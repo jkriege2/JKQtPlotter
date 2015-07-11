@@ -36,8 +36,7 @@ SOURCES += $$PWD/jkqtpbaseplotter.cpp \
 
 RESOURCES += $$PWD/jkqtpbaseplotter.qrc
 
-INCLUDEPATH += $$PWD \
-               $$PWD/../
+INCLUDEPATH += $$PWD 
 
 QT += gui
 
