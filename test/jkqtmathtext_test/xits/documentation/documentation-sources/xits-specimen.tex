@@ -1,0 +1,149 @@
+\usetypescriptfile[type-xits]
+\usetypescript[xits]
+\setupbodyfont[xits]
+
+\setuplayout[header=0pt,footer=0pt]
+\setupformulas[spaceafter={2*big}]
+
+\starttext
+
+\midaligned{$\bfd\frak XITS\ Math$}\blank[4*big]
+
+\startformula
+\pi(n) = \sum^{n}_{m=2}\left\lfloor\biggl(\sum^{m-1}_{k=1}\bigl\lfloor(m/k)\big/\lceil m/k\rceil\bigr\rfloor\biggr)^{-1}\right\rfloor
+\stopformula
+
+\startformula
+\pi(n) = \sum^{n}_{k=2}\left\lfloor\phi(k) \over k-1\right\rfloor
+\stopformula
+
+\startformula
+1+\left(1\over1-x^2\right)^3
+\stopformula
+
+\startformula
+1+\left(1\over1-{{{x^2}\over{y^3}}\over{z^4}}\right)^3
+\stopformula
+
+\startformula
+{a+1\over b}\bigg/{c+1\over d}
+\stopformula
+
+\startformula
+\biggl({\partial^{2} \over \partial x^{2}} + {\partial^{2} \over \partial y^{2}}\biggr) {\bigl\vert\phi(x+iy)\bigr\vert}^2
+\stopformula
+
+\startformula
+\sum_{\scriptstyle0\le i\le m\atop\scriptstyle0<j<n}P(i,j)
+\stopformula
+
+\startformula
+\int_0^3 9x^2 + 2x + 4\, dx = 3x^3 + x^2 + 4x + C \Big]_0^3 = 102
+\stopformula
+
+\startformula
+e^{x+iy} = e^x(\cos y + i\sin y)
+\stopformula
+
+\startformula
+x = {-b \pm \sqrt{b^2 - 4ac} \over 2a}
+\stopformula
+
+\startformula
+ f(x) = 
+   \startmathcases
+     \NC x, \MC \text{if } 0 \le x \le \frac12 \NR
+     \NC 1-x ,\MC \text{if } \frac12 \le x \le 1 \NR
+   \stopmathcases
+\stopformula
+
+\startformula
+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+x}}}}}}}
+\stopformula
+
+\startformula
+{\bf S^{\rm -1} TS} = {\bf dg}(\omega_1,\ldots,\omega_n) = {\bf \Lambda}
+\stopformula
+
+\startformula
+\Pr(\,m=n\mid m+n=3\,)
+\stopformula
+
+\startformula
+\sin 18^\circ = {1\over 4} (\sqrt{5}-1)
+\stopformula
+
+\startformula
+k=1.38 \times 10^{-16}\,\rm erg/^\circ K
+\stopformula
+
+\startformula
+\bar\Phi \subset NL^*_1/N=\bar L^*_1\subseteq\cdots\subseteq  NL^*_n/N=\bar L^*_n
+\stopformula
+
+\startformula
+\textstyle I(\lambda)=\iint_D g(x,y)e^{i\lambda h(x,y)}\,dx\, dy
+\stopformula
+
+\startformula
+\textstyle\int^1_0\cdots\int^1_0 f(x_1,\ldots,x_n)\, dx_1\ldots dx_n
+\stopformula
+
+\startformula
+x_{2m} \equiv \cases{Q(X^2_m - P_2W^2_m)-2S^2 & ($m$ odd)\cr
+                     &\cr
+                     P^2_2(X^2_m - P_2W^2_m)-2S^2 & ($m$ even)} \pmod N
+\stopformula
+
+\startformula
+(1+x_1z+x^2_1z^2+\cdots\,)\ldots(1+x_nz+x^2_nz^2+\cdots\,)={1\over(1-x_1z)\ldots(1-x_nz)}
+\stopformula
+
+\startformula
+\prod_{j\ge 0}\biggl(\sum_{k\ge0}a_{jk}z^k\biggr) =
+\sum_{n\ge 0} z^n \Biggl(\sum_{k_0,k_1,\ldots\ge 0\atop k_0+k_1+\cdots=n} a_{0k_0}a_{1k_1}\ldots\,\Biggr)
+\stopformula
+
+\startformula
+\sum^\infty_{n=0} a_nz^n\qquad\hbox{converges if}\qquad|z|\lt\left(\limsup_{n\to\infty} \root n \of {|a-n|}\right)
+\stopformula
+
+\startformula
+{f(x+\Delta x)-f(x)\over\Delta x}\to f'(x)\qquad\hbox{as $\Delta x\to 0$}
+\stopformula
+
+\startformula
+\Vert u_i\Vert = 1, \qquad u_i\cdot u_j = 0 \quad\hbox{if $i\neq j$}
+\stopformula
+
+\startformula
+\prod_{k\ge0}{1\over(1-q^kz)}=\sum_{n\ge0}z^n\bigg/\!\!\prod_{1\le k\le n}(1-q^k).\eqno(16')
+\stopformula
+
+\startformula
+\eqalign{T(n)\le T(2^{\lceil\lg n\rceil})&\le c(3^{\lceil\lg n\rceil}-2^{\lceil\lg n\rceil})\cr
+                                         &< 3c\cdot3^{\lg n}\cr
+                                         &= 3cn^{\lg n}}
+\stopformula
+
+\startformula
+\eqalign{P(x)&=a_0+a_1x+a_2x^2+\cdots+a_nx^2,\cr
+        P(-x)&=a_0-a_1x+a_2x^2-\cdots+(-1)^na_nx^2.}
+\eqno(30)
+\stopformula
+
+\startformula
+\leqalignno{\gcd(u,v)&=\gcd(v,u); &(9)\cr
+            \gcd(u,v)&=\gcd(-u,v).&(10)}
+\stopformula
+
+\startformula
+\reqalignno{
+\biggl(\int^\infty_{-\infty}e^{-x^2}dx\biggr)^2 & =\int^\infty_{-\infty}\int^\infty_{-\infty}e^{-(x^2+y^2)}\,dx\,dy\cr
+                                                & =\int^{2\pi}_0\int^\infty_0 e^{-r^2} r\,dr\,d\theta\cr
+                                                & =\int^{2\pi}_0\biggl(-{e^{-r^2}\over2}\bigg|^{r=\infty}_{r=0}\,\biggr)\,d\theta\cr
+                                                & =\pi.&(11)
+}
+\stopformula
+
+\stoptext

@@ -1,0 +1,206 @@
+
+FONTLOG for XITS
+-------------------
+This file provides detailed information on the XITS font software.  This
+information should be distributed along with the XITS fonts and any derivative
+works.
+
+
+Basic Font Information
+--------------------------
+XITS is a Times-like typeface for mathematical and scientific publishing, based
+on STIX fonts project. The main mission of XITS is to provide a version of STIX
+fonts enriched with the OpenType MATH extension, making it suitable for high
+quality mathematic typesetting with OpenType MATH capable layout systems, like
+MS Office 2007 and the new TeX engines XeTeX and LuaTeX.
+
+XITS development is currently hosted on:
+http://github.com/khaledhosny/xits-math
+
+Feature requests, bug reports and patches should be directed to our issue
+tracker.
+
+XITS currently provides the following Unicode coverage:
+%{XITS Math}
+%{XITS}
+%{XITS Bold}
+%{XITS Italic}
+%{XITS Bold Italic}
+
+Information for Contributors
+------------------------------
+XITS is released under the OFL 1.1 - http://scripts.sil.org/OFL For information
+on what you're allowed to change or modify, consult the OFL-1.1.txt and
+OFL-FAQ.txt files. The OFL-FAQ also gives a very general rationale and various
+recommendations regarding why you would want to contribute to the project or
+make your own version of the font.
+
+See the project website for the current master and the various branches:
+http://github.com/khaledhosny/xits-math
+
+
+ChangeLog
+----------
+20 Jan 2014 (Khaled Hosny) <XITS> Version 1.108
+- Add ‘latn’ and ‘dflt’ languages to math stylistic sets
+- Add missing substitutions from ‘ss05’, ‘ss06’ and ‘ss07’ features
+- Drop regular Arabic letters
+- Drop the Arabic digits ‘locl’ feature
+- Import Arabic alphanumeric math symbols and Arabic ray sign from Amiri font
+- Add ‘ss10’ for \hbar variant of \hslash
+- Fix ‘rtlm’ feature to follow the spec
+
+28 May 2013 (Khaled Hosny) <XITS> Version 1.107
+- Make ‘rtlm’ feature work with Firefox
+- Disable fi ligatures with Turkish
+- New/improved accent positioning for all math alphabets
+- Italic correction for math alphabets accessible via stylistic sets
+- Fix coverage of italic mathbb stylistic sets
+- Make regular partial differential (U+2202) upright
+- Rework bold integral summations
+- Improve script positions of upright alphabet
+
+28 May 2012 (Khaled Hosny) <XITS> Version 1.106
+- Improve accent possitioning of bold script alphabet
+- Fix integral italic correction of bold math font
+- Add calligraphic alphabet bold math font
+- Add upright integrals to bold math font
+
+18 May 2012 (Khaled Hosny) <XITS> Version 1.105
+- Remove ligatures and oldstyle figures from math font
+- Move primes closer together
+- Fix extensibility of combining over/under arrows
+- Add 4 pre-built sizes for bar glyphs
+- Initial bold math font
+- Add under left right arrow
+
+12 Feb 2012 (Khaled Hosny) <XITS> Version 1.104
+- Fix various warnings reported vy `compareFamily` tool of AFDKO
+- Fix primes size so that base and superscripted primes are identical in size
+  and a bit smaller than before
+
+29 Nov 2011 (Khaled Hosny) <XITS> Version 1.103
+- Remove erroneous dots from U+2A2B and add U+2A2C to XITS Bold
+
+08 Nov 2011 (Khaled Hosny) <XITS> Version 1.102
+- Fix inconsistent line spacing caused by inline math in MS Word
+
+08 Oct 2011 (Khaled Hosny) <XITS> Version 1.101
+- Support for numr and dnom features in XITS Regular
+- Add Arabic comma to XITS Math
+- Sync with STIXv1.1.0-beta1:
+  - New values for StackBottomShiftDown and StackBottomDisplayStyleShiftDown
+  - Sync PS private table in XITS Math
+  - Sync relevant glyph changes
+
+18 Sep 2011 (Khaled Hosny) <XITS> Version 1.012
+- Fix bug in \scriptscriptstyle primes with XeTeX
+
+13 Jul 2011 (Khaled Hosny) <XITS> Version 1.011
+- Initial right-to-left math support
+- Add basic Arabic letters, digits and some math symbols
+- Add support for overly accents
+- Make uni2980, uni20E9, uni2223, uni2225, uni2AF4 and uni2AFC extensible
+- Support math variants using variation selector (VS1)
+- Add alternate negated symbols with vertical stroke
+- Use the bar glyph from STIXVar.otf
+- Fix FontForge warnings
+- Fix swapped U+22D2 and U+22D3 glyphs
+
+22 Apr 2011 (Khaled Hosny) <XITS> Version 1.010
+- Make \over/underbrace and sisters less close to base glyphs
+- Add upright integrals as stylistic set ss08
+
+21 Apr 2011 (Khaled Hosny) <XITS> Version 1.009
+- Don't hard code OS/2 code pages and Unicode ranges
+- Fix StackBottomShiftDown and StackBottomDisplayStyleShiftDown math parameters
+
+12 Jan 2011 (Khaled Hosny) <XITS> Version 1.008
+- Fix sub/supercript positioning for uppercase script family
+- Make \lgroup and \rgroup extensible
+- Mark few more brackets extended shapes
+- Make \lmoustache \rmoustache extensible
+
+25 Oct 2010 (Khaled Hosny) <XITS> Version 1.007
+- Add TopAccentHorizontal position to U+00B7, U+0131, U+0237, U+203E, U+22C5
+- Add spaces and control characters U+0000-001F, U+2000-200F, U+2028-202F
+- Tune script positioning for display integrals
+- Disable smaller than text size integrals
+- Rename fj ligature glyph to "f_j" for PDF search
+- Assign un-encoded glyphs PUA code points
+- Use U+23B7 slot for the glyph uni221A.base
+- Change integral glyphs name suffixes to "small" and "display"
+
+15 Jul 2010 (Khaled Hosny) <XITS> Version 1.006
+- More italic correction to double struck alphabet
+- Misc accents cleanup
+- Remove wide variants of spacing accents
+- Fine tuning of Latin and Greek top accent positioning
+- Revise math constants, based on a default rule thickness of 66 instead of 50
+- Draw a .notdef glyph instead of being empty, in the math font
+- Make the bar glyph descend below the base line in the math font
+
+08 Jul 2010 (Khaled Hosny) <XITS> Version 1.005
+- Fix wrong style for italic double struck symbols
+- Cover all small i and j letters in 'dtls' feature
+- Add top accent position for math serif Greek
+- Add vertical composition for floor and ceiling
+- Increase RadicalDegreeBottomRaisePercent
+- Add math bold digamma
+- Add math bold, italic and bold italic double-struck stylistic sets
+- Add math bold monospace digits stylistic set
+- Add math italic sans-serif digits stylistic set
+- Add math sans-serif Greek stylistic set
+
+11 Jun 2010 (Khaled Hosny) <XITS> Version 1.004
+- Fix the mysterious MS Office 2007 composition bug
+
+10 Jun 2010 (Khaled Hosny) <XITS> Version 1.003
+- Set OS/2 version to 4
+- Add italic correction to math italic Greek and Latin
+- Remove redundant math glyphs from text fonts
+- Add 'dtls' feature and bold dotless i and j
+- Add bold mathematical calligraphic alphabet
+- Add mathematical calligraphic alphabet
+
+6 Jun 2010 (Khaled Hosny) <XITS> Version 1.002
+- Make OS/2 ascender/descender absolute values
+- Move GSUB code to a font feature file
+- Merge oldstyle figures from STIXNonUni* fonts
+- Import the rest of STIXGeneral fonts
+
+4 Jun 2010 (Khaled Hosny) <XITS Math> Version 1.001
+- Edit various font metadata
+- Initial release of "XITS Math"
+- Add sub/superscript variants of primes
+- Fix displaced \widehat and sisters
+- Add italic correction, not all glyphs yet
+- Fix the vertical positions of \[over|under]brace
+- Ask FontForge to guess the BlueValues:
+- Add 'frac' feature for text fractions
+- Add oldstyle numbers
+- Add Horizontal construction
+- Add Vertical construction
+- Add horizontal top accent position values
+- Mark extended shapes
+- Add horizontal variants
+- Add vertical variants
+- Add MATH table
+
+
+Acknowledgements
+-------------------------
+If you make modifications be sure to add your name (N), email (E), web-address
+(W) and description (D). This list is sorted by last name in alphabetical
+order.)
+
+N: Khaled Hosny
+E: khaledhosny@eglug.org
+W: http://www.khaledhosny.org
+D: Engineer - OpenType MATH code
+
+N: STIX Fonts project
+E: 
+W: http://www.stixfonts.org
+D: Original authors
+

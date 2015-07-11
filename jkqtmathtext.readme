@@ -1,0 +1,23 @@
+--------------------------------------------------------------------------------
+-- JKQtFastPlotter                                                            --
+-- (c) 2010-2015 by Jan W. Krieger                                            --
+--     Biophysics of Macromolecules (B040)                                    --
+--        German Cancer Research center (DKFZ)                                --
+--     Institute for scientific computation (IWR)                             --
+--        University of Heidelberg                                            --
+--------------------------------------------------------------------------------
+--   http://www.dkfz.de/Macromol/quickfit/source.html                         --
+--------------------------------------------------------------------------------
+
+This is a self-contained LaTeX parser and renderer class for Qt (>= 4.7).
+
+This software is licensed under the term of the GNU General Public License 3.0 
+(GPL 3.0). 
+
+--------------------------------------------------------------------------------
+--   NOTE                                                                     --
+--------------------------------------------------------------------------------
+The directory structure in this source distribution is a bit strange, due to 
+history of the project. the Qt sources can be found in the subdirectory 'qt',
+while some basic C++ tool functions/classes reside in the parent directory. 
+Only the classes in 'qt' depend on Qt!!!

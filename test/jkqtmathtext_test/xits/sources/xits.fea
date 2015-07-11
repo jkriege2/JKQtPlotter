@@ -1,0 +1,99 @@
+languagesystem DFLT dflt;
+languagesystem latn dflt;
+languagesystem cyrl dflt;
+languagesystem grek dflt;
+
+feature frac {
+    sub one   fraction two    by onehalf;
+    sub one   fraction three  by onethird;
+    sub one   fraction four   by onequarter;
+    sub one   fraction five   by uni2155;
+    sub one   fraction six    by uni2159;
+    sub one   fraction eight  by oneeighth;
+    sub two   fraction three  by twothirds;
+    sub two   fraction five   by uni2156;
+    sub three fraction four   by threequarters;
+    sub three fraction five   by uni2157;
+    sub three fraction eight  by threeeighths;
+    sub four  fraction five   by uni2158;
+    sub five  fraction six    by uni215A;
+    sub five  fraction eight  by fiveeighths;
+    sub seven fraction eight  by seveneighths;
+
+    sub one   slash two    by onehalf;
+    sub one   slash three  by onethird;
+    sub one   slash four   by onequarter;
+    sub one   slash five   by uni2155;
+    sub one   slash six    by uni2159;
+    sub one   slash eight  by oneeighth;
+    sub two   slash three  by twothirds;
+    sub two   slash five   by uni2156;
+    sub three slash four   by threequarters;
+    sub three slash five   by uni2157;
+    sub three slash eight  by threeeighths;
+    sub four  slash five   by uni2158;
+    sub five  slash six    by uni215A;
+    sub five  slash eight  by fiveeighths;
+    sub seven slash eight  by seveneighths;
+} frac;
+
+feature numr {
+    sub zero  by zero.numr;
+    sub one   by one.numr;
+    sub two   by two.numr;
+    sub three by three.numr;
+    sub four  by four.numr;
+    sub five  by five.numr;
+    sub six   by six.numr;
+    sub seven by seven.numr;
+    sub eight by eight.numr;
+    sub nine  by nine.numr;
+} numr;
+
+feature dnom {
+    sub zero  by zero.dnom;
+    sub one   by one.dnom;
+    sub two   by two.dnom;
+    sub three by three.dnom;
+    sub four  by four.dnom;
+    sub five  by five.dnom;
+    sub six   by six.dnom;
+    sub seven by seven.dnom;
+    sub eight by eight.dnom;
+    sub nine  by nine.dnom;
+} dnom;
+
+feature onum {
+    sub zero  by zero.onum;
+    sub one   by one.onum;
+    sub two   by two.onum;
+    sub three by three.onum;
+    sub four  by four.onum;
+    sub five  by five.onum;
+    sub six   by six.onum;
+    sub seven by seven.onum;
+    sub eight by eight.onum;
+    sub nine  by nine.onum;
+} onum;
+
+feature liga {
+    sub f i  by fi;
+    sub f l  by fl;
+    sub f f  by ff;
+    sub f f i  by ffi;
+    sub f f l  by ffl;
+    sub f j  by f_j;
+} liga;
+
+feature liga {
+  script latn;
+   language NLD exclude_dflt;
+    sub I J  by uni0132;
+    sub i j  by uni0133;
+} liga;
+
+feature locl {
+  script latn;
+   language TRK exclude_dflt;
+    sub i by i.TRK;
+} locl;

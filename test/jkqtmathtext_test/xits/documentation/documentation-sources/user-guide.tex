@@ -1,0 +1,99 @@
+\setupbodyfont[xits]
+\setupinteraction[state=start]
+
+\useURL [ms-font-install] [http://www.microsoft.com/typography/truetypeinstall.mspx] [] [Installing fonts on Windows]
+\starttext
+
+\section{Introduction}
+
+XITS is Times-like font for scientific publishing with support for mathematical
+typesetting. It has wide coverage of Latin, Greek and Cyrillic scripts, as
+well as extensive coverage of Unicode symbols used in mathematics and other
+fields of science. XITS supports also proper mathematical typesetting and can
+be used to typeset complex mathematical equations in modern \TEX\ engines,
+namely \LUATEX\ and \XETEX, as well as Microsoft Office starting from 2007
+version.
+
+XITS is available as an OpenType font, in four styles; regular, bold, italic
+and bold italics, besides the maths font.
+
+\section{Font features}
+
+XITS supports the following OpenType features:
+
+\starttable[|lT|l|]
+\HL
+\NC feature\NC Description \NC\SR
+\HL
+\NC \Use{2}[I]{All fonts} \MR
+\NC kern \NC Kerning \NC\FR
+\NC liga \NC Ligatures \NC\MR
+\NC onum \NC Oldstyle numbers \NC\MR
+\NC frac \NC Diagonal fractions \NC\MR
+\NC \Use{2}[I]{The maths font, spports additional features} \MR
+\NC ss01 \NC Mathematical Calligraphic Alphabet \NC\MR
+\NC ss02 \NC Mathematical Greek Sans Serif Alphabet \NC\MR
+\NC ss03 \NC Mathematical Italic Sans Serif Digits \NC\MR
+\NC ss04 \NC Mathematical Bold Monospace Digits \NC\MR
+\NC ss05 \NC Mathematical Bold Double-Struck Alphabet \NC\MR
+\NC ss06 \NC Mathematical Italic Double-Struck Alphabet \NC\MR
+\NC ss07 \NC Mathematical Bold Italic Double-Struck Alphabet \NC\MR
+\NC ss08 \NC Upright Integrals \NC\LR
+\NC ss09 \NC Negated Symbols With Vertical Stroke \NC\MR
+\HL
+\stoptable
+
+
+\section{Installation}
+
+\subsection{\CONTEXT}
+\CONTEXT\ MkIV are needed for using the math font, text fonts can be used with
+either MkIV or MkII with \XETEX\ engine, MkII with \PDFTEX\ is not supported.
+
+Recent versions of \CONTEXT\ already have typescripts for XITS, so just
+installing the fonts into TEXMF tree is enough.
+
+\subsection{\LATEX}
+A modern \TEX\ engine with Unicode and OpenType support is needed, namely
+\LUATEX\ or \XETEX. In addition to {\ss fontspec} package, {\ss unicode-math}
+is needed for using XITS fonts in math mode.
+
+If you are using \LUATEX\ then you can either install the fonts OS wide or in
+TEXMF tree. If you are using \XeTeX\ then you need to either install fonts OS
+wide, or adapt your {\ss fontconfig} configuration to look for for fonts
+installed under TEXMF tree, otherwise you will not be able to access fonts by
+font name.
+
+\subsection{MS Office}
+MS Office 2007 or newer is required, please refer to Microsoft’s
+\from[ms-font-install] for general font installation instruction.
+
+\section{Usage}
+
+\subsection{\LATEX}
+
+\subsubsection{Examples}
+\startTEX
+\documentclass{article}
+\usepackage{unicode-math}
+\setmainfont{XITS}
+\setmathfont{XITS Math}
+
+\begin{document}
+Text $x+y=\sqrt{z}$
+\end{document}
+\stopTEX
+
+\subsection{\CONTEXT}
+
+\subsubsection{Examples}
+
+\startTEX
+\setupbodyfont[xits]
+
+\starttext
+Text $x+y=\sqrt{z}$
+\stoptext
+\stopTEX
+
+\stoptext

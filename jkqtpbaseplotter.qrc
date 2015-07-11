@@ -1,0 +1,77 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/jkqtp_savedata.png</file>
+        <file>images/jkqtp_saveplot.png</file>
+        <file alias="images/jkqtp_print.png">images/jkqtp_24_print.png</file>
+        <file>images/jkqtp_savepdf.png</file>
+        <file>images/jkqtp_savesvg.png</file>
+        <file>images/jkqtp_saveps.png</file>
+        <file>images/jkqtp_savepix.png</file>
+        <file>images/jkqtp_savecsv.png</file>
+        <file alias="images/jkqtp_zoomin.png">images/jkqtp_24_zoomin.png</file>
+        <file alias="images/jkqtp_zoomout.png">images/jkqtp_24_zoomout.png</file>
+        <file alias="images/jkqtp_zoomall.png">images/jkqtp_24_zoomall.png</file>
+        <file alias="images/exportprintpreview.png">images/jkqtp_zoomall.png</file>
+        <file>images/jkqtp_copydata.png</file>
+        <file>images/jkqtp_copymatlab.png</file>
+        <file>images/jkqtp_copyimg.png</file>
+        <file alias="jkqtp_exit.png">images/exit.png</file>
+        <file alias="jkqtp_cursor_rectangle.png">images/cursor_rectangle.png</file>
+        <file alias="jkqtp_cursor_rectangle_mask.png">images/cursor_rectangle_mask.png</file>
+        <file alias="jkqtp_cursor_line.png">images/cursor_line.png</file>
+        <file alias="jkqtp_cursor_line_mask.png">images/cursor_line_mask.png</file>
+        <file alias="jkqtp_cursor_circle.png">images/cursor_circle.png</file>
+        <file alias="jkqtp_cursor_circle_mask.png">images/cursor_circle_mask.png</file>
+        <file alias="jkqtp_cursor_ellipse.png">images/cursor_ellipse.png</file>
+        <file alias="jkqtp_cursor_ellipse_mask.png">images/cursor_ellipse_mask.png</file>
+        <file alias="jkqtp_cursor_scribble.png">images/cursor_scribble.png</file>
+        <file alias="jkqtp_cursor_scribble_mask.png">images/cursor_scribble_mask.png</file>
+        <file alias="jkqtp_cursor_zoom.png">images/cursor_zoom.png</file>
+        <file alias="jkqtp_cursor_zoom_mask.png">images/cursor_zoom_mask.png</file>
+        <file alias="jkqtp_copy16.png">images/copy16.png</file>
+        <file alias="jkqtp_copy16_nohead.png">images/copy16_nohead.png</file>
+        <file alias="jkqtp_printtable.png">images/jkqtp_print.png</file>
+        <file alias="jkqtp_showplotdata.png">images/jkqtp_showplotdata.png</file>
+        <file alias="jkqtp_ebars.png">images/jkqtp_ebars.png</file>
+        <file alias="jkqtp_elines.png">images/jkqtp_elines.png</file>
+        <file alias="jkqtp_elinesbars.png">images/jkqtp_elinesbars.png</file>
+        <file alias="jkqtp_enone.png">images/jkqtp_enone.png</file>
+        <file alias="jkqtp_epoly.png">images/jkqtp_epoly.png</file>
+        <file alias="jkqtp_epolybars.png">images/jkqtp_epolybars.png</file>
+
+        <file alias="jkqtp_esbars.png">images/jkqtp_esbars.png</file>
+        <file alias="jkqtp_elinessbars.png">images/jkqtp_elinessbars.png</file>
+        <file alias="jkqtp_epolysbars.png">images/jkqtp_epolysbars.png</file>
+        <file alias="jkqtp_eboxes.png">images/jkqtp_eboxes.png</file>
+        <file alias="jkqtp_eellipses.png">images/jkqtp_eellipses.png</file>
+
+        <file alias="jkqtp_key_ibl.png">images/jkqtp_key_ibl.png</file>
+        <file alias="jkqtp_key_ibr.png">images/jkqtp_key_ibr.png</file>
+        <file alias="jkqtp_key_itl.png">images/jkqtp_key_itl.png</file>
+        <file alias="jkqtp_key_itr.png">images/jkqtp_key_itr.png</file>
+        <file alias="jkqtp_key_obl.png">images/jkqtp_key_obl.png</file>
+        <file alias="jkqtp_key_obr.png">images/jkqtp_key_obr.png</file>
+        <file alias="jkqtp_key_olb.png">images/jkqtp_key_olb.png</file>
+        <file alias="jkqtp_key_olt.png">images/jkqtp_key_olt.png</file>
+        <file alias="jkqtp_key_orb.png">images/jkqtp_key_orb.png</file>
+        <file alias="jkqtp_key_ort.png">images/jkqtp_key_ort.png</file>
+        <file alias="jkqtp_key_otl.png">images/jkqtp_key_otl.png</file>
+        <file alias="jkqtp_key_otr.png">images/jkqtp_key_otr.png</file>
+        <file alias="jkqtp_axis_complete.png">images/jkqtp_axis_complete.png</file>
+        <file alias="jkqtp_axis_line.png">images/jkqtp_axis_line.png</file>
+        <file alias="jkqtp_axis_none.png">images/jkqtp_axis_none.png</file>
+        <file alias="jkqtp_axis_ticks.png">images/jkqtp_axis_ticks.png</file>
+        <file alias="jkqtp_axis_ticksandlabels.png">images/jkqtp_axis_ticksandlabels.png</file>
+        <file alias="jkqtp_ticks_default.png">images/jkqtp_ticks_default.png</file>
+        <file alias="jkqtp_ticks_exp.png">images/jkqtp_ticks_exp.png</file>
+        <file alias="jkqtp_ticks_expchar.png">images/jkqtp_ticks_expchar.png</file>
+
+        <file alias="jkqtp_ticks_time.png">images/jkqtp_ticks_time.png</file>
+        <file alias="jkqtp_ticks_date.png">images/jkqtp_ticks_date.png</file>
+        <file alias="jkqtp_ticks_datetime.png">images/jkqtp_ticks_datetime.png</file>
+
+        <file alias="jkqtp_plot_mimage.png">images/plot_mimage.png</file>
+        <file alias="jkqtp_plot_image.png">images/plot_image.png</file>
+        <file alias="jkqtp_plot_rgbimage.png">images/plot_rgbimage.png</file>
+    </qresource>
+</RCC>

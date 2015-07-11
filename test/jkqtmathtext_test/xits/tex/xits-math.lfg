@@ -1,0 +1,26 @@
+-- \setupbodyfont[xits]
+--
+-- \starttext
+--     $ABC$ $\cal ABC$ $\mathalternate{cal}\cal ABC$
+-- \stoptext
+
+return {
+    name = "xits-math",
+    version = "1.00",
+    comment = "Goodies that complement xits (by Khaled Hosny).",
+    author = "Hans Hagen",
+    copyright = "ConTeXt development team",
+    mathematics = {
+        alternates = {
+            cal       = { feature = 'ss01', value = 1, comment = "Mathematical Calligraphic Alphabet" },
+            greekssup = { feature = 'ss02', value = 1, comment = "Mathematical Greek Sans Serif Alphabet" },
+            greekssit = { feature = 'ss03', value = 1, comment = "Mathematical Italic Sans Serif Digits" },
+            monobfnum = { feature = 'ss04', value = 1, comment = "Mathematical Bold Monospace Digits" },
+            mathbbbf  = { feature = 'ss05', value = 1, comment = "Mathematical Bold Double-Struck Alphabet" },
+            mathbbit  = { feature = 'ss06', value = 1, comment = "Mathematical Italic Double-Struck Alphabet" },
+            mathbbbi  = { feature = 'ss07', value = 1, comment = "Mathematical Bold Italic Double-Struck Alphabet" },
+            upint     = { feature = 'ss08', value = 1, comment = "Upright Integrals" },
+            vertnot   = { feature = 'ss09', value = 1, comment = "Negated Symbols With Vertical Stroke" },
+        },
+    }
+}

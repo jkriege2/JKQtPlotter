@@ -1,0 +1,7 @@
+<doc>
+<ColorMap name="example BGR" space="RGB">
+  <Point x="0" o="1" r="0" g="0" b="1.0"/>
+  <Point x="0.5" o="1" r="0" g="1.00" b="0"/>
+  <Point x="1" o="1" r="1" g="0" b="0"/>
+</ColorMap>
+</doc>

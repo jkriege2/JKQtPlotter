@@ -1,0 +1,55 @@
+/*!
+  \mainpage QTeXEngine - TeX support for Qt
+
+QTeXEngine enables <a href="http://www.qtsoftware.com/">Qt</a> based applications to easily export graphics created using the 
+<a href="http://doc.trolltech.com/4.5/qpainter.html">QPainter</a> class to <a href="http://en.wikipedia.org/wiki/TeX">TeX</a>.
+It is built on top of <a href="http://doc.trolltech.com/4.5/qpaintengine.html">QPaintEngine</a> 
+and uses the <a href="http://sourceforge.net/projects/pgf/">TikZ/Pgf</a> graphic systems for TeX.
+
+  \section license License
+
+  QTeXEngine is distributed under the terms of the \ref gtexenginelicense.
+
+  \section platforms Platforms
+
+  QTeXEngine might be usable in all environments where you find
+  <a href="http://www.trolltech.com/products/qt">Qt 4</a>.
+  
+  \section dependencies Dependencies
+
+  QTeXEngine depends on the following libraries:
+  <a href="http://www.trolltech.com/products/qt">Qt 4</a>.
+
+  \section downloads Downloads
+  <a href="http://soft.proindependent.com/qtexengine/download.html">QTeXEngine-0.2-opensource.zip</a>
+
+  \section installonmainpage Installation
+ 
+  Have a look at the QTeXEngine.pro project file. It is prepared for building
+  static libraries in Win32 and Unix/X11 environments. 
+  If you don't know what to do with it, read the file \ref qtexengineinstall and/or 
+  Trolltechs <a href="http://doc.trolltech.com/4.4/qmake-manual.html">qmake</a> manual. 
+
+  \section support Support
+  If you are looking for technical support contact ion.vasilief@proindependent.com.
+
+  \section relatedprojects Related Projects
+  <a href="http://sourceforge.net/projects/pgf/">TikZ/Pgf</a> graphic systems for TeX.\n
+  <a href="http://soft.proindependent.com/qtiplot.html">QtiPlot</a>, data analysis and scientific plotting tool.
+
+  \section credits Credits:
+  \par Author: 
+    Ion Vasilief
+  \par Project admin:
+    Ion Vasilief \<ion.vasilief@proindependent.com\>
+*/
+
+/*!
+  \page gtexenginelicense GPL License, Version 3
+  \include "COPYING.txt"
+*/
+
+/*!
+  \page qtexengineinstall README.txt
+  \include "README.txt"
+*/

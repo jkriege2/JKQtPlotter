@@ -1,0 +1,1 @@
+RESOURCES += xits.qrc

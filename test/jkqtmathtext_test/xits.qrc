@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/JKQTmathText/fonts">
+        <file alias="xits-bold.otf">xits/xits-bold.otf</file>
+        <file alias="xits-bolditalic.otf">xits/xits-bolditalic.otf</file>
+        <file alias="xits-italic.otf">xits/xits-italic.otf</file>
+        <file alias="xits-math.otf">xits/xits-math.otf</file>
+        <file alias="xits-mathbold.otf">xits/xits-mathbold.otf</file>
+        <file alias="xits-regular.otf">xits/xits-regular.otf</file>
+    </qresource>
+</RCC>

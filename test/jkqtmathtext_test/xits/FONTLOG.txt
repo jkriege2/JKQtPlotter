@@ -1,0 +1,338 @@
+
+FONTLOG for XITS
+-------------------
+This file provides detailed information on the XITS font software.  This
+information should be distributed along with the XITS fonts and any derivative
+works.
+
+
+Basic Font Information
+--------------------------
+XITS is a Times-like typeface for mathematical and scientific publishing, based
+on STIX fonts project. The main mission of XITS is to provide a version of STIX
+fonts enriched with the OpenType MATH extension, making it suitable for high
+quality mathematic typesetting with OpenType MATH capable layout systems, like
+MS Office 2007 and the new TeX engines XeTeX and LuaTeX.
+
+XITS development is currently hosted on:
+http://github.com/khaledhosny/xits-math
+
+Feature requests, bug reports and patches should be directed to our issue
+tracker.
+
+XITS currently provides the following Unicode coverage:
+* XITS Math:
+  Basic Latin (U+0000-007F): 95/95 (100.00%)
+  Latin-1 Supplement (U+0080-00FF): 96/96 (100.00%)
+  Latin Extended-A (U+0100-017F): 128/128 (100.00%)
+  Latin Extended-B (U+0180-024F): 37/208 (17.79%)
+  IPA Extensions (U+0250-02AF): 91/96 (94.79%)
+  Spacing Modifier Letters (U+02B0-02FF): 62/80 (77.50%)
+  Combining Diacritical Marks (U+0300-036F): 73/112 (65.18%)
+  Greek and Coptic (U+0370-03FF): 93/134 (69.40%)
+  Cyrillic (U+0400-04FF): 102/256 (39.84%)
+  Arabic (U+0600-06FF): 67/250 (26.80%)
+  Phonetic Extensions (U+1D00-1D7F): 3/128 (2.34%)
+  Phonetic Extensions Supplement (U+1D80-1DBF): 8/64 (12.50%)
+  Latin Extended Additional (U+1E00-1EFF): 8/256 (3.12%)
+  General Punctuation (U+2000-206F): 70/107 (65.42%)
+  Superscripts and Subscripts (U+2070-209F): 1/34 (2.94%)
+  Currency Symbols (U+20A0-20CF): 4/25 (16.00%)
+  Combining Diacritical Marks for Symbols (U+20D0-20FF): 24/33 (72.73%)
+  Letterlike Symbols (U+2100-214F): 60/80 (75.00%)
+  Number Forms (U+2150-218F): 12/58 (20.69%)
+  Arrows (U+2190-21FF): 103/112 (91.96%)
+  Mathematical Operators (U+2200-22FF): 256/256 (100.00%)
+  Miscellaneous Technical (U+2300-23FF): 90/233 (38.63%)
+  Control Pictures (U+2400-243F): 1/39 (2.56%)
+  Enclosed Alphanumerics (U+2460-24FF): 62/160 (38.75%)
+  Box Drawing (U+2500-257F): 45/128 (35.16%)
+  Block Elements (U+2580-259F): 8/32 (25.00%)
+  Geometric Shapes (U+25A0-25FF): 96/96 (100.00%)
+  Miscellaneous Symbols (U+2600-26FF): 54/250 (21.60%)
+  Dingbats (U+2700-27BF): 30/175 (17.14%)
+  Miscellaneous Mathematical Symbols-A (U+27C0-27EF): 43/44 (97.73%)
+  Supplemental Arrows-A (U+27F0-27FF): 16/16 (100.00%)
+  Supplemental Arrows-B (U+2900-297F): 128/128 (100.00%)
+  Miscellaneous Mathematical Symbols-B (U+2980-29FF): 128/128 (100.00%)
+  Supplemental Mathematical Operators (U+2A00-2AFF): 256/256 (100.00%)
+  Miscellaneous Symbols and Arrows (U+2B00-2BFF): 64/87 (73.56%)
+  CJK Symbols and Punctuation (U+3000-303F): 2/64 (3.12%)
+  Hiragana (U+3040-309F): 1/93 (1.08%)
+  Latin Extended-D (U+A720-A7FF): 1/114 (0.88%)
+  Variation Selectors (U+FE00-FE0F): 1/16 (6.25%)
+  Specials (U+FFF0-FFFF): 1/5 (20.00%)
+  Mathematical Alphanumeric Symbols (U+1D400-1D7FF): 996/996 (100.00%)
+
+* XITS:
+  Basic Latin (U+0000-007F): 95/95 (100.00%)
+  Latin-1 Supplement (U+0080-00FF): 96/96 (100.00%)
+  Latin Extended-A (U+0100-017F): 128/128 (100.00%)
+  Latin Extended-B (U+0180-024F): 37/208 (17.79%)
+  IPA Extensions (U+0250-02AF): 91/96 (94.79%)
+  Spacing Modifier Letters (U+02B0-02FF): 61/80 (76.25%)
+  Combining Diacritical Marks (U+0300-036F): 72/112 (64.29%)
+  Greek and Coptic (U+0370-03FF): 93/134 (69.40%)
+  Cyrillic (U+0400-04FF): 102/256 (39.84%)
+  Phonetic Extensions (U+1D00-1D7F): 3/128 (2.34%)
+  Phonetic Extensions Supplement (U+1D80-1DBF): 8/64 (12.50%)
+  Latin Extended Additional (U+1E00-1EFF): 8/256 (3.12%)
+  General Punctuation (U+2000-206F): 46/107 (42.99%)
+  Superscripts and Subscripts (U+2070-209F): 1/34 (2.94%)
+  Currency Symbols (U+20A0-20CF): 4/25 (16.00%)
+  Combining Diacritical Marks for Symbols (U+20D0-20FF): 24/33 (72.73%)
+  Letterlike Symbols (U+2100-214F): 60/80 (75.00%)
+  Number Forms (U+2150-218F): 12/58 (20.69%)
+  Arrows (U+2190-21FF): 103/112 (91.96%)
+  Mathematical Operators (U+2200-22FF): 256/256 (100.00%)
+  Miscellaneous Technical (U+2300-23FF): 61/233 (26.18%)
+  Control Pictures (U+2400-243F): 1/39 (2.56%)
+  Enclosed Alphanumerics (U+2460-24FF): 62/160 (38.75%)
+  Box Drawing (U+2500-257F): 45/128 (35.16%)
+  Block Elements (U+2580-259F): 8/32 (25.00%)
+  Geometric Shapes (U+25A0-25FF): 96/96 (100.00%)
+  Miscellaneous Symbols (U+2600-26FF): 54/250 (21.60%)
+  Dingbats (U+2700-27BF): 30/175 (17.14%)
+  Miscellaneous Mathematical Symbols-A (U+27C0-27EF): 43/44 (97.73%)
+  Supplemental Arrows-A (U+27F0-27FF): 16/16 (100.00%)
+  Supplemental Arrows-B (U+2900-297F): 128/128 (100.00%)
+  Miscellaneous Mathematical Symbols-B (U+2980-29FF): 128/128 (100.00%)
+  Supplemental Mathematical Operators (U+2A00-2AFF): 256/256 (100.00%)
+  Miscellaneous Symbols and Arrows (U+2B00-2BFF): 64/87 (73.56%)
+  CJK Symbols and Punctuation (U+3000-303F): 2/64 (3.12%)
+  Hiragana (U+3040-309F): 1/93 (1.08%)
+  Latin Extended-D (U+A720-A7FF): 1/114 (0.88%)
+  Alphabetic Presentation Forms (U+FB00-FB4F): 5/58 (8.62%)
+  Specials (U+FFF0-FFFF): 1/5 (20.00%)
+
+* XITS Bold:
+  Basic Latin (U+0000-007F): 95/95 (100.00%)
+  Latin-1 Supplement (U+0080-00FF): 96/96 (100.00%)
+  Latin Extended-A (U+0100-017F): 128/128 (100.00%)
+  Latin Extended-B (U+0180-024F): 32/208 (15.38%)
+  IPA Extensions (U+0250-02AF): 89/96 (92.71%)
+  Spacing Modifier Letters (U+02B0-02FF): 61/80 (76.25%)
+  Combining Diacritical Marks (U+0300-036F): 72/112 (64.29%)
+  Greek and Coptic (U+0370-03FF): 93/134 (69.40%)
+  Cyrillic (U+0400-04FF): 102/256 (39.84%)
+  Phonetic Extensions (U+1D00-1D7F): 3/128 (2.34%)
+  Latin Extended Additional (U+1E00-1EFF): 8/256 (3.12%)
+  General Punctuation (U+2000-206F): 40/107 (37.38%)
+  Superscripts and Subscripts (U+2070-209F): 1/34 (2.94%)
+  Currency Symbols (U+20A0-20CF): 4/25 (16.00%)
+  Combining Diacritical Marks for Symbols (U+20D0-20FF): 22/33 (66.67%)
+  Letterlike Symbols (U+2100-214F): 38/80 (47.50%)
+  Number Forms (U+2150-218F): 12/58 (20.69%)
+  Arrows (U+2190-21FF): 82/112 (73.21%)
+  Mathematical Operators (U+2200-22FF): 237/256 (92.58%)
+  Miscellaneous Technical (U+2300-23FF): 15/233 (6.44%)
+  Control Pictures (U+2400-243F): 1/39 (2.56%)
+  Enclosed Alphanumerics (U+2460-24FF): 62/160 (38.75%)
+  Box Drawing (U+2500-257F): 40/128 (31.25%)
+  Geometric Shapes (U+25A0-25FF): 6/96 (6.25%)
+  Miscellaneous Symbols (U+2600-26FF): 3/250 (1.20%)
+  Miscellaneous Mathematical Symbols-A (U+27C0-27EF): 4/44 (9.09%)
+  Miscellaneous Mathematical Symbols-B (U+2980-29FF): 10/128 (7.81%)
+  Supplemental Mathematical Operators (U+2A00-2AFF): 58/256 (22.66%)
+  Alphabetic Presentation Forms (U+FB00-FB4F): 5/58 (8.62%)
+
+* XITS Italic:
+  Basic Latin (U+0000-007F): 95/95 (100.00%)
+  Latin-1 Supplement (U+0080-00FF): 96/96 (100.00%)
+  Latin Extended-A (U+0100-017F): 128/128 (100.00%)
+  Latin Extended-B (U+0180-024F): 32/208 (15.38%)
+  IPA Extensions (U+0250-02AF): 89/96 (92.71%)
+  Spacing Modifier Letters (U+02B0-02FF): 28/80 (35.00%)
+  Greek and Coptic (U+0370-03FF): 92/134 (68.66%)
+  Cyrillic (U+0400-04FF): 102/256 (39.84%)
+  Latin Extended Additional (U+1E00-1EFF): 8/256 (3.12%)
+  General Punctuation (U+2000-206F): 23/107 (21.50%)
+  Currency Symbols (U+20A0-20CF): 4/25 (16.00%)
+  Combining Diacritical Marks for Symbols (U+20D0-20FF): 20/33 (60.61%)
+  Letterlike Symbols (U+2100-214F): 30/80 (37.50%)
+  Mathematical Operators (U+2200-22FF): 2/256 (0.78%)
+  Control Pictures (U+2400-243F): 1/39 (2.56%)
+  Enclosed Alphanumerics (U+2460-24FF): 62/160 (38.75%)
+  Box Drawing (U+2500-257F): 40/128 (31.25%)
+  Alphabetic Presentation Forms (U+FB00-FB4F): 5/58 (8.62%)
+
+* XITS Bold Italic:
+  Basic Latin (U+0000-007F): 95/95 (100.00%)
+  Latin-1 Supplement (U+0080-00FF): 96/96 (100.00%)
+  Latin Extended-A (U+0100-017F): 128/128 (100.00%)
+  Latin Extended-B (U+0180-024F): 32/208 (15.38%)
+  IPA Extensions (U+0250-02AF): 89/96 (92.71%)
+  Spacing Modifier Letters (U+02B0-02FF): 28/80 (35.00%)
+  Greek and Coptic (U+0370-03FF): 92/134 (68.66%)
+  Cyrillic (U+0400-04FF): 102/256 (39.84%)
+  Latin Extended Additional (U+1E00-1EFF): 8/256 (3.12%)
+  General Punctuation (U+2000-206F): 23/107 (21.50%)
+  Currency Symbols (U+20A0-20CF): 4/25 (16.00%)
+  Combining Diacritical Marks for Symbols (U+20D0-20FF): 1/33 (3.03%)
+  Letterlike Symbols (U+2100-214F): 29/80 (36.25%)
+  Mathematical Operators (U+2200-22FF): 2/256 (0.78%)
+  Control Pictures (U+2400-243F): 1/39 (2.56%)
+  Enclosed Alphanumerics (U+2460-24FF): 62/160 (38.75%)
+  Box Drawing (U+2500-257F): 40/128 (31.25%)
+  Alphabetic Presentation Forms (U+FB00-FB4F): 5/58 (8.62%)
+
+
+Information for Contributors
+------------------------------
+XITS is released under the OFL 1.1 - http://scripts.sil.org/OFL For information
+on what you're allowed to change or modify, consult the OFL-1.1.txt and
+OFL-FAQ.txt files. The OFL-FAQ also gives a very general rationale and various
+recommendations regarding why you would want to contribute to the project or
+make your own version of the font.
+
+See the project website for the current master and the various branches:
+http://github.com/khaledhosny/xits-math
+
+
+ChangeLog
+----------
+28 May 2012 (Khaled Hosny) <XITS> Version 1.106
+- Improve accent possitioning of bold script alphabet
+- Fix integral italic correction of bold math font
+- Add calligraphic alphabet bold math font
+- Add upright integrals to bold math font
+
+18 May 2012 (Khaled Hosny) <XITS> Version 1.105
+- Remove ligatures and oldstyle figures from math font
+- Move primes closer together
+- Fix extensibility of combining over/under arrows
+- Add 4 pre-built sizes for bar glyphs
+- Initial bold math font
+- Add under left right arrow
+
+12 Feb 2012 (Khaled Hosny) <XITS> Version 1.104
+- Fix various warnings reported vy `compareFamily` tool of AFDKO
+- Fix primes size so that base and superscripted primes are identical in size
+  and a bit smaller than before
+
+29 Nov 2011 (Khaled Hosny) <XITS> Version 1.103
+- Remove erroneous dots from U+2A2B and add U+2A2C to XITS Bold
+
+08 Nov 2011 (Khaled Hosny) <XITS> Version 1.102
+- Fix inconsistent line spacing caused by inline math in MS Word
+
+08 Oct 2011 (Khaled Hosny) <XITS> Version 1.101
+- Support for numr and dnom features in XITS Regular
+- Add Arabic comma to XITS Math
+- Sync with STIXv1.1.0-beta1:
+  - New values for StackBottomShiftDown and StackBottomDisplayStyleShiftDown
+  - Sync PS private table in XITS Math
+  - Sync relevant glyph changes
+
+18 Sep 2011 (Khaled Hosny) <XITS> Version 1.012
+- Fix bug in \scriptscriptstyle primes with XeTeX
+
+13 Jul 2011 (Khaled Hosny) <XITS> Version 1.011
+- Initial right-to-left math support
+- Add basic Arabic letters, digits and some math symbols
+- Add support for overly accents
+- Make uni2980, uni20E9, uni2223, uni2225, uni2AF4 and uni2AFC extensible
+- Support math variants using variation selector (VS1)
+- Add alternate negated symbols with vertical stroke
+- Use the bar glyph from STIXVar.otf
+- Fix FontForge warnings
+- Fix swapped U+22D2 and U+22D3 glyphs
+
+22 Apr 2011 (Khaled Hosny) <XITS> Version 1.010
+- Make \over/underbrace and sisters less close to base glyphs
+- Add upright integrals as stylistic set ss08
+
+21 Apr 2011 (Khaled Hosny) <XITS> Version 1.009
+- Don't hard code OS/2 code pages and Unicode ranges
+- Fix StackBottomShiftDown and StackBottomDisplayStyleShiftDown math parameters
+
+12 Jan 2011 (Khaled Hosny) <XITS> Version 1.008
+- Fix sub/supercript positioning for uppercase script family
+- Make \lgroup and \rgroup extensible
+- Mark few more brackets extended shapes
+- Make \lmoustache \rmoustache extensible
+
+25 Oct 2010 (Khaled Hosny) <XITS> Version 1.007
+- Add TopAccentHorizontal position to U+00B7, U+0131, U+0237, U+203E, U+22C5
+- Add spaces and control characters U+0000-001F, U+2000-200F, U+2028-202F
+- Tune script positioning for display integrals
+- Disable smaller than text size integrals
+- Rename fj ligature glyph to "f_j" for PDF search
+- Assign un-encoded glyphs PUA code points
+- Use U+23B7 slot for the glyph uni221A.base
+- Change integral glyphs name suffixes to "small" and "display"
+
+15 Jul 2010 (Khaled Hosny) <XITS> Version 1.006
+- More italic correction to double struck alphabet
+- Misc accents cleanup
+- Remove wide variants of spacing accents
+- Fine tuning of Latin and Greek top accent positioning
+- Revise math constants, based on a default rule thickness of 66 instead of 50
+- Draw a .notdef glyph instead of being empty, in the math font
+- Make the bar glyph descend below the base line in the math font
+
+08 Jul 2010 (Khaled Hosny) <XITS> Version 1.005
+- Fix wrong style for italic double struck symbols
+- Cover all small i and j letters in 'dtls' feature
+- Add top accent position for math serif Greek
+- Add vertical composition for floor and ceiling
+- Increase RadicalDegreeBottomRaisePercent
+- Add math bold digamma
+- Add math bold, italic and bold italic double-struck stylistic sets
+- Add math bold monospace digits stylistic set
+- Add math italic sans-serif digits stylistic set
+- Add math sans-serif Greek stylistic set
+
+11 Jun 2010 (Khaled Hosny) <XITS> Version 1.004
+- Fix the mysterious MS Office 2007 composition bug
+
+10 Jun 2010 (Khaled Hosny) <XITS> Version 1.003
+- Set OS/2 version to 4
+- Add italic correction to math italic Greek and Latin
+- Remove redundant math glyphs from text fonts
+- Add 'dtls' feature and bold dotless i and j
+- Add bold mathematical calligraphic alphabet
+- Add mathematical calligraphic alphabet
+
+6 Jun 2010 (Khaled Hosny) <XITS> Version 1.002
+- Make OS/2 ascender/descender absolute values
+- Move GSUB code to a font feature file
+- Merge oldstyle figures from STIXNonUni* fonts
+- Import the rest of STIXGeneral fonts
+
+4 Jun 2010 (Khaled Hosny) <XITS Math> Version 1.001
+- Edit various font metadata
+- Initial release of "XITS Math"
+- Add sub/superscript variants of primes
+- Fix displaced \widehat and sisters
+- Add italic correction, not all glyphs yet
+- Fix the vertical positions of \[over|under]brace
+- Ask FontForge to guess the BlueValues:
+- Add 'frac' feature for text fractions
+- Add oldstyle numbers
+- Add Horizontal construction
+- Add Vertical construction
+- Add horizontal top accent position values
+- Mark extended shapes
+- Add horizontal variants
+- Add vertical variants
+- Add MATH table
+
+
+Acknowledgements
+-------------------------
+If you make modifications be sure to add your name (N), email (E), web-address
+(W) and description (D). This list is sorted by last name in alphabetical
+order.)
+
+N: Khaled Hosny
+E: khaledhosny@eglug.org
+W: http://www.khaledhosny.org
+D: Engineer - OpenType MATH code
+
+N: STIX Fonts project
+E: 
+W: http://www.stixfonts.org
+D: Original authors
+
+
