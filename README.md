@@ -9,18 +9,18 @@ You can find usage examples for the classes in this repository in the subfolder 
 
 ##Screenshots
 ###Different Types of Barcharts
-![Barcharts](jkriege2.github.com/JKQtPlotter/screenshots/screen_barcharts.png)
+![Barcharts](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_barcharts.png)
 
 ###Plotting a user-defined (parsed) function
 Yes, a complete math expression parser is contained!
-![Function Plot](jkriege2.github.com/JKQtPlotter/screenshots/screen_functionplot.png)
+![Function Plot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_functionplot.png)
 
 ###Axis-Label styles in LogLog-Plot
-![LogLog Plot](jkriege2.github.com/JKQtPlotter/screenshots/screen_loglog.png)
+![LogLog Plot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_loglog.png)
 
 
 ###Parametrized Scatter Plots and Data Viewer
 Scatter Plots can have symbols where the shape/color/size is parametrized by a data column. Also the plotter is built around an internal datastore, which you can access (readonly!!!) by a data-viewer that is accessible from the contextmenu in any plot.
-![LogLog Plot](jkriege2.github.com/JKQtPlotter/screenshots/screen_parmetrizedplots_datatable.png)
+![LogLog Plot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_parmetrizedplots_datatable.png)
 
 
