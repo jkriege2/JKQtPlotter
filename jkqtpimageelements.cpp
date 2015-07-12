@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2015 Jan W. Krieger & Sebastian Isbaner (contour plot), German Cancer Research Center
 
-    last modification: $LastChangedDate$  (revision $Rev$)
+    
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
