@@ -40,7 +40,6 @@
 #include <QPair>
 #include <QSettings>
 #include "jkqtptools.h"
-//#include "../tools.h"
 #include "jkqtmathtext.h"
 #include "jkqtp_imexport.h"
 

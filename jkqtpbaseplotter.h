@@ -32,7 +32,6 @@
   * \ingroup jkqtpbaseplotter
   */
 
-//#include "../tools.h"
 #include "jkqtptools.h"
 #include "jkqtpdatastorage.h"
 #include "jkqtmathtext.h"
