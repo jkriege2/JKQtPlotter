@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="531.49603"
+   height="248.03149"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="jkimagestack_dataorganisation.svg"
+   inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+   inkscape:export-xdpi="91.110001"
+   inkscape:export-ydpi="91.110001">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible">
+      <path
+         id="path4908"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mstart"
+       style="overflow:visible">
+      <path
+         id="path4905"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.4,0,0,0.4,4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Sstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Sstart"
+       style="overflow:visible">
+      <path
+         id="path4911"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mstart-4"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4905-0"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.4,0,0,0.4,4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-9"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4908-4"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-9-5"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4908-4-1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mstart-7"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4905-1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.4,0,0,0.4,4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-1"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4908-5"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6167"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path6169"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(0.4,0,0,0.4,4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6171"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path6173"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-9-7"
+       style="overflow:visible">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4908-4-6"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="868.13705"
+     inkscape:cy="-77.852714"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1024"
+     inkscape:window-height="581"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     units="mm" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-804.33069)">
+    <g
+       id="g6236"
+       transform="translate(14.142136,95.964488)"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001">
+      <rect
+         inkscape:transform-center-y="-10.763836"
+         inkscape:transform-center-x="16.635059"
+         y="756.55499"
+         x="52.600536"
+         height="90.025017"
+         width="90.025017"
+         id="rect4099-7"
+         style="fill:#0000ff;stroke:#000080;stroke-width:1.93739605" />
+      <rect
+         y="744.07861"
+         x="38.656452"
+         height="90.025017"
+         width="90.025017"
+         id="rect4099-1"
+         style="fill:#00ff00;stroke:#008000;stroke-width:1.93739605" />
+      <rect
+         y="731.60236"
+         x="24.71236"
+         height="90.025017"
+         width="90.025017"
+         id="rect4099"
+         style="fill:#ff0000;stroke:#800000;stroke-width:1.93739605" />
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.15833902px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Mstart);marker-mid:none;marker-end:url(#Arrow1Mend)"
+       d="m 38.924974,822.0474 88.437976,0"
+       id="path4126"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="71.999275"
+       y="818.68372"
+       id="text5898"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan5900"
+         x="71.999275"
+         y="818.68372"
+         style="font-size:10px">width</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.15833902px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow1Mstart);marker-mid:none;marker-end:url(#Arrow1Mend)"
+       d="m 31.671339,916.83138 0,-88.43799"
+       id="path4126-8"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="-883.75702"
+       y="28.30773"
+       id="text5898-8"
+       sodipodi:linespacing="125%"
+       transform="matrix(0,-1,1,0,0,0)"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan5900-2"
+         x="-883.75702"
+         y="28.30773"
+         style="font-size:10px">height</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Mend-9)"
+       d="m 132.71356,821.8981 26.42857,24.28571"
+       id="path5938"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="152.0753"
+       y="829.70422"
+       id="text5898-4"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan5900-5"
+         x="152.0753"
+         y="829.70422"
+         style="font-size:10px">channels</tspan></text>
+    <g
+       id="g6241"
+       transform="translate(184.14213,95.964488)"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001">
+      <rect
+         style="fill:#0000ff;stroke:#000080;stroke-width:1.93739605"
+         id="rect6243"
+         width="90.025017"
+         height="90.025017"
+         x="52.600536"
+         y="756.55499"
+         inkscape:transform-center-x="16.635059"
+         inkscape:transform-center-y="-10.763836" />
+      <rect
+         style="fill:#00ff00;stroke:#008000;stroke-width:1.93739605"
+         id="rect6245"
+         width="90.025017"
+         height="90.025017"
+         x="38.656452"
+         y="744.07861" />
+      <rect
+         style="fill:#ff0000;stroke:#800000;stroke-width:1.93739605"
+         id="rect6247"
+         width="90.025017"
+         height="90.025017"
+         x="24.71236"
+         y="731.60236" />
+    </g>
+    <g
+       id="g6257"
+       transform="translate(345.76652,95.964488)"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001">
+      <rect
+         style="fill:#0000ff;stroke:#000080;stroke-width:1.93739605"
+         id="rect6259"
+         width="90.025017"
+         height="90.025017"
+         x="52.600536"
+         y="756.55499"
+         inkscape:transform-center-x="16.635059"
+         inkscape:transform-center-y="-10.763836" />
+      <rect
+         style="fill:#00ff00;stroke:#008000;stroke-width:1.93739605"
+         id="rect6261"
+         width="90.025017"
+         height="90.025017"
+         x="38.656452"
+         y="744.07861" />
+      <rect
+         style="fill:#ff0000;stroke:#800000;stroke-width:1.93739605"
+         id="rect6263"
+         width="90.025017"
+         height="90.025017"
+         x="24.71236"
+         y="731.60236" />
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.04661417px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Mend-9)"
+       d="M 67.305229,952.14407 478.53831,951.87465"
+       id="path5938-1"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="210.64052"
+       y="963.08185"
+       id="text5898-4-8"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan5900-5-9"
+         x="210.64052"
+         y="963.08185"
+         style="font-size:10px">depth/time</tspan></text>
+    <rect
+       y="986.64148"
+       x="28.223551"
+       height="11.118073"
+       width="90.025017"
+       id="rect4099-2"
+       style="fill:#ff0000;stroke:#800000;stroke-width:0.68085021"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:#ff0000;stroke:#800000;stroke-width:0.68085021"
+       id="rect6333"
+       width="90.025017"
+       height="11.118073"
+       x="118.6322"
+       y="986.64148"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       y="986.64148"
+       x="253.99265"
+       height="11.118073"
+       width="90.025017"
+       id="rect6335"
+       style="fill:#ff0000;stroke:#800000;stroke-width:0.68085021"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="52.402824"
+       y="995.34442"
+       id="text6337"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan6339"
+         x="52.402824"
+         y="995.34442"
+         style="font-size:10px;fill:#cccccc">x=0..width-1</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6362"
+       y="995.34442"
+       x="139.78104"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       xml:space="preserve"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         style="font-size:10px;fill:#cccccc"
+         y="995.34442"
+         x="139.78104"
+         id="tspan6364"
+         sodipodi:role="line">x=0..width-1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="281.20239"
+       y="995.34442"
+       id="text6366"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan6368"
+         x="281.20239"
+         y="995.34442"
+         style="font-size:10px;fill:#cccccc">x=0..width-1</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.94521457"
+       id="rect6370"
+       width="316.41107"
+       height="21.713203"
+       x="27.779196"
+       y="986.32336"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="70.585564"
+       y="1006.456"
+       id="text6372"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan6374"
+         x="70.585564"
+         y="1006.456"
+         style="font-size:10px">y=0                        y=1                    ...                 y=height-1</tspan></text>
+    <rect
+       y="1022.3558"
+       x="27.917917"
+       height="11.118073"
+       width="47.03529"
+       id="rect6427"
+       style="fill:#ff0000;stroke:#800000;stroke-width:0.49213231"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:#00ff00;stroke:#008000;stroke-width:0.49213231"
+       id="rect6429"
+       width="47.03529"
+       height="11.118073"
+       x="74.940132"
+       y="1022.3558"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       y="1022.3558"
+       x="121.96235"
+       height="11.118073"
+       width="47.03529"
+       id="rect6431"
+       style="fill:#0000ff;stroke:#000080;stroke-width:0.49213231"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:#ff0000;stroke:#800000;stroke-width:0.49213231"
+       id="rect6457"
+       width="47.03529"
+       height="11.118073"
+       x="27.917917"
+       y="1022.3558"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       y="1022.3558"
+       x="74.940132"
+       height="11.118073"
+       width="47.03529"
+       id="rect6459"
+       style="fill:#00ff00;stroke:#008000;stroke-width:0.49213231"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:#0000ff;stroke:#000080;stroke-width:0.49213231"
+       id="rect6461"
+       width="47.03529"
+       height="11.118073"
+       x="121.96235"
+       y="1022.3558"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       y="1022.3558"
+       x="169.34648"
+       height="11.118073"
+       width="47.03529"
+       id="rect6463"
+       style="fill:#ff0000;stroke:#800000;stroke-width:0.49213231"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:#00ff00;stroke:#008000;stroke-width:0.49213231"
+       id="rect6465"
+       width="47.03529"
+       height="11.118073"
+       x="216.36871"
+       y="1022.3558"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       y="1022.3558"
+       x="263.39093"
+       height="11.118073"
+       width="47.03529"
+       id="rect6467"
+       style="fill:#0000ff;stroke:#000080;stroke-width:0.49213231"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:#ff0000;stroke:#800000;stroke-width:0.49213231"
+       id="rect6469"
+       width="47.03529"
+       height="11.118073"
+       x="372.91794"
+       y="1022.3558"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       y="1022.3558"
+       x="419.94016"
+       height="11.118073"
+       width="47.03529"
+       id="rect6471"
+       style="fill:#00ff00;stroke:#008000;stroke-width:0.49213231"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:#0000ff;stroke:#000080;stroke-width:0.49213231"
+       id="rect6473"
+       width="47.03529"
+       height="11.118073"
+       x="466.96237"
+       y="1022.3558"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <rect
+       style="fill:none;stroke:#000000"
+       id="rect6475"
+       width="487.14285"
+       height="25"
+       x="27.504354"
+       y="1021.898"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 27.526656,1022.0576 0.252538,-14.1421"
+       id="path6477"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 74.751289,1021.5525 268.855131,-13.583"
+       id="path6479"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.00411427px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 118.18784,986.19721 0,21.30049"
+       id="path6481"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path6483"
+       d="m 208.65777,986.19721 0,21.30049"
+       style="fill:none;stroke:#000000;stroke-width:1.00411427px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.00411427px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 254.01491,986.19721 0,21.30049"
+       id="path6485"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.07980943px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 169.20054,1022.014 0,24.633"
+       id="path6481-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path6505"
+       d="m 310.6219,1022.014 0,24.633"
+       style="fill:none;stroke:#000000;stroke-width:1.07980943px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.07980943px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 372.74628,1022.014 0,24.633"
+       id="path6507"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="40.911179"
+       y="1031.149"
+       id="text6509"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan6511"
+         x="40.911179"
+         y="1031.149">c=0            c=1          c=2</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6513"
+       y="1031.149"
+       x="183.34268"
+       style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       xml:space="preserve"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         y="1031.149"
+         x="183.34268"
+         id="tspan6515"
+         sodipodi:role="line">c=0            c=1          c=2</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="384.36307"
+       y="1031.149"
+       id="text6517"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         sodipodi:role="line"
+         id="tspan6519"
+         x="384.36307"
+         y="1031.149">c=0            c=1          c=2</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text6521"
+       y="1042.8215"
+       x="89.778465"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       xml:space="preserve"
+       inkscape:export-filename="F:\B040\LIB\trunk\doc\images\jkimagestack_dataorganisation.png"
+       inkscape:export-xdpi="91.110001"
+       inkscape:export-ydpi="91.110001"><tspan
+         style="font-size:10px"
+         y="1042.8215"
+         x="89.778465"
+         id="tspan6523"
+         sodipodi:role="line">z=0                                              z=1                                ...                             z=depth-1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="412.39478"
+       y="204.08986"
+       id="text3069"
+       sodipodi:linespacing="125%"
+       transform="translate(0,804.33069)"><tspan
+         sodipodi:role="line"
+         id="tspan3071"
+         x="412.39478"
+         y="204.08986">channels=3</tspan></text>
+  </g>
+</svg>
