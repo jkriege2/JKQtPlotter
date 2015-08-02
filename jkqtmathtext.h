@@ -20,7 +20,7 @@
 
 /*
   Name: jkqtmathtext.h
-  Copyright: (c) 2010
+  Copyright: (c) 2010-2015
   Author: Jan krieger <jan@jkrieger.de>, http://www.jkrieger.de/
 */
 

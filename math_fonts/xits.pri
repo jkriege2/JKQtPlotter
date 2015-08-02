@@ -1,1 +1,1 @@
-RESOURCES += xits.qrc
+RESOURCES += $$PWD/xits.qrc
