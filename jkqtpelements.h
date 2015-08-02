@@ -397,7 +397,7 @@ class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPsingleColumnGraph {
 class LIB_EXPORT JKQTPgraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPgraphErrors();
+        JKQTPgraphErrors(QColor graphColor=QColor("black"));
 
         JKQTPGET_SET_MACRO(QColor, errorColor)
         JKQTPGET_SET_MACRO(Qt::PenStyle, errorStyle)
@@ -407,6 +407,8 @@ class LIB_EXPORT JKQTPgraphErrors {
         JKQTPGET_SET_MACRO(double, errorbarSize)
         /** \brief returns true, if the error plots use the given column */
         virtual bool errorUsesColumn(int c);
+
+        void setErrorColorFromGraphColor(QColor graphColor);
 
     protected:
         /** \brief color of the error lines/bars */
@@ -454,7 +456,7 @@ class LIB_EXPORT JKQTPgraphErrors {
 class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPxGraphErrors();
+        JKQTPxGraphErrors(QColor graphColor=QColor("black"));
 
         JKQTPGET_SET_MACRO(bool, xErrorSymmetric)
         JKQTPGET_MACRO(int, xErrorColumnLower)
@@ -505,7 +507,7 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
 class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPyGraphErrors();
+        JKQTPyGraphErrors(QColor graphColor=QColor("black"));
 
         JKQTPGET_SET_MACRO(bool, yErrorSymmetric)
         JKQTPGET_MACRO(int, yErrorColumnLower)
@@ -553,7 +555,7 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
 class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPxyGraphErrors();
+        JKQTPxyGraphErrors(QColor graphColor=QColor("black"));
         JKQTPGET_SET_MACRO(bool, xErrorSymmetric)
         JKQTPGET_SET_MACRO(bool, yErrorSymmetric)
         JKQTPGET_MACRO(int, xErrorColumnLower)
@@ -798,11 +800,11 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
         /** \brief class constructor */
         inline JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=NULL):
             JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
-        {   }
+        { setErrorColorFromGraphColor(color); }
         /** \brief class constructor */
         inline JKQTPxyLineErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
-        {   }
+        { setErrorColorFromGraphColor(color);  }
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -838,10 +840,10 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
     public:
         inline JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=NULL):
             JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
-        {   }
+        {  setErrorColorFromGraphColor(color); }
         inline JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent=NULL):
             JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
-        {   }
+        { setErrorColorFromGraphColor(color);  }
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -926,10 +928,12 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
         inline JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=NULL):
             JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         inline JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         /** \copydoc JKQTPgraph::usesColumn() */
         virtual bool usesColumn(int c);
@@ -979,11 +983,13 @@ class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGr
         inline JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter* parent=NULL):
             JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         /** \brief class constructor */
         inline JKQTPimpulsesVerticalErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         /** \copydoc JKQTPgraph::usesColumn() */
         virtual bool usesColumn(int c);
@@ -1079,11 +1085,13 @@ class LIB_EXPORT JKQTPfilledCurveXErrorGraph: public JKQTPfilledCurveXGraph, pub
         inline JKQTPfilledCurveXErrorGraph(JKQtBasePlotter* parent=NULL):
             JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         /** \brief class constructor */
         inline JKQTPfilledCurveXErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         /** \copydoc JKQTPgraph::usesColumn() */
         virtual bool usesColumn(int c);
@@ -1135,10 +1143,12 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
         inline JKQTPfilledCurveYErrorGraph(JKQtBasePlotter* parent=NULL):
             JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         inline JKQTPfilledCurveYErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
         {
+            setErrorColorFromGraphColor(color);
         }
         /** \copydoc JKQTPgraph::usesColumn() */
         virtual bool usesColumn(int c);

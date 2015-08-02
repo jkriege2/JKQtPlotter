@@ -657,11 +657,12 @@ void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &
 
 
 
-JKQTPgraphErrors::JKQTPgraphErrors() {
-    errorColor=QColor("black");
+JKQTPgraphErrors::JKQTPgraphErrors(QColor graphColor) {
+    errorColor=graphColor.darker();
     errorStyle=Qt::SolidLine;
     errorWidth=2;
-    errorFillColor=QColor("lightgray");
+    errorFillColor=graphColor.lighter();
+    errorColor.setAlphaF(0.5);
     errorFillStyle=Qt::SolidPattern;
     errorbarSize=7;
 }
@@ -1054,8 +1055,8 @@ double JKQTPgraphErrors::getYErrorL(int/* i*/, JKQTPdatastore */*ds*/) const
 
 
 
-JKQTPxGraphErrors::JKQTPxGraphErrors():
-    JKQTPgraphErrors()
+JKQTPxGraphErrors::JKQTPxGraphErrors(QColor graphColor):
+    JKQTPgraphErrors(graphColor)
 {
     xErrorSymmetric=true;
     xErrorColumn=-1;
@@ -1090,8 +1091,8 @@ double JKQTPxGraphErrors::getXErrorL(int i, JKQTPdatastore *ds) const
 
 
 
-JKQTPyGraphErrors::JKQTPyGraphErrors():
-    JKQTPgraphErrors()
+JKQTPyGraphErrors::JKQTPyGraphErrors(QColor graphColor):
+    JKQTPgraphErrors(graphColor)
 {
     yErrorColumn=-1;
     yErrorSymmetric=true;
@@ -1126,8 +1127,8 @@ double JKQTPyGraphErrors::getYErrorL(int i, JKQTPdatastore *ds) const
 
 
 
-JKQTPxyGraphErrors::JKQTPxyGraphErrors():
-    JKQTPgraphErrors()
+JKQTPxyGraphErrors::JKQTPxyGraphErrors(QColor graphColor):
+    JKQTPgraphErrors(graphColor)
 {
     xErrorSymmetric=true;
     yErrorSymmetric=true;
@@ -4216,6 +4217,7 @@ JKQTPbarHorizontalGraph::JKQTPbarHorizontalGraph(JKQtBasePlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         fillColor=parent->getPlotStyle(parentPlotStyle).color();
     }
+    setErrorColorFromGraphColor(color);
 }
 
 
@@ -4236,6 +4238,7 @@ JKQTPbarHorizontalGraph::JKQTPbarHorizontalGraph(JKQtPlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         fillColor=parent->getPlotStyle(parentPlotStyle).color();
     }
+    setErrorColorFromGraphColor(color);
 }
 
 void JKQTPbarHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
@@ -5289,6 +5292,13 @@ bool JKQTPxGraphErrors::errorUsesColumn(int c)
 bool JKQTPgraphErrors::errorUsesColumn(int /*c*/)
 {
     return false;
+}
+
+void JKQTPgraphErrors::setErrorColorFromGraphColor(QColor graphColor)
+{
+    errorColor=graphColor.darker();
+    errorFillColor=graphColor.lighter();
+    //errorColor.setAlphaF(0.5);
 }
 
 bool JKQTPyGraphErrors::errorUsesColumn(int c)
