@@ -1,0 +1,20 @@
+\environment xits-env
+
+\startbuffer[Alpha]
+  ABCDEFGHIJKLMOPQRSTUVWXYZ
+\stopbuffer
+
+\startbuffer[alpha]
+  abcdefghijklmopqrstuvwxyz
+\stopbuffer
+
+\starttext
+
+\startformula
+  \startalign[align=middle]
+    \mathcal{\getbuffer[Alpha]}\NR
+    \mathcal{\getbuffer[alpha]}\NR
+  \stopalign
+\stopformula
+
+\stoptext

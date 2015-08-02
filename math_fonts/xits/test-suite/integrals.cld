@@ -1,0 +1,19 @@
+context.environment({"xits-env"})
+context.starttext()
+
+
+for _,s in next, {"text", "display"} do
+    context.startTEXpage()
+    context.startformula()
+    context([[\%sstyle]], s)
+    for i = 0x222B, 0x2233 do
+        context([[\Umathchar "1"0"%4X\nolimits_{x}^{y}]], i)
+        end
+    for i = 0x2A0B, 0x2A1C do
+        context([[\Umathchar "1"0"%4X\nolimits_{x}^{y}]], i)
+    end
+    context.stopformula()
+    context.stopTEXpage()
+end
+
+context.stoptext()

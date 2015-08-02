@@ -3,7 +3,7 @@ FontName: XITSMath-Bold
 FullName: XITS Math Bold
 FamilyName: XITS Math
 Weight: Bold
-Copyright: Copyright (c) 2001-2011 by the STI Pub Companies, consisting of the American Chemical Society, the American Institute of Physics, the American Mathematical Society, the American Physical Society, Elsevier, Inc., and The Institute of Electrical and Electronic Engineers, Inc.  Portions copyright (c) 1998-2003 by MicroPress, Inc.  Portions copyright (c) 1990 by Elsevier, Inc. Portions copyright (c) 2012 by Khaled Hosny.  All rights reserved. 
+Copyright: Copyright (c) 2001-2011 by the STI Pub Companies, consisting of the American Chemical Society, the American Institute of Physics, the American Mathematical Society, the American Physical Society, Elsevier, Inc., and The Institute of Electrical and Electronic Engineers, Inc.  Portions copyright (c) 1998-2003 by MicroPress, Inc.  Portions copyright (c) 1990 by Elsevier, Inc.  Portions copyright (c) 2009-2012 by Khaled Hosny.  All rights reserved. 
 Version: $version
 ItalicAngle: 0
 UnderlinePosition: -50
@@ -15,7 +15,7 @@ Layer: 0 0 "Back"  1
 Layer: 1 0 "Fore"  0
 XUID: [1021 579 371615373 6116148]
 FSType: 0
-OS2Version: 4
+OS2Version: 0
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: 1232396790
@@ -118,14 +118,13 @@ MATH:MinConnectorOverlap: 50
 Encoding: UnicodeFull
 UnicodeInterp: none
 NameList: AGL without afii
-BeginPrivate: 7
+BeginPrivate: 6
 BlueValues 23 [-19 0 461 473 676 691]
 BlueShift 1 6
 StdHW 4 [90]
 StdVW 4 [88]
 StemSnapH 31 [29 33 38 43 48 52 57 68 73 78]
 StemSnapV 31 [42 48 51 54 62 66 69 73 79 83]
-ForceBold 4 true
 EndPrivate
 BeginChars: 1114325 2149
 

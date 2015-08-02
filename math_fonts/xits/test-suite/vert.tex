@@ -1,0 +1,16 @@
+\environment xits-env
+
+\startbuffer[THEFORMULA]
+   \left\Vert\left\vert \frac12 \right\vert \right\Vert
+   \vert\big\vert\Big\vert\bigg\vert\Bigg\vert
+\stopbuffer
+
+\starttext
+
+\startTEXpage
+  \startformula
+    \getbuffer[THEFORMULA]
+  \stopformula
+\stopTEXpage
+
+\stoptext

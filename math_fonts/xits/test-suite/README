@@ -1,0 +1,17 @@
+This is a set of disorganised test file that I dump here occasionally,
+don't get fooled by the name of this directory.
+
+Files with .tex extensions are ConTeXt files, they usually have 3 modes,
+the default which uses XITS fonts, "modern" which uses Computer Modern
+fonts and "cambria" which uses Cambria fonts, this is useful for comparing
+the output of the three font families. To run, issue:
+
+$ context foo.tex                # XITS mode
+$ context --mode=modern foo.tex  # CM mode
+$ context --mode=cambria foo.tex # Cambria mode
+
+Files with .ltx are LaTeX files and can be run with either LuaTeX or
+XeTeX using LaTeX format, usually to compare the output of both engines:
+
+$ lualatex foo.ltx # LuaTeX engine
+$ xelatex foo.ltx  # XeTeX engine

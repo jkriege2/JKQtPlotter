@@ -1,0 +1,19 @@
+\environment xits-env
+
+\usemodule[fnt-25]
+
+\startbuffer[THEFORMULA]
+   \hat{a}\qquad \widehat{a}\qquad
+   \hat{aaa}\qquad \widehat{aaa}\qquad
+   \hat{aaaaaaaa}\qquad \widehat{aaaaaaaa}
+\stopbuffer
+
+\starttext
+
+$\getbuffer[THEFORMULA]$
+
+\blank
+
+\showmathfontcharacters[][0x2C6,0xFE302]
+
+\stoptext

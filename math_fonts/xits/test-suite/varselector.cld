@@ -1,0 +1,39 @@
+context.environment({'xits-env'})
+context.starttext()
+
+local NC, NR = context.NC, context.NR
+
+local function entry(code)
+    NC() context('U+'..code)
+    NC() context.math('a\\utfchar{"'..code..'}b')
+    NC() context.math('a\\vsone{\\utfchar{"'..code..'}}b')
+    NC() NR()
+end
+
+context.starttabulate { '|Tl|c|c|' }
+    entry('2229')
+    entry('222A')
+    entry('2268')
+    entry('2269')
+    entry('2272')
+    entry('2273')
+    entry('228A')
+    entry('228B')
+    entry('2293')
+    entry('2294')
+    entry('2295')
+    entry('2297')
+    entry('229C')
+    entry('22DA')
+    entry('22DB')
+    entry('2A3C')
+    entry('2A3D')
+    entry('2A9D')
+    entry('2A9E')
+    entry('2AAC')
+    entry('2AAD')
+    entry('2ACB')
+    entry('2ACC')
+context.stoptabulate()
+
+context.stoptext()

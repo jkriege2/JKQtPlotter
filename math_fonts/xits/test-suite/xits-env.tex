@@ -1,0 +1,48 @@
+\startenvironment xits
+
+%\startmode[xits]
+  \setupbodyfont[xits]
+%\stopmode
+
+\startmode[modern]
+  \setupbodyfont[modern]
+\stopmode
+
+\startmode[cambria]
+  \setupbodyfont[cambria]
+\stopmode
+
+\startmode[asana]
+  \setupbodyfont[asana]
+\stopmode
+
+\startmode[euler]
+  \setupbodyfont[euler]
+\stopmode
+
+\startmode[lucida]
+  \setupbodyfont[lucidaot]
+\stopmode
+
+\startmode[debug]
+  \tracingoutput=1
+  \tracingonline=1
+  \showboxdepth=\maxdimen
+  \showboxbreadth=\maxdimen
+\stopmode
+
+\setuplayout
+  [width=fit,
+   height=fit,
+   header=0pt,
+   footer=0pt,
+   leftmargin=0pt,
+   rightmargin=0pt,
+   backspace=2em,
+   topspace=2em]
+
+\setupalign
+  [line]
+
+
+\stopenvironment

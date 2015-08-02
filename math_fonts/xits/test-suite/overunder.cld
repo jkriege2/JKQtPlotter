@@ -1,0 +1,29 @@
+local format = string.format
+
+local accents = {
+    { "23B4", "23B5" },
+    { "23DC", "23DD" },
+    { "23DE", "23DF" },
+    { "23E0", "23E1" },
+}
+
+local function accent(str, bot)
+    if bot then
+        return format([[\Umathaccent bottom "0 "0 "%s ]], str)
+    else
+        return format([[\Umathaccent "0 "0 "%s ]], str)
+    end
+end
+
+context.environment({"xits-env"})
+context.starttext()
+
+for _,a in next, accents do
+    for _,t in next, {"x", "xx", "xxx", "xxxx", "xxxxx", "xxxxxx", "xxxxxxx", "xxxxxxxxxxxxxx"} do
+        context.math(format("%s{%s{%s}}", accent(a[1]), accent(a[2], true), t))
+        context(" ")
+    end
+    context.blank()
+end
+
+context.stoptext()

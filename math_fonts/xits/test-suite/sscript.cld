@@ -1,0 +1,17 @@
+local format, lower = string.format, string.lower
+
+local alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+local styles = { "it", "bi", "rm", "bf" }
+
+context.environment({"xits-env"})
+context.starttext()
+
+for c in alpha:gmatch"." do
+    for _,i in next, styles do
+        context.math(format([[\math%s{%s^1_1}\kern5pt]], i, c))
+        context.math(format([[\math%s{%s^1_1}\kern5pt]], i, lower(c)))
+    end
+    context.blank({"big"})
+end
+
+context.stoptext()

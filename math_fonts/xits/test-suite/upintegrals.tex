@@ -1,0 +1,35 @@
+
+\ctxlua{fonts.otf.features.register_base_substitution('ss08')} % for texlive's context
+\definefontfeature[virtualmath]      [virtualmath][ss08=yes]
+\definefontfeature[math-text]        [virtualmath][mathalternates=yes,ssty=no]
+\definefontfeature[math-script]      [virtualmath][mathalternates=yes,ssty=1,mathsize=yes]
+\definefontfeature[math-scriptscript][virtualmath][mathalternates=yes,ssty=2,mathsize=yes]
+
+\setupbodyfont[xits]
+
+\starttext
+\startbuffer[integrals]
+  \ctxlua {
+  local uchar = unicode.utf8.char
+  for i = 0x222B, 0x2233 do
+    tex.sprint([[\Umathchar"1"0`]]..uchar(i)..[[\nolimits_{x}^{y}]])
+  end
+  for i = 0x2A0B, 0x2A1C do
+    tex.sprint([[\Umathchar"1"0`]]..uchar(i)..[[\nolimits_{x}^{y}]])
+  end
+  }
+\stopbuffer
+
+\startTEXpage
+  \startformula
+    \textstyle\getbuffer[integrals]
+  \stopformula
+\stopTEXpage
+
+\startTEXpage
+  \startformula
+    \getbuffer[integrals]
+  \stopformula
+\stopTEXpage
+
+\stoptext

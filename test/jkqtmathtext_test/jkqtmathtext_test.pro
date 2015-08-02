@@ -1,4 +1,4 @@
-include(xits.pri)
+include(../../math_fonts/xits.pri)
 include(asana.pri)
 
 LIBS +=
