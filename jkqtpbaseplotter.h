@@ -407,7 +407,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          */
         JKQTPPROPERTY(bool, useAntiAliasingForGraphs);
 
-        /** \brief specifies whether to use antialiasing when drawing any text */
+        /** \brief specifies whether to use antialiasing when drawing any text
+        * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
+        *       roughly three-fold speed improvement!
+        */
         JKQTPPROPERTY(bool, useAntiAliasingForText);
 
         /** \brief multiplier which is used for font sizes when the plot is exported/printed */
@@ -1009,6 +1012,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         JKQTPGET_SET_MACRO_I(bool, useAntiAliasingForSystem, update_plot())
         JKQTPGET_SET_MACRO_I(bool, useAntiAliasingForGraphs, update_plot())
+        JKQTPGET_SET_MACRO_I(bool, useAntiAliasingForText, update_plot())
 
         JKQTPGET_SET_MACRO_I(QColor, graphColor, update_plot())
         JKQTPGET_SET_MACRO_I(double, graphWidth, update_plot())

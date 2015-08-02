@@ -1897,6 +1897,9 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPxyGraph, public JKQTPxyGra
          *  \note This function will scale ALL graphs of the parent plot, which were derived from JKQTPbarHorizontalGraph, that match in orientation (as returned by isHorizontal() ).
          */
         virtual void autoscaleBarWidthAndShift(double maxWidth=0.9, double shrinkFactor=0.8);
+        inline void autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth=0.75) {
+            autoscaleBarWidthAndShift(groupWidth, 1);
+        }
 
         virtual bool isHorizontal() const;
 

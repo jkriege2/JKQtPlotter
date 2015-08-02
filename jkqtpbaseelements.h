@@ -195,20 +195,50 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
             } else {
                 return xx/(scaleSign*scale);
             }
-        };
+        }
 
 
         /** \brief clear axis tick labels. This switches back to automatic labels mode for the axis. */
         inline void clearAxisTickLabels() {
             tickLabels.clear();
             update_plot();
-        };
+        }
 
         /** \brief add a new tick label to the axis */
         inline void addAxisTickLabel(double x, QString label) {
             tickLabels.append(qMakePair(x, label));
             update_plot();
-        };
+        }
+
+
+        /** \brief add a new tick label to the axis */
+        inline void addAxisTickLabels(const QVector<double>& x, const QStringList& label) {
+            for (int i=0; i<qMin(x.size(), label.size()); i++) {
+                tickLabels.append(qMakePair(x[i], label[i]));
+            }
+            update_plot();
+        }
+        /** \brief add a new tick label to the axis */
+        inline void addAxisTickLabels(const double* x, const QStringList& label) {
+            for (int i=0; i<label.size(); i++) {
+                tickLabels.append(qMakePair(x[i], label[i]));
+            }
+            update_plot();
+        }
+        /** \brief add a new tick label to the axis */
+        inline void addAxisTickLabels(const QVector<double>& x, const QString* label) {
+            for (int i=0; i<x.size(); i++) {
+                tickLabels.append(qMakePair(x[i], label[i]));
+            }
+            update_plot();
+        }
+        /** \brief add a new tick label to the axis */
+        inline void addAxisTickLabels(const double* x, const QString* label, int items) {
+            for (int i=0; i<items; i++) {
+                tickLabels.append(qMakePair(x[i], label[i]));
+            }
+            update_plot();
+        }
 
         /** \brief returns the size of the left/bottom axis in pixels */
         virtual QSize getSize1(JKQTPEnhancedPainter& painter)=0;
