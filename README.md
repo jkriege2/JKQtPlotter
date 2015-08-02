@@ -9,7 +9,7 @@ This section assembles some simple examples of usage. You can find more (complex
 
 ###Very simple line-graph
 This project (see `./test/jkqtplotter_simpletest/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave).
-The QMake project looks like this:
+The QMake project looks like this (see `./test/jkqtplotter_simpletest/jkqtplotter_simpletest.pro`):
 ```qmake
 # source code for this simple demo
 SOURCES = jkqtplotter_simpletest.cpp 
@@ -25,7 +25,7 @@ TARGET = jkqtplotter_simpletest
 # include JKQtPlotter source code
 include(../../jkqtplotter.pri)
 ```
-And the soruce code of the main application is:
+And the soruce code of the main application is (see `./test/jkqtplotter_simpletest/jkqtplotter_simpletest.cpp`):
 ```c++
 #include <QApplication>
 #include "jkqtplotter.h"
@@ -35,7 +35,8 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
+    // 1. create a plotter window and get a pointer to the internal datastore 
+	//    (for convenience)
     JKQtPlotter plot;
     JKQTPdatastore* ds=plot.getDatastore();
 
@@ -48,11 +49,13 @@ int main(int argc, char* argv[])
         Y<<sin(x);
     }
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
-    //    Note: In this step the data is copied (of not specified otherwise), so you can
-    //          reuse X and Y afterwards!
-    //    the variables columnX and columnY will contain the internal column ID of the newly
-    //    created columns with names "x" and "y" and the (copied) data from X and Y.
+    // 3. make data available to JKQtPlotter by adding it to the internal 
+	//    datastore.
+    //    Note: In this step the data is copied (of not specified otherwise), so
+    //          you can reuse X and Y afterwards!
+    //    The variables columnX and columnY will contain the internal column ID 
+    //    of the newlycreated columns with names "x" and "y" and the (copied) 
+	//    data from X and Y.
     size_t columnX=ds->addCopiedColumn(X, "x");
     size_t columnY=ds->addCopiedColumn(Y, "y");
 
