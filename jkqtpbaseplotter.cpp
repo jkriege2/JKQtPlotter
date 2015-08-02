@@ -950,7 +950,7 @@ void JKQtBasePlotter::plotSystemYAxis(JKQTPEnhancedPainter& painter) {
 
 
 
-JKQtBasePlotter::JKQTPPen JKQtBasePlotter::getPlotStyle(int i){
+JKQtBasePlotter::JKQTPPen JKQtBasePlotter::getPlotStyle(int i) const{
     int colorI=-1;
     int styleI=0;
     for (int k=0; k<=i; k++) {
@@ -1581,8 +1581,8 @@ bool JKQtBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     paintMagnification=1.0;
     gridPrintingCalc();
 
-    double resolution=paintDevice->logicalDpiX();
-    if (printer) resolution=printer->resolution();
+    //double resolution=paintDevice->logicalDpiX();
+    //if (printer) resolution=printer->resolution();
 
     printAspect=gridPrintingSize.height()/gridPrintingSize.width();
     if (printer) printPageSizeMM=printer->pageRect(QPrinter::Millimeter).size();
@@ -3560,7 +3560,7 @@ void JKQtBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
             jkaaot.write(QString("multi-col: graph %1: %2").arg(i).arg(g->get_title()));
 #endif
             if (!g->get_title().isEmpty() && g->get_visible()) {
-                QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->get_title(),painter);//  mt.getSize(painter);
+                //QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->get_title(),painter);//  mt.getSize(painter);
                 double itheight=qMax(key_item_height*kfm.width('X'), key_text_height);
                 QRectF rect(xx, yy+1.5*lineWidthMultiplier, key_line_length*kfm.width('X'), itheight-3.0*lineWidthMultiplier);
                 g->drawKeyMarker(painter, rect);

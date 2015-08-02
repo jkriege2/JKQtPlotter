@@ -223,7 +223,9 @@ QStringList JKQTPimagePlot_getPredefinedPalettes()  {
         sl<<QObject::tr("blue-red");
         //sl<<QObject::tr("");
 
+#ifdef QT_XML_LIB
         int palID=sl.size();
+#endif
         for (int i=0; i<JKQTPimagePlot_palettesSearchPaths.size(); i++) {
             QDir d(JKQTPimagePlot_palettesSearchPaths[i]);
             QStringList nameFilters;
@@ -305,7 +307,9 @@ QStringList JKQTPimagePlot_getPredefinedPalettes()  {
                             qStableSort(pal.begin(), pal.end(), JKQTPimagePlot_QPairCompareFirst<double, QRgb>);
                             JKQTPimagePlot_lutsFromFiles[sl.size()-1]=pal;
                             //qDebug()<<"   added as "<<sl.size()-1;
+#ifdef QT_XML_LIB
                             palID=l.size();
+#endif
                         }
 
                     }

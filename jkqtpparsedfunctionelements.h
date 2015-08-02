@@ -31,6 +31,7 @@
 
 // forward declarations
 class JKQtBasePlotter;
+class JKQtPlotter;
 
 
 struct JKQTPxParsedFunctionLineGraphFunctionData {
@@ -53,9 +54,12 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
 
         /** \brief class constructor */
         JKQTPxParsedFunctionLineGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPxParsedFunctionLineGraph(JKQtPlotter* parent);
+
 
         /** \brief class destructor */
-        ~JKQTPxParsedFunctionLineGraph();
+        virtual ~JKQTPxParsedFunctionLineGraph();
 
         JKQTPGET_SET_MACRO(QList<double>, parameters)
         JKQTPGET_SET_MACRO(QString, function)

@@ -189,7 +189,7 @@ void JKQTPoverlayVerticalRange::draw(JKQTPEnhancedPainter &painter) {
 
     QPointF p21=transform(position2, ymin);
     QPointF p22=transform(position2, ymax);
-    QPointF p23=p2-QPointF(0, (p2.y()-p1.y())*0.1);
+    //QPointF p23=p2-QPointF(0, (p2.y()-p1.y())*0.1);
     painter.save();
     if (fillColor!=QColor(Qt::transparent)) {
         if (inverted) {

@@ -26,6 +26,7 @@
 #include "jkqtptools.h"
 #include "jkqtpimageelements.h"
 #include "jkqtpbaseelements.h"
+#include "jkqtplotter.h"
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
 JKQTPgraph::JKQTPgraph(JKQtBasePlotter* parent):
@@ -35,6 +36,15 @@ JKQTPgraph::JKQTPgraph(JKQtBasePlotter* parent):
     title="";
     visible=true;
     setParent(parent);
+}
+
+JKQTPgraph::JKQTPgraph(JKQtPlotter *parent):
+    QObject(parent->get_plotter())
+{
+    datarange_end=datarange_start=-1;
+    title="";
+    visible=true;
+    setParent(parent->get_plotter());
 }
 
 QPointF JKQTPgraph::transform(const QPointF& x) {
@@ -57,6 +67,11 @@ void JKQTPgraph::setParent(JKQtBasePlotter* parent) {
         yAxis=NULL;
     }
     QObject::setParent(parent);
+}
+
+void JKQTPgraph::setParent(JKQtPlotter *parent)
+{
+    setParent(parent->get_plotter());
 }
 
 QVector<QPointF> JKQTPgraph::transform(const QVector<QPointF>& x) {
@@ -154,6 +169,15 @@ JKQTPxyGraph::JKQTPxyGraph(JKQtBasePlotter* parent):
     xColumn=-1;
     yColumn=-1;
 
+
+}
+
+JKQTPxyGraph::JKQTPxyGraph(JKQtPlotter *parent):
+    JKQTPgraph(parent)
+{
+    sortData=Unsorted;
+    xColumn=-1;
+    yColumn=-1;
 
 }
 
@@ -292,6 +316,77 @@ JKQTPsingleColumnGraph::JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt:
     parentPlotStyle=-1;
 }
 
+
+JKQTPsingleColumnGraph::JKQTPsingleColumnGraph(JKQtPlotter *parent):
+    JKQTPgraph(parent)
+{
+    sortData=Unsorted;
+    dataColumn=-1;
+    color=QColor("red");
+    style=Qt::SolidLine;
+    lineWidth=2;
+    parentPlotStyle=-1;
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+    }
+
+}
+
+JKQTPsingleColumnGraph::JKQTPsingleColumnGraph(int dataColumn, JKQtPlotter *parent):
+    JKQTPgraph(parent)
+{
+    sortData=Unsorted;
+    this->dataColumn=dataColumn;
+    parentPlotStyle=-1;
+    color=QColor("red");
+    style=Qt::SolidLine;
+    lineWidth=2;
+    parentPlotStyle=-1;
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+    }
+}
+
+JKQTPsingleColumnGraph::JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQtPlotter *parent):
+    JKQTPgraph(parent)
+{
+    sortData=Unsorted;
+    this->dataColumn=dataColumn;
+    this->color=color;
+    this->style=style;
+    this->lineWidth=lineWidth;
+    parentPlotStyle=-1;
+}
+
+JKQTPsingleColumnGraph::JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQtPlotter *parent):
+    JKQTPgraph(parent)
+{
+    sortData=Unsorted;
+    this->dataColumn=dataColumn;
+    this->color=color;
+    this->style=style;
+    this->lineWidth=2.0;
+    parentPlotStyle=-1;
+}
+
+JKQTPsingleColumnGraph::JKQTPsingleColumnGraph(int dataColumn, QColor color, JKQtPlotter *parent):
+    JKQTPgraph(parent)
+{
+    sortData=Unsorted;
+    this->dataColumn=dataColumn;
+    this->color=color;
+    this->style=Qt::SolidLine;
+    this->lineWidth=2.0;
+    parentPlotStyle=-1;
+}
 QColor JKQTPsingleColumnGraph::getKeyLabelColor()
 {
     return color;
@@ -400,6 +495,33 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, doub
     drawBaseline=true;
 }
 
+
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQtPlotter *parent):
+    JKQTPsingleColumnGraph(parent)
+{
+    baseline=0;
+    yPeaks=true;
+    peakHeight=1;
+    drawBaseline=true;
+}
+
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtPlotter *parent):
+    JKQTPsingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
+{
+    yPeaks=true;
+    this->baseline=baseline;
+    this->peakHeight=peakHeight;
+    drawBaseline=true;
+}
+
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtPlotter *parent):
+    JKQTPsingleColumnGraph(dataColumn, parent)
+{
+    yPeaks=true;
+    this->baseline=baseline;
+    this->peakHeight=peakHeight;
+    drawBaseline=true;
+}
 
 bool JKQTPPeakStreamGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {
@@ -682,9 +804,9 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
 
             // x-errorpolygons
             if (/*pastFirst &&*/ (xErrorStyle==JKQTPerrorPolygons || xErrorStyle==JKQTPerrorBarsPolygons || xErrorStyle==JKQTPerrorSimpleBarsPolygons)) {
-                double xl1m=xmold;
-                double xl1p=xpold;
-                double yl1=yold;
+                //double xl1m=xmold;
+                //double xl1p=xpold;
+                //double yl1=yold;
                 double xl2m=xAxis->x2p(xv+xrelshift*deltax-xl);
                 double xl2p=xAxis->x2p(xv+xrelshift*deltax+xe);
                 double yl2=y;
@@ -703,9 +825,9 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
 
             // y-errorpolygons
             if (/*pastFirst &&*/ (yErrorStyle==JKQTPerrorPolygons || yErrorStyle==JKQTPerrorBarsPolygons || yErrorStyle==JKQTPerrorSimpleBarsPolygons)) {
-                double yl1m=ymold;
-                double yl1p=ypold;
-                double xl1=xold;
+                //double yl1m=ymold;
+                //double yl1p=ypold;
+                //double xl1=xold;
                 double yl2m=yAxis->x2p(yv+yrelshift*deltay-yl);
                 double yl2p=yAxis->x2p(yv+yrelshift*deltay+ye);
                 double xl2=x;
@@ -1067,6 +1189,30 @@ double JKQTPxyGraphErrors::getYErrorL(int i, JKQTPdatastore *ds) const
 
 
 
+JKQTPxyLineGraph::JKQTPxyLineGraph(JKQtPlotter* parent):
+    JKQTPxyGraph(parent)
+{
+    sortData=JKQTPxyLineGraph::Unsorted;
+    drawSelectionLine=false;
+    selectionLineColor=Qt::transparent;
+    color=QColor("red");
+    style=Qt::SolidLine;
+    lineWidth=2;
+    parentPlotStyle=-1;
+    symbolSize=12;
+    symbolWidth=1;
+    symbol=JKQTPnoSymbol;
+    drawLine=true;
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+    }
+    fillColor=color;
+}
+
 JKQTPxyLineGraph::JKQTPxyLineGraph(JKQtBasePlotter* parent):
     JKQTPxyGraph(parent)
 {
@@ -1141,9 +1287,9 @@ void JKQTPxyLineGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imax<0) imax=0;
 
     //qDebug()<<"JKQTPxyLineGraph::draw(): "<<3<<" imin="<<imin<<" imax="<<imax;
-    double xold=-1;
-    double yold=-1;
-    bool first=false;
+    //double xold=-1;
+    //double yold=-1;
+    //bool first=false;
     //QVector<QLineF> lines;
     QPolygonF linesP;
     intSortData();
@@ -1173,9 +1319,9 @@ void JKQTPxyLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 linesP<<QPointF(x,y);
 
             }
-            xold=x;
-            yold=y;
-            first=true;
+//            xold=x;
+//            yold=y;
+//            first=true;
         }
     }
     //qDebug()<<"JKQTPxyLineGraph::draw(): "<<4<<" lines="<<lines.size();
@@ -1348,6 +1494,19 @@ JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* pare
     }
 }
 
+JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent):
+    JKQTPxyGraph(parent)
+{
+    baseline=0;
+    color=QColor("red");
+    lineWidth=3;
+    parentPlotStyle=-1;
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        color=parent->getPlotStyle(parentPlotStyle).color();
+    }
+}
 void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesHorizontalGraph::draw");
@@ -1383,20 +1542,20 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imin<0) imin=0;
     if (imax<0) imax=0;
 
-    double xold=-1;
-    double yold=-1;
+    //double xold=-1;
+    //double yold=-1;
     double x0=xAxis->x2p(baseline);
     if (parent->getXAxis()->isLogAxis()) {
         if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
         else x0=xAxis->x2p(parent->getXAxis()->getMin());
     }
-    double y0=yAxis->x2p(baseline);
-    if (parent->getYAxis()->isLogAxis()) {
-        y0=yAxis->x2p(parent->getYAxis()->getMin());
-        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=yAxis->x2p(baseline);
-        else y0=yAxis->x2p(parent->getYAxis()->getMin());
-    }
-    bool first=false;
+//    double y0=yAxis->x2p(baseline);
+//    if (parent->getYAxis()->isLogAxis()) {
+//        y0=yAxis->x2p(parent->getYAxis()->getMin());
+//        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=yAxis->x2p(baseline);
+//        else y0=yAxis->x2p(parent->getYAxis()->getMin());
+//    }
+    //bool first=false;
     QVector<QLineF> lines;
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
@@ -1410,9 +1569,9 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
             lines.append(QLineF(x0, y, x, y));
 
-            xold=x;
-            yold=y;
-            first=true;
+//            xold=x;
+//            yold=y;
+            //first=true;
         }
     }
     painter.setPen(p);
@@ -1456,6 +1615,12 @@ JKQTPimpulsesVerticalGraph::JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent):
 {
 }
 
+JKQTPimpulsesVerticalGraph::JKQTPimpulsesVerticalGraph(JKQtPlotter *parent):
+    JKQTPimpulsesHorizontalGraph(parent)
+{
+
+}
+
 void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesVerticalGraph::draw");
@@ -1491,14 +1656,14 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imin<0) imin=0;
     if (imax<0) imax=0;
 
-    double xold=-1;
-    double yold=-1;
-    bool first=false;
-    double x0=xAxis->x2p(baseline);
-    if (parent->getXAxis()->isLogAxis()) {
-        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
-        else x0=xAxis->x2p(parent->getXAxis()->getMin());
-    }
+    //double xold=-1;
+    //double yold=-1;
+    //bool first=false;
+//    double x0=xAxis->x2p(baseline);
+//    if (parent->getXAxis()->isLogAxis()) {
+//        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
+//        else x0=xAxis->x2p(parent->getXAxis()->getMin());
+//    }
     double y0=yAxis->x2p(baseline);
     if (parent->getYAxis()->isLogAxis()) {
         y0=yAxis->x2p(parent->getYAxis()->getMin());
@@ -1518,9 +1683,9 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
             lines.append(QLineF(x, y0, x, y));
 
-            xold=x;
-            yold=y;
-            first=true;
+            //xold=x;
+            //yold=y;
+            //first=true;
         }
     }
     painter.setPen(p);
@@ -1549,6 +1714,29 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 JKQTPfilledCurveXGraph::JKQTPfilledCurveXGraph(JKQtBasePlotter* parent):
+    JKQTPxyGraph(parent)
+{
+    baseline=0.0;
+    drawSelectionLine=false;
+    selectionLineColor=Qt::transparent;
+    color=QColor("red");
+    fillColor=color.lighter();
+    style=Qt::SolidLine;
+    lineWidth=2;
+    parentPlotStyle=-1;
+    drawLine=true;
+    fillStyle=Qt::SolidPattern;
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+        fillColor=color.lighter();
+    }
+}
+
+JKQTPfilledCurveXGraph::JKQTPfilledCurveXGraph(JKQtPlotter *parent):
     JKQTPxyGraph(parent)
 {
     baseline=0.0;
@@ -1615,12 +1803,12 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath pl, pf;
 
     double xold=-1;
-    double yold=-1;
-    double x0=xAxis->x2p(baseline);
-    if (parent->getXAxis()->isLogAxis()) {
-        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
-        else x0=xAxis->x2p(parent->getXAxis()->getMin());
-    }
+    //double yold=-1;
+//    double x0=xAxis->x2p(baseline);
+//    if (parent->getXAxis()->isLogAxis()) {
+//        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
+//        else x0=xAxis->x2p(parent->getXAxis()->getMin());
+//    }
     double y0=yAxis->x2p(baseline);
     if (parent->getYAxis()->isLogAxis()) {
         y0=yAxis->x2p(parent->getYAxis()->getMin());
@@ -1643,12 +1831,12 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
                     pf.lineTo(x, y);
                     if (drawLine) pl.lineTo(x, y);
                     xold=x;
-                    yold=y;
+                    //yold=y;
                 } else if (xok&&!yok){
                     pf.lineTo(x, y0);
                     if (drawLine) pl.lineTo(x, y0);
                     xold=x;
-                    yold=y0;
+                    //yold=y0;
                 }
             } else {
                 if (xok&&yok) {
@@ -1656,13 +1844,13 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
                     pf.moveTo(x, y0);
                     pf.lineTo(x, y);
                     xold=x;
-                    yold=y;
+                    //yold=y;
                     first=false;
                 } else if (xok&&!yok) {
                     if (drawLine) pl.moveTo(x,y0);
                     pf.moveTo(x, y0);
                     xold=x;
-                    yold=y0;
+                    //yold=y0;
                     first=false;
                 }
             }
@@ -1740,6 +1928,12 @@ JKQTPfilledCurveYGraph::JKQTPfilledCurveYGraph(JKQtBasePlotter* parent):
 {
 }
 
+JKQTPfilledCurveYGraph::JKQTPfilledCurveYGraph(JKQtPlotter *parent):
+    JKQTPfilledCurveXGraph(parent)
+{
+
+}
+
 void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPfilledCurveYGraph::draw");
@@ -1784,7 +1978,7 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPainterPath pl, pf;
 
-    double xold=-1;
+    //double xold=-1;
     double yold=-1;
     double x0=xAxis->x2p(baseline);
     if (parent->getXAxis()->isLogAxis()) {
@@ -1812,12 +2006,12 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (xok&&yok) {
                     pf.lineTo(x, y);
                     if (drawLine) pl.lineTo(x, y);
-                    xold=x;
+                    //xold=x;
                     yold=y;
                 } else if (!xok&&yok){
                     pf.lineTo(x0, y);
                     if (drawLine) pl.lineTo(x0, y);
-                    xold=x0;
+                    //xold=x0;
                     yold=y;
                 }
             } else {
@@ -1825,13 +2019,13 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
                     if (drawLine) pl.moveTo(x,y);
                     pf.moveTo(x, y0);
                     pf.lineTo(x, y);
-                    xold=x;
+                    //xold=x;
                     yold=y;
                     first=false;
                 } else if (!xok&&yok) {
                     if (drawLine) pl.moveTo(x0,y);
                     pf.moveTo(x0, y);
-                    xold=x0;
+                    //xold=x0;
                     yold=y;
                     first=false;
                 }
@@ -1907,6 +2101,37 @@ JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent):
 
 }
 
+
+JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtPlotter* parent):
+    JKQTPgraph(parent)
+{
+    posColumn=-1;
+    medianColumn=-1;
+    meanColumn=-1;
+    minColumn=-1;
+    maxColumn=-1;
+    percentile25Column=-1;
+    percentile75Column=-1;
+    color=QColor("red");
+    fillColor=QColor("white");
+    fillStyle=Qt::SolidPattern;
+    whiskerStyle=Qt::SolidLine;
+    lineWidth=1;
+    boxWidth=0.4;
+    meanSymbol=JKQTPplus;
+    meanSymbolWidth=1;
+    meanSymbolSize=12;
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        whiskerStyle=parent->getPlotStyle(parentPlotStyle).style();
+    }
+
+}
+
+
 void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotVerticalGraph::draw");
@@ -1951,7 +2176,7 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-    bool first=false;
+    //bool first=false;
 
     // 1. step find width of boxplots:
     double boxwidth_real=0;
@@ -2048,7 +2273,7 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (lines_pw.size()>0) painter.drawLines(lines_pw);
             painter.restore();
 
-            first=true;
+            //first=true;
         }
     }
     painter.restore();
@@ -2425,7 +2650,7 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     // 2. plot:
     painter.save();
 
-    bool first=false;
+    //bool first=false;
     for (int i=imin; i<imax; i++) {
         double yv=datastore->get(posColumn,i);
         double p25v=datastore->get(percentile25Column,i);
@@ -2499,7 +2724,7 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 plotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
             }
 
-            first=true;
+            //first=true;
             painter.setPen(p);
             if (lines_p.size()>0) painter.drawLines(lines_p);
             painter.setPen(pw);
@@ -2565,6 +2790,36 @@ JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtBasePlotter* parent
 
 }
 
+JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtPlotter* parent):
+    JKQTPgraph(parent)
+{
+    pos=0;
+    median=0;
+    mean=0;
+    min=-1;
+    max=1;
+    drawMean=true;
+    drawMinMax=true;
+    percentile25=-0.75;
+    percentile75=0.75;
+    color=QColor("red");
+    fillColor=QColor("white");
+    fillStyle=Qt::SolidPattern;
+    whiskerStyle=Qt::SolidLine;
+    lineWidth=1;
+    boxWidth=0.4;
+    meanSymbol=JKQTPplus;
+    meanSymbolWidth=1;
+    meanSymbolSize=12;
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        whiskerStyle=parent->getPlotStyle(parentPlotStyle).style();
+    }
+
+}
 void JKQTPboxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotVerticalElement::draw");
@@ -3019,6 +3274,55 @@ JKQTPxFunctionLineGraph::JKQTPxFunctionLineGraph(JKQtBasePlotter* parent):
     errorFillColor.setAlphaF(0.5);
 }
 
+JKQTPxFunctionLineGraph::JKQTPxFunctionLineGraph(JKQtPlotter* parent):
+    JKQTPgraph(parent)
+{
+    color=QColor("red");
+    fillColor=color.lighter();
+    style=Qt::SolidLine;
+    lineWidth=2;
+    fillStyle=Qt::SolidPattern;
+    drawLine=true;
+    fillCurve=false;
+    plotFunction=NULL;
+    params=NULL;
+    minSamples=10;
+    maxRefinementDegree=7;
+    slopeTolerance=0.005;
+    minPixelPerSample=32;
+    plotRefinement=true;
+    displaySamplePoints=false;
+    data=NULL;
+
+    drawErrorPolygons=false;
+    drawErrorLines=false;
+    errorPlotFunction=NULL;
+    errorParams=NULL;
+    errorColor=color.lighter();
+    errorFillColor=color.lighter();
+    errorStyle=Qt::SolidLine;
+    errorLineWidth=1;
+    errorFillStyle=Qt::SolidPattern;
+
+    parameterColumn=-1;
+    errorParameterColumn=-1;
+
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=color.lighter();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+        errorColor=color.lighter();
+        errorFillColor=color.lighter();
+        errorStyle=style;
+    }
+    fillColor.setAlphaF(0.5);
+    errorFillColor.setAlphaF(0.5);
+}
+
+
 JKQTPxFunctionLineGraph::~JKQTPxFunctionLineGraph() {
     clearData();
 }
@@ -3235,13 +3539,13 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     eb.setStyle(errorFillStyle);
 
 
-    double xold=-1;
-    double yold=-1;
-    double ypeold=-1;
-    double ymeold=-1;
+//    double xold=-1;
+//    double yold=-1;
+//    double ypeold=-1;
+//    double ymeold=-1;
 
-    double x0=xAxis->x2p(0);
-    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
+//    double x0=xAxis->x2p(0);
+//    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
     double y0=yAxis->x2p(0);
     if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     bool first=false;
@@ -3294,10 +3598,10 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 errorLineBottom<<QPointF(x, yme);
             }
 
-            xold=x;
-            yold=y;
-            ypeold=ype;
-            ymeold=yme;
+//            xold=x;
+//            yold=y;
+//            ypeold=ype;
+//            ymeold=yme;
             first=true;
         }
         d=d->next;
@@ -3425,12 +3729,11 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
     double x0=xAxis->x2p(0);
     if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-    double y0=yAxis->x2p(0);
-    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+//    double y0=yAxis->x2p(0);
+//    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     bool first=false;
     doublePair* d=data;
-    QPainterPath pa, pfill;
-    QPainterPath pel, pef;
+
     while (d!=NULL) {
         double yv=d->x;
         double xv=d->f;
@@ -3600,6 +3903,29 @@ JKQTPstepHorizontalGraph::JKQTPstepHorizontalGraph(JKQtBasePlotter* parent):
 }
 
 
+JKQTPstepHorizontalGraph::JKQTPstepHorizontalGraph(JKQtPlotter* parent):
+    JKQTPxyGraph(parent)
+{
+    color=QColor("red");
+    fillColor=color.lighter();
+    style=Qt::SolidLine;
+    lineWidth=2;
+    fillStyle=Qt::SolidPattern;
+    drawLine=true;
+    fillCurve=true;
+    valuesCentered=false;
+
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=color.lighter();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+    }
+}
+
+
 void JKQTPstepHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
@@ -3670,12 +3996,12 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     double xold=-1;
     double yold=-1;
-    double xstart=-1;
-    double ystart=-1;
+//    double xstart=-1;
+//    double ystart=-1;
     double x0=xAxis->x2p(0);
     if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-    double y0=yAxis->x2p(0);
-    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+//    double y0=yAxis->x2p(0);
+//    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     bool subsequentItem=false;
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
@@ -3716,8 +4042,8 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (drawLine) pl.moveTo(x,y);
                 pf.moveTo(x0, y);
                 pf.lineTo(x, y);
-                xstart=x;
-                ystart=y0;
+                //xstart=x;
+                //ystart=y0;
             }
             xold=x;
             yold=y;
@@ -3797,8 +4123,8 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     double xold=-1;
     double yold=-1;
-    double x0=xAxis->x2p(0);
-    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
+//    double x0=xAxis->x2p(0);
+//    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
     double y0=yAxis->x2p(0);
     if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     bool first=false;
@@ -3893,6 +4219,25 @@ JKQTPbarHorizontalGraph::JKQTPbarHorizontalGraph(JKQtBasePlotter* parent):
 }
 
 
+JKQTPbarHorizontalGraph::JKQTPbarHorizontalGraph(JKQtPlotter* parent):
+    JKQTPxyGraph(parent), JKQTPxyGraphErrors()
+{
+    baseline=0.0;
+    color=QColor("black");
+    fillColor=QColor("red");
+    style=Qt::SolidLine;
+    lineWidth=1;
+    fillStyle=Qt::SolidPattern;
+    width=0.9;
+    shift=0;
+
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        fillColor=parent->getPlotStyle(parentPlotStyle).color();
+    }
+}
+
 void JKQTPbarHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
@@ -3952,8 +4297,8 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imax<0) imax=0;
     painter.save();
 
-    double x0=xAxis->x2p(0);
-    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
+//    double x0=xAxis->x2p(0);
+//    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
     double y0=yAxis->x2p(0);
     if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     double delta=1;
@@ -4187,8 +4532,8 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     double x0=xAxis->x2p(0);
     if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-    double y0=yAxis->x2p(0);
-    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+//    double y0=yAxis->x2p(0);
+//    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     double delta=1;
     double deltap=0;
     double deltam=0;
@@ -4385,6 +4730,41 @@ JKQTPhorizontalRange::JKQTPhorizontalRange(JKQtBasePlotter* parent):
     fillRange=true;
 }
 
+
+JKQTPhorizontalRange::JKQTPhorizontalRange(JKQtPlotter* parent):
+    JKQTPgraph(parent)
+{
+    color=QColor("red").darker();
+    fillColor=QColor("red").lighter();
+    style=Qt::DotLine;
+    lineWidth=1;
+    fillStyle=Qt::SolidPattern;
+    centerColor=QColor("red");
+    centerStyle=Qt::SolidLine;
+    centerLineWidth=2;
+    sizeMin=0;
+    sizeMax=1;
+    unlimitedSizeMin=true;
+    unlimitedSizeMax=true;
+    invertedRange=false;
+
+
+
+    if (parent) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        centerColor=parent->getPlotStyle(parentPlotStyle).color();
+        color=centerColor.darker();
+        fillColor=centerColor.lighter();
+    }
+    fillColor.setAlphaF(0.5);
+
+    rangeMin=rangeMax=0;
+    rangeCenter=0;
+    plotCenterLine=true;
+    plotRange=true;
+    plotRangeLines=true;
+    fillRange=true;
+}
 void JKQTPhorizontalRange::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPhorizontalRange::draw");
@@ -4501,6 +4881,11 @@ void JKQTPhorizontalRange::setDrawCenterLineOnly()
 
 
 JKQTPverticalRange::JKQTPverticalRange(JKQtBasePlotter* parent):
+    JKQTPhorizontalRange(parent)
+{
+}
+
+JKQTPverticalRange::JKQTPverticalRange(JKQtPlotter* parent):
     JKQTPhorizontalRange(parent)
 {
 }
@@ -4960,6 +5345,23 @@ JKQTPxyParametrizedScatterGraph::JKQTPxyParametrizedScatterGraph(JKQtBasePlotter
     gridSymbolFractionSize=0.9;
 }
 
+JKQTPxyParametrizedScatterGraph::JKQTPxyParametrizedScatterGraph(JKQtPlotter *parent):
+    JKQTPxyLineGraph(parent),
+    JKQTPColorPaletteTools(parent->get_plotter())
+{
+    sizeColumn=-1;
+    colorColumn=-1;
+    symbolColumn=-1;
+    palette=JKQTPMathImageMATLAB;
+    colorColumnContainsRGB=false;
+    symbol=JKQTPfilledCircle;
+    drawLine=false;
+
+    gridModeForSymbolSize=false;
+    gridDeltaX=1;
+    gridDeltaY=1;
+    gridSymbolFractionSize=0.9;
+}
 void JKQTPxyParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 {
 #ifdef JKQTBP_AUTOTIMER

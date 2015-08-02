@@ -42,6 +42,7 @@
 
 // forward declarations
 class JKQtBasePlotter;
+class JKQtPlotter;
 class JKQTPcoordinateAxis;
 class JKQTPdatastore;
 //class JKQTPColorPaletteTools;
@@ -67,10 +68,12 @@ class LIB_EXPORT JKQTPgraph: public QObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPgraph(JKQtBasePlotter* parent=NULL);
+        explicit JKQTPgraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        explicit JKQTPgraph(JKQtPlotter* parent);
 
         /** \brief default wirtual destructor */
-        virtual ~JKQTPgraph() {};
+        inline virtual ~JKQTPgraph() {}
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter)=0;
@@ -96,9 +99,11 @@ class LIB_EXPORT JKQTPgraph: public QObject {
         JKQTPGET_SET_MACRO(bool, visible)
 
         /** \brief returns the parent painter class */
-        inline JKQtBasePlotter* getParent() { return parent; };
+        inline JKQtBasePlotter* getParent() { return parent; }
         /** \brief sets the parent painter class */
         virtual void setParent(JKQtBasePlotter* parent);
+        /** \brief sets the parent painter class */
+        virtual void setParent(JKQtPlotter* parent);
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -124,13 +129,13 @@ class LIB_EXPORT JKQTPgraph: public QObject {
          * By default this function does nothing. But children of this class may overwrite it to implement
          * drawing error indicators.
          */
-        virtual void drawErrorsBefore(JKQTPEnhancedPainter& /*painter*/) {};
+        inline virtual void drawErrorsBefore(JKQTPEnhancedPainter& /*painter*/) {}
         /** \brief this function is used to plot error inidcators after plotting the graphs.
          *
          * By default this function does nothing. But children of this class may overwrite it to implement
          * drawing error indicators.
          */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& /*painter*/) {};
+        inline virtual void drawErrorsAfter(JKQTPEnhancedPainter& /*painter*/) {}
 
 
 
@@ -143,11 +148,11 @@ class LIB_EXPORT JKQTPgraph: public QObject {
         /** \brief tool routine that transforms a QPointF according to the parent's transformation rules */
         inline QPointF transform(double x, double y) {
             return transform(QPointF(x,y));
-        };
+        }
         /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules */
         inline QPointF backTransform(double x, double y) {
             return backTransform(QPointF(x,y));
-        };
+        }
         /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules */
         QVector<QPointF> transform(const QVector<QPointF>& x);
 
@@ -208,6 +213,8 @@ class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
 
         /** \brief class constructor */
         JKQTPxyGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPxyGraph(JKQtPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -267,6 +274,11 @@ class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
         JKQTPsingleColumnGraph(JKQtBasePlotter* parent=NULL);
         JKQTPsingleColumnGraph(int dataColumn, JKQtBasePlotter* parent=NULL);
         JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style=Qt::SolidLine, double lineWidth=2.0, JKQtBasePlotter* parent=NULL);
+        JKQTPsingleColumnGraph(JKQtPlotter* parent);
+        JKQTPsingleColumnGraph(int dataColumn, JKQtPlotter* parent);
+        JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQtPlotter* parent);
+        JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQtPlotter* parent);
+        JKQTPsingleColumnGraph(int dataColumn, QColor color, JKQtPlotter* parent);
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor();
 
@@ -328,6 +340,9 @@ class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPsingleColumnGraph {
         JKQTPPeakStreamGraph(JKQtBasePlotter* parent=NULL);
         JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtBasePlotter* parent=NULL);
         JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtBasePlotter* parent=NULL);
+         JKQTPPeakStreamGraph(JKQtPlotter* parent);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtPlotter* parent);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -446,13 +461,13 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
         JKQTPGET_MACRO(int, xErrorColumn)
         JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, xErrorStyle)
 
-        void set_xErrorColumn(int __value) {
+        inline  void set_xErrorColumn(int __value) {
             if (this->xErrorColumn != __value) { \
                 this->xErrorColumn = __value; \
                 if (xErrorColumn>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars; \
             } \
         }
-        void set_xErrorColumnLower(int __value) {
+        inline void set_xErrorColumnLower(int __value) {
             if (this->xErrorColumnLower != __value) { \
                 this->xErrorColumnLower = __value; \
                 if (xErrorColumnLower>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars; \
@@ -499,13 +514,13 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
         /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c);
 
-        void set_yErrorColumn(int __value) {
+        inline void set_yErrorColumn(int __value) {
             if (this->yErrorColumn != __value) { \
                 this->yErrorColumn = __value; \
                 if (yErrorColumn>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars; \
             } \
         }
-        void set_yErrorColumnLower(int __value) {
+        inline void set_yErrorColumnLower(int __value) {
             if (this->yErrorColumnLower != __value) { \
                 this->yErrorColumnLower = __value; \
                 if (yErrorColumnLower>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars; \
@@ -550,25 +565,25 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
         /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c);
 
-        void set_xErrorColumn(int __value) {
+        inline void set_xErrorColumn(int __value) {
             if (this->xErrorColumn != __value) { \
                 this->xErrorColumn = __value; \
                 if (xErrorColumn>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars; \
             } \
         }
-        void set_xErrorColumnLower(int __value) {
+        inline void set_xErrorColumnLower(int __value) {
             if (this->xErrorColumnLower != __value) { \
                 this->xErrorColumnLower = __value; \
                 if (xErrorColumnLower>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars; \
             } \
         }
-        void set_yErrorColumn(int __value) {
+        inline void set_yErrorColumn(int __value) {
             if (this->yErrorColumn != __value) { \
                 this->yErrorColumn = __value; \
                 if (yErrorColumn>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars; \
             } \
         }
-        void set_yErrorColumnLower(int __value) {
+        inline void set_yErrorColumnLower(int __value) {
             if (this->yErrorColumnLower != __value) { \
                 this->yErrorColumnLower = __value; \
                 if (yErrorColumnLower>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars; \
@@ -617,6 +632,8 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
     public:
         /** \brief class constructor */
         JKQTPxyLineGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPxyLineGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -689,6 +706,8 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
     public:
         /** \brief class constructor */
         JKQTPxyParametrizedScatterGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPxyParametrizedScatterGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -700,10 +719,10 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         JKQTPGET_SET_MACRO(int, colorColumn)
         JKQTPGET_SET_MACRO(int, symbolColumn)
         JKQTPGET_SET_MACRO(bool, colorColumnContainsRGB)
-        JKQTPGET_SET_MACRO(bool, gridModeForSymbolSize);
-        JKQTPGET_SET_MACRO(double, gridDeltaX);
-        JKQTPGET_SET_MACRO(double, gridDeltaY);
-        JKQTPGET_SET_MACRO(double, gridSymbolFractionSize);
+        JKQTPGET_SET_MACRO(bool, gridModeForSymbolSize)
+        JKQTPGET_SET_MACRO(double, gridDeltaX)
+        JKQTPGET_SET_MACRO(double, gridDeltaY)
+        JKQTPGET_SET_MACRO(double, gridSymbolFractionSize)
 
         virtual void setParent(JKQtBasePlotter* parent);
 
@@ -777,9 +796,13 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=NULL):
             JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
-        {   };
+        {   }
+        /** \brief class constructor */
+        inline JKQTPxyLineErrorGraph(JKQtPlotter* parent=NULL):
+            JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
+        {   }
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -796,7 +819,7 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter) {
+        inline virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter) {
             intSortData();
             if (sortData==JKQTPxyLineGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
             else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
@@ -813,7 +836,10 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
 class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrizedScatterGraph, public JKQTPxyGraphErrors {
         Q_OBJECT
     public:
-        JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=NULL):
+            JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
+        {   }
+        inline JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent=NULL):
             JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
         {   }
 
@@ -833,11 +859,11 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter) {
+        inline virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter) {
             intSortData();
             if (sortData==JKQTPxyLineGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
             else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
-        };
+        }
 
         /** \brief this function can be used to set the color of the error indicators automatically
          *
@@ -857,6 +883,8 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
     public:
         /** \brief class constructor */
         JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -895,7 +923,11 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=NULL):
+            JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
+        {
+        }
+        inline JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
         {
         }
@@ -904,12 +936,12 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
+        inline virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
             if (sortData==JKQTPxyLineGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
             else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
             //plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-        };
+        }
 
 };
 
@@ -926,6 +958,8 @@ class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph
     public:
         /** \brief class constructor */
         JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPimpulsesVerticalGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -942,7 +976,12 @@ class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGr
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter* parent=NULL):
+            JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
+        {
+        }
+        /** \brief class constructor */
+        inline JKQTPimpulsesVerticalErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
         {
         }
@@ -951,12 +990,12 @@ class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGr
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
+        inline virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
             if (sortData==JKQTPxyLineGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
             else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
             //plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-        };
+        }
 
 };
 
@@ -976,6 +1015,8 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
     public:
         /** \brief class constructor */
         JKQTPfilledCurveXGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPfilledCurveXGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1035,7 +1076,12 @@ class LIB_EXPORT JKQTPfilledCurveXErrorGraph: public JKQTPfilledCurveXGraph, pub
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveXErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPfilledCurveXErrorGraph(JKQtBasePlotter* parent=NULL):
+            JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
+        {
+        }
+        /** \brief class constructor */
+        inline JKQTPfilledCurveXErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
         {
         }
@@ -1068,6 +1114,8 @@ class LIB_EXPORT JKQTPfilledCurveYGraph: public JKQTPfilledCurveXGraph {
     public:
         /** \brief class constructor */
         JKQTPfilledCurveYGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPfilledCurveYGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1084,7 +1132,11 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveYErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPfilledCurveYErrorGraph(JKQtBasePlotter* parent=NULL):
+            JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
+        {
+        }
+        inline JKQTPfilledCurveYErrorGraph(JKQtPlotter* parent=NULL):
             JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
         {
         }
@@ -1093,12 +1145,12 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
+        inline virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
             //plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
             if (sortData==JKQTPxyLineGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
             else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
-        };
+        }
 
 };
 
@@ -1126,6 +1178,8 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
 
         /** \brief class constructor */
         JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPboxplotVerticalGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1238,10 +1292,14 @@ class LIB_EXPORT JKQTPboxplotHorizontalGraph: public JKQTPboxplotVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPboxplotHorizontalGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPboxplotHorizontalGraph(JKQtBasePlotter* parent=NULL):
             JKQTPboxplotVerticalGraph(parent)
         {
-        };
+        }
+        inline JKQTPboxplotHorizontalGraph(JKQtPlotter* parent=NULL):
+            JKQTPboxplotVerticalGraph(parent)
+        {
+        }
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1282,6 +1340,8 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
     public:
         /** \brief class constructor */
         JKQTPboxplotVerticalElement(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPboxplotVerticalElement(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1384,10 +1444,15 @@ class LIB_EXPORT JKQTPboxplotHorizontalElement: public JKQTPboxplotVerticalEleme
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPboxplotHorizontalElement(JKQtBasePlotter* parent=NULL):
+        inline JKQTPboxplotHorizontalElement(JKQtBasePlotter* parent=NULL):
             JKQTPboxplotVerticalElement(parent)
         {
-        };
+        }
+        /** \brief class constructor */
+        inline JKQTPboxplotHorizontalElement(JKQtPlotter* parent=NULL):
+            JKQTPboxplotVerticalElement(parent)
+        {
+        }
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1451,8 +1516,11 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         /** \brief class constructor */
         JKQTPxFunctionLineGraph(JKQtBasePlotter* parent=NULL);
 
+        /** \brief class constructor */
+        JKQTPxFunctionLineGraph(JKQtPlotter* parent=NULL);
+
         /** \brief class destructor */
-        ~JKQTPxFunctionLineGraph();
+        virtual ~JKQTPxFunctionLineGraph();
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1466,10 +1534,10 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
          * This functions returns 0 for both parameters, so that the plotter uses the predefined
          * min and max values.
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) { smallestGreaterZero=minx=maxx=0; return false; };
+        inline virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) { smallestGreaterZero=minx=maxx=0; return false; }
         /** \brief get the maximum and minimum y-value of the graph
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) { smallestGreaterZero=miny=maxy=0; return false; };
+        inline virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) { smallestGreaterZero=miny=maxy=0; return false; }
 
         /** \brief clear the data sampled from the function. */
         void clearData();
@@ -1634,7 +1702,9 @@ class LIB_EXPORT JKQTPyFunctionLineGraph: public JKQTPxFunctionLineGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=NULL):JKQTPxFunctionLineGraph(parent) {};
+        inline JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=NULL):JKQTPxFunctionLineGraph(parent) {}
+        /** \brief class constructor */
+        inline JKQTPyFunctionLineGraph(JKQtPlotter* parent=NULL):JKQTPxFunctionLineGraph(parent) {}
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1675,6 +1745,8 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
     public:
         /** \brief class constructor */
         JKQTPstepHorizontalGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPstepHorizontalGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1741,7 +1813,9 @@ class LIB_EXPORT JKQTPstepVerticalGraph: public JKQTPstepHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPstepVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPstepHorizontalGraph(parent) {};
+        inline JKQTPstepVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPstepHorizontalGraph(parent) {}
+        /** \brief class constructor */
+        inline JKQTPstepVerticalGraph(JKQtPlotter* parent=NULL): JKQTPstepHorizontalGraph(parent) {}
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1784,6 +1858,8 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPxyGraph, public JKQTPxyGra
     public:
         /** \brief class constructor */
         JKQTPbarHorizontalGraph(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPbarHorizontalGraph(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1856,12 +1932,12 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPxyGraph, public JKQTPxyGra
         QPen getLinePen(JKQTPEnhancedPainter &painter) const;
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
+        inline virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) {
             //plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
             if (sortData==JKQTPxyLineGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
             else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, shift, 0, &sortedIndices);
 
-        };
+        }
 
 
 };
@@ -1882,7 +1958,9 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPbarHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPbarHorizontalGraph(parent) {};
+        inline JKQTPbarVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPbarHorizontalGraph(parent) {}
+        /** \brief class constructor */
+        inline JKQTPbarVerticalGraph(JKQtPlotter* parent=NULL): JKQTPbarHorizontalGraph(parent) {}
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1928,6 +2006,8 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
     public:
         /** \brief class constructor */
         JKQTPhorizontalRange(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPhorizontalRange(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1938,12 +2018,12 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero){ smallestGreaterZero=minx=maxx=0;  return false; };
+        inline virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero){ smallestGreaterZero=minx=maxx=0;  return false; }
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+        inline virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
             miny=rangeMin;
             maxy=rangeMax;
             smallestGreaterZero=0;
@@ -1951,7 +2031,7 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
              return true;
         }
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() { return color; };
+        inline virtual QColor getKeyLabelColor() { return color; }
 
         void setDrawCenterLineOnly();
 
@@ -2037,6 +2117,8 @@ class LIB_EXPORT JKQTPverticalRange: public JKQTPhorizontalRange {
     public:
         /** \brief class constructor */
         JKQTPverticalRange(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPverticalRange(JKQtPlotter* parent=NULL);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -2047,19 +2129,19 @@ class LIB_EXPORT JKQTPverticalRange: public JKQTPhorizontalRange {
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero){
+        inline virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero){
             minx=rangeMin;
             maxx=rangeMax;
             smallestGreaterZero=0;
             if (rangeMin>0) smallestGreaterZero=rangeMin;
              return true;
 
-        };
+        }
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) { smallestGreaterZero=miny=maxy=0; return false; }
+        inline virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) { smallestGreaterZero=miny=maxy=0; return false; }
 };
 
 #endif // JKQTPELEMENTS_H

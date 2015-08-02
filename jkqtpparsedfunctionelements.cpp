@@ -75,6 +75,25 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtBasePlotter *pa
     set_errorPlotFunction(JKQTPxParsedFunctionLineGraphFunction);
 }
 
+JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtPlotter *parent):
+    JKQTPxFunctionLineGraph(parent)
+{
+    fdata.parser=new JKQTPMathParser();
+    fdata.node=NULL;
+    fdata.varcount=0;
+    function="";
+    parameterColumn=-1;
+    set_params(&fdata);
+    set_plotFunction(JKQTPxParsedFunctionLineGraphFunction);
+
+    efdata.parser=new JKQTPMathParser();
+    efdata.node=NULL;
+    efdata.varcount=0;
+    errorFunction="";
+    errorParameterColumn=-1;
+    set_errorParams(&efdata);
+    set_errorPlotFunction(JKQTPxParsedFunctionLineGraphFunction);
+}
 JKQTPxParsedFunctionLineGraph::~JKQTPxParsedFunctionLineGraph()
 {
     if (fdata.node) delete fdata.node;
@@ -87,8 +106,8 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 {
     collectParameters();
 
-    QElapsedTimer timer;
-    timer.start();
+    //QElapsedTimer timer;
+    //timer.start();
     for (int i=0; i<fdata.varcount; i++) {
         fdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
     }
@@ -113,7 +132,7 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
         }
         fdata.parser->addVariableDouble(std::string("x"), 0.0);
         if (fdata.node) delete fdata.node;
-        qint64 t=timer.elapsed();
+        //qint64 t=timer.elapsed();
 
 
         //qDebug()<<"createPlotData():   adding variables: "<<t<<"ms";
@@ -123,7 +142,7 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
         //qDebug()<<QString("parser error: %1").arg(E.what());
     }
 
-    qint64 t0=timer.elapsed();
+    //qint64 t0=timer.elapsed();
     for (int i=0; i<efdata.varcount; i++) {
         efdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
     }
@@ -148,7 +167,7 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
         }
         efdata.parser->addVariableDouble(std::string("x"), 0.0);
         if (efdata.node) delete efdata.node;
-        qint64 t=timer.elapsed();
+        //qint64 t=timer.elapsed();
         //qDebug()<<"createPlotData():   adding variables: "<<t-t0<<"ms";
         efdata.node=efdata.parser->parse(errorFunction.toStdString());
         //qDebug()<<"createPlotData():   parsing: "<<timer.elapsed()-t<<"ms";
@@ -161,7 +180,7 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     set_errorParams(&efdata);
     set_errorPlotFunction(JKQTPxParsedFunctionLineGraphFunction);
 
-    qint64 t=timer.elapsed();
+    //qint64 t=timer.elapsed();
     JKQTPxFunctionLineGraph::createPlotData(false);
     //qDebug()<<"createPlotData():   JKQTPxFunctionLineGraph::createPlotData():   "<<timer.elapsed()-t<<"ms";
 

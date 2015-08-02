@@ -951,14 +951,14 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
             double width() const { return m_width; }
             double widthF() const { return m_width; }
             QColor color() const { return m_color; }
-            void setColor(QColor& col) {m_color=col; }
+            void setColor(const QColor& col) {m_color=col; }
             Qt::PenStyle style() const { return m_style; }
             void setStyle(Qt::PenStyle s) { m_style=s; }
         };
 
 
         /** \brief returns a QPen object for the i-th plot style */
-        JKQTPPen getPlotStyle(int i);
+        JKQTPPen getPlotStyle(int i) const;
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn

@@ -33,7 +33,7 @@
 #ifndef JKQTTOOLS_H
 #define JKQTTOOLS_H
 
-#include "../lib_imexport.h"
+#include "jkqtp_imexport.h"
 #include <QSettings>
 #include <QWidget>
 #include <QSplitter>

@@ -92,7 +92,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         /** \brief class constructor
          */
-        explicit JKQtPlotter(bool datastore_internal=true, QWidget* parent=NULL, JKQTPdatastore* datast=NULL);
+        explicit JKQtPlotter(bool datastore_internal, QWidget* parent=NULL, JKQTPdatastore* datast=NULL);
         explicit JKQtPlotter(QWidget* parent=NULL);
 
         /** \brief class destructor */
@@ -115,7 +115,9 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         };
 
         /** \brief returns the class internally used for plotting */
-        JKQtBasePlotter* get_plotter() { return plotter; }
+        JKQtBasePlotter* get_plotter() const { return plotter; }
+        /** \brief returns the class internally used for plotting */
+        const JKQtBasePlotter* get_constplotter() const { return const_cast<const JKQtBasePlotter*>(plotter); }
 
         JKQTPGET_SET_MACRO_I(bool, displayToolbar, updateToolbar())
         JKQTPGET_SET_MACRO_I(bool, toolbarAlwaysOn, updateToolbar())
@@ -284,6 +286,25 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         inline double getMagnification() const { return magnification; }
 
+        /** \brief gets the next unused style id, i.e. the smalles number >=0 which is not contained in usedStyles */
+        inline int getNextStyle() {
+            return get_plotter()->getNextStyle();
+        }
+
+        /** \brief returns a QPen object for the i-th plot style */
+        inline JKQtBasePlotter::JKQTPPen getPlotStyle(int i) const {
+            return get_constplotter()->getPlotStyle(i);
+        }
+
+        /** \brief font face for key labels */
+        inline QString get_keyFont() const {
+            return get_constplotter()->get_keyFont();
+        }
+
+        /** \brief font size for key labels [in points] */
+        inline double get_keyFontSize() const {
+            return get_constplotter()->get_keyFontSize();
+        }
     public slots:
         /** \brief set the plot magnification */
         void setMagnification(double m);

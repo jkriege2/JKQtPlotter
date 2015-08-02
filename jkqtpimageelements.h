@@ -57,6 +57,10 @@ class LIB_EXPORT JKQTPImageBase: public JKQTPgraph {
         JKQTPImageBase(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
         JKQTPImageBase(double x, double y, double width, double height, JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPImageBase(JKQtPlotter* parent);
+        /** \brief class constructor */
+        JKQTPImageBase(double x, double y, double width, double height, JKQtPlotter* parent);
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
 
@@ -151,6 +155,12 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         JKQTPMathImageBase(double x, double y, double width, double height, JKQtBasePlotter* parent=NULL);
         JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=NULL);
 
+
+        /** \brief class constructor */
+        JKQTPMathImageBase(JKQtPlotter* parent);
+        JKQTPMathImageBase(double x, double y, double width, double height, JKQtPlotter* parent=NULL);
+        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
 
@@ -227,7 +237,13 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
     public:
 
         /** \brief class constructor */
+        JKQTPImage(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPImage(JKQtPlotter* parent);
+        /** \brief class constructor */
         JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -241,6 +257,8 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
     protected:
         /** \brief the image to be plotted */
         QImage* image;
+
+        void createImageActions();
 
     protected:
         QAction* actSaveImage;
@@ -265,13 +283,11 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
 
-
-
-
-
         /** \brief class constructor */
         JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQtBasePlotter* parent=NULL);
         JKQTPMathImage(JKQtBasePlotter* parent=NULL);
+        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQtPlotter* parent);
+        JKQTPMathImage(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -361,6 +377,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
 
     protected:
+        void initJKQTPMathImage();
         /** \brief top color bar visible */
         bool colorBarTopVisible;
         /** \brief right color bar visible */
@@ -448,6 +465,15 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         /** \brief class constructor */
         JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=NULL);
 
+        /** \brief class constructor */
+        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+
+        /** \brief class constructor */
+        JKQTPRGBMathImage(JKQtBasePlotter* parent=NULL);
+
+        /** \brief class constructor */
+        JKQTPRGBMathImage(JKQtPlotter* parent);
+
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
 
@@ -530,6 +556,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
 
     protected:
+        void initObject();
         /** \brief points to the data array, holding the image */
         void* dataG;
         /** \brief datatype of the data array data */
@@ -624,6 +651,11 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         JKQTPColumnMathImage(JKQtBasePlotter* parent=NULL);
         JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=NULL);
         JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPColumnMathImage(JKQtPlotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQtPlotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
 
         JKQTPGET_SET_MACRO(int, imageColumn)
         JKQTPGET_SET_MACRO(int, modifierColumn)
@@ -657,6 +689,12 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=NULL);
         JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=NULL);
         JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPColumnRGBMathImage(JKQtPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
 
         JKQTPGET_SET_MACRO(int, imageRColumn)
         JKQTPGET_SET_MACRO(int, imageGColumn)
@@ -690,6 +728,10 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /** \brief class constructor */
         JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtBasePlotter* parent=NULL);
         JKQTPOverlayImage(JKQtBasePlotter* parent=NULL);
+
+        /** \brief class constructor */
+        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtPlotter* parent);
+        JKQTPOverlayImage(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -752,6 +794,9 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         /** \brief class constructor */
         JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtBasePlotter* parent=NULL);
         JKQTPOverlayImageEnhanced(JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtPlotter* parent);
+        JKQTPOverlayImageEnhanced(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -795,6 +840,7 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
         Q_OBJECT
     public:
         JKQTPColumnOverlayImageEnhanced(JKQtBasePlotter* parent=NULL);
+        JKQTPColumnOverlayImageEnhanced(JKQtPlotter* parent);
 
         JKQTPGET_SET_MACRO(int, imageColumn)
         /** \brief plots the graph to the plotter object specified as parent */
@@ -824,6 +870,8 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
  *  levels with createContourLevels(). The levels are linearly spaced between the maximum and minimum
  *  value in your data. For logarithmic data, use createContourLevelsLog() to create contour levels
  *  with logarithmic spacing.
+ *
+ * \author Sebastian Isbaner, 2013-2014
  */
 class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         Q_OBJECT
@@ -832,6 +880,10 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         JKQTPContour(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
         JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, DataType datatype = JKQTPMathImageBase::DoubleArray, JKQtBasePlotter* parent=NULL);
+        /** \brief class constructor */
+        JKQTPContour(JKQtPlotter* parent);
+        /** \brief class constructor */
+        JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, DataType datatype , JKQtPlotter* parent);
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
 

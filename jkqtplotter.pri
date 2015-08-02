@@ -15,7 +15,8 @@ HEADERS += $$PWD/jkqtpbaseplotter.h \
            $$PWD/jkqtpparsedfunctionelements.h \
            $$PWD/jkqtpoverlayelements.h \
            $$PWD/jkqtpgeoelements.h \
-           $$PWD/jkqtpjkmathparser.h
+           $$PWD/jkqtpmathparser.h \
+           $$PWD/jkqtp_imexport.h
 
 
 SOURCES += $$PWD/jkqtpbaseplotter.cpp \
@@ -31,17 +32,17 @@ SOURCES += $$PWD/jkqtpbaseplotter.cpp \
            $$PWD/jkqtpparsedfunctionelements.cpp  \
            $$PWD/jkqtpoverlayelements.cpp  \
            $$PWD/jkqtpgeoelements.cpp  \
-           $$PWD/jkqtpjkmathparser.cpp
+           $$PWD/jkqtpmathparser.cpp
 
 
 RESOURCES += $$PWD/jkqtpbaseplotter.qrc
 
 INCLUDEPATH += $$PWD 
 
-QT += gui
-
-QT += core gui svg xml
+QT += core gui svg
 win32:LIBS += -lgdi32
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 
+# for support of palettes stored as XML, use:
+QT += xml

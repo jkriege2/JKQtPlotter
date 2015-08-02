@@ -1888,7 +1888,7 @@ void JKQTPhorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         QRect rect(0,0, get_parent_plotwidth(), ascent+descent);//plotBorderLeft-30);
         painter.save();
         painter.translate(QPointF(left, bottom+parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)+labelMax.height()));
-        JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
+        //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
         //painter.drawRect(rect);
         //painter.drawEllipse(-4, -4, 8, 8);
         switch(labelPosition) {
@@ -1914,7 +1914,7 @@ void JKQTPhorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         QRect rect(0,0, get_parent_plotwidth(), get_parent_mathText()->getSize(painter).height());//plotBorderLeft-30);
         painter.save();
         painter.translate(QPointF(left, top-parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)-labelMax.height()-rect.height()));
-        JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
+        //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
         //painter.drawRect(rect);
         //painter.drawEllipse(-4, -4, 8, 8);
         switch(labelPosition) {
