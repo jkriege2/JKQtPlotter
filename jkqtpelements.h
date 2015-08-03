@@ -802,7 +802,7 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
             JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
         { setErrorColorFromGraphColor(color); }
         /** \brief class constructor */
-        inline JKQTPxyLineErrorGraph(JKQtPlotter* parent=NULL):
+        inline JKQTPxyLineErrorGraph(JKQtPlotter* parent):
             JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
         { setErrorColorFromGraphColor(color);  }
 
