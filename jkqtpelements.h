@@ -635,7 +635,7 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
         /** \brief class constructor */
         JKQTPxyLineGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPxyLineGraph(JKQtPlotter* parent=NULL);
+        JKQTPxyLineGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -709,7 +709,7 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         /** \brief class constructor */
         JKQTPxyParametrizedScatterGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPxyParametrizedScatterGraph(JKQtPlotter* parent=NULL);
+        JKQTPxyParametrizedScatterGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -841,7 +841,7 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
         inline JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=NULL):
             JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
         {  setErrorColorFromGraphColor(color); }
-        inline JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent=NULL):
+        inline JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent):
             JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
         { setErrorColorFromGraphColor(color);  }
 
@@ -886,7 +886,7 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
         /** \brief class constructor */
         JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent=NULL);
+        JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -930,7 +930,7 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
         {
             setErrorColorFromGraphColor(color);
         }
-        inline JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter* parent=NULL):
+        inline JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter* parent):
             JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -963,7 +963,7 @@ class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph
         /** \brief class constructor */
         JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPimpulsesVerticalGraph(JKQtPlotter* parent=NULL);
+        JKQTPimpulsesVerticalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -986,7 +986,7 @@ class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGr
             setErrorColorFromGraphColor(color);
         }
         /** \brief class constructor */
-        inline JKQTPimpulsesVerticalErrorGraph(JKQtPlotter* parent=NULL):
+        inline JKQTPimpulsesVerticalErrorGraph(JKQtPlotter* parent):
             JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -1022,7 +1022,7 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
         /** \brief class constructor */
         JKQTPfilledCurveXGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPfilledCurveXGraph(JKQtPlotter* parent=NULL);
+        JKQTPfilledCurveXGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1088,7 +1088,7 @@ class LIB_EXPORT JKQTPfilledCurveXErrorGraph: public JKQTPfilledCurveXGraph, pub
             setErrorColorFromGraphColor(color);
         }
         /** \brief class constructor */
-        inline JKQTPfilledCurveXErrorGraph(JKQtPlotter* parent=NULL):
+        inline JKQTPfilledCurveXErrorGraph(JKQtPlotter* parent):
             JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -1123,7 +1123,7 @@ class LIB_EXPORT JKQTPfilledCurveYGraph: public JKQTPfilledCurveXGraph {
         /** \brief class constructor */
         JKQTPfilledCurveYGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPfilledCurveYGraph(JKQtPlotter* parent=NULL);
+        JKQTPfilledCurveYGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1145,7 +1145,7 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
         {
             setErrorColorFromGraphColor(color);
         }
-        inline JKQTPfilledCurveYErrorGraph(JKQtPlotter* parent=NULL):
+        inline JKQTPfilledCurveYErrorGraph(JKQtPlotter* parent):
             JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -1189,7 +1189,7 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
         /** \brief class constructor */
         JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPboxplotVerticalGraph(JKQtPlotter* parent=NULL);
+        JKQTPboxplotVerticalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1306,7 +1306,7 @@ class LIB_EXPORT JKQTPboxplotHorizontalGraph: public JKQTPboxplotVerticalGraph {
             JKQTPboxplotVerticalGraph(parent)
         {
         }
-        inline JKQTPboxplotHorizontalGraph(JKQtPlotter* parent=NULL):
+        inline JKQTPboxplotHorizontalGraph(JKQtPlotter* parent):
             JKQTPboxplotVerticalGraph(parent)
         {
         }
@@ -1351,7 +1351,7 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
         /** \brief class constructor */
         JKQTPboxplotVerticalElement(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPboxplotVerticalElement(JKQtPlotter* parent=NULL);
+        JKQTPboxplotVerticalElement(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1459,7 +1459,7 @@ class LIB_EXPORT JKQTPboxplotHorizontalElement: public JKQTPboxplotVerticalEleme
         {
         }
         /** \brief class constructor */
-        inline JKQTPboxplotHorizontalElement(JKQtPlotter* parent=NULL):
+        inline JKQTPboxplotHorizontalElement(JKQtPlotter* parent):
             JKQTPboxplotVerticalElement(parent)
         {
         }
@@ -1527,7 +1527,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         JKQTPxFunctionLineGraph(JKQtBasePlotter* parent=NULL);
 
         /** \brief class constructor */
-        JKQTPxFunctionLineGraph(JKQtPlotter* parent=NULL);
+        JKQTPxFunctionLineGraph(JKQtPlotter* parent);
 
         /** \brief class destructor */
         virtual ~JKQTPxFunctionLineGraph();
@@ -1714,7 +1714,7 @@ class LIB_EXPORT JKQTPyFunctionLineGraph: public JKQTPxFunctionLineGraph {
         /** \brief class constructor */
         inline JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=NULL):JKQTPxFunctionLineGraph(parent) {}
         /** \brief class constructor */
-        inline JKQTPyFunctionLineGraph(JKQtPlotter* parent=NULL):JKQTPxFunctionLineGraph(parent) {}
+        inline JKQTPyFunctionLineGraph(JKQtPlotter* parent):JKQTPxFunctionLineGraph(parent) {}
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1756,7 +1756,7 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         /** \brief class constructor */
         JKQTPstepHorizontalGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPstepHorizontalGraph(JKQtPlotter* parent=NULL);
+        JKQTPstepHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1825,7 +1825,7 @@ class LIB_EXPORT JKQTPstepVerticalGraph: public JKQTPstepHorizontalGraph {
         /** \brief class constructor */
         inline JKQTPstepVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPstepHorizontalGraph(parent) {}
         /** \brief class constructor */
-        inline JKQTPstepVerticalGraph(JKQtPlotter* parent=NULL): JKQTPstepHorizontalGraph(parent) {}
+        inline JKQTPstepVerticalGraph(JKQtPlotter* parent): JKQTPstepHorizontalGraph(parent) {}
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1869,7 +1869,7 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPxyGraph, public JKQTPxyGra
         /** \brief class constructor */
         JKQTPbarHorizontalGraph(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPbarHorizontalGraph(JKQtPlotter* parent=NULL);
+        JKQTPbarHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -1973,7 +1973,7 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPbarHorizontalGraph {
         /** \brief class constructor */
         inline JKQTPbarVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPbarHorizontalGraph(parent) {}
         /** \brief class constructor */
-        inline JKQTPbarVerticalGraph(JKQtPlotter* parent=NULL): JKQTPbarHorizontalGraph(parent) {}
+        inline JKQTPbarVerticalGraph(JKQtPlotter* parent): JKQTPbarHorizontalGraph(parent) {}
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -2020,7 +2020,7 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
         /** \brief class constructor */
         JKQTPhorizontalRange(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPhorizontalRange(JKQtPlotter* parent=NULL);
+        JKQTPhorizontalRange(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -2131,7 +2131,7 @@ class LIB_EXPORT JKQTPverticalRange: public JKQTPhorizontalRange {
         /** \brief class constructor */
         JKQTPverticalRange(JKQtBasePlotter* parent=NULL);
         /** \brief class constructor */
-        JKQTPverticalRange(JKQtPlotter* parent=NULL);
+        JKQTPverticalRange(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
