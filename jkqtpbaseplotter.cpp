@@ -45,6 +45,9 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QVBoxLayout>
+#ifdef QFWIDLIB_LIBRARY
+#  include "qftools.h"
+#endif
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";
@@ -2851,7 +2854,11 @@ void JKQtBasePlotter::saveImage(QString filename, bool displayPreview) {
         } else if (isWithSpecialDeviceAdapter && adapterID>=0 && adapterID<jkqtpPaintDeviceAdapters.size()) {
             QString tempFM="";
             if (QFile::exists(fn)) {
+#ifdef QFWIDLIB_LIBRARY
+                QFTemporaryFile* tf=new QFTemporaryFile();
+#else
                 QTemporaryFile* tf=new QTemporaryFile();
+#endif
                 tf->open();
                 tempFM=tf->fileName();
                 tf->close();
@@ -3079,7 +3086,11 @@ void JKQtBasePlotter::saveAsSVG(QString filename, bool displayPreview) {
     if (!fn.isEmpty()) {
         QString tempFM="";
         if (QFile::exists(fn)) {
-            QTemporaryFile* tf=new QTemporaryFile();
+#ifdef QFWIDLIB_LIBRARY
+                QFTemporaryFile* tf=new QFTemporaryFile();
+#else
+                QTemporaryFile* tf=new QTemporaryFile();
+#endif
             tf->open();
             tempFM=tf->fileName();
             tf->close();
