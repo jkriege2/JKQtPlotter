@@ -303,9 +303,9 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteIcon(JKQTPMathImageColorPalette palette) ;
         /*! \brief get QIcon representing the given palette */
-        static QImage getPaletteImage(int i, int width) ;
+        static QImage getPaletteImage(int i, int width, int height=1) ;
         /*! \brief get QIcon representing the given palette */
-        static QImage getPaletteImage(JKQTPMathImageColorPalette palette, int width) ;
+        static QImage getPaletteImage(JKQTPMathImageColorPalette palette, int width, int height=1) ;
 
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteKeyIcon(int i) ;
@@ -360,6 +360,9 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
             The four value supplied tell the method where to draw (inside one of the rectangles).
          */
         virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
+
+        /*! \brief returns a QImage, which contains the plaette drawn outside the plot. \a steps is the number of data-setps (and the size of the output image) used for the palette image. */
+        virtual QImage drawOutsidePalette(int steps=200);
 
         /*! \brief return the plotted image only as a QImage */
         virtual QImage drawImage();
@@ -438,11 +441,15 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
     protected:
         QAction* actSaveImage;
         QAction* actCopyImage;
+        QAction* actSavePalette;
+        QAction* actCopyPalette;
     public:
         virtual void set_title(const typedef_set_title& title);
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
+        void saveColorbarPlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
+        void copyColorbarPlotAsImage();
 
 };
 

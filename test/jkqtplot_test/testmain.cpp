@@ -8,15 +8,15 @@
 #endif
 
 
-double f1(double x, void* param) {
+double f1(double x, void* /*param*/) {
     return x/30;
 }
 
-double f1e(double x, void* param) {
+double f1e(double x, void* /*param*/) {
     return 2;
 }
 
-double f2(double x, void* param) {
+double f2(double x, void* /*param*/) {
     return 10*sin(exp(x/100));
 }
 

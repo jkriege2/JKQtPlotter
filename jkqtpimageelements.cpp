@@ -269,7 +269,7 @@ void JKQTPImage::copyImagePlotAsImage()
 {
     QClipboard* clip=QApplication::clipboard();
     if (clip && image) {
-        clip->setImage(*image);
+        clip->setPixmap(QPixmap::fromImage(*image));
     }
 }
 
@@ -600,8 +600,12 @@ void JKQTPMathImageBase::modifyImage(QImage &img, void *dataModifier, JKQTPMathI
 void JKQTPMathImage::initJKQTPMathImage() {
     actSaveImage=new QAction(tr("Save JKQTPMathImage ..."), this);
     connect(actSaveImage, SIGNAL(triggered()), this, SLOT(saveImagePlotAsImage()));
-    actCopyImage=new QAction(tr("Copy JKQTPOverlayImage ..."), this);
+    actCopyImage=new QAction(tr("Copy JKQTPMathImage ..."), this);
     connect(actCopyImage, SIGNAL(triggered()), this, SLOT(copyImagePlotAsImage()));
+    actSavePalette=new QAction(tr("Save JKQTPMathImage Palette/Colorbar ..."), this);
+    connect(actSavePalette, SIGNAL(triggered()), this, SLOT(saveColorbarPlotAsImage()));
+    actCopyPalette=new QAction(tr("Copy JKQTPMathImage Palette/Colorbar ..."), this);
+    connect(actCopyPalette, SIGNAL(triggered()), this, SLOT(copyColorbarPlotAsImage()));
 
     colorBarRightAxis=new JKQTPverticalIndependentAxis(0, 100, 0, 100, parent);
     if (parent) colorBarRightAxis->loadSettings(parent->getYAxis());
@@ -702,6 +706,8 @@ void JKQTPMathImage::setParent(JKQtBasePlotter* parent) {
     if (this->parent) {
         this->parent->deregisterAdditionalAction(actSaveImage);
         this->parent->deregisterAdditionalAction(actCopyImage);
+        this->parent->deregisterAdditionalAction(actSavePalette);
+        this->parent->deregisterAdditionalAction(actCopyPalette);
     }
     JKQTPMathImageBase::setParent(parent);
     colorBarRightAxis->set_parent(parent);
@@ -711,9 +717,13 @@ void JKQTPMathImage::setParent(JKQtBasePlotter* parent) {
     if (parent) {
         parent->registerAdditionalAction(tr("Save Image Plot Images ..."), actSaveImage);
         parent->registerAdditionalAction(tr("Copy Image Plot Images ..."), actCopyImage);
+        parent->registerAdditionalAction(tr("Save Image Plot Images ..."), actSavePalette);
+        parent->registerAdditionalAction(tr("Copy Image Plot Images ..."), actCopyPalette);
     }
     actSaveImage->setEnabled(parent);
     actCopyImage->setEnabled(parent);
+    actSavePalette->setEnabled(parent);
+    actCopyPalette->setEnabled(parent);
 }
 
 void JKQTPMathImage::set_title(const JKQTPgraph::typedef_set_title &title)
@@ -771,7 +781,57 @@ void JKQTPMathImage::copyImagePlotAsImage()
 {
     QClipboard* clip=QApplication::clipboard();
     if (clip) {
-        clip->setImage(drawImage());
+        clip->setPixmap(QPixmap::fromImage(drawImage()));
+    }
+}
+
+void JKQTPMathImage::saveColorbarPlotAsImage(const QString &filename, const QByteArray &outputFormat)
+{
+    if (parent) {
+        parent->loadUserSettings();
+        QString currentSaveDirectory=parent->get_currentSaveDirectory();
+        QString currentFileFormat=parent->get_currentFileFormat();
+        QString fn=filename;
+        QStringList filt;
+        QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
+        for (int i=0; i<writerformats.size(); i++) {
+            filt<<QString("%1 Image (*.%2)").arg(QString(writerformats[i]).toUpper()).arg(QString(writerformats[i].toLower()));
+        }
+        QString selFormat;
+        if (fn.isEmpty()) {
+            selFormat=currentFileFormat;
+            fn = QFileDialog::getSaveFileName(NULL, tr("Save Image Plot As Image ..."),
+                                        currentSaveDirectory,
+                                              filt.join(";;"), &selFormat);
+            if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
+        }
+
+        parent->set_currentFileFormat(currentFileFormat);
+        parent->set_currentSaveDirectory(currentSaveDirectory);
+        parent->saveUserSettings();
+        if (!fn.isEmpty()) {
+            int filtID=filt.indexOf(selFormat);
+            QString form="NONE";
+            if (filtID>=0 && filtID<writerformats.size()) {
+                form=writerformats[filtID];
+            }
+            if (outputFormat.size()>0) {
+                form =outputFormat;
+            }
+
+            QImage image=drawOutsidePalette(256);
+
+            if (form=="NONE") image.save(fn);
+            else image.save(fn, form.toLatin1().data());
+        }
+    }
+}
+
+void JKQTPMathImage::copyColorbarPlotAsImage()
+{
+    QClipboard* clip=QApplication::clipboard();
+    if (clip) {
+        clip->setPixmap(QPixmap::fromImage(drawOutsidePalette(256)));
     }
 }
 
@@ -839,27 +899,11 @@ void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftSpac
         if (colorBarRightVisible) {
             painter.save();
 
-            uint8_t h=1;
-            if (modifierMode!=ModifyNone) {
-                h=50;
-            }
-            uint8_t d[200*h], dd[200*h];
-            for (int i=0; i<200; i++) {
-                for (int j=0; j<h; j++) {
-                    d[i*h+j]=i;
-                    dd[i*h+j]=j;
-                }
-            }
-            QImage b(h, 200, QImage::Format_ARGB32);
-            JKQTPimagePlot_array2image<uint8_t>(d, h, 200, b, palette, 0, 199);
-            if (modifierMode!=ModifyNone) {
-                modifyImage(b, dd, UInt8Array, h, 200, 0, h-1);
-            }
 
-            /*parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-            parent->get_mathText()->set_fontRoman(imageNameFontName);
-            parent->get_mathText()->parse(imageName);
-            QSizeF names=parent->get_mathText()->getSize(painter);*/
+
+            QImage b=drawOutsidePalette(200);
+
+
             QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->get_fontSizeMultiplier(), imageName, painter);
 
             double icolorBarRelativeHeight=colorBarRelativeHeight;
@@ -906,36 +950,13 @@ void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftSpac
         if (colorBarTopVisible) {
             painter.save();
 
-            /*uint8_t d[200];
-            for (int i=0; i<200; i++) d[i]=i;
-            QImage b(200,1, QImage::Format_ARGB32);
-            JKQTPimagePlot_array2image<uint8_t>(d, 200, 1, b, palette, 0, 199);*/
-
-
-            uint8_t h=1;
-            if (modifierMode!=ModifyNone) {
-                h=50;
-            }
-            uint8_t d[200*h], dd[200*h];
-            for (int i=0; i<200; i++) {
-                for (int j=0; j<h; j++) {
-                    d[i*h+j]=i;
-                    dd[i*h+j]=j;
-                }
-            }
-            QImage b(h,200, QImage::Format_ARGB32);
-            JKQTPimagePlot_array2image<uint8_t>(d,h,200, b, palette, 0, 199);
-            if (modifierMode!=ModifyNone) {
-                modifyImage(b, dd, UInt8Array, h,200, 0, h-1);
-            }
 
 
 
 
-            /*parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-            parent->get_mathText()->set_fontRoman(imageNameFontName);
-            parent->get_mathText()->parse(imageName);
-            QSizeF names=parent->get_mathText()->getSize(painter);*/
+            QImage b=drawOutsidePalette(200);
+
+
             QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->get_fontSizeMultiplier(), imageName, painter);
 
             double icolorBarRelativeHeight=colorBarRelativeHeight;
@@ -983,6 +1004,32 @@ void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftSpac
             painter.restore();
         }
     }
+}
+
+QImage JKQTPMathImage::drawOutsidePalette(int steps)
+{
+
+    uint8_t h=1;
+    if (modifierMode!=ModifyNone) {
+        h=50;
+    }
+    uint8_t* d=new uint8_t[steps*h];
+    uint8_t* dd=new uint8_t[steps*h];
+    for (int i=0; i<steps; i++) {
+        for (int j=0; j<h; j++) {
+            d[i*h+j]=i;
+            dd[i*h+j]=j;
+        }
+    }
+
+    QImage b(h,200, QImage::Format_ARGB32);
+    JKQTPimagePlot_array2image<uint8_t>(d,h,steps, b, palette, 0, steps-1);
+    if (modifierMode!=ModifyNone) {
+        modifyImage(b, dd, UInt8Array, h,steps, 0, h-1);
+    }
+    delete[] d;
+    delete[] dd;
+    return b;
 }
 
 void JKQTPMathImage::getDataMinMax(double& imin, double& imax) {
@@ -1058,21 +1105,21 @@ QIcon JKQTPMathImage::getPaletteIcon(JKQTPMathImageColorPalette palette)  {
     return getPaletteIcon((int)palette);
 }
 
-QImage JKQTPMathImage::getPaletteImage(int i, int width)
+QImage JKQTPMathImage::getPaletteImage(int i, int width, int height)
 {
     QImage img;
     double* pic=(double*)malloc(width*sizeof(double));
     for (int j=0; j<width; j++) {
         pic[j]=j;
     }
-    JKQTPimagePlot_array2image<double>(pic, width, 1, img, (JKQTPMathImageColorPalette)i, 0, width-1);
+    JKQTPimagePlot_array2image<double>(pic, width, qMax(1,height), img, (JKQTPMathImageColorPalette)i, 0, width-1);
     free(pic);
     return img;
 }
 
-QImage JKQTPMathImage::getPaletteImage(JKQTPMathImageColorPalette palette, int width)
+QImage JKQTPMathImage::getPaletteImage(JKQTPMathImageColorPalette palette, int width, int height)
 {
-    return getPaletteImage((int)palette, width);
+    return getPaletteImage((int)palette, width,height);
 }
 
 QIcon JKQTPMathImage::getPaletteKeyIcon(int i)
@@ -2073,7 +2120,7 @@ void JKQTPRGBMathImage::copyImagePlotAsImage()
 {
     QClipboard* clip=QApplication::clipboard();
     if (clip) {
-        clip->setImage(drawImage());
+        clip->setPixmap(QPixmap::fromImage(drawImage()));
     }
 }
 
@@ -2603,7 +2650,7 @@ void JKQTPOverlayImage::copyImagePlotAsImage()
 {
     QClipboard* clip=QApplication::clipboard();
     if (clip) {
-        clip->setImage(drawImage());
+        clip->setPixmap(QPixmap::fromImage(drawImage()));
     }
 }
 

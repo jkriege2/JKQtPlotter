@@ -1,24 +1,14 @@
+# NOTE: This shouldn't be built as a SHADOW build
+!equals(PWD, $${OUT_PWD}) {
+    warning(This project should not be built as a shadow build!!!)
+}
 
-LIBS +=
+include(../../jkqtplotter.pri)
 
-
-SOURCES = jkqtplot_test.cpp \
-          ../../jkqtpbaseplotter.cpp \
-          ../../jkqtpdatastorage.cpp \
-          ../../jkqtplotter.cpp \
-          ../../jkqtptools.cpp \
-          ../../jkqtpelements.cpp \
-          ../../jkqtpbaseelements.cpp \
-          ../../jkqtmathtext.cpp \
-          ../../jkqtpgeoelements.cpp \
-    ../../jkqtpimageelements.cpp \
-    ../../jkqtpoverlayelements.cpp \
+SOURCES += jkqtplot_test.cpp \
     testmain.cpp \
-    ../../jkqtpparsedfunctionelements.cpp \
-    ../../jkqtpmathparser.cpp \
-    ../../jkqtpimagetools.cpp \
-QTeXEngine/src/QTeXPaintEngine.cpp \
-    QTeXEngine/src/QTeXPaintDevice.cpp \
+    QTeXEngine/src/QTeXPaintEngine.cpp \
+    QTeXEngine/src/QTeXPaintDevice.cpp
 
 greaterThan(QT_MAJOR_VERSION, 4) {
 } else {
@@ -54,21 +44,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 #if not added by qmake:
 DEFINES += QT_XML_LIB
 
-HEADERS = ../../jkqtpbaseplotter.h \
-          ../../jkqtpdatastorage.h \
-          ../../jkqtplotter.h \
-          ../../jkqtptools.h \
-          ../../jkqtpelements.h \
-          ../../jkqtpgeoelements.h \
-          ../../jkqtpbaseelements.h \
-          ../../jkqtmathtext.h \
-    ../../jkqtpimageelements.h \
-    ../../jkqtpimagetools.h \
-    ../../jkqtpoverlayelements.h \
-    testmain.h \
-    ../../jkqtpparsedfunctionelements.h \
-    ../../jkqtpmathparser.h \
-    ../../jkqtp_imexport.h
+HEADERS += testmain.h
 
 
 INCLUDEPATH +=
@@ -79,8 +55,5 @@ MOC_DIR = .mocs
 RCC_DIR = .rccs
 DESTDIR = ./
 
-FORMS =
 
-
-RESOURCES = ../../jkqtpbaseplotter.qrc \
-    jkqtplot_test.qrc
+RESOURCES += jkqtplot_test.qrc
