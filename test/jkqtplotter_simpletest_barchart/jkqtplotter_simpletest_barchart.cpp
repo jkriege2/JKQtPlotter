@@ -14,8 +14,10 @@ int main(int argc, char* argv[])
     JKQTPdatastore* ds=plot.getDatastore();
 
     // 2. now we create data for three simple barchart
-    QString L[Ndata]={  "cat. A", "cat. B", "cat. C", "cat. D", "other"};
-    double  X[Ndata]={        1,        2,        3,        4,       5};
+    QString L[Ndata]={  "cat. A", "cat. C", "cat. B", "cat. D", "other"};
+    double  X[Ndata]={        1,        3,        2,        4,       5};
+    //QString L[Ndata]={  "cat. A", "cat. B", "cat. C", "cat. D", "other"}; // correctly sorted data!
+    //double  X[Ndata]={        1,        2,        3,        4,       5};
     double Y1[Ndata]={        5,        4,        3,        4,       5};
     double Y2[Ndata]={       -5,       -3,        1,        3,       6};
     double Y3[Ndata]={        6,        2,        5,        3,       6};

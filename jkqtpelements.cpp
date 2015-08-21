@@ -23,6 +23,7 @@
 #include "jkqtpbaseplotter.h"
 #include <stdlib.h>
 #include <QDebug>
+#include <iostream>
 #include "jkqtptools.h"
 #include "jkqtpimageelements.h"
 #include "jkqtpbaseelements.h"
@@ -4311,18 +4312,32 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(xColumn,i);
+        long long sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
+        long long lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
         double yv=datastore->get(yColumn,i);
-        if (imin==imax) { // only one x-value
+//        if (imin==imax) { // only one x-value
+//            deltam=0.5;
+//            deltap=0.5;
+//        } else if (i==imax-1) { // the right-most x-value
+//            deltap=deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
+//        } else if (i==imin) { // the left-most x-value
+//            deltam=deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+//        } else {
+//            deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
+//            deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+//        }
+        if (sr<0 && lr<0) { // only one x-value
             deltam=0.5;
             deltap=0.5;
-        } else if (i==imax-1) { // the right-most x-value
-            deltap=deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
-        } else if (i==imin) { // the left-most x-value
-            deltam=deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+        } else if (lr<0) { // the right-most x-value
+            deltap=deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
+        } else if (sr<0) { // the left-most x-value
+            deltam=deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
         } else {
-            deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
-            deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+            deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
+            deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
         }
+        //std::cout<<iii<<", \t"<<i<<", \t"<<sr<<", \t"<<lr<<", \t"<<deltam<<", \t"<<deltap<<"\n\n";
         delta=deltap+deltam;
 
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
@@ -4375,17 +4390,31 @@ bool JKQTPbarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
 
     for (int i=imin; i<imax; i++) {
         double xv=datastore->get(xColumn,i);
+        long long sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
+        long long lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
         double delta, deltap, deltam;
-        if (imin==imax) { // only one x-value
+//        if (imin==imax) { // only one x-value
+//            deltam=0.5;
+//            deltap=0.5;
+//        } else if (i==imax-1) { // the right-most x-value
+//            deltap=deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
+//        } else if (i==imin) { // the left-most x-value
+//            deltam=deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+//        } else {
+//            deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
+//            deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+//        }
+
+        if (sr<0 && lr<0) { // only one x-value
             deltam=0.5;
             deltap=0.5;
-        } else if (i==imax-1) { // the right-most x-value
-            deltap=deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
-        } else if (i==imin) { // the left-most x-value
-            deltam=deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+        } else if (lr<0) { // the right-most x-value
+            deltap=deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
+        } else if (sr<0) { // the left-most x-value
+            deltam=deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
         } else {
-            deltam=fabs(xv-datastore->get(xColumn,i-1))/2.0;
-            deltap=fabs(datastore->get(xColumn,i+1)-xv)/2.0;
+            deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
+            deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
         }
         delta=deltap+deltam;
 
@@ -4546,16 +4575,30 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(xColumn,i);
         double yv=datastore->get(yColumn,i);
-        if (imin==imax) { // only one x-value
+        long long sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
+        long long lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
+//        if (imin==imax) { // only one x-value
+//            deltam=0.5;
+//            deltap=0.5;
+//        } else if (i==imax-1) { // the right-most x-value
+//            deltap=deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
+//        } else if (i==imin) { // the left-most x-value
+//            deltam=deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+//        } else {
+//            deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
+//            deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+//        }
+
+        if (sr<0 && lr<0) { // only one y-value
             deltam=0.5;
             deltap=0.5;
-        } else if (i==imax-1) { // the right-most x-value
-            deltap=deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
-        } else if (i==imin) { // the left-most x-value
-            deltam=deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+        } else if (lr<0) { // the right-most y-value
+            deltap=deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+        } else if (sr<0) { // the left-most y-value
+            deltam=deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
         } else {
-            deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
-            deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+            deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+            deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
         }
         delta=deltap+deltam;
 
@@ -4659,16 +4702,30 @@ bool JKQTPbarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
     for (int i=imin; i<imax; i++) {
         double yv=datastore->get(yColumn,i);
         double delta, deltap, deltam;
-        if (imin==imax) { // only one x-value
+        long long sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
+        long long lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
+//        if (imin==imax) { // only one x-value
+//            deltam=0.5;
+//            deltap=0.5;
+//        } else if (i==imax-1) { // the right-most x-value
+//            deltap=deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
+//        } else if (i==imin) { // the left-most x-value
+//            deltam=deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+//        } else {
+//            deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
+//            deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+//        }
+
+        if (sr<0 && lr<0) { // only one y-value
             deltam=0.5;
             deltap=0.5;
-        } else if (i==imax-1) { // the right-most x-value
-            deltap=deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
-        } else if (i==imin) { // the left-most x-value
-            deltam=deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+        } else if (lr<0) { // the right-most y-value
+            deltap=deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+        } else if (sr<0) { // the left-most y-value
+            deltam=deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
         } else {
-            deltam=fabs(yv-datastore->get(yColumn,i-1))/2.0;
-            deltap=fabs(datastore->get(yColumn,i+1)-yv)/2.0;
+            deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+            deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
         }
         delta=deltap+deltam;
         if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(delta) ) {

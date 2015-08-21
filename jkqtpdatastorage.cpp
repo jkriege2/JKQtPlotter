@@ -57,14 +57,10 @@ QVector<double> JKQTPcolumn::copyData()
     QVector<double> d;
     copyData(d);
     return d;
-};
+}
 
-/** \brief reads the \a n'th value from the column
- *
- * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
- * column.
- */
-double JKQTPcolumn::getValue(unsigned long long n) const {
+double JKQTPcolumn::getValue(unsigned long long n) const
+{
     if (!datastore) return 0;
     if (!datastore->getItem(datastoreItem)) return 0;
     return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
@@ -75,18 +71,17 @@ double *JKQTPcolumn::getPointer(unsigned long long n) const
     if (!datastore) return 0;
     if (!datastore->getItem(datastoreItem)) return 0;
     return datastore->getItem(datastoreItem)->getPointer(datastoreOffset, n);
-};
+}
 
-/** \brief sets the \a n'th value from the column
- *
- * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
- * column.
- */
-void JKQTPcolumn::setValue(unsigned long long n, double val) {
+void JKQTPcolumn::setValue(unsigned long long n, double val)
+{
     if (!datastore) return ;
     if (!datastore->getItem(datastoreItem))  return;
     datastore->getItem(datastoreItem)->set(datastoreOffset, n, val);
 };
+
+
+
 
 void JKQTPcolumn::copy(double* data, unsigned long long N, unsigned long long offset) {
     if (!datastore) return ;
@@ -306,6 +301,11 @@ size_t JKQTPdatastore::ensureColumnNum(QString name) {
         if (it.value().get_name()==name) return it.key();
     }
     return addColumn(0, name);
+}
+
+JKQTPcolumn JKQTPdatastore::getColumn(size_t i) const
+{
+    return columns.value(i);
 }
 
 size_t JKQTPdatastore::addCopiedItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columnsnum, unsigned long long rows) {
@@ -1042,19 +1042,77 @@ size_t JKQTPdatastore::addLinearColumn(unsigned long long rows, double start, do
 }
 
 /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
-double JKQTPdatastore::get(size_t column, unsigned long long row) {
+double JKQTPdatastore::get(size_t column, unsigned long long row) const {
     return columns[column].getValue(row);
-};
+}
 
-/** \brief sets the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!) */
-void JKQTPdatastore::set(size_t column, unsigned long long row, double value) {
+long long JKQTPdatastore::getNextLowerIndex(size_t column, unsigned long long row, long long start, long long end) const
+{
+    const JKQTPcolumn& col=columns[column];
+    if (start<0 && end>=0) return getNextLowerIndex(column, row, 0, end);
+    else if (start>=0 && end<0)  return getNextLowerIndex(column, row, start, col.getRows()-1);
+    else if (start<0 && end<0)  return getNextLowerIndex(column, row, 0, col.getRows()-1);
+    else {
+        double d=0;
+        const double v=col.getValue(row);
+        long long res=-1;
+        for ( long long i=start; i<=end; i++) {
+            if (i!=(long long)row) {
+                const double v1=col.getValue(i);
+                const double dd=v1-v;
+                if ((dd<0) && ((fabs(dd)<d)||(d==0.0))) {
+                    res=i;
+                    d=fabs(dd);
+                    //std::cout<<"   getNextLowerIndex("<<column<<", "<<row<<", "<<start<<", "<<end<<"): i="<<i<<":  OK   res="<<res<<" d="<<d<<"\n";
+                } /*else {
+                    std::cout<<"   getNextLowerIndex("<<column<<", "<<row<<", "<<start<<", "<<end<<"): i="<<i<<":  FAIL res="<<res<<" dd="<<dd<<" v1="<<v1<<" v="<<v<<"\n";
+                }*/
+            }
+        }
+        return res;
+    }
+}
+
+long long JKQTPdatastore::getNextLowerIndex(size_t column, unsigned long long row) const
+{
+    return getNextLowerIndex(column, row, 0, columns[column].getRows()-1);
+}
+
+long long JKQTPdatastore::getNextHigherIndex(size_t column, unsigned long long row, long long start, long long end) const
+{
+    const JKQTPcolumn& col=columns[column];
+    if (start<0 && end>=0) return getNextHigherIndex(column, row, 0, end);
+    else if (start>=0 && end<0)  return getNextHigherIndex(column, row, start, col.getRows()-1);
+    else if (start<0 && end<0)  return getNextHigherIndex(column, row, 0, col.getRows()-1);
+    else {
+        double d=0;
+        const double v=col.getValue(row);
+        long long res=-1;
+        for ( long long i=start; i<=end; i++) {
+            if (i!=(long long)row) {
+                const double v1=col.getValue(i);
+                const double dd=v1-v;
+                if ((dd>0) && ((fabs(dd)<d)||(d==0.0))) {
+                    res=i;
+                    d=fabs(dd);
+                }
+            }
+        }
+        return res;
+    }
+}
+
+long long JKQTPdatastore::getNextHigherIndex(size_t column, unsigned long long row) const
+{
+    return getNextHigherIndex(column, row, 0, columns[column].getRows()-1);
+}
+
+void JKQTPdatastore::set(size_t column, unsigned long long row, double value)
+{
     columns[column].setValue(row, value);
-};
+}
 
-JKQTPcolumn JKQTPdatastore::getColumn(size_t i) {
-    //std::cout<<"datastore->getColumn("<<i<<")\n";
-    return columns.value(i);
-};
+
 
 unsigned long long JKQTPdatastore::getMaxRows() {
     unsigned long long res=0;

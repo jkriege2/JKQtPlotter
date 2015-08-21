@@ -204,7 +204,15 @@ class LIB_EXPORT JKQTPdatastore{
 
 
         /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
-        double get(size_t column, unsigned long long row);
+        double get(size_t column, unsigned long long row) const;
+        /** \brief gets the of the datapoint with the nearest, but lower value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column)*/
+        long long getNextLowerIndex(size_t column, unsigned long long row,  long long start,  long long end) const;
+        /** \brief gets the of the datapoint with the nearest, but lower value in the column */
+        long long getNextLowerIndex(size_t column, unsigned long long row) const;
+        /** \brief gets the index of the  datapoint with the nearest, but higher value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column) */
+        long long getNextHigherIndex(size_t column, unsigned long long row,  long long start,  long long end) const;
+        /** \brief gets the index of the  datapoint with the nearest, but higher value in the column */
+        long long getNextHigherIndex(size_t column, unsigned long long row) const;
 
         /** \brief sets the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!) */
         void set(size_t column, unsigned long long row, double value);
@@ -772,7 +780,7 @@ class LIB_EXPORT JKQTPdatastore{
         size_t ensureColumnNum(QString name);
 
         /** \brief returns the JKQTPcolumn object for the \a i -th column in the store */
-        JKQTPcolumn getColumn(size_t i);
+        JKQTPcolumn getColumn(size_t i) const;
 
         /** \brief returns the maximum number of rows in all columns */
         unsigned long long getMaxRows();
@@ -918,14 +926,14 @@ class LIB_EXPORT JKQTPcolumn {
     double getValue(unsigned long long n) const;
     /** \brief gets a pointer to the n-th value in the column
      */
-    double* getPointer(unsigned long long n=0) const;
+    double* getPointer(unsigned long long n=0) const ;
 
     /** \brief sets the \a n'th value from the column
      *
      * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
      * column.
      */
-    void setValue(unsigned long long n, double val);
+    void setValue(unsigned long long n, double val) ;
 
     /** \brief returns a pointer to the datastore item representing this column */
     inline JKQTPdatastoreItem* getDatastoreItem() const { return datastore->getItem(datastoreItem); }
