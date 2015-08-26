@@ -3056,8 +3056,14 @@ void JKQtBasePlotter::copyPixelImage() {
             //qDebug()<<"clipboard before adding content:\n"<<clipboard->mimeData()->formats();
             //clipboard->setImage(png);
             clipboard->clear();
+            clipboard->setPixmap(QPixmap::fromImage(png));
             QMimeData* mime=new QMimeData();
-            mime->setImageData(png);
+            mime->setImageData(QPixmap::fromImage(png));
+            QBuffer pngbuf;
+            png.save(&pngbuf, "png");
+            mime->setData("image/x-png", pngbuf.data());
+            png.save(&pngbuf, "bmp");
+            mime->setData("image/bmp", pngbuf.data());
             mime->setData("image/svg+xml", svgdata);
             clipboard->setMimeData(mime);
             //qDebug()<<"clipboard after adding content:\n"<<clipboard->mimeData()->formats();
