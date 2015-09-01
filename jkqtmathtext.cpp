@@ -24,6 +24,7 @@
 #include <QDebug>
 #include <QFontDatabase>
 #include <typeinfo>
+#include <QApplication>
 //#define QColor2String(color) QString(jkqtp_rgbtostring((color).red(), (color).green(), (color).blue(), (color).alpha()).c_str())
 
 
@@ -4053,7 +4054,8 @@ void JKQTMathTextLabel::setMath(const QString &text, bool doRepaint)
     if (text!=lastText || doRepaint){
         lastText=text;
         repaintDo=true;
-        repaint();
+        internalPaint();
+        update();
     }
 }
 
@@ -4062,12 +4064,16 @@ void JKQTMathTextLabel::internalPaint()
 {
     //return;
     //qDebug()<<"internalPaint "<<lastText<<repaintDo;
-    if (repaintDo) {
+    //if (repaintDo) {
         QSizeF size;
         {
             repaintDo=false;
             //qDebug()<<"internalPaint(): parse "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->get_error_list().join("\n")<<"\n\n";
-            if (buffer.width()<=0 || buffer.height()<=0) buffer=QPixmap(100,100);
+            if (!m_mathText->parse(lastText)) {
+                qDebug()<<"JKQTMathTextLabel::internalPaint(): parse '"<<lastText<<"': "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->get_error_list().join("\n")<<"\n\n";
+            }
+
+            if (buffer.width()<=0 || buffer.height()<=0) buffer=QPixmap(1000,100);
             //qDebug()<<"internalPaint(): buffer "<<buffer.size();
             QPainter p;
             //qDebug()<<"internalPaint(): "<<p.begin(&buffer);
@@ -4091,16 +4097,21 @@ void JKQTMathTextLabel::internalPaint()
             m_mathText->draw(p,alignment(), QRectF(QPointF(0,0), size));
             p.end();
         }
-    }
+        setPixmap(buffer);
+    //}
+    //qDebug()<<"internalPaint(): setPixmap";
+    QApplication::processEvents();
+    //qDebug()<<"internalPaint(): DONE";
 }
 
 void JKQTMathTextLabel::paintEvent(QPaintEvent *event)
 {
     //QLabel::paintEvent(event);
     //return;
-    internalPaint();
+
     //qDebug()<<"paintEvent: "<<buffer.size();
-    setPixmap(buffer);
+
+    //QApplication::processEvents();
     QLabel::paintEvent(event);
     //qDebug()<<"paintEvent DONE: "<<size();
 }
