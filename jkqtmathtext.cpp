@@ -4078,7 +4078,7 @@ void JKQTMathTextLabel::internalPaint()
             size=m_mathText->getSize(p);
             p.end();
         }
-        buffer=QPixmap(size.width()*1.2, size.height()*1.1);
+        buffer=QPixmap(qMax(32.0,size.width()*1.2), qMax(10.0,size.height()*1.1));
         buffer.fill(Qt::transparent);
         {
             //qDebug()<<"internalPaint(): "<<buffer.size()<<size;
@@ -4099,8 +4099,10 @@ void JKQTMathTextLabel::paintEvent(QPaintEvent *event)
     //QLabel::paintEvent(event);
     //return;
     internalPaint();
+    //qDebug()<<"paintEvent: "<<buffer.size();
     setPixmap(buffer);
     QLabel::paintEvent(event);
+    //qDebug()<<"paintEvent DONE: "<<size();
 }
 
 
