@@ -44,15 +44,19 @@ Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>),
 #include <QHeaderView>
 #include <QPrintDialog>
 #include <QDialogButtonBox>
-
-
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+#include <ctype.h>
+#include <locale>
 
 std::string jkqtp_tolower(const std::string& s){
   std::string d;
   d="";
+  std::locale loc;
   if (s.length()>0) {
     for (unsigned long i=0; i<s.length(); i++) {
-        d+=std::tolower(s[i]);
+        d+=std::tolower(s[i], loc);
     }
   }
   return d;
@@ -72,9 +76,10 @@ std::string jkqtp_tolower(const std::string& s){
  std::string jkqtp_toupper(const std::string& s){
   std::string d;
   d="";
+  std::locale loc;
   if (s.length()>0) {
     for (unsigned long i=0; i<s.length(); i++) {
-        d+=std::toupper(s[i]);
+        d+=std::toupper(s[i], loc);
     }
   }
   return d;
