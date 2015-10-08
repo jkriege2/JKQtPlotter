@@ -1562,6 +1562,8 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         JKQTPGET_SET_MACRO_I(void*, params, clearData())
         /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void set_params(const QVector<double>& params);
+        /** \brief sets the params from a copy of the given array of length \a N */
+        void set_copiedParams(const double* params, int N);
         inline void set_paramsV(double p1) {
             QVector<double> p;
             p<<p1;

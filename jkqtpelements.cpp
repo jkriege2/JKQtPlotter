@@ -5320,6 +5320,13 @@ void JKQTPxFunctionLineGraph::set_params(const QVector<double> &params)
     set_params(&iparams);
 }
 
+void JKQTPxFunctionLineGraph::set_copiedParams(const double *params, int N)
+{
+    QVector<double> v;
+    for (int i=0; i<N; i++) { v<<params[i]; }
+    set_params(v);
+}
+
 void JKQTPxFunctionLineGraph::set_errorParams(const QVector<double> &errorParams)
 {
     ierrorparams=errorParams;
