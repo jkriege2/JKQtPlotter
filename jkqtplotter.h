@@ -202,6 +202,9 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         JKQTPGET_SET_MACRO(bool, zoomByMouseWheel);
 
+        JKQTPGetMacro(double, mouseContextX)
+        JKQTPGetMacro(double, mouseContextY)
+
         inline JKQTPhorizontalAxis* getXAxis() { return plotter->getXAxis(); }
         inline JKQTPverticalAxis* getYAxis() { return plotter->getYAxis(); }
         inline JKQTPhorizontalAxis* get_xAxis() { return plotter->get_xAxis(); }
@@ -410,6 +413,8 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         void plotScalingRecalculated();
         /** \brief emitted before the plot scaling has been recalculated */
         void beforePlotScalingRecalculate();
+        /** \brief emitted when a context-emnu was opened at the given position */
+        void contextMenuOpened(double x, double y, QMenu* contextMenu);
 
 
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
@@ -590,6 +595,8 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         QSize minSize;
 
         QMenu* contextMenu;
+        double mouseContextX;
+        double mouseContextY;
         QList<QMenu*> contextSubMenus;
         void initContextMenu();
 

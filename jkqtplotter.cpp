@@ -60,6 +60,8 @@ JKQtPlotter::JKQtPlotter(QWidget *parent):
 
 void JKQtPlotter::init(bool datastore_internal, QWidget* parent, JKQTPdatastore* datast)
 {
+    mouseContextX=0;
+    mouseContextY=0;
     setParent(parent);
     connect(&resizeTimer, SIGNAL(timeout()), this, SLOT(delayedResizeEvent()));
     doDrawing=false;
@@ -303,9 +305,12 @@ void JKQtPlotter::mousePressEvent ( QMouseEvent * event ){
             //update();
             event->accept();
         } else if (rightMouseButtonAction==JKQtPlotter::RightMouseButtonContextMenu) {
+            mouseContextX=plotter->p2x(event->x()/magnification);
+            mouseContextY=plotter->p2y((event->y()-getPlotYOffset())/magnification);
             contextMenu->close();
             initContextMenu();
             contextMenu->popup(event->globalPos());
+            emit contextMenuOpened(mouseContextX, mouseContextY, contextMenu);
             event->accept();
         }
     }
