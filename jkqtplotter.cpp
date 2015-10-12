@@ -60,6 +60,8 @@ JKQtPlotter::JKQtPlotter(QWidget *parent):
 
 void JKQtPlotter::init(bool datastore_internal, QWidget* parent, JKQTPdatastore* datast)
 {
+    leftDoubleClickAction=LeftDoubleClickDefault;
+    menuSpecialContextMenu=NULL;
     mouseContextX=0;
     mouseContextY=0;
     setParent(parent);
@@ -273,6 +275,8 @@ void JKQtPlotter::mouseMoveEvent ( QMouseEvent * event ) {
 
 void JKQtPlotter::mousePressEvent ( QMouseEvent * event ){
     if (event->button()==Qt::LeftButton) {
+        mouseLastClickX=event->x();
+        mouseLastClickY=event->y();
         if ( (mouseActionMode!=JKQtPlotter::NoMouseAction))
         {
             mouseDragRectXStart=plotter->p2x(event->x()/magnification);
@@ -284,6 +288,8 @@ void JKQtPlotter::mousePressEvent ( QMouseEvent * event ){
             if (mouseActionMode==JKQtPlotter::ClickEvents) emit userClickFinished(mouseDragRectXStart, mouseDragRectYStart, event->modifiers());
         }
     } else if (event->button()==Qt::RightButton) {
+        mouseLastClickX=event->x();
+        mouseLastClickY=event->y();
         if (rightMouseButtonAction==JKQtPlotter::RightMouseButtonZoom) {
             double xmin=plotter->p2x((long)round((double)plotter->get_iplotBorderLeft()-(double)plotter->get_plotWidth()/2.0));
             double xmax=plotter->p2x((long)round((double)plotter->get_iplotBorderLeft()+1.5*(double)plotter->get_plotWidth()));
@@ -305,12 +311,8 @@ void JKQtPlotter::mousePressEvent ( QMouseEvent * event ){
             //update();
             event->accept();
         } else if (rightMouseButtonAction==JKQtPlotter::RightMouseButtonContextMenu) {
-            mouseContextX=plotter->p2x(event->x()/magnification);
-            mouseContextY=plotter->p2y((event->y()-getPlotYOffset())/magnification);
-            contextMenu->close();
-            initContextMenu();
-            contextMenu->popup(event->globalPos());
-            emit contextMenuOpened(mouseContextX, mouseContextY, contextMenu);
+            openContextMenu(event->x(), event->y());
+
             event->accept();
         }
     }
@@ -324,6 +326,9 @@ void JKQtPlotter::mousePressEvent ( QMouseEvent * event ){
 }
 
 void JKQtPlotter::mouseReleaseEvent ( QMouseEvent * event ){
+    if ((event->flags()&Qt::MouseEventCreatedDoubleClick)==Qt::MouseEventCreatedDoubleClick) {
+        return;
+    }
     if (mouseDragingRectangle && event->button()==Qt::LeftButton) {
         mouseDragRectXEnd=plotter->p2x(event->x()/magnification);
         mouseDragRectYEnd=plotter->p2y((event->y()-getPlotYOffset())/magnification);
@@ -370,7 +375,19 @@ void JKQtPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
     if  ( (event->x()/magnification>=plotter->get_iplotBorderLeft()) && (event->x()/magnification<=plotter->get_plotWidth()+plotter->get_iplotBorderLeft())  &&
           ((event->y()-getPlotYOffset())/magnification>=plotter->get_iplotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->get_plotHeight()+plotter->get_iplotBorderTop()) ) {
 
-        if (rightMouseButtonAction==JKQtPlotter::RightMouseButtonZoom) {
+        mouseLastClickX=event->x();
+        mouseLastClickY=event->y();
+        if (event->button()==Qt::LeftButton) {
+            if (leftDoubleClickAction==LeftDoubleClickContextMenu) {
+                openContextMenu(event->x(), event->y());
+                event->accept();
+            } else if (leftDoubleClickAction==LeftDoubleClickSpecialContextMenu) {
+                openSpecialContextMenu(event->x(), event->y());
+                event->accept();
+            }
+        }
+
+        if (rightMouseButtonAction==JKQtPlotter::RightMouseButtonZoom && event->button()==Qt::RightButton) {
             double factor=4.0;
             if (event->button()==Qt::RightButton) factor=1;
             double xmin=plotter->p2x((long)round((double)event->x()/magnification-(double)plotter->get_plotWidth()/factor));
@@ -770,6 +787,15 @@ void JKQtPlotter::set_zoomByMouseRectangle(bool zomByrectangle) {
     else mouseActionMode=JKQtPlotter::NoMouseAction;
 }
 
+void JKQtPlotter::set_menuSpecialContextMenu(QMenu *menu)
+{
+    menuSpecialContextMenu=menu;
+    if (menuSpecialContextMenu) {
+        menuSpecialContextMenu->setParent(this);
+        menuSpecialContextMenu->close();
+    }
+}
+
 void JKQtPlotter::setMagnification(double m)
 {
     magnification=m;
@@ -811,6 +837,47 @@ void JKQtPlotter::setMousePositionLabel(const QString &text)
 {
     customMousePositiontext=text;
     if (displayCustomMousePosition) update();
+}
+
+void JKQtPlotter::openContextMenu()
+{
+    openContextMenu(mouseLastClickX, mouseLastClickY);
+}
+
+void JKQtPlotter::openContextMenu(int x, int y)
+{
+    //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<")";
+    mouseContextX=plotter->p2x(x/magnification);
+    mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
+    contextMenu->close();
+    initContextMenu();
+    contextMenu->popup(mapToGlobal(QPoint(x,y)));
+    qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<contextMenu->size()<<contextMenu->pos()<<contextMenu->parent();
+    emit contextMenuOpened(mouseContextX, mouseContextY, contextMenu);
+    //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<") ... DONE";
+}
+
+void JKQtPlotter::openSpecialContextMenu()
+{
+    openSpecialContextMenu(mouseLastClickX, mouseLastClickY);
+}
+
+void JKQtPlotter::openSpecialContextMenu(int x, int y)
+{
+    qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<")";
+    if (menuSpecialContextMenu) {
+        for (int i=0; i<menuSpecialContextMenu->actions().size(); i++) {
+            qDebug()<<"  - "<<menuSpecialContextMenu->actions().at(i)->text();
+        }
+        mouseContextX=plotter->p2x(x/magnification);
+        mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
+        menuSpecialContextMenu->close();
+        menuSpecialContextMenu->popup(mapToGlobal(QPoint(x,y)));
+        menuSpecialContextMenu->resize(menuSpecialContextMenu->sizeHint());
+        qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<menuSpecialContextMenu->size()<<menuSpecialContextMenu->pos()<<menuSpecialContextMenu->parent();
+        emit contextMenuOpened(mouseContextX, mouseContextY, menuSpecialContextMenu);
+        qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<") ... DONE";
+    }
 }
 
 

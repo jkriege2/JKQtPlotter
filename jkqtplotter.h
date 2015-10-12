@@ -89,6 +89,14 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
             RightMouseButtonContextMenu=2
         };
 
+        enum LeftDoubleClickAction {
+            LeftDoubleClickDefault,
+            LeftDoubleClickContextMenu,
+            LeftDoubleClickSpecialContextMenu,
+        };
+
+
+
 
         /** \brief class constructor
          */
@@ -199,11 +207,16 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         //GET_SET_MACRO(bool, zoomByDoubleAndRightMouseClick);
         JKQTPGET_SET_MACRO(RightMouseButtonAction, rightMouseButtonAction);
+        JKQTPGET_SET_MACRO(LeftDoubleClickAction, leftDoubleClickAction);
+        JKQTPGET_MACRO(QMenu*, menuSpecialContextMenu);
+        void set_menuSpecialContextMenu(QMenu* menu);
 
         JKQTPGET_SET_MACRO(bool, zoomByMouseWheel);
 
         JKQTPGetMacro(double, mouseContextX)
         JKQTPGetMacro(double, mouseContextY)
+        JKQTPGetMacro(int, mouseLastClickX)
+        JKQTPGetMacro(int, mouseLastClickY)
 
         inline JKQTPhorizontalAxis* getXAxis() { return plotter->getXAxis(); }
         inline JKQTPverticalAxis* getYAxis() { return plotter->getYAxis(); }
@@ -400,6 +413,10 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         void setMousePositionLabel(const QString& text);
 
+        void openContextMenu();
+        void openContextMenu(int x, int y);
+        void openSpecialContextMenu();
+        void openSpecialContextMenu(int x, int y);
     signals:
         /** \brief signal: emitted whenever the mouse moved over the plot */
         void plotMouseMove(double x, double y);
@@ -497,6 +514,10 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         /** \brief indicates whether zooming using the mouse-wheel is activated */
         bool zoomByMouseWheel;
+
+        /** \brief indicates the action to perform on a left mouse-button double-click */
+        LeftDoubleClickAction leftDoubleClickAction;
+        QMenu* menuSpecialContextMenu;
 
 
 
@@ -597,6 +618,8 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         QMenu* contextMenu;
         double mouseContextX;
         double mouseContextY;
+        int mouseLastClickX;
+        int mouseLastClickY;
         QList<QMenu*> contextSubMenus;
         void initContextMenu();
 
