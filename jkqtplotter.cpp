@@ -852,7 +852,7 @@ void JKQtPlotter::openContextMenu(int x, int y)
     contextMenu->close();
     initContextMenu();
     contextMenu->popup(mapToGlobal(QPoint(x,y)));
-    qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<contextMenu->size()<<contextMenu->pos()<<contextMenu->parent();
+    //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<contextMenu->size()<<contextMenu->pos()<<contextMenu->parent();
     emit contextMenuOpened(mouseContextX, mouseContextY, contextMenu);
     //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<") ... DONE";
 }
@@ -864,19 +864,19 @@ void JKQtPlotter::openSpecialContextMenu()
 
 void JKQtPlotter::openSpecialContextMenu(int x, int y)
 {
-    qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<")";
+    //qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<")";
     if (menuSpecialContextMenu) {
         for (int i=0; i<menuSpecialContextMenu->actions().size(); i++) {
-            qDebug()<<"  - "<<menuSpecialContextMenu->actions().at(i)->text();
+            //qDebug()<<"  - "<<menuSpecialContextMenu->actions().at(i)->text();
         }
         mouseContextX=plotter->p2x(x/magnification);
         mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
         menuSpecialContextMenu->close();
         menuSpecialContextMenu->popup(mapToGlobal(QPoint(x,y)));
         menuSpecialContextMenu->resize(menuSpecialContextMenu->sizeHint());
-        qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<menuSpecialContextMenu->size()<<menuSpecialContextMenu->pos()<<menuSpecialContextMenu->parent();
+        //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<menuSpecialContextMenu->size()<<menuSpecialContextMenu->pos()<<menuSpecialContextMenu->parent();
         emit contextMenuOpened(mouseContextX, mouseContextY, menuSpecialContextMenu);
-        qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<") ... DONE";
+        //qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<") ... DONE";
     }
 }
 
