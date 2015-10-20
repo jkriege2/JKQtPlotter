@@ -2093,6 +2093,7 @@ JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent):
     meanSymbol=JKQTPplus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
+    sortData=Unsorted;
 
     if (parent) { // get style settings from parent object
         parentPlotStyle=parent->getNextStyle();
@@ -2123,6 +2124,7 @@ JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtPlotter* parent):
     meanSymbol=JKQTPplus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
+    sortData=Unsorted;
 
     if (parent) { // get style settings from parent object
         parentPlotStyle=parent->getNextStyle();
