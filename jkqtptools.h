@@ -151,24 +151,24 @@
   inline virtual void set_##varname (const typedef_set_##varname & __value)  \
   { \
     this->varname = __value; \
-  }; \
+  } \
   /** \brief returns the property varname. \see varname for more information */ \
   inline virtual type get_##varname () const  \
   {\
     return this->varname; \
-  };
+  }
 #define JKQTPGET_SET_VMACRO(type,varname) \
     typedef type typedef_set_##varname ;\
   /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
   inline virtual void set_##varname (const typedef_set_##varname & __value)  \
   { \
     this->varname = __value; \
-  }; \
+  } \
   /** \brief returns the property varname. \see varname for more information */ \
   inline virtual type get_##varname () const  \
   {\
     return this->varname; \
-  };
+  }
 #define JKQTPGetSetMacro(type,varname) JKQTPGET_SET_MACRO(type,varname)
 
 /**
@@ -184,11 +184,11 @@
   { \
     this->varname = __value; \
     this-> paramsChanged=true; \
-  }; \
+  } \
   inline virtual type get_##varname () const /** \brief returns the property varname. \see varname for more information */ \
   {\
     return this->varname; \
-  };
+  }
 #define JKQTPGetSetMacroP(type,varname) JKQTPGET_SET_MACRO_P(type,varname)
 
 /**
@@ -205,12 +205,12 @@
         this-> paramsChanged=true; \
         inst; \
     } \
-  }; \
+  } \
   /** \brief returns the property varname. \see varname for more information */ \
   inline virtual type get_##varname () const  \
   { \
     return this->varname; \
-  };
+  }
 #define JKQTPGetSetMacroIP(type,varname,inst) JKQTPGET_SET_MACRO_IP(type,varname,inst)
 
 /**
@@ -226,12 +226,12 @@
             this->varname = __value; \
             inst; \
         } \
-    }; \
+    } \
     /** \brief returns the property varname. \see varname for more information */ \
     inline virtual type get_##varname () const  \
     {\
         return this->varname; \
-    };
+    }
 #define JKQTPGetSetMacroI(type,varname,inst) JKQTPGET_SET_MACRO_I(type,varname,inst)
 
 /**
@@ -249,17 +249,17 @@
         if (this->varname2 != __value2) { \
             this->varname2 = __value2; \
         } \
-    }; \
+    } \
     /** \brief returns the property varname. \see varname for more information */ \
     inline virtual type get_##varname () const  \
     {\
         return this->varname; \
-    }; \
+    } \
     /** \brief returns the property varname2. \see varname2 for more information */\
     inline virtual type2 get_##varname2 () const  \
     {\
         return this->varname2; \
-    };
+    }
 #define JKQTPGetSetMacroTwo(name,type,varname,type2,varname2) JKQTPGET_SET_MACRO_TWO(name,type,varname,type2,varname2)
 
 /**
@@ -282,17 +282,17 @@
         if (set) { \
             inst; \
         } \
-    }; \
+    } \
     /** \brief returns the property varname. \see varname for more information */ \
     inline virtual type get_##varname () const  \
     {\
         return this->varname; \
-    }; \
+    } \
     /** \brief returns the property varname2. \see varname2 for more information */ \
     inline virtual type2 get_##varname2 () const  \
     {\
         return this->varname2; \
-    };
+    }
 #define JKQTPGetSetMacroTwoI(name,type,varname,type2,varname2,inst) JKQTPGET_SET_MACRO_TWO_I(name,type,varname,type2,varname2,inst)
 
 
@@ -308,12 +308,12 @@
     {\
         this->varname = __value; \
         inst; \
-    }; \
+    } \
     /** \brief returns the property varname. \see varname for more information */ \
     inline virtual type get_##varname () const  \
     {\
         return this->varname; \
-    };
+    }
 #define JKQTPGetSetMacroINC(type,varname,inst) JKQTPGET_SET_MACRO_INC(type,varname,inst)
 
 /** \brief create get_varname() and set_varname(type __value) methods/functions
@@ -324,7 +324,7 @@
 #define JKQTPGET_MACRO(type,varname) \
     /** \brief returns the property varname. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER>. \see varname for more information */ \
     inline virtual type get_##varname() const  \
-    {   return this->varname;   };
+    {   return this->varname;   }
 
 #define JKQTPGetMacro(type,varname) JKQTPGET_MACRO(type,varname)
 
@@ -340,7 +340,7 @@
     inline virtual void set_##varname (const typedef_set_##varname & __value)  \
     { \
         this->varname = __value; \
-    };
+    }
 #define JKQTPSetMacro(type,varname) JKQTPSET_MACRO(type,varname)
 
 /**
@@ -359,7 +359,7 @@
         this->varname = __value; \
         this->paramsChanged=true; \
     } \
-  };
+  }
 #define JKQTPSetMacroP(type,varname) JKQTPSET_MACRO_P(type,varname)
 
 /**
@@ -375,7 +375,7 @@
         this->varname = __value; \
         inst; \
     } \
-  };
+  }
 #define JKQTPSetMacroI(type,varname,inst) JKQTPSET_MACRO_I(type,varname,inst)
 
 /**
@@ -391,7 +391,7 @@
     if (this->varname != __value) { \
         this->varname = __value; \
     } \
-  };
+  }
 #define JKQTPSetMacroIBefore(type,varname,inst) JKQTPSET_MACRO_I_BEFORE(type,varname,inst)
 /**
  * \brief like SetMacroP(), but adds the instruction \a inst to the set method. This may be used
@@ -407,7 +407,7 @@
         this->paramsChanged=true; \
         inst; \
     } \
-  };
+  }
 #define JKQTPSetMacroIP(type,varname,inst) JKQTPSET_MACRO_IP(type,varname,inst)
 /*@}*/
 

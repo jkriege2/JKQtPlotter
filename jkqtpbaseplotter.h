@@ -68,7 +68,7 @@
 #define JKQTPBASEPLOTTER_H
 
 
-
+class JKQTPPlotsModel; // forward
 
 
 /** \brief base class for 2D plotter classes
@@ -207,6 +207,9 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief object used for the y-axis */
         JKQTPverticalAxis* yAxis;
 
+        /** \brief model representing all Plots in this plotter and showing their visible/invisible state */
+        JKQTPPlotsModel* m_plotsModel;
+
         /** \brief filename for the ini file in which to save the user settings
          *  \see jkqtplotter_base_userprops
          */
@@ -237,7 +240,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         double paintMagnification;
 
         /** \brief the decimal separator used when exporting data to text files */
-        JKQTPPROPERTY(QString, CSVdecimalSeparator);
+        JKQTPPROPERTY(QString, CSVdecimalSeparator)
         /** \brief this string is used to introduce comments in text output when exporting data */
         JKQTPPROPERTY(QString, CSVcommentInitializer)
 
@@ -256,7 +259,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief free space between widget top border and plot top border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderTop */
-        JKQTPPROPERTY(int, plotBorderTop);
+        JKQTPPROPERTY(int, plotBorderTop)
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderTop;
         int iplotKeyBorderTop;
@@ -264,19 +267,19 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         int iTitleHeight;
         /** \brief free space between widget left border and plot left border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderLeft  */
-        JKQTPPROPERTY(int, plotBorderLeft);
+        JKQTPPROPERTY(int, plotBorderLeft)
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderLeft;
         int iplotKeyBorderLeft;
         /** \brief free space between widget bottom border and plot bottom border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderBottom  */
-        JKQTPPROPERTY(int, plotBorderBottom);
+        JKQTPPROPERTY(int, plotBorderBottom)
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderBottom;
         int iplotKeyBorderBottom;
         /** \brief free space between widget right border and plot right border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderRight  */
-        JKQTPPROPERTY(int, plotBorderRight);
+        JKQTPPROPERTY(int, plotBorderRight)
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderRight;
         int iplotKeyBorderRight;
@@ -293,14 +296,14 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         int iplotBorderRight_nographs;
 
         /** \brief indicates whether the widget should maintain an aspect ratio of plotwidth and plotheight */
-        JKQTPPROPERTY(bool, maintainAspectRatio);
+        JKQTPPROPERTY(bool, maintainAspectRatio)
         /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true */
-        JKQTPPROPERTY(double, aspectRatio);
+        JKQTPPROPERTY(double, aspectRatio)
 
         /** \brief indicates whether the axes should maintain an aspect ratio */
-        JKQTPPROPERTY(bool, maintainAxisAspectRatio);
+        JKQTPPROPERTY(bool, maintainAxisAspectRatio)
         /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true */
-        JKQTPPROPERTY(double, axisAspectRatio);
+        JKQTPPROPERTY(double, axisAspectRatio)
 
         /** \brief plot width in pixels inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth) */
         int plotWidth;
@@ -310,16 +313,16 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief color of the plotted graph */
-        JKQTPPROPERTY(QColor, graphColor);
+        JKQTPPROPERTY(QColor, graphColor)
         /** \brief colors used in modes where more than one graph is beeing plottet */
         QColor manyGraphsColor[50];
         QColor def_manyGraphsColor[50];
         /** \brief number of actually defined items in manyGraphsColor */
         int manyGraphsColorCount;
         /** \brief pen styles used in modes where more than one graph is beeing plottet */
-        JKQTPPROPERTY(Qt::PenStyle, manyGraphsStyle[5]);
+        JKQTPPROPERTY(Qt::PenStyle, manyGraphsStyle[5])
         /** \brief width of the plotted graph (in pixel) */
-        JKQTPPROPERTY(double, graphWidth);
+        JKQTPPROPERTY(double, graphWidth)
 
 
 
@@ -329,64 +332,64 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief color of the coordinate system */
-        JKQTPPROPERTY(QColor, systemColor);
+        JKQTPPROPERTY(QColor, systemColor)
         /** \brief width of the coordinate (in pixel) */
-        JKQTPPROPERTY(double, systemWidth);
+        JKQTPPROPERTY(double, systemWidth)
         /** \brief color of the background*/
-        JKQTPPROPERTY(QColor, backgroundColor);
+        JKQTPPROPERTY(QColor, backgroundColor)
         /** \brief color of the background when exporting*/
-        JKQTPPROPERTY(QColor, exportBackgroundColor);
+        JKQTPPROPERTY(QColor, exportBackgroundColor)
         /** \brief color of the plot's background*/
-        JKQTPPROPERTY(QColor, plotBackgroundColor);
+        JKQTPPROPERTY(QColor, plotBackgroundColor)
 
 
         /** \brief indicates whether to plot a frame around the key */
-        JKQTPPROPERTY(bool, showKeyFrame);
+        JKQTPPROPERTY(bool, showKeyFrame)
         /** \brief color of the key frame line */
-        JKQTPPROPERTY(QColor, keyFrameColor);
+        JKQTPPROPERTY(QColor, keyFrameColor)
         /** \brief width of the key frame line */
-        JKQTPPROPERTY(double, keyFrameWidth);
+        JKQTPPROPERTY(double, keyFrameWidth)
         /** \brief color of the key background */
-        JKQTPPROPERTY(QColor, keyBackgroundColor);
+        JKQTPPROPERTY(QColor, keyBackgroundColor)
         /** \brief indicates whether to plot a key */
-        JKQTPPROPERTY(bool, showKey);
+        JKQTPPROPERTY(bool, showKey)
         /** \brief font face for key labels */
-        JKQTPPROPERTY(QString, keyFont);
+        JKQTPPROPERTY(QString, keyFont)
         /** \brief font size for key labels [in points] */
-        JKQTPPROPERTY(double, keyFontSize);
+        JKQTPPROPERTY(double, keyFontSize)
         /** \brief width of a key item in pixels [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, key_item_width);
+        JKQTPPROPERTY(double, key_item_width)
         /** \brief height of a key item in pixels [in units of height  keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, key_item_height);
+        JKQTPPROPERTY(double, key_item_height)
         /** \brief length of the line samples in the key in pixels [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, key_line_length);
+        JKQTPPROPERTY(double, key_line_length)
         /** \brief x-distance between key frame and key content [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyXMargin);
+        JKQTPPROPERTY(double, keyXMargin)
         /** \brief y-distance between key frame and key content [in units of width of 'x' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyYMargin);
+        JKQTPPROPERTY(double, keyYMargin)
         /** \brief x-offset of the key from the border of the plot [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyXOffset);
+        JKQTPPROPERTY(double, keyXOffset)
         /** \brief y-offset of the key from the border of the plot [in units of width of 'x' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyYOffset);
+        JKQTPPROPERTY(double, keyYOffset)
         /** \brief distance between key line example and key text [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyXSeparation);
+        JKQTPPROPERTY(double, keyXSeparation)
         /** \brief distance between two key entries [in units of height of keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyYSeparation);
+        JKQTPPROPERTY(double, keyYSeparation)
         /** \brief key position */
-        JKQTPPROPERTY(JKQTPkeyPosition, keyPosition);
+        JKQTPPROPERTY(JKQTPkeyPosition, keyPosition)
         /** \brief the key layout */
-        JKQTPPROPERTY(JKQTPkeyLayout, keyLayout);
+        JKQTPPROPERTY(JKQTPkeyLayout, keyLayout)
         /** \brief determine width of the key automatically */
-        JKQTPPROPERTY(bool, keyAutosize);
+        JKQTPPROPERTY(bool, keyAutosize)
 
         /** \brief the plot label text */
         QString plotLabel;
 
         /** \brief the plot label font name */
-        JKQTPPROPERTY(QString, plotLabelFontname);
+        JKQTPPROPERTY(QString, plotLabelFontname)
 
         /** \brief the plot label font size */
-        JKQTPPROPERTY(double, plotLabelFontSize);
+        JKQTPPROPERTY(double, plotLabelFontSize)
 
         /** \brief calculate the scaling and offset values from axis min/max values */
         void calcPlotScaling(JKQTPEnhancedPainter& painter);
@@ -398,20 +401,20 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         bool emitSignals;
 
         /** \brief specifies whether to use antialiasing for plotting the coordinate system */
-        JKQTPPROPERTY(bool, useAntiAliasingForSystem);
+        JKQTPPROPERTY(bool, useAntiAliasingForSystem)
 
         /** \brief specifies whether to use antialiasing for plotting the graphs
          *
          * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
          *       roughly three-fold speed improvement!
          */
-        JKQTPPROPERTY(bool, useAntiAliasingForGraphs);
+        JKQTPPROPERTY(bool, useAntiAliasingForGraphs)
 
         /** \brief specifies whether to use antialiasing when drawing any text
         * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
         *       roughly three-fold speed improvement!
         */
-        JKQTPPROPERTY(bool, useAntiAliasingForText);
+        JKQTPPROPERTY(bool, useAntiAliasingForText)
 
         /** \brief multiplier which is used for font sizes when the plot is exported/printed */
         double fontSizePrintMultiplier;
@@ -442,7 +445,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief hidden default constructor */
-        JKQtBasePlotter() {};
+        JKQtBasePlotter() {}
 
 
 
@@ -752,7 +755,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         virtual ~JKQtBasePlotter();
 
         /** \brief returns a pointer to the datastore used by this object */
-        inline JKQTPdatastore* getDatastore() { return datastore; };
+        inline JKQTPdatastore* getDatastore() { return datastore; }
+
+        /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
+        inline JKQTPPlotsModel* getPlotsModel() { return m_plotsModel; }
 
         /** \brief tells the plotter object to use the given external datastore.
          *
@@ -806,10 +812,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void resize(int width, int height);
 
         /** \brief gets the width of the plot widget */
-        inline int getWidth() {return widgetWidth; };
+        inline int getWidth() {return widgetWidth; }
 
         /** \brief gets the width of the plot widget */
-        inline int getHeight() {return widgetHeight; };
+        inline int getHeight() {return widgetHeight; }
 
         /** \brief sets the width of the plot widget */
         void setHeight(int heigh);
@@ -827,16 +833,16 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void setXY(double xminn, double xmaxx, double yminn, double ymaxx);
 
         /** \brief returns the current x-axis min */
-        inline double getXMin() const {return xAxis->getMin(); };
+        inline double getXMin() const {return xAxis->getMin(); }
 
         /** \brief returns the current x-axis max */
-        inline double getXMax() const {return xAxis->getMax(); };
+        inline double getXMax() const {return xAxis->getMax(); }
 
         /** \brief returns the current y-axis min */
-        inline double getYMin() const {return yAxis->getMin(); };
+        inline double getYMin() const {return yAxis->getMin(); }
 
         /** \brief returns the current y-axis max */
-        inline double getYMax() const {return yAxis->getMax(); };
+        inline double getYMax() const {return yAxis->getMax(); }
 
 
 
@@ -1121,7 +1127,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         void setAllGraphsInvisible();
         void setAllGraphsVisible();
-        void setGraphVisible(int i);
+        void setGraphVisible(int i, bool visible=true);
 
         /** \brief add a new graph, returns it's position in the graphs list, if the graph is already in the plot, this returns the index in the list */
         size_t addGraph(JKQTPgraph* gr);

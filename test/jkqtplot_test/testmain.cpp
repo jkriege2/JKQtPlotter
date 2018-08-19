@@ -51,9 +51,16 @@ TestMain::TestMain(QWidget *parent) :
     plotBot->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
     plotBot2->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
 
+    QListView* listPlots=new QListView(win);
+    listPlots->setModel(plot->get_plotter()->getPlotsModel());
+    listPlots->setMaximumWidth(256);
     QVBoxLayout* layout=new QVBoxLayout(win);
-    layout->addWidget(plot);
-    layout->addWidget(plotBot);
+    QGridLayout* layout_grid=new QGridLayout(win);
+    layout_grid->addWidget(plot,0,0,1,1);
+    layout_grid->addWidget(plotBot,1,0,1,1);
+    layout_grid->addWidget(listPlots,0,1,1,1);
+    layout_grid->setColumnStretch(0,1);
+    layout->addLayout(layout_grid);
     layout->addWidget(plotBot2);
     win->setLayout(layout);
     win->resize(1000, 800);

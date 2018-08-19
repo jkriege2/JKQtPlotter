@@ -16,6 +16,7 @@
 #include "../../jkqtpoverlayelements.h"
 #include "../../jkqtpparsedfunctionelements.h"
 #include "../../jkqtpbaseelements.h"
+#include "../../jkqtpplotsmodel.h"
 #include "../../jkqtptools.h"
 
 #define N1 200

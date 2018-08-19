@@ -16,7 +16,8 @@ HEADERS += $$PWD/jkqtpbaseplotter.h \
            $$PWD/jkqtpoverlayelements.h \
            $$PWD/jkqtpgeoelements.h \
            $$PWD/jkqtpmathparser.h \
-           $$PWD/jkqtp_imexport.h
+           $$PWD/jkqtp_imexport.h \
+           $$PWD/jkqtpplotsmodel.h
 
 
 SOURCES += $$PWD/jkqtpbaseplotter.cpp \
@@ -32,7 +33,8 @@ SOURCES += $$PWD/jkqtpbaseplotter.cpp \
            $$PWD/jkqtpparsedfunctionelements.cpp  \
            $$PWD/jkqtpoverlayelements.cpp  \
            $$PWD/jkqtpgeoelements.cpp  \
-           $$PWD/jkqtpmathparser.cpp
+           $$PWD/jkqtpmathparser.cpp \
+           $$PWD/jkqtpplotsmodel.cpp
 
 
 RESOURCES += $$PWD/jkqtpbaseplotter.qrc

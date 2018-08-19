@@ -35,7 +35,8 @@
 #include <QPrintPreviewWidget>
 #include <QDialog>
 #include "jkqtpbaseplotter.h"
-#include<QPrinter>
+#include "jkqtpplotsmodel.h"
+#include <QPrinter>
 #include <QPrinterInfo>
 #include <QPrintDialog>
 #include <QGridLayout>
@@ -144,7 +145,7 @@ QSizeF JKQtBasePlotter::getTextSizeSize(const QString &fontName, double fontSize
  * JKQtPlotterBase
  **************************************************************************************************************************/
 JKQtBasePlotter::JKQtBasePlotter(bool datastore_internal, QObject* parent, JKQTPdatastore* datast):
-    QObject(parent)
+    QObject(parent), m_plotsModel(nullptr), xAxis(nullptr), yAxis(nullptr)
 {
 
     dataColumnsListWidget=NULL;
@@ -177,6 +178,8 @@ JKQtBasePlotter::JKQtBasePlotter(bool datastore_internal, QObject* parent, JKQTP
 
     xAxis=new JKQTPhorizontalAxis(this);
     yAxis=new JKQTPverticalAxis(this);
+    m_plotsModel=new JKQTPPlotsModel(this);
+    connect(this, SIGNAL(plotUpdated()), m_plotsModel, SLOT(plotUpdated()));
 
 
     emitSignals=false;
@@ -4090,10 +4093,10 @@ void JKQtBasePlotter::setAllGraphsVisible()
     if (emitPlotSignals) emit plotUpdated();
 }
 
-void JKQtBasePlotter::setGraphVisible(int i)
+void JKQtBasePlotter::setGraphVisible(int i, bool visible)
 {
     JKQTPgraph* g=graphs.value(i, NULL);
-    if (g) g->set_visible(true);
+    if (g) g->set_visible(visible);
     if (emitPlotSignals) emit plotUpdated();
 }
 
