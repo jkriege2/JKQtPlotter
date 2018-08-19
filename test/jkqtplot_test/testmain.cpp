@@ -60,8 +60,8 @@ TestMain::TestMain(QWidget *parent) :
     layout_grid->addWidget(plotBot,1,0,1,1);
     layout_grid->addWidget(listPlots,0,1,1,1);
     layout_grid->setColumnStretch(0,1);
-    layout->addLayout(layout_grid);
-    layout->addWidget(plotBot2);
+    layout->addLayout(layout_grid,2);
+    layout->addWidget(plotBot2,1);
     win->setLayout(layout);
     win->resize(1000, 800);
 
