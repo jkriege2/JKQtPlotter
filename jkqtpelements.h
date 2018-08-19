@@ -79,6 +79,8 @@ class LIB_EXPORT JKQTPgraph: public QObject {
         virtual void draw(JKQTPEnhancedPainter& painter)=0;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect)=0;
+        /** \brief returns an image with a key marker inside  */
+        QImage generateKeyMarker(QSize size=QSize(16,16));
 
         /** \brief get the maximum and minimum x-value of the graph
          *

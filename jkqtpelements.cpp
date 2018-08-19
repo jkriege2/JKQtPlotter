@@ -48,6 +48,22 @@ JKQTPgraph::JKQTPgraph(JKQtPlotter *parent):
     setParent(parent->get_plotter());
 }
 
+QImage JKQTPgraph::generateKeyMarker(QSize size)
+{
+    QImage img(size.width(),size.height(),QImage::Format_ARGB32);
+    if (parent) img.fill(parent->get_keyBackgroundColor());
+    {
+        JKQTPEnhancedPainter painter(&img);
+        painter.setRenderHint(QPainter::Antialiasing, true);
+        painter.setRenderHint(QPainter::TextAntialiasing, true);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+        painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
+        QRectF rect(0,0,size.width(),size.height());
+        drawKeyMarker(painter, rect);
+    }
+    return img;
+}
+
 QPointF JKQTPgraph::transform(const QPointF& x) {
     if (xAxis&&yAxis) return QPointF(xAxis->x2p(x.x()), yAxis->x2p(x.y()));
     return QPointF();

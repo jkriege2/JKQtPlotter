@@ -54,13 +54,7 @@ QVariant JKQTPPlotsModel::data(const QModelIndex &index, int role) const
        if (index.row()<m_plotter->getGraphCount()) return m_plotter->getGraph(index.row())->get_visible()?Qt::Checked:Qt::Unchecked;
     } else if (role == Qt::DecorationRole) {
         if (index.row()<m_plotter->getGraphCount()) {
-            QImage img(16,16,QImage::Format_ARGB32);
-            {
-                JKQTPEnhancedPainter painter(&img);
-                QRectF rect(0,0,16,16);
-                m_plotter->getGraph(index.row())->drawKeyMarker(painter, rect);
-            }
-            return img;
+            return m_plotter->getGraph(index.row())->generateKeyMarker(QSize(16,16));
         }
     }
     return QVariant();

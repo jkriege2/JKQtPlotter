@@ -473,6 +473,20 @@ void JKQtPlotter::initContextMenu()
     contextMenu->addAction(plotter->get_actZoomAll());
     contextMenu->addAction(plotter->get_actZoomIn());
     contextMenu->addAction(plotter->get_actZoomOut());
+    contextMenu->addSeparator();
+    QMenu* menVisibleGroup=new QMenu(tr("Graph Visibility"), contextMenu);
+    for (size_t i=0; i<get_plotter()->getGraphCount(); i++) {
+        QString tit=get_plotter()->getGraph(i)->get_title();
+        if (tit.isEmpty()) tit=tr("Graph %1").arg(static_cast<int>(i));
+        QAction* act=new QAction(tit, menVisibleGroup);
+        act->setCheckable(true);
+        act->setChecked(get_plotter()->getGraph(i)->get_visible());
+        act->setIcon(QIcon(QPixmap::fromImage(get_plotter()->getGraph(i)->generateKeyMarker(QSize(16,16)))));
+        act->setData(static_cast<int>(i));
+        connect(act, SIGNAL(toggled(bool)), this, SLOT(reactGraphVisible(bool)));
+        menVisibleGroup->addAction(act);
+    }
+    contextMenu->addMenu(menVisibleGroup);
 
     if (actions().size()>0) {
         contextMenu->addSeparator();
@@ -780,6 +794,14 @@ void JKQtPlotter::pzoomChangedLocally(double newxmin, double newxmax, double new
 
 void JKQtPlotter::intBeforePlotScalingRecalculate() {
     emit beforePlotScalingRecalculate();
+}
+
+void JKQtPlotter::reactGraphVisible(bool visible)
+{
+    QAction* act=dynamic_cast<QAction*>(sender());
+    if (act) {
+        get_plotter()->setGraphVisible(act->data().toInt(), visible);
+    }
 }
 
 void JKQtPlotter::set_zoomByMouseRectangle(bool zomByrectangle) {

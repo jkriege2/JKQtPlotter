@@ -638,6 +638,8 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         /** \brief emitted before the plot scaling has been recalculated */
         void intBeforePlotScalingRecalculate();
+        /** \brief called from a menu entry that encodes the graph ID */
+        void reactGraphVisible(bool visible);
 
 };
 
