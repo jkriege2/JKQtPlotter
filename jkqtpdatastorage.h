@@ -247,7 +247,7 @@ class LIB_EXPORT JKQTPdatastore{
          */
         template <typename TContainer>
         size_t addCopiedColumn(const TContainer& data, const QString& name=QString("")) {
-            const size_t N=data.size();
+            const size_t N=static_cast<size_t>(data.size());
             double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
             if (N>0) {
                 size_t r=0;
@@ -271,7 +271,7 @@ class LIB_EXPORT JKQTPdatastore{
          */
         template <typename TContainer>
         size_t addCopiedColumn(const TContainer& data, const QString& name, size_t stride, size_t start=0) {
-            const size_t N=(data.size()-start)/stride;
+            const size_t N=static_cast<size_t>(data.size()-start)/stride;
             double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
             if (N>0) {
                 size_t r=0;
@@ -355,7 +355,7 @@ class LIB_EXPORT JKQTPdatastore{
         /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
         template <typename T>
-        inline size_t addCopiedImageAsColumn(const T* data, size_t width, size_t height, const QString& name=QString(""), size_t stride=0, size_t start=0){
+        inline size_t addCopiedImageAsColumn(const T* data, size_t width, size_t height, const QString& name=QString(""), size_t stride=1, size_t start=0){
             return addCopiedColumn<T>(data, width*height, stride, start, name);
         }
 
@@ -370,7 +370,7 @@ class LIB_EXPORT JKQTPdatastore{
         /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
         template <typename T>
-        size_t addCopiedImageAsColumnTranspose(const T* data, size_t width, size_t height, const QString& name=QString(""), size_t stride=0, size_t start=0){
+        size_t addCopiedImageAsColumnTranspose(const T* data, size_t width, size_t height, const QString& name=QString(""), size_t stride=1, size_t start=0){
             double* temp=static_cast<T*>(malloc(width*height*sizeof(T)));
 
             for (size_t x=0; x<width; x++) {
@@ -390,7 +390,7 @@ class LIB_EXPORT JKQTPdatastore{
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
         template <typename T>
         inline size_t addCopiedImageAsColumnTranspose(const QVector<T>& data, size_t width, const QString& name=QString("")){
-            return addCopiedImageAsColumnTranspose<T>(data.data(), width, data.size()/width, name);
+            return addCopiedImageAsColumnTranspose<T>(data.data(), width, static_cast<size_t>(data.size())/width, name);
         }
 
 
@@ -429,7 +429,7 @@ class LIB_EXPORT JKQTPdatastore{
          */
         template <typename TContainer, typename TContainerMask>
         size_t addCopiedColumnMasked(const TContainer& data, const TContainerMask& mask, const QString& name=QString(""), bool useIfMaskEquals=false) {
-            const size_t N=data.size();
+            const size_t N=static_cast<size_t>(data.size());
             double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
             size_t rrs=0;
             if (data) {

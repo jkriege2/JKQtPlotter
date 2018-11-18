@@ -7,6 +7,17 @@ include(../../jkqtplotter.pri)
 
 SOURCES += jkqtplot_test.cpp \
     testmain.cpp \
+    TestWidgetFunctionPlots.cpp \
+    TestWidgetGeometry.cpp \
+    TestWidgetGraphs.cpp \
+    TestWidgetImages.cpp \
+    TestWidgetLogGraphs.cpp \
+    TestWidgetParamScatterPlots.cpp \
+    TestWidgetPeaksPlots.cpp \
+    TestWidgetRGBImages.cpp \
+    TestWidgetBarcharts.cpp \
+    TestWidgetContourPlots.cpp \
+    TestWidgetEmptyPlot.cpp \
     QTeXEngine/src/QTeXPaintEngine.cpp \
     QTeXEngine/src/QTeXPaintDevice.cpp
 
@@ -15,14 +26,14 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     win32  {
         SOURCES += jkqtpemfengineadapter.cpp \
             EmfEngine/src/EmfPaintDevice.cpp \
-            EmfEngine/src/EmfEngine.cpp
+            EmfEngine/src/EmfEngine.cpp \
 
         HEADERS +=EmfEngine/src/EmfEngine.h \
             jkqtpemfengineadapter.h
     }
 }
 
-CONFIG += qt console
+CONFIG += qt
 
 #QMAKE_LFLAGS += -s
 
@@ -44,7 +55,19 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 #if not added by qmake:
 DEFINES += QT_XML_LIB
 
-HEADERS += testmain.h
+HEADERS += testmain.h \
+    TestWidgetFunctionPlots.h \
+    TestWidgetGeometry.h \
+    TestWidgetGraphs.h \
+    TestWidgetImages.h \
+    TestWidgetLogGraphs.h \
+    TestWidgetParamScatterPlots.h \
+    TestWidgetPeaksPlots.h \
+    TestWidgetRGBImages.h \
+    TestWidgetBarcharts.h \
+    TestWidgetContourPlots.h \
+    TestWidgetEmptyPlot.h \
+    QTeXEngine/src/QTeXEngine.h
 
 
 INCLUDEPATH +=
