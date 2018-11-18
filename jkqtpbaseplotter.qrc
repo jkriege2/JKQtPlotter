@@ -1,20 +1,20 @@
 <RCC>
-    <qresource prefix="/">
-        <file>images/jkqtp_savedata.png</file>
-        <file>images/jkqtp_saveplot.png</file>
-        <file alias="images/jkqtp_print.png">images/jkqtp_24_print.png</file>
-        <file>images/jkqtp_savepdf.png</file>
-        <file>images/jkqtp_savesvg.png</file>
-        <file>images/jkqtp_saveps.png</file>
-        <file>images/jkqtp_savepix.png</file>
-        <file>images/jkqtp_savecsv.png</file>
-        <file alias="images/jkqtp_zoomin.png">images/jkqtp_24_zoomin.png</file>
-        <file alias="images/jkqtp_zoomout.png">images/jkqtp_24_zoomout.png</file>
-        <file alias="images/jkqtp_zoomall.png">images/jkqtp_24_zoomall.png</file>
-        <file alias="images/exportprintpreview.png">images/jkqtp_zoomall.png</file>
-        <file>images/jkqtp_copydata.png</file>
-        <file>images/jkqtp_copymatlab.png</file>
-        <file>images/jkqtp_copyimg.png</file>
+    <qresource prefix="JKQTPlotter/">
+        <file alias="jkqtp_savedata.png">images/jkqtp_savedata.png</file>
+        <file alias="jkqtp_saveplot.png">images/jkqtp_saveplot.png</file>
+        <file alias="jkqtp_print.png">images/jkqtp_24_print.png</file>
+        <file alias="jkqtp_savepdf.png">images/jkqtp_savepdf.png</file>
+        <file alias="jkqtp_savesvg.png">images/jkqtp_savesvg.png</file>
+        <file alias="jkqtp_saveps.png">images/jkqtp_saveps.png</file>
+        <file alias="jkqtp_savepix.png">images/jkqtp_savepix.png</file>
+        <file alias="jkqtp_savecsv.png">images/jkqtp_savecsv.png</file>
+        <file alias="jkqtp_zoomin.png">images/jkqtp_24_zoomin.png</file>
+        <file alias="jkqtp_zoomout.png">images/jkqtp_24_zoomout.png</file>
+        <file alias="jkqtp_zoomall.png">images/jkqtp_24_zoomall.png</file>
+        <file alias="jkqtp_exportprintpreview.png">images/jkqtp_zoomall.png</file> 
+        <file alias="jkqtp_copydata.png">images/jkqtp_copydata.png</file>
+        <file alias="jkqtp_copymatlab.png">images/jkqtp_copymatlab.png</file>
+        <file alias="jkqtp_copyimg.png">images/jkqtp_copyimg.png</file>
         <file alias="jkqtp_exit.png">images/exit.png</file>
         <file alias="jkqtp_cursor_rectangle.png">images/cursor_rectangle.png</file>
         <file alias="jkqtp_cursor_rectangle_mask.png">images/cursor_rectangle_mask.png</file>

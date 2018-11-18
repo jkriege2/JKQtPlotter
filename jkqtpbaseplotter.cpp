@@ -194,48 +194,48 @@ JKQtBasePlotter::JKQtBasePlotter(bool datastore_internal, QObject* parent, JKQTP
 
     emitSignals=true;
 
-    actSavePlot=new QAction(QIcon(":/images/jkqtp_saveplot.png"), "Save Plot", this);
+    actSavePlot=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveplot.png"), "Save Plot", this);
     actSavePlot->setToolTip("Save plot as image file (PDF, PS; PNG, ...).");
-    actSaveData=new QAction(QIcon(":/images/jkqtp_savedata.png"), "Save Data", this);
+    actSaveData=new QAction(QIcon(":/JKQTPlotter/jkqtp_savedata.png"), "Save Data", this);
     actSaveData->setToolTip("Save Data of the plot as file (CSV, ...).");
-    actCopyData=new QAction(QIcon(":/images/jkqtp_copydata.png"), "Copy Data", this);
+    actCopyData=new QAction(QIcon(":/JKQTPlotter/jkqtp_copydata.png"), "Copy Data", this);
     actCopyData->setToolTip("Copy Data of the plot to the clipboard to be pasted into Excel etc.");
-    actCopyMatlab=new QAction(QIcon(":/images/jkqtp_copymatlab.png"), "Copy Data to Matlab", this);
+    actCopyMatlab=new QAction(QIcon(":/JKQTPlotter/jkqtp_copymatlab.png"), "Copy Data to Matlab", this);
     actCopyMatlab->setToolTip("Copy Data of the plot to the clipboard in Matlab script format.");
-    actCopyPixelImage=new QAction(QIcon(":/images/jkqtp_copyimg.png"), "Copy Image", this);
+    actCopyPixelImage=new QAction(QIcon(":/JKQTPlotter/jkqtp_copyimg.png"), "Copy Image", this);
     actCopyPixelImage->setToolTip("Copy the plot as a pixel image to the clipboard");
 
 
-    actSavePDF=new QAction(QIcon(":/images/jkqtp_savepdf.png"), "Save P&DF", this);
+    actSavePDF=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepdf.png"), "Save P&DF", this);
     actSavePDF->setToolTip("Save as PDF");
     //toolbar->addAction(actSavePDF);
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    actSavePS=new QAction(QIcon(":/images/jkqtp_saveps.png"), "Save P&S", this);
+    actSavePS=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveps.png"), "Save P&S", this);
     actSavePS->setToolTip("Save as PostScript");
     //toolbar->addAction(actSavePS);
 #endif
-    actSaveSVG=new QAction(QIcon(":/images/jkqtp_savesvg.png"), "Save S&VG", this);
+    actSaveSVG=new QAction(QIcon(":/JKQTPlotter/jkqtp_savesvg.png"), "Save S&VG", this);
     actSaveSVG->setToolTip("Save as Scalable Vector Graphics (SVG)");
     //toolbar->addAction(actSaveSVG);
-    actSavePix=new QAction(QIcon(":/images/jkqtp_savepix.png"), "Save &Image", this);
+    actSavePix=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepix.png"), "Save &Image", this);
     actSavePix->setToolTip("Save as Pixel Image (PNG, JPEG, TIFF ...)");
     //toolbar->addAction(actSavePix);
 
-    actPrint=new QAction(QIcon(":/images/jkqtp_print.png"), "&Print", this);
+    actPrint=new QAction(QIcon(":/JKQTPlotter/jkqtp_print.png"), "&Print", this);
     actPrint->setToolTip("Print");
     //toolbar->addSeparator();
-    actSaveCSV=new QAction(QIcon(":/images/jkqtp_savecsv.png"), "Save &CSV", this);
+    actSaveCSV=new QAction(QIcon(":/JKQTPlotter/jkqtp_savecsv.png"), "Save &CSV", this);
     actSaveCSV->setToolTip("Save the data which is used for the plot as Comma Separated Values (CSV)");
     //toolbar->addAction(actSaveCSV);
     //toolbar->addSeparator();
-    actZoomAll=new QAction(QIcon(":/images/jkqtp_zoomall.png"), "Zoom &All", this);
+    actZoomAll=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomall.png"), "Zoom &All", this);
     actZoomAll->setToolTip("Zoom to view all data");
-    actZoomIn=new QAction(QIcon(":/images/jkqtp_zoomin.png"), "Zoom &In", this);
+    actZoomIn=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomin.png"), "Zoom &In", this);
     actZoomIn->setToolTip("Zoom in around the center of the plot");
-    actZoomOut=new QAction(QIcon(":/images/jkqtp_zoomout.png"), "Zoom &Out", this);
+    actZoomOut=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomout.png"), "Zoom &Out", this);
     actZoomOut->setToolTip("Zoom out");
 
-    actShowPlotData=new QAction(QIcon(":/jkqtp_showplotdata.png"), "&Show Plot Data", this);
+    actShowPlotData=new QAction(QIcon(":/JKQTPlotter/jkqtp_showplotdata.png"), "&Show Plot Data", this);
     actShowPlotData->setToolTip("opens a dialog that contains all data used for the plot in a table.");
 
 
@@ -1453,7 +1453,7 @@ void JKQtBasePlotter::printpreview(QPrinter *p, bool setabsolutesize) {
     QGridLayout* layout=new QGridLayout();
     dlg->setLayout(layout);
     dlg->setWindowTitle(tr("Graph print/export preview ..."));
-    dlg->setWindowIcon(QIcon(":/images/exportprintpreview.png"));
+    dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
     printPreview=new QPrintPreviewWidget(p, dlg);
     connect(printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printpreviewPaintRequested(QPrinter*)));
 
@@ -1617,7 +1617,7 @@ bool JKQtBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     QGridLayout* layout=new QGridLayout();
     dlg->setLayout(layout);
     dlg->setWindowTitle(tr("Graph print/export preview ..."));
-    dlg->setWindowIcon(QIcon(":/images/exportprintpreview.png"));
+    dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
 
     bool delPrinter=false;
     if (svg) {
@@ -1810,7 +1810,7 @@ bool JKQtBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
     QGridLayout* layout=new QGridLayout();
     dlg->setLayout(layout);
     dlg->setWindowTitle(tr("Graph export preview ..."));
-    dlg->setWindowIcon(QIcon(":/images/exportprintpreview.png"));
+    dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
     /*printPreview=new QPrintPreviewWidget(p, dlg);
     connect(printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printpreviewPaintRequested(QPrinter*)));*/
     QScrollArea* scroll=new QScrollArea(dlg);
@@ -4368,7 +4368,7 @@ void JKQtBasePlotter::showPlotData() {
     QVBoxLayout* layout=new QVBoxLayout();
     dlg->setLayout(layout);
     QToolBar* tb=new QToolBar("toolbar", dlg);
-    QAction* actClose=new QAction(QIcon(":/jkqtp_exit.png"), tr("&Close Window"), dlg);
+    QAction* actClose=new QAction(QIcon(":/JKQTPlotter/jkqtp_exit.png"), tr("&Close Window"), dlg);
     connect(actClose, SIGNAL(triggered()), dlg, SLOT(accept()));
     tb->addAction(actClose);
     tb->addSeparator();

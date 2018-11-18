@@ -526,30 +526,30 @@ void JKQtPlotter::initContextMenu()
 
 void JKQtPlotter::updateCursor() {
     if (mouseActionMode==JKQtPlotter::ZoomRectangle) {
-        QBitmap cursor(":/jkqtp_cursor_zoom.png");
-        QBitmap mask(":/jkqtp_cursor_zoom_mask.png");
+        QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_zoom.png");
+        QBitmap mask(":/JKQTPlotter/jkqtp_cursor_zoom_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));
     } else if (mouseActionMode==JKQtPlotter::RectangleEvents) {
-        QBitmap cursor(":/jkqtp_cursor_rectangle.png");
-        QBitmap mask(":/jkqtp_cursor_rectangle_mask.png");
+        QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_rectangle.png");
+        QBitmap mask(":/JKQTPlotter/jkqtp_cursor_rectangle_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));
     } else if (mouseActionMode==JKQtPlotter::CircleEvents) {
-        QBitmap cursor(":/jkqtp_cursor_circle.png");
-        QBitmap mask(":/jkqtp_cursor_circle_mask.png");
+        QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_circle.png");
+        QBitmap mask(":/JKQTPlotter/jkqtp_cursor_circle_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));
     } else if (mouseActionMode==JKQtPlotter::EllipseEvents) {
-        QBitmap cursor(":/jkqtp_cursor_ellipse.png");
-        QBitmap mask(":/jkqtp_cursor_ellipse_mask.png");
+        QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_ellipse.png");
+        QBitmap mask(":/JKQTPlotter/jkqtp_cursor_ellipse_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));
     } else if (mouseActionMode==JKQtPlotter::LineEvents) {
-        QBitmap cursor(":/jkqtp_cursor_line.png");
-        QBitmap mask(":/jkqtp_cursor_line_mask.png");
+        QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_line.png");
+        QBitmap mask(":/JKQTPlotter/jkqtp_cursor_line_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));
     } else if (mouseActionMode==JKQtPlotter::ClickEvents) {
         setCursor(QCursor(Qt::CrossCursor));
     } else if (mouseActionMode==JKQtPlotter::ScribbleEvents) {
-        QBitmap cursor(":/jkqtp_cursor_scribble.png");
-        QBitmap mask(":/jkqtp_cursor_scribble_mask.png");
+        QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_scribble.png");
+        QBitmap mask(":/JKQTPlotter/jkqtp_cursor_scribble_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));
     } else {
         setCursor(QCursor(Qt::ArrowCursor));

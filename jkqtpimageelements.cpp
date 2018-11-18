@@ -189,7 +189,7 @@ void JKQTPImage::draw(JKQTPEnhancedPainter& painter)  {
 
 void JKQTPImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
-    painter.drawImage(rect, QPixmap(":/jkqtp_plot_image.png").toImage());
+    painter.drawImage(rect, QPixmap(":/JKQTPlotter/jkqtp_plot_image.png").toImage());
 }
 
 void JKQTPImage::createImageActions()
@@ -2062,7 +2062,7 @@ double JKQTPRGBMathImage::getValueAt(double x, double y, int channel)
 
 void JKQTPRGBMathImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
-    painter.drawImage(rect, QPixmap(":/jkqtp_plot_rgbimage.png").toImage());
+    painter.drawImage(rect, QPixmap(":/JKQTPlotter/jkqtp_plot_rgbimage.png").toImage());
 }
 
 void JKQTPRGBMathImage::set_title(const JKQTPgraph::typedef_set_title &title)

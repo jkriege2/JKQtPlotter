@@ -933,17 +933,17 @@ JKQTPerrorPlotstyleComboBox::JKQTPerrorPlotstyleComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addSymbol(JKQTPnoError, tr("none"), QIcon(":/jkqtp_enone.png"));
-    addSymbol(JKQTPerrorLines, tr("error lines"), QIcon(":/jkqtp_elines.png"));
-    addSymbol(JKQTPerrorBars, tr("error bars"), QIcon(":/jkqtp_ebars.png"));
-    addSymbol(JKQTPerrorSimpleBars, tr("simple error bars"), QIcon(":/jkqtp_esbars.png"));
-    addSymbol(JKQTPerrorPolygons, tr("error polygons"), QIcon(":/jkqtp_epoly.png"));
-    addSymbol(JKQTPerrorBarsLines, tr("bars + lines"), QIcon(":/jkqtp_elinesbars.png"));
-    addSymbol(JKQTPerrorBarsPolygons, tr("bars + polygons"), QIcon(":/jkqtp_epolybars.png"));
-    addSymbol(JKQTPerrorSimpleBarsLines, tr("simple bars + lines"), QIcon(":/jkqtp_elinessbars.png"));
-    addSymbol(JKQTPerrorSimpleBarsPolygons, tr("simple bars + polygons"), QIcon(":/jkqtp_epolysbars.png"));
-    addSymbol(JKQTPerrorBoxes, tr("boxes"), QIcon(":/jkqtp_eboxes.png"));
-    addSymbol(JKQTPerrorEllipses, tr("ellipses"), QIcon(":/jkqtp_eellipses.png"));
+    addSymbol(JKQTPnoError, tr("none"), QIcon(":/JKQTPlotter/jkqtp_enone.png"));
+    addSymbol(JKQTPerrorLines, tr("error lines"), QIcon(":/JKQTPlotter/jkqtp_elines.png"));
+    addSymbol(JKQTPerrorBars, tr("error bars"), QIcon(":/JKQTPlotter/jkqtp_ebars.png"));
+    addSymbol(JKQTPerrorSimpleBars, tr("simple error bars"), QIcon(":/JKQTPlotter/jkqtp_esbars.png"));
+    addSymbol(JKQTPerrorPolygons, tr("error polygons"), QIcon(":/JKQTPlotter/jkqtp_epoly.png"));
+    addSymbol(JKQTPerrorBarsLines, tr("bars + lines"), QIcon(":/JKQTPlotter/jkqtp_elinesbars.png"));
+    addSymbol(JKQTPerrorBarsPolygons, tr("bars + polygons"), QIcon(":/JKQTPlotter/jkqtp_epolybars.png"));
+    addSymbol(JKQTPerrorSimpleBarsLines, tr("simple bars + lines"), QIcon(":/JKQTPlotter/jkqtp_elinessbars.png"));
+    addSymbol(JKQTPerrorSimpleBarsPolygons, tr("simple bars + polygons"), QIcon(":/JKQTPlotter/jkqtp_epolysbars.png"));
+    addSymbol(JKQTPerrorBoxes, tr("boxes"), QIcon(":/JKQTPlotter/jkqtp_eboxes.png"));
+    addSymbol(JKQTPerrorEllipses, tr("ellipses"), QIcon(":/JKQTPlotter/jkqtp_eellipses.png"));
     setCurrentIndex(2);
 }
 
@@ -978,18 +978,18 @@ JKQTPkeyPositionComboBox::JKQTPkeyPositionComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addPosition(JKQTPkeyInsideTopRight, tr("inside, top-right"), QIcon(":/jkqtp_key_itr.png"));
-    addPosition(JKQTPkeyInsideTopLeft, tr("inside, top-left"), QIcon(":/jkqtp_key_itl.png"));
-    addPosition(JKQTPkeyInsideBottomLeft, tr("inside, bottom-left"), QIcon(":/jkqtp_key_ibl.png"));
-    addPosition(JKQTPkeyInsideBottomRight, tr("inside, bottom-right"), QIcon(":/jkqtp_key_ibr.png"));
-    addPosition(JKQTPkeyOutsideTopRight, tr("outside, top-right"), QIcon(":/jkqtp_key_otr.png"));
-    addPosition(JKQTPkeyOutsideTopLeft, tr("outside, top-left"), QIcon(":/jkqtp_key_otl.png"));
-    addPosition(JKQTPkeyOutsideLeftTop, tr("outside, left-top"), QIcon(":/jkqtp_key_olt.png"));
-    addPosition(JKQTPkeyOutsideLeftBottom, tr("outside, left-bottom"), QIcon(":/jkqtp_key_olb.png"));
-    addPosition(JKQTPkeyOutsideBottomRight, tr("outside, bottom-right"), QIcon(":/jkqtp_key_obr.png"));
-    addPosition(JKQTPkeyOutsideBottomLeft, tr("outside, bottom-left"), QIcon(":/jkqtp_key_obl.png"));
-    addPosition(JKQTPkeyOutsideRightTop, tr("outside, right-top"), QIcon(":/jkqtp_key_ort.png"));
-    addPosition(JKQTPkeyOutsideRightBottom, tr("outside, right-bottom"), QIcon(":/jkqtp_key_orb.png"));
+    addPosition(JKQTPkeyInsideTopRight, tr("inside, top-right"), QIcon(":/JKQTPlotter/jkqtp_key_itr.png"));
+    addPosition(JKQTPkeyInsideTopLeft, tr("inside, top-left"), QIcon(":/JKQTPlotter/jkqtp_key_itl.png"));
+    addPosition(JKQTPkeyInsideBottomLeft, tr("inside, bottom-left"), QIcon(":/JKQTPlotter/jkqtp_key_ibl.png"));
+    addPosition(JKQTPkeyInsideBottomRight, tr("inside, bottom-right"), QIcon(":/JKQTPlotter/jkqtp_key_ibr.png"));
+    addPosition(JKQTPkeyOutsideTopRight, tr("outside, top-right"), QIcon(":/JKQTPlotter/jkqtp_key_otr.png"));
+    addPosition(JKQTPkeyOutsideTopLeft, tr("outside, top-left"), QIcon(":/JKQTPlotter/jkqtp_key_otl.png"));
+    addPosition(JKQTPkeyOutsideLeftTop, tr("outside, left-top"), QIcon(":/JKQTPlotter/jkqtp_key_olt.png"));
+    addPosition(JKQTPkeyOutsideLeftBottom, tr("outside, left-bottom"), QIcon(":/JKQTPlotter/jkqtp_key_olb.png"));
+    addPosition(JKQTPkeyOutsideBottomRight, tr("outside, bottom-right"), QIcon(":/JKQTPlotter/jkqtp_key_obr.png"));
+    addPosition(JKQTPkeyOutsideBottomLeft, tr("outside, bottom-left"), QIcon(":/JKQTPlotter/jkqtp_key_obl.png"));
+    addPosition(JKQTPkeyOutsideRightTop, tr("outside, right-top"), QIcon(":/JKQTPlotter/jkqtp_key_ort.png"));
+    addPosition(JKQTPkeyOutsideRightBottom, tr("outside, right-bottom"), QIcon(":/JKQTPlotter/jkqtp_key_orb.png"));
     setCurrentIndex(0);
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(posChanged(int)));
 }
@@ -1077,12 +1077,12 @@ JKQTPCAlabelTypeComboBox::JKQTPCAlabelTypeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/jkqtp_ticks_exp.png"));
-    addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/jkqtp_ticks_default.png"));
-    addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/jkqtp_ticks_expchar.png"));
-    addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/jkqtp_ticks_time.png"));
-    addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/jkqtp_ticks_date.png"));
-    addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/jkqtp_ticks_datetime.png"));
+    addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/JKQTPlotter/jkqtp_ticks_exp.png"));
+    addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/JKQTPlotter/jkqtp_ticks_default.png"));
+    addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/JKQTPlotter/jkqtp_ticks_expchar.png"));
+    addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/JKQTPlotter/jkqtp_ticks_time.png"));
+    addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/JKQTPlotter/jkqtp_ticks_date.png"));
+    addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/JKQTPlotter/jkqtp_ticks_datetime.png"));
     setCurrentIndex(0);
 }
 
@@ -1106,11 +1106,11 @@ JKQTPCAdrawModeComboBox::JKQTPCAdrawModeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/jkqtp_axis_complete.png"));
-    addDrawMode(JKQTPCADMticksAndLabels, tr("tick+lab."), QIcon(":/jkqtp_axis_ticksandlabels.png"));
-    addDrawMode(JKQTPCADMticks, tr("tick"), QIcon(":/jkqtp_axis_ticks.png"));
-    addDrawMode(JKQTPCADMline, tr("line"), QIcon(":/jkqtp_axis_line.png"));
-    addDrawMode(JKQTPCADMnone, tr("none"), QIcon(":/jkqtp_axis_none.png"));
+    addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/JKQTPlotter/jkqtp_axis_complete.png"));
+    addDrawMode(JKQTPCADMticksAndLabels, tr("tick+lab."), QIcon(":/JKQTPlotter/jkqtp_axis_ticksandlabels.png"));
+    addDrawMode(JKQTPCADMticks, tr("tick"), QIcon(":/JKQTPlotter/jkqtp_axis_ticks.png"));
+    addDrawMode(JKQTPCADMline, tr("line"), QIcon(":/JKQTPlotter/jkqtp_axis_line.png"));
+    addDrawMode(JKQTPCADMnone, tr("none"), QIcon(":/JKQTPlotter/jkqtp_axis_none.png"));
     setCurrentIndex(0);
 }
 
@@ -1137,19 +1137,19 @@ JKQTPEnhancedTableView::JKQTPEnhancedTableView(QWidget *parent):
     setContextMenuPolicy(Qt::ActionsContextMenu);
     QAction* act;
 
-    act=new QAction(QIcon(":/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (for Excel ...)"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (for Excel ...)"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToExcel()));
     addAction(act);
-    act=new QAction(QIcon(":/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (for Excel ...) without header row/column"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (for Excel ...) without header row/column"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToExcelNoHead()));
     addAction(act);
-    act=new QAction(QIcon(":/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (as CSV)"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (as CSV)"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToCSV()));
     addAction(act);
-    act=new QAction(QIcon(":/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (as CSV ...) without header row/column"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (as CSV ...) without header row/column"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToCSVNoHead()));
     addAction(act);
-    act=new QAction(QIcon(":/jkqtp_printtable.png"), tr("Print Table"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_printtable.png"), tr("Print Table"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(print()));
     addAction(act);
 	printAction=act;
