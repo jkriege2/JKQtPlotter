@@ -139,7 +139,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTmathText(QObject * parent = NULL);
+        JKQTmathText(QObject * parent = nullptr);
         /** \brief class destructor */
         ~JKQTmathText();
         /** \brief load the object settings from the given QSettings object with the given name prefix */
@@ -179,7 +179,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
         void useLatexFonts(QString prefix=QString(""), QString postfix=QString(""));
 
         /** \brief convert LaTeX to HTML. returns \c ok=true on success and \c ok=false else. */
-        QString toHtml(bool* ok=NULL, double fontPointSize=10);
+        QString toHtml(bool* ok=nullptr, double fontPointSize=10);
 
         /*! \brief used to specify the font encoding used for drawing
 
@@ -713,7 +713,7 @@ inline uint qHash(const JKQTmathText::tbrDataH& data) {
 class LIB_EXPORT JKQTMathTextLabel: public QLabel {
         Q_OBJECT
     public:
-        explicit JKQTMathTextLabel(QWidget* parent=NULL);
+        explicit JKQTMathTextLabel(QWidget* parent=nullptr);
         virtual ~JKQTMathTextLabel();
 
         JKQTmathText* getMathText() const;

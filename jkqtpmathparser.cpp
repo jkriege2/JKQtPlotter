@@ -661,10 +661,10 @@ std::string JKQTPMathParser::currenttokentostring() {
 
 // class constructor
 JKQTPMathParser::JKQTPMathParser() {
-    jkmathparser_exception_function=NULL;
-    data=NULL;
+    jkmathparser_exception_function=nullptr;
+    data=nullptr;
     argc=0;
-    argv=NULL;
+    argv=nullptr;
     addStandardFunctions();
     addStandardVariables();
 }
@@ -966,7 +966,7 @@ JKQTPMathParser::jkmpEvaluateFunc JKQTPMathParser::getFunctionDef(std::string na
     //std::cout <<name<<std::endl;
     jkmpError(jkqtp_format("function '%s' does not exist (getFunctionDef)", name.c_str()));
   }
-  return NULL;
+  return nullptr;
 }
 
 void JKQTPMathParser::addTempVariable(std::string name, JKQTPMathParser::jkmpResult value) {
@@ -1151,7 +1151,7 @@ JKQTPMathParser::jkmpTokenType JKQTPMathParser::getToken(){
 
 JKQTPMathParser::jkmpNode* JKQTPMathParser::parse(std::string prog){
 	program=new std::istringstream(prog);
-    JKQTPMathParser::jkmpNode* res=NULL;
+    JKQTPMathParser::jkmpNode* res=nullptr;
     JKQTPMathParser::jkmpNodeList* resList=new JKQTPMathParser::jkmpNodeList(this);
 	while(true) {
 		getToken();
@@ -1183,13 +1183,13 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::logicalExpression(bool get){
 	for(;;) // forever, do until you find anything else than an expressions
 		switch(CurrentToken) {
 			case LOGIC_OR:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPor, left, logicalTerm(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPor, left, logicalTerm(true), this, nullptr);
 				break;
 			case LOGIC_XOR:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPxor, left, logicalTerm(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPxor, left, logicalTerm(true), this, nullptr);
 				break;
 			case LOGIC_NOR:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPnor, left, logicalTerm(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPnor, left, logicalTerm(true), this, nullptr);
 				break;
 			default:
 				return left;
@@ -1202,10 +1202,10 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::logicalTerm(bool get){
 	for(;;) // forever, do until you find anything else than an expressions
 		switch(CurrentToken) {
 			case LOGIC_AND:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPand, left, compExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPand, left, compExpression(true), this, nullptr);
 				break;
 			case LOGIC_NAND:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPnand, left, compExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPnand, left, compExpression(true), this, nullptr);
 				break;
 			default:
 				return left;
@@ -1218,22 +1218,22 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::compExpression(bool get){
 	for(;;) // forever, do until you find anything else than an expressions
 		switch(CurrentToken) {
 			case COMP_EQUALT:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPequal, left, mathExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPequal, left, mathExpression(true), this, nullptr);
 				break;
 			case COMP_UNEQUAL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPnequal, left, mathExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPnequal, left, mathExpression(true), this, nullptr);
 				break;
 			case COMP_GREATER:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPgreater, left, mathExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPgreater, left, mathExpression(true), this, nullptr);
 				break;
 			case COMP_SMALLER:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPlesser, left, mathExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPlesser, left, mathExpression(true), this, nullptr);
 				break;
 			case COMP_GEQUAL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPgreaterequal, left, mathExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPgreaterequal, left, mathExpression(true), this, nullptr);
 				break;
 			case COMP_SEQUAL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPlesserequal, left, mathExpression(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPlesserequal, left, mathExpression(true), this, nullptr);
 				break;
 			default:
 				return left;
@@ -1247,10 +1247,10 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::mathExpression(bool get){
 	for(;;) // forever, do until you find anything else than an expressions
 		switch(CurrentToken) {
 			case PLUS:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('+', left, mathTerm(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('+', left, mathTerm(true), this, nullptr);
 				break;
 			case MINUS:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('-', left, mathTerm(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('-', left, mathTerm(true), this, nullptr);
 				break;
 			default:
 				return left;
@@ -1263,13 +1263,13 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::mathTerm(bool get){
 	for(;;) // forever, do until you find anything else than a term
 		switch(CurrentToken) {
 			case MUL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('*', left, primary(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('*', left, primary(true), this, nullptr);
 				break;
 			case DIV:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('/', left, primary(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('/', left, primary(true), this, nullptr);
 				break;
 			case MODULO:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('%', left, primary(true), this, NULL);
+                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('%', left, primary(true), this, nullptr);
 				break;
 			default:
 				return left;
@@ -1277,7 +1277,7 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::mathTerm(bool get){
 }
 
 JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
-    JKQTPMathParser::jkmpNode* res=NULL;
+    JKQTPMathParser::jkmpNode* res=nullptr;
 
 	if (get) getToken();
 
@@ -1287,16 +1287,16 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
             val.type=JKQTPMathParser::jkmpDouble;
 			val.num=NumberValue;
 			getToken();
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, NULL);
+            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
 			break;
 		}
 
 		case NAME: {
-			//jkMathParser::jkmpNode* def=NULL;
+			//jkMathParser::jkmpNode* def=nullptr;
  			std::string varname=StringValue;
     	getToken();
  			if (CurrentToken == ASSIGN) { // assign a variable name
-    			res=new jkmpVariableAssignNode(varname, logicalExpression(true), this, NULL);
+    			res=new jkmpVariableAssignNode(varname, logicalExpression(true), this, nullptr);
  			} else if (CurrentToken == LBRACKET) { // function found
                 JKQTPMathParser::jkmpNode** params=(JKQTPMathParser::jkmpNode**)malloc(255*sizeof(JKQTPMathParser::jkmpNode*));
     			unsigned char num=0;
@@ -1312,19 +1312,19 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
           	}
 
     				if ( CurrentToken != RBRACKET ) jkmpError(jkqtp_format("')' expected, but '%s' found", currenttokentostring().c_str()));;
-                    JKQTPMathParser::jkmpNode** p=NULL;
+                    JKQTPMathParser::jkmpNode** p=nullptr;
             if (num>0) {
                p=(JKQTPMathParser::jkmpNode**)malloc(sizeof(JKQTPMathParser::jkmpNode*) * num);
                for (int i=0; i<num; i++) {
                  p[i]=params[i];
                }
             }
-	    			res=new jkmpFunctionNode(varname, p, num, this, NULL);
+	    			res=new jkmpFunctionNode(varname, p, num, this, nullptr);
 	    			free(params);
 	    			getToken();
 
   		} else {
-          res=(JKQTPMathParser::jkmpNode*)new jkmpVariableNode(varname, this, NULL);
+          res=(JKQTPMathParser::jkmpNode*)new jkmpVariableNode(varname, this, nullptr);
  			}
 			//res= def;
 			break;
@@ -1335,17 +1335,17 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
             JKQTPMathParser::jkmpResult val;
             val.type=JKQTPMathParser::jkmpString;
 			val.str=readDelim('"');
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, NULL);
+            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
 			getToken();
 			break;
 		}
 
 		case MINUS:  // found primary:  - primary
-            res= (JKQTPMathParser::jkmpNode*)new jkmpUnaryNode('-', primary(true), this, NULL);
+            res= (JKQTPMathParser::jkmpNode*)new jkmpUnaryNode('-', primary(true), this, nullptr);
 			break;
 
 		case LOGIC_NOT:
-            res= (JKQTPMathParser::jkmpNode*)new jkmpUnaryNode('!', primary(true), this, NULL);
+            res= (JKQTPMathParser::jkmpNode*)new jkmpUnaryNode('!', primary(true), this, nullptr);
 			break;
 
 		case LBRACKET: { // found primary ( expression )
@@ -1360,7 +1360,7 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
             JKQTPMathParser::jkmpResult val;
             val.type=JKQTPMathParser::jkmpBool;
 			val.boolean=true;
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, NULL);
+            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
 			getToken();
 			break;
    }
@@ -1368,7 +1368,7 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
             JKQTPMathParser::jkmpResult val;
             val.type=JKQTPMathParser::jkmpBool;
 			val.boolean=false;
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, NULL);
+            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
 			getToken();
 			break;
    }
@@ -1379,7 +1379,7 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
 	}
 
 	if (CurrentToken==POWER) {
-        res=(JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('^', res, primary(true), this, NULL);
+        res=(JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('^', res, primary(true), this, nullptr);
 	}
 
 	return res;
@@ -1808,7 +1808,7 @@ JKQTPMathParser::jkmpFunctionNode::~jkmpFunctionNode() {
       delete child[i];
     }
   }*/
-    if ((child!=NULL) && (n>0)) {
+    if ((child!=nullptr) && (n>0)) {
       for (int i=0; i<n; i++) {
 	delete child[i];
       }
@@ -1829,9 +1829,9 @@ JKQTPMathParser::jkmpVariable::jkmpVariable()
 {
     type=jkmpDouble;     /*!< \brief type of the variable */
     internal=false;           /*!< \brief this is an internal variable */
-    str=NULL;        /*!< \brief this points to the variable data if \c type==jkmpString */
-    num=NULL;             /*!< \brief this points to the variable data if \c type==jkmpDouble */
-    boolean=NULL;
+    str=nullptr;        /*!< \brief this points to the variable data if \c type==jkmpString */
+    num=nullptr;             /*!< \brief this points to the variable data if \c type==jkmpDouble */
+    boolean=nullptr;
 }
 
 void JKQTPMathParser::setArgCV(int argc, char **argv) {

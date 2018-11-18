@@ -99,7 +99,7 @@ private:
     //! Converts a QPen to a GDI+ Pen structure
     Pen *convertPen(const QPen& pen);
     //! Converts a QBrush to a GDI+ Brush structure
-    Brush *convertBrush(const QBrush& brush, GraphicsPath *origPath = NULL);
+    Brush *convertBrush(const QBrush& brush, GraphicsPath *origPath = nullptr);
     //! Draws pixmap pix in a given rectangle
     void drawPixmap(const QPixmap &pix, const RectF &p);
     //! Constructs a texture brush based on pixmap pix

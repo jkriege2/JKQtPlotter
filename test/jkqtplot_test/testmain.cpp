@@ -431,7 +431,7 @@ TestMain::TestMain(QWidget *parent) :
         for (int y=0; y<100; y++) {
             img2[y*100+x]=sin(2*M_PI*sqrt(1.0+x*x+y*y)/20);
             img2M[y*100+x]=abs(y-x);
-            bimg2[y*100+x]=(double)rand()/(double)RAND_MAX>0.9;
+            bimg2[y*100+x]=static_cast<double>(rand())/static_cast<double>(RAND_MAX)>0.9;
         }
     }
     pimg2=new JKQTPMathImage(10,0,10,10, JKQTPMathImageBase::DoubleArray, img2, 100, 100, JKQTPMathImageGRAY, plotImg->get_plotter());
@@ -664,7 +664,7 @@ TestMain::TestMain(QWidget *parent) :
     // plotter for images
     QWidget* winrgb=new QWidget(this);
     QVBoxLayout* layoutrgb=new QVBoxLayout(this);
-    QFormLayout* frm=new QFormLayout(NULL);
+    QFormLayout* frm=new QFormLayout(nullptr);
     winrgb->setLayout(layoutrgb);
     winrgb->resize(1000, 800);
     plotImgRGB=new JKQtPlotter(true, winrgb);
@@ -828,8 +828,8 @@ TestMain::TestMain(QWidget *parent) :
     for (int i=0; i<1000; i++) {
         double x=double(i)/1000.0;
         const double p=0.33*fabs(sin(x*4.0*M_PI))*fabs(sin(x*4.0*M_PI));
-        if ((double)rand()/(double)RAND_MAX<=p) photons1<<x;
-        if ((double)rand()/(double)RAND_MAX<=p) photons2<<x;
+        if (static_cast<double>(rand())/static_cast<double>(RAND_MAX)<=p) photons1<<x;
+        if (static_cast<double>(rand())/static_cast<double>(RAND_MAX)<=p) photons2<<x;
     }
     int phot1=plotPeaks->getDatastore()->addCopiedColumn(photons1.data(), photons1.size(), "photons 1");
     int phot2=plotPeaks->getDatastore()->addCopiedColumn(photons2.data(), photons2.size(), "photons 2");
@@ -1263,21 +1263,21 @@ void TestMain::updateRGBChannels()
         rgbimg->set_data(rgb_rimg2, 100, 100);
         rgbimg2->set_imageRColumn(rgb_colr);
     } else {
-        rgbimg->set_data(NULL, 100, 100);
+        rgbimg->set_data(nullptr, 100, 100);
         rgbimg2->set_imageRColumn(-1);
     }
     if (chkRGBUseG->isChecked()) {
         rgbimg->set_dataG(rgb_gimg2);
         rgbimg2->set_imageGColumn(rgb_colg);
     } else {
-        rgbimg->set_dataG(NULL);
+        rgbimg->set_dataG(nullptr);
         rgbimg2->set_imageGColumn(-1);
     }
     if (chkRGBUseB->isChecked()) {
         rgbimg->set_dataB(rgb_bimg2);
         rgbimg2->set_imageBColumn(rgb_colb);
     } else {
-        rgbimg->set_dataB(NULL);
+        rgbimg->set_dataB(nullptr);
         rgbimg2->set_imageBColumn(-1);
     }
     plotImgRGB->update_plot();

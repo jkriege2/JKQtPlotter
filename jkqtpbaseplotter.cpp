@@ -148,7 +148,7 @@ JKQtBasePlotter::JKQtBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     QObject(parent), m_plotsModel(nullptr), xAxis(nullptr), yAxis(nullptr)
 {
 
-    dataColumnsListWidget=NULL;
+    dataColumnsListWidget=nullptr;
     printMagnification=1.0;
     printZoomFactor=1.0;
     printSizeX_Millimeter=1.0;
@@ -157,7 +157,7 @@ JKQtBasePlotter::JKQtBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     printDoUpdate=true;
 
     emitPlotSignals=true;
-    masterPlotter=NULL;
+    masterPlotter=nullptr;
     masterSynchronizeWidth=false;
     masterSynchronizeHeight=false;
     fontSizePrintMultiplier=1;
@@ -268,7 +268,7 @@ JKQtBasePlotter::JKQtBasePlotter(bool datastore_internal, QObject* parent, JKQTP
 
 JKQtBasePlotter::~JKQtBasePlotter(){
     clearGraphs(false);
-    if (datastoreInternal && datastore!=NULL) delete datastore;
+    if (datastoreInternal && datastore!=nullptr) delete datastore;
     delete xAxis;
     delete yAxis;
 }
@@ -279,18 +279,18 @@ void JKQtBasePlotter::setGrid(bool val) {
 };
 
 void JKQtBasePlotter::useExternalDatastore(JKQTPdatastore* newStore){
-    if (datastoreInternal && datastore!=NULL) {
+    if (datastoreInternal && datastore!=nullptr) {
         delete datastore;
-        datastore=NULL;
+        datastore=nullptr;
     }
     datastore=newStore;
     datastoreInternal=false;
 };
 
 void JKQtBasePlotter::useAsInternalDatastore(JKQTPdatastore* newStore){
-    if (datastoreInternal && datastore!=NULL) {
+    if (datastoreInternal && datastore!=nullptr) {
         delete datastore;
-        datastore=NULL;
+        datastore=nullptr;
     }
     datastore=newStore;
     datastoreInternal=true;
@@ -306,9 +306,9 @@ void JKQtBasePlotter::useInternalDatastore(){
 }
 
 void JKQtBasePlotter::forceInternalDatastore(){
-    if (datastoreInternal && datastore!=NULL) {
+    if (datastoreInternal && datastore!=nullptr) {
         delete datastore;
-        datastore=NULL;
+        datastore=nullptr;
     }
     datastore=new JKQTPdatastore();
     datastoreInternal=true;
@@ -418,10 +418,10 @@ void JKQtBasePlotter::initSettings() {
 
 void JKQtBasePlotter::zoomIn(double factor) {
     //std::cout<<(double)event->delta()/120.0<<":   "<<factor<<std::endl;
-    double xmin=p2x((long)round((double)plotWidth/2.0-(double)plotWidth/(2.0*factor)));
-    double xmax=p2x((long)round((double)plotWidth/2.0+(double)plotWidth/(2.0*factor)));
-    double ymin=p2y((long)round((double)plotHeight/2.0+(double)plotHeight/(2.0*factor)));
-    double ymax=p2y((long)round((double)plotHeight/2.0-(double)plotHeight/(2.0*factor)));
+    double xmin=p2x(static_cast<long>(round(static_cast<double>(plotWidth)/2.0-static_cast<double>(plotWidth)/(2.0*factor))));
+    double xmax=p2x(static_cast<long>(round(static_cast<double>(plotWidth)/2.0+static_cast<double>(plotWidth)/(2.0*factor))));
+    double ymin=p2y(static_cast<long>(round(static_cast<double>(plotHeight)/2.0+static_cast<double>(plotHeight)/(2.0*factor))));
+    double ymax=p2y(static_cast<long>(round(static_cast<double>(plotHeight)/2.0-static_cast<double>(plotHeight)/(2.0*factor))));
 
 
     xAxis->setRange(xmin, xmax);
@@ -791,7 +791,7 @@ void JKQtBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
         QFontMetrics fm=fontMetrics();
         QString test="�Aquator";
         int labelHeight=fm.size(Qt::TextSingleLine, test).height()*1.5;
-        //if (mousePosLabel!=NULL) labelHeight=mousePosLabel->height();
+        //if (mousePosLabel!=nullptr) labelHeight=mousePosLabel->height();
         iplotBorderTop=iplotBorderTop+(labelHeight-plotBorderTop)*1.1;
     }*/
 
@@ -852,24 +852,24 @@ void JKQtBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
     // ENSURE ASPECT RATIO (if activated)
     ////////////////////////////////////////////////////////////////////
     if (maintainAspectRatio && (!xAxis->isLogAxis()) && (!xAxis->isLogAxis())) {
-        double currRatio=(double)plotWidth/(double)plotHeight;
+        double currRatio=static_cast<double>(plotWidth)/static_cast<double>(plotHeight);
         double newPlotWidth=plotWidth;
         double newPlotHeight=plotHeight;
         double dx=0;
         double dy=0;
         if (currRatio!=aspectRatio) {
             if (aspectRatio>=currRatio) {
-                newPlotWidth=aspectRatio*(double)plotHeight;
+                newPlotWidth=aspectRatio*static_cast<double>(plotHeight);
             } else {
-                newPlotHeight=(double)plotWidth/aspectRatio;
+                newPlotHeight=static_cast<double>(plotWidth)/aspectRatio;
             }
             dx=plotWidth-newPlotWidth;
             dy=plotHeight-newPlotHeight;
             if (dx<0) {
                 newPlotWidth=plotWidth;
-                newPlotHeight=(double)plotWidth/aspectRatio;
+                newPlotHeight=static_cast<double>(plotWidth)/aspectRatio;
             } else if (dy<0) {
-                newPlotWidth=aspectRatio*(double)plotHeight;
+                newPlotWidth=aspectRatio*static_cast<double>(plotHeight);
                 newPlotHeight=plotHeight;
             }
             dx=plotWidth-newPlotWidth;
@@ -1399,12 +1399,12 @@ void JKQtBasePlotter::print(QPrinter* printer, bool displayPreview) {
 
 
     // select a printer
-    if (p==NULL) {
+    if (p==nullptr) {
         p=new QPrinter();
         p->setPrinterName(currentPrinter);
         delP=true;
 
-        QPrintDialog *dialog = new QPrintDialog(p, NULL);
+        QPrintDialog *dialog = new QPrintDialog(p, nullptr);
         dialog->setWindowTitle(tr("Print Plot"));
         if (dialog->exec() != QDialog::Accepted) {
             delete p;
@@ -1437,7 +1437,7 @@ void JKQtBasePlotter::printpreview(QPrinter *p, bool setabsolutesize) {
     backgroundColor=exportBackgroundColor;
     lineWidthMultiplier=lineWidthPrintMultiplier;
     fontSizeMultiplier=fontSizePrintMultiplier;
-    exportPreviewLabel=NULL;
+    exportPreviewLabel=nullptr;
     printSizeX_Millimeter=widgetWidth;
     printSizeY_Millimeter=widgetHeight;
     printAspect=1;
@@ -1446,7 +1446,7 @@ void JKQtBasePlotter::printpreview(QPrinter *p, bool setabsolutesize) {
     printSetAbsolutePageSize=setabsolutesize;
     printKeepAbsoluteFontSizes=false;
     printScaleToPagesize=true;
-    QDialog* dlg=new QDialog(NULL, Qt::WindowMinMaxButtonsHint);
+    QDialog* dlg=new QDialog(nullptr, Qt::WindowMinMaxButtonsHint);
     dlg->setSizeGripEnabled(true);
     //printZoomFactor=0.95;
     //printMagnification=1.5;
@@ -1565,7 +1565,7 @@ void JKQtBasePlotter::printpreview(QPrinter *p, bool setabsolutesize) {
         printpreviewPaintRequested(p);
     }
     delete dlg;
-    printPreview=NULL;
+    printPreview=nullptr;
     lineWidthMultiplier=lw;
     fontSizeMultiplier=fs;
     backgroundColor=bc;
@@ -1582,7 +1582,7 @@ bool JKQtBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     backgroundColor=exportBackgroundColor;
     lineWidthMultiplier=lineWidthPrintMultiplier;
     fontSizeMultiplier=fontSizePrintMultiplier;
-    exportPreviewLabel=NULL;
+    exportPreviewLabel=nullptr;
     printMagnification=1.0;
     paintMagnification=1.0;
     gridPrintingCalc();
@@ -1610,7 +1610,7 @@ bool JKQtBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     printSetAbsolutePageSize=setAbsolutePaperSize;
     printKeepAbsoluteFontSizes=true;
     printScaleToPagesize=false;
-    QDialog* dlg=new QDialog(NULL, Qt::WindowMinMaxButtonsHint);
+    QDialog* dlg=new QDialog(nullptr, Qt::WindowMinMaxButtonsHint);
     dlg->setSizeGripEnabled(true);
     //printZoomFactor=0.95;
     //printMagnification=1.5;
@@ -1780,7 +1780,7 @@ bool JKQtBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
         delete printer;
     }
     delete dlg;
-    printPreview=NULL;
+    printPreview=nullptr;
     lineWidthMultiplier=lw;
     fontSizeMultiplier=fs;
     backgroundColor=bc;
@@ -1793,7 +1793,7 @@ bool JKQtBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
 }
 
 bool JKQtBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
-    printPreview=NULL;
+    printPreview=nullptr;
     printSizeX_Millimeter=pageSize.width();
     printSizeY_Millimeter=pageSize.height();
     printAspect=1;
@@ -1803,7 +1803,7 @@ bool JKQtBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
     printSetAbsolutePageSize=true;
     printScaleToPagesize=false;
     printKeepAbsoluteFontSizes=true;
-    QDialog* dlg=new QDialog(NULL, Qt::WindowMinMaxButtonsHint);
+    QDialog* dlg=new QDialog(nullptr, Qt::WindowMinMaxButtonsHint);
     dlg->setSizeGripEnabled(true);
     //printZoomFactor=0.95;
     //printMagnification=1.5;
@@ -2560,7 +2560,7 @@ void JKQtBasePlotter::saveData(QString filename, QString format) {
     if (fn.isEmpty()) {
         QString selectedFilter=currentDataFileFormat;
         //qDebug()<<"before: currentSaveDirectory="<<currentSaveDirectory;
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     fileformats.join(";;"),
                                     &selectedFilter);
@@ -2613,7 +2613,7 @@ void JKQtBasePlotter::saveAsCSV(QString filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     tr("Comma Separated Values (*.csv *.dat)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2629,7 +2629,7 @@ void JKQtBasePlotter::saveAsSYLK(QString filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     tr("SYLK spreadsheet (*.slk)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2645,7 +2645,7 @@ void JKQtBasePlotter::saveAsMatlab(QString filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     tr("Matlab Script (*.m)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2661,7 +2661,7 @@ void JKQtBasePlotter::saveAsDIF(QString filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     tr("DIF: Data Interchange Format (*.dif)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2677,7 +2677,7 @@ void JKQtBasePlotter::saveAsSemicolonSV(QString filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     tr("Comma Separated Values (*.csv *.dat)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2693,7 +2693,7 @@ void JKQtBasePlotter::saveAsTabSV(QString filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     tr("Tabulator Separated Values (*.txt)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2709,7 +2709,7 @@ void JKQtBasePlotter::saveAsGerExcelCSV(QString filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot Data"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot Data"),
                                     currentSaveDirectory,
                                     tr("Tabulator Separated Values (*.txt)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2725,7 +2725,7 @@ void JKQtBasePlotter::saveAsPDF(QString filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot"),
                                     currentSaveDirectory,
                                     tr("PDF File (*.pdf)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2759,7 +2759,7 @@ void JKQtBasePlotter::saveAsPS(QString filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot"),
                                     currentSaveDirectory,
                                     tr("PostScript File (*.ps)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -2818,7 +2818,7 @@ void JKQtBasePlotter::saveImage(QString filename, bool displayPreview) {
     QString selFormat="";
     if (fn.isEmpty()) {
         selFormat=currentFileFormat;
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot"),
                                     currentSaveDirectory,
                                           filt.join(";;"), &selFormat);
         if (!fn.isEmpty()) {
@@ -2913,7 +2913,7 @@ void JKQtBasePlotter::saveAsPixelImage(QString filename, bool displayPreview, co
     QString selFormat;
     if (fn.isEmpty()) {
         selFormat=currentFileFormat;
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot"),
                                     currentSaveDirectory,
                                           filt.join(";;"), &selFormat);
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -3086,7 +3086,7 @@ void JKQtBasePlotter::saveAsSVG(QString filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(NULL, tr("Save Plot"),
+        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot"),
                                     currentSaveDirectory,
                                     tr("SVG Image (*.svg)"));
         if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -3147,7 +3147,7 @@ void JKQtBasePlotter::synchronizeToMaster(JKQtBasePlotter* master, bool synchron
 }
 
 void JKQtBasePlotter::resetMasterSynchronization() {
-    masterPlotter=NULL;
+    masterPlotter=nullptr;
     masterSynchronizeHeight=false;
     masterSynchronizeWidth=false;
 }
@@ -3449,7 +3449,7 @@ void JKQtBasePlotter::plotGraphs(JKQTPEnhancedPainter& painter){
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQtBasePlotter::plotGraphs"));
 #endif
-    if (datastore==NULL || graphs.isEmpty()) return;
+    if (datastore==nullptr || graphs.isEmpty()) return;
     //qDebug()<<"start JKQtPlotterBase::plotGraphs()";
     if (useClipping) {
         QRegion cregion(iplotBorderLeft, iplotBorderTop, plotWidth, plotHeight);
@@ -3562,7 +3562,7 @@ void JKQtBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
             }
         }
     } else if (keyLayout==JKQTPkeyLayoutMultiColumn) {
-        //int columns=floor((double)plotWidth/(double)(key_item_width*kfm.width('X')));
+        //int columns=floor(static_cast<double>(plotWidth)/(double)(key_item_width*kfm.width('X')));
         bool colfirst=true;
 
         if (keyPosition==JKQTPkeyInsideTopLeft || keyPosition==JKQTPkeyInsideTopRight
@@ -3633,13 +3633,13 @@ void JKQtBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
     f.setFamily(keyFont);
     f.setPointSizeF(keyFontSize*fontSizeMultiplier);
     QFontMetricsF kfm(f);
-    if (text_height!=NULL) *text_height=key_item_height*kfm.width('X');
+    if (text_height!=nullptr) *text_height=key_item_height*kfm.width('X');
     if (keyLayout==JKQTPkeyLayoutOneColumn) {
         int keyHeight=graphs.size();
         double w=0;
         double h=0;
         painter.setFont(f);
-        if (text_height!=NULL) *text_height=0;
+        if (text_height!=nullptr) *text_height=0;
 
 
         for (int i=0; i<graphs.size(); i++) {
@@ -3656,10 +3656,10 @@ void JKQtBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         }
         if (keyAutosize) {
             if (width) *width=w+(key_line_length+2.0*keyXSeparation)*kfm.width('X');
-            if (text_width!=NULL) *text_width=w+2.0*kfm.width('X');
+            if (text_width!=nullptr) *text_width=w+2.0*kfm.width('X');
         } else {
             if (width) *width=key_item_width*kfm.width('X');
-            if (text_width!=NULL) *text_width=(key_item_width-(key_line_length+keyXSeparation))*kfm.width('X');
+            if (text_width!=nullptr) *text_width=(key_item_width-(key_line_length+keyXSeparation))*kfm.width('X');
         }
         if (h>keyYSeparation*kfm.width('X')) h=h-keyYSeparation*kfm.width('X');
         if (height) *height=h;//keyHeight*key_item_height*kfm.width('X');
@@ -3670,7 +3670,7 @@ void JKQtBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         double w=0;
         double h=0;
         painter.setFont(f);
-        if (text_width!=NULL) *text_width=0;
+        if (text_width!=nullptr) *text_width=0;
 
 
         for (int i=0; i<graphs.size(); i++) {
@@ -3688,10 +3688,10 @@ void JKQtBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         if (h<key_item_height*kfm.width('X')) h=key_item_height*kfm.width('X');
         if (keyAutosize) {
             if (height) *height=h;
-            if (text_height!=NULL) *text_height=h;
+            if (text_height!=nullptr) *text_height=h;
         } else {
             if (height) *height=h;
-            if (text_height!=NULL) *text_height=(key_item_height-(keyYSeparation))*kfm.width('X');
+            if (text_height!=nullptr) *text_height=(key_item_height-(keyYSeparation))*kfm.width('X');
         }
         if (w>(keyXSeparation)*kfm.width('X')) w=w-(keyXSeparation)*kfm.width('X');
         if (width) *width=w;//keyHeight*key_item_height*kfm.width('X');
@@ -3736,9 +3736,9 @@ void JKQtBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         if (keyPosition==JKQTPkeyInsideTopLeft || keyPosition==JKQTPkeyInsideTopRight
             || keyPosition==JKQTPkeyOutsideTopLeft || keyPosition==JKQTPkeyOutsideTopRight) {
             if (keyAutosize) {
-                lines=(int)floor((double)plotHeight/(double)(txtH+(keyYSeparation)*kfm.width('X')));
+                lines=(int)floor(static_cast<double>(plotHeight)/(double)(txtH+(keyYSeparation)*kfm.width('X')));
             } else {
-                lines=(int)floor((double)plotHeight/(double)((key_item_height+keyYSeparation)*kfm.width('X')));
+                lines=(int)floor(static_cast<double>(plotHeight)/(double)((key_item_height+keyYSeparation)*kfm.width('X')));
             }
             columns=(int)ceil((double)keyHeight/(double)lines);
             lines=qMin((double)lines, keyHeight);
@@ -3752,12 +3752,12 @@ void JKQtBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
             if (width) *width=(w+(key_line_length+3.0*keyXSeparation)*kfm.width('X'))*columns;
             if (height) *height=lines*(txtH+keyYSeparation*kfm.width('X'));
             if (lines>0) *height=*height-keyYSeparation*kfm.width('X');
-            if (text_width!=NULL) *text_width=w;
+            if (text_width!=nullptr) *text_width=w;
         } else {
             if (width) *width=(key_item_width+2.0*keyXSeparation)*kfm.width('X')*columns;
             if (height) *height=lines*(key_item_height+keyYSeparation)*kfm.width('X');
             if (lines>0) *height=*height-keyYSeparation*kfm.width('X');
-            if (text_width!=NULL) *text_width=(key_item_width-(key_line_length+keyXSeparation))*kfm.width('X');
+            if (text_width!=nullptr) *text_width=(key_item_width-(key_line_length+keyXSeparation))*kfm.width('X');
         }
 #ifdef SHOW_JKQTPLOTTER_DEBUG
         qDebug()<<"getKeyExtent(): mult-column: columns="<<columns<<"  lines="<<lines;
@@ -4095,7 +4095,7 @@ void JKQtBasePlotter::setAllGraphsVisible()
 
 void JKQtBasePlotter::setGraphVisible(int i, bool visible)
 {
-    JKQTPgraph* g=graphs.value(i, NULL);
+    JKQTPgraph* g=graphs.value(i, nullptr);
     if (g) g->set_visible(visible);
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -4106,7 +4106,7 @@ void JKQtBasePlotter::setOnlyGraphVisible(int gr)
         JKQTPgraph* g=graphs[i];
         g->set_visible(false);
     }
-    JKQTPgraph* g=graphs.value(gr, NULL);
+    JKQTPgraph* g=graphs.value(gr, nullptr);
     if (g) g->set_visible(true);
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -4118,7 +4118,7 @@ void JKQtBasePlotter::setOnlyNthGraphsVisible(int start, int n)
         g->set_visible(false);
     }
     for (int i=start; i<graphs.size(); i+=n) {
-        JKQTPgraph* g=graphs.value(i, NULL);
+        JKQTPgraph* g=graphs.value(i, nullptr);
         if (g) g->set_visible(true);
     }
     if (emitPlotSignals) emit plotUpdated();
@@ -4221,7 +4221,7 @@ QSet<int> JKQtBasePlotter::getDataColumnsByUser() {
 
     QStringList cols=getDatastore()->getColumnNames();
 
-    QDialog* dlg=new QDialog(NULL, Qt::WindowMinMaxButtonsHint);
+    QDialog* dlg=new QDialog(nullptr, Qt::WindowMinMaxButtonsHint);
     dlg->setSizeGripEnabled(true);
     //printZoomFactor=0.95;
     //printMagnification=1.5;
@@ -4279,7 +4279,7 @@ QSet<int> JKQtBasePlotter::getDataColumnsByUser() {
 
     }
     delete dlg;
-    dataColumnsListWidget=NULL;
+    dataColumnsListWidget=nullptr;
 
     saveUserSettings();
     return set;
@@ -4306,7 +4306,7 @@ void JKQtBasePlotter::getDataColumnsByUserSave() {
     QStringList items=getDataColumnsByUserSaved.keys();
     items<<name;
     bool ok=false;
-    name=QInputDialog::getItem(NULL, tr("save columns selection"), tr("name for new selection:"), items, items.size()-1, true, &ok);
+    name=QInputDialog::getItem(nullptr, tr("save columns selection"), tr("name for new selection:"), items, items.size()-1, true, &ok);
     if (ok) {
         QStringList data;
         for (int i=0; i<dataColumnsListWidget->count(); i++) {
@@ -4361,7 +4361,7 @@ void JKQtBasePlotter::getDataColumnsByUserItemChanged(QListWidgetItem */*widgeti
 }
 
 void JKQtBasePlotter::showPlotData() {
-    QDialog* dlg=new QDialog(NULL,Qt::Dialog|Qt::WindowCloseButtonHint|Qt::WindowMinMaxButtonsHint);
+    QDialog* dlg=new QDialog(nullptr,Qt::Dialog|Qt::WindowCloseButtonHint|Qt::WindowMinMaxButtonsHint);
     dlg->setWindowTitle(tr("Plot data table"));
     dlg->setSizeGripEnabled(true);
 

@@ -55,13 +55,13 @@ JKQtPlotter::JKQtPlotter(bool datastore_internal, QWidget* parent, JKQTPdatastor
 JKQtPlotter::JKQtPlotter(QWidget *parent):
     QWidget(parent, Qt::Widget)
 {
-    init(true, parent, NULL);
+    init(true, parent, nullptr);
 }
 
 void JKQtPlotter::init(bool datastore_internal, QWidget* parent, JKQTPdatastore* datast)
 {
     leftDoubleClickAction=LeftDoubleClickDefault;
-    menuSpecialContextMenu=NULL;
+    menuSpecialContextMenu=nullptr;
     mouseContextX=0;
     mouseContextY=0;
     setParent(parent);

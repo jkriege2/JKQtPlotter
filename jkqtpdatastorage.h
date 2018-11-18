@@ -165,7 +165,7 @@ class LIB_EXPORT JKQTPdatastore{
 
         /** \brief returns the JKQTPdatastoreItem object for the \a i -th item in the store */
         inline JKQTPdatastoreItem* getItem(size_t i) const {
-            return items.value(i, NULL);
+            return items.value(i, nullptr);
         }
 
         /** \brief add a new item to the datastore and return its ID */
@@ -173,617 +173,309 @@ class LIB_EXPORT JKQTPdatastore{
 
 
         /** \brief add a new columns/item with \a rows rows to the datastore and return its ID. The item uses internal memory management. */
-        size_t addItem(unsigned long long rows);
+        size_t addItem(size_t rows);
 
         /** \brief delete the given column, if no other columns points to the datastore item of the column and \a removeItems is \c true, the item will be removed */
         void deleteColumn(size_t column, bool removeItems=true);
 
         /** \brief delete all columns with the given name, if no other columns points to the datastore item of the column and \a removeItems is \c true, the item will be removed */
-        void deleteAllColumns(QString name, bool removeItems=true);
+        void deleteAllColumns(const QString& name, bool removeItems=true);
 
         /** \brief delete all columns where the name starts with a given prefix, if no other columns points to the datastore item of the column and \a removeItems is \c true, the item will be removed */
         void deleteAllPrefixedColumns(QString prefix, bool removeItems=true);
 
         /** \brief add a new item with \a rows rows and \a columns columns to the datastore and return its ID. The item uses internal memory management. */
-        size_t addItem(size_t columns, unsigned long long rows);
+        size_t addItem(size_t columns, size_t rows);
 
         /** \brief add one external column to the datastore. It contains \a rows rows.*/
-        size_t addItem(double* data, unsigned long long rows);
+        size_t addItem(double* data, size_t rows);
         /** \brief add one internal column to the datastore. It contains \a rows rows.*/
-        size_t addInternalItem(double* data, unsigned long long rows);
+        size_t addInternalItem(double* data, size_t rows);
 
         /** \brief add an external memory block to the datastore. It contains \a rows rows and \a columns columns. \a dataformat determined the memory layout*/
-        size_t addItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, unsigned long long rows);
+        size_t addItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
 
         /** \brief add one external column to the datastore. It contains \a rows rows. The data is copied and the copy managed internally */
-        size_t addCopiedItem(const double *data, unsigned long long rows);
+        size_t addCopiedItem(const double *data, size_t rows);
 
         /** \brief add one external data block to the datastore. It contains \a rows rows and \a columns columns. The data is copied and the copy managed internally */
-        size_t addCopiedItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, unsigned long long rows);
+        size_t addCopiedItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
 
 
 
         /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
-        double get(size_t column, unsigned long long row) const;
-        /** \brief gets the of the datapoint with the nearest, but lower value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column)*/
-        long long getNextLowerIndex(size_t column, unsigned long long row,  long long start,  long long end) const;
-        /** \brief gets the of the datapoint with the nearest, but lower value in the column */
-        long long getNextLowerIndex(size_t column, unsigned long long row) const;
+        double get(size_t column, size_t row) const;
+        /** \brief gets the index of the datapoint with the nearest, but lower value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column)*/
+        long long getNextLowerIndex(size_t column, size_t row,  long long start,  long long end) const;
+        /** \brief gets the index of the datapoint with the nearest, but lower value in the column */
+        long long getNextLowerIndex(size_t column, size_t row) const;
         /** \brief gets the index of the  datapoint with the nearest, but higher value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column) */
-        long long getNextHigherIndex(size_t column, unsigned long long row,  long long start,  long long end) const;
+        long long getNextHigherIndex(size_t column, size_t row,  long long start,  long long end) const;
         /** \brief gets the index of the  datapoint with the nearest, but higher value in the column */
-        long long getNextHigherIndex(size_t column, unsigned long long row) const;
+        long long getNextHigherIndex(size_t column, size_t row) const;
 
         /** \brief sets the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!) */
-        void set(size_t column, unsigned long long row, double value);
+        void set(size_t column, size_t row, double value);
 
 
 
         /** \brief add a new columns which references a specified item and a specified column therein. */
-        size_t addColumnForItem(size_t itemID, size_t columnInItem, QString name=QString(""));
+        size_t addColumnForItem(size_t itemID, size_t columnInItem, const QString& name=QString(""));
 
         /** \brief add a new columns with \a rows rows to the datastore and return its column ID. The new item uses internal memory management. */
-        size_t addColumn(unsigned long long rows, QString name=QString(""));
+        size_t addColumn(size_t rows, const QString& name=QString(""));
 
         /** \brief add one external column to the datastore. It contains \a rows rows. This returns its logical column ID.*/
-        size_t addColumn(double* data, unsigned long long rows, QString name=QString(""));
+        size_t addColumn(double* data, size_t rows, const QString& name=QString(""));
 
 
 
 
 
         /** \brief copies the given \A old_column into a new one, reading the data with the given start column and stride */
-        size_t copyColumn(size_t old_column, unsigned long long start, unsigned long long stride, QString name=QString(""));
+        size_t copyColumn(size_t old_column, size_t start, size_t stride, const QString& name=QString(""));
         /** \brief copies the given \A old_column into a new one */
-        size_t copyColumn(size_t old_column, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const double* data, unsigned long long rows, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const double* data, unsigned long long rows, unsigned long long stride, QString name=QString(""));
+        size_t copyColumn(size_t old_column, const QString& name=QString(""));
 
 
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<double>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<double>& data, QString name, unsigned long long stride);
-
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<float>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<bool>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<uint8_t>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<uint16_t>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<uint32_t>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<uint64_t>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<int8_t>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<int16_t>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<int32_t>& data, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedColumn(const QVector<int64_t>& data, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
+        /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
          *
-         *  \note This function converts the input array \a data into an array of double!
+         *   \tparam TContainer datatype of the container, which need to support standard C++ iterators and the function \c size(). The contents needs to be convertible to double.
+         *   \param data data vector to be copied
+         *   \param name name for the column
+         *   \return the ID of the newly created column
          */
-        size_t addCopiedColumn(const bool* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const uint8_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const uint16_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const uint32_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const int8_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const int16_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const int32_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const int64_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const uint64_t* data, unsigned long long rows, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumn(const float* data, unsigned long long rows, QString name=QString(""));
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumnMasked(const float* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<float>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
+        template <typename TContainer>
+        size_t addCopiedColumn(const TContainer& data, const QString& name=QString("")) {
+            const size_t N=data.size();
+            double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
+            if (N>0) {
+                size_t r=0;
+                for (auto it=data.begin(); it!=data.end(); ++it) {
+                    d[r]=jkqtp_todouble(*it);
+                    r++;
+                }
+            }
+            size_t itemid=addInternalItem(d, N);
+            return addColumnForItem(itemid, 0, name);
         }
 
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
+        /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
          *
-         *  \note This function converts the input array \a data into an array of double!
+         *   \tparam TContainer datatype of the container, which need to support standard C++ iterators and the function \c size(). The contents needs to be convertible to double.
+         *   \param data data vector to be copied
+         *   \param name name for the column
+         *   \param stride strides through the container \a data with the given stride
+         *   \param start starts copying from \a data with the element \a start
+         *   \return the ID of the newly created column
          */
-        size_t addCopiedColumnMasked(const double* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<double>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
+        template <typename TContainer>
+        size_t addCopiedColumn(const TContainer& data, const QString& name, size_t stride, size_t start=0) {
+            const size_t N=(data.size()-start)/stride;
+            double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
+            if (N>0) {
+                size_t r=0;
+                auto it=data.begin();
+                if (start>0) it+=start;
+                for (; it!=data.end(); it+=stride) {
+                    d[r]=jkqtp_todouble(*it);
+                    r++;
+                }
+            }
+            size_t itemid=addInternalItem(d, N);
+            return addColumnForItem(itemid, 0, name);
         }
 
 
 
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
+        /** \brief copy an external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.
+         *
+         *   \tparam T datatype of the element in the vector, this has to be convertible to double!
+         *   \param data pointer to the data to be copied
+         *   \param name name for the column
+         *   \return the ID of the newly created column
          *
          *  \note This function converts the input array \a data into an array of double!
          */
-        size_t addCopiedColumnMasked(const uint8_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<uint8_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
+        template<typename T>
+        size_t addCopiedColumn(const T* data, size_t rows, const QString& name=QString("")){
+            double* d=static_cast<double*>(malloc(static_cast<size_t>(rows)*sizeof(double)));
+            if (data) {
+                for (size_t r=0; r<rows; r++) {
+                    d[r]=jkqtp_todouble(data[r]);
+                }
+            }
+            size_t itemid=addInternalItem(d, rows);
+            return addColumnForItem(itemid, 0, name);
         }
 
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
+        /** \brief copy an external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.
+         *
+         *   \tparam T datatype of the element in the vector, this has to be convertible to double!
+         *   \param data pointer to the data to be copied
+         *   \param rows number of items to copy from \a data
+         *   \param stride when copying, this function steps throught the data with the given stride, so only eleemnts <code>[start, start+stride, start+2*stride, ... start+(rows-1)*stride]</code> are copied!
+         *   \param start first element to copy
+         *   \param name name for the column
+         *   \return the ID of the newly created column
          *
          *  \note This function converts the input array \a data into an array of double!
          */
-        size_t addCopiedColumnMasked(const int8_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<int8_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
+        template<typename T>
+        size_t addCopiedColumn(const T* data, size_t rows, size_t stride, int start, const QString& name) {
+            double* d=static_cast<double*>(malloc(static_cast<size_t>(rows)*sizeof(double)));
+            if (data) {
+                for (size_t r=0; r<rows; r++) {
+                    d[r]=jkqtp_todouble(data[static_cast<size_t>(start+static_cast<int64_t>(r*stride))]);
+                }
+            }
+            size_t itemid=addInternalItem(d, rows);
+            return addColumnForItem(itemid, 0, name);
         }
 
-
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
+        /** \brief copy an external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.
+         *
+         *   \tparam T datatype of the element in the vector, this has to be convertible to double!
+         *   \param data pointer to the data to be copied
+         *   \param name name for the column
+         *   \param stride when copying, this function steps throught the data with the given stride, so only eleemnts <code>[0, stride, 2*stride, ... (rows-1)*stride]</code> are copied!
+         *   \return the ID of the newly created column
          *
          *  \note This function converts the input array \a data into an array of double!
          */
-        size_t addCopiedColumnMasked(const int16_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<int16_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
+        template<typename T>
+        size_t addCopiedColumn(const T* data, size_t rows, size_t stride, const QString& name) {
+            return addCopiedColumn<T>(data, rows, stride, 0, name);
         }
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumnMasked(const uint16_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<uint16_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
-        }
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumnMasked(const int32_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<int32_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
-        }
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumnMasked(const uint32_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<uint32_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
-        }
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumnMasked(const uint64_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<uint64_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
-        }
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumnMasked(const int64_t* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<int64_t>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
-        }
-        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        size_t addCopiedColumnMasked(const bool* data, const bool* mask, unsigned long long rows, QString name=QString(""), bool useIfMaskEquals=false);
-
-        /** \brief add one external column to the datastore. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.
-         *
-         *  \note This function converts the input array \a data into an array of double!
-         */
-        inline size_t addCopiedColumnMasked(const QVector<bool>& data, const QVector<bool>& mask, QString name=QString(""), bool useIfMaskEquals=false) {
-            return addCopiedColumnMasked(data.data(), mask.data(), qMin(data.size(), mask.size()), name, useIfMaskEquals);
-        }
-
-
 
 
         /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const double* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
+        template <typename T>
+        inline size_t addCopiedImageAsColumn(const T* data, size_t width, size_t height, const QString& name=QString(""), size_t stride=0, size_t start=0){
+            return addCopiedColumn<T>(data, width*height, stride, start, name);
         }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const double* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<double>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<double>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
-
-
 
         /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const float* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
+        template <typename TContainer>
+        inline size_t addCopiedImageAsColumn(const TContainer& data, size_t /*width*/, const QString& name=QString("")){
+            return addCopiedColumn<TContainer>(data, name);
         }
+
+
         /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const float* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<float>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
+        template <typename T>
+        size_t addCopiedImageAsColumnTranspose(const T* data, size_t width, size_t height, const QString& name=QString(""), size_t stride=0, size_t start=0){
+            double* temp=static_cast<T*>(malloc(width*height*sizeof(T)));
+
+            for (size_t x=0; x<width; x++) {
+                for (size_t y=0; y<height; y++) {
+                    temp[x*height+y]=data[start+(y*width+x)*stride];
+                }
+
+            }
+
+            size_t idx=addCopiedColumn(temp, width*height, name);
+            free(temp);
+            return idx;
         }
+
+
         /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<float>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
+        template <typename T>
+        inline size_t addCopiedImageAsColumnTranspose(const QVector<T>& data, size_t width, const QString& name=QString("")){
+            return addCopiedImageAsColumnTranspose<T>(data.data(), width, data.size()/width, name);
         }
 
 
-
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const bool *data, unsigned long long width, unsigned long long height, QString name=QString("")) {
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const bool* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<bool>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<bool>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
+        /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
+         *         afterwards you can delete the external arrayThis returns its logical column ID.
+         *
+         *  \note This function converts the input array \a data into an array of double!
+         */
+        template <typename T>
+        size_t addCopiedColumnMasked(const T* data, const bool* mask, size_t rows, const QString& name=QString(""), bool useIfMaskEquals=false) {
+            double* d=static_cast<double*>(calloc(rows, sizeof(double)));
+            size_t rrs=0;
+            if (data) {
+                for (size_t r=0; r<rows; r++) {
+                    if (!mask || (mask && (mask[r]==useIfMaskEquals))) {
+                        d[rrs]=jkqtp_todouble(data[r]);
+                        rrs++;
+                    }
+                }
+            }
 
 
-
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const uint64_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const uint64_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<uint64_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<uint64_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
+            size_t col= addCopiedColumn(d, rrs, name);
+            free(d);
+            return col;
         }
 
+        /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
+         *
+         *   \tparam TContainer datatype of the container, which need to support standard C++ iterators and the function \c size(). The contents needs to be convertible to double.
+         *   \param data data vector to be copied
+         *   \param name name for the column
+         *   \param stride strides through the container \a data with the given stride
+         *   \param start starts copying from \a data with the element \a start
+         *   \return the ID of the newly created column
+         */
+        template <typename TContainer, typename TContainerMask>
+        size_t addCopiedColumnMasked(const TContainer& data, const TContainerMask& mask, const QString& name=QString(""), bool useIfMaskEquals=false) {
+            const size_t N=data.size();
+            double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
+            size_t rrs=0;
+            if (data) {
+                auto itmask=mask.begin();
+                auto itdata=data.begin();
+                for (size_t r=0; r<N; r++) {
+                    if ((*itmask)==useIfMaskEquals) {
+                        d[rrs]=jkqtp_todouble(*itdata);
+                        rrs++;
+                    }
+                    ++itmask;
+                    ++itdata;
+                }
+            }
 
 
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const int64_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const int64_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<int64_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<int64_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
+            size_t col= addCopiedColumn(d, rrs, name);
+            free(d);
+            return col;
 
-
-
-
-
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const uint32_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const uint32_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<uint32_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<uint32_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
-
-
-
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const int32_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const int32_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<int32_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<int32_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
         }
 
 
 
 
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const uint16_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const uint16_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<uint16_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<uint16_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
 
-
-
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const int16_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const int16_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<int16_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<int16_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
-
-
-
-
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const uint8_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const uint8_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<uint8_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<uint8_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
-
-
-
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const int8_t* data, unsigned long long width, unsigned long long height, QString name=QString("")){
-            return addCopiedColumn(data, width*height, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        size_t addCopiedImageAsColumnTranspose(const int8_t* data, unsigned long long width, unsigned long long height, QString name=QString(""));
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumn(const QVector<int8_t>& data, unsigned long long width, QString name=QString("")) {
-            return addCopiedImageAsColumn(data.data(), width, data.size()/width, name);
-        }
-        /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a column-major image and is copied as row-major (i.e. is transposed). The external data is copied to an internal array, so
-         *         afterwards you can delete the external arrayThis returns its logical column ID.*/
-        inline size_t addCopiedImageAsColumnTranspose(const QVector<int8_t>& data, unsigned long long width, QString name=QString(""))  {
-            return addCopiedImageAsColumnTranspose(data.data(), width, data.size()/width, name);
-        }
         /** \brief add a column to the datastore that contains \a rows rows with increasing value starting at \a start and ending at \a end.
          *         the values are equidistant between \a start end \a end */
-        size_t addLinearColumn(unsigned long long rows, double start, double end, QString name=QString(""));
+        size_t addLinearColumn(size_t rows, double start, double end, const QString& name=QString(""));
 
         /** \brief returns the number of (logical) columns currently managed by the datastore */
-        inline size_t getColumnCount() { return columns.size(); }
+        inline size_t getColumnCount() { return static_cast<size_t>(columns.size()); }
 
         inline QList<size_t> getColumnIDs() { return columns.keys(); }
 
         /** \brief return the num of the first column  with the given name, or -1 if none was found */
-        int getColumnNum(QString name);
+        int getColumnNum(const QString& name);
 
         /** \brief return the num of the first column  with the given name, if none was found this creates a new column with no rows and returns its num */
-        size_t ensureColumnNum(QString name);
+        size_t ensureColumnNum(const QString& name);
 
         /** \brief returns the JKQTPcolumn object for the \a i -th column in the store */
         JKQTPcolumn getColumn(size_t i) const;
 
         /** \brief returns the maximum number of rows in all columns */
-        unsigned long long getMaxRows();
+        size_t getMaxRows();
 
         /** \brief save contents of datastore as Comma Separated Values (CSV) file
          *
@@ -832,10 +524,10 @@ class LIB_EXPORT JKQTPdatastore{
 
         /** \brief return contents of datastore as QList<QVector<double> >, i.e. a list of column-vectors
          *
-         * \param columnNames if \c !=NULL this will afterwards conatin the column titles
+         * \param columnNames if \c !=nullptr this will afterwards conatin the column titles
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
-        QList<QVector<double> > getData(QStringList* columnNames=NULL, QSet<int> userColumns=QSet<int>());
+        QList<QVector<double> > getData(QStringList* columnNames=nullptr, QSet<int> userColumns=QSet<int>());
 
         /** \brief save contents of datastore as <a href="http://www.fileformat.info/format/dif/egff.htm">DIF file (data interchange format)</a>
          *
@@ -860,8 +552,10 @@ class LIB_EXPORT JKQTPdatastore{
 
         /** \brief return a list with all columns available in the datastore */
         QStringList getColumnNames() const;
-        size_t addInternalColumn(double *data, unsigned long long rows, QString name);
+        size_t addInternalColumn(double *data, size_t rows, const QString& name);
 };
+
+
 
 
 /** \brief stores information about one data column. See JKQTPdatastore for more information.
@@ -874,7 +568,7 @@ class LIB_EXPORT JKQTPcolumn {
     /** \brief index of the item in the datastore that contains the data for this column */
     size_t datastoreItem;
     /** \brief offset, if the datastore item contains more than one column */
-    unsigned long long datastoreOffset;
+    size_t datastoreOffset;
     /** \brief a name describing the column */
     QString name;
     /** \brief pointer to the datastore object used to manage the data of the plot */
@@ -885,37 +579,27 @@ class LIB_EXPORT JKQTPcolumn {
   protected:
     JKQTPGET_MACRO(JKQTPdatastore*, datastore)
   public:
-    JKQTPcolumn() {
-        datastore=NULL;
-        name="";
-        datastoreItem=0;
-        datastoreOffset=0;
-        valid=false;
-    };
+    JKQTPcolumn();
     /** \brief class constructor that binds the column to a specific datastore object.
      *
      * The use of this constructor is mandatory. The default constructor (no arguments) is hidden. Also note
      * that you cannot change the binding of a column to a datastore object after creation of the column.
      */
-    JKQTPcolumn(JKQTPdatastore* datastore, QString name=QString(""), size_t datastoreItem=0, unsigned long long datastoreOffset=0) {
-        this->datastore=datastore;
-        this->datastoreItem=datastoreItem;
-        this->datastoreOffset=datastoreOffset;
-        this->name=name;
-        valid=true;
-    }
+    JKQTPcolumn(JKQTPdatastore* datastore, const QString& name=QString(""), size_t datastoreItem=0, size_t datastoreOffset=0);
 
     inline bool isValid() const { return valid; }
 
     /** \brief class destructor */
-    virtual ~JKQTPcolumn() {}
+    virtual ~JKQTPcolumn() ;
 
     JKQTPGET_SET_MACRO(QString, name)
 
     /** \brief returns the number of rows in this column (accesses the datastore) */
-    unsigned long long getRows() const;
+    size_t getRows() const;
 
+    /** \brief copies the contained data into a QVector */
     void copyData(QVector<double>& copyTo) const;
+    /** \brief returns a QVector with the contained data (as a copy) */
     QVector<double> copyData();
 
     /** \brief reads the \a n'th value from the column
@@ -923,17 +607,17 @@ class LIB_EXPORT JKQTPcolumn {
      * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
      * column.
      */
-    double getValue(unsigned long long n) const;
+    double getValue(size_t n) const;
     /** \brief gets a pointer to the n-th value in the column
      */
-    double* getPointer(unsigned long long n=0) const ;
+    double* getPointer(size_t n=0) const ;
 
     /** \brief sets the \a n'th value from the column
      *
      * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
      * column.
      */
-    void setValue(unsigned long long n, double val) ;
+    void setValue(size_t n, double val) ;
 
     /** \brief returns a pointer to the datastore item representing this column */
     inline JKQTPdatastoreItem* getDatastoreItem() const { return datastore->getItem(datastoreItem); }
@@ -943,7 +627,7 @@ class LIB_EXPORT JKQTPcolumn {
      * This copies \a N elements from \a data into the column where the first overwritten column
      * line is \a offset, so you can shift the location where the copy process starts.
      */
-    void copy(double* data, unsigned long long N, unsigned long long offset=0);
+    void copy(double* data, size_t N, size_t offset=0);
 
     /** \brief exchange everz occurence of a given \a value by a \a replace value */
     void exchange(double value, double replace);
@@ -954,7 +638,7 @@ class LIB_EXPORT JKQTPcolumn {
     void scale(double factor);
 
     JKQTPGET_MACRO(size_t, datastoreItem)
-    JKQTPGET_MACRO(unsigned long long, datastoreOffset)
+    JKQTPGET_MACRO(size_t, datastoreOffset)
 };
 
 
@@ -990,7 +674,7 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief as data may also point to a matrix, this specifies the number of columns in this element (default: 1) */
     size_t columns;
     /** \brief number of rows in this item */
-    unsigned long long rows;
+    size_t rows;
     /** \brief memory format of the data in this item */
     JKQTPdatastoreItemFormat dataformat;
   protected:
@@ -998,24 +682,24 @@ class LIB_EXPORT JKQTPdatastoreItem {
     JKQTPdatastoreItem();
   public:
     /** \brief class constructor: initializes the object for internal data storage */
-    JKQTPdatastoreItem(size_t columns, unsigned long long rows);
+    JKQTPdatastoreItem(size_t columns, size_t rows);
     /** \brief class constructor: initializes the object for external data storage */
-    JKQTPdatastoreItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, unsigned long long rows);
+    JKQTPdatastoreItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
     /** \brief class constructor: initializes the object for external data storage */
-    JKQTPdatastoreItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, unsigned long long rows, bool internal);
+    JKQTPdatastoreItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool internal);
     /** \brief class destructor: frees unfreed internal memory */
     virtual ~JKQTPdatastoreItem();
 
     /** \brief change the size of all columns to the givne number of rows. The data will be lost */
-    void resizeColumns(unsigned long long rows);
+    void resizeColumns(size_t rows);
 
-    JKQTPGET_MACRO(unsigned long long, rows)
+    JKQTPGET_MACRO(size_t, rows)
     JKQTPGET_MACRO(size_t, columns)
 
 
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
-    inline double get(size_t column, unsigned long long row) {
-        if (data!=NULL) switch(dataformat) {
+    inline double get(size_t column, size_t row) {
+        if (data!=nullptr) switch(dataformat) {
             case JKQTPsingleColumn:
               return data[row];
             case JKQTPmatrixColumn:
@@ -1028,8 +712,8 @@ class LIB_EXPORT JKQTPdatastoreItem {
 
 
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
-    inline double* getPointer(size_t column, unsigned long long row) {
-        if (data!=NULL) switch(dataformat) {
+    inline double* getPointer(size_t column, size_t row) {
+        if (data!=nullptr) switch(dataformat) {
             case JKQTPsingleColumn:
               return &(data[row]);
             case JKQTPmatrixColumn:
@@ -1037,11 +721,11 @@ class LIB_EXPORT JKQTPdatastoreItem {
             case JKQTPmatrixRow:
               return &(data[row*columns+column]);
         }
-        return NULL;
+        return nullptr;
     }
     /** \brief set the data at the position (\a column, \a row ) to \a value. The column index specifies the column inside THIS item, not the global column number. */
-    inline void set(size_t column, unsigned long long row, double value) {
-        if (data!=NULL) switch(dataformat) {
+    inline void set(size_t column, size_t row, double value) {
+        if (data!=nullptr) switch(dataformat) {
             case JKQTPsingleColumn:
               data[row]=value;
               return;
@@ -1064,7 +748,7 @@ class LIB_EXPORT JKQTPdatastoreItem {
 class LIB_EXPORT JKQTPdatastoreModel: public QAbstractTableModel {
         Q_OBJECT
     public:
-        JKQTPdatastoreModel(JKQTPdatastore* datastore, QObject* parent=NULL);
+        JKQTPdatastoreModel(JKQTPdatastore* datastore, QObject* parent=nullptr);
         ~JKQTPdatastoreModel();
 
 

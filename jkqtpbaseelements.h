@@ -973,7 +973,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
         /** \brief calculates the maximum width and height (returned as QSize) of all tick labels.
          *         Ascent and descent may also be returned in the two additional pointer arguments- */
-        QSizeF getMaxTickLabelSize(JKQTPEnhancedPainter& painter, double* ascent=NULL, double* descent=NULL);
+        QSizeF getMaxTickLabelSize(JKQTPEnhancedPainter& painter, double* ascent=nullptr, double* descent=nullptr);
 };
 
 

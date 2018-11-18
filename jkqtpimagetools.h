@@ -131,7 +131,7 @@ enum JKQTPMathImageColorPalette {
 class LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPMathImageColorPaletteComboBox(QWidget* parent=NULL);
+        JKQTPMathImageColorPaletteComboBox(QWidget* parent=nullptr);
         JKQTPMathImageColorPalette colorPalette() const;
         JKQTPMathImageColorPalette currentColorPalette() const;
         JKQTPMathImageColorPalette getColorPalette() const;
@@ -617,9 +617,9 @@ inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage 
     double delta=max-min;
 
 
-    int* lut_used=NULL;
+    int* lut_used=nullptr;
     int lutSize=JKQTPimagePlot_LUTSIZE;
-    if (global_jkqtpimagetools_lutstore.size()<=0) global_jkqtpimagetools_lutstore=JKQTPimagePlot_makeQList<int*>(NULL, JKQTPimagePlot_getPredefinedPalettes().size()+2);
+    if (global_jkqtpimagetools_lutstore.size()<=0) global_jkqtpimagetools_lutstore=JKQTPimagePlot_makeQList<int*>(nullptr, JKQTPimagePlot_getPredefinedPalettes().size()+2);
 
 
     img = QImage(width, height, QImage::Format_ARGB32);
@@ -637,7 +637,7 @@ inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage 
         }
 
 
-        if (lut_used!=NULL && lutSize>0) {
+        if (lut_used!=nullptr && lutSize>0) {
             // LUT found: collor the image accordingly
             for (register int j=0; j<height; ++j) {
                 QRgb* line=(QRgb*)(img.scanLine(height-1-j));

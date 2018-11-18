@@ -68,7 +68,7 @@ class LIB_EXPORT JKQTPgraph: public QObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        explicit JKQTPgraph(JKQtBasePlotter* parent=NULL);
+        explicit JKQTPgraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         explicit JKQTPgraph(JKQtPlotter* parent);
 
@@ -214,7 +214,7 @@ class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
 
 
         /** \brief class constructor */
-        JKQTPxyGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPxyGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPxyGraph(JKQtPlotter* parent);
 
@@ -273,9 +273,9 @@ class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
             Sorted=1
         };
         /** \brief class constructor */
-        JKQTPsingleColumnGraph(JKQtBasePlotter* parent=NULL);
-        JKQTPsingleColumnGraph(int dataColumn, JKQtBasePlotter* parent=NULL);
-        JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style=Qt::SolidLine, double lineWidth=2.0, JKQtBasePlotter* parent=NULL);
+        JKQTPsingleColumnGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPsingleColumnGraph(int dataColumn, JKQtBasePlotter* parent=nullptr);
+        JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style=Qt::SolidLine, double lineWidth=2.0, JKQtBasePlotter* parent=nullptr);
         JKQTPsingleColumnGraph(JKQtPlotter* parent);
         JKQTPsingleColumnGraph(int dataColumn, JKQtPlotter* parent);
         JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQtPlotter* parent);
@@ -339,9 +339,9 @@ class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPsingleColumnGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPPeakStreamGraph(JKQtBasePlotter* parent=NULL);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtBasePlotter* parent=NULL);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtBasePlotter* parent=NULL);
+        JKQTPPeakStreamGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtBasePlotter* parent=nullptr);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtBasePlotter* parent=nullptr);
          JKQTPPeakStreamGraph(JKQtPlotter* parent);
         JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtPlotter* parent);
         JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtPlotter* parent);
@@ -429,11 +429,11 @@ class LIB_EXPORT JKQTPgraphErrors {
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. This method is called by
          *         the JKQTPgraph descendents */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis,  int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=NULL)=0;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis,  int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, long long datarange_start=-1, long long datarange_end=-1, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=NULL);
+        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, long long datarange_start=-1, long long datarange_end=-1, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         /** \brief this function can be used to set the color of the error indicators automatically
          *
@@ -493,7 +493,7 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=NULL);
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         virtual double getXErrorU(int i, JKQTPdatastore* ds) const;
         virtual double getXErrorL(int i, JKQTPdatastore* ds) const;
@@ -542,7 +542,7 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=NULL);
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         virtual double getYErrorU(int i, JKQTPdatastore* ds) const;
         virtual double getYErrorL(int i, JKQTPdatastore* ds) const;
@@ -614,7 +614,7 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=NULL);
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         virtual double getXErrorU(int i, JKQTPdatastore* ds) const;
         virtual double getXErrorL(int i, JKQTPdatastore* ds) const;
@@ -635,7 +635,7 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPxyLineGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPxyLineGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPxyLineGraph(JKQtPlotter* parent);
 
@@ -709,7 +709,7 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPxyParametrizedScatterGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPxyParametrizedScatterGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPxyParametrizedScatterGraph(JKQtPlotter* parent);
 
@@ -800,7 +800,7 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=nullptr):
             JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
         { setErrorColorFromGraphColor(color); }
         /** \brief class constructor */
@@ -840,7 +840,7 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
 class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrizedScatterGraph, public JKQTPxyGraphErrors {
         Q_OBJECT
     public:
-        inline JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=nullptr):
             JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
         {  setErrorColorFromGraphColor(color); }
         inline JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent):
@@ -886,7 +886,7 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent);
 
@@ -927,7 +927,7 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=nullptr):
             JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -963,7 +963,7 @@ class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPimpulsesVerticalGraph(JKQtPlotter* parent);
 
@@ -982,7 +982,7 @@ class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGr
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter* parent=nullptr):
             JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -1022,7 +1022,7 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveXGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPfilledCurveXGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPfilledCurveXGraph(JKQtPlotter* parent);
 
@@ -1084,7 +1084,7 @@ class LIB_EXPORT JKQTPfilledCurveXErrorGraph: public JKQTPfilledCurveXGraph, pub
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPfilledCurveXErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPfilledCurveXErrorGraph(JKQtBasePlotter* parent=nullptr):
             JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -1123,7 +1123,7 @@ class LIB_EXPORT JKQTPfilledCurveYGraph: public JKQTPfilledCurveXGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveYGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPfilledCurveYGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPfilledCurveYGraph(JKQtPlotter* parent);
 
@@ -1142,7 +1142,7 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPfilledCurveYErrorGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPfilledCurveYErrorGraph(JKQtBasePlotter* parent=nullptr):
             JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
         {
             setErrorColorFromGraphColor(color);
@@ -1189,7 +1189,7 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
 
 
         /** \brief class constructor */
-        JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPboxplotVerticalGraph(JKQtPlotter* parent);
 
@@ -1304,7 +1304,7 @@ class LIB_EXPORT JKQTPboxplotHorizontalGraph: public JKQTPboxplotVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPboxplotHorizontalGraph(JKQtBasePlotter* parent=NULL):
+        inline JKQTPboxplotHorizontalGraph(JKQtBasePlotter* parent=nullptr):
             JKQTPboxplotVerticalGraph(parent)
         {
         }
@@ -1351,7 +1351,7 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPboxplotVerticalElement(JKQtBasePlotter* parent=NULL);
+        JKQTPboxplotVerticalElement(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPboxplotVerticalElement(JKQtPlotter* parent);
 
@@ -1456,7 +1456,7 @@ class LIB_EXPORT JKQTPboxplotHorizontalElement: public JKQTPboxplotVerticalEleme
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPboxplotHorizontalElement(JKQtBasePlotter* parent=NULL):
+        inline JKQTPboxplotHorizontalElement(JKQtBasePlotter* parent=nullptr):
             JKQTPboxplotVerticalElement(parent)
         {
         }
@@ -1526,7 +1526,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         };
 
         /** \brief class constructor */
-        JKQTPxFunctionLineGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPxFunctionLineGraph(JKQtBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
         JKQTPxFunctionLineGraph(JKQtPlotter* parent);
@@ -1716,7 +1716,7 @@ class LIB_EXPORT JKQTPyFunctionLineGraph: public JKQTPxFunctionLineGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=NULL):JKQTPxFunctionLineGraph(parent) {}
+        inline JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=nullptr):JKQTPxFunctionLineGraph(parent) {}
         /** \brief class constructor */
         inline JKQTPyFunctionLineGraph(JKQtPlotter* parent):JKQTPxFunctionLineGraph(parent) {}
 
@@ -1758,7 +1758,7 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPstepHorizontalGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPstepHorizontalGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPstepHorizontalGraph(JKQtPlotter* parent);
 
@@ -1827,7 +1827,7 @@ class LIB_EXPORT JKQTPstepVerticalGraph: public JKQTPstepHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPstepVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPstepHorizontalGraph(parent) {}
+        inline JKQTPstepVerticalGraph(JKQtBasePlotter* parent=nullptr): JKQTPstepHorizontalGraph(parent) {}
         /** \brief class constructor */
         inline JKQTPstepVerticalGraph(JKQtPlotter* parent): JKQTPstepHorizontalGraph(parent) {}
 
@@ -1871,7 +1871,7 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPxyGraph, public JKQTPxyGra
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarHorizontalGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPbarHorizontalGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPbarHorizontalGraph(JKQtPlotter* parent);
 
@@ -1975,7 +1975,7 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPbarHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPbarVerticalGraph(JKQtBasePlotter* parent=NULL): JKQTPbarHorizontalGraph(parent) {}
+        inline JKQTPbarVerticalGraph(JKQtBasePlotter* parent=nullptr): JKQTPbarHorizontalGraph(parent) {}
         /** \brief class constructor */
         inline JKQTPbarVerticalGraph(JKQtPlotter* parent): JKQTPbarHorizontalGraph(parent) {}
 
@@ -2022,7 +2022,7 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPhorizontalRange(JKQtBasePlotter* parent=NULL);
+        JKQTPhorizontalRange(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPhorizontalRange(JKQtPlotter* parent);
 
@@ -2133,7 +2133,7 @@ class LIB_EXPORT JKQTPverticalRange: public JKQTPhorizontalRange {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPverticalRange(JKQtBasePlotter* parent=NULL);
+        JKQTPverticalRange(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPverticalRange(JKQtPlotter* parent);
 

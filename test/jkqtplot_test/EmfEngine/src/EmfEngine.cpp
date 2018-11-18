@@ -343,7 +343,7 @@ void EmfPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF
 	int height = qRound(r.height());
 
 #ifdef Q_WS_WIN
-	HBITMAP hbtmp = NULL;
+	HBITMAP hbtmp = nullptr;
 	DWORD op = SRCCOPY;
 	if (pm.hasAlpha()){
 		QImage image = pm.scaled(width, height).toImage();
@@ -457,13 +457,13 @@ void EmfPaintEngine::resetClipping()
 {
 #ifdef Q_WS_WIN
 	if (painter()->hasClipping())
-		SelectClipRgn(metaDC, NULL);
+		SelectClipRgn(metaDC, nullptr);
 #endif
 }
 
 HPEN EmfPaintEngine::convertPen(const QPen& pen)
 {
-	INT style = PS_NULL;
+	INT style = PS_nullptr;
 	switch (pen.style()){
 		case Qt::SolidLine:
 			style = PS_SOLID;
@@ -528,12 +528,12 @@ HPEN EmfPaintEngine::convertPen(const QPen& pen)
 	}
 
 	LOGBRUSH lbrush = {BS_SOLID, RGB(pen.color().red(),pen.color().green(),pen.color().blue()), 0};
-	return ExtCreatePen(PS_GEOMETRIC | style | capStyle | joinStyle, pen.width(), &lbrush, 0, NULL);
+	return ExtCreatePen(PS_GEOMETRIC | style | capStyle | joinStyle, pen.width(), &lbrush, 0, nullptr);
 }
 
 HBRUSH EmfPaintEngine::convertBrush(const QBrush& brush)
 {
-	LOGBRUSH lbrush = {BS_NULL, 0, 0};
+	LOGBRUSH lbrush = {BS_nullptr, 0, 0};
 
 	if (!brush.color().alpha())
 		return CreateBrushIndirect( &lbrush );
@@ -562,7 +562,7 @@ HBRUSH EmfPaintEngine::convertBrush(const QBrush& brush)
 	UINT lbStyle = BS_HATCHED;
 	switch(brush.style()){
 		case Qt::NoBrush:
-			lbStyle = BS_NULL;
+			lbStyle = BS_nullptr;
 		break;
 
 		case Qt::SolidPattern:

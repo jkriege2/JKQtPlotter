@@ -49,12 +49,12 @@ int JKQTPPlotsModel::columnCount(const QModelIndex &/*parent*/) const
 QVariant JKQTPPlotsModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
-       if (index.row()<m_plotter->getGraphCount()) return m_plotter->getGraph(index.row())->get_title();
+       if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->get_title();
     } else if (role == Qt::CheckStateRole) {
-       if (index.row()<m_plotter->getGraphCount()) return m_plotter->getGraph(index.row())->get_visible()?Qt::Checked:Qt::Unchecked;
+       if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->get_visible()?Qt::Checked:Qt::Unchecked;
     } else if (role == Qt::DecorationRole) {
-        if (index.row()<m_plotter->getGraphCount()) {
-            return m_plotter->getGraph(index.row())->generateKeyMarker(QSize(16,16));
+        if (index.row()<static_cast<int>(m_plotter->getGraphCount())) {
+            return m_plotter->getGraph(static_cast<size_t>(index.row()))->generateKeyMarker(QSize(16,16));
         }
     }
     return QVariant();
@@ -63,7 +63,7 @@ QVariant JKQTPPlotsModel::data(const QModelIndex &index, int role) const
 bool JKQTPPlotsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (role == Qt::CheckStateRole) {
-        if (index.row()<m_plotter->getGraphCount()) {
+        if (index.row()<static_cast<int>(m_plotter->getGraphCount())) {
             m_plotter->setGraphVisible(index.row(), value.toBool());
             return true;
         }

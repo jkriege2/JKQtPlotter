@@ -80,8 +80,8 @@ void JKQTPgraph::setParent(JKQtBasePlotter* parent) {
         this->xAxis=parent->getXAxis();
         this->yAxis=parent->getYAxis();
     } else {
-        xAxis=NULL;
-        yAxis=NULL;
+        xAxis=nullptr;
+        yAxis=nullptr;
     }
     QObject::setParent(parent);
 }
@@ -117,17 +117,17 @@ bool JKQTPgraph::getDataMinMax(int column, double &minx, double &maxx, double &s
     maxx=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(column).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -204,17 +204,17 @@ bool JKQTPxyGraph::getXMinMax(double& minx, double& maxx, double& smallestGreate
     maxx=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL)  return false;
+    if (parent==nullptr)  return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -225,7 +225,7 @@ bool JKQTPxyGraph::getXMinMax(double& minx, double& maxx, double& smallestGreate
     if (imax<0) imax=0;
 
     for (int i=imin; i<imax; i++) {
-        double xv=datastore->get(xColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         if (JKQTPIsOKFloat(xv)) {
             if (start || xv>maxx) maxx=xv;
             if (start || xv<minx) minx=xv;
@@ -243,17 +243,17 @@ bool JKQTPxyGraph::getYMinMax(double& miny, double& maxy, double& smallestGreate
     maxy=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -264,7 +264,7 @@ bool JKQTPxyGraph::getYMinMax(double& miny, double& maxy, double& smallestGreate
     if (imax<0) imax=0;
 
     for (int i=imin; i<imax; i++) {
-        double yv=datastore->get(yColumn,i);
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         if (JKQTPIsOKFloat(yv)) {
             if (start || yv>maxy) maxy=yv;
             if (start || yv<miny) miny=yv;
@@ -431,17 +431,17 @@ void JKQTPsingleColumnGraph::intSortData()
 
 
 
-    if (parent==NULL)  return ;
+    if (parent==nullptr)  return ;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(dataColumn).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -571,9 +571,9 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPPeakStreamGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -586,10 +586,10 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -688,9 +688,9 @@ JKQTPgraphErrors::JKQTPgraphErrors(QColor graphColor) {
 
 void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, long long datarange_start, long long datarange_end, int xErrorColumnLower, int yErrorColumnLower, bool xErrorSymmetric, bool yErrorSymmetric, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
     //std::cout<<"JKQTPgraphErrors::intPlotXYErrorIndicators(p, "<<parent<<", "<<xColumn<<", "<<yColumn<<", "<<xErrorColumn<<", "<<yErrorColumn<<", "<<xErrorStyle<<", "<<yErrorStyle<<", ...)\n";
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     if ((yErrorStyle==JKQTPnoError) && (xErrorStyle==JKQTPnoError)) return;
     bool visX=(xErrorStyle!=JKQTPnoError)&&(xErrorColumn>=0||xErrorColumnLower>=0)&&(xColumn>=0)&&(yColumn>=0);
@@ -710,16 +710,16 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     painter.setPen(p);
 
     unsigned long long imaxx=0, imaxy=0;
-    if (xColumn>=0) imaxx=datastore->getColumn(xColumn).getRows();
-    if (yColumn>=0) imaxy=datastore->getColumn(yColumn).getRows();
+    if (xColumn>=0) imaxx=datastore->getColumn(static_cast<size_t>(xColumn)).getRows();
+    if (yColumn>=0) imaxy=datastore->getColumn(static_cast<size_t>(yColumn)).getRows();
     int imax=qMin(imaxx, imaxy);
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -748,8 +748,8 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     double deltap=0;
     double deltam=0;
     for (int i=imin; i<imax; i++) {
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         if (imin==imax) { // only one x-value
             deltam=0.5;
             deltap=0.5;
@@ -767,8 +767,8 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     for (int iii=imin; iii<imax; iii++) {
         int i=iii;
         if (dataorder) i=dataorder->value(iii, iii);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
 
         double deltax=1;
         double deltapx=0;
@@ -1259,9 +1259,9 @@ void JKQTPxyLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPxyLineGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     //qDebug()<<"JKQTPxyLineGraph::draw();";
 
@@ -1287,14 +1287,14 @@ void JKQTPxyLineGraph::draw(JKQTPEnhancedPainter& painter) {
     penSelection.setWidthF(penSelection.widthF()*3.0);
 
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -1313,8 +1313,8 @@ void JKQTPxyLineGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double x=xAxis->x2p(xv);
         double y=yAxis->x2p(yv);
         //qDebug()<<"JKQTPxyLineGraph::draw(): (xv, yv) =    ( "<<xv<<", "<<yv<<" )";
@@ -1397,17 +1397,17 @@ bool JKQTPxyLineErrorGraph::getXMinMax(double &minx, double &maxx, double &small
         maxx=0;
         smallestGreaterZero=0;
 
-        if (parent==NULL) return false;
+        if (parent==nullptr) return false;
 
         JKQTPdatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, (long long)imax);
+            imin=qMin(datarange_start, static_cast<long long>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, (long long)imax);
+            imax=qMin(datarange_end, static_cast<long long>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -1419,13 +1419,13 @@ bool JKQTPxyLineErrorGraph::getXMinMax(double &minx, double &maxx, double &small
 
         for (int i=imin; i<imax; i++) {
             double xvsgz;
-            double xv=datastore->get(xColumn,i)+getXErrorU(i, datastore);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
             if (JKQTPIsOKFloat(xv)) {
                 if (start || xv>maxx) maxx=xv;
                 if (start || xv<minx) minx=xv;
                 xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
-                xv=datastore->get(xColumn,i)-getXErrorL(i, datastore);
+                xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
                 if (start || xv>maxx) maxx=xv;
                 if (start || xv<minx) minx=xv;
                 xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
@@ -1445,17 +1445,17 @@ bool JKQTPxyLineErrorGraph::getYMinMax(double &miny, double &maxy, double &small
         maxy=0;
         smallestGreaterZero=0;
 
-        if (parent==NULL) return false;
+        if (parent==nullptr) return false;
 
         JKQTPdatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, (long long)imax);
+            imin=qMin(datarange_start, static_cast<long long>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, (long long)imax);
+            imax=qMin(datarange_end, static_cast<long long>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -1466,14 +1466,14 @@ bool JKQTPxyLineErrorGraph::getYMinMax(double &miny, double &maxy, double &small
         if (imax<0) imax=0;
 
         for (int i=imin; i<imax; i++) {
-            double yv=datastore->get(yColumn,i)+getYErrorU(i, datastore);
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+getYErrorU(i, datastore);
             if (JKQTPIsOKFloat(yv)) {
                 if (start || yv>maxy) maxy=yv;
                 if (start || yv<miny) miny=yv;
                 double xvsgz;
                 xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
-                yv=datastore->get(yColumn,i)-getYErrorL(i, datastore);
+                yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
                 if (start || yv>maxy) maxy=yv;
                 if (start || yv<miny) miny=yv;
                 xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
@@ -1529,9 +1529,9 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesHorizontalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -1543,14 +1543,14 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     p.setStyle(Qt::SolidLine);
     p.setCapStyle(Qt::FlatCap);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -1578,8 +1578,8 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
             double x=xAxis->x2p(xv);
             double y=yAxis->x2p(yv);
@@ -1643,9 +1643,9 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesVerticalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -1657,14 +1657,14 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     p.setStyle(Qt::SolidLine);
     p.setCapStyle(Qt::FlatCap);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -1692,8 +1692,8 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv) ) {
             double x=xAxis->x2p(xv);
             double y=yAxis->x2p(yv);
@@ -1781,9 +1781,9 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPfilledCurveXGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -1801,14 +1801,14 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -1837,8 +1837,8 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
             double x=xAxis->x2p(xv); bool xok=JKQTPIsOKFloat(x);
@@ -1956,9 +1956,9 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPfilledCurveYGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -1977,14 +1977,14 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -2013,8 +2013,8 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
             double x=xAxis->x2p(xv); bool xok=JKQTPIsOKFloat(x);
@@ -2156,9 +2156,9 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotVerticalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -2181,10 +2181,10 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -2310,17 +2310,17 @@ bool JKQTPboxplotVerticalGraph::getXMinMax(double& minx, double& maxx, double& s
     smallestGreaterZero=0;
 
     if (posColumn<0) return false;
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -2360,17 +2360,17 @@ bool JKQTPboxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
 
     if (percentile25Column<0 && percentile75Column<0 && medianColumn<0 && minColumn<0 && maxColumn<0) return false;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(medianColumn).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -2510,17 +2510,17 @@ bool JKQTPboxplotHorizontalGraph::getXMinMax(double& miny, double& maxy, double&
 
     if (percentile25Column<0 && percentile75Column<0 && medianColumn<0 && minColumn<0 && maxColumn<0) return false;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(medianColumn).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -2566,17 +2566,17 @@ bool JKQTPboxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double&
     smallestGreaterZero=0;
 
     if (posColumn<0) return false;
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -2612,9 +2612,9 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotHorizontalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -2637,10 +2637,10 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -2844,7 +2844,7 @@ void JKQTPboxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotVerticalElement::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -2925,7 +2925,7 @@ bool JKQTPboxplotVerticalElement::getXMinMax(double& minx, double& maxx, double&
     maxx=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     double xv=pos;
     double w=boxWidth;
@@ -2944,7 +2944,7 @@ bool JKQTPboxplotVerticalElement::getYMinMax(double& miny, double& maxy, double&
     maxy=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false ;
+    if (parent==nullptr) return false ;
 
 
         double p25=percentile25;
@@ -3068,7 +3068,7 @@ bool JKQTPboxplotHorizontalElement::getXMinMax(double& miny, double& maxy, doubl
     maxy=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
 
         double p25=percentile25;
@@ -3103,7 +3103,7 @@ bool JKQTPboxplotHorizontalElement::getYMinMax(double& minx, double& maxx, doubl
     maxx=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     double xv=pos;
     double w=boxWidth;
@@ -3121,7 +3121,7 @@ void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotHorizontalElement::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -3256,20 +3256,20 @@ JKQTPxFunctionLineGraph::JKQTPxFunctionLineGraph(JKQtBasePlotter* parent):
     fillStyle=Qt::SolidPattern;
     drawLine=true;
     fillCurve=false;
-    plotFunction=NULL;
-    params=NULL;
+    plotFunction=nullptr;
+    params=nullptr;
     minSamples=10;
     maxRefinementDegree=7;
     slopeTolerance=0.005;
     minPixelPerSample=32;
     plotRefinement=true;
     displaySamplePoints=false;
-    data=NULL;
+    data=nullptr;
 
     drawErrorPolygons=false;
     drawErrorLines=false;
-    errorPlotFunction=NULL;
-    errorParams=NULL;
+    errorPlotFunction=nullptr;
+    errorParams=nullptr;
     errorColor=color.lighter();
     errorFillColor=color.lighter();
     errorStyle=Qt::SolidLine;
@@ -3304,20 +3304,20 @@ JKQTPxFunctionLineGraph::JKQTPxFunctionLineGraph(JKQtPlotter* parent):
     fillStyle=Qt::SolidPattern;
     drawLine=true;
     fillCurve=false;
-    plotFunction=NULL;
-    params=NULL;
+    plotFunction=nullptr;
+    params=nullptr;
     minSamples=10;
     maxRefinementDegree=7;
     slopeTolerance=0.005;
     minPixelPerSample=32;
     plotRefinement=true;
     displaySamplePoints=false;
-    data=NULL;
+    data=nullptr;
 
     drawErrorPolygons=false;
     drawErrorLines=false;
-    errorPlotFunction=NULL;
-    errorParams=NULL;
+    errorPlotFunction=nullptr;
+    errorParams=nullptr;
     errorColor=color.lighter();
     errorFillColor=color.lighter();
     errorStyle=Qt::SolidLine;
@@ -3348,12 +3348,12 @@ JKQTPxFunctionLineGraph::~JKQTPxFunctionLineGraph() {
 }
 
 void JKQTPxFunctionLineGraph::clearData() {
-    while (data!=NULL) {
+    while (data!=nullptr) {
         doublePair* d=data;
         data=data->next;
         delete d;
     }
-    data=NULL;
+    data=nullptr;
 }
 
 
@@ -3388,8 +3388,8 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
     clearData();
     if (collectParams) collectParameters();
 
-    if (parent==NULL) return;
-    if (plotFunction==NULL) return;
+    if (parent==nullptr) return;
+    if (plotFunction==nullptr) return;
 
     double xmin=parent->getXMin();
     double xmax=parent->getXMax();
@@ -3402,14 +3402,14 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
     doublePair* d=new doublePair;
     d->x=xmin;
     d->f=plotFunction(xmin, params);
-    d->next=NULL;
+    d->next=nullptr;
     data=d;
     /*if (parent && parent->getXAxis()->isLogAxis()) {
         for (double x=log(xmin)+logdelta0; x<log(xmax); x=x+logdelta0) {
             d->next = new doublePair;
             d->next->x=exp(x+((double)rand()/(double)RAND_MAX-0.5)*delta0/2.0);
             d->next->f=plotFunction(d->next->x, params);
-            d->next->next=NULL;
+            d->next->next=nullptr;
             doublePair* dd=d;
             d=d->next;
             refine(dd, d);
@@ -3423,7 +3423,7 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
             d->next = new doublePair;
             d->next->x=parent->p2x(x+((double)rand()/(double)RAND_MAX-0.5)*delta0/2.0);
             d->next->f=plotFunction(d->next->x, params);
-            d->next->next=NULL;
+            d->next->next=nullptr;
             doublePair* dd=d;
             d=d->next;
             refine(dd, d);
@@ -3433,7 +3433,7 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
     d->next = new doublePair;
     d->next->x=xmax;
     d->next->f=plotFunction(xmax, params);
-    d->next->next=NULL;
+    d->next->next=nullptr;
     refine(d, d->next);
 
 }
@@ -3523,9 +3523,9 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPxFunctionLineGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     //qDebug()<<"start plot\n";
     createPlotData();
@@ -3579,7 +3579,7 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     double dypix=fabs(yama-yami);
     yami=yami-2*dypix;
     yama=yama+2*dypix;
-    while (d!=NULL) {
+    while (d!=nullptr) {
 
         double xv=d->x;
         double yv=d->f;
@@ -3588,7 +3588,7 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
             double x=xAxis->x2p(xv);
             double y=yAxis->x2p(yv);
             double ype=0, yme=0;
-            if ((drawErrorLines || drawErrorPolygons) && (errorPlotFunction!=NULL)) {
+            if ((drawErrorLines || drawErrorPolygons) && (errorPlotFunction!=nullptr)) {
                 double e=errorPlotFunction(xv, errorParams);
                 ype=yAxis->x2p(yv+e);
                 yme=yAxis->x2p(yv-e);
@@ -3604,7 +3604,7 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (!d->next) filledPolygon<<QPointF(x, y0);
             }
 
-            if (drawErrorPolygons && (errorPlotFunction!=NULL)) {
+            if (drawErrorPolygons && (errorPlotFunction!=nullptr)) {
                 epTop<<QPointF(x, ype);
                 epBottom<<QPointF(x, yme);
             }
@@ -3613,7 +3613,7 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 linePolygon<<QPointF(x, y);
             }
 
-            if (drawErrorLines && (errorPlotFunction!=NULL)) {
+            if (drawErrorLines && (errorPlotFunction!=nullptr)) {
                 errorLineTop<<QPointF(x, ype);
                 errorLineBottom<<QPointF(x, yme);
             }
@@ -3655,7 +3655,7 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         painter.restore();
     }
 
-    if (drawErrorLines && (errorPlotFunction!=NULL)) {
+    if (drawErrorLines && (errorPlotFunction!=nullptr)) {
         painter.save();
         painter.setPen(ep);
         painter.drawPolyline(errorLineTop);
@@ -3670,7 +3670,7 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     d=data;
     if (displaySamplePoints) {
         painter.save();
-        while (d!=NULL) {
+        while (d!=nullptr) {
             double xv=d->x;
             double yv=d->f;
             //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
@@ -3706,9 +3706,9 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPyFunctionLineGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     //std::cout<<"start plot\n";
     createPlotData();
@@ -3754,7 +3754,7 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     bool first=false;
     doublePair* d=data;
 
-    while (d!=NULL) {
+    while (d!=nullptr) {
         double yv=d->x;
         double xv=d->f;
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
@@ -3762,7 +3762,7 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
             double x=xAxis->x2p(xv);
             double y=yAxis->x2p(yv);
             double xpe=0, xme=0;
-            if ((drawErrorLines || drawErrorPolygons) && (errorPlotFunction!=NULL)) {
+            if ((drawErrorLines || drawErrorPolygons) && (errorPlotFunction!=nullptr)) {
                 double e=errorPlotFunction(xv, errorParams);
                 xpe=xAxis->x2p(xv+e);
                 xme=xAxis->x2p(xv-e);
@@ -3783,12 +3783,12 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     painter.drawConvexPolygon(poly);
                     painter.restore();
                     /*pfill.lineTo(x, y);
-                    if (d->next==NULL) { // last datapoint
+                    if (d->next==nullptr) { // last datapoint
                         pfill.lineTo(x, y0);
                     }*/
                 }
 
-                if (drawErrorPolygons && (errorPlotFunction!=NULL)) {
+                if (drawErrorPolygons && (errorPlotFunction!=nullptr)) {
                     painter.save();
                     painter.setBrush(eb);
                     painter.setPen(np);
@@ -3804,7 +3804,7 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     painter.drawLine(QLineF(xl1, yl1, xl2, yl2));
                 }
 
-                if (drawErrorLines && (errorPlotFunction!=NULL)) {
+                if (drawErrorLines && (errorPlotFunction!=nullptr)) {
                     painter.setPen(ep);
                     painter.drawLine(QLineF(xpeold, yold, xpe, y));
                     painter.drawLine(QLineF(xmeold, yold, xme, y));
@@ -3846,7 +3846,7 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     QColor c=color;
     c.setHsv(fmod(color.hue()+90, 360), color.saturation(), color.value());
     d=data;
-    if (displaySamplePoints) while (d!=NULL) {
+    if (displaySamplePoints) while (d!=nullptr) {
         double yv=d->x;
         double xv=d->f;
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
@@ -3866,8 +3866,8 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 void JKQTPyFunctionLineGraph::createPlotData(bool /*collectParams*/) {
     clearData();
 
-    if (parent==NULL) return;
-    if (plotFunction==NULL) return;
+    if (parent==nullptr) return;
+    if (plotFunction==nullptr) return;
 
     double ymin=parent->getYMin();
     double ymax=parent->getYMax();
@@ -3877,13 +3877,13 @@ void JKQTPyFunctionLineGraph::createPlotData(bool /*collectParams*/) {
     doublePair* d=new doublePair;
     d->x=ymin;
     d->f=plotFunction(ymin, params);
-    d->next=NULL;
+    d->next=nullptr;
     data=d;
     for (double y=ymin+delta0; y<ymax; y=y+delta0) {
         d->next = new doublePair;
         d->next->x=y+((double)rand()/(double)RAND_MAX-0.5)*delta0/2.0;
         d->next->f=plotFunction(d->next->x, params);
-        d->next->next=NULL;
+        d->next->next=nullptr;
         doublePair* dd=d;
         d=d->next;
         refine(dd, d);
@@ -3891,7 +3891,7 @@ void JKQTPyFunctionLineGraph::createPlotData(bool /*collectParams*/) {
     d->next = new doublePair;
     d->next->x=ymax;
     d->next->f=plotFunction(ymax, params);
-    d->next->next=NULL;
+    d->next->next=nullptr;
     refine(d, d->next);
 
 }
@@ -3975,9 +3975,9 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPstepHorizontalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -3995,14 +3995,14 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -4026,8 +4026,8 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
             double x=xAxis->x2p(xv);
@@ -4104,9 +4104,9 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPstepVerticalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -4122,14 +4122,14 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -4151,8 +4151,8 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
             double x=xAxis->x2p(xv);
@@ -4285,9 +4285,9 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPbarHorizontalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -4301,14 +4301,14 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end+1, (long long)imax);
+        imax=qMin(datarange_end+1, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -4329,10 +4329,10 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         long long sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
         long long lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
-        double yv=datastore->get(yColumn,i);
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
 //        if (imin==imax) { // only one x-value
 //            deltam=0.5;
 //            deltap=0.5;
@@ -4386,17 +4386,17 @@ bool JKQTPbarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
     maxx=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -4407,7 +4407,7 @@ bool JKQTPbarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
     if (imax<0) imax=0;
 
     for (int i=imin; i<imax; i++) {
-        double xv=datastore->get(xColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         long long sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
         long long lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
         double delta, deltap, deltam;
@@ -4461,17 +4461,17 @@ bool JKQTPbarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
         smallestGreaterZero=0;
         if (baseline>0) smallestGreaterZero=baseline;
 
-        if (parent==NULL) return false;
+        if (parent==nullptr) return false;
 
         JKQTPdatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, (long long)imax);
+            imin=qMin(datarange_start, static_cast<long long>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, (long long)imax);
+            imax=qMin(datarange_end, static_cast<long long>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -4483,8 +4483,8 @@ bool JKQTPbarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
 
 
         for (int i=imin; i<imax; i++) {
-            double yv=datastore->get(yColumn,i)+getYErrorU(i, datastore);
-            double yvv=datastore->get(yColumn,i)-getYErrorL(i, datastore);
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+getYErrorU(i, datastore);
+            double yvv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
             if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(yvv) ) {
                 if (start || yv>maxy) maxy=yv;
                 if (start || yv<miny) miny=yv;
@@ -4547,9 +4547,9 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPbarVerticalGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
@@ -4563,14 +4563,14 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end+1, (long long)imax);
+        imax=qMin(datarange_end+1, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -4591,8 +4591,8 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         long long sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
         long long lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
 //        if (imin==imax) { // only one x-value
@@ -4652,17 +4652,17 @@ bool JKQTPbarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
         maxx=0;
         smallestGreaterZero=0;
 
-        if (parent==NULL) return false;
+        if (parent==nullptr) return false;
 
         JKQTPdatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, (long long)imax);
+            imin=qMin(datarange_start, static_cast<long long>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, (long long)imax);
+            imax=qMin(datarange_end, static_cast<long long>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -4674,8 +4674,8 @@ bool JKQTPbarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
 
         for (int i=imin; i<imax; i++) {
             double xvsgz;
-            double xv=datastore->get(xColumn,i)+getXErrorU(i, datastore);
-            double xvv=datastore->get(xColumn,i)-getXErrorL(i, datastore);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
+            double xvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xvv) ) {
                 if (start || xv>maxx) maxx=xv;
                 if (start || xv<minx) minx=xv;
@@ -4697,17 +4697,17 @@ bool JKQTPbarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
     maxy=0;
     smallestGreaterZero=0;
 
-    if (parent==NULL) return false;
+    if (parent==nullptr) return false;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -4718,7 +4718,7 @@ bool JKQTPbarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
     if (imax<0) imax=0;
 
     for (int i=imin; i<imax; i++) {
-        double yv=datastore->get(yColumn,i);
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double delta, deltap, deltam;
         long long sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
         long long lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
@@ -5094,17 +5094,17 @@ void JKQTPxyGraph::intSortData()
 
 
 
-    if (parent==NULL)  return ;
+    if (parent==nullptr)  return ;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -5119,7 +5119,7 @@ void JKQTPxyGraph::intSortData()
     if (sortData==JKQTPxyLineGraph::SortedX) {
 
         for (int i=0; i<imax; i++) {
-            double xv=datastore->get(xColumn,i);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
             sortedIndices<<i;
             datas<<xv;
         }
@@ -5130,7 +5130,7 @@ void JKQTPxyGraph::intSortData()
     } else if (sortData==JKQTPxyLineGraph::SortedY) {
 
         for (int i=0; i<imax; i++) {
-            double xv=datastore->get(yColumn,i);
+            double xv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
             sortedIndices<<i;
             datas<<xv;
         }
@@ -5182,17 +5182,17 @@ void JKQTPboxplotVerticalGraph::intSortData()
 
 
 
-    if (parent==NULL)  return ;
+    if (parent==nullptr)  return ;
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -5459,9 +5459,9 @@ void JKQTPxyParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPxyParametrizedScatterGraph::draw");
 #endif
-    if (parent==NULL) return;
+    if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return;
+    if (datastore==nullptr) return;
 
     cbGetDataMinMax(intColMin, intColMax);
 
@@ -5486,14 +5486,14 @@ void JKQTPxyParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
     penSelection.setWidthF(penSelection.widthF()*3.0);
 
 
-    int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, (long long)imax);
+        imin=qMin(datarange_start, static_cast<long long>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, (long long)imax);
+        imax=qMin(datarange_end, static_cast<long long>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -5517,8 +5517,8 @@ void JKQTPxyParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
     painter.save();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(xColumn,i);
-        double yv=datastore->get(yColumn,i);
+        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double x=xAxis->x2p(xv);
         double y=yAxis->x2p(yv);
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
@@ -5626,18 +5626,18 @@ void JKQTPxyParametrizedScatterGraph::cbGetDataMinMax(double &dmin, double &dmax
 {
     if (autoImageRange) {
         dmin=dmax=0;
-        if (parent==NULL) return;
+        if (parent==nullptr) return;
         JKQTPdatastore* datastore=parent->getDatastore();
-        if (datastore==NULL) return;
+        if (datastore==nullptr) return;
         if (colorColumn<0) return;
-        int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         int imin=0;
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, (long long)imax);
+            imin=qMin(datarange_start, static_cast<long long>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, (long long)imax);
+            imax=qMin(datarange_end, static_cast<long long>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -5683,9 +5683,9 @@ double JKQTPxyParametrizedScatterGraph::getInternalDataMax() const
 
 double JKQTPxyParametrizedScatterGraph::getLocalSymbolSize(int i)
 {
-    if (parent==NULL) return symbolSize;
+    if (parent==nullptr) return symbolSize;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return symbolSize;
+    if (datastore==nullptr) return symbolSize;
     if (sizeColumn<0) return symbolSize;
     if (i>=(int64_t)datastore->getColumn(sizeColumn).getRows()) return symbolSize;
     return datastore->get(sizeColumn,i);
@@ -5693,9 +5693,9 @@ double JKQTPxyParametrizedScatterGraph::getLocalSymbolSize(int i)
 
 QColor JKQTPxyParametrizedScatterGraph::getLocalColor(int i)
 {
-    if (parent==NULL) return color;
+    if (parent==nullptr) return color;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return color;
+    if (datastore==nullptr) return color;
     if (colorColumn<0) return color;
     if (colorColumnContainsRGB) {
         if (i<0 || i>=(int64_t)datastore->getColumn(colorColumn).getRows()) return color;
@@ -5722,9 +5722,9 @@ QColor JKQTPxyParametrizedScatterGraph::getLocalColor(int i)
 
 JKQTPgraphSymbols JKQTPxyParametrizedScatterGraph::getLocalSymbolType(int i)
 {
-    if (parent==NULL) return symbol;
+    if (parent==nullptr) return symbol;
     JKQTPdatastore* datastore=parent->getDatastore();
-    if (datastore==NULL) return symbol;
+    if (datastore==nullptr) return symbol;
     if (symbolColumn<0) return symbol;
     if (i>=(int64_t)datastore->getColumn(symbolColumn).getRows()) return symbol;
     int id=floor(datastore->get(symbolColumn,i));
@@ -5744,17 +5744,17 @@ bool JKQTPxyParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx
         maxx=0;
         smallestGreaterZero=0;
 
-        if (parent==NULL) return false;
+        if (parent==nullptr) return false;
 
         JKQTPdatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, (long long)imax);
+            imin=qMin(datarange_start, static_cast<long long>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, (long long)imax);
+            imax=qMin(datarange_end, static_cast<long long>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -5766,8 +5766,8 @@ bool JKQTPxyParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx
 
         for (int i=imin; i<imax; i++) {
             double xvsgz;
-            double xv=datastore->get(xColumn,i)+getXErrorU(i, datastore);
-            double xvv=datastore->get(xColumn,i)-getXErrorL(i, datastore);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
+            double xvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xvv) ) {
                 if (start || xv>maxx) maxx=xv;
                 if (start || xv<minx) minx=xv;
@@ -5793,17 +5793,17 @@ bool JKQTPxyParametrizedErrorScatterGraph::getYMinMax(double &miny, double &maxy
         maxy=0;
         smallestGreaterZero=0;
 
-        if (parent==NULL) return false;
+        if (parent==nullptr) return false;
 
         JKQTPdatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getColumn(xColumn).getRows(), datastore->getColumn(yColumn).getRows());
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, (long long)imax);
+            imin=qMin(datarange_start, static_cast<long long>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, (long long)imax);
+            imax=qMin(datarange_end, static_cast<long long>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -5814,8 +5814,8 @@ bool JKQTPxyParametrizedErrorScatterGraph::getYMinMax(double &miny, double &maxy
         if (imax<0) imax=0;
 
         for (int i=imin; i<imax; i++) {
-            double yv=datastore->get(yColumn,i)+getYErrorU(i, datastore);
-            double yvv=datastore->get(yColumn,i)-getYErrorL(i, datastore);
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+getYErrorU(i, datastore);
+            double yvv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
             if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(yvv) ) {
                 if (start || yv>maxy) maxy=yv;
                 if (start || yv<miny) miny=yv;

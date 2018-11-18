@@ -59,7 +59,7 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtBasePlotter *pa
     JKQTPxFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();
-    fdata.node=NULL;
+    fdata.node=nullptr;
     fdata.varcount=0;
     function="";
     parameterColumn=-1;
@@ -67,7 +67,7 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtBasePlotter *pa
     set_plotFunction(JKQTPxParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
-    efdata.node=NULL;
+    efdata.node=nullptr;
     efdata.varcount=0;
     errorFunction="";
     errorParameterColumn=-1;
@@ -79,7 +79,7 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtPlotter *parent
     JKQTPxFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();
-    fdata.node=NULL;
+    fdata.node=nullptr;
     fdata.varcount=0;
     function="";
     parameterColumn=-1;
@@ -87,7 +87,7 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtPlotter *parent
     set_plotFunction(JKQTPxParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
-    efdata.node=NULL;
+    efdata.node=nullptr;
     efdata.varcount=0;
     errorFunction="";
     errorParameterColumn=-1;
@@ -186,7 +186,7 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 
     /*int count=0;
     doublePair* d=data;
-    while (d!=NULL) {
+    while (d!=nullptr) {
         count++;
         d=d->next;
     }

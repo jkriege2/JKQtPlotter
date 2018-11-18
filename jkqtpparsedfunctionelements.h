@@ -53,7 +53,7 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
 
 
         /** \brief class constructor */
-        JKQTPxParsedFunctionLineGraph(JKQtBasePlotter* parent=NULL);
+        JKQTPxParsedFunctionLineGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPxParsedFunctionLineGraph(JKQtPlotter* parent);
 

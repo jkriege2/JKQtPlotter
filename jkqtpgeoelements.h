@@ -56,7 +56,7 @@ class LIB_EXPORT JKQTPgeoBaseLine: public JKQTPgraph {
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
          */
-        explicit JKQTPgeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQtBasePlotter* parent=NULL);
+        explicit JKQTPgeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQtBasePlotter* parent=nullptr);
         /*! \brief class contructor
 
             \param color color of drawing
@@ -104,7 +104,7 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
          */
-        JKQTPgeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style=Qt::SolidLine, Qt::BrushStyle fillStyle=Qt::SolidPattern, JKQtBasePlotter* parent=NULL);
+        JKQTPgeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style=Qt::SolidLine, Qt::BrushStyle fillStyle=Qt::SolidPattern, JKQtBasePlotter* parent=nullptr);
         /*! \brief class contructor
 
             \param color color of drawing

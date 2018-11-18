@@ -435,7 +435,7 @@ class JKQTPEnhancedPainter; // forward
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
  */
-#define QColor2String(color) QString(jkqtp_rgbtostring((color).red(), (color).green(), (color).blue(), (color).alpha()).c_str())
+#define QColor2String(color) QString(jkqtp_rgbtostring(static_cast<unsigned char>((color).red()), static_cast<unsigned char>((color).green()), static_cast<unsigned char>((color).blue()), static_cast<unsigned char>((color).alpha())).c_str())
 
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools
@@ -476,7 +476,7 @@ enum JKQTPCAdrawMode {
 class LIB_EXPORT JKQTPCAdrawModeComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPCAdrawModeComboBox(QWidget* parent=NULL);
+        JKQTPCAdrawModeComboBox(QWidget* parent=nullptr);
 
         JKQTPCAdrawMode getDrawMode() const;
         void setDrawMode(JKQTPCAdrawMode position);
@@ -533,7 +533,7 @@ LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(QString pos);
 class LIB_EXPORT JKQTPCAlabelTypeComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPCAlabelTypeComboBox(QWidget* parent=NULL);
+        JKQTPCAlabelTypeComboBox(QWidget* parent=nullptr);
 
         JKQTPCAlabelType getLabelType() const;
         void setLabelType(JKQTPCAlabelType position);
@@ -567,7 +567,7 @@ enum JKQTPlabelPosition {
 class LIB_EXPORT JKQTPlabelPositionComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPlabelPositionComboBox(QWidget* parent=NULL);
+        JKQTPlabelPositionComboBox(QWidget* parent=nullptr);
 
         JKQTPlabelPosition getPosition() const;
         void setPosition(JKQTPlabelPosition position);
@@ -609,7 +609,7 @@ enum JKQTPkeyPosition {
 class LIB_EXPORT JKQTPkeyPositionComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPkeyPositionComboBox(QWidget* parent=NULL);
+        JKQTPkeyPositionComboBox(QWidget* parent=nullptr);
 
         JKQTPkeyPosition getPosition() const;
         void setPosition(JKQTPkeyPosition position);
@@ -647,7 +647,7 @@ enum JKQTPkeyLayout {
 class LIB_EXPORT JKQTPkeyLayoutComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPkeyLayoutComboBox(QWidget* parent=NULL);
+        JKQTPkeyLayoutComboBox(QWidget* parent=nullptr);
 
         JKQTPkeyLayout getKeyLayout() const;
         void setKeyLayout(JKQTPkeyLayout layout);
@@ -751,7 +751,7 @@ enum JKQTPerrorPlotstyle {
 class LIB_EXPORT JKQTPerrorPlotstyleComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPerrorPlotstyleComboBox(QWidget* parent=NULL);
+        JKQTPerrorPlotstyleComboBox(QWidget* parent=nullptr);
 
         JKQTPerrorPlotstyle getErrorStyle() const;
         void setSymbol(JKQTPerrorPlotstyle symbol);
@@ -836,7 +836,7 @@ LIB_EXPORT JKQTPgraphSymbols String2JKQTPgraphSymbols(QString pos);
 class LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPSymbolComboBox(QWidget* parent=NULL);
+        JKQTPSymbolComboBox(QWidget* parent=nullptr);
 
         JKQTPgraphSymbols getSymbol() const;
         void setSymbol(JKQTPgraphSymbols symbol);
@@ -852,7 +852,7 @@ class LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
 class LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPLinePlotStyleComboBox(QWidget* parent=NULL);
+        JKQTPLinePlotStyleComboBox(QWidget* parent=nullptr);
 
         void setDefaultSymbol(JKQTPgraphSymbols symbol);
         void addUsedSymbol(JKQTPgraphSymbols symbol);
@@ -873,7 +873,7 @@ class LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
 class LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPLinePlotStyleWithSymbolSizeComboBox(QWidget* parent=NULL);
+        JKQTPLinePlotStyleWithSymbolSizeComboBox(QWidget* parent=nullptr);
 
         void setDefaultSymbol(JKQTPgraphSymbols symbol, double size);
         void addUsedSymbol(JKQTPgraphSymbols symbol, double symbolSize, bool line);
@@ -959,7 +959,7 @@ LIB_EXPORT void plotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPg
 
     \note all angles are given in degrees [0..360]
 */
-LIB_EXPORT QVector<QPointF> draw_ellipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=NULL, QPointF* x_end=NULL);
+LIB_EXPORT QVector<QPointF> draw_ellipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
 
 
 #include <QDoubleSpinBox>
@@ -970,7 +970,7 @@ LIB_EXPORT QVector<QPointF> draw_ellipse(double x, double y, double a, double b,
 class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
         Q_OBJECT
     public:
-        JKQTPEnhancedDoubleSpinBox(QWidget* parent=NULL);
+        JKQTPEnhancedDoubleSpinBox(QWidget* parent=nullptr);
         ~JKQTPEnhancedDoubleSpinBox();
     signals:
         void editingFinished(double value);
@@ -988,7 +988,7 @@ class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
 class LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
         Q_OBJECT
     public:
-        JKQTPEnhancedSpinBox(QWidget* parent=NULL);
+        JKQTPEnhancedSpinBox(QWidget* parent=nullptr);
         ~JKQTPEnhancedSpinBox();
     signals:
         void editingFinished(int value);
@@ -1026,7 +1026,7 @@ inline QString JKQTPDoubleToQString(double value, int prec = 10, char f = 'g', Q
 class LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
         Q_OBJECT
     public:
-        JKQTPEnhancedTableView(QWidget* parent=NULL);
+        JKQTPEnhancedTableView(QWidget* parent=nullptr);
         virtual ~JKQTPEnhancedTableView();
 
         /** \brief return the contents of the table view as HTML fragment */
@@ -1048,9 +1048,9 @@ class LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
 
     protected:
         virtual void keyPressEvent(QKeyEvent* event);
-        void paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p=NULL);
+        void paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p=nullptr);
 
-        QPrinter* getPrinter(QPrinter* printerIn=NULL, bool *localPrinter=NULL);
+        QPrinter* getPrinter(QPrinter* printerIn=nullptr, bool *localPrinter=nullptr);
         QAction* printAction;
     private:
 };
@@ -1252,23 +1252,23 @@ inline void jkqtpQuicksort(T* a, T2* a2, long long l, long long r){
     \param input array to be sorted
     \param input2 array to be sorted
     \param N size of the array input
-    \param output if \c !=NULL data is written here (the memory location pointed at by \a output has to have at least the length \a N !!!),
+    \param output if \c !=nullptr data is written here (the memory location pointed at by \a output has to have at least the length \a N !!!),
                   otherwise the array input is sorted inplace.
-    \param output2 if \c !=NULL data is written here (the memory location pointed at by \a output has to have at least the length \a N !!!),
+    \param output2 if \c !=nullptr data is written here (the memory location pointed at by \a output has to have at least the length \a N !!!),
                   otherwise the array input is sorted inplace.
 
  */
 template <class T, class T2>
-inline void jkqtpSort(T* input, T2* input2, long long N, T* output=NULL, T2* output2=NULL) {
+inline void jkqtpSort(T* input, T2* input2, long long N, T* output=nullptr, T2* output2=nullptr) {
     if ((!input)) return ;
     if (N<=0) return;
     T* data=input;
-    if (output!=NULL) {
+    if (output!=nullptr) {
         data=output;
         memcpy(output, input, N*sizeof(T));
     }
     T2* data2=input2;
-    if (output2!=NULL && input2!=NULL) {
+    if (output2!=nullptr && input2!=nullptr) {
         data2=output2;
         memcpy(output2, input2, N*sizeof(T2));
     }
@@ -1290,23 +1290,23 @@ class LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 
 LIB_EXPORT std::string jkqtp_tolower(const std::string& s);
 
- LIB_EXPORT bool jkqtp_strtobool(std::string data);
- LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
+LIB_EXPORT bool jkqtp_strtobool(std::string data);
+LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
 
- LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
+LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
 
- LIB_EXPORT long jkqtp_get_filesize(char *FileName);
- LIB_EXPORT std::string jkqtp_bytestostr(double bytes);
+LIB_EXPORT long jkqtp_get_filesize(char *FileName);
+LIB_EXPORT std::string jkqtp_bytestostr(double bytes);
 
- LIB_EXPORT std::string jkqtp_inttostr(long data);
+LIB_EXPORT std::string jkqtp_inttostr(long data);
 
- LIB_EXPORT std::string jkqtp_inttohex(long data);
+LIB_EXPORT std::string jkqtp_inttohex(long data);
 
- LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
+LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
 
- LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
+LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
 
- LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, std::string unitname);
+LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, std::string unitname);
 LIB_EXPORT std::string jkqtp_booltostr(bool data);
 LIB_EXPORT std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
 LIB_EXPORT std::string jkqtp_to_valid_variable_name(std::string input);
@@ -1315,4 +1315,21 @@ LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool 
 LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
 LIB_EXPORT std::string jkqtp_floattohtmlstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
 LIB_EXPORT std::string jkqtp_chartostr(char data);
+
+/** \brief wandelt einen Datentyp in einen double um, wird von JKQTPDatastore zur Wandlung benutzt
+ *
+ * Diese Funktion nutzt per default static_cast<double>(), kann aber für spezielle Datentypen überschrieben werden, etwa für bool
+*/
+template<typename T>
+inline constexpr double jkqtp_todouble(const T& d) {
+    return static_cast<double>(d);
+}
+
+
+/** \brief wandelt einen boolean in einen double um, wird von JKQTPDatastore zur Wandlung benutzt,
+ *         Spezialisierung für bool (true -> 1.0, false -> 0.0) */
+template<>
+inline constexpr double jkqtp_todouble(const bool& d) {
+    return static_cast<double>((d)?1.0:0.0);
+}
 #endif // JKQTPTOOLS_H_INCLUDED

@@ -100,8 +100,8 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         /** \brief class constructor
          */
-        explicit JKQtPlotter(bool datastore_internal, QWidget* parent=NULL, JKQTPdatastore* datast=NULL);
-        explicit JKQtPlotter(QWidget* parent=NULL);
+        explicit JKQtPlotter(bool datastore_internal, QWidget* parent=nullptr, JKQTPdatastore* datast=nullptr);
+        explicit JKQtPlotter(QWidget* parent=nullptr);
 
         /** \brief class destructor */
         virtual ~JKQtPlotter();
@@ -352,8 +352,8 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
             plotter->saveData(filename, format);
         }
 
-        /** \brief print the current plot, if printer is \c NULL a printer selection dialog is displayed */
-        inline void print(QPrinter* printer=NULL) {
+        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
+        inline void print(QPrinter* printer=nullptr) {
             plotter->print(printer);
         }
 

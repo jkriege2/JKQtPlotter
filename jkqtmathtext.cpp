@@ -443,7 +443,7 @@ JKQTmathText::MTinstruction1Node::MTinstruction1Node(JKQTmathText* parent, QStri
 }
 
 JKQTmathText::MTinstruction1Node::~MTinstruction1Node() {
-    if (child!=NULL) delete child;
+    if (child!=nullptr) delete child;
 }
 
 void JKQTmathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -569,7 +569,7 @@ JKQTmathText::MTsubscriptNode::MTsubscriptNode(JKQTmathText* parent, MTnode* chi
 }
 
 JKQTmathText::MTsubscriptNode::~MTsubscriptNode() {
-    if (child!=NULL) delete child;
+    if (child!=nullptr) delete child;
 }
 
 void JKQTmathText::MTsubscriptNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -629,7 +629,7 @@ JKQTmathText::MTsqrtNode::MTsqrtNode(JKQTmathText* parent, MTnode* child, int de
 }
 
 JKQTmathText::MTsqrtNode::~MTsqrtNode() {
-    if (child!=NULL) delete child;
+    if (child!=nullptr) delete child;
 }
 
 void JKQTmathText::MTsqrtNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -711,8 +711,8 @@ JKQTmathText::MTfracNode::MTfracNode(JKQTmathText* parent, MTnode* child_top, MT
 }
 
 JKQTmathText::MTfracNode::~MTfracNode() {
-    if (child1!=NULL) delete child1;
-    if (child2!=NULL) delete child2;
+    if (child1!=nullptr) delete child1;
+    if (child2!=nullptr) delete child2;
 }
 
 void JKQTmathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -990,7 +990,7 @@ double JKQTmathText::MTmatrixNode::draw(QPainter& painter, double x, double y, J
         //widths[i].resize(columns);
         //baselines[i]=heights[i]=widths[i];
         for (int j=0; j<children[i].size(); j++) {
-            if (children[i].at(j)!=NULL) children[i].at(j)->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos);;
+            if (children[i].at(j)!=nullptr) children[i].at(j)->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos);;
             /*widths[i].operator[](j)=width1;
             baselines[i].operator[](j)=baselineHeight;
             heights[i].operator[](j)=overallHeight1;*/
@@ -1054,7 +1054,7 @@ JKQTmathText::MTdecoratedNode::MTdecoratedNode(JKQTmathText* parent, MTdecoratio
 }
 
 JKQTmathText::MTdecoratedNode::~MTdecoratedNode() {
-    if (child!=NULL) delete child;
+    if (child!=nullptr) delete child;
 }
 
 void JKQTmathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -1209,7 +1209,7 @@ JKQTmathText::MTsuperscriptNode::MTsuperscriptNode(JKQTmathText* parent, MTnode*
 }
 
 JKQTmathText::MTsuperscriptNode::~MTsuperscriptNode() {
-    if (child!=NULL) delete child;
+    if (child!=nullptr) delete child;
 }
 
 void JKQTmathText::MTsuperscriptNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -1272,7 +1272,7 @@ JKQTmathText::MTbraceNode::MTbraceNode(JKQTmathText* parent, QString openbrace, 
 }
 
 JKQTmathText::MTbraceNode::~MTbraceNode() {
-    if (child!=NULL) delete child;
+    if (child!=nullptr) delete child;
 }
 
 void JKQTmathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -1621,9 +1621,9 @@ void JKQTmathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTmathText::
         } else if (smb) {
             QString s=smb->get_symbolName();
             if (subsupOperations.contains(s)) {
-                MTsubscriptNode* subn=NULL;
+                MTsubscriptNode* subn=nullptr;
                 if (i+1<nodes.size()) subn=dynamic_cast<MTsubscriptNode*>(nodes[i+1]);
-                MTsuperscriptNode* supn=NULL;
+                MTsuperscriptNode* supn=nullptr;
                 if (i+2<nodes.size()) supn=dynamic_cast<MTsuperscriptNode*>(nodes[i+2]);
                 //std::cout<<"symbol ='"<<s.toStdString()<<"'   subn="<<subn<<"   supn="<<supn<<"\n";
                 if (subn && supn) { // is this subscript and superscript?
@@ -1831,9 +1831,9 @@ double JKQTmathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
             if (smb) {
                 QString s=smb->get_symbolName();
                 if (subsupOperations.contains(s)) {
-                    MTsubscriptNode* subn=NULL;
+                    MTsubscriptNode* subn=nullptr;
                     if (i+1<nodes.size()) subn=dynamic_cast<MTsubscriptNode*>(nodes[i+1]);
-                    MTsuperscriptNode* supn=NULL;
+                    MTsuperscriptNode* supn=nullptr;
                     if (i+2<nodes.size()) supn=dynamic_cast<MTsuperscriptNode*>(nodes[i+2]);
                     //std::cout<<"symbol ='"<<s.toStdString()<<"'   subn="<<subn<<"   supn="<<supn<<"\n";
                     if (subn && supn) { // is this subscript and superscript?
@@ -3082,8 +3082,8 @@ JKQTmathText::JKQTmathText(QObject* parent):
     def_expensiveRendering=expensiveRendering=true;
     useUnparsed=false;
 
-    parsedNode=NULL;
-    unparsedNode=NULL;
+    parsedNode=nullptr;
+    unparsedNode=nullptr;
 
     currentToken=MTTnone;
     currentTokenName="";
@@ -3093,10 +3093,10 @@ JKQTmathText::JKQTmathText(QObject* parent):
 }
 
 JKQTmathText::~JKQTmathText() {
-    if (parsedNode!=NULL) delete parsedNode;
-    parsedNode=NULL;
-    if (unparsedNode!=NULL) delete unparsedNode;
-    unparsedNode=NULL;
+    if (parsedNode!=nullptr) delete parsedNode;
+    parsedNode=nullptr;
+    if (unparsedNode!=nullptr) delete unparsedNode;
+    unparsedNode=nullptr;
 }
 
 void JKQTmathText::loadSettings(QSettings& settings, QString group){
@@ -3311,7 +3311,7 @@ void JKQTmathText::useLatexFonts(QString prefix, QString postfix) {
 QString JKQTmathText::toHtml(bool *ok, double fontPointSize) {
     QString s;
     bool okk=false;
-    if (getTree()!=NULL) {
+    if (getTree()!=nullptr) {
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontPointSize;
@@ -3477,55 +3477,55 @@ JKQTmathText::MTnode* JKQTmathText::parseLatexString(bool get, QString quitOnClo
                     }
                 } else if (name=="frac") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="dfrac") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMdfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="tfrac") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMtfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="stackrel") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMstackrel));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="binom") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTbraceNode(this, "(", ")", new MTfracNode(this, n1, n2, MTFMstackrel)));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="underbrace") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMunderbrace));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="underset") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMunderset));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="overbrace") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMoverbrace));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="overset") {
                     MTnode* n1=parseLatexString(true);
-                    MTnode* n2=NULL;
+                    MTnode* n2=nullptr;
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMoverset));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
@@ -3757,8 +3757,8 @@ JKQTmathText::MTnode* JKQTmathText::parseLatexString(bool get, QString quitOnClo
             if (!parsingMathEnvironment) nl->addNode(new MTwhitespaceNode(this));
         } else if (currentToken==MTTunderscore) {
             getToken();
-            MTnode* child=NULL;
-            MTnode* child2=NULL;
+            MTnode* child=nullptr;
+            MTnode* child2=nullptr;
             if (currentToken==MTTinstruction) {
                 QString name=currentTokenName;
                 getToken(); // look at next token
@@ -3783,12 +3783,12 @@ JKQTmathText::MTnode* JKQTmathText::parseLatexString(bool get, QString quitOnClo
             } else {
                 getNew=false;
             }
-            if (child!=NULL) nl->addNode(new MTsubscriptNode(this, child));
-            if (child2!=NULL) nl->addNode(child2);
+            if (child!=nullptr) nl->addNode(new MTsubscriptNode(this, child));
+            if (child2!=nullptr) nl->addNode(child2);
         } else if (currentToken==MTThat) {
             getToken();
-            MTnode* child=NULL;
-            MTnode* child2=NULL;
+            MTnode* child=nullptr;
+            MTnode* child2=nullptr;
             if (currentToken==MTTinstruction) {
                 QString name=currentTokenName;
                 getToken(); // look at next token
@@ -3813,8 +3813,8 @@ JKQTmathText::MTnode* JKQTmathText::parseLatexString(bool get, QString quitOnClo
             } else {
                 getNew=false;
             }
-            if (child!=NULL) nl->addNode(new MTsuperscriptNode(this, child));
-            if (child2!=NULL) nl->addNode(child2);
+            if (child!=nullptr) nl->addNode(new MTsuperscriptNode(this, child));
+            if (child2!=nullptr) nl->addNode(child2);
         } else if (currentToken==MTTopenbrace) {
             nl->addNode(parseLatexString(true));
         } else if (currentToken==MTTclosebrace) {
@@ -3872,8 +3872,8 @@ bool JKQTmathText::parse(QString text){
     if (parsedNode && parseString==ntext) return true;
 
 
-    if (parsedNode!=NULL) delete parsedNode;
-    if (unparsedNode!=NULL) delete unparsedNode;
+    if (parsedNode!=nullptr) delete parsedNode;
+    if (unparsedNode!=nullptr) delete unparsedNode;
     parseString=ntext;
 
     currentTokenID=-1;
@@ -3883,12 +3883,12 @@ bool JKQTmathText::parse(QString text){
     error_list.clear();
     parsedNode=parseLatexString(true);
     unparsedNode=new MTplainTextNode(this, text, false);
-    return (parsedNode!=NULL);
+    return (parsedNode!=nullptr);
 }
 
 
 QSizeF JKQTmathText::getSize(QPainter& painter){
-    if (getTree()!=NULL) {
+    if (getTree()!=nullptr) {
         double w=0, a=0, d=0, s=0;
         getSizeDetail(painter, w, a, d, s);
         return QSizeF(w, a+d);
@@ -3913,7 +3913,7 @@ void JKQTmathText::getSizeDetail(QPainter& painter, double& width, double& ascen
     ascent=0;
     descent=0;
     strikeoutPos=0;
-    if (getTree()!=NULL) {
+    if (getTree()!=nullptr) {
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
@@ -3928,7 +3928,7 @@ void JKQTmathText::getSizeDetail(QPainter& painter, double& width, double& ascen
 }
 
 void JKQTmathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
-    if (getTree()!=NULL) {
+    if (getTree()!=nullptr) {
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
@@ -3938,7 +3938,7 @@ void JKQTmathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
 }
 
 void JKQTmathText::draw(QPainter& painter, int flags, QRectF rect, bool drawBoxes) {
-    if (getTree()!=NULL) {
+    if (getTree()!=nullptr) {
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;

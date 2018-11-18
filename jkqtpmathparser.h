@@ -643,7 +643,7 @@ class JKQTPMathParser
             /** \brief constructor for a jkmpNodeList
              *  \param p a pointer to a jkMathParser object
              */
-            jkmpNodeList(JKQTPMathParser* p) { setParser(p); setParent(NULL); };
+            jkmpNodeList(JKQTPMathParser* p) { setParser(p); setParent(nullptr); };
 
             /** \brief standard destructor, also destroy the children (recursively) */
             ~jkmpNodeList();
@@ -676,7 +676,7 @@ class JKQTPMathParser
          * \attention If you do not want to use the exception handling which throws
          * jkmpException exceptions, but want to write your own error handling, you should write your own
          * error handler and assign it (function pointer) to the global variable jkmathparser_exception_function.
-         * If this is not NULL this function will be called instead of throwing an exception.
+         * If this is not nullptr this function will be called instead of throwing an exception.
          */
         class jkmpException : public std::exception {
           private:
@@ -711,7 +711,7 @@ class JKQTPMathParser
 
         /** \brief macro that throws an exception or calls an error handler */
         inline void jkmpError(std::string st) {
-            if (jkmathparser_exception_function!=NULL) {
+            if (jkmathparser_exception_function!=nullptr) {
                 jkmathparser_exception_function(st);
             } else {
                 throw jkmpException(st);
@@ -719,7 +719,7 @@ class JKQTPMathParser
         };
 
     private:
-        /** \brief if this is NULL then an exception may be thrown otherwise this should point to an error handler that will be called. */
+        /** \brief if this is nullptr then an exception may be thrown otherwise this should point to an error handler that will be called. */
         jkmpexceptionf jkmathparser_exception_function;
 
     public:
@@ -730,7 +730,7 @@ class JKQTPMathParser
 
         /** \brief deactivate error handling by use of an exception function */
         inline void reset_exception_function() {
-            jkmathparser_exception_function=NULL;
+            jkmathparser_exception_function=nullptr;
         };
 
 

@@ -202,13 +202,13 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief used to plot LaTeX markup */
         JKQTmathText mathText;
 
+        /** \brief model representing all Plots in this plotter and showing their visible/invisible state */
+        JKQTPPlotsModel* m_plotsModel;
+
         /** \brief object used for the x-axis */
         JKQTPhorizontalAxis* xAxis;
         /** \brief object used for the y-axis */
         JKQTPverticalAxis* yAxis;
-
-        /** \brief model representing all Plots in this plotter and showing their visible/invisible state */
-        JKQTPPlotsModel* m_plotsModel;
 
         /** \brief filename for the ini file in which to save the user settings
          *  \see jkqtplotter_base_userprops
@@ -502,7 +502,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          *
          * The implementation in here returns zero size!
          */
-        virtual void getKeyExtent(JKQTPEnhancedPainter& painter, double *width, double *height, double *text_width=NULL, double *text_height=NULL, int *columns_count=NULL, int* lines_count=NULL);
+        virtual void getKeyExtent(JKQTPEnhancedPainter& painter, double *width, double *height, double *text_width=nullptr, double *text_height=nullptr, int *columns_count=nullptr, int* lines_count=nullptr);
         /** \brief QAction which triggers saving of the plot as an image */
         QAction* actSavePlot;
         /** \brief QAction which triggers saving of the data used for the plot */
@@ -689,8 +689,8 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief save the current plot data as a Semicolon Separated Values (CSV) file for german Excel, i.e. with comma as decimal separator*/
         virtual void saveAsGerExcelCSV(QString filename=QString(""));
 
-        /** \brief print the current plot, if printer is \c NULL a printer selection dialog is displayed */
-        void print(QPrinter* printer=NULL, bool displayPreview=true);
+        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
+        void print(QPrinter* printer=nullptr, bool displayPreview=true);
 
         /** \brief this method zooms the graph so that all plotted datapoints are visible.
          *
@@ -711,7 +711,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief zooms out of the graph (the same as turning the mouse wheel) by the given factor */
         void zoomOut(double factor=2.0) {
             zoomIn(1.0/factor);
-        };
+        }
 
         /** \brief set the datarange of all current graphs to the given values */
         void setGraphsDataRange(long long datarange_start, long long datarange_end);
@@ -749,7 +749,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * will be managed (freed) by this class. If \a datastore_internal is \c false the class will use tha datastore provided
          * in \a datast as an external datastore. You can modify this later by using useInternalDatastore() and useExternalDatastore().
          */
-        JKQtBasePlotter(bool datastore_internal=true, QObject* parent=NULL, JKQTPdatastore* datast=NULL);
+        JKQtBasePlotter(bool datastore_internal=true, QObject* parent=nullptr, JKQTPdatastore* datast=nullptr);
 
         /** \brief class destructor */
         virtual ~JKQtBasePlotter();
@@ -901,16 +901,16 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void setAbsoluteXY(double xminn, double xmaxx, double yminn, double ymaxx);
 
         /** \brief returns the absolute x-axis min */
-        inline double getAbsoluteXMin() const {return xAxis->getAbsoluteMin(); };
+        inline double getAbsoluteXMin() const {return xAxis->getAbsoluteMin(); }
 
         /** \brief returns the absolute x-axis max */
-        inline double getAbsoluteXMax() const {return xAxis->getAbsoluteMax(); };
+        inline double getAbsoluteXMax() const {return xAxis->getAbsoluteMax(); }
 
         /** \brief returns the absolute y-axis min */
-        inline double getAbsoluteYMin() const {return yAxis->getAbsoluteMin(); };
+        inline double getAbsoluteYMin() const {return yAxis->getAbsoluteMin(); }
 
         /** \brief returns the absolute y-axis max */
-        inline double getAbsoluteYMax() const {return yAxis->getAbsoluteMax(); };
+        inline double getAbsoluteYMax() const {return yAxis->getAbsoluteMax(); }
 
 
         /** \brief add a new plotter for grid printing mode */
@@ -920,32 +920,32 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
             i.y=y;
             i.plotter=plotter;
             gridPrintingList.push_back(i);
-        };
+        }
 
         /** \brief clear all additional plotters for grid printing mode */
         inline void clearGridPrintingPlotters() {
             gridPrintingList.clear();
-        };
+        }
 
         /** \brief return x-pixel coordinate from time coordinate */
         inline double x2p(double x) const {
             return xAxis->x2p(x);
-        };
+        }
 
         /** \brief return y-pixel coordinate from y coordinate */
         inline double y2p(double y) const {
             return yAxis->x2p(y);
-        };
+        }
 
         /** \brief return time coordinate coordinate from x-pixel */
         inline double p2x(long x) const {
             return xAxis->p2x(x);
-        };
+        }
 
         /** \brief return y coordinate coordinate from y-pixel */
         inline double p2y(long y) const {
             return yAxis->p2x(y);
-        };
+        }
 
         /** \brief gets the next unused style id, i.e. the smalles number >=0 which is not contained in usedStyles */
         int getNextStyle();
@@ -1066,11 +1066,11 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         JKQTPGET_MACRO(int, iplotBorderRight)
         JKQTPGET_MACRO(int, plotWidth)
         JKQTPGET_MACRO(int, plotHeight)
-        inline JKQTmathText* get_mathText() { return &mathText; };
-        inline JKQTPhorizontalAxis* getXAxis() { return xAxis; };
-        inline JKQTPverticalAxis* getYAxis() { return yAxis; };
-        inline JKQTPhorizontalAxis* get_xAxis() { return xAxis; };
-        inline JKQTPverticalAxis* get_yAxis() { return yAxis; };
+        inline JKQTmathText* get_mathText() { return &mathText; }
+        inline JKQTPhorizontalAxis* getXAxis() { return xAxis; }
+        inline JKQTPverticalAxis* getYAxis() { return yAxis; }
+        inline JKQTPhorizontalAxis* get_xAxis() { return xAxis; }
+        inline JKQTPverticalAxis* get_yAxis() { return yAxis; }
 
 
         JKQTPGET_MACRO(QAction*, actSavePlot)
@@ -1346,7 +1346,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief add a new overlay elements from a QList */
         void addOverlayElements(const QList<JKQTPoverlayElement*>& gr);
 
-        QVector<QLineF> getBoundingLinesX1Y1(QRectF *rect=NULL) const;
+        QVector<QLineF> getBoundingLinesX1Y1(QRectF *rect=nullptr) const;
 
     signals:
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */

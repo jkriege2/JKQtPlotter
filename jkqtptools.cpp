@@ -1465,7 +1465,7 @@ void JKQTPEnhancedTableView::keyPressEvent(QKeyEvent *event)
 
 void JKQTPEnhancedTableView::print()
 {
-    QPrinter* tablePrinter=getPrinter(NULL);
+    QPrinter* tablePrinter=getPrinter(nullptr);
 
     if (tablePrinter) {
         QDialog* dlg=new QDialog(this);
@@ -1737,12 +1737,12 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
 QPrinter *JKQTPEnhancedTableView::getPrinter(QPrinter *printerIn, bool *localPrinter)
 {
     QPrinter* p=printerIn;
-    if (p==NULL) {
+    if (p==nullptr) {
         p=new QPrinter();
         if (localPrinter) *localPrinter=true;
     }
 
-    QPrintDialog *dialog = new QPrintDialog(p, NULL);
+    QPrintDialog *dialog = new QPrintDialog(p, nullptr);
     dialog->setWindowTitle(tr("Print Table"));
     if (dialog->exec() != QDialog::Accepted) {
         if (localPrinter && *localPrinter) delete p;

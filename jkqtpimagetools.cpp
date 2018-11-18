@@ -371,15 +371,15 @@ void JKQTPimagePlot_freeLUTs(QList<int *> &lutstore) {
 }
 
 int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalette palette) {
-    int* lut_used=NULL;
+    int* lut_used=nullptr;
 
     if (palette == JKQTPMathImageRED)
     {
         //int*& plut=lutstore[palette];
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgb(static_cast<int>(255.0*v), 0, 0);
@@ -393,10 +393,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageGREEN)
     {
         //int*& plut=&lut_green;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgb(0, static_cast<int>(255.0*v), 0);
@@ -410,10 +410,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageBLUE)
     {
         //int*& plut=&lut_blue;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgb(0, 0, static_cast<int>(255.0*v));
@@ -427,10 +427,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageGRAY)
     {
         //int*& plut=&lut_gray;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgb(static_cast<int>(255.0*v),
@@ -445,10 +445,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageALPHA)
     {
         //int*& plut=&lut_gray;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgba(255,255,255,
@@ -462,10 +462,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTED_ALPHA)
     {
         //int*& plut=&lut_gray;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgba(255,255,255,
@@ -479,10 +479,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTEDRED)
     {
         //int*& plut=&lut_invred;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgb(static_cast<int>(255.0*(1.0-v)), 0, 0);
@@ -496,10 +496,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTEDGREEN)
     {
         //int*& plut=&lut_invgreen;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgb(0, static_cast<int>(255.0*(1.0-v)), 0);
@@ -512,10 +512,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTEDBLUE)
     {
         //int*& plut=&lut_invblue;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     plut[l]=qRgb(0, 0, static_cast<int>(255.0*(1.0-v)));
@@ -528,10 +528,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTEDGRAY)
     {
         //int*& plut=&lut_invgray;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=1.0-(l/(double)(JKQTPimagePlot_LUTSIZE));
                     plut[l]=qRgb(static_cast<int>(255.0*v),
@@ -547,10 +547,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageMATLAB)
     {
         //int*& plut=&lut_matlab;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = 382.5 - 1020.0 * std::abs(v - 0.75);
@@ -581,10 +581,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         else if (palette == JKQTPMathImageINVERTED_MATLAB)
         {
             //int*& plut=&lut_matlab_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=JKQTPimagePlot_LUTSIZE; l>=0; l--) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         double r = 382.5 - 1020.0 * std::abs(v - 0.75);
@@ -615,10 +615,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         else if (palette == JKQTPMathImageRYGB) //gnuplot: 30,-13,-23
         {
             //int*& plut=&lut_rygb;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                         double r = 796.875*v - 199.21875;
@@ -642,10 +642,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         else if (palette == JKQTPMathImageINVERTED_RYGB) //gnuplot: 30,-13,-23
         {
             //int*& plut=&lut_rygb_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=JKQTPimagePlot_LUTSIZE; l>=0; l--) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         double r = 796.875*v - 199.21875;
@@ -669,10 +669,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageHSV)
     {
         //int*& plut=&lut_hsv;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     int h = static_cast<int>(floor(6*v));
@@ -696,10 +696,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTED_HSV)
     {
         //int*& plut=&lut_invhsv;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     int h = static_cast<int>(floor(6.0-6.0*v));
@@ -723,11 +723,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     }
     else if (palette == JKQTPMathImageRAINBOW) //gnuplot: 33,13,10
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
             //std::cout<<"!!! creating rainbow lut\n";
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = 255.0*std::abs(2.0*v-0.5);
@@ -745,11 +745,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageINVERTED_RAINBOW) //gnuplot: 33,13,10
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
             //std::cout<<"!!! creating rainbow lut\n";
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=JKQTPimagePlot_LUTSIZE; l>=0; l--) {
                     double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = 255.0*std::abs(2.0*v-0.5);
@@ -769,10 +769,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageHOT) //gnuplot: 21,22,23
     {
         //int*& plut=&lut_hot;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = 765.0*v;
@@ -797,10 +797,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTED_HOT) //gnuplot: 21,22,23
     {
         //int*& plut=&lut_hot_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=JKQTPimagePlot_LUTSIZE; l>=0; l--) {
                     double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = 765.0*v;
@@ -825,10 +825,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageOCEAN) //gnuplot: 23,28,3
     {
         //int*& plut=&lut_ocean;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = 765.0*v-510.0;
@@ -847,10 +847,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageINVERTED_OCEAN) //gnuplot: 23,28,3
     {
         //int*& plut=&lut_ocean_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=JKQTPimagePlot_LUTSIZE; l>=0; l--) {
                     double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = 765.0*v-510.0;
@@ -868,10 +868,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     } else if (palette == JKQTPMathImageBLUEMAGENTAYELLOW) //gnuplot: 30,31,32
     {
         //int*& plut=&lut_bluemagentayellow;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = (v/0.32-0.78125);
@@ -898,10 +898,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         else if (palette == JKQTPMathImageINVERTED_BLUEMAGENTAYELLOW) //gnuplot: 30,31,32
        {
            //int*& plut=&lut_bluemagentayellow_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-               if (plut!=NULL) {
+               if (plut!=nullptr) {
                    for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                        double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                        double r = (v/0.32-0.78125);
@@ -928,10 +928,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     else if (palette == JKQTPMathImageBLUEYELLOW) //gnuplot: 8,9,10
     {
         //int*& plut=&lut_blueyellow;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = sqrt(sqrt(v));
@@ -955,10 +955,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     } else if (palette == JKQTPMathImageINVERTED_BLUEYELLOW) //gnuplot: 8,9,10
     {
         //int*& plut=&lut_blueyellow_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = sqrt(sqrt(v));
@@ -982,10 +982,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     } else if (palette == JKQTPMathImageCYAN)
     {
         //int*& plut=&lut_cyan;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = v*0.5;
@@ -1009,10 +1009,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         else if (palette == JKQTPMathImageINVERTED_CYAN)
     {
         //int*& plut=&lut_cyan_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = v*0.5;
@@ -1036,10 +1036,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         else if (palette == JKQTPMathImageTRAFFICLIGHT)
     {
         //int*& plut=&lut_trafficlight;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=l/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = (v < 0.5) ? 128.0*sin(M_PI*(2.0*v-0.5))+128.0 : 255.0;
@@ -1059,10 +1059,10 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
         else if (palette == JKQTPMathImageINVERTED_TRAFFICLIGHT)
     {
         //int*& plut=&lut_trafficlight_inverted;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                     double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                     double r = (v < 0.5) ? 128.0*sin(M_PI*(2.0*v-0.5))+128.0 : 255.0;
@@ -1081,11 +1081,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     }
     else if (palette == JKQTPMathImageBLUEWHITERED) //gnuplot: 34,13,-34
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
             //std::cout<<"!!! creating rainbow lut\n";
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 QList<QPair<double, QRgb> > lst;
                 lst<<qMakePair<double, QRgb>(8.0, 0xFFB2182B);
                 lst<<qMakePair<double, QRgb>(7.0, 0xFFD6604D);
@@ -1103,11 +1103,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     }
     else if (palette == JKQTPMathImageREDWHITEBLUE) //gnuplot: https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/RdBu.plt
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
             //std::cout<<"!!! creating rainbow lut\n";
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 QList<QPair<double, QRgb> > lst;
                 lst<<qMakePair<double, QRgb>(0.0, 0xFFB2182B);
                 lst<<qMakePair<double, QRgb>(1.0, 0xFFD6604D);
@@ -1128,11 +1128,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     } else if (palette == JKQTPMathImageBLACKBLUEREDYELLOW) //gnuplot: 7,5,15
         {
 //                int*& plut=&lut_BLACKBLUEREDYELLOW;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         double r = 255.0*qBound(0.0,sqrt(v),1.0);
@@ -1147,11 +1147,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     } else if (palette == JKQTPMathImageGREENREDVIOLET) //gnuplot: 3,11,6
     {
             //int*& plut=&lut_GREENREDVIOLET;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         double r = 255.0*qBound(0.0,v,1.0);
@@ -1166,11 +1166,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     } else if (palette == JKQTPMathImageBLACKBLUEVIOLETYELLOWWHITE) //gnuplot: 30,31,32
     {
             //int*& plut=&lut_BLACKBLUEVIOLETYELLOWWHITE;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         double r = 255.0*qBound(0.0,v/0.32-0.78125,1.0);
@@ -1185,11 +1185,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
     } else if (palette == JKQTPMathImageWHITEYELLOWVIOLETBLUEBLACK) //gnuplot: 30,31,32
     {
             //int*& plut=&lut_WHITEYELLOWVIOLETBLUEBLACK;
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         double r = 255.0*qBound(0.0,v/0.32-0.78125,1.0);
@@ -1203,11 +1203,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageBR_GR) //https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/BrBG.plt
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, qRgb(0x8C, 0x51, 0x0A));
                     lst<<qMakePair<double, QRgb>(1.0, qRgb(0xBF, 0x81, 0x2D));
@@ -1224,11 +1224,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageBR_GR_STEP) //https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/BrBG.plt
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, qRgb(0x8C, 0x51, 0x0A));
                     lst<<qMakePair<double, QRgb>(1.0, qRgb(0xBF, 0x81, 0x2D));
@@ -1245,11 +1245,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImagePU_OR) //https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/PuOr.plt
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, 0xFFB35806);
                     lst<<qMakePair<double, QRgb>(1.0, 0xFFE08214);
@@ -1267,11 +1267,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImagePU_OR_STEP) //https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/PuOr.plt
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, 0xFFB35806);
                     lst<<qMakePair<double, QRgb>(1.0, 0xFFE08214);
@@ -1289,11 +1289,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageYL_GN_BU) //http://colorbrewer2.org/
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, 0xFFFFFFD9);
                     lst<<qMakePair<double, QRgb>(1.0, 0xFFEDF8B1);
@@ -1311,11 +1311,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageYL_GN_BU_STEP) //http://colorbrewer2.org/
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, 0xFFFFFFD9);
                     lst<<qMakePair<double, QRgb>(1.0, 0xFFEDF8B1);
@@ -1334,11 +1334,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImageGN_BU) //http://colorbrewer2.org/
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, 0xFFF7FCF0);
                     lst<<qMakePair<double, QRgb>(1.0, 0xFFE0F3DB);
@@ -1356,11 +1356,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageGN_BU_STEP) //http://colorbrewer2.org/
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, 0xFFF7FCF0);
                     lst<<qMakePair<double, QRgb>(1.0, 0xFFE0F3DB);
@@ -1378,11 +1378,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageBU_GN) //http://colorbrewer2.org/
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(8.0, 0xFFF7FCF0);
                     lst<<qMakePair<double, QRgb>(7.0, 0xFFE0F3DB);
@@ -1400,11 +1400,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageBU_GN_STEP) //http://colorbrewer2.org/
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(8.0, 0xFFF7FCF0);
                     lst<<qMakePair<double, QRgb>(7.0, 0xFFE0F3DB);
@@ -1422,11 +1422,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageINVERTED_MAGENTA) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,1,0,v).rgba();
@@ -1437,11 +1437,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageMAGENTA) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,1,0,v).rgba();
@@ -1452,11 +1452,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageINVERTED_YELLOW) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,0,1,v).rgba();
@@ -1467,11 +1467,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageYELLOW) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,0,1,v).rgba();
@@ -1483,11 +1483,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImageINVERTED_MAGENTAWHITE) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,v,0,0).rgba();
@@ -1498,11 +1498,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageMAGENTAWHITE) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,v,0,0).rgba();
@@ -1513,11 +1513,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageINVERTED_YELLOWWHITE) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,0,v,0).rgba();
@@ -1528,11 +1528,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageYELLOWWHITE) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(0,0,v,0).rgba();
@@ -1544,11 +1544,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImageINVERTED_CYANWHITE) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(v,0,0,0).rgba();
@@ -1559,11 +1559,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageCYANWHITE) // from CMYK model
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     for (int l=0; l<=JKQTPimagePlot_LUTSIZE; l++) {
                         double v=(JKQTPimagePlot_LUTSIZE-l)/(double)(JKQTPimagePlot_LUTSIZE);
                         plut[l]=QColor::fromCmykF(v,0,0,0).rgba();
@@ -1574,11 +1574,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             lut_used=lutstore[palette];
     } else if (palette == JKQTPMathImageBlueGreenRed)
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(1.0, QColor("blue").rgb());
                     lst<<qMakePair<double, QRgb>(2.0, QColor("green").rgb());
@@ -1591,11 +1591,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImageRedGreenBlue)
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(1.0, QColor("red").rgb());
                     lst<<qMakePair<double, QRgb>(2.0, QColor("green").rgb());
@@ -1609,11 +1609,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImagePREDEFINED_PALETTES_COUNT)
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(1.0, QColor("magenta").rgb());
                     lst<<qMakePair<double, QRgb>(2.0, QColor("yellow").rgb());
@@ -1625,11 +1625,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImagePREDEFINED_PALETTES_COUNT+1)
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(1.0, QColor("yellow").rgb());
                     lst<<qMakePair<double, QRgb>(2.0, QColor("magenta").rgb());
@@ -1641,11 +1641,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImagePREDEFINED_PALETTES_COUNT+2)
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(1.0, QColor("red").rgb());
                     lst<<qMakePair<double, QRgb>(2.0, QColor("blue").rgb());
@@ -1657,11 +1657,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (palette == JKQTPMathImagePREDEFINED_PALETTES_COUNT+3)
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
             //std::cout<<"!!! creating rainbow lut\n";
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 QList<QPair<double, QRgb> > lst;
                 lst<<qMakePair<double, QRgb>(1.0, QColor("blue").rgb());
                 lst<<qMakePair<double, QRgb>(2.0, QColor("red").rgb());
@@ -1675,11 +1675,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
             /*
     } else if (palette == JKQTPMathImagePU_OR) //https://github.com/aschn/gnuplot-colorbrewer/blob/master/diverging/PuOr.plt
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
                 //std::cout<<"!!! creating rainbow lut\n";
-                if (plut!=NULL) {
+                if (plut!=nullptr) {
                     QList<QPair<double, QRgb> > lst;
                     lst<<qMakePair<double, QRgb>(0.0, 0xFF);
                     lst<<qMakePair<double, QRgb>(1.0, 0xFF);
@@ -1700,11 +1700,11 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
 
     } else if (JKQTPimagePlot_lutsFromFiles.contains(palette)) // LUTs read from files in JKQTPimagePlot_lutsFromFiles
     {
-        if (lutstore[palette]==NULL) {
+        if (lutstore[palette]==nullptr) {
             lutstore[palette]=(int*)malloc((JKQTPimagePlot_LUTSIZE+2)*sizeof(int));
             int* plut=lutstore[palette];
             //std::cout<<"!!! creating rainbow lut\n";
-            if (plut!=NULL) {
+            if (plut!=nullptr) {
                 if (JKQTPimagePlot_lutsFromFiles[palette].size()>220) JKQTPimagePlot_buildDefinedPalette(plut, JKQTPimagePlot_lutsFromFiles[palette]);
                 else JKQTPimagePlot_buildDefinedPaletteLinInterpolate(plut, JKQTPimagePlot_lutsFromFiles[palette]);
             }
