@@ -322,7 +322,7 @@
   <customwidget>
    <class>JKQTMathTextLabel</class>
    <extends>QLabel</extends>
-   <header>../../../jkqtmathtext.h</header>
+   <header>jkqtmathtext/jkqtmathtext.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

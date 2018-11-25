@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include <QStringList>
-#include "../../jkqtmathtext.h"
-#include "../../jkqtphighrestimer.h"
+#include "jkqtmathtext/jkqtmathtext.h"
+#include "jkqtplottertools/jkqtphighrestimer.h"
 #include <QPainter>
 #include <QTreeWidget>
 

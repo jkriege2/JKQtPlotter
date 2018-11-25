@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "jkqtplotter.h"
+#include "jkqtplotter/jkqtplotter.h"
 
 
 int main(int argc, char* argv[])

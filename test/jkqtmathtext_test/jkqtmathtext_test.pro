@@ -1,13 +1,11 @@
-include(../../math_fonts/xits.pri)
-include(asana.pri)
+include(../../lib/jkqtmathtext_with_xits.pri)
+include($$PWD/asana.pri)
 
 LIBS +=
 
 
-SOURCES = jkqtmathtext_test.cpp \
-          ../../jkqtmathtext.cpp \
-          ../../jkqtptools.cpp \
-          ../../jkqtphighrestimer.cpp \
+SOURCES += jkqtmathtext_test.cpp \
+    ../../lib/jkqtplottertools/jkqtphighrestimer.cpp \
     testform.cpp
 
 RCC_DIR = rccs
@@ -21,10 +19,8 @@ QT += core gui svg
 
 UI_DIR = .uics
 
-HEADERS = ../../jkqtptools.h \
-          ../../jkqtmathtext.h \
-          ../../jkqtphighrestimer.h \
-    testform.h
+HEADERS += testform.h \
+    ../../lib/jkqtplottertools/jkqtphighrestimer.h
 
 OBJECTS_DIR = .objs
 
@@ -32,7 +28,7 @@ INCLUDEPATH +=
 
 MOC_DIR = .mocs
 
-FORMS = \
+FORMS += \
     testform.ui
 
 DESTDIR = ./

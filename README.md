@@ -27,12 +27,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET = jkqtplotter_simpletest
 
 # include JKQtPlotter source code
-include(../../jkqtplotter.pri)
+include(../../lib/jkqtplotter.pri)
 ```
 And the soruce code of the main application is (see `./test/jkqtplotter_simpletest/jkqtplotter_simpletest.cpp`):
 ```c++
 #include <QApplication>
-#include "jkqtplotter.h"
+#include "jkqtplotter/jkqtplotter.h"
 
 
 int main(int argc, char* argv[])
@@ -91,7 +91,7 @@ This project (see `./test/jkqtplotter_simpletest_symbols_and_errors/`) simply cr
 The soruce code of the main application is (see `./test/jkqtplotter_simpletest_symbols_and_errors/jkqtplotter_simpletest_symbols_and_errors.cpp`):
 ```c++
 #include <QApplication>
-#include "jkqtplotter.h"
+#include "jkqtplotter/jkqtplotter.h"
 
 // number of datapoints:
 #define Ndata 10
@@ -167,8 +167,8 @@ This project (see `./test/jkqtplotter_simpletest_barchart/`) simply creates a JK
 The soruce code of the main application is (see `./test/jkqtplotter_simpletest_barchart/jkqtplotter_simpletest_barchart.cpp`):
 ```c++
 #include <QApplication>
-#include "jkqtplotter.h"
-#include "jkqtpbarchartelements.h"
+#include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpbarchartelements.h"
 
 #define Ndata 5
 int main(int argc, char* argv[])
@@ -263,8 +263,8 @@ This project (see `./test/jkqtplotter_simpletest_stackedbars/`) simply creates a
 The soruce code of the main application is (see `./test/jkqtplotter_simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp`):
 ```c++
 #include <QApplication>
-#include "jkqtplotter.h"
-#include "jkqtpbarchartelements.h"
+#include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpbarchartelements.h"
 
 #define Ndata 5
 int main(int argc, char* argv[])
@@ -403,12 +403,12 @@ This project (see `./test/jkqtmathtext_simpletest/`) simply creates a QLabel (as
 The QMake project looks like this (see `./test/jkqtmathtext_simpletest/jkqtmathtext_simpletest.pro`):
 ```qmake
 # include JKQTmathText source-code, including the open-source XITS fonts
-include(../../jkqtmathtext_with_xits.pri)
+include(../../lib/jkqtmathtext_with_xits.pri)
 SOURCES += jkqtmathtext_simpletest.cpp
 
 # if you don't want to use the XITS fonts, use this line (and uncomment the 
 # last two line!):
-#include(../../jkqtmathtext.pri)
+#include(../../lib/jkqtmathtext.pri)
 
 CONFIG += qt
 QT += core gui
@@ -421,7 +421,7 @@ And the soruce code of the main application is (see `./test/jkqtmathtext_simplet
 #include <QApplication>
 #include <QLabel>
 #include <QPixmap>
-#include "jkqtmathtext.h"
+#include "jkqtmathtext/jkqtmathtext.h"
 
 int main(int argc, char* argv[])
 {

@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET = jkqtplotter_simpletest
 
 # include JKQtPlotter source code
-include(../../jkqtplotter.pri)
+include(../../lib/jkqtplotter.pri)
 # here you can activate some debug options
 #DEFINES += SHOW_JKQTPLOTTER_DEBUG
 #DEFINES += JKQTBP_AUTOTIMER

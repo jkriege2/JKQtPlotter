@@ -6,8 +6,8 @@
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QTextBrowser>
-#include "../../jkqtmathtext.h"
-#include "../../jkqtphighrestimer.h"
+#include "jkqtmathtext/jkqtmathtext.h"
+#include "jkqtplottertools/jkqtphighrestimer.h"
 #include "testform.h"
 
 

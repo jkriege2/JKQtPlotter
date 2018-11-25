@@ -3,7 +3,7 @@
 
 #include <QTabWidget>
 #include <QGridLayout>
-#include "../../jkqtfastplotter.h"
+#include "jkqtfastplotter/jkqtfastplotter.h"
 #include <QComboBox>
 
 #define N1 20

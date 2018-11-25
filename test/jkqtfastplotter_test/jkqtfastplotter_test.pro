@@ -5,16 +5,12 @@ TARGET = JKQTFastPlotter_test
 
 TEMPLATE = app
 
+include(../../lib/jkqtfastplotter.pri)
+
 SOURCES += jkqtfastplotter_test.cpp \
-    ../../jkqtfastplotter.cpp \
-    ../../jkqtptools.cpp \
-    ../../jkqtphighrestimer.cpp \
     testmain.cpp
 
-HEADERS += ../../jkqtfastplotter.h \
-           ../../jkqtptools.h \
-           ../../jkqtphighrestimer.h \
-    testmain.h
+HEADERS += testmain.h
 
 RCC_DIR = .rccs
 

@@ -1,4 +1,4 @@
-include(../../jkqtmathtext_with_xits.pri)
+include(../../lib/jkqtmathtext_with_xits.pri)
 SOURCES += jkqtmathtext_simpletest.cpp
 
 CONFIG += qt

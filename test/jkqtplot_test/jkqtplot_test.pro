@@ -3,7 +3,7 @@
     warning(This project should not be built as a shadow build!!!)
 }
 
-include(../../jkqtplotter.pri)
+include(../../lib/jkqtplotter.pri)
 
 SOURCES += jkqtplot_test.cpp \
     testmain.cpp \

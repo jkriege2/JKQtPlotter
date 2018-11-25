@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QLabel>
 #include <QPixmap>
-#include "jkqtmathtext.h"
+#include "jkqtmathtext/jkqtmathtext.h"
 
 int main(int argc, char* argv[])
 {
