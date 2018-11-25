@@ -7,7 +7,7 @@ This software is licensed under the term of the GNU Lesser General Public Licens
 ## Examples
 This section assembles some simple examples of usage. You can find more (complex) examples for the classes in this repository in the subfolder "test". All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
 
-###Very simple line-graph
+### Very simple line-graph
 This project (see `./test/jkqtplotter_simpletest/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 The QMake project looks like this (see `./test/jkqtplotter_simpletest/jkqtplotter_simpletest.pro`):
 ```qmake
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
 The result looks like this:
 ![jkqtplotter_simpletest1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1.png)
 
-###Simple line-graph with error bars
+### Simple line-graph with error bars
 This project (see `./test/jkqtplotter_simpletest_symbols_and_errors/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave) that has y-errorbars. In addition, this example shows how to change some of the axis properties and how to use LaTeX markup to format axis labels (can actually be used for all labels in JKQtPlotter). Also, in comparison to the last example, here we initialize the data from C-type arrays (double*), instead of QVector<double> objects.
 
 The soruce code of the main application is (see `./test/jkqtplotter_simpletest_symbols_and_errors/jkqtplotter_simpletest_symbols_and_errors.cpp`):
@@ -154,9 +154,10 @@ int main(int argc, char* argv[])
 
 ```
 The result looks like this:
+
 ![jkqtplotter_simpletest_symbols_and_errors](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_symbols_and_errors.png)
 
-###Simple barchart
+### Simple barchart
 This project (see `./test/jkqtplotter_simpletest_barchart/`) simply creates a JKQtPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
 
 The soruce code of the main application is (see `./test/jkqtplotter_simpletest_barchart/jkqtplotter_simpletest_barchart.cpp`):
@@ -248,10 +249,11 @@ int main(int argc, char* argv[])
 }
 ```
 The result looks like this:
+
 ![jkqtplotter_simpletest_barchart](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_barchart.png)
 
 
-###Simple stacked barchart
+### Simple stacked barchart
 This project (see `./test/jkqtplotter_simpletest_stackedbars/`) simply creates a JKQtPlotter widget (as a new window) and adds several stacked barcharts.
 
 The soruce code of the main application is (see `./test/jkqtplotter_simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp`):
@@ -356,41 +358,44 @@ int main(int argc, char* argv[])
 }
 ```
 The result looks like this:
+
 ![JKQTPbarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPbarVerticalGraphStacked.png)
+
+If you use `JKQTPbarHorizontalGraphStacked` instead of `JKQTPbarVerticalStackableGraph`, you'll get a result like this: 
 ![JKQTPbarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPbarHorizontalGraphStacked.png)
 
 
-##Screenshots
-###Scatter Plots and Boxplots
+## Screenshots
+### Scatter Plots and Boxplots
 ![Scatterplots](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_scatter.png)
 
-###Different Types of Barcharts
+### Different Types of Barcharts
 ![Barcharts](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_barcharts.png)
 
-###Image Plots
+### Image Plots
 You can plot C-arrays as images in different color-coding styles. Diferent Overlays/masks are also available. Finally you can use LaTeX markup to format any axis/plot/tick/... label. there is an internal LaTeX parser in this package.
 ![Scatterplots](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_images_latex.png)
 
 
-###Plotting a user-defined (parsed) function
+### Plotting a user-defined (parsed) function
 Yes, a complete math expression parser is contained!
 ![Function Plot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_functionplot.png)
 
-###Axis-Label styles in LogLog-Plot
+### Axis-Label styles in LogLog-Plot
 ![LogLog Plot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_loglog.png)
 
 
-###Parametrized Scatter Plots and Data Viewer
+### Parametrized Scatter Plots and Data Viewer
 Scatter Plots can have symbols where the shape/color/size is parametrized by a data column. Also the plotter is built around an internal datastore, which you can access (readonly!!!) by a data-viewer that is accessible from the contextmenu in any plot.
 ![LogLog Plot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/screen_parmetrizedplots_datatable.png)
 
 
 
 
-#JKQTmathText
+# JKQTmathText
 JKQTmathText is a hand-written LaTeX-renderer for Qt (implemented in native C++, using Qt). It supports a large set of standard LaTeX markup and can render it to a QPainter.
-##A simple usage example
-This project (see `./test/jkqtmathtext_simpletest/`) simply creates a QLabel (as a new window) that displays a rendered LaTeX equation (here the time-dependent Schrödinger equation).
+## A simple usage example
+This project (see `./test/jkqtmathtext_simpletest/`) simply creates a QLabel (as a new window) that displays a rendered LaTeX equation (here the time-dependent SchrÃ¶dinger equation).
 The QMake project looks like this (see `./test/jkqtmathtext_simpletest/jkqtmathtext_simpletest.pro`):
 ```qmake
 # include JKQTmathText source-code, including the open-source XITS fonts
@@ -453,7 +458,7 @@ int main(int argc, char* argv[])
 The result looks like this:
 ![jkqtmathtext_simpletest](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtmathtext_simpletest.png)
 
-##Screenshots
+## Screenshots
 ![LatexRender](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/mscreen_schroedinger.png)
 ![LatexRender](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/mscreen_rottaion.png)
 ![LatexRender](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/mscreen_maxwell.png)
