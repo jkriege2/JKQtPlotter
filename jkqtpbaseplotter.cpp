@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
 
     
 
@@ -49,6 +49,8 @@
 #ifdef QFWIDLIB_LIBRARY
 #  include "qftools.h"
 #endif
+#include "jkqtpboxplotelements.h"
+#include "jkqtpbarchartelements.h"
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";
@@ -639,8 +641,8 @@ void JKQtBasePlotter::loadSettings(QSettings& settings, QString group){
     keyFont=settings.value(g+"key_fontname", keyFont).toString();
     keyFontSize=settings.value(g+"key_fontsize", keyFontSize).toInt();
     key_item_width=settings.value(g+"key_item_width", key_item_width).toInt();
-    key_item_height=settings.value(g+"key_item_height", key_item_height).toInt();;
-    key_line_length=settings.value(g+"key_line_width", key_line_length).toInt();;
+    key_item_height=settings.value(g+"key_item_height", key_item_height).toInt();
+    key_line_length=settings.value(g+"key_line_width", key_line_length).toInt();
     keyAutosize=settings.value(g+"key_autosize", keyAutosize).toBool();
 
     plotLabelFontname=settings.value(g+"plotLabelFontname", plotLabelFontname).toString();
@@ -3307,7 +3309,7 @@ void JKQtBasePlotter::addHorizontalBargraph(size_t xColumn, QVector<size_t> yCol
     double width=w/(double)yColumns.size();
     double s=-1.0*w/2.0+width/2.0;
     for (int i=0; i<yColumns.size(); i++) {
-        JKQTPbarHorizontalGraph* g=new JKQTPbarHorizontalGraph(this);
+        JKQTPbarVerticalGraph* g=new JKQTPbarVerticalGraph(this);
         g->set_title(titles[i]);
         g->set_xColumn(xColumn);
         g->set_yColumn(yColumns[i]);
@@ -3324,7 +3326,7 @@ void JKQtBasePlotter::addVerticalBargraph(QVector<size_t> xColumns, size_t yColu
     double width=w/(double)xColumns.size();
     double s=-1.0*w/2.0+width/2.0;
     for (int i=0; i<xColumns.size(); i++) {
-        JKQTPbarVerticalGraph* g=new JKQTPbarVerticalGraph(this);
+        JKQTPbarHorizontalGraph* g=new JKQTPbarHorizontalGraph(this);
         g->set_title(titles[i]);
         g->set_xColumn(xColumns[i]);
         g->set_yColumn(yColumn);
@@ -4176,11 +4178,6 @@ bool JKQtBasePlotter::containsGraph(JKQTPgraph* gr) const {
     return false;
 };
 
-void JKQtBasePlotter::addGraphs(const QList<JKQTPgraph *> &gr) {
-    for (int i=0; i< gr.size(); i++) {
-        addGraph(gr[i]);
-    }
-};
 
 void JKQtBasePlotter::setGraphsDataRange(long long datarange_start, long long datarange_end) {
     for (int i=0; i<graphs.size(); i++) {

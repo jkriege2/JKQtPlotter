@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger & Sebastian Isbaner (contour plot), German Cancer Research Center
+    Copyright (c) 2008-2018 Jan W. Krieger & Sebastian Isbaner (contour plot), German Cancer Research Center
 
     
 

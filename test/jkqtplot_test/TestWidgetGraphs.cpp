@@ -3,7 +3,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
-
+#include "jkqtpboxplotelements.h"
 
 
 
@@ -330,7 +330,7 @@ void TestWidgetGraphs::setESSymbol(int index)
 
 void TestWidgetGraphs::setSortOrder2(int index)
 {
-    if (index==0) pltePlot2->set_sortData(JKQTPxyLineGraph::Unsorted);
+    if (index==0) pltePlot2->set_sortData(JKQTPxyGraph::Unsorted);
     if (index==1) pltePlot2->set_sortData(JKQTPxyLineGraph::SortedX);
     if (index==2) pltePlot2->set_sortData(JKQTPxyLineGraph::SortedY);
     plotBot->update_plot();

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -276,7 +276,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
 
                 JKQTPGET_MACRO(bool, drawBoxes)
                 virtual void set_drawBoxes(bool draw);
-                inline virtual QString getTypeName() const { return "MTnode"; }
+                virtual QString getTypeName() const;
             protected:
                 JKQTmathText* parent;
                 bool drawBoxes;
@@ -292,7 +292,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 JKQTPGET_MACRO(QString, text)
-                inline virtual QString getTypeName() const { return QLatin1String("MTtextNode(")+text+")"; }
+                virtual QString getTypeName() const ;
             protected:
                 QString text;
                 virtual QString textTransform(const QString& text, JKQTmathText::MTenvironment currentEv, bool forSize=false);
@@ -302,16 +302,16 @@ class LIB_EXPORT JKQTmathText : public QObject {
         class MTplainTextNode: public MTtextNode {
             public:
                 MTplainTextNode(JKQTmathText* parent, QString text, bool addWhitespace, bool stripInnerWhitepace=false);
-                inline virtual QString getTypeName() const { return QLatin1String("MTplainTextNode(")+text+")"; }
+                virtual QString getTypeName() const;
             protected:
                 virtual QString textTransform(const QString& text, JKQTmathText::MTenvironment currentEv, bool forSize=false);
         };
         /** \brief subclass representing one whitepsace node in the syntax tree */
         class MTwhitespaceNode: public MTtextNode {
             public:
-                MTwhitespaceNode(JKQTmathText* parent): MTtextNode(parent, " ", false, false) {};
-                virtual ~MTwhitespaceNode(){};
-                inline virtual QString getTypeName() const { return QLatin1String("MTwhitespaceNode(")+text+")"; }
+                MTwhitespaceNode(JKQTmathText* parent);
+                virtual ~MTwhitespaceNode();
+                virtual QString getTypeName() const;
                 /** \brief convert node to HTML and returns \c true on success */
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
         };
@@ -321,7 +321,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
             public:
                 MTsymbolNode(JKQTmathText* parent, QString name, bool addWhitespace);
                 virtual ~MTsymbolNode();
-                inline virtual QString getTypeName() const { return QLatin1String("MTsymbolNode(")+symbolName+QLatin1String(")"); }
+                virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
@@ -357,7 +357,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
             public:
                 MTlistNode(JKQTmathText* parent);
                 virtual ~MTlistNode();
-                inline virtual QString getTypeName() const { return "MTlistNode"; }
+                virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 void addNode(MTnode* n) { nodes.append(n); }
@@ -374,7 +374,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
             public:
                 MTinstruction1Node(JKQTmathText* parent, QString name, MTnode* child, const QStringList& parameters=QStringList());
                 virtual ~MTinstruction1Node();
-                inline virtual QString getTypeName() const { return QLatin1String("MTinstruction1Node(")+name+")"; }
+                virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief convert node to HTML and returns \c true on success */
@@ -399,8 +399,8 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief returns true if node is subscript or superscript node */
-                virtual bool isSubOrSuper() { return true; }
-                inline virtual QString getTypeName() const { return "MTsubscriptNode"; }
+                virtual bool isSubOrSuper() ;
+                virtual QString getTypeName() const;
                 JKQTPGET_MACRO(MTnode*, child)
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
@@ -416,9 +416,9 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief returns true if node is subscript or superscript node */
-                virtual bool isSubOrSuper() { return true; }
+                virtual bool isSubOrSuper();
                 JKQTPGET_MACRO(MTnode*, child)
-                inline virtual QString getTypeName() const { return "MTsuperscriptNode"; }
+                virtual QString getTypeName() const;
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
             protected:
@@ -434,7 +434,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
-                inline virtual QString getTypeName() const { return QLatin1String("MTbraceNode(")+openbrace+" "+closebrace+")"; }
+                virtual QString getTypeName() const;
                 JKQTPGET_MACRO(MTnode*, child)
                 JKQTPGET_MACRO(QString, openbrace)
                 JKQTPGET_MACRO(QString, closebrace)
@@ -458,7 +458,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
-                inline virtual QString getTypeName() const { return "MTsqrtNode"; }
+                virtual QString getTypeName() const ;
                 JKQTPGET_MACRO(MTnode*, child)
                 JKQTPGET_MACRO(int, degree)
             protected:
@@ -484,7 +484,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
             public:
                 MTfracNode(JKQTmathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
                 virtual ~MTfracNode();
-                inline virtual QString getTypeName() const { return "MTfracNode"; }
+                virtual QString getTypeName() const ;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
@@ -503,7 +503,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
             public:
                 MTmatrixNode(JKQTmathText* parent, QVector<QVector<MTnode*> > children);
                 virtual ~MTmatrixNode();
-                inline virtual QString getTypeName() const { return "MTmatrixNode"; }
+                virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
@@ -542,7 +542,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
-                inline virtual QString getTypeName() const { return "MTdecoratedNode"; }
+                virtual QString getTypeName() const ;
                 JKQTPGET_MACRO(MTnode*, child)
                 JKQTPGET_MACRO(MTdecoration, decoration)
             protected:
@@ -554,77 +554,77 @@ class LIB_EXPORT JKQTmathText : public QObject {
 
 
         /** \brief font color */
-        JKQTMTPROPERTY(QColor, fontColor);
+        JKQTMTPROPERTY(QColor, fontColor)
         /** \brief base font size in points */
-        JKQTMTPROPERTY(double, fontSize);
+        JKQTMTPROPERTY(double, fontSize)
         /** \brief roman font */
-        JKQTMTPROPERTY(QString, fontRoman);
+        JKQTMTPROPERTY(QString, fontRoman)
         /** \brief sans-serif font */
-        JKQTMTPROPERTY(QString, fontSans);
+        JKQTMTPROPERTY(QString, fontSans)
         /** \brief typewriter font */
-        JKQTMTPROPERTY(QString, fontTypewriter);
+        JKQTMTPROPERTY(QString, fontTypewriter)
         /** \brief script font */
-        JKQTMTPROPERTY(QString, fontScript);
+        JKQTMTPROPERTY(QString, fontScript)
         /** \brief greek font */
-        JKQTMTPROPERTY(QString, fontGreek);
+        JKQTMTPROPERTY(QString, fontGreek)
         /** \brief symbol font, used for math symbols. */
-        JKQTMTPROPERTY(QString, fontSymbol);
+        JKQTMTPROPERTY(QString, fontSymbol)
         /** \brief symbol font, used for braces in math mode. */
-        JKQTMTPROPERTY(QString, fontBraces);
+        JKQTMTPROPERTY(QString, fontBraces)
         /** \brief symbol font, used for integrals in math mode. */
-        JKQTMTPROPERTY(QString, fontIntegrals);
+        JKQTMTPROPERTY(QString, fontIntegrals)
         /** \brief font used for caligraphic symbols (escepcially in math environments) */
-        JKQTMTPROPERTY(QString, fontCaligraphic);
+        JKQTMTPROPERTY(QString, fontCaligraphic)
         /** \brief font used for blackboard (double-stroke) symbols (escepcially in math environments) */
-        JKQTMTPROPERTY(QString, fontBlackboard);
+        JKQTMTPROPERTY(QString, fontBlackboard)
         /** \brief roman font for math environment */
-        JKQTMTPROPERTY(QString, fontMathRoman);
+        JKQTMTPROPERTY(QString, fontMathRoman)
         /** \brief sans font for math environment */
-        JKQTMTPROPERTY(QString, fontMathSans);
+        JKQTMTPROPERTY(QString, fontMathSans)
         /** \brief prefix for LaTeX fonts */
-        JKQTMTPROPERTY(QString, fontLatexPrefix);
+        JKQTMTPROPERTY(QString, fontLatexPrefix)
         /** \brief postfix for LaTeX fonts */
-        JKQTMTPROPERTY(QString, fontLatexPostfix);
+        JKQTMTPROPERTY(QString, fontLatexPostfix)
         /** \brief specifies the encoding of special character fonts (default is \c MTFEwinSymbol ) */
-        JKQTMTPROPERTY(MTfontEncoding, fontEncoding);
+        JKQTMTPROPERTY(MTfontEncoding, fontEncoding)
         /** \brief resizing factor for braces in math mode */
-        JKQTMTPROPERTY(double, brace_factor);
+        JKQTMTPROPERTY(double, brace_factor)
         /** \brief shrinking the width of braces in math mode 0: reduce to 0 pixel width, 1: leave unchanged*/
-        JKQTMTPROPERTY(double, brace_shrink_factor);
+        JKQTMTPROPERTY(double, brace_shrink_factor)
         /** \brief resizing factor for font size in sub-/superscript */
-        JKQTMTPROPERTY(double, subsuper_size_factor);
+        JKQTMTPROPERTY(double, subsuper_size_factor)
         /** \brief fraction of a whitespace by which to shift a sub-/superscript left/right when the previous text is italic */
-        JKQTMTPROPERTY(double, italic_correction_factor);
+        JKQTMTPROPERTY(double, italic_correction_factor)
         /** \brief like subsuper_size_factor, but for operators (\\sum, \\int) where the text is placed above/below the symbol */
-        JKQTMTPROPERTY(double, operatorsubsuper_size_factor);
+        JKQTMTPROPERTY(double, operatorsubsuper_size_factor)
         /** \brief factor, used to extend the size of an operator in math mode */
-        JKQTMTPROPERTY(double, mathoperator_width_factor);
+        JKQTMTPROPERTY(double, mathoperator_width_factor)
         /** \brief relative shift of text in superscript to normal text:
          *         0= baseline kept, 1: baseline shifted to top of normal text */
-        JKQTMTPROPERTY(double, super_shift_factor);
+        JKQTMTPROPERTY(double, super_shift_factor)
         /** \brief relative shift of text in subscript to normal text:
          *         0= baseline kept, 1: baseline shifted to bottom of normal text */
-        JKQTMTPROPERTY(double, sub_shift_factor);
+        JKQTMTPROPERTY(double, sub_shift_factor)
         /** \brief indicates whether to use STIX fonts or not */
-        JKQTMTPROPERTY(bool, useSTIXfonts);
+        JKQTMTPROPERTY(bool, useSTIXfonts)
         /** \brief indicates whether to use XITS fonts or not */
-        JKQTMTPROPERTY(bool, useXITSfonts);
+        JKQTMTPROPERTY(bool, useXITSfonts)
         /** \brief indicates whether to use XITS fonts or not */
-        JKQTMTPROPERTY(bool, useASANAfonts);
+        JKQTMTPROPERTY(bool, useASANAfonts)
         /** \brief scaling factor for font of nominator and denominator of a fraction */
-        JKQTMTPROPERTY(double, frac_factor);
+        JKQTMTPROPERTY(double, frac_factor)
         /** \brief shift of denominator/nummerator away from central line of a frac */
-        JKQTMTPROPERTY(double, frac_shift_factor);
+        JKQTMTPROPERTY(double, frac_shift_factor)
         /** \brief scaling factor for font of underbrace/overbrace text */
-        JKQTMTPROPERTY(double, underbrace_factor);
+        JKQTMTPROPERTY(double, underbrace_factor)
         /** \brief scaling factor for font of underset/overset text */
-        JKQTMTPROPERTY(double, underset_factor);
+        JKQTMTPROPERTY(double, underset_factor)
         /** \brief fraction of the brace ascent that the brace is shifted downwards, when scaled */
-        JKQTMTPROPERTY(double, brace_y_shift_factor);
+        JKQTMTPROPERTY(double, brace_y_shift_factor)
         /** \brief size of the decorations (dot, tilde, ...), as fractio of the baselineheight */
-        JKQTMTPROPERTY(double, decoration_height_factor);
+        JKQTMTPROPERTY(double, decoration_height_factor)
         /** \brief switches on some options that will grant better rendering at the expense of higher time consumption */
-        JKQTMTPROPERTY(bool, expensiveRendering);
+        JKQTMTPROPERTY(bool, expensiveRendering)
         /** \brief a list that will be filled with error messages while parsing, if any error occur */
         QStringList error_list;
         /** \brief used by the parser. This is used to implement brace pairs with \\right. */

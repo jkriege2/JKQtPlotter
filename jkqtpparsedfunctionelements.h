@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -27,7 +27,7 @@
 #include "jkqtptools.h"
 #include "jkqtpmathparser.h"
 #include "jkqtp_imexport.h"
-#include "jkqtpelements.h"
+#include "jkqtpevaluatedfunctionelements.h"
 
 // forward declarations
 class JKQtBasePlotter;

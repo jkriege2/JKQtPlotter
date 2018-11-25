@@ -3,7 +3,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
-
+#include "jkqtpbarchartelements.h"
 
 
 
@@ -47,7 +47,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     size_t bcpy2=plotBarchart->getDatastore()->addCopiedColumn(dataBCY2, "y2");
     size_t bcpye2=plotBarchart->getDatastore()->addCopiedColumn(dataBCYE2, "ye2");
 
-    JKQTPbarHorizontalGraph* plteBar1=new JKQTPbarHorizontalGraph(plotBarchart->get_plotter());
+    JKQTPbarVerticalErrorGraph* plteBar1=new JKQTPbarVerticalErrorGraph(plotBarchart->get_plotter());
     plteBar1->set_title(tr("bars 1"));
     plteBar1->set_xColumn(bcpxd);
     plteBar1->set_yColumn(bcpy1);
@@ -56,7 +56,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     plteBar1->set_shift(-0.25);
     plotBarchart->get_plotter()->addGraph(plteBar1);
 
-    JKQTPbarHorizontalGraph* plteBar2=new JKQTPbarHorizontalGraph(plotBarchart->get_plotter());
+    JKQTPbarVerticalErrorGraph* plteBar2=new JKQTPbarVerticalErrorGraph(plotBarchart->get_plotter());
     plteBar2->set_xColumn(bcpxd);
     plteBar2->set_yColumn(bcpy2);
     plteBar2->set_yErrorColumn(bcpye2);
@@ -64,7 +64,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     plteBar2->set_width(0.45);
     plteBar2->set_shift(0.25);
     plteBar2->set_baseline(0.5);
-    plteBar2->set_xErrorSymmetric(false);
+    plteBar2->set_yErrorSymmetric(false);
     plotBarchart->get_plotter()->addGraph(plteBar2);
 
     plteBar2->autoscaleBarWidthAndShift();
@@ -82,26 +82,26 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
 
     barchartLayout->addWidget(plotBarchart2);
 
-    plteBar1=new JKQTPbarVerticalGraph(plotBarchart2->get_plotter());
-    plteBar1->set_title(tr("bars 1"));
-    plteBar1->set_yColumn(bcpx);
-    plteBar1->set_xColumn(bcpy1);
-    plteBar1->set_xErrorColumn(bcpye1);
-    plteBar1->set_width(0.45);
-    plteBar1->set_shift(-0.25);
-    plotBarchart2->get_plotter()->addGraph(plteBar1);
+    JKQTPbarHorizontalErrorGraph* plteBar3=new JKQTPbarHorizontalErrorGraph(plotBarchart2->get_plotter());
+    plteBar3->set_title(tr("bars 1"));
+    plteBar3->set_yColumn(bcpx);
+    plteBar3->set_xColumn(bcpy1);
+    plteBar3->set_xErrorColumn(bcpye1);
+    plteBar3->set_width(0.45);
+    plteBar3->set_shift(-0.25);
+    plotBarchart2->get_plotter()->addGraph(plteBar3);
 
-    plteBar2=new JKQTPbarVerticalGraph(plotBarchart2->get_plotter());
-    plteBar2->set_yColumn(bcpx);
-    plteBar2->set_xColumn(bcpy2);
-    plteBar2->set_xErrorColumn(bcpye2);
-    plteBar2->set_title(tr("bars 2"));
-    plteBar2->set_width(0.45);
-    plteBar2->set_shift(0.25);
-    plteBar2->set_xErrorSymmetric(false);
-    plotBarchart2->get_plotter()->addGraph(plteBar2);
+    JKQTPbarHorizontalErrorGraph* plteBar4=new JKQTPbarHorizontalErrorGraph(plotBarchart2->get_plotter());
+    plteBar4->set_yColumn(bcpx);
+    plteBar4->set_xColumn(bcpy2);
+    plteBar4->set_xErrorColumn(bcpye2);
+    plteBar4->set_title(tr("bars 2"));
+    plteBar4->set_width(0.45);
+    plteBar4->set_shift(0.25);
+    plteBar4->set_xErrorSymmetric(false);
+    plotBarchart2->get_plotter()->addGraph(plteBar4);
 
-    plteBar2->autoscaleBarWidthAndShift(0.9, 1);
+    plteBar4->autoscaleBarWidthAndShift(0.9, 1);
     plotBarchart2->set_doDrawing(true);
     plotBarchart2->zoomToFit();
 

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -192,6 +192,44 @@ void JKQTPcoordinateAxis::loadSettings(JKQTPcoordinateAxis* settings) {
     JKQTPPROPERTYloadFromAxis(settings, tickMode);
     paramsChanged=true;
     calcPlotScaling();
+}
+
+void JKQTPcoordinateAxis::clearAxisTickLabels() {
+    tickLabels.clear();
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::addAxisTickLabel(double x, QString label) {
+    tickLabels.append(qMakePair(x, label));
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::addAxisTickLabels(const QVector<double> &x, const QStringList &label) {
+    for (int i=0; i<qMin(x.size(), label.size()); i++) {
+        tickLabels.append(qMakePair(x[i], label[i]));
+    }
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::addAxisTickLabels(const double *x, const QStringList &label) {
+    for (int i=0; i<label.size(); i++) {
+        tickLabels.append(qMakePair(x[i], label[i]));
+    }
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::addAxisTickLabels(const QVector<double> &x, const QString *label) {
+    for (int i=0; i<x.size(); i++) {
+        tickLabels.append(qMakePair(x[i], label[i]));
+    }
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::addAxisTickLabels(const double *x, const QString *label, int items) {
+    for (int i=0; i<items; i++) {
+        tickLabels.append(qMakePair(x[i], label[i]));
+    }
+    update_plot();
 }
 
 void JKQTPcoordinateAxis::loadSettings(QSettings& settings, QString group) {
@@ -725,6 +763,10 @@ void JKQTPcoordinateAxis::calcPlotScaling(bool force) {
 
 }
 
+bool JKQTPcoordinateAxis::isLogAxis() const {
+    return logAxis || (tickMode==JKQTPLTMPower);
+}
+
 void JKQTPcoordinateAxis::setRange(double aamin, double aamax) {
     double oldamin=axismin;
     double oldamax=axismax;
@@ -772,6 +814,30 @@ void JKQTPcoordinateAxis::setNoAbsoluteRange() {
     setRange(axismin, axismax);
 }
 
+void JKQTPcoordinateAxis::set_tickSpacing(double __value) {
+    this->tickSpacing = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_axisMinWidth(double __value) {
+    this->axisMinWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_autoAxisSpacing(bool __value) {
+    this->autoAxisSpacing = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTickLabelsEnabled(bool __value) {
+    this->minorTickLabelsEnabled = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
 void JKQTPcoordinateAxis::set_logAxis(bool __value)
 {
     this->logAxis = __value;
@@ -786,11 +852,274 @@ void JKQTPcoordinateAxis::set_logAxis(bool __value)
     update_plot();
 }
 
+void JKQTPcoordinateAxis::set_logAxisBase(double __value) {
+    this->logAxisBase = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_userTickSpacing(double __value) {
+    this->userTickSpacing = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_userLogTickSpacing(double __value) {
+    this->userLogTickSpacing = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_labelType(JKQTPCAlabelType __value) {
+    this->labelType = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
 void JKQTPcoordinateAxis::set_tickMode(JKQTPLabelTickMode __value)
 {
     this->tickMode = __value;
     this->paramsChanged=true;
     set_logAxis(this->logAxis);
+}
+
+void JKQTPcoordinateAxis::set_tickMode(int __value) {
+    set_tickMode(JKQTPLabelTickMode(__value));
+}
+
+void JKQTPcoordinateAxis::set_axisLabel(QString __value) {
+    this->axisLabel = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_labelPosition(JKQTPlabelPosition __value) {
+    this->labelPosition = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_labelFont(QString __value) {
+    this->labelFont = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_labelFontSize(double __value) {
+    this->labelFontSize = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickLabelFont(QString __value) {
+    this->tickLabelFont = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickTimeFormat(QString __value) {
+    this->tickTimeFormat = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickDateFormat(QString __value) {
+    this->tickDateFormat = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickDateTimeFormat(QString __value) {
+    this->tickDateTimeFormat = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickLabelFontSize(double __value) {
+    this->tickLabelFontSize = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTickLabelFontSize(double __value) {
+    this->minorTickLabelFontSize = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTickLabelFullNumber(bool __value) {
+    this->minorTickLabelFullNumber = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minTicks(unsigned int __value) {
+    this->minTicks = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTicks(unsigned int __value) {
+    this->minorTicks = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTicks(int __value) {
+    this->minorTicks = qMax(int(0), __value);
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickOutsideLength(double __value) {
+    this->tickOutsideLength = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTickOutsideLength(double __value) {
+    this->minorTickOutsideLength = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickInsideLength(double __value) {
+    this->tickInsideLength = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTickInsideLength(double __value) {
+    this->minorTickInsideLength = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_axisColor(QColor __value) {
+    this->axisColor = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_showZeroAxis(bool __value) {
+    this->showZeroAxis = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_inverted(bool __value) {
+    this->inverted = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_gridColor(QColor __value) {
+    this->gridColor = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorGridColor(QColor __value) {
+    this->minorGridColor = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_gridWidth(double __value) {
+    this->gridWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_gridStyle(Qt::PenStyle __value) {
+    this->gridStyle = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorGridWidth(double __value) {
+    this->minorGridWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorGridStyle(Qt::PenStyle __value) {
+    this->minorGridStyle = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_drawMode1(JKQTPCAdrawMode __value) {
+    this->drawMode1 = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_drawMode2(JKQTPCAdrawMode __value) {
+    this->drawMode2 = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_minorTickWidth(double __value) {
+    this->minorTickWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickWidth(double __value) {
+    this->tickWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_lineWidth(double __value) {
+    this->lineWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_lineWidthZeroAxis(double __value) {
+    this->lineWidthZeroAxis = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickLabelDistance(double __value) {
+    this->tickLabelDistance = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_labelDistance(double __value) {
+    this->labelDistance = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_labelDigits(int __value) {
+    this->labelDigits = __value;
+    this->paramsChanged=true;
+    this->autoLabelDigits=false;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_drawGrid(bool __value) {
+    this->drawGrid = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_drawMinorGrid(bool __value) {
+    this->drawMinorGrid = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPcoordinateAxis::set_tickLabelAngle(double __value) {
+    this->tickLabelAngle = __value;
+    this->paramsChanged=true;
+    update_plot();
 }
 
 
@@ -1416,6 +1745,36 @@ JKQTPverticalIndependentAxis::JKQTPverticalIndependentAxis(double axisOffset, do
     this->otherAxisInverted=false;
 }
 
+void JKQTPverticalIndependentAxis::set_axisOffset(double __value) {
+    this->axisOffset = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPverticalIndependentAxis::set_axisWidth(double __value) {
+    this->axisWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPverticalIndependentAxis::set_otherAxisOffset(double __value) {
+    this->otherAxisOffset = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPverticalIndependentAxis::set_otherAxisWidth(double __value) {
+    this->otherAxisWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPverticalIndependentAxis::set_otherAxisInverted(bool __value) {
+    this->otherAxisInverted = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
 
 
 
@@ -1957,5 +2316,45 @@ JKQTPhorizontalIndependentAxis::JKQTPhorizontalIndependentAxis(double axisOffset
     this->otherAxisWidth=otherAxisWidth;
     this->otherAxisInverted=false;
 }
+
+void JKQTPhorizontalIndependentAxis::set_axisOffset(double __value) {
+    this->axisOffset = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPhorizontalIndependentAxis::set_axisWidth(double __value) {
+    this->axisWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPhorizontalIndependentAxis::set_otherAxisOffset(double __value) {
+    this->otherAxisOffset = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPhorizontalIndependentAxis::set_otherAxisWidth(double __value) {
+    this->otherAxisWidth = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+void JKQTPhorizontalIndependentAxis::set_otherAxisInverted(bool __value) {
+    this->otherAxisInverted = __value;
+    this->paramsChanged=true;
+    update_plot();
+}
+
+double JKQTPhorizontalIndependentAxis::get_parent_plotwidth() const { return axisWidth; }
+
+double JKQTPhorizontalIndependentAxis::get_parent_plotoffset() const { return axisOffset; }
+
+double JKQTPhorizontalIndependentAxis::get_parent_otheraxis_width() const { return otherAxisWidth; }
+
+bool JKQTPhorizontalIndependentAxis::get_parent_otheraxis_inverted() const { return otherAxisInverted; }
+
+double JKQTPhorizontalIndependentAxis::get_parent_otheraxis_offset() const { return otherAxisOffset; }
 
 

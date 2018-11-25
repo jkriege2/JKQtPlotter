@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 

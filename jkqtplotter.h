@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
 
     
 
@@ -253,8 +253,9 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
         inline size_t moveGraphBottom(JKQTPgraph* gr) { return plotter->moveGraphBottom(gr); }
 
-        /** \brief add a new graphs from a QVector */
-        inline void addGraphs(const QList<JKQTPgraph*>& gr) { plotter->addGraphs(gr); }
+        /** \brief add a new graphs from a QVector<JKQTPgraph*>, QList<JKQTPgraph*>, std::vector<JKQTPgraph*> ... or any standard-iterateable container with JKQTPgraph*-items */
+        template <class TJKQTPgraphContainer>
+        inline void addGraphs(const TJKQTPgraphContainer& gr) { plotter->addGraphs(gr); }
 
         /** \brief sets minimum and maximum x-value to plot */
         inline void setX(double xminn, double xmaxx) { plotter->setX(xminn, xmaxx); }
@@ -470,13 +471,13 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
 
         /** \brief fill color of the zoom rectangle */
-        JKQTPPROPERTY(QColor, userActionColor);
+        JKQTPPROPERTY(QColor, userActionColor)
 
         /** \brief fill color of the zoom rectangle */
-        JKQTPPROPERTY(QPainter::CompositionMode, userActionCompositionMode);
+        JKQTPPROPERTY(QPainter::CompositionMode, userActionCompositionMode)
 
         /** \brief width/height of the icons in the plotter toolbar in pixels */
-        JKQTPPROPERTY(int, toolbarIconSize);
+        JKQTPPROPERTY(int, toolbarIconSize)
 
         /** \brief this is set \c true if we are drawing a zoom rectangle */
         bool mouseDragingRectangle;
@@ -597,7 +598,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
                    top border, so the position fits in. The default widget font is used for the output. */
         bool displayMousePosition;
         /** \brief this string is used to generate the position output above the graph */
-        JKQTPPROPERTY(QString, mousePositionTemplate);
+        JKQTPPROPERTY(QString, mousePositionTemplate)
         /** \brief if set \c true and displayMousePosition is \c true, the mouse position is not automaticallz determined, but the text given to setMousePositionLabel() is used */
         bool displayCustomMousePosition;
         QString customMousePositiontext;

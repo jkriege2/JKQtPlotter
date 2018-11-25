@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
 
     
 
@@ -335,13 +335,25 @@
  * methodes
 */
 #define JKQTPSET_MACRO(type,varname) \
-    typedef type typedef_set_##varname ;\
     /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-    inline virtual void set_##varname (const typedef_set_##varname & __value)  \
+    inline virtual void set_##varname (const type & __value)  \
     { \
         this->varname = __value; \
     }
 #define JKQTPSetMacro(type,varname) JKQTPSET_MACRO(type,varname)
+
+/**
+ * \brief create set_varname(type __value) methods/functions
+ * inside a class, where \c type is the type of \c varname and \c varname is a
+ * previously declared private variable that should be accessed by these
+ * methodes
+*/
+#define JKQTPSET_CAST_MACRO(typefunction,typeinternal,varname) \
+    /** \brief sets the property varname to the specified \a __value, where __value is static_cast'ed from typefunction to typeinternal. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
+    inline virtual void set_##varname (const typefunction & __value)  \
+    { \
+        this->varname = static_cast<typeinternal>(__value); \
+    }
 
 /**
  * \brief create set_varname(type __value) methods/functions

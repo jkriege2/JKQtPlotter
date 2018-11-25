@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "jkqtplotter.h"
+#include "jkqtpbarchartelements.h"
 
 #define Ndata 5
 int main(int argc, char* argv[])
@@ -14,7 +15,7 @@ int main(int argc, char* argv[])
     JKQTPdatastore* ds=plot.getDatastore();
 
     // 2. now we create data for three simple barchart
-    QString L[Ndata]={  "cat. A", "cat. C", "cat. B", "cat. D", "other"};
+    QString L[Ndata]={  "cat. A", "cat. C", "cat. B", "cat. D", "other"}; // unsorted category axis
     double  X[Ndata]={        1,        3,        2,        4,       5};
     //QString L[Ndata]={  "cat. A", "cat. B", "cat. C", "cat. D", "other"}; // correctly sorted data!
     //double  X[Ndata]={        1,        2,        3,        4,       5};
@@ -33,15 +34,15 @@ int main(int argc, char* argv[])
     size_t columnY3=ds->addCopiedColumn(Y3, Ndata, "y3");
 
     // 4. create graphs in the plot, which plots the dataset X/Y1, X/Y2 and X/Y3:
-    JKQTPbarHorizontalGraph* graph1=new JKQTPbarHorizontalGraph(&plot);
+    JKQTPbarVerticalGraph* graph1=new JKQTPbarVerticalGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY1);
     graph1->set_title(QObject::tr("dataset 1"));
-    JKQTPbarHorizontalGraph* graph2=new JKQTPbarHorizontalGraph(&plot);
+    JKQTPbarVerticalGraph* graph2=new JKQTPbarVerticalGraph(&plot);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY2);
     graph2->set_title(QObject::tr("dataset 2"));
-    JKQTPbarHorizontalGraph* graph3=new JKQTPbarHorizontalGraph(&plot);
+    JKQTPbarVerticalGraph* graph3=new JKQTPbarVerticalGraph(&plot);
     graph3->set_xColumn(columnX);
     graph3->set_yColumn(columnY3);
     graph3->set_title(QObject::tr("dataset 3"));

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -356,6 +356,11 @@ bool JKQTmathText::MTtextNode::toHtml(QString &html, JKQTmathText::MTenvironment
     return true;
 }
 
+QString JKQTmathText::MTtextNode::getTypeName() const
+{
+    return QLatin1String("MTtextNode(")+text+")";
+}
+
 QString JKQTmathText::MTtextNode::textTransform(const QString &text, JKQTmathText::MTenvironment currentEv, bool /*forSize*/)
 {
     QString txt=text;
@@ -444,6 +449,11 @@ JKQTmathText::MTinstruction1Node::MTinstruction1Node(JKQTmathText* parent, QStri
 
 JKQTmathText::MTinstruction1Node::~MTinstruction1Node() {
     if (child!=nullptr) delete child;
+}
+
+QString JKQTmathText::MTinstruction1Node::getTypeName() const
+{
+    return QLatin1String("MTinstruction1Node(")+name+")";
 }
 
 void JKQTmathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -602,6 +612,16 @@ double JKQTmathText::MTsubscriptNode::draw(QPainter& painter, double x, double y
     return child->draw(painter, xx, y+shift, ev);//+0.5*fm.boundingRect("A").width();
 }
 
+bool JKQTmathText::MTsubscriptNode::isSubOrSuper()
+{
+    return true;
+}
+
+QString JKQTmathText::MTsubscriptNode::getTypeName() const
+{
+    return "MTsubscriptNode";
+}
+
 
 bool JKQTmathText::MTsubscriptNode::toHtml(QString &html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv) {
     html=html+"<sub>";
@@ -697,6 +717,11 @@ void JKQTmathText::MTsqrtNode::set_drawBoxes(bool draw)
 
 }
 
+QString JKQTmathText::MTsqrtNode::getTypeName() const
+{
+    return "MTsqrtNode";
+}
+
 
 
 
@@ -713,6 +738,11 @@ JKQTmathText::MTfracNode::MTfracNode(JKQTmathText* parent, MTnode* child_top, MT
 JKQTmathText::MTfracNode::~MTfracNode() {
     if (child1!=nullptr) delete child1;
     if (child2!=nullptr) delete child2;
+}
+
+QString JKQTmathText::MTfracNode::getTypeName() const
+{
+    return "MTfracNode";
 }
 
 void JKQTmathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -920,6 +950,11 @@ JKQTmathText::MTmatrixNode::~MTmatrixNode() {
     children.clear();
 }
 
+QString JKQTmathText::MTmatrixNode::getTypeName() const
+{
+    return "MTmatrixNode";
+}
+
 void JKQTmathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     JKQTmathText::MTenvironment ev1=currentEv;
@@ -944,7 +979,7 @@ void JKQTmathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTmathText
         //widths[i].resize(columns);
         //baselines[i]=heights[i]=widths[i];
         for (int j=0; j<children[i].size(); j++) {
-            children[i].at(j)->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos1);;
+            children[i].at(j)->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos1);
             /*widths[i].operator[](j)=width1;
             baselines[i].operator[](j)=baselineHeight;
             heights[i].operator[](j)=overallHeight1;*/
@@ -990,7 +1025,7 @@ double JKQTmathText::MTmatrixNode::draw(QPainter& painter, double x, double y, J
         //widths[i].resize(columns);
         //baselines[i]=heights[i]=widths[i];
         for (int j=0; j<children[i].size(); j++) {
-            if (children[i].at(j)!=nullptr) children[i].at(j)->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos);;
+            if (children[i].at(j)!=nullptr) children[i].at(j)->getSize(painter, ev1, width1, baselineHeight1, overallHeight1, strikeoutPos);
             /*widths[i].operator[](j)=width1;
             baselines[i].operator[](j)=baselineHeight;
             heights[i].operator[](j)=overallHeight1;*/
@@ -1197,6 +1232,11 @@ void JKQTmathText::MTdecoratedNode::set_drawBoxes(bool draw)
 
 }
 
+QString JKQTmathText::MTdecoratedNode::getTypeName() const
+{
+    return "MTdecoratedNode";
+}
+
 
 
 
@@ -1239,6 +1279,16 @@ double JKQTmathText::MTsuperscriptNode::draw(QPainter& painter, double x, double
     if (currentEv.italic) xx=xx+double(fm.width(' '))*parent->get_italic_correction_factor();
 
     return child->draw(painter, xx, y-shift, ev);//+0.5*fm.boundingRect("A").width();
+}
+
+bool JKQTmathText::MTsuperscriptNode::isSubOrSuper()
+{
+    return true;
+}
+
+QString JKQTmathText::MTsuperscriptNode::getTypeName() const
+{
+    return "MTsuperscriptNode";
 }
 
 
@@ -1492,6 +1542,11 @@ void JKQTmathText::MTbraceNode::set_drawBoxes(bool draw)
 
 }
 
+QString JKQTmathText::MTbraceNode::getTypeName() const
+{
+    return QLatin1String("MTbraceNode(")+openbrace+" "+closebrace+")";
+}
+
 void JKQTmathText::MTbraceNode::getBraceWidth(QPainter &/*painter*/, JKQTmathText::MTenvironment ev, double /*baselineHeight*/, double overallHeight, double &bracewidth, double &braceheight)
 {
     /*QFont evf=ev.getFont(parent);
@@ -1537,6 +1592,11 @@ JKQTmathText::MTlistNode::~MTlistNode() {
         delete nodes[i];
     }
     nodes.clear();
+}
+
+QString JKQTmathText::MTlistNode::getTypeName() const
+{
+    return "MTlistNode";
 }
 
 void JKQTmathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
@@ -2281,11 +2341,11 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
                 else if (n=="notni") symbol=QChar(0x220C);
                 else if (n=="circ") symbol=QChar(0x2218);
                 else if (n=="tilde") symbol=QChar(0x223C);
-                else if (n=="iint") { symbol=QChar(0x222C); fontFactor=mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="iiint") { symbol=QChar(0x222D); fontFactor=mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="oint") { symbol=QChar(0x222E); fontFactor=mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="oiint") { symbol=QChar(0x222F); fontFactor=mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="oiiint") { symbol=QChar(0x2230); fontFactor=mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent=true; exactAscent=true; }
+                else if (n=="iint") { symbol=QChar(0x222C); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
+                else if (n=="iiint") { symbol=QChar(0x222D); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
+                else if (n=="oint") { symbol=QChar(0x222E); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
+                else if (n=="oiint") { symbol=QChar(0x222F); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
+                else if (n=="oiiint") { symbol=QChar(0x2230); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
                 else if (n=="emptyset") symbol=QChar(0x2300);
                 else if (n=="varnothing") symbol=QChar(0x2300);
                 else if (n=="odot") symbol=QChar(0x2299);
@@ -2326,10 +2386,10 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
                 else if (n=="multimap") { symbol=QChar(0x22B8); }
                 else if (n=="maporiginal") { symbol=QChar(0x22B6); }
                 else if (n=="mapimage") { symbol=QChar(0x22B7); }
-                else if (n=="bigcap") { symbol=QChar(0x22C2); heightIsAscent=true; exactAscent=true;; heightIsAscent=true; exactAscent=true; }
-                else if (n=="bigcup") { symbol=QChar(0x22C3); heightIsAscent=true; exactAscent=true;; heightIsAscent=true; exactAscent=true; }
-                else if (n=="bigvee") { symbol=QChar(0x22C1); heightIsAscent=true; exactAscent=true;; heightIsAscent=true; exactAscent=true; }
-                else if (n=="bighat") { symbol=QChar(0x22C0); heightIsAscent=true; exactAscent=true;; heightIsAscent=true; exactAscent=true; }
+                else if (n=="bigcap") { symbol=QChar(0x22C2); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
+                else if (n=="bigcup") { symbol=QChar(0x22C3); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
+                else if (n=="bigvee") { symbol=QChar(0x22C1); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
+                else if (n=="bighat") { symbol=QChar(0x22C0); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
                 else if (n=="benzene") symbol=QChar(0x232C);
 
                 else if (n=="times") symbol=QChar(0x2A2F);
@@ -2366,7 +2426,7 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
                 else if (n=="diamond") symbol=QChar(0xE0);
                 else if (n=="langle") symbol=QChar(0x2329);
                 else if (n=="rangle") symbol=QChar(0x232A);
-                else if (n=="int") { symbol=QChar(0x222B); fontFactor=mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent=true; exactAscent=true; }
+                else if (n=="int") { symbol=QChar(0x222B); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
                 else if (n=="infty") { symbol=QChar(0x221E); }
                 else if (n=="forall") { symbol=QChar(0x2200); }
                 else if (n=="exists") { symbol=QChar(0x2203); }
@@ -2612,6 +2672,11 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
 }
 
 JKQTmathText::MTsymbolNode::~MTsymbolNode() {
+}
+
+QString JKQTmathText::MTsymbolNode::getTypeName() const
+{
+    return QLatin1String("MTsymbolNode(")+symbolName+QLatin1String(")");
 }
 
 QFont JKQTmathText::MTsymbolNode::getFontName(symbolFont f, QFont& fi) {
@@ -3472,7 +3537,7 @@ JKQTmathText::MTnode* JKQTmathText::parseLatexString(bool get, QString quitOnClo
                             currentTokenID++;
                             if (currentTokenID<parseString.size()) c=parseString[currentTokenID];
                         }
-                        if (c!='}')  error_list.append(tr("error @ ch. %1: \verb{...} not closed by '}'").arg(currentTokenID).arg(name));;
+                        if (c!='}')  error_list.append(tr("error @ ch. %1: \verb{...} not closed by '}'").arg(currentTokenID).arg(name));
                         nl->addNode(new MTtextNode(this, text, false));
                     }
                 } else if (name=="frac") {
@@ -3966,6 +4031,22 @@ void JKQTmathText::draw(QPainter& painter, int flags, QRectF rect, bool drawBoxe
     }
 }
 
+JKQTmathText::MTwhitespaceNode::MTwhitespaceNode(JKQTmathText *parent):
+    MTtextNode(parent, " ", false, false)
+{
+
+}
+
+JKQTmathText::MTwhitespaceNode::~MTwhitespaceNode()
+{
+
+}
+
+QString JKQTmathText::MTwhitespaceNode::getTypeName() const
+{
+    return QLatin1String("MTwhitespaceNode(")+text+")";
+}
+
 bool JKQTmathText::MTwhitespaceNode::toHtml(QString &html, JKQTmathText::MTenvironment /*currentEv*/, JKQTmathText::MTenvironment /*defaultEv*/) {
     html=html+"&nbsp;";
     return true;
@@ -3974,6 +4055,11 @@ bool JKQTmathText::MTwhitespaceNode::toHtml(QString &html, JKQTmathText::MTenvir
 void JKQTmathText::MTnode::set_drawBoxes(bool draw)
 {
     this->drawBoxes=draw;
+}
+
+QString JKQTmathText::MTnode::getTypeName() const
+{
+    return "MTnode";
 }
 
 QString JKQTmathText::fracModeToString(JKQTmathText::MTfracMode mode)
@@ -4171,6 +4257,11 @@ bool JKQTmathText::tbrDataH::operator==(const JKQTmathText::tbrDataH &other) con
 JKQTmathText::MTplainTextNode::MTplainTextNode(JKQTmathText *parent, QString text, bool addWhitespace, bool stripInnerWhitepace):
     JKQTmathText::MTtextNode(parent, text, addWhitespace, stripInnerWhitepace)
 {
+
+}
+
+QString JKQTmathText::MTplainTextNode::getTypeName() const
+{return QLatin1String("MTplainTextNode(")+text+")";
 
 }
 

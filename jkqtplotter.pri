@@ -4,6 +4,7 @@ QMAKE_CXXFLAGS += -fexceptions
 
 HEADERS += $$PWD/jkqtpbaseplotter.h \
            $$PWD/jkqtpdatastorage.h \
+           $$PWD/jkqtpbasegraphs.h \
            $$PWD/jkqtpelements.h \
            $$PWD/jkqtmathtext.h \
            $$PWD/jkqtpbaseelements.h \
@@ -12,6 +13,9 @@ HEADERS += $$PWD/jkqtpbaseplotter.h \
            $$PWD/jkqttools.h \
            $$PWD/jkqtpimageelements.h \
            $$PWD/jkqtpimagetools.h \
+           $$PWD/jkqtpbarchartelements.h \
+           $$PWD/jkqtpboxplotelements.h \
+           $$PWD/jkqtpevaluatedfunctionelements.h \
            $$PWD/jkqtpparsedfunctionelements.h \
            $$PWD/jkqtpoverlayelements.h \
            $$PWD/jkqtpgeoelements.h \
@@ -22,6 +26,7 @@ HEADERS += $$PWD/jkqtpbaseplotter.h \
 
 SOURCES += $$PWD/jkqtpbaseplotter.cpp \
            $$PWD/jkqtpdatastorage.cpp \
+           $$PWD/jkqtpbasegraphs.cpp \
            $$PWD/jkqtpelements.cpp \
            $$PWD/jkqtmathtext.cpp \
            $$PWD/jkqtpbaseelements.cpp \
@@ -30,6 +35,9 @@ SOURCES += $$PWD/jkqtpbaseplotter.cpp \
            $$PWD/jkqttools.cpp  \
            $$PWD/jkqtpimageelements.cpp  \
            $$PWD/jkqtpimagetools.cpp  \
+           $$PWD/jkqtpbarchartelements.cpp  \
+           $$PWD/jkqtpboxplotelements.cpp  \
+           $$PWD/jkqtpevaluatedfunctionelements.cpp  \
            $$PWD/jkqtpparsedfunctionelements.cpp  \
            $$PWD/jkqtpoverlayelements.cpp  \
            $$PWD/jkqtpgeoelements.cpp  \

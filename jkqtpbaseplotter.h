@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -1141,7 +1141,12 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         size_t moveGraphBottom(JKQTPgraph* gr);
 
         /** \brief add a new graphs from a QVector */
-        void addGraphs(const QList<JKQTPgraph*>& gr);
+        template <class TJKQTPgraphContainer>
+        inline void addGraphs(const TJKQTPgraphContainer& gr) {
+            for (auto it=gr.begin(); it!=gr.end(); ++it) {
+                addGraph(*it);
+            }
+        }
 
         /** \brief add a new graph, returns it's position in the graphs list.
          *

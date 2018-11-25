@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -181,7 +181,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
             } else {
                 return r;
             }
-        };
+        }
 
         /** \brief return time coordinate coordinate from x-pixel */
         inline double p2x(long x) const {
@@ -199,46 +199,20 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
 
         /** \brief clear axis tick labels. This switches back to automatic labels mode for the axis. */
-        inline void clearAxisTickLabels() {
-            tickLabels.clear();
-            update_plot();
-        }
+        void clearAxisTickLabels();
 
         /** \brief add a new tick label to the axis */
-        inline void addAxisTickLabel(double x, QString label) {
-            tickLabels.append(qMakePair(x, label));
-            update_plot();
-        }
+        void addAxisTickLabel(double x, QString label);
 
 
         /** \brief add a new tick label to the axis */
-        inline void addAxisTickLabels(const QVector<double>& x, const QStringList& label) {
-            for (int i=0; i<qMin(x.size(), label.size()); i++) {
-                tickLabels.append(qMakePair(x[i], label[i]));
-            }
-            update_plot();
-        }
+        void addAxisTickLabels(const QVector<double>& x, const QStringList& label);
         /** \brief add a new tick label to the axis */
-        inline void addAxisTickLabels(const double* x, const QStringList& label) {
-            for (int i=0; i<label.size(); i++) {
-                tickLabels.append(qMakePair(x[i], label[i]));
-            }
-            update_plot();
-        }
+        void addAxisTickLabels(const double* x, const QStringList& label);
         /** \brief add a new tick label to the axis */
-        inline void addAxisTickLabels(const QVector<double>& x, const QString* label) {
-            for (int i=0; i<x.size(); i++) {
-                tickLabels.append(qMakePair(x[i], label[i]));
-            }
-            update_plot();
-        }
+        void addAxisTickLabels(const QVector<double>& x, const QString* label);
         /** \brief add a new tick label to the axis */
-        inline void addAxisTickLabels(const double* x, const QString* label, int items) {
-            for (int i=0; i<items; i++) {
-                tickLabels.append(qMakePair(x[i], label[i]));
-            }
-            update_plot();
-        }
+        void addAxisTickLabels(const double* x, const QString* label, int items);
 
         /** \brief returns the size of the left/bottom axis in pixels */
         virtual QSize getSize1(JKQTPEnhancedPainter& painter)=0;
@@ -305,17 +279,16 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
 
         /** \brief returns the current min */
-        inline double getMin() const {return axismin; };
+        inline double getMin() const {return axismin; }
 
         /** \brief returns the current max */
-        inline double getMax() const {return axismax; };
+        inline double getMax() const {return axismax; }
 
         /** \brief returns the current absolute min */
-        inline double getAbsoluteMin() const {return axisabsoultemin; };
+        inline double getAbsoluteMin() const {return axisabsoultemin; }
 
         /** \brief returns the current absolute max */
-        inline double getAbsoluteMax() const {return axisabsoultemax; };
-
+        inline double getAbsoluteMax() const {return axisabsoultemax; }
         /** \brief calculate the scaling and offset values from axis min/max values
          *
          *  This is only executed when \c paramChanged==true, as otherwise the data has to be still
@@ -324,9 +297,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         void calcPlotScaling(bool force=false);
 
 
-        inline bool isLogAxis() const {
-            return logAxis || (tickMode==JKQTPLTMPower);
-        }
+        bool isLogAxis() const;
 
     public slots:
         /** \brief set range of plot axis */
@@ -339,38 +310,22 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /** \brief sets the property tickSpacing to the specified \a __value.
          *  \details Description of the parameter tickSpacing is:  <CENTER>\copybrief tickSpacing.</CENTER>
          *  \see tickSpacing for more information */
-        inline virtual void set_tickSpacing(double __value) {
-            this->tickSpacing = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickSpacing(double __value);
 
         /** \brief sets the property axisMinWidth to the specified \a __value.
          *  \details Description of the parameter tickSpacing is:  <CENTER>\copybrief axisMinWidth.</CENTER>
          *  \see axisMinWidth for more information */
-        inline virtual void set_axisMinWidth(double __value) {
-            this->axisMinWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_axisMinWidth(double __value);
 
         /** \brief sets the property autoAxisSpacing to the specified \a __value.
          *  \details Description of the parameter autoAxisSpacing is:  <CENTER>\copybrief autoAxisSpacing.</CENTER>
          *  \see autoAxisSpacing for more information */
-        inline virtual void set_autoAxisSpacing(bool __value) {
-            this->autoAxisSpacing = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_autoAxisSpacing(bool __value);
 
         /** \brief sets the property minorTickLabelsEnabled to the specified \a __value.
          *  \details Description of the parameter minorTickLabelsEnabled is:  <CENTER>\copybrief minorTickLabelsEnabled.</CENTER>
          *  \see autoAxisSpacing for more information */
-        inline virtual void set_minorTickLabelsEnabled(bool __value) {
-            this->minorTickLabelsEnabled = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorTickLabelsEnabled(bool __value);
 
         /** \brief sets the property logAxis to the specified \a __value.
          *  \details Description of the parameter logAxis is:  <CENTER>\copybrief logAxis.</CENTER>
@@ -380,38 +335,22 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /** \brief sets the property logAxisBase to the specified \a __value.
          *  \details Description of the parameter logAxisBase is:  <CENTER>\copybrief logAxisBase.</CENTER>
          *  \see logAxisBase for more information */
-        inline virtual void set_logAxisBase (double __value) {
-            this->logAxisBase = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_logAxisBase (double __value);
 
         /** \brief sets the property userTickSpacing to the specified \a __value.
          *  \details Description of the parameter userTickSpacing is:  <CENTER>\copybrief userTickSpacing.</CENTER>
          *  \see userTickSpacing for more information */
-        inline virtual void set_userTickSpacing (double __value) {
-            this->userTickSpacing = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_userTickSpacing (double __value);
 
         /** \brief sets the property userLogTickSpacing to the specified \a __value.
          *  \details Description of the parameter userLogTickSpacing is:  <CENTER>\copybrief userLogTickSpacing.</CENTER>
          *  \see userLogTickSpacing for more information */
-        inline virtual void set_userLogTickSpacing (double __value) {
-            this->userLogTickSpacing = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_userLogTickSpacing (double __value);
 
         /** \brief sets the property labelType to the specified \a __value.
          *  \details Description of the parameter labelType is:  <CENTER>\copybrief labelType.</CENTER>
          *  \see labelType for more information */
-        inline virtual void set_labelType (JKQTPCAlabelType __value) {
-            this->labelType = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_labelType (JKQTPCAlabelType __value);
 
         /** \brief sets the property tickMode to the specified \a __value.
          *  \details Description of the parameter tickMode is:  <CENTER>\copybrief tickMode.</CENTER>
@@ -420,333 +359,169 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /** \brief sets the property tickMode to the specified \a __value.
          *  \details Description of the parameter tickMode is:  <CENTER>\copybrief tickMode.</CENTER>
          *  \see tickMode for more information */
-        inline virtual void set_tickMode (int __value) {
-           set_tickMode(JKQTPLabelTickMode(__value));
-        };
+        virtual void set_tickMode (int __value);
 
         /** \brief sets the property axisLabel to the specified \a __value.
          *  \details Description of the parameter axisLabel is:  <CENTER>\copybrief axisLabel.</CENTER>
          *  \see axisLabel for more information */
-        inline virtual void set_axisLabel (QString __value) {
-            this->axisLabel = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_axisLabel (QString __value);
 
         /** \brief sets the property labelPosition to the specified \a __value.
          *  \details Description of the parameter labelPosition is:  <CENTER>\copybrief labelPosition.</CENTER> */
-        inline virtual void set_labelPosition (JKQTPlabelPosition __value) {
-            this->labelPosition = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_labelPosition (JKQTPlabelPosition __value);
 
         /** \brief sets the property labelFont to the specified \a __value.
          *  \details Description of the parameter labelFont is:  <CENTER>\copybrief labelFont.</CENTER> */
-        inline virtual void set_labelFont (QString __value) {
-            this->labelFont = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_labelFont (QString __value);
 
         /** \brief sets the property labelFontSize to the specified \a __value.
          *  \details Description of the parameter labelFontSize is:  <CENTER>\copybrief labelFontSize.</CENTER> */
-        inline virtual void set_labelFontSize (double __value) {
-            this->labelFontSize = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_labelFontSize (double __value);
 
         /** \brief sets the property tickLabelFont to the specified \a __value.
          *  \details Description of the parameter tickLabelFont is:  <CENTER>\copybrief tickLabelFont.</CENTER> */
-        inline virtual void set_tickLabelFont (QString __value) {
-            this->tickLabelFont = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickLabelFont (QString __value);
 
 
         /** \brief sets the property tickTimeFormat to the specified \a __value.
          *  \details Description of the parameter tickTimeFormat is:  <CENTER>\copybrief tickTimeFormat.</CENTER> */
-        inline virtual void set_tickTimeFormat (QString __value) {
-            this->tickTimeFormat = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickTimeFormat (QString __value);
 
 
         /** \brief sets the property tickDateFormat to the specified \a __value.
          *  \details Description of the parameter tickDateFormat is:  <CENTER>\copybrief tickDateFormat.</CENTER> */
-        inline virtual void set_tickDateFormat (QString __value) {
-            this->tickDateFormat = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickDateFormat (QString __value);
 
 
         /** \brief sets the property tickDateTimeFormat to the specified \a __value.
          *  \details Description of the parameter tickDateTimeFormat is:  <CENTER>\copybrief tickDateTimeFormat.</CENTER> */
-        inline virtual void set_tickDateTimeFormat (QString __value) {
-            this->tickDateTimeFormat = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
-
-
+        virtual void set_tickDateTimeFormat (QString __value);
 
 
         /** \brief sets the property tickLabelFontSize to the specified \a __value.
          *  \details Description of the parameter tickLabelFontSize is:  <CENTER>\copybrief tickLabelFontSize.</CENTER> */
-        inline virtual void set_tickLabelFontSize (double __value) {
-            this->tickLabelFontSize = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
-
-
+        virtual void set_tickLabelFontSize (double __value);
 
         /** \brief sets the property minorTickLabelFontSize to the specified \a __value.
          *  \details Description of the parameter minorTickLabelFontSize is:  <CENTER>\copybrief minorTickLabelFontSize.</CENTER> */
-        inline virtual void set_minorTickLabelFontSize (double __value) {
-            this->minorTickLabelFontSize = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
-
+        virtual void set_minorTickLabelFontSize (double __value);
 
         /** \brief sets the property minorTickLabelFullNumber to the specified \a __value.
          *  \details Description of the parameter minorTickLabelFullNumber is:  <CENTER>\copybrief minorTickLabelFullNumber.</CENTER> */
-        inline virtual void set_minorTickLabelFullNumber (bool __value) {
-            this->minorTickLabelFullNumber = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorTickLabelFullNumber (bool __value);
 
         /** \brief sets the property minTicks to the specified \a __value.
          *  \details Description of the parameter minTicks is:  <CENTER>\copybrief minTicks.</CENTER> */
-        inline virtual void set_minTicks(unsigned int __value) {
-            this->minTicks = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minTicks(unsigned int __value);
 
         /** \brief sets the property minorTicks to the specified \a __value.
          *  \details Description of the parameter minorTicks is:  <CENTER>\copybrief minorTicks.</CENTER> */
-        inline virtual void set_minorTicks (unsigned int __value) {
-            this->minorTicks = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorTicks (unsigned int __value);
 
         /** \brief sets the property minorTicks to the specified \a __value.
          *  \details Description of the parameter minorTicks is:  <CENTER>\copybrief minorTicks.</CENTER> */
-        inline virtual void set_minorTicks (int __value) {
-            this->minorTicks = qMax(int(0), __value);
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorTicks (int __value);
 
         /** \brief sets the property tickOutsideLength to the specified \a __value.
          *  \details Description of the parameter tickOutsideLength is:  <CENTER>\copybrief tickOutsideLength.</CENTER> */
-        inline virtual void set_tickOutsideLength(double __value) {
-            this->tickOutsideLength = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickOutsideLength(double __value);
 
         /** \brief sets the property minorTickOutsideLength to the specified \a __value.
          *  \details Description of the parameter minorTickOutsideLength is:  <CENTER>\copybrief minorTickOutsideLength.</CENTER> */
-        inline virtual void set_minorTickOutsideLength (double __value) {
-            this->minorTickOutsideLength = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorTickOutsideLength (double __value);
 
         /** \brief sets the property tickInsideLength to the specified \a __value.
          *  \details Description of the parameter tickInsideLength is:  <CENTER>\copybrief tickInsideLength.</CENTER> */
-        inline virtual void set_tickInsideLength(double __value) {
-            this->tickInsideLength = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickInsideLength(double __value);
 
         /** \brief sets the property minorTickInsideLength to the specified \a __value.
          *  \details Description of the parameter minorTickInsideLength is:  <CENTER>\copybrief minorTickInsideLength.</CENTER> */
-        inline virtual void set_minorTickInsideLength (double __value) {
-            this->minorTickInsideLength = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorTickInsideLength (double __value);
 
         /** \brief sets the property axisColor to the specified \a __value.
          *  \details Description of the parameter axisColor is:  <CENTER>\copybrief axisColor.</CENTER> */
-        inline virtual void set_axisColor (QColor __value) {
-            this->axisColor = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_axisColor (QColor __value);
 
         /** \brief sets the property showZeroAxis to the specified \a __value.
          *  \details Description of the parameter showZeroAxis is:  <CENTER>\copybrief showZeroAxis.</CENTER> */
-        inline virtual void set_showZeroAxis(bool __value) {
-            this->showZeroAxis = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_showZeroAxis(bool __value);
 
         /** \brief sets the property inverted to the specified \a __value.
          *  \details Description of the parameter inverted is:  <CENTER>\copybrief inverted.</CENTER> */
-        inline virtual void set_inverted(bool __value) {
-            this->inverted = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_inverted(bool __value);
 
         /** \brief sets the property gridColor to the specified \a __value.
          *  \details Description of the parameter gridColor is:  <CENTER>\copybrief gridColor.</CENTER> */
-        inline virtual void set_gridColor(QColor __value) {
-            this->gridColor = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_gridColor(QColor __value);
 
         /** \brief sets the property minorGridColor to the specified \a __value.
          *  \details Description of the parameter minorGridColor is:  <CENTER>\copybrief minorGridColor.</CENTER> */
-        inline virtual void set_minorGridColor(QColor __value) {
-            this->minorGridColor = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorGridColor(QColor __value);
 
         /** \brief sets the property gridWidth to the specified \a __value.
          *  \details Description of the parameter gridWidth is:  <CENTER>\copybrief gridWidth.</CENTER> */
-        inline virtual void set_gridWidth (double __value) {
-            this->gridWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_gridWidth (double __value);
 
         /** \brief sets the property gridStyle to the specified \a __value.
          *  \details Description of the parameter gridStyle is:  <CENTER>\copybrief gridStyle.</CENTER> */
-        inline virtual void set_gridStyle(Qt::PenStyle __value) {
-            this->gridStyle = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_gridStyle(Qt::PenStyle __value);
 
         /** \brief sets the property minorGridWidth to the specified \a __value.
          *  \details Description of the parameter minorGridWidth is:  <CENTER>\copybrief minorGridWidth.</CENTER> */
-        inline virtual void set_minorGridWidth(double __value) {
-            this->minorGridWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorGridWidth(double __value);
 
         /** \brief sets the property minorGridStyle to the specified \a __value.
          *  \details Description of the parameter minorGridStyle is:  <CENTER>\copybrief minorGridStyle.</CENTER> */
-        inline virtual void set_minorGridStyle (Qt::PenStyle __value) {
-            this->minorGridStyle = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorGridStyle (Qt::PenStyle __value);
 
 
         /** \brief sets the property drawMode1 to the specified \a __value.
          *  \details Description of the parameter drawMode1 is:  <CENTER>\copybrief drawMode1.</CENTER> */
-        inline virtual void set_drawMode1 (JKQTPCAdrawMode __value) {
-            this->drawMode1 = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_drawMode1 (JKQTPCAdrawMode __value);
 
         /** \brief sets the property drawMode2 to the specified \a __value.
          *  \details Description of the parameter drawMode2 is:  <CENTER>\copybrief drawMode2.</CENTER> */
-        inline virtual void set_drawMode2(JKQTPCAdrawMode __value) {
-            this->drawMode2 = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_drawMode2(JKQTPCAdrawMode __value);
 
         /** \brief sets the property minorTickWidth to the specified \a __value.
          *  \details Description of the parameter minorTickWidth is:  <CENTER>\copybrief minorTickWidth.</CENTER> */
-        inline virtual void set_minorTickWidth(double __value) {
-            this->minorTickWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_minorTickWidth(double __value);
 
         /** \brief sets the property tickWidth to the specified \a __value.
          *  \details Description of the parameter tickWidth is:  <CENTER>\copybrief tickWidth.</CENTER> */
-        inline virtual void set_tickWidth (double __value) {
-            this->tickWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickWidth (double __value);
 
         /** \brief sets the property lineWidth to the specified \a __value.
          *  \details Description of the parameter lineWidth is:  <CENTER>\copybrief lineWidth.</CENTER> */
-        inline virtual void set_lineWidth (double __value) {
-            this->lineWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_lineWidth (double __value);
 
         /** \brief sets the property lineWidthZeroAxis to the specified \a __value.
          *  \details Description of the parameter lineWidthZeroAxis is:  <CENTER>\copybrief lineWidthZeroAxis.</CENTER> */
-        inline virtual void set_lineWidthZeroAxis (double __value) {
-            this->lineWidthZeroAxis = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_lineWidthZeroAxis (double __value);
 
         /** \brief sets the property tickLabelDistance to the specified \a __value.
          *  \details Description of the parameter tickLabelDistance is:  <CENTER>\copybrief tickLabelDistance.</CENTER> */
-        inline virtual void set_tickLabelDistance(double __value) {
-            this->tickLabelDistance = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickLabelDistance(double __value);
 
         /** \brief sets the property labelDistance to the specified \a __value.
          *  \details Description of the parameter labelDistance is:  <CENTER>\copybrief labelDistance.</CENTER> */
-        inline virtual void set_labelDistance(double __value) {
-            this->labelDistance = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_labelDistance(double __value);
         /** \brief sets the property labelDigits to the specified \a __value.
          *  \details Description of the parameter labelDistance is:  <CENTER>\copybrief labelDigits.</CENTER> */
-        inline virtual void set_labelDigits(int __value) {
-            this->labelDigits = __value;
-            this->paramsChanged=true;
-            this->autoLabelDigits=false;
-            update_plot();
-        };
+        virtual void set_labelDigits(int __value);
 
         /** \brief sets the property drawGrid to the specified \a __value.
          *  \details Description of the parameter drawGrid is:  <CENTER>\copybrief drawGrid.</CENTER> */
-        inline virtual void set_drawGrid(bool __value) {
-            this->drawGrid = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_drawGrid(bool __value);
 
         /** \brief sets the property drawMinorGrid to the specified \a __value.
          *  \details Description of the parameter drawMinorGrid is:  <CENTER>\copybrief drawMinorGrid.</CENTER> */
-        inline virtual void set_drawMinorGrid(bool __value) {
-            this->drawMinorGrid = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_drawMinorGrid(bool __value);
 
 
         /** \brief sets the property tickLabelAngle to the specified \a __value.
          *  \details Description of the parameter tickLabelAngle is:  <CENTER>\copybrief tickLabelAngle.</CENTER> */
-        inline virtual void set_tickLabelAngle(double __value) {
-            this->tickLabelAngle = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_tickLabelAngle(double __value);
 
     protected:
         /** \brief indicates whether one of the parameters has changed sinse the last recalculation of tickspacing ... */
@@ -818,69 +593,69 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /** \brief when \c true, the digits of the labels are calculated automatically */
         bool autoLabelDigits;
         /** \brief indicates whether the object should use automatic tick spacing for the x axis (calculated by calcPlotScaling() ) */
-        JKQTPPROPERTY(bool, autoAxisSpacing);
+        JKQTPPROPERTY(bool, autoAxisSpacing)
         /** \brief if \c true, the plotter displays minor axis labels as number between 1 and 10 in some cases */
-        JKQTPPROPERTY(bool, minorTickLabelsEnabled);
+        JKQTPPROPERTY(bool, minorTickLabelsEnabled)
         /** \brief indicates whether the y axis has a logarithmic scale */
-        JKQTPPROPERTY(bool, logAxis);
+        JKQTPPROPERTY(bool, logAxis)
         /** \brief the base for a logarithmic x axis */
-        JKQTPPROPERTY(double, logAxisBase);
+        JKQTPPROPERTY(double, logAxisBase)
         /** \brief if autoXAxisSpacing is \c false then this value is used for xTickSpacing. So this is the property which
          *         is editable by use of public access methods.
          */
-        JKQTPPROPERTY(double, userTickSpacing);
+        JKQTPPROPERTY(double, userTickSpacing)
         /** \brief if autoXAxisSpacing is \c false then this value is used for xTickSpacing. So this is the property which
          *         is editable by use of public access methods.
          */
-        JKQTPPROPERTY(double, userLogTickSpacing);
+        JKQTPPROPERTY(double, userLogTickSpacing)
 
         /** \brief indicates how to draw the labels */
-        JKQTPPROPERTY(JKQTPCAlabelType, labelType);
+        JKQTPPROPERTY(JKQTPCAlabelType, labelType)
 
         /** \brief mode of the major ticks */
-        JKQTPPROPERTY(JKQTPLabelTickMode, tickMode);
+        JKQTPPROPERTY(JKQTPLabelTickMode, tickMode)
 
         /** \brief axis label of the axis */
         QString axisLabel;
 
         /** \brief position of the axis label */
-        JKQTPPROPERTY(JKQTPlabelPosition, labelPosition);
+        JKQTPPROPERTY(JKQTPlabelPosition, labelPosition)
         /** \brief font of the axis labels */
-        JKQTPPROPERTY(QString, labelFont);
+        JKQTPPROPERTY(QString, labelFont)
         /** \brief fontsize of the axis labels */
-        JKQTPPROPERTY(double, labelFontSize);
+        JKQTPPROPERTY(double, labelFontSize)
         /** \brief font of the axis tick labels */
-        JKQTPPROPERTY(QString, tickLabelFont);
+        JKQTPPROPERTY(QString, tickLabelFont)
         /** \brief fontsize of the axis tick labels */
-        JKQTPPROPERTY(double, tickLabelFontSize);
+        JKQTPPROPERTY(double, tickLabelFontSize)
         /** \brief fontsize of the minor axis tick labels */
-        JKQTPPROPERTY(double, minorTickLabelFontSize);
+        JKQTPPROPERTY(double, minorTickLabelFontSize)
         /** \brief indicates whether to draw a thick axis line at x=0 (zero axis) */
-        JKQTPPROPERTY(bool, showZeroAxis);
+        JKQTPPROPERTY(bool, showZeroAxis)
         /** \brief indicates whether the minor tick labels should be full numbers, or just a number between 0..10 */
-        JKQTPPROPERTY(bool, minorTickLabelFullNumber);
+        JKQTPPROPERTY(bool, minorTickLabelFullNumber)
 
 
         /** \brief draw mode of the main (left/bottom) axis */
-        JKQTPPROPERTY(JKQTPCAdrawMode, drawMode1);
+        JKQTPPROPERTY(JKQTPCAdrawMode, drawMode1)
         /** \brief draw mode of the secondary (right/top) axis */
-        JKQTPPROPERTY(JKQTPCAdrawMode, drawMode2);
+        JKQTPPROPERTY(JKQTPCAdrawMode, drawMode2)
         /** \brief line width of minor ticks in pixels */
-        JKQTPPROPERTY(double, minorTickWidth);
+        JKQTPPROPERTY(double, minorTickWidth)
         /** \brief line width of ticks in pixels */
-        JKQTPPROPERTY(double, tickWidth);
+        JKQTPPROPERTY(double, tickWidth)
         /** \brief line width of axis in pixels */
-        JKQTPPROPERTY(double, lineWidth);
+        JKQTPPROPERTY(double, lineWidth)
         /** \brief line width of 0-line in pixels */
-        JKQTPPROPERTY(double, lineWidthZeroAxis);
+        JKQTPPROPERTY(double, lineWidthZeroAxis)
 
 
         /** \brief format string for time tick labels */
-        JKQTPPROPERTY(QString, tickTimeFormat);
+        JKQTPPROPERTY(QString, tickTimeFormat)
         /** \brief format string for date tick labels */
-        JKQTPPROPERTY(QString, tickDateFormat);
+        JKQTPPROPERTY(QString, tickDateFormat)
         /** \brief format string for datetime tick labels */
-        JKQTPPROPERTY(QString, tickDateTimeFormat);
+        JKQTPPROPERTY(QString, tickDateTimeFormat)
 
         /** \brief calculates the tick spacing for a linear axis that spans \a awidth and that should
          *         show at least \a minTicks ticks.
@@ -916,42 +691,42 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         int calcLinearUnitDigits();
 
         /** \brief minimum number of axis ticks */
-        JKQTPPROPERTY(unsigned int, minTicks);
+        JKQTPPROPERTY(unsigned int, minTicks)
         /** \brief number of minor grid lines per axis tick interval */
-        JKQTPPROPERTY(unsigned int, minorTicks);
+        JKQTPPROPERTY(unsigned int, minorTicks)
         /** \brief length of an axis tick outside the plot border  in pt */
-        JKQTPPROPERTY(double, tickOutsideLength);
+        JKQTPPROPERTY(double, tickOutsideLength)
         /** \brief length of a minor axis tick outside the plot border in pt */
-        JKQTPPROPERTY(double, minorTickOutsideLength);
+        JKQTPPROPERTY(double, minorTickOutsideLength)
         /** \brief length of an axis tick inside the plot border  in pt */
-        JKQTPPROPERTY(double, tickInsideLength);
+        JKQTPPROPERTY(double, tickInsideLength)
         /** \brief length of a minor axis tick inside the plot border in pt */
-        JKQTPPROPERTY(double, minorTickInsideLength);
+        JKQTPPROPERTY(double, minorTickInsideLength)
         /** \brief color of the axis (labels, ticks, axis itself ...) */
-        JKQTPPROPERTY(QColor, axisColor);
+        JKQTPPROPERTY(QColor, axisColor)
         /** \brief distance between tick end and label start in pt */
-        JKQTPPROPERTY(double, tickLabelDistance);
+        JKQTPPROPERTY(double, tickLabelDistance)
         /** \brief distance between tick label and axis label in pt */
-        JKQTPPROPERTY(double, labelDistance);
+        JKQTPPROPERTY(double, labelDistance)
         /** \brief rotation angle of tick labels [-180..180], i.e. given in degrees, default is 0 (horizontal) */
-        JKQTPPROPERTY(double, tickLabelAngle);
+        JKQTPPROPERTY(double, tickLabelAngle)
 
         /** \brief indicates whether to draw the major grid lines */
-        JKQTPPROPERTY(bool, drawGrid);
+        JKQTPPROPERTY(bool, drawGrid)
         /** \brief indicates whether to draw the minor grid lines */
-        JKQTPPROPERTY(bool, drawMinorGrid);
+        JKQTPPROPERTY(bool, drawMinorGrid)
         /** \brief color of the grid*/
-        JKQTPPROPERTY(QColor, gridColor);
+        JKQTPPROPERTY(QColor, gridColor)
         /** \brief color of the minor grid lines */
-        JKQTPPROPERTY(QColor, minorGridColor);
+        JKQTPPROPERTY(QColor, minorGridColor)
         /** \brief width of the grid lines (in pixel) */
-        JKQTPPROPERTY(double, gridWidth);
+        JKQTPPROPERTY(double, gridWidth)
         /** \brief line stye of the grid lines */
-        JKQTPPROPERTY(Qt::PenStyle, gridStyle);
+        JKQTPPROPERTY(Qt::PenStyle, gridStyle)
         /** \brief width of the minor grid lines (in pixel) */
-        JKQTPPROPERTY(double, minorGridWidth);
+        JKQTPPROPERTY(double, minorGridWidth)
         /** \brief line stye of the minor grid lines */
-        JKQTPPROPERTY(Qt::PenStyle, minorGridStyle);
+        JKQTPPROPERTY(Qt::PenStyle, minorGridStyle)
 
         /** \brief axis prefix for storage of parameters */
         QString axisPrefix;
@@ -1032,35 +807,15 @@ class LIB_EXPORT JKQTPverticalIndependentAxis: public JKQTPverticalAxis {
         /** \brief class constructor */
         JKQTPverticalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQtBasePlotter* parent);
         /** \brief set the axis offset */
-        inline virtual void set_axisOffset(double __value) {
-            this->axisOffset = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_axisOffset(double __value);
         /** \brief set the axis width */
-        inline virtual void set_axisWidth(double __value) {
-            this->axisWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_axisWidth(double __value);
         /** \brief set the other axis offset */
-        inline virtual void set_otherAxisOffset(double __value) {
-            this->otherAxisOffset = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_otherAxisOffset(double __value);
         /** \brief set the other axis width */
-        inline virtual void set_otherAxisWidth(double __value) {
-            this->otherAxisWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_otherAxisWidth(double __value);
         /** \brief set the other axis width */
-        inline virtual void set_otherAxisInverted(bool __value) {
-            this->otherAxisInverted = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_otherAxisInverted(bool __value);
     protected:
         /** \brief width of the plot in the direction of the axis */
         virtual double get_parent_plotwidth() const { return axisWidth; }
@@ -1134,44 +889,24 @@ class LIB_EXPORT JKQTPhorizontalIndependentAxis: public JKQTPhorizontalAxis {
         /** \brief class constructor */
         JKQTPhorizontalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQtBasePlotter* parent);
         /** \brief se the axis offset */
-        inline virtual void set_axisOffset(double __value) {
-            this->axisOffset = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_axisOffset(double __value);
         /** \brief se the axis width */
-        inline virtual void set_axisWidth(double __value) {
-            this->axisWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_axisWidth(double __value);
         /** \brief set the other axis offset */
-        inline virtual void set_otherAxisOffset(double __value) {
-            this->otherAxisOffset = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_otherAxisOffset(double __value);
         /** \brief set the other axis width */
-        inline virtual void set_otherAxisWidth(double __value) {
-            this->otherAxisWidth = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
-        inline virtual void set_otherAxisInverted(bool __value) {
-            this->otherAxisInverted = __value;
-            this->paramsChanged=true;
-            update_plot();
-        };
+        virtual void set_otherAxisWidth(double __value);
+        virtual void set_otherAxisInverted(bool __value);
     protected:
         /** \brief width of the plot in the direction of the axis */
-        virtual double get_parent_plotwidth() const { return axisWidth; }
+        virtual double get_parent_plotwidth() const;
         /** \brief offset of the plot in the direction of the axis */
-        virtual double get_parent_plotoffset() const { return axisOffset; }
+        virtual double get_parent_plotoffset() const;
         /** \brief pixel of other (perpendicular) axis (needed for grids) */
-        virtual double get_parent_otheraxis_width() const { return otherAxisWidth; }
-        virtual bool get_parent_otheraxis_inverted() const { return otherAxisInverted; }
+        virtual double get_parent_otheraxis_width() const;
+        virtual bool get_parent_otheraxis_inverted() const;
         /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
-        virtual double get_parent_otheraxis_offset() const { return otherAxisOffset; }
+        virtual double get_parent_otheraxis_offset() const;
 
         double axisOffset;
         double axisWidth;
