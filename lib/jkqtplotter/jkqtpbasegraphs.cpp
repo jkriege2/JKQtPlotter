@@ -1102,3 +1102,51 @@ bool JKQTPxyGraphErrors::errorUsesColumn(int c)
 {
     return (c==xErrorColumn)||(c==yErrorColumn)||(c==xErrorColumnLower)||(c==yErrorColumnLower);
 }
+
+void JKQTPxyGraphErrors::set_xErrorColumn(int __value) {
+    if (this->xErrorColumn != __value) {
+        this->xErrorColumn = __value;
+        if (xErrorColumn>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars;
+    }
+}
+
+void JKQTPxyGraphErrors::set_xErrorColumnLower(int __value) {
+    if (this->xErrorColumnLower != __value) {
+        this->xErrorColumnLower = __value;
+        if (xErrorColumnLower>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars;
+    } \
+}
+
+void JKQTPxyGraphErrors::set_yErrorColumn(int __value) {
+    if (this->yErrorColumn != __value) {
+        this->yErrorColumn = __value;
+        if (yErrorColumn>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars;
+    }
+}
+
+void JKQTPxyGraphErrors::set_yErrorColumnLower(int __value) {
+    if (this->yErrorColumnLower != __value) {
+        this->yErrorColumnLower = __value;
+        if (yErrorColumnLower>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars;
+    }
+}
+
+void JKQTPxyGraphErrors::set_xErrorColumn(size_t __value)
+{
+    set_xErrorColumn(static_cast<int>(__value));
+}
+
+void JKQTPxyGraphErrors::set_xErrorColumnLower(size_t __value)
+{
+    set_xErrorColumnLower(static_cast<int>(__value));
+}
+
+void JKQTPxyGraphErrors::set_yErrorColumn(size_t __value)
+{
+    set_yErrorColumn(static_cast<int>(__value));
+}
+
+void JKQTPxyGraphErrors::set_yErrorColumnLower(size_t __value)
+{
+    set_yErrorColumnLower(static_cast<int>(__value));
+}

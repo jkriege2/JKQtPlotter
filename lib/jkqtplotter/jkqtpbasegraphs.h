@@ -517,30 +517,14 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
         /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c);
 
-        inline void set_xErrorColumn(int __value) {
-            if (this->xErrorColumn != __value) { \
-                this->xErrorColumn = __value; \
-                if (xErrorColumn>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars; \
-            } \
-        }
-        inline void set_xErrorColumnLower(int __value) {
-            if (this->xErrorColumnLower != __value) { \
-                this->xErrorColumnLower = __value; \
-                if (xErrorColumnLower>=0 && xErrorStyle==JKQTPnoError) xErrorStyle=JKQTPerrorBars; \
-            } \
-        }
-        inline void set_yErrorColumn(int __value) {
-            if (this->yErrorColumn != __value) { \
-                this->yErrorColumn = __value; \
-                if (yErrorColumn>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars; \
-            } \
-        }
-        inline void set_yErrorColumnLower(int __value) {
-            if (this->yErrorColumnLower != __value) { \
-                this->yErrorColumnLower = __value; \
-                if (yErrorColumnLower>=0 && yErrorStyle==JKQTPnoError) yErrorStyle=JKQTPerrorBars; \
-            } \
-        }
+        void set_xErrorColumn(int __value);
+        void set_xErrorColumnLower(int __value);
+        void set_yErrorColumn(int __value);
+        void set_yErrorColumnLower(int __value);
+        void set_xErrorColumn(size_t __value);
+        void set_xErrorColumnLower(size_t __value);
+        void set_yErrorColumn(size_t __value);
+        void set_yErrorColumnLower(size_t __value);
 
     protected:
         /** \brief the column that contains the error of the x-component of the datapoints */

@@ -1,5 +1,5 @@
 *.user
-/test/build-*
+build-*
 
 
 # C++ objects and libs
@@ -84,3 +84,6 @@ Sicherungskopie_*.cdr
 Thumbs.db
 *.prf
 *.exe
+/doc/html
+.qmake.stash
+moc_predefs.h
