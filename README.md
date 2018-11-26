@@ -16,7 +16,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 Choose an example from the list below:
 
 
-[![jkqtplotter_simpletest_imageplot_opencv_small](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1_small.png)<br/>Very Basic Example (Line Graph)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtmathtext_simpletest)
+[![jkqtplotter_simpletest_imageplot_opencv_small](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1_small.png)<br/>Very Basic Example (Line Graph)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest)
 
 [![jkqtplotter_simpletest_imageplot_opencv_small](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_symbols_and_errors_small.png)<br/>Simple Line/Symbol Graph With Errorbars](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_symbols_and_errors)
 
