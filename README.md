@@ -475,6 +475,8 @@ The result looks like this:
 ![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot.png)
 
 
+[![jkqtplotter_simpletest_imageplot_opencv_small](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/test/jkqtplotter_simpletest_imageplot_opencv)
+
 
 
 

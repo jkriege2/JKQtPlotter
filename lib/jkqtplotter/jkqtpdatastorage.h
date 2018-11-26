@@ -49,7 +49,9 @@
 #include <QStringList>
 #include <QAbstractTableModel>
 #include <QObject>
-
+#ifdef JKQTPLOTTER_OPENCV_INTERFACE
+#  include <opencv/cv.h>
+#endif
 #ifndef JKQTPDATASTORAGE_H
 #define JKQTPDATASTORAGE_H
 
@@ -164,7 +166,12 @@ class LIB_EXPORT JKQTPdatastore{
         void clear();
 
         /** \brief returns the JKQTPdatastoreItem object for the \a i -th item in the store */
-        inline JKQTPdatastoreItem* getItem(size_t i) const {
+        inline JKQTPdatastoreItem* getItem(size_t i)  {
+            return items.value(i, nullptr);
+        }
+
+        /** \brief returns the JKQTPdatastoreItem object for the \a i -th item in the store */
+        inline const JKQTPdatastoreItem* getItem(size_t i) const {
             return items.value(i, nullptr);
         }
 
@@ -259,6 +266,17 @@ class LIB_EXPORT JKQTPdatastore{
             size_t itemid=addInternalItem(d, N);
             return addColumnForItem(itemid, 0, name);
         }
+#ifdef JKQTPLOTTER_OPENCV_INTERFACE
+        /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
+         *
+         *   \tparam TContainer datatype of the container, which need to support standard C++ iterators and the function \c size(). The contents needs to be convertible to double.
+         *   \param mat OpenCV-marix to store here
+         *   \param name name for the column
+         *   \param channel to copy from \a mat
+         *   \return the ID of the newly created column
+         */
+        size_t copyCvMatToColumn(const cv::Mat& mat, const QString& name=QString(""), int channel=0);
+#endif
 
         /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
          *
@@ -362,7 +380,7 @@ class LIB_EXPORT JKQTPdatastore{
         /** \brief add one external column to the datastore. It contains \a width * \a height rows. The external data is assumed to be organized as a row-major image and is copied as such. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.*/
         template <typename TContainer>
-        inline size_t addCopiedImageAsColumn(const TContainer& data, size_t /*width*/, const QString& name=QString("")){
+        inline size_t addCopiedImageAsColumn(const TContainer& data, const QString& name=QString("")){
             return addCopiedColumn<TContainer>(data, name);
         }
 
@@ -617,7 +635,16 @@ class LIB_EXPORT JKQTPcolumn {
      * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
      * column.
      */
-    void setValue(size_t n, double val) ;
+    void setValue(size_t n, double val);
+
+    /** \brief sets the element at (x,y) in the column, where the data is interpreted as a row-major ordered Matrix of the given width
+     *
+     * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
+     * column.
+     */
+    inline void setPixelValue(size_t x, size_t y, size_t width, double val) {
+        setValue(y*width+x, val);
+    }
 
     /** \brief returns a pointer to the datastore item representing this column */
     inline JKQTPdatastoreItem* getDatastoreItem() const { return datastore->getItem(datastoreItem); }
