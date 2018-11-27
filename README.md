@@ -1,5 +1,5 @@
 # JKQtPlotter
-This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.4).
+This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.11).
 
 This software is licensed under the term of the GNU Lesser General Public License 2.1 
 (LGPL 2.1) or above. 
@@ -17,17 +17,18 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest) | [Very Basic Example (Line Graph)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest) | C-style arrays of data |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_symbols_and_errors_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_symbols_and_errors) | [Simple Line/Symbol Graph With Errorbars](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_symbols_and_errors) | C-style arrays of data |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_barchart_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_barchart) | [Simple Bar Charts](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_barchart) | C-style arrays of data |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/JKQTPbarVerticalGraphStacked_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_stackedbars) | [Stacked Bar Charts](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_stackedbars) | C++-style vectors of data |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest) | [Very Basic Example (Line Graph)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest) | `JKQTPxyLineGraph`<br/>C-style arrays of data |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_symbols_and_errors_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_symbols_and_errors) | [Simple Line/Symbol Graph With Errorbars](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_symbols_and_errors) | `JKQTPxyLineErrorGraph`<br/>C-style arrays of data |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_barchart_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_barchart) | [Simple Bar Charts](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_barchart) | `JKQTPbarVerticalGraph`<br/>C-style arrays of data |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/JKQTPbarVerticalGraphStacked_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_stackedbars) | [Stacked Bar Charts](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_stackedbars) | `JKQTPbarVerticalStackableGraph`, `JKQTPbarHorizontalStackableGraph`<br/>C++-style vectors of data |
 
 ### Image data Plots
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot) | [1-channel Raw C Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot) | image data copied from C-style row-major array into a single column of the internal datastore |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot_opencv) | [1-channel OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot_opencv) | image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot) | [1-channel Raw C Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot) | `JKQTPColumnMathImage`<br/>image data copied from C-style row-major array into a single column of the internal datastore |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot_opencv) | [1-channel OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_imageplot_opencv) | `JKQTPColumnMathImage`<br/>image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_rgbimageplot_opencv) | [RGB OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_rgbimageplot_opencv) | `JKQTPColumnRGBMathImage`<br/>image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore |
 
 ### Tools and Special Features
 

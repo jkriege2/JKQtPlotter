@@ -508,13 +508,22 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         JKQTPGET_SET_MACRO(int, colorBarOffset)
         JKQTPGET_SET_MACRO(double, colorBarRelativeHeight)
         JKQTPGET_SET_MACRO(double, imageMin)
+        inline void set_imageMinR(double m) {
+            set_imageMin(m);
+        }
         JKQTPGET_SET_MACRO(double, imageMax)
+        inline void set_imageMaxR(double m) {
+            set_imageMax(m);
+        }
         JKQTPGET_SET_MACRO(double, imageMinG)
         JKQTPGET_SET_MACRO(double, imageMaxG)
         JKQTPGET_SET_MACRO(double, imageMinB)
         JKQTPGET_SET_MACRO(double, imageMaxB)
         JKQTPGET_SET_MACRO(bool, autoImageRange)
         JKQTPGET_SET_MACRO(QString, imageName)
+        inline void set_imageNameR(const QString& m) {
+            set_imageName(m);
+        }
         JKQTPGET_SET_MACRO(QString, imageNameG)
         JKQTPGET_SET_MACRO(QString, imageNameB)
         JKQTPGET_SET_MACRO(QString, imageNameFontName)

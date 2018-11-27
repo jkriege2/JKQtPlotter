@@ -3,9 +3,12 @@
 # JKQtPlotter
 
 ## Simple math image plot, showin a 1-channel OpenCV cv::Mat
-This project (see `./test/jkqtplotter_simpletest_imageplot_opencv/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
+This project (see `./test/jkqtplotter_simpletest_imageplot_opencv/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
+To copy the data a special OpenCV Interface function `JKQTPdatastore::copyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
-The soruce code of the main application is (see `./test/jkqtplotter_simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp`):
+The function `JKQTPdatastore::copyCvMatToColumn()` is only available, when the preprocessore macro `JKQTPLOTTER_OPENCV_INTERFACE` is defined when compiling the JKQtPlotter library.
+
+The source code of the main application is (see `./test/jkqtplotter_simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp`):
 ```c++
 #include <QApplication>
 #include <cmath>

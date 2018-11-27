@@ -274,6 +274,8 @@ class LIB_EXPORT JKQTPdatastore{
          *   \param name name for the column
          *   \param channel to copy from \a mat
          *   \return the ID of the newly created column
+         *
+         *   \note You need to define the Macro JKQTPLOTTER_OPENCV_INTERFACE when compiling this lib to enabled this function.
          */
         size_t copyCvMatToColumn(const cv::Mat& mat, const QString& name=QString(""), int channel=0);
 #endif
