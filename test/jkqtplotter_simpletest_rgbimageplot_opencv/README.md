@@ -100,4 +100,6 @@ The result looks like this:
 
 ![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv.png)
 
+The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQtPlotter has its 0 at the bottom-left (right-handed coordinate system).
+
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
