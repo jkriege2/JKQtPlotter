@@ -118,7 +118,7 @@ The result looks like this:
 ![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot.png)
 
 There are several ways to modify the plot:
-  # You can set the color scale manually (here 0..2), by using
+  1. You can set the color scale manually (here 0..2), by using
     ```
     graph->set_autoImageRange(false);
     graph->set_imageMin(0);
@@ -131,7 +131,7 @@ There are several ways to modify the plot:
 	from above. The result will look like this:<br>
 	![jkqtplotter_simpletest_imageplot__scale02](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__scale02.png)<br>
 	Note how the color scale is not used completely, because data really only scales between 0 and 1.
-  # If you set the color-range to 0.1 .. 0.8 with
+  2. If you set the color-range to 0.1 .. 0.8 with
     ```
     graph->set_autoImageRange(false);
     graph->set_imageMin(0.1);
