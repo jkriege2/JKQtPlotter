@@ -84,10 +84,7 @@ int main(int argc, char* argv[])
     graph->get_colorBarRightAxis()->set_axisLabel("light intensity [A.U.]");
     // determine min/max of data automatically and use it to set the range of the color-scale
     graph->set_autoImageRange(true);
-    // you can set the color-scale range manually by using:
-    //   graph->set_autoImageRange(false);
-    //   graph->set_imageMin(0);
-    //   graph->set_imageMax(10);
+
 	
 	
     // 5. add the graphs to the plot, so it is actually displayed
@@ -119,5 +116,37 @@ int main(int argc, char* argv[])
 The result looks like this:
 
 ![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot.png)
+
+There are several ways to modify the plot:
+  # You can set the color scale manually (here 0..2), by using
+    ```
+    graph->set_autoImageRange(false);
+    graph->set_imageMin(0);
+    graph->set_imageMax(2);
+	```
+	instead of 
+    ```
+    graph->set_autoImageRange(true);
+	```
+	from above. The result will look like this:<br>
+	![jkqtplotter_simpletest_imageplot__scale02](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__scale02.png)<br>
+	Note how the color scale is not used completely, because data really only scales between 0 and 1.
+  # If you set the color-range to 0.1 .. 0.8 with
+    ```
+    graph->set_autoImageRange(false);
+    graph->set_imageMin(0.1);
+    graph->set_imageMax(0.8);
+	```
+	Then there will be datapoints above or below the range of the colorscale. The default behaviour of the graph is to use the first color of the palette for every pixel with a value below the minimum (here 0.1) and the last color in the palette for every pixel with a value above the maximum.<br>
+	![jkqtplotter_simpletest_imageplot__smallscalelimitcolor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__smallscalelimitcolor.png)<br>
+	You can change this behaviour by `set_rangeMinFailAction(),set_rangeMaxFailAction()` with one of these parameters:
+	  - `JKQTPMathImageLastPaletteColor`: the default behaviour explained above
+	  - `JKQTPMathImageGivenColor`: use a color set by `set_rangeMinFailColor(),set_rangeMaxFailColor()` (here e.g. black for min and grey for max)<br>
+	    ![jkqtplotter_simpletest_imageplot__smallscalecolor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__smallscalecolor.png)
+	  - `JKQTPMathImageTransparent`: draw pixels transparent<br>
+	    ![jkqtplotter_simpletest_imageplot__smallscaletransparent](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__smallscaletransparent.png)
+    .
+.
+
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)

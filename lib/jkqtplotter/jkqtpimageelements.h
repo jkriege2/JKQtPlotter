@@ -302,18 +302,18 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         static QIcon getPaletteIcon(int i) ;
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteIcon(JKQTPMathImageColorPalette palette) ;
-        /*! \brief get QIcon representing the given palette */
+        /*! \brief get QImage representing the given palette */
         static QImage getPaletteImage(int i, int width, int height=1) ;
-        /*! \brief get QIcon representing the given palette */
+        /*! \brief get QImage representing the given palette */
         static QImage getPaletteImage(JKQTPMathImageColorPalette palette, int width, int height=1) ;
 
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteKeyIcon(int i) ;
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteKeyIcon(JKQTPMathImageColorPalette palette) ;
-        /*! \brief get QIcon representing the given palette */
+        /*! \brief get QImage representing the given palette */
         static QImage getPaletteKeyImage(int i, int width, int height) ;
-        /*! \brief get QIcon representing the given palette */
+        /*! \brief get QImage representing the given palette */
         static QImage getPaletteKeyImage(JKQTPMathImageColorPalette palette, int width, int height) ;
 
 

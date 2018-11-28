@@ -3,7 +3,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
-#include "jkqtpbarchartelements.h"
+#include "jkqtplotter/jkqtpbarchartelements.h"
 
 
 

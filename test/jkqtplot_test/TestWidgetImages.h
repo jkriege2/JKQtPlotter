@@ -10,14 +10,14 @@
 #include <QTabWidget>
 #include <QFormLayout>
 #include <QCheckBox>
-#include "../../jkqtplotter.h"
-#include "../../jkqtpgeoelements.h"
-#include "../../jkqtpimageelements.h"
-#include "../../jkqtpoverlayelements.h"
-#include "../../jkqtpparsedfunctionelements.h"
-#include "../../jkqtpbaseelements.h"
-#include "../../jkqtpplotsmodel.h"
-#include "../../jkqtptools.h"
+#include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgeoelements.h"
+#include "jkqtplotter/jkqtpimageelements.h"
+#include "jkqtplotter/jkqtpoverlayelements.h"
+#include "jkqtplotter/jkqtpparsedfunctionelements.h"
+#include "jkqtplotter/jkqtpbaseelements.h"
+#include "jkqtplotter/jkqtpplotsmodel.h"
+#include "jkqtplottertools/jkqtptools.h"
 
 #define N1 200
 #define N2 50

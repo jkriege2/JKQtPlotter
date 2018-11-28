@@ -3,7 +3,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
-#include "jkqtpboxplotelements.h"
+#include "jkqtplotter/jkqtpboxplotelements.h"
 
 
 
