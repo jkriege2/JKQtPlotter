@@ -447,26 +447,26 @@ class JKQTPEnhancedPainter; // forward
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
  */
-#define QColor2String(color) QString(jkqtp_rgbtostring(static_cast<unsigned char>((color).red()), static_cast<unsigned char>((color).green()), static_cast<unsigned char>((color).blue()), static_cast<unsigned char>((color).alpha())).c_str())
+#define JKQTP_QColor2String(color) QString(jkqtp_rgbtostring(static_cast<unsigned char>((color).red()), static_cast<unsigned char>((color).green()), static_cast<unsigned char>((color).blue()), static_cast<unsigned char>((color).alpha())).c_str())
 
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString QPenStyle2String(Qt::PenStyle style);
+LIB_EXPORT QString JKQTP_QPenStyle2String(Qt::PenStyle style);
 
 /** \brief converts a QString into a Qt::PenStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::PenStyle String2QPenStyle(QString style);
+LIB_EXPORT Qt::PenStyle JKQTP_String2QPenStyle(QString style);
 /** \brief converts a QT::BrushStyle into a string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString QBrushStyle2String(Qt::BrushStyle style);
+LIB_EXPORT QString JKQTP_QBrushStyle2String(Qt::BrushStyle style);
 
 /** \brief converts a QString into a Qt::BrushStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::BrushStyle String2QBrushStyle(QString style);
+LIB_EXPORT Qt::BrushStyle JKQTP_String2QBrushStyle(QString style);
 
 
 class JKQtBasePlotter; // forward declaration
@@ -824,8 +824,10 @@ enum JKQTPgraphSymbols {
     JKQTPasterisc=18,          /*!< \brief an asterisc star '*' */
 
     JKQTPtarget=19,              /*!< \brief a target symbol (circle with cross) */
+    JKQTPrectCross=20,              /*!< \brief a square symbol with a cross inside */
+    JKQTPrectPlus=21,              /*!< \brief a square symbol with a plus inside */
 
-    JKQTPmaxSymbolID=JKQTPtarget
+    JKQTPmaxSymbolID=JKQTPrectPlus
 };
 
 /** \brief converts a JKQTPgraphSymbols variable into a identifier string
@@ -920,7 +922,7 @@ class LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-LIB_EXPORT void plotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+LIB_EXPORT void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools
@@ -934,7 +936,7 @@ LIB_EXPORT void plotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JK
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-LIB_EXPORT void plotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+LIB_EXPORT void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
 /*! \brief plot an arrow between positions (x1,y1) and (x2,y2)
@@ -951,7 +953,7 @@ LIB_EXPORT void plotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPg
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-//LIB_EXPORT void plotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+//LIB_EXPORT void JKQTPplotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
 /*! \brief draw an ellipse without setting pen or brush, or saving the painter!
@@ -971,7 +973,7 @@ LIB_EXPORT void plotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPg
 
     \note all angles are given in degrees [0..360]
 */
-LIB_EXPORT QVector<QPointF> draw_ellipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
+LIB_EXPORT QVector<QPointF> JKQTPdrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
 
 
 #include <QDoubleSpinBox>

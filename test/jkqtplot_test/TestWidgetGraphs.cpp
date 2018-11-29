@@ -230,10 +230,10 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     layout->addWidget(chkInvertY);
     layout->addWidget(chkInvertX);
     layout->addWidget(chkInvertY);
-    JKQTPSymbolComboBox* cmbPlotSymbol=new JKQTPSymbolComboBox(this);
-    cmbPlotSymbol->setSymbol(JKQTPplus);
-    connect(cmbPlotSymbol, SIGNAL(currentIndexChanged(int)), this, SLOT(setESSymbol(int)));
-    layout->addWidget(cmbPlotSymbol);
+    JKQTPSymbolComboBox* cmbJKQTPplotSymbol=new JKQTPSymbolComboBox(this);
+    cmbJKQTPplotSymbol->setSymbol(JKQTPplus);
+    connect(cmbJKQTPplotSymbol, SIGNAL(currentIndexChanged(int)), this, SLOT(setESSymbol(int)));
+    layout->addWidget(cmbJKQTPplotSymbol);
     JKQTPerrorPlotstyleComboBox* cmbErrors=new JKQTPerrorPlotstyleComboBox(this);
     cmbErrors->setCurrentErrorStyle(JKQTPerrorBars);
     connect(cmbErrors, SIGNAL(currentIndexChanged(int)), this, SLOT(setErrorStyle(int)));

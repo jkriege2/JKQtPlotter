@@ -275,12 +275,12 @@ void JKQTPcoordinateAxis::loadSettings(QSettings& settings, QString group) {
 
     labelPosition=String2JKQTPlabelPosition(settings.value(group+axisPrefix+"label_position", JKQTPlabelPosition2String(labelPosition)).toString());
     labelType=String2JKQTPCAlabelType(settings.value(group+axisPrefix+"label_type", JKQTPCAlabelType2String(labelType)).toString());
-    axisColor=QColor(settings.value(group+axisPrefix+"color", QColor2String(axisColor)).toString());
+    axisColor=QColor(settings.value(group+axisPrefix+"color", JKQTP_QColor2String(axisColor)).toString());
 
-    gridColor=QColor(settings.value(group+axisPrefix+"grid_color", QColor2String(gridColor)).toString());
-    minorGridColor=QColor(settings.value(group+axisPrefix+"minor_grid_color", QColor2String(minorGridColor)).toString());
-    gridStyle=String2QPenStyle(settings.value(group+axisPrefix+"grid_style", QPenStyle2String(gridStyle)).toString());
-    minorGridStyle=String2QPenStyle(settings.value(group+axisPrefix+"minor_grid_style", QPenStyle2String(minorGridStyle)).toString());
+    gridColor=QColor(settings.value(group+axisPrefix+"grid_color", JKQTP_QColor2String(gridColor)).toString());
+    minorGridColor=QColor(settings.value(group+axisPrefix+"minor_grid_color", JKQTP_QColor2String(minorGridColor)).toString());
+    gridStyle=JKQTP_String2QPenStyle(settings.value(group+axisPrefix+"grid_style", JKQTP_QPenStyle2String(gridStyle)).toString());
+    minorGridStyle=JKQTP_String2QPenStyle(settings.value(group+axisPrefix+"minor_grid_style", JKQTP_QPenStyle2String(minorGridStyle)).toString());
 
     drawMode1=String2JKQTPCAdrawMode(settings.value(group+axisPrefix+"draw_mode1", JKQTPCAdrawMode2String(drawMode1)).toString());
     drawMode2=String2JKQTPCAdrawMode(settings.value(group+axisPrefix+"draw_mode2", JKQTPCAdrawMode2String(drawMode2)).toString());
@@ -334,14 +334,14 @@ void JKQTPcoordinateAxis::saveSettings(QSettings& settings, QString group) {
 
     if (labelPosition!=def_labelPosition) settings.setValue(group+axisPrefix+"label_position", JKQTPlabelPosition2String(labelPosition));
     if (labelType!=def_labelType) settings.setValue(group+axisPrefix+"label_type", JKQTPCAlabelType2String(labelType));
-    if (axisColor!=def_axisColor) settings.setValue(group+axisPrefix+"color", QColor2String(axisColor));
+    if (axisColor!=def_axisColor) settings.setValue(group+axisPrefix+"color", JKQTP_QColor2String(axisColor));
     if (drawMode1!=def_drawMode1) settings.setValue(group+axisPrefix+"draw_mode1", JKQTPCAdrawMode2String(drawMode1));
     if (drawMode2!=def_drawMode2) settings.setValue(group+axisPrefix+"draw_mode2", JKQTPCAdrawMode2String(drawMode2));
     if (tickMode!=def_tickMode) settings.setValue(group+axisPrefix+"tick_mode", JKQTPLabelTickMode2String(tickMode));
-    if (gridColor!=def_gridColor) settings.setValue(group+axisPrefix+"grid_color", QColor2String(gridColor));
-    if (minorGridColor!=def_minorGridColor) settings.setValue(group+axisPrefix+"minor_grid_style", QPenStyle2String(minorGridStyle));
-    if (gridStyle!=def_gridStyle) settings.setValue(group+axisPrefix+"grid_color", QColor2String(gridColor));
-    if (minorGridStyle!=def_minorGridStyle) settings.setValue(group+axisPrefix+"minor_grid_style", QPenStyle2String(minorGridStyle));
+    if (gridColor!=def_gridColor) settings.setValue(group+axisPrefix+"grid_color", JKQTP_QColor2String(gridColor));
+    if (minorGridColor!=def_minorGridColor) settings.setValue(group+axisPrefix+"minor_grid_style", JKQTP_QPenStyle2String(minorGridStyle));
+    if (gridStyle!=def_gridStyle) settings.setValue(group+axisPrefix+"grid_color", JKQTP_QColor2String(gridColor));
+    if (minorGridStyle!=def_minorGridStyle) settings.setValue(group+axisPrefix+"minor_grid_style", JKQTP_QPenStyle2String(minorGridStyle));
 }
 
 double JKQTPcoordinateAxis::calcLinearTickSpacing() {

@@ -230,7 +230,7 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (percentile25Column>=0 && percentile75Column>=0) painter.drawRect(QRectF(xmi, p75, fabs(xma-xmi), fabs(p75-p25)));
             if (medianColumn>=0) lines_p.append(QLineF(xmi+p.widthF()/2.0, median, xma-p.widthF()/2.0, median));
             if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                plotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPplotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
             }
 
 
@@ -688,7 +688,7 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (medianColumn>=0) lines_p.append(QLineF(median, ymi-p.widthF()/2.0, median, yma+p.widthF()/2.0));
 
             if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                plotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPplotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
             }
 
             //first=true;
@@ -856,7 +856,7 @@ void JKQTPboxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 
         if (drawMean) {
             double mean=yAxis->x2p(this->mean);
-            plotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+            JKQTPplotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
         }
 
 
@@ -1134,7 +1134,7 @@ void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
         if (drawMean) {
             double mean=yAxis->x2p(this->mean);
-            plotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+            JKQTPplotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
         }
 
     }

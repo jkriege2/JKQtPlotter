@@ -1371,7 +1371,7 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQtPlotter *parent):
 }
 void JKQTPOverlayImageEnhanced::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     if (drawAsRectangles) JKQTPOverlayImage::drawKeyMarker(painter, rect);
-    else plotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), trueColor, trueColor.lighter());
+    else JKQTPplotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), trueColor, trueColor.lighter());
 }
 
 void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
@@ -1406,7 +1406,7 @@ void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
                 } else {
                     QPointF p=(p1+p2)/2.0;
                     if (data[ix+iy*Nx]) {
-                        plotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), trueColor, trueColor.lighter());
+                        JKQTPplotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), trueColor, trueColor.lighter());
                     }
                 }
             }

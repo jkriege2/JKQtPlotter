@@ -266,12 +266,12 @@ std::string jkqtp_tolower(const std::string& s){
  }
 
 
-void plotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
+void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
     JKQTPEnhancedPainter p(&paintDevice);
-    plotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor);
+    JKQTPplotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor);
 }
 
-void plotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double symbolSize, double symbolLineWidth, QColor color, QColor fillColor) {
+void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double symbolSize, double symbolLineWidth, QColor color, QColor fillColor) {
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
@@ -349,6 +349,28 @@ void plotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSym
             break;
         case JKQTPrect:{
                 painter.setBrush(QColor(Qt::transparent));
+                QRectF rectangle(x-w2, y-w2, w, w);
+                painter.drawRect(rectangle);
+            }
+            break;
+        case JKQTPrectCross:{
+                painter.setBrush(QColor(Qt::transparent));
+                QPainterPath path;
+                path.moveTo(x-w2,y-w2);
+                path.lineTo(x+w2,y+w2);
+                path.moveTo(x-w2,y+w2);
+                path.lineTo(x+w2,y-w2);
+                painter.drawPath(path);
+                QRectF rectangle(x-w2, y-w2, w, w);
+                painter.drawRect(rectangle);
+            }
+            break;
+        case JKQTPrectPlus:{
+                painter.setBrush(QColor(Qt::transparent));
+                QVector<QLineF> lines;
+                lines<<QLineF(x,y-w2,x,y+w2);
+                lines<<QLineF(x-w2,y,x+w2,y);
+                painter.drawLines(lines);
                 QRectF rectangle(x-w2, y-w2, w, w);
                 painter.drawRect(rectangle);
             }
@@ -445,7 +467,7 @@ void plotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSym
 
 
 
-QVector<QPointF> draw_ellipse(double x, double y, double a, double b, double angle_start, double angle_end, double alpha, int controlPoints, QPointF* x_start, QPointF* x_end) {
+QVector<QPointF> JKQTPdrawEllipse(double x, double y, double a, double b, double angle_start, double angle_end, double alpha, int controlPoints, QPointF* x_start, QPointF* x_end) {
     QVector<QPointF> result;
     double start=angle_start*M_PI/180.0;
     double stop=angle_end*M_PI/180.0;
@@ -472,7 +494,7 @@ QVector<QPointF> draw_ellipse(double x, double y, double a, double b, double ang
 
 
 
-QString QPenStyle2String(Qt::PenStyle style) {
+QString JKQTP_QPenStyle2String(Qt::PenStyle style) {
     switch(style) {
         case Qt::DashLine:       return "dash";
         case Qt::DotLine:        return "dot";
@@ -483,7 +505,7 @@ QString QPenStyle2String(Qt::PenStyle style) {
     }
 }
 
-Qt::PenStyle String2QPenStyle(QString style) {
+Qt::PenStyle JKQTP_String2QPenStyle(QString style) {
     QString s=style.toLower().trimmed();
     if (s=="dash" || s=="--") return Qt::DashLine;
     if (s=="dot" || s=="." || s=="..") return Qt::DotLine;
@@ -493,7 +515,7 @@ Qt::PenStyle String2QPenStyle(QString style) {
     return Qt::SolidLine;
 }
 
-QString QBrushStyle2String(Qt::BrushStyle style) {
+QString JKQTP_QBrushStyle2String(Qt::BrushStyle style) {
 
     switch(style) {
         case Qt::NoBrush:       return "none";
@@ -518,7 +540,7 @@ QString QBrushStyle2String(Qt::BrushStyle style) {
     }
 }
 
-Qt::BrushStyle String2QBrushStyle(QString style) {
+Qt::BrushStyle JKQTP_String2QBrushStyle(QString style) {
     QString s=style.toLower().trimmed();
     if (s=="none") return Qt::NoBrush;
     if (s=="d1") return Qt::Dense1Pattern;
@@ -740,6 +762,8 @@ QString JKQTPgraphSymbols2String(JKQTPgraphSymbols pos) {
         case JKQTPpentagon: return "symbol_pentagon";
         case JKQTPasterisc: return "symbol_asterisc";
         case JKQTPfilledPentagon: return "symbol_filled_pentagon";
+        case JKQTPrectCross: return "symbol_rect_cross";
+        case JKQTPrectPlus: return "symbol_rect_plus";
         case JKQTPnoSymbol: return "none";
     }
     return "";
@@ -766,6 +790,8 @@ QString JKQTPgraphSymbols2NameString(JKQTPgraphSymbols pos) {
         case JKQTPfilledPentagon: return QObject::tr("filled pentagon");
         case JKQTPtarget: return QObject::tr("target");
         case JKQTPasterisc: return QObject::tr("asterisc");
+        case JKQTPrectCross: return QObject::tr("square with cross");
+        case JKQTPrectPlus: return QObject::tr("square with plus");
         case JKQTPnoSymbol: return QObject::tr("none");
     }
     return "";
@@ -791,6 +817,8 @@ JKQTPgraphSymbols String2JKQTPgraphSymbols(QString pos)  {
     if (s=="symbol_pentagon"||s=="pentagon"||s=="p") return JKQTPpentagon;
     if (s=="symbol_filled_pentagon"||s=="filled_pentagon"||s=="fp") return JKQTPfilledPentagon;
     if (s=="symbol_asterisc"||s=="asterisc"||s=="*") return JKQTPasterisc;
+    if (s=="symbol_rect_cross"||s=="rect_cross"||s=="rx") return JKQTPrectCross;
+    if (s=="symbol_rect_plus"||s=="rect_plus"||s=="r+") return JKQTPrectPlus;
     return JKQTPnoSymbol;
 }
 
@@ -799,26 +827,9 @@ JKQTPSymbolComboBox::JKQTPSymbolComboBox(QWidget *parent):
 {
     clear();
     setEditable(false);
-    addSymbol(JKQTPnoSymbol, tr("none"));
-    addSymbol(JKQTPdot, tr("dot"));
-    addSymbol(JKQTPcross, tr("cross"));
-    addSymbol(JKQTPplus, tr("plus"));
-    addSymbol(JKQTPasterisc, tr("asterisc"));
-    addSymbol(JKQTPcircle, tr("circle"));
-    addSymbol(JKQTPfilledCircle, tr("filled circle"));
-    addSymbol(JKQTPrect, tr("rect"));
-    addSymbol(JKQTPfilledRect, tr("filled rect"));
-    addSymbol(JKQTPtriangle, tr("triangle"));
-    addSymbol(JKQTPfilledTriangle, tr("filled triangle"));
-    addSymbol(JKQTPdownTriangle, tr("down triangle"));
-    addSymbol(JKQTPfilledDownTriangle, tr("filled down triangle"));
-    addSymbol(JKQTPdiamond, tr("diamond"));
-    addSymbol(JKQTPfilledDiamond, tr("filled diamond"));
-    addSymbol(JKQTPstar, tr("star"));
-    addSymbol(JKQTPfilledStar, tr("filled star"));
-    addSymbol(JKQTPpentagon, tr("pentagon"));
-    addSymbol(JKQTPfilledPentagon, tr("filled pentagon"));
-    addSymbol(JKQTPtarget, tr("target"));
+    for (int i=0; i<=JKQTPmaxSymbolID; i++) {
+        addSymbol(static_cast<JKQTPgraphSymbols>(i), JKQTPgraphSymbols2NameString(static_cast<JKQTPgraphSymbols>(i)));
+    }
     setCurrentIndex(0);
 }
 
@@ -846,7 +857,7 @@ void JKQTPSymbolComboBox::addSymbol(JKQTPgraphSymbols symbol, const QString &nam
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    plotSymbol(p, 6,6,symbol,10,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPplotSymbol(p, 6,6,symbol,10,1,QColor("blue"), QColor("blue").lighter());
     p.end();
     addItem(QIcon(pix), name, JKQTPgraphSymbols2String(symbol));
 }
@@ -920,7 +931,7 @@ void JKQTPLinePlotStyleComboBox::addSymbol(JKQTPgraphSymbols symbol, bool line, 
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    plotSymbol(p, 6,6,symbol,7,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPplotSymbol(p, 6,6,symbol,7,1,QColor("blue"), QColor("blue").lighter());
     p.setPen(QColor("blue"));
     if (line) p.drawLine(0,6,12,6);
     p.end();
@@ -1852,7 +1863,7 @@ void JKQTPLinePlotStyleWithSymbolSizeComboBox::addSymbol(JKQTPgraphSymbols symbo
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    plotSymbol(p, double(pixSize)/2.0,double(pixSize)/2.0,symbol,symbolSize,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPplotSymbol(p, double(pixSize)/2.0,double(pixSize)/2.0,symbol,symbolSize,1,QColor("blue"), QColor("blue").lighter());
     p.setPen(QColor("blue"));
     if (line) p.drawLine(QLineF(0,double(pixSize)/2.0,pixSize,double(pixSize)/2.0));
     p.end();

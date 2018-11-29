@@ -394,8 +394,8 @@ void JKQtBasePlotter::initSettings() {
     for (int i=0; i<manyGraphsColorCount; i++) {
         manyGraphsColor[i]=def_manyGraphsColor[i];
         //std::cout<<manyGraphsColor[i].red()<<", "<<manyGraphsColor[i].green()<<", "<<manyGraphsColor[i].blue()<<"    ";
-        //std::cout<<"init: manyGraphsColor["<<i<<"] = "<<QColor2String(manyGraphsColor[i]).toStdString()<<" = "<<manyGraphsColor[i].name().toStdString()<<std::endl;
-        //std::cout<<"init: def_manyGraphsColor["<<i<<"] = "<<QColor2String(def_manyGraphsColor[i]).toStdString()<<" = "<<def_manyGraphsColor[i].name().toStdString()<<std::endl;
+        //std::cout<<"init: manyGraphsColor["<<i<<"] = "<<JKQTP_QColor2String(manyGraphsColor[i]).toStdString()<<" = "<<manyGraphsColor[i].name().toStdString()<<std::endl;
+        //std::cout<<"init: def_manyGraphsColor["<<i<<"] = "<<JKQTP_QColor2String(def_manyGraphsColor[i]).toStdString()<<" = "<<def_manyGraphsColor[i].name().toStdString()<<std::endl;
     }
     def_manyGraphsStyle[0]=Qt::SolidLine;
     def_manyGraphsStyle[1]=Qt::DashLine;
@@ -484,10 +484,10 @@ void JKQtBasePlotter::saveSettings(QSettings& settings, QString group){
     if (keyYMargin!=def_keyYMargin) settings.setValue(g+"key_ymargin", keyYMargin);
     if (keyXSeparation!=def_keyXSeparation) settings.setValue(g+"key_xseparation", keyXSeparation);
     if (keyYSeparation!=def_keyYSeparation) settings.setValue(g+"key_yseparation", keyYSeparation);
-    if (keyFrameColor!=def_keyFrameColor) settings.setValue(g+"key_frame_color", QColor2String(keyFrameColor));
+    if (keyFrameColor!=def_keyFrameColor) settings.setValue(g+"key_frame_color", JKQTP_QColor2String(keyFrameColor));
     if (keyFrameWidth!=def_keyFrameWidth) settings.setValue(g+"key_frame_width", keyFrameWidth);
     if (showKeyFrame!=def_showKeyFrame) settings.setValue(g+"show_key_frame", showKeyFrame);
-    if (keyBackgroundColor!=def_keyBackgroundColor) settings.setValue(g+"key_background_color", QColor2String(keyBackgroundColor));
+    if (keyBackgroundColor!=def_keyBackgroundColor) settings.setValue(g+"key_background_color", JKQTP_QColor2String(keyBackgroundColor));
     if (showKey!=def_showKey) settings.setValue(g+"show_key", showKey);
     if (keyPosition!=def_keyPosition) settings.setValue(g+"key_position", JKQTPkeyPosition2String(keyPosition));
     if (keyLayout!=def_keyLayout) settings.setValue(g+"key_layout", JKQTPkeyLayout2String(keyLayout));
@@ -496,10 +496,10 @@ void JKQtBasePlotter::saveSettings(QSettings& settings, QString group){
     if (useAntiAliasingForGraphs!=def_useAntiAliasingForGraphs) settings.setValue(g+"use_antialiasing_for_graphs", useAntiAliasingForGraphs);
     if (useAntiAliasingForText!=def_useAntiAliasingForText) settings.setValue(g+"use_antialiasing_for_text", useAntiAliasingForText);
 
-    if (backgroundColor!=def_backgroundColor) settings.setValue(g+"background_color", QColor2String(backgroundColor));
-    if (exportBackgroundColor!=def_exportBackgroundColor) settings.setValue(g+"exportBackgroundColor", QColor2String(exportBackgroundColor));
-    if (plotBackgroundColor!=def_plotBackgroundColor) settings.setValue(g+"plot_background_color", QColor2String(plotBackgroundColor));
-    if (graphColor!=def_graphColor) settings.setValue(g+"graph_color", QColor2String(graphColor));
+    if (backgroundColor!=def_backgroundColor) settings.setValue(g+"background_color", JKQTP_QColor2String(backgroundColor));
+    if (exportBackgroundColor!=def_exportBackgroundColor) settings.setValue(g+"exportBackgroundColor", JKQTP_QColor2String(exportBackgroundColor));
+    if (plotBackgroundColor!=def_plotBackgroundColor) settings.setValue(g+"plot_background_color", JKQTP_QColor2String(plotBackgroundColor));
+    if (graphColor!=def_graphColor) settings.setValue(g+"graph_color", JKQTP_QColor2String(graphColor));
     if (graphWidth!=def_graphWidth) settings.setValue(g+"graph_linewidth", graphWidth);
 
 
@@ -522,7 +522,7 @@ void JKQtBasePlotter::saveSettings(QSettings& settings, QString group){
     }
     if (palette_changed) {
         for (int cnt=0; cnt<manyGraphsColorCount; cnt++) {
-            settings.setValue(QString(g+"manygraphscolor%1").arg(cnt), QColor2String(manyGraphsColor[cnt]));
+            settings.setValue(QString(g+"manygraphscolor%1").arg(cnt), JKQTP_QColor2String(manyGraphsColor[cnt]));
         }
     }
     mathText.saveSettings(settings, g+"math_text.");
@@ -619,10 +619,10 @@ void JKQtBasePlotter::loadSettings(QSettings& settings, QString group){
     keyYMargin=settings.value(g+"key_ymargin", keyYMargin).toInt();
     keyXSeparation=settings.value(g+"key_xseparation", keyXSeparation).toInt();
     keyYSeparation=settings.value(g+"key_yseparation", keyYSeparation).toInt();
-    keyFrameColor=QColor(settings.value(g+"key_frame_color", QColor2String(keyFrameColor)).toString());
+    keyFrameColor=QColor(settings.value(g+"key_frame_color", JKQTP_QColor2String(keyFrameColor)).toString());
     keyFrameWidth=settings.value(g+"key_frame_width", keyFrameWidth).toDouble();
     showKeyFrame=settings.value(g+"show_key_frame", showKeyFrame).toBool();
-    keyBackgroundColor=QColor(settings.value(g+"key_background_color", QColor2String(keyBackgroundColor)).toString());
+    keyBackgroundColor=QColor(settings.value(g+"key_background_color", JKQTP_QColor2String(keyBackgroundColor)).toString());
     showKey=settings.value(g+"show_key", showKey).toBool();
     keyPosition=String2JKQTPkeyPosition(settings.value(g+"key_position", JKQTPkeyPosition2String(keyPosition)).toString());
     keyLayout=JKQTPkeyLayoutOneColumn;
@@ -634,8 +634,8 @@ void JKQtBasePlotter::loadSettings(QSettings& settings, QString group){
 
     backgroundColor=QColor(settings.value(g+"background_color", def_backgroundColor).toString());
     exportBackgroundColor=QColor(settings.value(g+"exportBackgroundColor", def_exportBackgroundColor).toString());
-    plotBackgroundColor=QColor(settings.value(g+"plot_background_color", QColor2String(plotBackgroundColor)).toString());
-    graphColor=QColor(settings.value(g+"graph_color", QColor2String(graphColor)).toString());
+    plotBackgroundColor=QColor(settings.value(g+"plot_background_color", JKQTP_QColor2String(plotBackgroundColor)).toString());
+    graphColor=QColor(settings.value(g+"graph_color", JKQTP_QColor2String(graphColor)).toString());
     graphWidth=settings.value(g+"graph_linewidth", graphWidth).toDouble();
 
     keyFont=settings.value(g+"key_fontname", keyFont).toString();
@@ -666,8 +666,8 @@ void JKQtBasePlotter::loadSettings(QSettings& settings, QString group){
 #endif
 
     /*for (int i=0; i<manyGraphsColorCount; i++) {
-        std::cout<<"manyGraphsColor["<<i<<"] = "<<QColor2String(manyGraphsColor[i]).toStdString()<<std::endl;
-        std::cout<<"def_manyGraphsColor["<<i<<"] = "<<QColor2String(def_manyGraphsColor[i]).toStdString()<<std::endl;
+        std::cout<<"manyGraphsColor["<<i<<"] = "<<JKQTP_QColor2String(manyGraphsColor[i]).toStdString()<<std::endl;
+        std::cout<<"def_manyGraphsColor["<<i<<"] = "<<JKQTP_QColor2String(def_manyGraphsColor[i]).toStdString()<<std::endl;
     }*/
     xAxis->loadSettings(settings, g+"xaxis_");
     yAxis->loadSettings(settings, g+"yaxis_");

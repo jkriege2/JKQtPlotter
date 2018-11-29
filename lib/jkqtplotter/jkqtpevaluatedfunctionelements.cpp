@@ -517,7 +517,7 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                 double x=xAxis->x2p(xv);
                 double y=yAxis->x2p(yv);
-                plotSymbol(painter, x, y, JKQTPcross, 6,1*parent->get_lineWidthMultiplier(), c, QColor(Qt::transparent));
+                JKQTPplotSymbol(painter, x, y, JKQTPcross, 6,1*parent->get_lineWidthMultiplier(), c, QColor(Qt::transparent));
             }
             d=d->next;
         }
@@ -693,7 +693,7 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
             double x=xAxis->x2p(xv);
             double y=yAxis->x2p(yv);
-            plotSymbol(painter, x, y, JKQTPcross, 6, 1*parent->get_lineWidthMultiplier(), c, QColor(Qt::transparent));
+            JKQTPplotSymbol(painter, x, y, JKQTPcross, 6, 1*parent->get_lineWidthMultiplier(), c, QColor(Qt::transparent));
         }
         d=d->next;
     }

@@ -618,7 +618,7 @@ JKQTPgeoEllipse::JKQTPgeoEllipse(JKQtPlotter* parent, double x, double y, double
 
 void JKQTPgeoEllipse::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(draw_ellipse(x,y,width/2.0, height/2.0,0,360,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,0,360,alpha, controlPoints));
     rect.closeSubpath();
 
 
@@ -660,7 +660,7 @@ JKQTPgeoArc::JKQTPgeoArc(JKQtPlotter* parent, double x, double y, double width, 
 
 void JKQTPgeoArc::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
 
     painter.save();
     painter.setPen(getPen(painter));
@@ -671,7 +671,7 @@ void JKQTPgeoArc::draw(JKQTPEnhancedPainter& painter) {
 
 bool JKQTPgeoArc::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     minx=rect.boundingRect().left();
     maxx=rect.boundingRect().right();
     if (minx>maxx) std::swap(minx, maxx);
@@ -684,7 +684,7 @@ bool JKQTPgeoArc::getXMinMax(double& minx, double& maxx, double& smallestGreater
 
 bool JKQTPgeoArc::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     miny=rect.boundingRect().bottom();
     maxy=rect.boundingRect().top();
     if (miny>maxy) std::swap(miny, maxy);
@@ -717,7 +717,7 @@ JKQTPgeoPie::JKQTPgeoPie(JKQtPlotter* parent, double x, double y, double width, 
 
 void JKQTPgeoPie::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     rect.lineTo(transform(x,y));
     rect.closeSubpath();
 
@@ -731,7 +731,7 @@ void JKQTPgeoPie::draw(JKQTPEnhancedPainter& painter) {
 
 bool JKQTPgeoPie::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     rect.append(QPointF(x,y));
     minx=rect.boundingRect().left();
     maxx=rect.boundingRect().right();
@@ -745,7 +745,7 @@ bool JKQTPgeoPie::getXMinMax(double& minx, double& maxx, double& smallestGreater
 
 bool JKQTPgeoPie::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     rect.append(QPointF(x,y));
     miny=rect.boundingRect().bottom();
     maxy=rect.boundingRect().top();
@@ -775,7 +775,7 @@ JKQTPgeoChord::JKQTPgeoChord(JKQtPlotter* parent, double x, double y, double wid
 
 void JKQTPgeoChord::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     rect.closeSubpath();
 
 
@@ -788,7 +788,7 @@ void JKQTPgeoChord::draw(JKQTPEnhancedPainter& painter) {
 
 bool JKQTPgeoChord::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     minx=rect.boundingRect().left();
     maxx=rect.boundingRect().right();
     if (minx>maxx) std::swap(minx, maxx);
@@ -800,7 +800,7 @@ bool JKQTPgeoChord::getXMinMax(double& minx, double& maxx, double& smallestGreat
 
 bool JKQTPgeoChord::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(draw_ellipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
     miny=rect.boundingRect().bottom();
     maxy=rect.boundingRect().top();
     if (miny>maxy) std::swap(miny, maxy);

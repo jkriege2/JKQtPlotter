@@ -343,9 +343,9 @@ void JKQTPxyLineGraph::draw(JKQTPEnhancedPainter& painter) {
             QColor symbFillColor=fillColor;// symbColor.lighter();
 
             if (drawSelectionLine && symbol!=JKQTPnoSymbol) {
-                plotSymbol(painter, x, y, JKQTPfilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), penSelection.color(), penSelection.color());
+                JKQTPplotSymbol(painter, x, y, JKQTPfilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), penSelection.color(), penSelection.color());
             }
-            plotSymbol(painter, x, y, symbol, parent->pt2px(painter, symbolSize), parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), symbColor, symbFillColor);
+            JKQTPplotSymbol(painter, x, y, symbol, parent->pt2px(painter, symbolSize), parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), symbColor, symbFillColor);
             /*if (drawLine && first) {
                 double xl1=xold;
                 double yl1=yold;
@@ -399,7 +399,7 @@ void JKQTPxyLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect
     painter.setPen(p);
     int y=rect.top()+rect.height()/2.0;
     if (drawLine) painter.drawLine(rect.left(), y, rect.right(), y);
-    plotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, getKeyLabelColor(), fillColor);
+    JKQTPplotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, getKeyLabelColor(), fillColor);
     painter.restore();
 }
 
@@ -2085,9 +2085,9 @@ void JKQTPxyParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
             }
 
             if (drawSelectionLine && symbol!=JKQTPnoSymbol && symbolColumn<0) {
-                plotSymbol(painter, x, y, JKQTPfilledCircle,symbSize, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), penSelection.color(), penSelection.color());
+                JKQTPplotSymbol(painter, x, y, JKQTPfilledCircle,symbSize, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), penSelection.color(), penSelection.color());
             } else {
-                plotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), symbColor, symbFillColor);
+                JKQTPplotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), symbColor, symbFillColor);
             }
 
 

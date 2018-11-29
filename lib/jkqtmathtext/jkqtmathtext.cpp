@@ -25,7 +25,7 @@
 #include <QFontDatabase>
 #include <typeinfo>
 #include <QApplication>
-//#define QColor2String(color) QString(jkqtp_rgbtostring((color).red(), (color).green(), (color).blue(), (color).alpha()).c_str())
+//#define JKQTP_QColor2String(color) QString(jkqtp_rgbtostring((color).red(), (color).green(), (color).blue(), (color).alpha()).c_str())
 
 
 QPainterPath makeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink=0.5, double cubiccontrolfac=0.3) {
@@ -3166,7 +3166,7 @@ JKQTmathText::~JKQTmathText() {
 
 void JKQTmathText::loadSettings(QSettings& settings, QString group){
     fontSize=settings.value(group+"font_size", fontSize).toDouble();
-    fontColor=QColor(settings.value(group+"font_color", QColor2String(fontColor)).toString());
+    fontColor=QColor(settings.value(group+"font_color", JKQTP_QColor2String(fontColor)).toString());
     fontRoman=settings.value(group+"font_roman", fontRoman).toString();
     fontSans=settings.value(group+"font_sans", fontSans).toString();
     fontTypewriter=settings.value(group+"font_typewriter", fontTypewriter).toString();
@@ -3209,7 +3209,7 @@ void JKQTmathText::loadSettings(QSettings& settings, QString group){
 
 void JKQTmathText::saveSettings(QSettings& settings, QString group){
     JKQTMTPROPERTYsave(settings, group, fontSize,"font_size");
-    if (fontColor!=def_fontColor) settings.setValue(group+"font_color", QColor2String(fontColor));
+    if (fontColor!=def_fontColor) settings.setValue(group+"font_color", JKQTP_QColor2String(fontColor));
     JKQTMTPROPERTYsave(settings, group, fontRoman, "font_roman");
     JKQTMTPROPERTYsave(settings, group, fontSans, "font_sans");
     JKQTMTPROPERTYsave(settings, group, fontTypewriter, "font_typewriter");

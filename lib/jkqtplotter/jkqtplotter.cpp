@@ -157,7 +157,7 @@ void JKQtPlotter::loadSettings(QSettings& settings, QString group) {
 
     set_toolbarIconSize(settings.value(group+"toolbar_icon_size", toolbarIconSize).toInt());
     mousePositionTemplate=settings.value(group+"mouse_position_template", mousePositionTemplate).toString();
-    userActionColor=QColor(settings.value(group+"zoomrect_color", QColor2String(userActionColor)).toString());
+    userActionColor=QColor(settings.value(group+"zoomrect_color", JKQTP_QColor2String(userActionColor)).toString());
 
     update_plot();
 }
@@ -165,7 +165,7 @@ void JKQtPlotter::loadSettings(QSettings& settings, QString group) {
 void JKQtPlotter::saveSettings(QSettings& settings, QString group) {
     plotter->saveSettings(settings, group);
 
-    if (userActionColor!=def_userActionColor) settings.setValue(group+"zoomrect_color", QColor2String(userActionColor));
+    if (userActionColor!=def_userActionColor) settings.setValue(group+"zoomrect_color", JKQTP_QColor2String(userActionColor));
     if (toolbarIconSize!=def_toolbarIconSize) settings.setValue(group+"toolbar_icon_size", toolbarIconSize);
     if (mousePositionTemplate!=def_mousePositionTemplate) settings.setValue(group+"mouse_position_template", mousePositionTemplate);
 }
