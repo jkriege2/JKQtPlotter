@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     // 3. now we make several plots with different symbol styles and line-styles
     //    for that we iterate over every symbol style and at the same time over
     //    pen styles from the vector pens
-    QVector<Qt::PenStyle> pens {Qt::NoPen, Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
+    QVector<Qt::PenStyle> pens {Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
     int ipen=0;
     for (int symbolID=0; symbolID<=JKQTPmaxSymbolID; symbolID++) {
         // generate some plot data
@@ -43,9 +43,18 @@ int main(int argc, char* argv[])
         // set symbol + pen style and color
         graph->set_symbol(static_cast<JKQTPgraphSymbols>(symbolID));
         graph->set_style(pens[ipen]);
+        QString lname=JKQTP_QPenStyle2String(graph->get_style());
+        graph->set_drawLine(static_cast<JKQTPgraphSymbols>(symbolID)!=JKQTPdot);
+        if (!graph->get_drawLine()) lname="";
+        // set symbol size
+        graph->set_symbolSize(14);
+        // set width of symbol lines
+        graph->set_symbolWidth(1.5);
+        // set width of graph line
+        graph->set_lineWidth(1);
 
         // graph title is made from symbol+penstyle
-        graph->set_title(JKQTPgraphSymbols2NameString(static_cast<JKQTPgraphSymbols>(graph->get_symbol()))+QString(", ")+JKQTP_QPenStyle2String(graph->get_style()));
+        graph->set_title(JKQTPgraphSymbols2NameString(static_cast<JKQTPgraphSymbols>(graph->get_symbol()))+QString(", ")+lname);
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);
