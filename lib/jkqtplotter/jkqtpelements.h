@@ -605,6 +605,84 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
 
 
 
+
+/*! \brief This implements filled curve plots where the area is filled between two data columns for each x-value
+    \ingroup jkqtplotter_plots
+
+    With set_drawlines(false):
+    \image html JKQTPfilledVerticalRangeGraph.png
+
+    With set_drawlines(true):
+    \image html JKQTPfilledVerticalRangeGraph_WithLines.png
+ */
+class LIB_EXPORT JKQTPfilledVerticalRangeGraph: public JKQTPxyGraph {
+        Q_OBJECT
+    public:
+        /** \brief class constructor */
+        JKQTPfilledVerticalRangeGraph(JKQtBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPfilledVerticalRangeGraph(JKQtPlotter* parent);
+        /** \brief get the maximum and minimum y-value of the graph
+         *
+         * The result is given in the two parameters which are call-by-reference parameters!
+         */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+
+        /** \copydoc JKQTPgraph::usesColumn() */
+        virtual bool usesColumn(int column);
+
+        /** \brief plots the graph to the plotter object specified as parent */
+        virtual void draw(JKQTPEnhancedPainter& painter);
+        /** \brief plots a key marker inside the specified rectangle \a rect */
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        /** \brief returns the color to be used for the key label */
+        virtual QColor getKeyLabelColor();
+
+        JKQTPGET_SET_MACRO(int, yColumn2)
+        JKQTPSET_CAST_MACRO(size_t, int, yColumn2)
+
+        JKQTPGET_SET_MACRO(QColor, color)
+        JKQTPGET_SET_MACRO(QColor, fillColor)
+        JKQTPGET_SET_MACRO(Qt::PenStyle, style)
+        JKQTPGET_SET_MACRO(bool, drawLine)
+        JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
+
+        JKQTPGET_SET_MACRO(bool, drawSelectionLine)
+        JKQTPGET_SET_MACRO(QColor, selectionLineColor)
+
+    protected:
+
+        /** \brief the column that contains the second y-component of the range */
+        int yColumn2;
+        /** \brief if \c true, draws a thick shadow around the line*/
+        bool drawSelectionLine;
+        /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
+        QColor selectionLineColor;
+
+        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        int parentPlotStyle;
+
+        /** \brief color of the graph */
+        QColor color;
+        /** \brief color of the graph fill */
+        QColor fillColor;
+        /** \brief fill styl for the curve */
+        Qt::BrushStyle fillStyle;
+        /** \brief linestyle of the graph lines */
+        Qt::PenStyle style;
+        /** \brief width (pixels) of the graph */
+        double lineWidth;
+        /** \brief indicates whether to draw a line or not */
+        bool drawLine;
+
+        QBrush getBrush(JKQTPEnhancedPainter& painter) const;
+        QPen getLinePen(JKQTPEnhancedPainter& painter) const;
+};
+
+
+
+
+
 /*! \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
     \ingroup jkqtplotter_plots
 

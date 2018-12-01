@@ -255,9 +255,9 @@ void JKQTPcoordinateAxis::loadSettings(QSettings& settings, QString group) {
     JKQTPPROPERTYload(settings, group+axisPrefix, minorTickLabelFontSize, "minor_tick_label_font_size", toDouble());
     JKQTPPROPERTYload(settings, group+axisPrefix, minorTickLabelFullNumber, "minor_tick_label_full_number", toBool());
 
-    JKQTPPROPERTYload(settings, group+axisPrefix, tickTimeFormat, "tick_time_format", toDouble());
-    JKQTPPROPERTYload(settings, group+axisPrefix, tickDateFormat, "tick_date_format", toDouble());
-    JKQTPPROPERTYload(settings, group+axisPrefix, tickDateTimeFormat, "tick_datetime_format", toDouble());
+    JKQTPPROPERTYload(settings, group+axisPrefix, tickTimeFormat, "tick_time_format", toString());
+    JKQTPPROPERTYload(settings, group+axisPrefix, tickDateFormat, "tick_date_format", toString());
+    JKQTPPROPERTYload(settings, group+axisPrefix, tickDateTimeFormat, "tick_datetime_format", toString());
 
 
     JKQTPPROPERTYload(settings, group+axisPrefix, minTicks, "min_ticks", toUInt());
@@ -577,17 +577,17 @@ QString JKQTPcoordinateAxis::floattolabel(double data) {
             }; break;
         case JKQTPCALTdate: {
                 QDateTime dt;
-                dt.setMSecsSinceEpoch(uint(data));
+                dt.setMSecsSinceEpoch(uint64_t(data));
                 return dt.toString(tickDateFormat);
             }; break;
         case JKQTPCALTtime: {
                 QDateTime dt;
-                dt.setMSecsSinceEpoch(uint(data));
+                dt.setMSecsSinceEpoch(uint64_t(data));
                 return dt.toString(tickTimeFormat);
             }; break;
         case JKQTPCALTdatetime: {
                 QDateTime dt;
-                dt.setMSecsSinceEpoch(uint(data));
+                dt.setMSecsSinceEpoch(uint64_t(data));
                 return dt.toString(tickDateTimeFormat);
             }; break;
         default:

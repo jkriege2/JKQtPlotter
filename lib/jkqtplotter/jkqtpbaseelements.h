@@ -650,11 +650,11 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         JKQTPPROPERTY(double, lineWidthZeroAxis)
 
 
-        /** \brief format string for time tick labels */
+        /** \brief format string for time tick labels, see see QDateTime::toString() documentation for details on format strings */
         JKQTPPROPERTY(QString, tickTimeFormat)
-        /** \brief format string for date tick labels */
+        /** \brief format string for date tick labels, see see QDateTime::toString() documentation for details on format strings */
         JKQTPPROPERTY(QString, tickDateFormat)
-        /** \brief format string for datetime tick labels */
+        /** \brief format string for datetime tick labels, see see QDateTime::toString() documentation for details on format strings */
         JKQTPPROPERTY(QString, tickDateTimeFormat)
 
         /** \brief calculates the tick spacing for a linear axis that spans \a awidth and that should
