@@ -526,7 +526,7 @@ void JKQTPxyLineErrorGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 
 
 
-JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent):
+JKQTPimpulsesVerticalGraph::JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent):
     JKQTPxyGraph(parent)
 {
     baseline=0;
@@ -540,7 +540,7 @@ JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* pare
     }
 }
 
-JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent):
+JKQTPimpulsesVerticalGraph::JKQTPimpulsesVerticalGraph(JKQtPlotter* parent):
     JKQTPxyGraph(parent)
 {
     baseline=0;
@@ -553,9 +553,9 @@ JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent):
         color=parent->getPlotStyle(parentPlotStyle).color();
     }
 }
-void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesHorizontalGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesVerticalGraph::draw");
 #endif
     if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
@@ -627,7 +627,7 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsAfter(painter);
 }
 
-void JKQTPimpulsesHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPimpulsesVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
 
 
     painter.save();
@@ -642,7 +642,7 @@ void JKQTPimpulsesHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, 
     painter.restore();
 }
 
-QColor JKQTPimpulsesHorizontalGraph::getKeyLabelColor() {
+QColor JKQTPimpulsesVerticalGraph::getKeyLabelColor() {
     return color;
 }
 
@@ -656,20 +656,20 @@ QColor JKQTPimpulsesHorizontalGraph::getKeyLabelColor() {
 
 
 
-JKQTPimpulsesVerticalGraph::JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent):
-    JKQTPimpulsesHorizontalGraph(parent)
+JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent):
+    JKQTPimpulsesVerticalGraph(parent)
 {
 }
 
-JKQTPimpulsesVerticalGraph::JKQTPimpulsesVerticalGraph(JKQtPlotter *parent):
-    JKQTPimpulsesHorizontalGraph(parent)
+JKQTPimpulsesHorizontalGraph::JKQTPimpulsesHorizontalGraph(JKQtPlotter *parent):
+    JKQTPimpulsesVerticalGraph(parent)
 {
 
 }
 
-void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesVerticalGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPimpulsesHorizontalGraph::draw");
 #endif
     if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
@@ -1805,7 +1805,7 @@ QBrush JKQTPxyLineGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
 }
 
 
-QPen JKQTPimpulsesHorizontalGraph::getPen(JKQTPEnhancedPainter& painter) const {
+QPen JKQTPimpulsesVerticalGraph::getPen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
     p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
@@ -1870,7 +1870,7 @@ QPen JKQTPhorizontalRange::getLinePen(JKQTPEnhancedPainter& painter) const {
 
 bool JKQTPimpulsesHorizontalErrorGraph::usesColumn(int c)
 {
-    return JKQTPimpulsesHorizontalGraph::usesColumn(c)|| JKQTPxGraphErrors::errorUsesColumn(c);
+    return JKQTPimpulsesVerticalGraph::usesColumn(c)|| JKQTPxGraphErrors::errorUsesColumn(c);
 }
 
 void JKQTPimpulsesHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
@@ -1880,20 +1880,20 @@ void JKQTPimpulsesHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &pa
 }
 
 JKQTPimpulsesVerticalErrorGraph::JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter *parent):
-    JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
+    JKQTPimpulsesHorizontalGraph(parent), JKQTPyGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
 JKQTPimpulsesVerticalErrorGraph::JKQTPimpulsesVerticalErrorGraph(JKQtPlotter *parent):
-    JKQTPimpulsesVerticalGraph(parent), JKQTPyGraphErrors()
+    JKQTPimpulsesHorizontalGraph(parent), JKQTPyGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
 bool JKQTPimpulsesVerticalErrorGraph::usesColumn(int c)
 {
-    return JKQTPimpulsesVerticalGraph::usesColumn(c)|| JKQTPyGraphErrors::errorUsesColumn(c);
+    return JKQTPimpulsesHorizontalGraph::usesColumn(c)|| JKQTPyGraphErrors::errorUsesColumn(c);
 }
 
 void JKQTPimpulsesVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)

@@ -360,13 +360,13 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
 
     \image html plot_impulsesxplots.png
  */
-class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
+class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPxyGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent);
+        JKQTPimpulsesVerticalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -401,17 +401,17 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
 
     \image html plot_impulsesxerrorsplots.png
  */
-class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizontalGraph, public JKQTPxGraphErrors {
+class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesVerticalGraph, public JKQTPxGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
         inline JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=nullptr):
-            JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
+            JKQTPimpulsesVerticalGraph(parent), JKQTPxGraphErrors()
         {
             setErrorColorFromGraphColor(color);
         }
         inline JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter* parent):
-            JKQTPimpulsesHorizontalGraph(parent), JKQTPxGraphErrors()
+            JKQTPimpulsesVerticalGraph(parent), JKQTPxGraphErrors()
         {
             setErrorColorFromGraphColor(color);
         }
@@ -432,13 +432,13 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
 
     \image html plot_impulsesyplots.png
  */
-class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph {
+class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPimpulsesVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPimpulsesVerticalGraph(JKQtPlotter* parent);
+        JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -451,7 +451,7 @@ class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph
 
     \image html plot_impulsesyerrorsplots.png
  */
-class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGraph, public JKQTPyGraphErrors {
+class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesHorizontalGraph, public JKQTPyGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */

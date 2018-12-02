@@ -3158,13 +3158,13 @@ void JKQtBasePlotter::resetMasterSynchronization() {
 
 size_t JKQtBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPgraphPlotstyle graphStyle) {
     if (graphStyle==JKQTPimpulsesHorizontal) {
-        JKQTPimpulsesHorizontalGraph* gr=new JKQTPimpulsesHorizontalGraph(this);
+        JKQTPimpulsesVerticalGraph* gr=new JKQTPimpulsesVerticalGraph(this);
         gr->set_title(title);
         gr->set_xColumn(xColumn);
         gr->set_yColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPimpulsesVertical) {
-        JKQTPimpulsesVerticalGraph* gr=new JKQTPimpulsesVerticalGraph(this);
+        JKQTPimpulsesHorizontalGraph* gr=new JKQTPimpulsesHorizontalGraph(this);
         gr->set_title(title);
         gr->set_xColumn(xColumn);
         gr->set_yColumn(yColumn);
@@ -3207,7 +3207,7 @@ size_t JKQtBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, 
 
 size_t JKQtBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPgraphPlotstyle graphStyle, QColor color, JKQTPgraphSymbols symbol, Qt::PenStyle penstyle, double width) {
     if (graphStyle==JKQTPimpulsesHorizontal) {
-        JKQTPimpulsesHorizontalGraph* gr=new JKQTPimpulsesHorizontalGraph(this);
+        JKQTPimpulsesVerticalGraph* gr=new JKQTPimpulsesVerticalGraph(this);
         gr->set_title(title);
         gr->set_xColumn(xColumn);
         gr->set_yColumn(yColumn);
@@ -3215,7 +3215,7 @@ size_t JKQtBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, 
         gr->set_lineWidth(width);
         return addGraph(gr);
     } else if (graphStyle==JKQTPimpulsesVertical) {
-        JKQTPimpulsesVerticalGraph* gr=new JKQTPimpulsesVerticalGraph(this);
+        JKQTPimpulsesHorizontalGraph* gr=new JKQTPimpulsesHorizontalGraph(this);
         gr->set_title(title);
         gr->set_xColumn(xColumn);
         gr->set_yColumn(yColumn);
