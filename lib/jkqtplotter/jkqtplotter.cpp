@@ -47,14 +47,15 @@
  **************************************************************************************************************************/
 JKQtPlotter::JKQtPlotter(bool datastore_internal, QWidget* parent, JKQTPdatastore* datast):
     QWidget(parent, Qt::Widget)
-{
+{    
+    initJKQtPlotterResources();
     init(datastore_internal, parent, datast);
-
 }
 
 JKQtPlotter::JKQtPlotter(QWidget *parent):
     QWidget(parent, Qt::Widget)
 {
+    initJKQtPlotterResources();
     init(true, parent, nullptr);
 }
 
@@ -910,3 +911,8 @@ void JKQtPlotter::set_doDrawing(bool enable)
     //qDebug()<<objectName()<<"  doDrawing="<<doDrawing;
 }
 
+
+void initJKQtPlotterResources()
+{
+    initJKQtBasePlotterResources();
+}

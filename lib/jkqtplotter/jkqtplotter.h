@@ -60,6 +60,9 @@
 #ifndef JKQTPLOTTER_H
 #define JKQTPLOTTER_H
 
+/** \brief initialized Qt-ressources necessary for JKQtPlotter */
+LIB_EXPORT void initJKQtPlotterResources();
+
 
 /** \brief class to plot function graphs in linear or (semi-)logarithmic scale
  * \ingroup jkqtplotter
@@ -599,7 +602,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         bool displayMousePosition;
         /** \brief this string is used to generate the position output above the graph */
         JKQTPPROPERTY(QString, mousePositionTemplate)
-        /** \brief if set \c true and displayMousePosition is \c true, the mouse position is not automaticallz determined, but the text given to setMousePositionLabel() is used */
+        /** \brief if set \c true and displayMousePosition is \c true, the mouse position is not automatically determined, but the text given to setMousePositionLabel() is used */
         bool displayCustomMousePosition;
         QString customMousePositiontext;
 

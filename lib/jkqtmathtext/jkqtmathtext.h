@@ -72,6 +72,10 @@
  */
 #define JKQTMTPROPERTYload(settings, group, var, varname, varconvert) \
     var=settings.value(group+varname, var).varconvert;
+
+/** \brief initialized Qt-ressources necessary for JKQtMathText */
+LIB_EXPORT void initJKQtMathTextResources();
+
 /*! \brief this class manages an enhanced text message (containing a subset of LaTeX markups) and allows to draw a representation
     \ingroup jkqtmathtext
 

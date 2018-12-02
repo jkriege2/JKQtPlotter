@@ -70,6 +70,9 @@
 
 class JKQTPPlotsModel; // forward
 
+/** \brief initialized Qt-ressources necessary for JKQtBasePlotter */
+LIB_EXPORT void initJKQtBasePlotterResources();
+
 
 /** \brief base class for 2D plotter classes
  * \ingroup jkqtplotter
@@ -445,7 +448,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief hidden default constructor */
-        JKQtBasePlotter() {}
+        JKQtBasePlotter();
 
 
 

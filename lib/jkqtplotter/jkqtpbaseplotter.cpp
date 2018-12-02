@@ -59,6 +59,18 @@ static QString globalUserSettigsPrefix="";
 static QList<JKQtBasePlotter::JKQTPPaintDeviceAdapter*> jkqtpPaintDeviceAdapters;
 static QList<JKQtBasePlotter::JKQTPSaveDataAdapter*> jkqtpSaveDataAdapters;
 
+
+void initJKQtBasePlotterResources()
+{
+    Q_INIT_RESOURCE(jkqtpbaseplotter);
+    initJKQtMathTextResources();
+}
+
+JKQtBasePlotter::JKQtBasePlotter()
+{
+    initJKQtBasePlotterResources();
+}
+
 void JKQtBasePlotter::setDefaultJKQtBasePrinterUserSettings(QString userSettigsFilename, QString userSettigsPrefix)
 {
     globalUserSettigsFilename=userSettigsFilename;
@@ -415,6 +427,7 @@ void JKQtBasePlotter::initSettings() {
 
     if (emitPlotSignals) emit plotUpdated();
 }
+
 
 
 

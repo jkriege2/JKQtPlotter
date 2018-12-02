@@ -3065,7 +3065,7 @@ bool JKQTmathText::MTsymbolNode::toHtml(QString &html, JKQTmathText::MTenvironme
 JKQTmathText::JKQTmathText(QObject* parent):
     QObject(parent)
 {
-
+    Q_INIT_RESOURCE(xits);
     QFontDatabase fontdb;
 
     QString serifFont="Serif";
@@ -4269,4 +4269,9 @@ QString JKQTmathText::MTplainTextNode::getTypeName() const
 QString JKQTmathText::MTplainTextNode::textTransform(const QString &text, JKQTmathText::MTenvironment /*currentEv*/, bool /*forSize*/)
 {
     return text;
+}
+
+void initJKQtMathTextResources()
+{
+    Q_INIT_RESOURCE(xits);
 }
