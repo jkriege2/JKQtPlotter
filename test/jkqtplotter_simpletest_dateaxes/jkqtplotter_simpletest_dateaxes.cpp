@@ -6,6 +6,7 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgeoelements.h"
 #include "jkqtplottertools/jkqtptools.h"
+#include "jkqtplotter/jkqtpfilledcurveelements.h"
 
 void drawWithDateAxis(JKQtPlotter& plot) {
 

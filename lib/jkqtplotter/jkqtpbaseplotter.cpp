@@ -51,6 +51,8 @@
 #endif
 #include "jkqtplotter/jkqtpboxplotelements.h"
 #include "jkqtplotter/jkqtpbarchartelements.h"
+#include "jkqtplotter/jkqtpfilledcurveelements.h"
+#include "jkqtplotter/jkqtpimpulseselements.h"
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";

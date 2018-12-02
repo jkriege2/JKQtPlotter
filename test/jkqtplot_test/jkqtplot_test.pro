@@ -1,9 +1,3 @@
-# NOTE: This shouldn't be built as a SHADOW build
-!equals(PWD, $${OUT_PWD}) {
-    warning(This project should not be built as a shadow build!!!)
-}
-
-include(../../lib/jkqtplotter.pri)
 
 SOURCES += jkqtplot_test.cpp \
     testmain.cpp \
@@ -48,7 +42,7 @@ DEFINES +=
 
 TARGET = jkqtplot_test
 
-QT += core gui svg xml
+QT += core gui xml svg xml
 win32:LIBS += -lgdi32
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -80,3 +74,9 @@ DESTDIR = ./
 
 
 RESOURCES += jkqtplot_test.qrc
+
+
+DEPENDPATH += . ../../lib
+INCLUDEPATH += ../../lib
+CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtplotterlib
+CONFIG (release):LIBS += -L../../lib/release -ljkqtplotterlib

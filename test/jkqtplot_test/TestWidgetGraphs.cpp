@@ -4,7 +4,7 @@
 #include <QDateTime>
 #include <QApplication>
 #include "jkqtplotter/jkqtpboxplotelements.h"
-
+#include "jkqtplotter/jkqtpfilledcurveelements.h"
 
 
 

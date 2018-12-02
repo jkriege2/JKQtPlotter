@@ -24,7 +24,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_barchart_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_barchart) | [Simple Bar Charts](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_barchart) | `JKQTPbarVerticalGraph`<br/>C-style arrays of data |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/JKQTPbarVerticalGraphStacked_small.png)<br>![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/JKQTPbarHorizontalGraphStacked_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_stackedbars) | [Stacked Bar Charts](https://github.com/jkriege2/JKQtPlotter/tree/master/test/jkqtplotter_simpletest_stackedbars) | `JKQTPbarVerticalStackableGraph`, `JKQTPbarHorizontalStackableGraph`<br/>C++-style vectors of data |
 
-### Styling the Plot, Key Axes
+### Styling the Plot, Keys, Axes, ...
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |

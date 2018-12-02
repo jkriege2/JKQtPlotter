@@ -5,8 +5,6 @@ TARGET = JKQTFastPlotter_test
 
 TEMPLATE = app
 
-include(../../lib/jkqtfastplotter.pri)
-
 SOURCES += jkqtfastplotter_test.cpp \
     testmain.cpp
 
@@ -29,3 +27,9 @@ DESTDIR = ./
 DEFINES += DEBUG_TIMING
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+
+# include JKQtFastPlotter source code
+DEPENDPATH += . ../../lib
+INCLUDEPATH += ../../lib
+CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtfastplotterlib
+CONFIG (release):LIBS += -L../../lib/release -ljkqtfastplotterlib
