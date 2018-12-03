@@ -98,12 +98,15 @@ Switching the minor grid off results in a plot like this:
 ![jkqtplotter_simpletest_logaxes_nominorgrid](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_nominorgrid.png)
 
 These examples show the results for different typical values for `set_minorTicks()`:
+
 ![logaxis_set_minorticks](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_set_minorticks.png)
 
 These examples show the results for different typical values for `set_labelType()`:
+
 ![logaxis_set_labelType](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_set_labelType.png)
 
 These examples show the results for different typical values for `set_labelType()`:
+
 ![logaxis_set_labelType](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_set_labelType.png)
 
 
