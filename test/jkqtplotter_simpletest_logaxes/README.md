@@ -105,9 +105,5 @@ These examples show the results for different typical values for `set_labelType(
 
 ![logaxis_set_labelType](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_set_labelType.png)
 
-These examples show the results for different typical values for `set_labelType()`:
-
-![logaxis_set_labelType](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_set_labelType.png)
-
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
