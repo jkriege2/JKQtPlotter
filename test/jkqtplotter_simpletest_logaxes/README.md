@@ -50,8 +50,9 @@ Then a `JKQTPgeoText` is added to the graph, which shows the function plotted in
     //    high-quality math rendering.
     plot.addGraph(new JKQTPgeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
 ```
-The difference between not using and using `$...$` for the equation can be seen below (left: no $-math-mode, right: using $-math-mode):
-![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_lowqmathrendering.png)   ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_highqmathrendering.png)
+The difference between not using and using `$...$` for the equation can be seen here:
+- no $-math-mode: ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_lowqmathrendering.png)   
+- using $-math-mode: ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_highqmathrendering.png)
 
 Finally the y-axis is switched to logarithmic scaling and the axis labels are set:
 ```c++
