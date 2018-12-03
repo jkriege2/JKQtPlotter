@@ -3263,7 +3263,7 @@ void JKQTmathText::useXITS()
 #ifdef AUTOLOAD_XITS_FONTS
     //qDebug()<<"has XITS: "<<fdb.families().contains("XITS");
     if (!fdb.families().contains("XITS")) {
-        int i;
+        int i=0;
         if (QFile::exists(":/JKQTmathText/fonts/xits-bold.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTmathText/fonts/xits-bold.otf"); }
         //qDebug()<<QFontDatabase::applicationFontFamilies(i);
         if (QFile::exists(":/JKQTmathText/fonts/xits-bolditalic.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTmathText/fonts/xits-bolditalic.otf"); }
@@ -3285,6 +3285,8 @@ void JKQTmathText::useXITS()
     //bool hasXITSMath=false;
     QString XITSMathfam;
     for (int i=0; i<fdb.families().size(); i++) {
+        //::cout<<fdb.families().at(i).simplified().toStdString()<<"\n";
+        //qDebug()<<fdb.families().at(i).simplified();
         if (fdb.families().at(i).contains("XITS Math")) {
             //hasXITSMath=true;
             XITSMathfam=fdb.families().at(i);

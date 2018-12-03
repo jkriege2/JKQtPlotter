@@ -152,7 +152,9 @@ bool JKQTPgeoText::getYMinMax(double& miny, double& maxy, double& smallestGreate
 
 void JKQTPgeoText::draw(JKQTPEnhancedPainter& painter) {
     painter.save();
-
+#ifdef USE_XITS_FONTS
+    parent->get_mathText()->useXITS();
+#endif
     parent->get_mathText()->set_fontSize(fontSize*parent->get_fontSizeMultiplier());
     parent->get_mathText()->set_fontColor(color);
     parent->get_mathText()->parse(text);
