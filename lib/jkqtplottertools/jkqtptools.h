@@ -41,7 +41,6 @@
 #include <QPrinter>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -110,6 +109,7 @@
   /** \brief a separator between two directories in a path between \c ' quotes */
   #define JKQTPPATHSEPARATOR_CHAR '/'
   #include <unistd.h>
+  #include <dirent.h>
 #endif
 
 
