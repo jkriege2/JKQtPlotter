@@ -3,6 +3,8 @@
     QMAKE_CXXFLAGS += -fexceptions
 } else {
     QMAKE_CXXFLAGS += /EHsc
+    # To enable M_PI, M_E,...
+    DEFINES += _USE_MATH_DEFINES
 }
 
 HEADERS += $$PWD/jkqtplotter/jkqtpbaseplotter.h \
