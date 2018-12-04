@@ -1962,8 +1962,9 @@ void JKQTPColorPaletteTools::cbDrawOutside(JKQTPEnhancedPainter& painter, QRect 
         if (colorBarRightVisible) {
             painter.save();
 
-            uint8_t h=1;
-            uint8_t d[200*h];//, dd[200*h];
+            static const uint8_t h=1;
+            static const uint8_t dSize = 200*h;
+            uint8_t d[dSize];//, dd[200*h];
             for (int i=0; i<200; i++) {
                 for (int j=0; j<h; j++) {
                     d[i*h+j]=i;
@@ -2023,9 +2024,9 @@ void JKQTPColorPaletteTools::cbDrawOutside(JKQTPEnhancedPainter& painter, QRect 
             JKQTPimagePlot_array2image<uint8_t>(d, 200, 1, b, palette, 0, 199);*/
 
 
-            uint8_t h=1;
-
-            uint8_t d[200*h];//, dd[200*h];
+            static const uint8_t h=1;
+            static const uint8_t dSize = 200*h;
+            uint8_t d[dSize];//, dd[200*h];
             for (int i=0; i<200; i++) {
                 for (int j=0; j<h; j++) {
                     d[i*h+j]=i;
