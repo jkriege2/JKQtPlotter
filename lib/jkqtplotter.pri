@@ -1,6 +1,9 @@
 
-
-QMAKE_CXXFLAGS += -fexceptions
+!win32-msvc* {
+    QMAKE_CXXFLAGS += -fexceptions
+} else {
+    QMAKE_CXXFLAGS += /EHsc
+}
 
 HEADERS += $$PWD/jkqtplotter/jkqtpbaseplotter.h \
            $$PWD/jkqtplotter/jkqtpdatastorage.h \
