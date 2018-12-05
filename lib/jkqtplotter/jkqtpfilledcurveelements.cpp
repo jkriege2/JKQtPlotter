@@ -679,7 +679,7 @@ QColor JKQTPfilledVerticalRangeGraph::getKeyLabelColor()
     return color;
 }
 
-QBrush JKQTPfilledVerticalRangeGraph::getBrush(JKQTPEnhancedPainter &painter) const
+QBrush JKQTPfilledVerticalRangeGraph::getBrush(JKQTPEnhancedPainter &/*painter*/) const
 {
     QBrush b;
     b.setColor(fillColor);

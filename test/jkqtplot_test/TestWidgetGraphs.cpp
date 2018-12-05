@@ -297,7 +297,7 @@ void TestWidgetGraphs::moveovl() {
 }
 
 
-void TestWidgetGraphs::setErrorStyle(int index)
+void TestWidgetGraphs::setErrorStyle(int /*index*/)
 {
     QComboBox* cmb=qobject_cast<QComboBox*>(sender());
     if (cmb) {
@@ -314,7 +314,7 @@ void TestWidgetGraphs::setErrorStyle(int index)
     }
 }
 
-void TestWidgetGraphs::setESSymbol(int index)
+void TestWidgetGraphs::setESSymbol(int /*index*/)
 {
     QComboBox* cmb=qobject_cast<QComboBox*>(sender());
     if (cmb) {

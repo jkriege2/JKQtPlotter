@@ -43,7 +43,7 @@ double JKQTPxParsedFunctionLineGraphFunction(double x, void* data) {
                     return r.num;
                 }
             }
-        } catch(std::exception& E) {
+        } catch(std::exception& /*E*/) {
             //qDebug()<<QString("parser error: %1").arg(E.what());
            /*ok= QMessageBox::critical(this, tr("QuickFit-table"),
                                      tr("An error occured while parsing the expression '%1' in cell (row, column)=(%3, %4):\n%2\n\n\"OK\" will still go on evaluating\n\"Cancel\" will cancel evaluation for the rest of the cells.").arg(dlgMathExpression->getExpression()).arg(E.what()).arg(row).arg(column),
@@ -138,7 +138,7 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
         //qDebug()<<"createPlotData():   adding variables: "<<t<<"ms";
         fdata.node=fdata.parser->parse(function.toStdString());
         //qDebug()<<"createPlotData():   parsing: "<<timer.elapsed()-t<<"ms";
-    } catch(std::exception& E) {
+    } catch(std::exception& /*E*/) {
         //qDebug()<<QString("parser error: %1").arg(E.what());
     }
 
@@ -171,7 +171,7 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
         //qDebug()<<"createPlotData():   adding variables: "<<t-t0<<"ms";
         efdata.node=efdata.parser->parse(errorFunction.toStdString());
         //qDebug()<<"createPlotData():   parsing: "<<timer.elapsed()-t<<"ms";
-    } catch(std::exception& E) {
+    } catch(std::exception& /*E*/) {
         //qDebug()<<QString("parser error: %1").arg(E.what());
     }
 
