@@ -2027,8 +2027,10 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
     exactAscent=false;
     extendWidthInMathmode=false;
 
-    //qDebug()<<"MTsymbolNode("<<n<<") addWhitespace="<<addWhitespace;
-
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // statische Lookup-Tabellen vorbereiten
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     static QStringList extendWInMM;
     if (extendWInMM.isEmpty()) {
         extendWInMM <<"ll"<<"gg"<<"leq"<<"geq"<<"leftrightarrow"<<"leftarrow"<<"rightarrow"<<"to"<<"uparrow"<<"downarrow"<<"updownarrow"<<"Leftrightarrow"
@@ -2038,634 +2040,676 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
                     <<"times"<<"propto"<<"bullet"<<"neq"<<"ne"<<"equiv"<<"approx"<<"otimes"<<"oplus"<<"oslash"<<"cap"<<"land"<<"cup"<<"lor"<<"supset"<<"supseteq"<<"supsetnot"
                     <<"subset"<<"subseteq"<<"in"<<"notin"<<"cdot"<<"wedge"<<"vee"<<"cong"<<"bot";
     }
-
+    
     if (extendWInMM.contains(n)) {
         extendWidthInMathmode=true;
     }
 
-    if (n=="sin") { symbol="sin"; }
-    //else if (n==" ") { symbol=" "; }
-    else if (n=="") { symbol=" "; }
-    else if (n=="cos") { symbol="cos"; }
-    else if (n=="tan") { symbol="tan"; }
-    else if (n=="sinh") { symbol="sinh"; }
-    else if (n=="cosh") { symbol="cosh"; }
-    else if (n=="tanh") { symbol="tanh"; }
-    else if (n=="atan") { symbol="atan"; }
-    else if (n=="acos") { symbol="acos"; }
-    else if (n=="asin") { symbol="asin"; }
-    else if (n=="arcsin") { symbol="arcsin"; }
-    else if (n=="arccos") { symbol="arccos"; }
-    else if (n=="arctan") { symbol="arctan"; }
-    else if (n=="degree") { symbol=QLatin1String("\xB0"); }
-    else if (n=="ii") { symbol="i"; }
-    else if (n=="dd") { symbol="d"; }
-    else if (n=="exp") { symbol="exp"; }
-    else if (n=="log") { symbol="log"; }
-    else if (n=="ln") { symbol="ln"; }
-    else if (n=="ld") { symbol="ld"; }
-    else if (n=="lb") { symbol="lb"; }
-    else if (n=="erf") { symbol="erf"; heightIsAscent=true; }
-    else if (n=="min") { symbol="min"; heightIsAscent=true; }
-    else if (n=="max") { symbol="max"; heightIsAscent=true; }
-    else if (n=="argmin") { symbol="argmin"; }
-    else if (n=="argmax") { symbol="argmax"; }
-    else if (n=="inf") { symbol="inf"; heightIsAscent=true; }
-    else if (n=="sup") { symbol="sup"; heightIsAscent=true; }
-    else if (n=="liminf") { symbol="liminf"; heightIsAscent=true; }
-    else if (n=="limsup") { symbol="limsup"; heightIsAscent=true; }
-    else if (n=="lim") { symbol="lim"; heightIsAscent=true; }
-    else if (n=="max") { symbol="max"; }
-    else if (n=="min") { symbol="min"; }
-    else if (n=="sec") { symbol="sec"; }
-    else if (n=="gcd") { symbol="gcd"; }
-    else if (n=="hom") { symbol="hom"; }
-    else if (n=="ker") { symbol="ker"; }
-    else if (n=="dim") { symbol="dim"; }
-    else if (n=="cot") { symbol="cot"; }
-    else if (n=="arg") { symbol="arg"; }
-    else if (n=="det") { symbol="det"; }
-    else if (n=="deg") { symbol="deg"; }
-    else if (n=="Pr") { symbol="Pr"; }
-    else if (n=="coth") { symbol="coth"; }
-    else {
-        if (parent->get_fontEncoding()==MTFEwinSymbol) {
-            // first we start with greek characters
-            font=MTSFgreek;
-            italic=-1;
-            if (n=="alpha") symbol="a";
-            else if (n=="beta") symbol="b";
-            else if (n=="gamma") symbol="g";
-            else if (n=="delta") symbol="d";
-            else if (n=="epsilon") symbol="e";
-            else if (n=="varepsilon") symbol="e";
-            else if (n=="zeta") symbol="z";
-            else if (n=="eta") symbol="h";
-            else if (n=="theta") symbol="q";
-            else if (n=="vartheta") symbol="J";
-            else if (n=="iota") symbol="i";
-            else if (n=="kappa") symbol="k";
-            else if (n=="lambda") symbol="l";
-            else if (n=="mu") symbol="m";
-            else if (n=="nu") symbol="n";
-            else if (n=="xi") symbol="x";
-            else if (n=="pi") symbol="p";
-            else if (n=="varpi") symbol="v";
-            else if (n=="rho") symbol="r";
-            else if (n=="sigma") symbol="s";
-            else if (n=="varsigma") symbol="V";
-            else if (n=="tau") symbol="t";
-            else if (n=="upsilon") symbol="u";
-            else if (n=="phi") symbol="f";
-            else if (n=="varphi") symbol="j";
-            else if (n=="chi") symbol="c";
-            else if (n=="psi") symbol="y";
-            else if (n=="omega") symbol="w";
-            else if (n=="Gamma") symbol="G";
-            else if (n=="Delta") symbol="D";
-            else if (n=="Theta") symbol="Q";
-            else if (n=="Lambda") symbol="L";
-            else if (n=="Omega") symbol="W";
-            else if (n=="Xi") symbol="X";
-            else if (n=="Pi") symbol="P";
-            else if (n=="Sigma") symbol="S";
-            else if (n=="sum") { symbol="S"; fontFactor=mathFontFactor; heightIsAscent=true; exactAscent=true; }
-            else if (n=="prod") { symbol="P"; fontFactor=mathFontFactor; heightIsAscent=true; exactAscent=true; }
-            else if (n=="Upsilon") symbol="";
-            else if (n=="Phi") symbol="F";
-            else if (n=="Psi") symbol="Y";
-            else {
-                // now we set the symbols from the Symbol font
-                font=MTSFsymbol;
-                if (n=="leftrightarrow") symbol=QChar(0xAB);
-                else if (n=="leftarrow") symbol=QChar(0xAC);
-                else if (n=="rightarrow"||n=="to") symbol=QChar(0xAE);
-                else if (n=="uparrow") symbol=QChar(0xAD);
-                else if (n=="downarrow") symbol=QChar(0xAF);
-                else if (n=="Leftrightarrow" || n=="iff") symbol=QChar(0xDB);
-                else if (n=="Leftarrow") symbol=QChar(0xDC);
-                else if (n=="Rightarrow") symbol=QChar(0xDE);
-                else if (n=="Uparrow") symbol=QChar(0xDD);
-                else if (n=="Downarrow") symbol=QChar(0xFF);
-                else if (n=="pm") symbol=QChar(0xB1);
-                else if (n=="leq") symbol=QChar(0xA3);
-                else if (n=="geq") symbol=QChar(0xB3);
-                else if (n=="times") symbol=QChar(0xB4);
-                else if (n=="propto") symbol=QChar(0xB5);
-                else if (n=="partial") symbol=QChar(0xB6);
-                else if (n=="bullet") symbol=QChar(0xB7);
-                else if (n=="neq"||n=="ne") symbol=QChar(0xB9);
-                else if (n=="equiv") symbol=QChar(0xBA);
-                else if (n=="approx") symbol=QChar(0xBB);
-                else if (n=="ellipsis") symbol=QChar(0xBC);
-                else if (n=="Im") symbol=QChar(0xC1);
-                else if (n=="Re") symbol=QChar(0xC2);
-                else if (n=="otimes") symbol=QChar(0xC4);
-                else if (n=="oplus") symbol=QChar(0xC5);
-                else if (n=="oslash") symbol=QChar(0xC6);
-                else if (n=="cap"||n=="land") symbol=QChar(0xC7);
-                else if (n=="cup"||n=="lor") symbol=QChar(0xC8);
-                else if (n=="supset") symbol=QChar(0xC9);
-                else if (n=="supseteq") symbol=QChar(0xCA);
-                else if (n=="supsetnot") symbol=QChar(0xCB);
-                else if (n=="subset") symbol=QChar(0xCC);
-                else if (n=="subseteq") symbol=QChar(0xCD);
-                else if (n=="in") symbol=QChar(0xCE);
-                else if (n=="notin") symbol=QChar(0xCF);
-                else if (n=="angle") symbol=QChar(0xD0);
-                else if (n=="nabla") symbol=QChar(0xD1);
-                else if (n=="copyright") symbol=QChar(0xD3);
-                else if (n=="registered") symbol=QChar(0xD2);
-                else if (n=="trademark") symbol=QChar(0xD4);
-                else if (n=="cdot") symbol=QChar(0xD7);
-                else if (n=="neg") symbol=QChar(0xD8);
-                else if (n=="wedge") symbol=QChar(0xD9);
-                else if (n=="vee") symbol=QChar(0xDA);
-                else if (n=="diamond") symbol=QChar(0xE0);
-                else if (n=="langle") symbol=QChar(0xE1);
-                else if (n=="rangle") symbol=QChar(0xF1);
-                else if (n=="int") { symbol=QChar(0xF2); fontFactor=mathFontFactor; yfactor=+0.1; }
-                else if (n=="forall") { symbol=QChar(0x22); }
-                else if (n=="exists") { symbol=QChar(0x24); }
-                else if (n=="cong") { symbol=QChar(0x40); }
-                else if (n=="bot") { symbol=QChar(0x5E); }
+
+    static QHash<QString, QString> simpleTranslations;
+    if (simpleTranslations.isEmpty()) {
+      simpleTranslations.insert("", " ");
+      simpleTranslations.insert("sin", "sin");
+      simpleTranslations.insert("cos", "cos");
+      simpleTranslations.insert("tan", "tan");
+      simpleTranslations.insert("sinh", "sinh");
+      simpleTranslations.insert("cosh", "cosh");
+      simpleTranslations.insert("tanh", "tanh");
+      simpleTranslations.insert("atan", "atan");
+      simpleTranslations.insert("acos", "acos");
+      simpleTranslations.insert("asin", "asin");
+      simpleTranslations.insert("arcsin", "arcsin");
+      simpleTranslations.insert("arccos", "arccos");
+      simpleTranslations.insert("arctan", "arctan");
+      simpleTranslations.insert("degree", QLatin1String("\xB0"));
+      simpleTranslations.insert("ii", "i");
+      simpleTranslations.insert("dd", "d");
+      simpleTranslations.insert("exp", "exp");
+      simpleTranslations.insert("log", "log");
+      simpleTranslations.insert("ln", "ln");
+      simpleTranslations.insert("ld", "ld");
+      simpleTranslations.insert("lb", "lb");
+      simpleTranslations.insert("argmin", "argmin");
+      simpleTranslations.insert("argmax", "argmax");
+      simpleTranslations.insert("max", "max");
+      simpleTranslations.insert("min", "min");
+      simpleTranslations.insert("sec", "sec");
+      simpleTranslations.insert("gcd", "gcd");
+      simpleTranslations.insert("hom", "hom");
+      simpleTranslations.insert("ker", "ker");
+      simpleTranslations.insert("dim", "dim");
+      simpleTranslations.insert("cot", "cot");
+      simpleTranslations.insert("arg", "arg");
+      simpleTranslations.insert("det", "det");
+      simpleTranslations.insert("deg", "deg");
+      simpleTranslations.insert("Pr", "Pr");
+      simpleTranslations.insert("coth", "coth");
+    }
 
 
-                else if (n=="ll") { symbol="<<"; }
-                else if (n=="gg") { symbol=">>"; }
-                else if (n=="bbC") { symbol="C"; bold=+1; italic=-1; }
-                else if (n=="bbH") { symbol="H"; bold=+1; italic=-1; }
-                else if (n=="bbN") { symbol="N"; bold=+1; italic=-1; }
-                else if (n=="bbP") { symbol="P"; bold=+1; italic=-1; }
-                else if (n=="bbQ") { symbol="Q"; bold=+1; italic=-1; }
-                else if (n=="bbR") { symbol="R"; bold=+1; italic=-1; }
-                else if (n=="bbZ") { symbol="Z"; bold=+1; italic=-1; }
-                else if (n=="Alef"  || n=="alef") symbol=QChar(0xC0);
-                else if (n=="tilde") symbol="~";
-                else if (n=="iint") { symbol=QString(2,QChar(0xF2)); fontFactor=mathFontFactor; yfactor=+0.1; }
-                else if (n=="iiint") { symbol=QString(3,QChar(0xF2)); fontFactor=mathFontFactor; yfactor=+0.1; }
-                else if (n=="emptyset") symbol=QChar(0xC6);
-                else if (n=="varnothing") symbol=QChar(0xC6);
-                else if (n=="lceil") symbol=QChar(0xE9);
-                else if (n=="rceil") symbol=QChar(0xF9);
-                else if (n=="lfloor") symbol=QChar(0xEB);
-                else if (n=="rfloor") symbol=QChar(0xFB);
-                else if (n=="subsetnot") symbol=QChar(0xCB);
-                else if (n=="DC") symbol="=";
-                else if (n=="bot") { symbol=QChar(0x5E); }
-                else if (n=="cdots") { symbol=QString(3,QChar(0xD7)); }
-                else if (n=="dots" || n=="ldots") { symbol=QChar(0xDC); }
+    static QHash<QString, QString> simpleTranslations_heightIsAscent;
+    if (simpleTranslations_heightIsAscent.isEmpty()) {
+      simpleTranslations_heightIsAscent.insert("erf", "erf");
+      simpleTranslations_heightIsAscent.insert("min", "min");
+      simpleTranslations_heightIsAscent.insert("max", "max");
+      simpleTranslations_heightIsAscent.insert("inf", "inf");
+      simpleTranslations_heightIsAscent.insert("sup", "sup");
+      simpleTranslations_heightIsAscent.insert("liminf", "liminf");
+      simpleTranslations_heightIsAscent.insert("limsup", "limsup");
+      simpleTranslations_heightIsAscent.insert("lim", "lim");
+    }
 
-                else if (n=="cent") { symbol="c"; }
-                else if (n=="bigcap") { symbol=QChar(0xC7); fontFactor=2; }
-                else if (n=="bigcup") { symbol=QChar(0xC8); fontFactor=2; }
-                else if (n=="bigvee") { symbol=QChar(0xDA); fontFactor=2; }
-                else if (n=="bighat") { symbol=QChar(0xD9); fontFactor=2; }
+    static QHash<QString, QString> winSymbolGreek;
+    if (winSymbolGreek.isEmpty()) {
+      winSymbolGreek.insert("alpha", "a");
+      winSymbolGreek.insert("beta", "b");
+      winSymbolGreek.insert("gamma", "g");
+      winSymbolGreek.insert("delta", "d");
+      winSymbolGreek.insert("epsilon", "e");
+      winSymbolGreek.insert("varepsilon", "e");
+      winSymbolGreek.insert("zeta", "z");
+      winSymbolGreek.insert("eta", "h");
+      winSymbolGreek.insert("theta", "q");
+      winSymbolGreek.insert("vartheta", "J");
+      winSymbolGreek.insert("iota", "i");
+      winSymbolGreek.insert("kappa", "k");
+      winSymbolGreek.insert("lambda", "l");
+      winSymbolGreek.insert("mu", "m");
+      winSymbolGreek.insert("nu", "n");
+      winSymbolGreek.insert("xi", "x");
+      winSymbolGreek.insert("pi", "p");
+      winSymbolGreek.insert("varpi", "v");
+      winSymbolGreek.insert("rho", "r");
+      winSymbolGreek.insert("sigma", "s");
+      winSymbolGreek.insert("varsigma", "V");
+      winSymbolGreek.insert("tau", "t");
+      winSymbolGreek.insert("upsilon", "u");
+      winSymbolGreek.insert("phi", "f");
+      winSymbolGreek.insert("varphi", "j");
+      winSymbolGreek.insert("chi", "c");
+      winSymbolGreek.insert("psi", "y");
+      winSymbolGreek.insert("omega", "w");
+      winSymbolGreek.insert("Gamma", "G");
+      winSymbolGreek.insert("Delta", "D");
+      winSymbolGreek.insert("Theta", "Q");
+      winSymbolGreek.insert("Lambda", "L");
+      winSymbolGreek.insert("Omega", "W");
+      winSymbolGreek.insert("Xi", "X");
+      winSymbolGreek.insert("Pi", "P");
+      winSymbolGreek.insert("Sigma", "S");
+      winSymbolGreek.insert("Upsilon", "");
+      winSymbolGreek.insert("Phi", "F");
+      winSymbolGreek.insert("Psi", "Y");
+    }
 
-                else { // here are text mode symbols, i.e. bold and italic won't be touched
-                    bold=-1;
-                    italic=-1;
-                    font=MTSFdefault;
-                    if (n=="_") { symbol="_"; bold=0; italic=0; }
-                    else if (n=="}") { symbol="}"; }
-                    else if (n=="{") { symbol="{"; }
-                    else if (n=="hbar") { symbol="h"; bold=0; italic=0; drawBar=true; }
-                    else if (n=="euro") { symbol=""; bold=0; italic=0; }
-                    else if (n=="cent") { symbol=QChar(0xA2); bold=0; italic=0; }
-                    else if (n=="pound") { symbol=QChar(0xA3); bold=0; italic=0; }
-                    else if (n=="yen") { symbol=QChar(0xA5); bold=0; italic=0; }
-                    else if (n=="div") { symbol=QChar(0xF7); bold=0; italic=0; }
-                    else if (n=="backslash") { symbol="\\"; bold=0; italic=0; }
-                    //else if (n=="|") { symbol="||"; bold=0; italic=0; }
-                    else if (n=="$") { symbol="$"; bold=0; italic=0; }
-                    else if (n=="%") { symbol="%"; bold=0; italic=0; }
-                    else if (n=="&") { symbol="&"; bold=0; italic=0; }
-                    else if (n=="#") { symbol="#"; bold=0; italic=0; }
-                    else if (n=="ast") { symbol="*"; bold=0; italic=0; }
-                    else if (n=="glq") { symbol="'"; bold=0; italic=0; }
-                    else if (n=="grq") { symbol="'"; bold=0; italic=0; }
-                    else if (n=="glqq") { symbol="\""; bold=0; italic=0; }
-                    else if (n=="grqq") { symbol="\""; bold=0; italic=0; }
-                    else if (n=="flq") { symbol="<"; bold=0; italic=0; }
-                    else if (n=="frq") { symbol=">"; bold=0; italic=0; }
-                    else if (n=="flqq") { symbol=""; bold=0; italic=0; }
-                    else if (n=="frqq") { symbol=""; bold=0; italic=0; }
-                }
-                //else if (n=="") { symbol=QChar(); font=MTSFdefault; }
-                //else if (n=="") symbol=QChar(0x);
+    static QHash<QString, QString> winSymbolSymbol;
+    if (winSymbolSymbol.isEmpty()) { 
+      winSymbolSymbol.insert("leftrightarrow", QChar(0xAB));
+      winSymbolSymbol.insert("leftarrow", QChar(0xAC));
+      winSymbolSymbol.insert("rightarrow", QChar(0xAE));
+      winSymbolSymbol.insert("to", QChar(0xAE));
+      winSymbolSymbol.insert("uparrow", QChar(0xAD));
+      winSymbolSymbol.insert("downarrow", QChar(0xAF));
+      winSymbolSymbol.insert("Leftrightarrow", QChar(0xDB));
+      winSymbolSymbol.insert("iff", QChar(0xDB));
+      winSymbolSymbol.insert("Leftarrow", QChar(0xDC));
+      winSymbolSymbol.insert("Rightarrow", QChar(0xDE));
+      winSymbolSymbol.insert("Uparrow", QChar(0xDD));
+      winSymbolSymbol.insert("Downarrow", QChar(0xFF));
+      winSymbolSymbol.insert("pm", QChar(0xB1));
+      winSymbolSymbol.insert("leq", QChar(0xA3));
+      winSymbolSymbol.insert("geq", QChar(0xB3));
+      winSymbolSymbol.insert("times", QChar(0xB4));
+      winSymbolSymbol.insert("propto", QChar(0xB5));
+      winSymbolSymbol.insert("partial", QChar(0xB6));
+      winSymbolSymbol.insert("bullet", QChar(0xB7));
+      winSymbolSymbol.insert("neq", QChar(0xB9));
+      winSymbolSymbol.insert("ne", QChar(0xB9));
+      winSymbolSymbol.insert("equiv", QChar(0xBA));
+      winSymbolSymbol.insert("approx", QChar(0xBB));
+      winSymbolSymbol.insert("ellipsis", QChar(0xBC));
+      winSymbolSymbol.insert("Im", QChar(0xC1));
+      winSymbolSymbol.insert("Re", QChar(0xC2));
+      winSymbolSymbol.insert("otimes", QChar(0xC4));
+      winSymbolSymbol.insert("oplus", QChar(0xC5));
+      winSymbolSymbol.insert("oslash", QChar(0xC6));
+      winSymbolSymbol.insert("cap", QChar(0xC7));
+      winSymbolSymbol.insert("land", QChar(0xC7));
+      winSymbolSymbol.insert("cup", QChar(0xC8));
+      winSymbolSymbol.insert("lor", QChar(0xC8));
+      winSymbolSymbol.insert("supset", QChar(0xC9));
+      winSymbolSymbol.insert("supseteq", QChar(0xCA));
+      winSymbolSymbol.insert("supsetnot", QChar(0xCB));
+      winSymbolSymbol.insert("subset", QChar(0xCC));
+      winSymbolSymbol.insert("subseteq", QChar(0xCD));
+      winSymbolSymbol.insert("in", QChar(0xCE));
+      winSymbolSymbol.insert("notin", QChar(0xCF));
+      winSymbolSymbol.insert("angle", QChar(0xD0));
+      winSymbolSymbol.insert("nabla", QChar(0xD1));
+      winSymbolSymbol.insert("copyright", QChar(0xD3));
+      winSymbolSymbol.insert("registered", QChar(0xD2));
+      winSymbolSymbol.insert("trademark", QChar(0xD4));
+      winSymbolSymbol.insert("cdot", QChar(0xD7));
+      winSymbolSymbol.insert("neg", QChar(0xD8));
+      winSymbolSymbol.insert("wedge", QChar(0xD9));
+      winSymbolSymbol.insert("vee", QChar(0xDA));
+      winSymbolSymbol.insert("diamond", QChar(0xE0));
+      winSymbolSymbol.insert("langle", QChar(0xE1));
+      winSymbolSymbol.insert("rangle", QChar(0xF1));
+      winSymbolSymbol.insert("forall", QChar(0x22));
+      winSymbolSymbol.insert("exists", QChar(0x24));
+      winSymbolSymbol.insert("cong", QChar(0x40));
+      winSymbolSymbol.insert("bot", QChar(0x5E));
+      winSymbolSymbol.insert("ll", "<<");
+      winSymbolSymbol.insert("gg", ">>");
+      winSymbolSymbol.insert("Alef", QChar(0xC0));
+      winSymbolSymbol.insert("alef", QChar(0xC0));
+      winSymbolSymbol.insert("tilde", "~");
+      winSymbolSymbol.insert("emptyset", QChar(0xC6));
+      winSymbolSymbol.insert("varnothing", QChar(0xC6));
+      winSymbolSymbol.insert("lceil", QChar(0xE9));
+      winSymbolSymbol.insert("rceil", QChar(0xF9));
+      winSymbolSymbol.insert("lfloor", QChar(0xEB));
+      winSymbolSymbol.insert("rfloor", QChar(0xFB));
+      winSymbolSymbol.insert("subsetnot", QChar(0xCB));
+      winSymbolSymbol.insert("DC", "=");
+      winSymbolSymbol.insert("bot", QChar(0x5E));
+      winSymbolSymbol.insert("cdots", QString(3, QChar(0xD7)));
+      winSymbolSymbol.insert("dots", QChar(0xDC));
+      winSymbolSymbol.insert("ldots", QChar(0xDC));
+      winSymbolSymbol.insert("cent", "c");
+    }
+
+    
+    static QHash<QString, QString> unicodeGreek;
+    if (unicodeGreek.isEmpty()) {
+      unicodeGreek.insert("alpha", QChar(0x3B1));
+      unicodeGreek.insert("beta", QChar(0x3B2));
+      unicodeGreek.insert("gamma", QChar(0x3B3));
+      unicodeGreek.insert("delta", QChar(0x3B4));
+      unicodeGreek.insert("epsilon", QChar(0x3B5));
+      unicodeGreek.insert("varepsilon", QChar(0x3B5));
+      unicodeGreek.insert("zeta", QChar(0x3B6));
+      unicodeGreek.insert("eta", QChar(0x3B7));
+      unicodeGreek.insert("theta", QChar(0x3B8));
+      unicodeGreek.insert("vartheta", QChar(0x3D1));
+      unicodeGreek.insert("iota", QChar(0x3B9));
+      unicodeGreek.insert("kappa", QChar(0x3BA));
+      unicodeGreek.insert("lambda", QChar(0x3BB));
+      unicodeGreek.insert("mu", QChar(0x3BC));
+      unicodeGreek.insert("nu", QChar(0x3BD));
+      unicodeGreek.insert("xi", QChar(0x3BE));
+      unicodeGreek.insert("pi", QChar(0x3C0));
+      unicodeGreek.insert("varpi", QChar(0x3D6));
+      unicodeGreek.insert("rho", QChar(0x3C1));
+      unicodeGreek.insert("varrho", QChar(0x3F1));
+      unicodeGreek.insert("sigma", QChar(0x3C3));
+      unicodeGreek.insert("varsigma", QChar(0x3C2));
+      unicodeGreek.insert("tau", QChar(0x3C4));
+      unicodeGreek.insert("upsilon", QChar(0x3C5));
+      unicodeGreek.insert("phi", QChar(0x3D5));
+      unicodeGreek.insert("varphi", QChar(0x3C6));
+      unicodeGreek.insert("chi", QChar(0x3C7));
+      unicodeGreek.insert("psi", QChar(0x3C8));
+      unicodeGreek.insert("omega", QChar(0x3C9));
+      unicodeGreek.insert("Omega", QChar(0x3A9));
+      unicodeGreek.insert("Gamma", QChar(0x393));
+      unicodeGreek.insert("Delta", QChar(0x394));
+      unicodeGreek.insert("Theta", QChar(0x398));
+      unicodeGreek.insert("Lambda", QChar(0x39B));
+      unicodeGreek.insert("Xi", QChar(0x39E));
+      unicodeGreek.insert("Pi", QChar(0x3A0));
+      unicodeGreek.insert("Sigma", QChar(0x3A3));
+      unicodeGreek.insert("Upsilon", QChar(0x3A5));
+      unicodeGreek.insert("Phi", QChar(0x3A6));
+      unicodeGreek.insert("Psi", QChar(0x3A8));
+    }
+    
+    static QHash<QString, QString> unicodeSymbol;
+    if (unicodeSymbol.isEmpty()) {
+      unicodeSymbol.insert("leftrightarrow", QChar(0x2194));
+      unicodeSymbol.insert("leftarrow", QChar(0x2190));
+      unicodeSymbol.insert("rightarrow", QChar(0x2192));
+      unicodeSymbol.insert("to", QChar(0x2192));
+      unicodeSymbol.insert("uparrow", QChar(0x2191));
+      unicodeSymbol.insert("downarrow", QChar(0x2193));
+      unicodeSymbol.insert("updownarrow", QChar(0x2195));
+      unicodeSymbol.insert("Leftrightarrow", QChar(0x21D4));
+      unicodeSymbol.insert("iff", QChar(0x21D4));
+      unicodeSymbol.insert("Leftarrow", QChar(0x21D0));
+      unicodeSymbol.insert("Rightarrow", QChar(0x21D2));
+      unicodeSymbol.insert("Uparrow", QChar(0x21D1));
+      unicodeSymbol.insert("Downarrow", QChar(0x21D3));
+      unicodeSymbol.insert("Updownarrow", QChar(0x21D5));
+      unicodeSymbol.insert("pm", QChar(0x00B1));
+      unicodeSymbol.insert("mp", QChar(0x2213));
+      unicodeSymbol.insert("leq", QChar(0x2264));
+      unicodeSymbol.insert("geq", QChar(0x2265));
+      unicodeSymbol.insert("ll", QChar(0x226A));
+      unicodeSymbol.insert("gg", QChar(0x226B));
+      unicodeSymbol.insert("hbar", QChar(0x210F));
+      unicodeSymbol.insert("euro", QChar(0x20AC));
+      unicodeSymbol.insert("Angstrom", QChar(0x212B));
+      unicodeSymbol.insert("Alef", QChar(0x2135));
+      unicodeSymbol.insert("Bet", QChar(0x2136));
+      unicodeSymbol.insert("Gimel", QChar(0x2137));
+      unicodeSymbol.insert("Dalet", QChar(0x2138));
+      unicodeSymbol.insert("alef", QChar(0x2135));
+      unicodeSymbol.insert("bet", QChar(0x2136));
+      unicodeSymbol.insert("gimel", QChar(0x2137));
+      unicodeSymbol.insert("dalet", QChar(0x2138));
+      unicodeSymbol.insert("nexists", QChar(0x2204));
+      unicodeSymbol.insert("ni", QChar(0x220B));
+      unicodeSymbol.insert("notni", QChar(0x220C));
+      unicodeSymbol.insert("circ", QChar(0x2218));
+      unicodeSymbol.insert("tilde", QChar(0x223C));
+      unicodeSymbol.insert("emptyset", QChar(0x2300));
+      unicodeSymbol.insert("varnothing", QChar(0x2300));
+      unicodeSymbol.insert("odot", QChar(0x2299));
+      unicodeSymbol.insert("ominus", QChar(0x2296));
+      unicodeSymbol.insert("lceil", QChar(0x2308));
+      unicodeSymbol.insert("rceil", QChar(0x2309));
+      unicodeSymbol.insert("lfloor", QChar(0x230A));
+      unicodeSymbol.insert("rfloor", QChar(0x230B));
+      unicodeSymbol.insert("subsetnot", QChar(0x2284));
+      unicodeSymbol.insert("DC", QChar(0x2393));
+      unicodeSymbol.insert("bot", QChar(0x22A4));
+      unicodeSymbol.insert("cdots", QString(QChar(0x00B7)) + QString(QChar(0x00B7)) + QString(QChar(0x00B7)));
+      unicodeSymbol.insert("vdots", QChar(0x22EE));
+      unicodeSymbol.insert("iddots", QChar(0x22F0));
+      unicodeSymbol.insert("ddots", QChar(0x22F1));
+      unicodeSymbol.insert("dots", "...");
+      unicodeSymbol.insert("ldots", "...");
+      unicodeSymbol.insert("perthousand", QChar(0x2030));
+      unicodeSymbol.insert("leftharpoonup", QChar(0x21BC));
+      unicodeSymbol.insert("rightharpoonup", QChar(0x21C0));
+      unicodeSymbol.insert("upharpoonleft", QChar(0x21BF));
+      unicodeSymbol.insert("downharpoonleft", QChar(0x21C3));
+      unicodeSymbol.insert("leftrightharpoon", QChar(0x21CB));
+      unicodeSymbol.insert("rightleftharpoon", QChar(0x21CC));
+      unicodeSymbol.insert("leftharpoondown", QChar(0x21BD));
+      unicodeSymbol.insert("rightharpoondown", QChar(0x21C1));
+      unicodeSymbol.insert("upharpoonright", QChar(0x21BE));
+      unicodeSymbol.insert("downharpoonright", QChar(0x21C2));
+      unicodeSymbol.insert("nwarrow", QChar(0x2196));
+      unicodeSymbol.insert("nearrow", QChar(0x2197));
+      unicodeSymbol.insert("searrow", QChar(0x2198));
+      unicodeSymbol.insert("swarrow", QChar(0x2199));
+      unicodeSymbol.insert("mapsto", QChar(0x21A6));
+      unicodeSymbol.insert("cent", QChar(0x00A2));
+      unicodeSymbol.insert("pound", QChar(0x00A3));
+      unicodeSymbol.insert("yen", QChar(0x00A5));
+      unicodeSymbol.insert("div", QChar(0x00F7));
+      unicodeSymbol.insert("multimap", QChar(0x22B8));
+      unicodeSymbol.insert("maporiginal", QChar(0x22B6));
+      unicodeSymbol.insert("mapimage", QChar(0x22B7));
+      unicodeSymbol.insert("benzene", QChar(0x232C));
+      unicodeSymbol.insert("times", QChar(0x2A2F));
+      unicodeSymbol.insert("propto", QChar(0x221D));
+      unicodeSymbol.insert("partial", QChar(0x2202));
+      unicodeSymbol.insert("bullet", QChar(0x2219));
+      unicodeSymbol.insert("neq", QChar(0x2260));
+      unicodeSymbol.insert("ne", QChar(0x2260));
+      unicodeSymbol.insert("equiv", QChar(0x2261));
+      unicodeSymbol.insert("approx", QChar(0x2245));
+      unicodeSymbol.insert("ellipsis", QChar(0x2026));
+      unicodeSymbol.insert("Im", QChar(0x2111));
+      unicodeSymbol.insert("Re", QChar(0x211C));
+      unicodeSymbol.insert("otimes", QChar(0x2297));
+      unicodeSymbol.insert("oplus", QChar(0x2295));
+      unicodeSymbol.insert("oslash", QChar(0x2298));
+      unicodeSymbol.insert("cap", QChar(0x2229));
+      unicodeSymbol.insert("land", QChar(0x2229));
+      unicodeSymbol.insert("cup", QChar(0x222A));
+      unicodeSymbol.insert("lor", QChar(0x222A));
+      unicodeSymbol.insert("supset", QChar(0x2283));
+      unicodeSymbol.insert("supseteq", QChar(0x2286));
+      unicodeSymbol.insert("supsetnot", QChar(0x2285));
+      unicodeSymbol.insert("subset", QChar(0x2282));
+      unicodeSymbol.insert("subseteq", QChar(0x2286));
+      unicodeSymbol.insert("in", QChar(0x2208));
+      unicodeSymbol.insert("notin", QChar(0x2209));
+      unicodeSymbol.insert("angle", QChar(0x2221));
+      unicodeSymbol.insert("nabla", QChar(0x2207));
+      unicodeSymbol.insert("copyright", QChar(0x00A9));
+      unicodeSymbol.insert("registered", QChar(0x00AE));
+      unicodeSymbol.insert("trademark", QChar(0x2122));
+      unicodeSymbol.insert("cdot", QChar(0x00B7));
+      unicodeSymbol.insert("neg", QChar(0x00AC));
+      unicodeSymbol.insert("wedge", QChar(0x2227));
+      unicodeSymbol.insert("vee", QChar(0x2228));
+      unicodeSymbol.insert("diamond", QChar(0xE0));
+      unicodeSymbol.insert("langle", QChar(0x2329));
+      unicodeSymbol.insert("rangle", QChar(0x232A));
+      unicodeSymbol.insert("infty", QChar(0x221E));
+      unicodeSymbol.insert("forall", QChar(0x2200));
+      unicodeSymbol.insert("exists", QChar(0x2203));
+      unicodeSymbol.insert("cong", QChar(0x2245));
+      unicodeSymbol.insert("bot", QChar(0x22A5));
+
+    }
+    
+    static QHash<QString, QString> latexSimpleSymbol;
+    if (latexSimpleSymbol.isEmpty()) {
+      latexSimpleSymbol.insert("_", "_");
+      latexSimpleSymbol.insert("}", "}");
+      latexSimpleSymbol.insert("{", "{");
+      latexSimpleSymbol.insert("$", "$");
+      latexSimpleSymbol.insert("%", "%");
+      latexSimpleSymbol.insert("&", "&");
+      latexSimpleSymbol.insert("#", "#");
+      latexSimpleSymbol.insert("ast", "*");
+      latexSimpleSymbol.insert("glq", QChar(0x27));
+      latexSimpleSymbol.insert("grq", QChar(0x60));
+      latexSimpleSymbol.insert("glqq", QChar(0x5C));
+      latexSimpleSymbol.insert("grqq", "\"");
+    }
+    
+    static QHash<QString, QString> latexGreek;
+    if (latexGreek.isEmpty()) {
+      latexGreek.insert("alpha", QChar(0xAE));
+      latexGreek.insert("beta", QChar(0xAF));
+      latexGreek.insert("gamma", QChar(0xB0));
+      latexGreek.insert("delta", QChar(0xB1));
+      latexGreek.insert("epsilon", QChar(0x22));
+      latexGreek.insert("varepsilon", QChar(0xB2));
+      latexGreek.insert("zeta", QChar(0xB3));
+      latexGreek.insert("eta", QChar(0xB4));
+      latexGreek.insert("theta", QChar(0xB5));
+      latexGreek.insert("vartheta", QChar(0x23));
+      latexGreek.insert("iota", QChar(0xB6));
+      latexGreek.insert("kappa", QChar(0xB7));
+      latexGreek.insert("lambda", QChar(0xB8));
+      latexGreek.insert("mu", QChar(0xB9));
+      latexGreek.insert("nu", QChar(0xBA));
+      latexGreek.insert("xi", QChar(0xBB));
+      latexGreek.insert("pi", QChar(0xBC));
+      latexGreek.insert("varpi", QChar(0x24));
+      latexGreek.insert("rho", QChar(0xBD));
+      latexGreek.insert("varrho", QChar(0x25));
+      latexGreek.insert("sigma", QChar(0xBE));
+      latexGreek.insert("varsigma", QChar(0x26));
+      latexGreek.insert("tau", QChar(0xBF));
+      latexGreek.insert("upsilon", QChar(0xC0));
+      latexGreek.insert("phi", QChar(0xC1));
+      latexGreek.insert("varphi", QChar(0x27));
+      latexGreek.insert("chi", QChar(0xC2));
+      latexGreek.insert("psi", QChar(0xC3));
+      latexGreek.insert("omega", QChar(0x21));
+      latexGreek.insert("Gamma", QChar(0xA1));
+      latexGreek.insert("Delta", QChar(0xA2));
+      latexGreek.insert("Theta", QChar(0xA3));
+      latexGreek.insert("Lambda", QChar(0xA4));
+      latexGreek.insert("Xi", QChar(0xA5));
+      latexGreek.insert("Pi", QChar(0xA6));
+      latexGreek.insert("Sigma", QChar(0xA7));
+      latexGreek.insert("Upsilon", QChar(0xA8));
+      latexGreek.insert("Phi", QChar(0xA9));
+      latexGreek.insert("Psi", QChar(0xAA));
+      latexGreek.insert("leftharpoonup", QChar(0x28));
+      latexGreek.insert("rightharpoonup", QChar(0x2A));
+      latexGreek.insert("leftharpoondown", QChar(0x29));
+      latexGreek.insert("rightharpoondown", QChar(0x2B));
+      latexGreek.insert("neg", QChar(0xAC));
+      latexGreek.insert("star", QChar(0x3F));
+    }
+    
+    static QHash<QString, QString> latexSymbol;
+    if (latexSymbol.isEmpty()) {
+      latexSymbol.insert("leftrightarrow", QChar(0x24));
+      latexSymbol.insert("leftarrow", QChar(0xc3));
+      latexSymbol.insert("rightarrow", QChar(0x21));
+      latexSymbol.insert("to", QChar(0x21));
+      latexSymbol.insert("uparrow", QChar(0x22));
+      latexSymbol.insert("downarrow", QChar(0x23));
+      latexSymbol.insert("updownarrow", QChar(0x6c));
+      latexSymbol.insert("Leftrightarrow", QChar(0x2c));
+      latexSymbol.insert("iff", QChar(0x2c));
+      latexSymbol.insert("Leftarrow", QChar(0x28));
+      latexSymbol.insert("Rightarrow", QChar(0x29));
+      latexSymbol.insert("Uparrow", QChar(0x2a));
+      latexSymbol.insert("Downarrow", QChar(0x2b));
+      latexSymbol.insert("Updownarrow", QChar(0x6d));
+      latexSymbol.insert("pm", QChar(0xa7));
+      latexSymbol.insert("mp", QChar(0xa8));
+      latexSymbol.insert("leq", QChar(0xb7));
+      latexSymbol.insert("geq", QChar(0xb8));
+      latexSymbol.insert("ll", QChar(0xbf));
+      latexSymbol.insert("gg", QChar(0xc0));
+      latexSymbol.insert("Alef", QChar(0x40));
+      latexSymbol.insert("alef", QChar(0x40));
+      latexSymbol.insert("ni", QChar(0x33));
+      latexSymbol.insert("circ", QChar(0xb1));
+      latexSymbol.insert("tilde", QChar(0xbb));
+      latexSymbol.insert("emptyset", QChar(0x3b));
+      latexSymbol.insert("odot", QChar(0xaf));
+      latexSymbol.insert("ominus", QChar(0xaa));
+      latexSymbol.insert("odiv", QChar(0xae));
+      latexSymbol.insert("oplus", QChar(0xa9));
+      latexSymbol.insert("lceil", QChar(0x64));
+      latexSymbol.insert("rceil", QChar(0x65));
+      latexSymbol.insert("lfloor", QChar(0x62));
+      latexSymbol.insert("rfloor", QChar(0x63));
+      latexSymbol.insert("bot", QChar(0x3f));
+      latexSymbol.insert("cdots", QString(3, QChar(0xA2)));
+      latexSymbol.insert("dots", "...");
+      latexSymbol.insert("nwarrow", QChar(0x2d));
+      latexSymbol.insert("nearrow", QChar(0x25));
+      latexSymbol.insert("searrow", QChar(0x26));
+      latexSymbol.insert("swarrow", QChar(0x2e));
+      latexSymbol.insert("div", QChar(0xa5));
+      latexSymbol.insert("times", QChar(0xa3));
+      latexSymbol.insert("propto", QChar(0x2f));
+      latexSymbol.insert("bullet", QChar(0x2b));
+      latexSymbol.insert("equiv", QChar(0xb4));
+      latexSymbol.insert("approx", QChar(0xbc));
+      latexSymbol.insert("ellipsis", "...");
+      latexSymbol.insert("Im", QChar(0x3D));
+      latexSymbol.insert("Re", QChar(0x3C));
+      latexSymbol.insert("oplus", QChar(0xa9));
+      latexSymbol.insert("oslash", QChar(0xae));
+      latexSymbol.insert("cap", QChar(0x5c));
+      latexSymbol.insert("cup", QChar(0x5b));
+      latexSymbol.insert("land", QChar(0x5c));
+      latexSymbol.insert("lor", QChar(0x5b));
+      latexSymbol.insert("supset", QChar(0xbe));
+      latexSymbol.insert("supseteq", QChar(0xb6));
+      latexSymbol.insert("subset", QChar(0xbd));
+      latexSymbol.insert("subseteq", QChar(0xb5));
+      latexSymbol.insert("in", QChar(0x32));
+      latexSymbol.insert("nabla", QChar(0x35));
+      latexSymbol.insert("cdot", QChar(0xa2));
+      latexSymbol.insert("wedge", QChar(0x5e));
+      latexSymbol.insert("vee", QChar(0x5f));
+      latexSymbol.insert("diamond", QChar(0xE0));
+      latexSymbol.insert("langle", QChar(0x68));
+      latexSymbol.insert("rangle", QChar(0x69));
+      latexSymbol.insert("infty", QChar(0x31));
+      latexSymbol.insert("forall", QChar(0x38));
+      latexSymbol.insert("exists", QChar(0x39));
+      latexSymbol.insert("cong", QChar(0xbb));
+      latexSymbol.insert("bot", QChar(0x3f));
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    QHash<QString, QString>::iterator itsimple = simpleTranslations.find(n);
+    if (itsimple!= simpleTranslations.end()) { 
+      symbol=itsimple.value(); 
+    } else {
+      QHash<QString, QString>::iterator itsimplehia = simpleTranslations_heightIsAscent.find(n);
+      if (itsimplehia != simpleTranslations_heightIsAscent.end()) {
+        symbol = itsimplehia.value();
+        heightIsAscent = true; 
+      } else {
+        if (parent->get_fontEncoding() == MTFEwinSymbol) {
+          // first we start with greek characters
+          font = MTSFgreek;
+          italic = -1;
+          QHash<QString, QString>::iterator itgreek = winSymbolGreek.find(n);
+          if (itgreek!=winSymbolGreek.end()) {
+              symbol = itgreek.value();
+          } else if (n == "sum") { symbol = "S"; fontFactor = mathFontFactor; heightIsAscent = true; exactAscent = true; }
+          else if (n == "prod") { symbol = "P"; fontFactor = mathFontFactor; heightIsAscent = true; exactAscent = true; }
+          else {
+            // now we set the symbols from the Symbol font
+            font = MTSFsymbol;
+            QHash<QString, QString>::iterator itsymbol = winSymbolSymbol.find(n);
+            if (itsymbol!=winSymbolSymbol.end()) {
+              symbol = itsymbol.value();
+            } else if (n == "int") { symbol = QChar(0xF2); fontFactor = mathFontFactor; yfactor = +0.1; }
+            else if (n == "bbC") { symbol = "C"; bold = +1; italic = -1; }
+            else if (n == "bbH") { symbol = "H"; bold = +1; italic = -1; }
+            else if (n == "bbN") { symbol = "N"; bold = +1; italic = -1; }
+            else if (n == "bbP") { symbol = "P"; bold = +1; italic = -1; }
+            else if (n == "bbQ") { symbol = "Q"; bold = +1; italic = -1; }
+            else if (n == "bbR") { symbol = "R"; bold = +1; italic = -1; }
+            else if (n == "bbZ") { symbol = "Z"; bold = +1; italic = -1; }
+            else if (n == "iint") { symbol = QString(2, QChar(0xF2)); fontFactor = mathFontFactor; yfactor = +0.1; }
+            else if (n == "iiint") { symbol = QString(3, QChar(0xF2)); fontFactor = mathFontFactor; yfactor = +0.1; }
+            else if (n == "bigcap") { symbol = QChar(0xC7); fontFactor = 2; }
+            else if (n == "bigcup") { symbol = QChar(0xC8); fontFactor = 2; }
+            else if (n == "bigvee") { symbol = QChar(0xDA); fontFactor = 2; }
+            else if (n == "bighat") { symbol = QChar(0xD9); fontFactor = 2; }
+
+            else { // here are text mode symbols, i.e. bold and italic won't be touched
+              bold = -1;
+              italic = -1;
+              font = MTSFdefault;
+              if (n == "_") { symbol = "_"; bold = 0; italic = 0; }
+              else if (n == "}") { symbol = "}"; }
+              else if (n == "{") { symbol = "{"; }
+              else if (n == "hbar") { symbol = "h"; bold = 0; italic = 0; drawBar = true; }
+              else if (n == "euro") { symbol = ""; bold = 0; italic = 0; }
+              else if (n == "cent") { symbol = QChar(0xA2); bold = 0; italic = 0; }
+              else if (n == "pound") { symbol = QChar(0xA3); bold = 0; italic = 0; }
+              else if (n == "yen") { symbol = QChar(0xA5); bold = 0; italic = 0; }
+              else if (n == "div") { symbol = QChar(0xF7); bold = 0; italic = 0; }
+              else if (n == "backslash") { symbol = "\\"; bold = 0; italic = 0; }
+              //else if (n=="|") { symbol="||"; bold=0; italic=0; }
+              else if (n == "$") { symbol = "$"; bold = 0; italic = 0; }
+              else if (n == "%") { symbol = "%"; bold = 0; italic = 0; }
+              else if (n == "&") { symbol = "&"; bold = 0; italic = 0; }
+              else if (n == "#") { symbol = "#"; bold = 0; italic = 0; }
+              else if (n == "ast") { symbol = "*"; bold = 0; italic = 0; }
+              else if (n == "glq") { symbol = "'"; bold = 0; italic = 0; }
+              else if (n == "grq") { symbol = "'"; bold = 0; italic = 0; }
+              else if (n == "glqq") { symbol = "\""; bold = 0; italic = 0; }
+              else if (n == "grqq") { symbol = "\""; bold = 0; italic = 0; }
+              else if (n == "flq") { symbol = "<"; bold = 0; italic = 0; }
+              else if (n == "frq") { symbol = ">"; bold = 0; italic = 0; }
+              else if (n == "flqq") { symbol = ""; bold = 0; italic = 0; }
+              else if (n == "frqq") { symbol = ""; bold = 0; italic = 0; }
             }
-        } else if (parent->get_fontEncoding()==MTFEunicode) { // use UNICODE encoding for special characters
-            // first we start with greek characters
-            font=MTSFdefault; //MTSFgreek;
-            //std::cout<<"encoding unicode\n";
-            if (n=="alpha") symbol=QChar(0x3B1);
-            else if (n=="beta") symbol=QChar(0x3B2);
-            else if (n=="gamma") symbol=QChar(0x3B3);
-            else if (n=="delta") symbol=QChar(0x3B4);
-            else if (n=="epsilon") symbol=QChar(0x3B5);
-            else if (n=="varepsilon") symbol=QChar(0x3B5);
-            else if (n=="zeta") symbol=QChar(0x3B6);
-            else if (n=="eta") symbol=QChar(0x3B7);
-            else if (n=="theta") symbol=QChar(0x3B8);
-            else if (n=="vartheta") symbol=QChar(0x3D1);
-            else if (n=="iota") symbol=QChar(0x3B9);
-            else if (n=="kappa") symbol=QChar(0x3BA);
-            else if (n=="lambda") symbol=QChar(0x3BB);
-            else if (n=="mu") symbol=QChar(0x3BC);
-            else if (n=="nu") symbol=QChar(0x3BD);
-            else if (n=="xi") symbol=QChar(0x3BE);
-            else if (n=="pi") symbol=QChar(0x3C0);
-            else if (n=="varpi") symbol=QChar(0x3D6);
-            else if (n=="rho") symbol=QChar(0x3C1);
-            else if (n=="varrho") symbol=QChar(0x3F1);
-            else if (n=="sigma") symbol=QChar(0x3C3);
-            else if (n=="varsigma") symbol=QChar(0x3C2);
-            else if (n=="tau") symbol=QChar(0x3C4);
-            else if (n=="upsilon") symbol=QChar(0x3C5);
-            else if (n=="phi") symbol=QChar(0x3D5);
-            else if (n=="varphi") symbol=QChar(0x3C6);
-            else if (n=="chi") symbol=QChar(0x3C7);
-            else if (n=="psi") symbol=QChar(0x3C8);
-            else if (n=="omega") symbol=QChar(0x3C9);
-            else if (n=="Omega") symbol=QChar(0x3A9);
-            else if (n=="Gamma") symbol=QChar(0x393);
-            else if (n=="Delta") symbol=QChar(0x394);
-            else if (n=="Theta") symbol=QChar(0x398);
-            else if (n=="Lambda") symbol=QChar(0x39B);
-            else if (n=="Xi") symbol=QChar(0x39E);
-            else if (n=="Pi") symbol=QChar(0x3A0);
-            else if (n=="Sigma") symbol=QChar(0x3A3);
-            else if (n=="Upsilon") symbol=QChar(0x3A5);
-            else if (n=="Phi") symbol=QChar(0x3A6);
-            else if (n=="Psi") symbol=QChar(0x3A8);
-            else {
-                // now we set the symbols from the Symbol font
-                font=MTSFsymbol;
-                if (n=="leftrightarrow") symbol=QChar(0x2194);
-                else if (n=="leftarrow") symbol=QChar(0x2190);
-                else if (n=="rightarrow"||n=="to") symbol=QChar(0x2192);
-                else if (n=="uparrow") symbol=QChar(0x2191);
-                else if (n=="downarrow") symbol=QChar(0x2193);
-                else if (n=="updownarrow") symbol=QChar(0x2195);
-                else if (n=="Leftrightarrow" || n=="iff") symbol=QChar(0x21D4);
-                else if (n=="Leftarrow") symbol=QChar(0x21D0);
-                else if (n=="Rightarrow") symbol=QChar(0x21D2);
-                else if (n=="Uparrow") symbol=QChar(0x21D1);
-                else if (n=="Downarrow") symbol=QChar(0x21D3);
-                else if (n=="Updownarrow") symbol=QChar(0x21D5);
-                else if (n=="sum") { symbol=QChar(0x2211); heightIsAscent=true; exactAscent=true; }
-                else if (n=="prod") { symbol=QChar(0x220F); heightIsAscent=true; exactAscent=true; }
-                else if (n=="pm") symbol=QChar(0x00B1);
-                else if (n=="mp") symbol=QChar(0x2213);
-                else if (n=="leq") symbol=QChar(0x2264);
-                else if (n=="geq") symbol=QChar(0x2265);
-
-                else if (n=="ll") symbol=QChar(0x226A);
-                else if (n=="gg") symbol=QChar(0x226B);
-                else if (n=="hbar") symbol=QChar(0x210F);
-                else if (n=="euro") symbol=QChar(0x20AC);
-                else if (n=="bbC") {symbol=QChar(0x2102); italic=-1; }
-                else if (n=="bbH") {symbol=QChar(0x210D); italic=-1; }
-                else if (n=="bbN") {symbol=QChar(0x2115); italic=-1; }
-                else if (n=="bbP") {symbol=QChar(0x2119); italic=-1; }
-                else if (n=="bbQ") {symbol=QChar(0x211A); italic=-1; }
-                else if (n=="bbR") {symbol=QChar(0x211D); italic=-1; }
-                else if (n=="bbZ") {symbol=QChar(0x2124); italic=-1; }
-                else if (n=="Angstrom") symbol=QChar(0x212B);
-                else if (n=="Alef" || n=="alef") symbol=QChar(0x2135);
-                else if (n=="Bet" || n=="bet") symbol=QChar(0x2136);
-                else if (n=="Gimel" || n=="gimel") symbol=QChar(0x2137);
-                else if (n=="Dalet" || n=="dalet") symbol=QChar(0x2138);
-                else if (n=="nexists") { symbol=QChar(0x2204); }
-                else if (n=="ni") symbol=QChar(0x220B);
-                else if (n=="notni") symbol=QChar(0x220C);
-                else if (n=="circ") symbol=QChar(0x2218);
-                else if (n=="tilde") symbol=QChar(0x223C);
-                else if (n=="iint") { symbol=QChar(0x222C); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="iiint") { symbol=QChar(0x222D); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="oint") { symbol=QChar(0x222E); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="oiint") { symbol=QChar(0x222F); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="oiiint") { symbol=QChar(0x2230); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="emptyset") symbol=QChar(0x2300);
-                else if (n=="varnothing") symbol=QChar(0x2300);
-                else if (n=="odot") symbol=QChar(0x2299);
-                else if (n=="ominus") symbol=QChar(0x2296);
-                else if (n=="lceil") symbol=QChar(0x2308);
-                else if (n=="rceil") symbol=QChar(0x2309);
-                else if (n=="lfloor") symbol=QChar(0x230A);
-                else if (n=="rfloor") symbol=QChar(0x230B);
-                else if (n=="subsetnot") symbol=QChar(0x2284);
-                else if (n=="DC") symbol=QChar(0x2393);
-                else if (n=="bot") { symbol=QChar(0x22A4); }
-                else if (n=="cdots") { symbol=QString(QChar(0x00B7))+QString(QChar(0x00B7))+QString(QChar(0x00B7)); }//QChar(0x22EF); }
-                else if (n=="vdots") { symbol=QChar(0x22EE); }
-                else if (n=="iddots") { symbol=QChar(0x22F0); }
-                else if (n=="ddots") { symbol=QChar(0x22F1); }
-                else if (n=="dots" || n=="ldots") { symbol="..."; }//QChar(0x2026); }
-                else if (n=="perthousand") { symbol=QChar(0x2030); }
-                else if (n=="leftharpoonup") { symbol=QChar(0x21BC); }
-                else if (n=="rightharpoonup") { symbol=QChar(0x21C0); }
-                else if (n=="upharpoonleft") { symbol=QChar(0x21BF); }
-                else if (n=="downharpoonleft") { symbol=QChar(0x21C3); }
-                else if (n=="leftrightharpoon") { symbol=QChar(0x21CB); }
-                else if (n=="rightleftharpoon") { symbol=QChar(0x21CC); }
-                else if (n=="coprod") { symbol=QChar(0x2210); heightIsAscent=true; exactAscent=true; }
-                else if (n=="leftharpoondown") { symbol=QChar(0x21BD); }
-                else if (n=="rightharpoondown") { symbol=QChar(0x21C1); }
-                else if (n=="upharpoonright") { symbol=QChar(0x21BE); }
-                else if (n=="downharpoonright") { symbol=QChar(0x21C2); }
-                else if (n=="nwarrow") { symbol=QChar(0x2196); }
-                else if (n=="nearrow") { symbol=QChar(0x2197); }
-                else if (n=="searrow") { symbol=QChar(0x2198); }
-                else if (n=="swarrow") { symbol=QChar(0x2199); }
-                else if (n=="mapsto") { symbol=QChar(0x21A6); }
-                else if (n=="cent") { symbol=QChar(0x00A2); }
-                else if (n=="pound") { symbol=QChar(0x00A3); }
-                else if (n=="yen") { symbol=QChar(0x00A5); }
-                else if (n=="div") { symbol=QChar(0x00F7); }
-                else if (n=="multimap") { symbol=QChar(0x22B8); }
-                else if (n=="maporiginal") { symbol=QChar(0x22B6); }
-                else if (n=="mapimage") { symbol=QChar(0x22B7); }
-                else if (n=="bigcap") { symbol=QChar(0x22C2); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
-                else if (n=="bigcup") { symbol=QChar(0x22C3); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
-                else if (n=="bigvee") { symbol=QChar(0x22C1); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
-                else if (n=="bighat") { symbol=QChar(0x22C0); heightIsAscent=true; exactAscent=true; heightIsAscent=true; exactAscent=true; }
-                else if (n=="benzene") symbol=QChar(0x232C);
-
-                else if (n=="times") symbol=QChar(0x2A2F);
-                else if (n=="propto") symbol=QChar(0x221D);
-                else if (n=="partial") symbol=QChar(0x2202);
-                else if (n=="bullet") symbol=QChar(0x2219);
-                else if (n=="neq"||n=="ne") symbol=QChar(0x2260);
-                else if (n=="equiv") symbol=QChar(0x2261);
-                else if (n=="approx") symbol=QChar(0x2245);
-                else if (n=="ellipsis") symbol=QChar(0x2026);
-                else if (n=="Im") symbol=QChar(0x2111);
-                else if (n=="Re") symbol=QChar(0x211C);
-                else if (n=="otimes") symbol=QChar(0x2297);
-                else if (n=="oplus") symbol=QChar(0x2295);
-                else if (n=="oslash") symbol=QChar(0x2298);
-                else if (n=="cap"||n=="land") symbol=QChar(0x2229);
-                else if (n=="cup"||n=="lor") symbol=QChar(0x222A);
-                else if (n=="supset") symbol=QChar(0x2283);
-                else if (n=="supseteq") symbol=QChar(0x2286);
-                else if (n=="supsetnot") symbol=QChar(0x2285);
-                else if (n=="subset") symbol=QChar(0x2282);
-                else if (n=="subseteq") symbol=QChar(0x2286);
-                else if (n=="in") symbol=QChar(0x2208);
-                else if (n=="notin") symbol=QChar(0x2209);
-                else if (n=="angle") symbol=QChar(0x2221);
-                else if (n=="nabla") symbol=QChar(0x2207);
-                else if (n=="copyright") symbol=QChar(0x00A9);
-                else if (n=="registered") symbol=QChar(0x00AE);
-                else if (n=="trademark") symbol=QChar(0x2122);
-                else if (n=="cdot") symbol=QChar(0x00B7);
-                else if (n=="neg") symbol=QChar(0x00AC);
-                else if (n=="wedge") symbol=QChar(0x2227);
-                else if (n=="vee") symbol=QChar(0x2228);
-                else if (n=="diamond") symbol=QChar(0xE0);
-                else if (n=="langle") symbol=QChar(0x2329);
-                else if (n=="rangle") symbol=QChar(0x232A);
-                else if (n=="int") { symbol=QChar(0x222B); fontFactor=mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent=true; exactAscent=true; }
-                else if (n=="infty") { symbol=QChar(0x221E); }
-                else if (n=="forall") { symbol=QChar(0x2200); }
-                else if (n=="exists") { symbol=QChar(0x2203); }
-                else if (n=="cong") { symbol=QChar(0x2245); }
-                else if (n=="bot") { symbol=QChar(0x22A5); }
-
-                else { // here are text mode symbols, i.e. bold and italic won't be touched
-                    bold=-1;
-                    italic=-1;
-                    font=MTSFdefault;
-                    if (n=="_") { symbol="_"; }
-                    else if (n=="}") { symbol="}"; }
-                    else if (n=="{") { symbol="{"; }
-                    else if (n=="backslash") { symbol="\\"; bold=0; italic=0; }
-                    //else if (n=="|") { symbol=QChar(0x2016); }
-                    else if (n=="$") { symbol="$"; }
-                    else if (n=="%") { symbol="%"; }
-                    else if (n=="&") { symbol="&"; }
-                    else if (n=="#") { symbol="#"; }
-                    else if (n=="ast") { symbol="*"; }
-                    else if (n=="glq") { symbol=QChar(0x2018); bold=0; italic=0; }
-                    else if (n=="grq") { symbol=QChar(0x2019); bold=0; italic=0; }
-                    else if (n=="glqq") { symbol=QChar(0x201C); bold=0; italic=0; }
-                    else if (n=="grqq") { symbol=QChar(0x201D); bold=0; italic=0; }
-                    else if (n=="flq") { symbol=QChar(0x2039); bold=0; italic=0; }
-                    else if (n=="frq") { symbol=QChar(0x203A); bold=0; italic=0; }
-                    else if (n=="flqq") { symbol=""; bold=0; italic=0; }
-                    else if (n=="frqq") { symbol=""; bold=0; italic=0; }
-                }
-                //else if (n=="") { symbol=QChar(); font=MTSFdefault; }
-                //else if (n=="") symbol=QChar(0x);
-            }
-        } else if (parent->get_fontEncoding()==MTFElatex) { // use UNICODE encoding for special characters
-            // first we start with greek characters
-            font=MTSFdefault; //MTSFgreek;
-            //std::cout<<"encoding unicode\n";
-            if (n=="_") { symbol="_"; }
-            else if (n=="}") { symbol="}"; }
-            else if (n=="{") { symbol="{"; }
-            else if (n=="backslash") { symbol="\\"; bold=0; italic=0; }
-            //else if (n=="|") { symbol=QChar(0x2016); }
-            else if (n=="$") { symbol="$"; }
-            else if (n=="%") { symbol="%"; }
-            else if (n=="&") { symbol="&"; }
-            else if (n=="#") { symbol="#"; }
-            else if (n=="ast") { symbol="*"; }
-            else if (n=="glq") { symbol=QChar(0x27); }
-            else if (n=="grq") { symbol=QChar(0x60); }
-            else if (n=="glqq") { symbol=QChar(0x5C); }
-            else if (n=="grqq") { symbol="\""; }
-            //else if (n=="flq") { symbol=QChar(0x2039); }
-            //else if (n=="frq") { symbol=QChar(0x203A); }
-            //else if (n=="flqq") { symbol=""; }
-            //else if (n=="frqq") { symbol=""; }
-            else {
-                font=MTSFgreek;
-                if (n=="alpha") symbol=QChar(0xAE);
-                else if (n=="beta") symbol=QChar(0xAF);
-                else if (n=="gamma") symbol=QChar(0xB0);
-                else if (n=="delta") symbol=QChar(0xB1);
-                else if (n=="epsilon") symbol=QChar(0x22);
-                else if (n=="varepsilon") symbol=QChar(0xB2);
-                else if (n=="zeta") symbol=QChar(0xB3);
-                else if (n=="eta") symbol=QChar(0xB4);
-                else if (n=="theta") symbol=QChar(0xB5);
-                else if (n=="vartheta") symbol=QChar(0x23);
-                else if (n=="iota") symbol=QChar(0xB6);
-                else if (n=="kappa") symbol=QChar(0xB7);
-                else if (n=="lambda") symbol=QChar(0xB8);
-                else if (n=="mu") symbol=QChar(0xB9);
-                else if (n=="nu") symbol=QChar(0xBA);
-                else if (n=="xi") symbol=QChar(0xBB);
-                else if (n=="pi") symbol=QChar(0xBC);
-                else if (n=="varpi") symbol=QChar(0x24);
-                else if (n=="rho") symbol=QChar(0xBD);
-                else if (n=="varrho") symbol=QChar(0x25);
-                else if (n=="sigma") symbol=QChar(0xBE);
-                else if (n=="varsigma") symbol=QChar(0x26);
-                else if (n=="tau") symbol=QChar(0xBF);
-                else if (n=="upsilon") symbol=QChar(0xC0);
-                else if (n=="phi") symbol=QChar(0xC1);
-                else if (n=="varphi") symbol=QChar(0x27);
-                else if (n=="chi") symbol=QChar(0xC2);
-                else if (n=="psi") symbol=QChar(0xC3);
-                else if (n=="omega") symbol=QChar(0x21);
-                //else if (n=="Omega") symbol=QChar(0x3A9);
-                else if (n=="Gamma") symbol=QChar(0xA1);
-                else if (n=="Delta") symbol=QChar(0xA2);
-                else if (n=="Theta") symbol=QChar(0xA3);
-                else if (n=="Lambda") symbol=QChar(0xA4);
-                else if (n=="Xi") symbol=QChar(0xA5);
-                else if (n=="Pi") symbol=QChar(0xA6);
-                else if (n=="Sigma") symbol=QChar(0xA7);
-                else if (n=="Upsilon") symbol=QChar(0xA8);
-                else if (n=="Phi") symbol=QChar(0xA9);
-                else if (n=="Psi") symbol=QChar(0xAA);
-                else if (n=="leftharpoonup") { symbol=QChar(0x28); }
-                else if (n=="rightharpoonup") { symbol=QChar(0x2A); }
-                else if (n=="leftharpoondown") { symbol=QChar(0x29); }
-                else if (n=="rightharpoondown") { symbol=QChar(0x2B); }
-                else if (n=="neg") symbol=QChar(0xAC);
-                else if (n=="star") symbol=QChar(0x3F);
-                else {
-                    // now we set the symbols from the Symbol font
-                    font=MTSFsymbol;
-                    if (n=="leftrightarrow") symbol=QChar(0x24);
-                    else if (n=="leftarrow") symbol=QChar(0xc3);
-                    else if (n=="rightarrow"||n=="to") symbol=QChar(0x21);
-                    else if (n=="uparrow") symbol=QChar(0x22);
-                    else if (n=="downarrow") symbol=QChar(0x23);
-                    else if (n=="updownarrow") symbol=QChar(0x6c);
-                    else if (n=="Leftrightarrow" || n=="iff") symbol=QChar(0x2c);
-                    else if (n=="Leftarrow") symbol=QChar(0x28);
-                    else if (n=="Rightarrow") symbol=QChar(0x29);
-                    else if (n=="Uparrow") symbol=QChar(0x2a);
-                    else if (n=="Downarrow") symbol=QChar(0x2b);
-                    else if (n=="Updownarrow") symbol=QChar(0x6d);
-
-                    else if (n=="pm") symbol=QChar(0xa7);
-                    else if (n=="mp") symbol=QChar(0xa8);
-                    else if (n=="leq") symbol=QChar(0xb7);
-                    else if (n=="geq") symbol=QChar(0xb8);
-
-                    else if (n=="ll") symbol=QChar(0xbf);
-                    else if (n=="gg") symbol=QChar(0xc0);
-                    //else if (n=="euro") symbol=QChar(0x20AC);
-                    else if (n=="Alef" || n=="alef") symbol=QChar(0x40);
-                    //else if (n=="Bet") symbol=QChar(0x2136);
-                    //else if (n=="Gimel") symbol=QChar(0x2137);
-                    //else if (n=="Dalet") symbol=QChar(0x2138);
-                    else if (n=="ni") symbol=QChar(0x33);
-                    else if (n=="circ") symbol=QChar(0xb1);
-
-                    else if (n=="tilde") symbol=QChar(0xbb);
-                    else if (n=="emptyset") symbol=QChar(0x3b);
-                    else if (n=="odot") symbol=QChar(0xaf);
-                    else if (n=="ominus") symbol=QChar(0xaa);
-                    else if (n=="odiv") symbol=QChar(0xae);
-                    else if (n=="oplus") symbol=QChar(0xa9);
-                    else if (n=="lceil") symbol=QChar(0x64);
-                    else if (n=="rceil") symbol=QChar(0x65);
-                    else if (n=="lfloor") symbol=QChar(0x62);
-                    else if (n=="rfloor") symbol=QChar(0x63);
-
-                    else if (n=="bot") { symbol=QChar(0x3f); }
-                    else if (n=="cdots") { symbol=QString(3,QChar(0xA2)); }
-                    else if (n=="dots") { symbol="..."; }
-
-                    else if (n=="nwarrow") { symbol=QChar(0x2d); }
-                    else if (n=="nearrow") { symbol=QChar(0x25); }
-                    else if (n=="searrow") { symbol=QChar(0x26); }
-                    else if (n=="swarrow") { symbol=QChar(0x2e); }
-
-                    else if (n=="div") { symbol=QChar(0xa5); }
-
-                    else if (n=="times") symbol=QChar(0xa3);
-                    else if (n=="propto") symbol=QChar(0x2f);
-                    else if (n=="bullet") symbol=QChar(0x2b);
-                    else if (n=="equiv") symbol=QChar(0xb4);
-                    else if (n=="approx") symbol=QChar(0xbc);
-                    else if (n=="ellipsis") symbol="...";
-                    else if (n=="Im") symbol=QChar(0x3D);
-                    else if (n=="Re") symbol=QChar(0x3C);
-                    //else if (n=="otimes") symbol=QChar(0x2297);
-                    else if (n=="oplus") symbol=QChar(0xa9);
-                    else if (n=="oslash") symbol=QChar(0xae);
-                    else if (n=="cap"||n=="land") symbol=QChar(0x5c);
-                    else if (n=="cup"||n=="lor") symbol=QChar(0x5b);
-                    else if (n=="supset") symbol=QChar(0xbe);
-                    else if (n=="supseteq") symbol=QChar(0xb6);
-                    else if (n=="subset") symbol=QChar(0xbd);
-                    else if (n=="subseteq") symbol=QChar(0xb5);
-
-                    else if (n=="in") symbol=QChar(0x32);
-                    else if (n=="nabla") symbol=QChar(0x35);
-                    else if (n=="cdot") symbol=QChar(0xa2);
-                    else if (n=="wedge") symbol=QChar(0x5e);
-                    else if (n=="vee") symbol=QChar(0x5f);
-                    else if (n=="diamond") symbol=QChar(0xE0);
-                    else if (n=="langle") symbol=QChar(0x68);
-                    else if (n=="rangle") symbol=QChar(0x69);
-                    else if (n=="int") { symbol=QChar(0x73); fontFactor=mathFontFactor; yfactor=+0.1; }
-                    else if (n=="infty") { symbol=QChar(0x31); }
-                    else if (n=="forall") { symbol=QChar(0x38); }
-                    else if (n=="exists") { symbol=QChar(0x39); }
-                    else if (n=="cong") { symbol=QChar(0xbb); }
-                    else if (n=="bot") { symbol=QChar(0x3f); }
-
-                    else { // here are text mode symbols, i.e. bold and italic won't be touched
-                        font=MTSFbraces;
-                        if (n=="bigcap") { symbol=QChar(0x5c); heightIsAscent=true; exactAscent=true; }
-                        else if (n=="bigcup") { symbol=QChar(0x5b); heightIsAscent=true; exactAscent=true; }
-                        else if (n=="bigvee") { symbol=QChar(0x5F); heightIsAscent=true; exactAscent=true; }
-                        else if (n=="bighat") { symbol=QChar(0x5E); heightIsAscent=true; exactAscent=true; }
-                        else if (n=="oint") { symbol=QChar(0x49); yfactor=+0.1; }
-                        //else if (n=="oiint") { symbol=QChar(0x222F); fontFactor=mathFontFactor; yfactor=+0.1; }
-                        //else if (n=="oiiint") { symbol=QChar(0x2230); fontFactor=mathFontFactor; yfactor=+0.1; }
-                        else if (n=="coprod") { symbol=QChar(0x61); heightIsAscent=true; exactAscent=true; }
-                        else if (n=="iint") { symbol=QString(2,QChar(0x5A)); yfactor=+0.1; }
-                        else if (n=="iiint") { symbol=QString(3,QChar(0x5A)); yfactor=+0.1; }
-                        else if (n=="sum") { symbol=QChar(0x58); heightIsAscent=true; exactAscent=true; }
-                        else if (n=="prod") { symbol=QChar(0x59); heightIsAscent=true; exactAscent=true; }
-
-
-                        /*else if (n=="angle") symbol=QChar(0x2221);
-                        else if (n=="supsetnot") symbol=QChar(0x2285);
-                        else if (n=="notin") symbol=QChar(0x2209);
-                        else if (n=="multimap") { symbol=QChar(0x22B8); }
-                        else if (n=="neq") symbol=QChar(0x2260);
-                        else if (n=="maporiginal") { symbol=QChar(0x22B6); }
-                        else if (n=="mapimage") { symbol=QChar(0x22B7); }
-                        else if (n=="partial") symbol=QChar(0x2202);
-                        else if (n=="benzene") symbol=QChar(0x232C);
-                        else if (n=="perthousand") { symbol=QChar(0x2030); }
-                        else if (n=="upharpoonleft") { symbol=QChar(0x21BF); }
-                        else if (n=="downharpoonleft") { symbol=QChar(0x21C3); }
-                        else if (n=="leftrightharpoon") { symbol=QChar(0x21CB); }
-                        else if (n=="rightleftharpoon") { symbol=QChar(0x21CC); }
-                        else if (n=="upharpoonright") { symbol=QChar(0x21BE); }
-                        else if (n=="downharpoonright") { symbol=QChar(0x21C2); }
-                        else if (n=="varnothing") symbol=QChar(0x2300);
-                        else if (n=="mapsto") { symbol=QChar(0x21A6); }
-                        else if (n=="cent") { symbol=QChar(0x00A2); }
-                        else if (n=="pound") { symbol=QChar(0x00A3); }
-                        else if (n=="yen") { symbol=QChar(0x00A5); }
-                        else if (n=="hbar") symbol=QChar(0x210F);
-                        else if (n=="nexists") { symbol=QChar(0x2204); }
-                        else if (n=="notni") symbol=QChar(0x220C);
-                        else if (n=="subsetnot") symbol=QChar(0x2284);*/
-                        //else if (n=="DC") symbol=QChar(0x2393);
-                        //else if (n=="copyright") symbol=QChar(0x00A9);
-                        //else if (n=="registered") symbol=QChar(0x00AE);
-                        //else if (n=="trademark") symbol=QChar(0x2122);
-                    }
-                    //else if (n=="") { symbol=QChar(); font=MTSFdefault; }
-                    //else if (n=="") symbol=QChar(0x);
-                }
-            }
+            //else if (n=="") { symbol=QChar(); font=MTSFdefault; }
+            //else if (n=="") symbol=QChar(0x);
+          }
         }
+        else if (parent->get_fontEncoding() == MTFEunicode) { // use UNICODE encoding for special characters
+         // first we start with greek characters
+          font = MTSFdefault; //MTSFgreek;
+          //std::cout<<"encoding unicode\n";
+          QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
+          if (itgreek!=unicodeGreek.end()) {
+              symbol = itgreek.value();
+          } else {
+            // now we set the symbols from the Symbol font
+            font = MTSFsymbol;
+            QHash<QString, QString>::iterator itsymbol = unicodeSymbol.find(n);
+            if (itsymbol!=unicodeSymbol.end()) {
+              symbol = itsymbol.value();
+            } if (n == "sum") { symbol = QChar(0x2211); heightIsAscent = true; exactAscent = true; }
+            else if (n == "prod") { symbol = QChar(0x220F); heightIsAscent = true; exactAscent = true; }
+            else if (n == "bbC") { symbol = QChar(0x2102); italic = -1; }
+            else if (n == "bbH") { symbol = QChar(0x210D); italic = -1; }
+            else if (n == "bbN") { symbol = QChar(0x2115); italic = -1; }
+            else if (n == "bbP") { symbol = QChar(0x2119); italic = -1; }
+            else if (n == "bbQ") { symbol = QChar(0x211A); italic = -1; }
+            else if (n == "bbR") { symbol = QChar(0x211D); italic = -1; }
+            else if (n == "bbZ") { symbol = QChar(0x2124); italic = -1; }
+            else if (n == "iint") { symbol = QChar(0x222C); fontFactor = mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent = true; exactAscent = true; }
+            else if (n == "iiint") { symbol = QChar(0x222D); fontFactor = mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent = true; exactAscent = true; }
+            else if (n == "oint") { symbol = QChar(0x222E); fontFactor = mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent = true; exactAscent = true; }
+            else if (n == "oiint") { symbol = QChar(0x222F); fontFactor = mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent = true; exactAscent = true; }
+            else if (n == "oiiint") { symbol = QChar(0x2230); fontFactor = mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent = true; exactAscent = true; }
+            else if (n == "coprod") { symbol = QChar(0x2210); heightIsAscent = true; exactAscent = true; }
+            else if (n == "bigcap") { symbol = QChar(0x22C2); heightIsAscent = true; exactAscent = true;; heightIsAscent = true; exactAscent = true; }
+            else if (n == "bigcup") { symbol = QChar(0x22C3); heightIsAscent = true; exactAscent = true;; heightIsAscent = true; exactAscent = true; }
+            else if (n == "bigvee") { symbol = QChar(0x22C1); heightIsAscent = true; exactAscent = true;; heightIsAscent = true; exactAscent = true; }
+            else if (n == "bighat") { symbol = QChar(0x22C0); heightIsAscent = true; exactAscent = true;; heightIsAscent = true; exactAscent = true; }
+            else if (n == "int") { symbol = QChar(0x222B); fontFactor = mathFontFactor; /*yfactor=+0.1;;*/ heightIsAscent = true; exactAscent = true; }
+
+            else { // here are text mode symbols, i.e. bold and italic won't be touched
+              bold = -1;
+              italic = -1;
+              font = MTSFdefault;
+              if (n == "_") { symbol = "_"; }
+              else if (n == "}") { symbol = "}"; }
+              else if (n == "{") { symbol = "{"; }
+              else if (n == "backslash") { symbol = "\\"; bold = 0; italic = 0; }
+              //else if (n=="|") { symbol=QChar(0x2016); }
+              else if (n == "$") { symbol = "$"; }
+              else if (n == "%") { symbol = "%"; }
+              else if (n == "&") { symbol = "&"; }
+              else if (n == "#") { symbol = "#"; }
+              else if (n == "ast") { symbol = "*"; }
+              else if (n == "glq") { symbol = QChar(0x2018); bold = 0; italic = 0; }
+              else if (n == "grq") { symbol = QChar(0x2019); bold = 0; italic = 0; }
+              else if (n == "glqq") { symbol = QChar(0x201C); bold = 0; italic = 0; }
+              else if (n == "grqq") { symbol = QChar(0x201D); bold = 0; italic = 0; }
+              else if (n == "flq") { symbol = QChar(0x2039); bold = 0; italic = 0; }
+              else if (n == "frq") { symbol = QChar(0x203A); bold = 0; italic = 0; }
+              else if (n == "flqq") { symbol = ""; bold = 0; italic = 0; }
+              else if (n == "frqq") { symbol = ""; bold = 0; italic = 0; }
+            }
+            //else if (n=="") { symbol=QChar(); font=MTSFdefault; }
+            //else if (n=="") symbol=QChar(0x);
+          }
+        }
+        else if (parent->get_fontEncoding() == MTFElatex) { // use UNICODE encoding for special characters
+         // first we start with greek characters
+          font = MTSFdefault; //MTSFgreek;
+          //std::cout<<"encoding unicode\n";
+          QHash<QString, QString>::iterator itssymbol = latexSimpleSymbol.find(n);
+          if (itssymbol!=latexSimpleSymbol.end()) {
+            symbol = itssymbol.value();
+          } else if (n == "backslash") { symbol = "\\"; bold = 0; italic = 0; }
+
+          else {
+            font = MTSFgreek;
+            QHash<QString, QString>::iterator itgreek = latexGreek.find(n);
+            if (itgreek!=latexGreek.end()) {
+              symbol = itgreek.value();
+            } else {
+              // now we set the symbols from the Symbol font
+              font = MTSFsymbol;
+              QHash<QString, QString>::iterator itsymbol = latexSymbol.find(n);
+              if (itsymbol!=latexSymbol.end()) {
+                symbol = itsymbol.value();
+              } else if (n == "int") { symbol = QChar(0x73); fontFactor = mathFontFactor; yfactor = +0.1; }
+
+              else { // here are text mode symbols, i.e. bold and italic won't be touched
+                font = MTSFbraces;
+                if (n == "bigcap") { symbol = QChar(0x5c); heightIsAscent = true; exactAscent = true; }
+                else if (n == "bigcup") { symbol = QChar(0x5b); heightIsAscent = true; exactAscent = true; }
+                else if (n == "bigvee") { symbol = QChar(0x5F); heightIsAscent = true; exactAscent = true; }
+                else if (n == "bighat") { symbol = QChar(0x5E); heightIsAscent = true; exactAscent = true; }
+                else if (n == "oint") { symbol = QChar(0x49); yfactor = +0.1; }
+                else if (n == "coprod") { symbol = QChar(0x61); heightIsAscent = true; exactAscent = true; }
+                else if (n == "iint") { symbol = QString(2, QChar(0x5A)); yfactor = +0.1; }
+                else if (n == "iiint") { symbol = QString(3, QChar(0x5A)); yfactor = +0.1; }
+                else if (n == "sum") { symbol = QChar(0x58); heightIsAscent = true; exactAscent = true; }
+                else if (n == "prod") { symbol = QChar(0x59); heightIsAscent = true; exactAscent = true; }
+
+
+
+              }
+            }
+          }
+        }
+      }
     }
     if (addWhitespace) symbol=symbol+" ";
     //std::cout<<"symbol node '"<<symbolName.toStdString()<<"': symbol='"<<symbol.toStdString()<<"'\n";
@@ -2863,195 +2907,208 @@ bool JKQTmathText::MTsymbolNode::toHtml(QString &html, JKQTmathText::MTenvironme
     QString s;
     JKQTmathText::MTenvironment ev=currentEv;
 
-    if (symbolName == "sin") { s="sin"; }
-    else if (symbolName == "cos") { s="cos"; }
-    else if (symbolName == "tan") { s="tan"; }
-    else if (symbolName == "sinh") { s="sinh"; }
-    else if (symbolName == "cosh") { s="cosh"; }
-    else if (symbolName == "tanh") { s="tanh"; }
-    else if (symbolName == "atan") { s="atan"; }
-    else if (symbolName == "acos") { s="acos"; }
-    else if (symbolName == "asin") { s="asin"; }
-    else if (symbolName == "arcsin") { s="arcsin"; }
-    else if (symbolName == "arccos") { s="arccos"; }
-    else if (symbolName == "arctan") { s="arctan"; }
-    else if (symbolName == "ii") { s="i"; }
-    else if (symbolName == "dd") { s="d"; }
-    else if (symbolName == "exp") { s="exp"; }
-    else if (symbolName == "log") { s="log"; }
-    else if (symbolName == "ln") { s="ln"; }
-    else if (symbolName == "ld") { s="ld"; }
-    else if (symbolName == "lb") { s="lb"; }
-    else if (symbolName == "erf") { s="erf"; }
-    else if (symbolName == "min") { s="min"; }
-    else if (symbolName == "max") { s="max"; }
-    else if (symbolName == "argmin") { s="argmin"; }
-    else if (symbolName == "argmax") { s="argmax"; }
-    else if (symbolName == "inf") { s="inf"; }
-    else if (symbolName == "sup") { s="sup"; }
-    else if (symbolName == "liminf") { s="liminf"; }
-    else if (symbolName == "limsup") { s="limsup"; }
-    else if (symbolName == "lim") { s="lim"; }
-    else if (symbolName == "max") { s="max"; }
-    else if (symbolName == "min") { s="min"; }
-    else if (symbolName == "sec") { s="sec"; }
-    else if (symbolName == "gcd") { s="gcd"; }
-    else if (symbolName == "hom") { s="hom"; }
-    else if (symbolName == "ker") { s="ker"; }
-    else if (symbolName == "dim") { s="dim"; }
-    else if (symbolName == "cot") { s="cot"; }
-    else if (symbolName == "arg") { s="arg"; }
-    else if (symbolName == "det") { s="det"; }
-    else if (symbolName == "deg") { s="deg"; }
-    else if (symbolName == "Pr") { s="Pr"; }
-    else if (symbolName == "coth") { s="coth"; }
-    else if (symbolName == "alpha") s="&alpha;";
-    else if (symbolName == "beta") s="&beta;";
-    else if (symbolName == "gamma") s="&gamma;";
-    else if (symbolName == "delta") s="&delta;";
-    else if (symbolName == "epsilon") s="&epsilon;";
-    else if (symbolName == "varepsilon") s="&epsilon;";
-    else if (symbolName == "zeta") s="&zeta;";
-    else if (symbolName == "eta") s="&eta;";
-    else if (symbolName == "theta") s="&theta;";
-    else if (symbolName == "vartheta") s="&thetasym;";
-    else if (symbolName == "iota") s="&iota;";
-    else if (symbolName == "kappa") s="&kappa;";
-    else if (symbolName == "lambda") s="&lambda;";
-    else if (symbolName == "mu") s="&mu;";
-    else if (symbolName == "nu") s="&nu;";
-    else if (symbolName == "xi") s="&xi;";
-    else if (symbolName == "pi") s="&pi;";
-    else if (symbolName == "varpi") s="&piv;";
-    else if (symbolName == "rho") s="&rho;";
-    else if (symbolName == "sigma") s="&sigma;";
-    else if (symbolName == "varsigma") s="&sigmaf;";
-    else if (symbolName == "tau") s="&tau;";
-    else if (symbolName == "upsilon") s="&upsilon;";
-    else if (symbolName == "phi") s="&phi;";
-    else if (symbolName == "varphi") s="&phi;";
-    else if (symbolName == "chi") s="&chi;";
-    else if (symbolName == "psi") s="&psi;";
-    else if (symbolName == "omega") s="&omega;";
-    else if (symbolName == "Gamma") s="&Gamma;";
-    else if (symbolName == "Delta") s="&Delta;";
-    else if (symbolName == "Theta") s="&Theta;";
-    else if (symbolName == "Lambda") s="&Lambda;";
-    else if (symbolName == "Omega") s="&Omega;";
-    else if (symbolName == "Xi") s="&Xi;";
-    else if (symbolName == "Pi") s="&Pi;";
-    else if (symbolName == "Sigma") s="&Sigma;";
+    static QMap<QString, QString> entitylut;
+    if (entitylut.isEmpty()) {
+      entitylut.insert("sin", "sin");
+      entitylut.insert("cos", "cos");
+      entitylut.insert("tan", "tan");
+      entitylut.insert("sinh", "sinh");
+      entitylut.insert("cosh", "cosh");
+      entitylut.insert("tanh", "tanh");
+      entitylut.insert("atan", "atan");
+      entitylut.insert("acos", "acos");
+      entitylut.insert("asin", "asin");
+      entitylut.insert("arcsin", "arcsin");
+      entitylut.insert("arccos", "arccos");
+      entitylut.insert("arctan", "arctan");
+      entitylut.insert("ii", "i");
+      entitylut.insert("dd", "d");
+      entitylut.insert("exp", "exp");
+      entitylut.insert("log", "log");
+      entitylut.insert("ln", "ln");
+      entitylut.insert("ld", "ld");
+      entitylut.insert("lb", "lb");
+      entitylut.insert("erf", "erf");
+      entitylut.insert("min", "min");
+      entitylut.insert("max", "max");
+      entitylut.insert("argmin", "argmin");
+      entitylut.insert("argmax", "argmax");
+      entitylut.insert("inf", "inf");
+      entitylut.insert("sup", "sup");
+      entitylut.insert("liminf", "liminf");
+      entitylut.insert("limsup", "limsup");
+      entitylut.insert("lim", "lim");
+      entitylut.insert("max", "max");
+      entitylut.insert("min", "min");
+      entitylut.insert("sec", "sec");
+      entitylut.insert("gcd", "gcd");
+      entitylut.insert("hom", "hom");
+      entitylut.insert("ker", "ker");
+      entitylut.insert("dim", "dim");
+      entitylut.insert("cot", "cot");
+      entitylut.insert("arg", "arg");
+      entitylut.insert("det", "det");
+      entitylut.insert("deg", "deg");
+      entitylut.insert("Pr", "Pr");
+      entitylut.insert("coth", "coth");
+      entitylut.insert("alpha",  "&alpha;");
+      entitylut.insert("beta",  "&beta;");
+      entitylut.insert("gamma",  "&gamma;");
+      entitylut.insert("delta",  "&delta;");
+      entitylut.insert("epsilon",  "&epsilon;");
+      entitylut.insert("varepsilon",  "&epsilon;");
+      entitylut.insert("zeta",  "&zeta;");
+      entitylut.insert("eta",  "&eta;");
+      entitylut.insert("theta",  "&theta;");
+      entitylut.insert("vartheta",  "&thetasym;");
+      entitylut.insert("iota",  "&iota;");
+      entitylut.insert("kappa",  "&kappa;");
+      entitylut.insert("lambda",  "&lambda;");
+      entitylut.insert("mu",  "&mu;");
+      entitylut.insert("nu",  "&nu;");
+      entitylut.insert("xi",  "&xi;");
+      entitylut.insert("pi",  "&pi;");
+      entitylut.insert("varpi",  "&piv;");
+      entitylut.insert("rho",  "&rho;");
+      entitylut.insert("sigma",  "&sigma;");
+      entitylut.insert("varsigma",  "&sigmaf;");
+      entitylut.insert("tau",  "&tau;");
+      entitylut.insert("upsilon",  "&upsilon;");
+      entitylut.insert("phi",  "&phi;");
+      entitylut.insert("varphi",  "&phi;");
+      entitylut.insert("chi",  "&chi;");
+      entitylut.insert("psi",  "&psi;");
+      entitylut.insert("omega",  "&omega;");
+      entitylut.insert("Gamma",  "&Gamma;");
+      entitylut.insert("Delta",  "&Delta;");
+      entitylut.insert("Theta",  "&Theta;");
+      entitylut.insert("Lambda",  "&Lambda;");
+      entitylut.insert("Omega",  "&Omega;");
+      entitylut.insert("Xi",  "&Xi;");
+      entitylut.insert("Pi",  "&Pi;");
+      entitylut.insert("Sigma",  "&Sigma;");
+      entitylut.insert("Upsilon",  "&Upsilon;");
+      entitylut.insert("Phi",  "&Phi;");
+      entitylut.insert("Psi",  "&Psi;");
+      entitylut.insert("leftrightarrow",  "&harr;");
+      entitylut.insert("leftarrow",  "&larr;");
+      entitylut.insert("rightarrow", "&rarr;");
+      entitylut.insert("to", "&rarr;");
+      entitylut.insert("uparrow",  "&uarr;");
+      entitylut.insert("downarrow",  "&darr;");
+      entitylut.insert("Leftrightarrow", "&hArr;");
+      entitylut.insert("iff", "&hArr;");
+      entitylut.insert("Leftarrow",  "&lArr;");
+      entitylut.insert("Rightarrow",  "&rArr;");
+      entitylut.insert("Uparrow",  "&uArr;");
+      entitylut.insert("Downarrow",  "&dArr;");
+      entitylut.insert("pm",  "&plusmn;");
+      entitylut.insert("leq",  "&le;");
+      entitylut.insert("geq",  "&ge;");
+      entitylut.insert("times",  "&times;");
+      entitylut.insert("propto",  "&prop;");
+      entitylut.insert("partial",  "&part;");
+      entitylut.insert("bullet",  "&bull;");
+      entitylut.insert("neq", "&ne;");
+      entitylut.insert("ne", "&ne;");
+      entitylut.insert("equiv",  "&equiv;");
+      entitylut.insert("approx",  "&asymp;");
+      entitylut.insert("ellipsis",  "...");
+      entitylut.insert("Im",  "&image;");
+      entitylut.insert("Re",  "&real;");
+      entitylut.insert("otimes",  "&otimes;");
+      entitylut.insert("oplus",  "&oplus;");
+      entitylut.insert("oslash",  "/");
+      entitylut.insert("cap", "&cap;");
+      entitylut.insert("cup", "&cup;");
+      entitylut.insert("land", "&cap;");
+      entitylut.insert("lor", "&cup;");
+      entitylut.insert("supset",  "&sup;");
+      entitylut.insert("supseteq",  "&supe;");
+      entitylut.insert("supsetnot",  "&nsup;");
+      entitylut.insert("subset",  "&sub;");
+      entitylut.insert("subseteq",  "&sube;");
+      entitylut.insert("in",  "&isin;");
+      entitylut.insert("notin",  "&notin;");
+      entitylut.insert("angle",  "&ang;");
+      entitylut.insert("nabla",  "&nabla;");
+      entitylut.insert("copyright",  "&copy;");
+      entitylut.insert("registered",  "&reg;");
+      entitylut.insert("trademark",  "&trade;");
+      entitylut.insert("cdot",  "&sdot;");
+      entitylut.insert("neg",  "&not;");
+      entitylut.insert("wedge",  "&and;");
+      entitylut.insert("vee",  "&vee;");
+      entitylut.insert("diamond",  "&loz;");
+      entitylut.insert("langle",  "&lang;");
+      entitylut.insert("rangle",  "&rang;");
+      entitylut.insert("int", "&int;");
+      entitylut.insert("forall", "&forall;");
+      entitylut.insert("exists", "&exist;");
+      entitylut.insert("cong", "&sim;");
+      entitylut.insert("bot", "&perp;");
+
+
+      entitylut.insert("ll", "<<");
+      entitylut.insert("gg", ">>");
+      entitylut.insert("bbC", "<b>C</b>");
+      entitylut.insert("bbH", "<b>H</b>");
+      entitylut.insert("bbN", "<b>N</b>");
+      entitylut.insert("bbP", "<b>P</b>");
+      entitylut.insert("bbQ", "<b>Q</b>");
+      entitylut.insert("bbR", "<b>R</b>");
+      entitylut.insert("bbZ", "<b>Z</b>");
+      entitylut.insert("Alef", "&alefsym;");
+      entitylut.insert("alef", "&alefsym;");
+      entitylut.insert("tilde",  "~");
+      entitylut.insert("iint", "&int;&int;");
+      entitylut.insert("iiint", "&int;&int;&int;");
+      entitylut.insert("emptyset",  "&empty;");
+      entitylut.insert("varnothing",  "&empty;");
+      entitylut.insert("lceil",  "&lceil;");
+      entitylut.insert("rceil",  "&rceil;");
+      entitylut.insert("lfloor",  "&lfloor;");
+      entitylut.insert("rfloor",  "&rfloor;");
+      entitylut.insert("subsetnot",  "&nsub;");
+      entitylut.insert("DC",  "=");
+      entitylut.insert("cdots", "&sdot;&sdot;&sdot;");
+      entitylut.insert("dots", "...");
+
+      entitylut.insert("cent", "&cent;");
+
+      entitylut.insert("_", "_");
+      entitylut.insert("}", "}");
+      entitylut.insert("{", "{");
+      entitylut.insert("hbar", "&#8463;");
+      entitylut.insert("euro", "&euro;");
+      entitylut.insert("pound", "&pound;");
+      entitylut.insert("yen", "&yen;");
+      entitylut.insert("div", "&divide;");
+      entitylut.insert("backslash", "\\");
+      entitylut.insert("$", "$");
+      entitylut.insert("%", "%");
+      entitylut.insert("&", "&");
+      entitylut.insert("#", "#");
+      entitylut.insert("ast", "*");
+      entitylut.insert("glq", "'");
+      entitylut.insert("grq", "'");
+      entitylut.insert("glqq", "\"");
+      entitylut.insert("grqq", "\"");
+      entitylut.insert("flq", "&lt;");
+      entitylut.insert("frq", "&gt;");
+      entitylut.insert("flqq", "");
+      entitylut.insert("frqq", "");
+    }
+
+
+    QMap<QString, QString>::iterator itS = entitylut.find(symbolName);
+    if (itS!=entitylut.end()) { s=itS.value(); }
     else if (symbolName == "sum") { ev.fontSize*=1.7; s="&sum;"; }
     else if (symbolName == "prod") { ev.fontSize*=1.7; s="&prod;"; }
-    else if (symbolName == "Upsilon") s="&Upsilon;";
-    else if (symbolName == "Phi") s="&Phi;";
-    else if (symbolName == "Psi") s="&Psi;";
-    else if (symbolName == "leftrightarrow") s="&harr;";
-    else if (symbolName == "leftarrow") s="&larr;";
-    else if (symbolName == "rightarrow"||symbolName=="to") s="&rarr;";
-    else if (symbolName == "uparrow") s="&uarr;";
-    else if (symbolName == "downarrow") s="&darr;";
-    else if (symbolName == "Leftrightarrow" || symbolName=="iff") s="&hArr;";
-    else if (symbolName == "Leftarrow") s="&lArr;";
-    else if (symbolName == "Rightarrow") s="&rArr;";
-    else if (symbolName == "Uparrow") s="&uArr;";
-    else if (symbolName == "Downarrow") s="&dArr;";
-    else if (symbolName == "pm") s="&plusmn;";
-    else if (symbolName == "leq") s="&le;";
-    else if (symbolName == "geq") s="&ge;";
-    else if (symbolName == "times") s="&times;";
-    else if (symbolName == "propto") s="&prop;";
-    else if (symbolName == "partial") s="&part;";
-    else if (symbolName == "bullet") s="&bull;";
-    else if (symbolName == "neq"||symbolName=="ne") s="&ne;";
-    else if (symbolName == "equiv") s="&equiv;";
-    else if (symbolName == "approx") s="&asymp;";
-    else if (symbolName == "ellipsis") s="...";
-    else if (symbolName == "Im") s="&image;";
-    else if (symbolName == "Re") s="&real;";
-    else if (symbolName == "otimes") s="&otimes;";
-    else if (symbolName == "oplus") s="&oplus;";
-    else if (symbolName == "oslash") s="/";
-    else if (symbolName == "cap"||symbolName=="land") s="&cap;";
-    else if (symbolName == "cup"||symbolName=="lor") s="&cup;";
-    else if (symbolName == "supset") s="&sup;";
-    else if (symbolName == "supseteq") s="&supe;";
-    else if (symbolName == "supsetnot") s="&nsup;";
-    else if (symbolName == "subset") s="&sub;";
-    else if (symbolName == "subseteq") s="&sube;";
-    else if (symbolName == "in") s="&isin;";
-    else if (symbolName == "notin") s="&notin;";
-    else if (symbolName == "angle") s="&ang;";
-    else if (symbolName == "nabla") s="&nabla;";
-    else if (symbolName == "copyright") s="&copy;";
-    else if (symbolName == "registered") s="&reg;";
-    else if (symbolName == "trademark") s="&trade;";
-    else if (symbolName == "cdot") s="&sdot;";
-    else if (symbolName == "neg") s="&not;";
-    else if (symbolName == "wedge") s="&and;";
-    else if (symbolName == "vee") s="&vee;";
-    else if (symbolName == "diamond") s="&loz;";
-    else if (symbolName == "langle") s="&lang;";
-    else if (symbolName == "rangle") s="&rang;";
-    else if (symbolName == "int") { s="&int;"; }
-    else if (symbolName == "forall") { s="&forall;"; }
-    else if (symbolName == "exists") { s="&exist;"; }
-    else if (symbolName == "cong") { s="&sim;"; }
-    else if (symbolName == "bot") { s="&perp;"; }
-
-
-    else if (symbolName == "ll") { s="<<"; }
-    else if (symbolName == "gg") { s=">>"; }
-    else if (symbolName == "bbC") { s="<b>C</b>"; }
-    else if (symbolName == "bbH") { s="<b>H</b>"; }
-    else if (symbolName == "bbN") { s="<b>N</b>"; }
-    else if (symbolName == "bbP") { s="<b>P</b>"; }
-    else if (symbolName == "bbQ") { s="<b>Q</b>"; }
-    else if (symbolName == "bbR") { s="<b>R</b>"; }
-    else if (symbolName == "bbZ") { s="<b>Z</b>"; }
-    else if (symbolName == "Alef" || symbolName=="alef") s="&alefsym;";
-    else if (symbolName == "tilde") s="~";
-    else if (symbolName == "iint") { s="&int;&int;"; }
-    else if (symbolName == "iiint") { s="&int;&int;&int;"; }
-    else if (symbolName == "emptyset") s="&empty;";
-    else if (symbolName == "varnothing") s="&empty;";
-    else if (symbolName == "lceil") s="&lceil;";
-    else if (symbolName == "rceil") s="&rceil;";
-    else if (symbolName == "lfloor") s="&lfloor;";
-    else if (symbolName == "rfloor") s="&rfloor;";
-    else if (symbolName == "subsetnot") s="&nsub;";
-    else if (symbolName == "DC") s="=";
-    else if (symbolName == "cdots") { s="&sdot;&sdot;&sdot;"; }
-    else if (symbolName == "dots") { s="..."; }
-
-    else if (symbolName == "cent") { s="&cent;"; }
     else if (symbolName == "bigcap") { ev.fontSize*=1.7; s="&cap;"; }
     else if (symbolName == "bigcup") { ev.fontSize*=1.7; s="&cup;"; }
     else if (symbolName == "bigvee") { ev.fontSize*=1.7; s="&or;"; }
     else if (symbolName == "bighat") { ev.fontSize*=1.7; s="&and;"; }
-
-    else if (symbolName == "_") { s="_"; }
-    else if (symbolName == "}") { s="}"; }
-    else if (symbolName == "{") { s="{"; }
-    else if (symbolName == "hbar") { s="&#8463;"; }
-    else if (symbolName == "euro") { s="&euro;"; }
-    else if (symbolName == "pound") { s="&pound;"; }
-    else if (symbolName == "yen") { s="&yen;"; }
-    else if (symbolName == "div") { s="&divide;"; }
-    else if (symbolName == "backslash") { s="\\"; }
-    else if (symbolName == "$") { s="$"; }
-    else if (symbolName == "%") { s="%"; }
-    else if (symbolName == "&") { s="&"; }
-    else if (symbolName == "#") { s="#"; }
-    else if (symbolName == "ast") { s="*"; }
-    else if (symbolName == "glq") { s="'"; }
-    else if (symbolName == "grq") { s="'"; }
-    else if (symbolName == "glqq") { s="\""; }
-    else if (symbolName == "grqq") { s="\""; }
-    else if (symbolName == "flq") { s="&lt;"; }
-    else if (symbolName == "frq") { s="&gt;"; }
-    else if (symbolName == "flqq") { s=""; }
-    else if (symbolName == "frqq") { s=""; }
     else ok=false;
 
     if (ok) html=html+ev.toHtmlStart(defaultEv)+s+ev.toHtmlAfter(defaultEv);
