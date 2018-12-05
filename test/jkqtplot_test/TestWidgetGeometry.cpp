@@ -30,9 +30,9 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     plotGeo->get_plotter()->set_axisAspectRatio(1);
 
 
-    JKQTPgeoLine* line1=new JKQTPgeoLine(plotGeo->get_plotter(), -1, -2, 2, 1.5);
+//    JKQTPgeoLine* line1=new JKQTPgeoLine(plotGeo->get_plotter(), -1, -2, 2, 1.5);
     //plotGeo->get_plotter()->addGraph(line1);
-    JKQTPgeoLine* line2=new JKQTPgeoLine(plotGeo->get_plotter(), 1, -5, 4, 3, QColor("blue"), 4);
+//    JKQTPgeoLine* line2=new JKQTPgeoLine(plotGeo->get_plotter(), 1, -5, 4, 3, QColor("blue"), 4);
     //plotGeo->get_plotter()->addGraph(line2);
 
     JKQTPgeoRectangle* rect1=new JKQTPgeoRectangle(plotGeo->get_plotter(), 1,1,2,2, QColor("blue"),2, Qt::SolidLine, QColor("lightblue"));
@@ -55,18 +55,18 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     p.append(QPointF(0,-2));
     p.append(QPointF(M_PI,5.5));
 
-    JKQTPgeoPolygon* poly=new JKQTPgeoPolygon(plotGeo->get_plotter(), p, QColor("black"), 1.5, Qt::SolidLine, QColor(128,128,0,128));
+//    JKQTPgeoPolygon* poly=new JKQTPgeoPolygon(plotGeo->get_plotter(), p, QColor("black"), 1.5, Qt::SolidLine, QColor(128,128,0,128));
     //plotGeo->get_plotter()->addGraph(poly);
-    JKQTPgeoLines* lines=new JKQTPgeoLines(plotGeo->get_plotter(), p, QColor(255,255,0), 3);
+//    JKQTPgeoLines* lines=new JKQTPgeoLines(plotGeo->get_plotter(), p, QColor(255,255,0), 3);
     //plotGeo->get_plotter()->addGraph(lines);
 
     JKQTPgeoEllipse* ell1=new JKQTPgeoEllipse(plotGeo->get_plotter(), 0,0,2,4, QColor("black"),1.5, Qt::DotLine);
     plotGeo->get_plotter()->addGraph(ell1);
-    JKQTPgeoArc* arc=new JKQTPgeoArc(plotGeo->get_plotter(), 0,0,2,4,0, 135, QColor("blue"),3, Qt::SolidLine);
+//    JKQTPgeoArc* arc=new JKQTPgeoArc(plotGeo->get_plotter(), 0,0,2,4,0, 135, QColor("blue"),3, Qt::SolidLine);
     //plotGeo->get_plotter()->addGraph(arc);
-    JKQTPgeoPie* pie=new JKQTPgeoPie(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
+//    JKQTPgeoPie* pie=new JKQTPgeoPie(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
     //plotGeo->get_plotter()->addGraph(pie);
-    JKQTPgeoChord* chord=new JKQTPgeoChord(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
+//    JKQTPgeoChord* chord=new JKQTPgeoChord(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
     //plotGeo->get_plotter()->addGraph(chord);
 
     JKQTPgeoInfiniteLine* iline=new JKQTPgeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,1,1, QColor("blue"), 3);

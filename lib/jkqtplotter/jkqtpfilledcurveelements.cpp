@@ -604,9 +604,6 @@ void JKQTPfilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
     // then the whole thing is drawn
     QPolygonF poly_all, phigh, plow;
 
-    double xold=-1;
-
-    bool first=true;
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);

@@ -95,7 +95,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     size_t cx2=ds->addColumn(x2, N2, "x2");
     size_t cy21=ds->addColumn(y21, N2, "y21");
     size_t cy22=ds->addColumn(y22, N2, "y22");
-    size_t cy23=ds->addColumn(y23, N2, "y23");
+//    size_t cy23=ds->addColumn(y23, N2, "y23");
     //size_t cy24=ds->addColumn(y24, N2, "y24");
     size_t cx2r=ds->addColumn(x2r, N2, "x2r");
     size_t cy21r=ds->addColumn(y21r, N2, "y21r");
@@ -302,7 +302,7 @@ void TestWidgetGraphs::setErrorStyle(int /*index*/)
     QComboBox* cmb=qobject_cast<QComboBox*>(sender());
     if (cmb) {
         JKQTPxyGraphErrors* exy=dynamic_cast<JKQTPxyGraphErrors*>(plteErrors);
-        JKQTPxGraphErrors* ex=dynamic_cast<JKQTPxGraphErrors*>(plteErrors);
+//        JKQTPxGraphErrors* ex=dynamic_cast<JKQTPxGraphErrors*>(plteErrors);
         JKQTPyGraphErrors* ey=dynamic_cast<JKQTPyGraphErrors*>(plteErrors);
         if (exy) {
             exy->set_yErrorStyle(String2JKQTPerrorPlotstyle(cmb->itemData(cmb->currentIndex()).toString()));
