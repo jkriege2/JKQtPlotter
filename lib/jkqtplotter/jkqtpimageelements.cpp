@@ -2506,7 +2506,7 @@ void JKQTPColumnRGBMathImage::ensureImageData()
     this->dataModifier=parent->getDatastore()->getColumn(modifierColumn).getPointer(0);
 }
 
-JKQTPImageModifierModeComboBox::JKQTPImageModifierModeComboBox(QWidget */*parent*/)
+JKQTPImageModifierModeComboBox::JKQTPImageModifierModeComboBox(QWidget * /*parent*/)
 {
     addMode(JKQTPMathImageBase::ModifyNone, tr("none"));
     addMode(JKQTPMathImageBase::ModifyValue, tr("value"));

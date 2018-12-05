@@ -861,27 +861,27 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     //std::cout<<"end\n";
 }
 
-bool JKQTPgraphErrors::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter */*parent*/, JKQTPcoordinateAxis* /*xAxis*/, JKQTPcoordinateAxis* /*yAxis*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, long long /*index*/, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
+bool JKQTPgraphErrors::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter * /*parent*/, JKQTPcoordinateAxis* /*xAxis*/, JKQTPcoordinateAxis* /*yAxis*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, long long /*index*/, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
 {
     return false;
 }
 
-double JKQTPgraphErrors::getXErrorU(int /*i*/, JKQTPdatastore */*ds*/) const
+double JKQTPgraphErrors::getXErrorU(int /*i*/, JKQTPdatastore * /*ds*/) const
 {
     return 0.0;
 }
 
-double JKQTPgraphErrors::getXErrorL(int /*i*/, JKQTPdatastore */*ds*/) const
+double JKQTPgraphErrors::getXErrorL(int /*i*/, JKQTPdatastore * /*ds*/) const
 {
     return 0.0;
 }
 
-double JKQTPgraphErrors::getYErrorU(int /*i*/, JKQTPdatastore */*ds*/) const
+double JKQTPgraphErrors::getYErrorU(int /*i*/, JKQTPdatastore * /*ds*/) const
 {
     return 0.0;
 }
 
-double JKQTPgraphErrors::getYErrorL(int/* i*/, JKQTPdatastore */*ds*/) const
+double JKQTPgraphErrors::getYErrorL(int/* i*/, JKQTPdatastore * /*ds*/) const
 {
     return 0.0;
 }

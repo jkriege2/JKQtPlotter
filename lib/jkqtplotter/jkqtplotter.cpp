@@ -573,15 +573,15 @@ void JKQtPlotter::update_overlays() {
     update();
 }
 
-void JKQtPlotter::synchronizeXAxis(double newxmin, double newxmax, double /*newymin*/, double /*newymax*/, JKQtPlotter */*sender*/) {
+void JKQtPlotter::synchronizeXAxis(double newxmin, double newxmax, double /*newymin*/, double /*newymax*/, JKQtPlotter * /*sender*/) {
     setX(newxmin, newxmax);
 }
 
-void JKQtPlotter::synchronizeYAxis(double /*newxmin*/, double /*newxmax*/, double newymin, double newymax, JKQtPlotter */*sender*/) {
+void JKQtPlotter::synchronizeYAxis(double /*newxmin*/, double /*newxmax*/, double newymin, double newymax, JKQtPlotter * /*sender*/) {
     setY(newymin, newymax);
 }
 
-void JKQtPlotter::synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtPlotter */*sender*/) {
+void JKQtPlotter::synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtPlotter * /*sender*/) {
     setXY(newxmin, newxmax, newymin, newymax);
 }
 
@@ -729,7 +729,7 @@ void JKQtPlotter::delayedResizeEvent()
     if (sizeChanged) update_plot();
 }
 
-void JKQtPlotter::leaveEvent(QEvent */*event*/) {
+void JKQtPlotter::leaveEvent(QEvent * /*event*/) {
     if (!toolbarAlwaysOn) toolbar->hide();
 }
 
@@ -829,7 +829,7 @@ bool JKQtPlotter::get_zoomByMouseRectangle() const {
     return (mouseActionMode==JKQtPlotter::ZoomRectangle);
 }
 
-void JKQtPlotter::modifyContextMenu(QMenu */*menu*/)
+void JKQtPlotter::modifyContextMenu(QMenu * /*menu*/)
 {
 }
 
