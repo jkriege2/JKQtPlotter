@@ -110,6 +110,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem(QLatin1String("Schrödinger's equation"), "$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
     ui->cmbTestset->addItem("Cauchy-Schwarz inequality", "$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$");
     ui->cmbTestset->addItem("Maxwell's equations", "$\\begin{aligned}\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} & = \\frac{4\\pi}{c}\\vec{\\mathbf{j}} \\\\   \\nabla \\cdot \\vec{\\mathbf{E}} & = 4 \\pi \\rho \\\\\\nabla \\times \\vec{\\mathbf{E}}\\, +\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{B}}}{\\partial t} & = \\vec{\\mathbf{0}} \\\\\\nabla \\cdot \\vec{\\mathbf{B}} & = 0 \\end{aligned}$");
+    ui->cmbTestset->addItem("User-Editable Text");
     //ui->cmbTestset->addItem("", "$$");
     //ui->cmbTestset->addItem("", "$$");
     //ui->cmbTestset->addItem("", "$$");
@@ -132,7 +133,7 @@ TestForm::~TestForm()
 
 
 
-double TestForm::draw(QPainter& painter, double X, double YY, JKQTmathText& mt, QString name) {
+double TestForm::draw(QPainter& painter, double X, double YY, JKQTmathText& mt, QString name, double& durationSizingMS, double&durationTimingMS) {
 
 
     double Y=YY;
@@ -140,7 +141,8 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTmathText& mt, 
     ht.start();
     QSizeF s=mt.getSize(painter);
     Y=Y+mt.getAscent(painter);
-    qDebug()<<"    sizing in "<<ht.get_time()/1000.0<<" ms\n";
+    durationSizingMS=ht.get_time()/1000.0;
+    qDebug()<<"    sizing in "<<durationSizingMS<<" ms\n";
     QPen p=painter.pen();
     p.setColor("lightcoral");
     p.setStyle(Qt::DashLine);
@@ -157,7 +159,8 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTmathText& mt, 
     p.setColor("black");
     painter.setPen(p);
     mt.draw(painter, X, Y, ui->chkBoxes->isChecked());
-    qDebug()<<"   drawing in "<<ht.get_time()/1000.0<<" ms";
+    durationTimingMS=ht.get_time()/1000.0;
+    qDebug()<<"   drawing in "<<durationTimingMS<<" ms";
     p.setColor("blue");
     painter.setPen(p);
 
@@ -188,7 +191,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTmathText::MTnode *node, QTreeWidgetIte
     JKQTmathText::MTmatrixNode* matrixN=dynamic_cast<JKQTmathText::MTmatrixNode*>(node);
     JKQTmathText::MTdecoratedNode* decoN=dynamic_cast<JKQTmathText::MTdecoratedNode*>(node);
 
-    QTreeWidgetItem* ti=NULL;
+    QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
     else ti=new QTreeWidgetItem(ui->tree);
 
@@ -202,7 +205,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTmathText::MTnode *node, QTreeWidgetIte
         QVector<QVector<JKQTmathText::MTnode*> > children=matrixN->get_children();
         for (int y=0; y<l; y++) {
             for (int x=0; x<c; x++) {
-                if (children[y].at(x)!=NULL) {
+                if (children[y].at(x)!=nullptr) {
                     QTreeWidgetItem* it=createTree(children[y].at(x), ti);
                     it->setText(0, QString("(%1,%2):").arg(y).arg(x)+it->text(0));
                     ti->addChild(it);
@@ -274,9 +277,16 @@ void TestForm::updateMath()
 
     //QString text="x_0My Text$\\sqrt{a^2+b^2 } \\underbrace{underbrace}{x_0}$";
 
-    mathTest=ui->cmbTestset->itemData(ui->cmbTestset->currentIndex()).toString();
-
-    ui->textBrowserSource->setPlainText(mathTest);
+    if (ui->cmbTestset->currentIndex()==ui->cmbTestset->count()-1) {
+        mathTest=ui->textBrowserSource->toPlainText();
+        ui->textBrowserSource->setReadOnly(false);
+        ui->btnRender->setEnabled(true);
+    } else {
+        mathTest=ui->cmbTestset->itemData(ui->cmbTestset->currentIndex()).toString();
+        ui->textBrowserSource->setPlainText(mathTest);
+        ui->textBrowserSource->setReadOnly(true);
+        ui->btnRender->setEnabled(false);
+    }
 
     ui->scrollArea->setBackgroundRole(QPalette::Dark);
 
@@ -313,24 +323,32 @@ void TestForm::updateMath()
     }
 
     ui->tree->clear();
+    ht.start();
+    double durationParse=0;
     if (mt.parse(mathTest)) {
+        durationParse=ht.get_time()/1000.0;
         ui->tree->addTopLevelItem(createTree(mt.get_parsedNode()));
+    } else {
+        durationParse=ht.get_time()/1000.0;
     }
+    ui->labParsingTimes->setText(QString("   %1ms").arg(durationParse, 0, 'f', 3));
     ui->tree->expandAll();
     bool okh=true;
     ui->textBrowser->clear();
     qDebug()<<"parse mathTest in "<<ht.get_time()/1000.0<<" ms\n";
 
     QStringList sl=ui->edtSizes->text().split(",");
+    ui->labRenderTimes->setText("");
 
     for (int i=0; i<sl.size(); i++) {
         bool ok=true;
         int size=sl[i].trimmed().toUInt(&ok);
         if (!ok) size=10+i*5;
         mt.set_fontSize(size);
-        Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3pt").arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size));
+        double durationSizingMS=0, durationTimingMS=0;
+        Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3pt").arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size), durationSizingMS, durationTimingMS);
 
-
+        ui->labRenderTimes->setText(ui->labRenderTimes->text()+QString("     %1pt: %2ms/%3ms").arg(size).arg(durationSizingMS, 0, 'F', 1).arg(durationTimingMS, 0, 'F', 1));
         ui->textBrowser->textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");
         qDebug()<<"HTML: ---------------------------------------------\n"<<mt.toHtml(&okh)<<"\nHTML: --------------------------------------------- ok="<<okh;
         if (mt.get_error_list().size()>0) {
@@ -342,5 +360,5 @@ void TestForm::updateMath()
 
 
     ui->label->setPixmap(pix);
-     QApplication::restoreOverrideCursor();
+    QApplication::restoreOverrideCursor();
 }

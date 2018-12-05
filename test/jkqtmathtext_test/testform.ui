@@ -14,7 +14,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0" rowspan="5">
+   <item row="4" column="0" rowspan="11">
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -25,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>605</width>
-        <height>628</height>
+        <height>616</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -43,10 +43,16 @@
      </widget>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QTextBrowser" name="textBrowserSource">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
+   <item row="11" column="1">
+    <widget class="QLabel" name="label_12">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>render times (getSize()+getAscent()/draw()):</string>
      </property>
     </widget>
    </item>
@@ -186,6 +192,86 @@
      </item>
     </layout>
    </item>
+   <item row="15" column="0" colspan="2">
+    <widget class="JKQTMathTextLabel" name="labMath">
+     <property name="text">
+      <string>left(left[sqrt{2picdotint_{-infty}^infty f(x);mathrm{d}x}right]right) </string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>LaTeX source:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnRender">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>&amp;Render</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="1" rowspan="2">
+    <widget class="QPlainTextEdit" name="textBrowserSource">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_11">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>rendered result:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLabel" name="label_9">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>HTML output:</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
@@ -266,7 +352,17 @@
      </item>
     </layout>
    </item>
+   <item row="12" column="1">
+    <widget class="QLabel" name="labRenderTimes">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
    <item row="8" column="1">
+    <widget class="QTextBrowser" name="textBrowser"/>
+   </item>
+   <item row="14" column="1">
     <widget class="QTreeWidget" name="tree">
      <property name="headerHidden">
       <bool>true</bool>
@@ -278,41 +374,36 @@
      </column>
     </widget>
    </item>
-   <item row="6" column="1">
-    <widget class="QTextBrowser" name="textBrowser"/>
-   </item>
-   <item row="5" column="1">
-    <widget class="QLabel" name="label_9">
-     <property name="text">
-      <string>HTML output:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="1">
+   <item row="13" column="1">
     <widget class="QLabel" name="label_10">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
       <string>node tree:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QLabel" name="label_8">
+   <item row="9" column="1">
+    <widget class="QLabel" name="label_13">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>LaTeX source:</string>
+      <string>parsing times:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_11">
+   <item row="10" column="1">
+    <widget class="QLabel" name="labParsingTimes">
      <property name="text">
-      <string>rendered result:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0" colspan="2">
-    <widget class="JKQTMathTextLabel" name="labMath">
-     <property name="text">
-      <string>left(left[sqrt{2picdotint_{-infty}^infty f(x);mathrm{d}x}right]right) </string>
+      <string/>
      </property>
     </widget>
    </item>
@@ -366,7 +457,7 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>591</x>
+     <x>790</x>
      <y>27</y>
     </hint>
     <hint type="destinationlabel">
@@ -382,7 +473,7 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>669</x>
+     <x>868</x>
      <y>27</y>
     </hint>
     <hint type="destinationlabel">
@@ -398,7 +489,7 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>765</x>
+     <x>964</x>
      <y>27</y>
     </hint>
     <hint type="destinationlabel">
@@ -414,7 +505,7 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>867</x>
+     <x>1067</x>
      <y>27</y>
     </hint>
     <hint type="destinationlabel">
@@ -430,7 +521,7 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>520</x>
+     <x>679</x>
      <y>29</y>
     </hint>
     <hint type="destinationlabel">
@@ -510,8 +601,8 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>697</x>
-     <y>45</y>
+     <x>949</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>518</x>
@@ -526,8 +617,8 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>941</x>
-     <y>54</y>
+     <x>1221</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>520</x>
@@ -542,12 +633,28 @@
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>905</x>
-     <y>22</y>
+     <x>1181</x>
+     <y>27</y>
     </hint>
     <hint type="destinationlabel">
      <x>519</x>
      <y>317</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnRender</sender>
+   <signal>clicked()</signal>
+   <receiver>TestForm</receiver>
+   <slot>updateMath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1187</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>617</x>
+     <y>380</y>
     </hint>
    </hints>
   </connection>
