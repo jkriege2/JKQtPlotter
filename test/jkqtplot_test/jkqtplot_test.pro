@@ -33,6 +33,8 @@ CONFIG += qt
 
 win32: LIBS += -lgdi32
 
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+
 #QMAKE_CXXFLAGS += -O2
 
 DEFINES -= -DQT_DLL
