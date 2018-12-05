@@ -1654,12 +1654,12 @@ void JKQTmathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTmathText::
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<MTsuperscriptNode*>(nodes[i+1])) { // is this subscript?
                     double w1, w2, oh, bh, sp;
+                    nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);
                     double shift=parent->get_super_shift_factor()*fm.xHeight()+(oh-bh);//(overallHeight-baselineHeight)+(oh-bh);
                     if (wasBrace) {
                         shift=baselineHeight-parent->get_super_shift_factor()*parent->getTBR(currentEv.getFont(parent), "M", painter.device()).height()+(oh-bh);
                     }
 
-                    nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);
                     //qDebug()<<"sub_super:   sub: "<<nodes[i]->getTypeName()<<"  w1="<<w1<<" bh"<<bh<<" oh="<<oh<<" sp="<<sp;
                     if (shift+oh-bh>overallHeight-baselineHeight) {
                         overallHeight=baselineHeight+shift+(oh-bh);
