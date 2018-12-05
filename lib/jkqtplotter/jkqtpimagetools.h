@@ -221,7 +221,7 @@ inline double JKQTPimagePlot_getImageMin(T* dbl, int width, int height)
     for (int i=1; i<width*height; ++i)
     {
         register T v=dbl[i];
-        if (!(std::isnan(v) || std::isinf(v))) {
+        if (!(std::isnan(static_cast<long double>(v)) || std::isinf(static_cast<long double>(v)))) {
             if (first) {
                 min=max=v;
                 first=false;
@@ -252,7 +252,7 @@ inline double JKQTPimagePlot_getImageMax(T* dbl, int width, int height)
     for (int i=1; i<width*height; ++i)
     {
         register T v=dbl[i];
-        if (!(std::isnan(v) || std::isinf(v))) {
+        if (!(std::isnan(static_cast<long double>(v)) || std::isinf(static_cast<long double>(v)))) {
             if (first) {
                 min=max=v;
                 first=false;
@@ -296,7 +296,7 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
         for (int i=1; i<width*height; ++i)
         {
             register T v=dbl_in[i];
-            if (std::isfinite(v)) {
+            if (std::isfinite(static_cast<long double>(v))) {
                 if (first) {
                     min=max=v;
                     first=false;
@@ -585,7 +585,7 @@ inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage 
         for (int i=1; i<width*height; ++i)
         {
             register T v=dbl_in[i];
-            if (!(std::isnan(v) || std::isinf(v))) {
+            if (!(std::isnan(static_cast<long double>(v)) || std::isinf(static_cast<long double>(v)))) {
                 if (first) {
                     min=max=v;
                     first=false;
