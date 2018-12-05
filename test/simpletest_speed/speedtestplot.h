@@ -1,6 +1,8 @@
 #pragma once
 #include <array>
 #include <random>
+#include <chrono>
+
 #include "jkqtplotter/jkqtplotter.h"
 
 
