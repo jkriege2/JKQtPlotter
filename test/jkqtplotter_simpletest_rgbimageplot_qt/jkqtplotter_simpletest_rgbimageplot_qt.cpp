@@ -41,21 +41,21 @@ int main(int argc, char* argv[])
 
 
 
-    // 5. add the graphs to the plot, so it is actually displayed
+    // 4. add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
 
-    // 6. set axis labels
+    // 5. set axis labels
     plot.get_xAxis()->set_axisLabel("x [pixels]");
     plot.get_yAxis()->set_axisLabel("y [pixels]");
 
-    // 7. fix axis aspect ratio to width/height, so pixels are square
+    // 6. fix axis aspect ratio to width/height, so pixels are square
     plot.get_plotter()->set_maintainAspectRatio(true);
     plot.get_plotter()->set_aspectRatio(double(image.width())/double(image.height()));
 
-    // 8. autoscale the plot so the graph is contained
+    // 7. autoscale the plot so the graph is contained
     plot.zoomToFit();
 
-    // show plotter and make it a decent size
+    // 8. show plotter and make it a decent size
     plot.show();
     plot.resize(800,600);
     plot.setWindowTitle("JKQTPImage");
