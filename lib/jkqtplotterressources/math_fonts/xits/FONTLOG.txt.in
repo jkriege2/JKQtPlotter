@@ -15,13 +15,14 @@ quality mathematic typesetting with OpenType MATH capable layout systems, like
 MS Office 2007 and the new TeX engines XeTeX and LuaTeX.
 
 XITS development is currently hosted on:
-http://github.com/khaledhosny/xits-math
+http://github.com/alif-type/xits
 
 Feature requests, bug reports and patches should be directed to our issue
 tracker.
 
 XITS currently provides the following Unicode coverage:
 %{XITS Math}
+%{XITS Math Bold}
 %{XITS}
 %{XITS Bold}
 %{XITS Italic}
@@ -36,11 +37,29 @@ recommendations regarding why you would want to contribute to the project or
 make your own version of the font.
 
 See the project website for the current master and the various branches:
-http://github.com/khaledhosny/xits-math
+http://github.com/alif-type/xits
 
 
 ChangeLog
 ----------
+2 October 2018 (Khaled Hosny) <XITS> Version 1.200
+- This is the final release with new features, from now only XITS is in
+  maintenance mode and only bug fixes will be made.
+
+29 September 2018 (Khaled Hosny) <XITS> Version 1.109
+- Improve Arabic math glyph considerably, they are much usable now.
+- Add upright RTL integral alternates.
+- Change ‘cv01’ feature for alternate Arabic math glyphs.
+- Make the ‘hhea’ ascent/descent/line gap match the ‘OS/2’ typo metrics.
+- Don’t set deprecated ForceBold in CFF Private dictionary.
+- Fix script position with vertical bar on MS Word.
+- Make vertical bar extensible in bold math font.
+- Make MS Word linear fraction work better.
+- Bundle WOFF fonts.
+- Remove glyph overlap, some CFF rasterizers handle it badly.
+- Fonts can be build with vanilla FontForge now.
+- Builds are reproducible.
+
 20 Jan 2014 (Khaled Hosny) <XITS> Version 1.108
 - Add ‘latn’ and ‘dflt’ languages to math stylistic sets
 - Add missing substitutions from ‘ss05’, ‘ss06’ and ‘ss07’ features
@@ -196,7 +215,7 @@ order.)
 
 N: Khaled Hosny
 E: khaledhosny@eglug.org
-W: http://www.khaledhosny.org
+W: http://github.com/alif-type
 D: Engineer - OpenType MATH code
 
 N: STIX Fonts project

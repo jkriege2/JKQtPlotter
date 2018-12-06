@@ -1,0 +1,78 @@
+languagesystem DFLT dflt;
+languagesystem latn dflt;
+languagesystem math dflt;
+
+feature ssty {
+  script math;
+
+  sub uni2032 from [uni2032.ssty1 uni2032.ssty2];
+  sub uni2033 from [uni2033.ssty1 uni2033.ssty2];
+  sub uni2034 from [uni2034.ssty1 uni2034.ssty2];
+  sub uni2035 from [uni2035.ssty1 uni2035.ssty2];
+  sub uni2036 from [uni2036.ssty1 uni2036.ssty2];
+  sub uni2037 from [uni2037.ssty1 uni2037.ssty2];
+  sub uni2057 from [uni2057.ssty1 uni2057.ssty2];
+} ssty;
+
+feature ss01 {
+  featureNames { name "Mathematical Calligraphic Alphabet"; };
+
+  sub u1D4D0 by u1D4D0.cal;
+  sub u1D4D1 by u1D4D1.cal;
+  sub u1D4D2 by u1D4D2.cal;
+  sub u1D4D3 by u1D4D3.cal;
+  sub u1D4D4 by u1D4D4.cal;
+  sub u1D4D5 by u1D4D5.cal;
+  sub u1D4D6 by u1D4D6.cal;
+  sub u1D4D7 by u1D4D7.cal;
+  sub u1D4D8 by u1D4D8.cal;
+  sub u1D4D9 by u1D4D9.cal;
+  sub u1D4DA by u1D4DA.cal;
+  sub u1D4DB by u1D4DB.cal;
+  sub u1D4DC by u1D4DC.cal;
+  sub u1D4DD by u1D4DD.cal;
+  sub u1D4DE by u1D4DE.cal;
+  sub u1D4DF by u1D4DF.cal;
+  sub u1D4E0 by u1D4E0.cal;
+  sub u1D4E1 by u1D4E1.cal;
+  sub u1D4E2 by u1D4E2.cal;
+  sub u1D4E3 by u1D4E3.cal;
+  sub u1D4E4 by u1D4E4.cal;
+  sub u1D4E5 by u1D4E5.cal;
+  sub u1D4E6 by u1D4E6.cal;
+  sub u1D4E7 by u1D4E7.cal;
+  sub u1D4E8 by u1D4E8.cal;
+  sub u1D4E9 by u1D4E9.cal;
+} ss01;
+
+feature ss08 {
+  featureNames { name "Upright Integrals"; };
+
+  sub uni222B by uni222B.up;
+  sub uni222C by uni222C.up;
+  sub uni222D by uni222D.up;
+  sub uni222E by uni222E.up;
+  sub uni222F by uni222F.up;
+  sub uni2230 by uni2230.up;
+  sub uni2231 by uni2231.up;
+  sub uni2232 by uni2232.up;
+  sub uni2233 by uni2233.up;
+  sub uni2A0C by uni2A0C.up;
+  sub uni2A0D by uni2A0D.up;
+  sub uni2A0E by uni2A0E.up;
+  sub uni2A0F by uni2A0F.up;
+  sub uni2A10 by uni2A10.up;
+  sub uni2A11 by uni2A11.up;
+  sub uni2A12 by uni2A12.up;
+  sub uni2A13 by uni2A13.up;
+  sub uni2A14 by uni2A14.up;
+  sub uni2A15 by uni2A15.up;
+  sub uni2A16 by uni2A16.up;
+  sub uni2A17 by uni2A17.up;
+  sub uni2A18 by uni2A18.up;
+  sub uni2A19 by uni2A19.up;
+  sub uni2A1A by uni2A1A.up;
+  sub uni2A1B by uni2A1B.up;
+  sub uni2A1C by uni2A1C.up;
+  sub uni2A0B by uni2A0B.up;
+} ss08;

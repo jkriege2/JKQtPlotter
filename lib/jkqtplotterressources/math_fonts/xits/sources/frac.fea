@@ -1,0 +1,33 @@
+feature frac {
+    sub one   fraction two    by onehalf;
+    sub one   fraction three  by onethird;
+    sub one   fraction four   by onequarter;
+    sub one   fraction five   by uni2155;
+    sub one   fraction six    by uni2159;
+    sub one   fraction eight  by oneeighth;
+    sub two   fraction three  by twothirds;
+    sub two   fraction five   by uni2156;
+    sub three fraction four   by threequarters;
+    sub three fraction five   by uni2157;
+    sub three fraction eight  by threeeighths;
+    sub four  fraction five   by uni2158;
+    sub five  fraction six    by uni215A;
+    sub five  fraction eight  by fiveeighths;
+    sub seven fraction eight  by seveneighths;
+
+    sub one   slash two    by onehalf;
+    sub one   slash three  by onethird;
+    sub one   slash four   by onequarter;
+    sub one   slash five   by uni2155;
+    sub one   slash six    by uni2159;
+    sub one   slash eight  by oneeighth;
+    sub two   slash three  by twothirds;
+    sub two   slash five   by uni2156;
+    sub three slash four   by threequarters;
+    sub three slash five   by uni2157;
+    sub three slash eight  by threeeighths;
+    sub four  slash five   by uni2158;
+    sub five  slash six    by uni215A;
+    sub five  slash eight  by fiveeighths;
+    sub seven slash eight  by seveneighths;
+} frac;

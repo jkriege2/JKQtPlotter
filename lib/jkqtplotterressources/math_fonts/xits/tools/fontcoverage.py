@@ -39,19 +39,19 @@ for fontfile in sys.argv[3:-1]:
         if f:
             found.append((name, (t,f)))
 
-    fullname = str(font['name'].getName(4, 1, 0).string, encoding='ascii')
-    coverage  = ""
-    coverage += "* %s:\n" %fullname
+    fullname = font['name'].getName(4, 3, 1)
+    coverage = []
+    coverage.append("* %s:" % fullname)
     for f in found:
         for b in blocks:
             if b[0] == f[0]:
-                name = f[0]
-                start, end = b[1]
-                total, present = f[1]
-                percent = present/total*100
-                coverage += "  %s (U+%s-%s): %s/%s (%.2f%%)\n" %(name, start, end, present, total, percent)
+                name, (total, present) = f
+                _, (start, end) = b 
+                percent = present / total * 100
+                coverage.append("  %s (U+%s-%s): %s/%s (%.2f%%)" % (
+                    name, start, end, present, total, percent))
 
-    log = log.replace("%%{%s}" %fullname, coverage)
+    log = log.replace("%%{%s}" % fullname, "\n".join(coverage))
 
 outfile = open(sys.argv[-1], "w")
 outfile.write(log)

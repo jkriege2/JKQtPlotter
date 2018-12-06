@@ -1,0 +1,25 @@
+feature numr {
+    sub zero  by zero.numr;
+    sub one   by one.numr;
+    sub two   by two.numr;
+    sub three by three.numr;
+    sub four  by four.numr;
+    sub five  by five.numr;
+    sub six   by six.numr;
+    sub seven by seven.numr;
+    sub eight by eight.numr;
+    sub nine  by nine.numr;
+} numr;
+
+feature dnom {
+    sub zero  by zero.dnom;
+    sub one   by one.dnom;
+    sub two   by two.dnom;
+    sub three by three.dnom;
+    sub four  by four.dnom;
+    sub five  by five.dnom;
+    sub six   by six.dnom;
+    sub seven by seven.dnom;
+    sub eight by eight.dnom;
+    sub nine  by nine.dnom;
+} dnom;
