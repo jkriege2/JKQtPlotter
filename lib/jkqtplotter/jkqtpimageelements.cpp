@@ -155,31 +155,50 @@ void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, dou
 
 
 JKQTPImage::JKQTPImage(JKQtBasePlotter *parent):
-    JKQTPImageBase(parent)
+    JKQTPImageBase(parent), image_owned(false)
 {
     this->image=nullptr;
     createImageActions();
 }
 
 JKQTPImage::JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtBasePlotter* parent):
-    JKQTPImageBase(x, y, width, height, parent)
+    JKQTPImageBase(x, y, width, height, parent), image_owned(false)
 {
     this->image=image;
     createImageActions();
 }
 
 JKQTPImage::JKQTPImage(JKQtPlotter *parent):
-    JKQTPImageBase(parent)
+    JKQTPImageBase(parent), image_owned(false)
 {
     this->image=nullptr;
     createImageActions();
 }
 
 JKQTPImage::JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtPlotter* parent):
-    JKQTPImageBase(x, y, width, height, parent)
+    JKQTPImageBase(x, y, width, height, parent), image_owned(false)
 {
     this->image=image;
     createImageActions();
+}
+
+JKQTPImage::JKQTPImage(double x, double y, double width, double height, const QImage &image, JKQtBasePlotter *parent):
+    JKQTPImageBase(x, y, width, height, parent), image_owned(true)
+{
+    this->image=new QImage(image);
+    createImageActions();
+}
+
+JKQTPImage::JKQTPImage(double x, double y, double width, double height, const QImage &image, JKQtPlotter *parent):
+    JKQTPImageBase(x, y, width, height, parent), image_owned(true)
+{
+    this->image=new QImage(image);
+    createImageActions();
+}
+
+JKQTPImage::~JKQTPImage()
+{
+    clear_image();
 }
 
 
@@ -190,6 +209,31 @@ void JKQTPImage::draw(JKQTPEnhancedPainter& painter)  {
 void JKQTPImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
     painter.drawImage(rect, QPixmap(":/JKQTPlotter/jkqtp_plot_image.png").toImage());
+}
+
+void JKQTPImage::set_image(const QImage &image)
+{
+    clear_image();
+    this->image=new QImage(image);
+    image_owned=true;
+    createImageActions();
+}
+
+void JKQTPImage::set_image(QImage *image)
+{
+    clear_image();
+    this->image=image;
+    image_owned=false;
+    createImageActions();
+}
+
+void JKQTPImage::clear_image()
+{
+    if (image_owned && image!=nullptr) {
+        delete image;
+    }
+    image=nullptr;
+    image_owned=false;
 }
 
 void JKQTPImage::createImageActions()

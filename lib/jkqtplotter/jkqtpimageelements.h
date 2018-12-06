@@ -240,10 +240,16 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         JKQTPImage(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPImage(JKQtPlotter* parent);
-        /** \brief class constructor */
+        /** \brief class constructor, which points to an external image (not owned by this object!!!) */
         JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtBasePlotter* parent=nullptr);
-        /** \brief class constructor */
+        /** \brief class constructor, which points to an external image (not owned by this object!!!) */
         JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtPlotter* parent);
+        /** \brief class constructor, which generates an internal image object, by copying \a image */
+        JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQtBasePlotter* parent=nullptr);
+        /** \brief class constructor, which generates an internal image object, by copying \a image */
+        JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQtPlotter* parent);
+
+        virtual ~JKQTPImage();
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -251,12 +257,21 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
 
+        /** \brief copy an external image into an internally owned copy */
+        virtual void set_image(const QImage& image);
 
+        /** \brief set an external image to be plotted, the image will NOT BE OWNED by the graph-object */
+        virtual void set_image(QImage* image);
 
-        JKQTPGET_SET_MACRO(QImage*, image)
+        /** \brief deletes the internal image */
+        void clear_image();
+
+        JKQTPGET_MACRO(QImage*, image)
     protected:
-        /** \brief the image to be plotted */
+        /** \brief the image to be plotted. This is freed by the destructor, iff \a image_owned is set to \c true (.e.g by QImage-copy-constructors) */
         QImage* image;
+        /** \brief indicates that the image \a image is owned by this object (i.e. freed, when the object is destroyed) */
+        bool image_owned;
 
         void createImageActions();
 

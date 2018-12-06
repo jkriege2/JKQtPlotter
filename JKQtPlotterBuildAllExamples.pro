@@ -13,6 +13,7 @@ SUBDIRS +=  jkqtplotterlib \
             jkqtplotter_simpletest_barchart \
             jkqtplotter_simpletest \
             jkqtplotter_simpletest_speed \
+            jkqtplotter_simpletest_rgbimageplot_qt \
             jkqtplot_test
             #jkqtplotter_simpletest_imageplot_nodatastore \
             #jkqtplotter_simpletest_rgbimageplot_opencv \
@@ -72,3 +73,6 @@ jkqtplotter_simpletest_symbols_and_styles.depends = jkqtplotterlib
 
 jkqtplotter_simpletest_speed.subdir = test/jkqtplotter_simpletest_speed
 jkqtplotter_simpletest_speed.depends = jkqtplotterlib
+
+jkqtplotter_simpletest_rgbimageplot_qt.subdir = test/jkqtplotter_simpletest_rgbimageplot_qt
+jkqtplotter_simpletest_rgbimageplot_qt.depends = jkqtplotterlib
