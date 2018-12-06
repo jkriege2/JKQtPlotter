@@ -2809,7 +2809,7 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     painter.setFont(f);
 
     if (extendWidthInMathmode && currentEv.insideMath) {
-        x=x+0.5*width*parent->get_mathoperator_width_factor();
+        x=x+0.5*width*(parent->get_mathoperator_width_factor()-1.0);
     }
 
     //std::cout<<"symbol '"<<symbolName.toStdString()<<"' = "<<std::hex<<symbol.at(0).digitValue()<<" in font '"<<f.family().toStdString()<<"' ("<<QFontInfo(f).family().toStdString()<<"): "<<fm.inFont(symbol.at(0))<<std::endl;
