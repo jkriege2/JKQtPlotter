@@ -11,6 +11,30 @@ SOURCES = jkqtplotter_simpletest.cpp
 
 # configure Qt
 CONFIG += qt
+QT += core gui xml svg
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+
+# output executable name
+TARGET = jkqtplotter_simpletest
+
+# include JKQtPlotter source headers and link against library
+DEPENDPATH += . ../../lib
+INCLUDEPATH += ../../lib
+CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtplotterlib
+CONFIG (release):LIBS += -L../../lib/release -ljkqtplotterlib
+
+# here you can activate some debug options
+#DEFINES += SHOW_JKQTPLOTTER_DEBUG
+#DEFINES += JKQTBP_AUTOTIMER
+```
+
+Alternatively to linking agains a `libjkqtplotter`, you can also directy add the JKQtPlotter sources to the project:
+```qmake
+# source code for this simple demo
+SOURCES = jkqtplotter_simpletest.cpp 
+
+# configure Qt
+CONFIG += qt
 QT += core gui svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
@@ -20,7 +44,7 @@ TARGET = jkqtplotter_simpletest
 # include JKQtPlotter source code
 include(../../lib/jkqtplotter.pri)
 ```
-And the soruce code of the main application is (see `./test/jkqtplotter_simpletest/jkqtplotter_simpletest.cpp`):
+The soruce code of the main application is (see `./test/jkqtplotter_simpletest/jkqtplotter_simpletest.cpp`):
 ```c++
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"

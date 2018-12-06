@@ -2,8 +2,8 @@
 
 # JKQtPlotter
 
-## Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
-This project (see `./test/jkqtplotter_simpletest_rgbimageplot_qt/`) simply creates a JKQtPlotter widget (as a new window) and adds an image plot with an image taken from a QImage object. 
+## `QImage` as a Graph
+This project (see `./test/jkqtplotter_simpletest_rgbimageplot_qt/`) simply creates a JKQtPlotter widget (as a new window) and adds an image plot with an image taken from a [QImage](http://doc.qt.io/qt-5/qimage.html) object. 
 
 The source code of the main application is (see `./test/jkqtplotter_simpletest_rgbimageplot_qt/jkqtplotter_simpletest_rgbimageplot_qt.cpp`). the main parts are:
 ```c++

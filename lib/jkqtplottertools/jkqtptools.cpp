@@ -2204,3 +2204,56 @@ std::string jkqtp_chartostr(char data){
   ost<<data;
   return ost.str();
 }
+
+JKQTPstepTypeComboBox::JKQTPstepTypeComboBox(QWidget *parent):
+    QComboBox(parent)
+{
+    clear();
+    setEditable(false);
+    addStep(JKQTPstepType::JKQTPstepLeft, JKQTPstepType2String(JKQTPstepType::JKQTPstepLeft));
+    addStep(JKQTPstepType::JKQTPstepCenter, JKQTPstepType2String(JKQTPstepType::JKQTPstepCenter));
+    addStep(JKQTPstepType::JKQTPstepRight, JKQTPstepType2String(JKQTPstepType::JKQTPstepRight));
+    setCurrentIndex(0);
+}
+
+JKQTPstepType JKQTPstepTypeComboBox::getStepType() const
+{
+    return String2JKQTPstepType(itemData(currentIndex()).toString());
+}
+
+void JKQTPstepTypeComboBox::setStepType(JKQTPstepType step)
+{
+    int i=findData(JKQTPstepType2String(step));
+    if (i>=0) setCurrentIndex(i);
+}
+
+void JKQTPstepTypeComboBox::setCurrentStepType(JKQTPstepType step)
+{
+    setStepType(step);
+}
+
+void JKQTPstepTypeComboBox::addStep(JKQTPstepType step, const QString &name, const QIcon &icon)
+{
+    addItem(icon, name, JKQTPstepType2String(step));
+}
+
+QString JKQTPstepType2String(JKQTPstepType pos)
+{
+    switch(pos) {
+        case JKQTPstepLeft: return "step_left";
+        case JKQTPstepCenter: return "step_center";
+        case JKQTPstepRight: return "step_right";
+    }
+    return "";
+}
+
+JKQTPstepType String2JKQTPstepType(QString pos)
+{
+    QString s=pos.trimmed().toLower();
+    if (s=="step_left"||s=="left"||s=="l") return JKQTPstepLeft;
+    if (s=="step_center"||s=="center"||s=="c") return JKQTPstepCenter;
+    if (s=="step_right"||s=="right"||s=="r") return JKQTPstepRight;
+
+    return JKQTPstepLeft;
+}
+

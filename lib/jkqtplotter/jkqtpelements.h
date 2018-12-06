@@ -397,7 +397,7 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         JKQTPGET_SET_MACRO(double, lineWidth)
         JKQTPGET_SET_MACRO(bool, drawLine)
         JKQTPGET_SET_MACRO(bool, fillCurve)
-        JKQTPGET_SET_MACRO(bool, valuesCentered)
+        JKQTPGET_SET_MACRO(JKQTPstepType, stepType)
     protected:
         /** \brief color of the graph */
         QColor color;
@@ -413,8 +413,8 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         bool drawLine;
         /** \brief indicates whether to fill the space between the curve and the x-axis */
         bool fillCurve;
-        /** \brief The steps are centered around the \f$ x_i \f$ values, if this is true. */
-        bool valuesCentered;
+        /** \brief specifies whether the steps elongate to the left, the right, or are centered around the \f$ x_i \f$ values. */
+        JKQTPstepType stepType;
 
         /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
         int parentPlotStyle;

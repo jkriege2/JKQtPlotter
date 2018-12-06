@@ -540,7 +540,7 @@ JKQTPstepHorizontalGraph::JKQTPstepHorizontalGraph(JKQtBasePlotter* parent):
     fillStyle=Qt::SolidPattern;
     drawLine=true;
     fillCurve=true;
-    valuesCentered=false;
+    stepType=JKQTPstepLeft;
 
 
     if (parent) { // get style settings from parent object
@@ -563,7 +563,7 @@ JKQTPstepHorizontalGraph::JKQTPstepHorizontalGraph(JKQtPlotter* parent):
     fillStyle=Qt::SolidPattern;
     drawLine=true;
     fillCurve=true;
-    valuesCentered=false;
+    stepType=JKQTPstepLeft;
 
 
     if (parent) { // get style settings from parent object
@@ -650,8 +650,8 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 //    double ystart=-1;
     double x0=xAxis->x2p(0);
     if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-//    double y0=yAxis->x2p(0);
-//    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+    double y0=yAxis->x2p(0);
+    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     bool subsequentItem=false;
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
@@ -668,7 +668,7 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 //double xl2=x;
                 //double yl2=y;
 
-                if (valuesCentered) {
+                if (stepType==JKQTPstepCenter) {
                     double d=(x-xold);
                     pf.lineTo(xold+d/2.0, yold);
                     pf.lineTo(xold+d/2.0, y);
@@ -678,7 +678,14 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                         pl.lineTo(xold+d/2.0, y);
                         pl.lineTo(x, y);
                     }
-                } else {
+                } else if (stepType==JKQTPstepLeft) {
+                    pf.lineTo(xold, y);
+                    pf.lineTo(x, y);
+                    if (drawLine) {
+                        pl.lineTo(xold, y);
+                        pl.lineTo(x, y);
+                    }
+                } else if (stepType==JKQTPstepRight) {
                     pf.lineTo(x, yold);
                     pf.lineTo(x, y);
                     if (drawLine) {
@@ -690,7 +697,7 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
             } else {
                 if (drawLine) pl.moveTo(x,y);
-                pf.moveTo(x0, y);
+                pf.moveTo(x, y0);
                 pf.lineTo(x, y);
                 //xstart=x;
                 //ystart=y0;
@@ -701,7 +708,7 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         }
     }
     if (fillCurve) {
-        pf.lineTo(x0, yold);
+        pf.lineTo(xold, y0);
         pf.closeSubpath();
     }
     painter.save();
@@ -784,8 +791,8 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     double xold=-1;
     double yold=-1;
-//    double x0=xAxis->x2p(0);
-//    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
+    double x0=xAxis->x2p(0);
+    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
     double y0=yAxis->x2p(0);
     if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
     bool first=false;
@@ -804,7 +811,7 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 //double xl2=x;
                 //double yl2=y;
 
-                if (valuesCentered) {
+                if (stepType==JKQTPstepCenter) {
                     double d=(y-yold);
                     pf.lineTo(xold, yold+d/2.0);
                     pf.lineTo(x, yold+d/2.0);
@@ -814,7 +821,14 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                         pl.lineTo(x, yold+d/2.0);
                         pl.lineTo(x, y);
                     }
-                } else {
+                } else if (stepType==JKQTPstepLeft) {
+                    pf.lineTo(x, yold);
+                    pf.lineTo(x, y);
+                    if (drawLine) {
+                        pl.lineTo(x, yold);
+                        pl.lineTo(x, y);
+                    }
+                } else if (stepType==JKQTPstepRight) {
                     pf.lineTo(xold, y);
                     pf.lineTo(x, y);
                     if (drawLine) {
@@ -826,7 +840,7 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
             } else {
                 if (drawLine) pl.moveTo(x,y);
-                pf.moveTo(x, y0);
+                pf.moveTo(x0, y);
                 pf.lineTo(x, y);
             }
             xold=x;
@@ -834,7 +848,7 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             first=true;
         }
     }
-    pf.lineTo(xold, y0);
+    pf.lineTo(x0, yold);
     pf.closeSubpath();
     painter.save();
     if (drawLine) {

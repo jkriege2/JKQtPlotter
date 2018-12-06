@@ -1346,4 +1346,44 @@ template<>
 inline constexpr double jkqtp_todouble(const bool& d) {
     return static_cast<double>((d)?1.0:0.0);
 }
+
+
+
+
+/** \brief plot styles for the error information
+ * \ingroup jkqtplotter
+ */
+enum JKQTPstepType {
+    JKQTPstepLeft=0,           /*!< \brief datapoint is on the left edge of the hor. step line */
+    JKQTPstepCenter=1,           /*!< \brief datapoint is centered on the hor. step line */
+    JKQTPstepRight=2,         /*!< \brief datapoint is on the right edge of the hor. step line */
+};
+
+/*! \brief a QComboBox which shows JKQTPstepType
+    \ingroup jkqtptools
+ */
+class LIB_EXPORT JKQTPstepTypeComboBox: public QComboBox {
+        Q_OBJECT
+    public:
+        JKQTPstepTypeComboBox(QWidget* parent=nullptr);
+
+        JKQTPstepType getStepType() const;
+        void setStepType(JKQTPstepType step);
+        void setCurrentStepType(JKQTPstepType step);
+    protected:
+        void addStep(JKQTPstepType step, const QString& name, const QIcon &icon=QIcon());
+};
+
+
+
+/** \brief converts a JKQTPstepType variable into a human-readable string
+ * \ingroup jkqtptools
+ */
+LIB_EXPORT QString JKQTPstepType2String(JKQTPstepType pos);
+
+/** \brief converts a String into a JKQTPstepType
+ * \ingroup jkqtptools
+ */
+LIB_EXPORT JKQTPstepType String2JKQTPstepType(QString pos);
+
 #endif // JKQTPTOOLS_H_INCLUDED
