@@ -5,7 +5,7 @@
 ## Line Graph with Logarithmic y-axis
 This project (see `./test/simpletest_logaxes/`) simply creates a JKQtPlotter widget (as a new window) and several line-graphs of different resonance curves. 
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp´]((https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->set_style()`). The colors are set automtically from an internal default palette. The main loop looks like this:
+The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->set_style()`). The colors are set automtically from an internal default palette. The main loop looks like this:
 
 ```c++
 	QVector<Qt::PenStyle> pens {Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };

@@ -122,6 +122,6 @@ The result looks like this:
 
 ![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_opencv.png)
 
-See [`test/simpletest_imageplot´]((https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plottet.
+See [`test/simpletest_imageplot´](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plottet.
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)

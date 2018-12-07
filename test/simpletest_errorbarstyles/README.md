@@ -5,7 +5,7 @@
 ## Different Types of Errorindicators
 This project (see `./test/simpletest_errorbarstyles/`) simply creates a JKQtPlotter widget (as a new window) and adds several curves show-casing different styles of error indicators. Data is initialized from two QVector<double> objects.
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_errorbarstyles.cpp´]((https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_errorbarstyles/jkqtplotter_simpletest_errorbarstyles.cpp). 
+The source code of the main application can be found in  [`jkqtplotter_simpletest_errorbarstyles.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_errorbarstyles/jkqtplotter_simpletest_errorbarstyles.cpp). 
 
 First some data is added to the internal datastore (mostly, like explained in several other examples, like e.g. [Line Graph with Different Symbols and Line Styles](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_symbols_and_styles)). The (in a loop) several graphs are added, each with a distinct style for its error indicators:
 
