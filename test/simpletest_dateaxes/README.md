@@ -7,7 +7,7 @@
 ### Date Axis
 This project (see `./test/simpletest_dateaxes/`) simply creates a JKQtPlotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_dateaxes.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_dateaxes/jkqtplotter_simpletest_dateaxes.cpp). 
+The source code of the main application can be found in  [`jkqtplotter_simpletest_dateaxes.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_dateaxes/jkqtplotter_simpletest_dateaxes.cpp). 
 
 First some data is parsed from a CSV-file (added as ressource to the example). Note that the Time/date or Date+Time data is internally stored as milliseconds since epoc (Jan 1st 1970, 00:00:00), therefore data has to be converted accordingly before beeing added to the graph.
 
@@ -94,7 +94,7 @@ On top of that plot, a second plot is added, which draws the average temperature
     plot.addGraph(graphTemperature);
 ```
 
-Finally the x-axis is formatted to display dates (see [Qt-Documentation of `QDateTime::toString()´]((http://doc.qt.io/qt-5/qdatetime.html#toString) for details on the formating strings):
+Finally the x-axis is formatted to display dates (see [Qt-Documentation of `QDateTime::toString()`]((http://doc.qt.io/qt-5/qdatetime.html#toString) for details on the formating strings):
 ```c++
     // 7. format the plot
     // set the title above the plot, use LaTeX instructions to make text bold

@@ -4,7 +4,7 @@
 
 ## Very simple line-graph
 This project (see `./test/simpletest/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
-The QMake project looks like this (see [`jkqtplotter_simpletest.pro´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest/jkqtplotter_simpletest.pro):
+The QMake project looks like this (see [`jkqtplotter_simpletest.pro`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest/jkqtplotter_simpletest.pro):
 ```qmake
 # source code for this simple demo
 SOURCES = jkqtplotter_simpletest.cpp 
@@ -44,7 +44,7 @@ TARGET = jkqtplotter_simpletest
 # include JKQtPlotter source code
 include(../../lib/jkqtplotter.pri)
 ```
-The soruce code of the main application is (see [`jkqtplotter_simpletest.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest/jkqtplotter_simpletest.cpp):
+The soruce code of the main application is (see [`jkqtplotter_simpletest.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest/jkqtplotter_simpletest.cpp):
 ```c++
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"

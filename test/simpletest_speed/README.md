@@ -4,7 +4,7 @@
 
 ## Simple line-graph with live-data (speed test)
 This project (see `./test/simpletest_speed/`) simply creates a JKQtPlotter widget (as a new window) and adds two line-graph (a sine and a cosine wave). 
-Data is stored in two [`std::array<double, NDATA>´](https://en.cppreference.com/w/cpp/container/array) objects (`X`, `Y`, and `Y2`) and the data is added as external pointer to the datastore:
+Data is stored in two [`std::array<double, NDATA>`](https://en.cppreference.com/w/cpp/container/array) objects (`X`, `Y`, and `Y2`) and the data is added as external pointer to the datastore:
 ```c++
     // 3. make data available to JKQtPlotter by adding it to the internal datastore.
     //    Here the data from the std::array's is not copied, but only the pointer to

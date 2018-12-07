@@ -8,7 +8,7 @@ To copy the data a special OpenCV Interface function `JKQTPdatastore::copyCvMatT
 
 The function `JKQTPdatastore::copyCvMatToColumn()` is only available, when the preprocessore macro `JKQTPLOTTER_OPENCV_INTERFACE` is defined when compiling the JKQtPlotter library.
 
-The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
 ```c++
 #include <QApplication>
 #include <cmath>

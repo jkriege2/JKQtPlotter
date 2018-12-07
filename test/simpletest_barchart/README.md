@@ -3,9 +3,9 @@
 # JKQtPlotter
 
 ## Simple barchart
-This project (see [`simpletest_barchart´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_barchart) simply creates a JKQtPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
+This project (see [`simpletest_barchart`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_barchart) simply creates a JKQtPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
+The soruce code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
 ```c++
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"

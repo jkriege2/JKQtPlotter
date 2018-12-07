@@ -5,7 +5,7 @@
 ## Simple stacked barchart
 This project (see `./test/simpletest_stackedbars/`) simply creates a JKQtPlotter widget (as a new window) and adds several stacked barcharts.
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
+The soruce code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
 ```c++
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"

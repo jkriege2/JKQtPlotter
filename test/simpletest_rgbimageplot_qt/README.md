@@ -5,7 +5,7 @@
 ## `QImage` as a Graph
 This project (see `./test/simpletest_rgbimageplot_qt/`) simply creates a JKQtPlotter widget (as a new window) and adds an image plot with an image taken from a [QImage](http://doc.qt.io/qt-5/qimage.html) object. 
 
-The source code of the main application is (see [`jkqtplotter_simpletest_rgbimageplot_qt.cpp´](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_rgbimageplot_qt/jkqtplotter_simpletest_rgbimageplot_qt.cpp). the main parts are:
+The source code of the main application is (see [`jkqtplotter_simpletest_rgbimageplot_qt.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_rgbimageplot_qt/jkqtplotter_simpletest_rgbimageplot_qt.cpp). the main parts are:
 ```c++
     // 2. now we open a BMP-file and load it into an OpenCV cv::Mat
     QImage image(":/example.bmp");
