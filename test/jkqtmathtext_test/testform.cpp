@@ -8,7 +8,8 @@ TestForm::TestForm(QWidget *parent) :
     ui(new Ui::TestForm)
 {
     ui->setupUi(this);
-    ui->cmbTestset->addItem("simple equarelationslities", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
+    ui->cmbTestset->addItem("simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
+    ui->cmbTestset->addItem("simple relations in different modes", "math: $a{\\leq}b$, math/no braces: $a\\leq b$, no math: a{\\leq}b, no math/no braces: a\\leq b");
     ui->cmbTestset->addItem("named symbols 1", "ll: $\\ll$\\ gg: $\\gg$\\ leq: $\\leq$\\ geq: $\\geq$\\ pm: $\\pm$\\ mp: $\\mp$\\ ");
     ui->cmbTestset->addItem("named symbols 2", "nexists: $\\nexists$\\ ni: $\\ni$\\ notni: $\\notni$\\ circ: $\\circ$\\ sim: $\\sim$\\ emptyset: $\\emptyset$\\ odot: $\\odot$\\ ominus: $\\ominus$\\ subsetnot: $\\subsetnot$\\ bot: $\\bot$");
     ui->cmbTestset->addItem("named symbols 3", "leftharpoonup: $\\leftharpoonup$\\ rightharpoonup: $\\rightharpoonup$\\ upharpoonleft: $\\upharpoonleft$\\ downharpoonleft: $\\downharpoonleft$\\ leftrightharpoon: $\\leftrightharpoon$\\ rightleftharpoon: $\\rightleftharpoon$");
@@ -120,8 +121,12 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem(QLatin1String("Schrödinger's equation"), "$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
     ui->cmbTestset->addItem("Cauchy-Schwarz inequality", "$\\left( \\sum_{k=1}^n a_k b_k \\right)^2 \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)$");
     ui->cmbTestset->addItem("Maxwell's equations", "$\\begin{aligned}\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} & = \\frac{4\\pi}{c}\\vec{\\mathbf{j}} \\\\   \\nabla \\cdot \\vec{\\mathbf{E}} & = 4 \\pi \\rho \\\\\\nabla \\times \\vec{\\mathbf{E}}\\, +\\, \\frac{1}{c}\\, \\frac{\\partial\\vec{\\mathbf{B}}}{\\partial t} & = \\vec{\\mathbf{0}} \\\\\\nabla \\cdot \\vec{\\mathbf{B}} & = 0 \\end{aligned}$");
+    ui->cmbTestset->addItem("Langevin Equation", "$m \\dot{v}(t) = -\\gamma v(t) + F(x,t)+ f(t)$");
+    ui->cmbTestset->addItem("Fokker-Planck Equation", "$\\frac{\\partial}{\\partial t}P(y,t)=-\\frac{\\partial}{\\partial y}\\left[ A(y,t)P(y,t)\\right] +\\frac{\\Gamma}{2}\\frac{\\partial^2}{\\partial y^2}\\left[ P(y,t)\\right]$");
+    ui->cmbTestset->addItem("Hamilton Equations of motion", "$\\mathcal{H}(\\mathbf{q},\\mathbf{p})=\\frac{\\mathbf{p}^2}{2\\,m}+V(\\mathbf{q})\\ \\ \\ \\text{and}\\ \\ \\ \\dot{q}_k =\\frac{p_k}{m}\\ ,\\ \\dot{p}_k = - \\frac{\\partial V}{\\partial q_k}$");
+    ui->cmbTestset->addItem("Gaussian Distrubution", "$f(x | \\mu,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}\\operatorname{exp}\\left(-\\frac{(x-\\mu)^2}{2\\sigma^2}\\right)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}\\quad -\\infty<x<\\infty$");
     ui->cmbTestset->addItem("User-Editable Text");
-    //ui->cmbTestset->addItem("", "$$");
+    //
     //ui->cmbTestset->addItem("", "$$");
     //ui->cmbTestset->addItem("", "$$");
     //ui->cmbTestset->addItem("", "");
@@ -357,6 +362,14 @@ void TestForm::updateMath()
         mt.set_fontSize(size);
         double durationSizingMS=0, durationTimingMS=0;
         Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3pt").arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size), durationSizingMS, durationTimingMS);
+
+        if (i==0) {
+            if (mt.get_error_list().size()>0) {
+                ui->labError->setText("<span color=\"red\">"+mt.get_error_list().join("<br>")+"</span>");
+            } else {
+                ui->labError->setText("<span color=\"green\">OK</span>");
+            }
+        }
 
         ui->labRenderTimes->setText(ui->labRenderTimes->text()+QString("     %1pt: %2ms/%3ms").arg(size).arg(durationSizingMS, 0, 'F', 1).arg(durationTimingMS, 0, 'F', 1));
         ui->textBrowser->textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");

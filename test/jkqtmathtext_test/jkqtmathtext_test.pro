@@ -11,7 +11,7 @@ RCC_DIR = rccs
 CONFIG += qt windows
 
 
-TARGET = jkqtplot_test
+TARGET = jkqtmathtext_test
 
 QT += core gui svg xml
 

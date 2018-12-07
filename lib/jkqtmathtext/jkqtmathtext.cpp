@@ -2038,7 +2038,7 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
                     <<"subsetnot"<<"bot"<<"leftharpoonup"<<"rightharpoonup"<<"upharpoonleft"<<"downharpoonleft"<<"leftrightharpoon"<<"rightleftharpoon"<<"coprod"<<"leftharpoondown"
                     <<"rightharpoondown"<<"upharpoonright"<<"downharpoonright"<<"nwarrow"<<"nearrow"<<"searrow"<<"swarrow"<<"mapsto"<<"div"<<"multimap"<<"maporiginal"<<"mapimage"
                     <<"times"<<"propto"<<"bullet"<<"neq"<<"ne"<<"equiv"<<"approx"<<"otimes"<<"oplus"<<"oslash"<<"cap"<<"land"<<"cup"<<"lor"<<"supset"<<"supseteq"<<"supsetnot"
-                    <<"subset"<<"subseteq"<<"in"<<"notin"<<"cdot"<<"wedge"<<"vee"<<"cong"<<"bot";
+                    <<"subset"<<"subseteq"<<"in"<<"notin"<<"cdot"<<"wedge"<<"vee"<<"cong"<<"bot"<<"mid";
     }
     
     if (extendWInMM.contains(n)) {
@@ -2213,7 +2213,7 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
       winSymbolSymbol.insert("rfloor", QChar(0xFB));
       winSymbolSymbol.insert("subsetnot", QChar(0xCB));
       winSymbolSymbol.insert("DC", "=");
-      winSymbolSymbol.insert("bot", QChar(0x5E));
+      winSymbolSymbol.insert("mid", "|");
       winSymbolSymbol.insert("cdots", QString(3, QChar(0xD7)));
       winSymbolSymbol.insert("dots", QChar(0xDC));
       winSymbolSymbol.insert("ldots", QChar(0xDC));
@@ -2314,6 +2314,7 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
       unicodeSymbol.insert("subsetnot", QChar(0x2284));
       unicodeSymbol.insert("DC", QChar(0x2393));
       unicodeSymbol.insert("bot", QChar(0x22A4));
+      unicodeSymbol.insert("mid", QChar(0xFF5C));
       unicodeSymbol.insert("cdots", QString(QChar(0x00B7)) + QString(QChar(0x00B7)) + QString(QChar(0x00B7)));
       unicodeSymbol.insert("vdots", QChar(0x22EE));
       unicodeSymbol.insert("iddots", QChar(0x22F0));
@@ -2528,7 +2529,7 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
       latexSymbol.insert("forall", QChar(0x38));
       latexSymbol.insert("exists", QChar(0x39));
       latexSymbol.insert("cong", QChar(0xbb));
-      latexSymbol.insert("bot", QChar(0x3f));
+      latexSymbol.insert("mid", "|");
 
     }
 
@@ -2756,6 +2757,7 @@ void JKQTmathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTmathText
         width=fm.width("a");
         if (symbolName=="|") width=fm.width("1")*0.8;
         else if (symbolName=="infty") width=fm.width("M");
+        else if (symbolName=="quad") width=parent->getTBR(f, "M", painter.device()).width();
         else if (symbolName==" ") width=parent->getTBR(f, "x", painter.device()).width();
         else if (symbolName==";") width=parent->getTBR(f, "x", painter.device()).width()*0.75;
         else if (symbolName==":") width=parent->getTBR(f, "x", painter.device()).width()*0.5;
@@ -2808,8 +2810,11 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     QFontMetricsF fm1(f1, painter.device());
     painter.setFont(f);
 
+    double shift=0;
     if (extendWidthInMathmode && currentEv.insideMath) {
-        x=x+0.5*width*(parent->get_mathoperator_width_factor()-1.0);
+        double origwidth=width/parent->get_mathoperator_width_factor();
+        shift=0.5*(width-origwidth);
+        //width=width*parent->get_mathoperator_width_factor();
     }
 
     //std::cout<<"symbol '"<<symbolName.toStdString()<<"' = "<<std::hex<<symbol.at(0).digitValue()<<" in font '"<<f.family().toStdString()<<"' ("<<QFontInfo(f).family().toStdString()<<"): "<<fm.inFont(symbol.at(0))<<std::endl;
@@ -2822,8 +2827,8 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     double xwi=fm.width("x");
     if (!symbol.isEmpty()) {
         // if the symbol has been recognized in the constructor: draw the symbol
-        painter.drawText(QPointF(x, y+yfactor*overallHeight), symbol);
-        double xx=x;
+        painter.drawText(QPointF(x+shift, y+yfactor*overallHeight), symbol);
+        double xx=x+shift;
         double yy=y-fm.xHeight()-(parent->getTBR(f, "M", painter.device()).height()-fm.xHeight())/3.0;
         QLineF l(xx, yy, xx+xwi/3.0+((currentEv.italic)?(xwi/3.0):0), yy);
         if (drawBar&&l.length()>0) painter.drawLine(l);
@@ -2835,7 +2840,7 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
         f1.setItalic(false);
         painter.setFont(f1);
         painter.save();
-        painter.translate(x+fm1.width("8")/3.0, y-fm1.xHeight());
+        painter.translate(x+shift+fm1.width("8")/3.0, y-fm1.xHeight());
         painter.rotate(90);
         painter.drawText(QPointF(0,0), "8");
         painter.restore();
@@ -2845,7 +2850,7 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
         painter.setFont(f1);
 
         painter.save();
-        painter.translate(x, y);
+        painter.translate(x+shift, y);
         painter.drawText(QPointF(0,0), "|");
         painter.translate(fm1.width("8")/3.0, 0);
         painter.drawText(QPointF(0,0), "|");
@@ -2853,6 +2858,7 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
 
     // here are some spaces
     } else if (symbolName==" ") { // full space
+    } else if (symbolName=="quad") { // 75% space
     } else if (symbolName==";") { // 75% space
     } else if (symbolName==":") { // 50% space
     } else if (symbolName==",") { // 25% space
@@ -2861,41 +2867,42 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
         double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
         double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
         double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeArrow(x+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, false);
+        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, false);
         painter.drawPath(path);
     } else if (symbolName=="longrightarrow"){
         double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
         double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
         double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeArrow(x+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, false, true);
+        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, false, true);
         painter.drawPath(path);
     } else if (symbolName=="Longleftarrow") {
         double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
         double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
         double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeDArrow(x+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, false);
+        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, false);
         painter.drawPath(path);
     } else if (symbolName=="Longrightarrow") {
         double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
         double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
         double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeDArrow(x+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, false, true);
+        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, false, true);
         painter.drawPath(path);
     } else if (symbolName=="longleftrightarrow") {
         double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
         double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
         double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeArrow(x+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, true);
+        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, true);
         painter.drawPath(path);
     } else if (symbolName=="Longleftrightarrow") {
         double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
         double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
         double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeDArrow(x+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, true);
+        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, true);
         painter.drawPath(path);
     } else { // draw a box to indicate an unavailable symbol
         QRectF tbr=parent->getTBR(f, "M", painter.device());
-        painter.drawRect(QRectF(x,y-tbr.height(), xwi, tbr.height()*0.8));
+        painter.drawRect(QRectF(x+shift,y-tbr.height(), xwi, tbr.height()*0.8));
+        parent->error_list<<"unknown symbol '"<<symbolName<<"' found!";
     }
     painter.setPen(pold);
     painter.setFont(fold);
