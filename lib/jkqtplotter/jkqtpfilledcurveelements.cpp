@@ -340,7 +340,7 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
             } else {
                 if (xok&&yok) {
                     if (drawLine) pl.moveTo(x,y);
-                    pf.moveTo(x, y0);
+                    pf.moveTo(x0, y);
                     pf.lineTo(x, y);
                     //xold=x;
                     yold=y;

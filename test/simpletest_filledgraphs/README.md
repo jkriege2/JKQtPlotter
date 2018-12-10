@@ -74,6 +74,10 @@ The result looks like this:
 
 ![jkqtplotter_simpletest_filledgraphs](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_filledgraphs.png)
 
+If you use `JKQTPfilledCurveYGraph` instead of `JKQTPfilledCurveXGraph`, the curve will not be filled until the y=0-axis, but until the x=0-axis. Of course you will also have to swap the x- and y-data columns. The result will look like this:
+
+![jkqtplotter_simpletest_filledgraphs_yaxis](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_filledgraphs_yaxis.png)
+
 
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
