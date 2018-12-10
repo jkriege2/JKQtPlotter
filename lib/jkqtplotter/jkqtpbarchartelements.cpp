@@ -602,7 +602,7 @@ QPen JKQTPbarVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     return p;
 }
 
-double JKQTPbarVerticalGraph::getParentStackedMax(int index) const
+double JKQTPbarVerticalGraph::getParentStackedMax(int /*index*/) const
 {
     return false;
 }

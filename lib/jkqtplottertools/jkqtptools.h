@@ -39,10 +39,8 @@
 #include <cfloat>
 #include <QComboBox>
 #include <QPrinter>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -104,11 +102,14 @@
   /** \brief a separator between two directories in a path between \c ' quotes */
   #define JKQTPPATHSEPARATOR_CHAR '\\'
   #include<windows.h>
+  #include <io.h>
 #else
   /** \brief a separator between two directories in a path between \c " quotes */
   #define JKQTPPATHSEPARATOR_STRING "/"
   /** \brief a separator between two directories in a path between \c ' quotes */
   #define JKQTPPATHSEPARATOR_CHAR '/'
+  #include <unistd.h>
+  #include <dirent.h>
 #endif
 
 

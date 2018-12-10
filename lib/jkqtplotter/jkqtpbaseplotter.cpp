@@ -4348,7 +4348,7 @@ void JKQtBasePlotter::getDataColumnsByUserComboBoxSelected(const QString &name) 
     }
 }
 
-void JKQtBasePlotter::getDataColumnsByUserItemChanged(QListWidgetItem */*widgetitem*/) {
+void JKQtBasePlotter::getDataColumnsByUserItemChanged(QListWidgetItem * /*widgetitem*/) {
     if (!dataColumnsListWidget) return;
     QStringList data;
     for (int i=0; i<dataColumnsListWidget->count(); i++) {

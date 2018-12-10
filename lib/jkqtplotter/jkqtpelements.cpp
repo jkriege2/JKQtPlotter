@@ -1690,7 +1690,7 @@ void JKQTPxyParametrizedErrorScatterGraph::drawErrorsBefore(JKQTPEnhancedPainter
     else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 }
 
-bool JKQTPxyParametrizedErrorScatterGraph::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter */*parent*/, JKQTPcoordinateAxis* /*xAxis*/, JKQTPcoordinateAxis* /*yAxis*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, long long index, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
+bool JKQTPxyParametrizedErrorScatterGraph::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter * /*parent*/, JKQTPcoordinateAxis* /*xAxis*/, JKQTPcoordinateAxis* /*yAxis*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, long long index, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
 {
     QColor c=getLocalColor(index);
     errorColor=c.darker();
