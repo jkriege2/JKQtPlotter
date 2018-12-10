@@ -86,13 +86,6 @@ QVector<double> JKQTPcolumn::copyData()
     return d;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-double JKQTPcolumn::getValue(size_t n) const
-{
-    if (!datastore) return 0;
-    if (!datastore->getItem(datastoreItem)) return 0;
-    return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 double *JKQTPcolumn::getPointer(size_t n) const
@@ -101,15 +94,6 @@ double *JKQTPcolumn::getPointer(size_t n) const
     if (!datastore->getItem(datastoreItem)) return nullptr;
     return datastore->getItem(datastoreItem)->getPointer(datastoreOffset, n);
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPcolumn::setValue(size_t n, double val)
-{
-    if (!datastore) return ;
-    if (!datastore->getItem(datastoreItem)) return ;
-    datastore->getItem(datastoreItem)->set(datastoreOffset, n, val);
-}
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,6 +139,19 @@ void JKQTPcolumn::scale(double factor)
     if (data){
         for (size_t i=0; i<N; i++) {
             data[i]=data[i]*factor;
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPcolumn::setAll(double value)
+{
+    if (!datastore) return ;
+    double* data=getPointer();
+    size_t N=getRows();
+    if (data){
+        for (size_t i=0; i<N; i++) {
+            data[i]=value;
         }
     }
 }

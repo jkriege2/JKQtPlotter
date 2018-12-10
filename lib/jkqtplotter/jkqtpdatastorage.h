@@ -627,17 +627,30 @@ class LIB_EXPORT JKQTPcolumn {
      * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
      * column.
      */
-    double getValue(size_t n) const;
+    inline double getValue(size_t n) const;
     /** \brief gets a pointer to the n-th value in the column
      */
     double* getPointer(size_t n=0) const ;
 
     /** \brief sets the \a n'th value from the column
      *
-     * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
+     * This method accesses the datastore and sets the value stored in the \a n'th row of the according
      * column.
      */
-    void setValue(size_t n, double val);
+    inline void setValue(size_t n, double val);
+
+    /** \brief increment the \a n'th value from the column
+     *
+     */
+    inline void incValue(size_t n, double increment=1.0);
+
+    /** \brief decrement the \a n'th value from the column
+     *
+     */
+    inline void decValue(size_t n, double decrement=1.0) {
+        incValue(n, -1.0*decrement);
+    }
+
 
     /** \brief sets the element at (x,y) in the column, where the data is interpreted as a row-major ordered Matrix of the given width
      *
@@ -658,13 +671,16 @@ class LIB_EXPORT JKQTPcolumn {
      */
     void copy(double* data, size_t N, size_t offset=0);
 
-    /** \brief exchange everz occurence of a given \a value by a \a replace value */
+    /** \brief exchange every occurence of a given \a value by a \a replace value */
     void exchange(double value, double replace);
 
     /** \brief subtracts a given value from all members of the column */
     void subtract(double value);
     /** \brief scales all members of the column with the given factor */
     void scale(double factor);
+
+    /** \brief set all values in the column to a specific \a value */
+    void setAll(double value);
 
     JKQTPGET_MACRO(size_t, datastoreItem)
     JKQTPGET_MACRO(size_t, datastoreOffset)
@@ -795,5 +811,29 @@ class LIB_EXPORT JKQTPdatastoreModel: public QAbstractTableModel {
 
 };
 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline void JKQTPcolumn::setValue(size_t n, double val){
+    if (!datastore) return ;
+    if (!datastore->getItem(datastoreItem)) return ;
+    datastore->getItem(datastoreItem)->set(datastoreOffset, n, val);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline void JKQTPcolumn::incValue(size_t n, double increment){
+    if (!datastore) return ;
+    if (!datastore->getItem(datastoreItem)) return ;
+    datastore->getItem(datastoreItem)->set(datastoreOffset, n, datastore->getItem(datastoreItem)->get(datastoreOffset, n)+increment);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline double JKQTPcolumn::getValue(size_t n) const {
+    if (!datastore) return 0;
+    if (!datastore->getItem(datastoreItem)) return 0;
+    return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
+}
 
 #endif // JKQTPDATASTORAGE_H
