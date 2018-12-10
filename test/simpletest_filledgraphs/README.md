@@ -20,19 +20,23 @@ And three columns with 256 entries each, which will be filled with the R-, G- an
 ```
 	
 In this example we will access the data in the internal datastore directly. This access is possible through objects of type JKQTPcolumn, which is a proxy to the data in one of the columns in a `JKQTdatastore`:
+
 ```c++
     JKQTPcolumn cG=ds->getColumn(columnG);
     JKQTPcolumn cR=ds->getColumn(columnR);
     JKQTPcolumn cB=ds->getColumn(columnB);
-```c++
+```
 
 In order to calculate the histograms, first all enries in the columns are set to 0:
+
 ```c++
     cR.setAll(0);
     cG.setAll(0);
     cB.setAll(0);
 ```
+
 Finally the histogram is calculated:
+
 ```c++
     QImage image(":/example.bmp");
     for (int y=0; y<image.height(); y++) {
@@ -49,6 +53,7 @@ Finally the histogram is calculated:
 ```
 
 Finally three `JKQTPfilledCurveXGraph` objects are generated and added to the plot (here we show the code for the R-channel only):
+
 ```c++
     JKQTPfilledCurveXGraph* graphR=new JKQTPfilledCurveXGraph(&plot);
 
