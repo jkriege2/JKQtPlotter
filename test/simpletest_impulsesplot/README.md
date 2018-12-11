@@ -8,7 +8,7 @@ The soruce code of the main application is (see [`jkqtplotter_simpletest_impulse
 
 
 
-First data for a curve is calculated and stored in `QVector<double`: 
+First data for a curve is calculated and stored in `QVector<double>`: 
 ```c++
     QVector<double> X, Y;
     for (int i=0; i<Ndata; i++) {
