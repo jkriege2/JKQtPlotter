@@ -8,79 +8,51 @@ The soruce code of the main application is (see [`jkqtplotter_simpletest_impulse
 
 
 
-First the data columns for three x-y-curves are generated. One column of x-values with entries 0,1,2,...,254,255 (256 entries). 
+First data for a curve is calculated and stored in `QVector<double`: 
 ```c++
-    size_t columnX=ds->addLinearColumn(256, 0, 255, "x");
+    QVector<double> X, Y;
+    for (int i=0; i<Ndata; i++) {
+        const double xx=double(i)/double(Ndata)*6.0*M_PI;
+        X << xx;
+        Y << cos(xx)*exp(-xx/10.0);
+    }
 ```
 
-And three columns with 256 entries each, which will be filled with the R-, G- and B-histograms of an image `example.bmp`:
+... and finally the data is copied into the datastore
 ```c++
-    size_t columnR=ds->addColumn(256, "historam_R");
-    size_t columnG=ds->addColumn(256, "historam_G");
-    size_t columnB=ds->addColumn(256, "historam_B");
+    size_t columnX=ds->addCopiedColumn(X,  "x");
+    size_t columnY=ds->addCopiedColumn(Y,  "y");
 ```
 	
-In this example we will access the data in the internal datastore directly. This access is possible through objects of type JKQTPcolumn, which is a proxy to the data in one of the columns in a `JKQTdatastore`:
-
+Now an impulse graph object is generated and added to the plot:
 ```c++
-    JKQTPcolumn cG=ds->getColumn(columnG);
-    JKQTPcolumn cR=ds->getColumn(columnR);
-    JKQTPcolumn cB=ds->getColumn(columnB);
+    JKQTPimpulsesVerticalGraph* graph=new JKQTPimpulsesVerticalGraph(&plot);
+    graph->set_xColumn(columnX);
+    graph->set_yColumn(columnY);
+	graph->set_lineWidth(2);
+	graph->set_color(QColor("red"));
+    graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
+
+    plot.addGraph(graph);
 ```
-
-In order to calculate the histograms, first all entries in the columns are set to 0:
-
-```c++
-    cR.setAll(0);
-    cG.setAll(0);
-    cB.setAll(0);
-```
-
-Finally the histogram is calculated:
-
-```c++
-    QImage image(":/example.bmp");
-    for (int y=0; y<image.height(); y++) {
-        for (int x=0; x<image.width(); x++) {
-            QRgb pix=image.pixel(x,y);
-            cR.incValue(qRed(pix), 1);
-            cG.incValue(qGreen(pix), 1);
-            cB.incValue(qBlue(pix), 1);
-        }
-    }
-    cR.scale(100.0/static_cast<double>(image.width()*image.height()));
-    cG.scale(100.0/static_cast<double>(image.width()*image.height()));
-    cB.scale(100.0/static_cast<double>(image.width()*image.height()));
-```
-
-Finally three `JKQTPfilledCurveXGraph` objects are generated and added to the plot (here we show the code for the R-channel only):
-
-```c++
-    JKQTPfilledCurveXGraph* graphR=new JKQTPfilledCurveXGraph(&plot);
-
-    // set graph titles
-    graphR->set_title("R-channel");
-
-    // set graph colors (lines: non-transparent, fill: semi-transparent
-    QColor col;
-    col=QColor("red"); graphR->set_color(col);
-    col.setAlphaF(0.25); graphR->set_fillColor(col);
-
-    // set data
-    graphR->set_xColumn(columnX); graphR->set_yColumn(columnR);
-
-
-    // add the graphs to the plot, so they are actually displayed
-    plot.addGraph(graphR);
-```
-
-
-
-
 
 The result looks like this:
 
 ![jkqtplotter_simpletest_impulsesplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_impulsesplot.png)
+
+There is an alternative class `JKQTPimpulsesHorizontalGraph` which draws horizontal impulse plots:
+```c++
+    JKQTPimpulsesHorizontalGraph* graph=new JKQTPimpulsesHorizontalGraph(&plot);
+    graph->set_yColumn(columnX);
+    graph->set_xColumn(columnY);
+    graph->set_lineWidth(2);
+    graph->set_color(QColor("blue"));
+    graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
+```
+
+This code snippet results in a plot like this:
+
+![jkqtplotter_simpletest_impulsesplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_impulsesplot_horizontal.png)
 
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
