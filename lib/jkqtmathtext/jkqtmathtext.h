@@ -388,7 +388,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 JKQTPGET_MACRO(QString, name)
                 JKQTPGET_MACRO(QStringList, parameters)
             protected:
-                void setupMTenvironment(JKQTmathText::MTenvironment &ev);
+                bool setupMTenvironment(JKQTmathText::MTenvironment &ev = JKQTmathText::MTenvironment());
 
                 MTnode* child;
                 QString name;

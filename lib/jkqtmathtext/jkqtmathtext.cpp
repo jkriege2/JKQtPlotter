@@ -445,6 +445,10 @@ JKQTmathText::MTinstruction1Node::MTinstruction1Node(JKQTmathText* parent, QStri
     this->name=name;
     this->child=child;
     this->parameters=parameters;
+
+    if (!setupMTenvironment()) {
+        parent->error_list.append(tr("unknown instruction '%1' found!").arg(name));
+    }
 }
 
 JKQTmathText::MTinstruction1Node::~MTinstruction1Node() {
@@ -513,7 +517,7 @@ void JKQTmathText::MTinstruction1Node::set_drawBoxes(bool draw)
     child->set_drawBoxes(draw);
 }
 
-void JKQTmathText::MTinstruction1Node::setupMTenvironment(JKQTmathText::MTenvironment &ev)
+bool JKQTmathText::MTinstruction1Node::setupMTenvironment(JKQTmathText::MTenvironment &ev)
 {
     if (name=="bf" || name=="textbf" || name=="mathbf") ev.bold=true;
     else if (name=="em") ev.italic=!ev.italic;
@@ -535,9 +539,12 @@ void JKQTmathText::MTinstruction1Node::setupMTenvironment(JKQTmathText::MTenviro
     else if (name=="displaystyle") { ev.fontSize=ev.fontSize/0.8; }
     else if (name=="scriptstyle") { ev.fontSize=ev.fontSize*0.8; }
     else if (name=="scriptscriptstyle") { ev.fontSize=ev.fontSize*0.8*0.8; }
+    else {
+        return false;
+    }
+
+    return true;
 }
-
-
 
 
 
@@ -2683,6 +2690,19 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
       }
     }
     if (addWhitespace) symbol=symbol+" ";
+
+    static QSet<QString> extraSymbolName = {
+        "infty",
+        "|", " ", "quad", ";", ":", ",", "!",
+        "longleftarrow",  "longrightarrow",
+        "Longleftarrow", "Longrightarrow",
+        "longleftrightarrow", "Longleftrightarrow"
+    };
+
+    if (symbol.simplified().isEmpty() && !extraSymbolName.contains(n)) {
+        parent->error_list.append(tr("unknown symbol '%1' found!").arg(n));
+    }
+
     //std::cout<<"symbol node '"<<symbolName.toStdString()<<"': symbol='"<<symbol.toStdString()<<"'\n";
 }
 
@@ -2872,7 +2892,6 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     } else { // draw a box to indicate an unavailable symbol
         QRectF tbr=parent->getTBR(f, "M", painter.device());
         painter.drawRect(QRectF(x+shift,y-tbr.height(), xwi, tbr.height()*0.8));
-        parent->error_list<<"unknown symbol '"<<symbolName<<"' found!";
     }
     painter.setPen(pold);
     painter.setFont(fold);
