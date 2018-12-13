@@ -473,6 +473,23 @@ class LIB_EXPORT JKQTPdatastore{
         }
 
 
+        /** \brief copies the contents of the map-like container \a c into two columns of the datastore,
+         *         returns the two IDs of the items as a std::pair */
+        template <typename TContainer>
+        std::pair<size_t, size_t> addCopiedMap(const TContainer& c, const QString& nameKey=QString("map_key"), const QString& nameValue=QString("map_value")) {
+            std::vector<double> xvals;
+            std::vector<double> yvals;
+            for (auto it=c.begin(); it!=c.end(); ++it) {
+                xvals.push_back(jkqtp_todouble(it->first));
+                yvals.push_back(jkqtp_todouble(it->second));
+            }
+            return std::make_pair<size_t, size_t>(
+                        addCopiedColumn(xvals, nameKey),
+                        addCopiedColumn(yvals, nameValue)
+                        );
+        }
+
+
 
 
 
