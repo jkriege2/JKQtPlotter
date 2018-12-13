@@ -623,6 +623,12 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void getDataColumnsByUserComboBoxSelected(const QString& name);
         void getDataColumnsByUserItemChanged(QListWidgetItem* widgetitem);
         void showPlotData();
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
+        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis */
+        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis */
+        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
 
     public slots:
 
@@ -1312,8 +1318,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
             \param master the plotter widget to synchronize to
             \param synchronizeWidth do you want the plot width to be synchronized?
             \param synchronizeHeight do you want the plot height to be synchronized?
+            \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
+            \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
         */
-        void synchronizeToMaster(JKQtBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight);
+        void synchronizeToMaster(JKQtBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave=false, bool synchronizeZoomingSlaveToMaster=false);
 
         /** \brief switches any synchronization off, that has been created by synchronizeToMaster() */
         void resetMasterSynchronization();

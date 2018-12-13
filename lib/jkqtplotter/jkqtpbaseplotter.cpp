@@ -3154,22 +3154,77 @@ void JKQtBasePlotter::setBorder(int left, int right, int top, int bottom){
     if (emitPlotSignals) emit plotUpdated();
 }
 
-void JKQtBasePlotter::synchronizeToMaster(JKQtBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight) {
+void JKQtBasePlotter::synchronizeToMaster(JKQtBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster) {
     if (!master) {
         resetMasterSynchronization();
     }
     masterPlotter=master;
+    if (masterSynchronizeHeight!=synchronizeHeight && masterSynchronizeHeight) {
+        disconnect(masterPlotter, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                           this, SLOT(synchronizeYAxis(double,double,double,double,JKQtBasePlotter*)));
+        disconnect(this, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                           masterPlotter, SLOT(synchronizeYAxis(double,double,double,double,JKQtBasePlotter*)));
+    }
+    if (masterSynchronizeWidth!=synchronizeWidth && masterSynchronizeWidth) {
+        disconnect(masterPlotter, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                           this, SLOT(synchronizeXAxis(double,double,double,double,JKQtBasePlotter*)));
+        disconnect(this, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                           masterPlotter, SLOT(synchronizeXAxis(double,double,double,double,JKQtBasePlotter*)));
+    }
     masterSynchronizeHeight=synchronizeHeight;
     masterSynchronizeWidth=synchronizeWidth;
+
+    if (masterSynchronizeWidth) {
+        if (synchronizeZoomingMasterToSlave) {
+            connect(master, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                               this, SLOT(synchronizeXAxis(double,double,double,double,JKQtBasePlotter*)));
+        }
+        if (synchronizeZoomingSlaveToMaster) {
+            connect(this, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                               master, SLOT(synchronizeXAxis(double,double,double,double,JKQtBasePlotter*)));
+
+        }
+    }
+    if (masterSynchronizeWidth) {
+        if (synchronizeHeight) {
+            connect(master, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                               this, SLOT(synchronizeYAxis(double,double,double,double,JKQtBasePlotter*)));
+        }
+        if (synchronizeZoomingSlaveToMaster) {
+            connect(this, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                               master, SLOT(synchronizeYAxis(double,double,double,double,JKQtBasePlotter*)));
+
+        }
+    }
 }
 
 void JKQtBasePlotter::resetMasterSynchronization() {
     masterPlotter=nullptr;
     masterSynchronizeHeight=false;
     masterSynchronizeWidth=false;
+
+    disconnect(masterPlotter, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                       this, SLOT(synchronizeXAxis(double,double,double,double,JKQtBasePlotter*)));
+    disconnect(this, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                       masterPlotter, SLOT(synchronizeXAxis(double,double,double,double,JKQtBasePlotter*)));
+    disconnect(masterPlotter, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                       this, SLOT(synchronizeYAxis(double,double,double,double,JKQtBasePlotter*)));
+    disconnect(this, SIGNAL(zoomChangedLocally(double,double,double,double,JKQtBasePlotter*)),
+                       masterPlotter, SLOT(synchronizeYAxis(double,double,double,double,JKQtBasePlotter*)));
 }
 
 
+void JKQtBasePlotter::synchronizeXAxis(double newxmin, double newxmax, double /*newymin*/, double /*newymax*/, JKQtBasePlotter * /*sender*/) {
+    setX(newxmin, newxmax);
+}
+
+void JKQtBasePlotter::synchronizeYAxis(double /*newxmin*/, double /*newxmax*/, double newymin, double newymax, JKQtBasePlotter * /*sender*/) {
+    setY(newymin, newymax);
+}
+
+void JKQtBasePlotter::synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter * /*sender*/) {
+    setXY(newxmin, newxmax, newymin, newymax);
+}
 
 size_t JKQtBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPgraphPlotstyle graphStyle) {
     if (graphStyle==JKQTPimpulsesHorizontal) {
