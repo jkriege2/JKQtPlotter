@@ -446,7 +446,8 @@ JKQTmathText::MTinstruction1Node::MTinstruction1Node(JKQTmathText* parent, QStri
     this->child=child;
     this->parameters=parameters;
 
-    if (!setupMTenvironment()) {
+    JKQTmathText::MTenvironment ev;
+    if (!setupMTenvironment(ev)) {
         parent->error_list.append(tr("unknown instruction '%1' found!").arg(name));
     }
 }
