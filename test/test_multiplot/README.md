@@ -5,7 +5,7 @@
 ## Layouting Several Plots
 This project (see `./test/test_multiplot/`) shows how several JKQtPlotter widgets can be combined to in a layout (based on the [Qt layouting system](http://doc.qt.io/qt-5/layout.html)). It also shows how axes in such a layout can be linked to improve user experience.
 
-The source code of the main application can be found in  [`test_multiplot.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_stepplots/test_multiplot.cpp). 
+The source code of the main application can be found in  [`test_multiplot.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/test_multiplot/test_multiplot.cpp). 
 
 First three plots are generated and put into a [QGridLayout](http://doc.qt.io/qt-5/qgridlayout.html):
 
@@ -59,7 +59,7 @@ Finally: When printing or saving an image of the plots, the plotter will no know
 
 In the first line, grid-printing (i.e. the layouted printing of several graphs) is activated. Then the arrangement of the two slave plots `plotResid` and `plotResidHist` is defined as (`x,y`)-shifts with respect to the master plot `plotMain`.
 
-Now some data is generated and several curves are added to the graphs. See [`test_multiplot.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_stepplots/test_multiplot.cpp) for the full source code.
+Now some data is generated and several curves are added to the graphs. See [`test_multiplot.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/test_multiplot/test_multiplot.cpp) for the full source code.
 
 Finally the axes and plots need a bit of formatting to make them look nicer:
 
