@@ -445,6 +445,10 @@ JKQTmathText::MTinstruction1Node::MTinstruction1Node(JKQTmathText* parent, QStri
     this->name=name;
     this->child=child;
     this->parameters=parameters;
+
+    if (!setupMTenvironment()) {
+        parent->error_list.append(tr("unknown instruction '%1' found!").arg(name));
+    }
 }
 
 JKQTmathText::MTinstruction1Node::~MTinstruction1Node() {
@@ -458,26 +462,8 @@ QString JKQTmathText::MTinstruction1Node::getTypeName() const
 
 void JKQTmathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTmathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     JKQTmathText::MTenvironment ev=currentEv;
-    if (name=="bf" || name=="textbf" || name=="mathbf") ev.bold=true;
-    else if (name=="em") ev.italic=!ev.italic;
-    else if (name=="it" || name=="textit" || name=="mathit") ev.italic=true;
-    else if (name=="textcolor" || name=="mathcolor" || name=="color") ev.color=QColor(parameters.value(0, ev.color.name()));
-    else if (name=="equation") { ev.italic=true; ev.insideMath=true; }
-    else if (name=="sc" || name=="textsc" || name=="mathsc") ev.smallCaps=true;
-    else if (name=="ul" || name=="underline" || name=="underlined") ev.underlined=true;
-    else if (name=="ol" || name=="overline" || name=="overlined") ev.overline=true;
-    else if (name=="strike") ev.strike=true;
-    else if (name=="rm" || name=="textrm") { ev.font=JKQTmathText::MTEroman; }
-    else if (name=="mathrm" || name=="text" || name=="mbox" || name=="operatorname") { ev.font=JKQTmathText::MTEroman; ev.italic=false; }
-    else if (name=="mat") { ev.font=JKQTmathText::MTEroman; ev.italic=false; ev.bold=true; }
-    else if (name=="cal" || name=="textcal" || name=="mathcal") { ev.font=JKQTmathText::MTEcaligraphic; }
-    else if (name=="bb" || name=="textbb" || name=="mathbb") { ev.font=JKQTmathText::MTEblackboard; }
-    else if (name=="tt" || name=="texttt" || name=="mathtt") { ev.font=JKQTmathText::MTEtypewriter; }
-    else if (name=="sf" || name=="textsf" || name=="mathsf") { ev.font=JKQTmathText::MTEsans; }
-    else if (name=="script" || name=="textscript" || name=="mathscript") { ev.font=JKQTmathText::MTEscript; }
-    else if (name=="displaystyle") { ev.fontSize=ev.fontSize/0.8; }
-    else if (name=="scriptstyle") { ev.fontSize=ev.fontSize*0.8; }
-    else if (name=="scriptscriptstyle") { ev.fontSize=ev.fontSize*0.8*0.8; }
+
+    setupMTenvironment(ev);
 
     child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
     if (name=="colorbox" || name=="fbox" || name=="boxed") {
@@ -491,27 +477,9 @@ void JKQTmathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTma
 
 double JKQTmathText::MTinstruction1Node::draw(QPainter& painter, double x, double y, JKQTmathText::MTenvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
-    JKQTmathText::MTenvironment ev=currentEv;    
-    if (name=="bf" || name=="textbf" || name=="mathbf") ev.bold=true;
-    else if (name=="em") ev.italic=!ev.italic;
-    else if (name=="it" || name=="textit" || name=="mathit") ev.italic=true;
-    else if (name=="textcolor" || name=="mathcolor" || name=="color") ev.color=QColor(parameters.value(0, ev.color.name()));
-    else if (name=="equation") { ev.italic=true; ev.insideMath=true; }
-    else if (name=="sc" || name=="textsc" || name=="mathsc") ev.smallCaps=true;
-    else if (name=="ul" || name=="underline" || name=="underlined") ev.underlined=true;
-    else if (name=="ol" || name=="overline" || name=="overlined") ev.overline=true;
-    else if (name=="strike") ev.strike=true;
-    else if (name=="rm" || name=="textrm") { ev.font=JKQTmathText::MTEroman; }
-    else if (name=="mathrm" || name=="text" || name=="mbox" || name=="operatorname") { ev.font=JKQTmathText::MTEroman; ev.italic=false; }
-    else if (name=="mat") { ev.font=JKQTmathText::MTEroman; ev.italic=false; ev.bold=true; }
-    else if (name=="cal" || name=="textcal" || name=="mathcal") { ev.font=JKQTmathText::MTEcaligraphic; }
-    else if (name=="bb" || name=="textbb" || name=="mathbb") { ev.font=JKQTmathText::MTEblackboard; }
-    else if (name=="tt" || name=="texttt" || name=="mathtt") { ev.font=JKQTmathText::MTEtypewriter; }
-    else if (name=="sf" || name=="textsf" || name=="mathsf") { ev.font=JKQTmathText::MTEsans; }
-    else if (name=="script" || name=="textscript" || name=="mathscript") { ev.font=JKQTmathText::MTEscript; }
-    else if (name=="displaystyle") { ev.fontSize=ev.fontSize/0.8; }
-    else if (name=="scriptstyle") { ev.fontSize=ev.fontSize*0.8; }
-    else if (name=="scriptscriptstyle") { ev.fontSize=ev.fontSize*0.8*0.8; }
+    JKQTmathText::MTenvironment ev=currentEv;
+
+    setupMTenvironment(ev);
 
     QPen oldPen=painter.pen();
     double shiftX=0;
@@ -537,6 +505,20 @@ double JKQTmathText::MTinstruction1Node::draw(QPainter& painter, double x, doubl
 
 bool JKQTmathText::MTinstruction1Node::toHtml(QString &html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv) {
     JKQTmathText::MTenvironment ev=currentEv;
+
+    setupMTenvironment(ev);
+
+    return child->toHtml(html, ev, defaultEv);
+}
+
+void JKQTmathText::MTinstruction1Node::set_drawBoxes(bool draw)
+{
+    drawBoxes=draw;
+    child->set_drawBoxes(draw);
+}
+
+bool JKQTmathText::MTinstruction1Node::setupMTenvironment(JKQTmathText::MTenvironment &ev)
+{
     if (name=="bf" || name=="textbf" || name=="mathbf") ev.bold=true;
     else if (name=="em") ev.italic=!ev.italic;
     else if (name=="it" || name=="textit" || name=="mathit") ev.italic=true;
@@ -557,17 +539,12 @@ bool JKQTmathText::MTinstruction1Node::toHtml(QString &html, JKQTmathText::MTenv
     else if (name=="displaystyle") { ev.fontSize=ev.fontSize/0.8; }
     else if (name=="scriptstyle") { ev.fontSize=ev.fontSize*0.8; }
     else if (name=="scriptscriptstyle") { ev.fontSize=ev.fontSize*0.8*0.8; }
+    else {
+        return false;
+    }
 
-    return child->toHtml(html, ev, defaultEv);
+    return true;
 }
-
-void JKQTmathText::MTinstruction1Node::set_drawBoxes(bool draw)
-{
-    drawBoxes=draw;
-    child->set_drawBoxes(draw);
-}
-
-
 
 
 
@@ -2713,6 +2690,19 @@ JKQTmathText::MTsymbolNode::MTsymbolNode(JKQTmathText* parent, QString name, boo
       }
     }
     if (addWhitespace) symbol=symbol+" ";
+
+    static QSet<QString> extraSymbolName = {
+        "infty",
+        "|", " ", "quad", ";", ":", ",", "!",
+        "longleftarrow",  "longrightarrow",
+        "Longleftarrow", "Longrightarrow",
+        "longleftrightarrow", "Longleftrightarrow"
+    };
+
+    if (symbol.simplified().isEmpty() && !extraSymbolName.contains(n)) {
+        parent->error_list.append(tr("unknown symbol '%1' found!").arg(n));
+    }
+
     //std::cout<<"symbol node '"<<symbolName.toStdString()<<"': symbol='"<<symbol.toStdString()<<"'\n";
 }
 
@@ -2902,7 +2892,6 @@ double JKQTmathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     } else { // draw a box to indicate an unavailable symbol
         QRectF tbr=parent->getTBR(f, "M", painter.device());
         painter.drawRect(QRectF(x+shift,y-tbr.height(), xwi, tbr.height()*0.8));
-        parent->error_list<<"unknown symbol '"<<symbolName<<"' found!";
     }
     painter.setPen(pold);
     painter.setFont(fold);
