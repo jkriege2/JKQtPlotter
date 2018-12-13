@@ -47,6 +47,12 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_imageplot_opencv) | [1-channel OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_imageplot_opencv) | `JKQTPColumnMathImage`<br/>image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_rgbimageplot_opencv) | [RGB OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_rgbimageplot_opencv) | `JKQTPColumnRGBMathImage`<br/>image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore |
 
+### GUI Tools and Plot Layout
+
+| Screenshot    | Description   | Notes         |
+|:-------------:| ------------- | ------------- |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/test/test_multiplot) | [Layouting Several Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/test/test_multiplot) | Combining plots in Qt Layouts<br/>linking plot axes<br>copy data from a `std::map` int the datastore |
+
 ### Tools and Special Features
 
 | Screenshot    | Description   | Notes         |

@@ -4,6 +4,7 @@ SUBDIRS +=  jkqtplotterlib \
             jkqtmathtext_simpletest \
             jkqtplot_test \
             jkqtplotter_simpletest \
+			test_multiplot
 
 
 jkqtplotterlib.file = lib/jkqtplotterlib.pro
@@ -19,6 +20,9 @@ jkqtplot_test.depends = jkqtplotterlib
 
 jkqtplotter_simpletest.file = test/simpletest/jkqtplotter_simpletest.pro
 jkqtplotter_simpletest.depends = jkqtplotterlib
+
+test_multiplot.file = test/test_multiplot/test_multiplot.pro
+test_multiplot.depends = jkqtplotterlib
 
 defineTest(addSimpleTest) {
     test_name = $$1
