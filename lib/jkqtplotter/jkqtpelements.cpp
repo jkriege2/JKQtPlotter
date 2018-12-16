@@ -1271,6 +1271,7 @@ JKQTPxyParametrizedScatterGraph::JKQTPxyParametrizedScatterGraph(JKQtBasePlotter
     sizeColumn=-1;
     colorColumn=-1;
     symbolColumn=-1;
+    linewidthColumn=-1;
     palette=JKQTPMathImageMATLAB;
     colorColumnContainsRGB=false;
     symbol=JKQTPfilledCircle;
@@ -1289,6 +1290,7 @@ JKQTPxyParametrizedScatterGraph::JKQTPxyParametrizedScatterGraph(JKQtPlotter *pa
     sizeColumn=-1;
     colorColumn=-1;
     symbolColumn=-1;
+    linewidthColumn=-1;
     palette=JKQTPMathImageMATLAB;
     colorColumnContainsRGB=false;
     symbol=JKQTPfilledCircle;
@@ -1299,6 +1301,7 @@ JKQTPxyParametrizedScatterGraph::JKQTPxyParametrizedScatterGraph(JKQtPlotter *pa
     gridDeltaY=1;
     gridSymbolFractionSize=0.9;
 }
+
 void JKQTPxyParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 {
 #ifdef JKQTBP_AUTOTIMER
