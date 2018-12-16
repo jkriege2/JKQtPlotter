@@ -1160,14 +1160,8 @@ void JKQtBasePlotter::paintPlot(JKQTPEnhancedPainter& painter, bool drawOverlays
     painter.fillRect(QRectF(iplotBorderLeft, iplotBorderTop, plotWidth, plotHeight), QBrush(plotBackgroundColor));
     painter.restore();
     painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
-    if (useAntiAliasingForSystem)
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, true);
-    else
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, false);
-    if (useAntiAliasingForText)
-        painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, true);
-    else
-        painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, false);
+    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, useAntiAliasingForSystem);
+    painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, useAntiAliasingForText);
     plotSystemGrid(painter);
 
     if (!plotLabel.isEmpty()) {
@@ -1181,34 +1175,28 @@ void JKQtBasePlotter::paintPlot(JKQTPEnhancedPainter& painter, bool drawOverlays
         mathText.draw(painter, iplotBorderLeft+(plotWidth-s.width())/2.0,plotBorderTop+a*1.2);
     }
 
-    if (useAntiAliasingForGraphs)
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, true);
-    else
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, false);
+    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, useAntiAliasingForGraphs);
+    painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, useAntiAliasingForText);
     painter.save();
     plotGraphs(painter);
     painter.restore();
-    if (useAntiAliasingForSystem)
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, true);
-    else
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, false);
-    if (useAntiAliasingForText)
-        painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, true);
-    else
-        painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, false);
+    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, useAntiAliasingForSystem);
+    painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, useAntiAliasingForText);
+
     plotSystemXAxis(painter);
     plotSystemYAxis(painter);
+    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, useAntiAliasingForGraphs);
+    painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, useAntiAliasingForText);
     if (showKey) plotKey(painter);
+    painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, useAntiAliasingForText);
     if (drawOverlays) plotOverlays(painter);
     //qDebug()<<"  end JKQtPlotterBase::paintPlot";
 }
 
 void JKQtBasePlotter::paintOverlays(JKQTPEnhancedPainter &painter) {
     painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
-    if (useAntiAliasingForGraphs)
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, true);
-    else
-        painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, false);
+    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, useAntiAliasingForGraphs);
+    painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, useAntiAliasingForText);
     painter.save();
     plotOverlays(painter);
     painter.restore();
@@ -4249,7 +4237,7 @@ bool JKQtBasePlotter::containsGraph(JKQTPgraph* gr) const {
 };
 
 
-void JKQtBasePlotter::setGraphsDataRange(long long datarange_start, long long datarange_end) {
+void JKQtBasePlotter::setGraphsDataRange(int datarange_start, int datarange_end) {
     for (int i=0; i<graphs.size(); i++) {
         graphs[i]->set_datarange_start(datarange_start);
         graphs[i]->set_datarange_end(datarange_end);

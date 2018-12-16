@@ -723,7 +723,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         }
 
         /** \brief set the datarange of all current graphs to the given values */
-        void setGraphsDataRange(long long datarange_start, long long datarange_end);
+        void setGraphsDataRange(int datarange_start, int datarange_end);
 
         void set_maintainAspectRatio(bool value) {
             maintainAspectRatio=value;
