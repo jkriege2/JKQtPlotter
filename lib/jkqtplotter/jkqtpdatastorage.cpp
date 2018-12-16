@@ -347,6 +347,11 @@ JKQTPcolumn JKQTPdatastore::getColumn(size_t i) const
     return columns.value(i);
 }
 
+JKQTPcolumn JKQTPdatastore::getColumn(int i) const
+{
+    return columns.value(i);
+}
+
 size_t JKQTPdatastore::addCopiedItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columnsnum, size_t rows) {
     JKQTPdatastoreItem* it=nullptr;
     if ((dataformat==JKQTPsingleColumn)||(columnsnum==1)) {
@@ -537,12 +542,8 @@ size_t JKQTPdatastore::addLinearColumn(size_t rows, double start, double end, co
     return addColumnForItem(itemid, 0, name);
 }
 
-/** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
-double JKQTPdatastore::get(size_t column, size_t row) const {
-    return columns[column].getValue(row);
-}
 
-long long JKQTPdatastore::getNextLowerIndex(size_t column, size_t row, long long start, long long end) const
+int JKQTPdatastore::getNextLowerIndex(size_t column, size_t row, int start, int end) const
 {
     const JKQTPcolumn& col=columns[column];
     if (start<0 && end>=0) return getNextLowerIndex(column, row, 0, end);
@@ -551,9 +552,9 @@ long long JKQTPdatastore::getNextLowerIndex(size_t column, size_t row, long long
     else {
         double d=0;
         const double v=col.getValue(row);
-        long long res=-1;
-        for ( long long i=start; i<=end; i++) {
-            if (i!=(long long)row) {
+        int res=-1;
+        for ( int i=start; i<=end; i++) {
+            if (i!=(int)row) {
                 const double v1=col.getValue(i);
                 const double dd=v1-v;
                 if ((dd<0) && ((fabs(dd)<d)||(d==0.0))) {
@@ -569,12 +570,12 @@ long long JKQTPdatastore::getNextLowerIndex(size_t column, size_t row, long long
     }
 }
 
-long long JKQTPdatastore::getNextLowerIndex(size_t column, size_t row) const
+int JKQTPdatastore::getNextLowerIndex(size_t column, size_t row) const
 {
     return getNextLowerIndex(column, row, 0, columns[column].getRows()-1);
 }
 
-long long JKQTPdatastore::getNextHigherIndex(size_t column, size_t row, long long start, long long end) const
+int JKQTPdatastore::getNextHigherIndex(size_t column, size_t row, int start, int end) const
 {
     const JKQTPcolumn& col=columns[column];
     if (start<0 && end>=0) return getNextHigherIndex(column, row, 0, end);
@@ -583,9 +584,9 @@ long long JKQTPdatastore::getNextHigherIndex(size_t column, size_t row, long lon
     else {
         double d=0;
         const double v=col.getValue(row);
-        long long res=-1;
-        for ( long long i=start; i<=end; i++) {
-            if (i!=(long long)row) {
+        int res=-1;
+        for ( int i=start; i<=end; i++) {
+            if (i!=(int)row) {
                 const double v1=col.getValue(i);
                 const double dd=v1-v;
                 if ((dd>0) && ((fabs(dd)<d)||(d==0.0))) {
@@ -598,15 +599,23 @@ long long JKQTPdatastore::getNextHigherIndex(size_t column, size_t row, long lon
     }
 }
 
-long long JKQTPdatastore::getNextHigherIndex(size_t column, size_t row) const
+int JKQTPdatastore::getNextHigherIndex(size_t column, size_t row) const
 {
     return getNextHigherIndex(column, row, 0, columns[column].getRows()-1);
 }
 
-void JKQTPdatastore::set(size_t column, size_t row, double value)
-{
-    columns[column].setValue(row, value);
+int JKQTPdatastore::getNextLowerIndex(int column, size_t row, int start, int end) const {
+    return getNextLowerIndex(static_cast<size_t>(column), row, start, end);
 }
+
+int JKQTPdatastore::getNextLowerIndex(int column, size_t row) const {
+    return getNextLowerIndex(static_cast<size_t>(column), row);
+}
+
+int JKQTPdatastore::getNextHigherIndex(int column, size_t row, int start, int end) const {
+    return getNextHigherIndex(static_cast<size_t>(column), row, start, end);
+}
+
 
 
 
@@ -979,4 +988,8 @@ void JKQTPdatastoreModel::reloadModel()
     #else
     reset();
     #endif
+}
+
+int JKQTPdatastore::getNextHigherIndex(int column, size_t row) const {
+    return getNextHigherIndex(static_cast<size_t>(column), row);
 }

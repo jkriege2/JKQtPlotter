@@ -170,7 +170,7 @@ enum JKQTPRGBMathImageRGBMode {
 
 */
 template <class T>
-inline QVector<T> JKQTPimagePlot_arrayToVector(const T* input, long long N) {
+inline QVector<T> JKQTPimagePlot_arrayToVector(const T* input, int N) {
     if (!input || N<=0) return QVector<double>();
     T dummy;
     QVector<T> out(N, dummy);
@@ -220,7 +220,7 @@ inline double JKQTPimagePlot_getImageMin(T* dbl, int width, int height)
     bool first=true;
     for (int i=1; i<width*height; ++i)
     {
-        register T v=dbl[i];
+        T v=dbl[i];
         if (!(std::isnan(static_cast<long double>(v)) || std::isinf(static_cast<long double>(v)))) {
             if (first) {
                 min=max=v;
@@ -251,7 +251,7 @@ inline double JKQTPimagePlot_getImageMax(T* dbl, int width, int height)
     bool first=true;
     for (int i=1; i<width*height; ++i)
     {
-        register T v=dbl[i];
+        T v=dbl[i];
         if (!(std::isnan(static_cast<long double>(v)) || std::isinf(static_cast<long double>(v)))) {
             if (first) {
                 min=max=v;
@@ -295,7 +295,7 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
     if (minColor == maxColor) {
         for (int i=1; i<width*height; ++i)
         {
-            register T v=dbl_in[i];
+            T v=dbl_in[i];
             if (std::isfinite(static_cast<long double>(v))) {
                 if (first) {
                     min=max=v;
@@ -331,34 +331,34 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
         if (rgbMode==JKQTPRGBMathImageModeRGBMode) {
             //qDebug()<<"RGBMode";
             if (channel==0) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                        const register QRgb l=line[i];
+                        const QRgb l=line[i];
                         //if (j==5) qDebug()<<"r: "<<v<<qGreen(l)<<qBlue(l)<<qAlpha(255);
                         line[i]=qRgb(v,qGreen(l),qBlue(l));
                     }
                 }
             } else if (channel==1) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                        const register QRgb l=line[i];
+                        const QRgb l=line[i];
                         //if (j==5) qDebug()<<"g: "<<qRed(l)<<v<<qBlue(l)<<qAlpha(255);
                         line[i]=qRgb(qRed(l),v,qBlue(l));
                     }
                 }
             } else if (channel==2) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                        const register QRgb l=line[i];
+                        const QRgb l=line[i];
                         //if (j==5) qDebug()<<"b: "<<qRed(l)<<qGreen(l)<<v<<qAlpha(255);
                         line[i]=qRgb(qRed(l),qGreen(l),v);
                     }
@@ -367,34 +367,34 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
         } else if (rgbMode==JKQTPRGBMathImageModeCMYMode) {
             //qDebug()<<"RGBMode";
             if (channel==0) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                        const register QRgb l=line[i];
+                        const QRgb l=line[i];
                         //if (j==5) qDebug()<<"r: "<<v<<qGreen(l)<<qBlue(l)<<qAlpha(255);
                         line[i]=QColor::fromCmyk(v,QColor(l).magenta(),QColor(l).yellow(),QColor(l).black()).rgba();
                     }
                 }
             } else if (channel==1) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                        const register QRgb l=line[i];
+                        const QRgb l=line[i];
                         //if (j==5) qDebug()<<"g: "<<qRed(l)<<v<<qBlue(l)<<qAlpha(255);
                         line[i]=QColor::fromCmyk(QColor(l).cyan(),v,QColor(l).yellow(),QColor(l).black()).rgba();
                     }
                 }
             } else if (channel==2) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                        const register QRgb l=line[i];
+                        const QRgb l=line[i];
                         //if (j==5) qDebug()<<"b: "<<qRed(l)<<qGreen(l)<<v<<qAlpha(255);
                         line[i]=QColor::fromCmyk(QColor(l).cyan(),QColor(l).magenta(),v,QColor(l).black()).rgba();
                     }
@@ -402,9 +402,9 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
             }
         } else if (rgbMode==JKQTPRGBMathImageModeHSVMode) {
             if (channel==0) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*220.0/delta);
                         v = (v < 0) ? 0 : ( (v > 360) ? 360 : v);
                         QColor l=QColor::fromRgb(line[i]);
@@ -415,9 +415,9 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                     }
                 }
             } else if (channel==1) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
                         QColor l=QColor::fromRgb(line[i]);
@@ -428,9 +428,9 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                     }
                 }
             } else if (channel==2) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
                         QColor l=QColor::fromRgb(line[i]);
@@ -444,9 +444,9 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
             }
         } else if (rgbMode==JKQTPRGBMathImageModeHSLMode) {
             if (channel==0) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                         v = (v < 0) ? 0 : ( (v > 360) ? 360 : v);
                         QColor l=line[i];
@@ -455,9 +455,9 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                     }
                 }
             } else if (channel==1) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
                         QColor l=line[i];
@@ -466,9 +466,9 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                     }
                 }
             } else if (channel==2) {
-                for (register int j=0; j<height; ++j) {
+                for (int j=0; j<height; ++j) {
                     QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                    for (register int i=0; i<width; ++i) {
+                    for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
                         QColor l=line[i];
@@ -480,19 +480,19 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
             }
         }
         if (channel==3) {
-           for (register int j=0; j<height; ++j) {
+           for (int j=0; j<height; ++j) {
                QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-               for (register int i=0; i<width; ++i) {
+               for (int i=0; i<width; ++i) {
                    int v = (dbl[j*width+i]-min)*255/delta;
                    v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                   const register QRgb l=line[i];
+                   const QRgb l=line[i];
                    line[i]=qRgba(qRed(l),qGreen(l),qBlue(l),v);
                }
            }
         } else if (channel==4) {
-            for (register int j=0; j<height; ++j) {
+            for (int j=0; j<height; ++j) {
                 QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                for (register int i=0; i<width; ++i) {
+                for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
                     QColor c=QColor::fromRgba(line[i]);
@@ -501,9 +501,9 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             }
         } else if (channel==5) {
-            for (register int j=0; j<height; ++j) {
+            for (int j=0; j<height; ++j) {
                 QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                for (register int i=0; i<width; ++i) {
+                for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
                     QColor c=QColor::fromRgba(line[i]);
@@ -573,7 +573,7 @@ extern LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
     \param infColor color to use for pixels that are infinity
 */
 template <class T>
-inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage &img, JKQTPMathImageColorPalette palette, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0, int* lutUser=0, int lutUserSize=0)
+inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, JKQTPMathImageColorPalette palette, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0, const int* lutUser=0, int lutUserSize=0)
 {    
     if (!dbl_in || width<=0 || height<=0)
             return;
@@ -584,7 +584,7 @@ inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage 
         bool first=true;
         for (int i=1; i<width*height; ++i)
         {
-            register T v=dbl_in[i];
+            T v=dbl_in[i];
             if (!(std::isnan(static_cast<long double>(v)) || std::isinf(static_cast<long double>(v)))) {
                 if (first) {
                     min=max=v;
@@ -603,21 +603,23 @@ inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage 
         max = maxColor;
     }
 
-    T* dbl=dbl_in;
+    const T* dbl=dbl_in;
+    T* dbl1=nullptr;
     if (logScale) {
         double logB=log10(logBase);
-        dbl=(T*)malloc(width*height*sizeof(T));
+        dbl1=(T*)malloc(width*height*sizeof(T));
         //memcpy(dbl, dbl_in, width*height*sizeof(T));
         for (int i=0; i<width*height; i++) {
-            dbl[i]=log10(dbl_in[i])/logB;
+            dbl1[i]=log10(dbl_in[i])/logB;
         }
+        dbl=dbl1;
         min=log10(min)/logB;
         max=log10(max)/logB;
     }
     double delta=max-min;
 
 
-    int* lut_used=nullptr;
+    const int* lut_used=nullptr;
     int lutSize=JKQTPimagePlot_LUTSIZE;
     if (global_jkqtpimagetools_lutstore.size()<=0) global_jkqtpimagetools_lutstore=JKQTPimagePlot_makeQList<int*>(nullptr, JKQTPimagePlot_getPredefinedPalettes().size()+2);
 
@@ -638,19 +640,20 @@ inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage 
 
 
         if (lut_used!=nullptr && lutSize>0) {
+            const unsigned int* lut_usedui=reinterpret_cast<const unsigned int*>(lut_used);
             // LUT found: collor the image accordingly
-            for (register int j=0; j<height; ++j) {
-                QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                for (register int i=0; i<width; ++i) {
-                    register double val=dbl[j*width+i];
+            for (int j=0; j<height; ++j) {
+                QRgb* line=reinterpret_cast<QRgb*>(img.scanLine(height-1-j));
+                for (int i=0; i<width; ++i) {
+                    double val=dbl[j*width+i];
                     if (std::isnan(val)) {
                         line[i]=nanColor.rgba();
                     } else if (std::isinf(val)) {
                         line[i]=infColor.rgba();
                     } else {
-                        register int v = (val-min)/delta*lutSize;
-                        register int vv = (v < 0) ? 0 : ( (v > lutSize) ? (lutSize) : v);
-                        line[i]=lut_used[vv];
+                        const int v = static_cast<int>((val-min)/delta*static_cast<double>(lutSize));
+                        const int vv = (v < 0) ? 0 : ( (v > lutSize) ? (lutSize) : v);
+                        line[i]=lut_usedui[vv];
                         if ((v<0)&&(paletteMinFail==JKQTPMathImageGivenColor)) {
                             line[i]=minFailColor.rgba();
                         } else if ((v>lutSize)&&(paletteMaxFail==JKQTPMathImageGivenColor)) {
@@ -669,12 +672,12 @@ inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage 
         }
     }
 
-    if (logScale) free(dbl);
+    if (dbl1) free(dbl1);
 
 };
 
 template <class T>
-inline void JKQTPimagePlot_array2image(T* dbl_in, int width, int height, QImage &img, int* lutUser, int lutUserSize, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0)
+inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, const int* lutUser, int lutUserSize, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0)
 {
     JKQTPimagePlot_array2image(dbl_in,  width,  height, img,  JKQTPMathImageUSER_PALETTE, minColor, maxColor,  paletteMinFail,  paletteMaxFail,  minFailColor,  maxFailColor,  nanColor,  infColor,  logScale,  logBase, lutUser, lutUserSize);
 }

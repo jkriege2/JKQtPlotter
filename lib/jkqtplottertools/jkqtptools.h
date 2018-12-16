@@ -1198,7 +1198,7 @@ LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
 
 */
 template <class T>
-inline void jkqtpSwap(T* a, long long l, long long r){
+inline void jkqtpSwap(T* a, int l, int r){
     const T tmp=a[l];
     a[l]=a[r];
     a[r]=tmp;
@@ -1213,10 +1213,10 @@ inline void jkqtpSwap(T* a, long long l, long long r){
     implementation from http://www.linux-related.de/index.html?/coding/sort/sort_quick.htm
 */
 template <class T>
-inline void jkqtpQuicksort(T* a, long long l, long long r){
+inline void jkqtpQuicksort(T* a, int l, int r){
     if(r>l){
-        long long i=l-1;
-        long long j=r;
+        int i=l-1;
+        int j=r;
 
         for(;;){
             while(a[++i]<a[r]);
@@ -1238,10 +1238,10 @@ inline void jkqtpQuicksort(T* a, long long l, long long r){
     implementation from http://www.linux-related.de/index.html?/coding/sort/sort_quick.htm
 */
 template <class T, class T2>
-inline void jkqtpQuicksort(T* a, T2* a2, long long l, long long r){
+inline void jkqtpQuicksort(T* a, T2* a2, int l, int r){
     if(r>l){
-        long long i=l-1;
-        long long j=r;
+        int i=l-1;
+        int j=r;
 
         for(;;){
             while(a[++i]<a[r]);
@@ -1274,7 +1274,7 @@ inline void jkqtpQuicksort(T* a, T2* a2, long long l, long long r){
 
  */
 template <class T, class T2>
-inline void jkqtpSort(T* input, T2* input2, long long N, T* output=nullptr, T2* output2=nullptr) {
+inline void jkqtpSort(T* input, T2* input2, int N, T* output=nullptr, T2* output2=nullptr) {
     if ((!input)) return ;
     if (N<=0) return;
     T* data=input;

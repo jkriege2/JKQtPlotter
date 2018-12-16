@@ -83,10 +83,10 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -197,10 +197,10 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;

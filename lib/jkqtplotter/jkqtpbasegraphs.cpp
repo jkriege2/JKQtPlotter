@@ -129,10 +129,10 @@ bool JKQTPgraph::getDataMinMax(int column, double &minx, double &maxx, double &s
     int imax=datastore->getColumn(column).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -226,10 +226,10 @@ bool JKQTPxyGraph::getXMinMax(double& minx, double& maxx, double& smallestGreate
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -265,10 +265,10 @@ bool JKQTPxyGraph::getYMinMax(double& miny, double& maxy, double& smallestGreate
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -453,10 +453,10 @@ void JKQTPsingleColumnGraph::intSortData()
     int imax=datastore->getColumn(dataColumn).getRows();
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -506,7 +506,7 @@ JKQTPgraphErrors::JKQTPgraphErrors(QColor graphColor) {
 
 
 
-void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, long long datarange_start, long long datarange_end, int xErrorColumnLower, int yErrorColumnLower, bool xErrorSymmetric, bool yErrorSymmetric, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int datarange_start, int datarange_end, int xErrorColumnLower, int yErrorColumnLower, bool xErrorSymmetric, bool yErrorSymmetric, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
     //std::cout<<"JKQTPgraphErrors::intPlotXYErrorIndicators(p, "<<parent<<", "<<xColumn<<", "<<yColumn<<", "<<xErrorColumn<<", "<<yErrorColumn<<", "<<xErrorStyle<<", "<<yErrorStyle<<", ...)\n";
     if (parent==nullptr) return;
     JKQTPdatastore* datastore=parent->getDatastore();
@@ -529,17 +529,17 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     p.setCapStyle(Qt::RoundCap);
     painter.setPen(p);
 
-    unsigned long long imaxx=0, imaxy=0;
+    unsigned int imaxx=0, imaxy=0;
     if (xColumn>=0) imaxx=datastore->getColumn(static_cast<size_t>(xColumn)).getRows();
     if (yColumn>=0) imaxy=datastore->getColumn(static_cast<size_t>(yColumn)).getRows();
     int imax=qMin(imaxx, imaxy);
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -861,7 +861,7 @@ void JKQTPgraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     //std::cout<<"end\n";
 }
 
-bool JKQTPgraphErrors::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter * /*parent*/, JKQTPcoordinateAxis* /*xAxis*/, JKQTPcoordinateAxis* /*yAxis*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, long long /*index*/, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
+bool JKQTPgraphErrors::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter * /*parent*/, JKQTPcoordinateAxis* /*xAxis*/, JKQTPcoordinateAxis* /*yAxis*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, int /*index*/, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
 {
     return false;
 }
@@ -901,7 +901,7 @@ JKQTPxGraphErrors::JKQTPxGraphErrors(QColor graphColor):
     xErrorColumnLower=-1;
 }
 
-void JKQTPxGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis *xAxis, JKQTPcoordinateAxis *yAxis, int xColumn, int yColumn, long long datarange_start, long long datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+void JKQTPxGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis *xAxis, JKQTPcoordinateAxis *yAxis, int xColumn, int yColumn, int datarange_start, int datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
     intPlotXYErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, xErrorColumn, -1, xErrorStyle, JKQTPnoError, datarange_start, datarange_end, xErrorColumnLower, -1, xErrorSymmetric, true, xrelshift, yrelshift, dataorder);
 }
 
@@ -937,7 +937,7 @@ JKQTPyGraphErrors::JKQTPyGraphErrors(QColor graphColor):
     yErrorColumnLower=-1;
 }
 
-void JKQTPyGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start, long long datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+void JKQTPyGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int datarange_start, int datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
     intPlotXYErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, -1, yErrorColumn, JKQTPnoError, yErrorStyle, datarange_start, datarange_end, -1, yErrorColumnLower, true, yErrorSymmetric, xrelshift, yrelshift, dataorder);
 }
 
@@ -978,7 +978,7 @@ JKQTPxyGraphErrors::JKQTPxyGraphErrors(QColor graphColor):
 
 }
 
-void JKQTPxyGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start, long long datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+void JKQTPxyGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int datarange_start, int datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
     this->intPlotXYErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, xErrorColumn, yErrorColumn, xErrorStyle, yErrorStyle, datarange_start, datarange_end, xErrorColumnLower, yErrorColumnLower, xErrorSymmetric, yErrorSymmetric, xrelshift, yrelshift, dataorder);
 }
 
@@ -1037,10 +1037,10 @@ void JKQTPxyGraph::intSortData()
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;

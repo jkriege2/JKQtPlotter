@@ -96,8 +96,8 @@ class LIB_EXPORT JKQTPgraph: public QObject {
         virtual QColor getKeyLabelColor()=0;
 
         JKQTPGET_SET_VMACRO(QString, title)
-        JKQTPGET_SET_MACRO(long long, datarange_start)
-        JKQTPGET_SET_MACRO(long long, datarange_end)
+        JKQTPGET_SET_MACRO(int, datarange_start)
+        JKQTPGET_SET_MACRO(int, datarange_end)
         JKQTPGET_SET_MACRO(bool, visible)
 
         /** \brief returns the parent painter class */
@@ -174,9 +174,9 @@ class LIB_EXPORT JKQTPgraph: public QObject {
         QString title;
 
         /** \brief start of the range of plot data. -1 switches the lower data range border off. */
-        long long datarange_start;
+        int datarange_start;
         /** \brief end of the range of plot data. -1 switches the upper data range border off. */
-        long long datarange_end;
+        int datarange_end;
 
         /** \brief indicates whether the graph is visible in the plot */
         bool visible;
@@ -377,16 +377,16 @@ class LIB_EXPORT JKQTPgraphErrors {
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. This method is called by
          *         the JKQTPgraph descendents */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis,  int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis,  int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, long long datarange_start=-1, long long datarange_end=-1, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
+        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int datarange_start=-1, int datarange_end=-1, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         /** \brief this function can be used to set the color of the error indicators automatically
          *
          * return \c true and the colors to use, if applicable, the default implementation returns false */
-        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, long long index, QColor& errorColor, QColor& errorFillColor);
+        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor);
 
 
         virtual double getXErrorU(int i, JKQTPdatastore* ds) const;
@@ -441,7 +441,7 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         virtual double getXErrorU(int i, JKQTPdatastore* ds) const;
         virtual double getXErrorL(int i, JKQTPdatastore* ds) const;
@@ -490,7 +490,7 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         virtual double getYErrorU(int i, JKQTPdatastore* ds) const;
         virtual double getYErrorL(int i, JKQTPdatastore* ds) const;
@@ -546,7 +546,7 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, long long datarange_start=-1, long long datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         virtual double getXErrorU(int i, JKQTPdatastore* ds) const;
         virtual double getXErrorL(int i, JKQTPdatastore* ds) const;

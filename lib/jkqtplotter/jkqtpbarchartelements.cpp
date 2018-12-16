@@ -120,10 +120,10 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end+1, static_cast<long long>(imax));
+        imax=qMin(datarange_end+1, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -146,8 +146,8 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        long long sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
-        long long lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
+        int lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double yv0=y0;
         if (!qFuzzyIsNull(baseline)) yv0=yAxis->x2p(baseline);
@@ -206,10 +206,10 @@ bool JKQTPbarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -221,8 +221,8 @@ bool JKQTPbarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
 
     for (int i=imin; i<imax; i++) {
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        long long sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
-        long long lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
+        int lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
         double delta, deltap, deltam;
 
         if (sr<0 && lr<0) { // only one x-value
@@ -268,10 +268,10 @@ bool JKQTPbarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -388,10 +388,10 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end+1, static_cast<long long>(imax));
+        imax=qMin(datarange_end+1, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -415,8 +415,8 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        long long sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
-        long long lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
+        int lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
         double xv0=x0;
         if (!qFuzzyIsNull(baseline)) xv0=xAxis->x2p(baseline);
         if (hasStackPar) {
@@ -479,10 +479,10 @@ bool JKQTPbarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(xColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -529,10 +529,10 @@ bool JKQTPbarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -545,8 +545,8 @@ bool JKQTPbarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
     for (int i=imin; i<imax; i++) {
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double delta, deltap, deltam;
-        long long sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
-        long long lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
+        int lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
 
         if (sr<0 && lr<0) { // only one y-value
             deltam=0.5;
@@ -664,10 +664,10 @@ bool JKQTPbarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<long long>(imax));
+            imin=qMin(datarange_start, static_cast<int>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<long long>(imax));
+            imax=qMin(datarange_end, static_cast<int>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -738,10 +738,10 @@ bool JKQTPbarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<long long>(imax));
+            imin=qMin(datarange_start, static_cast<int>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<long long>(imax));
+            imax=qMin(datarange_end, static_cast<int>(imax));
         }
         if (imax<imin) {
             int h=imin;
@@ -786,10 +786,10 @@ bool JKQTPbarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
         if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<long long>(imax));
+            imin=qMin(datarange_start, static_cast<int>(imax));
         }
         if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<long long>(imax));
+            imax=qMin(datarange_end, static_cast<int>(imax));
         }
         if (imax<imin) {
             int h=imin;

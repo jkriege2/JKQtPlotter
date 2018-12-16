@@ -59,7 +59,7 @@ double JKQTPHighResTimer::get_time(){
     struct timeval tv;
     gettimeofday(&tv,0);
 
-    long long t1, t2;
+    int t1, t2;
     t1 = last.tv_sec * 1000000 + last.tv_usec;
     t2 = tv.tv_sec * 1000000 + tv.tv_usec;
     return abs(t2 - t1);

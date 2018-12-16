@@ -110,10 +110,10 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -286,10 +286,10 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -518,10 +518,10 @@ bool JKQTPfilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, doubl
     int imax=qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows());
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;
@@ -586,10 +586,10 @@ void JKQTPfilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<long long>(imax));
+        imin=qMin(datarange_start, static_cast<int>(imax));
     }
     if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<long long>(imax));
+        imax=qMin(datarange_end, static_cast<int>(imax));
     }
     if (imax<imin) {
         int h=imin;

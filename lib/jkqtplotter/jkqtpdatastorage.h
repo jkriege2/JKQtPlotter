@@ -211,18 +211,31 @@ class LIB_EXPORT JKQTPdatastore{
 
 
         /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
-        double get(size_t column, size_t row) const;
+        inline double get(size_t column, size_t row) const ;
+
+        /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
+        inline double get(int column, size_t row) const ;
         /** \brief gets the index of the datapoint with the nearest, but lower value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column)*/
-        long long getNextLowerIndex(size_t column, size_t row,  long long start,  long long end) const;
+        int getNextLowerIndex(size_t column, size_t row,  int start,  int end) const;
         /** \brief gets the index of the datapoint with the nearest, but lower value in the column */
-        long long getNextLowerIndex(size_t column, size_t row) const;
+        int getNextLowerIndex(size_t column, size_t row) const;
         /** \brief gets the index of the  datapoint with the nearest, but higher value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column) */
-        long long getNextHigherIndex(size_t column, size_t row,  long long start,  long long end) const;
+        int getNextHigherIndex(size_t column, size_t row,  int start,  int end) const;
         /** \brief gets the index of the  datapoint with the nearest, but higher value in the column */
-        long long getNextHigherIndex(size_t column, size_t row) const;
+        int getNextHigherIndex(size_t column, size_t row) const;
 
         /** \brief sets the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!) */
-        void set(size_t column, size_t row, double value);
+        inline void set(size_t column, size_t row, double value);
+        /** \brief sets the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!) */
+        inline void set(int column, size_t row, double value);
+        /** \brief gets the index of the datapoint with the nearest, but lower value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column)*/
+        int getNextLowerIndex(int column, size_t row,  int start,  int end) const;
+        /** \brief gets the index of the datapoint with the nearest, but lower value in the column */
+        int getNextLowerIndex(int column, size_t row) const;
+        /** \brief gets the index of the  datapoint with the nearest, but higher value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column) */
+        int getNextHigherIndex(int column, size_t row,  int start,  int end) const;
+        /** \brief gets the index of the  datapoint with the nearest, but higher value in the column */
+        int getNextHigherIndex(int column, size_t row) const;
 
 
 
@@ -511,6 +524,10 @@ class LIB_EXPORT JKQTPdatastore{
         /** \brief returns the JKQTPcolumn object for the \a i -th column in the store */
         JKQTPcolumn getColumn(size_t i) const;
 
+
+        /** \brief returns the JKQTPcolumn object for the \a i -th column in the store */
+        JKQTPcolumn getColumn(int i) const;
+
         /** \brief returns the maximum number of rows in all columns */
         size_t getMaxRows();
 
@@ -589,6 +606,8 @@ class LIB_EXPORT JKQTPdatastore{
 
         /** \brief return a list with all columns available in the datastore */
         QStringList getColumnNames() const;
+        /** \brief add a column with \a rows entries from the array \a data,
+         *         ownership of the memory behind \a data is transfered to the datastore */
         size_t addInternalColumn(double *data, size_t rows, const QString& name);
 };
 
@@ -852,5 +871,27 @@ inline double JKQTPcolumn::getValue(size_t n) const {
     if (!datastore->getItem(datastoreItem)) return 0;
     return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline double JKQTPdatastore::get(size_t column, size_t row) const {
+    return columns[column].getValue(row);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline double JKQTPdatastore::get(int column, size_t row) const {
+    return get(static_cast<size_t>(column), static_cast<size_t>(row));
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline void JKQTPdatastore::set(size_t column, size_t row, double value)  {
+    columns[column].setValue(row, value);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline void JKQTPdatastore::set(int column, size_t row, double value)  {
+    set(static_cast<size_t>(column), static_cast<size_t>(row), value);
+}
+
+
 
 #endif // JKQTPDATASTORAGE_H

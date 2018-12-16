@@ -198,7 +198,8 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
-
+        /** \brief plots a key marker inside the specified rectangle \a rect */
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor();
 
@@ -208,6 +209,8 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         JKQTPSET_CAST_MACRO(size_t, int, colorColumn)
         JKQTPGET_SET_MACRO(int, symbolColumn)
         JKQTPSET_CAST_MACRO(size_t, int, symbolColumn)
+        JKQTPGET_SET_MACRO(int, linewidthColumn)
+        JKQTPSET_CAST_MACRO(size_t, int, linewidthColumn)
         JKQTPGET_SET_MACRO(bool, colorColumnContainsRGB)
         JKQTPGET_SET_MACRO(bool, gridModeForSymbolSize)
         JKQTPGET_SET_MACRO(double, gridDeltaX)
@@ -247,6 +250,8 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         int colorColumn;
         /** \brief this column contains the symbol type */
         int symbolColumn;
+        /** \brief this column contains the line width */
+        int linewidthColumn;
 
         /** \brief if the gridModeForSymbolSize mode is actiavted (false), the plot assumes that the scatter symbols are ordered in a grid. It the uses the given griDeltaX and gridDeltaY to calculate the symbol size, so they fill the available space to a fraction gridSymbolFractionSize. */
         bool gridModeForSymbolSize;
@@ -260,6 +265,7 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         /** \brief if this is true, the value in the colorColumn is converted to an integer, representing a color in ARGB format (as in QRgb) */
         bool colorColumnContainsRGB;
 
+        double getLocalLineWidth(int i);
         double getLocalSymbolSize(int i);
         QColor getLocalColor(int i);
         JKQTPgraphSymbols getLocalSymbolType(int i);
@@ -350,7 +356,7 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
         /** \brief this function can be used to set the color of the error indicators automatically
          *
          * return \c true and the colors to use, if applicable, the default implementation returns false */
-        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, long long index, QColor& errorColor, QColor& errorFillColor);
+        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor);
 
 };
 
