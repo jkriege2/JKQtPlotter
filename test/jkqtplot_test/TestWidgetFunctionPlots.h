@@ -11,12 +11,13 @@
 #include <QFormLayout>
 #include <QCheckBox>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgeoelements.h"
-#include "jkqtplotter/jkqtpimageelements.h"
-#include "jkqtplotter/jkqtpoverlayelements.h"
-#include "jkqtplotter/jkqtpparsedfunctionelements.h"
+#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpelementsoverlay.h"
+#include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplotter/jkqtpplotsmodel.h"
+#include "jkqtplottergui/jkqtpgraphsmodel.h"
+#include "jkqtplottergui/jkqtpcomboboxes.h"
 #include "jkqtplottertools/jkqtptools.h"
 
 #define N1 200

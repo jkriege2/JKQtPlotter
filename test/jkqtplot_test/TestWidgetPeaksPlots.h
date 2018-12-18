@@ -11,13 +11,7 @@
 #include <QFormLayout>
 #include <QCheckBox>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgeoelements.h"
-#include "jkqtplotter/jkqtpimageelements.h"
-#include "jkqtplotter/jkqtpoverlayelements.h"
-#include "jkqtplotter/jkqtpparsedfunctionelements.h"
-#include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplotter/jkqtpplotsmodel.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtplotter/jkqtpgraphspeakstream.h"
 
 #define N1 200
 #define N2 50
@@ -30,7 +24,7 @@ class TestWidgetPeaksPlots : public QWidget
 {
         Q_OBJECT
     public:
-        explicit TestWidgetPeaksPlots(QWidget *parent = 0);
+        explicit TestWidgetPeaksPlots(QWidget *parent = nullptr);
         
     signals:
         

@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpbarchartelements.h"
+#include "jkqtplotter/jkqtpgraphsbarchart.h"
 
 
 template<class TGRAPH>

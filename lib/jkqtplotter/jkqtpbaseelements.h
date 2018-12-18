@@ -27,7 +27,7 @@
  * These classes are used by JKQtPlotterBase to output the plot
  */
 
-/** \file jkqtpelements.h
+/** \file jkqtpgraphs.h
   * \ingroup jkqtpbaseplotter_elements
   */
 

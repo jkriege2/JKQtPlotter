@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
     
 
@@ -33,18 +33,13 @@
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include <QString>
 #include <QElapsedTimer>
-#include <QToolBar>
+#include <QLocale>
 #include <QPainter>
-#include <cmath>
 #include <cfloat>
-#include <QComboBox>
 #include <QPrinter>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <errno.h>
-#include <string.h>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -53,16 +48,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <vector>
-#include <time.h>
-#include <math.h>
-#include <sys/stat.h>
-#include <stdint.h>
+#include <ctime>
+#include <cmath>
+#include <cstdint>
 #include <stdexcept>
 #include <cctype>
-#include <iostream>
-#include <string>
-#include <stdio.h>
-#include <stdlib.h>
 
 
 #ifndef __WINDOWS__
@@ -483,20 +473,6 @@ enum JKQTPCAdrawMode {
     JKQTPCADMnone /*!< \brief draw no axis */
 };
 
-/*! \brief a QComboBox which shows  JKQTPCAdrawMode
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPCAdrawModeComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPCAdrawModeComboBox(QWidget* parent=nullptr);
-
-        JKQTPCAdrawMode getDrawMode() const;
-        void setDrawMode(JKQTPCAdrawMode position);
-    protected:
-        void addDrawMode(JKQTPCAdrawMode position, const QString& name, const QIcon& icon=QIcon());
-};
-
 /** \brief converts a JKQTPCAdrawMode variable into a human-readable string
  * \ingroup jkqtptools
  */
@@ -540,20 +516,6 @@ LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
 LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(QString pos);
 
 
-/*! \brief a QComboBox which shows  JKQTPCAlabelType
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPCAlabelTypeComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPCAlabelTypeComboBox(QWidget* parent=nullptr);
-
-        JKQTPCAlabelType getLabelType() const;
-        void setLabelType(JKQTPCAlabelType position);
-    protected:
-        void addLabelType(JKQTPCAlabelType position, const QString& name, const QIcon& icon=QIcon());
-};
-
 /** \brief converts a JKQTPCAlabelType variable into a human-readable string
  * \ingroup jkqtptools
  */
@@ -573,20 +535,6 @@ enum JKQTPlabelPosition {
 	JKQTPlabelCenter          /*!< \brief the label is at the center of the axis */
 };
 
-
-/*! \brief a QComboBox which shows  JKQTPlabelPosition
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPlabelPositionComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPlabelPositionComboBox(QWidget* parent=nullptr);
-
-        JKQTPlabelPosition getPosition() const;
-        void setPosition(JKQTPlabelPosition position);
-    protected:
-        void addPosition(JKQTPlabelPosition position, const QString& name, const QIcon& icon=QIcon());
-};
 
 /** \brief converts a JKQTPlabelPosition variable into a human-readable string
  * \ingroup jkqtptools
@@ -616,23 +564,6 @@ enum JKQTPkeyPosition {
     JKQTPkeyInsideBottomRight             /*!< \brief the key is positioned inside on the lower bound of the graph */
 };
 
-/*! \brief a QComboBox which shows JKQTPkeyPosition
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPkeyPositionComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPkeyPositionComboBox(QWidget* parent=nullptr);
-
-        JKQTPkeyPosition getPosition() const;
-        void setPosition(JKQTPkeyPosition position);
-    signals:
-        void currentPositionChanged(JKQTPkeyPosition pos);
-    protected:
-        void addPosition(JKQTPkeyPosition position, const QString& name, const QIcon& icon=QIcon());
-    protected slots:
-        void posChanged(int index);
-};
 
 /** \brief converts a JKQTPlabelPosition variable into a human-readable string
  * \ingroup jkqtptools
@@ -653,24 +584,6 @@ enum JKQTPkeyLayout {
     JKQTPkeyLayoutMultiColumn,           /*!< \brief the key consists of multiple columns */
 };
 
-
-/*! \brief a QComboBox which shows JKQTPkeyPosition
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPkeyLayoutComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPkeyLayoutComboBox(QWidget* parent=nullptr);
-
-        JKQTPkeyLayout getKeyLayout() const;
-        void setKeyLayout(JKQTPkeyLayout layout);
-    signals:
-        void currentLayoutChanged(JKQTPkeyLayout layout);
-    protected:
-        void addKeyLayout(JKQTPkeyLayout layout, const QString& name);
-    protected slots:
-        void currentIndexChangedP(int index);
-};
 
 /** \brief converts a JKQTPkeyLayout variable into a human-readable string
  * \ingroup jkqtptools
@@ -694,28 +607,6 @@ typedef struct {
 } JKQTPgridPrintingItem;
 
 
-/** \brief a modified a href="http://doc.trolltech.com/4.5/qtoolbar.html">QToolBar</a> which vanishes when the mouse leaves the toolbar.
- * \ingroup jkqtptools
- */
-class LIB_EXPORT JKVanishQToolBar: public QToolBar {
-        Q_OBJECT
-    public:
-        /** \brief class constructor */
-        JKVanishQToolBar(const QString& title, QWidget* parent=nullptr): QToolBar(title, parent) {
-            toolbarVanishes=true;
-        }
-        /** \brief class constructor */
-        JKVanishQToolBar(QWidget* parent=nullptr): QToolBar(parent){
-            toolbarVanishes=true;
-        }
-        JKQTPGET_SET_MACRO(bool, toolbarVanishes)
-    protected:
-        bool toolbarVanishes;
-        /** \brief this event triggers the vanishing of the toolbar */
-        void leaveEvent ( QEvent * /*event*/ ) {
-            if (toolbarVanishes) hide();
-        }
-};
 
 
 /**
@@ -758,20 +649,6 @@ enum JKQTPerrorPlotstyle {
 	JKQTPnoError=0                    /*!< \brief don't show error information */
 };
 
-/*! \brief a QComboBox which shows JKQTPerrorPlotstyle
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPerrorPlotstyleComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPerrorPlotstyleComboBox(QWidget* parent=nullptr);
-
-        JKQTPerrorPlotstyle getErrorStyle() const;
-        void setSymbol(JKQTPerrorPlotstyle symbol);
-        void setCurrentErrorStyle(JKQTPerrorPlotstyle symbol);
-    protected:
-        void addSymbol(JKQTPerrorPlotstyle symbol, const QString& name, const QIcon &icon=QIcon());
-};
 
 
 
@@ -845,171 +722,7 @@ LIB_EXPORT QString JKQTPgraphSymbols2NameString(JKQTPgraphSymbols pos);
  */
 LIB_EXPORT JKQTPgraphSymbols String2JKQTPgraphSymbols(QString pos);
 
-/*! \brief a QComboBox which shows JKQTPgraphSymbols
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPSymbolComboBox(QWidget* parent=nullptr);
 
-        JKQTPgraphSymbols getSymbol() const;
-        void setSymbol(JKQTPgraphSymbols symbol);
-        void setCurrentSymbol(JKQTPgraphSymbols symbol);
-    protected:
-        void addSymbol(JKQTPgraphSymbols symbol, const QString& name);
-};
-
-
-/*! \brief a QComboBox to select whether a line, symbols or both should be displayed
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPLinePlotStyleComboBox(QWidget* parent=nullptr);
-
-        void setDefaultSymbol(JKQTPgraphSymbols symbol);
-        void addUsedSymbol(JKQTPgraphSymbols symbol);
-
-        JKQTPgraphSymbols getSymbol() const;
-        bool getDrawLine() const;
-    protected:
-        void refill();
-        void addSymbol(JKQTPgraphSymbols symbol, bool line, const QString& name=QString(""), const QVariant& data=QVariant());
-        QList<JKQTPgraphSymbols> symbols;
-        JKQTPgraphSymbols defaultSymbol;
-};
-
-
-/*! \brief a QComboBox to select whether a line, symbols or both should be displayed, in addition to JKQTPLinePlotStyleComboBox this may also have different symbol sizes!
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPLinePlotStyleWithSymbolSizeComboBox(QWidget* parent=nullptr);
-
-        void setDefaultSymbol(JKQTPgraphSymbols symbol, double size);
-        void addUsedSymbol(JKQTPgraphSymbols symbol, double symbolSize, bool line);
-
-        JKQTPgraphSymbols getSymbol() const;
-        bool getDrawLine() const;
-        double getSymbolSize() const;
-    protected:
-        void refill();
-        void addSymbol(JKQTPgraphSymbols symbol, bool line, double symbolSize, const QString& name=QString(""), const QVariant& data=QVariant());
-        struct styleData {
-            JKQTPgraphSymbols symbol;
-            bool line;
-            double symbolSize;
-            bool operator==(const styleData& other)const;
-        };
-
-        QList<styleData> symbols;
-        JKQTPgraphSymbols defaultSymbol;
-        double defaultSize;
-};
-
-/*! \brief plot the specified symbol at pixel position x,y
-   \ingroup jkqtptools
-
-    \param painter the QPainter to draw to
-    \param x x-coordinate of the symbol center
-    \param y y-coordinate of the symbol center
-    \param symbol type of the symbol to plot, see JKQTPgraphSymbols
-    \param size size (width/height) of the symbol around (\a x , \a y)
-    \param symbolLineWidth width of the lines used to draw the symbol
-    \param color color of the symbol lines
-    \param fillColor color of the symbol filling
- */
-LIB_EXPORT void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
-
-/*! \brief plot the specified symbol at pixel position x,y
-   \ingroup jkqtptools
-
-    \param paintDevice the paint device to draw on
-    \param x x-coordinate of the symbol center
-    \param y y-coordinate of the symbol center
-    \param symbol type of the symbol to plot, see JKQTPgraphSymbols
-    \param size size (width/height) of the symbol around (\a x , \a y)
-    \param symbolLineWidth width of the lines used to draw the symbol
-    \param color color of the symbol lines
-    \param fillColor color of the symbol filling
- */
-LIB_EXPORT void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
-
-
-/*! \brief plot an arrow between positions (x1,y1) and (x2,y2)
-   \ingroup jkqtptools
-
-    \param painter the QPainter to draw to
-    \param x1 first x-coordinate of the arrow
-    \param y1 first y-coordinate of the arrow
-    \param x2 second x-coordinate of the arrow
-    \param y2 second y-coordinate of the arrow
-    \param symbol type of the symbol to plot, see JKQTPgraphSymbols
-    \param size size (width/height) of the symbol around (\a x , \a y)
-    \param symbolLineWidth width of the lines used to draw the symbol
-    \param color color of the symbol lines
-    \param fillColor color of the symbol filling
- */
-//LIB_EXPORT void JKQTPplotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
-
-
-/*! \brief draw an ellipse without setting pen or brush, or saving the painter!
-    \ingroup jkqtptools
-
-    \return a QVector<QPointF> with points that may be used for drawing
-    \param x center of ellipse (x-coordinate)
-    \param y center of ellipse (y-coordinate)
-    \param a half axis in x-direction
-    \param b half axis in y-direction
-    \param angle_start starting angle of ellipse section
-    \param angle_end ending angle of ellipse section
-    \param alpha rotation angle of ellipse
-    \param controlPoints the number of points to use for drawing
-    \param[out] x_start first point of ellipse
-    \param[out] x_end last point of ellipse
-
-    \note all angles are given in degrees [0..360]
-*/
-LIB_EXPORT QVector<QPointF> JKQTPdrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
-
-
-#include <QDoubleSpinBox>
-/*! \brief enhanced QDoubleSpinBox
-    \ingroup jkqtptools
-
-*/
-class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
-        Q_OBJECT
-    public:
-        JKQTPEnhancedDoubleSpinBox(QWidget* parent=nullptr);
-        ~JKQTPEnhancedDoubleSpinBox();
-    signals:
-        void editingFinished(double value);
-    protected slots:
-        void intEditingFinished();
-};
-
-
-
-#include <QSpinBox>
-/*! \brief enhanced QDoubleSpinBox
-    \ingroup jkqtptools
-
-*/
-class LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
-        Q_OBJECT
-    public:
-        JKQTPEnhancedSpinBox(QWidget* parent=nullptr);
-        ~JKQTPEnhancedSpinBox();
-    signals:
-        void editingFinished(int value);
-    protected slots:
-        void intEditingFinished();
-};
 
 inline QString JKQTPCDoubleToQString(double value) {
     QLocale loc=QLocale::c();
@@ -1027,163 +740,6 @@ inline QString JKQTPDoubleToQString(double value, int prec = 10, char f = 'g', Q
     }
     return res;
 }
-
-#include <QTableView>
-
-/*! \brief this class extends the QTableView
-    \ingroup jkqtptools
-
-    This enhanced table view adds some functionality to the Qt class:
-      - return HTML code that describes the table
-      - the selected cells may be copied to Excel using the clipboard (Excel will recognize number !)
-    .
-*/
-class LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
-        Q_OBJECT
-    public:
-        JKQTPEnhancedTableView(QWidget* parent=nullptr);
-        virtual ~JKQTPEnhancedTableView();
-
-        /** \brief return the contents of the table view as HTML fragment */
-        QString toHtml(int borderWidth=1, bool non_breaking=false, int fontSizePt=-1) const;
-        void print(QPrinter* printer, bool onePageWide=false, bool onePageHigh=false);
-
-        void paint(QPainter& painter, QRect pageRec=QRect());
-        QSizeF getTotalSize() const;
-        QAction* getPrintAction() const { return printAction; }
-
-    signals:
-        void keyPressed(int key, Qt::KeyboardModifiers modifiers, QString text);
-    public slots:
-        void copySelectionToExcel(int copyrole=Qt::EditRole, bool storeHead=true);
-        void copySelectionToExcelNoHead(int copyrole=Qt::EditRole);
-        void copySelectionToCSV(int copyrole=Qt::EditRole, bool storeHead=true, const QString& separator=", ", const QChar& decimalpoint='.');
-        void copySelectionToCSVNoHead(int copyrole=Qt::EditRole, const QString& separator=", ", const QChar& decimalpoint='.');
-        void print();
-
-    protected:
-        virtual void keyPressEvent(QKeyEvent* event);
-        void paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p=nullptr);
-
-        QPrinter* getPrinter(QPrinter* printerIn=nullptr, bool *localPrinter=nullptr);
-        QAction* printAction;
-    private:
-};
-
-
-
-
-#include <QPainter>
-
-
-/*! \brief this class extends the QPainter
-    \ingroup jkqtptools
-
-
-*/
-class LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
-    public:
-        JKQTPEnhancedPainter(QPaintDevice* device);
-        JKQTPEnhancedPainter();
-        virtual ~JKQTPEnhancedPainter();
-
-
-        //void drawPath(const QPainterPath &path);
-        //void drawPoints(const QPoint *points, int pointCount);
-        //void drawPoints(const QPointF *points, int pointCount);
-//        void drawLines(const QLineF *lines, int lineCount);
-//        void drawLines(const QPointF *pointPairs, int lineCount);
-//        void drawLines(const QLine *lines, int lineCount);
-//        void drawLines(const QPoint *pointPairs, int lineCount);
-
-
-//        inline void drawPoint(const QPointF &p) {
-//            drawPoints(&p, 1);
-//        }
-
-//        inline void drawPoint(const QPoint &p) {
-//             drawPoints(&p, 1);
-//        }
-
-//        inline void drawPoint(int x, int y) {
-//            drawPoint(QPointF(x,y));
-//        }
-
-//        inline void drawPoint(double x, double y) {
-//            drawPoint(QPointF(x,y));
-//        }
-
-//        inline void drawPoints(const QPolygonF &points){
-//             drawPoints(points.constData(), points.size());
-//        }
-
-//        inline void drawPoints(const QPolygon &points){
-//            drawPoints(points.constData(), points.size());
-//        }
-
-//        inline void drawLine(const QLineF &line) {
-//            drawLines(&l, 1);
-//        }
-
-//        inline void drawLine(const QLine &line) {
-//            drawLines(&l, 1);
-//        }
-
-//        inline void drawLine(int x1, int y1, int x2, int y2) {
-//            drawLines(QLineF(x1,y1,x2,y2), 1);
-//        }
-
-//        inline void drawLine(double x1, double y1, double x2, double y2) {
-//            drawLines(QLineF(x1,y1,x2,y2), 1);
-//        }
-
-//        inline void drawLine(const QPoint &p1, const QPoint &p2) {
-//            drawLine(QLineF(QLine(p1, p2)));
-//        }
-
-//        inline void drawLine(const QPointF &p1, const QPointF &p2) {
-//            drawLine(QLineF(p1, p2));
-//        }
-
-//        inline void drawLines(const QVector<QLineF> &lines) {
-//            drawLines(lines.constData(), lines.size());
-//        }
-
-//        inline void drawLines(const QVector<QPointF> &pointPairs) {
-//            drawLines(pointPairs.constData(), pointPairs.size() / 2);
-//        }
-
-//        inline void drawLines(const QVector<QLine> &lines) {
-//            drawLines(lines.constData(), lines.size());
-//        }
-
-//        inline void drawLines(const QVector<QPoint> &pointPairs) {
-//            drawLines(pointPairs.constData(), pointPairs.size() / 2);
-//        }
-
-//        inline void drawRect(const QRectF &rect) {
-//            drawRects(&rect, 1);
-//        }
-
-//        inline void drawRect(int x1, int y1, int w, int h) {
-//            QRectF r(x, y, w, h);
-//            drawRects(&r, 1);
-//        }
-
-//        inline void drawRect(double x1, double y1, double w, double h) {
-//            QRectF r(x, y, w, h);
-//            drawRects(&r, 1);
-//        }
-
-//        inline void drawRect(const QRect &rect) {
-//           drawRects(&r, 1);
-//        }
-
-    protected:
-        virtual void initQEnhacedPainter();
-    private:
-
-};
 
 
 
@@ -1359,22 +915,6 @@ enum JKQTPstepType {
     JKQTPstepCenter=1,           /*!< \brief datapoint is centered on the hor. step line */
     JKQTPstepRight=2,         /*!< \brief datapoint is on the right edge of the hor. step line */
 };
-
-/*! \brief a QComboBox which shows JKQTPstepType
-    \ingroup jkqtptools
- */
-class LIB_EXPORT JKQTPstepTypeComboBox: public QComboBox {
-        Q_OBJECT
-    public:
-        JKQTPstepTypeComboBox(QWidget* parent=nullptr);
-
-        JKQTPstepType getStepType() const;
-        void setStepType(JKQTPstepType step);
-        void setCurrentStepType(JKQTPstepType step);
-    protected:
-        void addStep(JKQTPstepType step, const QString& name, const QIcon &icon=QIcon());
-};
-
 
 
 /** \brief converts a JKQTPstepType variable into a human-readable string

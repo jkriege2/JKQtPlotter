@@ -36,11 +36,12 @@
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplotter/jkqtpelements.h"
-#include "jkqtplotter/jkqtpgeoelements.h"
-#include "jkqtplotter/jkqtpimageelements.h"
-#include "jkqtplotter/jkqtpoverlayelements.h"
-
+#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpelementsoverlay.h"
+#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtplottergui/jkqtpenhancedspinboxes.h"
 
 #include <QObject>
 #include <QAction>
@@ -68,7 +69,7 @@
 #define JKQTPBASEPLOTTER_H
 
 
-class JKQTPPlotsModel; // forward
+class JKQTPgraphsModel; // forward
 
 /** \brief initialized Qt-ressources necessary for JKQtBasePlotter */
 LIB_EXPORT void initJKQtBasePlotterResources();
@@ -206,7 +207,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         JKQTmathText mathText;
 
         /** \brief model representing all Plots in this plotter and showing their visible/invisible state */
-        JKQTPPlotsModel* m_plotsModel;
+        JKQTPgraphsModel* m_plotsModel;
 
         /** \brief object used for the x-axis */
         JKQTPhorizontalAxis* xAxis;
@@ -767,7 +768,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         inline JKQTPdatastore* getDatastore() { return datastore; }
 
         /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
-        inline JKQTPPlotsModel* getPlotsModel() { return m_plotsModel; }
+        inline JKQTPgraphsModel* getPlotsModel() { return m_plotsModel; }
 
         /** \brief tells the plotter object to use the given external datastore.
          *

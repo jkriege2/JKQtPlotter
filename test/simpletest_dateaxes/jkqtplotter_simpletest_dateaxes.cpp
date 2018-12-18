@@ -4,9 +4,9 @@
 #include <QFile>
 #include <QTextStream>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgeoelements.h"
+#include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplottertools/jkqtptools.h"
-#include "jkqtplotter/jkqtpfilledcurveelements.h"
+#include "jkqtplotter/jkqtpgraphsfilledcurve.h"
 
 void drawWithDateAxis(JKQtPlotter& plot) {
 

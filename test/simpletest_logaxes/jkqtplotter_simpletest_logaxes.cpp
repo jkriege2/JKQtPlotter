@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgeoelements.h"
+#include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplottertools/jkqtptools.h"
 
 #define sqr(x) ((x)*(x))

@@ -10,7 +10,7 @@ The soruce code of the main application is (see [`jkqtplotter_simpletest_imagepl
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpimageelements.h"
+#include "jkqtplotter/jkqtpgraphsimage.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpelements.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 
 
 int main(int argc, char* argv[])

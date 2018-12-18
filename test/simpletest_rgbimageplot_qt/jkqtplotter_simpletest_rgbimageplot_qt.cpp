@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpimageelements.h"
+#include "jkqtplotter/jkqtpgraphsimage.h"
 
 
 
@@ -16,13 +16,10 @@ int main(int argc, char* argv[])
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
 
 
     // 2. now we open a BMP-file and load it into an OpenCV cv::Mat
     QImage image(":/example.bmp");
-
-
 
 
     // 3. create a graph (JKQTPImage) with a pointer to the QImage-object, generated above

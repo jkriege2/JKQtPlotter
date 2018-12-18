@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
     
 
@@ -35,7 +35,8 @@
 #include <QPrintPreviewWidget>
 #include <QDialog>
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplotter/jkqtpplotsmodel.h"
+#include "jkqtplottergui/jkqtpgraphsmodel.h"
+#include "jkqtplottergui/jkqtpenhancedtableview.h"
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QPrintDialog>
@@ -49,10 +50,10 @@
 #ifdef QFWIDLIB_LIBRARY
 #  include "qftools.h"
 #endif
-#include "jkqtplotter/jkqtpboxplotelements.h"
-#include "jkqtplotter/jkqtpbarchartelements.h"
-#include "jkqtplotter/jkqtpfilledcurveelements.h"
-#include "jkqtplotter/jkqtpimpulseselements.h"
+#include "jkqtplotter/jkqtpgraphsboxplot.h"
+#include "jkqtplotter/jkqtpgraphsbarchart.h"
+#include "jkqtplotter/jkqtpgraphsfilledcurve.h"
+#include "jkqtplotter/jkqtpgraphsimpulses.h"
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";
@@ -194,7 +195,7 @@ JKQtBasePlotter::JKQtBasePlotter(bool datastore_internal, QObject* parent, JKQTP
 
     xAxis=new JKQTPhorizontalAxis(this);
     yAxis=new JKQTPverticalAxis(this);
-    m_plotsModel=new JKQTPPlotsModel(this);
+    m_plotsModel=new JKQTPgraphsModel(this);
     connect(this, SIGNAL(plotUpdated()), m_plotsModel, SLOT(plotUpdated()));
 
 

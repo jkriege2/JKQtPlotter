@@ -664,7 +664,13 @@ class LIB_EXPORT JKQTPcolumn {
      * column.
      */
     inline double getValue(size_t n) const;
-    /** \brief gets a pointer to the n-th value in the column
+    /** \brief reads the \a n'th value from the column
+     *
+     * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
+     * column.
+     */
+    inline double getValue(int n) const;
+     /** \brief gets a pointer to the n-th value in the column
      */
     double* getPointer(size_t n=0) const ;
 
@@ -870,6 +876,14 @@ inline double JKQTPcolumn::getValue(size_t n) const {
     if (!datastore) return 0;
     if (!datastore->getItem(datastoreItem)) return 0;
     return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline double JKQTPcolumn::getValue(int n) const {
+    if (!datastore) return 0;
+    if (!datastore->getItem(datastoreItem)) return 0;
+    if (n<0) return 0;
+    return datastore->getItem(datastoreItem)->get(datastoreOffset, static_cast<size_t>(n));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

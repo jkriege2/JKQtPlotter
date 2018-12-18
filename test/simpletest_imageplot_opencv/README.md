@@ -13,7 +13,7 @@ The source code of the main application is (see [`jkqtplotter_simpletest_imagepl
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpimageelements.h"
+#include "jkqtplotter/jkqtpgraphsimage.h"
 #include <opencv/cv.h>
 
 #ifndef M_PI

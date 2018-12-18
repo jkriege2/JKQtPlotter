@@ -3,6 +3,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
+#include "jkqtplottergui/jkqtpcomboboxes.h"
 
 
 

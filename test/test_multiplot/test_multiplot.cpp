@@ -1,8 +1,8 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpelements.h"
-#include "jkqtplotter/jkqtpparsedfunctionelements.h"
-#include "jkqtplotter/jkqtpbarchartelements.h"
+#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsparsedfunction.h"
+#include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include <random>
 #include <cmath>
 

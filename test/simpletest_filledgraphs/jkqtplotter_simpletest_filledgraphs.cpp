@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpfilledcurveelements.h"
+#include "jkqtplotter/jkqtpgraphsfilledcurve.h"
 
 int main(int argc, char* argv[])
 {

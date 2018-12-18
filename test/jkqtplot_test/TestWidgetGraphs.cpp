@@ -3,8 +3,9 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
-#include "jkqtplotter/jkqtpboxplotelements.h"
-#include "jkqtplotter/jkqtpfilledcurveelements.h"
+#include "jkqtplotter/jkqtpgraphsboxplot.h"
+#include "jkqtplotter/jkqtpgraphsfilledcurve.h"
+#include "jkqtplottergui/jkqtpcomboboxes.h"
 
 
 

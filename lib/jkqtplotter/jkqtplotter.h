@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>), German Cancer Research Center
+    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
     
 
@@ -55,6 +55,7 @@
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtplottergui/jkvanishqtoolbar.h"
 #include <QKeyEvent>
 
 #ifndef JKQTPLOTTER_H
