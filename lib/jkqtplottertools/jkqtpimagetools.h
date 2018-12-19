@@ -527,7 +527,7 @@ QStringList LIB_EXPORT JKQTPimagePlot_getPredefinedPalettes();
 
 
 
-int*  LIB_EXPORT JKQTPimagePlot_getCreateLUT(QList<int *> &lutstore, JKQTPMathImageColorPalette palette);
+LIB_EXPORT int* JKQTPimagePlot_getCreateLUT(QList<int *> &lutstore, JKQTPMathImageColorPalette palette);
 void LIB_EXPORT JKQTPimagePlot_freeLUTs(QList<int *> &lutstore);
 
 
