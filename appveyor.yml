@@ -1,0 +1,90 @@
+version: 0.{build}-{branch}
+
+image:
+    - Visual Studio 2017
+
+environment:
+  global:
+    QTVER: 5.11
+    ARCH: x86
+    QMAKESPEC: win32-msvc
+    MAKETOOL: jom
+    VSVER: 0
+    JOMDIR: C:\Qt\Tools\QtCreator\bin
+    MINGWDIR: C:\Qt\Tools\mingw530_32
+
+  matrix:
+    - QTABI: msvc2017_64
+      ARCH: x64
+      VSVER: 2017
+    - QTABI: msvc2015
+      VSVER: 14
+    - QTABI: mingw53_32
+      QMAKESPEC: win32-g++
+      MAKETOOL: mingw32-make
+
+skip_tags: true
+
+build:
+  parallel: true
+  verbosity: detailed
+
+configuration:
+  - release
+#  - debug
+
+install:
+  - IF %VSVER% GTR 14 (
+        call "C:\Program Files (x86)\Microsoft Visual Studio\%VSVER%\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+    ) ELSE (
+        IF %VSVER% GTR 0 (
+            call "C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\vcvarsall.bat" %ARCH%
+        ) ELSE (
+            set "PATH=%MINGWDIR%\bin;%PATH%"
+        )
+    )
+  - set PATH=C:\Qt\%QTVER%\%QTABI%\bin;%JOMDIR%;%PATH%
+  - echo "BUILD ID Qt%QTVER%_%QTABI%_%APPVEYOR_BUILD_VERSION%_%CONFIGURATION%"
+
+build_script:
+  - mkdir build
+  - cd build
+  - echo "Call QMake..."
+  - qmake.exe ..\JKQtPlotterBuildAllExamples.pro
+  - echo "Build..."
+  - call %MAKETOOL%
+  - cd ..
+ #### Fast Plotter ########
+  - mkdir build_fast_plotter
+  - cd build_fast_plotter
+  - echo "Call QMake (Fast Plotter)..."
+  - qmake.exe ..\JKQtFastPlotterBuildAllExamples.pro
+  - echo "Build (Fast Plotter)..."
+  - call %MAKETOOL%
+
+artifacts:
+   - path: build\lib\release\*.a
+     name: lib %QTVER%%QTABI%
+   - path: build\lib\release\*.lib
+     name: lib %QTVER%%QTABI%
+   - path: build\lib\release\*.dll
+     name: dll %QTVER%%QTABI%
+   - path: build\test\**\*.exe
+     name: Test %QTVER%%QTABI%
+ #### Fast Plotter ########
+   - path: build_fast_plotter\lib\release\*.a
+     name: (FP) lib %QTVER%%QTABI%
+   - path: build_fast_plotter\lib\release\*.lib
+     name: (FP) lib %QTVER%%QTABI%
+   - path: build_fast_plotter\lib\release\*.dll
+     name: (FP) dll %QTVER%%QTABI%
+   - path: build_fast_plotter\test\**\*.exe
+     name: (FP) Test %QTVER%%QTABI%
+
+# # remote desktop connection on init
+# init:
+  # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+# # remote desktop connection on finish and block build to not destroy VM
+# on_finish:
+  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
