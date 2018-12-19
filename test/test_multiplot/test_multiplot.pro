@@ -16,6 +16,7 @@ INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtplotterlib
 CONFIG (release):LIBS += -L../../lib/release -ljkqtplotterlib
 
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
 
 # here you can activate some debug options
 #DEFINES += SHOW_JKQTPLOTTER_DEBUG

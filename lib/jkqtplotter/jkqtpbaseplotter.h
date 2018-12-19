@@ -759,7 +759,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * will be managed (freed) by this class. If \a datastore_internal is \c false the class will use tha datastore provided
          * in \a datast as an external datastore. You can modify this later by using useInternalDatastore() and useExternalDatastore().
          */
-        JKQtBasePlotter(bool datastore_internal=true, QObject* parent=nullptr, JKQTPdatastore* datast=nullptr);
+        JKQtBasePlotter(bool datastore_internal, QObject* parent=nullptr, JKQTPdatastore* datast=nullptr);
 
         /** \brief class destructor */
         virtual ~JKQtBasePlotter();
