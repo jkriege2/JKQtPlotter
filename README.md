@@ -5,7 +5,7 @@ This software is licensed under the term of the GNU Lesser General Public Licens
 (LGPL 2.1) or above. 
 
 ## Continuous Integration Status
-![https://ci.appveyor.com/api/projects/status/jkriege2/jkqtplotter](https://ci.appveyor.com/api/projects/status/jkriege2/jkqtplotter)
+[![https://ci.appveyor.com/api/projects/status/jkriege2/jkqtplotter](https://ci.appveyor.com/api/projects/status/jkriege2/jkqtplotter)](https://ci.appveyor.com/project/jkriege2/jkqtplotter)
 
 ## Screenshots
 [Screenshots directory](https://github.com/jkriege2/JKQtPlotter/tree/master/screenshots)
