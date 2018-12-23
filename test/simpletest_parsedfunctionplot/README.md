@@ -47,7 +47,7 @@ This code snippet results in a plot like this:
 
 the adaptive capabilities of the rendering algorithm can be seen, when plotting e.g. `2/x`, which is drawn smoothely, even around the undefined value at `x=0`:
 
-![jkqtplotter_simpletest_parsedfunctionplot_2overx.png](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx.png.png)
+![jkqtplotter_simpletest_parsedfunctionplot_2overx.png](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx.png)
 
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
