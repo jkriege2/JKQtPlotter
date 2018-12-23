@@ -22,7 +22,7 @@ HEADERS += $$PWD/jkqtplotter/jkqtpbaseplotter.h \
            $$PWD/jkqtplottertools/jkqtpimagetools.h \
            $$PWD/jkqtplotter/jkqtpgraphsbarchart.h \
            $$PWD/jkqtplotter/jkqtpgraphsboxplot.h \
-           $$PWD/jkqtplotter/jkqtpgraphsvaluatedfunction.h \
+           $$PWD/jkqtplotter/jkqtpgraphsevaluatedfunction.h \
            $$PWD/jkqtplotter/jkqtpgraphsfilledcurve.h \
            $$PWD/jkqtplotter/jkqtpgraphsimpulses.h \
            $$PWD/jkqtplotter/jkqtpgraphsparsedfunction.h \
@@ -54,7 +54,7 @@ SOURCES += $$PWD/jkqtplotter/jkqtpbaseplotter.cpp \
            $$PWD/jkqtplottertools/jkqtpimagetools.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsbarchart.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsboxplot.cpp  \
-           $$PWD/jkqtplotter/jkqtpgraphsvaluatedfunction.cpp  \
+           $$PWD/jkqtplotter/jkqtpgraphsevaluatedfunction.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsfilledcurve.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsimpulses.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsparsedfunction.cpp  \

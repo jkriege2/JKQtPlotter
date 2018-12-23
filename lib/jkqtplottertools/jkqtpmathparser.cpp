@@ -1079,6 +1079,7 @@ JKQTPMathParser::jkmpTokenType JKQTPMathParser::getToken(){
 			// else
 			program->putback(ch1);
 			jkmpError("undefined operator '&'; Did you mean LOGICAL_AND ('&&' / 'and')?");
+            break;
 		}
 		case '|':{
 			char ch1=0;
@@ -1087,6 +1088,7 @@ JKQTPMathParser::jkmpTokenType JKQTPMathParser::getToken(){
 			// else
 			program->putback(ch1);
 			jkmpError("undefined operator '|'; Did you mean LOGICAL_OR ('||' / 'or')?");
+            break;
 		}
 		case '=':{
 			char ch1=0;

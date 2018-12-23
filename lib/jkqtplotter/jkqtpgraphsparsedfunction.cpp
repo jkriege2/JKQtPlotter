@@ -26,11 +26,11 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <QElapsedTimer>
-
+#include <utility>
 
 
 double JKQTPxParsedFunctionLineGraphFunction(double x, void* data) {
-    JKQTPxParsedFunctionLineGraphFunctionData* d=(JKQTPxParsedFunctionLineGraphFunctionData*)data;
+    JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunctionData* d=(JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunctionData*)data;
     if (d && d->parser && d->node) {
         try {
             d->parser->addVariableDouble("x", x);
@@ -100,6 +100,14 @@ JKQTPxParsedFunctionLineGraph::~JKQTPxParsedFunctionLineGraph()
     delete fdata.parser;
     if (efdata.node) delete efdata.node;
     delete efdata.parser;
+}
+
+void JKQTPxParsedFunctionLineGraph::set_plotFunction(jkqtpPlotFunctionType &&f){
+    JKQTPxFunctionLineGraph::set_plotFunction(std::move(f));
+}
+
+void JKQTPxParsedFunctionLineGraph::set_plotFunction(const jkqtpPlotFunctionType &f) {
+    JKQTPxFunctionLineGraph::set_plotFunction(f);
 }
 
 void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)

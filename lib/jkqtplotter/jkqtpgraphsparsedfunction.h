@@ -27,18 +27,12 @@
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplottertools/jkqtpmathparser.h"
 #include "jkqtplottertools/jkqtp_imexport.h"
-#include "jkqtplotter/jkqtpgraphsvaluatedfunction.h"
+#include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
 
 // forward declarations
 class JKQtBasePlotter;
 class JKQtPlotter;
 
-
-struct JKQTPxParsedFunctionLineGraphFunctionData {
-    JKQTPMathParser* parser;
-    JKQTPMathParser::jkmpNode* node;
-    int varcount;
-};
 
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$ The function is defined as a string and parsed by JKMathParser
@@ -63,26 +57,34 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
 
         JKQTPGET_SET_MACRO(QList<double>, parameters)
         JKQTPGET_SET_MACRO(QString, function)
-        JKQTPGET_SET_MACRO(int, parameterColumn)
 
         JKQTPGET_SET_MACRO(QList<double>, errorParameters)
         JKQTPGET_SET_MACRO(QString, errorFunction)
-        JKQTPGET_SET_MACRO(int, errorParameterColumn)
+
+        /** \brief INTERNAL data structure
+         *  \internal
+         */
+        struct JKQTPxParsedFunctionLineGraphFunctionData {
+            JKQTPMathParser* parser;
+            JKQTPMathParser::jkmpNode* node;
+            int varcount;
+        };
+
     protected:
-
-
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief the function to be evaluated for the plot.  Use \c x as the free variable, e.g. \c "x^2+2" */
         QString function;
+        /** \brief values of the parameters \c p1 , \c p2 , \c p3 , ... */
         QList<double> parameters;
         JKQTPxParsedFunctionLineGraphFunctionData fdata;
-        int parameterColumn;
 
+        /** \brief the function to be evaluated to add error indicators to the graph. This function is evaluated to an error for every x. Use \c x as the free variable, e.g. \c "x^2+2". */
         QString errorFunction;
+        /** \brief values of the parameters \c p1 , \c p2 , \c p3 , ... for the error function*/
         QList<double> errorParameters;
         JKQTPxParsedFunctionLineGraphFunctionData efdata;
-        int errorParameterColumn;
 
-        JKQTPGET_SET_MACRO_I(jkqtpPlotFunctionType, plotFunction, clearData())
+        virtual void set_plotFunction(jkqtpPlotFunctionType&& f);
+        virtual void set_plotFunction(const jkqtpPlotFunctionType& f);
         JKQTPGET_SET_MACRO_I(void*, params, clearData())
         JKQTPGET_SET_MACRO(jkqtpPlotFunctionType, errorPlotFunction)
         JKQTPGET_SET_MACRO(void*, errorParams)
