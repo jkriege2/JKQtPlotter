@@ -4,14 +4,14 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
 
-double sinc(double x, void* params) {
+double sinc(double x, void* /*params*/) {
     return 10.0*sin(x)/x;
 }
 
 struct SincSqr {
 public:
     inline SincSqr(double amplitude): a(amplitude) {}
-    inline double operator()(double x, void* params) {
+    inline double operator()(double x, void* /*params*/) {
         return a*sin(x)*sin(x)/x/x;
     }
 private:
