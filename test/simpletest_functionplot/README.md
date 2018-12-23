@@ -44,18 +44,18 @@ In any such plot function, you can also use parameters, provided via the second 
 
 You can also use C++ functors (or function objects):
 ```c++
-	struct SincSqr {
-	public:
-		inline SincSqr(double amplitude): a(amplitude) {}
-		inline double operator()(double x, void* /*params*/) {
-			return a*sin(x)*sin(x)/x/x;
-		}
-	private:
-		double a;
-	};
+    struct SincSqr {
+    public:
+        inline SincSqr(double amplitude): a(amplitude) {}
+        inline double operator()(double x, void* /*params*/) {
+            return a*sin(x)*sin(x)/x/x;
+        }
+    private:
+        double a;
+    };
 
-	// ...
-	
+    // ...
+    
     JKQTPxFunctionLineGraph* func4=new JKQTPxFunctionLineGraph(plot);
     func4->set_plotFunction(SincSqr(-8));
     func4->set_title("C++ functor $-8*\\sin^2(x)/x^2$");
@@ -64,13 +64,13 @@ You can also use C++ functors (or function objects):
 
 ... or simple static C functions:
 ```c++
-	double sinc(double x, void* /*params*/) {
-		return 10.0*sin(x)/x;
-	}
-	
-	// ...
+    double sinc(double x, void* /*params*/) {
+        return 10.0*sin(x)/x;
+    }
+    
+    // ...
 
-	JKQTPxFunctionLineGraph* func5=new JKQTPxFunctionLineGraph(plot);
+    JKQTPxFunctionLineGraph* func5=new JKQTPxFunctionLineGraph(plot);
     func5->set_plotFunction(&sinc);
     func5->set_title("static C function $10*\\sin(x)/x$");
     plot->addGraph(func5);

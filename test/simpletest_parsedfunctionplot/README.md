@@ -18,10 +18,10 @@ In the example in [`test/simpletest_parsedfunctionplot/simpletest_parsedfunction
     JKQtPlotter* plot=new JKQtPlotter(&mainWin);
     QLineEdit* edit=new QLineEdit(&mainWin);
     edit->setToolTip("enter a function in dependence of the variable <tt>x</tt> and press ENTER to update the graph");
-	
-	// ...
-	
-	
+    
+    // ...
+    
+    
     // 2. now we add a JKQTPxParsedFunctionLineGraph object, which will draw the function from
     //    the line edit
     JKQTPxParsedFunctionLineGraph* parsedFunc=new JKQTPxParsedFunctionLineGraph(plot);
