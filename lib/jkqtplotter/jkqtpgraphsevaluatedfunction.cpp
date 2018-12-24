@@ -711,8 +711,9 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 }
 
 
-void JKQTPyFunctionLineGraph::createPlotData(bool /*collectParams*/) {
+void JKQTPyFunctionLineGraph::createPlotData(bool collectParams) {
     clearData();
+    if (collectParams) collectParameters();
 
     if (parent==nullptr) return;
     if (!plotFunction && !simplePlotFunction) return;

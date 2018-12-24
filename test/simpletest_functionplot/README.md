@@ -3,8 +3,10 @@
 # JKQtPlotter
 
 ## Plotting Mathematical Functions as Line Graphs
+### Basics
 This project (see `./test/simpletest_functionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. See [test/simpletest_parsedfunctionplot](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_parsedfunctionplot) for an example of how to use an internal equation parser provided with JKQtPlotter instead of directly defining functions.
 
+### Simple C++ inline function
 The first example shows how to plot a C++ inline function: 
 ```c++
     JKQTPxFunctionLineGraph* func1=new JKQTPxFunctionLineGraph(plot);
@@ -13,6 +15,7 @@ The first example shows how to plot a C++ inline function:
     plot->addGraph(func1);
 ```
 
+### Simple C++ inline function with parameters
 In any such plot function, you can also use parameters, provided via the second parameter. Usually these are "internal parameters", defined by `func2->set_paramsV(p0, p1, ...)`:
 ```c++
     JKQTPxFunctionLineGraph* func2=new JKQTPxFunctionLineGraph(plot);
@@ -42,6 +45,7 @@ In any such plot function, you can also use parameters, provided via the second 
     plot->addGraph(func3);
 ```
 
+### C++ functors as plot functions
 You can also use C++ functors (or function objects):
 ```c++
     struct SincSqr {
@@ -62,7 +66,8 @@ You can also use C++ functors (or function objects):
     plot->addGraph(func4);
 ```
 
-... or simple static C functions:
+### Static C functions
+You can also plot simple static C functions:
 ```c++
     double sinc(double x) {
         return 10.0*sin(x)/x;
@@ -76,21 +81,44 @@ You can also use C++ functors (or function objects):
     plot->addGraph(func5);
 ```
 
-Finally `JKQTPxFunctionLineGraph` provides a small set of special functions (polynomial, exponential, ...), which draw their parameters from the internal or external parameters:
+### Predefined "special" functions
+Finally `JKQTPxFunctionLineGraph` provides a small set of special functions (polynomial `p0+p1*x+p2*x^2+...`, exponential `p0+p1*exp(x/p2)`, power-law `p0+p1*x^p2`, ...), which are parametrized from the internal or external parameters:
 ```c++
     JKQTPxFunctionLineGraph* func6=new JKQTPxFunctionLineGraph(plot);
     func6->setSpecialFunction(JKQTPxFunctionLineGraph::Line);
-    // here we set offset and slope of the line
+    // here we set offset p0=-1 and slope p1=1.5 of the line p0+p1*x
     func6->set_paramsV(-1,1.5);
     func6->set_title("special function: linear");
     plot->addGraph(func6);
 ```
 
+To demonstrate how to use parameters from a datastore column, have a look at the next example. It is derived from the special-function plot above, but adds a line with a different offset and slope and reads the parameters from a datastore column `paramCol`, which is initialized from the vector `params`:
+```c++
+JKQTPxFunctionLineGraph* func7=new JKQTPxFunctionLineGraph(plot);
+    func7->setSpecialFunction(JKQTPxFunctionLineGraph::Line);
+    // here we set offset p0=1 and slope p1=-1.5 of the line p0+p1*x by adding these into a column
+    // in the internal datastore and then set that column as parameterColumn for the function graph
+    QVector<double> params;
+    params << /*p0=*/1 << /*p1=*/-1.5;
+    size_t paramCol=plot->getDatastore()->addCopiedColumn(params);
+    func7->set_parameterColumn(paramCol);
+    func7->set_title("special function: linear");
+    plot->addGraph(func7);
+```
 
-
+### Screenshot
 This code snippets above result in a plot like this:
 
 ![jkqtplotter_simpletest_functionplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_functionplot.png)
+
+### Notes
+Note that all the different variants to provide parameters can be used with all types of functions!
+
+Also see the example [Plotting Parsed Mathematical Functions as Line Graphs](https://github.com/jkriege2/JKQtPlotter/tree/master/test/simpletest_parsedfunctionplot) for details on how the actual plotting algorithm works. That example also shows how to define a function as a string, which is then parsed and evaluated by an expression parser library embedded in JKQtPlotter.
+
+All examples above use the graph class `JKQTPxFunctionLineGraph`, which plots a function `y=f(x)`. If you want to plot a function `x=f(y)`, you can use the class `JKQTPyFunctionLineGraph` instead. If in the examples above, we exchange all `JKQTPxFunctionLineGraph` for `JKQTPyFunctionLineGraph`, the graphs will be rotated by 90 degree, as all functions are interpreted as `x=f(y)`:
+
+![jkqtplotter_simpletest_functionplot_fy](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_functionplot_fy.png)
 
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)

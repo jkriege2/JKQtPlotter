@@ -79,13 +79,25 @@ int main(int argc, char* argv[])
     func5->set_title("static C function $10*\\sin(x)/x$");
     plot->addGraph(func5);
 
-    // 6. finally JKQTPxFunctionLineGraph defines a small set of common functions
+    // 7. finally JKQTPxFunctionLineGraph defines a small set of common functions
     JKQTPxFunctionLineGraph* func6=new JKQTPxFunctionLineGraph(plot);
     func6->setSpecialFunction(JKQTPxFunctionLineGraph::Line);
-    // here we set offset and slope of the line
+    // here we set offset p0=-1 and slope p1=1.5 of the line p0+p1*x
     func6->set_paramsV(-1,1.5);
-    func6->set_title("special function: linear");
+    func6->set_title("special function: linear p_0=-1, p_1=1.5");
     plot->addGraph(func6);
+
+    // 7. finally JKQTPxFunctionLineGraph defines a small set of common functions
+    JKQTPxFunctionLineGraph* func7=new JKQTPxFunctionLineGraph(plot);
+    func7->setSpecialFunction(JKQTPxFunctionLineGraph::Line);
+    // here we set offset p0=1 and slope p1=-1.5 of the line p0+p1*x by adding these into a column
+    // in the internal datastore and then set that column as parameterColumn for the function graph
+    QVector<double> params;
+    params << /*p0=*/1 << /*p1=*/-1.5;
+    size_t paramCol=plot->getDatastore()->addCopiedColumn(params);
+    func7->set_parameterColumn(paramCol);
+    func7->set_title("special function: linear p_0=1, p_1=-1.5");
+    plot->addGraph(func7);
 
 
     // 8. set some axis properties (we use LaTeX for nice equation rendering)
