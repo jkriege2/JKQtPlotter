@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QLineEdit>
+#include <QCheckBox>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 
@@ -14,10 +15,12 @@ int main(int argc, char* argv[])
     QWidget mainWin;
     QLineEdit* edit=new QLineEdit(&mainWin);
     edit->setToolTip("enter a function in dependence of the variable <tt>x</tt> and press ENTER to update the graph");
+    QCheckBox* check=new QCheckBox("display sample points");
     JKQtPlotter* plot=new JKQtPlotter(&mainWin);
     QVBoxLayout* layout=new QVBoxLayout;
     mainWin.setLayout(layout);
     layout->addWidget(edit);
+    layout->addWidget(check);
     layout->addWidget(plot);
 
     // 2. now we add a JKQTPxParsedFunctionLineGraph object, which will draw the function from
@@ -30,10 +33,12 @@ int main(int argc, char* argv[])
        [=]() {
         parsedFunc->set_title("user function: \\verb{"+edit->text()+"}");
         parsedFunc->set_function(edit->text());
+        parsedFunc->set_displaySamplePoints(check->isChecked());
         plot->update_plot();
        };
     QObject::connect(edit, &QLineEdit::returnPressed, updateGraphFunctor);
     QObject::connect(edit, &QLineEdit::editingFinished, updateGraphFunctor);
+    QObject::connect(check, &QCheckBox::toggled, updateGraphFunctor);
     edit->setText("sin(x*8)*exp(-x/4)");
     updateGraphFunctor();
 

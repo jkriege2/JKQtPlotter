@@ -45,9 +45,13 @@ This code snippet results in a plot like this:
 
 ![jkqtplotter_simpletest_parsedfunctionplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parsedfunctionplot.png)
 
-the adaptive capabilities of the rendering algorithm can be seen, when plotting e.g. `2/x`, which is drawn smoothely, even around the undefined value at `x=0`:
+The adaptive capabilities of the rendering algorithm can be seen, when plotting e.g. `2/x`, which is drawn smoothely, even around the undefined value at `x=0`:
 
 ![jkqtplotter_simpletest_parsedfunctionplot_2overx.png](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx.png)
+
+With an additional checkbox in this example, you can switch drawing the actual sample points of the drawing algorithm on and off, by calling `parsedFunc->set_displaySamplePoints(...)`. This can be used to debug the drawing algorithm and explore its parameters (which you can set with `set_minSamples()`, `set_maxRefinementDegree()`, `set_slopeTolerance()`, `set_minPixelPerSample()`). Here is an example of a 2/x function with shown sample points:
+
+![jkqtplotter_simpletest_parsedfunctionplot_2overx_samplepoints.png](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx_samplepoints.png)
 
 
 [Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)

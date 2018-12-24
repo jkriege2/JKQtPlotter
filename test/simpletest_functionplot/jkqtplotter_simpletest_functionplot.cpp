@@ -4,14 +4,14 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
 
-double sinc(double x, void* /*params*/) {
+double sinc(double x) {
     return 10.0*sin(x)/x;
 }
 
 struct SincSqr {
 public:
     inline SincSqr(double amplitude): a(amplitude) {}
-    inline double operator()(double x, void* /*params*/) {
+    inline double operator()(double x) {
         return a*sin(x)*sin(x)/x/x;
     }
 private:
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     // 2. now we add a JKQTPxFunctionLineGraph object, which will draw a simple function
     //    the function is defined as C++ inline function
     JKQTPxFunctionLineGraph* func1=new JKQTPxFunctionLineGraph(plot);
-    func1->set_plotFunction([](double x, void* /*params*/) { return 0.2*x*x-0.015*x*x*x; });
+    func1->set_plotFunction([](double x) { return 0.2*x*x-0.015*x*x*x; });
     func1->set_title("C++-inline function $0.2x^2-0.015x^3$");
     plot->addGraph(func1);
 

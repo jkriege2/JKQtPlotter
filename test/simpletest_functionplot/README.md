@@ -8,7 +8,7 @@ This project (see `./test/simpletest_functionplot/`) demonstrates how to plot ma
 The first example shows how to plot a C++ inline function: 
 ```c++
     JKQTPxFunctionLineGraph* func1=new JKQTPxFunctionLineGraph(plot);
-    func1->set_plotFunction([](double x, void* /*params*/) { return 0.2*x*x-0.015*x*x*x; });
+    func1->set_plotFunction([](double x) { return 0.2*x*x-0.015*x*x*x; });
     func1->set_title("C++-inline function $0.2x^2-0.015x^3$");
     plot->addGraph(func1);
 ```
@@ -47,7 +47,7 @@ You can also use C++ functors (or function objects):
     struct SincSqr {
     public:
         inline SincSqr(double amplitude): a(amplitude) {}
-        inline double operator()(double x, void* /*params*/) {
+        inline double operator()(double x) {
             return a*sin(x)*sin(x)/x/x;
         }
     private:
@@ -64,7 +64,7 @@ You can also use C++ functors (or function objects):
 
 ... or simple static C functions:
 ```c++
-    double sinc(double x, void* /*params*/) {
+    double sinc(double x) {
         return 10.0*sin(x)/x;
     }
     

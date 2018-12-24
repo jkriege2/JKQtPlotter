@@ -53,6 +53,14 @@
 */
 typedef std::function<double(double, void*)> jkqtpPlotFunctionType;
 
+/*! \brief simplified type of functions (without parameters) that may be plottet
+    \ingroup jkqtplotter_plots
+
+    This is the type of functions \f$ y=f(x) \f$ that may be plottet by JKQTPxFunctionLineGraph
+    and JKQTPyFunctionLineGraph.
+*/
+typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
+
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$
     \ingroup jkqtplotter_plots
@@ -76,7 +84,9 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
             Polynomial, /*!< \brief a polynomial \f$ f(x)=p_0+p_1x+p_2x^2+p_3x^3+... \f$ The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
             Line=Polynomial, /*!< \brief a polynomial \f$ f(x)=p_0+p_1x \f$ The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
             Exponential,  /*!< \brief an exponential function \f$ f(x)=p_0+p_1\cdot\exp(x/p_2) \f$ or \f$ f(x)=p_0\cdot\exp(x/p_1) \f$ (depending on the number of parameters). The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
-            PowerLaw  /*!< \brief an exponential function \f$ f(x)=p_0+p_1\cdot x^{p_3} \f$ or \f$ f(x)=p_0\cdot x^{p_1} \f$ or \f$ f(x)= x^{p_0} \f$ (depending on the number of parameters) The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
+            PowerLaw,  /*!< \brief an exponential function \f$ f(x)=p_0+p_1\cdot x^{p_3} \f$ or \f$ f(x)=p_0\cdot x^{p_1} \f$ or \f$ f(x)= x^{p_0} \f$ (depending on the number of parameters) The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
+
+            UserFunction,  /*!< \brief no special function but the function is provided by the user */
         };
 
         /** \brief class constructor */
@@ -125,41 +135,40 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
          *  \details Description of the parameter varname is: <CENTER>\copybrief plotFunction.</CENTER>
          * \see plotFunction for more information */
         virtual void set_plotFunction (const jkqtpPlotFunctionType & __value);
-        /** \brief returns the property varname. \see varname for more information */ \
+        /** \brief sets the property plotFunction to the specified \a __value.
+         *
+         *  \details Description of the parameter plotFunction is: <CENTER>\copybrief plotFunction.</CENTER>
+         * \see plotFunction for more information */
+        virtual void set_plotFunction (jkqtpSimplePlotFunctionType && __value);
+        /** \brief sets the property plotFunction to the specified \a __value.
+         *
+         *  \details Description of the parameter plotFunction is: <CENTER>\copybrief plotFunction.</CENTER>
+         * \see plotFunction for more information */
+        virtual void set_plotFunction (const jkqtpSimplePlotFunctionType & __value);
+        /** \brief returns the property plotFunction. \see plotFunction for more information */ \
         virtual jkqtpPlotFunctionType get_plotFunction () const;
+        /** \brief returns the property simplePlotFunction. \see simplePlotFunction for more information */ \
+        virtual jkqtpSimplePlotFunctionType get_simplePlotFunction () const;
 
         JKQTPGET_SET_MACRO_I(void*, params, clearData())
         /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void set_params(const QVector<double>& params);
         /** \brief sets the params from a copy of the given array of length \a N */
         void set_copiedParams(const double* params, int N);
-        inline void set_paramsV(double p1) {
-            QVector<double> p;
-            p<<p1;
-            set_params(p);
-        }
-        inline void set_paramsV(double p1, double p2) {
-            QVector<double> p;
-            p<<p1<<p2;
-            set_params(p);
-        }
-        inline void set_paramsV(double p1, double p2, double p3) {
-            QVector<double> p;
-            p<<p1<<p2<<p3;
-            set_params(p);
-        }
-        inline void set_paramsV(double p1, double p2, double p3, double p4) {
-            QVector<double> p;
-            p<<p1<<p2<<p3<<p4;
-            set_params(p);
-        }
-        inline void set_paramsV(double p1, double p2, double p3, double p4, double p5) {
-            QVector<double> p;
-            p<<p1<<p2<<p3<<p4<<p5;
-            set_params(p);
-        }
+        /** \brief set an internal parameter vector as function parameters, initialized with {p1} */
+        void set_paramsV(double p1);
+        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2} */
+        void set_paramsV(double p1, double p2);
+        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3} */
+        void set_paramsV(double p1, double p2, double p3);
+        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3,p4} */
+        void set_paramsV(double p1, double p2, double p3, double p4);
+        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3,p4,p5} */
+        void set_paramsV(double p1, double p2, double p3, double p4, double p5);
 
+        /** \brief returns the currently set internal parameter vector */
         QVector<double> get_internalParams() const;
+        /** \brief returns the currently set internal parameter vector */
         QVector<double> get_internalErrorParams() const;
         JKQTPGET_SET_MACRO(unsigned int, minSamples)
         JKQTPGET_SET_MACRO(unsigned int, maxRefinementDegree)
@@ -181,6 +190,18 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         virtual void set_errorPlotFunction (const jkqtpPlotFunctionType & __value);
         /** \brief returns the property varname. \see varname for more information */ \
         virtual jkqtpPlotFunctionType get_errorPlotFunction () const;
+        /** \brief sets the property errorPlotFunction to the specified \a __value.
+         *
+         *  \details Description of the parameter varname is: <CENTER>\copybrief errorPlotFunction.</CENTER>
+         * \see errorPlotFunction for more information */
+        virtual void set_errorPlotFunction (jkqtpSimplePlotFunctionType && __value);
+        /** \brief sets the property errorPlotFunction to the specified \a __value.
+         *
+         *  \details Description of the parameter varname is: <CENTER>\copybrief errorPlotFunction.</CENTER>
+         * \see errorPlotFunction for more information */
+        virtual void set_errorPlotFunction (const jkqtpSimplePlotFunctionType & __value);
+        /** \brief returns the property varname. \see varname for more information */ \
+        virtual jkqtpSimplePlotFunctionType get_errorSimplePlotFunction () const;
         JKQTPGET_SET_MACRO(void*, errorParams)
         /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void set_errorParams(const QVector<double>& errorParams);
@@ -202,6 +223,8 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
 
         /** \brief sets function to the given special function */
         void setSpecialFunction(SpecialFunction function);
+        /** \brief returns, which special function is set (or if any is set) */
+        SpecialFunction getFunctionType() const;
     protected:
         /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
@@ -218,7 +241,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         virtual void createPlotData( bool collectParams=true);
 
         virtual void collectParameters();
-
+        /** \brief refine datapoints on the function graph between two evaluations \a a and \a b */
         void refine(doublePair* a, doublePair* b, unsigned int degree=0);
 
         /** \brief if set, the values from this datatsore column are used for the parameters \c p1 , \c p2 , \c p3 , ...  of the plot function */
@@ -242,6 +265,10 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         bool fillCurve;
         /** \brief the function to be plotted */
         jkqtpPlotFunctionType plotFunction;
+        /** \brief a simple function to be plotted, simplified form without parameters */
+        jkqtpSimplePlotFunctionType simplePlotFunction;
+        /** \brief indicates whether a special function is set (and if so, which one), or a user-supplied function */
+        SpecialFunction functionType;
         /** \brief pointer to the parameters supplied to the plotting funtion */
         void* params;
         /** \brief the minimum number of points to evaluate the function at */
@@ -267,6 +294,8 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         bool drawErrorLines;
         /** \brief this function calculates the error at a given position */
         jkqtpPlotFunctionType errorPlotFunction;
+        /** \brief this function calculates the error at a given position, simplified form without parameters */
+        jkqtpSimplePlotFunctionType errorSimplePlotFunction;
         /** \brief parameters for errorFunction */
         void* errorParams;
         /** \brief color of the error graph */
