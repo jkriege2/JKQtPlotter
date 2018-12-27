@@ -31,7 +31,7 @@
 
 
 /******************************************************************************************
- * default-Funktionen für den Parser
+ * default-Funktionen fï¿½r den Parser
  ******************************************************************************************/
 
 JKQTPMathParser::jkmpResult fFloatToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
@@ -761,7 +761,7 @@ JKQTPMathParser::~JKQTPMathParser()
 	clearVariables();
 }
 
-// fügt eine Variable hinzu. Der Speicher wird extern verwaltet
+// fï¿½gt eine Variable hinzu. Der Speicher wird extern verwaltet
 void JKQTPMathParser::addVariableDouble(std::string name, double* v)
 {
     name=strip(name);
@@ -901,7 +901,7 @@ void JKQTPMathParser::clearVariables(){
     }
 }
 
-// gibt den aktuellen Wert einer Variablen zurück
+// gibt den aktuellen Wert einer Variablen zurï¿½ck
 JKQTPMathParser::jkmpResult JKQTPMathParser::getVariable(std::string name)
 {
     if (variableExists(name)) {
@@ -1416,7 +1416,7 @@ std::string JKQTPMathParser::readDelim(char delimiter){
 
 
 /******************************************************************************************
- * Klassenhierarchie, um Ausdrücke darzustellen
+ * Klassenhierarchie, um Ausdrï¿½cke darzustellen
  ******************************************************************************************/
 JKQTPMathParser::jkmpUnaryNode::jkmpUnaryNode(char op, JKQTPMathParser::jkmpNode* c, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par){
   child=c;
@@ -1425,6 +1425,8 @@ JKQTPMathParser::jkmpUnaryNode::jkmpUnaryNode(char op, JKQTPMathParser::jkmpNode
   setParent(par);
   operation=op;
 }
+
+JKQTPMathParser::jkmpUnaryNode::~jkmpUnaryNode() {delete child;}
 
 JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpUnaryNode::evaluate(){
   JKQTPMathParser::jkmpResult c=child->evaluate();
@@ -1466,8 +1468,10 @@ JKQTPMathParser::jkmpBinaryArithmeticNode::jkmpBinaryArithmeticNode(char op, JKQ
   operation=op;
 }
 
+JKQTPMathParser::jkmpBinaryArithmeticNode::~jkmpBinaryArithmeticNode() { delete left; delete right;}
+
 JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpBinaryArithmeticNode::evaluate(){
-  JKQTPMathParser::jkmpResult l=left->evaluate();
+    JKQTPMathParser::jkmpResult l=left->evaluate();
   JKQTPMathParser::jkmpResult r=right->evaluate();
   JKQTPMathParser::jkmpResult res;
 
@@ -1563,8 +1567,10 @@ JKQTPMathParser::jkmpCompareNode::jkmpCompareNode(char op, JKQTPMathParser::jkmp
   operation=op;
 }
 
+JKQTPMathParser::jkmpCompareNode::~jkmpCompareNode() { delete left; delete right;}
+
 JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpCompareNode::evaluate(){
-  JKQTPMathParser::jkmpResult l=left->evaluate();
+    JKQTPMathParser::jkmpResult l=left->evaluate();
   JKQTPMathParser::jkmpResult r=right->evaluate();
   JKQTPMathParser::jkmpResult res;
   res.type=JKQTPMathParser::jkmpBool;
@@ -1718,7 +1724,7 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpBinaryBoolNode::evaluate(){
 }
 
 
-
+JKQTPMathParser::jkmpBinaryBoolNode::~jkmpBinaryBoolNode() { delete left; delete right;}
 
 JKQTPMathParser::jkmpVariableNode::jkmpVariableNode(std::string name, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par) {
   var=name;
@@ -1752,8 +1758,10 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpNodeList::evaluate(){
   return res;
 }
 
+JKQTPMathParser::jkmpNodeList::jkmpNodeList(JKQTPMathParser *p) { setParser(p); setParent(nullptr); }
+
 JKQTPMathParser::jkmpNodeList::~jkmpNodeList() {
-/*  if (getCount()>0) {
+    /*  if (getCount()>0) {
      for (int i=0; i<getCount(); i++) {
         delete list[i];
      }
@@ -1761,6 +1769,8 @@ JKQTPMathParser::jkmpNodeList::~jkmpNodeList() {
   list.clear();*/
 }
 
+
+JKQTPMathParser::jkmpVariableAssignNode::~jkmpVariableAssignNode() {delete child;}
 
 JKQTPMathParser::jkmpVariableAssignNode::jkmpVariableAssignNode(std::string var, JKQTPMathParser::jkmpNode* c, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par){
   child=c;
@@ -1850,4 +1860,16 @@ std::string JKQTPMathParser::getArgCVParam(std::string name, std::string default
 		}
 	}
 	return defaultResult;
+}
+
+JKQTPMathParser::jkmpNode::~jkmpNode() {}
+
+JKQTPMathParser::jkmpConstantNode::jkmpConstantNode(JKQTPMathParser::jkmpResult d, JKQTPMathParser *p, JKQTPMathParser::jkmpNode *par) { data=d; setParser(p); setParent(par); }
+
+JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpConstantNode::evaluate() { return data; }
+
+JKQTPMathParser::jkmpException::~jkmpException() {   }
+
+const char *JKQTPMathParser::jkmpException::what() const noexcept {
+    return getMessage().c_str();
 }

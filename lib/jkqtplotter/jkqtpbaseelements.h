@@ -184,7 +184,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         }
 
         /** \brief return time coordinate coordinate from x-pixel */
-        inline double p2x(long x) const {
+        inline double p2x(double x) const {
             double xx=x;
             if (inverted) {
                 xx=2.0*get_parent_plotoffset()+get_parent_plotwidth()-x;
@@ -767,31 +767,31 @@ class LIB_EXPORT JKQTPverticalAxis: public JKQTPcoordinateAxis {
         JKQTPverticalAxis(JKQtBasePlotter* parent);
 
         /** \brief returns the size of the left/bottom axis in pixels */
-        virtual QSize getSize1(JKQTPEnhancedPainter& painter);
+        virtual QSize getSize1(JKQTPEnhancedPainter& painter) override;
 
         /** \brief returns the size of the right/top axis in pixels */
-        virtual QSize getSize2(JKQTPEnhancedPainter& painter);
+        virtual QSize getSize2(JKQTPEnhancedPainter& painter) override;
 
         /** \brief draw axes */
-        virtual void drawAxes(JKQTPEnhancedPainter& painter);
+        virtual void drawAxes(JKQTPEnhancedPainter& painter) override;
 
         /** \brief draw grids  */
-        virtual void drawGrids(JKQTPEnhancedPainter& painter);
+        virtual void drawGrids(JKQTPEnhancedPainter& painter) override;
 
 
     protected:
         /** \brief width of the plot in the direction of the axis */
-        virtual double get_parent_plotwidth() const;
+        virtual double get_parent_plotwidth() const override;
         /** \brief offset of the plot in the direction of the axis */
-        virtual double get_parent_plotoffset() const;
+        virtual double get_parent_plotoffset() const override;
         /** \brief pixel of other (perpendicular) axis (needed for grids) */
-        virtual double get_parent_otheraxis_width() const;
-        virtual bool get_parent_otheraxis_inverted() const;
+        virtual double get_parent_otheraxis_width() const override;
+        virtual bool get_parent_otheraxis_inverted() const override;
         /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
-        virtual double get_parent_otheraxis_offset() const;
+        virtual double get_parent_otheraxis_offset() const override;
 
-        virtual void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize);
-        virtual void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize);
+        virtual void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize) ;
+        virtual void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize) ;
 };
 
 
@@ -807,25 +807,25 @@ class LIB_EXPORT JKQTPverticalIndependentAxis: public JKQTPverticalAxis {
         /** \brief class constructor */
         JKQTPverticalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQtBasePlotter* parent);
         /** \brief set the axis offset */
-        virtual void set_axisOffset(double __value);
+        virtual void set_axisOffset(double __value) ;
         /** \brief set the axis width */
-        virtual void set_axisWidth(double __value);
+        virtual void set_axisWidth(double __value) ;
         /** \brief set the other axis offset */
-        virtual void set_otherAxisOffset(double __value);
+        virtual void set_otherAxisOffset(double __value) ;
         /** \brief set the other axis width */
-        virtual void set_otherAxisWidth(double __value);
+        virtual void set_otherAxisWidth(double __value) ;
         /** \brief set the other axis width */
-        virtual void set_otherAxisInverted(bool __value);
+        virtual void set_otherAxisInverted(bool __value) ;
     protected:
         /** \brief width of the plot in the direction of the axis */
-        virtual double get_parent_plotwidth() const { return axisWidth; }
+        virtual double get_parent_plotwidth() const override;
         /** \brief offset of the plot in the direction of the axis */
-        virtual double get_parent_plotoffset() const { return axisOffset; }
+        virtual double get_parent_plotoffset() const override;
         /** \brief pixel of other (perpendicular) axis (needed for grids) */
-        virtual double get_parent_otheraxis_width() const { return otherAxisWidth; }
-        virtual bool get_parent_otheraxis_inverted() const { return otherAxisInverted; }
+        virtual double get_parent_otheraxis_width() const override;
+        virtual bool get_parent_otheraxis_inverted() const override;
         /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
-        virtual double get_parent_otheraxis_offset() const { return otherAxisOffset; }
+        virtual double get_parent_otheraxis_offset() const override;
 
         double axisOffset;
         double axisWidth;
@@ -848,31 +848,31 @@ class LIB_EXPORT JKQTPhorizontalAxis: public JKQTPcoordinateAxis {
         JKQTPhorizontalAxis(JKQtBasePlotter* parent);
 
         /** \brief returns the size of the left/bottom axis in pixels */
-        virtual QSize getSize1(JKQTPEnhancedPainter& painter);
+        virtual QSize getSize1(JKQTPEnhancedPainter& painter) override;
 
         /** \brief returns the size of the right/top axis in pixels */
-        virtual QSize getSize2(JKQTPEnhancedPainter& painter);
+        virtual QSize getSize2(JKQTPEnhancedPainter& painter) override;
 
         /** \brief draw axes */
-        virtual void drawAxes(JKQTPEnhancedPainter& painter);
+        virtual void drawAxes(JKQTPEnhancedPainter& painter) override;
 
         /** \brief draw grids  */
-        virtual void drawGrids(JKQTPEnhancedPainter& painter);
+        virtual void drawGrids(JKQTPEnhancedPainter& painter) override;
 
     protected:
         /** \brief width of the plot in the direction of the axis */
-        virtual double get_parent_plotwidth() const;
+        virtual double get_parent_plotwidth() const override;
         /** \brief offset of the plot in the direction of the axis */
-        virtual double get_parent_plotoffset() const;
+        virtual double get_parent_plotoffset() const override;
         /** \brief pixel of other (perpendicular) axis (needed for grids) */
-        virtual double get_parent_otheraxis_width() const;
-        virtual bool get_parent_otheraxis_inverted() const;
+        virtual double get_parent_otheraxis_width() const override;
+        virtual bool get_parent_otheraxis_inverted() const override;
         /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
-        virtual double get_parent_otheraxis_offset() const;
+        virtual double get_parent_otheraxis_offset() const override;
 
 
-        virtual void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double descentMax);
-        virtual void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double descentMax);
+        virtual void drawTickLabel1(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double descentMax) ;
+        virtual void drawTickLabel2(JKQTPEnhancedPainter& painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double descentMax) ;
 
 };
 
@@ -899,14 +899,14 @@ class LIB_EXPORT JKQTPhorizontalIndependentAxis: public JKQTPhorizontalAxis {
         virtual void set_otherAxisInverted(bool __value);
     protected:
         /** \brief width of the plot in the direction of the axis */
-        virtual double get_parent_plotwidth() const;
+        virtual double get_parent_plotwidth() const override;
         /** \brief offset of the plot in the direction of the axis */
-        virtual double get_parent_plotoffset() const;
+        virtual double get_parent_plotoffset() const override;
         /** \brief pixel of other (perpendicular) axis (needed for grids) */
-        virtual double get_parent_otheraxis_width() const;
-        virtual bool get_parent_otheraxis_inverted() const;
+        virtual double get_parent_otheraxis_width() const override;
+        virtual bool get_parent_otheraxis_inverted() const override;
         /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
-        virtual double get_parent_otheraxis_offset() const;
+        virtual double get_parent_otheraxis_offset() const override;
 
         double axisOffset;
         double axisWidth;

@@ -62,20 +62,20 @@ class LIB_EXPORT JKQTPImageBase: public JKQTPgraph {
         /** \brief class constructor */
         JKQTPImageBase(double x, double y, double width, double height, JKQtPlotter* parent);
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(double, x)
         JKQTPGET_SET_MACRO(double, y)
@@ -162,7 +162,7 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         JKQTPGET_SET_MACRO(uint32_t, Nx)
         JKQTPGET_SET_MACRO(uint32_t, Ny)
@@ -235,13 +235,13 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         /** \brief class constructor, which generates an internal image object, by copying \a image */
         JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQtPlotter* parent);
 
-        virtual ~JKQTPImage();
+        virtual ~JKQTPImage() override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         /** \brief copy an external image into an internally owned copy */
         virtual void set_image(const QImage& image);
@@ -265,8 +265,8 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         QAction* actSaveImage;
         QAction* actCopyImage;
     public:
-        virtual void setParent(JKQtBasePlotter* parent);
-        virtual void set_title(const typedef_set_title& title);
+        virtual void setParent(JKQtBasePlotter* parent) override;
+        virtual void set_title(const typedef_set_title& title) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -291,9 +291,9 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         JKQTPMathImage(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        virtual void setParent(JKQtBasePlotter* parent);
+        virtual void setParent(JKQtBasePlotter* parent) override;
 
         /*! \brief get list with all available palettes */
         static QStringList getPalettes() ;
@@ -352,7 +352,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 
             \note If you want to draw outside, then you'll also have to implement drawOutside()
          */
-        virtual void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace);
+        virtual void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace) override;
 
         /*! \brief plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -360,7 +360,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 
             The four value supplied tell the method where to draw (inside one of the rectangles).
          */
-        virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
+        virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
 
         /*! \brief returns a QImage, which contains the plaette drawn outside the plot. \a steps is the number of data-setps (and the size of the output image) used for the palette image. */
         virtual QImage drawOutsidePalette(int steps=200);
@@ -369,16 +369,16 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         virtual QImage drawImage();
 
         /** \brief determine min/max data value of the image */
-        virtual void getDataMinMax(double& imin, double& imax);
+        virtual void getDataMinMax(double& imin, double& imax) override;
 
         /** \brief determine min/max data value of the image */
-        virtual void getModifierMinMax(double& imin, double& imax);
+        virtual void getModifierMinMax(double& imin, double& imax) override;
 
         /** \brief return the value (raw data!) of the contained image at the given coordinate */
         double getValueAt(double x, double y);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
     protected:
         void initJKQTPMathImage();
@@ -445,7 +445,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         QAction* actSavePalette;
         QAction* actCopyPalette;
     public:
-        virtual void set_title(const typedef_set_title& title);
+        virtual void set_title(const typedef_set_title& title) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -483,9 +483,9 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         JKQTPRGBMathImage(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        virtual void setParent(JKQtBasePlotter* parent);
+        virtual void setParent(JKQtBasePlotter* parent) override;
 
 
 
@@ -497,7 +497,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
         /** \brief determine min/max data value of the image */
-        virtual void getDataMinMax(double& imin, double& imax);
+        virtual void getDataMinMax(double& imin, double& imax) override;
 
 
         JKQTPGET_SET_MACRO(void*, dataG)
@@ -548,7 +548,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
             \note If you want to draw outside, then you'll also have to implement drawOutside()
          */
-        virtual void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace);
+        virtual void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace) override;
 
         /*! \brief plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -556,7 +556,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
             The four value supplied tell the method where to draw (inside one of the rectangles).
          */
-        virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
+        virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
 
         /*! \brief return the plotted image only as a QImage */
         virtual QImage drawImage();
@@ -570,7 +570,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         double getValueAt(double x, double y, int channel=0) ;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
     protected:
         void initObject();
@@ -647,7 +647,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         QAction* actSaveImage;
         QAction* actCopyImage;
     public:
-        virtual void set_title(const typedef_set_title& title);
+        virtual void set_title(const typedef_set_title& title) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -678,7 +678,7 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         JKQTPGET_SET_MACRO(int, modifierColumn)
 
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
 
 
@@ -688,7 +688,7 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         /** \brief  column containing the modifier image */
         int modifierColumn;
 
-        virtual void ensureImageData();
+        virtual void ensureImageData() override;
 };
 
 
@@ -718,7 +718,7 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         JKQTPGET_SET_MACRO(int, imageBColumn)
         JKQTPGET_SET_MACRO(int, modifierColumn)
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief image column for R channel */
@@ -730,7 +730,7 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         /** \brief  column containing the modifier image */
         int modifierColumn;
 
-        void ensureImageData();
+        void ensureImageData() override;
 };
 
 
@@ -751,15 +751,15 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         JKQTPOverlayImage(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /*! \brief return the plotted image only as a QImage */
         virtual QImage drawImage();
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(QColor, trueColor)
         JKQTPGET_SET_MACRO(QColor, falseColor)
@@ -788,8 +788,8 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         QAction* actSaveImage;
         QAction* actCopyImage;
     public:
-        virtual void set_title(const typedef_set_title& title);
-        virtual void setParent(JKQtBasePlotter* parent);
+        virtual void set_title(const typedef_set_title& title) override;
+        virtual void setParent(JKQtBasePlotter* parent) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -816,9 +816,9 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         JKQTPOverlayImageEnhanced(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         JKQTPGET_SET_MACRO(JKQTPgraphSymbols, symbol)
         JKQTPGET_SET_MACRO(double, symbolWidth)
@@ -861,10 +861,10 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
 
         JKQTPGET_SET_MACRO(int, imageColumn)
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
 
     protected:
@@ -902,7 +902,7 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         /** \brief class constructor */
         JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, DataType datatype , JKQtPlotter* parent);
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \brief creates at nLevels contour levels linearly spaced between the data's minimum and maximum values */
         void createContourLevels(int nLevels=3);
@@ -942,7 +942,7 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         QList<double> contourLevels;
 //        /** \brief indicates wether the contour levels are absolute values or relative to the maximum (max-min) */
         bool relativeLevels;
-        virtual void ensureImageData();
+        virtual void ensureImageData() override;
 
 private:
         double value(int xIdx, int yIdx);

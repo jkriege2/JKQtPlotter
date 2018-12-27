@@ -149,8 +149,8 @@ void JKQTPxyLineGraph::draw(JKQTPEnhancedPainter& painter) {
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        double x=xAxis->x2p(xv);
-        double y=yAxis->x2p(yv);
+        double x=transformX(xv);
+        double y=transformY(yv);
         //qDebug()<<"JKQTPxyLineGraph::draw(): (xv, yv) =    ( "<<xv<<", "<<yv<<" )";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
             QColor symbColor=color;
@@ -221,6 +221,14 @@ QColor JKQTPxyLineGraph::getKeyLabelColor() {
     return color;
 }
 
+
+JKQTPxyLineErrorGraph::JKQTPxyLineErrorGraph(JKQtBasePlotter *parent):
+    JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
+{ setErrorColorFromGraphColor(color); }
+
+JKQTPxyLineErrorGraph::JKQTPxyLineErrorGraph(JKQtPlotter *parent):
+    JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
+{ setErrorColorFromGraphColor(color);  }
 
 bool JKQTPxyLineErrorGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero) {
     if (xErrorColumn<0 || xErrorStyle==JKQTPnoError) {
@@ -318,7 +326,7 @@ bool JKQTPxyLineErrorGraph::getYMinMax(double &miny, double &maxy, double &small
     }
 }
 
-bool JKQTPxyLineErrorGraph::usesColumn(int c)
+bool JKQTPxyLineErrorGraph::usesColumn(int c) const
 {
     return JKQTPxyLineGraph::usesColumn(c)||JKQTPxyGraphErrors::errorUsesColumn(c);
 }
@@ -326,8 +334,8 @@ bool JKQTPxyLineErrorGraph::usesColumn(int c)
 void JKQTPxyLineErrorGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 {
     intSortData();
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
 }
 
@@ -462,10 +470,10 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     double yold=-1;
 //    double xstart=-1;
 //    double ystart=-1;
-    //double x0=xAxis->x2p(0);
-    //if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-    double y0=yAxis->x2p(0);
-    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+    //double x0=transformX(0);
+    //if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+    double y0=transformY(0);
+    if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
     bool subsequentItem=false;
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
@@ -474,8 +482,8 @@ void JKQTPstepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv);
-            double y=yAxis->x2p(yv);
+            double x=transformX(xv);
+            double y=transformY(yv);
             if (subsequentItem) {
                 //double xl1=xold;
                 //double yl1=yold;
@@ -605,10 +613,10 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     double xold=-1;
     double yold=-1;
-    double x0=xAxis->x2p(0);
-    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-    //double y0=yAxis->x2p(0);
-    //if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+    double x0=transformX(0);
+    if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+    //double y0=transformY(0);
+    //if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
     bool first=false;
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
@@ -617,8 +625,8 @@ void JKQTPstepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv);
-            double y=yAxis->x2p(yv);
+            double x=transformX(xv);
+            double y=transformY(yv);
             if (first) {
                 //double xl1=xold;
                 //double yl1=yold;
@@ -765,15 +773,15 @@ void JKQTPhorizontalRange::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPhorizontalRange::draw");
 #endif
-    double c=yAxis->x2p(rangeCenter);
-    double cmi=yAxis->x2p(rangeMin);
-    double cma=yAxis->x2p(rangeMax);
-    double smi=yAxis->x2p(parent->getYAxis()->getMin());
-    double sma=yAxis->x2p(parent->getYAxis()->getMax());
-    double mi=xAxis->x2p(parent->getXAxis()->getMin());
-    double ma=xAxis->x2p(parent->getXAxis()->getMax());
-    if (!unlimitedSizeMin) mi=xAxis->x2p(sizeMin);
-    if (!unlimitedSizeMax) ma=xAxis->x2p(sizeMax);
+    double c=transformY(rangeCenter);
+    double cmi=transformY(rangeMin);
+    double cma=transformY(rangeMax);
+    double smi=transformY(parent->get_yAxis()->getMin());
+    double sma=transformY(parent->get_yAxis()->getMax());
+    double mi=transformX(parent->get_xAxis()->getMin());
+    double ma=transformX(parent->get_xAxis()->getMax());
+    if (!unlimitedSizeMin) mi=transformX(sizeMin);
+    if (!unlimitedSizeMax) ma=transformX(sizeMax);
     //std::cout<<"hor: rangeMin="<<rangeMin<<" -> "<<cmi<<std::endl;
     //std::cout<<"hor: rangeMax="<<rangeMax<<" -> "<<cma<<std::endl;
     painter.save();
@@ -910,15 +918,15 @@ void JKQTPverticalRange::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPverticalRange::draw");
 #endif
-    double c=xAxis->x2p(rangeCenter);
-    double cmi=xAxis->x2p(rangeMin);
-    double cma=xAxis->x2p(rangeMax);
-    double mi=yAxis->x2p(parent->getYAxis()->getMin());
-    double ma=yAxis->x2p(parent->getYAxis()->getMax());
-    double smi=xAxis->x2p(parent->getXAxis()->getMin());
-    double sma=xAxis->x2p(parent->getXAxis()->getMax());
-    if (!unlimitedSizeMin) mi=yAxis->x2p(sizeMin);
-    if (!unlimitedSizeMax) ma=yAxis->x2p(sizeMax);
+    double c=transformX(rangeCenter);
+    double cmi=transformX(rangeMin);
+    double cma=transformX(rangeMax);
+    double mi=transformY(parent->get_yAxis()->getMin());
+    double ma=transformY(parent->get_yAxis()->getMax());
+    double smi=transformX(parent->get_xAxis()->getMin());
+    double sma=transformX(parent->get_xAxis()->getMax());
+    if (!unlimitedSizeMin) mi=transformY(sizeMin);
+    if (!unlimitedSizeMax) ma=transformY(sizeMax);
     painter.save();
     if (plotRange && (cmi!=cma) && JKQTPIsOKFloat(mi) && JKQTPIsOKFloat(ma)) {
         QPen p=painter.pen();
@@ -1182,16 +1190,16 @@ void JKQTPxyParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        double x=xAxis->x2p(xv);
-        double y=yAxis->x2p(yv);
+        double x=transformX(xv);
+        double y=transformY(yv);
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
             double symbSize= parent->pt2px(painter, getLocalSymbolSize(i));
             double lineW= parent->pt2px(painter, getLocalLineWidth(i));
 
             if (gridModeForSymbolSize) {
                 if (!hasSpecSymbSize) {
-                    double sSX= fabs(xAxis->x2p( xv+gridDeltaX*gridSymbolFractionSize/2.0)-xAxis->x2p( xv-gridDeltaX*gridSymbolFractionSize/2.0));
-                    double sSY= fabs(yAxis->x2p( yv+gridDeltaY*gridSymbolFractionSize/2.0)-yAxis->x2p( yv-gridDeltaY*gridSymbolFractionSize/2.0));
+                    double sSX= fabs(transformX( xv+gridDeltaX*gridSymbolFractionSize/2.0)-transformX( xv-gridDeltaX*gridSymbolFractionSize/2.0));
+                    double sSY= fabs(transformY( yv+gridDeltaY*gridSymbolFractionSize/2.0)-transformY( yv-gridDeltaY*gridSymbolFractionSize/2.0));
                     hasSpecSymbSize=true;
                     specSymbSize=qMin(sSX,sSY);
                 }
@@ -1283,17 +1291,25 @@ void JKQTPxyParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     QColor color1=getKeyLabelColor();
     QColor color2=getKeyLabelColor();
 
-    if (colorColumn>=0 && colorColumnContainsRGB) {
-        color1=QColor("red");
-        color2=QColor("blue");
+    JKQTPgraphSymbols symbol1=symbol;
+    JKQTPgraphSymbols symbol2=symbol;
+
+    if (colorColumn>=0) {
+        if (colorColumnContainsRGB) {
+            color1=QColor("red");
+            color2=QColor("blue");
+        } else {
+            QImage img;
+            double colorval[]={0,1};
+            JKQTPimagePlot_array2image<double>(colorval, 2, 1, img, get_palette(), double(0.0), double(1.0));
+            color1=img.pixel(0,0);
+            color2=img.pixel(1,0);
+        }
     }
 
-    if (colorColumn>=0 && !colorColumnContainsRGB) {
-        QImage img;
-        double colorval[]={0,1};
-        JKQTPimagePlot_array2image<double>(colorval, 2, 1, img, get_palette(), double(0.0), double(1.0));
-        color1=img.pixel(0,0);
-        color2=img.pixel(1,0);
+    if (symbolColumn>=0) {
+        symbol1=JKQTPfilledCircle;
+        symbol2=JKQTPfilledRect;
     }
 
     double symbolWidth=parent->pt2px(painter, this->symbolWidth*0.7*parent->get_lineWidthMultiplier());
@@ -1311,8 +1327,8 @@ void JKQTPxyParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     double y1=rect.top()+symbolSize1/2.0;
     double x2=rect.right()-symbolSize2/2.0;
     double y2=rect.bottom()-symbolSize2/2.0;
-    JKQTPplotSymbol(painter, x1, y1, symbol, symbolSize1, symbolWidth, color1, color1.lighter());
-    JKQTPplotSymbol(painter, x2, y2, symbol, symbolSize2, symbolWidth, color2, color2.lighter());
+    JKQTPplotSymbol(painter, x1, y1, symbol1, symbolSize1, symbolWidth, color1, color1.lighter());
+    JKQTPplotSymbol(painter, x2, y2, symbol2, symbolSize2, symbolWidth, color2, color2.lighter());
     if (drawLine) painter.drawLine(x1,y1, x2,y2);
     painter.restore();
 }
@@ -1384,7 +1400,7 @@ void JKQTPxyParametrizedScatterGraph::cbGetDataMinMax(double &dmin, double &dmax
 
 }
 
-bool JKQTPxyParametrizedScatterGraph::usesColumn(int c)
+bool JKQTPxyParametrizedScatterGraph::usesColumn(int c) const
 {
     return (c==colorColumn) || (c==sizeColumn) || (c==symbolColumn) || (c==linewidthColumn) || JKQTPxyLineGraph::usesColumn(c);
 }
@@ -1461,6 +1477,14 @@ JKQTPgraphSymbols JKQTPxyParametrizedScatterGraph::getLocalSymbolType(int i)
 
 }
 
+
+JKQTPxyParametrizedErrorScatterGraph::JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter *parent):
+    JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
+{  setErrorColorFromGraphColor(color); }
+
+JKQTPxyParametrizedErrorScatterGraph::JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter *parent):
+    JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
+{ setErrorColorFromGraphColor(color);  }
 
 bool JKQTPxyParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {
@@ -1560,7 +1584,7 @@ bool JKQTPxyParametrizedErrorScatterGraph::getYMinMax(double &miny, double &maxy
     }
 }
 
-bool JKQTPxyParametrizedErrorScatterGraph::usesColumn(int c)
+bool JKQTPxyParametrizedErrorScatterGraph::usesColumn(int c) const
 {
     return JKQTPxyParametrizedScatterGraph::usesColumn(c)||JKQTPxyGraphErrors::errorUsesColumn(c);
 
@@ -1569,11 +1593,11 @@ bool JKQTPxyParametrizedErrorScatterGraph::usesColumn(int c)
 void JKQTPxyParametrizedErrorScatterGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 {
     intSortData();
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 }
 
-bool JKQTPxyParametrizedErrorScatterGraph::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter * /*parent*/, JKQTPcoordinateAxis* /*xAxis*/, JKQTPcoordinateAxis* /*yAxis*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, int index, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
+bool JKQTPxyParametrizedErrorScatterGraph::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQtBasePlotter * /*parent*/, JKQTPgraph* /*parentGraph*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPerrorPlotstyle /*xErrorStyle*/, JKQTPerrorPlotstyle /*yErrorStyle*/, int index, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
 {
     QColor c=getLocalColor(index);
     errorColor=c.darker();

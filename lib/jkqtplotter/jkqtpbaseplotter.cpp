@@ -54,6 +54,9 @@
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
 #include "jkqtplotter/jkqtpgraphsimpulses.h"
+#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/jkqtpgraphsimage.h"
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";
@@ -3526,8 +3529,8 @@ void JKQtBasePlotter::plotGraphs(JKQTPEnhancedPainter& painter){
 
     for (int j=0; j<graphs.size(); j++) {
         //int leftSpace, rightSpace, topSpace, bottomSpace;
-        JKQTPgraph* g=graphs[j];
-        //qDebug()<<"  drawing JKQTPgraph"<<j<<g->get_title()<<g->metaObject()->className();
+        JKQTPplotElement* g=graphs[j];
+        //qDebug()<<"  drawing JKQTPplotElement"<<j<<g->get_title()<<g->metaObject()->className();
         if (g->get_visible()) g->draw(painter);
     }
 
@@ -3537,7 +3540,7 @@ void JKQtBasePlotter::plotGraphs(JKQTPEnhancedPainter& painter){
 
     for (int j=0; j<graphs.size(); j++) {
         int leftSpace, rightSpace, topSpace, bottomSpace;
-        JKQTPgraph* g=graphs[j];
+        JKQTPplotElement* g=graphs[j];
         if (g->get_visible()) {
             g->getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
             ibTop+=topSpace;
@@ -3579,7 +3582,7 @@ void JKQtBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
     if (keyLayout==JKQTPkeyLayoutOneColumn) {
 
         for (int i=0; i<graphs.size(); i++) {
-            JKQTPgraph* g=graphs[i];
+            JKQTPplotElement* g=graphs[i];
 #ifdef JKQTBP_AUTOTIMER
             jkaaot.write(QString("one-col: graph %1: %2").arg(i).arg(g->get_title()));
 #endif
@@ -3602,7 +3605,7 @@ void JKQtBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
     } else if (keyLayout==JKQTPkeyLayoutOneRow) {
 
         for (int i=0; i<graphs.size(); i++) {
-            JKQTPgraph* g=graphs[i];
+            JKQTPplotElement* g=graphs[i];
 #ifdef JKQTBP_AUTOTIMER
             jkaaot.write(QString("one-row: graph %1: %2").arg(i).arg(g->get_title()));
 #endif
@@ -3636,7 +3639,7 @@ void JKQtBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
         double xx=x;
         double yy=y;
         for (int i=0; i<graphs.size(); i++) {
-            JKQTPgraph* g=graphs[i];
+            JKQTPplotElement* g=graphs[i];
 #ifdef JKQTBP_AUTOTIMER
             jkaaot.write(QString("multi-col: graph %1: %2").arg(i).arg(g->get_title()));
 #endif
@@ -4099,7 +4102,7 @@ QVector<QLineF> JKQtBasePlotter::getBoundingLinesX1Y1(QRectF* rect) const
 
 
 
-JKQTPgraph* JKQtBasePlotter::getGraph(size_t i) {
+JKQTPplotElement* JKQtBasePlotter::getGraph(size_t i) {
     return graphs[i];
 };
 
@@ -4109,13 +4112,13 @@ size_t JKQtBasePlotter::getGraphCount() {
 
 void JKQtBasePlotter::deleteGraph(size_t i, bool deletegraph) {
     if (long(i)<0 || long(i)>=graphs.size()) return;
-    JKQTPgraph* g=graphs[i];
+    JKQTPplotElement* g=graphs[i];
     graphs.removeAt(i);
     if (deletegraph && g) delete g;
     if (emitPlotSignals) emit plotUpdated();
 };
 
-void JKQtBasePlotter::deleteGraph(JKQTPgraph* gr, bool deletegraph) {
+void JKQtBasePlotter::deleteGraph(JKQTPplotElement* gr, bool deletegraph) {
     int i=graphs.indexOf(gr);
     while (i>=0) {
         graphs.removeAt(i);
@@ -4128,7 +4131,7 @@ void JKQtBasePlotter::deleteGraph(JKQTPgraph* gr, bool deletegraph) {
 
 void JKQtBasePlotter::clearGraphs(bool deleteGraphs) {
     for (int i=0; i<graphs.size(); i++) {
-        JKQTPgraph* g=graphs[i];
+        JKQTPplotElement* g=graphs[i];
         if (g && deleteGraphs) delete g;
     }
     graphs.clear();
@@ -4139,7 +4142,7 @@ void JKQtBasePlotter::clearGraphs(bool deleteGraphs) {
 void JKQtBasePlotter::setAllGraphsInvisible()
 {
     for (int i=0; i<graphs.size(); i++) {
-        JKQTPgraph* g=graphs[i];
+        JKQTPplotElement* g=graphs[i];
         g->set_visible(false);
     }
     if (emitPlotSignals) emit plotUpdated();
@@ -4148,7 +4151,7 @@ void JKQtBasePlotter::setAllGraphsInvisible()
 void JKQtBasePlotter::setAllGraphsVisible()
 {
     for (int i=0; i<graphs.size(); i++) {
-        JKQTPgraph* g=graphs[i];
+        JKQTPplotElement* g=graphs[i];
         g->set_visible(true);
     }
     if (emitPlotSignals) emit plotUpdated();
@@ -4156,7 +4159,7 @@ void JKQtBasePlotter::setAllGraphsVisible()
 
 void JKQtBasePlotter::setGraphVisible(int i, bool visible)
 {
-    JKQTPgraph* g=graphs.value(i, nullptr);
+    JKQTPplotElement* g=graphs.value(i, nullptr);
     if (g) g->set_visible(visible);
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -4164,10 +4167,10 @@ void JKQtBasePlotter::setGraphVisible(int i, bool visible)
 void JKQtBasePlotter::setOnlyGraphVisible(int gr)
 {
     for (int i=0; i<graphs.size(); i++) {
-        JKQTPgraph* g=graphs[i];
+        JKQTPplotElement* g=graphs[i];
         g->set_visible(false);
     }
-    JKQTPgraph* g=graphs.value(gr, nullptr);
+    JKQTPplotElement* g=graphs.value(gr, nullptr);
     if (g) g->set_visible(true);
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -4175,17 +4178,17 @@ void JKQtBasePlotter::setOnlyGraphVisible(int gr)
 void JKQtBasePlotter::setOnlyNthGraphsVisible(int start, int n)
 {
     for (int i=0; i<graphs.size(); i++) {
-        JKQTPgraph* g=graphs[i];
+        JKQTPplotElement* g=graphs[i];
         g->set_visible(false);
     }
     for (int i=start; i<graphs.size(); i+=n) {
-        JKQTPgraph* g=graphs.value(i, nullptr);
+        JKQTPplotElement* g=graphs.value(i, nullptr);
         if (g) g->set_visible(true);
     }
     if (emitPlotSignals) emit plotUpdated();
 }
 
-size_t JKQtBasePlotter::addGraph(JKQTPgraph* gr) {
+size_t JKQtBasePlotter::addGraph(JKQTPplotElement* gr) {
     gr->setParent(this);
     for (int i=0; i<graphs.size(); i++) {
         if (graphs[i]==gr) return i;
@@ -4195,7 +4198,7 @@ size_t JKQtBasePlotter::addGraph(JKQTPgraph* gr) {
     return graphs.size()-1;
 };
 
-size_t JKQtBasePlotter::moveGraphTop(JKQTPgraph* gr) {
+size_t JKQtBasePlotter::moveGraphTop(JKQTPplotElement* gr) {
     gr->setParent(this);
     for (int i=0; i<graphs.size(); i++) {
         if (graphs[i]==gr) {
@@ -4211,7 +4214,7 @@ size_t JKQtBasePlotter::moveGraphTop(JKQTPgraph* gr) {
     return graphs.size()-1;
 }
 
-size_t JKQtBasePlotter::moveGraphBottom(JKQTPgraph *gr)
+size_t JKQtBasePlotter::moveGraphBottom(JKQTPplotElement *gr)
 {
     gr->setParent(this);
     for (int i=0; i<graphs.size(); i++) {
@@ -4228,7 +4231,7 @@ size_t JKQtBasePlotter::moveGraphBottom(JKQTPgraph *gr)
     return graphs.size()-1;
 };
 
-bool JKQtBasePlotter::containsGraph(JKQTPgraph* gr) const {
+bool JKQtBasePlotter::containsGraph(JKQTPplotElement* gr) const {
     for (int i=0; i<graphs.size(); i++) {
         if (graphs[i]==gr) {
             return true;
@@ -4240,8 +4243,11 @@ bool JKQtBasePlotter::containsGraph(JKQTPgraph* gr) const {
 
 void JKQtBasePlotter::setGraphsDataRange(int datarange_start, int datarange_end) {
     for (int i=0; i<graphs.size(); i++) {
-        graphs[i]->set_datarange_start(datarange_start);
-        graphs[i]->set_datarange_end(datarange_end);
+        JKQTPgraph* g=dynamic_cast<JKQTPgraph*>(graphs[i]);
+        if (g) {
+            g->set_datarange_start(datarange_start);
+            g->set_datarange_end(datarange_end);
+        }
     }
 }
 

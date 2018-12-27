@@ -24,7 +24,7 @@ TestWidgetEmptyPlot::TestWidgetEmptyPlot(QWidget *parent) :
     efunc->set_xColumn(plotEmpty->getDatastore()->addCopiedColumn(xef, NEMPTY, "x"));
     efunc->set_yColumn(plotEmpty->getDatastore()->addCopiedColumn(efy, NEMPTY, "y"));
     plotEmpty->addGraph(efunc);
-    plotEmpty->getYAxis()->set_logAxis(true);
+    plotEmpty->get_yAxis()->set_logAxis(true);
     plotEmpty->zoomToFit();
     plotEmpty->setY(0,0);
 

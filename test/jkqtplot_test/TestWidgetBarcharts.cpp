@@ -22,8 +22,8 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     plotBarchart->get_plotter()->set_plotLabel(tr("\\textbf{bar charts}"));
     plotBarchart->setObjectName("plotBarchart");
     plotBarchart->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
-    plotBarchart->get_plotter()->getXAxis()->set_labelType(JKQTPCALTdate);
-    plotBarchart->get_plotter()->getXAxis()->set_tickDateFormat("dd. MMM yyyy");
+    plotBarchart->get_plotter()->get_xAxis()->set_labelType(JKQTPCALTdate);
+    plotBarchart->get_plotter()->get_xAxis()->set_tickDateFormat("dd. MMM yyyy");
 
     barchartLayout->addWidget(plotBarchart);
 
@@ -134,22 +134,22 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
 
 void TestWidgetBarcharts::setBarchartLogLog(bool checked)
 {
-    plotBarchart->getXAxis()->set_logAxis(checked);
-    plotBarchart->getYAxis()->set_logAxis(checked);
+    plotBarchart->get_xAxis()->set_logAxis(checked);
+    plotBarchart->get_yAxis()->set_logAxis(checked);
     plotBarchart->zoomToFit();
-    plotBarchart2->getXAxis()->set_logAxis(checked);
-    plotBarchart2->getYAxis()->set_logAxis(checked);
+    plotBarchart2->get_xAxis()->set_logAxis(checked);
+    plotBarchart2->get_yAxis()->set_logAxis(checked);
     plotBarchart2->zoomToFit();
 }
 
 void TestWidgetBarcharts::setBarchartAngele(int angle)
 {
-    plotBarchart->getXAxis()->set_tickLabelAngle(angle);
-    plotBarchart->getXAxis()->set_drawMode2(JKQTPCADMcomplete);
+    plotBarchart->get_xAxis()->set_tickLabelAngle(angle);
+    plotBarchart->get_xAxis()->set_drawMode2(JKQTPCADMcomplete);
 }
 
 void TestWidgetBarcharts::setBarchartAngele2(int angle)
 {
-    plotBarchart->getYAxis()->set_tickLabelAngle(angle);
-    plotBarchart->getYAxis()->set_drawMode2(JKQTPCADMcomplete);
+    plotBarchart->get_yAxis()->set_tickLabelAngle(angle);
+    plotBarchart->get_yAxis()->set_drawMode2(JKQTPCADMcomplete);
 }

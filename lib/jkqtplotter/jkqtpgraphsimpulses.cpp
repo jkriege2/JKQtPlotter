@@ -98,16 +98,16 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     //double xold=-1;
     //double yold=-1;
-    double x0=xAxis->x2p(baseline);
-    if (parent->getXAxis()->isLogAxis()) {
-        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
-        else x0=xAxis->x2p(parent->getXAxis()->getMin());
+    double x0=transformX(baseline);
+    if (parent->get_xAxis()->isLogAxis()) {
+        if (baseline>0 && baseline>parent->get_xAxis()->getMin()) x0=transformX(baseline);
+        else x0=transformX(parent->get_xAxis()->getMin());
     }
-//    double y0=yAxis->x2p(baseline);
-//    if (parent->getYAxis()->isLogAxis()) {
-//        y0=yAxis->x2p(parent->getYAxis()->getMin());
-//        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=yAxis->x2p(baseline);
-//        else y0=yAxis->x2p(parent->getYAxis()->getMin());
+//    double y0=transformY(baseline);
+//    if (parent->get_yAxis()->isLogAxis()) {
+//        y0=transformY(parent->get_yAxis()->getMin());
+//        if (baseline>0 && baseline>parent->get_yAxis()->getMin()) y0=transformY(baseline);
+//        else y0=transformY(parent->get_yAxis()->getMin());
 //    }
     //bool first=false;
     QVector<QLineF> lines;
@@ -117,8 +117,8 @@ void JKQTPimpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv);
-            double y=yAxis->x2p(yv);
+            double x=transformX(xv);
+            double y=transformY(yv);
 
 
             lines.append(QLineF(x0, y, x, y));
@@ -213,16 +213,16 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     //double xold=-1;
     //double yold=-1;
     //bool first=false;
-//    double x0=xAxis->x2p(baseline);
-//    if (parent->getXAxis()->isLogAxis()) {
-//        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
-//        else x0=xAxis->x2p(parent->getXAxis()->getMin());
+//    double x0=transformX(baseline);
+//    if (parent->get_xAxis()->isLogAxis()) {
+//        if (baseline>0 && baseline>parent->get_xAxis()->getMin()) x0=transformX(baseline);
+//        else x0=transformX(parent->get_xAxis()->getMin());
 //    }
-    double y0=yAxis->x2p(baseline);
-    if (parent->getYAxis()->isLogAxis()) {
-        y0=yAxis->x2p(parent->getYAxis()->getMin());
-        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=yAxis->x2p(baseline);
-        else y0=yAxis->x2p(parent->getYAxis()->getMin());
+    double y0=transformY(baseline);
+    if (parent->get_yAxis()->isLogAxis()) {
+        y0=transformY(parent->get_yAxis()->getMin());
+        if (baseline>0 && baseline>parent->get_yAxis()->getMin()) y0=transformY(baseline);
+        else y0=transformY(parent->get_yAxis()->getMin());
     }
     QVector<QLineF> lines;
     intSortData();
@@ -231,8 +231,8 @@ void JKQTPimpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv) ) {
-            double x=xAxis->x2p(xv);
-            double y=yAxis->x2p(yv);
+            double x=transformX(xv);
+            double y=transformY(yv);
 
 
             lines.append(QLineF(x, y0, x, y));
@@ -275,15 +275,15 @@ JKQTPimpulsesHorizontalErrorGraph::JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPimpulsesHorizontalErrorGraph::usesColumn(int c)
+bool JKQTPimpulsesHorizontalErrorGraph::usesColumn(int c) const
 {
     return JKQTPimpulsesHorizontalGraph::usesColumn(c)|| JKQTPxGraphErrors::errorUsesColumn(c);
 }
 
 void JKQTPimpulsesHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 }
 
 JKQTPimpulsesVerticalErrorGraph::JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter *parent):
@@ -298,14 +298,14 @@ JKQTPimpulsesVerticalErrorGraph::JKQTPimpulsesVerticalErrorGraph(JKQtPlotter *pa
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPimpulsesVerticalErrorGraph::usesColumn(int c)
+bool JKQTPimpulsesVerticalErrorGraph::usesColumn(int c) const
 {
     return JKQTPimpulsesVerticalGraph::usesColumn(c)|| JKQTPyGraphErrors::errorUsesColumn(c);
 }
 
 void JKQTPimpulsesVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
 }

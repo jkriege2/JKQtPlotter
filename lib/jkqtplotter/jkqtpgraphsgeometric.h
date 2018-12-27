@@ -42,12 +42,12 @@
 #define jkqtpgraphsgeometric_H_INCLUDED
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used as base class for geometric drawing
+/*! \brief This JKQTPplotObject is used as base class for geometric drawing
            elements that only consist of lines (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
 
  */
-class LIB_EXPORT JKQTPgeoBaseLine: public JKQTPgraph {
+class LIB_EXPORT JKQTPgeoBaseLine: public JKQTPplotObject {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -71,9 +71,9 @@ class LIB_EXPORT JKQTPgeoBaseLine: public JKQTPgraph {
         JKQTPGET_SET_MACRO(double, lineWidth)
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
     protected:
         /** \brief color of the graph */
@@ -88,7 +88,7 @@ class LIB_EXPORT JKQTPgeoBaseLine: public JKQTPgraph {
 };
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used as base class for geometric drawing
+/*! \brief This JKQTPplotObject is used as base class for geometric drawing
            elements that only consist of lines (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
 
@@ -140,7 +140,7 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
         JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
     protected:
 
         /** \brief filling color of the graph */
@@ -154,12 +154,12 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
 
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used to display text. It uses the JKQTMathText
+/*! \brief This JKQTPplotObject is used to display text. It uses the JKQTMathText
            class in order to display LaTeX formulas.
     \ingroup jkqtplotter_geoplots
 
  */
-class LIB_EXPORT JKQTPgeoText: public JKQTPgraph {
+class LIB_EXPORT JKQTPgeoText: public JKQTPplotObject {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -189,18 +189,18 @@ class LIB_EXPORT JKQTPgeoText: public JKQTPgraph {
         JKQTPGET_SET_MACRO(double, x)
         JKQTPGET_SET_MACRO(double, y)
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
     protected:
         double x,y;
@@ -216,7 +216,7 @@ class LIB_EXPORT JKQTPgeoText: public JKQTPgraph {
         QPen getPen(JKQTPEnhancedPainter& painter);
 };
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw a line
+/*! \brief This JKQTPplotObject is used to draw a line
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geoline.png
@@ -251,13 +251,13 @@ class LIB_EXPORT JKQTPgeoLine: public JKQTPgeoBaseLine {
         JKQTPgeoLine(JKQtPlotter* parent, double x1, double y1, double x2, double y2, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(double, x1)
         JKQTPGET_SET_MACRO(double, y1)
@@ -269,7 +269,7 @@ class LIB_EXPORT JKQTPgeoLine: public JKQTPgeoBaseLine {
 
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw an infinite line
+/*! \brief This JKQTPplotObject is used to draw an infinite line
     \ingroup jkqtplotter_geoplots
 
     an infinite line has a starting point and then goes on in a given direction
@@ -307,13 +307,13 @@ class LIB_EXPORT JKQTPgeoInfiniteLine: public JKQTPgeoBaseLine {
         JKQTPgeoInfiniteLine(JKQtPlotter* parent, double x, double y, double dx, double dy, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(double, x)
         JKQTPGET_SET_MACRO(double, y)
@@ -328,7 +328,7 @@ class LIB_EXPORT JKQTPgeoInfiniteLine: public JKQTPgeoBaseLine {
 };
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw a poly line
+/*! \brief This JKQTPplotObject is used to draw a poly line
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geolines.png
@@ -363,30 +363,30 @@ class LIB_EXPORT JKQTPgeoLines: public JKQTPgeoBaseLine {
         JKQTPgeoLines(JKQtPlotter* parent, QVector<QPointF> points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(QVector<QPointF>, points)
 
         /** \brief append a point to the polygon */
         inline void appendPoint(const QPointF& p) {
             points.append(p);
-        };
+        }
 
         /** \brief append a point to the polygon */
         inline void appendPoint(const double x, const double y) {
             points.append(QPointF(x, y));
-        };
+        }
     protected:
         QVector<QPointF> points;
 };
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw a rectangle
+/*! \brief This JKQTPplotObject is used to draw a rectangle
     \ingroup jkqtplotter_geoplots
 
     \image html plot_georectangle.png
@@ -425,13 +425,13 @@ class LIB_EXPORT JKQTPgeoRectangle: public JKQTPgeoBaseFilled {
 
 
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(double, x)
         JKQTPGET_SET_MACRO(double, y)
@@ -451,7 +451,7 @@ protected:
 };
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw a polygon
+/*! \brief This JKQTPplotObject is used to draw a polygon
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geopolygon.png
@@ -486,31 +486,31 @@ class LIB_EXPORT JKQTPgeoPolygon: public JKQTPgeoBaseFilled {
         JKQTPgeoPolygon(JKQtPlotter* parent, QVector<QPointF> points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(QVector<QPointF>, points)
 
         /** \brief append a point to the polygon */
         inline void appendPoint(const QPointF& p) {
             points.append(p);
-        };
+        }
 
         /** \brief append a point to the polygon */
         inline void appendPoint(const double x, const double y) {
             points.append(QPointF(x, y));
-        };
+        }
 
     protected:
         QVector<QPointF> points;
 };
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw an ellipse
+/*! \brief This JKQTPplotObject is used to draw an ellipse
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geoellipse.png
@@ -553,7 +553,7 @@ class LIB_EXPORT JKQTPgeoEllipse: public JKQTPgeoRectangle {
 
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(unsigned int, controlPoints)
     protected:
@@ -562,7 +562,7 @@ class LIB_EXPORT JKQTPgeoEllipse: public JKQTPgeoRectangle {
 };
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw an arc
+/*! \brief This JKQTPplotObject is used to draw an arc
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geoarc.png
@@ -597,14 +597,14 @@ class LIB_EXPORT JKQTPgeoArc: public JKQTPgeoBaseLine {
          */
         JKQTPgeoArc(JKQtPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(unsigned int, controlPoints)
         JKQTPGET_SET_MACRO(double, angleStart)
@@ -638,7 +638,7 @@ class LIB_EXPORT JKQTPgeoArc: public JKQTPgeoBaseLine {
 
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw a pie
+/*! \brief This JKQTPplotObject is used to draw a pie
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geopie.png
@@ -676,14 +676,14 @@ class LIB_EXPORT JKQTPgeoPie: public JKQTPgeoEllipse {
         JKQTPgeoPie(JKQtPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         JKQTPGET_SET_MACRO(double, angleStart)
         JKQTPGET_SET_MACRO(double, angleStop)
@@ -697,7 +697,7 @@ class LIB_EXPORT JKQTPgeoPie: public JKQTPgeoEllipse {
 
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used to draw a chord
+/*! \brief This JKQTPplotObject is used to draw a chord
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geochord.png
@@ -734,13 +734,13 @@ class LIB_EXPORT JKQTPgeoChord: public JKQTPgeoPie {
          */
         JKQTPgeoChord(JKQtPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
-        /** \copydoc JKQTPgraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-        /** \copydoc JKQTPgraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        /** \copydoc JKQTPplotObject::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+        /** \copydoc JKQTPplotObject::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 };
 
 

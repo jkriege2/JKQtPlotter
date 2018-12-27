@@ -61,8 +61,8 @@ int main(int argc, char* argv[])
 
 
     // 3. set some axis properties (we use LaTeX for nice equation rendering)
-    plot->getXAxis()->set_axisLabel(QObject::tr("x-axis"));
-    plot->getYAxis()->set_axisLabel(QObject::tr("y-axis"));
+    plot->get_xAxis()->set_axisLabel(QObject::tr("x-axis"));
+    plot->get_yAxis()->set_axisLabel(QObject::tr("y-axis"));
 
 
     // 4. scale the plot so the graph is contained

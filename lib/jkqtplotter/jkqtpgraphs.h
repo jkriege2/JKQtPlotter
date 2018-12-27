@@ -68,11 +68,11 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
         JKQTPxyLineGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(QColor, color)
         JKQTPGET_SET_MACRO(QColor, fillColor)
@@ -142,11 +142,11 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         JKQTPxyParametrizedScatterGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(int, sizeColumn)
         JKQTPSET_CAST_MACRO(size_t, int, sizeColumn)
@@ -162,14 +162,14 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         JKQTPGET_SET_MACRO(double, gridDeltaY)
         JKQTPGET_SET_MACRO(double, gridSymbolFractionSize)
 
-        virtual void setParent(JKQtBasePlotter* parent);
+        virtual void setParent(JKQtBasePlotter* parent) override;
 
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
             \note If you want to draw outside, then you'll also have to implement drawOutside()
          */
-        virtual void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace);
+        virtual void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace) override;
 
         /*! \brief plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -177,17 +177,17 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
 
             The four value supplied tell the method where to draw (inside one of the rectangles).
          */
-        virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
+        virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
 
 
         /** \brief determine min/max data value of the image */
-        virtual void cbGetDataMinMax(double& imin, double& imax);
+        virtual void cbGetDataMinMax(double& imin, double& imax) override;
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
 
-        virtual double getInternalDataMin() const ;
-        virtual double getInternalDataMax() const ;
+        virtual double getInternalDataMin() const  override;
+        virtual double getInternalDataMax() const  override;
     protected:
         /** \brief this column contains the symbol size in pt */
         int sizeColumn;
@@ -237,30 +237,26 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=nullptr):
-            JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
-        { setErrorColorFromGraphColor(color); }
+        JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        inline JKQTPxyLineErrorGraph(JKQtPlotter* parent):
-            JKQTPxyLineGraph(parent), JKQTPxyGraphErrors()
-        { setErrorColorFromGraphColor(color);  }
+        JKQTPxyLineErrorGraph(JKQtPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter) ;
+        virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter)  override;
 };
 
 
@@ -273,35 +269,31 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
 class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrizedScatterGraph, public JKQTPxyGraphErrors {
         Q_OBJECT
     public:
-        inline JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=nullptr):
-            JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
-        {  setErrorColorFromGraphColor(color); }
-        inline JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent):
-            JKQTPxyParametrizedScatterGraph(parent), JKQTPxyGraphErrors()
-        { setErrorColorFromGraphColor(color);  }
+        JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent);
 
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter) ;
+        virtual void drawErrorsBefore(JKQTPEnhancedPainter& painter)  override;
 
         /** \brief this function can be used to set the color of the error indicators automatically
          *
          * return \c true and the colors to use, if applicable, the default implementation returns false */
-        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPcoordinateAxis* xAxis, JKQTPcoordinateAxis* yAxis, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor);
+        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor) override;
 
 };
 
@@ -335,11 +327,11 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         JKQTPstepHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(QColor, color)
         JKQTPGET_SET_MACRO(QColor, fillColor)
@@ -404,7 +396,7 @@ class LIB_EXPORT JKQTPstepVerticalGraph: public JKQTPstepHorizontalGraph {
         JKQTPstepVerticalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 };
 
 
@@ -429,22 +421,22 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
         JKQTPhorizontalRange(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         void setDrawCenterLineOnly();
 
@@ -534,20 +526,20 @@ class LIB_EXPORT JKQTPverticalRange: public JKQTPhorizontalRange {
         JKQTPverticalRange(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 };
 
 #endif // jkqtpgraphs_H

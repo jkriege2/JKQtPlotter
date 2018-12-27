@@ -24,32 +24,11 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
         HEADERS +=EmfEngine/src/EmfEngine.h \
             jkqtpemfengineadapter.h
+
+        LIBS += -lgdi32
     }
 }
 
-CONFIG += qt
-
-#QMAKE_LFLAGS += -s
-
-win32: LIBS += -lgdi32
-
-win32-msvc*: DEFINES += _USE_MATH_DEFINES
-
-#QMAKE_CXXFLAGS += -O2
-
-DEFINES -= -DQT_DLL
-DEFINES +=
-#SHOW_JKQTPLOTTER_DEBUG
-#JKQTBP_AUTOTIMER
-
-TARGET = jkqtplot_test
-
-QT += core gui xml svg xml
-win32:LIBS += -lgdi32
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
-
-#if not added by qmake:
-DEFINES += QT_XML_LIB
 
 HEADERS += testmain.h \
     TestWidgetFunctionPlots.h \
@@ -66,19 +45,27 @@ HEADERS += testmain.h \
     QTeXEngine/src/QTeXEngine.h
 
 
-INCLUDEPATH +=
-
-UI_DIR = .uics
-OBJECTS_DIR = .objs
-MOC_DIR = .mocs
-RCC_DIR = .rccs
-DESTDIR = ./
-
-
 RESOURCES += jkqtplot_test.qrc
 
 
-DEPENDPATH += . ../../lib
-INCLUDEPATH += ../../lib
-CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtplotterlib
-CONFIG (release):LIBS += -L../../lib/release -ljkqtplotterlib
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+
+TARGET = jkqtplot_test
+
+# configure Qt
+CONFIG += qt
+QT += core gui xml svg
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+
+
+# include JKQtPlotter source code
+DEPENDPATH += $$PWD
+#$$PWD/../../lib
+INCLUDEPATH += $$PWD/../../lib
+CONFIG (debug, debug|release):LIBS += -L$$PWD/../../lib/debug -ljkqtplotterlib
+CONFIG (release):LIBS += -L$$PWD/../../lib/release -ljkqtplotterlib
+
+
+# here you can activate some debug options
+#DEFINES += SHOW_JKQTPLOTTER_DEBUG
+#DEFINES += JKQTBP_AUTOTIMER

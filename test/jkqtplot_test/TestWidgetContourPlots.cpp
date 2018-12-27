@@ -56,8 +56,8 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     plotDensity->get_plotter()->clearGraphs(true);
     ds->clear();
     plotDensity->setGrid(false);
-    plotDensity->get_plotter()->getXAxis()->set_axisLabel("X");
-    plotDensity->get_plotter()->getYAxis()->set_axisLabel("Y");
+    plotDensity->get_plotter()->get_xAxis()->set_axisLabel("X");
+    plotDensity->get_plotter()->get_yAxis()->set_axisLabel("Y");
 
     size_t colHist2D=ds->addCopiedImageAsColumn(histAlex.data(), histAlexNx, histAlexNy, tr("2Dhist"));
 //    size_t colContour=plotContour->getDatastore()->addCopiedImageAsColumnTranspose(histAlex.data(), histAlexNx, histAlexNy, tr("2Dhist"));

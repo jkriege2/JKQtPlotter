@@ -144,10 +144,10 @@ int main(int argc, char* argv[])
     // 4. autoscale the plot so the graph is contained and format the coordinate system and key
     plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideBottomLeft);
     plot.get_plotter()->set_keyLayout(JKQTPkeyLayoutOneRow);
-    plot.getXAxis()->set_axisLabel("x-axis");
-    plot.getYAxis()->set_axisLabel("y-axis");
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
+    plot.get_xAxis()->set_axisLabel("x-axis");
+    plot.get_yAxis()->set_axisLabel("y-axis");
+    plot.get_xAxis()->set_drawGrid(false);
+    plot.get_yAxis()->set_drawGrid(false);
     plot.zoomToFit();
 
     // 5. show plotter and make it a decent size

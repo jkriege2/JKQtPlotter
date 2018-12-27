@@ -238,8 +238,8 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
 
     double xmin=parent->getXMin();
     double xmax=parent->getXMax();
-    double pxmin=xAxis->x2p(xmin);
-    double pxmax=xAxis->x2p(xmax);
+    double pxmin=transformX(xmin);
+    double pxmax=transformX(xmax);
     double delta0=(pxmax-pxmin)/(double)minSamples;
     //double logdelta0=(log(xmax)-log(xmin))/(double)minSamples;
 
@@ -249,7 +249,7 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
     d->f=func(xmin);
     d->next=nullptr;
     data=d;
-    /*if (parent && parent->getXAxis()->isLogAxis()) {
+    /*if (parent && parent->get_xAxis()->isLogAxis()) {
         for (double x=log(xmin)+logdelta0; x<log(xmax); x=x+logdelta0) {
             d->next = new doublePair;
             d->next->x=exp(x+((double)rand()/(double)RAND_MAX-0.5)*delta0/2.0);
@@ -331,15 +331,15 @@ void JKQTPxFunctionLineGraph::collectParameters()
 
 void JKQTPxFunctionLineGraph::refine(doublePair* a, doublePair* b, unsigned int degree) {
     if (degree>=maxRefinementDegree) return;
-    double ax=xAxis->x2p(a->x);
-    double af=xAxis->x2p(a->f);
-    double bx=xAxis->x2p(b->x);
-    double bf=xAxis->x2p(b->f);
+    double ax=transformX(a->x);
+    double af=transformX(a->f);
+    double bx=transformX(b->x);
+    double bf=transformX(b->f);
 
     double delta=bx - ax;
     //double logdelta=log(bx) - log(ax);
     double xmid=ax+(delta)/2.0;
-    /*if (parent && parent->getXAxis()->isLogAxis()) {
+    /*if (parent && parent->get_xAxis()->isLogAxis()) {
         xmid=log(a->x)+(logdelta)/2.0;
         xmid=xmid+((double)rand()/(double)RAND_MAX-0.5)*delta/5.0;
         xmid=exp(xmid);
@@ -350,7 +350,7 @@ void JKQTPxFunctionLineGraph::refine(doublePair* a, doublePair* b, unsigned int 
     double realfmid;
     if (plotFunction) realfmid=plotFunction(realxmid, params);
     else if (simplePlotFunction) realfmid=simplePlotFunction(realxmid);
-    double fmid=yAxis->x2p(realfmid);
+    double fmid=transformY(realfmid);
     double a1=(fmid - af)/(xmid - ax);
     double a2=(bf - fmid)/(bx - xmid);
     //std::cout<<std::string(degree*2, ' ')<<"refine( ["<<a->x<<", "<<a->f<<"], ["<<xmid<<", "<<fmid<<"],   ["<<b->x<<", "<<b->f<<"] ): a1="<<a1<<",  a2="<<a2<<"  acrit="<<abs(a2/a1)-1.0<<"\n";
@@ -412,18 +412,18 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 //    double ypeold=-1;
 //    double ymeold=-1;
 
-//    double x0=xAxis->x2p(0);
-//    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-    double y0=yAxis->x2p(0);
-    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+//    double x0=transformX(0);
+//    if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+    double y0=transformY(0);
+    if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
     bool first=false;
     doublePair* d=data;
     //QPainterPath pa, pfill;
     //QPainterPath pel, pef;
     QPolygonF filledPolygon, linePolygon, errorLineTop, errorLineBottom;
     QList<QPointF> epTop, epBottom;
-    double yami=qMin(yAxis->x2p(parent->getYAxis()->getMin()),yAxis->x2p(parent->getYAxis()->getMax()));
-    double yama=qMax(yAxis->x2p(parent->getYAxis()->getMin()),yAxis->x2p(parent->getYAxis()->getMax()));
+    double yami=qMin(transformY(parent->get_yAxis()->getMin()),transformY(parent->get_yAxis()->getMax()));
+    double yama=qMax(transformY(parent->get_yAxis()->getMin()),transformY(parent->get_yAxis()->getMax()));
     double dypix=fabs(yama-yami);
     yami=yami-2*dypix;
     yama=yama+2*dypix;
@@ -433,13 +433,13 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         double yv=d->f;
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv);
-            double y=yAxis->x2p(yv);
+            double x=transformX(xv);
+            double y=transformY(yv);
             double ype=0, yme=0;
             if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
                 double e=errorPlotFunction(xv, errorParams);
-                ype=yAxis->x2p(yv+e);
-                yme=yAxis->x2p(yv-e);
+                ype=transformY(yv+e);
+                yme=transformY(yv-e);
                 ype=qBound(yami, ype, yama);
                 yme=qBound(yami, yme, yama);
             }
@@ -523,8 +523,8 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
             double yv=d->f;
             //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                double x=xAxis->x2p(xv);
-                double y=yAxis->x2p(yv);
+                double x=transformX(xv);
+                double y=transformY(yv);
                 JKQTPplotSymbol(painter, x, y, JKQTPcross, 6,1*parent->get_lineWidthMultiplier(), c, QColor(Qt::transparent));
             }
             d=d->next;
@@ -549,6 +549,10 @@ void JKQTPxFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 
+
+JKQTPyFunctionLineGraph::JKQTPyFunctionLineGraph(JKQtBasePlotter *parent):JKQTPxFunctionLineGraph(parent) {}
+
+JKQTPyFunctionLineGraph::JKQTPyFunctionLineGraph(JKQtPlotter *parent):JKQTPxFunctionLineGraph(parent) {}
 
 void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
@@ -595,10 +599,10 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     double xpeold=-1;
     double xmeold=-1;
 
-    double x0=xAxis->x2p(0);
-    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-//    double y0=yAxis->x2p(0);
-//    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+    double x0=transformX(0);
+    if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+//    double y0=transformY(0);
+//    if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
     bool first=false;
     doublePair* d=data;
 
@@ -607,13 +611,13 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         double xv=d->f;
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv);
-            double y=yAxis->x2p(yv);
+            double x=transformX(xv);
+            double y=transformY(yv);
             double xpe=0, xme=0;
             if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
                 double e=errorPlotFunction(xv, errorParams);
-                xpe=xAxis->x2p(xv+e);
-                xme=xAxis->x2p(xv-e);
+                xpe=transformX(xv+e);
+                xme=transformX(xv-e);
             }
 
             if (first) {
@@ -699,8 +703,8 @@ void JKQTPyFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         double xv=d->f;
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv);
-            double y=yAxis->x2p(yv);
+            double x=transformX(xv);
+            double y=transformY(yv);
             JKQTPplotSymbol(painter, x, y, JKQTPcross, 6, 1*parent->get_lineWidthMultiplier(), c, QColor(Qt::transparent));
         }
         d=d->next;
@@ -934,7 +938,7 @@ jkqtpSimplePlotFunctionType JKQTPxFunctionLineGraph::get_errorSimplePlotFunction
 }
 
 
-bool JKQTPxFunctionLineGraph::usesColumn(int c)
+bool JKQTPxFunctionLineGraph::usesColumn(int c) const
 {
     return (c==parameterColumn)||(c==errorParameterColumn);
 }

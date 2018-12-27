@@ -106,7 +106,7 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
+    int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
@@ -127,16 +127,16 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
 
     double xold=-1;
     //double yold=-1;
-//    double x0=xAxis->x2p(baseline);
-//    if (parent->getXAxis()->isLogAxis()) {
-//        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
-//        else x0=xAxis->x2p(parent->getXAxis()->getMin());
+//    double x0=transformX(baseline);
+//    if (parent->get_xAxis()->isLogAxis()) {
+//        if (baseline>0 && baseline>parent->get_xAxis()->getMin()) x0=transformX(baseline);
+//        else x0=transformX(parent->get_xAxis()->getMin());
 //    }
-    double y0=yAxis->x2p(baseline);
-    if (parent->getYAxis()->isLogAxis()) {
-        y0=yAxis->x2p(parent->getYAxis()->getMin());
-        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=yAxis->x2p(baseline);
-        else y0=yAxis->x2p(parent->getYAxis()->getMin());
+    double y0=transformY(baseline);
+    if (parent->get_yAxis()->isLogAxis()) {
+        y0=transformY(parent->get_yAxis()->getMin());
+        if (baseline>0 && baseline>parent->get_yAxis()->getMin()) y0=transformY(baseline);
+        else y0=transformY(parent->get_yAxis()->getMin());
     }
     bool first=true;
     intSortData();
@@ -146,8 +146,8 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv); bool xok=JKQTPIsOKFloat(x);
-            double y=yAxis->x2p(yv); bool yok=JKQTPIsOKFloat(y);
+            double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
+            double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
 
             if (!first) {
                 if (xok&&yok) {
@@ -282,7 +282,7 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
+    int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
@@ -303,17 +303,17 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 
     //double xold=-1;
     double yold=-1;
-    double x0=xAxis->x2p(baseline);
-    if (parent->getXAxis()->isLogAxis()) {
-        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=xAxis->x2p(baseline);
-        else x0=xAxis->x2p(parent->getXAxis()->getMin());
+    double x0=transformX(baseline);
+    if (parent->get_xAxis()->isLogAxis()) {
+        if (baseline>0 && baseline>parent->get_xAxis()->getMin()) x0=transformX(baseline);
+        else x0=transformX(parent->get_xAxis()->getMin());
     }
-    double y0=yAxis->x2p(baseline);
-    if (parent->getYAxis()->isLogAxis()) {
-        y0=yAxis->x2p(parent->getYAxis()->getMin());
-        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=yAxis->x2p(baseline);
-        else y0=yAxis->x2p(parent->getYAxis()->getMin());
-    }
+    /*double y0=transformY(baseline);
+    if (parent->get_yAxis()->isLogAxis()) {
+        y0=transformY(parent->get_yAxis()->getMin());
+        if (baseline>0 && baseline>parent->get_yAxis()->getMin()) y0=transformY(baseline);
+        else y0=transformY(parent->get_yAxis()->getMin());
+    }*/
     bool first=true;
     intSortData();
     for (int iii=imin; iii<imax; iii++) {
@@ -322,8 +322,8 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv); bool xok=JKQTPIsOKFloat(x);
-            double y=yAxis->x2p(yv); bool yok=JKQTPIsOKFloat(y);
+            double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
+            double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
 
             if (!first) {
                 if (xok&&yok) {
@@ -422,15 +422,15 @@ JKQTPfilledCurveXErrorGraph::JKQTPfilledCurveXErrorGraph(JKQtPlotter *parent):
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPfilledCurveXErrorGraph::usesColumn(int c)
+bool JKQTPfilledCurveXErrorGraph::usesColumn(int c) const
 {
     return JKQTPfilledCurveXGraph::usesColumn(c)|| JKQTPyGraphErrors::errorUsesColumn(c);
 }
 
 void JKQTPfilledCurveXErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
 }
 
@@ -446,15 +446,15 @@ JKQTPfilledCurveYErrorGraph::JKQTPfilledCurveYErrorGraph(JKQtPlotter *parent):
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPfilledCurveYErrorGraph::usesColumn(int c)
+bool JKQTPfilledCurveYErrorGraph::usesColumn(int c) const
 {
     return JKQTPfilledCurveYGraph::usesColumn(c)|| JKQTPxGraphErrors::errorUsesColumn(c);
 }
 
 void JKQTPfilledCurveYErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
 }
 
@@ -515,7 +515,7 @@ bool JKQTPfilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, doubl
 
     JKQTPdatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows());
+    int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
     // interpret data ranges
     if (datarange_start>-1) {
         imin=qMin(datarange_start, static_cast<int>(imax));
@@ -552,7 +552,7 @@ bool JKQTPfilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, doubl
     return !start;
 }
 
-bool JKQTPfilledVerticalRangeGraph::usesColumn(int column)
+bool JKQTPfilledVerticalRangeGraph::usesColumn(int column) const
 {
     return JKQTPxyGraph::usesColumn(column)||(column==yColumn2);
 }
@@ -582,7 +582,7 @@ void JKQTPfilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
     b.setColor(fillColor);
     b.setStyle(fillStyle);
 
-    int imax=qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows());
+    int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
     int imin=0;
     // interpret data ranges
     if (datarange_start>-1) {
@@ -612,9 +612,9 @@ void JKQTPfilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
         double yv2=datastore->get(static_cast<size_t>(yColumn2),static_cast<size_t>(i));
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
         if (JKQTPIsOKFloat(xv)) {
-            double x=xAxis->x2p(xv); bool xok=JKQTPIsOKFloat(x);
-            double y=yAxis->x2p(yv); bool yok=JKQTPIsOKFloat(y);
-            double y2=yAxis->x2p(yv2); bool y2ok=JKQTPIsOKFloat(y2);
+            double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
+            double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
+            double y2=transformY(yv2); bool y2ok=JKQTPIsOKFloat(y2);
 
             if (xok&&yok) phigh.append(QPointF(x,y));
             if (xok&&yok) poly_all.append(QPointF(x,y));

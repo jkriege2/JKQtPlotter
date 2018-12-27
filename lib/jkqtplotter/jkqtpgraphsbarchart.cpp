@@ -134,10 +134,10 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imax<0) imax=0;
     painter.save();
 
-//    double x0=xAxis->x2p(0);
-//    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-    double y0=yAxis->x2p(0);
-    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+//    double x0=transformX(0);
+//    if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+    double y0=transformY(0);
+    if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
     double delta=1;
     double deltap=0;
     double deltam=0;
@@ -150,11 +150,11 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         int lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double yv0=y0;
-        if (!qFuzzyIsNull(baseline)) yv0=yAxis->x2p(baseline);
+        if (!qFuzzyIsNull(baseline)) yv0=transformY(baseline);
         if (hasStackPar) {
             double stackLastY=getParentStackedMax(i);
             const double yvold=yv;
-            yv0=yAxis->x2p(stackLastY)-(get_lineWidth());
+            yv0=transformY(stackLastY)-(get_lineWidth());
             yv=stackLastY+yvold;
         }
         if (sr<0 && lr<0) { // only one x-value
@@ -172,9 +172,9 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         delta=deltap+deltam;
 
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xAxis->x2p(xv+shift*delta-width*deltam);
-            double y=yAxis->x2p(yv);
-            double xx=xAxis->x2p(xv+shift*delta+width*deltap);
+            double x=transformX(xv+shift*delta-width*deltam);
+            double y=transformY(yv);
+            double xx=transformX(xv+shift*delta+width*deltap);
             double yy=yv0;
 
             //std::cout<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy<<std::endl;
@@ -310,7 +310,7 @@ void JKQTPbarVerticalGraph::autoscaleBarWidthAndShift(double maxWidth, double sh
     if (parent) {
         double cntH=0;
         for (size_t i=0; i<parent->getGraphCount(); i++) {
-            JKQTPgraph* g=parent->getGraph(i);
+            JKQTPplotElement* g=parent->getGraph(i);
             JKQTPbarVerticalGraph* gb=qobject_cast<JKQTPbarVerticalGraph*>(g);
             if (gb && gb->isHorizontal()==isHorizontal()) {
                 cntH++;
@@ -322,7 +322,7 @@ void JKQTPbarVerticalGraph::autoscaleBarWidthAndShift(double maxWidth, double sh
         double dH=maxWidth/(cntH);
         double h=0.1+dH/2.0;
         for (size_t i=0; i<parent->getGraphCount(); i++) {
-            JKQTPgraph* g=parent->getGraph(i);
+            JKQTPplotElement* g=parent->getGraph(i);
             JKQTPbarVerticalGraph* gb=qobject_cast<JKQTPbarVerticalGraph*>(g);
             if (gb && gb->isHorizontal()==isHorizontal()) {
                 if (cntH>1) {
@@ -401,10 +401,10 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imin<0) imin=0;
     if (imax<0) imax=0;
 
-    double x0=xAxis->x2p(0);
-    if (parent->getXAxis()->isLogAxis()) x0=xAxis->x2p(parent->getXAxis()->getMin());
-//    double y0=yAxis->x2p(0);
-//    if (parent->getYAxis()->isLogAxis()) y0=yAxis->x2p(parent->getYAxis()->getMin());
+    double x0=transformX(0);
+    if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+//    double y0=transformY(0);
+//    if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
     double delta=1;
     double deltap=0;
     double deltam=0;
@@ -418,11 +418,11 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         int sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
         int lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
         double xv0=x0;
-        if (!qFuzzyIsNull(baseline)) xv0=xAxis->x2p(baseline);
+        if (!qFuzzyIsNull(baseline)) xv0=transformX(baseline);
         if (hasStackPar) {
             double stackLastX=getParentStackedMax(i);
             const double xvold=xv;
-            xv0=xAxis->x2p(stackLastX)+(get_lineWidth());
+            xv0=transformX(stackLastX)+(get_lineWidth());
             xv=stackLastX+xvold;
         }
 
@@ -442,10 +442,10 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
             double x=xv0;
-            if (!qFuzzyIsNull(baseline)) x=xAxis->x2p(baseline);
-            double y=yAxis->x2p(yv+shift*delta+width*deltap);
-            double xx=xAxis->x2p(xv);
-            double yy=yAxis->x2p(yv+shift*delta-width*deltam);
+            if (!qFuzzyIsNull(baseline)) x=transformX(baseline);
+            double y=transformY(yv+shift*delta+width*deltap);
+            double xx=transformX(xv);
+            double yy=transformY(yv+shift*delta-width*deltam);
             if (x>xx) { qSwap(x,xx); }
             //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
             //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
@@ -642,7 +642,7 @@ JKQTPbarHorizontalErrorGraph::JKQTPbarHorizontalErrorGraph(JKQtPlotter *parent):
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPbarHorizontalErrorGraph::usesColumn(int c)
+bool JKQTPbarHorizontalErrorGraph::usesColumn(int c) const
 {
     return JKQTPbarHorizontalGraph::usesColumn(c)|| JKQTPxGraphErrors::errorUsesColumn(c);
 }
@@ -698,8 +698,8 @@ bool JKQTPbarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
 
 void JKQTPbarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift, &sortedIndices);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift, &sortedIndices);
 }
 
 JKQTPbarVerticalErrorGraph::JKQTPbarVerticalErrorGraph(JKQtBasePlotter *parent):
@@ -714,7 +714,7 @@ JKQTPbarVerticalErrorGraph::JKQTPbarVerticalErrorGraph(JKQtPlotter *parent):
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPbarVerticalErrorGraph::usesColumn(int c)
+bool JKQTPbarVerticalErrorGraph::usesColumn(int c) const
 {
     return JKQTPbarVerticalGraph::usesColumn(c)|| JKQTPyGraphErrors::errorUsesColumn(c);
 }
@@ -820,9 +820,9 @@ bool JKQTPbarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
 
 void JKQTPbarVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    //plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
-    else plotErrorIndicators(painter, parent, xAxis, yAxis, xColumn, yColumn, datarange_start, datarange_end, shift, 0, &sortedIndices);
+    //plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
+    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0, &sortedIndices);
 }
 
 JKQTPbarVerticalStackableGraph::JKQTPbarVerticalStackableGraph(JKQtBasePlotter *parent):

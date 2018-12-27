@@ -36,9 +36,6 @@
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplotter/jkqtpgraphs.h"
-#include "jkqtplotter/jkqtpgraphsgeometric.h"
-#include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpelementsoverlay.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
 #include "jkqtplottergui/jkqtpenhancedspinboxes.h"
@@ -70,6 +67,8 @@
 
 
 class JKQTPgraphsModel; // forward
+class JKQTPgraph; // forward
+class JKQTPplotElement; // forward
 
 /** \brief initialized Qt-ressources necessary for JKQtBasePlotter */
 LIB_EXPORT void initJKQtBasePlotterResources();
@@ -120,7 +119,7 @@ LIB_EXPORT void initJKQtBasePlotterResources();
  *    - The plotting of coordinate axes and grids, as well as coordinate transforms is done by
  *      JKQTPcoordinateAxis descendents (see documentation there)
  *  .
- *  If you want to set the axis properties, use getXAxis() or getYAxis() to get a pointer to the axis objects which then
+ *  If you want to set the axis properties, use get_xAxis() or get_yAxis() to get a pointer to the axis objects which then
  *  may be used to set the axis properties.
  *
  *
@@ -436,7 +435,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief a vector that contains all graphs to be plottet in the system */
-        QList<JKQTPgraph*> graphs;
+        QList<JKQTPplotElement*> graphs;
 
 
         QList<JKQTPoverlayElement*> overlays;
@@ -770,6 +769,13 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
         inline JKQTPgraphsModel* getPlotsModel() { return m_plotsModel; }
 
+
+        /** \brief returns a pointer to the datastore used by this object */
+        inline const JKQTPdatastore* getDatastore() const { return datastore; }
+
+        /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
+        inline const JKQTPgraphsModel* getPlotsModel() const { return m_plotsModel; }
+
         /** \brief tells the plotter object to use the given external datastore.
          *
          * If the current datastore is internally managed, this method will free that object and use the supplied datastore
@@ -1077,10 +1083,11 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         JKQTPGET_MACRO(int, plotWidth)
         JKQTPGET_MACRO(int, plotHeight)
         inline JKQTmathText* get_mathText() { return &mathText; }
-        inline JKQTPhorizontalAxis* getXAxis() { return xAxis; }
-        inline JKQTPverticalAxis* getYAxis() { return yAxis; }
+        inline const JKQTmathText* get_mathText() const { return &mathText; }
         inline JKQTPhorizontalAxis* get_xAxis() { return xAxis; }
         inline JKQTPverticalAxis* get_yAxis() { return yAxis; }
+        inline const JKQTPhorizontalAxis* get_xAxis() const { return xAxis; }
+        inline const JKQTPverticalAxis* get_yAxis() const { return yAxis; }
 
 
         JKQTPGET_MACRO(QAction*, actSavePlot)
@@ -1118,7 +1125,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief returns description of i'th graph */
-        JKQTPgraph* getGraph(size_t i);
+        JKQTPplotElement* getGraph(size_t i);
 
         /** \brief returns the number of graphs */
         size_t getGraphCount();
@@ -1127,7 +1134,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void deleteGraph(size_t i, bool deletegraph=true);
 
         /** \brief remove the given graph, if it is contained */
-        void deleteGraph(JKQTPgraph* gr, bool deletegraph=true);
+        void deleteGraph(JKQTPplotElement* gr, bool deletegraph=true);
 
         /** \brief remove all plots
          *
@@ -1140,15 +1147,15 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void setGraphVisible(int i, bool visible=true);
 
         /** \brief add a new graph, returns it's position in the graphs list, if the graph is already in the plot, this returns the index in the list */
-        size_t addGraph(JKQTPgraph* gr);
+        size_t addGraph(JKQTPplotElement* gr);
 
         /** \brief returns \c true, if the given graph is in this plot */
-        bool containsGraph(JKQTPgraph* gr) const;
+        bool containsGraph(JKQTPplotElement* gr) const;
 
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        size_t moveGraphTop(JKQTPgraph* gr);
+        size_t moveGraphTop(JKQTPplotElement* gr);
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        size_t moveGraphBottom(JKQTPgraph* gr);
+        size_t moveGraphBottom(JKQTPplotElement* gr);
 
         /** \brief add a new graphs from a QVector */
         template <class TJKQTPgraphContainer>
@@ -1170,7 +1177,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * If you want to change them either use another overloaded version of addGraph(), or use getGraph() and setGraph():
          * \code
          * size_t i=addGraph(0,1,"graph1");
-         * JKQTPgraph gr=getGraph(i);
+         * JKQTPplotElement gr=getGraph(i);
          * gr.color=QColor("red");
          * setGraph(i, gr);
          * \endcode

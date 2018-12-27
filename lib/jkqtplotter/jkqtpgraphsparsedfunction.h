@@ -55,7 +55,7 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
 
 
         /** \brief class destructor */
-        virtual ~JKQTPxParsedFunctionLineGraph();
+        virtual ~JKQTPxParsedFunctionLineGraph() override;
 
         JKQTPGET_SET_MACRO(QString, function)
 
@@ -86,10 +86,10 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
         using JKQTPxFunctionLineGraph::set_errorParams;
 
         /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData(bool collectParams=true);
+        virtual void createPlotData(bool collectParams=true) override;
 
         /** \brief implements the actual plot function */
-        static double JKQTPxParsedFunctionLineGraphFunction(double x, void *data);
+        static double JKQTPxParsedFunctionLineGraphFunction(double x, void *data) ;
 };
 
 
@@ -115,7 +115,7 @@ class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
 
 
         /** \brief class destructor */
-        virtual ~JKQTPyParsedFunctionLineGraph();
+        virtual ~JKQTPyParsedFunctionLineGraph() override;
 
         JKQTPGET_SET_MACRO(QString, function)
 
@@ -146,7 +146,7 @@ class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
         using JKQTPxFunctionLineGraph::set_errorParams;
 
         /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData(bool collectParams=true);
+        virtual void createPlotData(bool collectParams=true) override;
         /** \brief implements the actual plot function */
         static double JKQTPyParsedFunctionLineGraphFunction(double x, void *data);
 };

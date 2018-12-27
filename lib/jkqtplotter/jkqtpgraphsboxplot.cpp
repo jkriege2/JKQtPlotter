@@ -151,8 +151,8 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin+1; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv0=xAxis->x2p(datastore->get(posColumn,i-1));
-        double xv=xAxis->x2p(datastore->get(posColumn,i));
+        double xv0=transformX(datastore->get(posColumn,i-1));
+        double xv=transformX(datastore->get(posColumn,i));
         if (posColumn>=0 && JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xv0)) {
             if (bwfirst) {
                 boxwidth_real=fabs(xv-xv0);
@@ -171,7 +171,7 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         double minv=datastore->get(minColumn,i);
         double maxv=datastore->get(maxColumn,i);
         double medianv=datastore->get(medianColumn,i);
-        double mean=yAxis->x2p(datastore->get(meanColumn,i));
+        double mean=transformY(datastore->get(meanColumn,i));
 
         QVector<QLineF> lines_p, lines_pw;
 
@@ -184,16 +184,16 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setPen(p);
             painter.setBrush(b);
             //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-            double x=xAxis->x2p(xv);
-            double p25=yAxis->x2p(p25v);
-            double p75=yAxis->x2p(p75v);
-            double min=yAxis->x2p(minv);
-            double max=yAxis->x2p(maxv);
-            double median=yAxis->x2p(medianv);
+            double x=transformX(xv);
+            double p25=transformY(p25v);
+            double p75=transformY(p75v);
+            double min=transformY(minv);
+            double max=transformY(maxv);
+            double median=transformY(medianv);
 
             double xn=x+1;
-            if (i+1<imax) xn=xAxis->x2p(datastore->get(posColumn,i+1));
-            else if (i-1>=0) xn=xAxis->x2p(datastore->get(posColumn,i-1));
+            if (i+1<imax) xn=transformX(datastore->get(posColumn,i+1));
+            else if (i-1>=0) xn=transformX(datastore->get(posColumn,i-1));
             else xn=x+1;
 
 
@@ -212,10 +212,10 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             double xmi4=x-w/4.0;
 
             if (imax<=0) {
-                xma=xAxis->x2p(xv+boxWidth/2.0);
-                xmi=xAxis->x2p(xv-boxWidth/2.0);
-                xma4=xAxis->x2p(xv+boxWidth/4.0);
-                xmi4=xAxis->x2p(xv-boxWidth/4.0);
+                xma=transformX(xv+boxWidth/2.0);
+                xmi=transformX(xv-boxWidth/2.0);
+                xma4=transformX(xv+boxWidth/4.0);
+                xmi4=transformX(xv-boxWidth/4.0);
             }
 
             if (minColumn>=0) {
@@ -357,9 +357,14 @@ bool JKQTPboxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
     return !start;
 }
 
-bool JKQTPboxplotVerticalGraph::usesColumn(int c)
+bool JKQTPboxplotVerticalGraph::usesColumn(int c) const
 {
     return (c==meanColumn)||(c==posColumn)||(c==medianColumn)||(c==minColumn)||(c==maxColumn)||(c==percentile25Column)||(c==percentile75Column);
+}
+
+void JKQTPboxplotVerticalGraph::set_sortData(int __value) {
+    sortData=(DataSortOrder)__value;
+    if (__value>0) sortData=Sorted;
 }
 
 
@@ -555,6 +560,16 @@ bool JKQTPboxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double&
     return !start;
 }
 
+JKQTPboxplotHorizontalGraph::JKQTPboxplotHorizontalGraph(JKQtBasePlotter *parent):
+    JKQTPboxplotVerticalGraph(parent)
+{
+}
+
+JKQTPboxplotHorizontalGraph::JKQTPboxplotHorizontalGraph(JKQtPlotter *parent):
+    JKQTPboxplotVerticalGraph(parent)
+{
+}
+
 void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotHorizontalGraph::draw");
@@ -603,8 +618,8 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     intSortData();
     for (int iii=imin+1; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
-        double xv0=yAxis->x2p(datastore->get(posColumn,i-1));
-        double xv=yAxis->x2p(datastore->get(posColumn,i));
+        double xv0=transformY(datastore->get(posColumn,i-1));
+        double xv=transformY(datastore->get(posColumn,i));
         if (posColumn>=0 && JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xv0)) {
             if (bwfirst) {
                 boxwidth_real=fabs(xv-xv0);
@@ -625,7 +640,7 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         double minv=datastore->get(minColumn,i);
         double maxv=datastore->get(maxColumn,i);
         double medianv=datastore->get(medianColumn,i);
-        double mean=xAxis->x2p(datastore->get(meanColumn,i));
+        double mean=transformX(datastore->get(meanColumn,i));
 
         QVector<QLineF> lines_p, lines_pw;
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
@@ -641,15 +656,15 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setBrush(b);
 
 
-            double p25=xAxis->x2p(p25v);
-            double p75=xAxis->x2p(p75v);
-            double min=xAxis->x2p(minv);
-            double max=xAxis->x2p(maxv);
-            double median=xAxis->x2p(medianv);
+            double p25=transformX(p25v);
+            double p75=transformX(p75v);
+            double min=transformX(minv);
+            double max=transformX(maxv);
+            double median=transformX(medianv);
 
 
             //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-            double y=yAxis->x2p(yv);
+            double y=transformY(yv);
             double minstop=p25;
             double maxstop=p75;
             if (percentile25Column<0 && medianColumn>=0) minstop=median;
@@ -660,8 +675,8 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             else if (percentile75Column<0 && meanColumn>=0) maxstop=mean;
 
             double yn=y+1;
-            if (i+1<imax) yn=yAxis->x2p(datastore->get(posColumn,i+1));
-            else if (i-1>=0) yn=yAxis->x2p(datastore->get(posColumn,i-1));
+            if (i+1<imax) yn=transformY(datastore->get(posColumn,i+1));
+            else if (i-1>=0) yn=transformY(datastore->get(posColumn,i-1));
             else yn=y+1;
             double delta=fabs(yn-y);
             double w=((boxwidth_real>0)?boxwidth_real:(delta))*boxWidth;
@@ -671,10 +686,10 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             double ymi4=y-w/4.0;
 
             if (imax<=1) {
-                ymi=yAxis->x2p(yv+boxWidth/2.0);
-                yma=yAxis->x2p(yv-boxWidth/2.0);
-                yma4=yAxis->x2p(yv+boxWidth/4.0);
-                ymi4=yAxis->x2p(yv-boxWidth/4.0);
+                ymi=transformY(yv+boxWidth/2.0);
+                yma=transformY(yv-boxWidth/2.0);
+                yma4=transformY(yv+boxWidth/4.0);
+                ymi4=transformY(yv-boxWidth/4.0);
             }
             if (minColumn>=0) {
                 lines_p.append(QLineF(min, ymi4, min, yma4));
@@ -825,12 +840,12 @@ void JKQTPboxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
         JKQTPIsOKFloat(maxv) && JKQTPIsOKFloat(medianv) ) {
 
         //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-        double x=xAxis->x2p(xv);
-        double p25=yAxis->x2p(p25v);
-        double p75=yAxis->x2p(p75v);
-        double min=yAxis->x2p(minv);
-        double max=yAxis->x2p(maxv);
-        double median=yAxis->x2p(medianv);
+        double x=transformX(xv);
+        double p25=transformY(p25v);
+        double p75=transformY(p75v);
+        double min=transformY(minv);
+        double max=transformY(maxv);
+        double median=transformY(medianv);
 
         double w=boxWidth;
         double xma=x+w/2.0;
@@ -855,7 +870,7 @@ void JKQTPboxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
         painter.restore();
 
         if (drawMean) {
-            double mean=yAxis->x2p(this->mean);
+            double mean=transformY(this->mean);
             JKQTPplotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
         }
 
@@ -1064,6 +1079,16 @@ bool JKQTPboxplotHorizontalElement::getYMinMax(double& minx, double& maxx, doubl
     return true;
 }
 
+JKQTPboxplotHorizontalElement::JKQTPboxplotHorizontalElement(JKQtBasePlotter *parent):
+    JKQTPboxplotVerticalElement(parent)
+{
+}
+
+JKQTPboxplotHorizontalElement::JKQTPboxplotHorizontalElement(JKQtPlotter *parent):
+    JKQTPboxplotVerticalElement(parent)
+{
+}
+
 void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPboxplotHorizontalElement::draw");
@@ -1103,12 +1128,12 @@ void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
         JKQTPIsOKFloat(medianv)) {
 
         //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-        double y=yAxis->x2p(yv);
-        double p25=xAxis->x2p(p25v);
-        double p75=xAxis->x2p(p75v);
-        double min=xAxis->x2p(minv);
-        double max=xAxis->x2p(maxv);
-        double median=xAxis->x2p(medianv);
+        double y=transformY(yv);
+        double p25=transformX(p25v);
+        double p75=transformX(p75v);
+        double min=transformX(minv);
+        double max=transformX(maxv);
+        double median=transformX(medianv);
 
         double w=boxWidth;
         double yma=y+w/2.0;
@@ -1133,7 +1158,7 @@ void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
         painter.restore();
 
         if (drawMean) {
-            double mean=yAxis->x2p(this->mean);
+            double mean=transformY(this->mean);
             JKQTPplotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
         }
 

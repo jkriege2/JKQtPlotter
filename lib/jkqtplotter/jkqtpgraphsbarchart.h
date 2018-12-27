@@ -77,22 +77,22 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPxyGraph {
         JKQTPbarVerticalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief finds all bar charts of the same orientation and determines width and shift, so they stand side by side
          *
@@ -210,12 +210,12 @@ class LIB_EXPORT JKQTPbarVerticalStackableGraph: public JKQTPbarVerticalGraph {
         JKQTPbarVerticalStackableGraph* stackParent;
 
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint */
-        virtual double getStackedMax(int index) const;
+        virtual double getStackedMax(int index) const override;
         /** \brief calls getStackedMax() on the stack parent (if available), or \c 0.0 */
-        virtual double getParentStackedMax(int index) const;
+        virtual double getParentStackedMax(int index) const override;
 
         /** \brief returns \c true, if a stack parent is set (if available) */
-        virtual bool hasStackParent() const;
+        virtual bool hasStackParent() const override;
 };
 
 /*! \brief This implements a bar graph with bars starting at \f$ y=0 \f$ to \f$ y=f(x) \f$
@@ -235,16 +235,16 @@ class LIB_EXPORT JKQTPbarVerticalErrorGraph: public JKQTPbarVerticalGraph, publi
         JKQTPbarVerticalErrorGraph(JKQtPlotter* parent);
 
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) ;
+        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter)  override;
 };
 
 
@@ -266,20 +266,20 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPbarVerticalGraph {
         JKQTPbarHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        virtual bool isHorizontal() const;
+        virtual bool isHorizontal() const override;
 
  };
 
@@ -316,12 +316,12 @@ class LIB_EXPORT JKQTPbarHorizontalStackableGraph: public JKQTPbarHorizontalGrap
         JKQTPbarHorizontalStackableGraph* stackParent;
 
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint */
-        virtual double getStackedMax(int index) const;
+        virtual double getStackedMax(int index) const override;
         /** \brief calls getStackedMax() on the stack parent (if available), or \c 0.0 */
-        virtual double getParentStackedMax(int index) const;
+        virtual double getParentStackedMax(int index) const override;
 
         /** \brief returns \c true, if a stack parent is set (if available) */
-        virtual bool hasStackParent() const;
+        virtual bool hasStackParent() const override;
 };
 
 /*! \brief This implements a bar graph with bars starting at \f$ x=0 \f$ to \f$ x=f(y) \f$
@@ -341,16 +341,16 @@ class LIB_EXPORT JKQTPbarHorizontalErrorGraph: public JKQTPbarHorizontalGraph, p
         JKQTPbarHorizontalErrorGraph(JKQtPlotter* parent);
 
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) ;
+        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) override;
 };
 
 

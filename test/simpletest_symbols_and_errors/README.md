@@ -52,16 +52,16 @@ int main(int argc, char* argv[])
     plot.addGraph(graph1);
 
     // 6. hide 0-lines
-    plot.getXAxis()->set_showZeroAxis(false);
-    plot.getYAxis()->set_showZeroAxis(false);
+    plot.get_xAxis()->set_showZeroAxis(false);
+    plot.get_yAxis()->set_showZeroAxis(false);
 
     // 7. set some axis properties (we use LaTeX for nice equation rendering)
-    plot.getXAxis()->set_axisLabel(QObject::tr("x-axis $x$ [mm]"));
-    plot.getYAxis()->set_axisLabel(QObject::tr("\\textbf{\\color{red}{y-axis} $\\left(y=\\sin(x)\\pm(0.2+0.25\\cdot x)\\right)$ [A.U.]}"));
-    plot.getXAxis()->set_labelFont("Arial");
-    plot.getYAxis()->set_labelFont("Times New Roman");
-    plot.getYAxis()->set_labelFontSize(12); // large x-axis label
-    plot.getYAxis()->set_tickLabelFontSize(10); // and larger y-axis tick labels
+    plot.get_xAxis()->set_axisLabel(QObject::tr("x-axis $x$ [mm]"));
+    plot.get_yAxis()->set_axisLabel(QObject::tr("\\textbf{\\color{red}{y-axis} $\\left(y=\\sin(x)\\pm(0.2+0.25\\cdot x)\\right)$ [A.U.]}"));
+    plot.get_xAxis()->set_labelFont("Arial");
+    plot.get_yAxis()->set_labelFont("Times New Roman");
+    plot.get_yAxis()->set_labelFontSize(12); // large x-axis label
+    plot.get_yAxis()->set_tickLabelFontSize(10); // and larger y-axis tick labels
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();

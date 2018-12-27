@@ -70,7 +70,7 @@ LIB_EXPORT void initJKQtPlotterResources();
  *
  * This class is an implementation of JKQtPlotterBase. It uses the tools from this base class
  * to display function graphs that use the internal datastore as data source. You can add graphs
- * to this component which are described by a JKQTPgraph struct.
+ * to this component which are described by a JKQTPplotElement struct.
  */
 class LIB_EXPORT JKQtPlotter: public QWidget {
         Q_OBJECT
@@ -119,12 +119,12 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
             toolbarIconSize=value;
             QSize s=QSize(toolbarIconSize, toolbarIconSize);
             toolbar->setIconSize(s);
-        };
+        }
 
         /** \brief get the width/height of the icons in the toolbar in pixels */
         inline int get_toolbarIconSize() {
             return toolbarIconSize;
-        };
+        }
 
         /** \brief returns the class internally used for plotting */
         JKQtBasePlotter* get_plotter() const { return plotter; }
@@ -203,32 +203,32 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         inline void set_emitSignals(bool sig) { plotter->set_emitSignals(sig); }
         inline bool get_emitSignals() { return plotter->get_emitSignals(); }
 
-        JKQTPGetMacro(bool, doDrawing);
+        JKQTPGetMacro(bool, doDrawing)
         void set_doDrawing(bool enable);
 
         bool get_zoomByMouseRectangle() const;
         void set_zoomByMouseRectangle(bool zomByrectangle);
 
         //GET_SET_MACRO(bool, zoomByDoubleAndRightMouseClick);
-        JKQTPGET_SET_MACRO(RightMouseButtonAction, rightMouseButtonAction);
-        JKQTPGET_SET_MACRO(LeftDoubleClickAction, leftDoubleClickAction);
-        JKQTPGET_MACRO(QMenu*, menuSpecialContextMenu);
+        JKQTPGET_SET_MACRO(RightMouseButtonAction, rightMouseButtonAction)
+        JKQTPGET_SET_MACRO(LeftDoubleClickAction, leftDoubleClickAction)
+        JKQTPGET_MACRO(QMenu*, menuSpecialContextMenu)
         void set_menuSpecialContextMenu(QMenu* menu);
 
-        JKQTPGET_SET_MACRO(bool, zoomByMouseWheel);
+        JKQTPGET_SET_MACRO(bool, zoomByMouseWheel)
 
         JKQTPGetMacro(double, mouseContextX)
         JKQTPGetMacro(double, mouseContextY)
         JKQTPGetMacro(int, mouseLastClickX)
         JKQTPGetMacro(int, mouseLastClickY)
 
-        inline JKQTPhorizontalAxis* getXAxis() { return plotter->getXAxis(); }
-        inline JKQTPverticalAxis* getYAxis() { return plotter->getYAxis(); }
         inline JKQTPhorizontalAxis* get_xAxis() { return plotter->get_xAxis(); }
         inline JKQTPverticalAxis* get_yAxis() { return plotter->get_yAxis(); }
+        inline const JKQTPhorizontalAxis* get_xAxis() const { return plotter->get_xAxis(); }
+        inline const JKQTPverticalAxis* get_yAxis() const { return plotter->get_yAxis(); }
 
        /** \brief returns description of i'th graph */
-        inline JKQTPgraph* getGraph(size_t i) { return plotter->getGraph(i); }
+        inline JKQTPplotElement* getGraph(size_t i) { return plotter->getGraph(i); }
 
         /** \brief returns the number of graphs */
         inline size_t getGraphCount() { return plotter->getGraphCount(); }
@@ -237,10 +237,10 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         inline void deleteGraph(size_t i, bool deletegraph=true) { plotter->deleteGraph(i, deletegraph); }
 
         /** \brief returns \c true, if the given graph is present */
-        inline bool containsGraph(JKQTPgraph* gr) { return plotter->containsGraph(gr); }
+        inline bool containsGraph(JKQTPplotElement* gr) { return plotter->containsGraph(gr); }
 
         /** \brief remove the given graph, if it is contained */
-        inline void deleteGraph(JKQTPgraph* gr, bool deletegraph=true) { plotter->deleteGraph(gr, deletegraph);  };
+        inline void deleteGraph(JKQTPplotElement* gr, bool deletegraph=true) { plotter->deleteGraph(gr, deletegraph);  };
 
         /** \brief remove all plots
          *
@@ -249,15 +249,15 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         inline void clearGraphs(bool deleteGraphs=true) { plotter->clearGraphs(deleteGraphs); }
 
         /** \brief add a new graph, returns it's position in the graphs list */
-        inline size_t addGraph(JKQTPgraph* gr) { return plotter->addGraph(gr); }
+        inline size_t addGraph(JKQTPplotElement* gr) { return plotter->addGraph(gr); }
 
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        inline size_t moveGraphTop(JKQTPgraph* gr) { return plotter->moveGraphTop(gr); }
+        inline size_t moveGraphTop(JKQTPplotElement* gr) { return plotter->moveGraphTop(gr); }
 
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        inline size_t moveGraphBottom(JKQTPgraph* gr) { return plotter->moveGraphBottom(gr); }
+        inline size_t moveGraphBottom(JKQTPplotElement* gr) { return plotter->moveGraphBottom(gr); }
 
-        /** \brief add a new graphs from a QVector<JKQTPgraph*>, QList<JKQTPgraph*>, std::vector<JKQTPgraph*> ... or any standard-iterateable container with JKQTPgraph*-items */
+        /** \brief add a new graphs from a QVector<JKQTPplotElement*>, QList<JKQTPplotElement*>, std::vector<JKQTPplotElement*> ... or any standard-iterateable container with JKQTPplotElement*-items */
         template <class TJKQTPgraphContainer>
         inline void addGraphs(const TJKQTPgraphContainer& gr) { plotter->addGraphs(gr); }
 

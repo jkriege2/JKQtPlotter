@@ -1320,7 +1320,7 @@ double JKQTPverticalAxis::get_parent_otheraxis_width() const {
 
 bool JKQTPverticalAxis::get_parent_otheraxis_inverted() const
 {
-    return parent->getXAxis()->get_inverted();
+    return parent->get_xAxis()->get_inverted();
 }
 
 void JKQTPverticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
@@ -1775,6 +1775,16 @@ void JKQTPverticalIndependentAxis::set_otherAxisInverted(bool __value) {
     update_plot();
 }
 
+double JKQTPverticalIndependentAxis::get_parent_plotwidth() const { return axisWidth; }
+
+double JKQTPverticalIndependentAxis::get_parent_plotoffset() const { return axisOffset; }
+
+double JKQTPverticalIndependentAxis::get_parent_otheraxis_width() const { return otherAxisWidth; }
+
+bool JKQTPverticalIndependentAxis::get_parent_otheraxis_inverted() const { return otherAxisInverted; }
+
+double JKQTPverticalIndependentAxis::get_parent_otheraxis_offset() const { return otherAxisOffset; }
+
 
 
 
@@ -1848,7 +1858,7 @@ double JKQTPhorizontalAxis::get_parent_otheraxis_width() const {
 
 bool JKQTPhorizontalAxis::get_parent_otheraxis_inverted() const
 {
-    return parent->getYAxis()->get_inverted();
+    return parent->get_yAxis()->get_inverted();
 }
 
 void JKQTPhorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {

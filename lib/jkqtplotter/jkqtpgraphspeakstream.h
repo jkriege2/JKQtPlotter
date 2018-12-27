@@ -68,18 +68,18 @@ class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPsingleColumnGraph {
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         JKQTPGET_SET_MACRO(double, baseline)
         JKQTPGET_SET_MACRO(double, peakHeight)

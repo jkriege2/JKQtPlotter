@@ -69,11 +69,11 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     connect(edtPFunc, SIGNAL(currentIndexChanged(QString)), this, SLOT(setPFuncE(QString)));
     QCheckBox* chkFLogX=new QCheckBox(tr("x-axis: log-scale"));
     chkFLogX->setChecked(false);
-    connect(chkFLogX, SIGNAL(toggled(bool)), plotFuncPlt->getXAxis(), SLOT(set_logAxis(bool)));
+    connect(chkFLogX, SIGNAL(toggled(bool)), plotFuncPlt->get_xAxis(), SLOT(set_logAxis(bool)));
     plotFuncLayout->addWidget(chkFLogX);
     QCheckBox* chkFLogY=new QCheckBox(tr("y-axis: log-scale"));
     chkFLogY->setChecked(false);
-    connect(chkFLogY, SIGNAL(toggled(bool)), plotFuncPlt->getYAxis(), SLOT(set_logAxis(bool)));
+    connect(chkFLogY, SIGNAL(toggled(bool)), plotFuncPlt->get_yAxis(), SLOT(set_logAxis(bool)));
     plotFuncLayout->addWidget(chkFLogY);
 
 

@@ -42,11 +42,11 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
         JKQTPfilledCurveXGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(QColor, color)
         JKQTPGET_SET_MACRO(QColor, fillColor)
@@ -103,11 +103,11 @@ class LIB_EXPORT JKQTPfilledCurveXErrorGraph: public JKQTPfilledCurveXGraph, pub
         /** \brief class constructor */
         JKQTPfilledCurveXErrorGraph(JKQtPlotter* parent);
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter);
+        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) override;
 
 };
 
@@ -130,7 +130,7 @@ class LIB_EXPORT JKQTPfilledCurveYGraph: public JKQTPfilledCurveXGraph {
         JKQTPfilledCurveYGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 };
 
 
@@ -147,11 +147,11 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
         JKQTPfilledCurveYErrorGraph(JKQtBasePlotter* parent=nullptr);
         JKQTPfilledCurveYErrorGraph(JKQtPlotter* parent);
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter);
+        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) override;
 
 };
 
@@ -181,17 +181,17 @@ class LIB_EXPORT JKQTPfilledVerticalRangeGraph: public JKQTPxyGraph {
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int column);
+        virtual bool usesColumn(int column) const override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(int, yColumn2)
         JKQTPSET_CAST_MACRO(size_t, int, yColumn2)

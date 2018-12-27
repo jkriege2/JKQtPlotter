@@ -80,8 +80,8 @@ int main(int argc, char* argv[])
     plot.addGraph(graphR);
 
     // 5. set axis labels
-    plot.getXAxis()->set_axisLabel("R/G/B-value");
-    plot.getYAxis()->set_axisLabel("normalized frequency [%]");
+    plot.get_xAxis()->set_axisLabel("R/G/B-value");
+    plot.get_yAxis()->set_axisLabel("normalized frequency [%]");
 
 
     // 4. set the maximum size of the plot to 0..100% and 0..256

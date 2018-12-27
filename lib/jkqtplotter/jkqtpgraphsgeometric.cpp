@@ -27,7 +27,7 @@
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
 JKQTPgeoBaseLine::JKQTPgeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQtBasePlotter* parent):
-    JKQTPgraph(parent)
+    JKQTPplotObject(parent)
 {
     this->color=color;
     this->lineWidth=lineWidth;
@@ -36,7 +36,7 @@ JKQTPgeoBaseLine::JKQTPgeoBaseLine(QColor color, double lineWidth, Qt::PenStyle 
 }
 
 JKQTPgeoBaseLine::JKQTPgeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQtPlotter* parent):
-    JKQTPgraph(parent)
+    JKQTPplotObject(parent)
 {
     this->color=color;
     this->lineWidth=lineWidth;
@@ -118,7 +118,7 @@ void JKQTPgeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& re
 
 
 JKQTPgeoText::JKQTPgeoText(JKQtBasePlotter* parent, double x, double y, QString text, double fontSize, QColor color):
-    JKQTPgraph(parent)
+    JKQTPplotObject(parent)
 {
     this->x=x;
     this->y=y;
@@ -128,7 +128,7 @@ JKQTPgeoText::JKQTPgeoText(JKQtBasePlotter* parent, double x, double y, QString 
 }
 
 JKQTPgeoText::JKQTPgeoText(JKQtPlotter* parent, double x, double y, QString text, double fontSize, QColor color):
-    JKQTPgraph(parent)
+    JKQTPplotObject(parent)
 {
     this->x=x;
     this->y=y;
@@ -158,7 +158,7 @@ void JKQTPgeoText::draw(JKQTPEnhancedPainter& painter) {
     parent->get_mathText()->set_fontSize(fontSize*parent->get_fontSizeMultiplier());
     parent->get_mathText()->set_fontColor(color);
     parent->get_mathText()->parse(text);
-    parent->get_mathText()->draw(painter, xAxis->x2p(x), yAxis->x2p(y));
+    parent->get_mathText()->draw(painter, transformX(x), transformY(y));
     painter.restore();
 }
 
@@ -225,7 +225,7 @@ bool JKQTPgeoLine::getYMinMax(double& miny, double& maxy, double& smallestGreate
 void JKQTPgeoLine::draw(JKQTPEnhancedPainter& painter) {
     painter.save();
     painter.setPen(getPen(painter));
-    QLineF l(QPointF(xAxis->x2p(x1), yAxis->x2p(y1)), QPointF(xAxis->x2p(x2), yAxis->x2p(y2)));
+    QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
     if (l.length()>0) painter.drawLine(l);
     painter.restore();
 }
@@ -273,10 +273,10 @@ bool JKQTPgeoInfiniteLine::getYMinMax(double& miny, double& maxy, double& smalle
 
 void JKQTPgeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
 
-    double xmin=parent->getXAxis()->getMin();
-    double xmax=parent->getXAxis()->getMax();
-    double ymin=parent->getYAxis()->getMin();
-    double ymax=parent->getYAxis()->getMax();
+    double xmin=parent->get_xAxis()->getMin();
+    double xmax=parent->get_xAxis()->getMax();
+    double ymin=parent->get_yAxis()->getMin();
+    double ymax=parent->get_yAxis()->getMax();
     QRectF bbox(QPointF(xmin, ymin), QPointF(xmax, ymax));
     bool doDraw=false;
     double x2=x, y2=y;
@@ -390,7 +390,7 @@ void JKQTPgeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
     if (doDraw) {
         painter.save();
         painter.setPen(getPen(painter));
-        QLineF l(QPointF(xAxis->x2p(x1), yAxis->x2p(y1)), QPointF(xAxis->x2p(x2), yAxis->x2p(y2)));
+        QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
         if (l.length()>0) painter.drawLine(l);
         painter.restore();
     }
@@ -525,7 +525,7 @@ void JKQTPgeoRectangle::draw(JKQTPEnhancedPainter& painter) {
     QPolygonF poly=getPolygon();
     QPolygonF rect;
     for (int i=0; i<poly.size(); i++) {
-        rect.append(QPointF(xAxis->x2p(poly[i].x()), yAxis->x2p(poly[i].y())));
+        rect.append(QPointF(transformX(poly[i].x()), transformY(poly[i].y())));
     }
 
     painter.save();

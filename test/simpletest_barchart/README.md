@@ -69,10 +69,10 @@ int main(int argc, char* argv[])
     // 7. data is grouped into 5 numbere groups (1..5), but we also have string
     //    labels for these groups (stored in L). In order to display these labels,
     //    we have to tell the x-Axis to use these special labels:
-    plot.getXAxis()->addAxisTickLabels(X, L, Ndata);
+    plot.get_xAxis()->addAxisTickLabels(X, L, Ndata);
     //    also we can rotate the labels a bit (by 45 degree), so they fit better
-    plot.getXAxis()->set_tickLabelAngle(45);
-    plot.getXAxis()->set_tickLabelFontSize(12);
+    plot.get_xAxis()->set_tickLabelAngle(45);
+    plot.get_xAxis()->set_tickLabelFontSize(12);
 
     // 8. finally we move the plot key/legend to the outside, top-right
     //    and lay it out as a single row

@@ -20,10 +20,10 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     plotGeo->setObjectName("plotGeo");
     layout1->addWidget(plotGeo);
     plotGeo->setXY(0,1,0,1);
-    plotGeo->get_plotter()->getXAxis()->set_axisLabel("$x$ [mm]");
-    plotGeo->get_plotter()->getYAxis()->set_axisLabel("$y$ [mm]");
-    /*plotGeo->get_plotter()->getXAxis()->set_linkedAxis(plotGeo->get_plotter()->getYAxis());
-    plotGeo->get_plotter()->getXAxis()->set_changeWidthToAspectRatio(true);*/
+    plotGeo->get_plotter()->get_xAxis()->set_axisLabel("$x$ [mm]");
+    plotGeo->get_plotter()->get_yAxis()->set_axisLabel("$y$ [mm]");
+    /*plotGeo->get_plotter()->get_xAxis()->set_linkedAxis(plotGeo->get_plotter()->get_yAxis());
+    plotGeo->get_plotter()->get_xAxis()->set_changeWidthToAspectRatio(true);*/
     plotGeo->get_plotter()->set_maintainAspectRatio(true);
     plotGeo->get_plotter()->set_aspectRatio(1);
     plotGeo->get_plotter()->set_maintainAxisAspectRatio(true);

@@ -52,17 +52,17 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     plot->get_plotter()->addGridPrintingPlotter(0,1,plotBot->get_plotter());
     plot->get_plotter()->addGridPrintingPlotter(0,2,plotBot2->get_plotter());
 
-    plot->get_plotter()->getXAxis()->set_axisLabel("$x$ axis with greek letters $\\sqrt{\\alpha\\cdot\\beta}$");
-    plot->get_plotter()->getYAxis()->set_axisLabel("$y$-axis label $f(x)=\\sin\\left(x^2\\right)$ [unit]");
+    plot->get_plotter()->get_xAxis()->set_axisLabel("$x$ axis with greek letters $\\sqrt{\\alpha\\cdot\\beta}$");
+    plot->get_plotter()->get_yAxis()->set_axisLabel("$y$-axis label $f(x)=\\sin\\left(x^2\\right)$ [unit]");
 
-    plotBot->get_plotter()->getXAxis()->set_axisLabel(plot->get_plotter()->getXAxis()->get_axisLabel());
-    plotBot->get_plotter()->getYAxis()->set_axisLabel("$y$-axis 2 [unit]");
-    plotBot2->get_plotter()->getXAxis()->set_axisLabel(plot->get_plotter()->getXAxis()->get_axisLabel());
-    plotBot2->get_plotter()->getYAxis()->set_axisLabel("$y$-axis 3 [unit]");
-    plotBot2->get_plotter()->getXAxis()->addAxisTickLabel(2.5, "tick 1");
-    plotBot2->get_plotter()->getXAxis()->addAxisTickLabel(7.5, "tick 2");
-    plotBot2->get_plotter()->getXAxis()->addAxisTickLabel(12.5, "tick 3");
-    plotBot2->get_plotter()->getXAxis()->addAxisTickLabel(17.5, "tick 4");
+    plotBot->get_plotter()->get_xAxis()->set_axisLabel(plot->get_plotter()->get_xAxis()->get_axisLabel());
+    plotBot->get_plotter()->get_yAxis()->set_axisLabel("$y$-axis 2 [unit]");
+    plotBot2->get_plotter()->get_xAxis()->set_axisLabel(plot->get_plotter()->get_xAxis()->get_axisLabel());
+    plotBot2->get_plotter()->get_yAxis()->set_axisLabel("$y$-axis 3 [unit]");
+    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(2.5, "tick 1");
+    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(7.5, "tick 2");
+    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(12.5, "tick 3");
+    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(17.5, "tick 4");
 
 
     for (unsigned int i=0; i<N1; i++) {
@@ -141,8 +141,8 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
         b2[i]=1.5+cos(i+M_PI/8.0);
         b3[i]=1.5+sin(i);
 
-        //plot->getXAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
-        //plot->getYAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
+        //plot->get_xAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
+        //plot->get_yAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
     }
 
     size_t cbp=ds->addLinearColumn(N3, 2, N3+2, "boxplot_x");
@@ -217,16 +217,16 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     QCheckBox* chklogX=new QCheckBox("logarithmic X-axis", this);
     QCheckBox* chklogY=new QCheckBox("logarithmic Y-axis", this);
-    connect(chklogX, SIGNAL(toggled(bool)), plot->get_plotter()->getXAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogY, SIGNAL(toggled(bool)), plot->get_plotter()->getYAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogX, SIGNAL(toggled(bool)), plotBot2->get_plotter()->getXAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogY, SIGNAL(toggled(bool)), plotBot2->get_plotter()->getYAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogX, SIGNAL(toggled(bool)), plot->get_plotter()->get_xAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogY, SIGNAL(toggled(bool)), plot->get_plotter()->get_yAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogX, SIGNAL(toggled(bool)), plotBot2->get_plotter()->get_xAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogY, SIGNAL(toggled(bool)), plotBot2->get_plotter()->get_yAxis(), SLOT(set_logAxis(bool)));
     layout->addWidget(chklogX);
     layout->addWidget(chklogY);
     QCheckBox* chkInvertX=new QCheckBox("invert X-axis", this);
     QCheckBox* chkInvertY=new QCheckBox("invert Y-axis", this);
-    connect(chkInvertX, SIGNAL(toggled(bool)), plot->get_plotter()->getXAxis(), SLOT(set_inverted(bool)));
-    connect(chkInvertY, SIGNAL(toggled(bool)), plot->get_plotter()->getYAxis(), SLOT(set_inverted(bool)));
+    connect(chkInvertX, SIGNAL(toggled(bool)), plot->get_plotter()->get_xAxis(), SLOT(set_inverted(bool)));
+    connect(chkInvertY, SIGNAL(toggled(bool)), plot->get_plotter()->get_yAxis(), SLOT(set_inverted(bool)));
     layout->addWidget(chkInvertX);
     layout->addWidget(chkInvertY);
     layout->addWidget(chkInvertX);

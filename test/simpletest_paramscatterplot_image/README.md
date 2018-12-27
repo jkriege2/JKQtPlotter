@@ -63,10 +63,10 @@ For illustrative purposes, the original image is shown at the bottom-left:
 Finally the plot is styled and the axis aspect ratios are fixed:
 ```c++
     // scale the plot so the graph is contained and format the coordinate system
-    plot.getXAxis()->set_axisLabel("x-axis");
-    plot.getYAxis()->set_axisLabel("y-axis");
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
+    plot.get_xAxis()->set_axisLabel("x-axis");
+    plot.get_yAxis()->set_axisLabel("y-axis");
+    plot.get_xAxis()->set_drawGrid(false);
+    plot.get_yAxis()->set_drawGrid(false);
     // max. size is the size of the image
     plot.setXY(0,image.width()-1,0,image.height()-1);
     plot.setAbsoluteXY(0,image.width()-1,0,image.height()-1);

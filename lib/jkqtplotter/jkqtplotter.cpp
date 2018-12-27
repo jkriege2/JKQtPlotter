@@ -33,6 +33,7 @@
 #include <QtGui>
 #endif
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 
 
 #define JKQTP_RESIZE_DELAY 100

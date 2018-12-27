@@ -29,9 +29,9 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     plotImg->get_plotter()->set_aspectRatio(3.0/2.0);
     plotImg->get_plotter()->set_maintainAxisAspectRatio(true);
     plotImg->get_plotter()->set_axisAspectRatio(4.0);
-    /*plotImg->get_plotter()->getXAxis()->set_linkedAxis(plotImg->get_plotter()->getYAxis());
-    plotImg->get_plotter()->getXAxis()->set_changeWidthToAspectRatio(true);
-    plotImg->get_plotter()->getXAxis()->set_aspectRatio(1.0);*/
+    /*plotImg->get_plotter()->get_xAxis()->set_linkedAxis(plotImg->get_plotter()->get_yAxis());
+    plotImg->get_plotter()->get_xAxis()->set_changeWidthToAspectRatio(true);
+    plotImg->get_plotter()->get_xAxis()->set_aspectRatio(1.0);*/
 
 
     layouti->addWidget(plotImg);

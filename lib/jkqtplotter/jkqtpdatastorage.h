@@ -646,7 +646,7 @@ class LIB_EXPORT JKQTPcolumn {
     inline bool isValid() const { return valid; }
 
     /** \brief class destructor */
-    virtual ~JKQTPcolumn() ;
+    ~JKQTPcolumn() ;
 
     JKQTPGET_SET_MACRO(QString, name)
 
@@ -775,7 +775,7 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief class constructor: initializes the object for external data storage */
     JKQTPdatastoreItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool internal);
     /** \brief class destructor: frees unfreed internal memory */
-    virtual ~JKQTPdatastoreItem();
+    ~JKQTPdatastoreItem();
 
     /** \brief change the size of all columns to the givne number of rows. The data will be lost */
     void resizeColumns(size_t rows);
@@ -836,14 +836,14 @@ class LIB_EXPORT JKQTPdatastoreModel: public QAbstractTableModel {
         Q_OBJECT
     public:
         JKQTPdatastoreModel(JKQTPdatastore* datastore, QObject* parent=nullptr);
-        ~JKQTPdatastoreModel();
+        virtual ~JKQTPdatastoreModel() override;
 
 
-        virtual QVariant data(const QModelIndex &index, int role) const;
-        virtual Qt::ItemFlags flags(const QModelIndex &index) const;
-        virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-        virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
-        virtual int columnCount(const QModelIndex &parent = QModelIndex()) const ;
+        virtual QVariant data(const QModelIndex &index, int role) const override;
+        virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
+        virtual QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+        virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+        virtual int columnCount(const QModelIndex &parent = QModelIndex()) const  override;
 
     public slots:
         void reloadModel();

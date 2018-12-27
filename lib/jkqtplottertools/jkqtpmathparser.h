@@ -424,22 +424,22 @@ class JKQTPMathParser
             jkmpNode* parent;      /*!< \brief points to the parent node */
           public:
             /** \brief virtual class destructor */
-            virtual ~jkmpNode() {};
+            virtual ~jkmpNode();
 
             /** \brief evaluate this node */
             virtual jkmpResult evaluate()=0;
 
             /** \brief return a pointer to the jkMathParser  */
-            inline JKQTPMathParser* getParser(){ return parser; };
+            inline JKQTPMathParser* getParser(){ return parser; }
 
             /** \brief set the jkMathParser  */
-            inline void setParser(JKQTPMathParser* mp){ parser=mp; };
+            inline void setParser(JKQTPMathParser* mp){ parser=mp; }
 
             /** \brief returns a pointer to the parent node */
-            inline jkmpNode* getParent(){ return parent; };
+            inline jkmpNode* getParent(){ return parent; }
 
             /** \brief sets the parent node  */
-            inline void setParent(jkmpNode* par) { parent=par; };
+            inline void setParent(jkmpNode* par) { parent=par; }
         };
 
 
@@ -462,10 +462,10 @@ class JKQTPMathParser
             jkmpBinaryArithmeticNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively)  */
-            ~jkmpBinaryArithmeticNode() { delete left; delete right;};
+            virtual ~jkmpBinaryArithmeticNode() override;
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -486,10 +486,10 @@ class JKQTPMathParser
             jkmpBinaryBoolNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively)  */
-            ~jkmpBinaryBoolNode() { delete left; delete right;};
+            virtual ~jkmpBinaryBoolNode() override;
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -510,10 +510,10 @@ class JKQTPMathParser
             jkmpCompareNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively)  */
-            ~jkmpCompareNode () { delete left; delete right;};
+            virtual ~jkmpCompareNode () override;
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -533,10 +533,10 @@ class JKQTPMathParser
             jkmpUnaryNode(char op, jkmpNode* c, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively)  */
-            ~jkmpUnaryNode() {delete child;};
+            virtual ~jkmpUnaryNode() override;
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -549,7 +549,7 @@ class JKQTPMathParser
             //char operation;
           public:
             /** \brief standard destructor, also destroy the children (recursively)  */
-            ~jkmpVariableAssignNode() {delete child;};
+            virtual ~jkmpVariableAssignNode() override;
 
             /** \brief constructor for a jkmpVariableAssignNode
              *  \param var name of the variable to assign to
@@ -560,7 +560,7 @@ class JKQTPMathParser
             jkmpVariableAssignNode(std::string var, jkmpNode* c, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -575,10 +575,10 @@ class JKQTPMathParser
              *  \param p a pointer to a jkMathParser object
              *  \param par a pointer to the parent node
              */
-            jkmpConstantNode(jkmpResult d, JKQTPMathParser* p, jkmpNode* par) { data=d; setParser(p); setParent(par); };
+            jkmpConstantNode(jkmpResult d, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate() { return data; };
+            virtual jkmpResult evaluate() override;;
         };
 
         /**
@@ -596,7 +596,7 @@ class JKQTPMathParser
             jkmpVariableNode(std::string name, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -625,10 +625,10 @@ class JKQTPMathParser
             jkmpFunctionNode(std::string name, jkmpNode** c, unsigned char num, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively) */
-            ~jkmpFunctionNode();
+            virtual ~jkmpFunctionNode() override;
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -643,19 +643,19 @@ class JKQTPMathParser
             /** \brief constructor for a jkmpNodeList
              *  \param p a pointer to a jkMathParser object
              */
-            jkmpNodeList(JKQTPMathParser* p) { setParser(p); setParent(nullptr); };
+            jkmpNodeList(JKQTPMathParser* p);
 
             /** \brief standard destructor, also destroy the children (recursively) */
-            ~jkmpNodeList();
+            virtual ~jkmpNodeList() override;
 
             /** \brief add a jkmpNode n to the list */
             void add(jkmpNode* n);
 
             /** \brief evaluate the node */
-            virtual jkmpResult evaluate();
+            virtual jkmpResult evaluate() override;
 
             /** \brief get the number of nodes in the list */
-            int getCount() {return list.size();};
+            inline int getCount() {return list.size();};
         };
 
         /*@}*/
@@ -684,25 +684,25 @@ class JKQTPMathParser
                std::string errormessage;
             public:
                 /** \brief class constructors */
-                jkmpException() throw() {
+                inline jkmpException() {
                     errormessage="unknown error";
-                };
+                }
 
                 /** \brief constructor with supplied error message */
-                jkmpException(std::string msg) throw() {
+                inline jkmpException(std::string msg) {
                     errormessage=msg;
-                };
+                }
 
                 /** \brief class destructors */
-                ~jkmpException() throw() {   };
+                virtual ~jkmpException() override;
 
                 /** \brief  returns the assigned errormessage */
                 inline std::string getMessage() const {
                     return errormessage;
-                };
+                }
 
                 /** \brief returns the error description as C string */
-                virtual const char* what() const throw() { return getMessage().c_str(); };
+                virtual const char* what() const throw();
         };
 
         /** \brief type for a custom error handler. This an alternative error handling ... may be used together with Matlab in a MEX file! */
@@ -716,7 +716,7 @@ class JKQTPMathParser
             } else {
                 throw jkmpException(st);
             }
-        };
+        }
 
     private:
         /** \brief if this is nullptr then an exception may be thrown otherwise this should point to an error handler that will be called. */
@@ -726,12 +726,12 @@ class JKQTPMathParser
         /** \brief activate error handling by use of an exception function */
         inline void set_exception_function(jkmpexceptionf exception_function) {
             jkmathparser_exception_function=exception_function;
-        };
+        }
 
         /** \brief deactivate error handling by use of an exception function */
         inline void reset_exception_function() {
             jkmathparser_exception_function=nullptr;
-        };
+        }
 
 
         /*@}*/
@@ -893,7 +893,7 @@ class JKQTPMathParser
             if (tempvariables[i].name==name) return true;
           }
           return false;
-        };
+        }
 
         /**\brief  tests whether a variable exists */
         inline bool variableExists(std::string name){ return tempvariableExists(name)||(variables.find(name)!=variables.end()); };
@@ -910,7 +910,7 @@ class JKQTPMathParser
         void deleteVariable(std::string name);
 
         /**\brief  clears the list of internal functions*/
-        inline void clearFunctions() {functions.clear();};
+        inline void clearFunctions() {functions.clear();}
 
         /**\brief  registers standard variables*/
         void addStandardVariables();

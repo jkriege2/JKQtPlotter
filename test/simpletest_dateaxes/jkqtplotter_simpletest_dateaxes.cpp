@@ -75,12 +75,12 @@ void drawWithDateAxis(JKQtPlotter& plot) {
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.get_plotter()->set_plotLabel("\\textbf{Weather in Gelsenkirchen, 2017-2018}");
     // set x-axis date-time-axis
-    plot.getXAxis()->set_labelType(JKQTPCALTdatetime);
-    plot.getXAxis()->set_axisLabel("Date");
+    plot.get_xAxis()->set_labelType(JKQTPCALTdatetime);
+    plot.get_xAxis()->set_axisLabel("Date");
     // set format string for date axis (e.g. Jan '18), see Documentation of QDateTime::toString()
-    plot.getXAxis()->set_tickDateTimeFormat("MMM ''yy");
+    plot.get_xAxis()->set_tickDateTimeFormat("MMM ''yy");
     // set y-axis temperature axis
-    plot.getYAxis()->set_axisLabel("Average Daily Temperature [{\\degree}C]");
+    plot.get_yAxis()->set_axisLabel("Average Daily Temperature [{\\degree}C]");
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();
@@ -142,13 +142,13 @@ void drawWithTimeAxis(JKQtPlotter& plot) {
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.get_plotter()->set_plotLabel("\\textbf{Weather in Heidelberg, 14^{th} Oct 2018}");
     // set x-axis date-time-axis
-    plot.getXAxis()->set_labelType(JKQTPCALTtime);
-    plot.getXAxis()->set_axisLabel("Time of Day");
+    plot.get_xAxis()->set_labelType(JKQTPCALTtime);
+    plot.get_xAxis()->set_axisLabel("Time of Day");
     // set format string for time axis with 24-hour and minute only,
     // see QDateTime::toString() documentation for details on format strings
-    plot.getXAxis()->set_tickTimeFormat("HH:mm");
+    plot.get_xAxis()->set_tickTimeFormat("HH:mm");
     // set y-axis temperature axis
-    plot.getYAxis()->set_axisLabel("Temperature [{\\degree}C]");
+    plot.get_yAxis()->set_axisLabel("Temperature [{\\degree}C]");
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();

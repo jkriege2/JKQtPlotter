@@ -100,10 +100,10 @@ In addition the plot key is moved outside the pot and the grid in the plot is sw
     // 6. change locaion of key (outside top-right)
     plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideRightTop);
     // ... and switch off the grid
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getXAxis()->set_drawMinorGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawMinorGrid(false);
+    plot.get_xAxis()->set_drawGrid(false);
+    plot.get_xAxis()->set_drawMinorGrid(false);
+    plot.get_yAxis()->set_drawGrid(false);
+    plot.get_yAxis()->set_drawMinorGrid(false);
 ```
 
 The result looks like this:

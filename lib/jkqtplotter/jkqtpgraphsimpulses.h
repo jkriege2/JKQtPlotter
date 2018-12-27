@@ -40,11 +40,11 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
         JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         JKQTPGET_SET_MACRO(QColor, color)
         JKQTPGET_SET_MACRO(double, lineWidth)
@@ -79,11 +79,11 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
         JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=nullptr);
         JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter* parent);
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) ;
+        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) override ;
 
 };
 
@@ -104,7 +104,7 @@ class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph
         JKQTPimpulsesVerticalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 };
 
 
@@ -122,11 +122,11 @@ class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGr
         /** \brief class constructor */
         JKQTPimpulsesVerticalErrorGraph(JKQtPlotter* parent);
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief this function is used to plot error inidcators before plotting the graphs. */
-        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) ;
+        virtual void drawErrorsAfter(JKQTPEnhancedPainter& painter) override ;
 
 };
 

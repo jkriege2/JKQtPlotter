@@ -80,22 +80,19 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
         JKQTPGET_SET_MACRO(DataSortOrder, sortData)
         /** \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> \see sortData for more information */
-        inline void set_sortData(int __value) {
-            sortData=(DataSortOrder)__value;
-            if (__value>0) sortData=Sorted;
-        }
+        void set_sortData(int __value);
         JKQTPGET_SET_MACRO(int, posColumn)
         JKQTPSET_CAST_MACRO(size_t, int, posColumn)
         JKQTPGET_SET_MACRO(int, medianColumn)
@@ -165,7 +162,7 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
         DataSortOrder sortData;
         /** \brief this array contains the order of indices, in which to access the data in the data columns */
         QVector<int> sortedIndices;
-        virtual void intSortData();
+        virtual void intSortData() ;
         inline  int getDataIndex(int i) {
             if (sortData==Unsorted) return i;
             return sortedIndices.value(i,i);
@@ -186,31 +183,25 @@ class LIB_EXPORT JKQTPboxplotHorizontalGraph: public JKQTPboxplotVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPboxplotHorizontalGraph(JKQtBasePlotter* parent=nullptr):
-            JKQTPboxplotVerticalGraph(parent)
-        {
-        }
-        inline JKQTPboxplotHorizontalGraph(JKQtPlotter* parent):
-            JKQTPboxplotVerticalGraph(parent)
-        {
-        }
+        JKQTPboxplotHorizontalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPboxplotHorizontalGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 };
 
 
@@ -238,23 +229,23 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
         JKQTPboxplotVerticalElement(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
         JKQTPGET_SET_MACRO(double, pos)
@@ -338,32 +329,26 @@ class LIB_EXPORT JKQTPboxplotHorizontalElement: public JKQTPboxplotVerticalEleme
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPboxplotHorizontalElement(JKQtBasePlotter* parent=nullptr):
-            JKQTPboxplotVerticalElement(parent)
-        {
-        }
+        JKQTPboxplotHorizontalElement(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        inline JKQTPboxplotHorizontalElement(JKQtPlotter* parent):
-            JKQTPboxplotVerticalElement(parent)
-        {
-        }
+        JKQTPboxplotHorizontalElement(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 };
 
 

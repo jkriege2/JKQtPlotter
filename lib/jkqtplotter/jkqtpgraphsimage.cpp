@@ -650,7 +650,7 @@ void JKQTPMathImage::initJKQTPMathImage() {
     connect(actCopyPalette, SIGNAL(triggered()), this, SLOT(copyColorbarPlotAsImage()));
 
     colorBarRightAxis=new JKQTPverticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxis->loadSettings(parent->getYAxis());
+    if (parent) colorBarRightAxis->loadSettings(parent->get_yAxis());
     colorBarRightAxis->set_drawMode1(JKQTPCADMline);
     colorBarRightAxis->set_drawMode2(JKQTPCADMcomplete);
     colorBarRightAxis->set_axisLabel("");
@@ -660,7 +660,7 @@ void JKQTPMathImage::initJKQTPMathImage() {
     colorBarRightAxis->set_minorTickOutsideLength(0);
     colorBarRightAxis->set_showZeroAxis(false);
     colorBarTopAxis=new JKQTPhorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxis->loadSettings(parent->getXAxis());
+    if (parent) colorBarTopAxis->loadSettings(parent->get_xAxis());
     colorBarTopAxis->set_drawMode1(JKQTPCADMline);
     colorBarTopAxis->set_drawMode2(JKQTPCADMcomplete);
     colorBarTopAxis->set_axisLabel("");
@@ -671,7 +671,7 @@ void JKQTPMathImage::initJKQTPMathImage() {
     colorBarTopAxis->set_showZeroAxis(false);
 
     modifierColorBarTopAxis=new JKQTPverticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) modifierColorBarTopAxis->loadSettings(parent->getXAxis());
+    if (parent) modifierColorBarTopAxis->loadSettings(parent->get_xAxis());
     modifierColorBarTopAxis->set_drawMode1(JKQTPCADMline);
     modifierColorBarTopAxis->set_drawMode2(JKQTPCADMcomplete);
     modifierColorBarTopAxis->set_axisLabel("");
@@ -681,7 +681,7 @@ void JKQTPMathImage::initJKQTPMathImage() {
     modifierColorBarTopAxis->set_tickOutsideLength(0);
     modifierColorBarTopAxis->set_minorTickOutsideLength(0);
     modifierColorBarRightAxis=new JKQTPhorizontalIndependentAxis (0, 100, 0, 100, parent);
-    if (parent) modifierColorBarRightAxis->loadSettings(parent->getYAxis());
+    if (parent) modifierColorBarRightAxis->loadSettings(parent->get_yAxis());
     modifierColorBarRightAxis->set_drawMode1(JKQTPCADMline);
     modifierColorBarRightAxis->set_drawMode2(JKQTPCADMcomplete);
     modifierColorBarRightAxis->set_axisLabel("");
@@ -1483,7 +1483,7 @@ void JKQTPRGBMathImage::initObject()
 
     rgbMode=JKQTPRGBMathImageModeRGBMode;
     colorBarRightAxis=new JKQTPverticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxis->loadSettings(parent->getYAxis());
+    if (parent) colorBarRightAxis->loadSettings(parent->get_yAxis());
     colorBarRightAxis->set_drawMode1(JKQTPCADMline);
     colorBarRightAxis->set_drawMode2(JKQTPCADMcomplete);
     colorBarRightAxis->set_axisLabel("");
@@ -1493,7 +1493,7 @@ void JKQTPRGBMathImage::initObject()
     colorBarRightAxis->set_minorTickOutsideLength(0);
     colorBarRightAxis->set_showZeroAxis(false);
     colorBarTopAxis=new JKQTPhorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxis->loadSettings(parent->getXAxis());
+    if (parent) colorBarTopAxis->loadSettings(parent->get_xAxis());
     colorBarTopAxis->set_drawMode1(JKQTPCADMline);
     colorBarTopAxis->set_drawMode2(JKQTPCADMcomplete);
     colorBarTopAxis->set_axisLabel("");
@@ -1504,7 +1504,7 @@ void JKQTPRGBMathImage::initObject()
     colorBarTopAxis->set_showZeroAxis(false);
 
     colorBarRightAxisG=new JKQTPverticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxisG->loadSettings(parent->getYAxis());
+    if (parent) colorBarRightAxisG->loadSettings(parent->get_yAxis());
     colorBarRightAxisG->set_drawMode1(JKQTPCADMline);
     colorBarRightAxisG->set_drawMode2(JKQTPCADMcomplete);
     colorBarRightAxisG->set_axisLabel("");
@@ -1514,7 +1514,7 @@ void JKQTPRGBMathImage::initObject()
     colorBarRightAxisG->set_tickOutsideLength(0);
     colorBarRightAxisG->set_minorTickOutsideLength(0);
     colorBarTopAxisG=new JKQTPhorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxisG->loadSettings(parent->getXAxis());
+    if (parent) colorBarTopAxisG->loadSettings(parent->get_xAxis());
     colorBarTopAxisG->set_drawMode1(JKQTPCADMline);
     colorBarTopAxisG->set_drawMode2(JKQTPCADMcomplete);
     colorBarTopAxisG->set_axisLabel("");
@@ -1525,7 +1525,7 @@ void JKQTPRGBMathImage::initObject()
     colorBarTopAxisG->set_minorTickOutsideLength(0);
 
     colorBarRightAxisB=new JKQTPverticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxisB->loadSettings(parent->getYAxis());
+    if (parent) colorBarRightAxisB->loadSettings(parent->get_yAxis());
     colorBarRightAxisB->set_drawMode1(JKQTPCADMline);
     colorBarRightAxisB->set_drawMode2(JKQTPCADMcomplete);
     colorBarRightAxisB->set_axisLabel("");
@@ -1535,7 +1535,7 @@ void JKQTPRGBMathImage::initObject()
     colorBarRightAxisB->set_tickOutsideLength(0);
     colorBarRightAxisB->set_minorTickOutsideLength(0);
     colorBarTopAxisB=new JKQTPhorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxisB->loadSettings(parent->getXAxis());
+    if (parent) colorBarTopAxisB->loadSettings(parent->get_xAxis());
     colorBarTopAxisB->set_drawMode1(JKQTPCADMline);
     colorBarTopAxisB->set_drawMode2(JKQTPCADMcomplete);
     colorBarTopAxisB->set_axisLabel("");
@@ -2331,7 +2331,7 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, dou
     this->imageColumn=imageColumn;
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
-bool JKQTPColumnMathImage::usesColumn(int c)
+bool JKQTPColumnMathImage::usesColumn(int c) const
 {
     return (c==imageColumn)||(c==modifierColumn);
 }
@@ -2381,7 +2381,7 @@ void JKQTPColumnOverlayImageEnhanced::draw(JKQTPEnhancedPainter &painter) {
     data=nullptr;
 }
 
-bool JKQTPColumnOverlayImageEnhanced::usesColumn(int c)
+bool JKQTPColumnOverlayImageEnhanced::usesColumn(int c) const
 {
     return (c==imageColumn);
 }
@@ -2485,7 +2485,7 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->imageBColumn=imageBColumn;
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
-bool JKQTPColumnRGBMathImage::usesColumn(int c)
+bool JKQTPColumnRGBMathImage::usesColumn(int c) const
 {
     return (c==imageRColumn)||(c==imageBColumn)||(c==imageGColumn)||(c==modifierColumn);
 }

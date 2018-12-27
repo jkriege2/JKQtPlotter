@@ -59,8 +59,8 @@ class TestWidgetGraphs : public QWidget
         JKQtPlotter* plotBot;
         JKQtPlotter* plotBot2;
 
-        JKQTPgraph* plteErrors;
-        JKQTPgraph* plteSymbols;
+        JKQTPplotElement* plteErrors;
+        JKQTPplotElement* plteSymbols;
         JKQTPxyLineErrorGraph* pltePlot2;
 
 

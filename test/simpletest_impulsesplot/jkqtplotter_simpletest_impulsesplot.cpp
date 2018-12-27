@@ -37,12 +37,12 @@ int main(int argc, char* argv[])
     plot.addGraph(graph);
 
     // 6. set some axis properties (we use LaTeX for nice equation rendering)
-    plot.getXAxis()->set_axisLabel(QObject::tr("x-axis"));
-    plot.getYAxis()->set_axisLabel(QObject::tr("y-axis"));
+    plot.get_xAxis()->set_axisLabel(QObject::tr("x-axis"));
+    plot.get_yAxis()->set_axisLabel(QObject::tr("y-axis"));
 
     // 7. switch the grid off
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
+    plot.get_xAxis()->set_drawGrid(false);
+    plot.get_yAxis()->set_drawGrid(false);
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();

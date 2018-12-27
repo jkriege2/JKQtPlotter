@@ -99,21 +99,21 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         virtual ~JKQTPxFunctionLineGraph();
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
          * This functions returns 0 for both parameters, so that the plotter uses the predefined
          * min and max values.
          */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \brief get the maximum and minimum y-value of the graph
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief clear the data sampled from the function. */
         void clearData();
@@ -218,7 +218,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         JKQTPGET_SET_MACRO(double, errorLineWidth)
 
         /** \copydoc JKQTPgraph::usesColumn() */
-        virtual bool usesColumn(int c);
+        virtual bool usesColumn(int c) const override;
 
 
         /** \brief sets function to the given special function */
@@ -327,16 +327,16 @@ class LIB_EXPORT JKQTPyFunctionLineGraph: public JKQTPxFunctionLineGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        inline JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=nullptr):JKQTPxFunctionLineGraph(parent) {}
+        JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        inline JKQTPyFunctionLineGraph(JKQtPlotter* parent):JKQTPxFunctionLineGraph(parent) {}
+        JKQTPyFunctionLineGraph(JKQtPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
     protected:
 
         /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData( bool collectParams=true);
+        virtual void createPlotData( bool collectParams=true) override;
 
 };
 

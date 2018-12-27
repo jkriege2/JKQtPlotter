@@ -1828,7 +1828,7 @@ JKQTPColorPaletteTools::JKQTPColorPaletteTools(JKQtBasePlotter *parent)
 {
     cbParent=parent;
     colorBarRightAxis=new JKQTPverticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxis->loadSettings(parent->getYAxis());
+    if (parent) colorBarRightAxis->loadSettings(parent->get_yAxis());
     colorBarRightAxis->set_drawMode1(JKQTPCADMline);
     colorBarRightAxis->set_drawMode2(JKQTPCADMcomplete);
     colorBarRightAxis->set_axisLabel("");
@@ -1838,7 +1838,7 @@ JKQTPColorPaletteTools::JKQTPColorPaletteTools(JKQtBasePlotter *parent)
     colorBarRightAxis->set_tickOutsideLength(0);
     colorBarRightAxis->set_minorTickOutsideLength(0);
     colorBarTopAxis=new JKQTPhorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxis->loadSettings(parent->getXAxis());
+    if (parent) colorBarTopAxis->loadSettings(parent->get_xAxis());
     colorBarTopAxis->set_drawMode1(JKQTPCADMline);
     colorBarTopAxis->set_drawMode2(JKQTPCADMcomplete);
     colorBarTopAxis->set_axisLabel("");
