@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 
 

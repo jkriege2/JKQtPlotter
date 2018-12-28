@@ -2,6 +2,7 @@
 #include <array>
 #include <random>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 #include "speedtestplot.h"
 
 int main(int argc, char* argv[])

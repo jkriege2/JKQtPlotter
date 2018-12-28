@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QTextStream>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"

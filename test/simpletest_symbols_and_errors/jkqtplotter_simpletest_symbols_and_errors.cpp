@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 
 // number of datapoints:
 #define Ndata 10

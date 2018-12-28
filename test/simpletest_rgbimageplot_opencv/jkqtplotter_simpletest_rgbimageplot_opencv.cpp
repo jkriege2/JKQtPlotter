@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include <opencv2/imgcodecs.hpp>
 

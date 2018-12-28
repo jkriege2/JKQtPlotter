@@ -1,4 +1,5 @@
 #include "speedtestplot.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 
 
 SpeedTestPlot::SpeedTestPlot():

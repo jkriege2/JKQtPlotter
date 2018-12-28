@@ -4,6 +4,7 @@
 #include <QFormLayout>
 #include <QDoubleSpinBox>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 
 
