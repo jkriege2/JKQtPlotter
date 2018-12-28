@@ -28,8 +28,8 @@ DEFINES += DEBUG_TIMING
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
-# include JKQtFastPlotter source code
+# include JKQtPlotter library
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
-CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtfastplotterlib
-CONFIG (release):LIBS += -L../../lib/release -ljkqtfastplotterlib
+CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtplotterlib
+CONFIG (release):LIBS += -L../../lib/release -ljkqtplotterlib

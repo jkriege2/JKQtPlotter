@@ -279,19 +279,7 @@ class LIB_EXPORT JKQTPdatastore{
             size_t itemid=addInternalItem(d, N);
             return addColumnForItem(itemid, 0, name);
         }
-#ifdef JKQTPLOTTER_OPENCV_INTERFACE
-        /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
-         *
-         *   \tparam TContainer datatype of the container, which need to support standard C++ iterators and the function \c size(). The contents needs to be convertible to double.
-         *   \param mat OpenCV-marix to store here
-         *   \param name name for the column
-         *   \param channel to copy from \a mat
-         *   \return the ID of the newly created column
-         *
-         *   \note You need to define the Macro JKQTPLOTTER_OPENCV_INTERFACE when compiling this lib to enabled this function.
-         */
-        size_t copyCvMatToColumn(const cv::Mat& mat, const QString& name=QString(""), int channel=0);
-#endif
+
 
         /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
          *
@@ -633,7 +621,8 @@ class LIB_EXPORT JKQTPcolumn {
     bool valid;
 
   protected:
-    JKQTPGET_MACRO(JKQTPdatastore*, datastore)
+    inline JKQTPdatastore* get_datastore() { return datastore; }
+    inline const JKQTPdatastore* get_datastore() const { return datastore; }
   public:
     JKQTPcolumn();
     /** \brief class constructor that binds the column to a specific datastore object.
@@ -648,7 +637,16 @@ class LIB_EXPORT JKQTPcolumn {
     /** \brief class destructor */
     ~JKQTPcolumn() ;
 
-    JKQTPGET_SET_MACRO(QString, name)
+    /** \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <CENTER>\copybrief name.</CENTER> \see name for more information */
+    inline void set_name (const QString& __value)
+    {
+      this->name = __value;
+    }
+    /** \brief returns the property name. \see name for more information */
+    inline QString get_name () const
+    {
+      return this->name;
+    }
 
     /** \brief returns the number of rows in this column (accesses the datastore) */
     size_t getRows() const;
@@ -670,9 +668,10 @@ class LIB_EXPORT JKQTPcolumn {
      * column.
      */
     inline double getValue(int n) const;
-     /** \brief gets a pointer to the n-th value in the column
-     */
-    double* getPointer(size_t n=0) const ;
+    /** \brief gets a pointer to the n-th value in the column */
+    double* getPointer(size_t n=0) ;
+    /** \brief gets a pointer to the n-th value in the column */
+    const double* getPointer(size_t n=0) const;
 
     /** \brief sets the \a n'th value from the column
      *
@@ -724,8 +723,13 @@ class LIB_EXPORT JKQTPcolumn {
     /** \brief set all values in the column to a specific \a value */
     void setAll(double value);
 
-    JKQTPGET_MACRO(size_t, datastoreItem)
-    JKQTPGET_MACRO(size_t, datastoreOffset)
+
+    /** \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <CENTER>\copybrief datastoreItem.</CENTER>. \see datastoreItem for more information */ \
+    inline size_t get_datastoreItem() const  \
+    {   return this->datastoreItem;   }
+    /** \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <CENTER>\copybrief datastoreOffset.</CENTER>. \see datastoreOffset for more information */ \
+    inline size_t get_datastoreOffset() const  \
+    {   return this->datastoreOffset;   }
 };
 
 
@@ -780,8 +784,12 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief change the size of all columns to the givne number of rows. The data will be lost */
     void resizeColumns(size_t rows);
 
-    JKQTPGET_MACRO(size_t, rows)
-    JKQTPGET_MACRO(size_t, columns)
+    /** \brief returns the property rows. \details Description of the parameter rows is:  <CENTER>\copybrief rows.</CENTER>. \see rows for more information */ \
+    inline size_t get_rows() const
+    {   return rows;   }
+    /** \brief returns the property columns. \details Description of the parameter columns is:  <CENTER>\copybrief columns.</CENTER>. \see columns for more information */ \
+    inline size_t get_columns() const
+    {   return columns;   }
 
 
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
@@ -800,6 +808,19 @@ class LIB_EXPORT JKQTPdatastoreItem {
 
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline double* getPointer(size_t column, size_t row) {
+        if (data!=nullptr) switch(dataformat) {
+            case JKQTPsingleColumn:
+              return &(data[row]);
+            case JKQTPmatrixColumn:
+              return &(data[column*rows+row]);
+            case JKQTPmatrixRow:
+              return &(data[row*columns+column]);
+        }
+        return nullptr;
+    }
+
+    /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
+    inline const double* getPointer(size_t column, size_t row) const {
         if (data!=nullptr) switch(dataformat) {
             case JKQTPsingleColumn:
               return &(data[row]);

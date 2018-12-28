@@ -31,554 +31,554 @@
 
 
 /******************************************************************************************
- * default-Funktionen f�r den Parser
+ * default-function implementations for math parser
  ******************************************************************************************/
-
-JKQTPMathParser::jkmpResult fFloatToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  std::ostringstream ost;
-  r.type=JKQTPMathParser::jkmpString;
-  if (n!=1) p->jkmpError("floattostr accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("floattostr needs double argument");
-  ost<<params[0].num;
-  r.str=ost.str();
-  return r;
-}
-
-
-JKQTPMathParser::jkmpResult fIntToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  std::ostringstream ost;
-  r.type=JKQTPMathParser::jkmpString;
-  if (n!=1) p->jkmpError("inttostr accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("inttostr needs double argument");
-  ost<<int64_t(params[0].num);
-  r.str=ost.str();
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fBoolToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  std::ostringstream ost;
-  r.type=JKQTPMathParser::jkmpString;
-  if (n!=1) p->jkmpError("booltostr accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpBool) p->jkmpError("floattostr needs bool argument");
-  r.str=(r.boolean)?"true":"false";
-  return r;
-}
+namespace { // anonymous namespace to limit availability to this module (CPP-file)
+    JKQTPMathParser::jkmpResult fFloatToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      std::ostringstream ost;
+      r.type=JKQTPMathParser::jkmpString;
+      if (n!=1) p->jkmpError("floattostr accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("floattostr needs double argument");
+      ost<<params[0].num;
+      r.str=ost.str();
+      return r;
+    }
 
 
-JKQTPMathParser::jkmpResult fToSystemPathSeparator(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpString;
-  if (n!=1) p->jkmpError("tosystempathseparator accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("tosystempathseparator needs string argument");
-  r.str="";
-  for (size_t i=0; i<params[0].str.size(); i++) {
-      char ch=params[0].str[i];
-      if (ch=='/' || ch=='\\') ch=JKQTPPATHSEPARATOR_CHAR;
-      r.str+=ch;
-  }
+    JKQTPMathParser::jkmpResult fIntToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      std::ostringstream ost;
+      r.type=JKQTPMathParser::jkmpString;
+      if (n!=1) p->jkmpError("inttostr accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("inttostr needs double argument");
+      ost<<int64_t(params[0].num);
+      r.str=ost.str();
+      return r;
+    }
 
-  return r;
-}
-
-
-JKQTPMathParser::jkmpResult fSetDefault(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpString;
-  if (n!=2) p->jkmpError("setdefault accepts 2 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("setdefault needs a string as first argument");
-  r=params[1];
-  if (p->variableExists(params[0].str)) {
-    r=p->getVariable(params[0].str);
-  }
-
-  return r;
-}
+    JKQTPMathParser::jkmpResult fBoolToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      std::ostringstream ost;
+      r.type=JKQTPMathParser::jkmpString;
+      if (n!=1) p->jkmpError("booltostr accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpBool) p->jkmpError("floattostr needs bool argument");
+      r.str=(r.boolean)?"true":"false";
+      return r;
+    }
 
 
-JKQTPMathParser::jkmpResult fStrDate(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-    JKQTPMathParser::jkmpResult r;
-    r.type=JKQTPMathParser::jkmpString;
-    std::string f="%Y-%m-%d";
-    if (n>1) p->jkmpError("strdate accepts 0 or 1 argumentment");
-    if (n>0 && params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("strdate needs a string as first argument");
-    if (n>0) f=params[0].str;
-    char re[1024];
-    time_t rawtime;
-    struct tm* timeinfo;
-    time(&rawtime);
-    timeinfo=localtime(&rawtime);
-    strftime(re, 1024, f.c_str(), timeinfo);
-    r.str=re;
-
-    return r;
-}
-
-JKQTPMathParser::jkmpResult fCMDParam(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpString;
-  std::string def="";
-  if (n<1 || n>2) p->jkmpError("cmdparam(name, default) accepts 1 or 2 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("cmdparam needs a string as first argument");
-  if (n>1 && params[1].type!=JKQTPMathParser::jkmpString) p->jkmpError("cmdparam needs a string as second argument");
-  if (n>1) def=params[1].str;
-
-  r.str=p->getArgCVParam(params[0].str, def);
-  return r;
-}
-
-
-JKQTPMathParser::jkmpResult fSinc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("sinc accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sinc needs double argument");
-  //r.num=sin(params[0].num)/params[0].num;
-
-  double x=params[0].num;
-  static double const    taylor_0_bound = 3*DBL_MIN ;
-  static double const    taylor_2_bound = sqrt(taylor_0_bound);
-  static double const    taylor_n_bound = sqrt(taylor_2_bound);
-
-  double    result = 1;
-  if    (fabs(x) >= taylor_n_bound)
-  {
-      result= sin(x)/x;
-  }
-  else
-  {
-      // approximation by taylor series in x at 0 up to order 0
-
-      if    (fabs(x) >= taylor_0_bound)
-      {
-          double    x2 = x*x;
-
-          // approximation by taylor series in x at 0 up to order 2
-          result -= x2/static_cast<double>(6);
-
-          if    (fabs(x) >= taylor_2_bound)
-          {
-              // approximation by taylor series in x at 0 up to order 4
-              result += (x2*x2)/static_cast<double>(120);
-          }
+    JKQTPMathParser::jkmpResult fToSystemPathSeparator(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpString;
+      if (n!=1) p->jkmpError("tosystempathseparator accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("tosystempathseparator needs string argument");
+      r.str="";
+      for (size_t i=0; i<params[0].str.size(); i++) {
+          char ch=params[0].str[i];
+          if (ch=='/' || ch=='\\') ch=JKQTPPATHSEPARATOR_CHAR;
+          r.str+=ch;
       }
 
-
-  }
-
-  r.num=result;
-
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fTanc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("tanc accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tanc needs double argument");
-  r.num=(params[0].num==0)?1.0:tan(params[0].num)/params[0].num;
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSin(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("sin accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sin needs double argument");
-  r.num=sin(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fCos(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("cos accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("cos needs double argument");
-  r.num=cos(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fTan(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("tan accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tan needs double argument");
-  r.num=tan(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fExp(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("exp accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("exp needs double argument");
-  r.num=exp(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fLog(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("log accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("log needs double argument");
-  r.num=log(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fLog10(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("log10 accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("log10 needs double argument");
-  r.num=log10(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fLog2(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("log2 accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("log2 needs double argument");
-  r.num=log2(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSqrt(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("sqrt accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sqrt needs double argument");
-  r.num=sqrt(params[0].num);
-  return r;
-}
-JKQTPMathParser::jkmpResult fCbrt(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("cbrt accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("cbrt needs double argument");
-  r.num=cbrt(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSqr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("sqr accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sqr needs double argument");
-  r.num=params[0].num*params[0].num;
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fAbs(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("abs accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("abs needs double argument");
-  r.num=fabs(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fIf(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  if (n!=3) p->jkmpError("If accepts 3 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpBool) p->jkmpError("If needs bool as first argument");
-  if (params[0].boolean) return params[1]; else return params[2];
-}
-
-JKQTPMathParser::jkmpResult fASin(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("asin accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("asin needs double argument");
-  r.num=asin(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fACos(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("acos accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("acos needs double argument");
-  r.num=acos(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fATan(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("atan accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("atan needs double argument");
-  r.num=atan(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fATan2(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("atan2 accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("atan2 needs double argument");
-  r.num=atan2(params[0].num, params[1].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSinh(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("sinh accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sinh needs double argument");
-  r.num=sinh(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fCosh(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("cosh accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("cosh needs double argument");
-  r.num=cosh(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fTanh(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("tanh accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tanh needs double argument");
-  r.num=tanh(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fErf(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("erf accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("erf needs double argument");
-  r.num=erf(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fErfc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("erfc accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("erfc needs double argument");
-  r.num=erfc(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult flGamma(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("lgamma accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("lgamma needs double argument");
-  r.num=lgamma(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult ftGamma(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("tgamma accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tgamma needs double argument");
-  r.num=tgamma(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fJ0(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("j0 accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j0 needs double argument");
-  r.num=j0(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fJ1(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("j1 accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j1 needs double argument");
-  r.num=j1(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fY0(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("y0 accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y0 needs double argument");
-  r.num=y0(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fY1(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("y1 accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y1 needs double argument");
-  r.num=y1(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fYn(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("yn accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("yn needs double argument");
-  r.num=yn((int)params[0].num, params[1].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fJn(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("jn accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("jn needs double argument");
-  r.num=jn((int)params[0].num, params[1].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSRand(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("srand accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("srand needs double argument");
-  r.num=0;
-  srand((unsigned int)params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fRand(JKQTPMathParser::jkmpResult* /*params*/, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=0) p->jkmpError("rand accepts 0 argument");
-  r.num=double(rand())/double(RAND_MAX);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fCeil(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("ceil accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("ceil needs double argument");
-  r.num=ceil(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fFloor(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("floor accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("floor needs double argument");
-  r.num=floor(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fTrunc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("trunc accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("trunc needs double argument");
-  r.num=trunc(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fRound(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("round accepts 1 argument");
-  if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("round needs double argument");
-  r.num=round(params[0].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fFMod(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("fmod accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("fmod needs double argument");
-  r.num=fmod((int)params[0].num, params[1].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fMin(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("min accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("min needs double argument");
-  r.num=fmin((int)params[0].num, params[1].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fMax(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("max accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("max needs double argument");
-  r.num=fmax((int)params[0].num, params[1].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult QFSPIMLightsheetEvaluationItem_fGauss(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("gauss accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("gauss needs double argument");
-  r.num=exp(-2*params[0].num*params[0].num/params[1].num/params[1].num);
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSlit(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=2) p->jkmpError("slit accepts 2 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("slit needs double argument");
-  r.num=((params[0].num>=-1.0*params[1].num/2)&&(params[0].num<=params[1].num/2))?1.0:0.0;
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fTheta(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("theta accepts 1 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("theta needs double argument");
-  r.num=(params[0].num>=0)?1.0:0.0;
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSigmoid(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("sigmoid accepts 1 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("sigmoid needs double argument");
-  r.num=1.0/(1+exp(-1.0*params[0].num));
-  return r;
-}
-
-JKQTPMathParser::jkmpResult fSign(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-  JKQTPMathParser::jkmpResult r;
-  r.type=JKQTPMathParser::jkmpDouble;
-  if (n!=1) p->jkmpError("sign accepts 1 argument");
-  if ((params[0].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("sign needs double argument");
-  r.num=0.0;
-  if (params[0].num<0) { r.num=-1; }
-  else if (params[0].num>0) { r.num=+1; }
-  return r;
-}
-
-
-
-inline std::string strip(std::string s) {
-  std::string r;
-  for (size_t i=0; i<s.size(); i++){
-    if ((s[i]!=' ')&&(s[i]!='\t')&&(s[i]!='\r')&&(s[i]!='\n')) {
-      r+=s[i];
+      return r;
     }
-  }
-  return r;
-}
 
+
+    JKQTPMathParser::jkmpResult fSetDefault(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpString;
+      if (n!=2) p->jkmpError("setdefault accepts 2 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("setdefault needs a string as first argument");
+      r=params[1];
+      if (p->variableExists(params[0].str)) {
+        r=p->getVariable(params[0].str);
+      }
+
+      return r;
+    }
+
+
+    JKQTPMathParser::jkmpResult fStrDate(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+        JKQTPMathParser::jkmpResult r;
+        r.type=JKQTPMathParser::jkmpString;
+        std::string f="%Y-%m-%d";
+        if (n>1) p->jkmpError("strdate accepts 0 or 1 argumentment");
+        if (n>0 && params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("strdate needs a string as first argument");
+        if (n>0) f=params[0].str;
+        char re[1024];
+        time_t rawtime;
+        struct tm* timeinfo;
+        time(&rawtime);
+        timeinfo=localtime(&rawtime);
+        strftime(re, 1024, f.c_str(), timeinfo);
+        r.str=re;
+
+        return r;
+    }
+
+    JKQTPMathParser::jkmpResult fCMDParam(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpString;
+      std::string def="";
+      if (n<1 || n>2) p->jkmpError("cmdparam(name, default) accepts 1 or 2 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("cmdparam needs a string as first argument");
+      if (n>1 && params[1].type!=JKQTPMathParser::jkmpString) p->jkmpError("cmdparam needs a string as second argument");
+      if (n>1) def=params[1].str;
+
+      r.str=p->getArgCVParam(params[0].str, def);
+      return r;
+    }
+
+
+    JKQTPMathParser::jkmpResult fSinc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("sinc accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sinc needs double argument");
+      //r.num=sin(params[0].num)/params[0].num;
+
+      double x=params[0].num;
+      static double const    taylor_0_bound = 3*DBL_MIN ;
+      static double const    taylor_2_bound = sqrt(taylor_0_bound);
+      static double const    taylor_n_bound = sqrt(taylor_2_bound);
+
+      double    result = 1;
+      if    (fabs(x) >= taylor_n_bound)
+      {
+          result= sin(x)/x;
+      }
+      else
+      {
+          // approximation by taylor series in x at 0 up to order 0
+
+          if    (fabs(x) >= taylor_0_bound)
+          {
+              double    x2 = x*x;
+
+              // approximation by taylor series in x at 0 up to order 2
+              result -= x2/static_cast<double>(6);
+
+              if    (fabs(x) >= taylor_2_bound)
+              {
+                  // approximation by taylor series in x at 0 up to order 4
+                  result += (x2*x2)/static_cast<double>(120);
+              }
+          }
+
+
+      }
+
+      r.num=result;
+
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fTanc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("tanc accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tanc needs double argument");
+      r.num=(params[0].num==0)?1.0:tan(params[0].num)/params[0].num;
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSin(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("sin accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sin needs double argument");
+      r.num=sin(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fCos(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("cos accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("cos needs double argument");
+      r.num=cos(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fTan(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("tan accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tan needs double argument");
+      r.num=tan(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fExp(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("exp accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("exp needs double argument");
+      r.num=exp(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fLog(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("log accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("log needs double argument");
+      r.num=log(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fLog10(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("log10 accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("log10 needs double argument");
+      r.num=log10(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fLog2(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("log2 accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("log2 needs double argument");
+      r.num=log2(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSqrt(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("sqrt accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sqrt needs double argument");
+      r.num=sqrt(params[0].num);
+      return r;
+    }
+    JKQTPMathParser::jkmpResult fCbrt(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("cbrt accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("cbrt needs double argument");
+      r.num=cbrt(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSqr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("sqr accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sqr needs double argument");
+      r.num=params[0].num*params[0].num;
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fAbs(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("abs accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("abs needs double argument");
+      r.num=fabs(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fIf(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      if (n!=3) p->jkmpError("If accepts 3 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpBool) p->jkmpError("If needs bool as first argument");
+      if (params[0].boolean) return params[1]; else return params[2];
+    }
+
+    JKQTPMathParser::jkmpResult fASin(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("asin accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("asin needs double argument");
+      r.num=asin(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fACos(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("acos accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("acos needs double argument");
+      r.num=acos(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fATan(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("atan accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("atan needs double argument");
+      r.num=atan(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fATan2(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("atan2 accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("atan2 needs double argument");
+      r.num=atan2(params[0].num, params[1].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSinh(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("sinh accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("sinh needs double argument");
+      r.num=sinh(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fCosh(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("cosh accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("cosh needs double argument");
+      r.num=cosh(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fTanh(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("tanh accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tanh needs double argument");
+      r.num=tanh(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fErf(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("erf accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("erf needs double argument");
+      r.num=erf(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fErfc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("erfc accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("erfc needs double argument");
+      r.num=erfc(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult flGamma(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("lgamma accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("lgamma needs double argument");
+      r.num=lgamma(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult ftGamma(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("tgamma accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("tgamma needs double argument");
+      r.num=tgamma(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fJ0(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("j0 accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j0 needs double argument");
+      r.num=j0(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fJ1(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("j1 accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j1 needs double argument");
+      r.num=j1(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fY0(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("y0 accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y0 needs double argument");
+      r.num=y0(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fY1(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("y1 accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y1 needs double argument");
+      r.num=y1(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fYn(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("yn accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("yn needs double argument");
+      r.num=yn((int)params[0].num, params[1].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fJn(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("jn accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("jn needs double argument");
+      r.num=jn((int)params[0].num, params[1].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSRand(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("srand accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("srand needs double argument");
+      r.num=0;
+      srand((unsigned int)params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fRand(JKQTPMathParser::jkmpResult* /*params*/, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=0) p->jkmpError("rand accepts 0 argument");
+      r.num=double(rand())/double(RAND_MAX);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fCeil(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("ceil accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("ceil needs double argument");
+      r.num=ceil(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fFloor(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("floor accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("floor needs double argument");
+      r.num=floor(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fTrunc(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("trunc accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("trunc needs double argument");
+      r.num=trunc(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fRound(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("round accepts 1 argument");
+      if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("round needs double argument");
+      r.num=round(params[0].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fFMod(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("fmod accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("fmod needs double argument");
+      r.num=fmod((int)params[0].num, params[1].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fMin(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("min accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("min needs double argument");
+      r.num=fmin((int)params[0].num, params[1].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fMax(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("max accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("max needs double argument");
+      r.num=fmax((int)params[0].num, params[1].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult QFSPIMLightsheetEvaluationItem_fGauss(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("gauss accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("gauss needs double argument");
+      r.num=exp(-2*params[0].num*params[0].num/params[1].num/params[1].num);
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSlit(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=2) p->jkmpError("slit accepts 2 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("slit needs double argument");
+      r.num=((params[0].num>=-1.0*params[1].num/2)&&(params[0].num<=params[1].num/2))?1.0:0.0;
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fTheta(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("theta accepts 1 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("theta needs double argument");
+      r.num=(params[0].num>=0)?1.0:0.0;
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSigmoid(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("sigmoid accepts 1 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("sigmoid needs double argument");
+      r.num=1.0/(1+exp(-1.0*params[0].num));
+      return r;
+    }
+
+    JKQTPMathParser::jkmpResult fSign(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
+      JKQTPMathParser::jkmpResult r;
+      r.type=JKQTPMathParser::jkmpDouble;
+      if (n!=1) p->jkmpError("sign accepts 1 argument");
+      if ((params[0].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("sign needs double argument");
+      r.num=0.0;
+      if (params[0].num<0) { r.num=-1; }
+      else if (params[0].num>0) { r.num=+1; }
+      return r;
+    }
+
+
+
+    inline std::string strip(std::string s) {
+      std::string r;
+      for (size_t i=0; i<s.size(); i++){
+        if ((s[i]!=' ')&&(s[i]!='\t')&&(s[i]!='\r')&&(s[i]!='\n')) {
+          r+=s[i];
+        }
+      }
+      return r;
+    }
+}
 
 
 std::string JKQTPMathParser::tokentostring(JKQTPMathParser::jkmpTokenType token) {

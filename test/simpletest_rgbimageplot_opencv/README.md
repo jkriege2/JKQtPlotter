@@ -4,9 +4,9 @@
 
 ## Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
 This project (see `./test/simpletest_imageplot_opencv/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
-To copy the data a special OpenCV Interface function `JKQTPdatastore::copyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
+To copy the data a special OpenCV Interface function `JKQTPcopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
-The function `JKQTPdatastore::copyCvMatToColumn()` is only available, when the preprocessore macro `JKQTPLOTTER_OPENCV_INTERFACE` is defined when compiling the JKQtPlotter library.
+The function `JKQTPcopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQtPlotter with OPenCV.
 
 The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/test/simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
 ```c++
@@ -14,6 +14,7 @@ The source code of the main application is (see [`jkqtplotter_simpletest_imagepl
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpopencvinterface.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 
@@ -41,9 +42,9 @@ int main(int argc, char* argv[])
     // 3. make data available to JKQtPlotter by adding it to the internal datastore.
     //    In this step the contents of each channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
-    size_t cPictureR=ds->copyCvMatToColumn(picture, "R-channel", 2);
-    size_t cPictureG=ds->copyCvMatToColumn(picture, "G-channel", 1);
-    size_t cPictureB=ds->copyCvMatToColumn(picture, "B-channel", 0);
+    size_t cPictureR=JKQTPcopyCvMatToColumn(ds, picture, "R-channel", 2);
+    size_t cPictureG=JKQTPcopyCvMatToColumn(ds, picture, "G-channel", 1);
+    size_t cPictureB=JKQTPcopyCvMatToColumn(ds, picture, "B-channel", 0);
 
 
     // 4. create a graph (JKQTPColumnRGBMathImage) with the columns created above as data

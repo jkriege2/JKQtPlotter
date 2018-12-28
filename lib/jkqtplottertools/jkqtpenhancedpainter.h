@@ -41,6 +41,7 @@
 
 */
 class LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
+        Q_GADGET
     public:
         JKQTPEnhancedPainter(QPaintDevice* device);
         JKQTPEnhancedPainter();

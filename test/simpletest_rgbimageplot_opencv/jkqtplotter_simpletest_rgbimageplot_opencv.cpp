@@ -3,6 +3,7 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpopencvinterface.h"
 #include <opencv2/imgcodecs.hpp>
 
 
@@ -29,9 +30,9 @@ int main(int argc, char* argv[])
     // 3. make data available to JKQtPlotter by adding it to the internal datastore.
     //    In this step the contents of each channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
-    size_t cPictureR=ds->copyCvMatToColumn(picture, "R-channel", 2);
-    size_t cPictureG=ds->copyCvMatToColumn(picture, "G-channel", 1);
-    size_t cPictureB=ds->copyCvMatToColumn(picture, "B-channel", 0);
+    size_t cPictureR=JKQTPcopyCvMatToColumn(ds, picture, "R-channel", 2);
+    size_t cPictureG=JKQTPcopyCvMatToColumn(ds, picture, "G-channel", 1);
+    size_t cPictureB=JKQTPcopyCvMatToColumn(ds, picture, "B-channel", 0);
 
 
     // 4. create a graph (JKQTPColumnRGBMathImage) with the columns created above as data

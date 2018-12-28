@@ -3,6 +3,7 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpopencvinterface.h"
 #include <opencv/cv.h>
 
 #ifndef M_PI
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
     // 3. make data available to JKQtPlotter by adding it to the internal datastore.
     //    In this step the contents of one channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
-    size_t cAiryDisk=ds->copyCvMatToColumn(airydisk, "imagedata");
+    size_t cAiryDisk=JKQTPcopyCvMatToColumn(ds, airydisk, "imagedata");
 
 
     // 4. create a graph (JKQTPColumnMathImage) with the column created above as data
