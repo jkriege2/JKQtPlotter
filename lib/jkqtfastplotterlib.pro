@@ -1,6 +1,6 @@
 TARGET = jkqtfastplotterlib
 
 TEMPLATE = lib
-CONFIG+=staticlib
+CONFIG+=staticlib dll
 
 include(jkqtfastplotter.pri)
