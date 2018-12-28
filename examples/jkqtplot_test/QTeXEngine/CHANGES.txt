@@ -1,0 +1,16 @@
+QTeXEngine GNU GPL v. 3.0
+------------------------
+
+09/11/2010 - Release 0.3:
+	Fixed a bug leading to the creation of empty drawing paths.
+	
+------------------------
+
+17/08/2009 - Release 0.2:
+- Improved handling of text strings.
+- Added several useful output options.
+- Added Doxygen configuration files.
+
+------------------------
+
+05/08/2009 - Release 0.1: Initial release.

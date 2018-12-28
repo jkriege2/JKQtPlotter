@@ -82,12 +82,8 @@ RESOURCES += $$PWD/jkqtplotterressources/jkqtpbaseplotter.qrc
 INCLUDEPATH += $$PWD 
 
 QT += core gui xml svg opengl
-#win32:LIBS += -lgdi32
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 include($$PWD/jkqtplotterressources/math_fonts/xits.pri)
 DEFINES += AUTOLOAD_XITS_FONTS
 DEFINES += USE_XITS_FONTS
-
-# for support of palettes stored as XML, use:
-QT += xml

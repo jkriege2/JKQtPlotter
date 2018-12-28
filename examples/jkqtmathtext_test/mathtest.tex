@@ -1,0 +1,127 @@
+
+\documentclass[a4paper]{scrartcl}
+
+%% Deutsche Anpassungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[ngerman]{babel}
+\usepackage[ansinew]{inputenc}
+\usepackage{ulem}
+\usepackage{mathtools}
+\usepackage{esint}
+%\usepackage{txfonts}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbH}{\mathbb{H}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbZ}{\mathbb{Z}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\Angstrom}{\r{A}}
+\newcommand{\lefrighttharpoons}{\rightleftharpoons}
+\newcommand{\subsetnot}{\not\subset}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+
+
+\newcommand{\va}{\vec{a}}
+\newcommand{\vr}{\vec{r}}
+\newcommand{\vR}{\vec{R}}
+\newcommand{\argmin}{\mbox{arg\:min}}
+\newcommand{\uul}[1]{\uuline{#1}}
+\newcommand{\ool}[1]{\overline{\overline{#1}}}
+\newcommand{\arrow}[1]{\overrightarrow{#1}}
+\begin{document}
+	 \begin{itemize}
+	
+\item\textbf{std dev:} \[\sigma_x=\sqrt{\langle (x-\langle x\rangle)^2\rangle}=\sqrt{\frac{1}{N-1}\cdot\left( \sum_{i=1}^N{x_i}^2-\frac{1}{N}\cdot\left(\sum_{i=1}^Nx_i\right)^2\right)} \]
+    \item\textbf{std dev 2:} \[\sigma_x=\sqrt{\langle (x-\langle x\rangle)^2\rangle}=\sqrt{\frac{1}{N-1}\cdot\left( \sum_{i=1}^Nx_i^2-\frac{1}{N}\cdot\left(\sum_{i=1}^Nx_i\right)^2\right)} \]
+    \item\textbf{rotation matrix:} \[\mathrm{\mathbf{M}}(\alpha) = \left(\begin{matrix}\cos(\alpha)+n_x^2\cdot (1-\cos(\alpha))  &  n_x\cdot n_y\cdot (1-\cos(\alpha))-n_z\cdot \sin(\alpha) &  n_x\cdot n_z\cdot (1-\cos(\alpha))+n_y\cdot \sin(\alpha)\\n_x\cdot n_y\cdot (1-\cos(\alpha))+n_z\cdot \sin(\alpha) & \cos(\alpha)+n_y^2\cdot (1-\cos(\alpha))  &   n_y\cdot n_z\cdot (1-\cos(\alpha))-n_x\cdot \sin(\alpha)\\n_z\cdot n_x\cdot (1-\cos(\alpha))-n_y\cdot \sin(\alpha) & n_z\cdot n_y\cdot (1-\cos(\alpha))+n_x\cdot \sin(\alpha)  & \cos(\alpha)+n_z^2\cdot (1-\cos(\alpha))\end{matrix}\right) \]
+    \item\textbf{like in label at bottom (no MM):} \[\left(\left[\sqrt{2\pi\cdot\int_{-\infty}^\infty f(x)\;\mathrm{d}x}\right]\right) \]
+    \item\textbf{like in label at bottom (MM):} \[\left(\left[\sqrt{2\pi\cdot\int_{-\infty}^\infty f(x)\;\mathrm{d}x}\right]\right) \]
+    \item\textbf{decoration:} \[\vec{x}\vec{X}\vec{\psi} -- \dot{x}\dot{X}\dot{\psi} -- \ddot{x}\ddot{X}\ddot{\psi} -- \overline{x}\overline{X}\overline{\psi} -- \underline{x}\underline{X}\underline{\psi} -- \hat{x}\hat{X}\hat{\psi} -- \tilde{x}\tilde{X}\tilde{\psi} -- \uul{x}\uul{X}\uul{\psi} -- \ool{x}\ool{X}\ool{\psi} -- \bar{x}\bar{X}\bar{\psi} -- \arrow{x}\arrow{X}\arrow{\psi} \]
+    \item\textbf{mathtest:}\\ This is normal text: $this is math:\langle r^2(\tau)\rangle=\left\langle (\vec{r}(t)-\vec{r}(t+\tau) )^2\right\rangle\ \ \ g(\tau)=\frac{1}{N}\cdot\left(1+\frac{2}{3}\frac{\langle r^2(\tau)\rangle}{w_{xy}^2}\right)^{-1}  \lfloor\rfloor\lceil\rceil\langle\rangle\left\{\va\left|\|\va\|_2\geq2\right.\right\} \vr\vR$\\$\frac{\sqrt{\sqrt{\sqrt{\sum_{i=0}^\infty \hat{i}^2}+y^\alpha}+1}}{\dot{v}\equiv\ddot{r}}\argmin_{\vec{k}}\sum_{\sqrt{i}=0}^{N}\int_{x_0}^{x_1}\left(\left(\left(x\right)\right)\right)\underbrace{\left[\left\{\frac{\partial f}{\partial x}\right\}\cdot\frac{1}{2}\right]}{\text{underbraced text $\hbar$}}\cdots\frac{\sqrt{\sum_{i=0}^2 \hat{i}^2}+y^\alpha}{\dot{v}\equiv\ddot{r}}, \hat{t}\hat{T} \overbrace{\left|\sqrt{x\cdot Y}\right|}{\propto\bbN\circ\bbZ}$\\$\left<\arrow{x(\tau)}\cdot\vec{R}(t+\bar{\tau})\right>   \alpha\beta\gamma\delta\epsilon\Gamma\Delta\Theta\Omega  \left\lfloor \left\lceil \cbrt{\hbar\omega}\right\rceil\right\rfloor $
+		\item\textbf{chi2 test:} \[\vec{p}^\ast=\argmax\limits_{\vec{p}}\chi^2=\argmax\limits_{\vec{p}}\sum\limits_{i=1}^N\left|\frac{\hat{f}_i-f(x_i;\vec{p})}{\sigma_i}\right|^2\]
+    \item\textbf{upper/lower parantheses test:} \[ \text{bblabla} \frac{1}{2}\cdot\left(\frac{1}{\mathrm{e}^x+\mathrm{e}^{-x}}\right)\cdot\left(\frac{1}{\frac{1+2}{5+x}}\right)\cdot\left(\frac{1}{\exp\left[-\frac{y^2}{\sqrt{x}}\right]\cdot\exp\left[-\frac{1}{\frac{1}{2}}\right]}\right) \]
+    \item\textbf{ACF test:} \[g_{rg}^{ab}(\tau)=\frac{1}{N}\cdot\left(1+\frac{2}{3}\frac{\langle r^2(\tau)\rangle}{w_{xy}^2}\right)^{-1}\cdot\left(1+\frac{2}{3}\frac{\langle r^2(\tau)\rangle}{w_{xy}^2}\right)^{-\frac{1}{2}} \]
+    \item\textbf{MSD test:} \[\mathrm{MSD}(\tau)\equiv\langle r^2(\tau)\rangle=\left\langle (\vec{r}(t)-\vec{r}(t+\tau) )^2\right\rangle=2n\cdot\frac{K_\alpha}{\Gamma(1+\alpha)}\cdot\tau^\alpha \]
+    \item\textbf{math: blackboard:} \[\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ120} \]
+    \item\textbf{math: bf:} \[\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120} \]
+    \item\textbf{math: rm:} \[\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120} \]
+    \item\textbf{math: cal:} \[\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120} \]
+    \item\textbf{subscript test:} \[r_{123}\ \ r_{\frac{1}{2}} \]
+    \item\textbf{subscript0 test:} \[r_{123} \]
+    \item\textbf{subscript1 test:} \[r_{123}\  \]
+    \item\textbf{subscript2 test:} \[r_{123}\ \  \]
+    \item\textbf{subscript3 test:} \[r_{123}r_{\frac{1}{2}} \]
+    \item\textbf{superscript test:} \[r^{123}\ \ r^{\frac{1}{2}} \]
+    \item\textbf{superscript0 test:} \[r^{123} \]
+    \item\textbf{superscript1 test:} \[r^{123}\  \]
+    \item\textbf{superscript2 test:} \[r^{123}\ \  \]
+    \item\textbf{superscript3 test:} \[r^{123}r^{\frac{1}{2}} \]
+    \item\textbf{asuperscript test:} \[a^{123}\ \ a^{\frac{1}{2}} \]
+    \item\textbf{asuperscript0 test:} \[a^{123} \]
+    \item\textbf{gsuperscript1 test:} \[g^{123}\  \]
+    \item\textbf{gsuperscript2 test:} \[g^{123}\ \  \]
+    \item\textbf{gsuperscript3 test:} \[g^{123}g^{\frac{1}{2}} \]
+    \item\textbf{frac test:} \[\frac{a}{b}+\frac{g}{a}-\frac{a^2}{b^2}\cdot\frac{a^2}{b^{\frac{1}{2}}} \]
+    \item\textbf{tfrac test:} \[\tfrac{a}{b}+\tfrac{g}{a}-\tfrac{a^2}{b^2}\cdot\tfrac{a^2}{b^{\tfrac{1}{2}}} \]
+    \item\textbf{dfrac test:} \[\dfrac{a}{b}+\dfrac{g}{a}-\dfrac{a^2}{b^2}\cdot\dfrac{a^2}{b^{\dfrac{1}{2}}} \]
+    \item\textbf{stackrel test:} \[\stackrel{a}{b}+\stackrel{g}{a}-\stackrel{a^2}{b^2}\cdot\stackrel{a^2}{b^{\stackrel{1}{2}}} \]
+    \item\textbf{brace5 test:  ( )} \[\left(\left(\left( r^{123}\right)\right)\right) -- \left(\left(\left( r^{123}\right)\right)\right) \]
+    \item\textbf{brace6 test:  [ ]} \[\left[\left[\left[ r^{123}\right]\right]\right] -- \left[\left[\left[ r^{123}\right]\right]\right] \]
+    \item\textbf{brace7 test:  { }} \[\left\{\left\{\left\{ r^{123}\right\}\right\}\right\} -- \left\{\left\{\left\{ r^{123}\right\}\right\}\right\} \]
+    \item\textbf{brace8 test: || ||} \[\left\|\left\|\left\| r^{123}\right\|\right\|\right\| -- \left\|\left\|\left\| r^{123}\right\|\right\|\right\| \]
+    \item\textbf{brace9 test:  | |} \[\left|\left|\left| r^{123}\right|\right|\right| -- \left|\left|\left| r^{123}\right|\right|\right| \]
+    \item\textbf{brace10 test} \[\left\{\left[\left( r^{123}\right)\right]\right\} -- \left\{\left[\left( r^{123}\right)\right]\right\} \]
+    \item\textbf{brace11 test:  floor} \[\left\lfloor\left\lfloor\left\lfloor r^{123}\right\rfloor\right\rfloor\right\rfloor -- \left\lfloor\left\lfloor\left\lfloor r^{123}\right\rfloor\right\rfloor\right\rfloor \]
+    \item\textbf{brace12 test:  ceil} \[\left\lceil\left\lceil\left\lceil r^{123}\right\rceil\right\rceil\right\rceil -- \left\lceil\left\lceil\left\lceil r^{123}\right\rceil\right\rceil\right\rceil \]
+    \item\textbf{sub-, superscript test} \[r^{1234}_{321} r_{321}^{1234} -- r^{1234}_{321} r_{321}^{1234} -- \kappa^2 -- \kappa_2 -- \kappa_2^2 \]
+    \item\textbf{super-, subscript test} \[r^{123}_{4321} r_{4321}^{123} -- r^{123}_{4321} r_{4321}^{123} -- \kappa^2 -- \kappa_2 -- \kappa_2^2 \]
+
+    \item\textbf{math 1:} \[f(x)=\int_{-\infty}^xe^{-t^2}\;\mathrm{d}t \]
+    \item\textbf{math 2:} \[\sum_{i=1}^\infty\frac{-e^{i\pi}}{2^n} \]
+    \item\textbf{math 3:} \[\mbox{det} \begin{pmatrix} 1 & x_1 & \ldots & x_1^{n-1} \\ 1 & x_2 & \ldots & x_2^{n-1} \\ \vdots & \vdots & \ddots & \vdots \\ 1 & x_n & \ldots & x_n^{n-1} \end{pmatrix} = \prod_{1 \leq i < j \leq n} (x_j - x_i)  \]
+    \item\textbf{math 4:} \[\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+\sqrt{1+x}}}}}} \]
+    \item\textbf{math 5:} \[\left(\stackrel{p}{2}\right)=x^2y^{p-2}-\frac{1}{1-x}\frac{1}{1-x^2} \]
+    \item\textbf{math 6:} \[a_0+\frac{1}{a_1+\frac{1}{a_2+\frac{1}{a_3+\frac{1}{a_4}}}} \]
+    \item\textbf{math 7:} \[\left(\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}\right)\left|\varphi(x+\mathrm{i}y)\right|^2=0 \]
+    \item\textbf{math 8:} \[2^{2^{2^{x}}} \]
+    \item\textbf{math 9:} \[\iint_Df(x,y)\;\mathrm{d}x\;\mathrm{d}y \]
+    \item\textbf{math 10 (overbrace):} \[\overbrace{x+x+...+x}{k\ \mathrm{times}} \]
+    \item\textbf{math 11 (underbrace):} \[\underbrace{x+x+...+x}{k\ \mathrm{times}} \]
+    \item\textbf{math 12 (under/overbrace):} \[\underbrace{\overbrace{x+x+...+x}{k\ \mathrm{times}} \overbrace{x+x+...+x}{k\ \mathrm{times}}}{2k\ \mathrm{times}} \]
+    \item\textbf{math 13:} \[y_1''\ \ \ y_2''' \]
+    \item\textbf{math 14:} \[f(x)=\begin{cases} 1/3 & \mathrm{if}\ 0\leq x\leq1 \\ 2/3 & \mathrm{if}\ 3\leq x\leq4 \\0 & \mathrm{elsewhere} \end{cases} \]
+    \item\textbf{math 15:} \[\Re{z} =\frac{n\pi \dfrac{\theta +\psi}{2}}{\left(\dfrac{\theta +\psi}{2}\right)^2 + \left( \dfrac{1}{2}\log \left\lvert\dfrac{B}{A}\right\rvert\right)^2}. \]
+    \item\textbf{math 16:} \[\sum_{m=1}^\infty\sum_{n=1}^\infty\frac{m^2\,n}{3^m\left(m\,3^n+n\,3^m\right)} \]
+    \item\textbf{math 17:} \[\phi_n(\kappa) =\frac{1}{4\pi^2\kappa^2} \int_0^\infty\frac{\sin(\kappa R)}{\kappa R}\frac{\partial}{\partial R}\left[R^2\frac{\partial D_n(R)}{\partial R}\right]\,dR \]
+    \item\textbf{math 18:} \[{}_pF_q(a_1,\dots,a_p;c_1,\dots,c_q;z)= \sum_{n=0}^\infty\frac{(a_1)_n\cdots(a_p)_n}{(c_1)_n\cdots(c_q)_n}\frac{z^n}{n!} \]
+    \item\textbf{math 19 (overset):} \[X \overset{=}{def} Y\ \ \ \ \ X \overset{=}{!} Y\ \ \ \ \ X \overset{\rightarrow}{f} Y\ \ \ \ \ \frac{f(x+\Delta x)-f(x)}{\Delta x}\overset{\longrightarrow}{\Delta x\to 0}f'(x) \]
+    \item\textbf{math 20 (underset):} \[X \underset{=}{\text{def (5)}} Y\ \ \ \ \ X \underset{\rightarrow}{f} Y\ \ \ \ \ \frac{f(x+\Delta x)-f(x)}{\Delta x}\underset{\longrightarrow}{\Delta x\to 0}f'(x) \]
+    \item\textbf{axiom of power test:} \[\forall A \, \exists P \, \forall B \, [B \in P \iff \forall C \, (C \in B \Rightarrow C \in A)] \]
+    \item\textbf{De Morgan's law:} $\neg(P\land Q)\iff(\neg P)\lor(\neg Q)$ or $\overline{\bigcap_{i \in I} A_{i}}\equiv\bigcup_{i \in I} \overline{A_{i}}$ or $\overline{A \cup B}\equiv\overline{A} \cap \overline{B} $
+    \item\textbf{quadratic formula:} \[x=\frac{-b \pm \sqrt{b^2-4ac}}{2a} \]
+    \item\textbf{combination:} \[\binom{n}{k} = \frac{n(n-1)...(n-k+1)}{k(k-1)\dots1}=\frac{n!}{k!(n-k)!} \]
+    \item\textbf{Sophomore's dream 1:} \[\int_0^1 x^{-x}\,dx = \sum_{n=1}^\infty n^{-n}(\scriptstyle{= 1.29128599706266354040728259059560054149861936827\dots)} \]
+    \item\textbf{Sophomore's dream 2:} \[\int_0^1 x^x   \,dx = \sum_{n=1}^\infty (-1)^{n+1}n^{-n} = - \sum_{n=1}^\infty (-n)^{-n} (\scriptstyle{= 0.78343051071213440705926438652697546940768199014\dots}) \]
+    \item\textbf{divergence 1:} \[\operatorname{div}\vec{F} = \nabla\cdot\vec{F}=\frac{\partial U}{\partial x}+\frac{\partial V}{\partial y}+\frac{\partial W}{\partial z} \]
+    \item\textbf{divergence 2:} \[\overrightarrow{\operatorname{div}}\,(\mathbf{\underline{\underline{\epsilon}}}) = 
+                            \begin{bmatrix}
+                            \frac{\partial \epsilon_{xx}}{\partial x} +\frac{\partial \epsilon_{yx}}{\partial y} +\frac{\partial \epsilon_{zx}}{\partial z} \\
+                            \frac{\partial \epsilon_{xy}}{\partial x} +\frac{\partial \epsilon_{yy}}{\partial y} +\frac{\partial \epsilon_{zy}}{\partial z} \\
+                            \frac{\partial \epsilon_{xz}}{\partial x} +\frac{\partial \epsilon_{yz}}{\partial y} +\frac{\partial \epsilon_{zz}}{\partial z}
+                            \end{bmatrix} \]
+    \item\textbf{lim, sum ...:} \[\lim_{x\to\infty} f(x) = \binom{k}{r} + \frac{a}{b} \sum_{n=1}^\infty a_n + \displaystyle{ \left\{ \frac{1}{13} \sum_{n=1}^\infty b_n \right\} }. \]
+    %\item\textbf{array test:} \[ f(x) := \left\{\begin{array}[ll] x^2\sin\frac{1}{x} & \text{if} x \ne 0, \\ 0 & \text{if } x = 0 . \end{array}\right. \]
+    \item\textbf{Schwinger-Dyson:} \[\left\langle\psi\left|\mathcal{T}\{F \phi^j\}\right|\psi\right\rangle=\left\langle\psi\left|\mathcal{T}\{iF_{,i}D^{ij}-FS_{int,i}D^{ij}\}\right|\psi\right\rangle. \]
+    \item\textbf{Schrödinger's equation:} \[\left[-\frac{\hbar^2}{-2m}\frac{\partial^2}{\partial x^2}+V\right]\Psi(x)=i\hbar\frac{\partial}{\partial t}\Psi(x) \]
+    \item\textbf{Cauchy-Schwarz inequality:} \[\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right) \]
+    \item\textbf{Maxwell's equations:} \[\begin{aligned}\nabla \times \vec{\mathbf{B}} -\, \frac{1}{c}\, \frac{\partial\vec{\mathbf{E}}}{\partial t} & = \frac{4\pi}{c}\vec{\mathbf{j}} \\   \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\\nabla \times \vec{\mathbf{E}}\, +\, \frac{1}{c}\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\\nabla \cdot \vec{\mathbf{B}} & = 0 \end{aligned} \]
+
+	 \end{itemize}
+
+\end{document}

@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>example.bmp</file>
-    </qresource>
-</RCC>

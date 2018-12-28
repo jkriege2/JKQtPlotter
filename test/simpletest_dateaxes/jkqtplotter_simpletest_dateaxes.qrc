@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>weatherdata_gelsenkirchen.csv</file>
-        <file>weatherdata_heidelberg_2018-10-14.csv</file>
-        <file>weatherdata_heidelberg.csv</file>
-    </qresource>
-</RCC>

@@ -1,1 +1,0 @@
-RESOURCES += asana.qrc
