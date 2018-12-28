@@ -61,9 +61,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 # include JKQtPlotter source code
 DEPENDPATH += $$PWD
 #$$PWD/../../lib
-INCLUDEPATH += $$PWD/../../lib
-CONFIG (debug, debug|release):LIBS += -L$$PWD/../../lib/debug -ljkqtplotterlib
-CONFIG (release):LIBS += -L$$PWD/../../lib/release -ljkqtplotterlib
+INCLUDEPATH += ../../lib
+CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtplotterlib
+CONFIG (release):LIBS += -L../../lib/release -ljkqtplotterlib
 
 
 # here you can activate some debug options
