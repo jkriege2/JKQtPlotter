@@ -2,6 +2,6 @@ TARGET = jkqtplotterlib
 CONFIG (debug, debug|release): TARGET = jkqtplotterlib_debug
 
 TEMPLATE = lib
-CONFIG += dll
+CONFIG += staticlib
 
 include(../lib/jkqtplotter.pri)

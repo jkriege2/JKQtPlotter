@@ -2,6 +2,6 @@ TARGET = jkqtmathtextlib
 CONFIG (debug, debug|release): TARGET = jkqtmathtextlib_debug
 
 TEMPLATE = lib
-CONFIG+=dll
+CONFIG+=staticlib
 
 include(../lib/jkqtmathtext.pri)
