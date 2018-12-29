@@ -50,20 +50,24 @@ build_script:
   - mkdir build
   - cd build
   - echo "Call QMake..."
-  - qmake.exe ..\JKQtPlotterBuildAllExamples.pro
+  - qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro
   - echo "Build..."
   - call %MAKETOOL%
   - cd ..
 
 artifacts:
-   - path: build\lib\release\*.a
-     name: lib %QTVER%%QTABI%
-   - path: build\lib\release\*.lib
-     name: lib %QTVER%%QTABI%
-   - path: build\lib\release\*.dll
+   - path: build\staticlib\**\*.a
+     name: staticlib %QTVER%%QTABI%
+   - path: build\sharedlib\**\*.a
+     name: sharedlib %QTVER%%QTABI%
+   - path: build\staticlib\**\*.lib
+     name: staticlib %QTVER%%QTABI%
+   - path: build\sharedlib\**\*.lib
+     name: sharedlib %QTVER%%QTABI%
+   - path: build\sharedlib\**\*.dll
      name: dll %QTVER%%QTABI%
-   - path: build\test\**\*.exe
-     name: Test %QTVER%%QTABI%
+   - path: build\examples\**\*.exe
+     name: Examples %QTVER%%QTABI%
 
 
 # # remote desktop connection on init
