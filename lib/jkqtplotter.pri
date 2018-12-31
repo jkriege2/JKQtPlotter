@@ -1,14 +1,6 @@
 
-!win32-msvc* {
-    QMAKE_CXXFLAGS += -fexceptions
-} else {
-    QMAKE_CXXFLAGS += /EHsc
-    # To enable M_PI, M_E,...
-    DEFINES += _USE_MATH_DEFINES
-    # To fix error: C2338: va_start argument must not
-    # have reference type and must not be parenthesized
-    DEFINES += _CRT_NO_VA_START_VALIDATION
-}
+include($$PWD/common.pri)
+
 
 HEADERS += \
 		   $$PWD/jkqtfastplotter/jkqtfastplotter.h \
@@ -34,13 +26,11 @@ HEADERS += \
            $$PWD/jkqtplottergui/jkqtpenhancedtableview.h \
            $$PWD/jkqtplottergui/jkqtpgraphsmodel.h \
            $$PWD/jkqtplottergui/jkvanishqtoolbar.h \
-           $$PWD/jkqtplottertools/jkqtp_imexport.h \
            $$PWD/jkqtplottertools/jkqtpdrawingtools.h \
            $$PWD/jkqtplottertools/jkqtpenhancedpainter.h \
            $$PWD/jkqtplottertools/jkqtphighrestimer.h \
            $$PWD/jkqtplottertools/jkqtpimagetools.h \
            $$PWD/jkqtplottertools/jkqtpmathparser.h \
-           $$PWD/jkqtplottertools/jkqtptools.h \
            $$PWD/jkqtplottertools/jkqttools.h 
 
 
@@ -73,16 +63,12 @@ SOURCES += \
            $$PWD/jkqtplottertools/jkqtphighrestimer.cpp \
            $$PWD/jkqtplottertools/jkqtpimagetools.cpp  \
            $$PWD/jkqtplottertools/jkqtpmathparser.cpp \
-           $$PWD/jkqtplottertools/jkqtptools.cpp \
            $$PWD/jkqtplottertools/jkqttools.cpp  
 
 
 RESOURCES += $$PWD/jkqtplotterressources/jkqtpbaseplotter.qrc
 
-INCLUDEPATH += $$PWD 
-
-QT += core gui xml svg opengl
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+QT += xml svg opengl
 
 include($$PWD/jkqtplotterressources/math_fonts/xits.pri)
 DEFINES += AUTOLOAD_XITS_FONTS
