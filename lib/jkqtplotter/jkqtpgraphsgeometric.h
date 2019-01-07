@@ -70,6 +70,9 @@ class LIB_EXPORT JKQTPgeoBaseLine: public JKQTPplotObject {
         JKQTPGET_SET_MACRO(Qt::PenStyle, style)
         JKQTPGET_SET_MACRO(double, lineWidth)
 
+        /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
+        virtual void setAlpha(float alpha);
+
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
@@ -99,7 +102,7 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
         /*! \brief class contructor
 
             \param color color of drawing
-            \param fillCOlor color of the filling in the drawing
+            \param fillColor color of the filling in the drawing
             \param style line style of drawing
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
@@ -108,7 +111,7 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
         /*! \brief class contructor
 
             \param color color of drawing
-            \param fillCOlor color of the filling in the drawing
+            \param fillColor color of the filling in the drawing
             \param style line style of drawing
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
@@ -117,7 +120,7 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
         /*! \brief class contructor
 
             \param color color of drawing
-            \param fillCOlor color of the filling in the drawing
+            \param fillColor color of the filling in the drawing
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
          */
@@ -125,19 +128,24 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
         /*! \brief class contructor
 
             \param color color of drawing
-            \param fillCOlor color of the filling in the drawing
+            \param fillColor color of the filling in the drawing
             \param lineWidth lineWidth of drawing
          */
         JKQTPgeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQtPlotter* parent);
         /*! \brief class contructor
 
             \param color color of drawing
-            \param fillCOlor color of the filling in the drawing
+            \param fillColor color of the filling in the drawing
          */
         JKQTPgeoBaseFilled(QColor color, QColor fillColor, JKQtPlotter* parent);
 
         JKQTPGET_SET_MACRO(QColor, fillColor)
         JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
+
+        /** \brief sets the alpha-channel of the \a color and \a fillColor (i.e. its transparency) to the same value */
+        virtual void setAlpha(float alpha) override;
+        /** \brief sets the alpha-channel of the \a color and \a fillColor (i.e. its transparency) */
+        virtual void setAlpha(float alphaLine, float alphaFill);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
@@ -152,6 +160,74 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
 
 };
 
+
+
+/*! \brief This virtual JKQTPgraph descendent may be used to display a single symbol (marker).
+    \ingroup jkqtplotter_geoplots
+
+ */
+class LIB_EXPORT JKQTPgeoSymbol: public JKQTPplotObject {
+        Q_OBJECT
+    public:
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+            \param symbolSize size of the symbol in pt
+            \param color color of drawing
+            \param fillColor fill color of the symbol (if filled)
+         */
+        JKQTPgeoSymbol(JKQtBasePlotter* parent, double x, double y, JKQTPgraphSymbols symbol=JKQTPcross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+            \param symbolSize size of the symbol in pt
+            \param color color of drawing
+            \param fillColor fill color of the symbol (if filled)
+         */
+        JKQTPgeoSymbol(JKQtPlotter* parent, double x, double y, JKQTPgraphSymbols symbol=JKQTPcross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
+
+        JKQTPGET_SET_MACRO(QColor, color)
+        JKQTPGET_SET_MACRO(QColor, fillColor)
+        JKQTPGET_SET_MACRO(JKQTPgraphSymbols, symbol)
+        JKQTPGET_SET_MACRO(double, symbolSize)
+        JKQTPGET_SET_MACRO(double, symbolWidth)
+        JKQTPGET_SET_MACRO(double, x)
+        JKQTPGET_SET_MACRO(double, y)
+
+        /** \copydoc JKQTPgraph::getXMinMax()        */
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        /** \copydoc JKQTPgraph::getYMinMax()        */
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+
+        /** \brief plots the graph to the plotter object specified as parent */
+        virtual void draw(JKQTPEnhancedPainter& painter);
+
+        /** \brief plots a key marker inside the specified rectangle \a rect */
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        /** \brief returns the color to be used for the key label */
+        virtual QColor getKeyLabelColor();
+
+    protected:
+        double x,y;
+
+        /** \brief color of the graph */
+        QColor color;
+        /** \brief fill-color of the graph */
+        QColor fillColor;
+
+        /** \brief size of the symbol in pt */
+        double symbolSize;
+        /** \brief width of the symbol lines in pt */
+        double symbolWidth;
+        /** \brief type of the symbol */
+        JKQTPgraphSymbols symbol;
+};
 
 
 /*! \brief This JKQTPplotObject is used to display text. It uses the JKQTMathText
@@ -334,33 +410,45 @@ class LIB_EXPORT JKQTPgeoInfiniteLine: public JKQTPgeoBaseLine {
     \image html plot_geolines.png
 
  */
-class LIB_EXPORT JKQTPgeoLines: public JKQTPgeoBaseLine {
+class LIB_EXPORT JKQTPgeoPolyLines: public JKQTPgeoBaseLine {
         Q_OBJECT
     public:
         /*! \brief class constructor
 
             \param parent the parent plotter class
-            \param x1 x-coordinate of first point of line
-            \param y1 y-coordinate of first point of line
-            \param x2 x-coordinate of second point of line
-            \param y2 y-coordinate of second point of line
+            \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPgeoLines(JKQtBasePlotter* parent, QVector<QPointF> points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPgeoPolyLines(JKQtBasePlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
             \param parent the parent plotter class
-            \param x1 x-coordinate of first point of line
-            \param y1 y-coordinate of first point of line
-            \param x2 x-coordinate of second point of line
-            \param y2 y-coordinate of second point of line
+            \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPgeoLines(JKQtPlotter* parent, QVector<QPointF> points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPgeoPolyLines(JKQtPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param points points on the polygon
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+         */
+        JKQTPgeoPolyLines(JKQtBasePlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param points points on the polygon
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+         */
+        JKQTPgeoPolyLines(JKQtPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
         /** \copydoc JKQTPplotObject::getXMinMax()        */
@@ -422,6 +510,60 @@ class LIB_EXPORT JKQTPgeoRectangle: public JKQTPgeoBaseFilled {
             \param fillStyle filling style of rectangle
          */
         JKQTPgeoRectangle(JKQtPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param x x-coordinate of center of rectangle
+            \param y y-coordinate of center of rectangle
+            \param width width of rectangle
+            \param height of rectangle
+            \param angle rotation angle of the rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoRectangle(JKQtBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param x x-coordinate of center of rectangle
+            \param y y-coordinate of center of rectangle
+            \param width width of rectangle
+            \param height of rectangle
+            \param angle rotation angle of the rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoRectangle(JKQtPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param bottomleft bottom left corner of rectangle
+            \param topright top right corner of rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoRectangle(JKQtBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param bottomleft bottom left corner of rectangle
+            \param topright top right corner of rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoRectangle(JKQtPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
 
@@ -437,13 +579,13 @@ class LIB_EXPORT JKQTPgeoRectangle: public JKQTPgeoBaseFilled {
         JKQTPGET_SET_MACRO(double, y)
         JKQTPGET_SET_MACRO(double, width)
         JKQTPGET_SET_MACRO(double, height)
-        JKQTPGET_SET_MACRO(double, alpha)
+        JKQTPGET_SET_MACRO(double, angle)
 
         void set_bottomleftrectangle(double x, double y, double width, double height);
 protected:
         double x,y,width,height;
         /** \brief rotation angle of rectangle */
-        double alpha;
+        double angle;
         /** \brief returns the transformation matrix used for this rectangle */
         QMatrix getMatrix();
         /** \brief returns a QPolygonF which represents the rectangle after rotation, but still in the world coordinate system, not in the screen/widget system */
@@ -463,27 +605,48 @@ class LIB_EXPORT JKQTPgeoPolygon: public JKQTPgeoBaseFilled {
         /*! \brief class constructor
 
             \param parent the parent plotter class
-            \param x1 x-coordinate of first point of line
-            \param y1 y-coordinate of first point of line
-            \param x2 x-coordinate of second point of line
-            \param y2 y-coordinate of second point of line
+            \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
             \param style line style
+            \param fillColor color of the filling
+            \param fillStyle style of the filling
+
          */
-        JKQTPgeoPolygon(JKQtBasePlotter* parent, QVector<QPointF> points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPgeoPolygon(JKQtBasePlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
             \param parent the parent plotter class
-            \param x1 x-coordinate of first point of line
-            \param y1 y-coordinate of first point of line
-            \param x2 x-coordinate of second point of line
-            \param y2 y-coordinate of second point of line
+            \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
             \param style line style
+            \param fillColor color of the filling
+            \param fillStyle style of the filling
          */
-        JKQTPgeoPolygon(JKQtPlotter* parent, QVector<QPointF> points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPgeoPolygon(JKQtPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor color of the filling
+            \param fillStyle style of the filling
+
+         */
+        JKQTPgeoPolygon(JKQtBasePlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor color of the filling
+            \param fillStyle style of the filling
+         */
+        JKQTPgeoPolygon(JKQtPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
         /** \copydoc JKQTPplotObject::getXMinMax()        */
@@ -550,6 +713,60 @@ class LIB_EXPORT JKQTPgeoEllipse: public JKQTPgeoRectangle {
             \param fillStyle filling style of ellipse
          */
         JKQTPgeoEllipse(JKQtPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param x x-coordinate of center of rectangle
+            \param y y-coordinate of center of rectangle
+            \param width width of rectangle
+            \param height of rectangle
+            \param angle rotation angle of the rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoEllipse(JKQtBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param x x-coordinate of center of rectangle
+            \param y y-coordinate of center of rectangle
+            \param width width of rectangle
+            \param height of rectangle
+            \param angle rotation angle of the rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoEllipse(JKQtPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param bottomleft bottom left corner of rectangle
+            \param topright top right corner of rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoEllipse(JKQtBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param bottomleft bottom left corner of rectangle
+            \param topright top right corner of rectangle
+            \param color color of line
+            \param lineWidth width of line
+            \param style line style
+            \param fillColor filling color of rectangle
+            \param fillStyle filling style of rectangle
+         */
+        JKQTPgeoEllipse(JKQtPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -613,11 +830,11 @@ class LIB_EXPORT JKQTPgeoArc: public JKQTPgeoBaseLine {
         JKQTPGET_SET_MACRO(double, y)
         JKQTPGET_SET_MACRO(double, width)
         JKQTPGET_SET_MACRO(double, height)
-        JKQTPGET_SET_MACRO(double, alpha)
+        JKQTPGET_SET_MACRO(double, angle)
     protected:
         double x,y,width,height;
         /** \brief rotation angle of rectangle */
-        double alpha;
+        double angle;
         /** \brief if we only draw an arc, this is the starting angle in degrees */
         double angleStart;
         /** \brief if we only draw an arc, this is the ending angle in degrees */

@@ -480,7 +480,7 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
         bool plotRange;
         /** \brief if \c true, draws lines at the range borders \a color */
         bool plotRangeLines;
-        /** \brief if \c true, this fills the range with \a fillCOlor */
+        /** \brief if \c true, this fills the range with \a fillColor */
         bool fillRange;
         /** \brief color of the graph */
         QColor color;

@@ -87,3 +87,4 @@ Thumbs.db
 /doc/html
 .qmake.stash
 moc_predefs.h
+/lib/jkqtplotter/*.TMP

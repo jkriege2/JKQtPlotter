@@ -36,16 +36,16 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     //plotGeo->get_plotter()->addGraph(line2);
 
     JKQTPgeoRectangle* rect1=new JKQTPgeoRectangle(plotGeo->get_plotter(), 1,1,2,2, QColor("blue"),2, Qt::SolidLine, QColor("lightblue"));
-    rect1->set_alpha(30);
+    rect1->set_angle(30);
     //plotGeo->get_plotter()->addGraph(rect1);
     JKQTPgeoRectangle* rect2=new JKQTPgeoRectangle(plotGeo->get_plotter(), 1,1,2,2, QColor("red"),2);
-    rect2->set_alpha(45);
+    rect2->set_angle(45);
     //plotGeo->get_plotter()->addGraph(rect2);
     JKQTPgeoRectangle* rect3=new JKQTPgeoRectangle(plotGeo->get_plotter(), 1,1,2,4, QColor("green"),2);
-    rect3->set_alpha(-30);
+    rect3->set_angle(-30);
     //plotGeo->get_plotter()->addGraph(rect3);
     JKQTPgeoEllipse* ell3=new JKQTPgeoEllipse(plotGeo->get_plotter(), 1,1,2,4, QColor("green"),2, Qt::SolidLine, QColor("lightgreen"), Qt::CrossPattern);
-    ell3->set_alpha(-30);
+    ell3->set_angle(-30);
     //plotGeo->get_plotter()->addGraph(ell3);
 
     QVector<QPointF> p;
@@ -57,7 +57,7 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
 
 //    JKQTPgeoPolygon* poly=new JKQTPgeoPolygon(plotGeo->get_plotter(), p, QColor("black"), 1.5, Qt::SolidLine, QColor(128,128,0,128));
     //plotGeo->get_plotter()->addGraph(poly);
-//    JKQTPgeoLines* lines=new JKQTPgeoLines(plotGeo->get_plotter(), p, QColor(255,255,0), 3);
+//    JKQTPgeoPolyLines* lines=new JKQTPgeoPolyLines(plotGeo->get_plotter(), p, QColor(255,255,0), 3);
     //plotGeo->get_plotter()->addGraph(lines);
 
     JKQTPgeoEllipse* ell1=new JKQTPgeoEllipse(plotGeo->get_plotter(), 0,0,2,4, QColor("black"),1.5, Qt::DotLine);

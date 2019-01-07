@@ -44,6 +44,11 @@ JKQTPgeoBaseLine::JKQTPgeoBaseLine(QColor color, double lineWidth, Qt::PenStyle 
     title="";
 }
 
+void JKQTPgeoBaseLine::setAlpha(float alpha)
+{
+    color.setAlphaF(alpha);
+}
+
 QPen JKQTPgeoBaseLine::getPen(JKQTPEnhancedPainter& painter) {
     QPen p;
     p.setColor(color);
@@ -55,8 +60,8 @@ QPen JKQTPgeoBaseLine::getPen(JKQTPEnhancedPainter& painter) {
 void JKQTPgeoBaseLine::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     painter.setPen(getPen(painter));
-    int y=rect.top()+rect.height()/2.0;
-    if (rect.width()>0) painter.drawLine(rect.left(), y, rect.right(), y);
+    double y=rect.top()+rect.height()/2.0;
+    if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     painter.restore();
 }
 
@@ -97,6 +102,18 @@ JKQTPgeoBaseFilled::JKQTPgeoBaseFilled(QColor color, QColor fillColor, JKQtPlott
 {
     this->fillColor=fillColor;
     this->fillStyle=Qt::SolidPattern;
+}
+
+void JKQTPgeoBaseFilled::setAlpha(float alpha)
+{
+    JKQTPgeoBaseLine::setAlpha(alpha);
+    fillColor.setAlphaF(alpha);
+}
+
+void JKQTPgeoBaseFilled::setAlpha(float alphaLine, float alphaFill)
+{
+    JKQTPgeoBaseLine::setAlpha(alphaLine);
+    fillColor.setAlphaF(alphaFill);
 }
 QBrush JKQTPgeoBaseFilled::getBrush(JKQTPEnhancedPainter &/*painter*/) {
     QBrush b;
@@ -165,8 +182,8 @@ void JKQTPgeoText::draw(JKQTPEnhancedPainter& painter) {
 void JKQTPgeoText::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     painter.setPen(getPen(painter));
-    int y=rect.top()+rect.height()/2.0;
-    if (rect.width()>0) painter.drawLine(rect.left(), y, rect.right(), y);
+    double y=rect.top()+rect.height()/2.0;
+    if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     painter.restore();
 }
 
@@ -400,17 +417,29 @@ void JKQTPgeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-JKQTPgeoLines::JKQTPgeoLines(JKQtBasePlotter* parent, QVector<QPointF> points, QColor color, double lineWidth, Qt::PenStyle style):
+JKQTPgeoPolyLines::JKQTPgeoPolyLines(JKQtBasePlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
     JKQTPgeoBaseLine(color, lineWidth, style, parent)
 {
     this->points=points;
 }
-JKQTPgeoLines::JKQTPgeoLines(JKQtPlotter* parent, QVector<QPointF> points, QColor color, double lineWidth, Qt::PenStyle style):
+JKQTPgeoPolyLines::JKQTPgeoPolyLines(JKQtPlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
     JKQTPgeoBaseLine(color, lineWidth, style, parent)
 {
     this->points=points;
 }
-bool JKQTPgeoLines::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+JKQTPgeoPolyLines::JKQTPgeoPolyLines(JKQtBasePlotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
+    JKQTPgeoBaseLine(color, lineWidth, style, parent)
+{
+
+}
+
+JKQTPgeoPolyLines::JKQTPgeoPolyLines(JKQtPlotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
+    JKQTPgeoBaseLine(color, lineWidth, style, parent)
+{
+
+}
+
+bool JKQTPgeoPolyLines::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     minx=0;
     maxx=0;
     smallestGreaterZero=0;
@@ -430,7 +459,7 @@ bool JKQTPgeoLines::getXMinMax(double& minx, double& maxx, double& smallestGreat
     //qDebug()<<"getXMinMax"<<minx<<maxx;
 }
 
-bool JKQTPgeoLines::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTPgeoPolyLines::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     miny=0;
     maxy=0;
     smallestGreaterZero=0;
@@ -450,7 +479,7 @@ bool JKQTPgeoLines::getYMinMax(double& miny, double& maxy, double& smallestGreat
     //qDebug()<<"getYMinMax"<<miny<<maxy;
 }
 
-void JKQTPgeoLines::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPgeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath path=transformToLinePath(points);
     painter.save();
     painter.setPen(getPen(painter));
@@ -464,7 +493,7 @@ JKQTPgeoRectangle::JKQTPgeoRectangle(JKQtBasePlotter* parent, double x, double y
 {
     this->x=x;
     this->y=y;
-    alpha=0;
+    angle=0;
     this->width=width;
     this->height=height;
 }
@@ -474,14 +503,54 @@ JKQTPgeoRectangle::JKQTPgeoRectangle(JKQtPlotter* parent, double x, double y, do
 {
     this->x=x;
     this->y=y;
-    alpha=0;
+    angle=0;
     this->width=width;
     this->height=height;
 }
 
+JKQTPgeoRectangle::JKQTPgeoRectangle(JKQtBasePlotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
+{
+    this->x=x;
+    this->y=y;
+    this->angle=angle;
+    this->width=width;
+    this->height=height;
+}
+
+JKQTPgeoRectangle::JKQTPgeoRectangle(JKQtPlotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
+{
+    this->x=x;
+    this->y=y;
+    this->angle=angle;
+    this->width=width;
+    this->height=height;
+}
+
+JKQTPgeoRectangle::JKQTPgeoRectangle(JKQtBasePlotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
+{
+    this->angle=0;
+    this->width=fabs(topright.x()-bottomleft.x());
+    this->height=fabs(topright.y()-bottomleft.y());
+    this->x=bottomleft.x()+this->width/2.0;
+    this->y=bottomleft.y()+this->height/2.0;
+}
+
+JKQTPgeoRectangle::JKQTPgeoRectangle(JKQtPlotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
+{
+    this->angle=0;
+    this->width=fabs(topright.x()-bottomleft.x());
+    this->height=fabs(topright.y()-bottomleft.y());
+    this->x=bottomleft.x()+this->width/2.0;
+    this->y=bottomleft.y()+this->height/2.0;
+}
+
 QMatrix JKQTPgeoRectangle::getMatrix() {
     QMatrix trans;
-    trans.rotate(alpha);
+    trans.rotate(angle);
     return trans;
 }
 
@@ -545,15 +614,24 @@ void JKQTPgeoRectangle::set_bottomleftrectangle(double x, double y, double width
 
 
 
-JKQTPgeoPolygon::JKQTPgeoPolygon(JKQtBasePlotter* parent, QVector<QPointF> points, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPgeoPolygon::JKQTPgeoPolygon(JKQtBasePlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
     this->points=points;
 }
-JKQTPgeoPolygon::JKQTPgeoPolygon(JKQtPlotter* parent, QVector<QPointF> points, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPgeoPolygon::JKQTPgeoPolygon(JKQtPlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
     this->points=points;
+}
+
+JKQTPgeoPolygon::JKQTPgeoPolygon(JKQtBasePlotter* parent, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
+{
+}
+JKQTPgeoPolygon::JKQTPgeoPolygon(JKQtPlotter* parent, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
+{
 }
 
 bool JKQTPgeoPolygon::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
@@ -617,10 +695,34 @@ JKQTPgeoEllipse::JKQTPgeoEllipse(JKQtPlotter* parent, double x, double y, double
     controlPoints=180;
 }
 
+JKQTPgeoEllipse::JKQTPgeoEllipse(JKQtBasePlotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoRectangle(parent, x, y, width, height, angle, color, lineWidth, style, fillColor, fillStyle)
+{
+    controlPoints=180;
+}
+
+JKQTPgeoEllipse::JKQTPgeoEllipse(JKQtPlotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoRectangle(parent, x, y, width, height, angle, color, lineWidth, style, fillColor, fillStyle)
+{
+    controlPoints=180;
+}
+
+JKQTPgeoEllipse::JKQTPgeoEllipse(JKQtBasePlotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoRectangle(parent, bottomleft, topright, color, lineWidth, style, fillColor, fillStyle)
+{
+    controlPoints=180;
+}
+
+JKQTPgeoEllipse::JKQTPgeoEllipse(JKQtPlotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+    JKQTPgeoRectangle(parent, bottomleft, topright, color, lineWidth, style, fillColor, fillStyle)
+{
+    controlPoints=180;
+}
+
 
 void JKQTPgeoEllipse::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,0,360,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,0,360,angle, controlPoints));
     rect.closeSubpath();
 
 
@@ -642,7 +744,7 @@ JKQTPgeoArc::JKQTPgeoArc(JKQtBasePlotter* parent, double x, double y, double wid
     this->y=y;
     this->width=width;
     this->height=height;
-    this->alpha=0;
+    this->angle=0;
     this->controlPoints=180;
 }
 
@@ -655,14 +757,14 @@ JKQTPgeoArc::JKQTPgeoArc(JKQtPlotter* parent, double x, double y, double width, 
     this->y=y;
     this->width=width;
     this->height=height;
-    this->alpha=0;
+    this->angle=0;
     this->controlPoints=180;
 }
 
 
 void JKQTPgeoArc::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
 
     painter.save();
     painter.setPen(getPen(painter));
@@ -673,7 +775,7 @@ void JKQTPgeoArc::draw(JKQTPEnhancedPainter& painter) {
 
 bool JKQTPgeoArc::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     minx=rect.boundingRect().left();
     maxx=rect.boundingRect().right();
     if (minx>maxx) std::swap(minx, maxx);
@@ -686,7 +788,7 @@ bool JKQTPgeoArc::getXMinMax(double& minx, double& maxx, double& smallestGreater
 
 bool JKQTPgeoArc::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     miny=rect.boundingRect().bottom();
     maxy=rect.boundingRect().top();
     if (miny>maxy) std::swap(miny, maxy);
@@ -719,7 +821,7 @@ JKQTPgeoPie::JKQTPgeoPie(JKQtPlotter* parent, double x, double y, double width, 
 
 void JKQTPgeoPie::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     rect.lineTo(transform(x,y));
     rect.closeSubpath();
 
@@ -733,7 +835,7 @@ void JKQTPgeoPie::draw(JKQTPEnhancedPainter& painter) {
 
 bool JKQTPgeoPie::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     rect.append(QPointF(x,y));
     minx=rect.boundingRect().left();
     maxx=rect.boundingRect().right();
@@ -747,7 +849,7 @@ bool JKQTPgeoPie::getXMinMax(double& minx, double& maxx, double& smallestGreater
 
 bool JKQTPgeoPie::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     rect.append(QPointF(x,y));
     miny=rect.boundingRect().bottom();
     maxy=rect.boundingRect().top();
@@ -777,7 +879,7 @@ JKQTPgeoChord::JKQTPgeoChord(JKQtPlotter* parent, double x, double y, double wid
 
 void JKQTPgeoChord::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
-    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=transformToLinePath(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     rect.closeSubpath();
 
 
@@ -790,7 +892,7 @@ void JKQTPgeoChord::draw(JKQTPEnhancedPainter& painter) {
 
 bool JKQTPgeoChord::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     minx=rect.boundingRect().left();
     maxx=rect.boundingRect().right();
     if (minx>maxx) std::swap(minx, maxx);
@@ -802,7 +904,7 @@ bool JKQTPgeoChord::getXMinMax(double& minx, double& maxx, double& smallestGreat
 
 bool JKQTPgeoChord::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,alpha, controlPoints));
+    rect=QPolygonF(JKQTPdrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
     miny=rect.boundingRect().bottom();
     maxy=rect.boundingRect().top();
     if (miny>maxy) std::swap(miny, maxy);
@@ -812,3 +914,72 @@ bool JKQTPgeoChord::getYMinMax(double& miny, double& maxy, double& smallestGreat
     return true;
 }
 
+
+JKQTPgeoSymbol::JKQTPgeoSymbol(JKQtBasePlotter *parent, double x, double y, JKQTPgraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
+    JKQTPplotObject(parent)
+{
+    this->x=x;
+    this->y=y;
+    this->symbol=symbol;
+    this->symbolSize=symbolSize;
+    this->color=color;
+    this->fillColor=fillColor;
+    this->symbolWidth=1;
+}
+
+JKQTPgeoSymbol::JKQTPgeoSymbol(JKQtPlotter *parent, double x, double y, JKQTPgraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
+    JKQTPplotObject(parent)
+{
+    this->x=x;
+    this->y=y;
+    this->symbol=symbol;
+    this->symbolSize=symbolSize;
+    this->color=color;
+    this->fillColor=fillColor;
+    this->symbolWidth=1;
+}
+
+bool JKQTPgeoSymbol::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    minx=x;
+    maxx=x;
+    double xvsgz;
+    xvsgz=minx; SmallestGreaterZeroCompare_xvsgz();
+    xvsgz=maxx; SmallestGreaterZeroCompare_xvsgz();
+    return true;
+}
+
+bool JKQTPgeoSymbol::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    miny=y;
+    maxy=y;
+    double xvsgz;
+    xvsgz=miny; SmallestGreaterZeroCompare_xvsgz();
+    xvsgz=maxy; SmallestGreaterZeroCompare_xvsgz();
+    return true;
+}
+
+void JKQTPgeoSymbol::draw(JKQTPEnhancedPainter &painter)
+{
+    painter.save();
+    JKQTPplotSymbol(painter, transformX(x), transformY(y), symbol, symbolSize, symbolWidth, color, fillColor);
+    painter.restore();
+}
+
+void JKQTPgeoSymbol::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+{
+    const double minSize=qMin(rect.width(), rect.height());
+    double symbolSize=parent->pt2px(painter, this->symbolSize);
+    if (symbolSize>minSize*0.9) symbolSize=minSize*0.9;
+    double symbolWidth=parent->pt2px(painter, this->symbolWidth*parent->get_lineWidthMultiplier());
+    if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
+
+    painter.save();
+    JKQTPplotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, color, fillColor);
+    painter.restore();
+}
+
+QColor JKQTPgeoSymbol::getKeyLabelColor()
+{
+    return color;
+}
