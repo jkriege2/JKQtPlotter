@@ -135,9 +135,11 @@ void FormWithJKQtPlotter::on_btnReplot_clicked()
 
 
 The result looks like this:
+
 ![jkqtplotter_simpletest_ui1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_ui.png)
 
 If you set both axes to logarithmic and modify the plotted function a bit, you get:
+
 ![jkqtplotter_simpletest_ui1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_ui_loglog.png)
 
 
