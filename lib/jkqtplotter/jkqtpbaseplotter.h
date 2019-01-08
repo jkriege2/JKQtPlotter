@@ -243,9 +243,13 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         double paintMagnification;
 
         /** \brief the decimal separator used when exporting data to text files */
-        JKQTPPROPERTY(QString, CSVdecimalSeparator)
+        QString CSVdecimalSeparator;
+        /** \brief default value for property property varname. \see CSVdecimalSeparator for more information */
+        QString def_CSVdecimalSeparator;
         /** \brief this string is used to introduce comments in text output when exporting data */
-        JKQTPPROPERTY(QString, CSVcommentInitializer)
+        QString CSVcommentInitializer;
+        /** \brief default value for property property varname. \see CSVcommentInitializer for more information */
+        QString def_CSVcommentInitializer;
 
         /** \brief an object which manages all data columns for this plotter class */
         JKQTPdatastore* datastore;
@@ -262,7 +266,9 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief free space between widget top border and plot top border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderTop */
-        JKQTPPROPERTY(int, plotBorderTop)
+        int plotBorderTop;
+        /** \brief default value for property property varname. \see plotBorderTop for more information */
+        int def_plotBorderTop;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderTop;
         int iplotKeyBorderTop;
@@ -270,19 +276,25 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         int iTitleHeight;
         /** \brief free space between widget left border and plot left border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderLeft  */
-        JKQTPPROPERTY(int, plotBorderLeft)
+        int plotBorderLeft;
+        /** \brief default value for property property varname. \see plotBorderLeft for more information */
+        int def_plotBorderLeft;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderLeft;
         int iplotKeyBorderLeft;
         /** \brief free space between widget bottom border and plot bottom border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderBottom  */
-        JKQTPPROPERTY(int, plotBorderBottom)
+        int plotBorderBottom;
+        /** \brief default value for property property varname. \see plotBorderBottom for more information */
+        int def_plotBorderBottom;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderBottom;
         int iplotKeyBorderBottom;
         /** \brief free space between widget right border and plot right border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderRight  */
-        JKQTPPROPERTY(int, plotBorderRight)
+        int plotBorderRight;
+        /** \brief default value for property property varname. \see plotBorderRight for more information */
+        int def_plotBorderRight;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderRight;
         int iplotKeyBorderRight;
@@ -299,14 +311,22 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         int iplotBorderRight_nographs;
 
         /** \brief indicates whether the widget should maintain an aspect ratio of plotwidth and plotheight */
-        JKQTPPROPERTY(bool, maintainAspectRatio)
+        bool maintainAspectRatio;
+        /** \brief default value for property property varname. \see maintainAspectRatio for more information */
+        bool def_maintainAspectRatio;
         /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true */
-        JKQTPPROPERTY(double, aspectRatio)
+        double aspectRatio;
+        /** \brief default value for property property varname. \see aspectRatio for more information */
+        double def_aspectRatio;
 
         /** \brief indicates whether the axes should maintain an aspect ratio */
-        JKQTPPROPERTY(bool, maintainAxisAspectRatio)
+        bool maintainAxisAspectRatio;
+        /** \brief default value for property property varname. \see maintainAxisAspectRatio for more information */
+        bool def_maintainAxisAspectRatio;
         /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true */
-        JKQTPPROPERTY(double, axisAspectRatio)
+        double axisAspectRatio;
+        /** \brief default value for property property varname. \see axisAspectRatio for more information */
+        double def_axisAspectRatio;
 
         /** \brief plot width in pixels inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth) */
         int plotWidth;
@@ -316,16 +336,22 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief color of the plotted graph */
-        JKQTPPROPERTY(QColor, graphColor)
+        QColor graphColor;
+        /** \brief default value for property property varname. \see graphColor for more information */
+        QColor def_graphColor;
         /** \brief colors used in modes where more than one graph is beeing plottet */
         QColor manyGraphsColor[50];
         QColor def_manyGraphsColor[50];
         /** \brief number of actually defined items in manyGraphsColor */
         int manyGraphsColorCount;
         /** \brief pen styles used in modes where more than one graph is beeing plottet */
-        JKQTPPROPERTY(Qt::PenStyle, manyGraphsStyle[5])
+        Qt::PenStyle manyGraphsStyle[5];
+        /** \brief default value for property property varname. \see manyGraphsStyle[5] for more information */
+        Qt::PenStyle def_manyGraphsStyle[5];
         /** \brief width of the plotted graph (in pixel) */
-        JKQTPPROPERTY(double, graphWidth)
+        double graphWidth;
+        /** \brief default value for property property varname. \see graphWidth for more information */
+        double def_graphWidth;
 
 
 
@@ -335,64 +361,116 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief color of the coordinate system */
-        JKQTPPROPERTY(QColor, systemColor)
+        QColor systemColor;
+        /** \brief default value for property property varname. \see systemColor for more information */
+        QColor def_systemColor;
         /** \brief width of the coordinate (in pixel) */
-        JKQTPPROPERTY(double, systemWidth)
+        double systemWidth;
+        /** \brief default value for property property varname. \see systemWidth for more information */
+        double def_systemWidth;
         /** \brief color of the background*/
-        JKQTPPROPERTY(QColor, backgroundColor)
+        QColor backgroundColor;
+        /** \brief default value for property property varname. \see backgroundColor for more information */
+        QColor def_backgroundColor;
         /** \brief color of the background when exporting*/
-        JKQTPPROPERTY(QColor, exportBackgroundColor)
+        QColor exportBackgroundColor;
+        /** \brief default value for property property varname. \see exportBackgroundColor for more information */
+        QColor def_exportBackgroundColor;
         /** \brief color of the plot's background*/
-        JKQTPPROPERTY(QColor, plotBackgroundColor)
+        QColor plotBackgroundColor;
+        /** \brief default value for property property varname. \see plotBackgroundColor for more information */
+        QColor def_plotBackgroundColor;
 
 
         /** \brief indicates whether to plot a frame around the key */
-        JKQTPPROPERTY(bool, showKeyFrame)
+        bool showKeyFrame;
+        /** \brief default value for property property varname. \see showKeyFrame for more information */
+        bool def_showKeyFrame;
         /** \brief color of the key frame line */
-        JKQTPPROPERTY(QColor, keyFrameColor)
+        QColor keyFrameColor;
+        /** \brief default value for property property varname. \see keyFrameColor for more information */
+        QColor def_keyFrameColor;
         /** \brief width of the key frame line */
-        JKQTPPROPERTY(double, keyFrameWidth)
+        double keyFrameWidth;
+        /** \brief default value for property property varname. \see keyFrameWidth for more information */
+        double def_keyFrameWidth;
         /** \brief color of the key background */
-        JKQTPPROPERTY(QColor, keyBackgroundColor)
+        QColor keyBackgroundColor;
+        /** \brief default value for property property varname. \see keyBackgroundColor for more information */
+        QColor def_keyBackgroundColor;
         /** \brief indicates whether to plot a key */
-        JKQTPPROPERTY(bool, showKey)
+        bool showKey;
+        /** \brief default value for property property varname. \see showKey for more information */
+        bool def_showKey;
         /** \brief font face for key labels */
-        JKQTPPROPERTY(QString, keyFont)
+        QString keyFont;
+        /** \brief default value for property property varname. \see keyFont for more information */
+        QString def_keyFont;
         /** \brief font size for key labels [in points] */
-        JKQTPPROPERTY(double, keyFontSize)
+        double keyFontSize;
+        /** \brief default value for property property varname. \see keyFontSize for more information */
+        double def_keyFontSize;
         /** \brief width of a key item in pixels [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, key_item_width)
+        double key_item_width;
+        /** \brief default value for property property varname. \see key_item_width for more information */
+        double def_key_item_width;
         /** \brief height of a key item in pixels [in units of height  keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, key_item_height)
+        double key_item_height;
+        /** \brief default value for property property varname. \see key_item_height for more information */
+        double def_key_item_height;
         /** \brief length of the line samples in the key in pixels [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, key_line_length)
+        double key_line_length;
+        /** \brief default value for property property varname. \see key_line_length for more information */
+        double def_key_line_length;
         /** \brief x-distance between key frame and key content [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyXMargin)
+        double keyXMargin;
+        /** \brief default value for property property varname. \see keyXMargin for more information */
+        double def_keyXMargin;
         /** \brief y-distance between key frame and key content [in units of width of 'x' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyYMargin)
+        double keyYMargin;
+        /** \brief default value for property property varname. \see keyYMargin for more information */
+        double def_keyYMargin;
         /** \brief x-offset of the key from the border of the plot [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyXOffset)
+        double keyXOffset;
+        /** \brief default value for property property varname. \see keyXOffset for more information */
+        double def_keyXOffset;
         /** \brief y-offset of the key from the border of the plot [in units of width of 'x' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyYOffset)
+        double keyYOffset;
+        /** \brief default value for property property varname. \see keyYOffset for more information */
+        double def_keyYOffset;
         /** \brief distance between key line example and key text [in units of width of 'X' set in keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyXSeparation)
+        double keyXSeparation;
+        /** \brief default value for property property varname. \see keyXSeparation for more information */
+        double def_keyXSeparation;
         /** \brief distance between two key entries [in units of height of keyFont, keyFontSize] */
-        JKQTPPROPERTY(double, keyYSeparation)
+        double keyYSeparation;
+        /** \brief default value for property property varname. \see keyYSeparation for more information */
+        double def_keyYSeparation;
         /** \brief key position */
-        JKQTPPROPERTY(JKQTPkeyPosition, keyPosition)
+        JKQTPkeyPosition keyPosition;
+        /** \brief default value for property property varname. \see keyPosition for more information */
+        JKQTPkeyPosition def_keyPosition;
         /** \brief the key layout */
-        JKQTPPROPERTY(JKQTPkeyLayout, keyLayout)
+        JKQTPkeyLayout keyLayout;
+        /** \brief default value for property property varname. \see keyLayout for more information */
+        JKQTPkeyLayout def_keyLayout;
         /** \brief determine width of the key automatically */
-        JKQTPPROPERTY(bool, keyAutosize)
+        bool keyAutosize;
+        /** \brief default value for property property varname. \see keyAutosize for more information */
+        bool def_keyAutosize;
 
         /** \brief the plot label text */
         QString plotLabel;
 
         /** \brief the plot label font name */
-        JKQTPPROPERTY(QString, plotLabelFontname)
+        QString plotLabelFontname;
+        /** \brief default value for property property varname. \see plotLabelFontname for more information */
+        QString def_plotLabelFontname;
 
         /** \brief the plot label font size */
-        JKQTPPROPERTY(double, plotLabelFontSize)
+        double plotLabelFontSize;
+        /** \brief default value for property property varname. \see plotLabelFontSize for more information */
+        double def_plotLabelFontSize;
 
         /** \brief calculate the scaling and offset values from axis min/max values */
         void calcPlotScaling(JKQTPEnhancedPainter& painter);
@@ -404,20 +482,26 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         bool emitSignals;
 
         /** \brief specifies whether to use antialiasing for plotting the coordinate system */
-        JKQTPPROPERTY(bool, useAntiAliasingForSystem)
+        bool useAntiAliasingForSystem;
+        /** \brief default value for property property varname. \see useAntiAliasingForSystem for more information */
+        bool def_useAntiAliasingForSystem;
 
         /** \brief specifies whether to use antialiasing for plotting the graphs
          *
          * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
          *       roughly three-fold speed improvement!
-         */
-        JKQTPPROPERTY(bool, useAntiAliasingForGraphs)
+*/
+        bool useAntiAliasingForGraphs;
+        /** \brief default value for property property varname. \see useAntiAliasingForGraphs for more information */
+        bool def_useAntiAliasingForGraphs;
 
         /** \brief specifies whether to use antialiasing when drawing any text
         * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
         *       roughly three-fold speed improvement!
-        */
-        JKQTPPROPERTY(bool, useAntiAliasingForText)
+*/
+        bool useAntiAliasingForText;
+        /** \brief default value for property property varname. \see useAntiAliasingForText for more information */
+        bool def_useAntiAliasingForText;
 
         /** \brief multiplier which is used for font sizes when the plot is exported/printed */
         double fontSizePrintMultiplier;
@@ -799,7 +883,8 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          *         the lather case */
         void forceInternalDatastore();
 
-        JKQTPGET_MACRO(bool, emitSignals)
+        /** \brief returns the property emitSignals. \details Description of the parameter emitSignals is:  <CENTER>\copybrief emitSignals.</CENTER>. \see emitSignals for more information */ 
+        inline bool get_emitSignals()const { return this->emitSignals; }
 
         void set_emitSignals(bool enabled);
 
@@ -1021,15 +1106,21 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         JKQTPGET_SET_MACRO(bool, emitPlotSignals)
 
-        JKQTPGET_MACRO(int, plotBorderTop)
-        JKQTPGET_MACRO(int, plotBorderLeft)
-        JKQTPGET_MACRO(int, plotBorderBottom)
-        JKQTPGET_MACRO(int, plotBorderRight)
+        /** \brief returns the property plotBorderTop. \details Description of the parameter plotBorderTop is:  <CENTER>\copybrief plotBorderTop.</CENTER>. \see plotBorderTop for more information */ 
+        inline int get_plotBorderTop() const { return this->plotBorderTop; }
+        /** \brief returns the property plotBorderLeft. \details Description of the parameter plotBorderLeft is:  <CENTER>\copybrief plotBorderLeft.</CENTER>. \see plotBorderLeft for more information */ 
+        inline int get_plotBorderLeft() const { return this->plotBorderLeft; }
+        /** \brief returns the property plotBorderBottom. \details Description of the parameter plotBorderBottom is:  <CENTER>\copybrief plotBorderBottom.</CENTER>. \see plotBorderBottom for more information */ 
+        inline int get_plotBorderBottom() const { return this->plotBorderBottom; }
+        /** \brief returns the property plotBorderRight. \details Description of the parameter plotBorderRight is:  <CENTER>\copybrief plotBorderRight.</CENTER>. \see plotBorderRight for more information */ 
+        inline int get_plotBorderRight() const { return this->plotBorderRight; }
 
-        JKQTPGET_MACRO(bool, maintainAspectRatio)
+        /** \brief returns the property maintainAspectRatio. \details Description of the parameter maintainAspectRatio is:  <CENTER>\copybrief maintainAspectRatio.</CENTER>. \see maintainAspectRatio for more information */ 
+        inline bool get_maintainAspectRatio() const { return this->maintainAspectRatio; }
         JKQTPGET_SET_MACRO_I(double, aspectRatio, update_plot())
 
-        JKQTPGET_MACRO(bool, maintainAxisAspectRatio)
+        /** \brief returns the property maintainAxisAspectRatio. \details Description of the parameter maintainAxisAspectRatio is:  <CENTER>\copybrief maintainAxisAspectRatio.</CENTER>. \see maintainAxisAspectRatio for more information */ 
+        inline bool get_maintainAxisAspectRatio() const { return this->maintainAxisAspectRatio; }
         JKQTPGET_SET_MACRO_I(double, axisAspectRatio, update_plot())
 
         JKQTPGET_SET_MACRO_I(bool, useAntiAliasingForSystem, update_plot())
@@ -1076,12 +1167,18 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         JKQTPGET_SET_MACRO(QString, CSVdecimalSeparator)
         JKQTPGET_SET_MACRO(QString, CSVcommentInitializer)
 
-        JKQTPGET_MACRO(int, iplotBorderTop)
-        JKQTPGET_MACRO(int, iplotBorderLeft)
-        JKQTPGET_MACRO(int, iplotBorderBottom)
-        JKQTPGET_MACRO(int, iplotBorderRight)
-        JKQTPGET_MACRO(int, plotWidth)
-        JKQTPGET_MACRO(int, plotHeight)
+        /** \brief returns the property iplotBorderTop. \details Description of the parameter iplotBorderTop is:  <CENTER>\copybrief iplotBorderTop.</CENTER>. \see iplotBorderTop for more information */ 
+        inline int get_iplotBorderTop() const { return this->iplotBorderTop; }
+        /** \brief returns the property iplotBorderLeft. \details Description of the parameter iplotBorderLeft is:  <CENTER>\copybrief iplotBorderLeft.</CENTER>. \see iplotBorderLeft for more information */ 
+        inline int get_iplotBorderLeft() const { return this->iplotBorderLeft; }
+        /** \brief returns the property iplotBorderBottom. \details Description of the parameter iplotBorderBottom is:  <CENTER>\copybrief iplotBorderBottom.</CENTER>. \see iplotBorderBottom for more information */ 
+        inline int get_iplotBorderBottom() const { return this->iplotBorderBottom; }
+        /** \brief returns the property iplotBorderRight. \details Description of the parameter iplotBorderRight is:  <CENTER>\copybrief iplotBorderRight.</CENTER>. \see iplotBorderRight for more information */ 
+        inline int get_iplotBorderRight() const { return this->iplotBorderRight; }
+        /** \brief returns the property plotWidth. \details Description of the parameter plotWidth is:  <CENTER>\copybrief plotWidth.</CENTER>. \see plotWidth for more information */ 
+        inline int get_plotWidth() const { return this->plotWidth; }
+        /** \brief returns the property plotHeight. \details Description of the parameter plotHeight is:  <CENTER>\copybrief plotHeight.</CENTER>. \see plotHeight for more information */ 
+        inline int get_plotHeight() const { return this->plotHeight; }
         inline JKQTmathText* get_mathText() { return &mathText; }
         inline const JKQTmathText* get_mathText() const { return &mathText; }
         inline JKQTPhorizontalAxis* get_xAxis() { return xAxis; }
@@ -1090,38 +1187,58 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         inline const JKQTPverticalAxis* get_yAxis() const { return yAxis; }
 
 
-        JKQTPGET_MACRO(QAction*, actSavePlot)
-        JKQTPGET_MACRO(QAction*, actSaveData)
-        JKQTPGET_MACRO(QAction*, actCopyData)
-        JKQTPGET_MACRO(QAction*, actCopyPixelImage)
-        JKQTPGET_MACRO(QAction*, actCopyMatlab)
-        JKQTPGET_MACRO(QAction*, actSavePDF)
+        /** \brief returns the property actSavePlot. \details Description of the parameter actSavePlot is:  <CENTER>\copybrief actSavePlot.</CENTER>. \see actSavePlot for more information */ 
+        inline QAction* get_actSavePlot() const { return this->actSavePlot; }
+        /** \brief returns the property actSaveData. \details Description of the parameter actSaveData is:  <CENTER>\copybrief actSaveData.</CENTER>. \see actSaveData for more information */ 
+        inline QAction* get_actSaveData() const { return this->actSaveData; }
+        /** \brief returns the property actCopyData. \details Description of the parameter actCopyData is:  <CENTER>\copybrief actCopyData.</CENTER>. \see actCopyData for more information */ 
+        inline QAction* get_actCopyData() const { return this->actCopyData; }
+        /** \brief returns the property actCopyPixelImage. \details Description of the parameter actCopyPixelImage is:  <CENTER>\copybrief actCopyPixelImage.</CENTER>. \see actCopyPixelImage for more information */ 
+        inline QAction* get_actCopyPixelImage() const { return this->actCopyPixelImage; }
+        /** \brief returns the property actCopyMatlab. \details Description of the parameter actCopyMatlab is:  <CENTER>\copybrief actCopyMatlab.</CENTER>. \see actCopyMatlab for more information */ 
+        inline QAction* get_actCopyMatlab() const { return this->actCopyMatlab; }
+        /** \brief returns the property actSavePDF. \details Description of the parameter actSavePDF is:  <CENTER>\copybrief actSavePDF.</CENTER>. \see actSavePDF for more information */ 
+        inline QAction* get_actSavePDF() const { return this->actSavePDF; }
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        JKQTPGET_MACRO(QAction*, actSavePS)
+        /** \brief returns the property actSavePS. \details Description of the parameter actSavePS is:  <CENTER>\copybrief actSavePS.</CENTER>. \see actSavePS for more information */ 
+        inline QAction* get_actSavePS() const { return this->actSavePS; }
 #endif
-        JKQTPGET_MACRO(QAction*, actSavePix)
-        JKQTPGET_MACRO(QAction*, actSaveSVG)
-        JKQTPGET_MACRO(QAction*, actPrint)
-        JKQTPGET_MACRO(QAction*, actSaveCSV)
-        JKQTPGET_MACRO(QAction*, actZoomAll)
-        JKQTPGET_MACRO(QAction*, actZoomIn)
-        JKQTPGET_MACRO(QAction*, actZoomOut)
-        JKQTPGET_MACRO(QAction*, actShowPlotData)
-        JKQTPGET_MACRO(AdditionalActionsMap, lstAdditionalPlotterActions)
+        /** \brief returns the property actSavePix. \details Description of the parameter actSavePix is:  <CENTER>\copybrief actSavePix.</CENTER>. \see actSavePix for more information */ 
+        inline QAction* get_actSavePix() const { return this->actSavePix; }
+        /** \brief returns the property actSaveSVG. \details Description of the parameter actSaveSVG is:  <CENTER>\copybrief actSaveSVG.</CENTER>. \see actSaveSVG for more information */ 
+        inline QAction* get_actSaveSVG() const { return this->actSaveSVG; }
+        /** \brief returns the property actPrint. \details Description of the parameter actPrint is:  <CENTER>\copybrief actPrint.</CENTER>. \see actPrint for more information */ 
+        inline QAction* get_actPrint() const { return this->actPrint; }
+        /** \brief returns the property actSaveCSV. \details Description of the parameter actSaveCSV is:  <CENTER>\copybrief actSaveCSV.</CENTER>. \see actSaveCSV for more information */ 
+        inline QAction* get_actSaveCSV() const { return this->actSaveCSV; }
+        /** \brief returns the property actZoomAll. \details Description of the parameter actZoomAll is:  <CENTER>\copybrief actZoomAll.</CENTER>. \see actZoomAll for more information */ 
+        inline QAction* get_actZoomAll() const { return this->actZoomAll; }
+        /** \brief returns the property actZoomIn. \details Description of the parameter actZoomIn is:  <CENTER>\copybrief actZoomIn.</CENTER>. \see actZoomIn for more information */ 
+        inline QAction* get_actZoomIn() const { return this->actZoomIn; }
+        /** \brief returns the property actZoomOut. \details Description of the parameter actZoomOut is:  <CENTER>\copybrief actZoomOut.</CENTER>. \see actZoomOut for more information */ 
+        inline QAction* get_actZoomOut() const { return this->actZoomOut; }
+        /** \brief returns the property actShowPlotData. \details Description of the parameter actShowPlotData is:  <CENTER>\copybrief actShowPlotData.</CENTER>. \see actShowPlotData for more information */ 
+        inline QAction* get_actShowPlotData() const { return this->actShowPlotData; }
+        /** \brief returns the property lstAdditionalPlotterActions. \details Description of the parameter lstAdditionalPlotterActions is:  <CENTER>\copybrief lstAdditionalPlotterActions.</CENTER>. \see lstAdditionalPlotterActions for more information */ 
+        inline AdditionalActionsMap get_lstAdditionalPlotterActions() const { return this->lstAdditionalPlotterActions; }
 
         /** \brief this function registers additional actions to lstAdditionalPlotterActions, which are displayed in the context-menu */
         void registerAdditionalAction(const QString& key, QAction* act);
         void deregisterAdditionalAction(QAction* act);
 
-        JKQTPGET_MACRO(bool, masterSynchronizeWidth)
-        JKQTPGET_MACRO(bool, masterSynchronizeHeight)
+        /** \brief returns the property masterSynchronizeWidth. \details Description of the parameter masterSynchronizeWidth is:  <CENTER>\copybrief masterSynchronizeWidth.</CENTER>. \see masterSynchronizeWidth for more information */ 
+        inline bool get_masterSynchronizeWidth() const { return this->masterSynchronizeWidth; }
+        /** \brief returns the property masterSynchronizeHeight. \details Description of the parameter masterSynchronizeHeight is:  <CENTER>\copybrief masterSynchronizeHeight.</CENTER>. \see masterSynchronizeHeight for more information */ 
+        inline bool get_masterSynchronizeHeight() const { return this->masterSynchronizeHeight; }
         JKQTPSET_MACRO(QColor, def_backgroundColor)
         JKQTPSET_MACRO(QColor, def_plotBackgroundColor)
 
         JKQTPGET_SET_MACRO(double, fontSizePrintMultiplier)
         JKQTPGET_SET_MACRO(double, lineWidthPrintMultiplier)
-        JKQTPGET_MACRO(double, fontSizeMultiplier)
-        JKQTPGET_MACRO(double, lineWidthMultiplier)
+        /** \brief returns the property fontSizeMultiplier. \details Description of the parameter fontSizeMultiplier is:  <CENTER>\copybrief fontSizeMultiplier.</CENTER>. \see fontSizeMultiplier for more information */ 
+        inline double get_fontSizeMultiplier() const { return this->fontSizeMultiplier; }
+        /** \brief returns the property lineWidthMultiplier. \details Description of the parameter lineWidthMultiplier is:  <CENTER>\copybrief lineWidthMultiplier.</CENTER>. \see lineWidthMultiplier for more information */ 
+        inline double get_lineWidthMultiplier() const { return this->lineWidthMultiplier; }
 
 
         /** \brief returns description of i'th graph */
@@ -1423,7 +1540,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         class LIB_EXPORT JKQTPSaveDataAdapter {
             public:
-                virtual ~JKQTPSaveDataAdapter()  {}
+                virtual ~JKQTPSaveDataAdapter() ;
                 virtual QString getFilter() const=0;
                 virtual void saveJKQTPData(const QString& filename, const QList<QVector<double> >& data, const QStringList& columnNames) const=0;
         };

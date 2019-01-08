@@ -21,8 +21,7 @@
 
 
 /**
- * \defgroup jkqtplotter Qt based Scientific Plotter Class
- * \ingroup tools_qt
+ * \defgroup jkqtplotter JKQtPlotter: Qt based Scientific Plotter Class
  *
  * A Qt based plotter for 2D scientific graphs.
  */
@@ -212,7 +211,8 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         //GET_SET_MACRO(bool, zoomByDoubleAndRightMouseClick);
         JKQTPGET_SET_MACRO(RightMouseButtonAction, rightMouseButtonAction)
         JKQTPGET_SET_MACRO(LeftDoubleClickAction, leftDoubleClickAction)
-        JKQTPGET_MACRO(QMenu*, menuSpecialContextMenu)
+        /** \brief returns the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <CENTER>\copybrief menuSpecialContextMenu.</CENTER>. \see menuSpecialContextMenu for more information */ 
+        inline QMenu* get_menuSpecialContextMenu() const { return this->menuSpecialContextMenu; }
         void set_menuSpecialContextMenu(QMenu* menu);
 
         JKQTPGET_SET_MACRO(bool, zoomByMouseWheel)
@@ -475,13 +475,19 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
 
         /** \brief fill color of the zoom rectangle */
-        JKQTPPROPERTY(QColor, userActionColor)
+        QColor userActionColor;
+        /** \brief default value for property property varname. \see userActionColor for more information */ 
+        QColor def_userActionColor;
 
         /** \brief fill color of the zoom rectangle */
-        JKQTPPROPERTY(QPainter::CompositionMode, userActionCompositionMode)
+        QPainter::CompositionMode userActionCompositionMode;
+        /** \brief default value for property property varname. \see userActionCompositionMode for more information */ 
+        QPainter::CompositionMode def_userActionCompositionMode;
 
         /** \brief width/height of the icons in the plotter toolbar in pixels */
-        JKQTPPROPERTY(int, toolbarIconSize)
+        int toolbarIconSize;
+        /** \brief default value for property property varname. \see toolbarIconSize for more information */ 
+        int def_toolbarIconSize;
 
         /** \brief this is set \c true if we are drawing a zoom rectangle */
         bool mouseDragingRectangle;
@@ -602,7 +608,9 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
                    top border, so the position fits in. The default widget font is used for the output. */
         bool displayMousePosition;
         /** \brief this string is used to generate the position output above the graph */
-        JKQTPPROPERTY(QString, mousePositionTemplate)
+        QString mousePositionTemplate;
+        /** \brief default value for property property varname. \see mousePositionTemplate for more information */ 
+        QString def_mousePositionTemplate;
         /** \brief if set \c true and displayMousePosition is \c true, the mouse position is not automatically determined, but the text given to setMousePositionLabel() is used */
         bool displayCustomMousePosition;
         QString customMousePositiontext;

@@ -4528,3 +4528,6 @@ QPaintDevice *JKQtBasePlotter::JKQTPPaintDeviceAdapter::createPaintdeviceMM(cons
 {
     return createPaintdevice(filename, widthMM/25.4*QApplication::desktop()->logicalDpiX(), heightMM/25.4*QApplication::desktop()->logicalDpiY());
 }
+
+JKQtBasePlotter::JKQTPSaveDataAdapter::~JKQTPSaveDataAdapter() {
+}

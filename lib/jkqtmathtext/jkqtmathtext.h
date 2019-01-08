@@ -26,8 +26,7 @@
 */
 
 /**
- * \defgroup jkqtmathtext Functions for special text output (with math markup)
- * \ingroup tools_qt
+ * \defgroup jkqtmathtext JKQtMathText LaTeX-Renderer for Qt
  */
 
 /** \file jkqtmathtext.h

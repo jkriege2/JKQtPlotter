@@ -496,8 +496,10 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
         JKQTPxGraphErrors(QColor graphColor=QColor("black"));
 
         JKQTPGET_SET_MACRO(bool, xErrorSymmetric)
-        JKQTPGET_MACRO(int, xErrorColumnLower)
-        JKQTPGET_MACRO(int, xErrorColumn)
+        /** \brief returns the property xErrorColumnLower. \details Description of the parameter xErrorColumnLower is:  <CENTER>\copybrief xErrorColumnLower.</CENTER>. \see xErrorColumnLower for more information */ 
+        inline int get_xErrorColumnLower() const { return this->xErrorColumnLower; }
+        /** \brief returns the property xErrorColumn. \details Description of the parameter xErrorColumn is:  <CENTER>\copybrief xErrorColumn.</CENTER>. \see xErrorColumn for more information */ 
+        inline int get_xErrorColumn() const { return this->xErrorColumn; }
         JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, xErrorStyle)
         /** \brief set the column from which to read the error values for x-error indicators */
         void set_xErrorColumn(int __value);
@@ -538,8 +540,10 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
         JKQTPyGraphErrors(QColor graphColor=QColor("black"));
 
         JKQTPGET_SET_MACRO(bool, yErrorSymmetric)
-        JKQTPGET_MACRO(int, yErrorColumnLower)
-        JKQTPGET_MACRO(int, yErrorColumn)
+        /** \brief returns the property yErrorColumnLower. \details Description of the parameter yErrorColumnLower is:  <CENTER>\copybrief yErrorColumnLower.</CENTER>. \see yErrorColumnLower for more information */ 
+        inline int get_yErrorColumnLower() const { return this->yErrorColumnLower; }
+        /** \brief returns the property yErrorColumn. \details Description of the parameter yErrorColumn is:  <CENTER>\copybrief yErrorColumn.</CENTER>. \see yErrorColumn for more information */ 
+        inline int get_yErrorColumn() const { return this->yErrorColumn; }
         JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, yErrorStyle)
         /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c) const override;
@@ -578,10 +582,14 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
         JKQTPxyGraphErrors(QColor graphColor=QColor("black"));
         JKQTPGET_SET_MACRO(bool, xErrorSymmetric)
         JKQTPGET_SET_MACRO(bool, yErrorSymmetric)
-        JKQTPGET_MACRO(int, xErrorColumnLower)
-        JKQTPGET_MACRO(int, xErrorColumn)
-        JKQTPGET_MACRO(int, yErrorColumnLower)
-        JKQTPGET_MACRO(int, yErrorColumn)
+        /** \brief returns the property xErrorColumnLower. \details Description of the parameter xErrorColumnLower is:  <CENTER>\copybrief xErrorColumnLower.</CENTER>. \see xErrorColumnLower for more information */ 
+        inline int get_xErrorColumnLower() const { return this->xErrorColumnLower; }
+        /** \brief returns the property xErrorColumn. \details Description of the parameter xErrorColumn is:  <CENTER>\copybrief xErrorColumn.</CENTER>. \see xErrorColumn for more information */ 
+        inline int get_xErrorColumn() const { return this->xErrorColumn; }
+        /** \brief returns the property yErrorColumnLower. \details Description of the parameter yErrorColumnLower is:  <CENTER>\copybrief yErrorColumnLower.</CENTER>. \see yErrorColumnLower for more information */ 
+        inline int get_yErrorColumnLower() const { return this->yErrorColumnLower; }
+        /** \brief returns the property yErrorColumn. \details Description of the parameter yErrorColumn is:  <CENTER>\copybrief yErrorColumn.</CENTER>. \see yErrorColumn for more information */ 
+        inline int get_yErrorColumn() const { return this->yErrorColumn; }
         JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, yErrorStyle)
         JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, xErrorStyle)
         /** \copydoc JKQTPgraphErrors::errorUsesColumn() */

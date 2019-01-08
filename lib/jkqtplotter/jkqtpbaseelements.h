@@ -227,54 +227,100 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         virtual void drawGrids(JKQTPEnhancedPainter& painter)=0;
 
 
-        JKQTPGET_MACRO(double, tickSpacing)
-        JKQTPGET_MACRO(int, labelDigits)
-        JKQTPGET_MACRO(bool, autoAxisSpacing)
-        JKQTPGET_MACRO(bool, minorTickLabelsEnabled)
-        JKQTPGET_MACRO(bool, logAxis)
-        JKQTPGET_MACRO(bool, inverted)
-        JKQTPGET_MACRO(double, logAxisBase)
-        JKQTPGET_MACRO(double, userTickSpacing)
-        JKQTPGET_MACRO(double, userLogTickSpacing)
-        JKQTPGET_MACRO(JKQTPCAlabelType, labelType)
-        JKQTPGET_MACRO(QString, axisLabel)
-        JKQTPGET_MACRO(JKQTPlabelPosition, labelPosition)
-        JKQTPGET_MACRO(QString, labelFont)
-        JKQTPGET_MACRO(double, labelFontSize)
-        JKQTPGET_MACRO(QString, tickLabelFont)
-        JKQTPGET_MACRO(double, tickLabelFontSize)
-        JKQTPGET_MACRO(double, minorTickLabelFontSize)
-        JKQTPGET_MACRO(bool, minorTickLabelFullNumber)
-        JKQTPGET_MACRO(double, tickLabelAngle)
-        JKQTPGET_MACRO(unsigned int, minTicks)
-        JKQTPGET_MACRO(unsigned int, minorTicks)
-        JKQTPGET_MACRO(double, tickOutsideLength)
-        JKQTPGET_MACRO(double, minorTickOutsideLength)
-        JKQTPGET_MACRO(QColor, axisColor)
-        JKQTPGET_MACRO(bool, showZeroAxis)
-        JKQTPGET_MACRO(QColor, gridColor)
-        JKQTPGET_MACRO(QColor, minorGridColor)
-        JKQTPGET_MACRO(double, gridWidth)
-        JKQTPGET_MACRO(Qt::PenStyle, gridStyle)
-        JKQTPGET_MACRO(double, minorGridWidth)
-        JKQTPGET_MACRO(Qt::PenStyle, minorGridStyle)
-        JKQTPGET_MACRO(QString, tickTimeFormat)
-        JKQTPGET_MACRO(QString, tickDateFormat)
-        JKQTPGET_MACRO(QString, tickDateTimeFormat)
-        JKQTPGET_MACRO(JKQTPLabelTickMode, tickMode)
+        /** \brief returns the property tickSpacing. \details Description of the parameter tickSpacing is:  <CENTER>\copybrief tickSpacing.</CENTER>. \see tickSpacing for more information */ 
+        inline double get_tickSpacing() const { return this->tickSpacing; }
+        /** \brief returns the property labelDigits. \details Description of the parameter labelDigits is:  <CENTER>\copybrief labelDigits.</CENTER>. \see labelDigits for more information */ 
+        inline int get_labelDigits() const { return this->labelDigits; }
+        /** \brief returns the property autoAxisSpacing. \details Description of the parameter autoAxisSpacing is:  <CENTER>\copybrief autoAxisSpacing.</CENTER>. \see autoAxisSpacing for more information */ 
+        inline bool get_autoAxisSpacing() const { return this->autoAxisSpacing; }
+        /** \brief returns the property minorTickLabelsEnabled. \details Description of the parameter minorTickLabelsEnabled is:  <CENTER>\copybrief minorTickLabelsEnabled.</CENTER>. \see minorTickLabelsEnabled for more information */ 
+        inline bool get_minorTickLabelsEnabled() const { return this->minorTickLabelsEnabled; }
+        /** \brief returns the property logAxis. \details Description of the parameter logAxis is:  <CENTER>\copybrief logAxis.</CENTER>. \see logAxis for more information */ 
+        inline bool get_logAxis() const { return this->logAxis; }
+        /** \brief returns the property inverted. \details Description of the parameter inverted is:  <CENTER>\copybrief inverted.</CENTER>. \see inverted for more information */ 
+        inline bool get_inverted() const { return this->inverted; }
+        /** \brief returns the property logAxisBase. \details Description of the parameter logAxisBase is:  <CENTER>\copybrief logAxisBase.</CENTER>. \see logAxisBase for more information */ 
+        inline double get_logAxisBase() const { return this->logAxisBase; }
+        /** \brief returns the property userTickSpacing. \details Description of the parameter userTickSpacing is:  <CENTER>\copybrief userTickSpacing.</CENTER>. \see userTickSpacing for more information */ 
+        inline double get_userTickSpacing() const { return this->userTickSpacing; }
+        /** \brief returns the property userLogTickSpacing. \details Description of the parameter userLogTickSpacing is:  <CENTER>\copybrief userLogTickSpacing.</CENTER>. \see userLogTickSpacing for more information */ 
+        inline double get_userLogTickSpacing() const { return this->userLogTickSpacing; }
+        /** \brief returns the property labelType. \details Description of the parameter labelType is:  <CENTER>\copybrief labelType.</CENTER>. \see labelType for more information */ 
+        inline JKQTPCAlabelType get_labelType() const { return this->labelType; }
+        /** \brief returns the property axisLabel. \details Description of the parameter axisLabel is:  <CENTER>\copybrief axisLabel.</CENTER>. \see axisLabel for more information */ 
+        inline QString get_axisLabel() const { return this->axisLabel; }
+        /** \brief returns the property labelPosition. \details Description of the parameter labelPosition is:  <CENTER>\copybrief labelPosition.</CENTER>. \see labelPosition for more information */ 
+        inline JKQTPlabelPosition get_labelPosition() const { return this->labelPosition; }
+        /** \brief returns the property labelFont. \details Description of the parameter labelFont is:  <CENTER>\copybrief labelFont.</CENTER>. \see labelFont for more information */ 
+        inline QString get_labelFont() const { return this->labelFont; }
+        /** \brief returns the property labelFontSize. \details Description of the parameter labelFontSize is:  <CENTER>\copybrief labelFontSize.</CENTER>. \see labelFontSize for more information */ 
+        inline double get_labelFontSize() const { return this->labelFontSize; }
+        /** \brief returns the property tickLabelFont. \details Description of the parameter tickLabelFont is:  <CENTER>\copybrief tickLabelFont.</CENTER>. \see tickLabelFont for more information */ 
+        inline QString get_tickLabelFont() const { return this->tickLabelFont; }
+        /** \brief returns the property tickLabelFontSize. \details Description of the parameter tickLabelFontSize is:  <CENTER>\copybrief tickLabelFontSize.</CENTER>. \see tickLabelFontSize for more information */ 
+        inline double get_tickLabelFontSize() const { return this->tickLabelFontSize; }
+        /** \brief returns the property minorTickLabelFontSize. \details Description of the parameter minorTickLabelFontSize is:  <CENTER>\copybrief minorTickLabelFontSize.</CENTER>. \see minorTickLabelFontSize for more information */ 
+        inline double get_minorTickLabelFontSize() const { return this->minorTickLabelFontSize; }
+        /** \brief returns the property minorTickLabelFullNumber. \details Description of the parameter minorTickLabelFullNumber is:  <CENTER>\copybrief minorTickLabelFullNumber.</CENTER>. \see minorTickLabelFullNumber for more information */ 
+        inline bool get_minorTickLabelFullNumber() const { return this->minorTickLabelFullNumber; }
+        /** \brief returns the property tickLabelAngle. \details Description of the parameter tickLabelAngle is:  <CENTER>\copybrief tickLabelAngle.</CENTER>. \see tickLabelAngle for more information */ 
+        inline double get_tickLabelAngle() const { return this->tickLabelAngle; }
+        /** \brief returns the property minTicks. \details Description of the parameter minTicks is:  <CENTER>\copybrief minTicks.</CENTER>. \see minTicks for more information */ 
+        inline unsigned int get_minTicks() const { return this->minTicks; }
+        /** \brief returns the property minorTicks. \details Description of the parameter minorTicks is:  <CENTER>\copybrief minorTicks.</CENTER>. \see minorTicks for more information */ 
+        inline unsigned int get_minorTicks() const { return this->minorTicks; }
+        /** \brief returns the property tickOutsideLength. \details Description of the parameter tickOutsideLength is:  <CENTER>\copybrief tickOutsideLength.</CENTER>. \see tickOutsideLength for more information */ 
+        inline double get_tickOutsideLength() const { return this->tickOutsideLength; }
+        /** \brief returns the property minorTickOutsideLength. \details Description of the parameter minorTickOutsideLength is:  <CENTER>\copybrief minorTickOutsideLength.</CENTER>. \see minorTickOutsideLength for more information */ 
+        inline double get_minorTickOutsideLength() const { return this->minorTickOutsideLength; }
+        /** \brief returns the property axisColor. \details Description of the parameter axisColor is:  <CENTER>\copybrief axisColor.</CENTER>. \see axisColor for more information */ 
+        inline QColor get_axisColor() const { return this->axisColor; }
+        /** \brief returns the property showZeroAxis. \details Description of the parameter showZeroAxis is:  <CENTER>\copybrief showZeroAxis.</CENTER>. \see showZeroAxis for more information */ 
+        inline bool get_showZeroAxis() const { return this->showZeroAxis; }
+        /** \brief returns the property gridColor. \details Description of the parameter gridColor is:  <CENTER>\copybrief gridColor.</CENTER>. \see gridColor for more information */ 
+        inline QColor get_gridColor() const { return this->gridColor; }
+        /** \brief returns the property minorGridColor. \details Description of the parameter minorGridColor is:  <CENTER>\copybrief minorGridColor.</CENTER>. \see minorGridColor for more information */ 
+        inline QColor get_minorGridColor() const { return this->minorGridColor; }
+        /** \brief returns the property gridWidth. \details Description of the parameter gridWidth is:  <CENTER>\copybrief gridWidth.</CENTER>. \see gridWidth for more information */ 
+        inline double get_gridWidth() const { return this->gridWidth; }
+        /** \brief returns the property gridStyle. \details Description of the parameter gridStyle is:  <CENTER>\copybrief gridStyle.</CENTER>. \see gridStyle for more information */ 
+        inline Qt::PenStyle get_gridStyle() const { return this->gridStyle; }
+        /** \brief returns the property minorGridWidth. \details Description of the parameter minorGridWidth is:  <CENTER>\copybrief minorGridWidth.</CENTER>. \see minorGridWidth for more information */ 
+        inline double get_minorGridWidth() const { return this->minorGridWidth; }
+        /** \brief returns the property minorGridStyle. \details Description of the parameter minorGridStyle is:  <CENTER>\copybrief minorGridStyle.</CENTER>. \see minorGridStyle for more information */ 
+        inline Qt::PenStyle get_minorGridStyle() const { return this->minorGridStyle; }
+        /** \brief returns the property tickTimeFormat. \details Description of the parameter tickTimeFormat is:  <CENTER>\copybrief tickTimeFormat.</CENTER>. \see tickTimeFormat for more information */ 
+        inline QString get_tickTimeFormat() const { return this->tickTimeFormat; }
+        /** \brief returns the property tickDateFormat. \details Description of the parameter tickDateFormat is:  <CENTER>\copybrief tickDateFormat.</CENTER>. \see tickDateFormat for more information */ 
+        inline QString get_tickDateFormat() const { return this->tickDateFormat; }
+        /** \brief returns the property tickDateTimeFormat. \details Description of the parameter tickDateTimeFormat is:  <CENTER>\copybrief tickDateTimeFormat.</CENTER>. \see tickDateTimeFormat for more information */ 
+        inline QString get_tickDateTimeFormat() const { return this->tickDateTimeFormat; }
+        /** \brief returns the property tickMode. \details Description of the parameter tickMode is:  <CENTER>\copybrief tickMode.</CENTER>. \see tickMode for more information */ 
+        inline JKQTPLabelTickMode get_tickMode() const { return this->tickMode; }
 
-        JKQTPGET_MACRO(JKQTPCAdrawMode, drawMode1)
-        JKQTPGET_MACRO(JKQTPCAdrawMode, drawMode2)
-        JKQTPGET_MACRO(double, minorTickWidth)
-        JKQTPGET_MACRO(double, tickWidth)
-        JKQTPGET_MACRO(double, lineWidth)
-        JKQTPGET_MACRO(double, lineWidthZeroAxis)
-        JKQTPGET_MACRO(double, tickLabelDistance)
-        JKQTPGET_MACRO(double, labelDistance)
-        JKQTPGET_MACRO(bool, drawGrid)
-        JKQTPGET_MACRO(bool, drawMinorGrid)
+        /** \brief returns the property drawMode1. \details Description of the parameter drawMode1 is:  <CENTER>\copybrief drawMode1.</CENTER>. \see drawMode1 for more information */ 
+        inline JKQTPCAdrawMode get_drawMode1() const { return this->drawMode1; }
+        /** \brief returns the property drawMode2. \details Description of the parameter drawMode2 is:  <CENTER>\copybrief drawMode2.</CENTER>. \see drawMode2 for more information */ 
+        inline JKQTPCAdrawMode get_drawMode2() const { return this->drawMode2; }
+        /** \brief returns the property minorTickWidth. \details Description of the parameter minorTickWidth is:  <CENTER>\copybrief minorTickWidth.</CENTER>. \see minorTickWidth for more information */ 
+        inline double get_minorTickWidth() const { return this->minorTickWidth; }
+        /** \brief returns the property tickWidth. \details Description of the parameter tickWidth is:  <CENTER>\copybrief tickWidth.</CENTER>. \see tickWidth for more information */ 
+        inline double get_tickWidth() const { return this->tickWidth; }
+        /** \brief returns the property lineWidth. \details Description of the parameter lineWidth is:  <CENTER>\copybrief lineWidth.</CENTER>. \see lineWidth for more information */ 
+        inline double get_lineWidth() const { return this->lineWidth; }
+        /** \brief returns the property lineWidthZeroAxis. \details Description of the parameter lineWidthZeroAxis is:  <CENTER>\copybrief lineWidthZeroAxis.</CENTER>. \see lineWidthZeroAxis for more information */ 
+        inline double get_lineWidthZeroAxis() const { return this->lineWidthZeroAxis; }
+        /** \brief returns the property tickLabelDistance. \details Description of the parameter tickLabelDistance is:  <CENTER>\copybrief tickLabelDistance.</CENTER>. \see tickLabelDistance for more information */ 
+        inline double get_tickLabelDistance() const { return this->tickLabelDistance; }
+        /** \brief returns the property labelDistance. \details Description of the parameter labelDistance is:  <CENTER>\copybrief labelDistance.</CENTER>. \see labelDistance for more information */ 
+        inline double get_labelDistance() const { return this->labelDistance; }
+        /** \brief returns the property drawGrid. \details Description of the parameter drawGrid is:  <CENTER>\copybrief drawGrid.</CENTER>. \see drawGrid for more information */ 
+        inline bool get_drawGrid() const { return this->drawGrid; }
+        /** \brief returns the property drawMinorGrid. \details Description of the parameter drawMinorGrid is:  <CENTER>\copybrief drawMinorGrid.</CENTER>. \see drawMinorGrid for more information */ 
+        inline bool get_drawMinorGrid() const { return this->drawMinorGrid; }
         JKQTPGET_SET_MACRO(bool, autoLabelDigits)
-        JKQTPGET_MACRO(JKQtBasePlotter*, parent)
+        /** \brief returns the property parent. \details Description of the parameter parent is:  <CENTER>\copybrief parent.</CENTER>. \see parent for more information */ 
+        inline JKQtBasePlotter* get_parent() const { return this->parent; }
         JKQTPGET_SET_MACRO(bool, doUpdateScaling)
 
 
@@ -593,69 +639,119 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /** \brief when \c true, the digits of the labels are calculated automatically */
         bool autoLabelDigits;
         /** \brief indicates whether the object should use automatic tick spacing for the x axis (calculated by calcPlotScaling() ) */
-        JKQTPPROPERTY(bool, autoAxisSpacing)
+        bool autoAxisSpacing;
+        /** \brief default value for property property varname. \see autoAxisSpacing for more information */ 
+        bool def_autoAxisSpacing;
         /** \brief if \c true, the plotter displays minor axis labels as number between 1 and 10 in some cases */
-        JKQTPPROPERTY(bool, minorTickLabelsEnabled)
+        bool minorTickLabelsEnabled;
+        /** \brief default value for property property varname. \see minorTickLabelsEnabled for more information */ 
+        bool def_minorTickLabelsEnabled;
         /** \brief indicates whether the y axis has a logarithmic scale */
-        JKQTPPROPERTY(bool, logAxis)
+        bool logAxis;
+        /** \brief default value for property property varname. \see logAxis for more information */ 
+        bool def_logAxis;
         /** \brief the base for a logarithmic x axis */
-        JKQTPPROPERTY(double, logAxisBase)
+        double logAxisBase;
+        /** \brief default value for property property varname. \see logAxisBase for more information */ 
+        double def_logAxisBase;
         /** \brief if autoXAxisSpacing is \c false then this value is used for xTickSpacing. So this is the property which
          *         is editable by use of public access methods.
          */
-        JKQTPPROPERTY(double, userTickSpacing)
+        double userTickSpacing;
+        /** \brief default value for property property varname. \see userTickSpacing for more information */ 
+        double def_userTickSpacing;
         /** \brief if autoXAxisSpacing is \c false then this value is used for xTickSpacing. So this is the property which
          *         is editable by use of public access methods.
          */
-        JKQTPPROPERTY(double, userLogTickSpacing)
+        double userLogTickSpacing;
+        /** \brief default value for property property varname. \see userLogTickSpacing for more information */ 
+        double def_userLogTickSpacing;
 
         /** \brief indicates how to draw the labels */
-        JKQTPPROPERTY(JKQTPCAlabelType, labelType)
+        JKQTPCAlabelType labelType;
+        /** \brief default value for property property varname. \see labelType for more information */ 
+        JKQTPCAlabelType def_labelType;
 
         /** \brief mode of the major ticks */
-        JKQTPPROPERTY(JKQTPLabelTickMode, tickMode)
+        JKQTPLabelTickMode tickMode;
+        /** \brief default value for property property varname. \see tickMode for more information */ 
+        JKQTPLabelTickMode def_tickMode;
 
         /** \brief axis label of the axis */
         QString axisLabel;
 
         /** \brief position of the axis label */
-        JKQTPPROPERTY(JKQTPlabelPosition, labelPosition)
+        JKQTPlabelPosition labelPosition;
+        /** \brief default value for property property varname. \see labelPosition for more information */ 
+        JKQTPlabelPosition def_labelPosition;
         /** \brief font of the axis labels */
-        JKQTPPROPERTY(QString, labelFont)
+        QString labelFont;
+        /** \brief default value for property property varname. \see labelFont for more information */ 
+        QString def_labelFont;
         /** \brief fontsize of the axis labels */
-        JKQTPPROPERTY(double, labelFontSize)
+        double labelFontSize;
+        /** \brief default value for property property varname. \see labelFontSize for more information */ 
+        double def_labelFontSize;
         /** \brief font of the axis tick labels */
-        JKQTPPROPERTY(QString, tickLabelFont)
+        QString tickLabelFont;
+        /** \brief default value for property property varname. \see tickLabelFont for more information */ 
+        QString def_tickLabelFont;
         /** \brief fontsize of the axis tick labels */
-        JKQTPPROPERTY(double, tickLabelFontSize)
+        double tickLabelFontSize;
+        /** \brief default value for property property varname. \see tickLabelFontSize for more information */ 
+        double def_tickLabelFontSize;
         /** \brief fontsize of the minor axis tick labels */
-        JKQTPPROPERTY(double, minorTickLabelFontSize)
+        double minorTickLabelFontSize;
+        /** \brief default value for property property varname. \see minorTickLabelFontSize for more information */ 
+        double def_minorTickLabelFontSize;
         /** \brief indicates whether to draw a thick axis line at x=0 (zero axis) */
-        JKQTPPROPERTY(bool, showZeroAxis)
+        bool showZeroAxis;
+        /** \brief default value for property property varname. \see showZeroAxis for more information */ 
+        bool def_showZeroAxis;
         /** \brief indicates whether the minor tick labels should be full numbers, or just a number between 0..10 */
-        JKQTPPROPERTY(bool, minorTickLabelFullNumber)
+        bool minorTickLabelFullNumber;
+        /** \brief default value for property property varname. \see minorTickLabelFullNumber for more information */ 
+        bool def_minorTickLabelFullNumber;
 
 
         /** \brief draw mode of the main (left/bottom) axis */
-        JKQTPPROPERTY(JKQTPCAdrawMode, drawMode1)
+        JKQTPCAdrawMode drawMode1;
+        /** \brief default value for property property varname. \see drawMode1 for more information */ 
+        JKQTPCAdrawMode def_drawMode1;
         /** \brief draw mode of the secondary (right/top) axis */
-        JKQTPPROPERTY(JKQTPCAdrawMode, drawMode2)
+        JKQTPCAdrawMode drawMode2;
+        /** \brief default value for property property varname. \see drawMode2 for more information */ 
+        JKQTPCAdrawMode def_drawMode2;
         /** \brief line width of minor ticks in pixels */
-        JKQTPPROPERTY(double, minorTickWidth)
+        double minorTickWidth;
+        /** \brief default value for property property varname. \see minorTickWidth for more information */ 
+        double def_minorTickWidth;
         /** \brief line width of ticks in pixels */
-        JKQTPPROPERTY(double, tickWidth)
+        double tickWidth;
+        /** \brief default value for property property varname. \see tickWidth for more information */ 
+        double def_tickWidth;
         /** \brief line width of axis in pixels */
-        JKQTPPROPERTY(double, lineWidth)
+        double lineWidth;
+        /** \brief default value for property property varname. \see lineWidth for more information */ 
+        double def_lineWidth;
         /** \brief line width of 0-line in pixels */
-        JKQTPPROPERTY(double, lineWidthZeroAxis)
+        double lineWidthZeroAxis;
+        /** \brief default value for property property varname. \see lineWidthZeroAxis for more information */ 
+        double def_lineWidthZeroAxis;
 
 
         /** \brief format string for time tick labels, see see QDateTime::toString() documentation for details on format strings */
-        JKQTPPROPERTY(QString, tickTimeFormat)
+        QString tickTimeFormat;
+        /** \brief default value for property property varname. \see tickTimeFormat for more information */ 
+        QString def_tickTimeFormat;
         /** \brief format string for date tick labels, see see QDateTime::toString() documentation for details on format strings */
-        JKQTPPROPERTY(QString, tickDateFormat)
+        QString tickDateFormat;
+        /** \brief default value for property property varname. \see tickDateFormat for more information */ 
+        QString def_tickDateFormat;
         /** \brief format string for datetime tick labels, see see QDateTime::toString() documentation for details on format strings */
-        JKQTPPROPERTY(QString, tickDateTimeFormat)
+        QString tickDateTimeFormat;
+        /** \brief default value for property property varname. \see tickDateTimeFormat for more information */ 
+        QString def_tickDateTimeFormat;
 
         /** \brief calculates the tick spacing for a linear axis that spans \a awidth and that should
          *         show at least \a minTicks ticks.
@@ -691,42 +787,78 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         int calcLinearUnitDigits();
 
         /** \brief minimum number of axis ticks */
-        JKQTPPROPERTY(unsigned int, minTicks)
+        unsigned int minTicks;
+        /** \brief default value for property property varname. \see minTicks for more information */ 
+        unsigned int def_minTicks;
         /** \brief number of minor grid lines per axis tick interval */
-        JKQTPPROPERTY(unsigned int, minorTicks)
+        unsigned int minorTicks;
+        /** \brief default value for property property varname. \see minorTicks for more information */ 
+        unsigned int def_minorTicks;
         /** \brief length of an axis tick outside the plot border  in pt */
-        JKQTPPROPERTY(double, tickOutsideLength)
+        double tickOutsideLength;
+        /** \brief default value for property property varname. \see tickOutsideLength for more information */ 
+        double def_tickOutsideLength;
         /** \brief length of a minor axis tick outside the plot border in pt */
-        JKQTPPROPERTY(double, minorTickOutsideLength)
+        double minorTickOutsideLength;
+        /** \brief default value for property property varname. \see minorTickOutsideLength for more information */ 
+        double def_minorTickOutsideLength;
         /** \brief length of an axis tick inside the plot border  in pt */
-        JKQTPPROPERTY(double, tickInsideLength)
+        double tickInsideLength;
+        /** \brief default value for property property varname. \see tickInsideLength for more information */ 
+        double def_tickInsideLength;
         /** \brief length of a minor axis tick inside the plot border in pt */
-        JKQTPPROPERTY(double, minorTickInsideLength)
+        double minorTickInsideLength;
+        /** \brief default value for property property varname. \see minorTickInsideLength for more information */ 
+        double def_minorTickInsideLength;
         /** \brief color of the axis (labels, ticks, axis itself ...) */
-        JKQTPPROPERTY(QColor, axisColor)
+        QColor axisColor;
+        /** \brief default value for property property varname. \see axisColor for more information */ 
+        QColor def_axisColor;
         /** \brief distance between tick end and label start in pt */
-        JKQTPPROPERTY(double, tickLabelDistance)
+        double tickLabelDistance;
+        /** \brief default value for property property varname. \see tickLabelDistance for more information */ 
+        double def_tickLabelDistance;
         /** \brief distance between tick label and axis label in pt */
-        JKQTPPROPERTY(double, labelDistance)
+        double labelDistance;
+        /** \brief default value for property property varname. \see labelDistance for more information */ 
+        double def_labelDistance;
         /** \brief rotation angle of tick labels [-180..180], i.e. given in degrees, default is 0 (horizontal) */
-        JKQTPPROPERTY(double, tickLabelAngle)
+        double tickLabelAngle;
+        /** \brief default value for property property varname. \see tickLabelAngle for more information */ 
+        double def_tickLabelAngle;
 
         /** \brief indicates whether to draw the major grid lines */
-        JKQTPPROPERTY(bool, drawGrid)
+        bool drawGrid;
+        /** \brief default value for property property varname. \see drawGrid for more information */ 
+        bool def_drawGrid;
         /** \brief indicates whether to draw the minor grid lines */
-        JKQTPPROPERTY(bool, drawMinorGrid)
+        bool drawMinorGrid;
+        /** \brief default value for property property varname. \see drawMinorGrid for more information */ 
+        bool def_drawMinorGrid;
         /** \brief color of the grid*/
-        JKQTPPROPERTY(QColor, gridColor)
+        QColor gridColor;
+        /** \brief default value for property property varname. \see gridColor for more information */ 
+        QColor def_gridColor;
         /** \brief color of the minor grid lines */
-        JKQTPPROPERTY(QColor, minorGridColor)
+        QColor minorGridColor;
+        /** \brief default value for property property varname. \see minorGridColor for more information */ 
+        QColor def_minorGridColor;
         /** \brief width of the grid lines (in pixel) */
-        JKQTPPROPERTY(double, gridWidth)
+        double gridWidth;
+        /** \brief default value for property property varname. \see gridWidth for more information */ 
+        double def_gridWidth;
         /** \brief line stye of the grid lines */
-        JKQTPPROPERTY(Qt::PenStyle, gridStyle)
+        Qt::PenStyle gridStyle;
+        /** \brief default value for property property varname. \see gridStyle for more information */ 
+        Qt::PenStyle def_gridStyle;
         /** \brief width of the minor grid lines (in pixel) */
-        JKQTPPROPERTY(double, minorGridWidth)
+        double minorGridWidth;
+        /** \brief default value for property property varname. \see minorGridWidth for more information */ 
+        double def_minorGridWidth;
         /** \brief line stye of the minor grid lines */
-        JKQTPPROPERTY(Qt::PenStyle, minorGridStyle)
+        Qt::PenStyle minorGridStyle;
+        /** \brief default value for property property varname. \see minorGridStyle for more information */ 
+        Qt::PenStyle def_minorGridStyle;
 
         /** \brief axis prefix for storage of parameters */
         QString axisPrefix;

@@ -252,7 +252,8 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         /** \brief deletes the internal image */
         void clear_image();
 
-        JKQTPGET_MACRO(QImage*, image)
+        /** \brief returns the property image. \details Description of the parameter image is:  <CENTER>\copybrief image.</CENTER>. \see image for more information */ 
+        inline QImage* get_image() const { return this->image; }
     protected:
         /** \brief the image to be plotted. This is freed by the destructor, iff \a image_owned is set to \c true (.e.g by QImage-copy-constructors) */
         QImage* image;
@@ -336,10 +337,14 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         JKQTPGET_SET_MACRO(QString, imageName)
         JKQTPGET_SET_MACRO(QString, imageNameFontName)
         JKQTPGET_SET_MACRO(double, imageNameFontSize)
-        JKQTPGET_MACRO(JKQTPverticalIndependentAxis*, colorBarRightAxis)
-        JKQTPGET_MACRO(JKQTPhorizontalIndependentAxis*, colorBarTopAxis)
-        JKQTPGET_MACRO(JKQTPverticalIndependentAxis*, modifierColorBarTopAxis)
-        JKQTPGET_MACRO(JKQTPhorizontalIndependentAxis*, modifierColorBarRightAxis )
+        /** \brief returns the property colorBarRightAxis. \details Description of the parameter colorBarRightAxis is:  <CENTER>\copybrief colorBarRightAxis.</CENTER>. \see colorBarRightAxis for more information */ 
+        inline JKQTPverticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
+        /** \brief returns the property colorBarTopAxis. \details Description of the parameter colorBarTopAxis is:  <CENTER>\copybrief colorBarTopAxis.</CENTER>. \see colorBarTopAxis for more information */ 
+        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
+        /** \brief returns the property modifierColorBarTopAxis. \details Description of the parameter modifierColorBarTopAxis is:  <CENTER>\copybrief modifierColorBarTopAxis.</CENTER>. \see modifierColorBarTopAxis for more information */ 
+        inline JKQTPverticalIndependentAxis* get_modifierColorBarTopAxis() const { return this->modifierColorBarTopAxis; }
+        /** \brief returns the property modifierColorBarRightAxis . \details Description of the parameter modifierColorBarRightAxis  is:  <CENTER>\copybrief modifierColorBarRightAxis .</CENTER>. \see modifierColorBarRightAxis  for more information */ 
+        inline JKQTPhorizontalIndependentAxis* get_modifierColorBarRightAxis()  const { return this->modifierColorBarRightAxis ; }
         JKQTPGET_SET_MACRO(bool, colorBarTopVisible)
         JKQTPGET_SET_MACRO(bool, colorBarRightVisible)
         JKQTPGET_SET_MACRO(bool, autoModifierRange)
@@ -529,12 +534,18 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         JKQTPGET_SET_MACRO(QString, imageNameB)
         JKQTPGET_SET_MACRO(QString, imageNameFontName)
         JKQTPGET_SET_MACRO(double, imageNameFontSize)
-        JKQTPGET_MACRO(JKQTPverticalIndependentAxis*, colorBarRightAxis)
-        JKQTPGET_MACRO(JKQTPhorizontalIndependentAxis*, colorBarTopAxis)
-        JKQTPGET_MACRO(JKQTPverticalIndependentAxis*, colorBarRightAxisG)
-        JKQTPGET_MACRO(JKQTPhorizontalIndependentAxis*, colorBarTopAxisG)
-        JKQTPGET_MACRO(JKQTPverticalIndependentAxis*, colorBarRightAxisB)
-        JKQTPGET_MACRO(JKQTPhorizontalIndependentAxis*, colorBarTopAxisB)
+        /** \brief returns the property colorBarRightAxis. \details Description of the parameter colorBarRightAxis is:  <CENTER>\copybrief colorBarRightAxis.</CENTER>. \see colorBarRightAxis for more information */ 
+        inline JKQTPverticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
+        /** \brief returns the property colorBarTopAxis. \details Description of the parameter colorBarTopAxis is:  <CENTER>\copybrief colorBarTopAxis.</CENTER>. \see colorBarTopAxis for more information */ 
+        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
+        /** \brief returns the property colorBarRightAxisG. \details Description of the parameter colorBarRightAxisG is:  <CENTER>\copybrief colorBarRightAxisG.</CENTER>. \see colorBarRightAxisG for more information */ 
+        inline JKQTPverticalIndependentAxis* get_colorBarRightAxisG() const { return this->colorBarRightAxisG; }
+        /** \brief returns the property colorBarTopAxisG. \details Description of the parameter colorBarTopAxisG is:  <CENTER>\copybrief colorBarTopAxisG.</CENTER>. \see colorBarTopAxisG for more information */ 
+        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxisG() const { return this->colorBarTopAxisG; }
+        /** \brief returns the property colorBarRightAxisB. \details Description of the parameter colorBarRightAxisB is:  <CENTER>\copybrief colorBarRightAxisB.</CENTER>. \see colorBarRightAxisB for more information */ 
+        inline JKQTPverticalIndependentAxis* get_colorBarRightAxisB() const { return this->colorBarRightAxisB; }
+        /** \brief returns the property colorBarTopAxisB. \details Description of the parameter colorBarTopAxisB is:  <CENTER>\copybrief colorBarTopAxisB.</CENTER>. \see colorBarTopAxisB for more information */ 
+        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxisB() const { return this->colorBarTopAxisB; }
         JKQTPGET_SET_MACRO(bool, colorBarTopVisible)
         JKQTPGET_SET_MACRO(bool, colorBarRightVisible)
         JKQTPGET_SET_MACRO(bool, colorbarsSideBySide)

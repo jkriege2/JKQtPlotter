@@ -25,8 +25,7 @@
 */
 
 /**
- * \defgroup jkqtfastplotter Speed-Optimized Plotter class
- * \ingroup tools_qt
+ * \defgroup jkqtfastplotter JKQTFastPlotter: Speed-Optimized Plotter class
  */
 
 /** \file jkqtpfastplotter.h

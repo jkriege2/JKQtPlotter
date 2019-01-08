@@ -104,9 +104,11 @@ LIB_EXPORT void jkloadSplitter(QSettings& settings, QSplitter* splitter, QString
 LIB_EXPORT QString jkVariantListToString(const QList<QVariant>& data, QString separator=QString(", "));
 
 
-/*! \brief filename-ize a string, i.e. replace every non-number and non-character (and also not <code> _ -</code>) character to \c _ */
+/*! \brief filename-ize a string, i.e. replace every non-number and non-character (and also not <code> _ -</code>) character to \c _
+    \ingroup tools_qt */
 LIB_EXPORT QString jkqtp_filenameize(const QString& data);
 
-/** \brief create a valid variable name from the string, i.e. a string with only characters and digits and \c '_'. ALso the first character has to be a charcter. */
+/** \brief create a valid variable name from the string, i.e. a string with only characters and digits and \c '_'. ALso the first character has to be a charcter.
+    \ingroup tools_qt */
 LIB_EXPORT QString jkqtp_toValidVariableName(const QString& input);
 #endif // JKQTTOOLS_H
