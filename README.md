@@ -67,6 +67,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | [Layouting Several Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | Combining plots in Qt Layouts<br/>linking plot axes<br>copy data from a `std::map` int the datastore<br>print plots/print preview |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_ui_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_ui) | [Placing JKQtPlotter into a Qt User-Interface-XML-file (`*.ui`)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_ui) |  |
 
 ### Tools and Special Features
 

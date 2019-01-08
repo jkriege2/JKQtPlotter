@@ -20,12 +20,11 @@ TARGET = jkqtplotter_simpletest
 # include JKQtPlotter source headers and link against library
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
-CONFIG (debug, debug|release):LIBS += -L../../lib/debug -ljkqtplotterlib
-CONFIG (release):LIBS += -L../../lib/release -ljkqtplotterlib
-
-# here you can activate some debug options
-#DEFINES += SHOW_JKQTPLOTTER_DEBUG
-#DEFINES += JKQTBP_AUTOTIMER
+CONFIG (debug, debug|release) {
+    LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug
+} else {
+    LIBS += -L../../staticlib/release -ljkqtplotterlib
+}
 ```
 
 Alternatively to linking agains a `libjkqtplotter`, you can also directy add the JKQtPlotter sources to the project:
