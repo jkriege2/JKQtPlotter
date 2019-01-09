@@ -61,15 +61,132 @@ class LIB_EXPORT JKQTPoverlayElement : public QObject {
         /** \brief sets the parent painter class */
         virtual void setParent(JKQtBasePlotter* parent);
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, lineStyle)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(QString, text)
-        JKQTPGET_SET_MACRO(QString, fontName)
-        JKQTPGET_SET_MACRO(double, fontSize)
-        JKQTPGET_SET_MACRO(bool, visible)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property lineStyle to the specified \a __value. 
+            \details Description of the parameter lineStyle is: <CENTER>\copybrief lineStyle.</CENTER> 
+            \see lineStyle for more information */ 
+        inline virtual void set_lineStyle(const Qt::PenStyle & __value)  
+        {
+            this->lineStyle = __value;
+        } 
+        /*! \brief returns the property lineStyle. 
+            \details Description of the parameter lineStyle is: <CENTER>\copybrief lineStyle.</CENTER> 
+            \see lineStyle for more information */ 
+        inline virtual Qt::PenStyle get_lineStyle() const  
+        {
+            return this->lineStyle; 
+        }
+        /*! \brief sets the property fillStyle to the specified \a __value. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->fillStyle = __value;
+        } 
+        /*! \brief returns the property fillStyle. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_fillStyle() const  
+        {
+            return this->fillStyle; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)  
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property text to the specified \a __value. 
+            \details Description of the parameter text is: <CENTER>\copybrief text.</CENTER> 
+            \see text for more information */ 
+        inline virtual void set_text(const QString & __value)  
+        {
+            this->text = __value;
+        } 
+        /*! \brief returns the property text. 
+            \details Description of the parameter text is: <CENTER>\copybrief text.</CENTER> 
+            \see text for more information */ 
+        inline virtual QString get_text() const  
+        {
+            return this->text; 
+        }
+        /*! \brief sets the property fontName to the specified \a __value. 
+            \details Description of the parameter fontName is: <CENTER>\copybrief fontName.</CENTER> 
+            \see fontName for more information */ 
+        inline virtual void set_fontName(const QString & __value)  
+        {
+            this->fontName = __value;
+        } 
+        /*! \brief returns the property fontName. 
+            \details Description of the parameter fontName is: <CENTER>\copybrief fontName.</CENTER> 
+            \see fontName for more information */ 
+        inline virtual QString get_fontName() const  
+        {
+            return this->fontName; 
+        }
+        /*! \brief sets the property fontSize to the specified \a __value. 
+            \details Description of the parameter fontSize is: <CENTER>\copybrief fontSize.</CENTER> 
+            \see fontSize for more information */ 
+        inline virtual void set_fontSize(double __value)  
+        {
+            this->fontSize = __value;
+        } 
+        /*! \brief returns the property fontSize. 
+            \details Description of the parameter fontSize is: <CENTER>\copybrief fontSize.</CENTER> 
+            \see fontSize for more information */ 
+        inline virtual double get_fontSize() const  
+        {
+            return this->fontSize; 
+        }
+        /*! \brief sets the property visible to the specified \a __value. 
+            \details Description of the parameter visible is: <CENTER>\copybrief visible.</CENTER> 
+            \see visible for more information */ 
+        inline virtual void set_visible(bool __value)  
+        {
+            this->visible = __value;
+        } 
+        /*! \brief returns the property visible. 
+            \details Description of the parameter visible is: <CENTER>\copybrief visible.</CENTER> 
+            \see visible for more information */ 
+        inline virtual bool get_visible() const  
+        {
+            return this->visible; 
+        }
 
     protected:
         /** \brief the plotter object this object belongs to */
@@ -132,10 +249,62 @@ class LIB_EXPORT JKQTPoverlayTwoPositionOverlay : public JKQTPoverlayElement {
     public:
         explicit JKQTPoverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQtBasePlotter *parent = 0);
 
-        JKQTPGET_SET_MACRO(double, x1)
-        JKQTPGET_SET_MACRO(double, x2)
-        JKQTPGET_SET_MACRO(double, y1)
-        JKQTPGET_SET_MACRO(double, y2)
+        /*! \brief sets the property x1 to the specified \a __value. 
+            \details Description of the parameter x1 is: <CENTER>\copybrief x1.</CENTER> 
+            \see x1 for more information */ 
+        inline virtual void set_x1(double __value)  
+        {
+            this->x1 = __value;
+        } 
+        /*! \brief returns the property x1. 
+            \details Description of the parameter x1 is: <CENTER>\copybrief x1.</CENTER> 
+            \see x1 for more information */ 
+        inline virtual double get_x1() const  
+        {
+            return this->x1; 
+        }
+        /*! \brief sets the property x2 to the specified \a __value. 
+            \details Description of the parameter x2 is: <CENTER>\copybrief x2.</CENTER> 
+            \see x2 for more information */ 
+        inline virtual void set_x2(double __value)  
+        {
+            this->x2 = __value;
+        } 
+        /*! \brief returns the property x2. 
+            \details Description of the parameter x2 is: <CENTER>\copybrief x2.</CENTER> 
+            \see x2 for more information */ 
+        inline virtual double get_x2() const  
+        {
+            return this->x2; 
+        }
+        /*! \brief sets the property y1 to the specified \a __value. 
+            \details Description of the parameter y1 is: <CENTER>\copybrief y1.</CENTER> 
+            \see y1 for more information */ 
+        inline virtual void set_y1(double __value)  
+        {
+            this->y1 = __value;
+        } 
+        /*! \brief returns the property y1. 
+            \details Description of the parameter y1 is: <CENTER>\copybrief y1.</CENTER> 
+            \see y1 for more information */ 
+        inline virtual double get_y1() const  
+        {
+            return this->y1; 
+        }
+        /*! \brief sets the property y2 to the specified \a __value. 
+            \details Description of the parameter y2 is: <CENTER>\copybrief y2.</CENTER> 
+            \see y2 for more information */ 
+        inline virtual void set_y2(double __value)  
+        {
+            this->y2 = __value;
+        } 
+        /*! \brief returns the property y2. 
+            \details Description of the parameter y2 is: <CENTER>\copybrief y2.</CENTER> 
+            \see y2 for more information */ 
+        inline virtual double get_y2() const  
+        {
+            return this->y2; 
+        }
     protected:
         double x1;
         double y1;
@@ -153,7 +322,20 @@ class LIB_EXPORT JKQTPoverlayOneCoordOverlay : public JKQTPoverlayElement {
     public:
         explicit JKQTPoverlayOneCoordOverlay(double pos, JKQtBasePlotter *parent = 0);
 
-        JKQTPGET_SET_MACRO(double, position)
+        /*! \brief sets the property position to the specified \a __value. 
+            \details Description of the parameter position is: <CENTER>\copybrief position.</CENTER> 
+            \see position for more information */ 
+        inline virtual void set_position(double __value)  
+        {
+            this->position = __value;
+        } 
+        /*! \brief returns the property position. 
+            \details Description of the parameter position is: <CENTER>\copybrief position.</CENTER> 
+            \see position for more information */ 
+        inline virtual double get_position() const  
+        {
+            return this->position; 
+        }
     protected:
         double position;
 };
@@ -168,7 +350,20 @@ class LIB_EXPORT JKQTPoverlayTwoCoordOverlay : public JKQTPoverlayOneCoordOverla
     public:
         explicit JKQTPoverlayTwoCoordOverlay(double pos, double pos2, JKQtBasePlotter *parent = 0);
 
-        JKQTPGET_SET_MACRO(double, position2)
+        /*! \brief sets the property position2 to the specified \a __value. 
+            \details Description of the parameter position2 is: <CENTER>\copybrief position2.</CENTER> 
+            \see position2 for more information */ 
+        inline virtual void set_position2(double __value)  
+        {
+            this->position2 = __value;
+        } 
+        /*! \brief returns the property position2. 
+            \details Description of the parameter position2 is: <CENTER>\copybrief position2.</CENTER> 
+            \see position2 for more information */ 
+        inline virtual double get_position2() const  
+        {
+            return this->position2; 
+        }
     protected:
         double position2;
 };
@@ -207,7 +402,20 @@ class LIB_EXPORT JKQTPoverlayVerticalRange : public JKQTPoverlayTwoCoordOverlay 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
 
-        JKQTPGET_SET_MACRO(bool, inverted)
+        /*! \brief sets the property inverted to the specified \a __value. 
+            \details Description of the parameter inverted is: <CENTER>\copybrief inverted.</CENTER> 
+            \see inverted for more information */ 
+        inline virtual void set_inverted(bool __value)  
+        {
+            this->inverted = __value;
+        } 
+        /*! \brief returns the property inverted. 
+            \details Description of the parameter inverted is: <CENTER>\copybrief inverted.</CENTER> 
+            \see inverted for more information */ 
+        inline virtual bool get_inverted() const  
+        {
+            return this->inverted; 
+        }
     protected:
         /** \brief if set \c false, the range is filled, otherwise everything outside the range is filled */
         bool inverted;
@@ -225,7 +433,20 @@ class LIB_EXPORT JKQTPoverlayLine : public JKQTPoverlayTwoPositionOverlay {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
 
-        JKQTPGET_SET_MACRO(bool, infinite)
+        /*! \brief sets the property infinite to the specified \a __value. 
+            \details Description of the parameter infinite is: <CENTER>\copybrief infinite.</CENTER> 
+            \see infinite for more information */ 
+        inline virtual void set_infinite(bool __value)  
+        {
+            this->infinite = __value;
+        } 
+        /*! \brief returns the property infinite. 
+            \details Description of the parameter infinite is: <CENTER>\copybrief infinite.</CENTER> 
+            \see infinite for more information */ 
+        inline virtual bool get_infinite() const  
+        {
+            return this->infinite; 
+        }
     protected:
         /** \brief the line goes on infinitely */
         bool infinite;

@@ -175,7 +175,7 @@ for (unsigned long i=0; i<runs; i++) {
 \endcode
      *
      */
-		void test(double* mean, double* stddev, unsigned long* histogram=NULL, double* histogram_x=NULL, unsigned long histogram_size=0);
+		void test(double* mean, double* stddev, unsigned long* histogram=nullptr, double* histogram_x=nullptr, unsigned long histogram_size=0);
 
 };
 

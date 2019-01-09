@@ -39,7 +39,20 @@ class LIB_EXPORT JKVanishQToolBar: public QToolBar {
         JKVanishQToolBar(const QString& title, QWidget* parent=nullptr);
         /** \brief class constructor */
         JKVanishQToolBar(QWidget* parent=nullptr);
-        JKQTPGET_SET_MACRO(bool, toolbarVanishes)
+        /*! \brief sets the property toolbarVanishes to the specified \a __value. 
+            \details Description of the parameter toolbarVanishes is: <CENTER>\copybrief toolbarVanishes.</CENTER> 
+            \see toolbarVanishes for more information */ 
+        inline virtual void set_toolbarVanishes(bool __value)  
+        {
+            this->toolbarVanishes = __value;
+        } 
+        /*! \brief returns the property toolbarVanishes. 
+            \details Description of the parameter toolbarVanishes is: <CENTER>\copybrief toolbarVanishes.</CENTER> 
+            \see toolbarVanishes for more information */ 
+        inline virtual bool get_toolbarVanishes() const  
+        {
+            return this->toolbarVanishes; 
+        }
     protected:
         bool toolbarVanishes;
         /** \brief this event triggers the vanishing of the toolbar */

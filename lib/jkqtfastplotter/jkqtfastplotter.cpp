@@ -29,12 +29,34 @@
 #include <QApplication>
 #include <QClipboard>
 
+
+/**
+ * \brief saves the given property (for which also a def_property exists) into the given settings object
+ * \ingroup jkqtfastplotter
+ * \internal
+ */
+#define JKQTFPPROPERTYsave(settings, group, var, varname) \
+    if (var!=def_##var) settings.setValue(group+varname, var);
+/**
+ * \brief loads the given property from the given settings object
+ * \ingroup jkqtfastplotter
+ * \internal
+ */
+#define JKQTFPPROPERTYload(settings, group, var, varname, varconvert) \
+    var=settings.value(group+varname, var).varconvert;
+
+
 JKQTFPPlot::JKQTFPPlot(JKQTFastPlotter* parent):
     QObject(parent)
 
 {
     this->parent=parent;
     this->visible=true;
+}
+
+JKQTFPPlot::~JKQTFPPlot()
+{
+
 };
 
 void JKQTFPPlot::replot() {
@@ -61,8 +83,8 @@ JKQTFastPlotter::JKQTFastPlotter(QWidget *parent) :
     plotBorderTop=def_plotBorderTop=5;
     plotBorderBottom=def_plotBorderBottom=30;
 
-    synchronizeX=NULL;
-    synchronizeY=NULL;
+    synchronizeX=nullptr;
+    synchronizeY=nullptr;
 
     backgroundColor=def_backgroundColor=palette().color(QPalette::Window);
     plotBackgroundColor=def_plotBackgroundColor=QColor("white");
@@ -701,7 +723,7 @@ void JKQTFastPlotter::calcPlotScaling() {
     ////////////////////////////////////////////////////////////////////
     // PLOTTER SYNCHRONIZATION
     ////////////////////////////////////////////////////////////////////
-    if (synchronizeX!=NULL) {
+    if (synchronizeX!=nullptr) {
         internalPlotBorderLeft=synchronizeX->get_internalPlotBorderLeft();
         internalPlotBorderRight=synchronizeX->get_internalPlotBorderRight();
         xMin=synchronizeX->get_xMin();
@@ -709,7 +731,7 @@ void JKQTFastPlotter::calcPlotScaling() {
         xAxisLog=synchronizeX->get_xAxisLog();
         xAxisLabel=synchronizeX->get_xAxisLabel();
     }
-    if (synchronizeY!=NULL) {
+    if (synchronizeY!=nullptr) {
         internalPlotBorderTop=synchronizeY->get_internalPlotBorderTop();
         internalPlotBorderBottom=synchronizeY->get_internalPlotBorderBottom();
         yMin=synchronizeY->get_yMin();
@@ -820,10 +842,10 @@ JKQTFPLinePlot::JKQTFPLinePlot(JKQTFastPlotter* parent, unsigned int N, double* 
     this->N=N;
     this->x=x;
     this->y=y;
-    this->yerr=NULL;
-    this->xv=NULL;
-    this->yv=NULL;
-    this->yerrv=NULL;
+    this->yerr=nullptr;
+    this->xv=nullptr;
+    this->yv=nullptr;
+    this->yerrv=nullptr;
     this->color=color;
     this->errorColor=color.lighter();
     this->errorStyle=this->style=style;
@@ -836,12 +858,12 @@ JKQTFPLinePlot::JKQTFPLinePlot(JKQTFastPlotter* parent, QVector<double>* x, QVec
     JKQTFPPlot(parent)
 {
     this->N=x->size();
-    this->x=NULL;
-    this->y=NULL;
-    this->yerr=NULL;
+    this->x=nullptr;
+    this->y=nullptr;
+    this->yerr=nullptr;
     this->xv=x;
     this->yv=y;
-    this->yerrv=NULL;
+    this->yerrv=nullptr;
     this->color=color;
     this->errorColor=color.lighter();
     this->errorStyle=this->style=style;
@@ -874,7 +896,7 @@ void JKQTFPLinePlot::drawGraph(QPainter& painter) {
             path.lineTo(parent->x2p(x[i]), parent->y2p(y[i]));
             //std::cout<<"-> ("<<parent->x2p(x[i])<<", "<<parent->y2p(y[i])<<")\n";
         }
-        if (yerr!=NULL) {
+        if (yerr!=nullptr) {
             if (N>0){
                 epath.moveTo(parent->x2p(x[0]), parent->y2p(y[0]+yerr[0]));
             }
@@ -897,7 +919,7 @@ void JKQTFPLinePlot::drawGraph(QPainter& painter) {
                 //std::cout<<"-> ("<<parent->x2p(x[i])<<", "<<parent->y2p(y[i])<<")\n";
             }
         }
-        if (yerrv!=NULL) {
+        if (yerrv!=nullptr) {
             if (yerrv->size()>1 && (xv->size()>=yerrv->size()) && (yv->size()>=yerrv->size())){
                 epath.moveTo(parent->x2p((*xv)[0]), parent->y2p((*yv)[0]+(*yerrv)[0]));
                 //std::cout<<"plotting graph, starting @ ("<<parent->x2p(x[0])<<", "<<parent->y2p(y[0])<<")\n";
@@ -959,7 +981,7 @@ void JKQTFPVCrossPlot::drawGraph(QPainter& painter) {
             path.lineTo(QPointF(parent->x2p(x[i]), parent->y2p(y[i])+crossWidth/2.0));
             //std::cout<<"-> ("<<parent->x2p(x[i])<<", "<<parent->y2p(y[i])<<")\n";
         }
-        if (yerr!=NULL) {
+        if (yerr!=nullptr) {
             if (N>0){
                 epath.moveTo(parent->x2p(x[0]), parent->y2p(y[0]+yerr[0]));
             }
@@ -983,7 +1005,7 @@ void JKQTFPVCrossPlot::drawGraph(QPainter& painter) {
                 //std::cout<<"-> ("<<parent->x2p(x[i])<<", "<<parent->y2p(y[i])<<")\n";
             }
         }
-        if (yerrv!=NULL) {
+        if (yerrv!=nullptr) {
             if (yerrv->size()>0 && (xv->size()>=yerrv->size()) && (yv->size()>=yerrv->size())){
                 epath.moveTo(parent->x2p((*xv)[0]), parent->y2p((*yv)[0]+(*yerrv)[0]));
                 //std::cout<<"plotting graph, starting @ ("<<parent->x2p(x[0])<<", "<<parent->y2p(y[0])<<")\n";
@@ -1541,11 +1563,11 @@ JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, vo
     this->imageFormatRed=imageFormat;
     colorMinGreen=0;
     colorMaxGreen=0;
-    this->imageGreen=NULL;
+    this->imageGreen=nullptr;
     this->imageFormatGreen=JKQTFP_uint16;
     colorMinBlue=0;
     colorMaxBlue=0;
-    this->imageBlue=NULL;
+    this->imageBlue=nullptr;
     this->imageFormatBlue=JKQTFP_uint16;
     this->rotation=0;
 }
@@ -1565,11 +1587,11 @@ JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, vo
     this->imageFormatRed=imageFormat;
     colorMinGreen=0;
     colorMaxGreen=0;
-    this->imageGreen=NULL;
+    this->imageGreen=nullptr;
     this->imageFormatGreen=JKQTFP_uint16;
     colorMinBlue=0;
     colorMaxBlue=0;
-    this->imageBlue=NULL;
+    this->imageBlue=nullptr;
     this->imageFormatBlue=JKQTFP_uint16;
     this->rotation=0;
 }
@@ -1585,15 +1607,15 @@ JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent):
     this->ymax=height-1;
     colorMinRed=0;
     colorMaxRed=0;
-    this->imageRed=NULL;
+    this->imageRed=nullptr;
     this->imageFormatRed=JKQTFP_uint16;
     colorMinGreen=0;
     colorMaxGreen=0;
-    this->imageGreen=NULL;
+    this->imageGreen=nullptr;
     this->imageFormatGreen=JKQTFP_uint16;
     colorMinBlue=0;
     colorMaxBlue=0;
-    this->imageBlue=NULL;
+    this->imageBlue=nullptr;
     this->imageFormatBlue=JKQTFP_uint16;
     this->rotation=0;
 }
@@ -1650,8 +1672,8 @@ void JKQTFPRGBImageOverlayPlot::drawGraph(QPainter &painter) {
 void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, unsigned int width, unsigned int height){
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
-    this->imageGreen=NULL;
-    this->imageBlue=NULL;
+    this->imageGreen=nullptr;
+    this->imageBlue=nullptr;
     this->width=width;
     this->height=height;
     this->xmin=0;
@@ -1666,7 +1688,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
     this->imageFormatGreen=imageFormatGreen;
-    this->imageBlue=NULL;
+    this->imageBlue=nullptr;
     this->width=width;
     this->height=height;
     this->xmin=0;
@@ -1697,8 +1719,8 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax){
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
-    this->imageRed=NULL;
-    this->imageBlue=NULL;
+    this->imageRed=nullptr;
+    this->imageBlue=nullptr;
     this->width=width;
     this->height=height;
     this->xmin=xmin;
@@ -1713,7 +1735,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
     this->imageFormatGreen=imageFormatGreen;
-    this->imageBlue=NULL;
+    this->imageBlue=nullptr;
     this->width=width;
     this->height=height;
     this->xmin=xmin;

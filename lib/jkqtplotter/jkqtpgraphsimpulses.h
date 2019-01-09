@@ -46,9 +46,48 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(double, baseline)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)  
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property baseline to the specified \a __value. 
+            \details Description of the parameter baseline is: <CENTER>\copybrief baseline.</CENTER> 
+            \see baseline for more information */ 
+        inline virtual void set_baseline(double __value)  
+        {
+            this->baseline = __value;
+        } 
+        /*! \brief returns the property baseline. 
+            \details Description of the parameter baseline is: <CENTER>\copybrief baseline.</CENTER> 
+            \see baseline for more information */ 
+        inline virtual double get_baseline() const  
+        {
+            return this->baseline; 
+        }
 
         /** \brief color of the graph */
         QColor color;

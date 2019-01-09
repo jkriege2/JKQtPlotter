@@ -90,33 +90,275 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
         /** \copydoc JKQTPgraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
-        JKQTPGET_SET_MACRO(DataSortOrder, sortData)
-        /** \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> \see sortData for more information */
+        /*! \brief sets the property sortData to the specified \a __value. 
+            \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> 
+            \see sortData for more information */ 
+        inline virtual void set_sortData(const DataSortOrder & __value)  
+        {
+            this->sortData = __value;
+        } 
+        /*! \brief returns the property sortData. 
+            \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> 
+            \see sortData for more information */ 
+        inline virtual DataSortOrder get_sortData() const  
+        {
+            return this->sortData; 
+        }
+        /*! \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> \see sortData for more information */
         void set_sortData(int __value);
-        JKQTPGET_SET_MACRO(int, posColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, posColumn)
-        JKQTPGET_SET_MACRO(int, medianColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, medianColumn)
-        JKQTPGET_SET_MACRO(int, meanColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, meanColumn)
-        JKQTPGET_SET_MACRO(int, minColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, minColumn)
-        JKQTPGET_SET_MACRO(int, maxColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, maxColumn)
-        JKQTPGET_SET_MACRO(int, percentile25Column)
-        JKQTPSET_CAST_MACRO(size_t, int, percentile25Column)
-        JKQTPGET_SET_MACRO(int, percentile75Column)
-        JKQTPSET_CAST_MACRO(size_t, int, percentile75Column)
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, whiskerStyle)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(double, boxWidth)
+        /*! \brief sets the property posColumn to the specified \a __value. 
+            \details Description of the parameter posColumn is: <CENTER>\copybrief posColumn.</CENTER> 
+            \see posColumn for more information */ 
+        inline virtual void set_posColumn(int __value)
+        {
+            this->posColumn = __value;
+        } 
+        /*! \brief returns the property posColumn. 
+            \details Description of the parameter posColumn is: <CENTER>\copybrief posColumn.</CENTER> 
+            \see posColumn for more information */ 
+        inline virtual int get_posColumn() const  
+        {
+            return this->posColumn; 
+        }
+        /*! \brief sets the property posColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter posColumn is:  <CENTER>\copybrief posColumn.</CENTER> 
+        	\see posColumn for more information */ 
+        inline virtual void set_posColumn (size_t __value) { this->posColumn = static_cast<int>(__value); }
+        /*! \brief sets the property medianColumn to the specified \a __value. 
+            \details Description of the parameter medianColumn is: <CENTER>\copybrief medianColumn.</CENTER> 
+            \see medianColumn for more information */ 
+        inline virtual void set_medianColumn(int __value)
+        {
+            this->medianColumn = __value;
+        } 
+        /*! \brief returns the property medianColumn. 
+            \details Description of the parameter medianColumn is: <CENTER>\copybrief medianColumn.</CENTER> 
+            \see medianColumn for more information */ 
+        inline virtual int get_medianColumn() const  
+        {
+            return this->medianColumn; 
+        }
+        /*! \brief sets the property medianColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter medianColumn is:  <CENTER>\copybrief medianColumn.</CENTER> 
+        	\see medianColumn for more information */ 
+        inline virtual void set_medianColumn (size_t __value) { this->medianColumn = static_cast<int>(__value); }
+        /*! \brief sets the property meanColumn to the specified \a __value. 
+            \details Description of the parameter meanColumn is: <CENTER>\copybrief meanColumn.</CENTER> 
+            \see meanColumn for more information */ 
+        inline virtual void set_meanColumn(int __value)
+        {
+            this->meanColumn = __value;
+        } 
+        /*! \brief returns the property meanColumn. 
+            \details Description of the parameter meanColumn is: <CENTER>\copybrief meanColumn.</CENTER> 
+            \see meanColumn for more information */ 
+        inline virtual int get_meanColumn() const  
+        {
+            return this->meanColumn; 
+        }
+        /*! \brief sets the property meanColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter meanColumn is:  <CENTER>\copybrief meanColumn.</CENTER> 
+        	\see meanColumn for more information */ 
+        inline virtual void set_meanColumn (size_t __value) { this->meanColumn = static_cast<int>(__value); }
+        /*! \brief sets the property minColumn to the specified \a __value. 
+            \details Description of the parameter minColumn is: <CENTER>\copybrief minColumn.</CENTER> 
+            \see minColumn for more information */ 
+        inline virtual void set_minColumn(int __value)
+        {
+            this->minColumn = __value;
+        } 
+        /*! \brief returns the property minColumn. 
+            \details Description of the parameter minColumn is: <CENTER>\copybrief minColumn.</CENTER> 
+            \see minColumn for more information */ 
+        inline virtual int get_minColumn() const  
+        {
+            return this->minColumn; 
+        }
+        /*! \brief sets the property minColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter minColumn is:  <CENTER>\copybrief minColumn.</CENTER> 
+        	\see minColumn for more information */ 
+        inline virtual void set_minColumn( size_t __value) { this->minColumn = static_cast<int>(__value); }
+        /*! \brief sets the property maxColumn to the specified \a __value. 
+            \details Description of the parameter maxColumn is: <CENTER>\copybrief maxColumn.</CENTER> 
+            \see maxColumn for more information */ 
+        inline virtual void set_maxColumn(int __value)
+        {
+            this->maxColumn = __value;
+        } 
+        /*! \brief returns the property maxColumn. 
+            \details Description of the parameter maxColumn is: <CENTER>\copybrief maxColumn.</CENTER> 
+            \see maxColumn for more information */ 
+        inline virtual int get_maxColumn() const  
+        {
+            return this->maxColumn; 
+        }
+        /*! \brief sets the property maxColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter maxColumn is:  <CENTER>\copybrief maxColumn.</CENTER> 
+        	\see maxColumn for more information */ 
+        inline virtual void set_maxColumn (size_t __value) { this->maxColumn = static_cast<int>(__value); }
+        /*! \brief sets the property percentile25Column to the specified \a __value. 
+            \details Description of the parameter percentile25Column is: <CENTER>\copybrief percentile25Column.</CENTER> 
+            \see percentile25Column for more information */ 
+        inline virtual void set_percentile25Column(int __value)
+        {
+            this->percentile25Column = __value;
+        } 
+        /*! \brief returns the property percentile25Column. 
+            \details Description of the parameter percentile25Column is: <CENTER>\copybrief percentile25Column.</CENTER> 
+            \see percentile25Column for more information */ 
+        inline virtual int get_percentile25Column() const  
+        {
+            return this->percentile25Column; 
+        }
+        /*! \brief sets the property percentile25Column to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter percentile25Column is:  <CENTER>\copybrief percentile25Column.</CENTER> 
+        	\see percentile25Column for more information */ 
+        inline virtual void set_percentile25Column (size_t __value) { this->percentile25Column = static_cast<int>(__value); }
+        /*! \brief sets the property percentile75Column to the specified \a __value. 
+            \details Description of the parameter percentile75Column is: <CENTER>\copybrief percentile75Column.</CENTER> 
+            \see percentile75Column for more information */ 
+        inline virtual void set_percentile75Column(int __value)
+        {
+            this->percentile75Column = __value;
+        } 
+        /*! \brief returns the property percentile75Column. 
+            \details Description of the parameter percentile75Column is: <CENTER>\copybrief percentile75Column.</CENTER> 
+            \see percentile75Column for more information */ 
+        inline virtual int get_percentile75Column() const  
+        {
+            return this->percentile75Column; 
+        }
+        /*! \brief sets the property percentile75Column to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter percentile75Column is:  <CENTER>\copybrief percentile75Column.</CENTER> 
+        	\see percentile75Column for more information */ 
+        inline virtual void set_percentile75Column (size_t __value) { this->percentile75Column = static_cast<int>(__value); }
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property whiskerStyle to the specified \a __value. 
+            \details Description of the parameter whiskerStyle is: <CENTER>\copybrief whiskerStyle.</CENTER> 
+            \see whiskerStyle for more information */ 
+        inline virtual void set_whiskerStyle(const Qt::PenStyle & __value)  
+        {
+            this->whiskerStyle = __value;
+        } 
+        /*! \brief returns the property whiskerStyle. 
+            \details Description of the parameter whiskerStyle is: <CENTER>\copybrief whiskerStyle.</CENTER> 
+            \see whiskerStyle for more information */ 
+        inline virtual Qt::PenStyle get_whiskerStyle() const  
+        {
+            return this->whiskerStyle; 
+        }
+        /*! \brief sets the property fillStyle to the specified \a __value. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->fillStyle = __value;
+        } 
+        /*! \brief returns the property fillStyle. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_fillStyle() const  
+        {
+            return this->fillStyle; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property boxWidth to the specified \a __value. 
+            \details Description of the parameter boxWidth is: <CENTER>\copybrief boxWidth.</CENTER> 
+            \see boxWidth for more information */ 
+        inline virtual void set_boxWidth(double __value)
+        {
+            this->boxWidth = __value;
+        } 
+        /*! \brief returns the property boxWidth. 
+            \details Description of the parameter boxWidth is: <CENTER>\copybrief boxWidth.</CENTER> 
+            \see boxWidth for more information */ 
+        inline virtual double get_boxWidth() const  
+        {
+            return this->boxWidth; 
+        }
 
-        JKQTPGET_SET_MACRO(JKQTPgraphSymbols, meanSymbol)
-        JKQTPGET_SET_MACRO(double, meanSymbolWidth)
-        JKQTPGET_SET_MACRO(double, meanSymbolSize)
+        /*! \brief sets the property meanSymbol to the specified \a __value. 
+            \details Description of the parameter meanSymbol is: <CENTER>\copybrief meanSymbol.</CENTER> 
+            \see meanSymbol for more information */ 
+        inline virtual void set_meanSymbol(const JKQTPgraphSymbols & __value)  
+        {
+            this->meanSymbol = __value;
+        } 
+        /*! \brief returns the property meanSymbol. 
+            \details Description of the parameter meanSymbol is: <CENTER>\copybrief meanSymbol.</CENTER> 
+            \see meanSymbol for more information */ 
+        inline virtual JKQTPgraphSymbols get_meanSymbol() const  
+        {
+            return this->meanSymbol; 
+        }
+        /*! \brief sets the property meanSymbolWidth to the specified \a __value. 
+            \details Description of the parameter meanSymbolWidth is: <CENTER>\copybrief meanSymbolWidth.</CENTER> 
+            \see meanSymbolWidth for more information */ 
+        inline virtual void set_meanSymbolWidth(double __value)
+        {
+            this->meanSymbolWidth = __value;
+        } 
+        /*! \brief returns the property meanSymbolWidth. 
+            \details Description of the parameter meanSymbolWidth is: <CENTER>\copybrief meanSymbolWidth.</CENTER> 
+            \see meanSymbolWidth for more information */ 
+        inline virtual double get_meanSymbolWidth() const  
+        {
+            return this->meanSymbolWidth; 
+        }
+        /*! \brief sets the property meanSymbolSize to the specified \a __value. 
+            \details Description of the parameter meanSymbolSize is: <CENTER>\copybrief meanSymbolSize.</CENTER> 
+            \see meanSymbolSize for more information */ 
+        inline virtual void set_meanSymbolSize(double __value)
+        {
+            this->meanSymbolSize = __value;
+        } 
+        /*! \brief returns the property meanSymbolSize. 
+            \details Description of the parameter meanSymbolSize is: <CENTER>\copybrief meanSymbolSize.</CENTER> 
+            \see meanSymbolSize for more information */ 
+        inline virtual double get_meanSymbolSize() const  
+        {
+            return this->meanSymbolSize; 
+        }
 
     protected:
         /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
@@ -248,25 +490,271 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
-        JKQTPGET_SET_MACRO(double, pos)
-        JKQTPGET_SET_MACRO_I(double, median, drawMedian=true)
-        JKQTPGET_SET_MACRO_I(double, mean, drawMean=true)
-        JKQTPGET_SET_MACRO_I(double, min, drawMinMax=true)
-        JKQTPGET_SET_MACRO_I(double, max, drawMinMax=true)
-        JKQTPGET_SET_MACRO(double, percentile25)
-        JKQTPGET_SET_MACRO(double, percentile75)
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, whiskerStyle)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(double, boxWidth)
+        /*! \brief sets the property pos to the specified \a __value. 
+            \details Description of the parameter pos is: <CENTER>\copybrief pos.</CENTER> 
+            \see pos for more information */ 
+        inline virtual void set_pos(double __value)
+        {
+            this->pos = __value;
+        } 
+        /*! \brief returns the property pos. 
+            \details Description of the parameter pos is: <CENTER>\copybrief pos.</CENTER> 
+            \see pos for more information */ 
+        inline virtual double get_pos() const  
+        {
+            return this->pos; 
+        }
+        /*! \brief sets the property median to the specified \a __value. 
+            \details Description of the parameter median is: <CENTER>\copybrief median.</CENTER> 
+            \see median for more information */ 
+        inline virtual void set_median(double __value)
+        {
+            if (this->median != __value) { 
+                this->median = __value; 
+                drawMedian=true; 
+            } 
+        } 
+        /*! \brief returns the property median. 
+            \details Description of the parameter median is: <CENTER>\copybrief median.</CENTER> 
+            \see median for more information */ 
+        inline virtual double get_median() const  
+        {
+            return this->median; 
+        }
+        /*! \brief sets the property mean to the specified \a __value. 
+            \details Description of the parameter mean is: <CENTER>\copybrief mean.</CENTER> 
+            \see mean for more information */ 
+        inline virtual void set_mean(double __value)
+        {
+            if (this->mean != __value) { 
+                this->mean = __value; 
+                drawMean=true; 
+            } 
+        } 
+        /*! \brief returns the property mean. 
+            \details Description of the parameter mean is: <CENTER>\copybrief mean.</CENTER> 
+            \see mean for more information */ 
+        inline virtual double get_mean() const  
+        {
+            return this->mean; 
+        }
+        /*! \brief sets the property min to the specified \a __value. 
+            \details Description of the parameter min is: <CENTER>\copybrief min.</CENTER> 
+            \see min for more information */ 
+        inline virtual void set_min(double __value)
+        {
+            if (this->min != __value) { 
+                this->min = __value; 
+                drawMinMax=true; 
+            } 
+        } 
+        /*! \brief returns the property min. 
+            \details Description of the parameter min is: <CENTER>\copybrief min.</CENTER> 
+            \see min for more information */ 
+        inline virtual double get_min() const  
+        {
+            return this->min; 
+        }
+        /*! \brief sets the property max to the specified \a __value. 
+            \details Description of the parameter max is: <CENTER>\copybrief max.</CENTER> 
+            \see max for more information */ 
+        inline virtual void set_max(double __value)
+        {
+            if (this->max != __value) { 
+                this->max = __value; 
+                drawMinMax=true; 
+            } 
+        } 
+        /*! \brief returns the property max. 
+            \details Description of the parameter max is: <CENTER>\copybrief max.</CENTER> 
+            \see max for more information */ 
+        inline virtual double get_max() const  
+        {
+            return this->max; 
+        }
+        /*! \brief sets the property percentile25 to the specified \a __value. 
+            \details Description of the parameter percentile25 is: <CENTER>\copybrief percentile25.</CENTER> 
+            \see percentile25 for more information */ 
+        inline virtual void set_percentile25(double __value)
+        {
+            this->percentile25 = __value;
+        } 
+        /*! \brief returns the property percentile25. 
+            \details Description of the parameter percentile25 is: <CENTER>\copybrief percentile25.</CENTER> 
+            \see percentile25 for more information */ 
+        inline virtual double get_percentile25() const  
+        {
+            return this->percentile25; 
+        }
+        /*! \brief sets the property percentile75 to the specified \a __value. 
+            \details Description of the parameter percentile75 is: <CENTER>\copybrief percentile75.</CENTER> 
+            \see percentile75 for more information */ 
+        inline virtual void set_percentile75(double __value)
+        {
+            this->percentile75 = __value;
+        } 
+        /*! \brief returns the property percentile75. 
+            \details Description of the parameter percentile75 is: <CENTER>\copybrief percentile75.</CENTER> 
+            \see percentile75 for more information */ 
+        inline virtual double get_percentile75() const  
+        {
+            return this->percentile75; 
+        }
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property whiskerStyle to the specified \a __value. 
+            \details Description of the parameter whiskerStyle is: <CENTER>\copybrief whiskerStyle.</CENTER> 
+            \see whiskerStyle for more information */ 
+        inline virtual void set_whiskerStyle(const Qt::PenStyle & __value)  
+        {
+            this->whiskerStyle = __value;
+        } 
+        /*! \brief returns the property whiskerStyle. 
+            \details Description of the parameter whiskerStyle is: <CENTER>\copybrief whiskerStyle.</CENTER> 
+            \see whiskerStyle for more information */ 
+        inline virtual Qt::PenStyle get_whiskerStyle() const  
+        {
+            return this->whiskerStyle; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property boxWidth to the specified \a __value. 
+            \details Description of the parameter boxWidth is: <CENTER>\copybrief boxWidth.</CENTER> 
+            \see boxWidth for more information */ 
+        inline virtual void set_boxWidth(double __value)
+        {
+            this->boxWidth = __value;
+        } 
+        /*! \brief returns the property boxWidth. 
+            \details Description of the parameter boxWidth is: <CENTER>\copybrief boxWidth.</CENTER> 
+            \see boxWidth for more information */ 
+        inline virtual double get_boxWidth() const  
+        {
+            return this->boxWidth; 
+        }
 
-        JKQTPGET_SET_MACRO(JKQTPgraphSymbols, meanSymbol)
-        JKQTPGET_SET_MACRO(double, meanSymbolWidth)
-        JKQTPGET_SET_MACRO(double, meanSymbolSize)
-        JKQTPGET_SET_MACRO(bool, drawMean)
-        JKQTPGET_SET_MACRO(bool, drawMedian)
-        JKQTPGET_SET_MACRO(bool, drawMinMax)
+        /*! \brief sets the property meanSymbol to the specified \a __value. 
+            \details Description of the parameter meanSymbol is: <CENTER>\copybrief meanSymbol.</CENTER> 
+            \see meanSymbol for more information */ 
+        inline virtual void set_meanSymbol(const JKQTPgraphSymbols & __value)  
+        {
+            this->meanSymbol = __value;
+        } 
+        /*! \brief returns the property meanSymbol. 
+            \details Description of the parameter meanSymbol is: <CENTER>\copybrief meanSymbol.</CENTER> 
+            \see meanSymbol for more information */ 
+        inline virtual JKQTPgraphSymbols get_meanSymbol() const  
+        {
+            return this->meanSymbol; 
+        }
+        /*! \brief sets the property meanSymbolWidth to the specified \a __value. 
+            \details Description of the parameter meanSymbolWidth is: <CENTER>\copybrief meanSymbolWidth.</CENTER> 
+            \see meanSymbolWidth for more information */ 
+        inline virtual void set_meanSymbolWidth(double __value)
+        {
+            this->meanSymbolWidth = __value;
+        } 
+        /*! \brief returns the property meanSymbolWidth. 
+            \details Description of the parameter meanSymbolWidth is: <CENTER>\copybrief meanSymbolWidth.</CENTER> 
+            \see meanSymbolWidth for more information */ 
+        inline virtual double get_meanSymbolWidth() const  
+        {
+            return this->meanSymbolWidth; 
+        }
+        /*! \brief sets the property meanSymbolSize to the specified \a __value. 
+            \details Description of the parameter meanSymbolSize is: <CENTER>\copybrief meanSymbolSize.</CENTER> 
+            \see meanSymbolSize for more information */ 
+        inline virtual void set_meanSymbolSize(double __value)
+        {
+            this->meanSymbolSize = __value;
+        } 
+        /*! \brief returns the property meanSymbolSize. 
+            \details Description of the parameter meanSymbolSize is: <CENTER>\copybrief meanSymbolSize.</CENTER> 
+            \see meanSymbolSize for more information */ 
+        inline virtual double get_meanSymbolSize() const  
+        {
+            return this->meanSymbolSize; 
+        }
+        /*! \brief sets the property drawMean to the specified \a __value. 
+            \details Description of the parameter drawMean is: <CENTER>\copybrief drawMean.</CENTER> 
+            \see drawMean for more information */ 
+        inline virtual void set_drawMean(bool __value)
+        {
+            this->drawMean = __value;
+        } 
+        /*! \brief returns the property drawMean. 
+            \details Description of the parameter drawMean is: <CENTER>\copybrief drawMean.</CENTER> 
+            \see drawMean for more information */ 
+        inline virtual bool get_drawMean() const  
+        {
+            return this->drawMean; 
+        }
+        /*! \brief sets the property drawMedian to the specified \a __value. 
+            \details Description of the parameter drawMedian is: <CENTER>\copybrief drawMedian.</CENTER> 
+            \see drawMedian for more information */ 
+        inline virtual void set_drawMedian(bool __value)
+        {
+            this->drawMedian = __value;
+        } 
+        /*! \brief returns the property drawMedian. 
+            \details Description of the parameter drawMedian is: <CENTER>\copybrief drawMedian.</CENTER> 
+            \see drawMedian for more information */ 
+        inline virtual bool get_drawMedian() const  
+        {
+            return this->drawMedian; 
+        }
+        /*! \brief sets the property drawMinMax to the specified \a __value. 
+            \details Description of the parameter drawMinMax is: <CENTER>\copybrief drawMinMax.</CENTER> 
+            \see drawMinMax for more information */ 
+        inline virtual void set_drawMinMax(bool __value)
+        {
+            this->drawMinMax = __value;
+        } 
+        /*! \brief returns the property drawMinMax. 
+            \details Description of the parameter drawMinMax is: <CENTER>\copybrief drawMinMax.</CENTER> 
+            \see drawMinMax for more information */ 
+        inline virtual bool get_drawMinMax() const  
+        {
+            return this->drawMinMax; 
+        }
 
     protected:
         /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */

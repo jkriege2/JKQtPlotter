@@ -57,9 +57,35 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
         /** \brief class destructor */
         virtual ~JKQTPxParsedFunctionLineGraph() override;
 
-        JKQTPGET_SET_MACRO(QString, function)
+        /*! \brief sets the property function to the specified \a __value. 
+            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \see function for more information */ 
+        inline virtual void set_function(const QString & __value)  
+        {
+            this->function = __value;
+        } 
+        /*! \brief returns the property function. 
+            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \see function for more information */ 
+        inline virtual QString get_function() const  
+        {
+            return this->function; 
+        }
 
-        JKQTPGET_SET_MACRO(QString, errorFunction)
+        /*! \brief sets the property errorFunction to the specified \a __value. 
+            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \see errorFunction for more information */ 
+        inline virtual void set_errorFunction(const QString & __value)  
+        {
+            this->errorFunction = __value;
+        } 
+        /*! \brief returns the property errorFunction. 
+            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \see errorFunction for more information */ 
+        inline virtual QString get_errorFunction() const  
+        {
+            return this->errorFunction; 
+        }
 
         /** \brief INTERNAL data structure
          *  \internal
@@ -117,9 +143,35 @@ class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
         /** \brief class destructor */
         virtual ~JKQTPyParsedFunctionLineGraph() override;
 
-        JKQTPGET_SET_MACRO(QString, function)
+        /*! \brief sets the property function to the specified \a __value. 
+            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \see function for more information */ 
+        inline virtual void set_function(const QString & __value)  
+        {
+            this->function = __value;
+        } 
+        /*! \brief returns the property function. 
+            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \see function for more information */ 
+        inline virtual QString get_function() const  
+        {
+            return this->function; 
+        }
 
-        JKQTPGET_SET_MACRO(QString, errorFunction)
+        /*! \brief sets the property errorFunction to the specified \a __value. 
+            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \see errorFunction for more information */ 
+        inline virtual void set_errorFunction(const QString & __value)  
+        {
+            this->errorFunction = __value;
+        } 
+        /*! \brief returns the property errorFunction. 
+            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \see errorFunction for more information */ 
+        inline virtual QString get_errorFunction() const  
+        {
+            return this->errorFunction; 
+        }
 
         /** \brief INTERNAL data structure
          *  \internal

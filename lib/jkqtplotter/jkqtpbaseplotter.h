@@ -244,11 +244,11 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief the decimal separator used when exporting data to text files */
         QString CSVdecimalSeparator;
-        /** \brief default value for property property varname. \see CSVdecimalSeparator for more information */
+        /*! \brief default value for property property varname. \see CSVdecimalSeparator for more information */
         QString def_CSVdecimalSeparator;
         /** \brief this string is used to introduce comments in text output when exporting data */
         QString CSVcommentInitializer;
-        /** \brief default value for property property varname. \see CSVcommentInitializer for more information */
+        /*! \brief default value for property property varname. \see CSVcommentInitializer for more information */
         QString def_CSVcommentInitializer;
 
         /** \brief an object which manages all data columns for this plotter class */
@@ -267,7 +267,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief free space between widget top border and plot top border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderTop */
         int plotBorderTop;
-        /** \brief default value for property property varname. \see plotBorderTop for more information */
+        /*! \brief default value for property property varname. \see plotBorderTop for more information */
         int def_plotBorderTop;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderTop;
@@ -277,7 +277,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief free space between widget left border and plot left border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderLeft  */
         int plotBorderLeft;
-        /** \brief default value for property property varname. \see plotBorderLeft for more information */
+        /*! \brief default value for property property varname. \see plotBorderLeft for more information */
         int def_plotBorderLeft;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderLeft;
@@ -285,7 +285,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief free space between widget bottom border and plot bottom border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderBottom  */
         int plotBorderBottom;
-        /** \brief default value for property property varname. \see plotBorderBottom for more information */
+        /*! \brief default value for property property varname. \see plotBorderBottom for more information */
         int def_plotBorderBottom;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderBottom;
@@ -293,7 +293,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief free space between widget right border and plot right border, this property may be set by the user and is possibly altered
          *         by the key positioning algorithm. The altered value is written to iplotBorderRight  */
         int plotBorderRight;
-        /** \brief default value for property property varname. \see plotBorderRight for more information */
+        /*! \brief default value for property property varname. \see plotBorderRight for more information */
         int def_plotBorderRight;
         /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
         int iplotBorderRight;
@@ -312,20 +312,20 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief indicates whether the widget should maintain an aspect ratio of plotwidth and plotheight */
         bool maintainAspectRatio;
-        /** \brief default value for property property varname. \see maintainAspectRatio for more information */
+        /*! \brief default value for property property varname. \see maintainAspectRatio for more information */
         bool def_maintainAspectRatio;
         /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true */
         double aspectRatio;
-        /** \brief default value for property property varname. \see aspectRatio for more information */
+        /*! \brief default value for property property varname. \see aspectRatio for more information */
         double def_aspectRatio;
 
         /** \brief indicates whether the axes should maintain an aspect ratio */
         bool maintainAxisAspectRatio;
-        /** \brief default value for property property varname. \see maintainAxisAspectRatio for more information */
+        /*! \brief default value for property property varname. \see maintainAxisAspectRatio for more information */
         bool def_maintainAxisAspectRatio;
         /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true */
         double axisAspectRatio;
-        /** \brief default value for property property varname. \see axisAspectRatio for more information */
+        /*! \brief default value for property property varname. \see axisAspectRatio for more information */
         double def_axisAspectRatio;
 
         /** \brief plot width in pixels inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth) */
@@ -337,7 +337,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief color of the plotted graph */
         QColor graphColor;
-        /** \brief default value for property property varname. \see graphColor for more information */
+        /*! \brief default value for property property varname. \see graphColor for more information */
         QColor def_graphColor;
         /** \brief colors used in modes where more than one graph is beeing plottet */
         QColor manyGraphsColor[50];
@@ -346,11 +346,11 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         int manyGraphsColorCount;
         /** \brief pen styles used in modes where more than one graph is beeing plottet */
         Qt::PenStyle manyGraphsStyle[5];
-        /** \brief default value for property property varname. \see manyGraphsStyle[5] for more information */
+        /*! \brief default value for property property varname. \see manyGraphsStyle[5] for more information */
         Qt::PenStyle def_manyGraphsStyle[5];
         /** \brief width of the plotted graph (in pixel) */
         double graphWidth;
-        /** \brief default value for property property varname. \see graphWidth for more information */
+        /*! \brief default value for property property varname. \see graphWidth for more information */
         double def_graphWidth;
 
 
@@ -362,101 +362,101 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief color of the coordinate system */
         QColor systemColor;
-        /** \brief default value for property property varname. \see systemColor for more information */
+        /*! \brief default value for property property varname. \see systemColor for more information */
         QColor def_systemColor;
         /** \brief width of the coordinate (in pixel) */
         double systemWidth;
-        /** \brief default value for property property varname. \see systemWidth for more information */
+        /*! \brief default value for property property varname. \see systemWidth for more information */
         double def_systemWidth;
         /** \brief color of the background*/
         QColor backgroundColor;
-        /** \brief default value for property property varname. \see backgroundColor for more information */
+        /*! \brief default value for property property varname. \see backgroundColor for more information */
         QColor def_backgroundColor;
         /** \brief color of the background when exporting*/
         QColor exportBackgroundColor;
-        /** \brief default value for property property varname. \see exportBackgroundColor for more information */
+        /*! \brief default value for property property varname. \see exportBackgroundColor for more information */
         QColor def_exportBackgroundColor;
         /** \brief color of the plot's background*/
         QColor plotBackgroundColor;
-        /** \brief default value for property property varname. \see plotBackgroundColor for more information */
+        /*! \brief default value for property property varname. \see plotBackgroundColor for more information */
         QColor def_plotBackgroundColor;
 
 
         /** \brief indicates whether to plot a frame around the key */
         bool showKeyFrame;
-        /** \brief default value for property property varname. \see showKeyFrame for more information */
+        /*! \brief default value for property property varname. \see showKeyFrame for more information */
         bool def_showKeyFrame;
         /** \brief color of the key frame line */
         QColor keyFrameColor;
-        /** \brief default value for property property varname. \see keyFrameColor for more information */
+        /*! \brief default value for property property varname. \see keyFrameColor for more information */
         QColor def_keyFrameColor;
         /** \brief width of the key frame line */
         double keyFrameWidth;
-        /** \brief default value for property property varname. \see keyFrameWidth for more information */
+        /*! \brief default value for property property varname. \see keyFrameWidth for more information */
         double def_keyFrameWidth;
         /** \brief color of the key background */
         QColor keyBackgroundColor;
-        /** \brief default value for property property varname. \see keyBackgroundColor for more information */
+        /*! \brief default value for property property varname. \see keyBackgroundColor for more information */
         QColor def_keyBackgroundColor;
         /** \brief indicates whether to plot a key */
         bool showKey;
-        /** \brief default value for property property varname. \see showKey for more information */
+        /*! \brief default value for property property varname. \see showKey for more information */
         bool def_showKey;
         /** \brief font face for key labels */
         QString keyFont;
-        /** \brief default value for property property varname. \see keyFont for more information */
+        /*! \brief default value for property property varname. \see keyFont for more information */
         QString def_keyFont;
         /** \brief font size for key labels [in points] */
         double keyFontSize;
-        /** \brief default value for property property varname. \see keyFontSize for more information */
+        /*! \brief default value for property property varname. \see keyFontSize for more information */
         double def_keyFontSize;
         /** \brief width of a key item in pixels [in units of width of 'X' set in keyFont, keyFontSize] */
         double key_item_width;
-        /** \brief default value for property property varname. \see key_item_width for more information */
+        /*! \brief default value for property property varname. \see key_item_width for more information */
         double def_key_item_width;
         /** \brief height of a key item in pixels [in units of height  keyFont, keyFontSize] */
         double key_item_height;
-        /** \brief default value for property property varname. \see key_item_height for more information */
+        /*! \brief default value for property property varname. \see key_item_height for more information */
         double def_key_item_height;
         /** \brief length of the line samples in the key in pixels [in units of width of 'X' set in keyFont, keyFontSize] */
         double key_line_length;
-        /** \brief default value for property property varname. \see key_line_length for more information */
+        /*! \brief default value for property property varname. \see key_line_length for more information */
         double def_key_line_length;
         /** \brief x-distance between key frame and key content [in units of width of 'X' set in keyFont, keyFontSize] */
         double keyXMargin;
-        /** \brief default value for property property varname. \see keyXMargin for more information */
+        /*! \brief default value for property property varname. \see keyXMargin for more information */
         double def_keyXMargin;
         /** \brief y-distance between key frame and key content [in units of width of 'x' set in keyFont, keyFontSize] */
         double keyYMargin;
-        /** \brief default value for property property varname. \see keyYMargin for more information */
+        /*! \brief default value for property property varname. \see keyYMargin for more information */
         double def_keyYMargin;
         /** \brief x-offset of the key from the border of the plot [in units of width of 'X' set in keyFont, keyFontSize] */
         double keyXOffset;
-        /** \brief default value for property property varname. \see keyXOffset for more information */
+        /*! \brief default value for property property varname. \see keyXOffset for more information */
         double def_keyXOffset;
         /** \brief y-offset of the key from the border of the plot [in units of width of 'x' set in keyFont, keyFontSize] */
         double keyYOffset;
-        /** \brief default value for property property varname. \see keyYOffset for more information */
+        /*! \brief default value for property property varname. \see keyYOffset for more information */
         double def_keyYOffset;
         /** \brief distance between key line example and key text [in units of width of 'X' set in keyFont, keyFontSize] */
         double keyXSeparation;
-        /** \brief default value for property property varname. \see keyXSeparation for more information */
+        /*! \brief default value for property property varname. \see keyXSeparation for more information */
         double def_keyXSeparation;
         /** \brief distance between two key entries [in units of height of keyFont, keyFontSize] */
         double keyYSeparation;
-        /** \brief default value for property property varname. \see keyYSeparation for more information */
+        /*! \brief default value for property property varname. \see keyYSeparation for more information */
         double def_keyYSeparation;
         /** \brief key position */
         JKQTPkeyPosition keyPosition;
-        /** \brief default value for property property varname. \see keyPosition for more information */
+        /*! \brief default value for property property varname. \see keyPosition for more information */
         JKQTPkeyPosition def_keyPosition;
         /** \brief the key layout */
         JKQTPkeyLayout keyLayout;
-        /** \brief default value for property property varname. \see keyLayout for more information */
+        /*! \brief default value for property property varname. \see keyLayout for more information */
         JKQTPkeyLayout def_keyLayout;
         /** \brief determine width of the key automatically */
         bool keyAutosize;
-        /** \brief default value for property property varname. \see keyAutosize for more information */
+        /*! \brief default value for property property varname. \see keyAutosize for more information */
         bool def_keyAutosize;
 
         /** \brief the plot label text */
@@ -464,12 +464,12 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief the plot label font name */
         QString plotLabelFontname;
-        /** \brief default value for property property varname. \see plotLabelFontname for more information */
+        /*! \brief default value for property property varname. \see plotLabelFontname for more information */
         QString def_plotLabelFontname;
 
         /** \brief the plot label font size */
         double plotLabelFontSize;
-        /** \brief default value for property property varname. \see plotLabelFontSize for more information */
+        /*! \brief default value for property property varname. \see plotLabelFontSize for more information */
         double def_plotLabelFontSize;
 
         /** \brief calculate the scaling and offset values from axis min/max values */
@@ -483,7 +483,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
         /** \brief specifies whether to use antialiasing for plotting the coordinate system */
         bool useAntiAliasingForSystem;
-        /** \brief default value for property property varname. \see useAntiAliasingForSystem for more information */
+        /*! \brief default value for property property varname. \see useAntiAliasingForSystem for more information */
         bool def_useAntiAliasingForSystem;
 
         /** \brief specifies whether to use antialiasing for plotting the graphs
@@ -492,7 +492,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          *       roughly three-fold speed improvement!
 */
         bool useAntiAliasingForGraphs;
-        /** \brief default value for property property varname. \see useAntiAliasingForGraphs for more information */
+        /*! \brief default value for property property varname. \see useAntiAliasingForGraphs for more information */
         bool def_useAntiAliasingForGraphs;
 
         /** \brief specifies whether to use antialiasing when drawing any text
@@ -500,7 +500,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         *       roughly three-fold speed improvement!
 */
         bool useAntiAliasingForText;
-        /** \brief default value for property property varname. \see useAntiAliasingForText for more information */
+        /*! \brief default value for property property varname. \see useAntiAliasingForText for more information */
         bool def_useAntiAliasingForText;
 
         /** \brief multiplier which is used for font sizes when the plot is exported/printed */
@@ -646,10 +646,48 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         bool printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize=false, double printsizeX_inMM=-1.0, double printsizeY_inMM=-1.0, bool displayPreview=true);
         bool exportpreview(QSizeF pageSize, bool unitIsMM=false);
 
-        JKQTPSET_MACRO(double, fontSizeMultiplier)
-        JKQTPSET_MACRO(double, lineWidthMultiplier)
-        JKQTPGET_SET_MACRO(double, printMagnification)
-        JKQTPGET_SET_MACRO(double, paintMagnification)
+        /*! \brief sets the property fontSizeMultiplier to the specified \a __value. 
+            \details Description of the parameter fontSizeMultiplier is:  <CENTER>\copybrief fontSizeMultiplier.</CENTER> 
+        	\see fontSizeMultiplier for more information */ 
+        inline virtual void set_fontSizeMultiplier(double __value)
+        { 
+        	this->fontSizeMultiplier = __value; 
+        }
+        /*! \brief sets the property lineWidthMultiplier to the specified \a __value. 
+            \details Description of the parameter lineWidthMultiplier is:  <CENTER>\copybrief lineWidthMultiplier.</CENTER> 
+        	\see lineWidthMultiplier for more information */ 
+        inline virtual void set_lineWidthMultiplier(double __value)
+        { 
+        	this->lineWidthMultiplier = __value; 
+        }
+        /*! \brief sets the property printMagnification to the specified \a __value. 
+            \details Description of the parameter printMagnification is: <CENTER>\copybrief printMagnification.</CENTER> 
+            \see printMagnification for more information */ 
+        inline virtual void set_printMagnification(double __value)
+        {
+            this->printMagnification = __value;
+        } 
+        /*! \brief returns the property printMagnification. 
+            \details Description of the parameter printMagnification is: <CENTER>\copybrief printMagnification.</CENTER> 
+            \see printMagnification for more information */ 
+        inline virtual double get_printMagnification() const  
+        {
+            return this->printMagnification; 
+        }
+        /*! \brief sets the property paintMagnification to the specified \a __value. 
+            \details Description of the parameter paintMagnification is: <CENTER>\copybrief paintMagnification.</CENTER> 
+            \see paintMagnification for more information */ 
+        inline virtual void set_paintMagnification(double __value)
+        {
+            this->paintMagnification = __value;
+        } 
+        /*! \brief returns the property paintMagnification. 
+            \details Description of the parameter paintMagnification is: <CENTER>\copybrief paintMagnification.</CENTER> 
+            \see paintMagnification for more information */ 
+        inline virtual double get_paintMagnification() const  
+        {
+            return this->paintMagnification; 
+        }
 
         QListWidget* dataColumnsListWidget;
         QComboBox* dataColumnsCombobox;
@@ -883,7 +921,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          *         the lather case */
         void forceInternalDatastore();
 
-        /** \brief returns the property emitSignals. \details Description of the parameter emitSignals is:  <CENTER>\copybrief emitSignals.</CENTER>. \see emitSignals for more information */ 
+        /*! \brief returns the property emitSignals. \details Description of the parameter emitSignals is:  <CENTER>\copybrief emitSignals.</CENTER>. \see emitSignals for more information */ 
         inline bool get_emitSignals()const { return this->emitSignals; }
 
         void set_emitSignals(bool enabled);
@@ -1104,80 +1142,696 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief emit plotUpdated() */
         void update_plot() { if (emitPlotSignals) emit plotUpdated(); }
 
-        JKQTPGET_SET_MACRO(bool, emitPlotSignals)
+        /*! \brief sets the property emitPlotSignals to the specified \a __value. 
+            \details Description of the parameter emitPlotSignals is: <CENTER>\copybrief emitPlotSignals.</CENTER> 
+            \see emitPlotSignals for more information */ 
+        inline virtual void set_emitPlotSignals(bool __value)
+        {
+            this->emitPlotSignals = __value;
+        } 
+        /*! \brief returns the property emitPlotSignals. 
+            \details Description of the parameter emitPlotSignals is: <CENTER>\copybrief emitPlotSignals.</CENTER> 
+            \see emitPlotSignals for more information */ 
+        inline virtual bool get_emitPlotSignals() const  
+        {
+            return this->emitPlotSignals; 
+        }
 
-        /** \brief returns the property plotBorderTop. \details Description of the parameter plotBorderTop is:  <CENTER>\copybrief plotBorderTop.</CENTER>. \see plotBorderTop for more information */ 
+        /*! \brief returns the property plotBorderTop. \details Description of the parameter plotBorderTop is:  <CENTER>\copybrief plotBorderTop.</CENTER>. \see plotBorderTop for more information */ 
         inline int get_plotBorderTop() const { return this->plotBorderTop; }
-        /** \brief returns the property plotBorderLeft. \details Description of the parameter plotBorderLeft is:  <CENTER>\copybrief plotBorderLeft.</CENTER>. \see plotBorderLeft for more information */ 
+        /*! \brief returns the property plotBorderLeft. \details Description of the parameter plotBorderLeft is:  <CENTER>\copybrief plotBorderLeft.</CENTER>. \see plotBorderLeft for more information */ 
         inline int get_plotBorderLeft() const { return this->plotBorderLeft; }
-        /** \brief returns the property plotBorderBottom. \details Description of the parameter plotBorderBottom is:  <CENTER>\copybrief plotBorderBottom.</CENTER>. \see plotBorderBottom for more information */ 
+        /*! \brief returns the property plotBorderBottom. \details Description of the parameter plotBorderBottom is:  <CENTER>\copybrief plotBorderBottom.</CENTER>. \see plotBorderBottom for more information */ 
         inline int get_plotBorderBottom() const { return this->plotBorderBottom; }
-        /** \brief returns the property plotBorderRight. \details Description of the parameter plotBorderRight is:  <CENTER>\copybrief plotBorderRight.</CENTER>. \see plotBorderRight for more information */ 
+        /*! \brief returns the property plotBorderRight. \details Description of the parameter plotBorderRight is:  <CENTER>\copybrief plotBorderRight.</CENTER>. \see plotBorderRight for more information */ 
         inline int get_plotBorderRight() const { return this->plotBorderRight; }
 
-        /** \brief returns the property maintainAspectRatio. \details Description of the parameter maintainAspectRatio is:  <CENTER>\copybrief maintainAspectRatio.</CENTER>. \see maintainAspectRatio for more information */ 
+        /*! \brief returns the property maintainAspectRatio. \details Description of the parameter maintainAspectRatio is:  <CENTER>\copybrief maintainAspectRatio.</CENTER>. \see maintainAspectRatio for more information */ 
         inline bool get_maintainAspectRatio() const { return this->maintainAspectRatio; }
-        JKQTPGET_SET_MACRO_I(double, aspectRatio, update_plot())
+        /*! \brief sets the property aspectRatio to the specified \a __value. 
+            \details Description of the parameter aspectRatio is: <CENTER>\copybrief aspectRatio.</CENTER> 
+            \see aspectRatio for more information */ 
+        inline virtual void set_aspectRatio(double __value)
+        {
+            if (this->aspectRatio != __value) {
+                this->aspectRatio = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property aspectRatio. 
+            \details Description of the parameter aspectRatio is: <CENTER>\copybrief aspectRatio.</CENTER> 
+            \see aspectRatio for more information */ 
+        inline virtual double get_aspectRatio() const  
+        {
+            return this->aspectRatio; 
+        }
 
-        /** \brief returns the property maintainAxisAspectRatio. \details Description of the parameter maintainAxisAspectRatio is:  <CENTER>\copybrief maintainAxisAspectRatio.</CENTER>. \see maintainAxisAspectRatio for more information */ 
+        /*! \brief returns the property maintainAxisAspectRatio. \details Description of the parameter maintainAxisAspectRatio is:  <CENTER>\copybrief maintainAxisAspectRatio.</CENTER>. \see maintainAxisAspectRatio for more information */ 
         inline bool get_maintainAxisAspectRatio() const { return this->maintainAxisAspectRatio; }
-        JKQTPGET_SET_MACRO_I(double, axisAspectRatio, update_plot())
+        /*! \brief sets the property axisAspectRatio to the specified \a __value. 
+            \details Description of the parameter axisAspectRatio is: <CENTER>\copybrief axisAspectRatio.</CENTER> 
+            \see axisAspectRatio for more information */ 
+        inline virtual void set_axisAspectRatio(double __value)
+        {
+            if (this->axisAspectRatio != __value) {
+                this->axisAspectRatio = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property axisAspectRatio. 
+            \details Description of the parameter axisAspectRatio is: <CENTER>\copybrief axisAspectRatio.</CENTER> 
+            \see axisAspectRatio for more information */ 
+        inline virtual double get_axisAspectRatio() const  
+        {
+            return this->axisAspectRatio; 
+        }
 
-        JKQTPGET_SET_MACRO_I(bool, useAntiAliasingForSystem, update_plot())
-        JKQTPGET_SET_MACRO_I(bool, useAntiAliasingForGraphs, update_plot())
-        JKQTPGET_SET_MACRO_I(bool, useAntiAliasingForText, update_plot())
+        /*! \brief sets the property useAntiAliasingForSystem to the specified \a __value. 
+            \details Description of the parameter useAntiAliasingForSystem is: <CENTER>\copybrief useAntiAliasingForSystem.</CENTER> 
+            \see useAntiAliasingForSystem for more information */ 
+        inline virtual void set_useAntiAliasingForSystem(bool __value)
+        {
+            if (this->useAntiAliasingForSystem != __value) {
+                this->useAntiAliasingForSystem = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property useAntiAliasingForSystem. 
+            \details Description of the parameter useAntiAliasingForSystem is: <CENTER>\copybrief useAntiAliasingForSystem.</CENTER> 
+            \see useAntiAliasingForSystem for more information */ 
+        inline virtual bool get_useAntiAliasingForSystem() const  
+        {
+            return this->useAntiAliasingForSystem; 
+        }
+        /*! \brief sets the property useAntiAliasingForGraphs to the specified \a __value. 
+            \details Description of the parameter useAntiAliasingForGraphs is: <CENTER>\copybrief useAntiAliasingForGraphs.</CENTER> 
+            \see useAntiAliasingForGraphs for more information */ 
+        inline virtual void set_useAntiAliasingForGraphs(bool __value)
+        {
+            if (this->useAntiAliasingForGraphs != __value) {
+                this->useAntiAliasingForGraphs = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property useAntiAliasingForGraphs. 
+            \details Description of the parameter useAntiAliasingForGraphs is: <CENTER>\copybrief useAntiAliasingForGraphs.</CENTER> 
+            \see useAntiAliasingForGraphs for more information */ 
+        inline virtual bool get_useAntiAliasingForGraphs() const  
+        {
+            return this->useAntiAliasingForGraphs; 
+        }
+        /*! \brief sets the property useAntiAliasingForText to the specified \a __value. 
+            \details Description of the parameter useAntiAliasingForText is: <CENTER>\copybrief useAntiAliasingForText.</CENTER> 
+            \see useAntiAliasingForText for more information */ 
+        inline virtual void set_useAntiAliasingForText(bool __value)
+        {
+            if (this->useAntiAliasingForText != __value) {
+                this->useAntiAliasingForText = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property useAntiAliasingForText. 
+            \details Description of the parameter useAntiAliasingForText is: <CENTER>\copybrief useAntiAliasingForText.</CENTER> 
+            \see useAntiAliasingForText for more information */ 
+        inline virtual bool get_useAntiAliasingForText() const  
+        {
+            return this->useAntiAliasingForText; 
+        }
 
-        JKQTPGET_SET_MACRO_I(QColor, graphColor, update_plot())
-        JKQTPGET_SET_MACRO_I(double, graphWidth, update_plot())
+        /*! \brief sets the property graphColor to the specified \a __value. 
+            \details Description of the parameter graphColor is: <CENTER>\copybrief graphColor.</CENTER> 
+            \see graphColor for more information */ 
+        inline virtual void set_graphColor(const QColor & __value)  
+        {
+            if (this->graphColor != __value) {
+                this->graphColor = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property graphColor. 
+            \details Description of the parameter graphColor is: <CENTER>\copybrief graphColor.</CENTER> 
+            \see graphColor for more information */ 
+        inline virtual QColor get_graphColor() const  
+        {
+            return this->graphColor; 
+        }
+        /*! \brief sets the property graphWidth to the specified \a __value. 
+            \details Description of the parameter graphWidth is: <CENTER>\copybrief graphWidth.</CENTER> 
+            \see graphWidth for more information */ 
+        inline virtual void set_graphWidth(double __value)
+        {
+            if (this->graphWidth != __value) {
+                this->graphWidth = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property graphWidth. 
+            \details Description of the parameter graphWidth is: <CENTER>\copybrief graphWidth.</CENTER> 
+            \see graphWidth for more information */ 
+        inline virtual double get_graphWidth() const  
+        {
+            return this->graphWidth; 
+        }
 
-        JKQTPGET_SET_MACRO_I(QColor, backgroundColor, update_plot())
-        JKQTPGET_SET_MACRO_I(QColor, exportBackgroundColor, update_plot())
-        JKQTPGET_SET_MACRO_I(QColor, plotBackgroundColor, update_plot())
+        /*! \brief sets the property backgroundColor to the specified \a __value. 
+            \details Description of the parameter backgroundColor is: <CENTER>\copybrief backgroundColor.</CENTER> 
+            \see backgroundColor for more information */ 
+        inline virtual void set_backgroundColor(const QColor & __value)  
+        {
+            if (this->backgroundColor != __value) {
+                this->backgroundColor = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property backgroundColor. 
+            \details Description of the parameter backgroundColor is: <CENTER>\copybrief backgroundColor.</CENTER> 
+            \see backgroundColor for more information */ 
+        inline virtual QColor get_backgroundColor() const  
+        {
+            return this->backgroundColor; 
+        }
+        /*! \brief sets the property exportBackgroundColor to the specified \a __value. 
+            \details Description of the parameter exportBackgroundColor is: <CENTER>\copybrief exportBackgroundColor.</CENTER> 
+            \see exportBackgroundColor for more information */ 
+        inline virtual void set_exportBackgroundColor(const QColor & __value)  
+        {
+            if (this->exportBackgroundColor != __value) {
+                this->exportBackgroundColor = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property exportBackgroundColor. 
+            \details Description of the parameter exportBackgroundColor is: <CENTER>\copybrief exportBackgroundColor.</CENTER> 
+            \see exportBackgroundColor for more information */ 
+        inline virtual QColor get_exportBackgroundColor() const  
+        {
+            return this->exportBackgroundColor; 
+        }
+        /*! \brief sets the property plotBackgroundColor to the specified \a __value. 
+            \details Description of the parameter plotBackgroundColor is: <CENTER>\copybrief plotBackgroundColor.</CENTER> 
+            \see plotBackgroundColor for more information */ 
+        inline virtual void set_plotBackgroundColor(const QColor & __value)  
+        {
+            if (this->plotBackgroundColor != __value) {
+                this->plotBackgroundColor = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property plotBackgroundColor. 
+            \details Description of the parameter plotBackgroundColor is: <CENTER>\copybrief plotBackgroundColor.</CENTER> 
+            \see plotBackgroundColor for more information */ 
+        inline virtual QColor get_plotBackgroundColor() const  
+        {
+            return this->plotBackgroundColor; 
+        }
 
-        JKQTPGET_SET_MACRO_I(QString, keyFont, update_plot())
-        JKQTPGET_SET_MACRO_I(double, keyFontSize, update_plot())
-        JKQTPGET_SET_MACRO_I(double, key_item_width, update_plot())
-        JKQTPGET_SET_MACRO_I(double, key_item_height, update_plot())
-        JKQTPGET_SET_MACRO_I(double, keyYSeparation, update_plot())
-        JKQTPGET_SET_MACRO_I(double, key_line_length, update_plot())
-        JKQTPGET_SET_MACRO_I(double, keyXMargin, update_plot())
-        JKQTPGET_SET_MACRO_I(double, keyYMargin, update_plot())
-        JKQTPGET_SET_MACRO_I(double, keyXSeparation, update_plot())
+        /*! \brief sets the property keyFont to the specified \a __value. 
+            \details Description of the parameter keyFont is: <CENTER>\copybrief keyFont.</CENTER> 
+            \see keyFont for more information */ 
+        inline virtual void set_keyFont(const QString & __value)  
+        {
+            if (this->keyFont != __value) {
+                this->keyFont = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyFont. 
+            \details Description of the parameter keyFont is: <CENTER>\copybrief keyFont.</CENTER> 
+            \see keyFont for more information */ 
+        inline virtual QString get_keyFont() const  
+        {
+            return this->keyFont; 
+        }
+        /*! \brief sets the property keyFontSize to the specified \a __value. 
+            \details Description of the parameter keyFontSize is: <CENTER>\copybrief keyFontSize.</CENTER> 
+            \see keyFontSize for more information */ 
+        inline virtual void set_keyFontSize(double __value)
+        {
+            if (this->keyFontSize != __value) {
+                this->keyFontSize = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyFontSize. 
+            \details Description of the parameter keyFontSize is: <CENTER>\copybrief keyFontSize.</CENTER> 
+            \see keyFontSize for more information */ 
+        inline virtual double get_keyFontSize() const  
+        {
+            return this->keyFontSize; 
+        }
+        /*! \brief sets the property key_item_width to the specified \a __value. 
+            \details Description of the parameter key_item_width is: <CENTER>\copybrief key_item_width.</CENTER> 
+            \see key_item_width for more information */ 
+        inline virtual void set_key_item_width(double __value)
+        {
+            if (this->key_item_width != __value) {
+                this->key_item_width = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property key_item_width. 
+            \details Description of the parameter key_item_width is: <CENTER>\copybrief key_item_width.</CENTER> 
+            \see key_item_width for more information */ 
+        inline virtual double get_key_item_width() const  
+        {
+            return this->key_item_width; 
+        }
+        /*! \brief sets the property key_item_height to the specified \a __value. 
+            \details Description of the parameter key_item_height is: <CENTER>\copybrief key_item_height.</CENTER> 
+            \see key_item_height for more information */ 
+        inline virtual void set_key_item_height(double __value)
+        {
+            if (this->key_item_height != __value) {
+                this->key_item_height = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property key_item_height. 
+            \details Description of the parameter key_item_height is: <CENTER>\copybrief key_item_height.</CENTER> 
+            \see key_item_height for more information */ 
+        inline virtual double get_key_item_height() const  
+        {
+            return this->key_item_height; 
+        }
+        /*! \brief sets the property keyYSeparation to the specified \a __value. 
+            \details Description of the parameter keyYSeparation is: <CENTER>\copybrief keyYSeparation.</CENTER> 
+            \see keyYSeparation for more information */ 
+        inline virtual void set_keyYSeparation(double __value)
+        {
+            if (this->keyYSeparation != __value) {
+                this->keyYSeparation = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyYSeparation. 
+            \details Description of the parameter keyYSeparation is: <CENTER>\copybrief keyYSeparation.</CENTER> 
+            \see keyYSeparation for more information */ 
+        inline virtual double get_keyYSeparation() const  
+        {
+            return this->keyYSeparation; 
+        }
+        /*! \brief sets the property key_line_length to the specified \a __value. 
+            \details Description of the parameter key_line_length is: <CENTER>\copybrief key_line_length.</CENTER> 
+            \see key_line_length for more information */ 
+        inline virtual void set_key_line_length(double __value)
+        {
+            if (this->key_line_length != __value) {
+                this->key_line_length = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property key_line_length. 
+            \details Description of the parameter key_line_length is: <CENTER>\copybrief key_line_length.</CENTER> 
+            \see key_line_length for more information */ 
+        inline virtual double get_key_line_length() const  
+        {
+            return this->key_line_length; 
+        }
+        /*! \brief sets the property keyXMargin to the specified \a __value. 
+            \details Description of the parameter keyXMargin is: <CENTER>\copybrief keyXMargin.</CENTER> 
+            \see keyXMargin for more information */ 
+        inline virtual void set_keyXMargin(double __value)
+        {
+            if (this->keyXMargin != __value) {
+                this->keyXMargin = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyXMargin. 
+            \details Description of the parameter keyXMargin is: <CENTER>\copybrief keyXMargin.</CENTER> 
+            \see keyXMargin for more information */ 
+        inline virtual double get_keyXMargin() const  
+        {
+            return this->keyXMargin; 
+        }
+        /*! \brief sets the property keyYMargin to the specified \a __value. 
+            \details Description of the parameter keyYMargin is: <CENTER>\copybrief keyYMargin.</CENTER> 
+            \see keyYMargin for more information */ 
+        inline virtual void set_keyYMargin(double __value)
+        {
+            if (this->keyYMargin != __value) {
+                this->keyYMargin = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyYMargin. 
+            \details Description of the parameter keyYMargin is: <CENTER>\copybrief keyYMargin.</CENTER> 
+            \see keyYMargin for more information */ 
+        inline virtual double get_keyYMargin() const  
+        {
+            return this->keyYMargin; 
+        }
+        /*! \brief sets the property keyXSeparation to the specified \a __value. 
+            \details Description of the parameter keyXSeparation is: <CENTER>\copybrief keyXSeparation.</CENTER> 
+            \see keyXSeparation for more information */ 
+        inline virtual void set_keyXSeparation(double __value)
+        {
+            if (this->keyXSeparation != __value) {
+                this->keyXSeparation = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyXSeparation. 
+            \details Description of the parameter keyXSeparation is: <CENTER>\copybrief keyXSeparation.</CENTER> 
+            \see keyXSeparation for more information */ 
+        inline virtual double get_keyXSeparation() const  
+        {
+            return this->keyXSeparation; 
+        }
 
-        JKQTPGET_SET_MACRO_I(double, keyXOffset, update_plot())
-        JKQTPGET_SET_MACRO_I(double, keyYOffset, update_plot())
-        JKQTPGET_SET_MACRO_I(bool, showKey, update_plot())
-        JKQTPGET_SET_MACRO_I(bool, showKeyFrame, update_plot())
-        JKQTPGET_SET_MACRO_I(QColor, keyFrameColor, update_plot())
-        JKQTPGET_SET_MACRO_I(QColor, keyBackgroundColor, update_plot())
-        JKQTPGET_SET_MACRO_I(double, keyFrameWidth, update_plot())
-        JKQTPGET_SET_MACRO_I(bool, keyAutosize, update_plot())
-        JKQTPGET_SET_MACRO_I(JKQTPkeyPosition, keyPosition, update_plot())
-        JKQTPGET_SET_MACRO_I(JKQTPkeyLayout, keyLayout, update_plot())
+        /*! \brief sets the property keyXOffset to the specified \a __value. 
+            \details Description of the parameter keyXOffset is: <CENTER>\copybrief keyXOffset.</CENTER> 
+            \see keyXOffset for more information */ 
+        inline virtual void set_keyXOffset(double __value)
+        {
+            if (this->keyXOffset != __value) {
+                this->keyXOffset = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyXOffset. 
+            \details Description of the parameter keyXOffset is: <CENTER>\copybrief keyXOffset.</CENTER> 
+            \see keyXOffset for more information */ 
+        inline virtual double get_keyXOffset() const  
+        {
+            return this->keyXOffset; 
+        }
+        /*! \brief sets the property keyYOffset to the specified \a __value. 
+            \details Description of the parameter keyYOffset is: <CENTER>\copybrief keyYOffset.</CENTER> 
+            \see keyYOffset for more information */ 
+        inline virtual void set_keyYOffset(double __value)
+        {
+            if (this->keyYOffset != __value) {
+                this->keyYOffset = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyYOffset. 
+            \details Description of the parameter keyYOffset is: <CENTER>\copybrief keyYOffset.</CENTER> 
+            \see keyYOffset for more information */ 
+        inline virtual double get_keyYOffset() const  
+        {
+            return this->keyYOffset; 
+        }
+        /*! \brief sets the property showKey to the specified \a __value. 
+            \details Description of the parameter showKey is: <CENTER>\copybrief showKey.</CENTER> 
+            \see showKey for more information */ 
+        inline virtual void set_showKey(bool __value)
+        {
+            if (this->showKey != __value) {
+                this->showKey = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property showKey. 
+            \details Description of the parameter showKey is: <CENTER>\copybrief showKey.</CENTER> 
+            \see showKey for more information */ 
+        inline virtual bool get_showKey() const  
+        {
+            return this->showKey; 
+        }
+        /*! \brief sets the property showKeyFrame to the specified \a __value. 
+            \details Description of the parameter showKeyFrame is: <CENTER>\copybrief showKeyFrame.</CENTER> 
+            \see showKeyFrame for more information */ 
+        inline virtual void set_showKeyFrame(bool __value)
+        {
+            if (this->showKeyFrame != __value) {
+                this->showKeyFrame = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property showKeyFrame. 
+            \details Description of the parameter showKeyFrame is: <CENTER>\copybrief showKeyFrame.</CENTER> 
+            \see showKeyFrame for more information */ 
+        inline virtual bool get_showKeyFrame() const  
+        {
+            return this->showKeyFrame; 
+        }
+        /*! \brief sets the property keyFrameColor to the specified \a __value. 
+            \details Description of the parameter keyFrameColor is: <CENTER>\copybrief keyFrameColor.</CENTER> 
+            \see keyFrameColor for more information */ 
+        inline virtual void set_keyFrameColor(const QColor & __value)  
+        {
+            if (this->keyFrameColor != __value) {
+                this->keyFrameColor = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyFrameColor. 
+            \details Description of the parameter keyFrameColor is: <CENTER>\copybrief keyFrameColor.</CENTER> 
+            \see keyFrameColor for more information */ 
+        inline virtual QColor get_keyFrameColor() const  
+        {
+            return this->keyFrameColor; 
+        }
+        /*! \brief sets the property keyBackgroundColor to the specified \a __value. 
+            \details Description of the parameter keyBackgroundColor is: <CENTER>\copybrief keyBackgroundColor.</CENTER> 
+            \see keyBackgroundColor for more information */ 
+        inline virtual void set_keyBackgroundColor(const QColor & __value)  
+        {
+            if (this->keyBackgroundColor != __value) {
+                this->keyBackgroundColor = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyBackgroundColor. 
+            \details Description of the parameter keyBackgroundColor is: <CENTER>\copybrief keyBackgroundColor.</CENTER> 
+            \see keyBackgroundColor for more information */ 
+        inline virtual QColor get_keyBackgroundColor() const  
+        {
+            return this->keyBackgroundColor; 
+        }
+        /*! \brief sets the property keyFrameWidth to the specified \a __value. 
+            \details Description of the parameter keyFrameWidth is: <CENTER>\copybrief keyFrameWidth.</CENTER> 
+            \see keyFrameWidth for more information */ 
+        inline virtual void set_keyFrameWidth(double __value)
+        {
+            if (this->keyFrameWidth != __value) {
+                this->keyFrameWidth = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyFrameWidth. 
+            \details Description of the parameter keyFrameWidth is: <CENTER>\copybrief keyFrameWidth.</CENTER> 
+            \see keyFrameWidth for more information */ 
+        inline virtual double get_keyFrameWidth() const  
+        {
+            return this->keyFrameWidth; 
+        }
+        /*! \brief sets the property keyAutosize to the specified \a __value. 
+            \details Description of the parameter keyAutosize is: <CENTER>\copybrief keyAutosize.</CENTER> 
+            \see keyAutosize for more information */ 
+        inline virtual void set_keyAutosize(bool __value)
+        {
+            if (this->keyAutosize != __value) {
+                this->keyAutosize = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyAutosize. 
+            \details Description of the parameter keyAutosize is: <CENTER>\copybrief keyAutosize.</CENTER> 
+            \see keyAutosize for more information */ 
+        inline virtual bool get_keyAutosize() const  
+        {
+            return this->keyAutosize; 
+        }
+        /*! \brief sets the property keyPosition to the specified \a __value. 
+            \details Description of the parameter keyPosition is: <CENTER>\copybrief keyPosition.</CENTER> 
+            \see keyPosition for more information */ 
+        inline virtual void set_keyPosition(const JKQTPkeyPosition & __value)  
+        {
+            if (this->keyPosition != __value) {
+                this->keyPosition = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyPosition. 
+            \details Description of the parameter keyPosition is: <CENTER>\copybrief keyPosition.</CENTER> 
+            \see keyPosition for more information */ 
+        inline virtual JKQTPkeyPosition get_keyPosition() const  
+        {
+            return this->keyPosition; 
+        }
+        /*! \brief sets the property keyLayout to the specified \a __value. 
+            \details Description of the parameter keyLayout is: <CENTER>\copybrief keyLayout.</CENTER> 
+            \see keyLayout for more information */ 
+        inline virtual void set_keyLayout(const JKQTPkeyLayout & __value)  
+        {
+            if (this->keyLayout != __value) {
+                this->keyLayout = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property keyLayout. 
+            \details Description of the parameter keyLayout is: <CENTER>\copybrief keyLayout.</CENTER> 
+            \see keyLayout for more information */ 
+        inline virtual JKQTPkeyLayout get_keyLayout() const  
+        {
+            return this->keyLayout; 
+        }
 
-        JKQTPGET_SET_MACRO_I(double, plotLabelFontSize, update_plot())
-        JKQTPGET_SET_MACRO_I(QString, plotLabelFontname, update_plot())
-        JKQTPGET_SET_MACRO_I(QString, plotLabel, update_plot())
+        /*! \brief sets the property plotLabelFontSize to the specified \a __value. 
+            \details Description of the parameter plotLabelFontSize is: <CENTER>\copybrief plotLabelFontSize.</CENTER> 
+            \see plotLabelFontSize for more information */ 
+        inline virtual void set_plotLabelFontSize(double __value)
+        {
+            if (this->plotLabelFontSize != __value) {
+                this->plotLabelFontSize = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property plotLabelFontSize. 
+            \details Description of the parameter plotLabelFontSize is: <CENTER>\copybrief plotLabelFontSize.</CENTER> 
+            \see plotLabelFontSize for more information */ 
+        inline virtual double get_plotLabelFontSize() const  
+        {
+            return this->plotLabelFontSize; 
+        }
+        /*! \brief sets the property plotLabelFontname to the specified \a __value. 
+            \details Description of the parameter plotLabelFontname is: <CENTER>\copybrief plotLabelFontname.</CENTER> 
+            \see plotLabelFontname for more information */ 
+        inline virtual void set_plotLabelFontname(const QString & __value)  
+        {
+            if (this->plotLabelFontname != __value) {
+                this->plotLabelFontname = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property plotLabelFontname. 
+            \details Description of the parameter plotLabelFontname is: <CENTER>\copybrief plotLabelFontname.</CENTER> 
+            \see plotLabelFontname for more information */ 
+        inline virtual QString get_plotLabelFontname() const  
+        {
+            return this->plotLabelFontname; 
+        }
+        /*! \brief sets the property plotLabel to the specified \a __value. 
+            \details Description of the parameter plotLabel is: <CENTER>\copybrief plotLabel.</CENTER> 
+            \see plotLabel for more information */ 
+        inline virtual void set_plotLabel(const QString & __value)  
+        {
+            if (this->plotLabel != __value) {
+                this->plotLabel = __value; 
+                update_plot(); 
+            } 
+        } 
+        /*! \brief returns the property plotLabel. 
+            \details Description of the parameter plotLabel is: <CENTER>\copybrief plotLabel.</CENTER> 
+            \see plotLabel for more information */ 
+        inline virtual QString get_plotLabel() const  
+        {
+            return this->plotLabel; 
+        }
 
-        JKQTPGET_SET_MACRO(bool, gridPrinting)
-        JKQTPGET_SET_MACRO(size_t, gridPrintingCurrentX)
-        JKQTPGET_SET_MACRO(size_t, gridPrintingCurrentY)
-        JKQTPGET_SET_MACRO(QString, currentSaveDirectory)
-        JKQTPGET_SET_MACRO(QString, currentFileFormat)
-        JKQTPGET_SET_MACRO(QString, CSVdecimalSeparator)
-        JKQTPGET_SET_MACRO(QString, CSVcommentInitializer)
+        /*! \brief sets the property gridPrinting to the specified \a __value. 
+            \details Description of the parameter gridPrinting is: <CENTER>\copybrief gridPrinting.</CENTER> 
+            \see gridPrinting for more information */ 
+        inline virtual void set_gridPrinting(bool __value)
+        {
+            this->gridPrinting = __value;
+        } 
+        /*! \brief returns the property gridPrinting. 
+            \details Description of the parameter gridPrinting is: <CENTER>\copybrief gridPrinting.</CENTER> 
+            \see gridPrinting for more information */ 
+        inline virtual bool get_gridPrinting() const  
+        {
+            return this->gridPrinting; 
+        }
+        /*! \brief sets the property gridPrintingCurrentX to the specified \a __value. 
+            \details Description of the parameter gridPrintingCurrentX is: <CENTER>\copybrief gridPrintingCurrentX.</CENTER> 
+            \see gridPrintingCurrentX for more information */ 
+        inline virtual void set_gridPrintingCurrentX(size_t __value)
+        {
+            this->gridPrintingCurrentX = __value;
+        } 
+        /*! \brief returns the property gridPrintingCurrentX. 
+            \details Description of the parameter gridPrintingCurrentX is: <CENTER>\copybrief gridPrintingCurrentX.</CENTER> 
+            \see gridPrintingCurrentX for more information */ 
+        inline virtual size_t get_gridPrintingCurrentX() const  
+        {
+            return this->gridPrintingCurrentX; 
+        }
+        /*! \brief sets the property gridPrintingCurrentY to the specified \a __value. 
+            \details Description of the parameter gridPrintingCurrentY is: <CENTER>\copybrief gridPrintingCurrentY.</CENTER> 
+            \see gridPrintingCurrentY for more information */ 
+        inline virtual void set_gridPrintingCurrentY(size_t __value)
+        {
+            this->gridPrintingCurrentY = __value;
+        } 
+        /*! \brief returns the property gridPrintingCurrentY. 
+            \details Description of the parameter gridPrintingCurrentY is: <CENTER>\copybrief gridPrintingCurrentY.</CENTER> 
+            \see gridPrintingCurrentY for more information */ 
+        inline virtual size_t get_gridPrintingCurrentY() const  
+        {
+            return this->gridPrintingCurrentY; 
+        }
+        /*! \brief sets the property currentSaveDirectory to the specified \a __value. 
+            \details Description of the parameter currentSaveDirectory is: <CENTER>\copybrief currentSaveDirectory.</CENTER> 
+            \see currentSaveDirectory for more information */ 
+        inline virtual void set_currentSaveDirectory(const QString & __value)  
+        {
+            this->currentSaveDirectory = __value;
+        } 
+        /*! \brief returns the property currentSaveDirectory. 
+            \details Description of the parameter currentSaveDirectory is: <CENTER>\copybrief currentSaveDirectory.</CENTER> 
+            \see currentSaveDirectory for more information */ 
+        inline virtual QString get_currentSaveDirectory() const  
+        {
+            return this->currentSaveDirectory; 
+        }
+        /*! \brief sets the property currentFileFormat to the specified \a __value. 
+            \details Description of the parameter currentFileFormat is: <CENTER>\copybrief currentFileFormat.</CENTER> 
+            \see currentFileFormat for more information */ 
+        inline virtual void set_currentFileFormat(const QString & __value)  
+        {
+            this->currentFileFormat = __value;
+        } 
+        /*! \brief returns the property currentFileFormat. 
+            \details Description of the parameter currentFileFormat is: <CENTER>\copybrief currentFileFormat.</CENTER> 
+            \see currentFileFormat for more information */ 
+        inline virtual QString get_currentFileFormat() const  
+        {
+            return this->currentFileFormat; 
+        }
+        /*! \brief sets the property CSVdecimalSeparator to the specified \a __value. 
+            \details Description of the parameter CSVdecimalSeparator is: <CENTER>\copybrief CSVdecimalSeparator.</CENTER> 
+            \see CSVdecimalSeparator for more information */ 
+        inline virtual void set_CSVdecimalSeparator(const QString & __value)  
+        {
+            this->CSVdecimalSeparator = __value;
+        } 
+        /*! \brief returns the property CSVdecimalSeparator. 
+            \details Description of the parameter CSVdecimalSeparator is: <CENTER>\copybrief CSVdecimalSeparator.</CENTER> 
+            \see CSVdecimalSeparator for more information */ 
+        inline virtual QString get_CSVdecimalSeparator() const  
+        {
+            return this->CSVdecimalSeparator; 
+        }
+        /*! \brief sets the property CSVcommentInitializer to the specified \a __value. 
+            \details Description of the parameter CSVcommentInitializer is: <CENTER>\copybrief CSVcommentInitializer.</CENTER> 
+            \see CSVcommentInitializer for more information */ 
+        inline virtual void set_CSVcommentInitializer(const QString & __value)  
+        {
+            this->CSVcommentInitializer = __value;
+        } 
+        /*! \brief returns the property CSVcommentInitializer. 
+            \details Description of the parameter CSVcommentInitializer is: <CENTER>\copybrief CSVcommentInitializer.</CENTER> 
+            \see CSVcommentInitializer for more information */ 
+        inline virtual QString get_CSVcommentInitializer() const  
+        {
+            return this->CSVcommentInitializer; 
+        }
 
-        /** \brief returns the property iplotBorderTop. \details Description of the parameter iplotBorderTop is:  <CENTER>\copybrief iplotBorderTop.</CENTER>. \see iplotBorderTop for more information */ 
+        /*! \brief returns the property iplotBorderTop. \details Description of the parameter iplotBorderTop is:  <CENTER>\copybrief iplotBorderTop.</CENTER>. \see iplotBorderTop for more information */ 
         inline int get_iplotBorderTop() const { return this->iplotBorderTop; }
-        /** \brief returns the property iplotBorderLeft. \details Description of the parameter iplotBorderLeft is:  <CENTER>\copybrief iplotBorderLeft.</CENTER>. \see iplotBorderLeft for more information */ 
+        /*! \brief returns the property iplotBorderLeft. \details Description of the parameter iplotBorderLeft is:  <CENTER>\copybrief iplotBorderLeft.</CENTER>. \see iplotBorderLeft for more information */ 
         inline int get_iplotBorderLeft() const { return this->iplotBorderLeft; }
-        /** \brief returns the property iplotBorderBottom. \details Description of the parameter iplotBorderBottom is:  <CENTER>\copybrief iplotBorderBottom.</CENTER>. \see iplotBorderBottom for more information */ 
+        /*! \brief returns the property iplotBorderBottom. \details Description of the parameter iplotBorderBottom is:  <CENTER>\copybrief iplotBorderBottom.</CENTER>. \see iplotBorderBottom for more information */ 
         inline int get_iplotBorderBottom() const { return this->iplotBorderBottom; }
-        /** \brief returns the property iplotBorderRight. \details Description of the parameter iplotBorderRight is:  <CENTER>\copybrief iplotBorderRight.</CENTER>. \see iplotBorderRight for more information */ 
+        /*! \brief returns the property iplotBorderRight. \details Description of the parameter iplotBorderRight is:  <CENTER>\copybrief iplotBorderRight.</CENTER>. \see iplotBorderRight for more information */ 
         inline int get_iplotBorderRight() const { return this->iplotBorderRight; }
-        /** \brief returns the property plotWidth. \details Description of the parameter plotWidth is:  <CENTER>\copybrief plotWidth.</CENTER>. \see plotWidth for more information */ 
+        /*! \brief returns the property plotWidth. \details Description of the parameter plotWidth is:  <CENTER>\copybrief plotWidth.</CENTER>. \see plotWidth for more information */ 
         inline int get_plotWidth() const { return this->plotWidth; }
-        /** \brief returns the property plotHeight. \details Description of the parameter plotHeight is:  <CENTER>\copybrief plotHeight.</CENTER>. \see plotHeight for more information */ 
+        /*! \brief returns the property plotHeight. \details Description of the parameter plotHeight is:  <CENTER>\copybrief plotHeight.</CENTER>. \see plotHeight for more information */ 
         inline int get_plotHeight() const { return this->plotHeight; }
         inline JKQTmathText* get_mathText() { return &mathText; }
         inline const JKQTmathText* get_mathText() const { return &mathText; }
@@ -1187,57 +1841,95 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         inline const JKQTPverticalAxis* get_yAxis() const { return yAxis; }
 
 
-        /** \brief returns the property actSavePlot. \details Description of the parameter actSavePlot is:  <CENTER>\copybrief actSavePlot.</CENTER>. \see actSavePlot for more information */ 
+        /*! \brief returns the property actSavePlot. \details Description of the parameter actSavePlot is:  <CENTER>\copybrief actSavePlot.</CENTER>. \see actSavePlot for more information */ 
         inline QAction* get_actSavePlot() const { return this->actSavePlot; }
-        /** \brief returns the property actSaveData. \details Description of the parameter actSaveData is:  <CENTER>\copybrief actSaveData.</CENTER>. \see actSaveData for more information */ 
+        /*! \brief returns the property actSaveData. \details Description of the parameter actSaveData is:  <CENTER>\copybrief actSaveData.</CENTER>. \see actSaveData for more information */ 
         inline QAction* get_actSaveData() const { return this->actSaveData; }
-        /** \brief returns the property actCopyData. \details Description of the parameter actCopyData is:  <CENTER>\copybrief actCopyData.</CENTER>. \see actCopyData for more information */ 
+        /*! \brief returns the property actCopyData. \details Description of the parameter actCopyData is:  <CENTER>\copybrief actCopyData.</CENTER>. \see actCopyData for more information */ 
         inline QAction* get_actCopyData() const { return this->actCopyData; }
-        /** \brief returns the property actCopyPixelImage. \details Description of the parameter actCopyPixelImage is:  <CENTER>\copybrief actCopyPixelImage.</CENTER>. \see actCopyPixelImage for more information */ 
+        /*! \brief returns the property actCopyPixelImage. \details Description of the parameter actCopyPixelImage is:  <CENTER>\copybrief actCopyPixelImage.</CENTER>. \see actCopyPixelImage for more information */ 
         inline QAction* get_actCopyPixelImage() const { return this->actCopyPixelImage; }
-        /** \brief returns the property actCopyMatlab. \details Description of the parameter actCopyMatlab is:  <CENTER>\copybrief actCopyMatlab.</CENTER>. \see actCopyMatlab for more information */ 
+        /*! \brief returns the property actCopyMatlab. \details Description of the parameter actCopyMatlab is:  <CENTER>\copybrief actCopyMatlab.</CENTER>. \see actCopyMatlab for more information */ 
         inline QAction* get_actCopyMatlab() const { return this->actCopyMatlab; }
-        /** \brief returns the property actSavePDF. \details Description of the parameter actSavePDF is:  <CENTER>\copybrief actSavePDF.</CENTER>. \see actSavePDF for more information */ 
+        /*! \brief returns the property actSavePDF. \details Description of the parameter actSavePDF is:  <CENTER>\copybrief actSavePDF.</CENTER>. \see actSavePDF for more information */ 
         inline QAction* get_actSavePDF() const { return this->actSavePDF; }
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        /** \brief returns the property actSavePS. \details Description of the parameter actSavePS is:  <CENTER>\copybrief actSavePS.</CENTER>. \see actSavePS for more information */ 
+        /*! \brief returns the property actSavePS. \details Description of the parameter actSavePS is:  <CENTER>\copybrief actSavePS.</CENTER>. \see actSavePS for more information */ 
         inline QAction* get_actSavePS() const { return this->actSavePS; }
 #endif
-        /** \brief returns the property actSavePix. \details Description of the parameter actSavePix is:  <CENTER>\copybrief actSavePix.</CENTER>. \see actSavePix for more information */ 
+        /*! \brief returns the property actSavePix. \details Description of the parameter actSavePix is:  <CENTER>\copybrief actSavePix.</CENTER>. \see actSavePix for more information */ 
         inline QAction* get_actSavePix() const { return this->actSavePix; }
-        /** \brief returns the property actSaveSVG. \details Description of the parameter actSaveSVG is:  <CENTER>\copybrief actSaveSVG.</CENTER>. \see actSaveSVG for more information */ 
+        /*! \brief returns the property actSaveSVG. \details Description of the parameter actSaveSVG is:  <CENTER>\copybrief actSaveSVG.</CENTER>. \see actSaveSVG for more information */ 
         inline QAction* get_actSaveSVG() const { return this->actSaveSVG; }
-        /** \brief returns the property actPrint. \details Description of the parameter actPrint is:  <CENTER>\copybrief actPrint.</CENTER>. \see actPrint for more information */ 
+        /*! \brief returns the property actPrint. \details Description of the parameter actPrint is:  <CENTER>\copybrief actPrint.</CENTER>. \see actPrint for more information */ 
         inline QAction* get_actPrint() const { return this->actPrint; }
-        /** \brief returns the property actSaveCSV. \details Description of the parameter actSaveCSV is:  <CENTER>\copybrief actSaveCSV.</CENTER>. \see actSaveCSV for more information */ 
+        /*! \brief returns the property actSaveCSV. \details Description of the parameter actSaveCSV is:  <CENTER>\copybrief actSaveCSV.</CENTER>. \see actSaveCSV for more information */ 
         inline QAction* get_actSaveCSV() const { return this->actSaveCSV; }
-        /** \brief returns the property actZoomAll. \details Description of the parameter actZoomAll is:  <CENTER>\copybrief actZoomAll.</CENTER>. \see actZoomAll for more information */ 
+        /*! \brief returns the property actZoomAll. \details Description of the parameter actZoomAll is:  <CENTER>\copybrief actZoomAll.</CENTER>. \see actZoomAll for more information */ 
         inline QAction* get_actZoomAll() const { return this->actZoomAll; }
-        /** \brief returns the property actZoomIn. \details Description of the parameter actZoomIn is:  <CENTER>\copybrief actZoomIn.</CENTER>. \see actZoomIn for more information */ 
+        /*! \brief returns the property actZoomIn. \details Description of the parameter actZoomIn is:  <CENTER>\copybrief actZoomIn.</CENTER>. \see actZoomIn for more information */ 
         inline QAction* get_actZoomIn() const { return this->actZoomIn; }
-        /** \brief returns the property actZoomOut. \details Description of the parameter actZoomOut is:  <CENTER>\copybrief actZoomOut.</CENTER>. \see actZoomOut for more information */ 
+        /*! \brief returns the property actZoomOut. \details Description of the parameter actZoomOut is:  <CENTER>\copybrief actZoomOut.</CENTER>. \see actZoomOut for more information */ 
         inline QAction* get_actZoomOut() const { return this->actZoomOut; }
-        /** \brief returns the property actShowPlotData. \details Description of the parameter actShowPlotData is:  <CENTER>\copybrief actShowPlotData.</CENTER>. \see actShowPlotData for more information */ 
+        /*! \brief returns the property actShowPlotData. \details Description of the parameter actShowPlotData is:  <CENTER>\copybrief actShowPlotData.</CENTER>. \see actShowPlotData for more information */ 
         inline QAction* get_actShowPlotData() const { return this->actShowPlotData; }
-        /** \brief returns the property lstAdditionalPlotterActions. \details Description of the parameter lstAdditionalPlotterActions is:  <CENTER>\copybrief lstAdditionalPlotterActions.</CENTER>. \see lstAdditionalPlotterActions for more information */ 
+        /*! \brief returns the property lstAdditionalPlotterActions. \details Description of the parameter lstAdditionalPlotterActions is:  <CENTER>\copybrief lstAdditionalPlotterActions.</CENTER>. \see lstAdditionalPlotterActions for more information */ 
         inline AdditionalActionsMap get_lstAdditionalPlotterActions() const { return this->lstAdditionalPlotterActions; }
 
         /** \brief this function registers additional actions to lstAdditionalPlotterActions, which are displayed in the context-menu */
         void registerAdditionalAction(const QString& key, QAction* act);
         void deregisterAdditionalAction(QAction* act);
 
-        /** \brief returns the property masterSynchronizeWidth. \details Description of the parameter masterSynchronizeWidth is:  <CENTER>\copybrief masterSynchronizeWidth.</CENTER>. \see masterSynchronizeWidth for more information */ 
+        /*! \brief returns the property masterSynchronizeWidth. \details Description of the parameter masterSynchronizeWidth is:  <CENTER>\copybrief masterSynchronizeWidth.</CENTER>. \see masterSynchronizeWidth for more information */ 
         inline bool get_masterSynchronizeWidth() const { return this->masterSynchronizeWidth; }
-        /** \brief returns the property masterSynchronizeHeight. \details Description of the parameter masterSynchronizeHeight is:  <CENTER>\copybrief masterSynchronizeHeight.</CENTER>. \see masterSynchronizeHeight for more information */ 
+        /*! \brief returns the property masterSynchronizeHeight. \details Description of the parameter masterSynchronizeHeight is:  <CENTER>\copybrief masterSynchronizeHeight.</CENTER>. \see masterSynchronizeHeight for more information */ 
         inline bool get_masterSynchronizeHeight() const { return this->masterSynchronizeHeight; }
-        JKQTPSET_MACRO(QColor, def_backgroundColor)
-        JKQTPSET_MACRO(QColor, def_plotBackgroundColor)
+        /*! \brief sets the property def_backgroundColor to the specified \a __value. 
+            \details Description of the parameter def_backgroundColor is:  <CENTER>\copybrief def_backgroundColor.</CENTER> 
+        	\see def_backgroundColor for more information */ 
+        inline virtual void set_def_backgroundColor(const QColor & __value)  
+        { 
+        	this->def_backgroundColor = __value; 
+        }
+        /*! \brief sets the property def_plotBackgroundColor to the specified \a __value. 
+            \details Description of the parameter def_plotBackgroundColor is:  <CENTER>\copybrief def_plotBackgroundColor.</CENTER> 
+        	\see def_plotBackgroundColor for more information */ 
+        inline virtual void set_def_plotBackgroundColor(const QColor & __value)  
+        { 
+        	this->def_plotBackgroundColor = __value; 
+        }
 
-        JKQTPGET_SET_MACRO(double, fontSizePrintMultiplier)
-        JKQTPGET_SET_MACRO(double, lineWidthPrintMultiplier)
-        /** \brief returns the property fontSizeMultiplier. \details Description of the parameter fontSizeMultiplier is:  <CENTER>\copybrief fontSizeMultiplier.</CENTER>. \see fontSizeMultiplier for more information */ 
+        /*! \brief sets the property fontSizePrintMultiplier to the specified \a __value. 
+            \details Description of the parameter fontSizePrintMultiplier is: <CENTER>\copybrief fontSizePrintMultiplier.</CENTER> 
+            \see fontSizePrintMultiplier for more information */ 
+        inline virtual void set_fontSizePrintMultiplier(double __value)
+        {
+            this->fontSizePrintMultiplier = __value;
+        } 
+        /*! \brief returns the property fontSizePrintMultiplier. 
+            \details Description of the parameter fontSizePrintMultiplier is: <CENTER>\copybrief fontSizePrintMultiplier.</CENTER> 
+            \see fontSizePrintMultiplier for more information */ 
+        inline virtual double get_fontSizePrintMultiplier() const  
+        {
+            return this->fontSizePrintMultiplier; 
+        }
+        /*! \brief sets the property lineWidthPrintMultiplier to the specified \a __value. 
+            \details Description of the parameter lineWidthPrintMultiplier is: <CENTER>\copybrief lineWidthPrintMultiplier.</CENTER> 
+            \see lineWidthPrintMultiplier for more information */ 
+        inline virtual void set_lineWidthPrintMultiplier(double __value)
+        {
+            this->lineWidthPrintMultiplier = __value;
+        } 
+        /*! \brief returns the property lineWidthPrintMultiplier. 
+            \details Description of the parameter lineWidthPrintMultiplier is: <CENTER>\copybrief lineWidthPrintMultiplier.</CENTER> 
+            \see lineWidthPrintMultiplier for more information */ 
+        inline virtual double get_lineWidthPrintMultiplier() const  
+        {
+            return this->lineWidthPrintMultiplier; 
+        }
+        /*! \brief returns the property fontSizeMultiplier. \details Description of the parameter fontSizeMultiplier is:  <CENTER>\copybrief fontSizeMultiplier.</CENTER>. \see fontSizeMultiplier for more information */ 
         inline double get_fontSizeMultiplier() const { return this->fontSizeMultiplier; }
-        /** \brief returns the property lineWidthMultiplier. \details Description of the parameter lineWidthMultiplier is:  <CENTER>\copybrief lineWidthMultiplier.</CENTER>. \see lineWidthMultiplier for more information */ 
+        /*! \brief returns the property lineWidthMultiplier. \details Description of the parameter lineWidthMultiplier is:  <CENTER>\copybrief lineWidthMultiplier.</CENTER>. \see lineWidthMultiplier for more information */ 
         inline double get_lineWidthMultiplier() const { return this->lineWidthMultiplier; }
 
 

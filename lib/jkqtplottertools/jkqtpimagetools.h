@@ -801,27 +801,284 @@ class LIB_EXPORT JKQTPColorPaletteTools {
 
     public:
 
-        JKQTPGET_SET_MACRO(JKQTPMathImageColorPalette, palette)
-        JKQTPGET_SET_MACRO(JKQTPMathImageColorRangeFailAction, rangeMinFailAction)
-        JKQTPGET_SET_MACRO(JKQTPMathImageColorRangeFailAction, rangeMaxFailAction)
-        JKQTPGET_SET_MACRO(QColor, rangeMinFailColor)
-        JKQTPGET_SET_MACRO(QColor, rangeMaxFailColor)
-        JKQTPGET_SET_MACRO(QColor, nanColor)
-        JKQTPGET_SET_MACRO(QColor, infColor)
-        JKQTPGET_SET_MACRO(bool, showColorBar)
-        JKQTPGET_SET_MACRO(int, colorBarWidth)
-        JKQTPGET_SET_MACRO(int, colorBarOffset)
-        JKQTPGET_SET_MACRO(double, colorBarRelativeHeight)
-        JKQTPGET_SET_MACRO(double, imageMin)
-        JKQTPGET_SET_MACRO(double, imageMax)
-        JKQTPGET_SET_MACRO(bool, autoImageRange)
-        JKQTPGET_SET_MACRO(QString, imageName)
-        JKQTPGET_SET_MACRO(QString, imageNameFontName)
-        JKQTPGET_SET_MACRO(double, imageNameFontSize)
-        JKQTPGET_MACRO(JKQTPverticalIndependentAxis*, colorBarRightAxis)
-        JKQTPGET_MACRO(JKQTPhorizontalIndependentAxis*, colorBarTopAxis)
-        JKQTPGET_SET_MACRO(bool, colorBarTopVisible)
-        JKQTPGET_SET_MACRO(bool, colorBarRightVisible)
+        /*! \brief sets the property palette to the specified \a __value. 
+            \details Description of the parameter palette is: <CENTER>\copybrief palette.</CENTER> 
+            \see palette for more information */ 
+        inline virtual void set_palette(const JKQTPMathImageColorPalette & __value)  
+        {
+            this->palette = __value;
+        } 
+        /*! \brief returns the property palette. 
+            \details Description of the parameter palette is: <CENTER>\copybrief palette.</CENTER> 
+            \see palette for more information */ 
+        inline virtual JKQTPMathImageColorPalette get_palette() const  
+        {
+            return this->palette; 
+        }
+        /*! \brief sets the property rangeMinFailAction to the specified \a __value. 
+            \details Description of the parameter rangeMinFailAction is: <CENTER>\copybrief rangeMinFailAction.</CENTER> 
+            \see rangeMinFailAction for more information */ 
+        inline virtual void set_rangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
+        {
+            this->rangeMinFailAction = __value;
+        } 
+        /*! \brief returns the property rangeMinFailAction. 
+            \details Description of the parameter rangeMinFailAction is: <CENTER>\copybrief rangeMinFailAction.</CENTER> 
+            \see rangeMinFailAction for more information */ 
+        inline virtual JKQTPMathImageColorRangeFailAction get_rangeMinFailAction() const  
+        {
+            return this->rangeMinFailAction; 
+        }
+        /*! \brief sets the property rangeMaxFailAction to the specified \a __value. 
+            \details Description of the parameter rangeMaxFailAction is: <CENTER>\copybrief rangeMaxFailAction.</CENTER> 
+            \see rangeMaxFailAction for more information */ 
+        inline virtual void set_rangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
+        {
+            this->rangeMaxFailAction = __value;
+        } 
+        /*! \brief returns the property rangeMaxFailAction. 
+            \details Description of the parameter rangeMaxFailAction is: <CENTER>\copybrief rangeMaxFailAction.</CENTER> 
+            \see rangeMaxFailAction for more information */ 
+        inline virtual JKQTPMathImageColorRangeFailAction get_rangeMaxFailAction() const  
+        {
+            return this->rangeMaxFailAction; 
+        }
+        /*! \brief sets the property rangeMinFailColor to the specified \a __value. 
+            \details Description of the parameter rangeMinFailColor is: <CENTER>\copybrief rangeMinFailColor.</CENTER> 
+            \see rangeMinFailColor for more information */ 
+        inline virtual void set_rangeMinFailColor(const QColor & __value)  
+        {
+            this->rangeMinFailColor = __value;
+        } 
+        /*! \brief returns the property rangeMinFailColor. 
+            \details Description of the parameter rangeMinFailColor is: <CENTER>\copybrief rangeMinFailColor.</CENTER> 
+            \see rangeMinFailColor for more information */ 
+        inline virtual QColor get_rangeMinFailColor() const  
+        {
+            return this->rangeMinFailColor; 
+        }
+        /*! \brief sets the property rangeMaxFailColor to the specified \a __value. 
+            \details Description of the parameter rangeMaxFailColor is: <CENTER>\copybrief rangeMaxFailColor.</CENTER> 
+            \see rangeMaxFailColor for more information */ 
+        inline virtual void set_rangeMaxFailColor(const QColor & __value)  
+        {
+            this->rangeMaxFailColor = __value;
+        } 
+        /*! \brief returns the property rangeMaxFailColor. 
+            \details Description of the parameter rangeMaxFailColor is: <CENTER>\copybrief rangeMaxFailColor.</CENTER> 
+            \see rangeMaxFailColor for more information */ 
+        inline virtual QColor get_rangeMaxFailColor() const  
+        {
+            return this->rangeMaxFailColor; 
+        }
+        /*! \brief sets the property nanColor to the specified \a __value. 
+            \details Description of the parameter nanColor is: <CENTER>\copybrief nanColor.</CENTER> 
+            \see nanColor for more information */ 
+        inline virtual void set_nanColor(const QColor & __value)  
+        {
+            this->nanColor = __value;
+        } 
+        /*! \brief returns the property nanColor. 
+            \details Description of the parameter nanColor is: <CENTER>\copybrief nanColor.</CENTER> 
+            \see nanColor for more information */ 
+        inline virtual QColor get_nanColor() const  
+        {
+            return this->nanColor; 
+        }
+        /*! \brief sets the property infColor to the specified \a __value. 
+            \details Description of the parameter infColor is: <CENTER>\copybrief infColor.</CENTER> 
+            \see infColor for more information */ 
+        inline virtual void set_infColor(const QColor & __value)  
+        {
+            this->infColor = __value;
+        } 
+        /*! \brief returns the property infColor. 
+            \details Description of the parameter infColor is: <CENTER>\copybrief infColor.</CENTER> 
+            \see infColor for more information */ 
+        inline virtual QColor get_infColor() const  
+        {
+            return this->infColor; 
+        }
+        /*! \brief sets the property showColorBar to the specified \a __value. 
+            \details Description of the parameter showColorBar is: <CENTER>\copybrief showColorBar.</CENTER> 
+            \see showColorBar for more information */ 
+        inline virtual void set_showColorBar(bool __value)  
+        {
+            this->showColorBar = __value;
+        } 
+        /*! \brief returns the property showColorBar. 
+            \details Description of the parameter showColorBar is: <CENTER>\copybrief showColorBar.</CENTER> 
+            \see showColorBar for more information */ 
+        inline virtual bool get_showColorBar() const  
+        {
+            return this->showColorBar; 
+        }
+        /*! \brief sets the property colorBarWidth to the specified \a __value. 
+            \details Description of the parameter colorBarWidth is: <CENTER>\copybrief colorBarWidth.</CENTER> 
+            \see colorBarWidth for more information */ 
+        inline virtual void set_colorBarWidth(int __value)  
+        {
+            this->colorBarWidth = __value;
+        } 
+        /*! \brief returns the property colorBarWidth. 
+            \details Description of the parameter colorBarWidth is: <CENTER>\copybrief colorBarWidth.</CENTER> 
+            \see colorBarWidth for more information */ 
+        inline virtual int get_colorBarWidth() const  
+        {
+            return this->colorBarWidth; 
+        }
+        /*! \brief sets the property colorBarOffset to the specified \a __value. 
+            \details Description of the parameter colorBarOffset is: <CENTER>\copybrief colorBarOffset.</CENTER> 
+            \see colorBarOffset for more information */ 
+        inline virtual void set_colorBarOffset(int __value)  
+        {
+            this->colorBarOffset = __value;
+        } 
+        /*! \brief returns the property colorBarOffset. 
+            \details Description of the parameter colorBarOffset is: <CENTER>\copybrief colorBarOffset.</CENTER> 
+            \see colorBarOffset for more information */ 
+        inline virtual int get_colorBarOffset() const  
+        {
+            return this->colorBarOffset; 
+        }
+        /*! \brief sets the property colorBarRelativeHeight to the specified \a __value. 
+            \details Description of the parameter colorBarRelativeHeight is: <CENTER>\copybrief colorBarRelativeHeight.</CENTER> 
+            \see colorBarRelativeHeight for more information */ 
+        inline virtual void set_colorBarRelativeHeight(double __value)  
+        {
+            this->colorBarRelativeHeight = __value;
+        } 
+        /*! \brief returns the property colorBarRelativeHeight. 
+            \details Description of the parameter colorBarRelativeHeight is: <CENTER>\copybrief colorBarRelativeHeight.</CENTER> 
+            \see colorBarRelativeHeight for more information */ 
+        inline virtual double get_colorBarRelativeHeight() const  
+        {
+            return this->colorBarRelativeHeight; 
+        }
+        /*! \brief sets the property imageMin to the specified \a __value. 
+            \details Description of the parameter imageMin is: <CENTER>\copybrief imageMin.</CENTER> 
+            \see imageMin for more information */ 
+        inline virtual void set_imageMin(double __value)  
+        {
+            this->imageMin = __value;
+        } 
+        /*! \brief returns the property imageMin. 
+            \details Description of the parameter imageMin is: <CENTER>\copybrief imageMin.</CENTER> 
+            \see imageMin for more information */ 
+        inline virtual double get_imageMin() const  
+        {
+            return this->imageMin; 
+        }
+        /*! \brief sets the property imageMax to the specified \a __value. 
+            \details Description of the parameter imageMax is: <CENTER>\copybrief imageMax.</CENTER> 
+            \see imageMax for more information */ 
+        inline virtual void set_imageMax(double __value)  
+        {
+            this->imageMax = __value;
+        } 
+        /*! \brief returns the property imageMax. 
+            \details Description of the parameter imageMax is: <CENTER>\copybrief imageMax.</CENTER> 
+            \see imageMax for more information */ 
+        inline virtual double get_imageMax() const  
+        {
+            return this->imageMax; 
+        }
+        /*! \brief sets the property autoImageRange to the specified \a __value. 
+            \details Description of the parameter autoImageRange is: <CENTER>\copybrief autoImageRange.</CENTER> 
+            \see autoImageRange for more information */ 
+        inline virtual void set_autoImageRange(bool __value)  
+        {
+            this->autoImageRange = __value;
+        } 
+        /*! \brief returns the property autoImageRange. 
+            \details Description of the parameter autoImageRange is: <CENTER>\copybrief autoImageRange.</CENTER> 
+            \see autoImageRange for more information */ 
+        inline virtual bool get_autoImageRange() const  
+        {
+            return this->autoImageRange; 
+        }
+        /*! \brief sets the property imageName to the specified \a __value. 
+            \details Description of the parameter imageName is: <CENTER>\copybrief imageName.</CENTER> 
+            \see imageName for more information */ 
+        inline virtual void set_imageName(const QString & __value)  
+        {
+            this->imageName = __value;
+        } 
+        /*! \brief returns the property imageName. 
+            \details Description of the parameter imageName is: <CENTER>\copybrief imageName.</CENTER> 
+            \see imageName for more information */ 
+        inline virtual QString get_imageName() const  
+        {
+            return this->imageName; 
+        }
+        /*! \brief sets the property imageNameFontName to the specified \a __value. 
+            \details Description of the parameter imageNameFontName is: <CENTER>\copybrief imageNameFontName.</CENTER> 
+            \see imageNameFontName for more information */ 
+        inline virtual void set_imageNameFontName(const QString & __value)  
+        {
+            this->imageNameFontName = __value;
+        } 
+        /*! \brief returns the property imageNameFontName. 
+            \details Description of the parameter imageNameFontName is: <CENTER>\copybrief imageNameFontName.</CENTER> 
+            \see imageNameFontName for more information */ 
+        inline virtual QString get_imageNameFontName() const  
+        {
+            return this->imageNameFontName; 
+        }
+        /*! \brief sets the property imageNameFontSize to the specified \a __value. 
+            \details Description of the parameter imageNameFontSize is: <CENTER>\copybrief imageNameFontSize.</CENTER> 
+            \see imageNameFontSize for more information */ 
+        inline virtual void set_imageNameFontSize(double __value)  
+        {
+            this->imageNameFontSize = __value;
+        } 
+        /*! \brief returns the property imageNameFontSize. 
+            \details Description of the parameter imageNameFontSize is: <CENTER>\copybrief imageNameFontSize.</CENTER> 
+            \see imageNameFontSize for more information */ 
+        inline virtual double get_imageNameFontSize() const  
+        {
+            return this->imageNameFontSize; 
+        }
+        /*! \brief returns the property colorBarRightAxis. 
+            \details Description of the parameter colorBarRightAxis is:  <CENTER>\copybrief colorBarRightAxis.</CENTER>. 
+            \see colorBarRightAxis for more information */ 
+        inline JKQTPverticalIndependentAxis* get_colorBarRightAxis() const { 
+            return this->colorBarRightAxis; 
+        }
+        /*! \brief returns the property colorBarTopAxis. 
+            \details Description of the parameter colorBarTopAxis is:  <CENTER>\copybrief colorBarTopAxis.</CENTER>. 
+            \see colorBarTopAxis for more information */ 
+        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxis() const { 
+            return this->colorBarTopAxis; 
+        }
+        /*! \brief sets the property colorBarTopVisible to the specified \a __value. 
+            \details Description of the parameter colorBarTopVisible is: <CENTER>\copybrief colorBarTopVisible.</CENTER> 
+            \see colorBarTopVisible for more information */ 
+        inline virtual void set_colorBarTopVisible(bool __value)  
+        {
+            this->colorBarTopVisible = __value;
+        } 
+        /*! \brief returns the property colorBarTopVisible. 
+            \details Description of the parameter colorBarTopVisible is: <CENTER>\copybrief colorBarTopVisible.</CENTER> 
+            \see colorBarTopVisible for more information */ 
+        inline virtual bool get_colorBarTopVisible() const  
+        {
+            return this->colorBarTopVisible; 
+        }
+        /*! \brief sets the property colorBarRightVisible to the specified \a __value. 
+            \details Description of the parameter colorBarRightVisible is: <CENTER>\copybrief colorBarRightVisible.</CENTER> 
+            \see colorBarRightVisible for more information */ 
+        inline virtual void set_colorBarRightVisible(bool __value)  
+        {
+            this->colorBarRightVisible = __value;
+        } 
+        /*! \brief returns the property colorBarRightVisible. 
+            \details Description of the parameter colorBarRightVisible is: <CENTER>\copybrief colorBarRightVisible.</CENTER> 
+            \see colorBarRightVisible for more information */ 
+        inline virtual bool get_colorBarRightVisible() const  
+        {
+            return this->colorBarRightVisible; 
+        }
 
 };
 #endif

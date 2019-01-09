@@ -96,13 +96,7 @@ std::string jkqtp_tolower(const std::string& s){
   return ret;
 };
 
- long jkqtp_get_filesize(char *FileName) {
-    struct stat file;
-    if(!stat(FileName,&file)) {
-         return file.st_size;
-    }
-    return 0;
-}
+
  std::string jkqtp_bytestostr(double bytes){
     double data=bytes;
   std::string form="%.0lf";

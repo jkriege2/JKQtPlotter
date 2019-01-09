@@ -51,29 +51,11 @@
 
 #define JKQTMATHTEXT_ABS_MIN_LINEWIDTH 0.02
 
-/**
- * \brief create a property variable and a default variable for it. Also creates a doxygen comment for the default variable
- * \ingroup jkqtmathtext
- */
-#define JKQTMTPROPERTY(type,varname) \
-  type varname; \
-  /** \brief default value for property property varname. \see varname for more information */ \
-  type def_##varname;
 
-/**
- * \brief saves the given property (for which also a def_property exists) into the given settings object
- * \ingroup jkqtmathtext
- */
-#define JKQTMTPROPERTYsave(settings, group, var, varname) \
-    if (var!=def_##var) settings.setValue(group+varname, var);
-/**
- * \brief loads the given property from the given settings object
- * \ingroup jkqtmathtext
- */
-#define JKQTMTPROPERTYload(settings, group, var, varname, varconvert) \
-    var=settings.value(group+varname, var).varconvert;
 
-/** \brief initialized Qt-ressources necessary for JKQtMathText */
+/** \brief initialized Qt-ressources necessary for JKQtMathText
+ *  \ingroup jkqtmathtext
+ */
 LIB_EXPORT void initJKQtMathTextResources();
 
 /*! \brief this class manages an enhanced text message (containing a subset of LaTeX markups) and allows to draw a representation
@@ -187,7 +169,6 @@ class LIB_EXPORT JKQTmathText : public QObject {
 
         /*! \brief used to specify the font encoding used for drawing
 
-
                - \c MTFEwinSymbol: This assumes that symbols shal be taken from a MS Windows style Symbol font
                - \c MTFElatex:     This assumes that symbols shal be taken from the CM (computer modern) fonts, used by LaTeX
                - \c MTFEunicode:   This assumes that symbols shall be taken from a Unicode font
@@ -200,42 +181,486 @@ class LIB_EXPORT JKQTmathText : public QObject {
             MTFElatex
         };
 
-        JKQTPGET_SET_MACRO(QColor, fontColor)
-        JKQTPGET_SET_MACRO(double, fontSize)
-        JKQTPGET_SET_MACRO(QString, fontRoman)
-        JKQTPGET_SET_MACRO(QString, fontSans)
-        JKQTPGET_SET_MACRO(QString, fontTypewriter)
-        JKQTPGET_SET_MACRO(QString, fontScript)
-        JKQTPGET_SET_MACRO(QString, fontGreek)
-        JKQTPGET_SET_MACRO(QString, fontSymbol)
-        JKQTPGET_SET_MACRO(QString, fontBraces)
-        JKQTPGET_SET_MACRO(QString, fontIntegrals)
-        JKQTPGET_SET_MACRO(QString, fontCaligraphic)
-        JKQTPGET_SET_MACRO(QString, fontBlackboard)
-        JKQTPGET_SET_MACRO(QString, fontMathRoman)
-        JKQTPGET_SET_MACRO(QString, fontMathSans)
-        JKQTPGET_SET_MACRO(QString, fontLatexPrefix)
-        JKQTPGET_SET_MACRO(QString, fontLatexPostfix)
-        JKQTPGET_SET_MACRO(MTfontEncoding, fontEncoding)
-        JKQTPGET_MACRO(bool, useSTIXfonts)
-        JKQTPGET_MACRO(bool, useXITSfonts)
-        JKQTPGET_SET_MACRO(double, brace_factor)
-        JKQTPGET_SET_MACRO(double, subsuper_size_factor)
-        JKQTPGET_SET_MACRO(double, italic_correction_factor)
-        JKQTPGET_SET_MACRO(double, operatorsubsuper_size_factor)
-        JKQTPGET_SET_MACRO(double, mathoperator_width_factor)
-        JKQTPGET_SET_MACRO(double, super_shift_factor)
-        JKQTPGET_SET_MACRO(double, sub_shift_factor)
-        JKQTPGET_SET_MACRO(double, brace_shrink_factor)
-        JKQTPGET_SET_MACRO(double, underbrace_factor)
-        JKQTPGET_SET_MACRO(double, underset_factor)
-        JKQTPGET_SET_MACRO(double, frac_factor)
-        JKQTPGET_SET_MACRO(double, frac_shift_factor)
-        JKQTPGET_SET_MACRO(double, brace_y_shift_factor)
-        JKQTPGET_SET_MACRO(double, decoration_height_factor)
-        JKQTPGET_SET_MACRO(bool, expensiveRendering)
-        JKQTPGET_SET_MACRO(bool, useUnparsed)
-        JKQTPGET_MACRO(QStringList, error_list)
+        /*! \brief sets the property fontColor to the specified \a __value. 
+            \details Description of the parameter fontColor is: <CENTER>\copybrief fontColor.</CENTER> 
+            \see fontColor for more information */ 
+        inline virtual void set_fontColor(const QColor & __value)  
+        {
+            this->fontColor = __value;
+        } 
+        /*! \brief returns the property fontColor. 
+            \details Description of the parameter fontColor is: <CENTER>\copybrief fontColor.</CENTER> 
+            \see fontColor for more information */ 
+        inline virtual QColor get_fontColor() const  
+        {
+            return this->fontColor; 
+        }
+        /*! \brief sets the property fontSize to the specified \a __value. 
+            \details Description of the parameter fontSize is: <CENTER>\copybrief fontSize.</CENTER> 
+            \see fontSize for more information */ 
+        inline virtual void set_fontSize(double __value)
+        {
+            this->fontSize = __value;
+        } 
+        /*! \brief returns the property fontSize. 
+            \details Description of the parameter fontSize is: <CENTER>\copybrief fontSize.</CENTER> 
+            \see fontSize for more information */ 
+        inline virtual double get_fontSize() const  
+        {
+            return this->fontSize; 
+        }
+        /*! \brief sets the property fontRoman to the specified \a __value. 
+            \details Description of the parameter fontRoman is: <CENTER>\copybrief fontRoman.</CENTER> 
+            \see fontRoman for more information */ 
+        inline virtual void set_fontRoman(const QString & __value)  
+        {
+            this->fontRoman = __value;
+        } 
+        /*! \brief returns the property fontRoman. 
+            \details Description of the parameter fontRoman is: <CENTER>\copybrief fontRoman.</CENTER> 
+            \see fontRoman for more information */ 
+        inline virtual QString get_fontRoman() const  
+        {
+            return this->fontRoman; 
+        }
+        /*! \brief sets the property fontSans to the specified \a __value. 
+            \details Description of the parameter fontSans is: <CENTER>\copybrief fontSans.</CENTER> 
+            \see fontSans for more information */ 
+        inline virtual void set_fontSans(const QString & __value)  
+        {
+            this->fontSans = __value;
+        } 
+        /*! \brief returns the property fontSans. 
+            \details Description of the parameter fontSans is: <CENTER>\copybrief fontSans.</CENTER> 
+            \see fontSans for more information */ 
+        inline virtual QString get_fontSans() const  
+        {
+            return this->fontSans; 
+        }
+        /*! \brief sets the property fontTypewriter to the specified \a __value. 
+            \details Description of the parameter fontTypewriter is: <CENTER>\copybrief fontTypewriter.</CENTER> 
+            \see fontTypewriter for more information */ 
+        inline virtual void set_fontTypewriter(const QString & __value)  
+        {
+            this->fontTypewriter = __value;
+        } 
+        /*! \brief returns the property fontTypewriter. 
+            \details Description of the parameter fontTypewriter is: <CENTER>\copybrief fontTypewriter.</CENTER> 
+            \see fontTypewriter for more information */ 
+        inline virtual QString get_fontTypewriter() const  
+        {
+            return this->fontTypewriter; 
+        }
+        /*! \brief sets the property fontScript to the specified \a __value. 
+            \details Description of the parameter fontScript is: <CENTER>\copybrief fontScript.</CENTER> 
+            \see fontScript for more information */ 
+        inline virtual void set_fontScript(const QString & __value)  
+        {
+            this->fontScript = __value;
+        } 
+        /*! \brief returns the property fontScript. 
+            \details Description of the parameter fontScript is: <CENTER>\copybrief fontScript.</CENTER> 
+            \see fontScript for more information */ 
+        inline virtual QString get_fontScript() const  
+        {
+            return this->fontScript; 
+        }
+        /*! \brief sets the property fontGreek to the specified \a __value. 
+            \details Description of the parameter fontGreek is: <CENTER>\copybrief fontGreek.</CENTER> 
+            \see fontGreek for more information */ 
+        inline virtual void set_fontGreek(const QString & __value)  
+        {
+            this->fontGreek = __value;
+        } 
+        /*! \brief returns the property fontGreek. 
+            \details Description of the parameter fontGreek is: <CENTER>\copybrief fontGreek.</CENTER> 
+            \see fontGreek for more information */ 
+        inline virtual QString get_fontGreek() const  
+        {
+            return this->fontGreek; 
+        }
+        /*! \brief sets the property fontSymbol to the specified \a __value. 
+            \details Description of the parameter fontSymbol is: <CENTER>\copybrief fontSymbol.</CENTER> 
+            \see fontSymbol for more information */ 
+        inline virtual void set_fontSymbol(const QString & __value)  
+        {
+            this->fontSymbol = __value;
+        } 
+        /*! \brief returns the property fontSymbol. 
+            \details Description of the parameter fontSymbol is: <CENTER>\copybrief fontSymbol.</CENTER> 
+            \see fontSymbol for more information */ 
+        inline virtual QString get_fontSymbol() const  
+        {
+            return this->fontSymbol; 
+        }
+        /*! \brief sets the property fontBraces to the specified \a __value. 
+            \details Description of the parameter fontBraces is: <CENTER>\copybrief fontBraces.</CENTER> 
+            \see fontBraces for more information */ 
+        inline virtual void set_fontBraces(const QString & __value)  
+        {
+            this->fontBraces = __value;
+        } 
+        /*! \brief returns the property fontBraces. 
+            \details Description of the parameter fontBraces is: <CENTER>\copybrief fontBraces.</CENTER> 
+            \see fontBraces for more information */ 
+        inline virtual QString get_fontBraces() const  
+        {
+            return this->fontBraces; 
+        }
+        /*! \brief sets the property fontIntegrals to the specified \a __value. 
+            \details Description of the parameter fontIntegrals is: <CENTER>\copybrief fontIntegrals.</CENTER> 
+            \see fontIntegrals for more information */ 
+        inline virtual void set_fontIntegrals(const QString & __value)  
+        {
+            this->fontIntegrals = __value;
+        } 
+        /*! \brief returns the property fontIntegrals. 
+            \details Description of the parameter fontIntegrals is: <CENTER>\copybrief fontIntegrals.</CENTER> 
+            \see fontIntegrals for more information */ 
+        inline virtual QString get_fontIntegrals() const  
+        {
+            return this->fontIntegrals; 
+        }
+        /*! \brief sets the property fontCaligraphic to the specified \a __value. 
+            \details Description of the parameter fontCaligraphic is: <CENTER>\copybrief fontCaligraphic.</CENTER> 
+            \see fontCaligraphic for more information */ 
+        inline virtual void set_fontCaligraphic(const QString & __value)  
+        {
+            this->fontCaligraphic = __value;
+        } 
+        /*! \brief returns the property fontCaligraphic. 
+            \details Description of the parameter fontCaligraphic is: <CENTER>\copybrief fontCaligraphic.</CENTER> 
+            \see fontCaligraphic for more information */ 
+        inline virtual QString get_fontCaligraphic() const  
+        {
+            return this->fontCaligraphic; 
+        }
+        /*! \brief sets the property fontBlackboard to the specified \a __value. 
+            \details Description of the parameter fontBlackboard is: <CENTER>\copybrief fontBlackboard.</CENTER> 
+            \see fontBlackboard for more information */ 
+        inline virtual void set_fontBlackboard(const QString & __value)  
+        {
+            this->fontBlackboard = __value;
+        } 
+        /*! \brief returns the property fontBlackboard. 
+            \details Description of the parameter fontBlackboard is: <CENTER>\copybrief fontBlackboard.</CENTER> 
+            \see fontBlackboard for more information */ 
+        inline virtual QString get_fontBlackboard() const  
+        {
+            return this->fontBlackboard; 
+        }
+        /*! \brief sets the property fontMathRoman to the specified \a __value. 
+            \details Description of the parameter fontMathRoman is: <CENTER>\copybrief fontMathRoman.</CENTER> 
+            \see fontMathRoman for more information */ 
+        inline virtual void set_fontMathRoman(const QString & __value)  
+        {
+            this->fontMathRoman = __value;
+        } 
+        /*! \brief returns the property fontMathRoman. 
+            \details Description of the parameter fontMathRoman is: <CENTER>\copybrief fontMathRoman.</CENTER> 
+            \see fontMathRoman for more information */ 
+        inline virtual QString get_fontMathRoman() const  
+        {
+            return this->fontMathRoman; 
+        }
+        /*! \brief sets the property fontMathSans to the specified \a __value. 
+            \details Description of the parameter fontMathSans is: <CENTER>\copybrief fontMathSans.</CENTER> 
+            \see fontMathSans for more information */ 
+        inline virtual void set_fontMathSans(const QString & __value)  
+        {
+            this->fontMathSans = __value;
+        } 
+        /*! \brief returns the property fontMathSans. 
+            \details Description of the parameter fontMathSans is: <CENTER>\copybrief fontMathSans.</CENTER> 
+            \see fontMathSans for more information */ 
+        inline virtual QString get_fontMathSans() const  
+        {
+            return this->fontMathSans; 
+        }
+        /*! \brief sets the property fontLatexPrefix to the specified \a __value. 
+            \details Description of the parameter fontLatexPrefix is: <CENTER>\copybrief fontLatexPrefix.</CENTER> 
+            \see fontLatexPrefix for more information */ 
+        inline virtual void set_fontLatexPrefix(const QString & __value)  
+        {
+            this->fontLatexPrefix = __value;
+        } 
+        /*! \brief returns the property fontLatexPrefix. 
+            \details Description of the parameter fontLatexPrefix is: <CENTER>\copybrief fontLatexPrefix.</CENTER> 
+            \see fontLatexPrefix for more information */ 
+        inline virtual QString get_fontLatexPrefix() const  
+        {
+            return this->fontLatexPrefix; 
+        }
+        /*! \brief sets the property fontLatexPostfix to the specified \a __value. 
+            \details Description of the parameter fontLatexPostfix is: <CENTER>\copybrief fontLatexPostfix.</CENTER> 
+            \see fontLatexPostfix for more information */ 
+        inline virtual void set_fontLatexPostfix(const QString & __value)  
+        {
+            this->fontLatexPostfix = __value;
+        } 
+        /*! \brief returns the property fontLatexPostfix. 
+            \details Description of the parameter fontLatexPostfix is: <CENTER>\copybrief fontLatexPostfix.</CENTER> 
+            \see fontLatexPostfix for more information */ 
+        inline virtual QString get_fontLatexPostfix() const  
+        {
+            return this->fontLatexPostfix; 
+        }
+        /*! \brief sets the property fontEncoding to the specified \a __value. 
+            \details Description of the parameter fontEncoding is: <CENTER>\copybrief fontEncoding.</CENTER> 
+            \see fontEncoding for more information */ 
+        inline virtual void set_fontEncoding(const MTfontEncoding & __value)  
+        {
+            this->fontEncoding = __value;
+        } 
+        /*! \brief returns the property fontEncoding. 
+            \details Description of the parameter fontEncoding is: <CENTER>\copybrief fontEncoding.</CENTER> 
+            \see fontEncoding for more information */ 
+        inline virtual MTfontEncoding get_fontEncoding() const  
+        {
+            return this->fontEncoding; 
+        }
+        /*! \brief returns the property useSTIXfonts. 
+            \details Description of the parameter useSTIXfonts is:  <CENTER>\copybrief useSTIXfonts.</CENTER>. 
+            \see useSTIXfonts for more information */ 
+        inline bool get_useSTIXfonts() const { 
+            return this->useSTIXfonts; 
+        }
+        /*! \brief returns the property useXITSfonts. 
+            \details Description of the parameter useXITSfonts is:  <CENTER>\copybrief useXITSfonts.</CENTER>. 
+            \see useXITSfonts for more information */ 
+        inline bool get_useXITSfonts() const { 
+            return this->useXITSfonts; 
+        }
+        /*! \brief sets the property brace_factor to the specified \a __value. 
+            \details Description of the parameter brace_factor is: <CENTER>\copybrief brace_factor.</CENTER> 
+            \see brace_factor for more information */ 
+        inline virtual void set_brace_factor(double __value)
+        {
+            this->brace_factor = __value;
+        } 
+        /*! \brief returns the property brace_factor. 
+            \details Description of the parameter brace_factor is: <CENTER>\copybrief brace_factor.</CENTER> 
+            \see brace_factor for more information */ 
+        inline virtual double get_brace_factor() const  
+        {
+            return this->brace_factor; 
+        }
+        /*! \brief sets the property subsuper_size_factor to the specified \a __value. 
+            \details Description of the parameter subsuper_size_factor is: <CENTER>\copybrief subsuper_size_factor.</CENTER> 
+            \see subsuper_size_factor for more information */ 
+        inline virtual void set_subsuper_size_factor(double __value)
+        {
+            this->subsuper_size_factor = __value;
+        } 
+        /*! \brief returns the property subsuper_size_factor. 
+            \details Description of the parameter subsuper_size_factor is: <CENTER>\copybrief subsuper_size_factor.</CENTER> 
+            \see subsuper_size_factor for more information */ 
+        inline virtual double get_subsuper_size_factor() const  
+        {
+            return this->subsuper_size_factor; 
+        }
+        /*! \brief sets the property italic_correction_factor to the specified \a __value. 
+            \details Description of the parameter italic_correction_factor is: <CENTER>\copybrief italic_correction_factor.</CENTER> 
+            \see italic_correction_factor for more information */ 
+        inline virtual void set_italic_correction_factor(double __value)
+        {
+            this->italic_correction_factor = __value;
+        } 
+        /*! \brief returns the property italic_correction_factor. 
+            \details Description of the parameter italic_correction_factor is: <CENTER>\copybrief italic_correction_factor.</CENTER> 
+            \see italic_correction_factor for more information */ 
+        inline virtual double get_italic_correction_factor() const  
+        {
+            return this->italic_correction_factor; 
+        }
+        /*! \brief sets the property operatorsubsuper_size_factor to the specified \a __value. 
+            \details Description of the parameter operatorsubsuper_size_factor is: <CENTER>\copybrief operatorsubsuper_size_factor.</CENTER> 
+            \see operatorsubsuper_size_factor for more information */ 
+        inline virtual void set_operatorsubsuper_size_factor(double __value)
+        {
+            this->operatorsubsuper_size_factor = __value;
+        } 
+        /*! \brief returns the property operatorsubsuper_size_factor. 
+            \details Description of the parameter operatorsubsuper_size_factor is: <CENTER>\copybrief operatorsubsuper_size_factor.</CENTER> 
+            \see operatorsubsuper_size_factor for more information */ 
+        inline virtual double get_operatorsubsuper_size_factor() const  
+        {
+            return this->operatorsubsuper_size_factor; 
+        }
+        /*! \brief sets the property mathoperator_width_factor to the specified \a __value. 
+            \details Description of the parameter mathoperator_width_factor is: <CENTER>\copybrief mathoperator_width_factor.</CENTER> 
+            \see mathoperator_width_factor for more information */ 
+        inline virtual void set_mathoperator_width_factor(double __value)
+        {
+            this->mathoperator_width_factor = __value;
+        } 
+        /*! \brief returns the property mathoperator_width_factor. 
+            \details Description of the parameter mathoperator_width_factor is: <CENTER>\copybrief mathoperator_width_factor.</CENTER> 
+            \see mathoperator_width_factor for more information */ 
+        inline virtual double get_mathoperator_width_factor() const  
+        {
+            return this->mathoperator_width_factor; 
+        }
+        /*! \brief sets the property super_shift_factor to the specified \a __value. 
+            \details Description of the parameter super_shift_factor is: <CENTER>\copybrief super_shift_factor.</CENTER> 
+            \see super_shift_factor for more information */ 
+        inline virtual void set_super_shift_factor(double __value)
+        {
+            this->super_shift_factor = __value;
+        } 
+        /*! \brief returns the property super_shift_factor. 
+            \details Description of the parameter super_shift_factor is: <CENTER>\copybrief super_shift_factor.</CENTER> 
+            \see super_shift_factor for more information */ 
+        inline virtual double get_super_shift_factor() const  
+        {
+            return this->super_shift_factor; 
+        }
+        /*! \brief sets the property sub_shift_factor to the specified \a __value. 
+            \details Description of the parameter sub_shift_factor is: <CENTER>\copybrief sub_shift_factor.</CENTER> 
+            \see sub_shift_factor for more information */ 
+        inline virtual void set_sub_shift_factor(double __value)
+        {
+            this->sub_shift_factor = __value;
+        } 
+        /*! \brief returns the property sub_shift_factor. 
+            \details Description of the parameter sub_shift_factor is: <CENTER>\copybrief sub_shift_factor.</CENTER> 
+            \see sub_shift_factor for more information */ 
+        inline virtual double get_sub_shift_factor() const  
+        {
+            return this->sub_shift_factor; 
+        }
+        /*! \brief sets the property brace_shrink_factor to the specified \a __value. 
+            \details Description of the parameter brace_shrink_factor is: <CENTER>\copybrief brace_shrink_factor.</CENTER> 
+            \see brace_shrink_factor for more information */ 
+        inline virtual void set_brace_shrink_factor(double __value)
+        {
+            this->brace_shrink_factor = __value;
+        } 
+        /*! \brief returns the property brace_shrink_factor. 
+            \details Description of the parameter brace_shrink_factor is: <CENTER>\copybrief brace_shrink_factor.</CENTER> 
+            \see brace_shrink_factor for more information */ 
+        inline virtual double get_brace_shrink_factor() const  
+        {
+            return this->brace_shrink_factor; 
+        }
+        /*! \brief sets the property underbrace_factor to the specified \a __value. 
+            \details Description of the parameter underbrace_factor is: <CENTER>\copybrief underbrace_factor.</CENTER> 
+            \see underbrace_factor for more information */ 
+        inline virtual void set_underbrace_factor(double __value)
+        {
+            this->underbrace_factor = __value;
+        } 
+        /*! \brief returns the property underbrace_factor. 
+            \details Description of the parameter underbrace_factor is: <CENTER>\copybrief underbrace_factor.</CENTER> 
+            \see underbrace_factor for more information */ 
+        inline virtual double get_underbrace_factor() const  
+        {
+            return this->underbrace_factor; 
+        }
+        /*! \brief sets the property underset_factor to the specified \a __value. 
+            \details Description of the parameter underset_factor is: <CENTER>\copybrief underset_factor.</CENTER> 
+            \see underset_factor for more information */ 
+        inline virtual void set_underset_factor(double __value)
+        {
+            this->underset_factor = __value;
+        } 
+        /*! \brief returns the property underset_factor. 
+            \details Description of the parameter underset_factor is: <CENTER>\copybrief underset_factor.</CENTER> 
+            \see underset_factor for more information */ 
+        inline virtual double get_underset_factor() const  
+        {
+            return this->underset_factor; 
+        }
+        /*! \brief sets the property frac_factor to the specified \a __value. 
+            \details Description of the parameter frac_factor is: <CENTER>\copybrief frac_factor.</CENTER> 
+            \see frac_factor for more information */ 
+        inline virtual void set_frac_factor(double __value)
+        {
+            this->frac_factor = __value;
+        } 
+        /*! \brief returns the property frac_factor. 
+            \details Description of the parameter frac_factor is: <CENTER>\copybrief frac_factor.</CENTER> 
+            \see frac_factor for more information */ 
+        inline virtual double get_frac_factor() const  
+        {
+            return this->frac_factor; 
+        }
+        /*! \brief sets the property frac_shift_factor to the specified \a __value. 
+            \details Description of the parameter frac_shift_factor is: <CENTER>\copybrief frac_shift_factor.</CENTER> 
+            \see frac_shift_factor for more information */ 
+        inline virtual void set_frac_shift_factor(double __value)
+        {
+            this->frac_shift_factor = __value;
+        } 
+        /*! \brief returns the property frac_shift_factor. 
+            \details Description of the parameter frac_shift_factor is: <CENTER>\copybrief frac_shift_factor.</CENTER> 
+            \see frac_shift_factor for more information */ 
+        inline virtual double get_frac_shift_factor() const  
+        {
+            return this->frac_shift_factor; 
+        }
+        /*! \brief sets the property brace_y_shift_factor to the specified \a __value. 
+            \details Description of the parameter brace_y_shift_factor is: <CENTER>\copybrief brace_y_shift_factor.</CENTER> 
+            \see brace_y_shift_factor for more information */ 
+        inline virtual void set_brace_y_shift_factor(double __value)
+        {
+            this->brace_y_shift_factor = __value;
+        } 
+        /*! \brief returns the property brace_y_shift_factor. 
+            \details Description of the parameter brace_y_shift_factor is: <CENTER>\copybrief brace_y_shift_factor.</CENTER> 
+            \see brace_y_shift_factor for more information */ 
+        inline virtual double get_brace_y_shift_factor() const  
+        {
+            return this->brace_y_shift_factor; 
+        }
+        /*! \brief sets the property decoration_height_factor to the specified \a __value. 
+            \details Description of the parameter decoration_height_factor is: <CENTER>\copybrief decoration_height_factor.</CENTER> 
+            \see decoration_height_factor for more information */ 
+        inline virtual void set_decoration_height_factor(double __value)
+        {
+            this->decoration_height_factor = __value;
+        } 
+        /*! \brief returns the property decoration_height_factor. 
+            \details Description of the parameter decoration_height_factor is: <CENTER>\copybrief decoration_height_factor.</CENTER> 
+            \see decoration_height_factor for more information */ 
+        inline virtual double get_decoration_height_factor() const  
+        {
+            return this->decoration_height_factor; 
+        }
+        /*! \brief sets the property expensiveRendering to the specified \a __value. 
+            \details Description of the parameter expensiveRendering is: <CENTER>\copybrief expensiveRendering.</CENTER> 
+            \see expensiveRendering for more information */ 
+        inline virtual void set_expensiveRendering(bool __value)
+        {
+            this->expensiveRendering = __value;
+        } 
+        /*! \brief returns the property expensiveRendering. 
+            \details Description of the parameter expensiveRendering is: <CENTER>\copybrief expensiveRendering.</CENTER> 
+            \see expensiveRendering for more information */ 
+        inline virtual bool get_expensiveRendering() const  
+        {
+            return this->expensiveRendering; 
+        }
+        /*! \brief sets the property useUnparsed to the specified \a __value. 
+            \details Description of the parameter useUnparsed is: <CENTER>\copybrief useUnparsed.</CENTER> 
+            \see useUnparsed for more information */ 
+        inline virtual void set_useUnparsed(bool __value)
+        {
+            this->useUnparsed = __value;
+        } 
+        /*! \brief returns the property useUnparsed. 
+            \details Description of the parameter useUnparsed is: <CENTER>\copybrief useUnparsed.</CENTER> 
+            \see useUnparsed for more information */ 
+        inline virtual bool get_useUnparsed() const  
+        {
+            return this->useUnparsed; 
+        }
+        /*! \brief returns the property error_list. 
+            \details Description of the parameter error_list is:  <CENTER>\copybrief error_list.</CENTER>. 
+            \see error_list for more information */ 
+        inline QStringList get_error_list() const { 
+            return this->error_list; 
+        }
 
     protected:
 
@@ -268,7 +693,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
         class MTnode {
             public:
                 MTnode(JKQTmathText* parent);
-                virtual ~MTnode() { };
+                virtual ~MTnode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos)=0;
                 void getSize(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 /** \brief draw the contents at the designated position. returns the x position which to use for the next part of the text */
@@ -278,7 +703,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 /** \brief convert node to HTML and returns \c true on success */
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
 
-                JKQTPGET_MACRO(bool, drawBoxes)
+                /*! \brief returns the property drawBoxes. 
+                    \details Description of the parameter drawBoxes is:  <CENTER>\copybrief drawBoxes.</CENTER>. 
+                    \see drawBoxes for more information */ 
+                inline bool get_drawBoxes() const { 
+                    return this->drawBoxes; 
+                }
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const;
             protected:
@@ -295,8 +725,13 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
-                JKQTPGET_MACRO(QString, text)
-                virtual QString getTypeName() const ;
+                /*! \brief returns the property text. 
+                    \details Description of the parameter text is:  <CENTER>\copybrief text.</CENTER>. 
+                    \see text for more information */ 
+                inline QString get_text() const { 
+                    return this->text; 
+                }
+                virtual QString getTypeName() const override ;
             protected:
                 QString text;
                 virtual QString textTransform(const QString& text, JKQTmathText::MTenvironment currentEv, bool forSize=false);
@@ -329,7 +764,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
-                JKQTPGET_MACRO(QString, symbolName)
+                /*! \brief returns the property symbolName. 
+                    \details Description of the parameter symbolName is:  <CENTER>\copybrief symbolName.</CENTER>. 
+                    \see symbolName for more information */ 
+                inline QString get_symbolName() const { 
+                    return this->symbolName; 
+                }
             protected:
                 /** \brief this string will be sent to the drawText method with properly set fonts */
                 QString symbol;
@@ -367,7 +807,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 void addNode(MTnode* n) { nodes.append(n); }
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
-                JKQTPGET_MACRO(QList<MTnode*>, nodes)
+                /*! \brief returns the property nodes. 
+                    \details Description of the parameter nodes is:  <CENTER>\copybrief nodes.</CENTER>. 
+                    \see nodes for more information */ 
+                inline QList<MTnode*> get_nodes() const { 
+                    return this->nodes; 
+                }
             protected:
                 QList<MTnode*> nodes;
                 QSet<QString> subsupOperations;
@@ -384,9 +829,24 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 /** \brief convert node to HTML and returns \c true on success */
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
-                JKQTPGET_MACRO(MTnode*, child)
-                JKQTPGET_MACRO(QString, name)
-                JKQTPGET_MACRO(QStringList, parameters)
+                /*! \brief returns the property child. 
+                    \details Description of the parameter child is:  <CENTER>\copybrief child.</CENTER>. 
+                    \see child for more information */ 
+                inline MTnode* get_child() const { 
+                    return this->child; 
+                }
+                /*! \brief returns the property name. 
+                    \details Description of the parameter name is:  <CENTER>\copybrief name.</CENTER>. 
+                    \see name for more information */ 
+                inline QString get_name() const { 
+                    return this->name; 
+                }
+                /*! \brief returns the property parameters. 
+                    \details Description of the parameter parameters is:  <CENTER>\copybrief parameters.</CENTER>. 
+                    \see parameters for more information */ 
+                inline QStringList get_parameters() const { 
+                    return this->parameters; 
+                }
             protected:
                 bool setupMTenvironment(JKQTmathText::MTenvironment &ev);
 
@@ -407,7 +867,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 /** \brief returns true if node is subscript or superscript node */
                 virtual bool isSubOrSuper() ;
                 virtual QString getTypeName() const;
-                JKQTPGET_MACRO(MTnode*, child)
+                /*! \brief returns the property child. 
+                    \details Description of the parameter child is:  <CENTER>\copybrief child.</CENTER>. 
+                    \see child for more information */ 
+                inline MTnode* get_child() const { 
+                    return this->child; 
+                }
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
             protected:
@@ -423,7 +888,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief returns true if node is subscript or superscript node */
                 virtual bool isSubOrSuper();
-                JKQTPGET_MACRO(MTnode*, child)
+                /*! \brief returns the property child. 
+                    \details Description of the parameter child is:  <CENTER>\copybrief child.</CENTER>. 
+                    \see child for more information */ 
+                inline MTnode* get_child() const { 
+                    return this->child; 
+                }
                 virtual QString getTypeName() const;
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
@@ -441,10 +911,30 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const;
-                JKQTPGET_MACRO(MTnode*, child)
-                JKQTPGET_MACRO(QString, openbrace)
-                JKQTPGET_MACRO(QString, closebrace)
-                JKQTPGET_MACRO(bool, showRightBrace)
+                /*! \brief returns the property child. 
+                    \details Description of the parameter child is:  <CENTER>\copybrief child.</CENTER>. 
+                    \see child for more information */ 
+                inline MTnode* get_child() const { 
+                    return this->child; 
+                }
+                /*! \brief returns the property openbrace. 
+                    \details Description of the parameter openbrace is:  <CENTER>\copybrief openbrace.</CENTER>. 
+                    \see openbrace for more information */ 
+                inline QString get_openbrace() const { 
+                    return this->openbrace; 
+                }
+                /*! \brief returns the property closebrace. 
+                    \details Description of the parameter closebrace is:  <CENTER>\copybrief closebrace.</CENTER>. 
+                    \see closebrace for more information */ 
+                inline QString get_closebrace() const { 
+                    return this->closebrace; 
+                }
+                /*! \brief returns the property showRightBrace. 
+                    \details Description of the parameter showRightBrace is:  <CENTER>\copybrief showRightBrace.</CENTER>. 
+                    \see showRightBrace for more information */ 
+                inline bool get_showRightBrace() const { 
+                    return this->showRightBrace; 
+                }
             protected:
                 MTnode* child;
                 QString openbrace;
@@ -465,8 +955,18 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const ;
-                JKQTPGET_MACRO(MTnode*, child)
-                JKQTPGET_MACRO(int, degree)
+                /*! \brief returns the property child. 
+                    \details Description of the parameter child is:  <CENTER>\copybrief child.</CENTER>. 
+                    \see child for more information */ 
+                inline MTnode* get_child() const { 
+                    return this->child; 
+                }
+                /*! \brief returns the property degree. 
+                    \details Description of the parameter degree is:  <CENTER>\copybrief degree.</CENTER>. 
+                    \see degree for more information */ 
+                inline int get_degree() const { 
+                    return this->degree; 
+                }
             protected:
                 MTnode* child;
                 int degree;
@@ -495,9 +995,24 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
-                JKQTPGET_MACRO(MTnode*, child1)
-                JKQTPGET_MACRO(MTnode*, child2)
-                JKQTPGET_MACRO(MTfracMode, mode)
+                /*! \brief returns the property child1. 
+                    \details Description of the parameter child1 is:  <CENTER>\copybrief child1.</CENTER>. 
+                    \see child1 for more information */ 
+                inline MTnode* get_child1() const { 
+                    return this->child1; 
+                }
+                /*! \brief returns the property child2. 
+                    \details Description of the parameter child2 is:  <CENTER>\copybrief child2.</CENTER>. 
+                    \see child2 for more information */ 
+                inline MTnode* get_child2() const { 
+                    return this->child2; 
+                }
+                /*! \brief returns the property mode. 
+                    \details Description of the parameter mode is:  <CENTER>\copybrief mode.</CENTER>. 
+                    \see mode for more information */ 
+                inline MTfracMode get_mode() const { 
+                    return this->mode; 
+                }
             protected:
                 MTnode* child1;
                 MTnode* child2;
@@ -513,9 +1028,24 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
-                JKQTPGET_MACRO(QVector<QVector<MTnode*> >, children)
-                JKQTPGET_MACRO(int, columns)
-                JKQTPGET_MACRO(int, lines)
+                /*! \brief returns the property children. 
+                    \details Description of the parameter children is:  <CENTER>\copybrief children.</CENTER>. 
+                    \see children for more information */ 
+                inline QVector<QVector<MTnode*> > get_children() const { 
+                    return this->children; 
+                }
+                /*! \brief returns the property columns. 
+                    \details Description of the parameter columns is:  <CENTER>\copybrief columns.</CENTER>. 
+                    \see columns for more information */ 
+                inline int get_columns() const { 
+                    return this->columns; 
+                }
+                /*! \brief returns the property lines. 
+                    \details Description of the parameter lines is:  <CENTER>\copybrief lines.</CENTER>. 
+                    \see lines for more information */ 
+                inline int get_lines() const { 
+                    return this->lines; 
+                }
             protected:
                 virtual void set_drawBoxes(bool draw);
                 QVector<QVector<MTnode*> > children;
@@ -549,8 +1079,18 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const ;
-                JKQTPGET_MACRO(MTnode*, child)
-                JKQTPGET_MACRO(MTdecoration, decoration)
+                /*! \brief returns the property child. 
+                    \details Description of the parameter child is:  <CENTER>\copybrief child.</CENTER>. 
+                    \see child for more information */ 
+                inline MTnode* get_child() const { 
+                    return this->child; 
+                }
+                /*! \brief returns the property decoration. 
+                    \details Description of the parameter decoration is:  <CENTER>\copybrief decoration.</CENTER>. 
+                    \see decoration for more information */ 
+                inline MTdecoration get_decoration() const { 
+                    return this->decoration; 
+                }
             protected:
                 MTnode* child;
                 MTdecoration decoration;
@@ -560,77 +1100,182 @@ class LIB_EXPORT JKQTmathText : public QObject {
 
 
         /** \brief font color */
-        JKQTMTPROPERTY(QColor, fontColor)
+        QColor fontColor;
+        /*! \brief default value for property fontColor.
+            \see fontColor for more information */
+        QColor def_fontColor;
         /** \brief base font size in points */
-        JKQTMTPROPERTY(double, fontSize)
+        double fontSize;
+        /*! \brief default value for property fontSize.
+            \see fontSize for more information */
+        double def_fontSize;
         /** \brief roman font */
-        JKQTMTPROPERTY(QString, fontRoman)
+        QString fontRoman;
+        /*! \brief default value for property fontRoman.
+            \see fontRoman for more information */
+        QString def_fontRoman;
         /** \brief sans-serif font */
-        JKQTMTPROPERTY(QString, fontSans)
+        QString fontSans;
+        /*! \brief default value for property fontSans.
+            \see fontSans for more information */
+        QString def_fontSans;
         /** \brief typewriter font */
-        JKQTMTPROPERTY(QString, fontTypewriter)
+        QString fontTypewriter;
+        /*! \brief default value for property fontTypewriter.
+            \see fontTypewriter for more information */
+        QString def_fontTypewriter;
         /** \brief script font */
-        JKQTMTPROPERTY(QString, fontScript)
+        QString fontScript;
+        /*! \brief default value for property fontScript.
+            \see fontScript for more information */
+        QString def_fontScript;
         /** \brief greek font */
-        JKQTMTPROPERTY(QString, fontGreek)
+        QString fontGreek;
+        /*! \brief default value for property fontGreek.
+            \see fontGreek for more information */
+        QString def_fontGreek;
         /** \brief symbol font, used for math symbols. */
-        JKQTMTPROPERTY(QString, fontSymbol)
+        QString fontSymbol;
+        /*! \brief default value for property fontSymbol.
+            \see fontSymbol for more information */
+        QString def_fontSymbol;
         /** \brief symbol font, used for braces in math mode. */
-        JKQTMTPROPERTY(QString, fontBraces)
+        QString fontBraces;
+        /*! \brief default value for property fontBraces.
+            \see fontBraces for more information */
+        QString def_fontBraces;
         /** \brief symbol font, used for integrals in math mode. */
-        JKQTMTPROPERTY(QString, fontIntegrals)
+        QString fontIntegrals;
+        /*! \brief default value for property fontIntegrals.
+            \see fontIntegrals for more information */
+        QString def_fontIntegrals;
         /** \brief font used for caligraphic symbols (escepcially in math environments) */
-        JKQTMTPROPERTY(QString, fontCaligraphic)
+        QString fontCaligraphic;
+        /*! \brief default value for property fontCaligraphic.
+            \see fontCaligraphic for more information */
+        QString def_fontCaligraphic;
         /** \brief font used for blackboard (double-stroke) symbols (escepcially in math environments) */
-        JKQTMTPROPERTY(QString, fontBlackboard)
+        QString fontBlackboard;
+        /*! \brief default value for property fontBlackboard.
+            \see fontBlackboard for more information */
+        QString def_fontBlackboard;
         /** \brief roman font for math environment */
-        JKQTMTPROPERTY(QString, fontMathRoman)
+        QString fontMathRoman;
+        /*! \brief default value for property fontMathRoman.
+            \see fontMathRoman for more information */
+        QString def_fontMathRoman;
         /** \brief sans font for math environment */
-        JKQTMTPROPERTY(QString, fontMathSans)
+        QString fontMathSans;
+        /*! \brief default value for property fontMathSans.
+            \see fontMathSans for more information */
+        QString def_fontMathSans;
         /** \brief prefix for LaTeX fonts */
-        JKQTMTPROPERTY(QString, fontLatexPrefix)
+        QString fontLatexPrefix;
+        /*! \brief default value for property fontLatexPrefix.
+            \see fontLatexPrefix for more information */
+        QString def_fontLatexPrefix;
         /** \brief postfix for LaTeX fonts */
-        JKQTMTPROPERTY(QString, fontLatexPostfix)
+        QString fontLatexPostfix;
+        /*! \brief default value for property fontLatexPostfix.
+            \see fontLatexPostfix for more information */
+        QString def_fontLatexPostfix;
         /** \brief specifies the encoding of special character fonts (default is \c MTFEwinSymbol ) */
-        JKQTMTPROPERTY(MTfontEncoding, fontEncoding)
+        MTfontEncoding fontEncoding;
+        /*! \brief default value for property fontEncoding.
+            \see fontEncoding for more information */
+        MTfontEncoding def_fontEncoding;
         /** \brief resizing factor for braces in math mode */
-        JKQTMTPROPERTY(double, brace_factor)
+        double brace_factor;
+        /*! \brief default value for property brace_factor.
+            \see brace_factor for more information */
+        double def_brace_factor;
         /** \brief shrinking the width of braces in math mode 0: reduce to 0 pixel width, 1: leave unchanged*/
-        JKQTMTPROPERTY(double, brace_shrink_factor)
+        double brace_shrink_factor;
+        /*! \brief default value for property brace_shrink_factor.
+            \see brace_shrink_factor for more information */
+        double def_brace_shrink_factor;
         /** \brief resizing factor for font size in sub-/superscript */
-        JKQTMTPROPERTY(double, subsuper_size_factor)
+        double subsuper_size_factor;
+        /*! \brief default value for property subsuper_size_factor.
+            \see subsuper_size_factor for more information */
+        double def_subsuper_size_factor;
         /** \brief fraction of a whitespace by which to shift a sub-/superscript left/right when the previous text is italic */
-        JKQTMTPROPERTY(double, italic_correction_factor)
+        double italic_correction_factor;
+        /*! \brief default value for property italic_correction_factor.
+            \see italic_correction_factor for more information */
+        double def_italic_correction_factor;
         /** \brief like subsuper_size_factor, but for operators (\\sum, \\int) where the text is placed above/below the symbol */
-        JKQTMTPROPERTY(double, operatorsubsuper_size_factor)
+        double operatorsubsuper_size_factor;
+        /*! \brief default value for property operatorsubsuper_size_factor.
+            \see operatorsubsuper_size_factor for more information */
+        double def_operatorsubsuper_size_factor;
         /** \brief factor, used to extend the size of an operator in math mode */
-        JKQTMTPROPERTY(double, mathoperator_width_factor)
+        double mathoperator_width_factor;
+        /*! \brief default value for property mathoperator_width_factor.
+            \see mathoperator_width_factor for more information */
+        double def_mathoperator_width_factor;
         /** \brief relative shift of text in superscript to normal text:
          *         0= baseline kept, 1: baseline shifted to top of normal text */
-        JKQTMTPROPERTY(double, super_shift_factor)
+        double super_shift_factor;
+        /*! \brief default value for property super_shift_factor.
+            \see super_shift_factor for more information */
+        double def_super_shift_factor;
         /** \brief relative shift of text in subscript to normal text:
          *         0= baseline kept, 1: baseline shifted to bottom of normal text */
-        JKQTMTPROPERTY(double, sub_shift_factor)
+        double sub_shift_factor;
+        /*! \brief default value for property sub_shift_factor.
+            \see sub_shift_factor for more information */
+        double def_sub_shift_factor;
         /** \brief indicates whether to use STIX fonts or not */
-        JKQTMTPROPERTY(bool, useSTIXfonts)
+        bool useSTIXfonts;
+        /*! \brief default value for property useSTIXfonts.
+            \see useSTIXfonts for more information */
+        bool def_useSTIXfonts;
         /** \brief indicates whether to use XITS fonts or not */
-        JKQTMTPROPERTY(bool, useXITSfonts)
+        bool useXITSfonts;
+        /*! \brief default value for property useXITSfonts.
+            \see useXITSfonts for more information */
+        bool def_useXITSfonts;
         /** \brief indicates whether to use XITS fonts or not */
-        JKQTMTPROPERTY(bool, useASANAfonts)
+        bool useASANAfonts;
+        /*! \brief default value for property useASANAfonts.
+            \see useASANAfonts for more information */
+        bool def_useASANAfonts;
         /** \brief scaling factor for font of nominator and denominator of a fraction */
-        JKQTMTPROPERTY(double, frac_factor)
+        double frac_factor;
+        /*! \brief default value for property frac_factor.
+            \see frac_factor for more information */
+        double def_frac_factor;
         /** \brief shift of denominator/nummerator away from central line of a frac */
-        JKQTMTPROPERTY(double, frac_shift_factor)
+        double frac_shift_factor;
+        /*! \brief default value for property frac_shift_factor.
+            \see frac_shift_factor for more information */
+        double def_frac_shift_factor;
         /** \brief scaling factor for font of underbrace/overbrace text */
-        JKQTMTPROPERTY(double, underbrace_factor)
+        double underbrace_factor;
+        /*! \brief default value for property underbrace_factor.
+            \see underbrace_factor for more information */
+        double def_underbrace_factor;
         /** \brief scaling factor for font of underset/overset text */
-        JKQTMTPROPERTY(double, underset_factor)
+        double underset_factor;
+        /*! \brief default value for property underset_factor.
+            \see underset_factor for more information */
+        double def_underset_factor;
         /** \brief fraction of the brace ascent that the brace is shifted downwards, when scaled */
-        JKQTMTPROPERTY(double, brace_y_shift_factor)
+        double brace_y_shift_factor;
+        /*! \brief default value for property brace_y_shift_factor.
+            \see brace_y_shift_factor for more information */
+        double def_brace_y_shift_factor;
         /** \brief size of the decorations (dot, tilde, ...), as fractio of the baselineheight */
-        JKQTMTPROPERTY(double, decoration_height_factor)
+        double decoration_height_factor;
+        /*! \brief default value for property decoration_height_factor.
+            \see decoration_height_factor for more information */
+        double def_decoration_height_factor;
         /** \brief switches on some options that will grant better rendering at the expense of higher time consumption */
-        JKQTMTPROPERTY(bool, expensiveRendering)
+        bool expensiveRendering;
+        /*! \brief default value for property expensiveRendering.
+            \see expensiveRendering for more information */
+        bool def_expensiveRendering;
         /** \brief a list that will be filled with error messages while parsing, if any error occur */
         QStringList error_list;
         /** \brief used by the parser. This is used to implement brace pairs with \\right. */
@@ -682,7 +1327,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
 
 
     public:
-        JKQTPGET_MACRO(MTnode*, parsedNode)
+        /*! \brief returns the property parsedNode. 
+            \details Description of the parameter parsedNode is:  <CENTER>\copybrief parsedNode.</CENTER>. 
+            \see parsedNode for more information */ 
+        inline MTnode* get_parsedNode() const { 
+            return this->parsedNode; 
+        }
 
         struct tbrData {
             explicit tbrData(const QFont& f, const QString& text, QPaintDevice *pd);

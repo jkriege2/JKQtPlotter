@@ -74,16 +74,146 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, style)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(JKQTPgraphSymbols, symbol)
-        JKQTPGET_SET_MACRO(double, symbolWidth)
-        JKQTPGET_SET_MACRO(double, symbolSize)
-        JKQTPGET_SET_MACRO(bool, drawLine)
-        JKQTPGET_SET_MACRO(bool, drawSelectionLine)
-        JKQTPGET_SET_MACRO(QColor, selectionLineColor)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property style to the specified \a __value. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual void set_style(const Qt::PenStyle & __value)  
+        {
+            this->style = __value;
+        } 
+        /*! \brief returns the property style. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual Qt::PenStyle get_style() const  
+        {
+            return this->style; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property symbol to the specified \a __value. 
+            \details Description of the parameter symbol is: <CENTER>\copybrief symbol.</CENTER> 
+            \see symbol for more information */ 
+        inline virtual void set_symbol(const JKQTPgraphSymbols & __value)  
+        {
+            this->symbol = __value;
+        } 
+        /*! \brief returns the property symbol. 
+            \details Description of the parameter symbol is: <CENTER>\copybrief symbol.</CENTER> 
+            \see symbol for more information */ 
+        inline virtual JKQTPgraphSymbols get_symbol() const  
+        {
+            return this->symbol; 
+        }
+        /*! \brief sets the property symbolWidth to the specified \a __value. 
+            \details Description of the parameter symbolWidth is: <CENTER>\copybrief symbolWidth.</CENTER> 
+            \see symbolWidth for more information */ 
+        inline virtual void set_symbolWidth(double __value)
+        {
+            this->symbolWidth = __value;
+        } 
+        /*! \brief returns the property symbolWidth. 
+            \details Description of the parameter symbolWidth is: <CENTER>\copybrief symbolWidth.</CENTER> 
+            \see symbolWidth for more information */ 
+        inline virtual double get_symbolWidth() const  
+        {
+            return this->symbolWidth; 
+        }
+        /*! \brief sets the property symbolSize to the specified \a __value. 
+            \details Description of the parameter symbolSize is: <CENTER>\copybrief symbolSize.</CENTER> 
+            \see symbolSize for more information */ 
+        inline virtual void set_symbolSize(double __value)
+        {
+            this->symbolSize = __value;
+        } 
+        /*! \brief returns the property symbolSize. 
+            \details Description of the parameter symbolSize is: <CENTER>\copybrief symbolSize.</CENTER> 
+            \see symbolSize for more information */ 
+        inline virtual double get_symbolSize() const  
+        {
+            return this->symbolSize; 
+        }
+        /*! \brief sets the property drawLine to the specified \a __value. 
+            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \see drawLine for more information */ 
+        inline virtual void set_drawLine(bool __value)  
+        {
+            this->drawLine = __value;
+        } 
+        /*! \brief returns the property drawLine. 
+            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \see drawLine for more information */ 
+        inline virtual bool get_drawLine() const  
+        {
+            return this->drawLine; 
+        }
+        /*! \brief sets the property drawSelectionLine to the specified \a __value. 
+            \details Description of the parameter drawSelectionLine is: <CENTER>\copybrief drawSelectionLine.</CENTER> 
+            \see drawSelectionLine for more information */ 
+        inline virtual void set_drawSelectionLine(bool __value)  
+        {
+            this->drawSelectionLine = __value;
+        } 
+        /*! \brief returns the property drawSelectionLine. 
+            \details Description of the parameter drawSelectionLine is: <CENTER>\copybrief drawSelectionLine.</CENTER> 
+            \see drawSelectionLine for more information */ 
+        inline virtual bool get_drawSelectionLine() const  
+        {
+            return this->drawSelectionLine; 
+        }
+        /*! \brief sets the property selectionLineColor to the specified \a __value. 
+            \details Description of the parameter selectionLineColor is: <CENTER>\copybrief selectionLineColor.</CENTER> 
+            \see selectionLineColor for more information */ 
+        inline virtual void set_selectionLineColor(const QColor & __value)  
+        {
+            this->selectionLineColor = __value;
+        } 
+        /*! \brief returns the property selectionLineColor. 
+            \details Description of the parameter selectionLineColor is: <CENTER>\copybrief selectionLineColor.</CENTER> 
+            \see selectionLineColor for more information */ 
+        inline virtual QColor get_selectionLineColor() const  
+        {
+            return this->selectionLineColor; 
+        }
 
     protected:
 
@@ -148,19 +278,148 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        JKQTPGET_SET_MACRO(int, sizeColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, sizeColumn)
-        JKQTPGET_SET_MACRO(int, colorColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, colorColumn)
-        JKQTPGET_SET_MACRO(int, symbolColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, symbolColumn)
-        JKQTPGET_SET_MACRO(int, linewidthColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, linewidthColumn)
-        JKQTPGET_SET_MACRO(bool, colorColumnContainsRGB)
-        JKQTPGET_SET_MACRO(bool, gridModeForSymbolSize)
-        JKQTPGET_SET_MACRO(double, gridDeltaX)
-        JKQTPGET_SET_MACRO(double, gridDeltaY)
-        JKQTPGET_SET_MACRO(double, gridSymbolFractionSize)
+        /*! \brief sets the property sizeColumn to the specified \a __value. 
+            \details Description of the parameter sizeColumn is: <CENTER>\copybrief sizeColumn.</CENTER> 
+            \see sizeColumn for more information */ 
+        inline virtual void set_sizeColumn(int __value)  
+        {
+            this->sizeColumn = __value;
+        } 
+        /*! \brief returns the property sizeColumn. 
+            \details Description of the parameter sizeColumn is: <CENTER>\copybrief sizeColumn.</CENTER> 
+            \see sizeColumn for more information */ 
+        inline virtual int get_sizeColumn() const  
+        {
+            return this->sizeColumn; 
+        }
+        /*! \brief sets the property sizeColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter sizeColumn is:  <CENTER>\copybrief sizeColumn.</CENTER> 
+        	\see sizeColumn for more information */ 
+        inline virtual void set_sizeColumn (size_t __value) { this->sizeColumn = static_cast<int>(__value); }
+        /*! \brief sets the property colorColumn to the specified \a __value. 
+            \details Description of the parameter colorColumn is: <CENTER>\copybrief colorColumn.</CENTER> 
+            \see colorColumn for more information */ 
+        inline virtual void set_colorColumn(int __value)  
+        {
+            this->colorColumn = __value;
+        } 
+        /*! \brief returns the property colorColumn. 
+            \details Description of the parameter colorColumn is: <CENTER>\copybrief colorColumn.</CENTER> 
+            \see colorColumn for more information */ 
+        inline virtual int get_colorColumn() const  
+        {
+            return this->colorColumn; 
+        }
+        /*! \brief sets the property colorColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter colorColumn is:  <CENTER>\copybrief colorColumn.</CENTER> 
+        	\see colorColumn for more information */ 
+        inline virtual void set_colorColumn (size_t __value) { this->colorColumn = static_cast<int>(__value); }
+        /*! \brief sets the property symbolColumn to the specified \a __value. 
+            \details Description of the parameter symbolColumn is: <CENTER>\copybrief symbolColumn.</CENTER> 
+            \see symbolColumn for more information */ 
+        inline virtual void set_symbolColumn(int __value)  
+        {
+            this->symbolColumn = __value;
+        } 
+        /*! \brief returns the property symbolColumn. 
+            \details Description of the parameter symbolColumn is: <CENTER>\copybrief symbolColumn.</CENTER> 
+            \see symbolColumn for more information */ 
+        inline virtual int get_symbolColumn() const  
+        {
+            return this->symbolColumn; 
+        }
+        /*! \brief sets the property symbolColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter symbolColumn is:  <CENTER>\copybrief symbolColumn.</CENTER> 
+        	\see symbolColumn for more information */ 
+        inline virtual void set_symbolColumn (size_t __value) { this->symbolColumn = static_cast<int>(__value); }
+        /*! \brief sets the property linewidthColumn to the specified \a __value. 
+            \details Description of the parameter linewidthColumn is: <CENTER>\copybrief linewidthColumn.</CENTER> 
+            \see linewidthColumn for more information */ 
+        inline virtual void set_linewidthColumn(int __value)  
+        {
+            this->linewidthColumn = __value;
+        } 
+        /*! \brief returns the property linewidthColumn. 
+            \details Description of the parameter linewidthColumn is: <CENTER>\copybrief linewidthColumn.</CENTER> 
+            \see linewidthColumn for more information */ 
+        inline virtual int get_linewidthColumn() const  
+        {
+            return this->linewidthColumn; 
+        }
+        /*! \brief sets the property linewidthColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter linewidthColumn is:  <CENTER>\copybrief linewidthColumn.</CENTER> 
+        	\see linewidthColumn for more information */ 
+        inline virtual void set_linewidthColumn( size_t __value) { this->linewidthColumn = static_cast<int>(__value); }
+        /*! \brief sets the property colorColumnContainsRGB to the specified \a __value. 
+            \details Description of the parameter colorColumnContainsRGB is: <CENTER>\copybrief colorColumnContainsRGB.</CENTER> 
+            \see colorColumnContainsRGB for more information */ 
+        inline virtual void set_colorColumnContainsRGB(bool __value)  
+        {
+            this->colorColumnContainsRGB = __value;
+        } 
+        /*! \brief returns the property colorColumnContainsRGB. 
+            \details Description of the parameter colorColumnContainsRGB is: <CENTER>\copybrief colorColumnContainsRGB.</CENTER> 
+            \see colorColumnContainsRGB for more information */ 
+        inline virtual bool get_colorColumnContainsRGB() const  
+        {
+            return this->colorColumnContainsRGB; 
+        }
+        /*! \brief sets the property gridModeForSymbolSize to the specified \a __value. 
+            \details Description of the parameter gridModeForSymbolSize is: <CENTER>\copybrief gridModeForSymbolSize.</CENTER> 
+            \see gridModeForSymbolSize for more information */ 
+        inline virtual void set_gridModeForSymbolSize(bool __value)  
+        {
+            this->gridModeForSymbolSize = __value;
+        } 
+        /*! \brief returns the property gridModeForSymbolSize. 
+            \details Description of the parameter gridModeForSymbolSize is: <CENTER>\copybrief gridModeForSymbolSize.</CENTER> 
+            \see gridModeForSymbolSize for more information */ 
+        inline virtual bool get_gridModeForSymbolSize() const  
+        {
+            return this->gridModeForSymbolSize; 
+        }
+        /*! \brief sets the property gridDeltaX to the specified \a __value. 
+            \details Description of the parameter gridDeltaX is: <CENTER>\copybrief gridDeltaX.</CENTER> 
+            \see gridDeltaX for more information */ 
+        inline virtual void set_gridDeltaX(double __value)
+        {
+            this->gridDeltaX = __value;
+        } 
+        /*! \brief returns the property gridDeltaX. 
+            \details Description of the parameter gridDeltaX is: <CENTER>\copybrief gridDeltaX.</CENTER> 
+            \see gridDeltaX for more information */ 
+        inline virtual double get_gridDeltaX() const  
+        {
+            return this->gridDeltaX; 
+        }
+        /*! \brief sets the property gridDeltaY to the specified \a __value. 
+            \details Description of the parameter gridDeltaY is: <CENTER>\copybrief gridDeltaY.</CENTER> 
+            \see gridDeltaY for more information */ 
+        inline virtual void set_gridDeltaY(double __value)
+        {
+            this->gridDeltaY = __value;
+        } 
+        /*! \brief returns the property gridDeltaY. 
+            \details Description of the parameter gridDeltaY is: <CENTER>\copybrief gridDeltaY.</CENTER> 
+            \see gridDeltaY for more information */ 
+        inline virtual double get_gridDeltaY() const  
+        {
+            return this->gridDeltaY; 
+        }
+        /*! \brief sets the property gridSymbolFractionSize to the specified \a __value. 
+            \details Description of the parameter gridSymbolFractionSize is: <CENTER>\copybrief gridSymbolFractionSize.</CENTER> 
+            \see gridSymbolFractionSize for more information */ 
+        inline virtual void set_gridSymbolFractionSize(double __value)
+        {
+            this->gridSymbolFractionSize = __value;
+        } 
+        /*! \brief returns the property gridSymbolFractionSize. 
+            \details Description of the parameter gridSymbolFractionSize is: <CENTER>\copybrief gridSymbolFractionSize.</CENTER> 
+            \see gridSymbolFractionSize for more information */ 
+        inline virtual double get_gridSymbolFractionSize() const  
+        {
+            return this->gridSymbolFractionSize; 
+        }
 
         virtual void setParent(JKQtBasePlotter* parent) override;
 
@@ -333,14 +592,118 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, style)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(bool, drawLine)
-        JKQTPGET_SET_MACRO(bool, fillCurve)
-        JKQTPGET_SET_MACRO(JKQTPstepType, stepType)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property fillStyle to the specified \a __value. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->fillStyle = __value;
+        } 
+        /*! \brief returns the property fillStyle. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_fillStyle() const  
+        {
+            return this->fillStyle; 
+        }
+        /*! \brief sets the property style to the specified \a __value. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual void set_style(const Qt::PenStyle & __value)  
+        {
+            this->style = __value;
+        } 
+        /*! \brief returns the property style. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual Qt::PenStyle get_style() const  
+        {
+            return this->style; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property drawLine to the specified \a __value. 
+            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \see drawLine for more information */ 
+        inline virtual void set_drawLine(bool __value)  
+        {
+            this->drawLine = __value;
+        } 
+        /*! \brief returns the property drawLine. 
+            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \see drawLine for more information */ 
+        inline virtual bool get_drawLine() const  
+        {
+            return this->drawLine; 
+        }
+        /*! \brief sets the property fillCurve to the specified \a __value. 
+            \details Description of the parameter fillCurve is: <CENTER>\copybrief fillCurve.</CENTER> 
+            \see fillCurve for more information */ 
+        inline virtual void set_fillCurve(bool __value)  
+        {
+            this->fillCurve = __value;
+        } 
+        /*! \brief returns the property fillCurve. 
+            \details Description of the parameter fillCurve is: <CENTER>\copybrief fillCurve.</CENTER> 
+            \see fillCurve for more information */ 
+        inline virtual bool get_fillCurve() const  
+        {
+            return this->fillCurve; 
+        }
+        /*! \brief sets the property stepType to the specified \a __value. 
+            \details Description of the parameter stepType is: <CENTER>\copybrief stepType.</CENTER> 
+            \see stepType for more information */ 
+        inline virtual void set_stepType(const JKQTPstepType & __value)  
+        {
+            this->stepType = __value;
+        } 
+        /*! \brief returns the property stepType. 
+            \details Description of the parameter stepType is: <CENTER>\copybrief stepType.</CENTER> 
+            \see stepType for more information */ 
+        inline virtual JKQTPstepType get_stepType() const  
+        {
+            return this->stepType; 
+        }
     protected:
         /** \brief color of the graph */
         QColor color;
@@ -440,27 +803,287 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
 
         void setDrawCenterLineOnly();
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, style)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(QColor, centerColor)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, centerStyle)
-        JKQTPGET_SET_MACRO(double, centerLineWidth)
-        JKQTPGET_SET_MACRO(double, rangeMin)
-        JKQTPGET_SET_MACRO(double, rangeMax)
-        JKQTPGET_SET_MACRO(double, sizeMin)
-        JKQTPGET_SET_MACRO(double, sizeMax)
-        JKQTPGET_SET_MACRO(bool, unlimitedSizeMin)
-        JKQTPGET_SET_MACRO(bool, unlimitedSizeMax)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property fillStyle to the specified \a __value. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->fillStyle = __value;
+        } 
+        /*! \brief returns the property fillStyle. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_fillStyle() const  
+        {
+            return this->fillStyle; 
+        }
+        /*! \brief sets the property style to the specified \a __value. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual void set_style(const Qt::PenStyle & __value)  
+        {
+            this->style = __value;
+        } 
+        /*! \brief returns the property style. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual Qt::PenStyle get_style() const  
+        {
+            return this->style; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property centerColor to the specified \a __value. 
+            \details Description of the parameter centerColor is: <CENTER>\copybrief centerColor.</CENTER> 
+            \see centerColor for more information */ 
+        inline virtual void set_centerColor(const QColor & __value)  
+        {
+            this->centerColor = __value;
+        } 
+        /*! \brief returns the property centerColor. 
+            \details Description of the parameter centerColor is: <CENTER>\copybrief centerColor.</CENTER> 
+            \see centerColor for more information */ 
+        inline virtual QColor get_centerColor() const  
+        {
+            return this->centerColor; 
+        }
+        /*! \brief sets the property centerStyle to the specified \a __value. 
+            \details Description of the parameter centerStyle is: <CENTER>\copybrief centerStyle.</CENTER> 
+            \see centerStyle for more information */ 
+        inline virtual void set_centerStyle(const Qt::PenStyle & __value)  
+        {
+            this->centerStyle = __value;
+        } 
+        /*! \brief returns the property centerStyle. 
+            \details Description of the parameter centerStyle is: <CENTER>\copybrief centerStyle.</CENTER> 
+            \see centerStyle for more information */ 
+        inline virtual Qt::PenStyle get_centerStyle() const  
+        {
+            return this->centerStyle; 
+        }
+        /*! \brief sets the property centerLineWidth to the specified \a __value. 
+            \details Description of the parameter centerLineWidth is: <CENTER>\copybrief centerLineWidth.</CENTER> 
+            \see centerLineWidth for more information */ 
+        inline virtual void set_centerLineWidth(double __value)
+        {
+            this->centerLineWidth = __value;
+        } 
+        /*! \brief returns the property centerLineWidth. 
+            \details Description of the parameter centerLineWidth is: <CENTER>\copybrief centerLineWidth.</CENTER> 
+            \see centerLineWidth for more information */ 
+        inline virtual double get_centerLineWidth() const  
+        {
+            return this->centerLineWidth; 
+        }
+        /*! \brief sets the property rangeMin to the specified \a __value. 
+            \details Description of the parameter rangeMin is: <CENTER>\copybrief rangeMin.</CENTER> 
+            \see rangeMin for more information */ 
+        inline virtual void set_rangeMin(double __value)
+        {
+            this->rangeMin = __value;
+        } 
+        /*! \brief returns the property rangeMin. 
+            \details Description of the parameter rangeMin is: <CENTER>\copybrief rangeMin.</CENTER> 
+            \see rangeMin for more information */ 
+        inline virtual double get_rangeMin() const  
+        {
+            return this->rangeMin; 
+        }
+        /*! \brief sets the property rangeMax to the specified \a __value. 
+            \details Description of the parameter rangeMax is: <CENTER>\copybrief rangeMax.</CENTER> 
+            \see rangeMax for more information */ 
+        inline virtual void set_rangeMax(double __value)
+        {
+            this->rangeMax = __value;
+        } 
+        /*! \brief returns the property rangeMax. 
+            \details Description of the parameter rangeMax is: <CENTER>\copybrief rangeMax.</CENTER> 
+            \see rangeMax for more information */ 
+        inline virtual double get_rangeMax() const  
+        {
+            return this->rangeMax; 
+        }
+        /*! \brief sets the property sizeMin to the specified \a __value. 
+            \details Description of the parameter sizeMin is: <CENTER>\copybrief sizeMin.</CENTER> 
+            \see sizeMin for more information */ 
+        inline virtual void set_sizeMin(double __value)
+        {
+            this->sizeMin = __value;
+        } 
+        /*! \brief returns the property sizeMin. 
+            \details Description of the parameter sizeMin is: <CENTER>\copybrief sizeMin.</CENTER> 
+            \see sizeMin for more information */ 
+        inline virtual double get_sizeMin() const  
+        {
+            return this->sizeMin; 
+        }
+        /*! \brief sets the property sizeMax to the specified \a __value. 
+            \details Description of the parameter sizeMax is: <CENTER>\copybrief sizeMax.</CENTER> 
+            \see sizeMax for more information */ 
+        inline virtual void set_sizeMax(double __value)
+        {
+            this->sizeMax = __value;
+        } 
+        /*! \brief returns the property sizeMax. 
+            \details Description of the parameter sizeMax is: <CENTER>\copybrief sizeMax.</CENTER> 
+            \see sizeMax for more information */ 
+        inline virtual double get_sizeMax() const  
+        {
+            return this->sizeMax; 
+        }
+        /*! \brief sets the property unlimitedSizeMin to the specified \a __value. 
+            \details Description of the parameter unlimitedSizeMin is: <CENTER>\copybrief unlimitedSizeMin.</CENTER> 
+            \see unlimitedSizeMin for more information */ 
+        inline virtual void set_unlimitedSizeMin(bool __value)  
+        {
+            this->unlimitedSizeMin = __value;
+        } 
+        /*! \brief returns the property unlimitedSizeMin. 
+            \details Description of the parameter unlimitedSizeMin is: <CENTER>\copybrief unlimitedSizeMin.</CENTER> 
+            \see unlimitedSizeMin for more information */ 
+        inline virtual bool get_unlimitedSizeMin() const  
+        {
+            return this->unlimitedSizeMin; 
+        }
+        /*! \brief sets the property unlimitedSizeMax to the specified \a __value. 
+            \details Description of the parameter unlimitedSizeMax is: <CENTER>\copybrief unlimitedSizeMax.</CENTER> 
+            \see unlimitedSizeMax for more information */ 
+        inline virtual void set_unlimitedSizeMax(bool __value)  
+        {
+            this->unlimitedSizeMax = __value;
+        } 
+        /*! \brief returns the property unlimitedSizeMax. 
+            \details Description of the parameter unlimitedSizeMax is: <CENTER>\copybrief unlimitedSizeMax.</CENTER> 
+            \see unlimitedSizeMax for more information */ 
+        inline virtual bool get_unlimitedSizeMax() const  
+        {
+            return this->unlimitedSizeMax; 
+        }
 
-        JKQTPGET_SET_MACRO(double, rangeCenter)
-        JKQTPGET_SET_MACRO(bool, plotCenterLine)
-        JKQTPGET_SET_MACRO(bool, invertedRange)
-        JKQTPGET_SET_MACRO(bool, plotRange)
-        JKQTPGET_SET_MACRO(bool, fillRange)
-        JKQTPGET_SET_MACRO(bool, plotRangeLines)
+        /*! \brief sets the property rangeCenter to the specified \a __value. 
+            \details Description of the parameter rangeCenter is: <CENTER>\copybrief rangeCenter.</CENTER> 
+            \see rangeCenter for more information */ 
+        inline virtual void set_rangeCenter(double __value)
+        {
+            this->rangeCenter = __value;
+        } 
+        /*! \brief returns the property rangeCenter. 
+            \details Description of the parameter rangeCenter is: <CENTER>\copybrief rangeCenter.</CENTER> 
+            \see rangeCenter for more information */ 
+        inline virtual double get_rangeCenter() const  
+        {
+            return this->rangeCenter; 
+        }
+        /*! \brief sets the property plotCenterLine to the specified \a __value. 
+            \details Description of the parameter plotCenterLine is: <CENTER>\copybrief plotCenterLine.</CENTER> 
+            \see plotCenterLine for more information */ 
+        inline virtual void set_plotCenterLine(bool __value)  
+        {
+            this->plotCenterLine = __value;
+        } 
+        /*! \brief returns the property plotCenterLine. 
+            \details Description of the parameter plotCenterLine is: <CENTER>\copybrief plotCenterLine.</CENTER> 
+            \see plotCenterLine for more information */ 
+        inline virtual bool get_plotCenterLine() const  
+        {
+            return this->plotCenterLine; 
+        }
+        /*! \brief sets the property invertedRange to the specified \a __value. 
+            \details Description of the parameter invertedRange is: <CENTER>\copybrief invertedRange.</CENTER> 
+            \see invertedRange for more information */ 
+        inline virtual void set_invertedRange(bool __value)  
+        {
+            this->invertedRange = __value;
+        } 
+        /*! \brief returns the property invertedRange. 
+            \details Description of the parameter invertedRange is: <CENTER>\copybrief invertedRange.</CENTER> 
+            \see invertedRange for more information */ 
+        inline virtual bool get_invertedRange() const  
+        {
+            return this->invertedRange; 
+        }
+        /*! \brief sets the property plotRange to the specified \a __value. 
+            \details Description of the parameter plotRange is: <CENTER>\copybrief plotRange.</CENTER> 
+            \see plotRange for more information */ 
+        inline virtual void set_plotRange(bool __value)  
+        {
+            this->plotRange = __value;
+        } 
+        /*! \brief returns the property plotRange. 
+            \details Description of the parameter plotRange is: <CENTER>\copybrief plotRange.</CENTER> 
+            \see plotRange for more information */ 
+        inline virtual bool get_plotRange() const  
+        {
+            return this->plotRange; 
+        }
+        /*! \brief sets the property fillRange to the specified \a __value. 
+            \details Description of the parameter fillRange is: <CENTER>\copybrief fillRange.</CENTER> 
+            \see fillRange for more information */ 
+        inline virtual void set_fillRange(bool __value)  
+        {
+            this->fillRange = __value;
+        } 
+        /*! \brief returns the property fillRange. 
+            \details Description of the parameter fillRange is: <CENTER>\copybrief fillRange.</CENTER> 
+            \see fillRange for more information */ 
+        inline virtual bool get_fillRange() const  
+        {
+            return this->fillRange; 
+        }
+        /*! \brief sets the property plotRangeLines to the specified \a __value. 
+            \details Description of the parameter plotRangeLines is: <CENTER>\copybrief plotRangeLines.</CENTER> 
+            \see plotRangeLines for more information */ 
+        inline virtual void set_plotRangeLines(bool __value)  
+        {
+            this->plotRangeLines = __value;
+        } 
+        /*! \brief returns the property plotRangeLines. 
+            \details Description of the parameter plotRangeLines is: <CENTER>\copybrief plotRangeLines.</CENTER> 
+            \see plotRangeLines for more information */ 
+        inline virtual bool get_plotRangeLines() const  
+        {
+            return this->plotRangeLines; 
+        }
     protected:
         /** \brief min-value of range */
         double rangeMin;

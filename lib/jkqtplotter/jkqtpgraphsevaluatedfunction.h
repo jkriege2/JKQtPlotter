@@ -118,12 +118,90 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         /** \brief clear the data sampled from the function. */
         void clearData();
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, style)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(bool, drawLine)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property fillStyle to the specified \a __value. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->fillStyle = __value;
+        } 
+        /*! \brief returns the property fillStyle. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_fillStyle() const  
+        {
+            return this->fillStyle; 
+        }
+        /*! \brief sets the property style to the specified \a __value. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual void set_style(const Qt::PenStyle & __value)  
+        {
+            this->style = __value;
+        } 
+        /*! \brief returns the property style. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual Qt::PenStyle get_style() const  
+        {
+            return this->style; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property drawLine to the specified \a __value. 
+            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \see drawLine for more information */ 
+        inline virtual void set_drawLine(bool __value)
+        {
+            this->drawLine = __value;
+        } 
+        /*! \brief returns the property drawLine. 
+            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \see drawLine for more information */ 
+        inline virtual bool get_drawLine() const  
+        {
+            return this->drawLine; 
+        }
 
         /** \brief sets the property plotFunction to the specified \a __value.
          *
@@ -145,12 +223,28 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
          *  \details Description of the parameter plotFunction is: <CENTER>\copybrief plotFunction.</CENTER>
          * \see plotFunction for more information */
         virtual void set_plotFunction (const jkqtpSimplePlotFunctionType & __value);
-        /** \brief returns the property plotFunction. \see plotFunction for more information */ \
+        /*! \brief returns the property plotFunction. \see plotFunction for more information */ \
         virtual jkqtpPlotFunctionType get_plotFunction () const;
-        /** \brief returns the property simplePlotFunction. \see simplePlotFunction for more information */ \
+        /*! \brief returns the property simplePlotFunction. \see simplePlotFunction for more information */ \
         virtual jkqtpSimplePlotFunctionType get_simplePlotFunction () const;
 
-        JKQTPGET_SET_MACRO_I(void*, params, clearData())
+        /*! \brief sets the property params to the specified \a __value. 
+            \details Description of the parameter params is: <CENTER>\copybrief params.</CENTER> 
+            \see params for more information */ 
+        inline virtual void set_params(void* __value)
+        {
+            if (this->params != __value) { 
+                this->params = __value; 
+                clearData(); 
+            } 
+        } 
+        /*! \brief returns the property params. 
+            \details Description of the parameter params is: <CENTER>\copybrief params.</CENTER> 
+            \see params for more information */ 
+        inline virtual void* get_params() const  
+        {
+            return this->params; 
+        }
         /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void set_params(const QVector<double>& params);
         /** \brief sets the params from a copy of the given array of length \a N */
@@ -170,14 +264,118 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         QVector<double> get_internalParams() const;
         /** \brief returns the currently set internal parameter vector */
         QVector<double> get_internalErrorParams() const;
-        JKQTPGET_SET_MACRO(unsigned int, minSamples)
-        JKQTPGET_SET_MACRO(unsigned int, maxRefinementDegree)
-        JKQTPGET_SET_MACRO(double, slopeTolerance)
-        JKQTPGET_SET_MACRO(double, minPixelPerSample)
-        JKQTPGET_SET_MACRO(bool, plotRefinement)
-        JKQTPGET_SET_MACRO(bool, displaySamplePoints)
-        JKQTPGET_SET_MACRO(bool, drawErrorPolygons)
-        JKQTPGET_SET_MACRO(bool, drawErrorLines)
+        /*! \brief sets the property minSamples to the specified \a __value. 
+            \details Description of the parameter minSamples is: <CENTER>\copybrief minSamples.</CENTER> 
+            \see minSamples for more information */ 
+        inline virtual void set_minSamples(const unsigned int & __value)  
+        {
+            this->minSamples = __value;
+        } 
+        /*! \brief returns the property minSamples. 
+            \details Description of the parameter minSamples is: <CENTER>\copybrief minSamples.</CENTER> 
+            \see minSamples for more information */ 
+        inline virtual unsigned int get_minSamples() const  
+        {
+            return this->minSamples; 
+        }
+        /*! \brief sets the property maxRefinementDegree to the specified \a __value. 
+            \details Description of the parameter maxRefinementDegree is: <CENTER>\copybrief maxRefinementDegree.</CENTER> 
+            \see maxRefinementDegree for more information */ 
+        inline virtual void set_maxRefinementDegree(const unsigned int & __value)  
+        {
+            this->maxRefinementDegree = __value;
+        } 
+        /*! \brief returns the property maxRefinementDegree. 
+            \details Description of the parameter maxRefinementDegree is: <CENTER>\copybrief maxRefinementDegree.</CENTER> 
+            \see maxRefinementDegree for more information */ 
+        inline virtual unsigned int get_maxRefinementDegree() const  
+        {
+            return this->maxRefinementDegree; 
+        }
+        /*! \brief sets the property slopeTolerance to the specified \a __value. 
+            \details Description of the parameter slopeTolerance is: <CENTER>\copybrief slopeTolerance.</CENTER> 
+            \see slopeTolerance for more information */ 
+        inline virtual void set_slopeTolerance(double __value)
+        {
+            this->slopeTolerance = __value;
+        } 
+        /*! \brief returns the property slopeTolerance. 
+            \details Description of the parameter slopeTolerance is: <CENTER>\copybrief slopeTolerance.</CENTER> 
+            \see slopeTolerance for more information */ 
+        inline virtual double get_slopeTolerance() const  
+        {
+            return this->slopeTolerance; 
+        }
+        /*! \brief sets the property minPixelPerSample to the specified \a __value. 
+            \details Description of the parameter minPixelPerSample is: <CENTER>\copybrief minPixelPerSample.</CENTER> 
+            \see minPixelPerSample for more information */ 
+        inline virtual void set_minPixelPerSample(double __value)
+        {
+            this->minPixelPerSample = __value;
+        } 
+        /*! \brief returns the property minPixelPerSample. 
+            \details Description of the parameter minPixelPerSample is: <CENTER>\copybrief minPixelPerSample.</CENTER> 
+            \see minPixelPerSample for more information */ 
+        inline virtual double get_minPixelPerSample() const  
+        {
+            return this->minPixelPerSample; 
+        }
+        /*! \brief sets the property plotRefinement to the specified \a __value. 
+            \details Description of the parameter plotRefinement is: <CENTER>\copybrief plotRefinement.</CENTER> 
+            \see plotRefinement for more information */ 
+        inline virtual void set_plotRefinement(bool __value)
+        {
+            this->plotRefinement = __value;
+        } 
+        /*! \brief returns the property plotRefinement. 
+            \details Description of the parameter plotRefinement is: <CENTER>\copybrief plotRefinement.</CENTER> 
+            \see plotRefinement for more information */ 
+        inline virtual bool get_plotRefinement() const  
+        {
+            return this->plotRefinement; 
+        }
+        /*! \brief sets the property displaySamplePoints to the specified \a __value. 
+            \details Description of the parameter displaySamplePoints is: <CENTER>\copybrief displaySamplePoints.</CENTER> 
+            \see displaySamplePoints for more information */ 
+        inline virtual void set_displaySamplePoints(bool __value)
+        {
+            this->displaySamplePoints = __value;
+        } 
+        /*! \brief returns the property displaySamplePoints. 
+            \details Description of the parameter displaySamplePoints is: <CENTER>\copybrief displaySamplePoints.</CENTER> 
+            \see displaySamplePoints for more information */ 
+        inline virtual bool get_displaySamplePoints() const  
+        {
+            return this->displaySamplePoints; 
+        }
+        /*! \brief sets the property drawErrorPolygons to the specified \a __value. 
+            \details Description of the parameter drawErrorPolygons is: <CENTER>\copybrief drawErrorPolygons.</CENTER> 
+            \see drawErrorPolygons for more information */ 
+        inline virtual void set_drawErrorPolygons(bool __value)
+        {
+            this->drawErrorPolygons = __value;
+        } 
+        /*! \brief returns the property drawErrorPolygons. 
+            \details Description of the parameter drawErrorPolygons is: <CENTER>\copybrief drawErrorPolygons.</CENTER> 
+            \see drawErrorPolygons for more information */ 
+        inline virtual bool get_drawErrorPolygons() const  
+        {
+            return this->drawErrorPolygons; 
+        }
+        /*! \brief sets the property drawErrorLines to the specified \a __value. 
+            \details Description of the parameter drawErrorLines is: <CENTER>\copybrief drawErrorLines.</CENTER> 
+            \see drawErrorLines for more information */ 
+        inline virtual void set_drawErrorLines(bool __value)
+        {
+            this->drawErrorLines = __value;
+        } 
+        /*! \brief returns the property drawErrorLines. 
+            \details Description of the parameter drawErrorLines is: <CENTER>\copybrief drawErrorLines.</CENTER> 
+            \see drawErrorLines for more information */ 
+        inline virtual bool get_drawErrorLines() const  
+        {
+            return this->drawErrorLines; 
+        }
         /** \brief sets the property errorPlotFunction to the specified \a __value.
          *
          *  \details Description of the parameter varname is: <CENTER>\copybrief errorPlotFunction.</CENTER>
@@ -188,7 +386,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
          *  \details Description of the parameter varname is: <CENTER>\copybrief errorPlotFunction.</CENTER>
          * \see errorPlotFunction for more information */
         virtual void set_errorPlotFunction (const jkqtpPlotFunctionType & __value);
-        /** \brief returns the property varname. \see varname for more information */ \
+        /*! \brief returns the property varname. \see varname for more information */ \
         virtual jkqtpPlotFunctionType get_errorPlotFunction () const;
         /** \brief sets the property errorPlotFunction to the specified \a __value.
          *
@@ -200,22 +398,132 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
          *  \details Description of the parameter varname is: <CENTER>\copybrief errorPlotFunction.</CENTER>
          * \see errorPlotFunction for more information */
         virtual void set_errorPlotFunction (const jkqtpSimplePlotFunctionType & __value);
-        /** \brief returns the property varname. \see varname for more information */ \
+        /*! \brief returns the property varname. \see varname for more information */ \
         virtual jkqtpSimplePlotFunctionType get_errorSimplePlotFunction () const;
-        JKQTPGET_SET_MACRO(void*, errorParams)
+        /*! \brief sets the property errorParams to the specified \a __value. 
+            \details Description of the parameter errorParams is: <CENTER>\copybrief errorParams.</CENTER> 
+            \see errorParams for more information */ 
+        inline virtual void set_errorParams(void* __value)
+        {
+            this->errorParams = __value;
+        } 
+        /*! \brief returns the property errorParams. 
+            \details Description of the parameter errorParams is: <CENTER>\copybrief errorParams.</CENTER> 
+            \see errorParams for more information */ 
+        inline virtual void* get_errorParams() const  
+        {
+            return this->errorParams; 
+        }
         /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void set_errorParams(const QVector<double>& errorParams);
 
-        JKQTPGET_SET_MACRO(int, parameterColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, parameterColumn)
-        JKQTPGET_SET_MACRO(int, errorParameterColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, errorParameterColumn)
+        /*! \brief sets the property parameterColumn to the specified \a __value. 
+            \details Description of the parameter parameterColumn is: <CENTER>\copybrief parameterColumn.</CENTER> 
+            \see parameterColumn for more information */ 
+        inline virtual void set_parameterColumn(int __value)
+        {
+            this->parameterColumn = __value;
+        } 
+        /*! \brief returns the property parameterColumn. 
+            \details Description of the parameter parameterColumn is: <CENTER>\copybrief parameterColumn.</CENTER> 
+            \see parameterColumn for more information */ 
+        inline virtual int get_parameterColumn() const  
+        {
+            return this->parameterColumn; 
+        }
+        /*! \brief sets the property parameterColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter parameterColumn is:  <CENTER>\copybrief parameterColumn.</CENTER> 
+        	\see parameterColumn for more information */ 
+        inline virtual void set_parameterColumn (size_t __value) { this->parameterColumn = static_cast<int>(__value); }
+        /*! \brief sets the property errorParameterColumn to the specified \a __value. 
+            \details Description of the parameter errorParameterColumn is: <CENTER>\copybrief errorParameterColumn.</CENTER> 
+            \see errorParameterColumn for more information */ 
+        inline virtual void set_errorParameterColumn(int __value)
+        {
+            this->errorParameterColumn = __value;
+        } 
+        /*! \brief returns the property errorParameterColumn. 
+            \details Description of the parameter errorParameterColumn is: <CENTER>\copybrief errorParameterColumn.</CENTER> 
+            \see errorParameterColumn for more information */ 
+        inline virtual int get_errorParameterColumn() const  
+        {
+            return this->errorParameterColumn; 
+        }
+        /*! \brief sets the property errorParameterColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter errorParameterColumn is:  <CENTER>\copybrief errorParameterColumn.</CENTER> 
+        	\see errorParameterColumn for more information */ 
+        inline virtual void set_errorParameterColumn (size_t __value) { this->errorParameterColumn = static_cast<int>(__value); }
 
-        JKQTPGET_SET_MACRO(QColor, errorColor)
-        JKQTPGET_SET_MACRO(QColor, errorFillColor)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, errorFillStyle)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, errorStyle)
-        JKQTPGET_SET_MACRO(double, errorLineWidth)
+        /*! \brief sets the property errorColor to the specified \a __value. 
+            \details Description of the parameter errorColor is: <CENTER>\copybrief errorColor.</CENTER> 
+            \see errorColor for more information */ 
+        inline virtual void set_errorColor(const QColor & __value)  
+        {
+            this->errorColor = __value;
+        } 
+        /*! \brief returns the property errorColor. 
+            \details Description of the parameter errorColor is: <CENTER>\copybrief errorColor.</CENTER> 
+            \see errorColor for more information */ 
+        inline virtual QColor get_errorColor() const  
+        {
+            return this->errorColor; 
+        }
+        /*! \brief sets the property errorFillColor to the specified \a __value. 
+            \details Description of the parameter errorFillColor is: <CENTER>\copybrief errorFillColor.</CENTER> 
+            \see errorFillColor for more information */ 
+        inline virtual void set_errorFillColor(const QColor & __value)  
+        {
+            this->errorFillColor = __value;
+        } 
+        /*! \brief returns the property errorFillColor. 
+            \details Description of the parameter errorFillColor is: <CENTER>\copybrief errorFillColor.</CENTER> 
+            \see errorFillColor for more information */ 
+        inline virtual QColor get_errorFillColor() const  
+        {
+            return this->errorFillColor; 
+        }
+        /*! \brief sets the property errorFillStyle to the specified \a __value. 
+            \details Description of the parameter errorFillStyle is: <CENTER>\copybrief errorFillStyle.</CENTER> 
+            \see errorFillStyle for more information */ 
+        inline virtual void set_errorFillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->errorFillStyle = __value;
+        } 
+        /*! \brief returns the property errorFillStyle. 
+            \details Description of the parameter errorFillStyle is: <CENTER>\copybrief errorFillStyle.</CENTER> 
+            \see errorFillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_errorFillStyle() const  
+        {
+            return this->errorFillStyle; 
+        }
+        /*! \brief sets the property errorStyle to the specified \a __value. 
+            \details Description of the parameter errorStyle is: <CENTER>\copybrief errorStyle.</CENTER> 
+            \see errorStyle for more information */ 
+        inline virtual void set_errorStyle(const Qt::PenStyle & __value)  
+        {
+            this->errorStyle = __value;
+        } 
+        /*! \brief returns the property errorStyle. 
+            \details Description of the parameter errorStyle is: <CENTER>\copybrief errorStyle.</CENTER> 
+            \see errorStyle for more information */ 
+        inline virtual Qt::PenStyle get_errorStyle() const  
+        {
+            return this->errorStyle; 
+        }
+        /*! \brief sets the property errorLineWidth to the specified \a __value. 
+            \details Description of the parameter errorLineWidth is: <CENTER>\copybrief errorLineWidth.</CENTER> 
+            \see errorLineWidth for more information */ 
+        inline virtual void set_errorLineWidth(double __value)
+        {
+            this->errorLineWidth = __value;
+        } 
+        /*! \brief returns the property errorLineWidth. 
+            \details Description of the parameter errorLineWidth is: <CENTER>\copybrief errorLineWidth.</CENTER> 
+            \see errorLineWidth for more information */ 
+        inline virtual double get_errorLineWidth() const  
+        {
+            return this->errorLineWidth; 
+        }
 
         /** \copydoc JKQTPgraph::usesColumn() */
         virtual bool usesColumn(int c) const override;

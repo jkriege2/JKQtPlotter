@@ -66,9 +66,48 @@ class LIB_EXPORT JKQTPgeoBaseLine: public JKQTPplotObject {
         explicit JKQTPgeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQtPlotter* parent);
 
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, style)
-        JKQTPGET_SET_MACRO(double, lineWidth)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property style to the specified \a __value. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual void set_style(const Qt::PenStyle & __value)  
+        {
+            this->style = __value;
+        } 
+        /*! \brief returns the property style. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual Qt::PenStyle get_style() const  
+        {
+            return this->style; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)  
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
 
         /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
         virtual void setAlpha(float alpha);
@@ -139,8 +178,34 @@ class LIB_EXPORT JKQTPgeoBaseFilled: public JKQTPgeoBaseLine {
          */
         JKQTPgeoBaseFilled(QColor color, QColor fillColor, JKQtPlotter* parent);
 
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, fillStyle)
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property fillStyle to the specified \a __value. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->fillStyle = __value;
+        } 
+        /*! \brief returns the property fillStyle. 
+            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \see fillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_fillStyle() const  
+        {
+            return this->fillStyle; 
+        }
 
         /** \brief sets the alpha-channel of the \a color and \a fillColor (i.e. its transparency) to the same value */
         virtual void setAlpha(float alpha) override;
@@ -192,13 +257,104 @@ class LIB_EXPORT JKQTPgeoSymbol: public JKQTPplotObject {
          */
         JKQTPgeoSymbol(JKQtPlotter* parent, double x, double y, JKQTPgraphSymbols symbol=JKQTPcross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QColor, fillColor)
-        JKQTPGET_SET_MACRO(JKQTPgraphSymbols, symbol)
-        JKQTPGET_SET_MACRO(double, symbolSize)
-        JKQTPGET_SET_MACRO(double, symbolWidth)
-        JKQTPGET_SET_MACRO(double, x)
-        JKQTPGET_SET_MACRO(double, y)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property fillColor to the specified \a __value. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual void set_fillColor(const QColor & __value)  
+        {
+            this->fillColor = __value;
+        } 
+        /*! \brief returns the property fillColor. 
+            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \see fillColor for more information */ 
+        inline virtual QColor get_fillColor() const  
+        {
+            return this->fillColor; 
+        }
+        /*! \brief sets the property symbol to the specified \a __value. 
+            \details Description of the parameter symbol is: <CENTER>\copybrief symbol.</CENTER> 
+            \see symbol for more information */ 
+        inline virtual void set_symbol(const JKQTPgraphSymbols & __value)  
+        {
+            this->symbol = __value;
+        } 
+        /*! \brief returns the property symbol. 
+            \details Description of the parameter symbol is: <CENTER>\copybrief symbol.</CENTER> 
+            \see symbol for more information */ 
+        inline virtual JKQTPgraphSymbols get_symbol() const  
+        {
+            return this->symbol; 
+        }
+        /*! \brief sets the property symbolSize to the specified \a __value. 
+            \details Description of the parameter symbolSize is: <CENTER>\copybrief symbolSize.</CENTER> 
+            \see symbolSize for more information */ 
+        inline virtual void set_symbolSize(double __value)  
+        {
+            this->symbolSize = __value;
+        } 
+        /*! \brief returns the property symbolSize. 
+            \details Description of the parameter symbolSize is: <CENTER>\copybrief symbolSize.</CENTER> 
+            \see symbolSize for more information */ 
+        inline virtual double get_symbolSize() const  
+        {
+            return this->symbolSize; 
+        }
+        /*! \brief sets the property symbolWidth to the specified \a __value. 
+            \details Description of the parameter symbolWidth is: <CENTER>\copybrief symbolWidth.</CENTER> 
+            \see symbolWidth for more information */ 
+        inline virtual void set_symbolWidth(double __value)  
+        {
+            this->symbolWidth = __value;
+        } 
+        /*! \brief returns the property symbolWidth. 
+            \details Description of the parameter symbolWidth is: <CENTER>\copybrief symbolWidth.</CENTER> 
+            \see symbolWidth for more information */ 
+        inline virtual double get_symbolWidth() const  
+        {
+            return this->symbolWidth; 
+        }
+        /*! \brief sets the property x to the specified \a __value. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual void set_x(double __value)  
+        {
+            this->x = __value;
+        } 
+        /*! \brief returns the property x. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual double get_x() const  
+        {
+            return this->x; 
+        }
+        /*! \brief sets the property y to the specified \a __value. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual void set_y(double __value)  
+        {
+            this->y = __value;
+        } 
+        /*! \brief returns the property y. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual double get_y() const  
+        {
+            return this->y; 
+        }
 
         /** \copydoc JKQTPgraph::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
@@ -259,11 +415,76 @@ class LIB_EXPORT JKQTPgeoText: public JKQTPplotObject {
          */
         JKQTPgeoText(JKQtPlotter* parent, double x, double y, QString text, double fontSize=10, QColor color=QColor("black"));
 
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(QString, text)
-        JKQTPGET_SET_MACRO(double, fontSize)
-        JKQTPGET_SET_MACRO(double, x)
-        JKQTPGET_SET_MACRO(double, y)
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property text to the specified \a __value. 
+            \details Description of the parameter text is: <CENTER>\copybrief text.</CENTER> 
+            \see text for more information */ 
+        inline virtual void set_text(const QString & __value)  
+        {
+            this->text = __value;
+        } 
+        /*! \brief returns the property text. 
+            \details Description of the parameter text is: <CENTER>\copybrief text.</CENTER> 
+            \see text for more information */ 
+        inline virtual QString get_text() const  
+        {
+            return this->text; 
+        }
+        /*! \brief sets the property fontSize to the specified \a __value. 
+            \details Description of the parameter fontSize is: <CENTER>\copybrief fontSize.</CENTER> 
+            \see fontSize for more information */ 
+        inline virtual void set_fontSize(double __value)  
+        {
+            this->fontSize = __value;
+        } 
+        /*! \brief returns the property fontSize. 
+            \details Description of the parameter fontSize is: <CENTER>\copybrief fontSize.</CENTER> 
+            \see fontSize for more information */ 
+        inline virtual double get_fontSize() const  
+        {
+            return this->fontSize; 
+        }
+        /*! \brief sets the property x to the specified \a __value. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual void set_x(double __value)  
+        {
+            this->x = __value;
+        } 
+        /*! \brief returns the property x. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual double get_x() const  
+        {
+            return this->x; 
+        }
+        /*! \brief sets the property y to the specified \a __value. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual void set_y(double __value)  
+        {
+            this->y = __value;
+        } 
+        /*! \brief returns the property y. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual double get_y() const  
+        {
+            return this->y; 
+        }
 
         /** \copydoc JKQTPplotObject::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
@@ -335,10 +556,62 @@ class LIB_EXPORT JKQTPgeoLine: public JKQTPgeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(double, x1)
-        JKQTPGET_SET_MACRO(double, y1)
-        JKQTPGET_SET_MACRO(double, x2)
-        JKQTPGET_SET_MACRO(double, y2)
+        /*! \brief sets the property x1 to the specified \a __value. 
+            \details Description of the parameter x1 is: <CENTER>\copybrief x1.</CENTER> 
+            \see x1 for more information */ 
+        inline virtual void set_x1(double __value)  
+        {
+            this->x1 = __value;
+        } 
+        /*! \brief returns the property x1. 
+            \details Description of the parameter x1 is: <CENTER>\copybrief x1.</CENTER> 
+            \see x1 for more information */ 
+        inline virtual double get_x1() const  
+        {
+            return this->x1; 
+        }
+        /*! \brief sets the property y1 to the specified \a __value. 
+            \details Description of the parameter y1 is: <CENTER>\copybrief y1.</CENTER> 
+            \see y1 for more information */ 
+        inline virtual void set_y1(double __value)  
+        {
+            this->y1 = __value;
+        } 
+        /*! \brief returns the property y1. 
+            \details Description of the parameter y1 is: <CENTER>\copybrief y1.</CENTER> 
+            \see y1 for more information */ 
+        inline virtual double get_y1() const  
+        {
+            return this->y1; 
+        }
+        /*! \brief sets the property x2 to the specified \a __value. 
+            \details Description of the parameter x2 is: <CENTER>\copybrief x2.</CENTER> 
+            \see x2 for more information */ 
+        inline virtual void set_x2(double __value)  
+        {
+            this->x2 = __value;
+        } 
+        /*! \brief returns the property x2. 
+            \details Description of the parameter x2 is: <CENTER>\copybrief x2.</CENTER> 
+            \see x2 for more information */ 
+        inline virtual double get_x2() const  
+        {
+            return this->x2; 
+        }
+        /*! \brief sets the property y2 to the specified \a __value. 
+            \details Description of the parameter y2 is: <CENTER>\copybrief y2.</CENTER> 
+            \see y2 for more information */ 
+        inline virtual void set_y2(double __value)  
+        {
+            this->y2 = __value;
+        } 
+        /*! \brief returns the property y2. 
+            \details Description of the parameter y2 is: <CENTER>\copybrief y2.</CENTER> 
+            \see y2 for more information */ 
+        inline virtual double get_y2() const  
+        {
+            return this->y2; 
+        }
     protected:
         double x1, y1, x2, y2;
 };
@@ -391,11 +664,76 @@ class LIB_EXPORT JKQTPgeoInfiniteLine: public JKQTPgeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(double, x)
-        JKQTPGET_SET_MACRO(double, y)
-        JKQTPGET_SET_MACRO(double, dx)
-        JKQTPGET_SET_MACRO(double, dy)
-        JKQTPGET_SET_MACRO(bool, two_sided)
+        /*! \brief sets the property x to the specified \a __value. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual void set_x(double __value)  
+        {
+            this->x = __value;
+        } 
+        /*! \brief returns the property x. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual double get_x() const  
+        {
+            return this->x; 
+        }
+        /*! \brief sets the property y to the specified \a __value. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual void set_y(double __value)  
+        {
+            this->y = __value;
+        } 
+        /*! \brief returns the property y. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual double get_y() const  
+        {
+            return this->y; 
+        }
+        /*! \brief sets the property dx to the specified \a __value. 
+            \details Description of the parameter dx is: <CENTER>\copybrief dx.</CENTER> 
+            \see dx for more information */ 
+        inline virtual void set_dx(double __value)  
+        {
+            this->dx = __value;
+        } 
+        /*! \brief returns the property dx. 
+            \details Description of the parameter dx is: <CENTER>\copybrief dx.</CENTER> 
+            \see dx for more information */ 
+        inline virtual double get_dx() const  
+        {
+            return this->dx; 
+        }
+        /*! \brief sets the property dy to the specified \a __value. 
+            \details Description of the parameter dy is: <CENTER>\copybrief dy.</CENTER> 
+            \see dy for more information */ 
+        inline virtual void set_dy(double __value)  
+        {
+            this->dy = __value;
+        } 
+        /*! \brief returns the property dy. 
+            \details Description of the parameter dy is: <CENTER>\copybrief dy.</CENTER> 
+            \see dy for more information */ 
+        inline virtual double get_dy() const  
+        {
+            return this->dy; 
+        }
+        /*! \brief sets the property two_sided to the specified \a __value. 
+            \details Description of the parameter two_sided is: <CENTER>\copybrief two_sided.</CENTER> 
+            \see two_sided for more information */ 
+        inline virtual void set_two_sided(bool __value)  
+        {
+            this->two_sided = __value;
+        } 
+        /*! \brief returns the property two_sided. 
+            \details Description of the parameter two_sided is: <CENTER>\copybrief two_sided.</CENTER> 
+            \see two_sided for more information */ 
+        inline virtual bool get_two_sided() const  
+        {
+            return this->two_sided; 
+        }
     protected:
         double x, y, dx, dy;
         /** \brief indicates whether the line ends at the given point \f$ (x,y) \f$ (false, default),
@@ -459,7 +797,20 @@ class LIB_EXPORT JKQTPgeoPolyLines: public JKQTPgeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(QVector<QPointF>, points)
+        /*! \brief sets the property points to the specified \a __value. 
+            \details Description of the parameter points is: <CENTER>\copybrief points.</CENTER> 
+            \see points for more information */ 
+        inline virtual void set_points(const QVector<QPointF> & __value)  
+        {
+            this->points = __value;
+        } 
+        /*! \brief returns the property points. 
+            \details Description of the parameter points is: <CENTER>\copybrief points.</CENTER> 
+            \see points for more information */ 
+        inline virtual QVector<QPointF> get_points() const  
+        {
+            return this->points; 
+        }
 
         /** \brief append a point to the polygon */
         inline void appendPoint(const QPointF& p) {
@@ -575,11 +926,76 @@ class LIB_EXPORT JKQTPgeoRectangle: public JKQTPgeoBaseFilled {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(double, x)
-        JKQTPGET_SET_MACRO(double, y)
-        JKQTPGET_SET_MACRO(double, width)
-        JKQTPGET_SET_MACRO(double, height)
-        JKQTPGET_SET_MACRO(double, angle)
+        /*! \brief sets the property x to the specified \a __value. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual void set_x(double __value)  
+        {
+            this->x = __value;
+        } 
+        /*! \brief returns the property x. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual double get_x() const  
+        {
+            return this->x; 
+        }
+        /*! \brief sets the property y to the specified \a __value. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual void set_y(double __value)  
+        {
+            this->y = __value;
+        } 
+        /*! \brief returns the property y. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual double get_y() const  
+        {
+            return this->y; 
+        }
+        /*! \brief sets the property width to the specified \a __value. 
+            \details Description of the parameter width is: <CENTER>\copybrief width.</CENTER> 
+            \see width for more information */ 
+        inline virtual void set_width(double __value)  
+        {
+            this->width = __value;
+        } 
+        /*! \brief returns the property width. 
+            \details Description of the parameter width is: <CENTER>\copybrief width.</CENTER> 
+            \see width for more information */ 
+        inline virtual double get_width() const  
+        {
+            return this->width; 
+        }
+        /*! \brief sets the property height to the specified \a __value. 
+            \details Description of the parameter height is: <CENTER>\copybrief height.</CENTER> 
+            \see height for more information */ 
+        inline virtual void set_height(double __value)  
+        {
+            this->height = __value;
+        } 
+        /*! \brief returns the property height. 
+            \details Description of the parameter height is: <CENTER>\copybrief height.</CENTER> 
+            \see height for more information */ 
+        inline virtual double get_height() const  
+        {
+            return this->height; 
+        }
+        /*! \brief sets the property angle to the specified \a __value. 
+            \details Description of the parameter angle is: <CENTER>\copybrief angle.</CENTER> 
+            \see angle for more information */ 
+        inline virtual void set_angle(double __value)  
+        {
+            this->angle = __value;
+        } 
+        /*! \brief returns the property angle. 
+            \details Description of the parameter angle is: <CENTER>\copybrief angle.</CENTER> 
+            \see angle for more information */ 
+        inline virtual double get_angle() const  
+        {
+            return this->angle; 
+        }
 
         void set_bottomleftrectangle(double x, double y, double width, double height);
 protected:
@@ -657,7 +1073,20 @@ class LIB_EXPORT JKQTPgeoPolygon: public JKQTPgeoBaseFilled {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(QVector<QPointF>, points)
+        /*! \brief sets the property points to the specified \a __value. 
+            \details Description of the parameter points is: <CENTER>\copybrief points.</CENTER> 
+            \see points for more information */ 
+        inline virtual void set_points(const QVector<QPointF> & __value)  
+        {
+            this->points = __value;
+        } 
+        /*! \brief returns the property points. 
+            \details Description of the parameter points is: <CENTER>\copybrief points.</CENTER> 
+            \see points for more information */ 
+        inline virtual QVector<QPointF> get_points() const  
+        {
+            return this->points; 
+        }
 
         /** \brief append a point to the polygon */
         inline void appendPoint(const QPointF& p) {
@@ -772,7 +1201,20 @@ class LIB_EXPORT JKQTPgeoEllipse: public JKQTPgeoRectangle {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(unsigned int, controlPoints)
+        /*! \brief sets the property controlPoints to the specified \a __value. 
+            \details Description of the parameter controlPoints is: <CENTER>\copybrief controlPoints.</CENTER> 
+            \see controlPoints for more information */ 
+        inline virtual void set_controlPoints(const unsigned int & __value)  
+        {
+            this->controlPoints = __value;
+        } 
+        /*! \brief returns the property controlPoints. 
+            \details Description of the parameter controlPoints is: <CENTER>\copybrief controlPoints.</CENTER> 
+            \see controlPoints for more information */ 
+        inline virtual unsigned int get_controlPoints() const  
+        {
+            return this->controlPoints; 
+        }
     protected:
         /** \brief number of steps/control points to draw the ellipse */
         unsigned int controlPoints;
@@ -823,14 +1265,118 @@ class LIB_EXPORT JKQTPgeoArc: public JKQTPgeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(unsigned int, controlPoints)
-        JKQTPGET_SET_MACRO(double, angleStart)
-        JKQTPGET_SET_MACRO(double, angleStop)
-        JKQTPGET_SET_MACRO(double, x)
-        JKQTPGET_SET_MACRO(double, y)
-        JKQTPGET_SET_MACRO(double, width)
-        JKQTPGET_SET_MACRO(double, height)
-        JKQTPGET_SET_MACRO(double, angle)
+        /*! \brief sets the property controlPoints to the specified \a __value. 
+            \details Description of the parameter controlPoints is: <CENTER>\copybrief controlPoints.</CENTER> 
+            \see controlPoints for more information */ 
+        inline virtual void set_controlPoints(const unsigned int & __value)  
+        {
+            this->controlPoints = __value;
+        } 
+        /*! \brief returns the property controlPoints. 
+            \details Description of the parameter controlPoints is: <CENTER>\copybrief controlPoints.</CENTER> 
+            \see controlPoints for more information */ 
+        inline virtual unsigned int get_controlPoints() const  
+        {
+            return this->controlPoints; 
+        }
+        /*! \brief sets the property angleStart to the specified \a __value. 
+            \details Description of the parameter angleStart is: <CENTER>\copybrief angleStart.</CENTER> 
+            \see angleStart for more information */ 
+        inline virtual void set_angleStart(double __value)  
+        {
+            this->angleStart = __value;
+        } 
+        /*! \brief returns the property angleStart. 
+            \details Description of the parameter angleStart is: <CENTER>\copybrief angleStart.</CENTER> 
+            \see angleStart for more information */ 
+        inline virtual double get_angleStart() const  
+        {
+            return this->angleStart; 
+        }
+        /*! \brief sets the property angleStop to the specified \a __value. 
+            \details Description of the parameter angleStop is: <CENTER>\copybrief angleStop.</CENTER> 
+            \see angleStop for more information */ 
+        inline virtual void set_angleStop(double __value)  
+        {
+            this->angleStop = __value;
+        } 
+        /*! \brief returns the property angleStop. 
+            \details Description of the parameter angleStop is: <CENTER>\copybrief angleStop.</CENTER> 
+            \see angleStop for more information */ 
+        inline virtual double get_angleStop() const  
+        {
+            return this->angleStop; 
+        }
+        /*! \brief sets the property x to the specified \a __value. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual void set_x(double __value)  
+        {
+            this->x = __value;
+        } 
+        /*! \brief returns the property x. 
+            \details Description of the parameter x is: <CENTER>\copybrief x.</CENTER> 
+            \see x for more information */ 
+        inline virtual double get_x() const  
+        {
+            return this->x; 
+        }
+        /*! \brief sets the property y to the specified \a __value. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual void set_y(double __value)  
+        {
+            this->y = __value;
+        } 
+        /*! \brief returns the property y. 
+            \details Description of the parameter y is: <CENTER>\copybrief y.</CENTER> 
+            \see y for more information */ 
+        inline virtual double get_y() const  
+        {
+            return this->y; 
+        }
+        /*! \brief sets the property width to the specified \a __value. 
+            \details Description of the parameter width is: <CENTER>\copybrief width.</CENTER> 
+            \see width for more information */ 
+        inline virtual void set_width(double __value)  
+        {
+            this->width = __value;
+        } 
+        /*! \brief returns the property width. 
+            \details Description of the parameter width is: <CENTER>\copybrief width.</CENTER> 
+            \see width for more information */ 
+        inline virtual double get_width() const  
+        {
+            return this->width; 
+        }
+        /*! \brief sets the property height to the specified \a __value. 
+            \details Description of the parameter height is: <CENTER>\copybrief height.</CENTER> 
+            \see height for more information */ 
+        inline virtual void set_height(double __value)  
+        {
+            this->height = __value;
+        } 
+        /*! \brief returns the property height. 
+            \details Description of the parameter height is: <CENTER>\copybrief height.</CENTER> 
+            \see height for more information */ 
+        inline virtual double get_height() const  
+        {
+            return this->height; 
+        }
+        /*! \brief sets the property angle to the specified \a __value. 
+            \details Description of the parameter angle is: <CENTER>\copybrief angle.</CENTER> 
+            \see angle for more information */ 
+        inline virtual void set_angle(double __value)  
+        {
+            this->angle = __value;
+        } 
+        /*! \brief returns the property angle. 
+            \details Description of the parameter angle is: <CENTER>\copybrief angle.</CENTER> 
+            \see angle for more information */ 
+        inline virtual double get_angle() const  
+        {
+            return this->angle; 
+        }
     protected:
         double x,y,width,height;
         /** \brief rotation angle of rectangle */
@@ -902,8 +1448,34 @@ class LIB_EXPORT JKQTPgeoPie: public JKQTPgeoEllipse {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        JKQTPGET_SET_MACRO(double, angleStart)
-        JKQTPGET_SET_MACRO(double, angleStop)
+        /*! \brief sets the property angleStart to the specified \a __value. 
+            \details Description of the parameter angleStart is: <CENTER>\copybrief angleStart.</CENTER> 
+            \see angleStart for more information */ 
+        inline virtual void set_angleStart(double __value)  
+        {
+            this->angleStart = __value;
+        } 
+        /*! \brief returns the property angleStart. 
+            \details Description of the parameter angleStart is: <CENTER>\copybrief angleStart.</CENTER> 
+            \see angleStart for more information */ 
+        inline virtual double get_angleStart() const  
+        {
+            return this->angleStart; 
+        }
+        /*! \brief sets the property angleStop to the specified \a __value. 
+            \details Description of the parameter angleStop is: <CENTER>\copybrief angleStop.</CENTER> 
+            \see angleStop for more information */ 
+        inline virtual void set_angleStop(double __value)  
+        {
+            this->angleStop = __value;
+        } 
+        /*! \brief returns the property angleStop. 
+            \details Description of the parameter angleStop is: <CENTER>\copybrief angleStop.</CENTER> 
+            \see angleStop for more information */ 
+        inline virtual double get_angleStop() const  
+        {
+            return this->angleStop; 
+        }
     protected:
          /** \brief if we only draw an arc, this is the starting angle */
         double angleStart;

@@ -258,7 +258,7 @@ void JKQTPImage::setParent(JKQtBasePlotter *parent)
     actCopyImage->setEnabled(parent);
 }
 
-void JKQTPImage::set_title(const typedef_set_title &title)
+void JKQTPImage::set_title(const QString &title)
 {
     JKQTPImageBase::set_title(title);
     QString t=title;
@@ -768,7 +768,7 @@ void JKQTPMathImage::setParent(JKQtBasePlotter* parent) {
     actCopyPalette->setEnabled(parent);
 }
 
-void JKQTPMathImage::set_title(const JKQTPgraph::typedef_set_title &title)
+void JKQTPMathImage::set_title(const QString &title)
 {
     JKQTPMathImageBase::set_title(title);
     QString t=title;
@@ -2107,7 +2107,7 @@ void JKQTPRGBMathImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rec
     painter.drawImage(rect, QPixmap(":/JKQTPlotter/jkqtp_plot_rgbimage.png").toImage());
 }
 
-void JKQTPRGBMathImage::set_title(const JKQTPgraph::typedef_set_title &title)
+void JKQTPRGBMathImage::set_title(const QString &title)
 {
     JKQTPImageBase::set_title(title);
     QString t=title;
@@ -2590,7 +2590,7 @@ QVector<double> JKQTPOverlayImage::getDataAsDoubleVector() const
 
 }
 
-void JKQTPOverlayImage::set_title(const JKQTPgraph::typedef_set_title &title)
+void JKQTPOverlayImage::set_title(const QString &title)
 {
     JKQTPImageBase::set_title(title);
     QString t=title;
@@ -2807,7 +2807,7 @@ double JKQTPContour::value(int xIdx, int yIdx)
     }
 }
 
-bool JKQTPContour::intersect(QLineF &line, const QVector3D &vertex1,const QVector3D &vertex2,const QVector3D &vertex3,const double &level)
+bool JKQTPContour::intersect(QLineF &line, const QVector3D &vertex1,const QVector3D &vertex2,const QVector3D &vertex3,double level)
 {
     bool found = true;
 
@@ -2969,7 +2969,7 @@ JKQTPContour::JKQTPContour(double x, double y, double width, double height, void
     colorFromPalette=true;
     relativeLevels=false;
 }
-int JKQTPContour::compare2level(const QVector3D &vertex, const double &level)
+int JKQTPContour::compare2level(const QVector3D &vertex, double level)
 {
     if (vertex.z() > level)
         return 1;
@@ -3105,7 +3105,7 @@ void JKQTPContour::calcContourLines(QList<QVector<QLineF> > &ContourLines)
     }
 }
 
-QPointF JKQTPContour::interpolatePoint(const QVector3D &point1, const QVector3D &point2,const double &level)
+QPointF JKQTPContour::interpolatePoint(const QVector3D &point1, const QVector3D &point2,double level)
 {  
     const double h1 = point1.z() - level; // height above contour level
     const double h2 = point2.z() - level;

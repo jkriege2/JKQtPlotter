@@ -130,13 +130,119 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         /** \brief returns the class internally used for plotting */
         const JKQtBasePlotter* get_constplotter() const { return const_cast<const JKQtBasePlotter*>(plotter); }
 
-        JKQTPGET_SET_MACRO_I(bool, displayToolbar, updateToolbar())
-        JKQTPGET_SET_MACRO_I(bool, toolbarAlwaysOn, updateToolbar())
-        JKQTPGET_SET_MACRO(bool, displayMousePosition)
-        JKQTPGET_SET_MACRO(bool, displayCustomMousePosition)
-        JKQTPGET_SET_MACRO_I(QColor, userActionColor, update())
-        JKQTPGET_SET_MACRO_I(QPainter::CompositionMode, userActionCompositionMode, update())
-        JKQTPGET_SET_MACRO_I(MouseActionModes, mouseActionMode, updateCursor())
+        /*! \brief sets the property displayToolbar to the specified \a __value. 
+            \details Description of the parameter displayToolbar is: <CENTER>\copybrief displayToolbar.</CENTER> 
+            \see displayToolbar for more information */ 
+        inline virtual void set_displayToolbar(bool __value)  
+        {
+            if (this->displayToolbar != __value) { 
+                this->displayToolbar = __value; 
+                updateToolbar(); 
+            } 
+        } 
+        /*! \brief returns the property displayToolbar. 
+            \details Description of the parameter displayToolbar is: <CENTER>\copybrief displayToolbar.</CENTER> 
+            \see displayToolbar for more information */ 
+        inline virtual bool get_displayToolbar() const  
+        {
+            return this->displayToolbar; 
+        }
+        /*! \brief sets the property toolbarAlwaysOn to the specified \a __value. 
+            \details Description of the parameter toolbarAlwaysOn is: <CENTER>\copybrief toolbarAlwaysOn.</CENTER> 
+            \see toolbarAlwaysOn for more information */ 
+        inline virtual void set_toolbarAlwaysOn(bool __value)  
+        {
+            if (this->toolbarAlwaysOn != __value) { 
+                this->toolbarAlwaysOn = __value; 
+                updateToolbar(); 
+            } 
+        } 
+        /*! \brief returns the property toolbarAlwaysOn. 
+            \details Description of the parameter toolbarAlwaysOn is: <CENTER>\copybrief toolbarAlwaysOn.</CENTER> 
+            \see toolbarAlwaysOn for more information */ 
+        inline virtual bool get_toolbarAlwaysOn() const  
+        {
+            return this->toolbarAlwaysOn; 
+        }
+        /*! \brief sets the property displayMousePosition to the specified \a __value. 
+            \details Description of the parameter displayMousePosition is: <CENTER>\copybrief displayMousePosition.</CENTER> 
+            \see displayMousePosition for more information */ 
+        inline virtual void set_displayMousePosition(bool __value)  
+        {
+            this->displayMousePosition = __value;
+        } 
+        /*! \brief returns the property displayMousePosition. 
+            \details Description of the parameter displayMousePosition is: <CENTER>\copybrief displayMousePosition.</CENTER> 
+            \see displayMousePosition for more information */ 
+        inline virtual bool get_displayMousePosition() const  
+        {
+            return this->displayMousePosition; 
+        }
+        /*! \brief sets the property displayCustomMousePosition to the specified \a __value. 
+            \details Description of the parameter displayCustomMousePosition is: <CENTER>\copybrief displayCustomMousePosition.</CENTER> 
+            \see displayCustomMousePosition for more information */ 
+        inline virtual void set_displayCustomMousePosition(bool __value)  
+        {
+            this->displayCustomMousePosition = __value;
+        } 
+        /*! \brief returns the property displayCustomMousePosition. 
+            \details Description of the parameter displayCustomMousePosition is: <CENTER>\copybrief displayCustomMousePosition.</CENTER> 
+            \see displayCustomMousePosition for more information */ 
+        inline virtual bool get_displayCustomMousePosition() const  
+        {
+            return this->displayCustomMousePosition; 
+        }
+        /*! \brief sets the property userActionColor to the specified \a __value. 
+            \details Description of the parameter userActionColor is: <CENTER>\copybrief userActionColor.</CENTER> 
+            \see userActionColor for more information */ 
+        inline virtual void set_userActionColor(const QColor & __value)  
+        {
+            if (this->userActionColor != __value) { 
+                this->userActionColor = __value; 
+                update(); 
+            } 
+        } 
+        /*! \brief returns the property userActionColor. 
+            \details Description of the parameter userActionColor is: <CENTER>\copybrief userActionColor.</CENTER> 
+            \see userActionColor for more information */ 
+        inline virtual QColor get_userActionColor() const  
+        {
+            return this->userActionColor; 
+        }
+        /*! \brief sets the property userActionCompositionMode to the specified \a __value. 
+            \details Description of the parameter userActionCompositionMode is: <CENTER>\copybrief userActionCompositionMode.</CENTER> 
+            \see userActionCompositionMode for more information */ 
+        inline virtual void set_userActionCompositionMode(const QPainter::CompositionMode & __value)  
+        {
+            if (this->userActionCompositionMode != __value) { 
+                this->userActionCompositionMode = __value; 
+                update(); 
+            } 
+        } 
+        /*! \brief returns the property userActionCompositionMode. 
+            \details Description of the parameter userActionCompositionMode is: <CENTER>\copybrief userActionCompositionMode.</CENTER> 
+            \see userActionCompositionMode for more information */ 
+        inline virtual QPainter::CompositionMode get_userActionCompositionMode() const  
+        {
+            return this->userActionCompositionMode; 
+        }
+        /*! \brief sets the property mouseActionMode to the specified \a __value. 
+            \details Description of the parameter mouseActionMode is: <CENTER>\copybrief mouseActionMode.</CENTER> 
+            \see mouseActionMode for more information */ 
+        inline virtual void set_mouseActionMode(const MouseActionModes & __value)  
+        {
+            if (this->mouseActionMode != __value) { 
+                this->mouseActionMode = __value; 
+                updateCursor(); 
+            } 
+        } 
+        /*! \brief returns the property mouseActionMode. 
+            \details Description of the parameter mouseActionMode is: <CENTER>\copybrief mouseActionMode.</CENTER> 
+            \see mouseActionMode for more information */ 
+        inline virtual MouseActionModes get_mouseActionMode() const  
+        {
+            return this->mouseActionMode; 
+        }
 
         /** \brief loads the plot properties from a QSettings object */
         virtual void loadSettings(QSettings& settings, QString group=QString("plots"));
@@ -199,28 +305,89 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
          *         the lather case */
         inline void forceInternalDatastore() { plotter->forceInternalDatastore(); }
 
+        /** \brief switch emitting of signals, such as zoomChangedLocally() ..., on (sig=true) or off (sig=false) */
         inline void set_emitSignals(bool sig) { plotter->set_emitSignals(sig); }
+        /** \brief determine, whether emitting of signals, such as zoomChangedLocally() ..., is switched on or off */
         inline bool get_emitSignals() { return plotter->get_emitSignals(); }
 
-        JKQTPGetMacro(bool, doDrawing)
+        inline bool get_doDrawing() const { return doDrawing; }
         void set_doDrawing(bool enable);
 
         bool get_zoomByMouseRectangle() const;
         void set_zoomByMouseRectangle(bool zomByrectangle);
 
         //GET_SET_MACRO(bool, zoomByDoubleAndRightMouseClick);
-        JKQTPGET_SET_MACRO(RightMouseButtonAction, rightMouseButtonAction)
-        JKQTPGET_SET_MACRO(LeftDoubleClickAction, leftDoubleClickAction)
-        /** \brief returns the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <CENTER>\copybrief menuSpecialContextMenu.</CENTER>. \see menuSpecialContextMenu for more information */ 
+        /*! \brief sets the property rightMouseButtonAction to the specified \a __value. 
+            \details Description of the parameter rightMouseButtonAction is: <CENTER>\copybrief rightMouseButtonAction.</CENTER> 
+            \see rightMouseButtonAction for more information */ 
+        inline virtual void set_rightMouseButtonAction(const RightMouseButtonAction & __value)  
+        {
+            this->rightMouseButtonAction = __value;
+        } 
+        /*! \brief returns the property rightMouseButtonAction. 
+            \details Description of the parameter rightMouseButtonAction is: <CENTER>\copybrief rightMouseButtonAction.</CENTER> 
+            \see rightMouseButtonAction for more information */ 
+        inline virtual RightMouseButtonAction get_rightMouseButtonAction() const  
+        {
+            return this->rightMouseButtonAction; 
+        }
+        /*! \brief sets the property leftDoubleClickAction to the specified \a __value. 
+            \details Description of the parameter leftDoubleClickAction is: <CENTER>\copybrief leftDoubleClickAction.</CENTER> 
+            \see leftDoubleClickAction for more information */ 
+        inline virtual void set_leftDoubleClickAction(const LeftDoubleClickAction & __value)  
+        {
+            this->leftDoubleClickAction = __value;
+        } 
+        /*! \brief returns the property leftDoubleClickAction. 
+            \details Description of the parameter leftDoubleClickAction is: <CENTER>\copybrief leftDoubleClickAction.</CENTER> 
+            \see leftDoubleClickAction for more information */ 
+        inline virtual LeftDoubleClickAction get_leftDoubleClickAction() const  
+        {
+            return this->leftDoubleClickAction; 
+        }
+        /*! \brief returns the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <CENTER>\copybrief menuSpecialContextMenu.</CENTER>. \see menuSpecialContextMenu for more information */ 
         inline QMenu* get_menuSpecialContextMenu() const { return this->menuSpecialContextMenu; }
         void set_menuSpecialContextMenu(QMenu* menu);
 
-        JKQTPGET_SET_MACRO(bool, zoomByMouseWheel)
+        /*! \brief sets the property zoomByMouseWheel to the specified \a __value. 
+            \details Description of the parameter zoomByMouseWheel is: <CENTER>\copybrief zoomByMouseWheel.</CENTER> 
+            \see zoomByMouseWheel for more information */ 
+        inline virtual void set_zoomByMouseWheel(bool __value)  
+        {
+            this->zoomByMouseWheel = __value;
+        } 
+        /*! \brief returns the property zoomByMouseWheel. 
+            \details Description of the parameter zoomByMouseWheel is: <CENTER>\copybrief zoomByMouseWheel.</CENTER> 
+            \see zoomByMouseWheel for more information */ 
+        inline virtual bool get_zoomByMouseWheel() const  
+        {
+            return this->zoomByMouseWheel; 
+        }
 
-        JKQTPGetMacro(double, mouseContextX)
-        JKQTPGetMacro(double, mouseContextY)
-        JKQTPGetMacro(int, mouseLastClickX)
-        JKQTPGetMacro(int, mouseLastClickY)
+        /** \brief returns the property mouseContextX. 
+            \details Description of the parameter mouseContextX is:  <CENTER>\copybrief mouseContextX.</CENTER>. 
+            \see mouseContextX for more information */ 
+        inline double get_mouseContextX() const { 
+            return this->mouseContextX; 
+        }
+        /** \brief returns the property mouseContextY. 
+            \details Description of the parameter mouseContextY is:  <CENTER>\copybrief mouseContextY.</CENTER>. 
+            \see mouseContextY for more information */ 
+        inline double get_mouseContextY() const { 
+            return this->mouseContextY; 
+        }
+        /** \brief returns the property mouseLastClickX. 
+            \details Description of the parameter mouseLastClickX is:  <CENTER>\copybrief mouseLastClickX.</CENTER>. 
+            \see mouseLastClickX for more information */ 
+        inline int get_mouseLastClickX() const { 
+            return this->mouseLastClickX; 
+        }
+        /** \brief returns the property mouseLastClickY. 
+            \details Description of the parameter mouseLastClickY is:  <CENTER>\copybrief mouseLastClickY.</CENTER>. 
+            \see mouseLastClickY for more information */ 
+        inline int get_mouseLastClickY() const { 
+            return this->mouseLastClickY; 
+        }
 
         inline JKQTPhorizontalAxis* get_xAxis() { return plotter->get_xAxis(); }
         inline JKQTPverticalAxis* get_yAxis() { return plotter->get_yAxis(); }
@@ -476,17 +643,17 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         /** \brief fill color of the zoom rectangle */
         QColor userActionColor;
-        /** \brief default value for property property varname. \see userActionColor for more information */ 
+        /*! \brief default value for property property varname. \see userActionColor for more information */ 
         QColor def_userActionColor;
 
         /** \brief fill color of the zoom rectangle */
         QPainter::CompositionMode userActionCompositionMode;
-        /** \brief default value for property property varname. \see userActionCompositionMode for more information */ 
+        /*! \brief default value for property property varname. \see userActionCompositionMode for more information */ 
         QPainter::CompositionMode def_userActionCompositionMode;
 
         /** \brief width/height of the icons in the plotter toolbar in pixels */
         int toolbarIconSize;
-        /** \brief default value for property property varname. \see toolbarIconSize for more information */ 
+        /*! \brief default value for property property varname. \see toolbarIconSize for more information */ 
         int def_toolbarIconSize;
 
         /** \brief this is set \c true if we are drawing a zoom rectangle */
@@ -609,7 +776,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         bool displayMousePosition;
         /** \brief this string is used to generate the position output above the graph */
         QString mousePositionTemplate;
-        /** \brief default value for property property varname. \see mousePositionTemplate for more information */ 
+        /*! \brief default value for property property varname. \see mousePositionTemplate for more information */ 
         QString def_mousePositionTemplate;
         /** \brief if set \c true and displayMousePosition is \c true, the mouse position is not automatically determined, but the text given to setMousePositionLabel() is used */
         bool displayCustomMousePosition;

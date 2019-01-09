@@ -99,8 +99,34 @@ class LIB_EXPORT JKQTPplotElement: public QObject {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor()=0;
 
-        JKQTPGET_SET_VMACRO(QString, title)
-        JKQTPGET_SET_MACRO(bool, visible)
+        /*! \brief sets the property title to the specified \a __value.
+            \details Description of the parameter title is: <CENTER>\copybrief title.</CENTER>
+            \see title for more information */
+        inline virtual void set_title(const QString & __value)
+        {
+            this->title = __value;
+        }
+        /*! \brief returns the property title.
+            \details Description of the parameter title is: <CENTER>\copybrief title.</CENTER>
+            \see title for more information */
+        inline virtual QString get_title() const
+        {
+            return this->title;
+        }
+        /*! \brief sets the property visible to the specified \a __value.
+            \details Description of the parameter visible is: <CENTER>\copybrief visible.</CENTER>
+            \see visible for more information */
+        inline virtual void set_visible(bool __value)
+        {
+            this->visible = __value;
+        }
+        /*! \brief returns the property visible.
+            \details Description of the parameter visible is: <CENTER>\copybrief visible.</CENTER> 
+            \see visible for more information */ 
+        inline virtual bool get_visible() const  
+        {
+            return this->visible; 
+        }
 
         /** \brief returns the parent painter class */
         inline JKQtBasePlotter* getParent() { return parent; }
@@ -207,8 +233,34 @@ class LIB_EXPORT JKQTPgraph: public JKQTPplotElement {
         virtual ~JKQTPgraph() ;
 
 
-        JKQTPGET_SET_MACRO(int, datarange_start)
-        JKQTPGET_SET_MACRO(int, datarange_end)
+        /*! \brief sets the property datarange_start to the specified \a __value. 
+            \details Description of the parameter datarange_start is: <CENTER>\copybrief datarange_start.</CENTER> 
+            \see datarange_start for more information */ 
+        inline virtual void set_datarange_start(int __value)
+        {
+            this->datarange_start = __value;
+        } 
+        /*! \brief returns the property datarange_start. 
+            \details Description of the parameter datarange_start is: <CENTER>\copybrief datarange_start.</CENTER> 
+            \see datarange_start for more information */ 
+        inline virtual int get_datarange_start() const  
+        {
+            return this->datarange_start; 
+        }
+        /*! \brief sets the property datarange_end to the specified \a __value. 
+            \details Description of the parameter datarange_end is: <CENTER>\copybrief datarange_end.</CENTER> 
+            \see datarange_end for more information */ 
+        inline virtual void set_datarange_end(int __value)
+        {
+            this->datarange_end = __value;
+        } 
+        /*! \brief returns the property datarange_end. 
+            \details Description of the parameter datarange_end is: <CENTER>\copybrief datarange_end.</CENTER> 
+            \see datarange_end for more information */ 
+        inline virtual int get_datarange_end() const  
+        {
+            return this->datarange_end; 
+        }
 
         /** \brief returns \c true if the given column is used by the graph */
         virtual bool usesColumn(int column) const;
@@ -312,12 +364,57 @@ class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
         /** \copydoc JKQTPgraph::usesColumn() */
         virtual bool usesColumn(int column) const override;
 
-        JKQTPGET_SET_MACRO(int, xColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, xColumn)
-        JKQTPGET_SET_MACRO(int, yColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, yColumn)
-        JKQTPGET_SET_MACRO(DataSortOrder, sortData)
-        /** \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> \see sortData for more information */
+        /*! \brief sets the property xColumn to the specified \a __value. 
+            \details Description of the parameter xColumn is: <CENTER>\copybrief xColumn.</CENTER> 
+            \see xColumn for more information */ 
+        inline virtual void set_xColumn(int __value)
+        {
+            this->xColumn = __value;
+        } 
+        /*! \brief returns the property xColumn. 
+            \details Description of the parameter xColumn is: <CENTER>\copybrief xColumn.</CENTER> 
+            \see xColumn for more information */ 
+        inline virtual int get_xColumn() const  
+        {
+            return this->xColumn; 
+        }
+        /*! \brief sets the property xColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter xColumn is:  <CENTER>\copybrief xColumn.</CENTER> 
+        	\see xColumn for more information */ 
+        inline virtual void set_xColumn (size_t __value) { this->xColumn = static_cast<int>(__value); }
+        /*! \brief sets the property yColumn to the specified \a __value. 
+            \details Description of the parameter yColumn is: <CENTER>\copybrief yColumn.</CENTER> 
+            \see yColumn for more information */ 
+        inline virtual void set_yColumn(int __value)
+        {
+            this->yColumn = __value;
+        } 
+        /*! \brief returns the property yColumn. 
+            \details Description of the parameter yColumn is: <CENTER>\copybrief yColumn.</CENTER> 
+            \see yColumn for more information */ 
+        inline virtual int get_yColumn() const  
+        {
+            return this->yColumn; 
+        }
+        /*! \brief sets the property yColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter yColumn is:  <CENTER>\copybrief yColumn.</CENTER> 
+        	\see yColumn for more information */ 
+        inline virtual void set_yColumn (size_t __value) { this->yColumn = static_cast<int>(__value); }
+        /*! \brief sets the property sortData to the specified \a __value. 
+            \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> 
+            \see sortData for more information */ 
+        inline virtual void set_sortData(const DataSortOrder & __value)  
+        {
+            this->sortData = __value;
+        } 
+        /*! \brief returns the property sortData. 
+            \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> 
+            \see sortData for more information */ 
+        inline virtual DataSortOrder get_sortData() const  
+        {
+            return this->sortData; 
+        }
+        /*! \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> \see sortData for more information */
         void set_sortData(int __value);
 
     protected:
@@ -369,13 +466,81 @@ class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor();
 
-        JKQTPGET_SET_MACRO(int, dataColumn)
-        JKQTPSET_CAST_MACRO(size_t, int, dataColumn)
-        JKQTPGET_SET_MACRO(QColor, color)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, style)
-        JKQTPGET_SET_MACRO(double, lineWidth)
-        JKQTPGET_SET_MACRO(DataSortOrder, sortData)
-        /** \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> \see sortData for more information */
+        /*! \brief sets the property dataColumn to the specified \a __value. 
+            \details Description of the parameter dataColumn is: <CENTER>\copybrief dataColumn.</CENTER> 
+            \see dataColumn for more information */ 
+        inline virtual void set_dataColumn(int __value)
+        {
+            this->dataColumn = __value;
+        } 
+        /*! \brief returns the property dataColumn. 
+            \details Description of the parameter dataColumn is: <CENTER>\copybrief dataColumn.</CENTER> 
+            \see dataColumn for more information */ 
+        inline virtual int get_dataColumn() const  
+        {
+            return this->dataColumn; 
+        }
+        /*! \brief sets the property dataColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
+            \details Description of the parameter dataColumn is:  <CENTER>\copybrief dataColumn.</CENTER> 
+        	\see dataColumn for more information */ 
+        inline virtual void set_dataColumn (size_t __value) { this->dataColumn = static_cast<int>(__value); }
+        /*! \brief sets the property color to the specified \a __value. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual void set_color(const QColor & __value)  
+        {
+            this->color = __value;
+        } 
+        /*! \brief returns the property color. 
+            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \see color for more information */ 
+        inline virtual QColor get_color() const  
+        {
+            return this->color; 
+        }
+        /*! \brief sets the property style to the specified \a __value. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual void set_style(const Qt::PenStyle & __value)  
+        {
+            this->style = __value;
+        } 
+        /*! \brief returns the property style. 
+            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \see style for more information */ 
+        inline virtual Qt::PenStyle get_style() const  
+        {
+            return this->style; 
+        }
+        /*! \brief sets the property lineWidth to the specified \a __value. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual void set_lineWidth(double __value)
+        {
+            this->lineWidth = __value;
+        } 
+        /*! \brief returns the property lineWidth. 
+            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \see lineWidth for more information */ 
+        inline virtual double get_lineWidth() const  
+        {
+            return this->lineWidth; 
+        }
+        /*! \brief sets the property sortData to the specified \a __value. 
+            \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> 
+            \see sortData for more information */ 
+        inline virtual void set_sortData(const DataSortOrder & __value)  
+        {
+            this->sortData = __value;
+        } 
+        /*! \brief returns the property sortData. 
+            \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> 
+            \see sortData for more information */ 
+        inline virtual DataSortOrder get_sortData() const  
+        {
+            return this->sortData; 
+        }
+        /*! \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <CENTER>\copybrief sortData.</CENTER> \see sortData for more information */
         void set_sortData(int __value);
 
         /** \copydoc JKQTPgraph::usesColumn() */
@@ -436,12 +601,90 @@ class LIB_EXPORT JKQTPgraphErrors {
         JKQTPgraphErrors(QColor graphColor=QColor("black"));
         virtual ~JKQTPgraphErrors();
 
-        JKQTPGET_SET_MACRO(QColor, errorColor)
-        JKQTPGET_SET_MACRO(Qt::PenStyle, errorStyle)
-        JKQTPGET_SET_MACRO(double, errorWidth)
-        JKQTPGET_SET_MACRO(QColor, errorFillColor)
-        JKQTPGET_SET_MACRO(Qt::BrushStyle, errorFillStyle)
-        JKQTPGET_SET_MACRO(double, errorbarSize)
+        /*! \brief sets the property errorColor to the specified \a __value. 
+            \details Description of the parameter errorColor is: <CENTER>\copybrief errorColor.</CENTER> 
+            \see errorColor for more information */ 
+        inline virtual void set_errorColor(const QColor & __value)  
+        {
+            this->errorColor = __value;
+        } 
+        /*! \brief returns the property errorColor. 
+            \details Description of the parameter errorColor is: <CENTER>\copybrief errorColor.</CENTER> 
+            \see errorColor for more information */ 
+        inline virtual QColor get_errorColor() const  
+        {
+            return this->errorColor; 
+        }
+        /*! \brief sets the property errorStyle to the specified \a __value. 
+            \details Description of the parameter errorStyle is: <CENTER>\copybrief errorStyle.</CENTER> 
+            \see errorStyle for more information */ 
+        inline virtual void set_errorStyle(const Qt::PenStyle & __value)  
+        {
+            this->errorStyle = __value;
+        } 
+        /*! \brief returns the property errorStyle. 
+            \details Description of the parameter errorStyle is: <CENTER>\copybrief errorStyle.</CENTER> 
+            \see errorStyle for more information */ 
+        inline virtual Qt::PenStyle get_errorStyle() const  
+        {
+            return this->errorStyle; 
+        }
+        /*! \brief sets the property errorWidth to the specified \a __value. 
+            \details Description of the parameter errorWidth is: <CENTER>\copybrief errorWidth.</CENTER> 
+            \see errorWidth for more information */ 
+        inline virtual void set_errorWidth(double __value)
+        {
+            this->errorWidth = __value;
+        } 
+        /*! \brief returns the property errorWidth. 
+            \details Description of the parameter errorWidth is: <CENTER>\copybrief errorWidth.</CENTER> 
+            \see errorWidth for more information */ 
+        inline virtual double get_errorWidth() const  
+        {
+            return this->errorWidth; 
+        }
+        /*! \brief sets the property errorFillColor to the specified \a __value. 
+            \details Description of the parameter errorFillColor is: <CENTER>\copybrief errorFillColor.</CENTER> 
+            \see errorFillColor for more information */ 
+        inline virtual void set_errorFillColor(const QColor & __value)  
+        {
+            this->errorFillColor = __value;
+        } 
+        /*! \brief returns the property errorFillColor. 
+            \details Description of the parameter errorFillColor is: <CENTER>\copybrief errorFillColor.</CENTER> 
+            \see errorFillColor for more information */ 
+        inline virtual QColor get_errorFillColor() const  
+        {
+            return this->errorFillColor; 
+        }
+        /*! \brief sets the property errorFillStyle to the specified \a __value. 
+            \details Description of the parameter errorFillStyle is: <CENTER>\copybrief errorFillStyle.</CENTER> 
+            \see errorFillStyle for more information */ 
+        inline virtual void set_errorFillStyle(const Qt::BrushStyle & __value)  
+        {
+            this->errorFillStyle = __value;
+        } 
+        /*! \brief returns the property errorFillStyle. 
+            \details Description of the parameter errorFillStyle is: <CENTER>\copybrief errorFillStyle.</CENTER> 
+            \see errorFillStyle for more information */ 
+        inline virtual Qt::BrushStyle get_errorFillStyle() const  
+        {
+            return this->errorFillStyle; 
+        }
+        /*! \brief sets the property errorbarSize to the specified \a __value. 
+            \details Description of the parameter errorbarSize is: <CENTER>\copybrief errorbarSize.</CENTER> 
+            \see errorbarSize for more information */ 
+        inline virtual void set_errorbarSize(double __value)
+        {
+            this->errorbarSize = __value;
+        } 
+        /*! \brief returns the property errorbarSize. 
+            \details Description of the parameter errorbarSize is: <CENTER>\copybrief errorbarSize.</CENTER> 
+            \see errorbarSize for more information */ 
+        inline virtual double get_errorbarSize() const  
+        {
+            return this->errorbarSize; 
+        }
         /** \brief returns true, if the error plots use the given column */
         virtual bool errorUsesColumn(int c) const;
 
@@ -495,12 +738,38 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
         /** \brief class contructor */
         JKQTPxGraphErrors(QColor graphColor=QColor("black"));
 
-        JKQTPGET_SET_MACRO(bool, xErrorSymmetric)
-        /** \brief returns the property xErrorColumnLower. \details Description of the parameter xErrorColumnLower is:  <CENTER>\copybrief xErrorColumnLower.</CENTER>. \see xErrorColumnLower for more information */ 
+        /*! \brief sets the property xErrorSymmetric to the specified \a __value. 
+            \details Description of the parameter xErrorSymmetric is: <CENTER>\copybrief xErrorSymmetric.</CENTER> 
+            \see xErrorSymmetric for more information */ 
+        inline virtual void set_xErrorSymmetric(bool __value)
+        {
+            this->xErrorSymmetric = __value;
+        } 
+        /*! \brief returns the property xErrorSymmetric. 
+            \details Description of the parameter xErrorSymmetric is: <CENTER>\copybrief xErrorSymmetric.</CENTER> 
+            \see xErrorSymmetric for more information */ 
+        inline virtual bool get_xErrorSymmetric() const  
+        {
+            return this->xErrorSymmetric; 
+        }
+        /*! \brief returns the property xErrorColumnLower. \details Description of the parameter xErrorColumnLower is:  <CENTER>\copybrief xErrorColumnLower.</CENTER>. \see xErrorColumnLower for more information */ 
         inline int get_xErrorColumnLower() const { return this->xErrorColumnLower; }
-        /** \brief returns the property xErrorColumn. \details Description of the parameter xErrorColumn is:  <CENTER>\copybrief xErrorColumn.</CENTER>. \see xErrorColumn for more information */ 
+        /*! \brief returns the property xErrorColumn. \details Description of the parameter xErrorColumn is:  <CENTER>\copybrief xErrorColumn.</CENTER>. \see xErrorColumn for more information */ 
         inline int get_xErrorColumn() const { return this->xErrorColumn; }
-        JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, xErrorStyle)
+        /*! \brief sets the property xErrorStyle to the specified \a __value. 
+            \details Description of the parameter xErrorStyle is: <CENTER>\copybrief xErrorStyle.</CENTER> 
+            \see xErrorStyle for more information */ 
+        inline virtual void set_xErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        {
+            this->xErrorStyle = __value;
+        } 
+        /*! \brief returns the property xErrorStyle. 
+            \details Description of the parameter xErrorStyle is: <CENTER>\copybrief xErrorStyle.</CENTER> 
+            \see xErrorStyle for more information */ 
+        inline virtual JKQTPerrorPlotstyle get_xErrorStyle() const  
+        {
+            return this->xErrorStyle; 
+        }
         /** \brief set the column from which to read the error values for x-error indicators */
         void set_xErrorColumn(int __value);
         /** \brief set the column from which to read the error values for lower x-error indicators (if not set [=-1], the xErrorColumn-values will be used for upper and lower error indicators) */
@@ -539,12 +808,38 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
         /** \brief class contructor */
         JKQTPyGraphErrors(QColor graphColor=QColor("black"));
 
-        JKQTPGET_SET_MACRO(bool, yErrorSymmetric)
-        /** \brief returns the property yErrorColumnLower. \details Description of the parameter yErrorColumnLower is:  <CENTER>\copybrief yErrorColumnLower.</CENTER>. \see yErrorColumnLower for more information */ 
+        /*! \brief sets the property yErrorSymmetric to the specified \a __value. 
+            \details Description of the parameter yErrorSymmetric is: <CENTER>\copybrief yErrorSymmetric.</CENTER> 
+            \see yErrorSymmetric for more information */ 
+        inline virtual void set_yErrorSymmetric(bool __value)
+        {
+            this->yErrorSymmetric = __value;
+        } 
+        /*! \brief returns the property yErrorSymmetric. 
+            \details Description of the parameter yErrorSymmetric is: <CENTER>\copybrief yErrorSymmetric.</CENTER> 
+            \see yErrorSymmetric for more information */ 
+        inline virtual bool get_yErrorSymmetric() const  
+        {
+            return this->yErrorSymmetric; 
+        }
+        /*! \brief returns the property yErrorColumnLower. \details Description of the parameter yErrorColumnLower is:  <CENTER>\copybrief yErrorColumnLower.</CENTER>. \see yErrorColumnLower for more information */ 
         inline int get_yErrorColumnLower() const { return this->yErrorColumnLower; }
-        /** \brief returns the property yErrorColumn. \details Description of the parameter yErrorColumn is:  <CENTER>\copybrief yErrorColumn.</CENTER>. \see yErrorColumn for more information */ 
+        /*! \brief returns the property yErrorColumn. \details Description of the parameter yErrorColumn is:  <CENTER>\copybrief yErrorColumn.</CENTER>. \see yErrorColumn for more information */ 
         inline int get_yErrorColumn() const { return this->yErrorColumn; }
-        JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, yErrorStyle)
+        /*! \brief sets the property yErrorStyle to the specified \a __value. 
+            \details Description of the parameter yErrorStyle is: <CENTER>\copybrief yErrorStyle.</CENTER> 
+            \see yErrorStyle for more information */ 
+        inline virtual void set_yErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        {
+            this->yErrorStyle = __value;
+        } 
+        /*! \brief returns the property yErrorStyle. 
+            \details Description of the parameter yErrorStyle is: <CENTER>\copybrief yErrorStyle.</CENTER> 
+            \see yErrorStyle for more information */ 
+        inline virtual JKQTPerrorPlotstyle get_yErrorStyle() const  
+        {
+            return this->yErrorStyle; 
+        }
         /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c) const override;
 
@@ -580,18 +875,70 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
     public:
         /** \brief class contructor */
         JKQTPxyGraphErrors(QColor graphColor=QColor("black"));
-        JKQTPGET_SET_MACRO(bool, xErrorSymmetric)
-        JKQTPGET_SET_MACRO(bool, yErrorSymmetric)
-        /** \brief returns the property xErrorColumnLower. \details Description of the parameter xErrorColumnLower is:  <CENTER>\copybrief xErrorColumnLower.</CENTER>. \see xErrorColumnLower for more information */ 
+        /*! \brief sets the property xErrorSymmetric to the specified \a __value. 
+            \details Description of the parameter xErrorSymmetric is: <CENTER>\copybrief xErrorSymmetric.</CENTER> 
+            \see xErrorSymmetric for more information */ 
+        inline virtual void set_xErrorSymmetric(bool __value)
+        {
+            this->xErrorSymmetric = __value;
+        } 
+        /*! \brief returns the property xErrorSymmetric. 
+            \details Description of the parameter xErrorSymmetric is: <CENTER>\copybrief xErrorSymmetric.</CENTER> 
+            \see xErrorSymmetric for more information */ 
+        inline virtual bool get_xErrorSymmetric() const  
+        {
+            return this->xErrorSymmetric; 
+        }
+        /*! \brief sets the property yErrorSymmetric to the specified \a __value. 
+            \details Description of the parameter yErrorSymmetric is: <CENTER>\copybrief yErrorSymmetric.</CENTER> 
+            \see yErrorSymmetric for more information */ 
+        inline virtual void set_yErrorSymmetric(bool __value)
+        {
+            this->yErrorSymmetric = __value;
+        } 
+        /*! \brief returns the property yErrorSymmetric. 
+            \details Description of the parameter yErrorSymmetric is: <CENTER>\copybrief yErrorSymmetric.</CENTER> 
+            \see yErrorSymmetric for more information */ 
+        inline virtual bool get_yErrorSymmetric() const  
+        {
+            return this->yErrorSymmetric; 
+        }
+        /*! \brief returns the property xErrorColumnLower. \details Description of the parameter xErrorColumnLower is:  <CENTER>\copybrief xErrorColumnLower.</CENTER>. \see xErrorColumnLower for more information */ 
         inline int get_xErrorColumnLower() const { return this->xErrorColumnLower; }
-        /** \brief returns the property xErrorColumn. \details Description of the parameter xErrorColumn is:  <CENTER>\copybrief xErrorColumn.</CENTER>. \see xErrorColumn for more information */ 
+        /*! \brief returns the property xErrorColumn. \details Description of the parameter xErrorColumn is:  <CENTER>\copybrief xErrorColumn.</CENTER>. \see xErrorColumn for more information */ 
         inline int get_xErrorColumn() const { return this->xErrorColumn; }
-        /** \brief returns the property yErrorColumnLower. \details Description of the parameter yErrorColumnLower is:  <CENTER>\copybrief yErrorColumnLower.</CENTER>. \see yErrorColumnLower for more information */ 
+        /*! \brief returns the property yErrorColumnLower. \details Description of the parameter yErrorColumnLower is:  <CENTER>\copybrief yErrorColumnLower.</CENTER>. \see yErrorColumnLower for more information */ 
         inline int get_yErrorColumnLower() const { return this->yErrorColumnLower; }
-        /** \brief returns the property yErrorColumn. \details Description of the parameter yErrorColumn is:  <CENTER>\copybrief yErrorColumn.</CENTER>. \see yErrorColumn for more information */ 
+        /*! \brief returns the property yErrorColumn. \details Description of the parameter yErrorColumn is:  <CENTER>\copybrief yErrorColumn.</CENTER>. \see yErrorColumn for more information */ 
         inline int get_yErrorColumn() const { return this->yErrorColumn; }
-        JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, yErrorStyle)
-        JKQTPGET_SET_MACRO(JKQTPerrorPlotstyle, xErrorStyle)
+        /*! \brief sets the property yErrorStyle to the specified \a __value. 
+            \details Description of the parameter yErrorStyle is: <CENTER>\copybrief yErrorStyle.</CENTER> 
+            \see yErrorStyle for more information */ 
+        inline virtual void set_yErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        {
+            this->yErrorStyle = __value;
+        } 
+        /*! \brief returns the property yErrorStyle. 
+            \details Description of the parameter yErrorStyle is: <CENTER>\copybrief yErrorStyle.</CENTER> 
+            \see yErrorStyle for more information */ 
+        inline virtual JKQTPerrorPlotstyle get_yErrorStyle() const  
+        {
+            return this->yErrorStyle; 
+        }
+        /*! \brief sets the property xErrorStyle to the specified \a __value. 
+            \details Description of the parameter xErrorStyle is: <CENTER>\copybrief xErrorStyle.</CENTER> 
+            \see xErrorStyle for more information */ 
+        inline virtual void set_xErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        {
+            this->xErrorStyle = __value;
+        } 
+        /*! \brief returns the property xErrorStyle. 
+            \details Description of the parameter xErrorStyle is: <CENTER>\copybrief xErrorStyle.</CENTER> 
+            \see xErrorStyle for more information */ 
+        inline virtual JKQTPerrorPlotstyle get_xErrorStyle() const  
+        {
+            return this->xErrorStyle; 
+        }
         /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c) const override;
 

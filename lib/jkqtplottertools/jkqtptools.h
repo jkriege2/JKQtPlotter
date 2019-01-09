@@ -104,316 +104,6 @@
 
 
 
-/**
- * \defgroup tools_getset get_var and set_var macros
- * \ingroup tools
- *
- * The macros in this group have the purpose to make writing \c get_<varname>() and \c set_<varname>(<varname>)
- * methods for classes easier. They can be used by giving the type and the name of a private variable for which
- * \c get_ and \c set_ methods should be created:
- * \code
- *   class a {
- *     private:
- *       int var1;
- *       std::strign var2;
- *     public:
- *       GetSetMacro(int, var1);
- *       JKQTPGetMacro(std::string, var2);
- *   }
- * \endcode
- * This code will create a \c set_var1, a \c set_var2 and a \c get_var1 method with the apropriate types.
- * All functions will be declared \c virtual and can thus be easily overloaded in inheriting classes. They are also
- * declared \c inline so the compiler may optimize them by really inlining them.
- *
- * The GetSetMacro creates get and set methods while the GetMacro and the SetMacro only create one of the
- * both.
- */
-/*@{*/
-
-/**
- * \brief create get_varname() and set_varname(type __value) methods/functions
- * inside a class, where \c type is the type of \c varname and \c varname is a
- * previously declared private variable that should be accessed by these
- * methodes
-*/
-#define JKQTPGET_SET_MACRO(type,varname) \
-    typedef type typedef_set_##varname ;\
-  /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  inline virtual void set_##varname (const typedef_set_##varname & __value)  \
-  { \
-    this->varname = __value; \
-  } \
-  /** \brief returns the property varname. \see varname for more information */ \
-  inline virtual type get_##varname () const  \
-  {\
-    return this->varname; \
-  }
-#define JKQTPGET_SET_VMACRO(type,varname) \
-    typedef type typedef_set_##varname ;\
-  /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  inline virtual void set_##varname (const typedef_set_##varname & __value)  \
-  { \
-    this->varname = __value; \
-  } \
-  /** \brief returns the property varname. \see varname for more information */ \
-  inline virtual type get_##varname () const  \
-  {\
-    return this->varname; \
-  }
-#define JKQTPGetSetMacro(type,varname) JKQTPGET_SET_MACRO(type,varname)
-
-/**
- * \brief create get_varname() and set_varname(type __value) methods/functions
- * inside a class, where \c type is the type of \c varname and \c varname is a
- * previously declared private variable that should be accessed by these
- * methodes. In addition this will set the property paramsChanged to true, which
- * you will have to declare in your class.
-*/
-#define JKQTPGET_SET_MACRO_P(type,varname) \
-    typedef type typedef_set_##varname ;\
-  inline virtual void set_##varname (const typedef_set_##varname & __value) /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  { \
-    this->varname = __value; \
-    this-> paramsChanged=true; \
-  } \
-  inline virtual type get_##varname () const /** \brief returns the property varname. \see varname for more information */ \
-  {\
-    return this->varname; \
-  }
-#define JKQTPGetSetMacroP(type,varname) JKQTPGET_SET_MACRO_P(type,varname)
-
-/**
- * \brief like GetSetMacroP(), but adds the instruction \a inst to the set method. This may be used
- *        to update a component after a value has been set.
-*/
-#define JKQTPGET_SET_MACRO_IP(type,varname,inst) \
-    typedef type typedef_set_##varname ;\
-  /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  inline virtual void set_##varname (const typedef_set_##varname & __value)   \
-  { \
-    if (this->varname != __value) { \
-        this->varname = __value; \
-        this-> paramsChanged=true; \
-        inst; \
-    } \
-  } \
-  /** \brief returns the property varname. \see varname for more information */ \
-  inline virtual type get_##varname () const  \
-  { \
-    return this->varname; \
-  }
-#define JKQTPGetSetMacroIP(type,varname,inst) JKQTPGET_SET_MACRO_IP(type,varname,inst)
-
-/**
- * \brief like GetSetMacro(), but adds the instruction \a inst to the set method. This may be used
- *        to update a component after a value has been set.
-*/
-#define JKQTPGET_SET_MACRO_I(type,varname,inst) \
-    typedef type typedef_set_##varname ;\
-    /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-    inline virtual void set_##varname (const typedef_set_##varname & __value)  \
-    {\
-        if (this->varname != __value) { \
-            this->varname = __value; \
-            inst; \
-        } \
-    } \
-    /** \brief returns the property varname. \see varname for more information */ \
-    inline virtual type get_##varname () const  \
-    {\
-        return this->varname; \
-    }
-#define JKQTPGetSetMacroI(type,varname,inst) JKQTPGET_SET_MACRO_I(type,varname,inst)
-
-/**
- * \brief sets two given properties at the same time, i.e. with one setter function with the name <code>set_<name>(type __value, type2 __value2)</code>. The getter methods are still separate. This may be used
- *        to update a component after a value has been set.
-*/
-#define JKQTPGET_SET_MACRO_TWO(name,type,varname,type2,varname2) \
-    /** \brief sets the properties varname and varname2 to the specified \a __value and \a __value2. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \details Description of the parameter varname2 is: <CENTER>\copybrief varname2.</CENTER> \see varname and varname2 for more information */ \
-    inline virtual void set_##name (type __value, type2 __value2)  \
-    {\
-        bool set=false; \
-        if (this->varname != __value) { \
-            this->varname = __value; \
-        } \
-        if (this->varname2 != __value2) { \
-            this->varname2 = __value2; \
-        } \
-    } \
-    /** \brief returns the property varname. \see varname for more information */ \
-    inline virtual type get_##varname () const  \
-    {\
-        return this->varname; \
-    } \
-    /** \brief returns the property varname2. \see varname2 for more information */\
-    inline virtual type2 get_##varname2 () const  \
-    {\
-        return this->varname2; \
-    }
-#define JKQTPGetSetMacroTwo(name,type,varname,type2,varname2) JKQTPGET_SET_MACRO_TWO(name,type,varname,type2,varname2)
-
-/**
- * \brief like GetSetMacroTwo(), but adds the instruction \a inst to the set method. This may be used
- *        to update a component after a value has been set.
-*/
-#define JKQTPGET_SET_MACRO_TWO_I(name,type,varname,type2,varname2,inst) \
-    /** \brief sets the properties varname and varname2 to the specified \a __value and \a __value2. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \details Description of the parameter varname2 is: <CENTER>\copybrief varname2.</CENTER> \see varname and varname2 for more information */ \
-    inline virtual void set_##name (type __value, type2 __value2)  \
-    {\
-        bool set=false; \
-        if (this->varname != __value) { \
-            this->varname = __value; \
-            set=true; \
-        } \
-        if (this->varname2 != __value2) { \
-            this->varname2 = __value2; \
-            set=true; \
-        } \
-        if (set) { \
-            inst; \
-        } \
-    } \
-    /** \brief returns the property varname. \see varname for more information */ \
-    inline virtual type get_##varname () const  \
-    {\
-        return this->varname; \
-    } \
-    /** \brief returns the property varname2. \see varname2 for more information */ \
-    inline virtual type2 get_##varname2 () const  \
-    {\
-        return this->varname2; \
-    }
-#define JKQTPGetSetMacroTwoI(name,type,varname,type2,varname2,inst) JKQTPGET_SET_MACRO_TWO_I(name,type,varname,type2,varname2,inst)
-
-
-/**
- * \brief like GetSetMacro(), but adds the instruction \a inst to the set method. This may be used
- *        to update a component after a value has been set. Alwys updates (no comparison of current
- *        and former value
-*/
-#define JKQTPGET_SET_MACRO_INC(type,varname,inst) \
-    typedef type typedef_set_##varname ;\
-    /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is: <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-    inline virtual void set_##varname (typedef_set_##varnam __value)  \
-    {\
-        this->varname = __value; \
-        inst; \
-    } \
-    /** \brief returns the property varname. \see varname for more information */ \
-    inline virtual type get_##varname () const  \
-    {\
-        return this->varname; \
-    }
-#define JKQTPGetSetMacroINC(type,varname,inst) JKQTPGET_SET_MACRO_INC(type,varname,inst)
-
-/** \brief create get_varname() and set_varname(type __value) methods/functions
- * inside a class, where \c type is the type of \c varname and \c varname is a
- * previously declared private variable that should be accessed by these
- * methodes
-*/
-#define JKQTPGET_MACRO(type,varname) \
-    /** \brief returns the property varname. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER>. \see varname for more information */ \
-    inline virtual type get_##varname() const  \
-    {   return this->varname;   }
-
-#define JKQTPGetMacro(type,varname) JKQTPGET_MACRO(type,varname)
-
-/**
- * \brief create set_varname(type __value) methods/functions
- * inside a class, where \c type is the type of \c varname and \c varname is a
- * previously declared private variable that should be accessed by these
- * methodes
-*/
-#define JKQTPSET_MACRO(type,varname) \
-    /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-    inline virtual void set_##varname (const type & __value)  \
-    { \
-        this->varname = __value; \
-    }
-#define JKQTPSetMacro(type,varname) JKQTPSET_MACRO(type,varname)
-
-/**
- * \brief create set_varname(type __value) methods/functions
- * inside a class, where \c type is the type of \c varname and \c varname is a
- * previously declared private variable that should be accessed by these
- * methodes
-*/
-#define JKQTPSET_CAST_MACRO(typefunction,typeinternal,varname) \
-    /** \brief sets the property varname to the specified \a __value, where __value is static_cast'ed from typefunction to typeinternal. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-    inline virtual void set_##varname (const typefunction & __value)  \
-    { \
-        this->varname = static_cast<typeinternal>(__value); \
-    }
-
-/**
- * \brief create set_varname(type __value) methods/functions
- * inside a class, where \c type is the type of \c varname and \c varname is a
- * previously declared private variable that should be accessed by these
- * methodes. In addition this will set the property paramsChanged to true, which
- * you will have to declare in your class.
-*/
-#define JKQTPSET_MACRO_P(type,varname) \
-    typedef type typedef_set_##varname ;\
-    /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  inline virtual void set_##varname (const typedef_set_##varname & __value)  \
-  { \
-    if (this->varname != __value) { \
-        this->varname = __value; \
-        this->paramsChanged=true; \
-    } \
-  }
-#define JKQTPSetMacroP(type,varname) JKQTPSET_MACRO_P(type,varname)
-
-/**
- * \brief like SetMacro(), but adds the instruction \a inst to the set method. This may be used
- *        to update a component after a value has been set
- */
-#define JKQTPSET_MACRO_I(type,varname,inst) \
-    typedef type typedef_set_##varname ;\
-  /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  inline virtual void set_##varname(const typedef_set_##varname & __value)  \
-  { \
-    if (this->varname != __value) { \
-        this->varname = __value; \
-        inst; \
-    } \
-  }
-#define JKQTPSetMacroI(type,varname,inst) JKQTPSET_MACRO_I(type,varname,inst)
-
-/**
- * \brief like SetMacro(), but adds the instruction \a inst at the start of the set method. This may be used
- *        e.g. to lock a mutex in the set operation, e.g. using QMutexLocker locker(mutex); from Qt
- */
-#define JKQTPSET_MACRO_I_BEFORE(type,varname,inst) \
-    typedef type typedef_set_##varname ;\
-  /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  inline virtual void set_##varname(const typedef_set_##varname & __value)  \
-  { \
-    inst; \
-    if (this->varname != __value) { \
-        this->varname = __value; \
-    } \
-  }
-#define JKQTPSetMacroIBefore(type,varname,inst) JKQTPSET_MACRO_I_BEFORE(type,varname,inst)
-/**
- * \brief like SetMacroP(), but adds the instruction \a inst to the set method. This may be used
- *        to update a component after a value has been set
- */
-#define JKQTPSET_MACRO_IP(type,varname,inst) \
-    typedef type typedef_set_##varname ;\
-  /** \brief sets the property varname to the specified \a __value. \details Description of the parameter varname is:  <CENTER>\copybrief varname.</CENTER> \see varname for more information */ \
-  inline virtual void set_##varname (const typedef_set_##varname & __value)  \
-  { \
-    if (this->varname != __value) { \
-        this->varname = __value; \
-        this->paramsChanged=true; \
-        inst; \
-    } \
-  }
-#define JKQTPSetMacroIP(type,varname,inst) JKQTPSET_MACRO_IP(type,varname,inst)
-/*@}*/
-
 /** \defgroup tools_files filesystem and file I/O
  *  \ingroup tools
  */
@@ -430,15 +120,12 @@ class JKQTPEnhancedPainter; // forward
 /** \brief check whether the dlotaing point number is OK (i.e. non-inf, non-NAN)
  * \ingroup jkqtptools
  */
-#define JKQTPIsOKFloat(v) (std::isfinite(v)&&(!std::isinf(v))&&(!std::isnan(v)))
+template <typename T>
+inline T JKQTPIsOKFloat(T v) {
+    return std::isfinite(v)&&(!std::isinf(v))&&(!std::isnan(v));
+}
 
 
-/** \brief converts a QColor into a string using the jkqtp_rgbtostring() method.
- * \ingroup jkqtptools
- *
- * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
- */
-#define JKQTP_QColor2String(color) QString(jkqtp_rgbtostring(static_cast<unsigned char>((color).red()), static_cast<unsigned char>((color).green()), static_cast<unsigned char>((color).blue()), static_cast<unsigned char>((color).alpha())).c_str())
 
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools
@@ -615,7 +302,7 @@ typedef struct {
  */
 #define JKQTPPROPERTY(type,varname) \
   type varname; \
-  /** \brief default value for property property varname. \see varname for more information */ \
+  /*! \brief default value for property property varname. \see varname for more information */ \
   type def_##varname;
 
 /**
@@ -723,14 +410,18 @@ LIB_EXPORT QString JKQTPgraphSymbols2NameString(JKQTPgraphSymbols pos);
 LIB_EXPORT JKQTPgraphSymbols String2JKQTPgraphSymbols(QString pos);
 
 
-
+/** \brief convert a double to a string, using the loacle "C"
+ * \ingroup jkqtptools
+ */
 inline QString JKQTPCDoubleToQString(double value) {
     QLocale loc=QLocale::c();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);
     return loc.toString(value, 'g', 18);
 }
 
-
+/** \brief convert a double to a string
+ * \ingroup jkqtptools
+ */
 inline QString JKQTPDoubleToQString(double value, int prec = 10, char f = 'g', QChar decimalSeparator='.') {
     QLocale loc=QLocale::c();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);
@@ -743,7 +434,9 @@ inline QString JKQTPDoubleToQString(double value, int prec = 10, char f = 'g', Q
 
 
 
-
+/** \brief rotate a rectangle by  given angle (rotates all points around the center of the rectangle and returns it as a QPolygonF)
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
 
 
@@ -846,6 +539,9 @@ inline void jkqtpSort(T* input, T2* input2, int N, T* output=nullptr, T2* output
     jkqtpQuicksort(data, data2, 0, N-1);
 }
 
+/** \brief RAII construct that times its lifetime, outputting properly indented qDebug()-message
+ * \ingroup jkqtptools
+ */
 class LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 {
     public:
@@ -859,32 +555,94 @@ class LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 
 };
 
+/** \brief convert a string to lower-case characters
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_tolower(const std::string& s);
 
+/** \brief convert a string to a boolean
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT bool jkqtp_strtobool(std::string data);
+/** \brief convert a string to upper-case
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
 
+/** \brief std::string wrapper around sprintf()
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
 
-LIB_EXPORT long jkqtp_get_filesize(char *FileName);
+/** \brief convert a number of bytes to a string, formatting e.g. 1024 as 1kB, ...
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_bytestostr(double bytes);
 
+/** \brief convert an integer to a string
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_inttostr(long data);
 
+/** \brief convert an integer to a hex string
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_inttohex(long data);
 
+/** \brief convert an unsigned int to a string
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
 
+/** \brief convert a double to a string
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
 
+/** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000,"g") will result in "1kg"
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, std::string unitname);
+/** \brief convert a boolean to a string
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_booltostr(bool data);
+/** \brief converts a RGBA color into a string
+ * \ingroup jkqtptools
+ *
+ * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
+ */
 LIB_EXPORT std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
+
+/** \brief converts a QColor into a string using the jkqtp_rgbtostring() method.
+ * \ingroup jkqtptools
+ *
+ * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
+ */
+inline QString JKQTP_QColor2String(QColor color) {
+    return QString(jkqtp_rgbtostring(static_cast<unsigned char>((color).red()), static_cast<unsigned char>((color).green()), static_cast<unsigned char>((color).blue()), static_cast<unsigned char>((color).alpha())).c_str());
+}
+
+/** \brief clean a string to be usable as a variable name, e.g. in an expression parser, or a C++-expression
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_to_valid_variable_name(std::string input);
 
+/** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000) will result in "1k"
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false);
+/** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. \c -1.23\cdot10^{-5})
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
+/** \brief convert a double to a string, encoding powers of ten as exponent with HTML tags
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_floattohtmlstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
+/** \brief convert a character to a string
+ * \ingroup jkqtptools
+ */
 LIB_EXPORT std::string jkqtp_chartostr(char data);
 
 /** \brief wandelt einen Datentyp in einen double um, wird von JKQTPDatastore zur Wandlung benutzt

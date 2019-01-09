@@ -578,7 +578,7 @@ class JKQTPMathParser
             jkmpConstantNode(jkmpResult d, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief evaluate this node */
-            virtual jkmpResult evaluate() override;;
+            virtual jkmpResult evaluate() override;
         };
 
         /**
@@ -814,7 +814,20 @@ class JKQTPMathParser
 		/**\brief class destructor */
         virtual ~JKQTPMathParser();
 
-        JKQTPGET_SET_MACRO(void*, data)
+        /*! \brief sets the property data to the specified \a __value. 
+            \details Description of the parameter data is: <CENTER>\copybrief data.</CENTER> 
+            \see data for more information */ 
+        inline virtual void set_data(void* __value)  
+        {
+            this->data = __value;
+        } 
+        /*! \brief returns the property data. 
+            \details Description of the parameter data is: <CENTER>\copybrief data.</CENTER> 
+            \see data for more information */ 
+        inline virtual void* get_data() const  
+        {
+            return this->data; 
+        }
 
 		/**\brief  register a new function
 		 * \param name name of the new function

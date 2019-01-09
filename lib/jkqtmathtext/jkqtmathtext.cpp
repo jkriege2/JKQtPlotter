@@ -27,6 +27,21 @@
 #include <QApplication>
 //#define JKQTP_QColor2String(color) QString(jkqtp_rgbtostring((color).red(), (color).green(), (color).blue(), (color).alpha()).c_str())
 
+/**
+ * \brief saves the given property (for which also a def_property exists) into the given settings object
+ * \ingroup jkqtmathtext
+ * \internal
+ */
+#define JKQTMTPROPERTYsave(settings, group, var, varname) \
+    if (var!=def_##var) settings.setValue(group+varname, var);
+/**
+ * \brief loads the given property from the given settings object
+ * \ingroup jkqtmathtext
+ * \internal
+ */
+#define JKQTMTPROPERTYload(settings, group, var, varname, varconvert) \
+    var=settings.value(group+varname, var).varconvert;
+
 
 QPainterPath makeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink=0.5, double cubiccontrolfac=0.3) {
     double xl1=x-(width)*cubicshrink+bw*cubicshrink;
@@ -177,6 +192,11 @@ QString JKQTmathText::MTenvironment::toHtmlAfter(JKQTmathText::MTenvironment /*d
 JKQTmathText::MTnode::MTnode(JKQTmathText* parent) {
     this->parent=parent;
     drawBoxes=false;
+}
+
+JKQTmathText::MTnode::~MTnode()
+{
+
 }
 
 void JKQTmathText::MTnode::getSize(QPainter &painter, JKQTmathText::MTenvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)

@@ -252,7 +252,7 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
     /*if (parent && parent->get_xAxis()->isLogAxis()) {
         for (double x=log(xmin)+logdelta0; x<log(xmax); x=x+logdelta0) {
             d->next = new doublePair;
-            d->next->x=exp(x+((double)rand()/(double)RAND_MAX-0.5)*delta0/2.0);
+            d->next->x=exp(x+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta0/2.0);
             d->next->f=func(d->next->x,);
             d->next->next=nullptr;
             doublePair* dd=d;
@@ -266,7 +266,7 @@ void JKQTPxFunctionLineGraph::createPlotData(bool collectParams) {
     } else {
        for (double x=pxmin+delta0; x<pxmax; x=x+delta0) {
            d->next = new doublePair;
-           d->next->x=parent->p2x(x+((double)rand()/(double)RAND_MAX-0.5)*delta0/2.0);
+           d->next->x=parent->p2x(x+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta0/2.0);
            d->next->f=func(d->next->x);
            d->next->next=nullptr;
            doublePair* dd=d;
@@ -341,10 +341,10 @@ void JKQTPxFunctionLineGraph::refine(doublePair* a, doublePair* b, unsigned int 
     double xmid=ax+(delta)/2.0;
     /*if (parent && parent->get_xAxis()->isLogAxis()) {
         xmid=log(a->x)+(logdelta)/2.0;
-        xmid=xmid+((double)rand()/(double)RAND_MAX-0.5)*delta/5.0;
+        xmid=xmid+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta/5.0;
         xmid=exp(xmid);
     } else {*/
-        xmid=xmid+((double)rand()/(double)RAND_MAX-0.5)*delta/5.0; // shake by 10%
+        xmid=xmid+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta/5.0; // shake by 10%
     //}
     double realxmid=parent->p2x(xmid);
     double realfmid;
@@ -738,7 +738,7 @@ void JKQTPyFunctionLineGraph::createPlotData(bool collectParams) {
     data=d;
     for (double y=ymin+delta0; y<ymax; y=y+delta0) {
         d->next = new doublePair;
-        d->next->x=y+((double)rand()/(double)RAND_MAX-0.5)*delta0/2.0;
+        d->next->x=y+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta0/2.0;
         d->next->f=func(d->next->x);
         d->next->next=nullptr;
         doublePair* dd=d;
