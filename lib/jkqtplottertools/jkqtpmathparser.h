@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -815,14 +815,14 @@ class JKQTPMathParser
         virtual ~JKQTPMathParser();
 
         /*! \brief sets the property data to the specified \a __value. 
-            \details Description of the parameter data is: <CENTER>\copybrief data.</CENTER> 
+            \details Description of the parameter data is: <BLOCKQUOTE>\copybrief data </BLOCKQUOTE> 
             \see data for more information */ 
         inline virtual void set_data(void* __value)  
         {
             this->data = __value;
         } 
         /*! \brief returns the property data. 
-            \details Description of the parameter data is: <CENTER>\copybrief data.</CENTER> 
+            \details Description of the parameter data is: <BLOCKQUOTE>\copybrief data </BLOCKQUOTE> 
             \see data for more information */ 
         inline virtual void* get_data() const  
         {

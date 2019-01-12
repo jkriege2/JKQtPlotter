@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -27,7 +27,7 @@
  * These classes are used by JKQtPlotterBase to output the plot
  */
 
-/** \file jkqtpgraphs.h
+/** \file jkqtpbaseelements.h
   * \ingroup jkqtpbaseplotter_elements
   */
 
@@ -66,7 +66,7 @@ class JKQtBasePlotter;
     Which parts to actually draw is set by the diverse properties.
 
 
-    \section jkqtplotter_base_systems Coordinate Systems and Transformations
+    \section jkqtplotter_base_systems_baseelements Coordinate Systems and Transformations
     The plot itself is positioned inside the widget. You simply supply the widget dimensions and the border
     widths between the plot and the widget. The Object then calculates the size of the plot:
 
@@ -227,122 +227,122 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         virtual void drawGrids(JKQTPEnhancedPainter& painter)=0;
 
 
-        /*! \brief returns the property tickSpacing. \details Description of the parameter tickSpacing is:  <CENTER>\copybrief tickSpacing.</CENTER>. \see tickSpacing for more information */ 
+        /*! \brief returns the property tickSpacing. \details Description of the parameter tickSpacing is:  <BLOCKQUOTE>\copybrief tickSpacing </BLOCKQUOTE>. \see tickSpacing for more information */ 
         inline double get_tickSpacing() const { return this->tickSpacing; }
-        /*! \brief returns the property labelDigits. \details Description of the parameter labelDigits is:  <CENTER>\copybrief labelDigits.</CENTER>. \see labelDigits for more information */ 
+        /*! \brief returns the property labelDigits. \details Description of the parameter labelDigits is:  <BLOCKQUOTE>\copybrief labelDigits </BLOCKQUOTE>. \see labelDigits for more information */ 
         inline int get_labelDigits() const { return this->labelDigits; }
-        /*! \brief returns the property autoAxisSpacing. \details Description of the parameter autoAxisSpacing is:  <CENTER>\copybrief autoAxisSpacing.</CENTER>. \see autoAxisSpacing for more information */ 
+        /*! \brief returns the property autoAxisSpacing. \details Description of the parameter autoAxisSpacing is:  <BLOCKQUOTE>\copybrief autoAxisSpacing </BLOCKQUOTE>. \see autoAxisSpacing for more information */ 
         inline bool get_autoAxisSpacing() const { return this->autoAxisSpacing; }
-        /*! \brief returns the property minorTickLabelsEnabled. \details Description of the parameter minorTickLabelsEnabled is:  <CENTER>\copybrief minorTickLabelsEnabled.</CENTER>. \see minorTickLabelsEnabled for more information */ 
+        /*! \brief returns the property minorTickLabelsEnabled. \details Description of the parameter minorTickLabelsEnabled is:  <BLOCKQUOTE>\copybrief minorTickLabelsEnabled </BLOCKQUOTE>. \see minorTickLabelsEnabled for more information */ 
         inline bool get_minorTickLabelsEnabled() const { return this->minorTickLabelsEnabled; }
-        /*! \brief returns the property logAxis. \details Description of the parameter logAxis is:  <CENTER>\copybrief logAxis.</CENTER>. \see logAxis for more information */ 
+        /*! \brief returns the property logAxis. \details Description of the parameter logAxis is:  <BLOCKQUOTE>\copybrief logAxis </BLOCKQUOTE>. \see logAxis for more information */ 
         inline bool get_logAxis() const { return this->logAxis; }
-        /*! \brief returns the property inverted. \details Description of the parameter inverted is:  <CENTER>\copybrief inverted.</CENTER>. \see inverted for more information */ 
+        /*! \brief returns the property inverted. \details Description of the parameter inverted is:  <BLOCKQUOTE>\copybrief inverted </BLOCKQUOTE>. \see inverted for more information */ 
         inline bool get_inverted() const { return this->inverted; }
-        /*! \brief returns the property logAxisBase. \details Description of the parameter logAxisBase is:  <CENTER>\copybrief logAxisBase.</CENTER>. \see logAxisBase for more information */ 
+        /*! \brief returns the property logAxisBase. \details Description of the parameter logAxisBase is:  <BLOCKQUOTE>\copybrief logAxisBase </BLOCKQUOTE>. \see logAxisBase for more information */ 
         inline double get_logAxisBase() const { return this->logAxisBase; }
-        /*! \brief returns the property userTickSpacing. \details Description of the parameter userTickSpacing is:  <CENTER>\copybrief userTickSpacing.</CENTER>. \see userTickSpacing for more information */ 
+        /*! \brief returns the property userTickSpacing. \details Description of the parameter userTickSpacing is:  <BLOCKQUOTE>\copybrief userTickSpacing </BLOCKQUOTE>. \see userTickSpacing for more information */ 
         inline double get_userTickSpacing() const { return this->userTickSpacing; }
-        /*! \brief returns the property userLogTickSpacing. \details Description of the parameter userLogTickSpacing is:  <CENTER>\copybrief userLogTickSpacing.</CENTER>. \see userLogTickSpacing for more information */ 
+        /*! \brief returns the property userLogTickSpacing. \details Description of the parameter userLogTickSpacing is:  <BLOCKQUOTE>\copybrief userLogTickSpacing </BLOCKQUOTE>. \see userLogTickSpacing for more information */ 
         inline double get_userLogTickSpacing() const { return this->userLogTickSpacing; }
-        /*! \brief returns the property labelType. \details Description of the parameter labelType is:  <CENTER>\copybrief labelType.</CENTER>. \see labelType for more information */ 
+        /*! \brief returns the property labelType. \details Description of the parameter labelType is:  <BLOCKQUOTE>\copybrief labelType </BLOCKQUOTE>. \see labelType for more information */ 
         inline JKQTPCAlabelType get_labelType() const { return this->labelType; }
-        /*! \brief returns the property axisLabel. \details Description of the parameter axisLabel is:  <CENTER>\copybrief axisLabel.</CENTER>. \see axisLabel for more information */ 
+        /*! \brief returns the property axisLabel. \details Description of the parameter axisLabel is:  <BLOCKQUOTE>\copybrief axisLabel </BLOCKQUOTE>. \see axisLabel for more information */ 
         inline QString get_axisLabel() const { return this->axisLabel; }
-        /*! \brief returns the property labelPosition. \details Description of the parameter labelPosition is:  <CENTER>\copybrief labelPosition.</CENTER>. \see labelPosition for more information */ 
+        /*! \brief returns the property labelPosition. \details Description of the parameter labelPosition is:  <BLOCKQUOTE>\copybrief labelPosition </BLOCKQUOTE>. \see labelPosition for more information */ 
         inline JKQTPlabelPosition get_labelPosition() const { return this->labelPosition; }
-        /*! \brief returns the property labelFont. \details Description of the parameter labelFont is:  <CENTER>\copybrief labelFont.</CENTER>. \see labelFont for more information */ 
+        /*! \brief returns the property labelFont. \details Description of the parameter labelFont is:  <BLOCKQUOTE>\copybrief labelFont </BLOCKQUOTE>. \see labelFont for more information */ 
         inline QString get_labelFont() const { return this->labelFont; }
-        /*! \brief returns the property labelFontSize. \details Description of the parameter labelFontSize is:  <CENTER>\copybrief labelFontSize.</CENTER>. \see labelFontSize for more information */ 
+        /*! \brief returns the property labelFontSize. \details Description of the parameter labelFontSize is:  <BLOCKQUOTE>\copybrief labelFontSize </BLOCKQUOTE>. \see labelFontSize for more information */ 
         inline double get_labelFontSize() const { return this->labelFontSize; }
-        /*! \brief returns the property tickLabelFont. \details Description of the parameter tickLabelFont is:  <CENTER>\copybrief tickLabelFont.</CENTER>. \see tickLabelFont for more information */ 
+        /*! \brief returns the property tickLabelFont. \details Description of the parameter tickLabelFont is:  <BLOCKQUOTE>\copybrief tickLabelFont </BLOCKQUOTE>. \see tickLabelFont for more information */ 
         inline QString get_tickLabelFont() const { return this->tickLabelFont; }
-        /*! \brief returns the property tickLabelFontSize. \details Description of the parameter tickLabelFontSize is:  <CENTER>\copybrief tickLabelFontSize.</CENTER>. \see tickLabelFontSize for more information */ 
+        /*! \brief returns the property tickLabelFontSize. \details Description of the parameter tickLabelFontSize is:  <BLOCKQUOTE>\copybrief tickLabelFontSize </BLOCKQUOTE>. \see tickLabelFontSize for more information */ 
         inline double get_tickLabelFontSize() const { return this->tickLabelFontSize; }
-        /*! \brief returns the property minorTickLabelFontSize. \details Description of the parameter minorTickLabelFontSize is:  <CENTER>\copybrief minorTickLabelFontSize.</CENTER>. \see minorTickLabelFontSize for more information */ 
+        /*! \brief returns the property minorTickLabelFontSize. \details Description of the parameter minorTickLabelFontSize is:  <BLOCKQUOTE>\copybrief minorTickLabelFontSize </BLOCKQUOTE>. \see minorTickLabelFontSize for more information */ 
         inline double get_minorTickLabelFontSize() const { return this->minorTickLabelFontSize; }
-        /*! \brief returns the property minorTickLabelFullNumber. \details Description of the parameter minorTickLabelFullNumber is:  <CENTER>\copybrief minorTickLabelFullNumber.</CENTER>. \see minorTickLabelFullNumber for more information */ 
+        /*! \brief returns the property minorTickLabelFullNumber. \details Description of the parameter minorTickLabelFullNumber is:  <BLOCKQUOTE>\copybrief minorTickLabelFullNumber </BLOCKQUOTE>. \see minorTickLabelFullNumber for more information */ 
         inline bool get_minorTickLabelFullNumber() const { return this->minorTickLabelFullNumber; }
-        /*! \brief returns the property tickLabelAngle. \details Description of the parameter tickLabelAngle is:  <CENTER>\copybrief tickLabelAngle.</CENTER>. \see tickLabelAngle for more information */ 
+        /*! \brief returns the property tickLabelAngle. \details Description of the parameter tickLabelAngle is:  <BLOCKQUOTE>\copybrief tickLabelAngle </BLOCKQUOTE>. \see tickLabelAngle for more information */ 
         inline double get_tickLabelAngle() const { return this->tickLabelAngle; }
-        /*! \brief returns the property minTicks. \details Description of the parameter minTicks is:  <CENTER>\copybrief minTicks.</CENTER>. \see minTicks for more information */ 
+        /*! \brief returns the property minTicks. \details Description of the parameter minTicks is:  <BLOCKQUOTE>\copybrief minTicks </BLOCKQUOTE>. \see minTicks for more information */ 
         inline unsigned int get_minTicks() const { return this->minTicks; }
-        /*! \brief returns the property minorTicks. \details Description of the parameter minorTicks is:  <CENTER>\copybrief minorTicks.</CENTER>. \see minorTicks for more information */ 
+        /*! \brief returns the property minorTicks. \details Description of the parameter minorTicks is:  <BLOCKQUOTE>\copybrief minorTicks </BLOCKQUOTE>. \see minorTicks for more information */ 
         inline unsigned int get_minorTicks() const { return this->minorTicks; }
-        /*! \brief returns the property tickOutsideLength. \details Description of the parameter tickOutsideLength is:  <CENTER>\copybrief tickOutsideLength.</CENTER>. \see tickOutsideLength for more information */ 
+        /*! \brief returns the property tickOutsideLength. \details Description of the parameter tickOutsideLength is:  <BLOCKQUOTE>\copybrief tickOutsideLength </BLOCKQUOTE>. \see tickOutsideLength for more information */ 
         inline double get_tickOutsideLength() const { return this->tickOutsideLength; }
-        /*! \brief returns the property minorTickOutsideLength. \details Description of the parameter minorTickOutsideLength is:  <CENTER>\copybrief minorTickOutsideLength.</CENTER>. \see minorTickOutsideLength for more information */ 
+        /*! \brief returns the property minorTickOutsideLength. \details Description of the parameter minorTickOutsideLength is:  <BLOCKQUOTE>\copybrief minorTickOutsideLength </BLOCKQUOTE>. \see minorTickOutsideLength for more information */ 
         inline double get_minorTickOutsideLength() const { return this->minorTickOutsideLength; }
-        /*! \brief returns the property axisColor. \details Description of the parameter axisColor is:  <CENTER>\copybrief axisColor.</CENTER>. \see axisColor for more information */ 
+        /*! \brief returns the property axisColor. \details Description of the parameter axisColor is:  <BLOCKQUOTE>\copybrief axisColor </BLOCKQUOTE>. \see axisColor for more information */ 
         inline QColor get_axisColor() const { return this->axisColor; }
-        /*! \brief returns the property showZeroAxis. \details Description of the parameter showZeroAxis is:  <CENTER>\copybrief showZeroAxis.</CENTER>. \see showZeroAxis for more information */ 
+        /*! \brief returns the property showZeroAxis. \details Description of the parameter showZeroAxis is:  <BLOCKQUOTE>\copybrief showZeroAxis </BLOCKQUOTE>. \see showZeroAxis for more information */ 
         inline bool get_showZeroAxis() const { return this->showZeroAxis; }
-        /*! \brief returns the property gridColor. \details Description of the parameter gridColor is:  <CENTER>\copybrief gridColor.</CENTER>. \see gridColor for more information */ 
+        /*! \brief returns the property gridColor. \details Description of the parameter gridColor is:  <BLOCKQUOTE>\copybrief gridColor </BLOCKQUOTE>. \see gridColor for more information */ 
         inline QColor get_gridColor() const { return this->gridColor; }
-        /*! \brief returns the property minorGridColor. \details Description of the parameter minorGridColor is:  <CENTER>\copybrief minorGridColor.</CENTER>. \see minorGridColor for more information */ 
+        /*! \brief returns the property minorGridColor. \details Description of the parameter minorGridColor is:  <BLOCKQUOTE>\copybrief minorGridColor </BLOCKQUOTE>. \see minorGridColor for more information */ 
         inline QColor get_minorGridColor() const { return this->minorGridColor; }
-        /*! \brief returns the property gridWidth. \details Description of the parameter gridWidth is:  <CENTER>\copybrief gridWidth.</CENTER>. \see gridWidth for more information */ 
+        /*! \brief returns the property gridWidth. \details Description of the parameter gridWidth is:  <BLOCKQUOTE>\copybrief gridWidth </BLOCKQUOTE>. \see gridWidth for more information */ 
         inline double get_gridWidth() const { return this->gridWidth; }
-        /*! \brief returns the property gridStyle. \details Description of the parameter gridStyle is:  <CENTER>\copybrief gridStyle.</CENTER>. \see gridStyle for more information */ 
+        /*! \brief returns the property gridStyle. \details Description of the parameter gridStyle is:  <BLOCKQUOTE>\copybrief gridStyle </BLOCKQUOTE>. \see gridStyle for more information */ 
         inline Qt::PenStyle get_gridStyle() const { return this->gridStyle; }
-        /*! \brief returns the property minorGridWidth. \details Description of the parameter minorGridWidth is:  <CENTER>\copybrief minorGridWidth.</CENTER>. \see minorGridWidth for more information */ 
+        /*! \brief returns the property minorGridWidth. \details Description of the parameter minorGridWidth is:  <BLOCKQUOTE>\copybrief minorGridWidth </BLOCKQUOTE>. \see minorGridWidth for more information */ 
         inline double get_minorGridWidth() const { return this->minorGridWidth; }
-        /*! \brief returns the property minorGridStyle. \details Description of the parameter minorGridStyle is:  <CENTER>\copybrief minorGridStyle.</CENTER>. \see minorGridStyle for more information */ 
+        /*! \brief returns the property minorGridStyle. \details Description of the parameter minorGridStyle is:  <BLOCKQUOTE>\copybrief minorGridStyle </BLOCKQUOTE>. \see minorGridStyle for more information */ 
         inline Qt::PenStyle get_minorGridStyle() const { return this->minorGridStyle; }
-        /*! \brief returns the property tickTimeFormat. \details Description of the parameter tickTimeFormat is:  <CENTER>\copybrief tickTimeFormat.</CENTER>. \see tickTimeFormat for more information */ 
+        /*! \brief returns the property tickTimeFormat. \details Description of the parameter tickTimeFormat is:  <BLOCKQUOTE>\copybrief tickTimeFormat </BLOCKQUOTE>. \see tickTimeFormat for more information */ 
         inline QString get_tickTimeFormat() const { return this->tickTimeFormat; }
-        /*! \brief returns the property tickDateFormat. \details Description of the parameter tickDateFormat is:  <CENTER>\copybrief tickDateFormat.</CENTER>. \see tickDateFormat for more information */ 
+        /*! \brief returns the property tickDateFormat. \details Description of the parameter tickDateFormat is:  <BLOCKQUOTE>\copybrief tickDateFormat </BLOCKQUOTE>. \see tickDateFormat for more information */ 
         inline QString get_tickDateFormat() const { return this->tickDateFormat; }
-        /*! \brief returns the property tickDateTimeFormat. \details Description of the parameter tickDateTimeFormat is:  <CENTER>\copybrief tickDateTimeFormat.</CENTER>. \see tickDateTimeFormat for more information */ 
+        /*! \brief returns the property tickDateTimeFormat. \details Description of the parameter tickDateTimeFormat is:  <BLOCKQUOTE>\copybrief tickDateTimeFormat </BLOCKQUOTE>. \see tickDateTimeFormat for more information */ 
         inline QString get_tickDateTimeFormat() const { return this->tickDateTimeFormat; }
-        /*! \brief returns the property tickMode. \details Description of the parameter tickMode is:  <CENTER>\copybrief tickMode.</CENTER>. \see tickMode for more information */ 
+        /*! \brief returns the property tickMode. \details Description of the parameter tickMode is:  <BLOCKQUOTE>\copybrief tickMode </BLOCKQUOTE>. \see tickMode for more information */ 
         inline JKQTPLabelTickMode get_tickMode() const { return this->tickMode; }
 
-        /*! \brief returns the property drawMode1. \details Description of the parameter drawMode1 is:  <CENTER>\copybrief drawMode1.</CENTER>. \see drawMode1 for more information */ 
+        /*! \brief returns the property drawMode1. \details Description of the parameter drawMode1 is:  <BLOCKQUOTE>\copybrief drawMode1 </BLOCKQUOTE>. \see drawMode1 for more information */ 
         inline JKQTPCAdrawMode get_drawMode1() const { return this->drawMode1; }
-        /*! \brief returns the property drawMode2. \details Description of the parameter drawMode2 is:  <CENTER>\copybrief drawMode2.</CENTER>. \see drawMode2 for more information */ 
+        /*! \brief returns the property drawMode2. \details Description of the parameter drawMode2 is:  <BLOCKQUOTE>\copybrief drawMode2 </BLOCKQUOTE>. \see drawMode2 for more information */ 
         inline JKQTPCAdrawMode get_drawMode2() const { return this->drawMode2; }
-        /*! \brief returns the property minorTickWidth. \details Description of the parameter minorTickWidth is:  <CENTER>\copybrief minorTickWidth.</CENTER>. \see minorTickWidth for more information */ 
+        /*! \brief returns the property minorTickWidth. \details Description of the parameter minorTickWidth is:  <BLOCKQUOTE>\copybrief minorTickWidth </BLOCKQUOTE>. \see minorTickWidth for more information */ 
         inline double get_minorTickWidth() const { return this->minorTickWidth; }
-        /*! \brief returns the property tickWidth. \details Description of the parameter tickWidth is:  <CENTER>\copybrief tickWidth.</CENTER>. \see tickWidth for more information */ 
+        /*! \brief returns the property tickWidth. \details Description of the parameter tickWidth is:  <BLOCKQUOTE>\copybrief tickWidth </BLOCKQUOTE>. \see tickWidth for more information */ 
         inline double get_tickWidth() const { return this->tickWidth; }
-        /*! \brief returns the property lineWidth. \details Description of the parameter lineWidth is:  <CENTER>\copybrief lineWidth.</CENTER>. \see lineWidth for more information */ 
+        /*! \brief returns the property lineWidth. \details Description of the parameter lineWidth is:  <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE>. \see lineWidth for more information */ 
         inline double get_lineWidth() const { return this->lineWidth; }
-        /*! \brief returns the property lineWidthZeroAxis. \details Description of the parameter lineWidthZeroAxis is:  <CENTER>\copybrief lineWidthZeroAxis.</CENTER>. \see lineWidthZeroAxis for more information */ 
+        /*! \brief returns the property lineWidthZeroAxis. \details Description of the parameter lineWidthZeroAxis is:  <BLOCKQUOTE>\copybrief lineWidthZeroAxis </BLOCKQUOTE>. \see lineWidthZeroAxis for more information */ 
         inline double get_lineWidthZeroAxis() const { return this->lineWidthZeroAxis; }
-        /*! \brief returns the property tickLabelDistance. \details Description of the parameter tickLabelDistance is:  <CENTER>\copybrief tickLabelDistance.</CENTER>. \see tickLabelDistance for more information */ 
+        /*! \brief returns the property tickLabelDistance. \details Description of the parameter tickLabelDistance is:  <BLOCKQUOTE>\copybrief tickLabelDistance </BLOCKQUOTE>. \see tickLabelDistance for more information */ 
         inline double get_tickLabelDistance() const { return this->tickLabelDistance; }
-        /*! \brief returns the property labelDistance. \details Description of the parameter labelDistance is:  <CENTER>\copybrief labelDistance.</CENTER>. \see labelDistance for more information */ 
+        /*! \brief returns the property labelDistance. \details Description of the parameter labelDistance is:  <BLOCKQUOTE>\copybrief labelDistance </BLOCKQUOTE>. \see labelDistance for more information */ 
         inline double get_labelDistance() const { return this->labelDistance; }
-        /*! \brief returns the property drawGrid. \details Description of the parameter drawGrid is:  <CENTER>\copybrief drawGrid.</CENTER>. \see drawGrid for more information */ 
+        /*! \brief returns the property drawGrid. \details Description of the parameter drawGrid is:  <BLOCKQUOTE>\copybrief drawGrid </BLOCKQUOTE>. \see drawGrid for more information */ 
         inline bool get_drawGrid() const { return this->drawGrid; }
-        /*! \brief returns the property drawMinorGrid. \details Description of the parameter drawMinorGrid is:  <CENTER>\copybrief drawMinorGrid.</CENTER>. \see drawMinorGrid for more information */ 
+        /*! \brief returns the property drawMinorGrid. \details Description of the parameter drawMinorGrid is:  <BLOCKQUOTE>\copybrief drawMinorGrid </BLOCKQUOTE>. \see drawMinorGrid for more information */ 
         inline bool get_drawMinorGrid() const { return this->drawMinorGrid; }
         /*! \brief sets the property autoLabelDigits to the specified \a __value. 
-            \details Description of the parameter autoLabelDigits is: <CENTER>\copybrief autoLabelDigits.</CENTER> 
+            \details Description of the parameter autoLabelDigits is: <BLOCKQUOTE>\copybrief autoLabelDigits </BLOCKQUOTE> 
             \see autoLabelDigits for more information */ 
         inline virtual void set_autoLabelDigits(bool __value)
         {
             this->autoLabelDigits = __value;
         } 
         /*! \brief returns the property autoLabelDigits. 
-            \details Description of the parameter autoLabelDigits is: <CENTER>\copybrief autoLabelDigits.</CENTER> 
+            \details Description of the parameter autoLabelDigits is: <BLOCKQUOTE>\copybrief autoLabelDigits </BLOCKQUOTE> 
             \see autoLabelDigits for more information */ 
         inline virtual bool get_autoLabelDigits() const  
         {
             return this->autoLabelDigits; 
         }
-        /*! \brief returns the property parent. \details Description of the parameter parent is:  <CENTER>\copybrief parent.</CENTER>. \see parent for more information */ 
+        /*! \brief returns the property parent. \details Description of the parameter parent is:  <BLOCKQUOTE>\copybrief parent </BLOCKQUOTE>. \see parent for more information */ 
         inline JKQtBasePlotter* get_parent() const { return this->parent; }
         /*! \brief sets the property doUpdateScaling to the specified \a __value. 
-            \details Description of the parameter doUpdateScaling is: <CENTER>\copybrief doUpdateScaling.</CENTER> 
+            \details Description of the parameter doUpdateScaling is: <BLOCKQUOTE>\copybrief doUpdateScaling </BLOCKQUOTE> 
             \see doUpdateScaling for more information */ 
         inline virtual void set_doUpdateScaling(bool __value)
         {
             this->doUpdateScaling = __value;
         } 
         /*! \brief returns the property doUpdateScaling. 
-            \details Description of the parameter doUpdateScaling is: <CENTER>\copybrief doUpdateScaling.</CENTER> 
+            \details Description of the parameter doUpdateScaling is: <BLOCKQUOTE>\copybrief doUpdateScaling </BLOCKQUOTE> 
             \see doUpdateScaling for more information */ 
         inline virtual bool get_doUpdateScaling() const  
         {
@@ -380,219 +380,219 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         void setNoAbsoluteRange();
 
         /** \brief sets the property tickSpacing to the specified \a __value.
-         *  \details Description of the parameter tickSpacing is:  <CENTER>\copybrief tickSpacing.</CENTER>
+         *  \details Description of the parameter tickSpacing is:  <BLOCKQUOTE>\copybrief tickSpacing </BLOCKQUOTE>
          *  \see tickSpacing for more information */
         virtual void set_tickSpacing(double __value);
 
         /** \brief sets the property axisMinWidth to the specified \a __value.
-         *  \details Description of the parameter tickSpacing is:  <CENTER>\copybrief axisMinWidth.</CENTER>
+         *  \details Description of the parameter tickSpacing is:  <BLOCKQUOTE>\copybrief axisMinWidth </BLOCKQUOTE>
          *  \see axisMinWidth for more information */
         virtual void set_axisMinWidth(double __value);
 
         /** \brief sets the property autoAxisSpacing to the specified \a __value.
-         *  \details Description of the parameter autoAxisSpacing is:  <CENTER>\copybrief autoAxisSpacing.</CENTER>
+         *  \details Description of the parameter autoAxisSpacing is:  <BLOCKQUOTE>\copybrief autoAxisSpacing </BLOCKQUOTE>
          *  \see autoAxisSpacing for more information */
         virtual void set_autoAxisSpacing(bool __value);
 
         /** \brief sets the property minorTickLabelsEnabled to the specified \a __value.
-         *  \details Description of the parameter minorTickLabelsEnabled is:  <CENTER>\copybrief minorTickLabelsEnabled.</CENTER>
+         *  \details Description of the parameter minorTickLabelsEnabled is:  <BLOCKQUOTE>\copybrief minorTickLabelsEnabled </BLOCKQUOTE>
          *  \see autoAxisSpacing for more information */
         virtual void set_minorTickLabelsEnabled(bool __value);
 
         /** \brief sets the property logAxis to the specified \a __value.
-         *  \details Description of the parameter logAxis is:  <CENTER>\copybrief logAxis.</CENTER>
+         *  \details Description of the parameter logAxis is:  <BLOCKQUOTE>\copybrief logAxis </BLOCKQUOTE>
          *  \see logAxis for more information */
         virtual void set_logAxis(bool __value) ;
 
         /** \brief sets the property logAxisBase to the specified \a __value.
-         *  \details Description of the parameter logAxisBase is:  <CENTER>\copybrief logAxisBase.</CENTER>
+         *  \details Description of the parameter logAxisBase is:  <BLOCKQUOTE>\copybrief logAxisBase </BLOCKQUOTE>
          *  \see logAxisBase for more information */
         virtual void set_logAxisBase (double __value);
 
         /** \brief sets the property userTickSpacing to the specified \a __value.
-         *  \details Description of the parameter userTickSpacing is:  <CENTER>\copybrief userTickSpacing.</CENTER>
+         *  \details Description of the parameter userTickSpacing is:  <BLOCKQUOTE>\copybrief userTickSpacing </BLOCKQUOTE>
          *  \see userTickSpacing for more information */
         virtual void set_userTickSpacing (double __value);
 
         /** \brief sets the property userLogTickSpacing to the specified \a __value.
-         *  \details Description of the parameter userLogTickSpacing is:  <CENTER>\copybrief userLogTickSpacing.</CENTER>
+         *  \details Description of the parameter userLogTickSpacing is:  <BLOCKQUOTE>\copybrief userLogTickSpacing </BLOCKQUOTE>
          *  \see userLogTickSpacing for more information */
         virtual void set_userLogTickSpacing (double __value);
 
         /** \brief sets the property labelType to the specified \a __value.
-         *  \details Description of the parameter labelType is:  <CENTER>\copybrief labelType.</CENTER>
+         *  \details Description of the parameter labelType is:  <BLOCKQUOTE>\copybrief labelType </BLOCKQUOTE>
          *  \see labelType for more information */
         virtual void set_labelType (JKQTPCAlabelType __value);
 
         /** \brief sets the property tickMode to the specified \a __value.
-         *  \details Description of the parameter tickMode is:  <CENTER>\copybrief tickMode.</CENTER>
+         *  \details Description of the parameter tickMode is:  <BLOCKQUOTE>\copybrief tickMode </BLOCKQUOTE>
          *  \see tickMode for more information */
         virtual void set_tickMode (JKQTPLabelTickMode __value);
         /** \brief sets the property tickMode to the specified \a __value.
-         *  \details Description of the parameter tickMode is:  <CENTER>\copybrief tickMode.</CENTER>
+         *  \details Description of the parameter tickMode is:  <BLOCKQUOTE>\copybrief tickMode </BLOCKQUOTE>
          *  \see tickMode for more information */
         virtual void set_tickMode (int __value);
 
         /** \brief sets the property axisLabel to the specified \a __value.
-         *  \details Description of the parameter axisLabel is:  <CENTER>\copybrief axisLabel.</CENTER>
+         *  \details Description of the parameter axisLabel is:  <BLOCKQUOTE>\copybrief axisLabel </BLOCKQUOTE>
          *  \see axisLabel for more information */
         virtual void set_axisLabel (QString __value);
 
         /** \brief sets the property labelPosition to the specified \a __value.
-         *  \details Description of the parameter labelPosition is:  <CENTER>\copybrief labelPosition.</CENTER> */
+         *  \details Description of the parameter labelPosition is:  <BLOCKQUOTE>\copybrief labelPosition </BLOCKQUOTE> */
         virtual void set_labelPosition (JKQTPlabelPosition __value);
 
         /** \brief sets the property labelFont to the specified \a __value.
-         *  \details Description of the parameter labelFont is:  <CENTER>\copybrief labelFont.</CENTER> */
+         *  \details Description of the parameter labelFont is:  <BLOCKQUOTE>\copybrief labelFont </BLOCKQUOTE> */
         virtual void set_labelFont (QString __value);
 
         /** \brief sets the property labelFontSize to the specified \a __value.
-         *  \details Description of the parameter labelFontSize is:  <CENTER>\copybrief labelFontSize.</CENTER> */
+         *  \details Description of the parameter labelFontSize is:  <BLOCKQUOTE>\copybrief labelFontSize </BLOCKQUOTE> */
         virtual void set_labelFontSize (double __value);
 
         /** \brief sets the property tickLabelFont to the specified \a __value.
-         *  \details Description of the parameter tickLabelFont is:  <CENTER>\copybrief tickLabelFont.</CENTER> */
+         *  \details Description of the parameter tickLabelFont is:  <BLOCKQUOTE>\copybrief tickLabelFont </BLOCKQUOTE> */
         virtual void set_tickLabelFont (QString __value);
 
 
         /** \brief sets the property tickTimeFormat to the specified \a __value.
-         *  \details Description of the parameter tickTimeFormat is:  <CENTER>\copybrief tickTimeFormat.</CENTER> */
+         *  \details Description of the parameter tickTimeFormat is:  <BLOCKQUOTE>\copybrief tickTimeFormat </BLOCKQUOTE> */
         virtual void set_tickTimeFormat (QString __value);
 
 
         /** \brief sets the property tickDateFormat to the specified \a __value.
-         *  \details Description of the parameter tickDateFormat is:  <CENTER>\copybrief tickDateFormat.</CENTER> */
+         *  \details Description of the parameter tickDateFormat is:  <BLOCKQUOTE>\copybrief tickDateFormat </BLOCKQUOTE> */
         virtual void set_tickDateFormat (QString __value);
 
 
         /** \brief sets the property tickDateTimeFormat to the specified \a __value.
-         *  \details Description of the parameter tickDateTimeFormat is:  <CENTER>\copybrief tickDateTimeFormat.</CENTER> */
+         *  \details Description of the parameter tickDateTimeFormat is:  <BLOCKQUOTE>\copybrief tickDateTimeFormat </BLOCKQUOTE> */
         virtual void set_tickDateTimeFormat (QString __value);
 
 
         /** \brief sets the property tickLabelFontSize to the specified \a __value.
-         *  \details Description of the parameter tickLabelFontSize is:  <CENTER>\copybrief tickLabelFontSize.</CENTER> */
+         *  \details Description of the parameter tickLabelFontSize is:  <BLOCKQUOTE>\copybrief tickLabelFontSize </BLOCKQUOTE> */
         virtual void set_tickLabelFontSize (double __value);
 
         /** \brief sets the property minorTickLabelFontSize to the specified \a __value.
-         *  \details Description of the parameter minorTickLabelFontSize is:  <CENTER>\copybrief minorTickLabelFontSize.</CENTER> */
+         *  \details Description of the parameter minorTickLabelFontSize is:  <BLOCKQUOTE>\copybrief minorTickLabelFontSize </BLOCKQUOTE> */
         virtual void set_minorTickLabelFontSize (double __value);
 
         /** \brief sets the property minorTickLabelFullNumber to the specified \a __value.
-         *  \details Description of the parameter minorTickLabelFullNumber is:  <CENTER>\copybrief minorTickLabelFullNumber.</CENTER> */
+         *  \details Description of the parameter minorTickLabelFullNumber is:  <BLOCKQUOTE>\copybrief minorTickLabelFullNumber </BLOCKQUOTE> */
         virtual void set_minorTickLabelFullNumber (bool __value);
 
         /** \brief sets the property minTicks to the specified \a __value.
-         *  \details Description of the parameter minTicks is:  <CENTER>\copybrief minTicks.</CENTER> */
+         *  \details Description of the parameter minTicks is:  <BLOCKQUOTE>\copybrief minTicks </BLOCKQUOTE> */
         virtual void set_minTicks(unsigned int __value);
 
         /** \brief sets the property minorTicks to the specified \a __value.
-         *  \details Description of the parameter minorTicks is:  <CENTER>\copybrief minorTicks.</CENTER> */
+         *  \details Description of the parameter minorTicks is:  <BLOCKQUOTE>\copybrief minorTicks </BLOCKQUOTE> */
         virtual void set_minorTicks (unsigned int __value);
 
         /** \brief sets the property minorTicks to the specified \a __value.
-         *  \details Description of the parameter minorTicks is:  <CENTER>\copybrief minorTicks.</CENTER> */
+         *  \details Description of the parameter minorTicks is:  <BLOCKQUOTE>\copybrief minorTicks </BLOCKQUOTE> */
         virtual void set_minorTicks (int __value);
 
         /** \brief sets the property tickOutsideLength to the specified \a __value.
-         *  \details Description of the parameter tickOutsideLength is:  <CENTER>\copybrief tickOutsideLength.</CENTER> */
+         *  \details Description of the parameter tickOutsideLength is:  <BLOCKQUOTE>\copybrief tickOutsideLength </BLOCKQUOTE> */
         virtual void set_tickOutsideLength(double __value);
 
         /** \brief sets the property minorTickOutsideLength to the specified \a __value.
-         *  \details Description of the parameter minorTickOutsideLength is:  <CENTER>\copybrief minorTickOutsideLength.</CENTER> */
+         *  \details Description of the parameter minorTickOutsideLength is:  <BLOCKQUOTE>\copybrief minorTickOutsideLength </BLOCKQUOTE> */
         virtual void set_minorTickOutsideLength (double __value);
 
         /** \brief sets the property tickInsideLength to the specified \a __value.
-         *  \details Description of the parameter tickInsideLength is:  <CENTER>\copybrief tickInsideLength.</CENTER> */
+         *  \details Description of the parameter tickInsideLength is:  <BLOCKQUOTE>\copybrief tickInsideLength </BLOCKQUOTE> */
         virtual void set_tickInsideLength(double __value);
 
         /** \brief sets the property minorTickInsideLength to the specified \a __value.
-         *  \details Description of the parameter minorTickInsideLength is:  <CENTER>\copybrief minorTickInsideLength.</CENTER> */
+         *  \details Description of the parameter minorTickInsideLength is:  <BLOCKQUOTE>\copybrief minorTickInsideLength </BLOCKQUOTE> */
         virtual void set_minorTickInsideLength (double __value);
 
         /** \brief sets the property axisColor to the specified \a __value.
-         *  \details Description of the parameter axisColor is:  <CENTER>\copybrief axisColor.</CENTER> */
+         *  \details Description of the parameter axisColor is:  <BLOCKQUOTE>\copybrief axisColor </BLOCKQUOTE> */
         virtual void set_axisColor (QColor __value);
 
         /** \brief sets the property showZeroAxis to the specified \a __value.
-         *  \details Description of the parameter showZeroAxis is:  <CENTER>\copybrief showZeroAxis.</CENTER> */
+         *  \details Description of the parameter showZeroAxis is:  <BLOCKQUOTE>\copybrief showZeroAxis </BLOCKQUOTE> */
         virtual void set_showZeroAxis(bool __value);
 
         /** \brief sets the property inverted to the specified \a __value.
-         *  \details Description of the parameter inverted is:  <CENTER>\copybrief inverted.</CENTER> */
+         *  \details Description of the parameter inverted is:  <BLOCKQUOTE>\copybrief inverted </BLOCKQUOTE> */
         virtual void set_inverted(bool __value);
 
         /** \brief sets the property gridColor to the specified \a __value.
-         *  \details Description of the parameter gridColor is:  <CENTER>\copybrief gridColor.</CENTER> */
+         *  \details Description of the parameter gridColor is:  <BLOCKQUOTE>\copybrief gridColor </BLOCKQUOTE> */
         virtual void set_gridColor(QColor __value);
 
         /** \brief sets the property minorGridColor to the specified \a __value.
-         *  \details Description of the parameter minorGridColor is:  <CENTER>\copybrief minorGridColor.</CENTER> */
+         *  \details Description of the parameter minorGridColor is:  <BLOCKQUOTE>\copybrief minorGridColor </BLOCKQUOTE> */
         virtual void set_minorGridColor(QColor __value);
 
         /** \brief sets the property gridWidth to the specified \a __value.
-         *  \details Description of the parameter gridWidth is:  <CENTER>\copybrief gridWidth.</CENTER> */
+         *  \details Description of the parameter gridWidth is:  <BLOCKQUOTE>\copybrief gridWidth </BLOCKQUOTE> */
         virtual void set_gridWidth (double __value);
 
         /** \brief sets the property gridStyle to the specified \a __value.
-         *  \details Description of the parameter gridStyle is:  <CENTER>\copybrief gridStyle.</CENTER> */
+         *  \details Description of the parameter gridStyle is:  <BLOCKQUOTE>\copybrief gridStyle </BLOCKQUOTE> */
         virtual void set_gridStyle(Qt::PenStyle __value);
 
         /** \brief sets the property minorGridWidth to the specified \a __value.
-         *  \details Description of the parameter minorGridWidth is:  <CENTER>\copybrief minorGridWidth.</CENTER> */
+         *  \details Description of the parameter minorGridWidth is:  <BLOCKQUOTE>\copybrief minorGridWidth </BLOCKQUOTE> */
         virtual void set_minorGridWidth(double __value);
 
         /** \brief sets the property minorGridStyle to the specified \a __value.
-         *  \details Description of the parameter minorGridStyle is:  <CENTER>\copybrief minorGridStyle.</CENTER> */
+         *  \details Description of the parameter minorGridStyle is:  <BLOCKQUOTE>\copybrief minorGridStyle </BLOCKQUOTE> */
         virtual void set_minorGridStyle (Qt::PenStyle __value);
 
 
         /** \brief sets the property drawMode1 to the specified \a __value.
-         *  \details Description of the parameter drawMode1 is:  <CENTER>\copybrief drawMode1.</CENTER> */
+         *  \details Description of the parameter drawMode1 is:  <BLOCKQUOTE>\copybrief drawMode1 </BLOCKQUOTE> */
         virtual void set_drawMode1 (JKQTPCAdrawMode __value);
 
         /** \brief sets the property drawMode2 to the specified \a __value.
-         *  \details Description of the parameter drawMode2 is:  <CENTER>\copybrief drawMode2.</CENTER> */
+         *  \details Description of the parameter drawMode2 is:  <BLOCKQUOTE>\copybrief drawMode2 </BLOCKQUOTE> */
         virtual void set_drawMode2(JKQTPCAdrawMode __value);
 
         /** \brief sets the property minorTickWidth to the specified \a __value.
-         *  \details Description of the parameter minorTickWidth is:  <CENTER>\copybrief minorTickWidth.</CENTER> */
+         *  \details Description of the parameter minorTickWidth is:  <BLOCKQUOTE>\copybrief minorTickWidth </BLOCKQUOTE> */
         virtual void set_minorTickWidth(double __value);
 
         /** \brief sets the property tickWidth to the specified \a __value.
-         *  \details Description of the parameter tickWidth is:  <CENTER>\copybrief tickWidth.</CENTER> */
+         *  \details Description of the parameter tickWidth is:  <BLOCKQUOTE>\copybrief tickWidth </BLOCKQUOTE> */
         virtual void set_tickWidth (double __value);
 
         /** \brief sets the property lineWidth to the specified \a __value.
-         *  \details Description of the parameter lineWidth is:  <CENTER>\copybrief lineWidth.</CENTER> */
+         *  \details Description of the parameter lineWidth is:  <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE> */
         virtual void set_lineWidth (double __value);
 
         /** \brief sets the property lineWidthZeroAxis to the specified \a __value.
-         *  \details Description of the parameter lineWidthZeroAxis is:  <CENTER>\copybrief lineWidthZeroAxis.</CENTER> */
+         *  \details Description of the parameter lineWidthZeroAxis is:  <BLOCKQUOTE>\copybrief lineWidthZeroAxis </BLOCKQUOTE> */
         virtual void set_lineWidthZeroAxis (double __value);
 
         /** \brief sets the property tickLabelDistance to the specified \a __value.
-         *  \details Description of the parameter tickLabelDistance is:  <CENTER>\copybrief tickLabelDistance.</CENTER> */
+         *  \details Description of the parameter tickLabelDistance is:  <BLOCKQUOTE>\copybrief tickLabelDistance </BLOCKQUOTE> */
         virtual void set_tickLabelDistance(double __value);
 
         /** \brief sets the property labelDistance to the specified \a __value.
-         *  \details Description of the parameter labelDistance is:  <CENTER>\copybrief labelDistance.</CENTER> */
+         *  \details Description of the parameter labelDistance is:  <BLOCKQUOTE>\copybrief labelDistance </BLOCKQUOTE> */
         virtual void set_labelDistance(double __value);
         /** \brief sets the property labelDigits to the specified \a __value.
-         *  \details Description of the parameter labelDistance is:  <CENTER>\copybrief labelDigits.</CENTER> */
+         *  \details Description of the parameter labelDistance is:  <BLOCKQUOTE>\copybrief labelDigits </BLOCKQUOTE> */
         virtual void set_labelDigits(int __value);
 
         /** \brief sets the property drawGrid to the specified \a __value.
-         *  \details Description of the parameter drawGrid is:  <CENTER>\copybrief drawGrid.</CENTER> */
+         *  \details Description of the parameter drawGrid is:  <BLOCKQUOTE>\copybrief drawGrid </BLOCKQUOTE> */
         virtual void set_drawGrid(bool __value);
 
         /** \brief sets the property drawMinorGrid to the specified \a __value.
-         *  \details Description of the parameter drawMinorGrid is:  <CENTER>\copybrief drawMinorGrid.</CENTER> */
+         *  \details Description of the parameter drawMinorGrid is:  <BLOCKQUOTE>\copybrief drawMinorGrid </BLOCKQUOTE> */
         virtual void set_drawMinorGrid(bool __value);
 
 
         /** \brief sets the property tickLabelAngle to the specified \a __value.
-         *  \details Description of the parameter tickLabelAngle is:  <CENTER>\copybrief tickLabelAngle.</CENTER> */
+         *  \details Description of the parameter tickLabelAngle is:  <BLOCKQUOTE>\copybrief tickLabelAngle </BLOCKQUOTE> */
         virtual void set_tickLabelAngle(double __value);
 
     protected:
@@ -789,13 +789,13 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
          * axis is divided into decades that each is divided into ticks, as defined above. With these preconditions the algorithm tries
          * to find a tick increment \f$ \Delta\mbox{tick} \f$ which is one of the above distances multiplied by a power \f$ \rho \f$ of 10.
          * This increment is determined in a way, that the axis contains at least \a minTicks ticks:
-         *   \f[ \Delta\mbox{tick}=f\cdot10^\rho,\ \ \ \ \ f\in\{1, 2, 2.5, 5\} \f]
+         *   \f[ \Delta\mbox{tick}=f\cdot 10^\rho,\ \ \ \ \ f\in\{1, 2, 2.5, 5\} \f]
          *
          *   -# The algorithm starts by finding a start exponent \f$ \rho_s=\left\lfloor\log_{10}(\mbox{awidth})\right\rfloor+3 \f$. This
          *      is a good (over)estimate for the biggest possible power \f$ \rho \f$.
          *   -# now we set \f$ \rho=\rho_0 \f$ and \f$ f=10 \f$.
          *   -# now the algorithm cycles through all possible factors \f$ f\in\{1, 2, 2.5, 5, 10\} \f$ (starting from 10) and calculates
-         *      \f$ \Delta\mbox{tick}=f\cdot10^\rho \f$. Then it checks whether \f$ \mbox{tickcount}=\mbox{round}\left(\frac{\mbox{awidth}}{\Delta\mbox{tick}}\right) \f$
+         *      \f$ \Delta\mbox{tick}=f\cdot 10^\rho \f$. Then it checks whether \f$ \mbox{tickcount}=\mbox{round}\left(\frac{\mbox{awidth}}{\Delta\mbox{tick}}\right) \f$
          *      is smaller than \a minTicks (if yes the algorithm reached its end and \f$ \Delta\mbox{tick} \f$ can be used.
          *   -# if \f$ f=1 \f$ is reached and checked \c false, then the algorithm decreases the exponent \f$ \rho \leftarrow \rho-1 \f$ and returns to step 3.
          *

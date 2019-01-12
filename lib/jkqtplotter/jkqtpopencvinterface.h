@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2018-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -20,10 +20,10 @@
 
 
 /**
- * \defgroup jkqtpopencvinterface OPenCV Interfaceing Tools
+ * \defgroup jkqtpopencvinterface OpenCV Interfaceing Tools
  * \ingroup jkqtplotter
  *
- * Classes and functions in this group allow JKQtPlotter to directly work with OpenCV data structures.
+ * Classes and functions in this group allow JKQtPlotter to directly work with <a href="https://opencv.org/">OpenCV</a> data structures.
  */
 
 /** \file jkqtpopencvinterface.h
@@ -40,8 +40,8 @@
 
 /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
  *
- *   \param datastore the datastore to which the OpenCV matrix shuld be added (as column)
- *   \param mat OpenCV-marix to store here
+ *   \param datastore the datastore to which the <a href="https://opencv.org/">OpenCV</a> matrix shuld be added (as column)
+ *   \param mat <a href="https://docs.opencv.org/master/d3/d63/classcv_1_1Mat.html">OpenCV-matrix</a> to store here
  *   \param name name for the column
  *   \param channel to copy from \a mat
  *   \return the ID of the newly created column

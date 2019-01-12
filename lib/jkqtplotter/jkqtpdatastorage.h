@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -637,7 +637,7 @@ class LIB_EXPORT JKQTPcolumn {
     /** \brief class destructor */
     ~JKQTPcolumn() ;
 
-    /*! \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <CENTER>\copybrief name.</CENTER> \see name for more information */
+    /*! \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copybrief JKQTPcolumn::name </BLOCKQUOTE> \see JKQTPcolumn::name for more information */
     inline void set_name (const QString& __value)
     {
       this->name = __value;
@@ -724,10 +724,10 @@ class LIB_EXPORT JKQTPcolumn {
     void setAll(double value);
 
 
-    /*! \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <CENTER>\copybrief datastoreItem.</CENTER>. \see datastoreItem for more information */ \
+    /*! \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copybrief JKQTPcolumn::datastoreItem </BLOCKQUOTE>. \see JKQTPcolumn::datastoreItem for more information */ \
     inline size_t get_datastoreItem() const  \
     {   return this->datastoreItem;   }
-    /*! \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <CENTER>\copybrief datastoreOffset.</CENTER>. \see datastoreOffset for more information */ \
+    /*! \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copybrief JKQTPcolumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPcolumn::datastoreOffset for more information */ \
     inline size_t get_datastoreOffset() const  \
     {   return this->datastoreOffset;   }
 };
@@ -784,10 +784,10 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief change the size of all columns to the givne number of rows. The data will be lost */
     void resizeColumns(size_t rows);
 
-    /*! \brief returns the property rows. \details Description of the parameter rows is:  <CENTER>\copybrief rows.</CENTER>. \see rows for more information */ \
+    /*! \brief returns the property rows. \details Description of the parameter rows is:  <BLOCKQUOTE>\copybrief JKQTPdatastoreItem::JKQTPdatastoreItemrows </BLOCKQUOTE>. \see JKQTPdatastoreItem::rows for more information */ \
     inline size_t get_rows() const
     {   return rows;   }
-    /*! \brief returns the property columns. \details Description of the parameter columns is:  <CENTER>\copybrief columns.</CENTER>. \see columns for more information */ \
+    /*! \brief returns the property columns. \details Description of the parameter columns is:  <BLOCKQUOTE>\copybrief JKQTPdatastoreItem::columns </BLOCKQUOTE>. \see JKQTPdatastoreItem::columns for more information */ \
     inline size_t get_columns() const
     {   return columns;   }
 

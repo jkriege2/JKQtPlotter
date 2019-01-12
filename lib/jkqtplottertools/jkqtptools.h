@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
     
 
@@ -175,8 +175,8 @@ LIB_EXPORT JKQTPCAdrawMode String2JKQTPCAdrawMode(QString pos);
  * \ingroup jkqtptools */
 enum JKQTPCAlabelType {
     JKQTPCALTdefault, /*!< \brief simply print the numbers */
-    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. \c 5µ for \f$ 5\cdot10^{-6} \f$ , \cd 3k for \f$ 3\cdot10^3 \f$ ... */
-    JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot10^5 \f$ ... */
+    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. \c 5µ for \f$ 5\cdot 10^{-6} \f$ , \cd 3k for \f$ 3\cdot 10^3 \f$ ... */
+    JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... */
     JKQTPCALTdate, /*!< \brief show numbers as dates */
     JKQTPCALTtime, /*!< \brief show numbers as times */
     JKQTPCALTdatetime, /*!< \brief show numbers as times */
@@ -369,28 +369,28 @@ enum JKQTPgraphPlotstyle {
  */
 enum JKQTPgraphSymbols {
     JKQTPnoSymbol=0,             /*!< \brief plots no symbol at all (usefull together with error bars) */
-    JKQTPdot=1,                 /*!< \brief a small dot */
-    JKQTPcross=2,               /*!< \brief a X cross */
-    JKQTPplus=3,                /*!< \brief a + cross */
-    JKQTPcircle=4,              /*!< \brief an unfilled circle */
-    JKQTPfilledCircle=5,        /*!< \brief a filled circle */
-    JKQTPrect=6,                /*!< \brief an unfilled rectangle */
-    JKQTPfilledRect=7,          /*!< \brief a filled rectangle */
-    JKQTPtriangle=8,            /*!< \brief an unfilled triangle (tip at top) */
-    JKQTPfilledTriangle=9,      /*!< \brief a filled triangle (tip at top) */
-    JKQTPdownTriangle=10,        /*!< \brief an unfilled triangle (tip at bottom) */
-    JKQTPfilledDownTriangle=11,  /*!< \brief a filled triangle (tip at bottom) */
-    JKQTPdiamond=12,                /*!< \brief an unfilled diamond */
-    JKQTPfilledDiamond=13,          /*!< \brief a filled diamond */
-    JKQTPstar=14,                /*!< \brief an unfilled diamond */
-    JKQTPfilledStar=15,          /*!< \brief a filled diamond */
-    JKQTPpentagon=16,                /*!< \brief an unfilled pentagon */
-    JKQTPfilledPentagon=17,          /*!< \brief a filled pentagon */
-    JKQTPasterisc=18,          /*!< \brief an asterisc star '*' */
+    JKQTPdot=1,                 /*!< \brief a small dot \image html symbols/symbol_symbol_dot.png */
+    JKQTPcross=2,               /*!< \brief a X cross \image html symbols/symbol_symbol_cross.png */
+    JKQTPplus=3,                /*!< \brief a + cross \image html symbols/symbol_symbol_plus.png */
+    JKQTPcircle=4,              /*!< \brief an unfilled circle \image html symbols/symbol_symbol_circle.png */
+    JKQTPfilledCircle=5,        /*!< \brief a filled circle \image html symbols/symbol_symbol_filled_circle.png */
+    JKQTPrect=6,                /*!< \brief an unfilled rectangle \image html symbols/symbol_symbol_rect.png */
+    JKQTPfilledRect=7,          /*!< \brief a filled rectangle \image html symbols/symbol_symbol_filled_rect.png */
+    JKQTPtriangle=8,            /*!< \brief an unfilled triangle (tip at top) \image html symbols/symbol_symbol_triangle.png */
+    JKQTPfilledTriangle=9,      /*!< \brief a filled triangle (tip at top) \image html symbols/symbol_symbol_filled_triangle.png */
+    JKQTPdownTriangle=10,        /*!< \brief an unfilled triangle (tip at bottom) \image html symbols/symbol_symbol_down_triangle.png */
+    JKQTPfilledDownTriangle=11,  /*!< \brief a filled triangle (tip at bottom) \image html symbols/symbol_symbol_filled_down_triangle.png */
+    JKQTPdiamond=12,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_diamond.png */
+    JKQTPfilledDiamond=13,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_diamind.png */
+    JKQTPstar=14,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_star.png */
+    JKQTPfilledStar=15,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_star.png */
+    JKQTPpentagon=16,                /*!< \brief an unfilled pentagon \image html symbols/symbol_symbol_pentagon.png */
+    JKQTPfilledPentagon=17,          /*!< \brief a filled pentagon \image html symbols/symbol_symbol_filled_pentagon.png */
+    JKQTPasterisc=18,          /*!< \brief an asterisc star '*' \image html symbols/symbol_symbol_asterisc.png */
 
-    JKQTPtarget=19,              /*!< \brief a target symbol (circle with cross) */
-    JKQTPrectCross=20,              /*!< \brief a square symbol with a cross inside */
-    JKQTPrectPlus=21,              /*!< \brief a square symbol with a plus inside */
+    JKQTPtarget=19,              /*!< \brief a target symbol (circle with cross) \image html symbols/symbol_symbol_target.png */
+    JKQTPrectCross=20,              /*!< \brief a square symbol with a cross inside \image html symbols/symbol_symbol_rect_cross.png */
+    JKQTPrectPlus=21,              /*!< \brief a square symbol with a plus inside \image html symbols/symbol_symbol_rect_plus.png */
 
     JKQTPmaxSymbolID=JKQTPrectPlus
 };
@@ -632,7 +632,7 @@ LIB_EXPORT std::string jkqtp_to_valid_variable_name(std::string input);
  * \ingroup jkqtptools
  */
 LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false);
-/** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. \c -1.23\cdot10^{-5})
+/** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. \c -1.23\cdot 10^{-5})
  * \ingroup jkqtptools
  */
 LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
     
 
@@ -23,7 +23,7 @@
  * \ingroup jkqtplotter
  */
 
-/** \file jkqtptools.h
+/** \file jkqtpdrawingtools.h
   * \ingroup jkqtptools
   */
 

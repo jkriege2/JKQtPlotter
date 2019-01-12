@@ -27,7 +27,7 @@
  */
 /*@{*/
 
-/** \file highrestimer.h
+/** \file jkqtphighrestimer.h
  *  \ingroup highrestimer_group
  */
 
@@ -134,7 +134,7 @@
  * resolution timer. As mentioned above this method is not available for MinGW in win32 which is the main development
  * platform for this project.
  *
- * \test you can find an example application in the file \link test_hrestimer.cpp .
+ * \test you can find an example application in the file \link test_hrestimer.cpp \endlink.
  *
  */
 class JKQTPHighResTimer {

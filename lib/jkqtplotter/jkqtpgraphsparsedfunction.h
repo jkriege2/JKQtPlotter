@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -58,14 +58,14 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
         virtual ~JKQTPxParsedFunctionLineGraph() override;
 
         /*! \brief sets the property function to the specified \a __value. 
-            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual void set_function(const QString & __value)  
         {
             this->function = __value;
         } 
         /*! \brief returns the property function. 
-            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual QString get_function() const  
         {
@@ -73,14 +73,14 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
         }
 
         /*! \brief sets the property errorFunction to the specified \a __value. 
-            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual void set_errorFunction(const QString & __value)  
         {
             this->errorFunction = __value;
         } 
         /*! \brief returns the property errorFunction. 
-            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual QString get_errorFunction() const  
         {
@@ -144,14 +144,14 @@ class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
         virtual ~JKQTPyParsedFunctionLineGraph() override;
 
         /*! \brief sets the property function to the specified \a __value. 
-            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual void set_function(const QString & __value)  
         {
             this->function = __value;
         } 
         /*! \brief returns the property function. 
-            \details Description of the parameter function is: <CENTER>\copybrief function.</CENTER> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual QString get_function() const  
         {
@@ -159,14 +159,14 @@ class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
         }
 
         /*! \brief sets the property errorFunction to the specified \a __value. 
-            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual void set_errorFunction(const QString & __value)  
         {
             this->errorFunction = __value;
         } 
         /*! \brief returns the property errorFunction. 
-            \details Description of the parameter errorFunction is: <CENTER>\copybrief errorFunction.</CENTER> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual QString get_errorFunction() const  
         {

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -49,98 +49,98 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
         virtual QColor getKeyLabelColor() override;
 
         /*! \brief sets the property color to the specified \a __value. 
-            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual void set_color(const QColor & __value)  
         {
             this->color = __value;
         } 
         /*! \brief returns the property color. 
-            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual QColor get_color() const  
         {
             return this->color; 
         }
         /*! \brief sets the property fillColor to the specified \a __value. 
-            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
         inline virtual void set_fillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
         /*! \brief returns the property fillColor. 
-            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
         inline virtual QColor get_fillColor() const  
         {
             return this->fillColor; 
         }
         /*! \brief sets the property style to the specified \a __value. 
-            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \details Description of the parameter style is: <BLOCKQUOTE>\copybrief style </BLOCKQUOTE> 
             \see style for more information */ 
         inline virtual void set_style(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
         /*! \brief returns the property style. 
-            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \details Description of the parameter style is: <BLOCKQUOTE>\copybrief style </BLOCKQUOTE> 
             \see style for more information */ 
         inline virtual Qt::PenStyle get_style() const  
         {
             return this->style; 
         }
         /*! \brief sets the property lineWidth to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual void set_lineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
-            \details Description of the parameter lineWidth is: <CENTER>\copybrief lineWidth.</CENTER> 
+            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual double get_lineWidth() const  
         {
             return this->lineWidth; 
         }
         /*! \brief sets the property baseline to the specified \a __value. 
-            \details Description of the parameter baseline is: <CENTER>\copybrief baseline.</CENTER> 
+            \details Description of the parameter baseline is: <BLOCKQUOTE>\copybrief baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
         inline virtual void set_baseline(double __value)
         {
             this->baseline = __value;
         } 
         /*! \brief returns the property baseline. 
-            \details Description of the parameter baseline is: <CENTER>\copybrief baseline.</CENTER> 
+            \details Description of the parameter baseline is: <BLOCKQUOTE>\copybrief baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
         inline virtual double get_baseline() const  
         {
             return this->baseline; 
         }
         /*! \brief sets the property drawLine to the specified \a __value. 
-            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copybrief drawLine </BLOCKQUOTE> 
             \see drawLine for more information */ 
         inline virtual void set_drawLine(bool __value)  
         {
             this->drawLine = __value;
         } 
         /*! \brief returns the property drawLine. 
-            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copybrief drawLine </BLOCKQUOTE> 
             \see drawLine for more information */ 
         inline virtual bool get_drawLine() const  
         {
             return this->drawLine; 
         }
         /*! \brief sets the property fillStyle to the specified \a __value. 
-            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copybrief fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
         inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
         /*! \brief returns the property fillStyle. 
-            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copybrief fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
         inline virtual Qt::BrushStyle get_fillStyle() const  
         {
@@ -148,28 +148,28 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
         }
 
         /*! \brief sets the property drawSelectionLine to the specified \a __value. 
-            \details Description of the parameter drawSelectionLine is: <CENTER>\copybrief drawSelectionLine.</CENTER> 
+            \details Description of the parameter drawSelectionLine is: <BLOCKQUOTE>\copybrief drawSelectionLine </BLOCKQUOTE> 
             \see drawSelectionLine for more information */ 
         inline virtual void set_drawSelectionLine(bool __value)  
         {
             this->drawSelectionLine = __value;
         } 
         /*! \brief returns the property drawSelectionLine. 
-            \details Description of the parameter drawSelectionLine is: <CENTER>\copybrief drawSelectionLine.</CENTER> 
+            \details Description of the parameter drawSelectionLine is: <BLOCKQUOTE>\copybrief drawSelectionLine </BLOCKQUOTE> 
             \see drawSelectionLine for more information */ 
         inline virtual bool get_drawSelectionLine() const  
         {
             return this->drawSelectionLine; 
         }
         /*! \brief sets the property selectionLineColor to the specified \a __value. 
-            \details Description of the parameter selectionLineColor is: <CENTER>\copybrief selectionLineColor.</CENTER> 
+            \details Description of the parameter selectionLineColor is: <BLOCKQUOTE>\copybrief selectionLineColor </BLOCKQUOTE> 
             \see selectionLineColor for more information */ 
         inline virtual void set_selectionLineColor(const QColor & __value)  
         {
             this->selectionLineColor = __value;
         } 
         /*! \brief returns the property selectionLineColor. 
-            \details Description of the parameter selectionLineColor is: <CENTER>\copybrief selectionLineColor.</CENTER> 
+            \details Description of the parameter selectionLineColor is: <BLOCKQUOTE>\copybrief selectionLineColor </BLOCKQUOTE> 
             \see selectionLineColor for more information */ 
         inline virtual QColor get_selectionLineColor() const  
         {
@@ -311,89 +311,89 @@ class LIB_EXPORT JKQTPfilledVerticalRangeGraph: public JKQTPxyGraph {
         virtual QColor getKeyLabelColor() override;
 
         /*! \brief sets the property yColumn2 to the specified \a __value. 
-            \details Description of the parameter yColumn2 is: <CENTER>\copybrief yColumn2.</CENTER> 
+            \details Description of the parameter yColumn2 is: <BLOCKQUOTE>\copybrief yColumn2 </BLOCKQUOTE> 
             \see yColumn2 for more information */ 
         inline virtual void set_yColumn2(int __value)  
         {
             this->yColumn2 = __value;
         } 
         /*! \brief returns the property yColumn2. 
-            \details Description of the parameter yColumn2 is: <CENTER>\copybrief yColumn2.</CENTER> 
+            \details Description of the parameter yColumn2 is: <BLOCKQUOTE>\copybrief yColumn2 </BLOCKQUOTE> 
             \see yColumn2 for more information */ 
         inline virtual int get_yColumn2() const  
         {
             return this->yColumn2; 
         }
         /*! \brief sets the property yColumn2 to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter yColumn2 is:  <CENTER>\copybrief yColumn2.</CENTER> 
+            \details Description of the parameter yColumn2 is:  <BLOCKQUOTE>\copybrief yColumn2 </BLOCKQUOTE> 
         	\see yColumn2 for more information */ 
         inline virtual void set_yColumn2 (size_t __value) { this->yColumn2 = static_cast<int>(__value); }
 
         /*! \brief sets the property color to the specified \a __value. 
-            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual void set_color(const QColor & __value)  
         {
             this->color = __value;
         } 
         /*! \brief returns the property color. 
-            \details Description of the parameter color is: <CENTER>\copybrief color.</CENTER> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual QColor get_color() const  
         {
             return this->color; 
         }
         /*! \brief sets the property fillColor to the specified \a __value. 
-            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
         inline virtual void set_fillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
         /*! \brief returns the property fillColor. 
-            \details Description of the parameter fillColor is: <CENTER>\copybrief fillColor.</CENTER> 
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
         inline virtual QColor get_fillColor() const  
         {
             return this->fillColor; 
         }
         /*! \brief sets the property style to the specified \a __value. 
-            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \details Description of the parameter style is: <BLOCKQUOTE>\copybrief style </BLOCKQUOTE> 
             \see style for more information */ 
         inline virtual void set_style(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
         /*! \brief returns the property style. 
-            \details Description of the parameter style is: <CENTER>\copybrief style.</CENTER> 
+            \details Description of the parameter style is: <BLOCKQUOTE>\copybrief style </BLOCKQUOTE> 
             \see style for more information */ 
         inline virtual Qt::PenStyle get_style() const  
         {
             return this->style; 
         }
         /*! \brief sets the property drawLine to the specified \a __value. 
-            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copybrief drawLine </BLOCKQUOTE> 
             \see drawLine for more information */ 
         inline virtual void set_drawLine(bool __value)  
         {
             this->drawLine = __value;
         } 
         /*! \brief returns the property drawLine. 
-            \details Description of the parameter drawLine is: <CENTER>\copybrief drawLine.</CENTER> 
+            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copybrief drawLine </BLOCKQUOTE> 
             \see drawLine for more information */ 
         inline virtual bool get_drawLine() const  
         {
             return this->drawLine; 
         }
         /*! \brief sets the property fillStyle to the specified \a __value. 
-            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copybrief fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
         inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
         /*! \brief returns the property fillStyle. 
-            \details Description of the parameter fillStyle is: <CENTER>\copybrief fillStyle.</CENTER> 
+            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copybrief fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
         inline virtual Qt::BrushStyle get_fillStyle() const  
         {
@@ -401,28 +401,28 @@ class LIB_EXPORT JKQTPfilledVerticalRangeGraph: public JKQTPxyGraph {
         }
 
         /*! \brief sets the property drawSelectionLine to the specified \a __value. 
-            \details Description of the parameter drawSelectionLine is: <CENTER>\copybrief drawSelectionLine.</CENTER> 
+            \details Description of the parameter drawSelectionLine is: <BLOCKQUOTE>\copybrief drawSelectionLine </BLOCKQUOTE> 
             \see drawSelectionLine for more information */ 
         inline virtual void set_drawSelectionLine(bool __value)  
         {
             this->drawSelectionLine = __value;
         } 
         /*! \brief returns the property drawSelectionLine. 
-            \details Description of the parameter drawSelectionLine is: <CENTER>\copybrief drawSelectionLine.</CENTER> 
+            \details Description of the parameter drawSelectionLine is: <BLOCKQUOTE>\copybrief drawSelectionLine </BLOCKQUOTE> 
             \see drawSelectionLine for more information */ 
         inline virtual bool get_drawSelectionLine() const  
         {
             return this->drawSelectionLine; 
         }
         /*! \brief sets the property selectionLineColor to the specified \a __value. 
-            \details Description of the parameter selectionLineColor is: <CENTER>\copybrief selectionLineColor.</CENTER> 
+            \details Description of the parameter selectionLineColor is: <BLOCKQUOTE>\copybrief selectionLineColor </BLOCKQUOTE> 
             \see selectionLineColor for more information */ 
         inline virtual void set_selectionLineColor(const QColor & __value)  
         {
             this->selectionLineColor = __value;
         } 
         /*! \brief returns the property selectionLineColor. 
-            \details Description of the parameter selectionLineColor is: <CENTER>\copybrief selectionLineColor.</CENTER> 
+            \details Description of the parameter selectionLineColor is: <BLOCKQUOTE>\copybrief selectionLineColor </BLOCKQUOTE> 
             \see selectionLineColor for more information */ 
         inline virtual QColor get_selectionLineColor() const  
         {
