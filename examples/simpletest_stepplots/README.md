@@ -1,11 +1,11 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
 ## Step Line Plots in Different Styles
 This project (see `./examples/simpletest_stepplots/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_stepplots.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_stepplots/jkqtplotter_simpletest_stepplots.cpp). For the most part, several datasets of cosine-curves are generated. then thrre tuples of graphs are added: One of type `JKQTPxyLineGraph`, which simply indicates the location of the actual datapoints. the second is of type `JKQTPstepHorizontalGraph`, which adds the step-graph to the plot:
+The source code of the main application can be found in  [`jkqtplotter_simpletest_stepplots.cpp`](../simpletest_stepplots/jkqtplotter_simpletest_stepplots.cpp). For the most part, several datasets of cosine-curves are generated. then thrre tuples of graphs are added: One of type `JKQTPxyLineGraph`, which simply indicates the location of the actual datapoints. the second is of type `JKQTPstepHorizontalGraph`, which adds the step-graph to the plot:
 
 ```c++
 	// 3 now we make several plots with different step styles, each one also contains a
@@ -51,8 +51,8 @@ In addition to the symbol type and line style, you can also alter the size of th
 
 The result looks like this:
 
-![jkqtplotter_simpletest_stepplots](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_stepplots.png)
+![jkqtplotter_simpletest_stepplots](../../screenshots/jkqtplotter_simpletest_stepplots.png)
 
 
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

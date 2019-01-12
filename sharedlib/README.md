@@ -1,7 +1,9 @@
+[Back to JKQTPlotter main page](../README.md)
+
 # JKQtPlotter
 ## SHAREDLIB subdirectory
 
-This directory contains Projects that can be used to build a shared library of JKQtPlotter (i.e. the contents of the directory [`../lib`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib)
+This directory contains Projects that can be used to build a shared library of JKQtPlotter (i.e. the contents of the directory [`../lib`](../lib)
 
 ### QMake
 
@@ -20,3 +22,6 @@ CONFIG (debug, debug|release) {
 ```
 
 This snippet assumes that you built the libraries with the provided `.PRO`-files.
+
+[Back to JKQTPlotter main page](../README.md)
+

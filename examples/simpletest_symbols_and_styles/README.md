@@ -1,11 +1,11 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
 ## Line Graph with Different Symbols and Line Styles
 This project (see `./examples/simpletest_symbols_and_styles/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_symbols_and_styles.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_symbols_and_styles/jkqtplotter_simpletest_symbols_and_styles.cpp). Mainly several graphs are generated in a loop and then different symbol and line styles are applied to the graph (set by `graph->set_symbol()` for the symbol and `graph->set_style()` for the line style). The colors are set automtically from an internal default palette. The main loop looks like this:
+The source code of the main application can be found in  [`jkqtplotter_simpletest_symbols_and_styles.cpp`](../simpletest_symbols_and_styles/jkqtplotter_simpletest_symbols_and_styles.cpp). Mainly several graphs are generated in a loop and then different symbol and line styles are applied to the graph (set by `graph->set_symbol()` for the symbol and `graph->set_style()` for the line style). The colors are set automtically from an internal default palette. The main loop looks like this:
 
 ```c++
 	QVector<Qt::PenStyle> pens {Qt::NoPen, Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
@@ -48,8 +48,8 @@ In addition to the symbol type and line style, you can also alter the size of th
 
 The result looks like this:
 
-![jkqtplotter_simpletest_symbols_and_styles](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_symbols_and_styles.png)
+![jkqtplotter_simpletest_symbols_and_styles](../../screenshots/jkqtplotter_simpletest_symbols_and_styles.png)
 
 
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

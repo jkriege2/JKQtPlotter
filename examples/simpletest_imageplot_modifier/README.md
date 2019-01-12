@@ -1,11 +1,11 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
 ## Simple math image plot
 This project (see `./examples/simpletest_imageplot_modifier/`) creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here `sin(r)`). Then a second image (linearly scaling from 1 in the center to 0 at the borders) is used to modify the first image. The modification can alter several properties of the original image, like its saturation, its transparency (alpha) ...
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot_modifier.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_imageplot_modifier/jkqtplotter_simpletest_imageplot_modifier.cpp):
+The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot_modifier.cpp`](../simpletest_imageplot_modifier/jkqtplotter_simpletest_imageplot_modifier.cpp):
 ```c++
 #include <QApplication>
 #include <cmath>
@@ -111,15 +111,15 @@ int main(int argc, char* argv[])
 }
 ```
 The data image (`sin(r/30)`) on its own looks like this:<br>
-![jkqtplotter_simpletest_imageplot_modifier_imageonly](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_modifier_imageonly.png)<br>
+![jkqtplotter_simpletest_imageplot_modifier_imageonly](../../screenshots/jkqtplotter_simpletest_imageplot_modifier_imageonly.png)<br>
 and the modifier image on its own would look like this:<br>
-![jkqtplotter_simpletest_imageplot_modifier_modifieronly](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_modifier_modifieronly.png)
+![jkqtplotter_simpletest_imageplot_modifier_modifieronly](../../screenshots/jkqtplotter_simpletest_imageplot_modifier_modifieronly.png)
 
 Combined the two form this plot:<br>
-![jkqtplotter_simpletest_imageplot_modifier](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_modifier.png)
+![jkqtplotter_simpletest_imageplot_modifier](../../screenshots/jkqtplotter_simpletest_imageplot_modifier.png)
 
 
-See [`test/simpletest_imageplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plotted. You can combine all options there with the modifier feature described here.
+See [`test/simpletest_imageplot`](../simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plotted. You can combine all options there with the modifier feature described here.
 
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

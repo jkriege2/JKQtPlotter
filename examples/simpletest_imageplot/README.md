@@ -1,11 +1,11 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
 ## Simple math image plot
 This project (see `./examples/simpletest_imageplot/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_imageplot/jkqtplotter_simpletest_imageplot.cpp):
+The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot.cpp`](../simpletest_imageplot/jkqtplotter_simpletest_imageplot.cpp):
 ```c++
 #include <QApplication>
 #include <cmath>
@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot.png)
+![jkqtplotter_simpletest_imageplot](../../screenshots/jkqtplotter_simpletest_imageplot.png)
 
 There are several ways to modify the plot:
   1. You can set the color scale manually (here 0..2), by using
@@ -129,7 +129,7 @@ There are several ways to modify the plot:
     graph->set_autoImageRange(true);
 	```
 	from above. The result will look like this:<br>
-	![jkqtplotter_simpletest_imageplot__scale02](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__scale02.png)<br>
+	![jkqtplotter_simpletest_imageplot__scale02](../../screenshots/jkqtplotter_simpletest_imageplot__scale02.png)<br>
 	Note how the color scale is not used completely, because data really only scales between 0 and 1.
   2. If you set the color-range to 0.1 .. 0.8 with
     ```
@@ -138,15 +138,15 @@ There are several ways to modify the plot:
     graph->set_imageMax(0.8);
 	```
 	Then there will be datapoints above or below the range of the colorscale. The default behaviour of the graph is to use the first color of the palette for every pixel with a value below the minimum (here 0.1) and the last color in the palette for every pixel with a value above the maximum.<br>
-	![jkqtplotter_simpletest_imageplot__smallscalelimitcolor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__smallscalelimitcolor.png)<br>
+	![jkqtplotter_simpletest_imageplot__smallscalelimitcolor](../../screenshots/jkqtplotter_simpletest_imageplot__smallscalelimitcolor.png)<br>
 	You can change this behaviour by `set_rangeMinFailAction(),set_rangeMaxFailAction()` with one of these parameters:
 	  - `JKQTPMathImageLastPaletteColor`: the default behaviour explained above
 	  - `JKQTPMathImageGivenColor`: use a color set by `set_rangeMinFailColor(),set_rangeMaxFailColor()` (here e.g. black for min and grey for max)<br>
-	    ![jkqtplotter_simpletest_imageplot__smallscalecolor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__smallscalecolor.png)
+	    ![jkqtplotter_simpletest_imageplot__smallscalecolor](../../screenshots/jkqtplotter_simpletest_imageplot__smallscalecolor.png)
 	  - `JKQTPMathImageTransparent`: draw pixels transparent<br>
-	    ![jkqtplotter_simpletest_imageplot__smallscaletransparent](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot__smallscaletransparent.png)
+	    ![jkqtplotter_simpletest_imageplot__smallscaletransparent](../../screenshots/jkqtplotter_simpletest_imageplot__smallscaletransparent.png)
     .
 .
 
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

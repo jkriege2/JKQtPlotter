@@ -1,17 +1,17 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
 ## Scatter Graph with Parametrized Symbols/Colors
-This project (see `./examples/simpletest_paramscatterplot/`) demonstrates the capabilities of `JKQTPxyParametrizedScatterGraph`. This graph class plots symbol&line-graphs, juts like [`JKQTPxyLineGraph`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_symbols_and_styles/) and in addition modifies several properties of each plot point by data from an additional column. These properties can be modified:
+This project (see `./examples/simpletest_paramscatterplot/`) demonstrates the capabilities of `JKQTPxyParametrizedScatterGraph`. This graph class plots symbol&line-graphs, juts like [`JKQTPxyLineGraph`](../simpletest_symbols_and_styles/) and in addition modifies several properties of each plot point by data from an additional column. These properties can be modified:
 - symbol size
 - symbol type
 - symbol/line color
 - line width
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_paramscatterplot.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_paramscatterplot/jkqtplotter_simpletest_paramscatterplot.cpp). First, several datasets are generated and added to the internal datastore. the resulting datatable looks like this:
+The source code of the main application can be found in  [`jkqtplotter_simpletest_paramscatterplot.cpp`](../simpletest_paramscatterplot/jkqtplotter_simpletest_paramscatterplot.cpp). First, several datasets are generated and added to the internal datastore. the resulting datatable looks like this:
 
-![jkqtplotter_simpletest_paramscatterplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot_datatable.png)
+![jkqtplotter_simpletest_paramscatterplot](../../screenshots/jkqtplotter_simpletest_paramscatterplot_datatable.png)
 
 Then several plots are added that modify different properties.
 
@@ -110,8 +110,8 @@ Note also that it is possible to combine any of parametrizations above in a sing
 
 The full test appication combines all these variants and the result looks like this:
 
-![jkqtplotter_simpletest_paramscatterplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot.png)
+![jkqtplotter_simpletest_paramscatterplot](../../screenshots/jkqtplotter_simpletest_paramscatterplot.png)
 
 
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

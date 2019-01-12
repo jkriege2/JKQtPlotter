@@ -1,4 +1,4 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
@@ -6,7 +6,7 @@
 JKQTmathText is a hand-written LaTeX-renderer for Qt (implemented in native C++, using Qt). It supports a large set of standard LaTeX markup and can render it to a QPainter.
 ## A simple usage example
 This project (see `./examples/jkqtmathtext_simpletest/`) simply creates a QLabel (as a new window) that displays a rendered LaTeX equation (here the time-dependent Schrödinger equation).
-The QMake project looks like this (see [`jkqtmathtext_simpletest.pro`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/jkqtmathtext_simpletest/jkqtmathtext_simpletest.pro):
+The QMake project looks like this (see [`jkqtmathtext_simpletest.pro`](../jkqtmathtext_simpletest/jkqtmathtext_simpletest.pro):
 ```qmake
 # include JKQTmathText source-code, including the open-source XITS fonts
 include(../../lib/jkqtmathtext_with_xits.pri)
@@ -22,7 +22,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = jkqtmathtext_simpletest
 ```
-And the soruce code of the main application is (see [`jkqtmathtext_simpletest.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/jkqtmathtext_simpletest/jkqtmathtext_simpletest.cpp):
+And the soruce code of the main application is (see [`jkqtmathtext_simpletest.cpp`](../jkqtmathtext_simpletest/jkqtmathtext_simpletest.cpp):
 ```c++
 #include <QApplication>
 #include <QLabel>
@@ -67,6 +67,6 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![jkqtmathtext_simpletest](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtmathtext_simpletest.png)
+![jkqtmathtext_simpletest](../../screenshots/jkqtmathtext_simpletest.png)
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

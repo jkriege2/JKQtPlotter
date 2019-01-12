@@ -1,4 +1,4 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
@@ -55,7 +55,7 @@ void SpeedTestPlot::plotNewData()
 
 The result looks like this:
 
-![jkqtplotter_simpletest_speed1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_speed.png)
+![jkqtplotter_simpletest_speed1](../../screenshots/jkqtplotter_simpletest_speed.png)
 
 There are different facor affecting the replot speed:
 1. *Anti-Aliasing:* If `JKQtPlotter` uses Anti-Aliasing for plotting, the plots are much nicer, but also about a factor of 3-4 slower. This is due to the increased amount of calculations, necessary in the drawing sub-system of Qt.
@@ -65,7 +65,7 @@ There are different facor affecting the replot speed:
       plot.get_plotter()->set_useAntiAliasingForSystem(false);
       plot.get_plotter()->set_useAntiAliasingForText(false);
 	```
-2. *Number of Graphs:* The number of plots (and also ther type and complexity) is a major imapct factor in the plotting speed. You can switch off a plot with the context menu:<br>![contextmenu_graph_visibility](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/contextmenu_graph_visibility.png)
+2. *Number of Graphs:* The number of plots (and also ther type and complexity) is a major imapct factor in the plotting speed. You can switch off a plot with the context menu:<br>![contextmenu_graph_visibility](../../screenshots/contextmenu_graph_visibility.png)
 3. *Axis Scales and Plot Appearance:* Replotting is done in two steps: First the plot with the axes, labels etc. is drawn. Then the graphs are draw on top. Therefore a replot is faster, if only the graphs change, because the background (plot) does not have to be replotted.
 
 
@@ -84,4 +84,4 @@ the next table summarizes some results for plotting speed under different condit
 
 
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

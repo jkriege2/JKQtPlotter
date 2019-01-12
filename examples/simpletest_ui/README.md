@@ -1,4 +1,4 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
@@ -22,7 +22,7 @@ For this to work you have to follow the steps shown below:
    
 ### QMake-Project of this example
 
-The QMake project for such a project looks like this (see [`jkqtplotter_simpletest_ui.pro`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_ui/jkqtplotter_simpletest_ui.pro):
+The QMake project for such a project looks like this (see [`jkqtplotter_simpletest_ui.pro`](../simpletest_ui/jkqtplotter_simpletest_ui.pro):
 ```qmake
 # source code for this simple demo
 SOURCES =  jkqtplotter_simpletest_ui.cpp \
@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 ### Form Class `FormWithJKQtPlotter`
 
 The Form was designed in the Qt Form Designer within Qt Creator, using the method described above (see `formwithjkqtplotter.ui`):
-![jkqtplotter_simpletest_ui1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_ui_widget.png)
+![jkqtplotter_simpletest_ui1](../../screenshots/jkqtplotter_simpletest_ui_widget.png)
 
 In addition the example implements some simple functionality in the `formwithjkqtplotter.cpp/.h`-files. A single graph, which parses and plots a function (from a `QLineEdit`) is added to the plot in the constructor:
 ```c++
@@ -136,12 +136,12 @@ void FormWithJKQtPlotter::on_btnReplot_clicked()
 
 The result looks like this:
 
-![jkqtplotter_simpletest_ui1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_ui.png)
+![jkqtplotter_simpletest_ui1](../../screenshots/jkqtplotter_simpletest_ui.png)
 
 If you set both axes to logarithmic and modify the plotted function a bit, you get:
 
-![jkqtplotter_simpletest_ui1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_ui_loglog.png)
+![jkqtplotter_simpletest_ui1](../../screenshots/jkqtplotter_simpletest_ui_loglog.png)
 
 
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)

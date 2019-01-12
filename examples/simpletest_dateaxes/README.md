@@ -1,4 +1,4 @@
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
 
 # JKQtPlotter
 
@@ -7,7 +7,7 @@
 ### Date Axis
 This project (see `./examples/simpletest_dateaxes/`) simply creates a JKQtPlotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_dateaxes.cpp`](https://github.com/jkriege2/JKQtPlotter/blob/master/examples/simpletest_dateaxes/jkqtplotter_simpletest_dateaxes.cpp). 
+The source code of the main application can be found in  [`jkqtplotter_simpletest_dateaxes.cpp`](../simpletest_dateaxes/jkqtplotter_simpletest_dateaxes.cpp). 
 
 First some data is parsed from a CSV-file (added as ressource to the example). Note that the Time/date or Date+Time data is internally stored as milliseconds since epoc (Jan 1st 1970, 00:00:00), therefore data has to be converted accordingly before beeing added to the graph.
 
@@ -34,9 +34,9 @@ First some data is parsed from a CSV-file (added as ressource to the example). N
     }
 ```
 
-The parsed data looks like this:
+The parsed data looks like this (data was taken from http://wetter.mpg-ge.de/NOAA/NOAA-2018.txt and http://wetter.mpg-ge.de/NOAA/NOAA-2017.txt):
 ```
-	ISO-Date+Time;Temp_mean[degC];Temp_min[degC];Temp_max[degC]; data from http://wetter.mpg-ge.de/NOAA/NOAA-2018.txt and http://wetter.mpg-ge.de/NOAA/NOAA-2017.txt
+	ISO-Date+Time;Temp_mean[degC];Temp_min[degC];Temp_max[degC]
 	2017-01-15T12:00; 1.2; -1.2; 3.7
 	2017-02-15T12:00; 5.6; 3.2; 8.1
 	2017-03-15T12:00; 9.6; 6.2; 13.5
@@ -110,13 +110,13 @@ Finally the x-axis is formatted to display dates (see [Qt-Documentation of `QDat
 
 The result looks like this:
 
-![jkqtplotter_simpletest_symbols_and_styles](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_dateaxes.png)
+![jkqtplotter_simpletest_symbols_and_styles](../../screenshots/jkqtplotter_simpletest_dateaxes.png)
 
 
 ### Time Axis
 A second variant (see the example CPP-file) displays data with a time-axis:
 
-![jkqtplotter_simpletest_symbols_and_styles](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_dateaxes_timeaxis.png)
+![jkqtplotter_simpletest_symbols_and_styles](../../screenshots/jkqtplotter_simpletest_dateaxes_timeaxis.png)
 
 
 For that example data-pasring is a bit different, because the file only contains times and no dates:
@@ -168,4 +168,4 @@ Axis formating for this example is done like this:
     plot.get_yAxis()->set_axisLabel("Temperature [{\\degree}C]");
 ```
 
-[Back to JKQTPlotter main page](https://github.com/jkriege2/JKQtPlotter/)
+[Back to JKQTPlotter main page](../../README.md)
