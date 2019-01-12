@@ -11,16 +11,16 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
 
-[![EXAMPLES-Page](./screenshots/examplesbanner.png)](./examples/)
+[![EXAMPLES-Page](./screenshots/examplesbanner.png)](./examples/README.md)
 
 ## [Screenshots](./screenshots/)
 The [Screenshots-page](./screenshots/) contains several screenshots, partly taken from the provided examples, but also from other software using this libarary (e.g. [QuickFit 3.0](https://github.com/jkriege2/QuickFit3))
 
-[![EXAMPLES-Page](./screenshots/screenshotsbanner.png)](./screenshots/)
+[![EXAMPLES-Page](./screenshots/screenshotsbanner.png)](./screenshots/README.md)
 
 
 ## Building
 Building instructions can be found here:
-- include necessary files into QMake project: [`./lib/*.pri`](./lib)
-- [build a static library](./staticlib): [`./staticlib/*.pro`](./staticlib)
-- [build a shared library (DLL, SO, ...)](./sharedlib): [`./sharedlib/*.pro`](./sharedlib)
+- include necessary files into QMake project: [`./lib/*.pri`](./lib/README.md)
+- [build a static library](./staticlib): [`./staticlib/*.pro`](./staticlib/README.md)
+- [build a shared library (DLL, SO, ...)](./sharedlib): [`./sharedlib/*.pro`](./sharedlib/README.md)
