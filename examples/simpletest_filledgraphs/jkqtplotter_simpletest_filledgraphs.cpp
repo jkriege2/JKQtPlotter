@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_filledgraphs.cpp
+ * Shows how to use filled graphs with JKQtPlotter
+ *
+ * \ref JKQtPlotterFilledGraphs
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"

@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Filled Curve Plots
+# JKQtPlotter: Examples: Filled Curve Plots {#JKQtPlotterFilledGraphs}
 This project (see `./examples/simpletest_filledgraphs/`) simply creates a JKQtPlotter widget (as a new window) and adds several filled curve graphs (Histograms). Data is initialized from QVector<int> objects.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_filledgraphs.cpp`](../simpletest_filledgraphs/jkqtplotter_simpletest_filledgraphs.cpp). 
@@ -85,4 +81,4 @@ If you use `JKQTPfilledCurveYGraph` instead of `JKQTPfilledCurveXGraph`, the cur
 
 
 
-[Back to JKQTPlotter main page](../../README.md)
+

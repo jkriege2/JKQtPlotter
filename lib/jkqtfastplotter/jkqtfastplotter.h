@@ -24,11 +24,8 @@
   Author: Jan krieger <jan@jkrieger.de>, http://www.jkrieger.de/
 */
 
-/**
- * \defgroup jkqtfastplotter JKQTFastPlotter: Speed-Optimized Plotter class
- */
 
-/** \file jkqtpfastplotter.h
+/** \file jkqtfastplotter.h
   * \ingroup jkqtfastplotter
   */
 #ifndef JKQTFASTPLOTTER_H

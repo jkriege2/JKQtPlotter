@@ -27,7 +27,7 @@
 
 
 /*! \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from y=0 to y=f(x) )
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesxplots.png
  */
@@ -107,7 +107,7 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
 
 
 /*! \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesxerrorsplots.png
  */
@@ -130,7 +130,7 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
 
 
 /*! \brief This implements an impulse plot with impulses in direction of the Y axis (i.e. from y=0 to y=f(x) )
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesyplots.png
  */
@@ -149,7 +149,7 @@ class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph
 
 
 /*! \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesyerrorsplots.png
  */

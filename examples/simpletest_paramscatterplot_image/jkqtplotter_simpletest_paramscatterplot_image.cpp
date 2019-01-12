@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_paramscatterplot_image.cpp
+ * JKQtPlotter: Examples: Draw an Artistic Image with a Parametrized Scatter Graph
+ *
+ * \ref JKQtPlotterParamScatterImage
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

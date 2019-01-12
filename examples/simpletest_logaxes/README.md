@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Line Graph with Logarithmic y-axis
+# JKQtPlotter: Examples: Line Graph with Logarithmic y-axis {#JKQtPlotterLogAxes}
 This project (see `./examples/simpletest_logaxes/`) simply creates a JKQtPlotter widget (as a new window) and several line-graphs of different resonance curves. 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp`](../simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->set_style()`). The colors are set automtically from an internal default palette. The main loop looks like this:
@@ -107,4 +103,4 @@ These examples show the results for different typical values for `set_labelType(
 ![logaxis_set_labelType](../../screenshots/logaxis_set_labelType.png)
 
 
-[Back to JKQTPlotter main page](../../README.md)
+

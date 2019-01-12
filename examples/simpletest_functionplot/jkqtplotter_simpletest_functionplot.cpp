@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_functionplot.cpp
+ * Shows how to plot Mathematical Functions as Line Graphs with JKQtPlotter (as evaluated C/C++ functions)
+ *
+ * \ref JKQtPlotterFunctionPlots
+ */
+
 #include <QApplication>
 #include <QVector>
 #include <QMap>

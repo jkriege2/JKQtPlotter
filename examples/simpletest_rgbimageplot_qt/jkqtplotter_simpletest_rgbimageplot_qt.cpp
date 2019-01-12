@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_rgbimageplot_qt.cpp
+ * JKQtPlotter: Examples: `QImage` as a Graph
+ *
+ * \ref JKQtPlotterImagePlotQImageRGB
+ */
+
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

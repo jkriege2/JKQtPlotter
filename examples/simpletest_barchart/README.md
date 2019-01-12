@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Simple barchart
+# JKQtPlotter: Examples: Simple barchart {#JKQtPlotterBarcharts}
 This project (see [`simpletest_barchart`](../simpletest_barchart) simply creates a JKQtPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp`](../simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
@@ -98,4 +94,3 @@ The result looks like this:
 ![jkqtplotter_simpletest_barchart](../../screenshots/jkqtplotter_simpletest_barchart.png)
 
 
-[Back to JKQTPlotter main page](../../README.md)

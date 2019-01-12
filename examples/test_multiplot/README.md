@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Layouting Several Plots
+# JKQtPlotter: Examples: Laying out Several Plots {#JKQtPlotterMultiPlotLayout}
 This project (see `./examples/test_multiplot/`) shows how several JKQtPlotter widgets can be combined to in a layout (based on the [Qt layouting system](http://doc.qt.io/qt-5/layout.html)). It also shows how axes in such a layout can be linked to improve user experience.
 
 The source code of the main application can be found in  [`test_multiplot.cpp`](../test_multiplot/test_multiplot.cpp). 
@@ -105,4 +101,4 @@ You push the print button (![test_multiplot](https://raw.githubusercontent.com/j
 
 
 
-[Back to JKQTPlotter main page](../../README.md)
+

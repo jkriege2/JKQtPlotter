@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_geometric.cpp
+ * Shows how to plot several geometric forms with JKQtPlotter
+ *
+ * \ref JKQtPlotterGeometricGraphs
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"

@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_impulsesplot.cpp
+ * Shows how to plot impulse graphs with JKQtPlotter
+ *
+ * \ref JKQtPlotterImpulsePlots
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsimpulses.h"

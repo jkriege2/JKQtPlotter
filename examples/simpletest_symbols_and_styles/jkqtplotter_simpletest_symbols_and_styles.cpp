@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_symbols_and_styles.cpp
+ * JKQtPlotter: Examples: Line Graph with Different Symbols and Line Styles
+ *
+ * \ref JKQtPlotterSymbolsAndStyles
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

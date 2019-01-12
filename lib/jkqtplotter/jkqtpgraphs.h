@@ -18,14 +18,6 @@
 */
 
 
-
-/**
- * \defgroup jkqtplotter_elements Plot Elements
- * \ingroup jkqtplotter
- * \defgroup jkqtplotter_plots Graphs
- * \ingroup jkqtplotter_elements
- */
-
 /** \file jkqtpgraphs.h
   * \ingroup jkqtplotter
   */
@@ -55,7 +47,7 @@ class JKQTPdatastore;
 
 
 /*! \brief This implements xy line plots. This also alows to draw symbols at the data points.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_linesymbolgraphs
 
     \image html plot_lineplots.png
  */
@@ -259,7 +251,7 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
 
 
 /*! \brief This implements xy scatter plots (like JKQTPxyLineGraph), but the color and size of the symbols may be taken from a column.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_linesymbolgraphs
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
  */
@@ -486,7 +478,7 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
 
 
 /*! \brief This implements xy line plots with x and y error indicators.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_linesymbolgraphs
 
     \image html plot_errorbarlineplots.png
     \image html plot_errorlinelineplots.png
@@ -521,7 +513,7 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
 
 
 /*! \brief This implements xy scatter plots (like JKQTPxyLineGraph), but the color and size of the symbols may be taken from a column. with errorbars
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_linesymbolgraphs
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
  */
@@ -559,7 +551,7 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
 
 
 /*! \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_linesymbolgraphs
 
     A step plot starts at \f$ \left(x_{i-1}, f(x_{i-1})\right) \f$ and then goes on to
     \f$ \left(x_{i}, f(x_{i-1})\right) \f$. There it raises immediately to
@@ -732,7 +724,7 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
 
 
 /*! \brief This implements a step plot with values \f$ \left(f(y), y \right) \f$
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_linesymbolgraphs
 
     A step plot starts at \f$ \left(f(y_{i-1}), x_{i-1}\right) \f$ and then goes on to
     \f$ \left(f(y_{i-1}), y_{i}\right) \f$. There it raises immediately to
@@ -772,7 +764,7 @@ class LIB_EXPORT JKQTPstepVerticalGraph: public JKQTPstepHorizontalGraph {
 
 /*! \brief simply marks a range (and possibly a centerline) in a plot. This may be used to display e.g. mean +/- stddev
            or a range of interest, or the range of good values, ...
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_diverse
 
  */
 class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
@@ -1137,7 +1129,7 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
 
 /*! \brief simply marks a range (and possibly a centerline) in a plot. This may be used to display e.g. mean +/- stddev
            or a range of interest, or the range of good values, ...
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_diverse
 
  */
 class LIB_EXPORT JKQTPverticalRange: public JKQTPhorizontalRange {

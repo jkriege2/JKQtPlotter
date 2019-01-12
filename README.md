@@ -1,4 +1,4 @@
-# JKQtPlotter
+# JKQtPlotter - A Qt Plotting Library
 This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.11).
 
 This software is licensed under the term of the [GNU Lesser General Public License 2.1 

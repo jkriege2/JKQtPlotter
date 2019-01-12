@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_parametriccurve.cpp
+ * Shows how to plot parametric curves from datapoints with JKQtPlotter
+ *
+ * \ref JKQtPlotterParametricCurves
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

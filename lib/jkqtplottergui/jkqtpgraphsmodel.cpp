@@ -20,7 +20,7 @@
 
 
 /** \file jkqtpgraphsmodel.cpp
-  * \ingroup jkqtpbaseplotter
+  * \ingroup jkqtplotter
   */
 
 #include "jkqtplottergui/jkqtpgraphsmodel.h"

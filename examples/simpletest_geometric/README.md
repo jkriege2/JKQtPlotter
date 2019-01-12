@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Plotting Geometric Objects
+# JKQtPlotter: Examples: Plotting Geometric Objects {#JKQtPlotterGeometricGraphs}
 This project (see `./test/simpletest_geometric/`) shows the capabilities of JKQtPlotter to also draw geometric elements, like circles, ellipses, rectangles etc.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_geometric.cpp`](../simpletest_geometric/jkqtplotter_simpletest_geometric.cpp). First a plot is generated and the axis aspect ration is set to 1, so an accurate plot is generated. Then several geometric graphs are added to the plot. Here are some examples, you can find more more examples in the source code of the example:
@@ -75,4 +71,3 @@ The result of the example combines all these elements and looks like this:
 
 
 
-[Back to JKQTPlotter main page](../../README.md)

@@ -18,14 +18,6 @@
 */
 
 
-
-/**
- * \defgroup jkqtplotter_elements Plot Elements
- * \ingroup jkqtplotter
- * \defgroup jkqtplotter_plots Graphs
- * \ingroup jkqtplotter_elements
- */
-
 /** \file jkqtpgraphspeakstream.h
   * \ingroup jkqtplotter
   */
@@ -48,7 +40,7 @@ class JKQTPdatastore;
 /*! \brief interprets data as a stream of x- or y-positions \f$ p_i \f$ (depending in \a yPeaks ) ans plots a line on the height
            \a baseline and upright lines from baseline to baseline+peakHeight at each position \f$ p_i \f$. This can be used to
            display a stream of photons with given arrivaltimes \f$ p_i \f$.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_diverse
 
     \image html JKQTPPeakStreamGraphY.png "yPeaks=true"
     \image html JKQTPPeakStreamGraphX.png "yPeaks=false"

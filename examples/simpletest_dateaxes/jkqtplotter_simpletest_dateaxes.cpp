@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_dateaxes.cpp
+ * Shows how to use date/time axes with JKQtPlotter
+ *
+ * \ref JKQtPlotterDateTimeAxes
+ */
+
 #include <QApplication>
 #include <QDateTime>
 #include <QTime>

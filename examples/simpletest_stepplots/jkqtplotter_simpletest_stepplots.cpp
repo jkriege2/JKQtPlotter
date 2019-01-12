@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_stepplots.cpp
+ * JKQtPlotter: Examples: Step Line Plots in Different Styles
+ *
+ * \ref JKQtPlotterStepPlot
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

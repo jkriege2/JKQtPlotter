@@ -18,12 +18,6 @@
 */
 
 
-
-/**
- * \defgroup jkqtplotter_overlays Overlay Elements
- * \ingroup jkqtplotter
- */
-
 /** \file jkqtpelementsoverlay.h
   * \ingroup jkqtplotter_overlays
   */

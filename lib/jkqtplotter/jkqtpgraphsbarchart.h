@@ -18,16 +18,8 @@
 */
 
 
-
-/**
- * \defgroup jkqtplotter_elements Plot Elements
- * \ingroup jkqtplotter
- * \defgroup jkqtplotter_plots Graphs
- * \ingroup jkqtplotter_elements
- */
-
 /** \file jkqtpgraphsbarchart.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtplotter_barssticks
   */
 
 #include <QString>
@@ -44,7 +36,7 @@
 
 
 /*! \brief This implements a bar graph with bars starting at \f$ y=0 \f$ to \f$ y=f(x) \f$
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_barssticks
 
     This class plots a bargraph. This image explains the parameters:
 
@@ -285,7 +277,7 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPxyGraph {
 
 /*! \brief This implements a bar graph with bars starting at \f$ y=0 \f$ to \f$ y=f(x) \f$
  *         Optionally several graphs of this type may be stacked on top of each other
- *  \ingroup jkqtplotter_plots
+ *  \ingroup jkqtplotter_barssticks
  *
  *  Draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
  *  \image html JKQTPbarVerticalGraphStacked.png
@@ -324,7 +316,7 @@ class LIB_EXPORT JKQTPbarVerticalStackableGraph: public JKQTPbarVerticalGraph {
 
 /*! \brief This implements a bar graph with bars starting at \f$ y=0 \f$ to \f$ y=f(x) \f$
  *         and error indicator
- *  \ingroup jkqtplotter_plots
+ *  \ingroup jkqtplotter_barssticks
  *
  *  This works much the same as JKQTPbarHorizontalGraph. Here is an example output:
  *  \image html plot_bargraphverploterr.png
@@ -355,7 +347,7 @@ class LIB_EXPORT JKQTPbarVerticalErrorGraph: public JKQTPbarVerticalGraph, publi
 
 
 /*! \brief This implements a bar graph with bars starting at \f$ x=0 \f$ to \f$ x=f(y) \f$
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_barssticks
 
     This works much the same as JKQTPbarHorizontalGraph. Here is an example output:
     \image html plot_bargraphhorplot.png
@@ -391,7 +383,7 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPbarVerticalGraph {
 
 /*! \brief This implements a bar graph with bars starting at \f$ y=0 \f$ to \f$ y=f(x) \f$
  *         Optionally several graphs of this type may be stacked on top of each other
- *  \ingroup jkqtplotter_plots
+ *  \ingroup jkqtplotter_barssticks
  *
  *  Draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
  *  \image html JKQTPbarHorizontalGraphStacked.png
@@ -430,7 +422,7 @@ class LIB_EXPORT JKQTPbarHorizontalStackableGraph: public JKQTPbarHorizontalGrap
 
 /*! \brief This implements a bar graph with bars starting at \f$ x=0 \f$ to \f$ x=f(y) \f$
  *         and error indicator
- *  \ingroup jkqtplotter_plots
+ *  \ingroup jkqtplotter_barssticks
  *
  *  This works much the same as JKQTPbarHorizontalGraph. Here is an example output:
  *  \image html plot_bargraphhorploterr.png

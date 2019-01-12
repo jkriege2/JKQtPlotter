@@ -1,0 +1,17 @@
+/*!
+
+\defgroup jkqtmathtext JKQtMathText LaTeX-Renderer for Qt
+
+	This group contains JKQtMathText, a self-contained LaTeX-renderer for Qt. It is used to renderer
+	labels in JKQtPlotter, but can be used independently. The class does not depend on any library, 
+	except Qt.
+
+
+	Examples for the usage of this class can be found here: 
+	  - \ref JKQTmathTextSimpleExample with the main source: \link ../../examples/jkqtmathtext_simpletest/jkqtmathtext_simpletest.cpp \endlink
+	  - \link ../../examples/jkqtmathtext_test/jkqtfastplotter_test_testmain.cpp \endlink
+	.
+
+
+
+*/

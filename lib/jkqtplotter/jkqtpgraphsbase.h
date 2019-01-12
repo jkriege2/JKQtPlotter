@@ -18,16 +18,8 @@
 */
 
 
-
-/**
- * \defgroup jkqtplotter_elements Plot Elements
- * \ingroup jkqtplotter
- * \defgroup jkqtplotter_plots Graphs
- * \ingroup jkqtplotter_elements
- */
-
 /** \file jkqtpgraphsbase.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtplotter_basegraphs
   */
 
 #include <QString>
@@ -48,7 +40,7 @@ class JKQTPdatastore;
 
 /** \brief this virtual base class of every element, which is part of a JKQtPlotter plot and may appear in its key
  *         (basically any type of graph, except overlay elements!)
- * \ingroup jkqtplotter_plots
+ * \ingroup jkqtplotter_basegraphs
  *
  * Each possible graph is represented by a child of this class. So additional plots may be created by
  * deriving new JKQTPgraph classes. To do so implement/overwrite these functions:
@@ -210,7 +202,7 @@ class LIB_EXPORT JKQTPplotElement: public QObject {
  *         which are part of a JKQtPlotter plot and which use the coordinate system
  *         of the JKQtPlotter (i.e. the two coordinate axes get_xAxis() and get_yAxis())
  *         as basis for the graphs
- * \ingroup jkqtplotter_plots
+ * \ingroup jkqtplotter_basegraphs
  *
  * This class adds several features to work with data columns. In addition this class adds protected
  * functions that do coordinate transforms based on the current coordinate system, of the paren
@@ -303,7 +295,7 @@ class LIB_EXPORT JKQTPgraph: public JKQTPplotElement {
  *         represent geometric forms or annotations. They have extended coordinate transform capabilities, because
  *         in addition to using the plot coordinates, you can also choose to use different other
  *         coordinate systems
- * \ingroup jkqtplotter_plots
+ * \ingroup jkqtplotter_basegraphs
  *
  */
 class LIB_EXPORT JKQTPplotObject: public JKQTPplotElement {
@@ -327,7 +319,7 @@ class LIB_EXPORT JKQTPplotObject: public JKQTPplotElement {
 
 /*! \brief This virtual JKQTPgraph descendent may be used as base for all graphs that use at least two columns
            that specify x and y coordinates for the single plot points.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_basegraphs
 
     This class implements basic management facilities for the data columns and implements the function
       - bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
@@ -443,7 +435,7 @@ class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
 
 /*! \brief This virtual JKQTPgraph descendent may be used as base for all graphs that use at least one column
            of data
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_basegraphs
 
 
  */
@@ -586,7 +578,7 @@ class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
 
 
 /*! \brief Descendents of this class add data fields for error indicators and methods to plot them to a class.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_basegraphserrors
 
     This class is meant to be used with multiple inheritance. I.e. if you implemented some kind of plot
     you may derive an error plot class in which you will have to overwrite the JKQTPgraph::drawErrorsBefor()
@@ -730,7 +722,7 @@ class LIB_EXPORT JKQTPgraphErrors {
 
 
 /*! \brief This class adds data fields for error indicators in x direction to a JKQTPgraph descendent.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_basegraphserrors
     \see JKQTPgraphErrors
  */
 class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
@@ -799,7 +791,7 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
 
 
 /*! \brief This class adds data fields for error indicators in y direction to a class.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_basegraphserrors
     \see JKQTPgraphErrors
 
  */
@@ -867,7 +859,7 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
 
 
 /*! \brief This class adds data fields for error indicators in x and y direction to a class.
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_basegraphserrors
     \see JKQTPgraphErrors
 
  */

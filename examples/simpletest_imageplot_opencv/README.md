@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Simple math image plot, showin a 1-channel OpenCV cv::Mat
+# JKQtPlotter: Examples: Simple math image plot, showin a 1-channel OpenCV cv::Mat {#JKQtPlotterImagePlotOpenCV}
 This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special OpenCV Interface function `JKQTPcopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
@@ -125,4 +121,3 @@ The result looks like this:
 
 See [`test/simpletest_imageplot`](../simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plottet.
 
-[Back to JKQTPlotter main page](../../README.md)

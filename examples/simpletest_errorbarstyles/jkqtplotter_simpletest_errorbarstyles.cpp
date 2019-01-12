@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_errorbarstyles.cpp
+ * Shows how to use different error indicator styles with JKQtPlotter
+ *
+ * \ref JKQtPlotterErrorBarStyles
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

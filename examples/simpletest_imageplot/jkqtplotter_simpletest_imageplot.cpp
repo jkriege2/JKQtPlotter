@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_imageplot.cpp
+ * Shows how to plot colored math images/matrices with JKQtPlotter
+ *
+ * \ref JKQtPlotterImagePlot
+ */
+
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

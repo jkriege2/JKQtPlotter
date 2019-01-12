@@ -23,15 +23,8 @@
 
 
 
-
-/**
- * \defgroup jkqtplotter_imagelots Image Plotting Elements
- * \ingroup jkqtplotter_elements
-
- */
-
 /** \file jkqtpgraphsimage.h
-  * \ingroup  jkqtplotter_imagelots
+  * \ingroup  jkqtplotter_imagelots_elements
   */
 
 #include <QString>
@@ -47,8 +40,7 @@
 
 
 /*! \brief base class for plotting an image
-    \ingroup jkqtplotter_imagelots
-
+    \ingroup jkqtplotter_imagelots_elements
  */
 class LIB_EXPORT JKQTPImageBase: public JKQTPgraph {
         Q_OBJECT
@@ -156,7 +148,9 @@ class LIB_EXPORT JKQTPImageBase: public JKQTPgraph {
 
 
 /*! \brief base class to hold an image from an 2-dimensional array of values
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
+
+    \image html jkqtplotter_simpletest_imageplot.png
 
  */
 class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
@@ -358,8 +352,9 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 
 
 /*! \brief class to plot an image from a QImage object
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
 
+    \image html jkqtplotter_simpletest_rgbimageplot_qt
  */
 class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         Q_OBJECT
@@ -421,8 +416,11 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of values
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
 
+    \image html jkqtplotter_simpletest_imageplot.png
+    \image html jkqtplotter_simpletest_imageplot_modifier.png
+    \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
  */
 class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         Q_OBJECT
@@ -908,8 +906,9 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of values
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
 
+    \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
  */
 class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
@@ -1422,7 +1421,11 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of values stored in a column of the datastore
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
+
+    \image html jkqtplotter_simpletest_imageplot.png
+    \image html jkqtplotter_simpletest_imageplot_modifier.png
+    \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
 
  */
 class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
@@ -1484,8 +1487,10 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
 
 
 /*! \brief like JKQTPRGBMathImage but reads images from columns of the datastore
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
 
+
+    \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
  */
 class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         Q_OBJECT
@@ -1578,7 +1583,7 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of boolean values: alle \c true values are plotted in a given color, while the \c false pixels are drawn in another (default: transparent)
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
 
  */
 class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
@@ -1707,7 +1712,7 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of boolean values: alle \c true values are plotted in a given color, while the \c false pixels are drawn in another (default: transparent)
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
 
     In contrast to JKQTPOverlayImage this class draws ist contents as rectangles, not as semi-transparent image. This may lead to nicer results,but could be slower.
     Also it is possible to draw other types of markers (cross, circles, ...)
@@ -1820,7 +1825,7 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of boolean values: alle \c true values are plotted in a given color, while the \c false pixels are drawn in another (default: transparent)
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtplotter_imagelots_elements
 
     In contrast to JKQTPOverlayImage this class draws ist contents as rectangles, not as semi-transparent image. This may lead to nicer results,but could be slower.
     Also it is possible to draw other types of markers (cross, circles, ...)
@@ -1861,7 +1866,7 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
 
 
 /*! \brief class for a contour plot
- *  \ingroup jkqtplotter_imagelots
+ *  \ingroup jkqtplotter_imagelots_contour
  *  calculates the contour of a given image using the CONREC algorithm
  *  <a href="http://paulbourke.net/papers/conrec/">http://paulbourke.net/papers/conrec/</a>
  *  The implementation for Qt is adapted from Qwt
@@ -1875,6 +1880,8 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
  *  with logarithmic spacing.
  *
  * \author Sebastian Isbaner, 2013-2014
+ *
+ * \image html JKQTPContour.png
  */
 class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         Q_OBJECT

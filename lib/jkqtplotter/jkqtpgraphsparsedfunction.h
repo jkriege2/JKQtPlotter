@@ -36,7 +36,7 @@ class JKQtPlotter;
 
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$ The function is defined as a string and parsed by JKMathParser
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_parsedFgraphs
 
     Additional function parameters may be given in the vector parameters. They are accessible in the function as \c p1 , \c p2 , \c p3 , ...
     Parameters may also be given from a data column. Then first the params from the column and the the parameters from the vector are numbered.
@@ -122,7 +122,7 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
 
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$ The function is defined as a string and parsed by JKMathParser
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_parsedFgraphs
 
     Additional function parameters may be given in the vector parameters. They are accessible in the function as \c p1 , \c p2 , \c p3 , ...
     Parameters may also be given from a data column. Then first the params from the column and the the parameters from the vector are numbered.

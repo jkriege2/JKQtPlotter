@@ -1,11 +1,7 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Using a JKQtPlotter inside a Qt User Interface Designer (UI) File
+# JKQtPlotter: Examples: Using a JKQtPlotter inside a Qt User Interface Designer (UI) File {#JKQtPlotterQtCreator}
 This project (see `./examples/simpletest_ui/`) demonstrates how to create add a `JKQtPlotter` inside the Qt Form Editor (e.g. called from of Qt Creator) into a widget. 
 
-### Instructions on how to use JKQtPlotter in the Qt Form Designer
+## Instructions on how to use JKQtPlotter in the Qt Form Designer
 
 For this to work you have to follow the steps shown below:
 
@@ -20,7 +16,7 @@ For this to work you have to follow the steps shown below:
    
    
    
-### QMake-Project of this example
+## QMake-Project of this example
 
 The QMake project for such a project looks like this (see [`jkqtplotter_simpletest_ui.pro`](../simpletest_ui/jkqtplotter_simpletest_ui.pro):
 ```qmake
@@ -77,7 +73,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-### Form Class `FormWithJKQtPlotter`
+## Form Class `FormWithJKQtPlotter`
 
 The Form was designed in the Qt Form Designer within Qt Creator, using the method described above (see `formwithjkqtplotter.ui`):
 ![jkqtplotter_simpletest_ui1](../../screenshots/jkqtplotter_simpletest_ui_widget.png)
@@ -144,4 +140,3 @@ If you set both axes to logarithmic and modify the plotted function a bit, you g
 
 
 
-[Back to JKQTPlotter main page](../../README.md)

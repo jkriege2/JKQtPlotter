@@ -19,13 +19,6 @@
 
 
 
-
-/**
- * \defgroup jkqtplotter JKQtPlotter: Qt based Scientific Plotter Class
- *
- * A Qt based plotter for 2D scientific graphs.
- */
-
 /** \file jkqtplotter.h
   * \ingroup jkqtplotter
   *
@@ -60,7 +53,9 @@
 #ifndef JKQTPLOTTER_H
 #define JKQTPLOTTER_H
 
-/** \brief initialized Qt-ressources necessary for JKQtPlotter */
+/** \brief initialized Qt-ressources necessary for JKQtPlotter
+ *  \ingroup jkqtplotter
+*/
 LIB_EXPORT void initJKQtPlotterResources();
 
 

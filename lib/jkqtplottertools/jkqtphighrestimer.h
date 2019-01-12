@@ -18,17 +18,9 @@
 */
 
 
-/**
- * \defgroup highrestimer_group High Resolution Timer
- * \ingroup tools
- *
- * This group contains a class that implements a high-resolution timer. Note that this
- * is highly system-dependent and you will find a way to implement this on your OS!
- */
-/*@{*/
 
 /** \file jkqtphighrestimer.h
- *  \ingroup highrestimer_group
+ *  \ingroup jkqtptools_debugging
  */
 
 #include <cmath>
@@ -71,7 +63,7 @@
 /**
  * \brief This class implements a high resolution timer capable of measuring time intervals with a resolution
  *        of some microseconds
- * \ingroup highrestimer_group
+ * \ingroup jkqtptools_debugging
  *
  * \attention Note that this is a MS Windows specific implementation od a high-resolution timer using some of
  * windows' API methods (namely \c QueryPerformanceCounter() and \c QueryPerformanceFrequency() ). So if you want
@@ -184,5 +176,3 @@ for (unsigned long i=0; i<runs; i++) {
 
 
 #endif // JKQTPHIGHRESTIMER_H
-
-/*@}*/

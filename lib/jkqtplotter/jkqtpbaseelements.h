@@ -19,16 +19,8 @@
 
 
 
-/**
- * \defgroup jkqtpbaseplotter_elements Basic Plot Elements
- * \ingroup jkqtplotter_elements
- *
- * This group contains some tool classes that implement basic elements of the plot (coordinate axes, key, ...).
- * These classes are used by JKQtPlotterBase to output the plot
- */
-
 /** \file jkqtpbaseelements.h
-  * \ingroup jkqtpbaseplotter_elements
+  * \ingroup jkqtplotter_elements
   */
 
 #ifndef JKQTPBASEELEMENTS_H
@@ -47,7 +39,7 @@
 class JKQtBasePlotter;
 
 /*! \brief this virtual class is the base for any type of coordinate axis, to be drawn by JKQTplotterBase.
-    \ingroup jkqtpbaseplotter_elements
+    \ingroup jkqtplotter_elements
 
     This class implements all the functionality needed for a coordinate axis:
       - transform world to screen coordinates and vice versa
@@ -111,7 +103,7 @@ class JKQtBasePlotter;
     are implemented in p2x(). They can be used to show the system coordinates of the current mouse position.
 
 
-    \section jkqtplotter_base_grids Axis Ticks and Grids
+    \section jkqtplotter_base_grids_baseelemenets Axis Ticks and Grids
 
     This section explains how this component draws the ticks on coordinate axes and the grids that may be drawn below
     the plots. In principle both - grids and axes - are drawn the same way, i.e. with the same step widths. There are
@@ -914,7 +906,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
 
 /*! \brief implements a vertical axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtpbaseplotter_elements
+    \ingroup jkqtplotter_elements
 
  */
 class LIB_EXPORT JKQTPverticalAxis: public JKQTPcoordinateAxis {
@@ -954,7 +946,7 @@ class LIB_EXPORT JKQTPverticalAxis: public JKQTPcoordinateAxis {
 
 
 /*! \brief implements a position-indipendent vertical axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtpbaseplotter_elements
+    \ingroup jkqtplotter_elements
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
@@ -995,7 +987,7 @@ class LIB_EXPORT JKQTPverticalIndependentAxis: public JKQTPverticalAxis {
 
 
 /*! \brief implements a horizontal axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtpbaseplotter_elements
+    \ingroup jkqtplotter_elements
 
  */
 class LIB_EXPORT JKQTPhorizontalAxis: public JKQTPcoordinateAxis {
@@ -1036,7 +1028,7 @@ class LIB_EXPORT JKQTPhorizontalAxis: public JKQTPcoordinateAxis {
 
 
 /*! \brief implements a position-indipendent horizontal axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtpbaseplotter_elements
+    \ingroup jkqtplotter_elements
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */

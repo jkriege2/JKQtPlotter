@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
+# JKQtPlotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQtPlotterImagePlotRGBOpenCV}
 This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special OpenCV Interface function `JKQTPcopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
@@ -103,4 +99,4 @@ The result looks like this:
 
 The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQtPlotter has its 0 at the bottom-left (right-handed coordinate system).
 
-[Back to JKQTPlotter main page](../../README.md)
+

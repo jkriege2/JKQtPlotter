@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_imageplot_modifier.cpp
+ * Shows how to plot colored math images/matrices modified by a second data-column/image with JKQtPlotter
+ *
+ * \ref JKQtPlotterImagePlotModifier
+ */
+
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

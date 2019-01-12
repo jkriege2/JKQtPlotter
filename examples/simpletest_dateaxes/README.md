@@ -1,10 +1,6 @@
-[Back to JKQTPlotter main page](../../README.md)
+# JKQtPlotter: Examples: Date/Time Axes {#JKQtPlotterDateTimeAxes}
 
-# JKQtPlotter
-
-## Date/Time Axes
-
-### Date Axis
+## Date Axis
 This project (see `./examples/simpletest_dateaxes/`) simply creates a JKQtPlotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_dateaxes.cpp`](../simpletest_dateaxes/jkqtplotter_simpletest_dateaxes.cpp). 
@@ -113,7 +109,7 @@ The result looks like this:
 ![jkqtplotter_simpletest_symbols_and_styles](../../screenshots/jkqtplotter_simpletest_dateaxes.png)
 
 
-### Time Axis
+## Time Axis
 A second variant (see the example CPP-file) displays data with a time-axis:
 
 ![jkqtplotter_simpletest_symbols_and_styles](../../screenshots/jkqtplotter_simpletest_dateaxes_timeaxis.png)
@@ -168,4 +164,3 @@ Axis formating for this example is done like this:
     plot.get_yAxis()->set_axisLabel("Temperature [{\\degree}C]");
 ```
 
-[Back to JKQTPlotter main page](../../README.md)

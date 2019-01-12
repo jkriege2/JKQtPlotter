@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_rgbimageplot_opencv.cpp
+ * JKQtPlotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
+ *
+ * \ref JKQtPlotterImagePlotRGBOpenCV
+ */
+
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

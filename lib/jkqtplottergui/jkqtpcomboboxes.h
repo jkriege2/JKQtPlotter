@@ -19,15 +19,8 @@
 
 
 
-/**
- * \defgroup jkqtpcomboboxes diverse comboboxes for properties of JKQtPlotter
- * \ingroup jkqtpbaseplotter
- *
- *
- */
-
 /** \file jkqtpcomboboxes.h
-  * \ingroup jkqtpbaseplotter
+  * \ingroup jkqtplotter
   */
 
 #ifndef JKQTPCOMBOBOXES_H
@@ -43,8 +36,9 @@
 
 
 /*! \brief class to plot an image from an 2-dimensional array of values
-    \ingroup jkqtplotter_imagelots
+    \ingroup jkqtpcomboboxes
 
+    \image html JKQTPMathImageColorPaletteComboBox.png
  */
 class LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBox {
         Q_OBJECT
@@ -65,7 +59,7 @@ class LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows  JKQTPCAdrawMode
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPCAdrawModeComboBox: public QComboBox {
         Q_OBJECT
@@ -81,7 +75,7 @@ class LIB_EXPORT JKQTPCAdrawModeComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows  JKQTPCAlabelType
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPCAlabelTypeComboBox: public QComboBox {
         Q_OBJECT
@@ -96,7 +90,7 @@ class LIB_EXPORT JKQTPCAlabelTypeComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows  JKQTPlabelPosition
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPlabelPositionComboBox: public QComboBox {
         Q_OBJECT
@@ -112,7 +106,9 @@ class LIB_EXPORT JKQTPlabelPositionComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows JKQTPkeyPosition
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
+
+    \image html JKQTPkeyPositionComboBox.png
  */
 class LIB_EXPORT JKQTPkeyPositionComboBox: public QComboBox {
         Q_OBJECT
@@ -132,7 +128,7 @@ class LIB_EXPORT JKQTPkeyPositionComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows JKQTPkeyPosition
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPkeyLayoutComboBox: public QComboBox {
         Q_OBJECT
@@ -151,7 +147,9 @@ class LIB_EXPORT JKQTPkeyLayoutComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows JKQTPerrorPlotstyle
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
+
+    \image html JKQTPerrorPlotstyleComboBox.png
  */
 class LIB_EXPORT JKQTPerrorPlotstyleComboBox: public QComboBox {
         Q_OBJECT
@@ -168,7 +166,9 @@ class LIB_EXPORT JKQTPerrorPlotstyleComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows JKQTPgraphSymbols
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
+
+    \image html JKQTPSymbolComboBox.png
  */
 class LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
         Q_OBJECT
@@ -184,7 +184,7 @@ class LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox to select whether a line, symbols or both should be displayed
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
         Q_OBJECT
@@ -205,7 +205,7 @@ class LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox to select whether a line, symbols or both should be displayed, in addition to JKQTPLinePlotStyleComboBox this may also have different symbol sizes!
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
         Q_OBJECT
@@ -235,7 +235,7 @@ class LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows JKQTPstepType
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPstepTypeComboBox: public QComboBox {
         Q_OBJECT
@@ -251,7 +251,7 @@ class LIB_EXPORT JKQTPstepTypeComboBox: public QComboBox {
 
 
 /*! \brief a QComboBox which shows  JKQTPMathImageBase::ModifierMode
-    \ingroup jkqtptools
+    \ingroup jkqtpcomboboxes
  */
 class LIB_EXPORT JKQTPImageModifierModeComboBox: public QComboBox {
         Q_OBJECT

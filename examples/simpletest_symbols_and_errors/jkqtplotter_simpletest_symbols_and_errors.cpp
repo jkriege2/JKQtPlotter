@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_symbols_and_errors.cpp
+ * JKQtPlotter: Examples: Simple line-graph with error bars
+ *
+ * \ref JKQtPlotterSymbolsErrors
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

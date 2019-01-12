@@ -18,16 +18,8 @@
 */
 
 
-
-/**
- * \defgroup jkqtplotter_elements Plot Elements
- * \ingroup jkqtplotter
- * \defgroup jkqtplotter_plots Graphs
- * \ingroup jkqtplotter_elements
- */
-
 /** \file jkqtpgraphsboxplot.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtplotter_statgraphs
   */
 
 #include <QString>
@@ -45,7 +37,7 @@
 
 
 /*! \brief This implements vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplots</a>
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_statgraphs
 
     the x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
     percentile25Column and percentile75Column.
@@ -414,7 +406,7 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
 
 
 /*! \brief This implements horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">boxplots</a>
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_statgraphs
 
     the x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
     percentile25Column and percentile75Column.
@@ -455,7 +447,7 @@ class LIB_EXPORT JKQTPboxplotHorizontalGraph: public JKQTPboxplotVerticalGraph {
 
 /*! \brief This implements a vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> where the data is directly given to the
            object and not stored in a column, as in JKQTPboxplotVerticalGraph
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_statgraphs
 
     the x position is given in posColumn. All other data are given in the median, min, max,
     percentile25 and percentile75.
@@ -806,7 +798,7 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
 
 /*! \brief This implements a horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> where the data is directly given to the
            object and not stored in a column, as in JKQTPboxplotVerticalGraph
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_statgraphs
 
     the x position is given in pos. All other data are given in the median, min, max,
     percentile25 and percentile75.

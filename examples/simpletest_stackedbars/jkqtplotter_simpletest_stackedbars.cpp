@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_stackedbars.cpp
+ * JKQtPlotter: Examples: Simple stacked barchart
+ *
+ * \ref JKQtPlotterStackedBarChart
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

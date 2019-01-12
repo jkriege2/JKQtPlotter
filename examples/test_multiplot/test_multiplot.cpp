@@ -1,3 +1,9 @@
+/** \example test_multiplot.cpp
+ * JKQtPlotter: Examples: Laying out Several Plots
+ *
+ * \ref JKQtPlotterMultiPlotLayout
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

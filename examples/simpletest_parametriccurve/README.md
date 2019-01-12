@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Plotting Parametric Curves
+# JKQtPlotter: Examples: Plotting Parametric Curves {#JKQtPlotterParametricCurves}
 This project (see `./examples/simpletest_parametriccurve/`) demonstrates how to draw parametric curves, using [`JKQTPxyLineGraph`}(../simpletest) and [`JKQTPxyParametrizedScatterGraph`](../simpletest_paramscatterplot). 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_parametriccurve.cpp`](../simpletest_parametriccurve/jkqtplotter_simpletest_parametriccurve.cpp). First, the parametric curve (here a [logarithic spiral](https://en.wikipedia.org/wiki/Logarithmic_spiral)) is sampled into two columns containing the x- and y-values along the curve. In addition the radial distance from x=y=0 is added into a third column:
@@ -61,4 +57,3 @@ The result looks like this:
 
 
 
-[Back to JKQTPlotter main page](../../README.md)

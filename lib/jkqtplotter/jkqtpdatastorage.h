@@ -19,17 +19,6 @@
 
 
 
-/**
- * \defgroup jkqtpdatastorage Data Storage Classes/System
- * \ingroup jkqtplotter
- *
- * The classes in this group implement a data storage system for use with the main plotter class.
- * Basically a table of data is generated as a set of logical columns that may be bound to different
- * data sources (internal or external memory arrays. Later on it is simply possible to plot graphs
- * using the column number and the not a link to the actual data array, as the link is stored in these
- * classes.
- */
-
 /** \file jkqtpdatastorage.h
   * \ingroup jkqtpdatastorage
   */
@@ -252,9 +241,9 @@ class LIB_EXPORT JKQTPdatastore{
 
 
 
-        /** \brief copies the given \A old_column into a new one, reading the data with the given start column and stride */
+        /** \brief copies the given \a old_column into a new one, reading the data with the given start column and stride */
         size_t copyColumn(size_t old_column, size_t start, size_t stride, const QString& name=QString(""));
-        /** \brief copies the given \A old_column into a new one */
+        /** \brief copies the given \a old_column into a new one */
         size_t copyColumn(size_t old_column, const QString& name=QString(""));
 
 

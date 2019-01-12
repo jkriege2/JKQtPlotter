@@ -1,3 +1,9 @@
+/** \example jkqtmathtext_simpletest.cpp
+ * A very basic example for the usage of JKQTmathText
+ *
+ * \ref JKQTmathTextSimpleExample
+ */
+ 
 #include <QApplication>
 #include <QLabel>
 #include <QPixmap>

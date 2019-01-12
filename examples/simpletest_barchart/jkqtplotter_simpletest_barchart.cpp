@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_barchart.cpp
+ * Shows how to draw Barcharts with JKQtPlotter
+ *
+ * \ref JKQtPlotterBarcharts
+ */
+ 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

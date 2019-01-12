@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_imageplot_nodatastore.cpp
+ * Simple math image plot without use of central JKQTdatastore
+ *
+ * \ref JKQtPlotterImagePlotNoDatastore
+ */
+
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

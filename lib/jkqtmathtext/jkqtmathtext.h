@@ -25,9 +25,6 @@
   Author: Jan krieger <jan@jkrieger.de>, http://www.jkrieger.de/
 */
 
-/**
- * \defgroup jkqtmathtext JKQtMathText LaTeX-Renderer for Qt
- */
 
 /** \file jkqtmathtext.h
   * \ingroup jkqtmathtext

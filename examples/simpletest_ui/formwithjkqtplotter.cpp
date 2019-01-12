@@ -1,3 +1,9 @@
+/** \example formwithjkqtplotter.cpp
+ * JKQtPlotter: Examples: Using a JKQtPlotter inside a Qt User Interface Designer (UI) File
+ *
+ * \ref JKQtPlotterQtCreator
+ */
+
 #include "formwithjkqtplotter.h"
 #include "ui_formwithjkqtplotter.h"
 

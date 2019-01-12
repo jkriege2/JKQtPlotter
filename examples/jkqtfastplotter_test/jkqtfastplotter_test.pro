@@ -6,9 +6,9 @@ TARGET = JKQTFastPlotter_test
 TEMPLATE = app
 
 SOURCES += jkqtfastplotter_test.cpp \
-    testmain.cpp
+    jkqtfastplotter_test_testmain.cpp
 
-HEADERS += testmain.h
+HEADERS += jkqtfastplotter_test_testmain.h
 
 RCC_DIR = .rccs
 

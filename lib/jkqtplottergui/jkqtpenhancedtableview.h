@@ -18,13 +18,8 @@
 */
 
 
-/**
- * \defgroup jkqtptools Tool Functions and Definitions
- * \ingroup jkqtplotter
- */
-
 /** \file jkqtpenhancedtableview.h
-  * \ingroup jkqtptools
+  * \ingroup jkqtptools_qtwidgets
   */
 
 
@@ -35,7 +30,7 @@
 #include <QPrinter>
 
 /*! \brief this class extends the QTableView
-    \ingroup jkqtptools
+    \ingroup jkqtptools_qtwidgets
 
     This enhanced table view adds some functionality to the Qt class:
       - return HTML code that describes the table

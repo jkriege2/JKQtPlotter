@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_paramscatterplot.cpp
+ * JKQtPlotter: Examples: Scatter Graph with Parametrized Symbols/Colors
+ *
+ * \ref JKQtPlotterParamScatter
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

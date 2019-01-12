@@ -18,13 +18,8 @@
 */
 
 
-/**
- * \defgroup jkqtptools Tool Functions and Definitions
- * \ingroup jkqtplotter
- */
-
 /** \file jkqtpdrawingtools.h
-  * \ingroup jkqtptools
+  * \ingroup jkqtptools_drawing
   */
 
 
@@ -37,7 +32,7 @@
 class JKQTPEnhancedPainter; // forward
 
 /*! \brief plot the specified symbol at pixel position x,y
-   \ingroup jkqtptools
+   \ingroup jkqtptools_drawing
 
     \param painter the QPainter to draw to
     \param x x-coordinate of the symbol center
@@ -51,7 +46,7 @@ class JKQTPEnhancedPainter; // forward
 LIB_EXPORT void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 /*! \brief plot the specified symbol at pixel position x,y
-   \ingroup jkqtptools
+   \ingroup jkqtptools_drawing
 
     \param paintDevice the paint device to draw on
     \param x x-coordinate of the symbol center
@@ -66,7 +61,7 @@ LIB_EXPORT void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, J
 
 
 /*! \brief plot an arrow between positions (x1,y1) and (x2,y2)
-   \ingroup jkqtptools
+   \ingroup jkqtptools_drawing
 
     \param painter the QPainter to draw to
     \param x1 first x-coordinate of the arrow
@@ -83,7 +78,7 @@ LIB_EXPORT void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, J
 
 
 /*! \brief draw an ellipse without setting pen or brush, or saving the painter!
-    \ingroup jkqtptools
+    \ingroup jkqtptools_drawing
 
     \return a QVector<QPointF> with points that may be used for drawing
     \param x center of ellipse (x-coordinate)

@@ -1,8 +1,6 @@
 # JKQTmathText: A simple usage example            {#JKQTmathTextSimpleExample}
 JKQTmathText is a hand-written LaTeX-renderer for Qt (implemented in native C++, using Qt). It supports a large set of standard LaTeX markup and can render it to a QPainter.
 
-[Back to JKQTPlotter main page](../../README.md)
-
 This project (see `./examples/jkqtmathtext_simpletest/`) simply creates a QLabel (as a new window) that displays a rendered LaTeX equation (here the time-dependent Schrödinger equation).
 The QMake project looks like this (see [`jkqtmathtext_simpletest.pro`](../jkqtmathtext_simpletest/jkqtmathtext_simpletest.pro):
 ```qmake
@@ -67,4 +65,3 @@ The result looks like this:
 
 ![jkqtmathtext_simpletest](../../screenshots/jkqtmathtext_simpletest.png)
 
-[Back to JKQTPlotter main page](../../README.md)

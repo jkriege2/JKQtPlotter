@@ -18,11 +18,6 @@
 */
 
 
-/**
- * \defgroup jkqtptools Tool Functions and Definitions
- * \ingroup jkqtplotter
- */
-
 /** \file jkqtptools.h
   * \ingroup jkqtptools
   */
@@ -104,17 +99,13 @@
 
 
 
-/** \defgroup tools_files filesystem and file I/O
- *  \ingroup tools
- */
-
-/** \defgroup tools_streams C++ stream tools
- *  \ingroup tools_files
- */
-/*@{*/
 
 class JKQTPEnhancedPainter; // forward
+class JKQtBasePlotter; // forward declaration
 
+/** \brief smallest linewidth any line in JKQtPlotter may have
+ * \ingroup jkqtplotter
+ */
 #define JKQTPLOTTER_ABS_MIN_LINEWIDTH 0.02
 
 /** \brief check whether the dlotaing point number is OK (i.e. non-inf, non-NAN)
@@ -147,7 +138,6 @@ LIB_EXPORT QString JKQTP_QBrushStyle2String(Qt::BrushStyle style);
 LIB_EXPORT Qt::BrushStyle JKQTP_String2QBrushStyle(QString style);
 
 
-class JKQtBasePlotter; // forward declaration
 
 
 /** \brief display mode for an axis
@@ -320,7 +310,7 @@ typedef struct {
 
 
 /** \brief plot styles for the error information
- * \ingroup jkqtplotter
+ * \ingroup jkqtptools
  */
 enum JKQTPerrorPlotstyle {
     JKQTPerrorEllipses=10,           /*!< \brief an ellipse spanned by the errors */
@@ -350,7 +340,7 @@ LIB_EXPORT QString JKQTPerrorPlotstyle2String(JKQTPerrorPlotstyle pos);
 LIB_EXPORT JKQTPerrorPlotstyle String2JKQTPerrorPlotstyle(QString pos);
 
 /** \brief plot styles for a graph
- * \ingroup jkqtplotter
+ * \ingroup jkqtptools
  */
 enum JKQTPgraphPlotstyle {
 	JKQTPlines,                /*!< \brief plot y=f(x), connect the datapoints by straight lines */
@@ -365,7 +355,7 @@ enum JKQTPgraphPlotstyle {
 };
 
 /** \brief symbols that can be used to plot a datapoint for a graph
- * \ingroup jkqtplotter
+ * \ingroup jkqtptools
  */
 enum JKQTPgraphSymbols {
     JKQTPnoSymbol=0,             /*!< \brief plots no symbol at all (usefull together with error bars) */
@@ -540,7 +530,7 @@ inline void jkqtpSort(T* input, T2* input2, int N, T* output=nullptr, T2* output
 }
 
 /** \brief RAII construct that times its lifetime, outputting properly indented qDebug()-message
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_debugging
  */
 class LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 {
@@ -556,66 +546,66 @@ class LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 };
 
 /** \brief convert a string to lower-case characters
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_tolower(const std::string& s);
 
 /** \brief convert a string to a boolean
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT bool jkqtp_strtobool(std::string data);
 /** \brief convert a string to upper-case
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
 
 /** \brief std::string wrapper around sprintf()
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
 
 /** \brief convert a number of bytes to a string, formatting e.g. 1024 as 1kB, ...
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_bytestostr(double bytes);
 
 /** \brief convert an integer to a string
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_inttostr(long data);
 
 /** \brief convert an integer to a hex string
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_inttohex(long data);
 
 /** \brief convert an unsigned int to a string
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
 
 /** \brief convert a double to a string
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
 
 /** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000,"g") will result in "1kg"
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, std::string unitname);
 /** \brief convert a boolean to a string
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_booltostr(bool data);
 /** \brief converts a RGBA color into a string
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
  */
 LIB_EXPORT std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
 
 /** \brief converts a QColor into a string using the jkqtp_rgbtostring() method.
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
  */
@@ -624,28 +614,29 @@ inline QString JKQTP_QColor2String(QColor color) {
 }
 
 /** \brief clean a string to be usable as a variable name, e.g. in an expression parser, or a C++-expression
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_to_valid_variable_name(std::string input);
 
 /** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000) will result in "1k"
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false);
-/** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. \c -1.23\cdot 10^{-5})
- * \ingroup jkqtptools
+/** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. <code>-1.23\cdot 10^{-5}</code>)
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
 /** \brief convert a double to a string, encoding powers of ten as exponent with HTML tags
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_floattohtmlstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
 /** \brief convert a character to a string
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_string
  */
 LIB_EXPORT std::string jkqtp_chartostr(char data);
 
 /** \brief wandelt einen Datentyp in einen double um, wird von JKQTPDatastore zur Wandlung benutzt
+ *  \ingroup jkqtptools
  *
  * Diese Funktion nutzt per default static_cast<double>(), kann aber für spezielle Datentypen überschrieben werden, etwa für bool
 */
@@ -656,7 +647,8 @@ inline constexpr double jkqtp_todouble(const T& d) {
 
 
 /** \brief wandelt einen boolean in einen double um, wird von JKQTPDatastore zur Wandlung benutzt,
- *         Spezialisierung für bool (true -> 1.0, false -> 0.0) */
+ *         Spezialisierung für bool (true -> 1.0, false -> 0.0)
+ *  \ingroup jkqtptools */
 template<>
 inline constexpr double jkqtp_todouble(const bool& d) {
     return static_cast<double>((d)?1.0:0.0);
@@ -666,7 +658,7 @@ inline constexpr double jkqtp_todouble(const bool& d) {
 
 
 /** \brief plot styles for the error information
- * \ingroup jkqtplotter
+ * \ingroup jkqtptools
  */
 enum JKQTPstepType {
     JKQTPstepLeft=0,           /*!< \brief datapoint is on the left edge of the hor. step line */

@@ -19,13 +19,6 @@
 
 
 
-/**
- * \defgroup jkqtpopencvinterface OpenCV Interfaceing Tools
- * \ingroup jkqtplotter
- *
- * Classes and functions in this group allow JKQtPlotter to directly work with <a href="https://opencv.org/">OpenCV</a> data structures.
- */
-
 /** \file jkqtpopencvinterface.h
   * \ingroup jkqtpopencvinterface
   */
@@ -39,6 +32,7 @@
 
 
 /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
+ * \ingroup jkqtpopencvinterface
  *
  *   \param datastore the datastore to which the <a href="https://opencv.org/">OpenCV</a> matrix shuld be added (as column)
  *   \param mat <a href="https://docs.opencv.org/master/d3/d63/classcv_1_1Mat.html">OpenCV-matrix</a> to store here
@@ -56,6 +50,9 @@ inline size_t JKQTPcopyCvMatToColumn(JKQTPdatastore* datastore, const cv::Mat& m
 
 ////////////////////////////////////////////////////////////////////////////////////////
 namespace JKQTPdatastore_Helper {
+	/** \brief internal helper function for JKQTPcopyCvMatToColumn()
+	 * \ingroup jkqtpopencvinterface
+	 * \internal */
     template <typename TPixel>
     inline void copyDataFromMat(double* data, const cv::Mat& mat, int channel) {
         size_t r=0;

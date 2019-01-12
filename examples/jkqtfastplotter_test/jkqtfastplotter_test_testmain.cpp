@@ -1,4 +1,8 @@
-#include "testmain.h"
+/** \example jkqtfastplotter_test_testmain.cpp
+ * Example of how to use JKQtFastPlotter
+ */
+
+#include "jkqtfastplotter_test_testmain.h"
 #include <QCheckBox>
 #include <QtGui>
 

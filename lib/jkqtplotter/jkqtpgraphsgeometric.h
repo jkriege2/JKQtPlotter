@@ -19,13 +19,6 @@
 
 
 
-
-/**
- * \defgroup jkqtplotter_geoplots Geometric Elements (Lines, Rectangles, ...)
- * \ingroup jkqtplotter_elements
-
- */
-
 /** \file jkqtpgraphsgeometric.h
   * \ingroup jkqtplotter_geoplots
   */

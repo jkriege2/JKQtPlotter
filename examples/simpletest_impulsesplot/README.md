@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Simple impulse plots
+# JKQtPlotter: Examples: Simple impulse plots {#JKQtPlotterImpulsePlots}
 This project (see `./examples/simpletest_impulsesplot/`) simply creates a JKQtPlotter widget (as a new window) and adds a single impulse graph. 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_impulsesplot.cpp`](../simpletest_impulsesplot/jkqtplotter_simpletest_impulsesplot.cpp).
 
@@ -55,4 +51,3 @@ This code snippet results in a plot like this:
 ![jkqtplotter_simpletest_impulsesplot](../../screenshots/jkqtplotter_simpletest_impulsesplot_horizontal.png)
 
 
-[Back to JKQTPlotter main page](../../README.md)

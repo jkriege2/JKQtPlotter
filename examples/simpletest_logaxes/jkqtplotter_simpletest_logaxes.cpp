@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_logaxes.cpp
+ * Shows how to use logarithmic axes with JKQtPlotter
+ *
+ * \ref JKQtPlotterLogAxes
+ */
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

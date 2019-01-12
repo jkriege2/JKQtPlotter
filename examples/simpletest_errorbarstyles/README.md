@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Different Types of Errorindicators
+# JKQtPlotter: Examples: Different Types of Errorindicators {#JKQtPlotterErrorBarStyles}
 This project (see `./examples/simpletest_errorbarstyles/`) simply creates a JKQtPlotter widget (as a new window) and adds several curves show-casing different styles of error indicators. Data is initialized from two QVector<double> objects.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_errorbarstyles.cpp`](../simpletest_errorbarstyles/jkqtplotter_simpletest_errorbarstyles.cpp). 
@@ -117,4 +113,3 @@ Error bars are implemented in the mixin-classes `JKQTPxyGraphErrors`, `JKQTPxGra
 .
 
 
-[Back to JKQTPlotter main page](../../README.md)

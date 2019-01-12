@@ -1,0 +1,125 @@
+/*!
+
+\defgroup jkqtptools Tool Functions and Definitions for JKQtPlotter
+
+This group contains a set of tools that I've written over the years to enhance the
+C++ standard library.
+
+\defgroup tools_math Tools for Mathematical Computations & Equation Parsing
+\ingroup jkqtptools
+
+\defgroup jkqtptools_string String Tool Functions
+\ingroup jkqtptools
+
+\defgroup jkqtptools_qt Additional Tools for Qt
+\ingroup jkqtptools
+
+\defgroup jkqtptools_qtwidgets Additional Widgets for Qt
+\ingroup jkqtptools
+
+\defgroup jkqtptools_drawing Drawing Tools
+\ingroup jkqtptools
+
+\defgroup jkqtptools_debugging Debugging Tools
+\ingroup jkqtptools
+
+
+
+
+
+\defgroup jkqtplotter JKQtPlotter: Qt based Scientific Plotter Class
+
+A Qt based plotter for 2D scientific graphs.
+
+
+\defgroup jkqtpdatastorage Data Storage Classes/System
+\ingroup jkqtplotter
+
+The classes in this group implement a data storage system for use with the main plotter class.
+Basically a table of data is generated as a set of logical columns that may be bound to different
+data sources (internal or external memory arrays. Later on it is simply possible to plot graphs
+using the column number and the not a link to the actual data array, as the link is stored in these
+classes.
+
+\defgroup jkqtpopencvinterface OpenCV Interfaceing Tools
+\ingroup jkqtpdatastorage
+
+Classes and functions in this group allow JKQtPlotter to directly work with <a href="https://opencv.org/">OpenCV</a> data structures.
+
+
+\defgroup jkqtpbaseplotter Plotter Base Class
+\ingroup jkqtplotter
+
+This class implements the basis for plotter classes. It contains layout management code,
+coordinate system management ... Use JKQPlotter if you need a widget
+
+\defgroup jkqtpbaseplotter_elements Basic Plot Elements (coordinate axes, key, ...)
+\ingroup jkqtplotter
+
+This group contains some tool classes that implement basic elements of the plot (coordinate axes, key, ...).
+These classes are used by JKQtPlotterBase to output the plot
+
+
+\defgroup jkqtplotter_elements Plot Elements
+\ingroup jkqtplotter
+
+
+\defgroup jkqtplotter_basegraphs Baseclasses for Graphs
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_basegraphserrors Base Classes for Error Indicators
+\ingroup jkqtplotter_basegraphs
+
+
+\defgroup jkqtplotter_linesymbolgraphs Line/Symbol Graphs
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_Fgraphs Function Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+\defgroup jkqtplotter_parsedFgraphs Parsed Function Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+\defgroup jkqtplotter_barssticks Barcharts, Stick-Charts, ...
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_statgraphs Statistical Graphs (e.g. Boxplots ...)
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_geoplots Geometric Elements (Lines, Rectangles, ...)
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_diverse Diverse Other Graphs (Ranges, ...)
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_imagelots Matrix/Image Plotting
+\ingroup jkqtplotter_elements
+
+\defgroup jkqtplotter_imagelots_elements Image Plotting Graphs
+\ingroup jkqtplotter_imagelots
+
+\defgroup jkqtplotter_imagelots_tools Image Drawing Tools
+\ingroup jkqtplotter_imagelots
+
+\defgroup jkqtplotter_imagelots_contour Contour Graphs
+\ingroup jkqtplotter_imagelots
+
+
+\defgroup jkqtplotter_overlays Overlay Elements
+\ingroup jkqtplotter_elements
+
+
+
+\defgroup jkqtpgraphsmodel Data Models to Access Graphs in a JKQtBasePlotter/JKQtPlotter
+\ingroup jkqtplotter
+
+\defgroup jkqtpcomboboxes Comboboxes for Properties of JKQtBasePlotter/JKQtPlotter
+\ingroup jkqtplotter
+
+\defgroup jkqtplotter_guitools Qt GUI classes to work with JKQtPlotter
+\ingroup jkqtplotter
+
+
+
+
+*/

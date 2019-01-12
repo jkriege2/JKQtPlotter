@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_parsedfunctionplot.cpp
+ * JKQtPlotter: Examples: Plotting Parsed Mathematical Functions as Line Graphs
+ *
+ * \ref JKQtPlotterParsedFunctionPlot
+ */
+
 #include <QApplication>
 #include <QLineEdit>
 #include <QCheckBox>

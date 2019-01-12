@@ -19,15 +19,8 @@
 
 
 
-/**
- * \defgroup jkqtplotter_elements Plot Elements
- * \ingroup jkqtplotter
- * \defgroup jkqtplotter_plots Graphs
- * \ingroup jkqtplotter_elements
- */
-
 /** \file jkqtpgraphsevaluatedfunction.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtplotter_Fgraphs
   */
 
 #include <QString>
@@ -44,7 +37,7 @@
 
 
 /*! \brief type of functions that may be plottet
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_Fgraphs
 
     This is the type of functions \f$ y=f(x, \vec{p}) \f$ that may be plottet by JKQTPxFunctionLineGraph
     and JKQTPyFunctionLineGraph. It is possible to supply parameters \f$ \vec{p} \f$ to the function that
@@ -54,7 +47,7 @@
 typedef std::function<double(double, void*)> jkqtpPlotFunctionType;
 
 /*! \brief simplified type of functions (without parameters) that may be plottet
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_Fgraphs
 
     This is the type of functions \f$ y=f(x) \f$ that may be plottet by JKQTPxFunctionLineGraph
     and JKQTPyFunctionLineGraph.
@@ -63,7 +56,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_Fgraphs
 
     This class implements an intelligent plotting algorithm for functions. It starts by sampling
     the function at minSamples positions. Then each function interval is bisected recursively if
@@ -628,7 +621,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
 };
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$
-    \ingroup jkqtplotter_plots
+    \ingroup jkqtplotter_Fgraphs
 
  */
 class LIB_EXPORT JKQTPyFunctionLineGraph: public JKQTPxFunctionLineGraph {

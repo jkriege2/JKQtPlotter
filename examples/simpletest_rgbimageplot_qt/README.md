@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## `QImage` as a Graph
+# JKQtPlotter: Examples: `QImage` as a Graph {#JKQtPlotterImagePlotQImageRGB}
 This project (see `./examples/simpletest_rgbimageplot_qt/`) simply creates a JKQtPlotter widget (as a new window) and adds an image plot with an image taken from a [QImage](http://doc.qt.io/qt-5/qimage.html) object. 
 
 The source code of the main application is (see [`jkqtplotter_simpletest_rgbimageplot_qt.cpp`](../simpletest_rgbimageplot_qt/jkqtplotter_simpletest_rgbimageplot_qt.cpp). the main parts are:
@@ -32,4 +28,4 @@ The result looks like this:
 ![jkqtplotter_simpletest_imageplot](../../screenshots/jkqtplotter_simpletest_rgbimageplot_qt.png)
 
 
-[Back to JKQTPlotter main page](../../README.md)
+

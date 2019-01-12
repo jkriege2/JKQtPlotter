@@ -20,7 +20,7 @@
 
 
 /** \file jkvanishqtoolbar.h
-  * \ingroup jkqtpbaseplotter
+  * \ingroup jkqtptools_qtwidgets
   */
 
 #ifndef jkvanishqtoolbar_H
@@ -30,7 +30,7 @@
 #include <QToolBar>
 
 /** \brief a modified a href="http://doc.trolltech.com/4.5/qtoolbar.html">QToolBar</a> which vanishes when the mouse leaves the toolbar.
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_qtwidgets
  */
 class LIB_EXPORT JKVanishQToolBar: public QToolBar {
         Q_OBJECT

@@ -1,8 +1,4 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Very simple line-graph
+# JKQtPlotter: Examples: Very simple line-graph             {#JKQTPlotterSimpleTest}
 This project (see `./examples/simpletest/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 The QMake project looks like this (see [`jkqtplotter_simpletest.pro`](../simpletest/jkqtplotter_simpletest.pro):
 ```qmake
@@ -102,4 +98,3 @@ The result looks like this:
 
 
 
-[Back to JKQTPlotter main page](../../README.md)

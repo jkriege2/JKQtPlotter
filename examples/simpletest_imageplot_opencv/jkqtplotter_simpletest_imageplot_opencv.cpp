@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest_imageplot_opencv.cpp
+ * Simple math image plot, showin a 1-channel OpenCV cv::Mat
+ *
+ * \ref JKQtPlotterImagePlotOpenCV
+ */
+
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

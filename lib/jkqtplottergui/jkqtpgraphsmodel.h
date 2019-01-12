@@ -19,15 +19,8 @@
 
 
 
-/**
- * \defgroup jkqtpgraphsmodel data model with all plots ina JKQtBasePlotter (+ allows to switch them visible/invisible)
- * \ingroup jkqtpbaseplotter
- *
- *
- */
-
 /** \file jkqtpgraphsmodel.h
-  * \ingroup jkqtpbaseplotter
+  * \ingroup jkqtpgraphsmodel
   */
 
 #ifndef jkqtpgraphsmodel_H
@@ -39,7 +32,11 @@
 #include <QAbstractTableModel>
 
 class JKQtBasePlotter; // forward
-/** \brief data model with all plots ina JKQtBasePlotter (+ allows to switch them visible/invisible) */
+/** \brief data model with all plots ina JKQtBasePlotter (+ allows to switch them visible/invisible)
+  * \ingroup jkqtpgraphsmodel
+  *
+  * \image html JKQTPgraphsModel.png
+  */
 class JKQTPgraphsModel : public QAbstractTableModel
 {
     Q_OBJECT

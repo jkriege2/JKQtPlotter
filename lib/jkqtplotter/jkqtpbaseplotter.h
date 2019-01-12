@@ -19,15 +19,6 @@
 
 
 
-/**
- * \defgroup jkqtpbaseplotter Plotter Base Class
- * \ingroup jkqtplotter
- *
- *
- * This class implements the basis for plotter classes. It contains layout management code,
- * coordinate system management ... Use JKQPlotter if you need a widget
- */
-
 /** \file jkqtpbaseplotter.h
   * \ingroup jkqtpbaseplotter
   */
@@ -75,7 +66,7 @@ LIB_EXPORT void initJKQtBasePlotterResources();
 
 
 /** \brief base class for 2D plotter classes
- * \ingroup jkqtplotter
+ * \ingroup jkqtpbaseplotter
  *
  * This class implements basic functionalities for the plotter classes. Those are:
  *   -# data storage using a JKQTPdatastore object
@@ -115,7 +106,7 @@ LIB_EXPORT void initJKQtBasePlotterResources();
  * methods (x2p(), y2p(), p2x(), p2y() which only call the respective methods in xAxis and yAxis objects.
  *
  *
- * \section jkqtplotter_base_grids Axis Ticks and Grids
+ * \section jkqtplotter_base_grids_baseplotter Axis Ticks and Grids
  *    - The plotting of coordinate axes and grids, as well as coordinate transforms is done by
  *      JKQTPcoordinateAxis descendents (see documentation there)
  *  .
@@ -847,11 +838,13 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief set the datarange of all current graphs to the given values */
         void setGraphsDataRange(int datarange_start, int datarange_end);
 
+        /** \brief en-/disables the maintaining of the data aspect ratio */
         void set_maintainAspectRatio(bool value) {
             maintainAspectRatio=value;
             update_plot();
         }
 
+        /** \brief en-/disables the maintaining of the axis aspect ratio */
         void set_maintainAxisAspectRatio(bool value) {
             maintainAxisAspectRatio=value;
             update_plot();
@@ -1090,6 +1083,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         int getNextStyle();
 
 
+        /** \brief represents a pen, when plotting in JKQtPlotter/JKQtBasePlotter */
         struct JKQTPPen {
             QColor m_color;
             double m_width;
@@ -1833,11 +1827,17 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         inline int get_plotWidth() const { return this->plotWidth; }
         /*! \brief returns the property plotHeight. \details Description of the parameter plotHeight is:  <BLOCKQUOTE>\copybrief plotHeight </BLOCKQUOTE>. \see plotHeight for more information */ 
         inline int get_plotHeight() const { return this->plotHeight; }
+        /** \brief returns the internal JKQTmathText, used to render text with LaTeX markup */
         inline JKQTmathText* get_mathText() { return &mathText; }
+        /** \brief returns the internal JKQTmathText, used to render text with LaTeX markup */
         inline const JKQTmathText* get_mathText() const { return &mathText; }
+        /** \brief returns the x-axis objet of the plot */
         inline JKQTPhorizontalAxis* get_xAxis() { return xAxis; }
+        /** \brief returns the y-axis objet of the plot */
         inline JKQTPverticalAxis* get_yAxis() { return yAxis; }
+        /** \brief returns the x-axis objet of the plot */
         inline const JKQTPhorizontalAxis* get_xAxis() const { return xAxis; }
+        /** \brief returns the y-axis objet of the plot */
         inline const JKQTPverticalAxis* get_yAxis() const { return yAxis; }
 
 
@@ -2200,7 +2200,6 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
     public:
 
         /** \brief set a global preset/default value for the userSettigsFilename and userSettigsPrefix properties of JKQtBasePlotter
-         * \ingroup jkqtplotter
          *
          *  These presets are application global and will be used ONLY on initialization of a JKQtBasePlotter. You can overwrite them
          *  on a local-basis for each JKQtBasePrinter separately. The changed values from this function call will only take effect for
@@ -2208,6 +2207,8 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          */
         static void setDefaultJKQtBasePrinterUserSettings(QString userSettigsFilename, QString userSettigsPrefix);
 
+        /** \brief Service from this class to implement a special QPaintDevice as a plugin, that can be registered to JKQtBasePlotter/JKQtPlotter
+         *         and then be used to export graphics, use registerPaintDeviceAdapter() to register such a plass */
         class LIB_EXPORT JKQTPPaintDeviceAdapter {
             public:
                 virtual ~JKQTPPaintDeviceAdapter()  {}
@@ -2226,10 +2227,14 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
                 virtual QPaintDevice* createPaintdeviceMM(const QString& filename, double widthMM, double heightMM) const;
         };
 
+        /** \brief register a user-defined QPaintDevice (with factory JKQTPPaintDeviceAdapter) as a plugin to JKQtBasePlotter/JKQtPlotter,
+         *         which will use it to export graphics */
         static void registerPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
+        /** \brief de-register a  JKQTPPaintDeviceAdapter from JKQtBasePlotter/JKQtPlotter */
         static void deregisterPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
 
 
+        /** \brief virtual base-class for exporter classes that can be used to save data inot a file */
         class LIB_EXPORT JKQTPSaveDataAdapter {
             public:
                 virtual ~JKQTPSaveDataAdapter() ;
@@ -2237,15 +2242,20 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
                 virtual void saveJKQTPData(const QString& filename, const QList<QVector<double> >& data, const QStringList& columnNames) const=0;
         };
 
+        /** \brief register a JKQTPSaveDataAdapter with JKQtPlotter/JKQtBasePlotter that can be used to export data from the internal datastore into a file */
         static bool registerSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
+        /** \brief de-register a JKQTPSaveDataAdapter from JKQtPlotter/JKQtBasePlotter */
         static bool deregisterSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
 
-
+        /** \brief internal tool class for text sizes
+         *  \internal */
         struct LIB_EXPORT textSizeData {
             explicit textSizeData();
             double ascent, descent, width, strikeoutPos;
         };
 
+        /** \brief internal tool class for text-sizess in a plot key
+         *  \internal */
         struct LIB_EXPORT textSizeKey {
             explicit textSizeKey(const QFont& f, const QString& text, QPaintDevice *pd);
             explicit textSizeKey(const QString& fontName, double fontSize, const QString& text, QPaintDevice *pd);

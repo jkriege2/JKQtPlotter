@@ -1,9 +1,5 @@
-[Back to JKQTPlotter main page](../../README.md)
-
-# JKQtPlotter
-
-## Plotting Parsed Mathematical Functions as Line Graphs
-### Plot Function f(x)
+# JKQtPlotter: Examples: Plotting Parsed Mathematical Functions as Line Graphs {#JKQtPlotterParsedFunctionPlot}
+## Plot Function f(x)
 This project (see `./examples/simpletest_parsedfunctionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions are defined as strings that will be evaluated with the equation parser, integrated into JKQtPlotter. 
 
 Note: See the example [Plotting Mathematical Functions as Line Graphs](../simpletest_functionplot) if you don't want to draw parsed functions, but want to provide a C function, or C++ functor!
@@ -48,7 +44,7 @@ This code snippet results in a plot like this:
 
 ![jkqtplotter_simpletest_parsedfunctionplot](../../screenshots/jkqtplotter_simpletest_parsedfunctionplot.png)
 
-### Plotting with parameters
+## Plotting with parameters
 As shown in [Plotting Mathematical Functions as Line Graphs](../simpletest_functionplot) you can also use externally set parameters in a plot function. These parameters can be double numbers and may be set with either as an internal parameter vector, or may be read from a parameter column (as shown in the [linked example](../simpletest_functionplot)). These parameters are available as variables `p1`, `p2`, ... in the function string. Here is a small example:
 
 ```c++
@@ -58,13 +54,13 @@ As shown in [Plotting Mathematical Functions as Line Graphs](../simpletest_funct
     parsedFunc->set_title("user function");
 ```
 
-### Plot Function f(y)
+## Plot Function f(y)
 If you use the graph class `JKQTPyParsedFunctionLineGraph` instead of `JKQTPxParsedFunctionLineGraph`, you can plot functions `x=f(y)` (instead of `y=f(x)`). The function from the example above will then ahve to be changed to `sin(y*8)*exp(-y/4)` and the result will look like this:
 
 ![jkqtplotter_simpletest_parsedfunctionplot_fy](../../screenshots/jkqtplotter_simpletest_parsedfunctionplot_fy.png)
 
 
-### Properties of the Adaptive Plotting Algorithm
+## Properties of the Adaptive Plotting Algorithm
 The adaptive capabilities of the rendering algorithm can be seen, when plotting e.g. `2/x`, which is drawn smoothely, even around the undefined value at `x=0`:
 
 ![jkqtplotter_simpletest_parsedfunctionplot_2overx.png](../../screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx.png)
@@ -74,4 +70,3 @@ With an additional checkbox in this example, you can switch drawing the actual s
 ![jkqtplotter_simpletest_parsedfunctionplot_2overx_samplepoints.png](../../screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx_samplepoints.png)
 
 
-[Back to JKQTPlotter main page](../../README.md)

@@ -1,3 +1,9 @@
+/** \example jkqtplotter_simpletest.cpp
+ * A very basic example for the usage of JKQtPlotter
+ *
+ * \ref JKQTPlotterSimpleTest
+ */
+ 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"

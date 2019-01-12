@@ -17,14 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-/**
- * \defgroup jkqtptools Tool Functions and Definitions
- * \ingroup jkqtplotter
- */
-
 /** \file jkqtpenhancedpainter.h
-  * \ingroup jkqtptools
+  * \ingroup jkqtptools_drawing
   */
 
 
@@ -36,7 +30,7 @@
 
 
 /*! \brief this class extends the QPainter
-    \ingroup jkqtptools
+    \ingroup jkqtptools_drawing
 
 
 */

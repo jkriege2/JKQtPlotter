@@ -18,13 +18,8 @@
 */
 
 
-/**
- * \defgroup jkqtptools Tool Functions and Definitions
- * \ingroup jkqtplotter
- */
-
 /** \file jkqtpenhancedspinboxes.h
-  * \ingroup jkqtptools
+  * \ingroup jkqtptools_qtwidgets
   */
 
 
@@ -36,7 +31,7 @@
 #include <QDoubleSpinBox>
 
 /*! \brief enhanced QDoubleSpinBox
-    \ingroup jkqtptools
+    \ingroup jkqtptools_qtwidgets
 
 */
 class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
@@ -53,7 +48,7 @@ class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
 
 
 /*! \brief enhanced QDoubleSpinBox
-    \ingroup jkqtptools
+    \ingroup jkqtptools_qtwidgets
 
 */
 class LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {

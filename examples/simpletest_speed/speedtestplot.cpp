@@ -1,3 +1,9 @@
+/** \example speedtestplot.cpp
+ * JKQtPlotter: Examples: Simple line-graph with live-data (speed test)
+ *
+ * \ref JKQtPlotterSpeedTest
+ */
+
 #include "speedtestplot.h"
 #include "jkqtplotter/jkqtpgraphs.h"
 
