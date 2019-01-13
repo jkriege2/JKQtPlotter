@@ -7,6 +7,10 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ## Continuous Integration Status
 [![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a/branch/master?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master)
 
+## [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
+A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
+**[http://jkriege2.github.io/JKQtPlotter/index.html](http://jkriege2.github.io/JKQtPlotter/index.html)**
+
 ## [Examples](./examples/)
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
