@@ -4,8 +4,39 @@ This is an extensive library of function/data plotter classes for Qt (>= 4.7, te
 This software is licensed under the term of the [GNU Lesser General Public License 2.1 
 (LGPL 2.1)](./LICENSE) or above. 
 
-## Continuous Integration Status
-[![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a/branch/master?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master)
+## Main Features
+- 2D Plotter class (JKQtPlotter)
+  - high-quality plotting
+  - no other dependencies than Qt >=4.7
+  - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
+  - integrated LaTeX parser (pure C++, no dependencies) to render mathematical equations in axis labels, ticks, ...
+  - extensive user-interactions pre-programmed (several zooming modes, selecting regions, custom context menus, switch graph visibility, ...)
+  - full print and export (PDF,PNG,...) support with preview and parametrization out-the-box
+  - highly customizable look and feel
+  - supports the Qt layout system for graphs and allows to symchronize several graphs with each other
+- centralized data management in an internal datastore:
+  - data organized by columns, can also represent image data (ropw-major)
+  - allows to reuse a column in several graphs
+  - access via Qt's model view framework
+  - external or internal datasets
+  - complete with GUI (table view)
+  - export capabilities (e.g. to CSV, SYLK, ...)
+- large variety of graphs that can be added to a plot, e.g.:
+  - scatter-plots (also parametrized color/size/symbol by a third data-column)
+  - line graphs, step graphs, impulses
+  - filled curves
+  - barcharts (also stacked)
+  - extensive support for different styles of error indicators
+  - integrated mathematical function parser for function plots (with intelligent rendering algorithm)
+  - line/scatter graphs can also be based on C/C++ functions instead of data series (C++11 support!)
+  - statistical plots (e.g. boxplots)
+  - extensive library of image plots (inclusing different color-scale modes, RGBA-plots, overlays/masks)
+  - contour plots
+  - geometric forms/annotations
+  - can be easily extended by deriving a new graph from JKQTPplotElement or JKQTPplotObject
+- optional: OpenCV interface
+- extensive set of [Examples/Tutorials](./examples/README.md)
+- extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
 
 ## [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
 A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
@@ -28,3 +59,7 @@ Building instructions can be found here:
 - include necessary files into QMake project: [`./lib/*.pri`](./lib/README.md)
 - [build a static library](./staticlib): [`./staticlib/*.pro`](./staticlib/README.md)
 - [build a shared library (DLL, SO, ...)](./sharedlib): [`./sharedlib/*.pro`](./sharedlib/README.md)
+
+
+## Continuous Integration Status
+[![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a/branch/master?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master)
