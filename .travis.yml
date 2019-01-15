@@ -9,7 +9,7 @@ addons:
     - doxygen
     - doxygen-latex
     - graphviz
-
+ 
     
 install:
   - doxygen --version
