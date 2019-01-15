@@ -21,7 +21,6 @@ install:
   - travis_retry wget -O - ${DOXYGEN_URL} | tar --strip-components=1 -xz -C doxygen
   - export PATH=${DEPS_DIR}/doxygen/bin:${PATH}
   - doxygen --version
-  - doxygen --version
 
 script:
   - cd doc
