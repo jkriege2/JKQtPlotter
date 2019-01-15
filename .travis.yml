@@ -6,12 +6,23 @@ branches:
 
 addons:
   apt:
+  
+install:
+  ############################################################################
+  # Install a recent Doxygen
+  ############################################################################
+  - |
+    if [[ "${DOCUMENTATION}" == "true" ]]; then
+      DOXYGEN_URL="http://doxygen.nl/files/doxygen-1.8.15.linux.bin.tar.gz"
+      mkdir doxygen && travis_retry wget --quiet -O - ${DOXYGEN_URL} | tar --strip-components=1 -xz -C doxygen
+      export PATH=${DEPS_DIR}/doxygen/bin:${PATH}
+      doxygen --version
+    fi
 
 script:
-  - wget -O - "http://doxygen.nl/files/doxygen-1.8.15.linux.bin.tar.gz" | tar xz -C ${TMPDIR-/tmp} doxygen-1.8.15/bin/doxygen
   - cd doc
-  - ../doxygen-1.8.15/bin/doxygen --version
-  - ../doxygen-1.8.15/bin/doxygen Doxyfile
+  - doxygen --version
+  - doxygen Doxyfile
 
 deploy:
   provider: pages
