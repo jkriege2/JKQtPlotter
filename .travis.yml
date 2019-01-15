@@ -14,10 +14,10 @@ install:
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
   ############################################################################
-  # Install a recent Doxygen DOXYGEN_URL="http://doxygen.nl/files/doxygen-1.8.15.linux.bin.tar.gz"
+  # Install a recent Doxygen
   ############################################################################
   - |
-    DOXYGEN_URL="https://ja.osdn.net/frs/g_redir.php?m=kent&f=doxygen%2Frel-1.8.15%2Fdoxygen-1.8.15.linux.bin.tar.gz"
+    DOXYGEN_URL="http://doxygen.nl/files/doxygen-1.8.15.linux.bin.tar.gz"
     mkdir doxygen && travis_retry wget --quiet -O - ${DOXYGEN_URL} | tar --strip-components=1 -xz -C doxygen
     export PATH=${DEPS_DIR}/doxygen/bin:${PATH}
     doxygen --version
