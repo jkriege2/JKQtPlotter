@@ -6,8 +6,19 @@ branches:
 
 addons:
   apt:
-  
+    - doxygen
+    - doxygen-latex
+    - graphviz
+
+    
 install:
+  - doxygen --version
+  - apt-get changelog doxygen
+  - sudo apt-get install python-software-properties 
+  - sudo apt-add-repository -y ppa:libreoffice/libreoffice-4-2
+  - sudo apt-get update
+  - sudo apt-get install doxygen
+  - doxygen --version
   ############################################################################
   # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
   ############################################################################
