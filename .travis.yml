@@ -4,12 +4,16 @@ branches:
   only:
     - master
 
+# Install dependencies
 addons:
   apt:
-    - doxygen
-    - doxygen-latex
-    - graphviz
-
+    packages:
+      - doxygen
+      - doxygen-doc
+      - doxygen-latex
+      - doxygen-gui
+      - graphviz
+ 
     
 install:
   - doxygen --version
