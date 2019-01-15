@@ -63,7 +63,7 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageINVERTED_CYAN, /*!< \image html palettes/palette_invcyan.png */
     JKQTPMathImageYELLOW, /*!< \image html palettes/palette_yellow.png */
     JKQTPMathImageINVERTED_YELLOW, /*!< \image html palettes/palette_invyellow.png */
-    JKQTPMathImageMAGENTA, /*!< \image html palettes/palettes/palette_magenta.png */
+    JKQTPMathImageMAGENTA, /*!< \image html palettes/palette_magenta.png */
     JKQTPMathImageINVERTED_MAGENTA, /*!< \image html palettes/palette_invmagenta.png */
 
 
@@ -91,8 +91,8 @@ enum JKQTPMathImageColorPalette {
 
     JKQTPMathImageBLACKBLUEREDYELLOW, /*!< \image html palettes/palette_BBlRdYe.png */
     JKQTPMathImageGREENREDVIOLET, /*!< \image html palettes/palette_GnRdVi.png */
-    JKQTPMathImageBLACKBLUEVIOLETYELLOWWHITE,
-    JKQTPMathImageWHITEYELLOWVIOLETBLUEBLACK, /*!< \image html palettes/palette_.png */
+    JKQTPMathImageBLACKBLUEWHITEYELLOWWHITE, /*!< \image html palettes/palette_BWprint.png */
+    JKQTPMathImageWHITEYELLOWWHITEBLUEBLACK, /*!< \image html palettes/palette_invBWprint.png */
     JKQTPMathImageBR_GR, /*!< \image html palettes/palette_BrBG.png */
     JKQTPMathImagePU_OR, /*!< \image html palettes/palette_PuOr.png */
     JKQTPMathImageGN_BU, /*!< \image html palettes/palette_greenblue.png */

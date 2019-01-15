@@ -371,7 +371,7 @@ enum JKQTPgraphSymbols {
     JKQTPdownTriangle=10,        /*!< \brief an unfilled triangle (tip at bottom) \image html symbols/symbol_symbol_down_triangle.png */
     JKQTPfilledDownTriangle=11,  /*!< \brief a filled triangle (tip at bottom) \image html symbols/symbol_symbol_filled_down_triangle.png */
     JKQTPdiamond=12,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_diamond.png */
-    JKQTPfilledDiamond=13,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_diamind.png */
+    JKQTPfilledDiamond=13,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_diamond.png */
     JKQTPstar=14,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_star.png */
     JKQTPfilledStar=15,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_star.png */
     JKQTPpentagon=16,                /*!< \brief an unfilled pentagon \image html symbols/symbol_symbol_pentagon.png */
