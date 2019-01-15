@@ -17,6 +17,7 @@ addons:
  
     
 install:
+  - pwd
   - doxygen --version
   ############################################################################
   # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
@@ -33,6 +34,8 @@ install:
   - doxygen --version
 
 script:
+  - pwd
+  - cd ${TRAVIS_BUILD_DIR}
   - cd doc
   - doxygen --version
   - doxygen Doxyfile

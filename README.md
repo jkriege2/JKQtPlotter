@@ -42,6 +42,8 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
 **[http://jkriege2.github.io/JKQtPlotter/index.html](http://jkriege2.github.io/JKQtPlotter/index.html)**
 
+Documentation is auto-generated after pushes by [Travis](https://travis-ci.org/jkriege2/JKQtPlotter): [![Build Status](https://travis-ci.org/jkriege2/JKQtPlotter.svg?branch=master)](https://travis-ci.org/jkriege2/JKQtPlotter)
+
 ## [Examples](./examples/)
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
