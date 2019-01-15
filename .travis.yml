@@ -16,11 +16,11 @@ install:
   ############################################################################
   # Install a recent Doxygen
   ############################################################################
-  - |
-    DOXYGEN_URL="http://doxygen.nl/files/doxygen-1.8.15.linux.bin.tar.gz"
-    mkdir doxygen && travis_retry wget --quiet -O - ${DOXYGEN_URL} | tar --strip-components=1 -xz -C doxygen
-    export PATH=${DEPS_DIR}/doxygen/bin:${PATH}
-    doxygen --version
+  - DOXYGEN_URL="http://doxygen.nl/files/doxygen-1.8.15.linux.bin.tar.gz"
+  - mkdir doxygen 
+  - travis_retry wget --quiet -O - ${DOXYGEN_URL} | tar --strip-components=1 -xz -C doxygen
+  - export PATH=${DEPS_DIR}/doxygen/bin:${PATH}
+  - doxygen --version
   - doxygen --version
 
 script:
