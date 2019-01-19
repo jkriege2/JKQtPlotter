@@ -55,17 +55,17 @@ build_script:
   - call %MAKETOOL%
   - cd ..
 
-artifacts:
-   - path: build\staticlib\**\*.a
-     name: staticlib %QTVER%%QTABI%
-   - path: build\sharedlib\**\*.a
-     name: sharedlib %QTVER%%QTABI%
-   - path: build\staticlib\**\*.lib
-     name: staticlib %QTVER%%QTABI%
-   - path: build\sharedlib\**\*.lib
-     name: sharedlib %QTVER%%QTABI%
-   - path: build\sharedlib\**\*.dll
-     name: dll %QTVER%%QTABI%
+#artifacts:
+#   - path: build\staticlib\**\*.a
+#     name: staticlib %QTVER%%QTABI%
+#   - path: build\sharedlib\**\*.a
+#     name: sharedlib %QTVER%%QTABI%
+#   - path: build\staticlib\**\*.lib
+#     name: staticlib %QTVER%%QTABI%
+#   - path: build\sharedlib\**\*.lib
+#     name: sharedlib %QTVER%%QTABI%
+#   - path: build\sharedlib\**\*.dll
+#     name: dll %QTVER%%QTABI%
 
 
 
