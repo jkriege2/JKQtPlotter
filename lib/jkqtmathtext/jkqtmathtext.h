@@ -50,24 +50,24 @@
 
 
 
-/** \brief initialized Qt-ressources necessary for JKQtMathText
+/** \brief initialized Qt-ressources necessary for JKQTmathText
  *  \ingroup jkqtmathtext
  */
-LIB_EXPORT void initJKQtMathTextResources();
+LIB_EXPORT void initJKQTmathTextResources();
 
 /*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a QPainter
     \ingroup jkqtmathtext
 
     
-	JKQtMathText is a self-contained LaTeX-renderer for Qt. It is used to renderer
-	labels in JKQtPlotter/JKQtBasePlotter, but can be used independently. 
-	The class does not depend on any library, except Qt. 
-	In particular it actually parses a LaTeX string and draws it in pure C++. It does NOT rely
-	on an installed LaTeX for the rendering!
-	
-	\section JKQtMathTextUsage Usage
-	\subsection JKQtMathTextUsageDirect Direct Usage
-	This small piece of C++ code may serve as an example of the usage and capabilities of the class:
+    JKQTmathText is a self-contained LaTeX-renderer for Qt. It is used to renderer
+    labels in JKQtPlotter/JKQtBasePlotter, but can be used independently. 
+    The class does not depend on any library, except Qt. 
+    In particular it actually parses a LaTeX string and draws it in pure C++. It does NOT rely
+    on an installed LaTeX for the rendering!
+    
+    \section JKQTmathTextUsage Usage
+    \subsection JKQTmathTextUsageDirect Direct Usage
+    This small piece of C++ code may serve as an example of the usage and capabilities of the class:
     \code
     // create a JKQTmathText object.
     JKQTmathText mathText;
@@ -86,38 +86,38 @@ LIB_EXPORT void initJKQtMathTextResources();
     mathText.draw(painter, Qt::AlignCenter, QRectF(0,0,pix.width(), pix.height()), false);
     painter.end();
     \endcode
-	
-	\subsection JKQtMathTextSizing Determining the size of an equation
-	
-	In addition there are also functions that allow to calculate the size of the equation, before drawing it (just like the functions in <a href="http://doc.qt.io/qt-5/qfontmetrics.html">QFontMetrics</a> and  <a href="http://doc.qt.io/qt-5/qfontmetricsf.html">QFontMetricsF</a>):
-	  - getSizeDetail()
-	  - getSize()
-	  - getAscent(), getDescent()
-	.
-	
-	\subsection JKQtMathTextErrorHandling Error Handling
-	
-	The class is designed to be as robust as possible and will still return some output, even if the equation contains some errors.
-	Nevertheless, several errors are detected while parsing. You can get a list of error messages using get_error_list() after calling parse().
-	Also parse() will return \c false if an error occured while parsing.
+    
+    \subsection JKQTmathTextSizing Determining the size of an equation
+    
+    In addition there are also functions that allow to calculate the size of the equation, before drawing it (just like the functions in <a href="http://doc.qt.io/qt-5/qfontmetrics.html">QFontMetrics</a> and  <a href="http://doc.qt.io/qt-5/qfontmetricsf.html">QFontMetricsF</a>):
+      - getSizeDetail()
+      - getSize()
+      - getAscent(), getDescent()
+    .
+    
+    \subsection JKQTmathTextErrorHandling Error Handling
+    
+    The class is designed to be as robust as possible and will still return some output, even if the equation contains some errors.
+    Nevertheless, several errors are detected while parsing. You can get a list of error messages using get_error_list() after calling parse().
+    Also parse() will return \c false if an error occured while parsing.
 
-	
-	\subsection JKQtMathTextUsageQLabel Usage within a QLabel class JKQTMathTextLabel
-	
-	Finally, there is also a QLabel-derived class JKQTMathTextLabel which can be used for drawing a LaTeX string onto a Qt form.
-	
-	\see JKQTMathTextLabel
+    
+    \subsection JKQTmathTextUsageQLabel Usage within a QLabel class JKQTmathTextLabel
+    
+    Finally, there is also a QLabel-derived class JKQTmathTextLabel which can be used for drawing a LaTeX string onto a Qt form.
+    
+    \see JKQTmathTextLabel
 
-	
-	\section JKQtMathTextExamples Examples
+    
+    \section JKQTmathTextExamples Examples
 
-	Examples for the usage of this class can be found here: 
-	  - \ref JKQTmathTextSimpleExample 
-	.
+    Examples for the usage of this class can be found here: 
+      - \ref JKQTmathTextSimpleExample 
+    .
 
 
-	\section JKQtMathTextSuppoertedLaTeX Supported LaTeX Subset
-	
+    \section JKQTmathTextSuppoertedLaTeX Supported LaTeX Subset
+    
     The supported LaTeX subset is listes below. Please note that some commands are used differently than in actual LaTeX.
     For example \c \\bf is just a renamed form of \c \\textbf and used as \c \\bf{...} and NOT as \c {\\bf...} .
 
@@ -152,8 +152,8 @@ LIB_EXPORT void initJKQtMathTextResources();
       - \c \\left~ \c \\right~ : ceil braces |~  ~|
     .
 
-	\section JKQtMathTextSuppoertedFonts Font Handling
-	
+    \section JKQTmathTextSuppoertedFonts Font Handling
+    
     Several fonts are defined as properties to the class:
       - A "roman" font used as the standard font ( set_fontRoman() in math-mode set_fontMathRoman() )
       - A "sans-serif" font which may be activated with \c \\sf ... ( set_fontSans() in math-mode set_fontMathSans() )
@@ -166,26 +166,26 @@ LIB_EXPORT void initJKQtMathTextResources();
       - A "blackboard" font used to display double stroked characters (set_fontBlackboard() )
       - A "caligraphic" font used to display caligraphic characters ( set_fontCaligraphic() )
     .
-	
-	These fonts are generic font classes, which font is actually used can be configured in JKQtMathText class with the \c set_...() functions mentioned above. You can also use these functions to set the fonts used for math rendering in math-mode:
+    
+    These fonts are generic font classes, which font is actually used can be configured in JKQTmathText class with the \c set_...() functions mentioned above. You can also use these functions to set the fonts used for math rendering in math-mode:
       - useSTIX() use the STIX fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a> in math-mode<br>\image html jkqtmathparser_stix.png
       - useXITS() use the XITS fonts from <a href="https://github.com/alif-type/xits">https://github.com/alif-type/xits</a> in math-mode. These are included by default in this library and also activated by default.<br>\image html jkqtmathparser_xits.png
       - useASANA() use the ASANA fonts from <a href="https://ctan.org/tex-archive/fonts/Asana-Math/">https://ctan.org/tex-archive/fonts/Asana-Math/</a> in math-mode<br>\image html jkqtmathparser_asana.png
       - useAnyUnicode() use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode. You should use fonts that contain as many of the mathematical symbols as possible to ensure good rendering results.<br>using "Times New Roman": \image html jkqtmathparser_timesnewroman.png
         <br>using "Arial": \image html jkqtmathparser_arial.png
-        <br>using "Courier New": \image html \image html jkqtmathparser_couriernew.png
-        <br>using "Comic Sans MS": \image html \image html jkqtmathparser_comicsans.png
+        <br>using "Courier New": \image html jkqtmathparser_couriernew.png
+        <br>using "Comic Sans MS": \image html jkqtmathparser_comicsans.png
     .
 
 
-	Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] . This mode is optimized for mathematical equations. Here is an example of the difference:
-      - <b>math-mode (XITS is used)</b> \c $...$: <br>\image html jkqtmathparser_schreq_mathmode.png
-      - <b>normal mode (Times new Roman is used)</b>: <br>\image html jkqtmathparser_schreq_normalmode.png
-	.
-	
+    Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] . This mode is optimized for mathematical equations. Here is an example of the difference:
+      - <b>math-mode (XITS fonts are used, whitespaces are mostly not drawn directly, symbol spacing is different)</b> \c $...$: <br>\image html jkqtmathparser_schreq_mathmode.png
+      - <b>normal mode (Times new Roman is used, whitespaces are evaluated directly)</b>: <br>\image html jkqtmathparser_schreq_normalmode.png
+    .
+    
 
-	\section JKQtMathTextToHTML Convert to HTML
-	
+    \section JKQTmathTextToHTML Convert to HTML
+    
     The method toHtml() may be used to get a HTML representation of the LaTeX string, if possible (only for simple LaTeX equations!). Whether
     the transformation was possible is returned as a call by value argument!
 
@@ -1467,18 +1467,18 @@ inline uint qHash(const JKQTmathText::tbrDataH& data) {
 
     \see JKQTmathText
 */
-class LIB_EXPORT JKQTMathTextLabel: public QLabel {
+class LIB_EXPORT JKQTmathTextLabel: public QLabel {
         Q_OBJECT
     public:
-        explicit JKQTMathTextLabel(QWidget* parent=nullptr);
-        virtual ~JKQTMathTextLabel();
+        explicit JKQTmathTextLabel(QWidget* parent=nullptr);
+        virtual ~JKQTmathTextLabel();
 
-		/** \brief returns the internal JKQTmathText instance used for drawing
-		 *
-		 *  Use this function to set the font, font size and other properties of the used renderer.
-		 */
+        /** \brief returns the internal JKQTmathText instance used for drawing
+         *
+         *  Use this function to set the font, font size and other properties of the used renderer.
+         */
         JKQTmathText* getMathText() const;
-		/** \brief set the equation to draw */
+        /** \brief set the equation to draw */
         void setMath(const QString& text, bool doRepaint=true);
     protected:
         JKQTmathText* m_mathText;

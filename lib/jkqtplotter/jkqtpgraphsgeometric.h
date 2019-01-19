@@ -379,7 +379,7 @@ class LIB_EXPORT JKQTPgeoSymbol: public JKQTPplotObject {
 };
 
 
-/*! \brief This JKQTPplotObject is used to display text. It uses the JKQTMathText
+/*! \brief This JKQTPplotObject is used to display text. It uses the JKQTmathText
            class in order to display LaTeX formulas.
     \ingroup jkqtplotter_geoplots
 

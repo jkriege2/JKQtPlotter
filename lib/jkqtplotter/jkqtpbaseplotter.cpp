@@ -67,7 +67,7 @@ static QList<JKQtBasePlotter::JKQTPSaveDataAdapter*> jkqtpSaveDataAdapters;
 void initJKQtBasePlotterResources()
 {
     Q_INIT_RESOURCE(jkqtpbaseplotter);
-    initJKQtMathTextResources();
+    initJKQTmathTextResources();
 }
 
 JKQtBasePlotter::JKQtBasePlotter()

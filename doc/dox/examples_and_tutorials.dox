@@ -122,7 +122,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html jkqtmathtext_simpletest_small.png
     <td> \subpage JKQTmathTextSimpleExample 
-	<td> JKQTMathText<br>render LaTeX markup (Schrödinger's equation)
+	<td> JKQTmathText<br>render LaTeX markup (Schrödinger's equation)
 </table>
 
 

@@ -89,3 +89,4 @@ Thumbs.db
 moc_predefs.h
 /lib/jkqtplotter/*.TMP
 /doc/doxygen_log.txt
+/doc/*.tmp

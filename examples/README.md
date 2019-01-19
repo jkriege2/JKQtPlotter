@@ -54,6 +54,6 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
-| [![](../screenshots/jkqtmathtext_simpletest_small.png)](./jkqtmathtext_simpletest) | [JKQTMathText: LaTeX Renderer](./jkqtmathtext_simpletest) |  |
+| [![](../screenshots/jkqtmathtext_simpletest_small.png)](./jkqtmathtext_simpletest) | [JKQTmathText: LaTeX Renderer](./jkqtmathtext_simpletest) |  |
 
 

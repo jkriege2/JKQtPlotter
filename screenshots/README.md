@@ -46,7 +46,7 @@ Scatter Plots can have symbols where the shape/color/size is parametrized by a d
 
 
 ## QuickFit 3.0 Screenshots
-The library JKQtPlotter was developed initially as a central part of the data evaluation software for biophysics [QuickFit 3.0](https://github.com/jkriege2/QuickFit3). The latter makes heavy use of `JKQtPlotter`, `JKQtMathText` and `JKQtFastPlotter`:
+The library JKQtPlotter was developed initially as a central part of the data evaluation software for biophysics [QuickFit 3.0](https://github.com/jkriege2/QuickFit3). The latter makes heavy use of `JKQtPlotter`, `JKQTmathText` and `JKQtFastPlotter`:
 
 ![QuickFit 3.0 Screenshot](./QF3_screen_dcalc.png)
 ![QuickFit 3.0 Screenshot](./QF3_screen_fccsfit.png)

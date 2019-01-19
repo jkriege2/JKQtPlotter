@@ -38,7 +38,7 @@
  * \ingroup jkmp
  */
  
-		 /**
+         /**
  * \defgroup jkmpErrorhandling error handling
  * \ingroup jkmp
  */
@@ -70,6 +70,8 @@
 /*! \brief A simple function parser to parse (build memory tree representation) and
            evaluate simple mathematical expressions
     \ingroup jkmp
+    
+    
  This class implements a simple function parser which can parse
  mathematical expressions like <code> z=a*3+2.34^2*sin(pi*sqrt(x))</code> .
  More than one expression can be separated by semicolon ';'. The result of
@@ -184,62 +186,62 @@
 
 
 
-  \section jkmp_example Simple Example of Usage
-     \code
-        try {
-            jkMathParser mp; // instanciate
-            jkmpNode* n;
-            jkmpResult r;
-            // parse some numeric expression
-            n=mp.parse("pi^2+4*sin(65*pi/exp(3.45))");
-            r=n->evaluate();
-            cout<<r.num<<endl;
-            //delete n;
+ \section jkmp_example Simple Example of Usage
+ \code
+ try {
+    jkMathParser mp; // instanciate
+    jkmpNode* n;
+    jkmpResult r;
+    // parse some numeric expression
+    n=mp.parse("pi^2+4*sin(65*pi/exp(3.45))");
+    r=n->evaluate();
+    cout<<r.num<<endl;
+    //delete n;
 
-            // parse some boolean expression
-            n=mp.parse("true==false");
-            r=n->evaluate();
-            if (r.type==jkmpBool) {
-                if (r.boolean) cout<<"true";
-                else cout<<"false";
-            }
-            if (r.type==jkmpDouble) cout<<r.num<<endl;
-            if (r.type==jkmpString) cout<<r.str<<endl;
-            delete n;
+    // parse some boolean expression
+    n=mp.parse("true==false");
+    r=n->evaluate();
+    if (r.type==jkmpBool) {
+        if (r.boolean) cout<<"true";
+        else cout<<"false";
+    }
+    if (r.type==jkmpDouble) cout<<r.num<<endl;
+    if (r.type==jkmpString) cout<<r.str<<endl;
+    delete n;
 
-            // parse some string expression
-            n=mp.parse("var1='false'; var1+'true'");
-            r=n->evaluate();
-            if (r.type==jkmpString) cout<<r.str<<endl;
-            delete n;
-        } catch(std::exception& E) {
-            cout<<"ERROR!!!\n  "<<E.what()<<endl<<endl;
-        }
-     \endcode
-
-
-
-     \section jkmp_errorhandling Error Handling
-
-     In the above example we use error handling by use of exception (default behauviour).
+    // parse some string expression
+    n=mp.parse("var1='false'; var1+'true'");
+    r=n->evaluate();
+    if (r.type==jkmpString) cout<<r.str<<endl;
+    delete n;
+ } catch(std::exception& E) {
+    cout<<"ERROR!!!\n  "<<E.what()<<endl<<endl;
+ }
+ \endcode
 
 
-     It is also possible to change the error handling from using exceptions to calling a specific
-     error handling function. This can be usefull in programs that don't support exceptions.
-     To do so, use this cod:
-     \code
-     void error(std::string message) {
-       cout<<"error: "+message;
-       system("PAUSE");
-       abort();
-     }
 
-     int main() {
-       jkMathParser mp;
-       mp.set_exception_function(error);  // make error ahndler known
-       ...
-     }
-     \endcode
+ \section jkmp_errorhandling Error Handling
+
+ In the above example we use error handling by use of exception (default behauviour).
+
+
+ It is also possible to change the error handling from using exceptions to calling a specific
+ error handling function. This can be usefull in programs that don't support exceptions.
+ To do so, use this cod:
+ \code
+ void error(std::string message) {
+   cout<<"error: "+message;
+   system("PAUSE");
+   abort();
+ }
+
+ int main() {
+   jkMathParser mp;
+   mp.set_exception_function(error);  // make error ahndler known
+   ...
+ }
+ \endcode
  */
 class JKQTPMathParser
 {
@@ -247,8 +249,8 @@ class JKQTPMathParser
         void* data;
 
         /** \brief the possible tokens that can be recognized by the tokenizer in jkMathParser::getToken() 
-		*   \ingroup jkmpultil
-		*/
+        *   \ingroup jkmpultil
+        */
         enum jkmpTokenType {
             END,                /*!< \brief end token */
             PRINT,              /*!< \brief a semicolon ';' */
@@ -285,7 +287,7 @@ class JKQTPMathParser
 
 
         /** \brief internal names for logic operations
-		*   \ingroup jkmpultil */
+        *   \ingroup jkmpultil */
         enum {
           jkmpLOPand='a',
           jkmpLOPor='o',
@@ -297,7 +299,7 @@ class JKQTPMathParser
 
 
         /** \brief jkmpCOMPdefs internal names for compare operations 
-		*   \ingroup jkmpultil*/
+        *   \ingroup jkmpultil*/
         enum {
             jkmpCOMPequal='=',
             jkmpCOMPnequal='!',
@@ -311,7 +313,7 @@ class JKQTPMathParser
     public:
 
         /** \brief possible result types
-		 *   \ingroup jkmpultil
+         *   \ingroup jkmpultil
          */
         enum jkmpResultType {jkmpDouble,  /*!< \brief a floating-point number with double precision. This is also used to deal with integers */
                              jkmpString,  /*!< \brief a string of characters */
@@ -320,7 +322,7 @@ class JKQTPMathParser
 
 
         /** \brief result of any expression  
-		*   \ingroup jkmpultil*/
+        *   \ingroup jkmpultil*/
         struct jkmpResult {
           jkmpResult();
 
@@ -354,7 +356,7 @@ class JKQTPMathParser
 
         /** \brief This struct is for managing variables. Unlike jkmpResult this struct
           * only contains pointers to the data
-		*   \ingroup jkmpultil
+        *   \ingroup jkmpultil
           */
         struct jkmpVariable {
           jkmpVariable();
@@ -366,7 +368,7 @@ class JKQTPMathParser
         };
 
         /** \brief This struct is for managing temporary variables. It is generally like jkmpVariable.
-		*   \ingroup jkmpultil
+        *   \ingroup jkmpultil
           */
         struct jkmpTempVariable {
           std::string name;       /*!< \brief name of the variable */
@@ -418,7 +420,7 @@ class JKQTPMathParser
         /**
          * \brief This class is the abstract base class for nodes.
          * All allowed node types must inherit from jkmpNode
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpNode {
           protected:
@@ -448,7 +450,7 @@ class JKQTPMathParser
         /**
          * \brief This class represents a binary arithmetic operation:
          *  add (+), subtract (-), multiply (*), divide (/), a to the power of b (a^b)
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpBinaryArithmeticNode: public jkmpNode {
           private:
@@ -473,7 +475,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents a binary boolean operation: and, or, xor, nor, nand
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpBinaryBoolNode: public jkmpNode {
           private:
@@ -498,7 +500,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents a binary compare operation: !=, ==, >=, <=, >, <
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpCompareNode: public jkmpNode {
           private:
@@ -523,7 +525,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents a unary operations: ! (bool negation), - (arithmetic negation)
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpUnaryNode: public jkmpNode {
           private:
@@ -547,7 +549,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents a variable assignment (a = expression)
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpVariableAssignNode: public jkmpNode {
           private:
@@ -572,7 +574,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents a number, a string contant or a boolean contant (true/false)
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpConstantNode: public jkmpNode {
           private:
@@ -591,7 +593,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents a variable.
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          */
         class jkmpVariableNode: public jkmpNode {
           private:
@@ -610,7 +612,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents an arbitrary function.
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          *
          * When initialized this class will get the function description that is
          * linked to the supplied function name from jkMathParser object. This
@@ -643,7 +645,7 @@ class JKQTPMathParser
 
         /**
          * \brief This class represents a list of jkmpNode.
-		 * \ingroup jkmpNodes 
+         * \ingroup jkmpNodes 
          *
          * when evaluating the result will be the result of the last node in the list.
          */
@@ -679,7 +681,7 @@ class JKQTPMathParser
 
 
         /** \brief error handling: exceptions of the type of this class will be thrown if an error occurs
-		 *  \ingroup jkmpErrorhandling 
+         *  \ingroup jkmpErrorhandling 
          *
          * \attention If you do not want to use the exception handling which throws
          * jkmpException exceptions, but want to write your own error handling, you should write your own
@@ -714,12 +716,12 @@ class JKQTPMathParser
         };
 
         /** \brief type for a custom error handler. This an alternative error handling
-		 *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkmpErrorhandling  */
         typedef void (*jkmpexceptionf)(std::string);
 
 
         /** \brief function that throws an exception or calls an error handler 
-		 *  \ingroup jkmpErrorhandling */
+         *  \ingroup jkmpErrorhandling */
         inline void jkmpError(std::string st) {
             if (jkmathparser_exception_function!=nullptr) {
                 jkmathparser_exception_function(st);
@@ -730,18 +732,18 @@ class JKQTPMathParser
 
     private:
         /** \brief if this is nullptr then an exception may be thrown otherwise this should point to an error handler that will be called.
-		 *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkmpErrorhandling  */
         jkmpexceptionf jkmathparser_exception_function;
 
     public:
         /** \brief activate error handling by use of an exception function
-		 *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkmpErrorhandling  */
         inline void set_exception_function(jkmpexceptionf exception_function) {
             jkmathparser_exception_function=exception_function;
         }
 
         /** \brief deactivate error handling by use of an exception function
-		 *  \ingroup jkmpErrorhandling  */
+         *  \ingroup jkmpErrorhandling  */
         inline void reset_exception_function() {
             jkmathparser_exception_function=nullptr;
         }
@@ -754,38 +756,38 @@ class JKQTPMathParser
         /** \brief return the current token as human-readable string */
         std::string currenttokentostring();
 
-		/** \brief Tokenizer: extract the next token from the input */
-		jkmpTokenType getToken();
+        /** \brief Tokenizer: extract the next token from the input */
+        jkmpTokenType getToken();
 
-		/** \brief return a delimited text, i.e. extract the texte between the delimiters <code>"</code> in: of <code>"Hallo!"</code>, i.e. returns <code> Hallo!</code>
+        /** \brief return a delimited text, i.e. extract the texte between the delimiters <code>"</code> in: of <code>"Hallo!"</code>, i.e. returns <code> Hallo!</code>
          *         This is used to parse string constants.
          *
          * This functions actually reads pascal style delimited string constants. So if you want to use the delimiter as part of the string you will have to
          * write it as doubled character. So <code>'Jan''s Test'</code> stands for <code>Jan's Test</code>.
          */
-		std::string readDelim(char delimiter);
+        std::string readDelim(char delimiter);
 
-		/** \brief recognizes an compExpression while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
-		jkmpNode* compExpression(bool get);
+        /** \brief recognizes an compExpression while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
+        jkmpNode* compExpression(bool get);
 
-		/** \brief recognizes a logicalExpression while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
-		jkmpNode* logicalExpression(bool get);
+        /** \brief recognizes a logicalExpression while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
+        jkmpNode* logicalExpression(bool get);
 
-		/** \brief recognizes a logicalTerm while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
-		jkmpNode* logicalTerm(bool get);
+        /** \brief recognizes a logicalTerm while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
+        jkmpNode* logicalTerm(bool get);
 
-		/** \brief recognizes a mathExpression while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
-		jkmpNode* mathExpression(bool get);
+        /** \brief recognizes a mathExpression while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
+        jkmpNode* mathExpression(bool get);
 
-		/** \brief recognizes a term while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
-		jkmpNode* mathTerm(bool get);
+        /** \brief recognizes a term while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
+        jkmpNode* mathTerm(bool get);
 
-		/** \brief recognizes a primary while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
-		jkmpNode* primary(bool get);
+        /** \brief recognizes a primary while parsing. If \a get ist \c true, this function first retrieves a new token by calling getToken() */
+        jkmpNode* primary(bool get);
 
-		/** \brief this stream is used to read in the program. An object is created and assigned
-  		 * (and destroyed) by the parse()-function */
-		std::istringstream* program;
+        /** \brief this stream is used to read in the program. An object is created and assigned
+         * (and destroyed) by the parse()-function */
+        std::istringstream* program;
 
         /** \brief vector containing all temporary variables */
         std::vector<jkmpTempVariable> tempvariables;
@@ -814,15 +816,15 @@ class JKQTPMathParser
         /** \brief  adds a temporary variable */
         void addTempVariable(std::string name, jkmpResult value);
 
-	protected:
-		int argc;
-		char **argv;
+    protected:
+        int argc;
+        char **argv;
 
-	public:
-		/** \brief class constructor */
+    public:
+        /** \brief class constructor */
         JKQTPMathParser();
 
-		/** \brief class destructor */
+        /** \brief class destructor */
         virtual ~JKQTPMathParser();
 
         /*! \brief sets the property data to the specified \a __value. 
@@ -840,42 +842,42 @@ class JKQTPMathParser
             return this->data; 
         }
 
-		/** \brief  register a new function
-		 * \param name name of the new function
-		 * \param function a pointer to the implementation
-		 */
-		void addFunction(std::string name, jkmpEvaluateFunc function);
+        /** \brief  register a new function
+         * \param name name of the new function
+         * \param function a pointer to the implementation
+         */
+        void addFunction(std::string name, jkmpEvaluateFunc function);
 
-		/** \brief  register a new external variable of type double
-		 * \param name name of the new variable
-		 * \param v pointer to the variable memory
-		 */
-		void addVariableDouble(std::string name, double* v);
+        /** \brief  register a new external variable of type double
+         * \param name name of the new variable
+         * \param v pointer to the variable memory
+         */
+        void addVariableDouble(std::string name, double* v);
 
-		/** \brief  register a new external variable of type string
-		 * \param name name of the new variable
-		 * \param v pointer to the variable memory
-		 */
-		void addVariableString(std::string name, std::string* v);
+        /** \brief  register a new external variable of type string
+         * \param name name of the new variable
+         * \param v pointer to the variable memory
+         */
+        void addVariableString(std::string name, std::string* v);
 
-		/** \brief  register a new external variable of type boolean
-		 * \param name name of the new variable
-		 * \param v pointer to the variable memory
-		 */
-		void addVariableBoolean(std::string name, bool* v);
+        /** \brief  register a new external variable of type boolean
+         * \param name name of the new variable
+         * \param v pointer to the variable memory
+         */
+        void addVariableBoolean(std::string name, bool* v);
 
 
-		/** \brief  register a new internal variable of type double
-		 * \param name name of the new variable
-		 * \param v initial value of this variable
-		 */
-		void addVariableDouble(std::string name, double v);
+        /** \brief  register a new internal variable of type double
+         * \param name name of the new variable
+         * \param v initial value of this variable
+         */
+        void addVariableDouble(std::string name, double v);
 
-		/** \brief  register a new internal variable of type string
-		 * \param name name of the new variable
-		 * \param v initial value of this variable
-		 */
-		void addVariableString(std::string name, std::string v);
+        /** \brief  register a new internal variable of type string
+         * \param name name of the new variable
+         * \param v initial value of this variable
+         */
+        void addVariableString(std::string name, std::string v);
 
         /** \brief  register a new internal variable of type boolean
          * \param name name of the new variable
@@ -951,14 +953,14 @@ class JKQTPMathParser
         /** \brief  prints a list of all registered variables */
         void printVariables();
 
-		/** \brief returns all registered variables */
+        /** \brief returns all registered variables */
         std::vector<std::pair<std::string, jkmpVariable> > getVariables();
 
-		/** \brief store programs command-line arguments, so they are available in the parser */
-		void setArgCV(int argc, char **argv);
+        /** \brief store programs command-line arguments, so they are available in the parser */
+        void setArgCV(int argc, char **argv);
 
-		/** \brief return one of programs command-line arguments, or \a defaultResult if it is not present */
-		std::string getArgCVParam(std::string name, std::string defaultResult);
+        /** \brief return one of programs command-line arguments, or \a defaultResult if it is not present */
+        std::string getArgCVParam(std::string name, std::string defaultResult);
 };
 
 #endif // JKQTPMATHPARSER_H

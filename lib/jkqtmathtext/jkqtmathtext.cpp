@@ -4208,7 +4208,7 @@ QString JKQTmathText::decorationToString(JKQTmathText::MTdecoration mode)
     return "unknown";
 }
 
-JKQTMathTextLabel::JKQTMathTextLabel(QWidget *parent):
+JKQTmathTextLabel::JKQTmathTextLabel(QWidget *parent):
     QLabel(parent)
 {
     m_mathText=new JKQTmathText(this);
@@ -4219,16 +4219,16 @@ JKQTMathTextLabel::JKQTMathTextLabel(QWidget *parent):
     buffer=QPixmap();
 }
 
-JKQTMathTextLabel::~JKQTMathTextLabel()
+JKQTmathTextLabel::~JKQTmathTextLabel()
 {
 }
 
-JKQTmathText *JKQTMathTextLabel::getMathText() const
+JKQTmathText *JKQTmathTextLabel::getMathText() const
 {
     return m_mathText;
 }
 
-void JKQTMathTextLabel::setMath(const QString &text, bool doRepaint)
+void JKQTmathTextLabel::setMath(const QString &text, bool doRepaint)
 {
     if (text!=lastText || doRepaint){
         lastText=text;
@@ -4239,7 +4239,7 @@ void JKQTMathTextLabel::setMath(const QString &text, bool doRepaint)
 }
 
 
-void JKQTMathTextLabel::internalPaint()
+void JKQTmathTextLabel::internalPaint()
 {
     //return;
     //qDebug()<<"internalPaint "<<lastText<<repaintDo;
@@ -4249,7 +4249,7 @@ void JKQTMathTextLabel::internalPaint()
             repaintDo=false;
             //qDebug()<<"internalPaint(): parse "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->get_error_list().join("\n")<<"\n\n";
             if (!m_mathText->parse(lastText)) {
-                qDebug()<<"JKQTMathTextLabel::internalPaint(): parse '"<<lastText<<"': "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->get_error_list().join("\n")<<"\n\n";
+                qDebug()<<"JKQTmathTextLabel::internalPaint(): parse '"<<lastText<<"': "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->get_error_list().join("\n")<<"\n\n";
             }
 
             if (buffer.width()<=0 || buffer.height()<=0) buffer=QPixmap(1000,100);
@@ -4283,7 +4283,7 @@ void JKQTMathTextLabel::internalPaint()
     //qDebug()<<"internalPaint(): DONE";
 }
 
-void JKQTMathTextLabel::paintEvent(QPaintEvent *event)
+void JKQTmathTextLabel::paintEvent(QPaintEvent *event)
 {
     //QLabel::paintEvent(event);
     //return;
@@ -4364,7 +4364,7 @@ QString JKQTmathText::MTplainTextNode::textTransform(const QString &text, JKQTma
     return text;
 }
 
-void initJKQtMathTextResources()
+void initJKQTmathTextResources()
 {
     Q_INIT_RESOURCE(xits);
 }
