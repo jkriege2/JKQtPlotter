@@ -173,12 +173,14 @@ LIB_EXPORT void initJKQtMathTextResources();
       - useASANA() use the ASANA fonts from <a href="https://ctan.org/tex-archive/fonts/Asana-Math/">https://ctan.org/tex-archive/fonts/Asana-Math/</a> in math-mode<br>\image html jkqtmathparser_asana.png
       - useAnyUnicode() use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode. You should use fonts that contain as many of the mathematical symbols as possible to ensure good rendering results.<br>using "Times New Roman": \image html jkqtmathparser_timesnewroman.png
         <br>using "Arial": \image html jkqtmathparser_arial.png
-	.
+        <br>using "Courier New": \image html \image html jkqtmathparser_couriernew.png
+        <br>using "Comic Sans MS": \image html \image html jkqtmathparser_comicsans.png
+    .
 
 
 	Math-mode is activated by enclosing your equation in \c $...$ or \c \\[...\\] . This mode is optimized for mathematical equations. Here is an example of the difference:
-      - <b>math-mode (XITS is used)</b> <code>"$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V(x)\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$"</code>: <br>\image html jkqtmathparser_schreq_mathmode.png
-      - <b>normal mode (Times new Roman is used)</b> <code>"\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V(x)\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)"</code>: <br>\image html jkqtmathparser_schreq_normalmode.png
+      - <b>math-mode (XITS is used)</b> \c $...$: <br>\image html jkqtmathparser_schreq_mathmode.png
+      - <b>normal mode (Times new Roman is used)</b>: <br>\image html jkqtmathparser_schreq_normalmode.png
 	.
 	
 
@@ -250,6 +252,8 @@ class LIB_EXPORT JKQTmathText : public QObject {
          *
          * <code>setAnyUnicode("Times New Roman", "Times New Roman")</code>:<br>\image html jkqtmathparser_timesnewroman.png
          * <code>setAnyUnicode("Arial", "Arial")</code>:<br>\image html jkqtmathparser_arial.png
+         * <code>setAnyUnicode("Courier New", "Courier New")</code>:<br>\image html jkqtmathparser_couriernew.png
+         * <code>setAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathparser_comicsans.png
          */
         void useAnyUnicode(QString timesFont=QString(""), QString sansFont=QString(""));
 
