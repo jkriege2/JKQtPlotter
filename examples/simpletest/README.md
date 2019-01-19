@@ -1,7 +1,7 @@
-# JKQtPlotter: Examples: Very simple line-graph             {#JKQTPlotterSimpleTest}
+# Example (JKQtPlotter): Very simple line-graph             {#JKQTPlotterSimpleTest}
 This project (see `./examples/simpletest/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 The QMake project looks like this (see [`jkqtplotter_simpletest.pro`](../simpletest/jkqtplotter_simpletest.pro):
-```qmake
+```.qmake
 # source code for this simple demo
 SOURCES = jkqtplotter_simpletest.cpp 
 
@@ -24,7 +24,7 @@ CONFIG (debug, debug|release) {
 ```
 
 Alternatively to linking agains a `libjkqtplotter`, you can also directy add the JKQtPlotter sources to the project:
-```qmake
+```.qmake
 # source code for this simple demo
 SOURCES = jkqtplotter_simpletest.cpp 
 
@@ -40,7 +40,7 @@ TARGET = jkqtplotter_simpletest
 include(../../lib/jkqtplotter.pri)
 ```
 The soruce code of the main application is (see [`jkqtplotter_simpletest.cpp`](../simpletest/jkqtplotter_simpletest.cpp):
-```c++
+```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 

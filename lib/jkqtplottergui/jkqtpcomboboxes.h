@@ -20,7 +20,7 @@
 
 
 /** \file jkqtpcomboboxes.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtpcomboboxes
   */
 
 #ifndef JKQTPCOMBOBOXES_H

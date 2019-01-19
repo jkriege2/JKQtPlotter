@@ -1,8 +1,8 @@
-# JKQtPlotter: Examples: Simple math image plot {#JKQtPlotterImagePlotModifier}
+# Example (JKQtPlotter): Simple math image plot {#JKQtPlotterImagePlotModifier}
 This project (see `./examples/simpletest_imageplot_modifier/`) creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here `sin(r)`). Then a second image (linearly scaling from 1 in the center to 0 at the borders) is used to modify the first image. The modification can alter several properties of the original image, like its saturation, its transparency (alpha) ...
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot_modifier.cpp`](../simpletest_imageplot_modifier/jkqtplotter_simpletest_imageplot_modifier.cpp):
-```c++
+```.cpp
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

@@ -1,8 +1,8 @@
-# JKQtPlotter: Examples: Simple barchart {#JKQtPlotterBarcharts}
+# Example (JKQtPlotter): Simple barchart {#JKQtPlotterBarcharts}
 This project (see [`simpletest_barchart`](../simpletest_barchart) simply creates a JKQtPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp`](../simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
-```c++
+```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"

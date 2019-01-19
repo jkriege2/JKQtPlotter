@@ -1,4 +1,4 @@
-# JKQtPlotter: Examples: Examples & Tutorials
+# Example (JKQtPlotter): Examples & Tutorials {#exampleProjectsTutorials}
 This section assembles some simple examples of usage. 
 You can find more (complex) examples for the classes in this repository in the subfolder "test". 
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
@@ -7,7 +7,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
-| [![](../screenshots/jkqtplotter_simpletest1_small.png)](./simpletest) | [Very Basic Example (Line Graph)](./simpletest) | `JKQTPxyLineGraph` <br> C++-style QVector arrays of data |
+| [![](../screenshots/jkqtplotter_simpletest1_small.png)](./simpletest/README.md) | [Very Basic Example (Line Graph)](./simpletest/README.md) | `JKQTPxyLineGraph` <br> C++-style QVector arrays of data |
 | [![](../screenshots/jkqtplotter_simpletest_speed_small.png)](./simpletest_speed) | [Line Graph with Live Data / Speed Test](./simpletest_speed) | `JKQTPxyLineGraph` <br> external `std::array<double,N>` data, not owned by datastore <br> live-data, measure plotting speed <br> tipps to increas plotting speed |
 | [![](../screenshots/jkqtplotter_simpletest_symbols_and_styles_small.png)](./simpletest_symbols_and_styles) | [Line Graph with Different Symbols and Line Styles](./simpletest_symbols_and_styles) | `JKQTPxyLineGraph` <br> C++ vector of data <br> setting line styles and symbol styles <br> automatic graph coloring |
 | [![](../screenshots/jkqtplotter_simpletest_stepplots_small.png)](./simpletest_stepplots) | [Step Line Plots in Different Styles](./simpletest_stepplots) | `JKQTPstepHorizontalGraph` (and `JKQTPxyLineGraph`) <br> C++ vector of data <br> different step modes, filled and line-only |

@@ -1,11 +1,11 @@
-# JKQtPlotter: Examples: Plotting Parsed Mathematical Functions as Line Graphs {#JKQtPlotterParsedFunctionPlot}
+# Example (JKQtPlotter): Plotting Parsed Mathematical Functions as Line Graphs {#JKQtPlotterParsedFunctionPlot}
 ## Plot Function f(x)
 This project (see `./examples/simpletest_parsedfunctionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions are defined as strings that will be evaluated with the equation parser, integrated into JKQtPlotter. 
 
 Note: See the example [Plotting Mathematical Functions as Line Graphs](../simpletest_functionplot) if you don't want to draw parsed functions, but want to provide a C function, or C++ functor!
 
 Adding an evaluated funtion to a graph is very simple: 
-```c++
+```.cpp
     JKQTPxParsedFunctionLineGraph* parsedFunc=new JKQTPxParsedFunctionLineGraph(plot);
     parsedFunc->set_function("sin(x*8)*exp(-x/4)");
     parsedFunc->set_title("user function");
@@ -13,7 +13,7 @@ Adding an evaluated funtion to a graph is very simple:
 As you can see a graph of the type `JKQTPxParsedFunctionLineGraph` is used, which plots a function that depends on the variable `x`. The given function is parsed and evaluated (see [`lib/jkqtplottertools/jkqtpmathparser.h`](https://github.com/jkriege2/JKQtPlotter/blob/master/lib/jkqtplottertools/jkqtpmathparser.h) for details on the features of the math parser). An intelligent drawing algorithm chooses the number of control points for drawing a smooth graph, with sufficient amount of details, by evaluating locally the slope of the function.
 
 In the example in [`test/simpletest_parsedfunctionplot/simpletest_parsedfunctionplot.cpp`](../simpletest_parsedfunctionplot/simpletest_parsedfunctionplot.cpp) we do not simply set a fixed function, but add a `QLineEdit` which allows to edit the function and redraws it, once ENTER is pressed:
-```c++
+```.cpp
     JKQtPlotter* plot=new JKQtPlotter(&mainWin);
     QLineEdit* edit=new QLineEdit(&mainWin);
     edit->setToolTip("enter a function in dependence of the variable <tt>x</tt> and press ENTER to update the graph");
@@ -47,7 +47,7 @@ This code snippet results in a plot like this:
 ## Plotting with parameters
 As shown in [Plotting Mathematical Functions as Line Graphs](../simpletest_functionplot) you can also use externally set parameters in a plot function. These parameters can be double numbers and may be set with either as an internal parameter vector, or may be read from a parameter column (as shown in the [linked example](../simpletest_functionplot)). These parameters are available as variables `p1`, `p2`, ... in the function string. Here is a small example:
 
-```c++
+```.cpp
     JKQTPxParsedFunctionLineGraph* parsedFunc=new JKQTPxParsedFunctionLineGraph(plot);
     parsedFunc->set_function("sin(x*p1)*exp(-x/p2)");
     parsedFunc->set_paramV(/*p1=*/8, /*p2=*/4);

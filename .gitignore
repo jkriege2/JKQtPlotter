@@ -88,3 +88,4 @@ Thumbs.db
 .qmake.stash
 moc_predefs.h
 /lib/jkqtplotter/*.TMP
+/doc/doxygen_log.txt

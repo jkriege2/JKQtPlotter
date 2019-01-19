@@ -21,7 +21,7 @@
 
 
 /** \file jkqtplotter.cpp
-  * \ingroup jkqtplotter
+  * \ingroup jkqtpplotterclasses
   */
 
 

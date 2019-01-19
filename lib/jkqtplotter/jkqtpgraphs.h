@@ -19,7 +19,7 @@
 
 
 /** \file jkqtpgraphs.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtplotter_linesymbolgraphs
   */
 
 #include <QString>

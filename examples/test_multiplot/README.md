@@ -1,11 +1,11 @@
-# JKQtPlotter: Examples: Laying out Several Plots {#JKQtPlotterMultiPlotLayout}
+# Example (JKQtPlotter): Laying out Several Plots {#JKQtPlotterMultiPlotLayout}
 This project (see `./examples/test_multiplot/`) shows how several JKQtPlotter widgets can be combined to in a layout (based on the [Qt layouting system](http://doc.qt.io/qt-5/layout.html)). It also shows how axes in such a layout can be linked to improve user experience.
 
 The source code of the main application can be found in  [`test_multiplot.cpp`](../test_multiplot/test_multiplot.cpp). 
 
 First three plots are generated and put into a [QGridLayout](http://doc.qt.io/qt-5/qgridlayout.html):
 
-```c++
+```.cpp
 // 1. create a widget
     QWidget mainWidget;
     mainWidget.setWindowTitle("JKQtPlotter(s) in a QGridLayout");
@@ -36,7 +36,7 @@ First three plots are generated and put into a [QGridLayout](http://doc.qt.io/qt
 
 With this simple setup, all three plots would be arranged by the QLayout, but they were all independent. This example could be part of a data fitting application, where the main plot shows data and a fit curve. A plot below that will display the residulas (errors) of the fit. Now if a user zooms one of the plots, he would expect that athe x-axes of the two plots are synchronized. The same for a third plot on the rhs of the residuals, which will show a residual histogram. This linking of the axes can be achieved by the following code:
 
-```c++
+```.cpp
     // 3.4 synchronize width/x-axis of plotResid to width/x-axis of plotMain
     plotResid->get_plotter()->synchronizeToMaster(plotMain->get_plotter(), true, false, true, true);
 
@@ -46,7 +46,7 @@ With this simple setup, all three plots would be arranged by the QLayout, but th
 
 Finally: When printing or saving an image of the plots, the plotter will no know anything about the arrangement of the plots and the plots cannot be printed/drawn in the same arrangement as in the window. If you want to arrange the plots in the same layout in a printout, as in the window, you will have to tell the main plot, in which arrangement to print the plots:
 
-```c++
+```.cpp
     // 3.6 ensure that the plot are printed/exported in whole, when printing in plotMain
     plotMain->get_plotter()->set_gridPrinting(true);
     plotMain->get_plotter()->addGridPrintingPlotter(0,1,plotResid->get_plotter());
@@ -59,7 +59,7 @@ Now some data is generated and several curves are added to the graphs. See [`tes
 
 Finally the axes and plots need a bit of formatting to make them look nicer:
 
-```c++
+```.cpp
     // 6.1 axis labels, distributed over the several plots
     plotMain->get_yAxis()->set_axisLabel("y axis");
     plotResid->get_xAxis()->set_axisLabel("x axis");
@@ -83,7 +83,7 @@ Finally the axes and plots need a bit of formatting to make them look nicer:
 
 As a last step, the axes are scaled automatically, so the data fills the plots:
 
-```c++
+```.cpp
     // 7. scale plots automatically to data
     plotResid->zoomToFit();
     plotResidHist->zoomToFit();

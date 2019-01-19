@@ -1,11 +1,11 @@
-# JKQtPlotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQtPlotterImagePlotRGBOpenCV}
+# Example (JKQtPlotter): Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQtPlotterImagePlotRGBOpenCV}
 This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special OpenCV Interface function `JKQTPcopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
 The function `JKQTPcopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQtPlotter with OPenCV.
 
 The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](../simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
-```c++
+```.cpp
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

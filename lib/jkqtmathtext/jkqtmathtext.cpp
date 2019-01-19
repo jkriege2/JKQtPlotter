@@ -3321,12 +3321,29 @@ void JKQTmathText::saveSettings(QSettings& settings, QString group){
 
 void JKQTmathText::useSTIX() {
     useSTIXfonts=true;
-    fontGreek="STIXGeneral";
-    fontSymbol="STIXGeneral";
-    fontBraces="STIXGeneral";
-    fontIntegrals="STIXGeneral";
-    //fontRoman="STIXGeneral";
-    fontMathRoman="STIXGeneral";
+    QString fontname="STIX Two Math Standard";
+    QString fontnametxt="STIX Two Text";
+    QFontDatabase fdb;
+
+    if (!fdb.families().contains(fontname)) {
+        fontname="STIX Math Standard";
+        fontnametxt="STIX Math Standard";
+        if (!fdb.families().contains(fontname)) {
+            fontname="STIX";
+            fontnametxt="Times New Roman";
+            if (!fdb.families().contains(fontname)) {
+                fontname="STIXGeneral";
+                fontnametxt="Times New Roman";
+            }
+        }
+    }
+
+    fontGreek=fontname;
+    fontSymbol=fontname;
+    fontBraces=fontname;
+    fontIntegrals=fontname;
+    fontRoman=fontnametxt;
+    fontMathRoman=fontname;
     fontEncoding=MTFEunicode;
     brace_shrink_factor=0.6;
 }

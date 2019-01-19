@@ -1,15 +1,15 @@
-# JKQtPlotter: Examples: Filled Curve Plots {#JKQtPlotterFilledGraphs}
+# Example (JKQtPlotter): Filled Curve Plots {#JKQtPlotterFilledGraphs}
 This project (see `./examples/simpletest_filledgraphs/`) simply creates a JKQtPlotter widget (as a new window) and adds several filled curve graphs (Histograms). Data is initialized from QVector<int> objects.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_filledgraphs.cpp`](../simpletest_filledgraphs/jkqtplotter_simpletest_filledgraphs.cpp). 
 
 First the data columns for three x-y-curves are generated. One column of x-values with entries 0,1,2,...,254,255 (256 entries). 
-```c++
+```.cpp
     size_t columnX=ds->addLinearColumn(256, 0, 255, "x");
 ```
 
 And three columns with 256 entries each, which will be filled with the R-, G- and B-histograms of an image `example.bmp`:
-```c++
+```.cpp
     size_t columnR=ds->addColumn(256, "historam_R");
     size_t columnG=ds->addColumn(256, "historam_G");
     size_t columnB=ds->addColumn(256, "historam_B");
@@ -17,7 +17,7 @@ And three columns with 256 entries each, which will be filled with the R-, G- an
 	
 In this example we will access the data in the internal datastore directly. This access is possible through objects of type JKQTPcolumn, which is a proxy to the data in one of the columns in a `JKQTdatastore`:
 
-```c++
+```.cpp
     JKQTPcolumn cG=ds->getColumn(columnG);
     JKQTPcolumn cR=ds->getColumn(columnR);
     JKQTPcolumn cB=ds->getColumn(columnB);
@@ -25,7 +25,7 @@ In this example we will access the data in the internal datastore directly. This
 
 In order to calculate the histograms, first all enries in the columns are set to 0:
 
-```c++
+```.cpp
     cR.setAll(0);
     cG.setAll(0);
     cB.setAll(0);
@@ -33,7 +33,7 @@ In order to calculate the histograms, first all enries in the columns are set to
 
 Finally the histogram is calculated:
 
-```c++
+```.cpp
     QImage image(":/example.bmp");
     for (int y=0; y<image.height(); y++) {
         for (int x=0; x<image.width(); x++) {
@@ -50,7 +50,7 @@ Finally the histogram is calculated:
 
 Finally three `JKQTPfilledCurveXGraph` objects are generated and added to the plot (here we show the code for the R-channel only):
 
-```c++
+```.cpp
     JKQTPfilledCurveXGraph* graphR=new JKQTPfilledCurveXGraph(&plot);
 
     // set graph titles

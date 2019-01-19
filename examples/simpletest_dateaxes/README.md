@@ -1,4 +1,4 @@
-# JKQtPlotter: Examples: Date/Time Axes {#JKQtPlotterDateTimeAxes}
+# Example (JKQtPlotter): Date/Time Axes {#JKQtPlotterDateTimeAxes}
 
 ## Date Axis
 This project (see `./examples/simpletest_dateaxes/`) simply creates a JKQtPlotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
@@ -7,7 +7,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 
 First some data is parsed from a CSV-file (added as ressource to the example). Note that the Time/date or Date+Time data is internally stored as milliseconds since epoc (Jan 1st 1970, 00:00:00), therefore data has to be converted accordingly before beeing added to the graph.
 
-```c++
+```.cpp
 	QVector<double> date;
     QVector<double> temperature, temperature_min, temperature_max;
     // parse a textfile with comments on the first line and the
@@ -40,7 +40,7 @@ The parsed data looks like this (data was taken from http://wetter.mpg-ge.de/NOA
 ```
 
 Then two graphs are added. One of type `JKQTPfilledVerticalRangeGraph` plots the range of min+max temperature for each month:
-```c++
+```.cpp
    // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
     JKQTPfilledVerticalRangeGraph* graphTemperatureRange=new JKQTPfilledVerticalRangeGraph(&plot);
 
@@ -64,7 +64,7 @@ Then two graphs are added. One of type `JKQTPfilledVerticalRangeGraph` plots the
 
 On top of that plot, a second plot is added, which draws the average temperatures of each month as a line:
 
-```c++
+```.cpp
    // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
     JKQTPxyLineErrorGraph* graphTemperature=new JKQTPxyLineErrorGraph(&plot);
 
@@ -91,7 +91,7 @@ On top of that plot, a second plot is added, which draws the average temperature
 ```
 
 Finally the x-axis is formatted to display dates (see [Qt-Documentation of `QDateTime::toString()`]((http://doc.qt.io/qt-5/qdatetime.html#toString) for details on the formating strings):
-```c++
+```.cpp
     // 7. format the plot
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.get_plotter()->set_plotLabel("\\textbf{Weather in Gelsenkirchen, 2017-2018}");
@@ -116,7 +116,7 @@ A second variant (see the example CPP-file) displays data with a time-axis:
 
 
 For that example data-pasring is a bit different, because the file only contains times and no dates:
-```c++
+```.cpp
     // 2. now we create data vectors with data parsed from a CSV-file
     QVector<double> time;
     QVector<double> temperature;
@@ -150,7 +150,7 @@ The parsed data looks like this:
 ```
 
 Axis formating for this example is done like this:
-```c++
+```.cpp
     // 7. format the plot
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.get_plotter()->set_plotLabel("\\textbf{Weather in Heidelberg, 14^{th} Oct 2018}");

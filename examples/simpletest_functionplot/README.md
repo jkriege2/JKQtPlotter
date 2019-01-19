@@ -1,10 +1,10 @@
-# JKQtPlotter: Examples: Plotting Mathematical Functions as Line Graphs {#JKQtPlotterFunctionPlots}
+# Example (JKQtPlotter): Plotting Mathematical Functions as Line Graphs {#JKQtPlotterFunctionPlots}
 ## Basics
 This project (see `./examples/simpletest_functionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. See [test/simpletest_parsedfunctionplot](../simpletest_parsedfunctionplot) for an example of how to use an internal equation parser provided with JKQtPlotter instead of directly defining functions.
 
 ## Simple C++ inline function
 The first example shows how to plot a C++ inline function: 
-```c++
+```.cpp
     JKQTPxFunctionLineGraph* func1=new JKQTPxFunctionLineGraph(plot);
     func1->set_plotFunction([](double x) { return 0.2*x*x-0.015*x*x*x; });
     func1->set_title("C++-inline function $0.2x^2-0.015x^3$");
@@ -13,7 +13,7 @@ The first example shows how to plot a C++ inline function:
 
 ## Simple C++ inline function with parameters
 In any such plot function, you can also use parameters, provided via the second parameter. Usually these are "internal parameters", defined by `func2->set_paramsV(p0, p1, ...)`:
-```c++
+```.cpp
     JKQTPxFunctionLineGraph* func2=new JKQTPxFunctionLineGraph(plot);
     func2->set_plotFunction([](double x, void* params) {
         QVector<double>* p=static_cast<QVector<double>*>(params);
@@ -26,7 +26,7 @@ In any such plot function, you can also use parameters, provided via the second 
 ```
 
 ... but generally any pointer can be used as parameter (the set by `set_parameter(static_cast<void*>(myDataObject))`):
-```c++
+```.cpp
     JKQTPxFunctionLineGraph* func3=new JKQTPxFunctionLineGraph(plot);
     func3->set_plotFunction([](double x, void* params) {
         QMap<QString,double>* p=static_cast<QMap<QString,double>*>(params);
@@ -43,7 +43,7 @@ In any such plot function, you can also use parameters, provided via the second 
 
 ## C++ functors as plot functions
 You can also use C++ functors (or function objects):
-```c++
+```.cpp
     struct SincSqr {
     public:
         inline SincSqr(double amplitude): a(amplitude) {}
@@ -64,7 +64,7 @@ You can also use C++ functors (or function objects):
 
 ## Static C functions
 You can also plot simple static C functions:
-```c++
+```.cpp
     double sinc(double x) {
         return 10.0*sin(x)/x;
     }
@@ -79,7 +79,7 @@ You can also plot simple static C functions:
 
 ## Predefined "special" functions
 Finally `JKQTPxFunctionLineGraph` provides a small set of special functions (polynomial `p0+p1*x+p2*x^2+...`, exponential `p0+p1*exp(x/p2)`, power-law `p0+p1*x^p2`, ...), which are parametrized from the internal or external parameters:
-```c++
+```.cpp
     JKQTPxFunctionLineGraph* func6=new JKQTPxFunctionLineGraph(plot);
     func6->setSpecialFunction(JKQTPxFunctionLineGraph::Line);
     // here we set offset p0=-1 and slope p1=1.5 of the line p0+p1*x
@@ -89,7 +89,7 @@ Finally `JKQTPxFunctionLineGraph` provides a small set of special functions (pol
 ```
 
 To demonstrate how to use parameters from a datastore column, have a look at the next example. It is derived from the special-function plot above, but adds a line with a different offset and slope and reads the parameters from a datastore column `paramCol`, which is initialized from the vector `params`:
-```c++
+```.cpp
 JKQTPxFunctionLineGraph* func7=new JKQTPxFunctionLineGraph(plot);
     func7->setSpecialFunction(JKQTPxFunctionLineGraph::Line);
     // here we set offset p0=1 and slope p1=-1.5 of the line p0+p1*x by adding these into a column

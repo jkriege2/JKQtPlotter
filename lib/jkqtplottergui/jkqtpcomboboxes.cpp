@@ -20,7 +20,7 @@
 
 
 /** \file jkqtpcomboboxes.cpp
-  * \ingroup jkqtplotter
+  * \ingroup jkqtpcomboboxes
   */
 
 #include "jkqtplottergui/jkqtpcomboboxes.h"

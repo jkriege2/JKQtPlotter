@@ -1,11 +1,11 @@
-# JKQtPlotter: Examples: Different Types of Errorindicators {#JKQtPlotterErrorBarStyles}
+# Example (JKQtPlotter): Different Types of Errorindicators {#JKQtPlotterErrorBarStyles}
 This project (see `./examples/simpletest_errorbarstyles/`) simply creates a JKQtPlotter widget (as a new window) and adds several curves show-casing different styles of error indicators. Data is initialized from two QVector<double> objects.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_errorbarstyles.cpp`](../simpletest_errorbarstyles/jkqtplotter_simpletest_errorbarstyles.cpp). 
 
 First some data is added to the internal datastore (mostly, like explained in several other examples, like e.g. [Line Graph with Different Symbols and Line Styles](../simpletest_symbols_and_styles)). The (in a loop) several graphs are added, each with a distinct style for its error indicators:
 
-```c++
+```.cpp
     // 3. now we make several plots with different error styles
     //    for that we iterate over every style from the vector errorStyles
     //    the array showXandYError indicates whether we want x- and y-error
@@ -70,7 +70,7 @@ First some data is added to the internal datastore (mostly, like explained in se
 ```
 
 The error styles are set in these lines:
-```c++
+```.cpp
 	// set error style, for the y-axis
 	graph->set_yErrorStyle(errorStyles[errorID]);
 	// no error indicators for the x-values
@@ -78,7 +78,7 @@ The error styles are set in these lines:
 ```
 
 There are several variables that can be used to further style the error indicator, like:
-```c++
+```.cpp
 	// make error indicator 30% transparent
 	QColor c=graph->get_errorFillColor();
 	c.setAlphaF(0.3);
@@ -92,7 +92,7 @@ There are several variables that can be used to further style the error indicato
 There are more properties that you can find in the documentation of the mix-in classes `JKQTPxyGraphErrors`, `JKQTPxGraphErrors`, `JKQTPyGraphErrors`, `JKQTPgraphErrors`.
 
 In addition the plot key is moved outside the pot and the grid in the plot is switched off:
-```c++
+```.cpp
     // 6. change locaion of key (outside top-right)
     plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideRightTop);
     // ... and switch off the grid

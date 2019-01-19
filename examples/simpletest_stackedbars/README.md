@@ -1,8 +1,8 @@
-# JKQtPlotter: Examples: Simple stacked barchart {#JKQtPlotterStackedBarChart}
+# Example (JKQtPlotter): Simple stacked barchart {#JKQtPlotterStackedBarChart}
 This project (see `./examples/simpletest_stackedbars/`) simply creates a JKQtPlotter widget (as a new window) and adds several stacked barcharts.
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp`](../simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
-```c++
+```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"

@@ -1163,7 +1163,7 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
                 }
             }
             lut_used=lutstore[palette];
-    } else if (palette == JKQTPMathImageBLACKBLUEVIOLETYELLOWWHITE) //gnuplot: 30,31,32
+    } else if (palette == JKQTPMathImageBLACKBLUEWHITEYELLOWWHITE) //gnuplot: 30,31,32
     {
             //int*& plut=&lut_BLACKBLUEVIOLETYELLOWWHITE;
         if (lutstore[palette]==nullptr) {
@@ -1182,7 +1182,7 @@ int* JKQTPimagePlot_getCreateLUT(QList<int*>& lutstore, JKQTPMathImageColorPalet
                 }
             }
             lut_used=lutstore[palette];
-    } else if (palette == JKQTPMathImageWHITEYELLOWVIOLETBLUEBLACK) //gnuplot: 30,31,32
+    } else if (palette == JKQTPMathImageWHITEYELLOWWHITEBLUEBLACK) //gnuplot: 30,31,32
     {
             //int*& plut=&lut_WHITEYELLOWVIOLETBLUEBLACK;
         if (lutstore[palette]==nullptr) {

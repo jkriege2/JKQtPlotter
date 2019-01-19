@@ -20,7 +20,7 @@
 
 
 /** \file jkqtpbaseelements.h
-  * \ingroup jkqtplotter_elements
+  * \ingroup jkqtpbaseplotter_elements
   */
 
 #ifndef JKQTPBASEELEMENTS_H
@@ -39,7 +39,7 @@
 class JKQtBasePlotter;
 
 /*! \brief this virtual class is the base for any type of coordinate axis, to be drawn by JKQTplotterBase.
-    \ingroup jkqtplotter_elements
+    \ingroup jkqtpbaseplotter_elements
 
     This class implements all the functionality needed for a coordinate axis:
       - transform world to screen coordinates and vice versa
@@ -906,7 +906,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
 
 /*! \brief implements a vertical axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtplotter_elements
+    \ingroup jkqtpbaseplotter_elements
 
  */
 class LIB_EXPORT JKQTPverticalAxis: public JKQTPcoordinateAxis {
@@ -946,7 +946,7 @@ class LIB_EXPORT JKQTPverticalAxis: public JKQTPcoordinateAxis {
 
 
 /*! \brief implements a position-indipendent vertical axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtplotter_elements
+    \ingroup jkqtpbaseplotter_elements
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
@@ -987,7 +987,7 @@ class LIB_EXPORT JKQTPverticalIndependentAxis: public JKQTPverticalAxis {
 
 
 /*! \brief implements a horizontal axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtplotter_elements
+    \ingroup jkqtpbaseplotter_elements
 
  */
 class LIB_EXPORT JKQTPhorizontalAxis: public JKQTPcoordinateAxis {
@@ -1028,7 +1028,7 @@ class LIB_EXPORT JKQTPhorizontalAxis: public JKQTPcoordinateAxis {
 
 
 /*! \brief implements a position-indipendent horizontal axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
-    \ingroup jkqtplotter_elements
+    \ingroup jkqtpbaseplotter_elements
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */

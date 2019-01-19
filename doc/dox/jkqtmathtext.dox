@@ -4,12 +4,12 @@
 
 	This group contains JKQtMathText, a self-contained LaTeX-renderer for Qt. It is used to renderer
 	labels in JKQtPlotter, but can be used independently. The class does not depend on any library, 
-	except Qt.
+	except Qt. In particular it actually parses a LaTeX string and draws it in pure C++. It does NOT rely
+	on an installed LaTeX for the rendering!
 
 
 	Examples for the usage of this class can be found here: 
-	  - \ref JKQTmathTextSimpleExample with the main source: \link ../../examples/jkqtmathtext_simpletest/jkqtmathtext_simpletest.cpp \endlink
-	  - \link ../../examples/jkqtmathtext_test/jkqtfastplotter_test_testmain.cpp \endlink
+	  - \ref JKQTmathTextSimpleExample 
 	.
 
 

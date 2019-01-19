@@ -20,7 +20,7 @@
 
 
 /** \file jkqtpbaseplotter.cpp
-  * \ingroup jkqtplotter
+  * \ingroup jkqtpplotterclasses
   */
 #include <QFileInfo>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))

@@ -1,11 +1,11 @@
-# JKQtPlotter: Examples: Simple impulse plots {#JKQtPlotterImpulsePlots}
+# Example (JKQtPlotter): Simple impulse plots {#JKQtPlotterImpulsePlots}
 This project (see `./examples/simpletest_impulsesplot/`) simply creates a JKQtPlotter widget (as a new window) and adds a single impulse graph. 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_impulsesplot.cpp`](../simpletest_impulsesplot/jkqtplotter_simpletest_impulsesplot.cpp).
 
 
 
 First data for a curve is calculated and stored in `QVector<double>`: 
-```c++
+```.cpp
     QVector<double> X, Y;
     for (int i=0; i<Ndata; i++) {
         const double xx=double(i)/double(Ndata)*6.0*M_PI;
@@ -15,13 +15,13 @@ First data for a curve is calculated and stored in `QVector<double>`:
 ```
 
 ... and finally the data is copied into the datastore
-```c++
+```.cpp
     size_t columnX=ds->addCopiedColumn(X,  "x");
     size_t columnY=ds->addCopiedColumn(Y,  "y");
 ```
 	
 Now an impulse graph object is generated and added to the plot:
-```c++
+```.cpp
     JKQTPimpulsesVerticalGraph* graph=new JKQTPimpulsesVerticalGraph(&plot);
     graph->set_xColumn(columnX);
     graph->set_yColumn(columnY);
@@ -37,7 +37,7 @@ The result looks like this:
 ![jkqtplotter_simpletest_impulsesplot](../../screenshots/jkqtplotter_simpletest_impulsesplot.png)
 
 There is an alternative class `JKQTPimpulsesHorizontalGraph` which draws horizontal impulse plots:
-```c++
+```.cpp
     JKQTPimpulsesHorizontalGraph* graph=new JKQTPimpulsesHorizontalGraph(&plot);
     graph->set_yColumn(columnX);
     graph->set_xColumn(columnY);

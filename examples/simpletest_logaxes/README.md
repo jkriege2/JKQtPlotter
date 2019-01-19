@@ -1,9 +1,9 @@
-# JKQtPlotter: Examples: Line Graph with Logarithmic y-axis {#JKQtPlotterLogAxes}
+# Example (JKQtPlotter): Line Graph with Logarithmic y-axis {#JKQtPlotterLogAxes}
 This project (see `./examples/simpletest_logaxes/`) simply creates a JKQtPlotter widget (as a new window) and several line-graphs of different resonance curves. 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp`](../simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->set_style()`). The colors are set automtically from an internal default palette. The main loop looks like this:
 
-```c++
+```.cpp
 	QVector<Qt::PenStyle> pens {Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
     for (int id=0; id<D.size(); id++) {
         // generate some plot data
@@ -34,7 +34,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 ```
 
 Then a `JKQTPgeoText` is added to the graph, which shows the function plotted in the plot:
-```c++
+```.cpp
     // 4. Also we add a text-element in the plot to show the plotted function
     //    This element (JKQTPgeoText) is taken from the set of geometric elements
     //    and is simply parametrized by a position (1.25/10) and the text to display.
@@ -51,7 +51,7 @@ The difference between not using and using `$...$` for the equation can be seen 
 - using $-math-mode: ![](../../screenshots/jkqtplotter_simpletest_logaxes_highqmathrendering.png)
 
 Finally the y-axis is switched to logarithmic scaling and the axis labels are set:
-```c++
+```.cpp
 // 5. set y-axis to logarithmic (x-axis would be analogous, but using `plot.get_xAxis()`)
     plot.get_yAxis()->set_logAxis(true);
     //    now we set the number of label ticks to 9 (you give the count if minor between two majors,

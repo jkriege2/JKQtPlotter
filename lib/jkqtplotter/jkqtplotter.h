@@ -20,7 +20,7 @@
 
 
 /** \file jkqtplotter.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtpplotterclasses
   *
   * A Qt based plotter for 2D scientific graphs.
   */
@@ -54,13 +54,13 @@
 #define JKQTPLOTTER_H
 
 /** \brief initialized Qt-ressources necessary for JKQtPlotter
- *  \ingroup jkqtplotter
+ *  \ingroup jkqtpplotterclasses
 */
 LIB_EXPORT void initJKQtPlotterResources();
 
 
 /** \brief class to plot function graphs in linear or (semi-)logarithmic scale
- * \ingroup jkqtplotter
+ * \ingroup jkqtpplotterclasses
  *
  * This class is an implementation of JKQtPlotterBase. It uses the tools from this base class
  * to display function graphs that use the internal datastore as data source. You can add graphs

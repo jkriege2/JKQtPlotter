@@ -1,8 +1,8 @@
-# JKQtPlotter: Examples: Plotting Parametric Curves {#JKQtPlotterParametricCurves}
+# Example (JKQtPlotter): Plotting Parametric Curves {#JKQtPlotterParametricCurves}
 This project (see `./examples/simpletest_parametriccurve/`) demonstrates how to draw parametric curves, using [`JKQTPxyLineGraph`}(../simpletest) and [`JKQTPxyParametrizedScatterGraph`](../simpletest_paramscatterplot). 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_parametriccurve.cpp`](../simpletest_parametriccurve/jkqtplotter_simpletest_parametriccurve.cpp). First, the parametric curve (here a [logarithic spiral](https://en.wikipedia.org/wiki/Logarithmic_spiral)) is sampled into two columns containing the x- and y-values along the curve. In addition the radial distance from x=y=0 is added into a third column:
-```c++
+```.cpp
     QVector<double> X, Y, R;
     const int Ndata=500; // number of plot points in each curve
     const double phiMax=4.0*M_PI;
@@ -23,7 +23,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 
 
 Then simples graph just uses the columns X and Y to plot the curve:
-```c++
+```.cpp
     JKQTPxyLineGraph* graph1=new JKQTPxyLineGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY);
@@ -34,7 +34,7 @@ Then simples graph just uses the columns X and Y to plot the curve:
 ```
  
 If you use `JKQTPxyParametrizedScatterGraph` instead of `JKQTPxyLineGraph`, you can also modify the color of the line-segments, connecting the datapoints:
-```c++
+```.cpp
     JKQTPxyParametrizedScatterGraph* graph2=new JKQTPxyParametrizedScatterGraph(&plot2);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY);

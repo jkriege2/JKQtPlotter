@@ -1,4 +1,4 @@
-# JKQtPlotter: Examples: Scatter Graph with Parametrized Symbols/Colors {#JKQtPlotterParamScatter}
+# Example (JKQtPlotter): Scatter Graph with Parametrized Symbols/Colors {#JKQtPlotterParamScatter}
 This project (see `./examples/simpletest_paramscatterplot/`) demonstrates the capabilities of `JKQTPxyParametrizedScatterGraph`. This graph class plots symbol&line-graphs, juts like [`JKQTPxyLineGraph`](../simpletest_symbols_and_styles/) and in addition modifies several properties of each plot point by data from an additional column. These properties can be modified:
 - symbol size
 - symbol type
@@ -12,7 +12,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 Then several plots are added that modify different properties.
 
 The simplest case is to modify the symbol type. Simply set the property `symbolColumn` with `graph1->set_symbolColumn(columnP)` to a data column. The values in the data column will be cast to an integer and then will be translated to `JKQTPgraphSymbols`. If the numbers are larger than the available symbol types in `JKQTPgraphSymbols`, the graph will cycle through the available symbols (via a modulo-operation with the max. symbol count!).
-```c++
+```.cpp
 	JKQTPxyParametrizedScatterGraph* graph1=new JKQTPxyParametrizedScatterGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY1);
@@ -25,7 +25,7 @@ The simplest case is to modify the symbol type. Simply set the property `symbolC
 
 
 The next two code snippets show how to modify the size of the symbols and the line width of the lines, connecting the symbols (ensure to set `graph6->set_drawLine(true)`, because otherwise no line will be drawn). The principle is the same as above, but here you need to set the properties `sizeColumn` for the symbol size and `linewidthColumn` for the line width. All values in the line width or symbol size columns are interpreted as sizes in dtp points (pt)!
-```c++
+```.cpp
     // symbol size
     JKQTPxyParametrizedScatterGraph* graph3=new JKQTPxyParametrizedScatterGraph(&plot);
     graph3->set_xColumn(columnX);
@@ -49,7 +49,7 @@ The next two code snippets show how to modify the size of the symbols and the li
 
 
 Finally you can set the color of each symbol, based on data in the column `colorColumn`. Here two possibilities exist: First you can store the RGB(A) value for each datapoint explicitly. For this, you first need to create the data in the column, using the Qt-function [`qRgb()`](http://doc.qt.io/qt-5/qcolor.html#qRgb) or [`qRgba()`}(http://doc.qt.io/qt-5/qcolor.html#qRgba):
-```c++
+```.cpp
     QVector<double> RGB;
     const int Ndata=10; // number of plot points in each curve
     for (int i=0; i<Ndata; i++) {
@@ -57,11 +57,11 @@ Finally you can set the color of each symbol, based on data in the column `color
         RGB<<double(qRgb(double(i)/double(Ndata)*255,0,255-double(i)/double(Ndata)*255));
     }
     size_t columnRGB=ds->addCopiedColumn(RGB, "rgb");
-```c++
+```.cpp
 Basically the data points in a RGB(A)-column will be interpreted by castig them to [`QRgb`](http://doc.qt.io/qt-5/qcolor.html#QRgb-typedef).
 
 Now you can add the graph. In order to interpret the color column as RGB(A)-values, ensure to set `graph4->set_colorColumnContainsRGB(true)`:
-```c++
+```.cpp
     JKQTPxyParametrizedScatterGraph* graph4=new JKQTPxyParametrizedScatterGraph(&plot);
     graph4->set_xColumn(columnX);
     graph4->set_yColumn(columnY4);
@@ -74,7 +74,7 @@ Now you can add the graph. In order to interpret the color column as RGB(A)-valu
 ```
 
 The second variant for setting the color of each datapoint is by mapping the values in the column to a color palette (`JKQTPMathImageRYGB` in this example). For this you simply need to define the color coumn and the palette to use. By default, the color palette spans the full range of values in `colorColumn`:
-```c++
+```.cpp
     JKQTPxyParametrizedScatterGraph* graph2=new JKQTPxyParametrizedScatterGraph(&plot);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY2);
@@ -90,7 +90,7 @@ Note: If you want to set the range manually, use `ste_imageMin()` and `set_image
 
 
 Note also that it is possible to combine any of parametrizations above in a single graph, by setting two or more columns:
-```c++
+```.cpp
     JKQTPxyParametrizedScatterGraph* graph5=new JKQTPxyParametrizedScatterGraph(&plot);
     graph5->set_xColumn(columnX);
     graph5->set_yColumn(columnY5);

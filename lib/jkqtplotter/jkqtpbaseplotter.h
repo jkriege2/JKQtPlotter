@@ -20,7 +20,7 @@
 
 
 /** \file jkqtpbaseplotter.h
-  * \ingroup jkqtpbaseplotter
+  * \ingroup jkqtpplotterclasses
   */
 
 #include "jkqtplottertools/jkqtptools.h"
@@ -66,7 +66,7 @@ LIB_EXPORT void initJKQtBasePlotterResources();
 
 
 /** \brief base class for 2D plotter classes
- * \ingroup jkqtpbaseplotter
+ * \ingroup jkqtpplotterclasses
  *
  * This class implements basic functionalities for the plotter classes. Those are:
  *   -# data storage using a JKQTPdatastore object

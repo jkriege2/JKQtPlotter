@@ -20,7 +20,7 @@
 
 
 /** \file jkvanishqtoolbar.cpp
-  * \ingroup jkqtplotter
+  * \ingroup jkqtptools_qtwidgets
   */
 
 #include "jkqtplottergui/jkvanishqtoolbar.h"

@@ -19,7 +19,7 @@
 
 
 /** \file jkqtpgraphspeakstream.h
-  * \ingroup jkqtplotter
+  * \ingroup jkqtplotter_diverse
   */
 
 #include <QString>

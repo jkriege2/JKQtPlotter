@@ -104,7 +104,7 @@ class JKQTPEnhancedPainter; // forward
 class JKQtBasePlotter; // forward declaration
 
 /** \brief smallest linewidth any line in JKQtPlotter may have
- * \ingroup jkqtplotter
+ * \ingroup jkqtptools
  */
 #define JKQTPLOTTER_ABS_MIN_LINEWIDTH 0.02
 

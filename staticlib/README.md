@@ -7,7 +7,7 @@ This directory contains Projects that can be used to build a static library of J
 ### Build shared libraries
 There are several `.PRO`-files, that can be used to build the full library, or a limited subsets. They will produce a static link libraries that you can include into your projects, e.g. with the following QMake-snippet:
 
-```qmake
+```.qmake
 # include JKQtPlotter library
 DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib

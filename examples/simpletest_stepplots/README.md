@@ -1,9 +1,9 @@
-# JKQtPlotter: Examples: Step Line Plots in Different Styles {#JKQtPlotterStepPlot}
+# Example (JKQtPlotter): Step Line Plots in Different Styles {#JKQtPlotterStepPlot}
 This project (see `./examples/simpletest_stepplots/`) simply creates a JKQtPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_stepplots.cpp`](../simpletest_stepplots/jkqtplotter_simpletest_stepplots.cpp). For the most part, several datasets of cosine-curves are generated. then thrre tuples of graphs are added: One of type `JKQTPxyLineGraph`, which simply indicates the location of the actual datapoints. the second is of type `JKQTPstepHorizontalGraph`, which adds the step-graph to the plot:
 
-```c++
+```.cpp
 	// 3 now we make several plots with different step styles, each one also contains a
     //     symbol plot indicating the location of the datapoints themselves
     JKQTPstepHorizontalGraph* graph;
@@ -27,7 +27,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 Note that you can configure the step type (left/center/right by `graph->set_stepType(JKQTPstepLeft)`. With `graph->set_fillCurve(true)` you can draw the curve filled until the y=0-axis and with `graph->set_drawLine(true)` you can switch the line along the values on and off (e.g. to only have the filled area, but no line).
 
 Finally the `JKQTPxyLineGraph` is configured:
-```c++
+```.cpp
     // set symbol + pen style and color for the added circles, copy color
     graphL->set_symbol(JKQTPgraphSymbols::JKQTPcircle);
     graphL->set_drawLine(false);
@@ -37,7 +37,7 @@ Finally the `JKQTPxyLineGraph` is configured:
 ```
 
 ... and all graphs are added to the plot:
-```c++
+```.cpp
     // add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
     plot.addGraph(graphL);
