@@ -66,8 +66,7 @@ artifacts:
      name: sharedlib %QTVER%%QTABI%
    - path: build\sharedlib\**\*.dll
      name: dll %QTVER%%QTABI%
-   - path: build\examples\**\*.exe
-     name: Examples %QTVER%%QTABI%
+
 
 
 # # remote desktop connection on init
