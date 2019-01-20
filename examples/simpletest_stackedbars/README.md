@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Simple stacked barchart {#JKQtPlotterStackedBarChart}
-This project (see `./examples/simpletest_stackedbars/`) simply creates a JKQtPlotter widget (as a new window) and adds several stacked barcharts.
+# Example (JKQTPLotter): Simple stacked barchart {#JKQTPLotterStackedBarChart}
+This project (see `./examples/simpletest_stackedbars/`) simply creates a JKQTPLotter widget (as a new window) and adds several stacked barcharts.
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp`](../simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
 ```.cpp
@@ -13,11 +13,11 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-	JKQtPlotter plot;
+	JKQTPLotter plot;
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
     QVector<double> year, percentage_other, percentage_coaloil, percentage_gas, percentage_nuclear, percentage_green;
@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
     percentage_green    << 3.6      << 4.4      << 6.2      << 9.5      << 15.8     << 28.1;
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise)
     //    the variables cYear, cOther ... will contain the internal column ID of the
     //    newly created columns with names "year" and "other" ... and the (copied) data
@@ -44,31 +44,31 @@ int main(int argc, char* argv[])
     //    The color of the graphs is set by calling set_fillColor_and_darkenedColor(), which sets the
     //    fillColor to the given color and makes the outline of the bars (i.e. their "color") a darker
     //    shade of the given color.
-    QVector<JKQTPbarVerticalStackableGraph*> graphs;
-    graphs.push_back(new JKQTPbarVerticalStackableGraph(&plot));
+    QVector<JKQTPBarVerticalStackableGraph*> graphs;
+    graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
     graphs.back()->set_xColumn(cYear);
     graphs.back()->set_yColumn(cOther);
     graphs.back()->set_title(QObject::tr("other sources"));
     graphs.back()->set_fillColor_and_darkenedColor(QColor("red"));
-    graphs.push_back(new JKQTPbarVerticalStackableGraph(&plot));
+    graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
     graphs.back()->set_xColumn(cYear);
     graphs.back()->set_yColumn(cCoalOil);
     graphs.back()->set_title(QObject::tr("coal & oil"));
     graphs.back()->set_fillColor_and_darkenedColor(QColor("darkgrey"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
-    graphs.push_back(new JKQTPbarVerticalStackableGraph(&plot));
+    graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
     graphs.back()->set_xColumn(cYear);
     graphs.back()->set_yColumn(cGas);
     graphs.back()->set_title(QObject::tr("natural gas"));
     graphs.back()->set_fillColor_and_darkenedColor(QColor("blue"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
-    graphs.push_back(new JKQTPbarVerticalStackableGraph(&plot));
+    graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
     graphs.back()->set_xColumn(cYear);
     graphs.back()->set_yColumn(cNuclear);
     graphs.back()->set_title(QObject::tr("nuclear energy"));
     graphs.back()->set_fillColor_and_darkenedColor(QColor("gold"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
-    graphs.push_back(new JKQTPbarVerticalStackableGraph(&plot));
+    graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
     graphs.back()->set_xColumn(cYear);
     graphs.back()->set_yColumn(cGreen);
     graphs.back()->set_title(QObject::tr("green energy"));
@@ -89,8 +89,8 @@ int main(int argc, char* argv[])
     //          type JKQTBasePlotter, which does the actual plotting.
     //          So many properties of the plot are only available in this internal
     //          object, which you can access by plot.get_plotter().
-    plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideTopRight);
-    plot.get_plotter()->set_keyLayout(JKQTPkeyLayoutOneRow);
+    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideTopRight);
+    plot.get_plotter()->set_keyLayout(JKQTPKeyLayoutOneRow);
 
     // 8 autoscale the plot so the graph is contained
     plot.zoomToFit();
@@ -104,8 +104,8 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![JKQTPbarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPbarVerticalGraphStacked.png)
+![JKQTPBarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/doc/images/JKQTPBarVerticalGraphStacked.png)
 
-If you use `JKQTPbarHorizontalGraphStacked` instead of `JKQTPbarVerticalStackableGraph`, you'll get a result like this: 
-![JKQTPbarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPbarHorizontalGraphStacked.png)
+If you use `JKQTPBarHorizontalGraphStacked` instead of `JKQTPBarVerticalStackableGraph`, you'll get a result like this: 
+![JKQTPBarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/doc/images/JKQTPBarHorizontalGraphStacked.png)
 

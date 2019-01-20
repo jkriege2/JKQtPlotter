@@ -12,7 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 # output executable name
 TARGET = jkqtplotter_simpletest_rgbimageplot_qt
 
-# include JKQtPlotter source code
+# include JKQTPLotter source code
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {

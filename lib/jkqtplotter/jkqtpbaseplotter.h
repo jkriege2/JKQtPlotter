@@ -57,19 +57,19 @@
 #define JKQTPBASEPLOTTER_H
 
 
-class JKQTPgraphsModel; // forward
-class JKQTPgraph; // forward
-class JKQTPplotElement; // forward
+class JKQTPGraphsModel; // forward
+class JKQTPGraph; // forward
+class JKQTPPlotElement; // forward
 
-/** \brief initialized Qt-ressources necessary for JKQtBasePlotter */
-LIB_EXPORT void initJKQtBasePlotterResources();
+/** \brief initialized Qt-ressources necessary for JKQTBasePlotter */
+LIB_EXPORT void initJKQTBasePlotterResources();
 
 
 /** \brief base class for 2D plotter classes
  * \ingroup jkqtpplotterclasses
  *
  * This class implements basic functionalities for the plotter classes. Those are:
- *   -# data storage using a JKQTPdatastore object
+ *   -# data storage using a JKQTPDatastore object
  *   -# coordinate transforms
  *   -# a set of properties for the graphs (colors, widthes ...) and also a system (see getNextStyle() to automatically
  *     choose a drawing style for different graphs.
@@ -78,37 +78,37 @@ LIB_EXPORT void initJKQtBasePlotterResources();
  *   -# saveing and printing the resulting plots
  * .
  *
- * This class is NOT a widget, if you need a plotting widget, use JKQtPlotter. This class may be used to
+ * This class is NOT a widget, if you need a plotting widget, use JKQTPLotter. This class may be used to
  * plot onto any JKQTPEnhancedPainter.
  *
  *
  *
  * \section jkqtplotter_base_datastore Data Storage
  * As already mentioned this class does not provide means to draw graphs, but it contains a basic mechanism to associate
- * data with it. This is imeplemented, using a JKQTPdatastore object together with some convenience access methods. No further
- * data access is implemented and child classes are NOT forced to use this datastore. Hide it if you want. JKQtPlotter shows
+ * data with it. This is imeplemented, using a JKQTPDatastore object together with some convenience access methods. No further
+ * data access is implemented and child classes are NOT forced to use this datastore. Hide it if you want. JKQTPLotter shows
  * how to use it. This class implement a graph management, where graphs simply point to a set of columns inside the datastore
  * that contain the actual plot data!
  *
- * If you call the \link JKQtPlotterBase::JKQtPlotterBase() constructor \endlink with no arguments, it will create an internal
- * datastore object and you can start adding data by using get_datastore(). If you have an external JKQTPdatastore object you can
+ * If you call the \link JKQTPLotterBase::JKQTPLotterBase() constructor \endlink with no arguments, it will create an internal
+ * datastore object and you can start adding data by using get_datastore(). If you have an external JKQTPDatastore object you can
  * give it as parameter to the constructor or use one of the other methods:
- *  - useExternalDatastore(): \copybrief JKQtPlotterBase::useExternalDatastore()
- *  - useAsInternalDatastore(): \copybrief JKQtPlotterBase::useAsInternalDatastore()
- *  - useInternalDatastore(): \copybrief JKQtPlotterBase::useInternalDatastore()
- *  - forceInternalDatastore(): \copybrief JKQtPlotterBase::forceInternalDatastore()
+ *  - useExternalDatastore(): \copybrief JKQTPLotterBase::useExternalDatastore()
+ *  - useAsInternalDatastore(): \copybrief JKQTPLotterBase::useAsInternalDatastore()
+ *  - useInternalDatastore(): \copybrief JKQTPLotterBase::useInternalDatastore()
+ *  - forceInternalDatastore(): \copybrief JKQTPLotterBase::forceInternalDatastore()
  *.
  *
  *
  *
  * \section jkqtplotter_base_systems_baseplotter Coordinate Systems and Transformations
- * These topics are discussed in the help for JKQTPcoordinateAxis. There is a set of coordinate transform
+ * These topics are discussed in the help for JKQTPCoordinateAxis. There is a set of coordinate transform
  * methods (x2p(), y2p(), p2x(), p2y() which only call the respective methods in xAxis and yAxis objects.
  *
  *
  * \section jkqtplotter_base_grids_baseplotter Axis Ticks and Grids
  *    - The plotting of coordinate axes and grids, as well as coordinate transforms is done by
- *      JKQTPcoordinateAxis descendents (see documentation there)
+ *      JKQTPCoordinateAxis descendents (see documentation there)
  *  .
  *  If you want to set the axis properties, use get_xAxis() or get_yAxis() to get a pointer to the axis objects which then
  *  may be used to set the axis properties.
@@ -186,7 +186,7 @@ LIB_EXPORT void initJKQtBasePlotterResources();
  *     \endcode
  * .
  */
-class LIB_EXPORT JKQtBasePlotter: public QObject {
+class LIB_EXPORT JKQTBasePlotter: public QObject {
         Q_OBJECT
     public:
         typedef QMap<QString, QList<QPointer<QAction> > > AdditionalActionsMap;
@@ -194,15 +194,15 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
     protected:
 
         /** \brief used to plot LaTeX markup */
-        JKQTmathText mathText;
+        JKQTMathText mathText;
 
         /** \brief model representing all Plots in this plotter and showing their visible/invisible state */
-        JKQTPgraphsModel* m_plotsModel;
+        JKQTPGraphsModel* m_plotsModel;
 
         /** \brief object used for the x-axis */
-        JKQTPhorizontalAxis* xAxis;
+        JKQTPHorizontalAxis* xAxis;
         /** \brief object used for the y-axis */
-        JKQTPverticalAxis* yAxis;
+        JKQTPVerticalAxis* yAxis;
 
         /** \brief filename for the ini file in which to save the user settings
          *  \see jkqtplotter_base_userprops
@@ -221,7 +221,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /** \brief y position of the current graph in \ref jkqtplotter_base_saveprint  */
         size_t gridPrintingCurrentY;
         /** \brief list that manages all the additional graphs for grid printing mode */
-        QList<JKQTPgridPrintingItem> gridPrintingList;
+        QList<JKQTPGridPrintingItem> gridPrintingList;
         /** \brief this list contains all the rows of the current printing grid and stores its heights */
         QList<int> gridPrintingRows;
         /** \brief this list contains all the columns of the current printing grid and stores its widths */
@@ -243,7 +243,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         QString def_CSVcommentInitializer;
 
         /** \brief an object which manages all data columns for this plotter class */
-        JKQTPdatastore* datastore;
+        JKQTPDatastore* datastore;
         /** \brief indicates whether the datastore is managed (allocated/freed) internally or externally */
         bool datastoreInternal;
 
@@ -438,13 +438,13 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /*! \brief default value for property property varname. \see keyYSeparation for more information */
         double def_keyYSeparation;
         /** \brief key position */
-        JKQTPkeyPosition keyPosition;
+        JKQTPKeyPosition keyPosition;
         /*! \brief default value for property property varname. \see keyPosition for more information */
-        JKQTPkeyPosition def_keyPosition;
+        JKQTPKeyPosition def_keyPosition;
         /** \brief the key layout */
-        JKQTPkeyLayout keyLayout;
+        JKQTPKeyLayout keyLayout;
         /*! \brief default value for property property varname. \see keyLayout for more information */
-        JKQTPkeyLayout def_keyLayout;
+        JKQTPKeyLayout def_keyLayout;
         /** \brief determine width of the key automatically */
         bool keyAutosize;
         /*! \brief default value for property property varname. \see keyAutosize for more information */
@@ -510,10 +510,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief a vector that contains all graphs to be plottet in the system */
-        QList<JKQTPplotElement*> graphs;
+        QList<JKQTPPlotElement*> graphs;
 
 
-        QList<JKQTPoverlayElement*> overlays;
+        QList<JKQTPOverlayElement*> overlays;
 
 
         /** \brief used as maximum/minimum pixel value for plotting */
@@ -523,7 +523,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief hidden default constructor */
-        JKQtBasePlotter();
+        JKQTBasePlotter();
 
 
 
@@ -622,7 +622,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         QString currentPrinter;
 
         /** \brief the master plotter, this plotter is connected to. */
-        JKQtBasePlotter* masterPlotter;
+        JKQTBasePlotter* masterPlotter;
         /** \brief synchronize plot width with masterPlotter */
         bool masterSynchronizeWidth;
         /** \brief synchronize plot height with masterPlotter */
@@ -737,11 +737,11 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void getDataColumnsByUserItemChanged(QListWidgetItem* widgetitem);
         void showPlotData();
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
-        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
+        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis */
-        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
+        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis */
-        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
+        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
 
     public slots:
 
@@ -873,23 +873,23 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * will be managed (freed) by this class. If \a datastore_internal is \c false the class will use tha datastore provided
          * in \a datast as an external datastore. You can modify this later by using useInternalDatastore() and useExternalDatastore().
          */
-        JKQtBasePlotter(bool datastore_internal, QObject* parent=nullptr, JKQTPdatastore* datast=nullptr);
+        JKQTBasePlotter(bool datastore_internal, QObject* parent=nullptr, JKQTPDatastore* datast=nullptr);
 
         /** \brief class destructor */
-        virtual ~JKQtBasePlotter();
+        virtual ~JKQTBasePlotter();
 
         /** \brief returns a pointer to the datastore used by this object */
-        inline JKQTPdatastore* getDatastore() { return datastore; }
+        inline JKQTPDatastore* getDatastore() { return datastore; }
 
         /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
-        inline JKQTPgraphsModel* getPlotsModel() { return m_plotsModel; }
+        inline JKQTPGraphsModel* getPlotsModel() { return m_plotsModel; }
 
 
         /** \brief returns a pointer to the datastore used by this object */
-        inline const JKQTPdatastore* getDatastore() const { return datastore; }
+        inline const JKQTPDatastore* getDatastore() const { return datastore; }
 
         /** \brief returns model representing all Plots in this plotter and showing their visible/invisible state */
-        inline const JKQTPgraphsModel* getPlotsModel() const { return m_plotsModel; }
+        inline const JKQTPGraphsModel* getPlotsModel() const { return m_plotsModel; }
 
         /** \brief tells the plotter object to use the given external datastore.
          *
@@ -897,12 +897,12 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * with external management. If the current datastore is already external, this method will simply replace it by the
          * new one.
          */
-        void useExternalDatastore(JKQTPdatastore* newStore);
+        void useExternalDatastore(JKQTPDatastore* newStore);
 
         /** \brief tells the plotter object to use the given external datastore and treat it as an internal one (i.e. free it
          *         when the plotter object ist destroyed.
          */
-        void useAsInternalDatastore(JKQTPdatastore* newStore);
+        void useAsInternalDatastore(JKQTPDatastore* newStore);
 
         /** \brief tells the plotter object to use an internal datastore. A new internal datastore object is generated only if
          *         the current datastore is not internal.
@@ -1046,8 +1046,8 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief add a new plotter for grid printing mode */
-        inline void addGridPrintingPlotter(size_t x, size_t y, JKQtBasePlotter* plotter) {
-            JKQTPgridPrintingItem i;
+        inline void addGridPrintingPlotter(size_t x, size_t y, JKQTBasePlotter* plotter) {
+            JKQTPGridPrintingItem i;
             i.x=x;
             i.y=y;
             i.plotter=plotter;
@@ -1083,7 +1083,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         int getNextStyle();
 
 
-        /** \brief represents a pen, when plotting in JKQtPlotter/JKQtBasePlotter */
+        /** \brief represents a pen, when plotting in JKQTPLotter/JKQTBasePlotter */
         struct JKQTPPen {
             QColor m_color;
             double m_width;
@@ -1632,7 +1632,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /*! \brief sets the property keyPosition to the specified \a __value. 
             \details Description of the parameter keyPosition is: <BLOCKQUOTE>\copybrief keyPosition </BLOCKQUOTE> 
             \see keyPosition for more information */ 
-        inline virtual void set_keyPosition(const JKQTPkeyPosition & __value)  
+        inline virtual void set_keyPosition(const JKQTPKeyPosition & __value)  
         {
             if (this->keyPosition != __value) {
                 this->keyPosition = __value; 
@@ -1642,14 +1642,14 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /*! \brief returns the property keyPosition. 
             \details Description of the parameter keyPosition is: <BLOCKQUOTE>\copybrief keyPosition </BLOCKQUOTE> 
             \see keyPosition for more information */ 
-        inline virtual JKQTPkeyPosition get_keyPosition() const  
+        inline virtual JKQTPKeyPosition get_keyPosition() const  
         {
             return this->keyPosition; 
         }
         /*! \brief sets the property keyLayout to the specified \a __value. 
             \details Description of the parameter keyLayout is: <BLOCKQUOTE>\copybrief keyLayout </BLOCKQUOTE> 
             \see keyLayout for more information */ 
-        inline virtual void set_keyLayout(const JKQTPkeyLayout & __value)  
+        inline virtual void set_keyLayout(const JKQTPKeyLayout & __value)  
         {
             if (this->keyLayout != __value) {
                 this->keyLayout = __value; 
@@ -1659,7 +1659,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         /*! \brief returns the property keyLayout. 
             \details Description of the parameter keyLayout is: <BLOCKQUOTE>\copybrief keyLayout </BLOCKQUOTE> 
             \see keyLayout for more information */ 
-        inline virtual JKQTPkeyLayout get_keyLayout() const  
+        inline virtual JKQTPKeyLayout get_keyLayout() const  
         {
             return this->keyLayout; 
         }
@@ -1827,18 +1827,18 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         inline int get_plotWidth() const { return this->plotWidth; }
         /*! \brief returns the property plotHeight. \details Description of the parameter plotHeight is:  <BLOCKQUOTE>\copybrief plotHeight </BLOCKQUOTE>. \see plotHeight for more information */ 
         inline int get_plotHeight() const { return this->plotHeight; }
-        /** \brief returns the internal JKQTmathText, used to render text with LaTeX markup */
-        inline JKQTmathText* get_mathText() { return &mathText; }
-        /** \brief returns the internal JKQTmathText, used to render text with LaTeX markup */
-        inline const JKQTmathText* get_mathText() const { return &mathText; }
+        /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
+        inline JKQTMathText* get_mathText() { return &mathText; }
+        /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
+        inline const JKQTMathText* get_mathText() const { return &mathText; }
         /** \brief returns the x-axis objet of the plot */
-        inline JKQTPhorizontalAxis* get_xAxis() { return xAxis; }
+        inline JKQTPHorizontalAxis* get_xAxis() { return xAxis; }
         /** \brief returns the y-axis objet of the plot */
-        inline JKQTPverticalAxis* get_yAxis() { return yAxis; }
+        inline JKQTPVerticalAxis* get_yAxis() { return yAxis; }
         /** \brief returns the x-axis objet of the plot */
-        inline const JKQTPhorizontalAxis* get_xAxis() const { return xAxis; }
+        inline const JKQTPHorizontalAxis* get_xAxis() const { return xAxis; }
         /** \brief returns the y-axis objet of the plot */
-        inline const JKQTPverticalAxis* get_yAxis() const { return yAxis; }
+        inline const JKQTPVerticalAxis* get_yAxis() const { return yAxis; }
 
 
         /*! \brief returns the property actSavePlot. \details Description of the parameter actSavePlot is:  <BLOCKQUOTE>\copybrief actSavePlot </BLOCKQUOTE>. \see actSavePlot for more information */ 
@@ -1934,7 +1934,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief returns description of i'th graph */
-        JKQTPplotElement* getGraph(size_t i);
+        JKQTPPlotElement* getGraph(size_t i);
 
         /** \brief returns the number of graphs */
         size_t getGraphCount();
@@ -1943,7 +1943,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void deleteGraph(size_t i, bool deletegraph=true);
 
         /** \brief remove the given graph, if it is contained */
-        void deleteGraph(JKQTPplotElement* gr, bool deletegraph=true);
+        void deleteGraph(JKQTPPlotElement* gr, bool deletegraph=true);
 
         /** \brief remove all plots
          *
@@ -1956,19 +1956,19 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void setGraphVisible(int i, bool visible=true);
 
         /** \brief add a new graph, returns it's position in the graphs list, if the graph is already in the plot, this returns the index in the list */
-        size_t addGraph(JKQTPplotElement* gr);
+        size_t addGraph(JKQTPPlotElement* gr);
 
         /** \brief returns \c true, if the given graph is in this plot */
-        bool containsGraph(JKQTPplotElement* gr) const;
+        bool containsGraph(JKQTPPlotElement* gr) const;
 
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        size_t moveGraphTop(JKQTPplotElement* gr);
+        size_t moveGraphTop(JKQTPPlotElement* gr);
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        size_t moveGraphBottom(JKQTPplotElement* gr);
+        size_t moveGraphBottom(JKQTPPlotElement* gr);
 
         /** \brief add a new graphs from a QVector */
-        template <class TJKQTPgraphContainer>
-        inline void addGraphs(const TJKQTPgraphContainer& gr) {
+        template <class TJKQTPGraphContainer>
+        inline void addGraphs(const TJKQTPGraphContainer& gr) {
             for (auto it=gr.begin(); it!=gr.end(); ++it) {
                 addGraph(*it);
             }
@@ -1981,17 +1981,17 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * \param title        a title for this specific graph which can be displayed in the key
          * \param graphStyle   the way how to plot the graph
          *
-         * Both point to columns in the datastore explained in the JKQtPlotterBase class. The plotWidth, color, pen style ...
-         * will be extracted from the automatic plot style creation mechanism implemented in JKQtPlotterBase::getNextStyle().
+         * Both point to columns in the datastore explained in the JKQTPLotterBase class. The plotWidth, color, pen style ...
+         * will be extracted from the automatic plot style creation mechanism implemented in JKQTPLotterBase::getNextStyle().
          * If you want to change them either use another overloaded version of addGraph(), or use getGraph() and setGraph():
          * \code
          * size_t i=addGraph(0,1,"graph1");
-         * JKQTPplotElement gr=getGraph(i);
+         * JKQTPPlotElement gr=getGraph(i);
          * gr.color=QColor("red");
          * setGraph(i, gr);
          * \endcode
          */
-        size_t addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPgraphPlotstyle graphStyle=JKQTPlines);
+        size_t addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPGraphPlotstyle graphStyle=JKQTPLines);
 
         /** \brief add a new graph, returns it's position in the graphs list.
          *
@@ -2004,10 +2004,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * \param width        width (in pixel) of the graph
          * \param penstyle     the drawing style (solid, dashed ...) of the graph lines.
          *
-         * Both point to columns in the datastore explained in the JKQtPlotterBase class.
+         * Both point to columns in the datastore explained in the JKQTPLotterBase class.
          * The symbolSize is set to 10 and no error information is expected.
          */
-        size_t addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPgraphPlotstyle graphStyle, QColor color, JKQTPgraphSymbols symbol=JKQTPcross, Qt::PenStyle penstyle=Qt::SolidLine, double width=2);
+        size_t addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPGraphPlotstyle graphStyle, QColor color, JKQTPGraphSymbols symbol=JKQTPCross, Qt::PenStyle penstyle=Qt::SolidLine, double width=2);
 
         /** \brief add a new graph with x-error information, returns it's position in the graphs list.
          *
@@ -2019,10 +2019,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * \param graphStyle   the way how to plot the graph
          * \param errorStyle   the drawing style (bars, lines ...) of the errors.
          *
-         * Both point to columns in the datastore explained in the JKQtPlotterBase class.
+         * Both point to columns in the datastore explained in the JKQTPLotterBase class.
          * The symbolSize is set to 10 and no error information is expected.
          */
-        size_t addGraphWithXError(size_t xColumn, size_t yColumn, size_t xErrorColumn, QString title, JKQTPgraphPlotstyle graphStyle=JKQTPpoints, JKQTPerrorPlotstyle errorStyle=JKQTPerrorBars);
+        size_t addGraphWithXError(size_t xColumn, size_t yColumn, size_t xErrorColumn, QString title, JKQTPGraphPlotstyle graphStyle=JKQTPPoints, JKQTPErrorPlotstyle errorStyle=JKQTPErrorBars);
 
         /** \brief add a new graph with x-error information, returns it's position in the graphs list.
          *
@@ -2034,10 +2034,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * \param graphStyle   the way how to plot the graph
          * \param errorStyle   the drawing style (bars, lines ...) of the errors.
          *
-         * Both point to columns in the datastore explained in the JKQtPlotterBase class.
+         * Both point to columns in the datastore explained in the JKQTPLotterBase class.
          * The symbolSize is set to 10 and no error information is expected.
          */
-        size_t addGraphWithYError(size_t xColumn, size_t yColumn, size_t yErrorColumn, QString title, JKQTPgraphPlotstyle graphStyle=JKQTPpoints, JKQTPerrorPlotstyle errorStyle=JKQTPerrorBars);
+        size_t addGraphWithYError(size_t xColumn, size_t yColumn, size_t yErrorColumn, QString title, JKQTPGraphPlotstyle graphStyle=JKQTPPoints, JKQTPErrorPlotstyle errorStyle=JKQTPErrorBars);
 
         /** \brief add a new graph with x-error information, returns it's position in the graphs list.
          *
@@ -2049,11 +2049,11 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
          * \param title        a title for this specific graph which can be displayed in the key
          * \param graphStyle   the way how to plot the graph
          *
-         * Both point to columns in the datastore explained in the JKQtPlotterBase class.
-         * The symbolSize is set to 10 and no error information is expected. The errorStyle is set to JKQTPerrorBars
+         * Both point to columns in the datastore explained in the JKQTPLotterBase class.
+         * The symbolSize is set to 10 and no error information is expected. The errorStyle is set to JKQTPErrorBars
          * for both directions.
          */
-        size_t addGraphWithXYError(size_t xColumn, size_t yColumn, size_t xErrorColumn, size_t yErrorColumn, QString title, JKQTPgraphPlotstyle graphStyle=JKQTPpoints);
+        size_t addGraphWithXYError(size_t xColumn, size_t yColumn, size_t xErrorColumn, size_t yErrorColumn, QString title, JKQTPGraphPlotstyle graphStyle=JKQTPPoints);
 
         /** \brief add a boxplot graph to the plot
          *
@@ -2138,7 +2138,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
             \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
             \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
         */
-        void synchronizeToMaster(JKQtBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave=false, bool synchronizeZoomingSlaveToMaster=false);
+        void synchronizeToMaster(JKQTBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave=false, bool synchronizeZoomingSlaveToMaster=false);
 
         /** \brief switches any synchronization off, that has been created by synchronizeToMaster() */
         void resetMasterSynchronization();
@@ -2150,7 +2150,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
 
         /** \brief returns description of i'th overlay element */
-        JKQTPoverlayElement* getOverlayElement(size_t i);
+        JKQTPOverlayElement* getOverlayElement(size_t i);
 
         /** \brief returns the number of overlay elements */
         size_t getOverlayElementCount();
@@ -2159,7 +2159,7 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void deleteOverlayElement(size_t i, bool deletegraph=true);
 
         /** \brief remove the given overlay element, if it is contained */
-        void deleteOverlayElement(JKQTPoverlayElement* gr, bool deletegraph=true);
+        void deleteOverlayElement(JKQTPOverlayElement* gr, bool deletegraph=true);
 
         /** \brief remove all overlay elements
          *
@@ -2168,22 +2168,22 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         void clearOverlayElement(bool deleteGraphs=true);
 
         /** \brief add a new overlay element, returns it's position in the overlay elements list, if the overlay element is already in the plot, this returns the index in the list */
-        size_t addOverlayElement(JKQTPoverlayElement* gr);
+        size_t addOverlayElement(JKQTPOverlayElement* gr);
 
         /** \brief returns \c true, if the given overlay element is in this plot */
-        bool containsOverlayElement(JKQTPoverlayElement* gr) const;
+        bool containsOverlayElement(JKQTPOverlayElement* gr) const;
 
         /** \brief move the given overlay element to the top, or add it, if it is not yet contained */
-        size_t moveOverlayElementTop(JKQTPoverlayElement* gr);
+        size_t moveOverlayElementTop(JKQTPOverlayElement* gr);
 
         /** \brief add a new overlay elements from a QList */
-        void addOverlayElements(const QList<JKQTPoverlayElement*>& gr);
+        void addOverlayElements(const QList<JKQTPOverlayElement*>& gr);
 
         QVector<QLineF> getBoundingLinesX1Y1(QRectF *rect=nullptr) const;
 
     signals:
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
-        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
+        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
 
         /** \brief emitted when the plot has to be updated */
         void plotUpdated();
@@ -2199,15 +2199,15 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
 
     public:
 
-        /** \brief set a global preset/default value for the userSettigsFilename and userSettigsPrefix properties of JKQtBasePlotter
+        /** \brief set a global preset/default value for the userSettigsFilename and userSettigsPrefix properties of JKQTBasePlotter
          *
-         *  These presets are application global and will be used ONLY on initialization of a JKQtBasePlotter. You can overwrite them
-         *  on a local-basis for each JKQtBasePrinter separately. The changed values from this function call will only take effect for
+         *  These presets are application global and will be used ONLY on initialization of a JKQTBasePlotter. You can overwrite them
+         *  on a local-basis for each JKQTBasePrinter separately. The changed values from this function call will only take effect for
          *  newly created plotters AFTER the function call!
          */
-        static void setDefaultJKQtBasePrinterUserSettings(QString userSettigsFilename, QString userSettigsPrefix);
+        static void setDefaultJKQTBasePrinterUserSettings(QString userSettigsFilename, QString userSettigsPrefix);
 
-        /** \brief Service from this class to implement a special QPaintDevice as a plugin, that can be registered to JKQtBasePlotter/JKQtPlotter
+        /** \brief Service from this class to implement a special QPaintDevice as a plugin, that can be registered to JKQTBasePlotter/JKQTPLotter
          *         and then be used to export graphics, use registerPaintDeviceAdapter() to register such a plass */
         class LIB_EXPORT JKQTPPaintDeviceAdapter {
             public:
@@ -2227,10 +2227,10 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
                 virtual QPaintDevice* createPaintdeviceMM(const QString& filename, double widthMM, double heightMM) const;
         };
 
-        /** \brief register a user-defined QPaintDevice (with factory JKQTPPaintDeviceAdapter) as a plugin to JKQtBasePlotter/JKQtPlotter,
+        /** \brief register a user-defined QPaintDevice (with factory JKQTPPaintDeviceAdapter) as a plugin to JKQTBasePlotter/JKQTPLotter,
          *         which will use it to export graphics */
         static void registerPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
-        /** \brief de-register a  JKQTPPaintDeviceAdapter from JKQtBasePlotter/JKQtPlotter */
+        /** \brief de-register a  JKQTPPaintDeviceAdapter from JKQTBasePlotter/JKQTPLotter */
         static void deregisterPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
 
 
@@ -2242,9 +2242,9 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
                 virtual void saveJKQTPData(const QString& filename, const QList<QVector<double> >& data, const QStringList& columnNames) const=0;
         };
 
-        /** \brief register a JKQTPSaveDataAdapter with JKQtPlotter/JKQtBasePlotter that can be used to export data from the internal datastore into a file */
+        /** \brief register a JKQTPSaveDataAdapter with JKQTPLotter/JKQTBasePlotter that can be used to export data from the internal datastore into a file */
         static bool registerSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
-        /** \brief de-register a JKQTPSaveDataAdapter from JKQtPlotter/JKQtBasePlotter */
+        /** \brief de-register a JKQTPSaveDataAdapter from JKQTPLotter/JKQTBasePlotter */
         static bool deregisterSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
 
         /** \brief internal tool class for text sizes
@@ -2273,11 +2273,11 @@ class LIB_EXPORT JKQtBasePlotter: public QObject {
         QSizeF getTextSizeSize(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
 
     protected:
-        static QHash<JKQtBasePlotter::textSizeKey, JKQtBasePlotter::textSizeData> tbrh;
+        static QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> tbrh;
 
 };
 
-inline uint qHash(const JKQtBasePlotter::textSizeKey& data) {
+inline uint qHash(const JKQTBasePlotter::textSizeKey& data) {
     return qHash(data.f.family())+qHash(data.text);
 }
 

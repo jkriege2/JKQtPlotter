@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Plotting Parametric Curves {#JKQtPlotterParametricCurves}
-This project (see `./examples/simpletest_parametriccurve/`) demonstrates how to draw parametric curves, using [`JKQTPxyLineGraph`}(../simpletest) and [`JKQTPxyParametrizedScatterGraph`](../simpletest_paramscatterplot). 
+# Example (JKQTPLotter): Plotting Parametric Curves {#JKQTPLotterParametricCurves}
+This project (see `./examples/simpletest_parametriccurve/`) demonstrates how to draw parametric curves, using [`JKQTPXYLineGraph`}(../simpletest) and [`JKQTPXYParametrizedScatterGraph`](../simpletest_paramscatterplot). 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_parametriccurve.cpp`](../simpletest_parametriccurve/jkqtplotter_simpletest_parametriccurve.cpp). First, the parametric curve (here a [logarithic spiral](https://en.wikipedia.org/wiki/Logarithmic_spiral)) is sampled into two columns containing the x- and y-values along the curve. In addition the radial distance from x=y=0 is added into a third column:
 ```.cpp
@@ -24,23 +24,23 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 
 Then simples graph just uses the columns X and Y to plot the curve:
 ```.cpp
-    JKQTPxyLineGraph* graph1=new JKQTPxyLineGraph(&plot);
+    JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY);
     graph1->set_drawLine(true);
-    graph1->set_symbol(JKQTPnoSymbol);
+    graph1->set_symbol(JKQTPNoSymbol);
     graph1->set_title("one-colored spiral");
     plot.addGraph(graph1);
 ```
  
-If you use `JKQTPxyParametrizedScatterGraph` instead of `JKQTPxyLineGraph`, you can also modify the color of the line-segments, connecting the datapoints:
+If you use `JKQTPXYParametrizedScatterGraph` instead of `JKQTPXYLineGraph`, you can also modify the color of the line-segments, connecting the datapoints:
 ```.cpp
-    JKQTPxyParametrizedScatterGraph* graph2=new JKQTPxyParametrizedScatterGraph(&plot2);
+    JKQTPXYParametrizedScatterGraph* graph2=new JKQTPXYParametrizedScatterGraph(&plot2);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY);
     graph2->set_colorColumn(columnR);
     graph2->set_palette(JKQTPMathImageMATLAB);
-    graph2->set_symbol(JKQTPnoSymbol);
+    graph2->set_symbol(JKQTPNoSymbol);
     graph2->set_drawLine(true);
     graph2->set_title("colored spiral");
     graph2->get_colorBarRightAxis()->set_axisLabel("color scale radius $r(\\phi)$");

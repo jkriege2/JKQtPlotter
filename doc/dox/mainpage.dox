@@ -1,6 +1,6 @@
 /*!
 
-\mainpage JKQtPlotter - A Qt Plotting Library
+\mainpage JKQTPLotter - A Qt Plotting Library
 This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.11).
 
 This software is licensed under the term of the GNU Lesser General Public License 2.1 
@@ -9,11 +9,11 @@ This software is licensed under the term of the GNU Lesser General Public Licens
 \image html examplesbanner.png
 
 \section jkqtp_main_features Main Features
-- Extensive Scientific 2D Plotting framework (JKQtPlotter/JKQtBasePlotter)
+- Extensive Scientific 2D Plotting framework (JKQTPLotter/JKQTBasePlotter)
   - high-quality plotting
   - no other dependencies than Qt >=4.7 (compatible with Qt 5.xx)
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
-  - integrated LaTeX parser/renderer JKQTmathText for axis labels, ticks, notes ...
+  - integrated LaTeX parser/renderer JKQTMathText for axis labels, ticks, notes ...
   - extensive user-interactions pre-programmed (several zooming modes, selecting regions, custom context menus, switch graph visibility, ...)
   - full print and export (PDF,PNG,...) support with preview and parametrization out-the-box
   - highly customizable look and feel
@@ -37,20 +37,20 @@ This software is licensed under the term of the GNU Lesser General Public Licens
   - extensive library of image plots (inclusing different color-scale modes, RGBA-plots, overlays/masks)
   - contour plots 
   - geometric forms/annotations, see: \ref jkqtplotter_geoplots 
-  - can be easily extended by deriving a new graph from JKQTPplotElement or JKQTPplotObject
+  - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPPlotObject
 - optional: OpenCV interface, see: \ref jkqtpopencvinterface 
-- integrated LaTeX parser/renderer JKQTmathText:
+- integrated LaTeX parser/renderer JKQTMathText:
   - pure C++ 
   - no dependencies in particular no installed LaTeX required
-  - can be used independently of JKQtPlotter
+  - can be used independently of JKQTPLotter
   - see: \ref jkqtmathtext
-- a second plotter widget JKQtFastPlotter:
-  - is optimized for fast plotting, but is not as feature-rich as JKQtPlotter
-  - may be used independently of JKQtPlotter
+- a second plotter widget JKQTFastPlotter:
+  - is optimized for fast plotting, but is not as feature-rich as JKQTPLotter
+  - may be used independently of JKQTPLotter
   - \see jkqtfastplotter
 - extensive set of Examples and Tutorials, see: \ref exampleTutorialProjects
-- extensive doxygen-generated <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a>
-- source code hosted&developed on GitHub <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a> (including continuous integration builds: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a>)
+- extensive doxygen-generated <a href="http://jkriege2.github.io/JKQTPLotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQTPLotter/index.html)</a>
+- source code hosted&developed on GitHub <a href="https://github.com/jkriege2/JKQTPLotter">https://github.com/jkriege2/JKQTPLotter</a> (including continuous integration builds: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a>)
 
 \image html screenshotsbanner.png
 

@@ -263,7 +263,7 @@ std::string jkqtp_tolower(const std::string& s){
 
 
 
-QString JKQTP_QPenStyle2String(Qt::PenStyle style) {
+QString jkqtp_QPenStyle2String(Qt::PenStyle style) {
     switch(style) {
         case Qt::DashLine:       return "dash";
         case Qt::DotLine:        return "dot";
@@ -274,7 +274,7 @@ QString JKQTP_QPenStyle2String(Qt::PenStyle style) {
     }
 }
 
-Qt::PenStyle JKQTP_String2QPenStyle(QString style) {
+Qt::PenStyle jkqtp_String2QPenStyle(QString style) {
     QString s=style.toLower().trimmed();
     if (s=="dash" || s=="--") return Qt::DashLine;
     if (s=="dot" || s=="." || s=="..") return Qt::DotLine;
@@ -284,7 +284,7 @@ Qt::PenStyle JKQTP_String2QPenStyle(QString style) {
     return Qt::SolidLine;
 }
 
-QString JKQTP_QBrushStyle2String(Qt::BrushStyle style) {
+QString jkqtp_QBrushStyle2String(Qt::BrushStyle style) {
 
     switch(style) {
         case Qt::NoBrush:       return "none";
@@ -309,7 +309,7 @@ QString JKQTP_QBrushStyle2String(Qt::BrushStyle style) {
     }
 }
 
-Qt::BrushStyle JKQTP_String2QBrushStyle(QString style) {
+Qt::BrushStyle jkqtp_String2QBrushStyle(QString style) {
     QString s=style.toLower().trimmed();
     if (s=="none") return Qt::NoBrush;
     if (s=="d1") return Qt::Dense1Pattern;
@@ -333,7 +333,7 @@ Qt::BrushStyle JKQTP_String2QBrushStyle(QString style) {
 
 
 
-QString JKQTPCAdrawMode2String(JKQTPCAdrawMode pos) {
+QString JKQTPCADrawMode2String(JKQTPCADrawMode pos) {
     switch(pos) {
         case JKQTPCADMcomplete: return "all";
         case JKQTPCADMticksAndLabels: return "ticks+labels";
@@ -344,7 +344,7 @@ QString JKQTPCAdrawMode2String(JKQTPCAdrawMode pos) {
     return "";
 }
 
-JKQTPCAdrawMode String2JKQTPCAdrawMode(QString pos) {
+JKQTPCADrawMode String2JKQTPCADrawMode(QString pos) {
     QString s=pos.trimmed().toLower();
     if (s=="all") return JKQTPCADMcomplete;
     if (s=="ticks+labels") return JKQTPCADMticksAndLabels;
@@ -376,7 +376,7 @@ JKQTPLabelTickMode String2JKQTPLabelTickMode(QString pos) {
 
 
 
-QString JKQTPCAlabelType2String(JKQTPCAlabelType pos) {
+QString JKQTPCALabelType2String(JKQTPCALabelType pos) {
     switch(pos) {
         case JKQTPCALTdefault: return "default";
         case JKQTPCALTexponentCharacter: return "exponent_character";
@@ -388,7 +388,7 @@ QString JKQTPCAlabelType2String(JKQTPCAlabelType pos) {
     return "";
 }
 
-JKQTPCAlabelType String2JKQTPCAlabelType(QString pos) {
+JKQTPCALabelType String2JKQTPCALabelType(QString pos) {
     QString s=pos.trimmed().toLower();
     if (s=="default") return JKQTPCALTdefault;
     if (s=="exponent_character") return JKQTPCALTexponentCharacter;
@@ -399,196 +399,196 @@ JKQTPCAlabelType String2JKQTPCAlabelType(QString pos) {
     return JKQTPCALTdefault;
 }
 
-QString JKQTPlabelPosition2String(JKQTPlabelPosition pos) {
+QString JKQTPLabelPosition2String(JKQTPLabelPosition pos) {
     switch(pos) {
-        case JKQTPlabelMin: return "min";
-        case JKQTPlabelMax: return "max";
-        case JKQTPlabelCenter: return "center";
+        case JKQTPLabelMin: return "min";
+        case JKQTPLabelMax: return "max";
+        case JKQTPLabelCenter: return "center";
     }
     return "";
 }
 
-JKQTPlabelPosition String2JKQTPlabelPosition(QString pos) {
+JKQTPLabelPosition String2JKQTPLabelPosition(QString pos) {
     QString s=pos.trimmed().toLower();
-    if (s=="min") return JKQTPlabelMin;
-    if (s=="max") return JKQTPlabelMax;
-    if (s=="center") return JKQTPlabelCenter;
-    return JKQTPlabelCenter;
+    if (s=="min") return JKQTPLabelMin;
+    if (s=="max") return JKQTPLabelMax;
+    if (s=="center") return JKQTPLabelCenter;
+    return JKQTPLabelCenter;
 }
 
-QString JKQTPkeyPosition2String(JKQTPkeyPosition pos) {
+QString JKQTPKeyPosition2String(JKQTPKeyPosition pos) {
     switch(pos) {
-        case JKQTPkeyOutsideLeftBottom: return "outside_leftbottom";
-        case JKQTPkeyOutsideTopLeft: return "outside_topleft";
-        case JKQTPkeyOutsideTopRight: return "outside_topright";
-        case JKQTPkeyOutsideLeftTop: return "outside_lefttop";
+        case JKQTPKeyOutsideLeftBottom: return "outside_leftbottom";
+        case JKQTPKeyOutsideTopLeft: return "outside_topleft";
+        case JKQTPKeyOutsideTopRight: return "outside_topright";
+        case JKQTPKeyOutsideLeftTop: return "outside_lefttop";
 
-        case JKQTPkeyOutsideRightBottom: return "outside_rightbottom";
-        case JKQTPkeyOutsideBottomLeft: return "outside_bottomleft";
-        case JKQTPkeyOutsideBottomRight: return "outside_bottomright";
-        case JKQTPkeyOutsideRightTop: return "outside_righttop";
+        case JKQTPKeyOutsideRightBottom: return "outside_rightbottom";
+        case JKQTPKeyOutsideBottomLeft: return "outside_bottomleft";
+        case JKQTPKeyOutsideBottomRight: return "outside_bottomright";
+        case JKQTPKeyOutsideRightTop: return "outside_righttop";
 
-        case JKQTPkeyInsideBottomRight: return "inside_bottomright";
-        case JKQTPkeyInsideTopLeft: return "inside_topleft";
-        case JKQTPkeyInsideTopRight: return "inside_topright";
-        case JKQTPkeyInsideBottomLeft: return "inside_bottomleft";
+        case JKQTPKeyInsideBottomRight: return "inside_bottomright";
+        case JKQTPKeyInsideTopLeft: return "inside_topleft";
+        case JKQTPKeyInsideTopRight: return "inside_topright";
+        case JKQTPKeyInsideBottomLeft: return "inside_bottomleft";
     }
     return "";
 }
 
-JKQTPkeyPosition String2JKQTPkeyPosition(QString pos) {
+JKQTPKeyPosition String2JKQTPKeyPosition(QString pos) {
     QString s=pos.trimmed().toLower();
-    if (s=="outside_bottom" || s=="outsidebottom" || s=="outside_leftbottom" || s=="outsideleftbottom" || s=="olb") return JKQTPkeyOutsideLeftBottom;
-    if (s=="outside_left" || s=="outsideleft" || s=="outside_topleft" || s=="outsidetopleft" || s=="otl") return JKQTPkeyOutsideTopLeft;
-    if (s=="outside_right" || s=="outsideright" || s=="outside_topright" || s=="outsidetopright" || s=="otr") return JKQTPkeyOutsideTopRight;
-    if (s=="outside_top" || s=="outsidetop" || s=="outside_lefttop" || s=="outsidelefttop" || s=="olt") return JKQTPkeyOutsideLeftTop;
+    if (s=="outside_bottom" || s=="outsidebottom" || s=="outside_leftbottom" || s=="outsideleftbottom" || s=="olb") return JKQTPKeyOutsideLeftBottom;
+    if (s=="outside_left" || s=="outsideleft" || s=="outside_topleft" || s=="outsidetopleft" || s=="otl") return JKQTPKeyOutsideTopLeft;
+    if (s=="outside_right" || s=="outsideright" || s=="outside_topright" || s=="outsidetopright" || s=="otr") return JKQTPKeyOutsideTopRight;
+    if (s=="outside_top" || s=="outsidetop" || s=="outside_lefttop" || s=="outsidelefttop" || s=="olt") return JKQTPKeyOutsideLeftTop;
 
-    if (s=="outside_rightbottom" || s=="outsiderightbottom" || s=="orb" ) return JKQTPkeyOutsideRightBottom;
-    if (s=="outside_bottomleft" || s=="outsidebottomleft" || s=="obl" ) return JKQTPkeyOutsideBottomLeft;
-    if (s=="outside_bottomright" || s=="outsidebottomright" || s=="obr" ) return JKQTPkeyOutsideBottomRight;
-    if (s=="outside_righttop" || s=="outsiderighttop" || s=="ort" ) return JKQTPkeyOutsideRightTop;
+    if (s=="outside_rightbottom" || s=="outsiderightbottom" || s=="orb" ) return JKQTPKeyOutsideRightBottom;
+    if (s=="outside_bottomleft" || s=="outsidebottomleft" || s=="obl" ) return JKQTPKeyOutsideBottomLeft;
+    if (s=="outside_bottomright" || s=="outsidebottomright" || s=="obr" ) return JKQTPKeyOutsideBottomRight;
+    if (s=="outside_righttop" || s=="outsiderighttop" || s=="ort" ) return JKQTPKeyOutsideRightTop;
 
-    if (s=="inside_bottom" || s=="insidebottom" || s=="inside_bottomright" || s=="insidebottomright" || s=="ibr") return JKQTPkeyInsideBottomRight;
-    if (s=="inside_top" || s=="insidetop" || s=="inside_left" || s=="insideleft" || s=="inside_topleft" || s=="insidetopleft" || s=="itl") return JKQTPkeyInsideTopLeft;
-    if (s=="inside_right" || s=="insideright" || s=="inside_topright" || s=="insidetopright" || s=="itr") return JKQTPkeyInsideTopRight;
-    if (s=="inside_bottomleft" || s=="insidebottomleft"  || s=="ibl") return JKQTPkeyInsideBottomLeft;
-    return JKQTPkeyInsideTopRight;
+    if (s=="inside_bottom" || s=="insidebottom" || s=="inside_bottomright" || s=="insidebottomright" || s=="ibr") return JKQTPKeyInsideBottomRight;
+    if (s=="inside_top" || s=="insidetop" || s=="inside_left" || s=="insideleft" || s=="inside_topleft" || s=="insidetopleft" || s=="itl") return JKQTPKeyInsideTopLeft;
+    if (s=="inside_right" || s=="insideright" || s=="inside_topright" || s=="insidetopright" || s=="itr") return JKQTPKeyInsideTopRight;
+    if (s=="inside_bottomleft" || s=="insidebottomleft"  || s=="ibl") return JKQTPKeyInsideBottomLeft;
+    return JKQTPKeyInsideTopRight;
 }
 
 
-QString JKQTPkeyLayout2String(JKQTPkeyLayout pos) {
+QString JKQTPKeyLayout2String(JKQTPKeyLayout pos) {
     switch(pos) {
-        case JKQTPkeyLayoutOneColumn: return "one_column";
-        case JKQTPkeyLayoutOneRow: return "one_row";
-        case JKQTPkeyLayoutMultiColumn: return "multi_column";
+        case JKQTPKeyLayoutOneColumn: return "one_column";
+        case JKQTPKeyLayoutOneRow: return "one_row";
+        case JKQTPKeyLayoutMultiColumn: return "multi_column";
     }
     return "";
 }
 
-JKQTPkeyLayout String2JKQTPkeyLayout(QString pos) {
+JKQTPKeyLayout String2JKQTPKeyLayout(QString pos) {
     QString s=pos.trimmed().toLower();
-    if (s=="one_column" || s=="onecolumn" || s=="one") return JKQTPkeyLayoutOneColumn;
-    if (s=="one_row" || s=="onerow") return JKQTPkeyLayoutOneRow;
-    if (s=="multi_column" || s=="multicolumn" || s=="multi") return JKQTPkeyLayoutMultiColumn;
-    return JKQTPkeyLayoutOneColumn;
+    if (s=="one_column" || s=="onecolumn" || s=="one") return JKQTPKeyLayoutOneColumn;
+    if (s=="one_row" || s=="onerow") return JKQTPKeyLayoutOneRow;
+    if (s=="multi_column" || s=="multicolumn" || s=="multi") return JKQTPKeyLayoutMultiColumn;
+    return JKQTPKeyLayoutOneColumn;
 }
 
 
-QString JKQTPerrorPlotstyle2String(JKQTPerrorPlotstyle pos) {
+QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos) {
     switch(pos) {
-        case JKQTPerrorBoxes: return "error_box";
-        case JKQTPerrorEllipses: return "error_ell";
-        case JKQTPerrorLines: return "error_lines";
-        case JKQTPerrorBars: return "error_bars";
-        case JKQTPerrorSimpleBars: return "error_simplebars";
-        case JKQTPerrorPolygons: return "error_polygons";
-        case JKQTPerrorBarsLines: return "error_bars_lines";
-        case JKQTPerrorBarsPolygons: return "error_bars_polygons";
-        case JKQTPerrorSimpleBarsLines: return "error_simplebars_lines";
-        case JKQTPerrorSimpleBarsPolygons: return "error_simplebars_polygons";
-        case JKQTPnoError: return "error_none";
+        case JKQTPErrorBoxes: return "error_box";
+        case JKQTPErrorEllipses: return "error_ell";
+        case JKQTPErrorLines: return "error_lines";
+        case JKQTPErrorBars: return "error_bars";
+        case JKQTPErrorSimpleBars: return "error_simplebars";
+        case JKQTPErrorPolygons: return "error_polygons";
+        case JKQTPErrorBarsLines: return "error_bars_lines";
+        case JKQTPErrorBarsPolygons: return "error_bars_polygons";
+        case JKQTPErrorSimpleBarsLines: return "error_simplebars_lines";
+        case JKQTPErrorSimpleBarsPolygons: return "error_simplebars_polygons";
+        case JKQTPNoError: return "error_none";
     }
     return "";
 }
 
-JKQTPerrorPlotstyle String2JKQTPerrorPlotstyle(QString pos) {
+JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(QString pos) {
     QString s=pos.trimmed().toLower();
-    if (s=="error_lines") return JKQTPerrorLines;
-    if (s=="error_box") return JKQTPerrorBoxes;
-    if (s=="error_ell") return JKQTPerrorEllipses;
-    if (s=="error_bars") return JKQTPerrorBars;
-    if (s=="error_simplebars") return JKQTPerrorSimpleBars;
-    if (s=="error_polygons") return JKQTPerrorPolygons;
-    if (s=="error_bars_lines") return JKQTPerrorBarsLines;
-    if (s=="error_bars_polygons") return JKQTPerrorBarsPolygons;
-    if (s=="error_simplebars_lines") return JKQTPerrorSimpleBarsLines;
-    if (s=="error_simplebars_polygons") return JKQTPerrorSimpleBarsPolygons;
-    return JKQTPnoError;
+    if (s=="error_lines") return JKQTPErrorLines;
+    if (s=="error_box") return JKQTPErrorBoxes;
+    if (s=="error_ell") return JKQTPErrorEllipses;
+    if (s=="error_bars") return JKQTPErrorBars;
+    if (s=="error_simplebars") return JKQTPErrorSimpleBars;
+    if (s=="error_polygons") return JKQTPErrorPolygons;
+    if (s=="error_bars_lines") return JKQTPErrorBarsLines;
+    if (s=="error_bars_polygons") return JKQTPErrorBarsPolygons;
+    if (s=="error_simplebars_lines") return JKQTPErrorSimpleBarsLines;
+    if (s=="error_simplebars_polygons") return JKQTPErrorSimpleBarsPolygons;
+    return JKQTPNoError;
 }
 
 
 
 
 
-QString JKQTPgraphSymbols2String(JKQTPgraphSymbols pos) {
+QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos) {
     switch(pos) {
-        case JKQTPdot: return "symbol_dot";
-        case JKQTPcross: return "symbol_cross";
-        case JKQTPplus: return "symbol_plus";
-        case JKQTPcircle: return "symbol_circle";
-        case JKQTPfilledCircle: return "symbol_filled_circle";
-        case JKQTPrect: return "symbol_rect";
-        case JKQTPfilledRect: return "symbol_filled_rect";
-        case JKQTPtriangle: return "symbol_triangle";
-        case JKQTPfilledTriangle: return "symbol_filled_triangle";
-        case JKQTPdownTriangle: return "symbol_down_triangle";
-        case JKQTPfilledDownTriangle: return "symbol_filled_down_triangle";
-        case JKQTPtarget: return "symbol_target";
+        case JKQTPDot: return "symbol_dot";
+        case JKQTPCross: return "symbol_cross";
+        case JKQTPPlus: return "symbol_plus";
+        case JKQTPCircle: return "symbol_circle";
+        case JKQTPFilledCircle: return "symbol_filled_circle";
+        case JKQTPRect: return "symbol_rect";
+        case JKQTPFilledRect: return "symbol_filled_rect";
+        case JKQTPTriangle: return "symbol_triangle";
+        case JKQTPFilledTriangle: return "symbol_filled_triangle";
+        case JKQTPDownTriangle: return "symbol_down_triangle";
+        case JKQTPFilledDownTriangle: return "symbol_filled_down_triangle";
+        case JKQTPTarget: return "symbol_target";
         case JKQTPstar: return "symbol_star";
-        case JKQTPfilledStar: return "symbol_filled_star";
-        case JKQTPdiamond: return "symbol_diamond";
-        case JKQTPfilledDiamond: return "symbol_filled_diamond";
-        case JKQTPpentagon: return "symbol_pentagon";
-        case JKQTPasterisc: return "symbol_asterisc";
-        case JKQTPfilledPentagon: return "symbol_filled_pentagon";
-        case JKQTPrectCross: return "symbol_rect_cross";
-        case JKQTPrectPlus: return "symbol_rect_plus";
-        case JKQTPnoSymbol: return "none";
+        case JKQTPFilledStar: return "symbol_filled_star";
+        case JKQTPDiamond: return "symbol_diamond";
+        case JKQTPFilledDiamond: return "symbol_filled_diamond";
+        case JKQTPPentagon: return "symbol_pentagon";
+        case JKQTPAsterisc: return "symbol_asterisc";
+        case JKQTPFilledPentagon: return "symbol_filled_pentagon";
+        case JKQTPRectCross: return "symbol_rect_cross";
+        case JKQTPRectPlus: return "symbol_rect_plus";
+        case JKQTPNoSymbol: return "none";
     }
     return "";
 }
 
-QString JKQTPgraphSymbols2NameString(JKQTPgraphSymbols pos) {
+QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos) {
     switch(pos) {
-        case JKQTPdot: return QObject::tr("dot");
-        case JKQTPcross: return QObject::tr("cross");
-        case JKQTPplus: return QObject::tr("plus");
-        case JKQTPcircle: return QObject::tr("circle");
-        case JKQTPfilledCircle: return QObject::tr("filled circle");
-        case JKQTPrect: return QObject::tr("rectangle");
-        case JKQTPfilledRect: return QObject::tr("filled rectangle");
-        case JKQTPtriangle: return QObject::tr("triangle");
-        case JKQTPfilledTriangle: return QObject::tr("filled triangle");
-        case JKQTPdownTriangle: return QObject::tr("down triangle");
-        case JKQTPfilledDownTriangle: return QObject::tr("filled down triangle");
+        case JKQTPDot: return QObject::tr("dot");
+        case JKQTPCross: return QObject::tr("cross");
+        case JKQTPPlus: return QObject::tr("plus");
+        case JKQTPCircle: return QObject::tr("circle");
+        case JKQTPFilledCircle: return QObject::tr("filled circle");
+        case JKQTPRect: return QObject::tr("rectangle");
+        case JKQTPFilledRect: return QObject::tr("filled rectangle");
+        case JKQTPTriangle: return QObject::tr("triangle");
+        case JKQTPFilledTriangle: return QObject::tr("filled triangle");
+        case JKQTPDownTriangle: return QObject::tr("down triangle");
+        case JKQTPFilledDownTriangle: return QObject::tr("filled down triangle");
         case JKQTPstar: return QObject::tr("star");
-        case JKQTPfilledStar: return QObject::tr("filled star");
-        case JKQTPdiamond: return QObject::tr("diamond");
-        case JKQTPfilledDiamond: return QObject::tr("filled diamond");
-        case JKQTPpentagon: return QObject::tr("pentagon");
-        case JKQTPfilledPentagon: return QObject::tr("filled pentagon");
-        case JKQTPtarget: return QObject::tr("target");
-        case JKQTPasterisc: return QObject::tr("asterisc");
-        case JKQTPrectCross: return QObject::tr("square with cross");
-        case JKQTPrectPlus: return QObject::tr("square with plus");
-        case JKQTPnoSymbol: return QObject::tr("none");
+        case JKQTPFilledStar: return QObject::tr("filled star");
+        case JKQTPDiamond: return QObject::tr("diamond");
+        case JKQTPFilledDiamond: return QObject::tr("filled diamond");
+        case JKQTPPentagon: return QObject::tr("pentagon");
+        case JKQTPFilledPentagon: return QObject::tr("filled pentagon");
+        case JKQTPTarget: return QObject::tr("target");
+        case JKQTPAsterisc: return QObject::tr("asterisc");
+        case JKQTPRectCross: return QObject::tr("square with cross");
+        case JKQTPRectPlus: return QObject::tr("square with plus");
+        case JKQTPNoSymbol: return QObject::tr("none");
     }
     return "";
 }
-JKQTPgraphSymbols String2JKQTPgraphSymbols(QString pos)  {
+JKQTPGraphSymbols String2JKQTPGraphSymbols(QString pos)  {
     QString s=pos.trimmed().toLower();
-    if (s=="symbol_dot"||s=="dot"||s==".") return JKQTPdot;
-    if (s=="symbol_cross"||s=="cross"||s=="x") return JKQTPcross;
-    if (s=="symbol_plus"||s=="plus"||s=="+") return JKQTPplus;
-    if (s=="symbol_circle"||s=="circle"||s=="o") return JKQTPcircle;
-    if (s=="symbol_filled_circle"||s=="filled_circle"||s=="fo") return JKQTPfilledCircle;
-    if (s=="symbol_rect"||s=="rect"||s=="r") return JKQTPrect;
-    if (s=="symbol_filled_rect"||s=="filled_rect"||s=="fr") return JKQTPfilledRect;
-    if (s=="symbol_triangle"||s=="triangle"||s=="^") return JKQTPtriangle;
-    if (s=="symbol_filled_triangle"||s=="filled_triangle"||s=="f^") return JKQTPfilledTriangle;
-    if (s=="symbol_down_triangle"||s=="down_triangle"||s=="v") return JKQTPdownTriangle;
-    if (s=="symbol_filles_down_triangle"||s=="filles_down_triangle"||s=="symbol_filled_down_triangle"||s=="filled_down_triangle"||s=="fv") return JKQTPfilledDownTriangle;
-    if (s=="symbol_target"||s=="target"||s=="t") return JKQTPtarget;
+    if (s=="symbol_dot"||s=="dot"||s==".") return JKQTPDot;
+    if (s=="symbol_cross"||s=="cross"||s=="x") return JKQTPCross;
+    if (s=="symbol_plus"||s=="plus"||s=="+") return JKQTPPlus;
+    if (s=="symbol_circle"||s=="circle"||s=="o") return JKQTPCircle;
+    if (s=="symbol_filled_circle"||s=="filled_circle"||s=="fo") return JKQTPFilledCircle;
+    if (s=="symbol_rect"||s=="rect"||s=="r") return JKQTPRect;
+    if (s=="symbol_filled_rect"||s=="filled_rect"||s=="fr") return JKQTPFilledRect;
+    if (s=="symbol_triangle"||s=="triangle"||s=="^") return JKQTPTriangle;
+    if (s=="symbol_filled_triangle"||s=="filled_triangle"||s=="f^") return JKQTPFilledTriangle;
+    if (s=="symbol_down_triangle"||s=="down_triangle"||s=="v") return JKQTPDownTriangle;
+    if (s=="symbol_filles_down_triangle"||s=="filles_down_triangle"||s=="symbol_filled_down_triangle"||s=="filled_down_triangle"||s=="fv") return JKQTPFilledDownTriangle;
+    if (s=="symbol_target"||s=="target"||s=="t") return JKQTPTarget;
     if (s=="symbol_star"||s=="star"||s=="s") return JKQTPstar;
-    if (s=="symbol_filled_star"||s=="filled_star"||s=="fs") return JKQTPfilledStar;
-    if (s=="symbol_diamond"||s=="diamond"||s=="d") return JKQTPdiamond;
-    if (s=="symbol_filled_diamond"||s=="filled_diamond"||s=="fd") return JKQTPfilledDiamond;
-    if (s=="symbol_pentagon"||s=="pentagon"||s=="p") return JKQTPpentagon;
-    if (s=="symbol_filled_pentagon"||s=="filled_pentagon"||s=="fp") return JKQTPfilledPentagon;
-    if (s=="symbol_asterisc"||s=="asterisc"||s=="*") return JKQTPasterisc;
-    if (s=="symbol_rect_cross"||s=="rect_cross"||s=="rx") return JKQTPrectCross;
-    if (s=="symbol_rect_plus"||s=="rect_plus"||s=="r+") return JKQTPrectPlus;
-    return JKQTPnoSymbol;
+    if (s=="symbol_filled_star"||s=="filled_star"||s=="fs") return JKQTPFilledStar;
+    if (s=="symbol_diamond"||s=="diamond"||s=="d") return JKQTPDiamond;
+    if (s=="symbol_filled_diamond"||s=="filled_diamond"||s=="fd") return JKQTPFilledDiamond;
+    if (s=="symbol_pentagon"||s=="pentagon"||s=="p") return JKQTPPentagon;
+    if (s=="symbol_filled_pentagon"||s=="filled_pentagon"||s=="fp") return JKQTPFilledPentagon;
+    if (s=="symbol_asterisc"||s=="asterisc"||s=="*") return JKQTPAsterisc;
+    if (s=="symbol_rect_cross"||s=="rect_cross"||s=="rx") return JKQTPRectCross;
+    if (s=="symbol_rect_plus"||s=="rect_plus"||s=="r+") return JKQTPRectPlus;
+    return JKQTPNoSymbol;
 }
 
 
@@ -843,23 +843,23 @@ std::string jkqtp_chartostr(char data){
 }
 
 
-QString JKQTPstepType2String(JKQTPstepType pos)
+QString JKQTPStepType2String(JKQTPStepType pos)
 {
     switch(pos) {
-        case JKQTPstepLeft: return "step_left";
-        case JKQTPstepCenter: return "step_center";
-        case JKQTPstepRight: return "step_right";
+        case JKQTPStepLeft: return "step_left";
+        case JKQTPStepCenter: return "step_center";
+        case JKQTPStepRight: return "step_right";
     }
     return "";
 }
 
-JKQTPstepType String2JKQTPstepType(QString pos)
+JKQTPStepType String2JKQTPStepType(QString pos)
 {
     QString s=pos.trimmed().toLower();
-    if (s=="step_left"||s=="left"||s=="l") return JKQTPstepLeft;
-    if (s=="step_center"||s=="center"||s=="c") return JKQTPstepCenter;
-    if (s=="step_right"||s=="right"||s=="r") return JKQTPstepRight;
+    if (s=="step_left"||s=="left"||s=="l") return JKQTPStepLeft;
+    if (s=="step_center"||s=="center"||s=="c") return JKQTPStepCenter;
+    if (s=="step_right"||s=="right"||s=="r") return JKQTPStepRight;
 
-    return JKQTPstepLeft;
+    return JKQTPStepLeft;
 }
 

@@ -44,7 +44,7 @@
 
     By default the sift parameter is, so the bar is centered at the x-value. The width is 0.9,
     so adjacent bars are plotted with a small distance between them. It is possible to use these two parameters
-    to plot multiple bars for every x-value, by having on JKQTPstepHorizontalGraph object per
+    to plot multiple bars for every x-value, by having on JKQTPStepHorizontalGraph object per
     set of bars that belong together. For example for three bars per x-value one would set:
     \verbatim
           width=0.3
@@ -55,18 +55,18 @@
     \image html plot_bargraphverplot.png
 
 
-    You can use JKQTPlotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
+    You can use JKQTPLotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
     automatically. The y-columns are given as a QVector<int> to this function.
 
 
  */
-class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPxyGraph {
+class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarVerticalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPBarVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPbarVerticalGraph(JKQtPlotter* parent);
+        JKQTPBarVerticalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -91,7 +91,7 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPxyGraph {
          *  \param maxWidth the maximum (relative) width, that all bars will span of the (doubled) inter-bar distance
          *  \param shrinkFactor factor, by which the bar are shrinked compared to the available space
          *
-         *  \note This function will scale ALL graphs of the parent plot, which were derived from JKQTPbarHorizontalGraph, that match in orientation (as returned by isHorizontal() ).
+         *  \note This function will scale ALL graphs of the parent plot, which were derived from JKQTPBarHorizontalGraph, that match in orientation (as returned by isHorizontal() ).
          */
         virtual void autoscaleBarWidthAndShift(double maxWidth=0.9, double shrinkFactor=0.8);
         void autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth=0.75);
@@ -240,7 +240,7 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPxyGraph {
          */
         double baseline;
 
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
 
@@ -249,24 +249,24 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPxyGraph {
 
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint
          *
-         *  \note This function returns \a baseline in this implementation. It is implemented in the derived classes JKQTPbarVerticalStackableGraph
-         *        and JKQTPbarHorizontalStackableGraph. The function is placed here, so the plotting does not have to be reimplemented in the
+         *  \note This function returns \a baseline in this implementation. It is implemented in the derived classes JKQTPBarVerticalStackableGraph
+         *        and JKQTPBarHorizontalStackableGraph. The function is placed here, so the plotting does not have to be reimplemented in the
          *        derived classes that allow for stacking, but can be implemented once centrally.
          */
         virtual double getStackedMax(int index) const;
 
         /** \brief calls getStackedMax() on the stack parent (if available)
          *
-         *  \note This function returns \c 0.0 in this implementation. It is implemented in the derived classes JKQTPbarVerticalStackableGraph
-         *        and JKQTPbarHorizontalStackableGraph. The function is placed here, so the plotting does not have to be reimplemented in the
+         *  \note This function returns \c 0.0 in this implementation. It is implemented in the derived classes JKQTPBarVerticalStackableGraph
+         *        and JKQTPBarHorizontalStackableGraph. The function is placed here, so the plotting does not have to be reimplemented in the
          *        derived classes that allow for stacking, but can be implemented once centrally.
          */
         virtual double getParentStackedMax(int index) const;
 
         /** \brief returns \c true, if a stack parent is set (if available)
          *
-         *  \note This function returns \c false in this implementation. It is implemented in the derived classes JKQTPbarVerticalStackableGraph
-         *        and JKQTPbarHorizontalStackableGraph. The function is placed here, so the plotting does not have to be reimplemented in the
+         *  \note This function returns \c false in this implementation. It is implemented in the derived classes JKQTPBarVerticalStackableGraph
+         *        and JKQTPBarHorizontalStackableGraph. The function is placed here, so the plotting does not have to be reimplemented in the
          *        derived classes that allow for stacking, but can be implemented once centrally.
          */
         virtual bool hasStackParent() const;
@@ -280,22 +280,22 @@ class LIB_EXPORT JKQTPbarVerticalGraph: public JKQTPxyGraph {
  *  \ingroup jkqtplotter_barssticks
  *
  *  Draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
- *  \image html JKQTPbarVerticalGraphStacked.png
+ *  \image html JKQTPBarVerticalGraphStacked.png
  *
  */
-class LIB_EXPORT JKQTPbarVerticalStackableGraph: public JKQTPbarVerticalGraph {
+class LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarVerticalStackableGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPBarVerticalStackableGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPbarVerticalStackableGraph(JKQtPlotter* parent);
+        JKQTPBarVerticalStackableGraph(JKQTPLotter* parent);
         /** \brief stacks this barchart upon the given \a parentGraph */
-        void stackUpon(JKQTPbarVerticalStackableGraph* parentGraph);
+        void stackUpon(JKQTPBarVerticalStackableGraph* parentGraph);
         /** \brief unstacks this graph (i.e. deletes the parent graph in the stack) */
         void dontStackUpon();
         /** \brief returns the stack parent graph, or \c nullptr */
-        const JKQTPbarVerticalStackableGraph* getStackParent() const;
+        const JKQTPBarVerticalStackableGraph* getStackParent() const;
 
     protected:
 
@@ -303,7 +303,7 @@ class LIB_EXPORT JKQTPbarVerticalStackableGraph: public JKQTPbarVerticalGraph {
          *
          *  draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
          */
-        JKQTPbarVerticalStackableGraph* stackParent;
+        JKQTPBarVerticalStackableGraph* stackParent;
 
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint */
         virtual double getStackedMax(int index) const override;
@@ -318,19 +318,19 @@ class LIB_EXPORT JKQTPbarVerticalStackableGraph: public JKQTPbarVerticalGraph {
  *         and error indicator
  *  \ingroup jkqtplotter_barssticks
  *
- *  This works much the same as JKQTPbarHorizontalGraph. Here is an example output:
+ *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
  *  \image html plot_bargraphverploterr.png
  *
  */
-class LIB_EXPORT JKQTPbarVerticalErrorGraph: public JKQTPbarVerticalGraph, public JKQTPyGraphErrors {
+class LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, public JKQTPYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarVerticalErrorGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPBarVerticalErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPbarVerticalErrorGraph(JKQtPlotter* parent);
+        JKQTPBarVerticalErrorGraph(JKQTPLotter* parent);
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
         /** \brief get the maximum and minimum y-value of the graph
          *
@@ -349,17 +349,17 @@ class LIB_EXPORT JKQTPbarVerticalErrorGraph: public JKQTPbarVerticalGraph, publi
 /*! \brief This implements a bar graph with bars starting at \f$ x=0 \f$ to \f$ x=f(y) \f$
     \ingroup jkqtplotter_barssticks
 
-    This works much the same as JKQTPbarHorizontalGraph. Here is an example output:
+    This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
     \image html plot_bargraphhorplot.png
 
  */
-class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPbarVerticalGraph {
+class LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarHorizontalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPBarHorizontalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPbarHorizontalGraph(JKQtPlotter* parent);
+        JKQTPBarHorizontalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -386,22 +386,22 @@ class LIB_EXPORT JKQTPbarHorizontalGraph: public JKQTPbarVerticalGraph {
  *  \ingroup jkqtplotter_barssticks
  *
  *  Draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
- *  \image html JKQTPbarHorizontalGraphStacked.png
+ *  \image html JKQTPBarHorizontalGraphStacked.png
  *
  */
-class LIB_EXPORT JKQTPbarHorizontalStackableGraph: public JKQTPbarHorizontalGraph {
+class LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarHorizontalStackableGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPBarHorizontalStackableGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPbarHorizontalStackableGraph(JKQtPlotter* parent);
+        JKQTPBarHorizontalStackableGraph(JKQTPLotter* parent);
         /** \brief stacks this barchart upon the given \a parentGraph */
-        void stackUpon(JKQTPbarHorizontalStackableGraph* parentGraph);
+        void stackUpon(JKQTPBarHorizontalStackableGraph* parentGraph);
         /** \brief unstacks this graph (i.e. deletes the parent graph in the stack) */
         void dontStackUpon();
         /** \brief returns the stack parent graph, or \c nullptr */
-        const JKQTPbarHorizontalStackableGraph* getStackParent() const;
+        const JKQTPBarHorizontalStackableGraph* getStackParent() const;
 
     protected:
 
@@ -409,7 +409,7 @@ class LIB_EXPORT JKQTPbarHorizontalStackableGraph: public JKQTPbarHorizontalGrap
          *
          *  draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
          */
-        JKQTPbarHorizontalStackableGraph* stackParent;
+        JKQTPBarHorizontalStackableGraph* stackParent;
 
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint */
         virtual double getStackedMax(int index) const override;
@@ -424,19 +424,19 @@ class LIB_EXPORT JKQTPbarHorizontalStackableGraph: public JKQTPbarHorizontalGrap
  *         and error indicator
  *  \ingroup jkqtplotter_barssticks
  *
- *  This works much the same as JKQTPbarHorizontalGraph. Here is an example output:
+ *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
  *  \image html plot_bargraphhorploterr.png
  *
  */
-class LIB_EXPORT JKQTPbarHorizontalErrorGraph: public JKQTPbarHorizontalGraph, public JKQTPxGraphErrors {
+class LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizontalGraph, public JKQTPXGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPbarHorizontalErrorGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPBarHorizontalErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPbarHorizontalErrorGraph(JKQtPlotter* parent);
+        JKQTPBarHorizontalErrorGraph(JKQTPLotter* parent);
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
         /** \brief get the maximum and minimum x-value of the graph
          *

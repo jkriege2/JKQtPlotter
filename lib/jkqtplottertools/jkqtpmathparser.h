@@ -24,7 +24,7 @@
 
  In this group there are classes that form a parser and evaluator for mathematical expressions.
  In the context of the sequencer program this is a tool class that can be used by the classes
- in the project. E.g. used by JKQTPxParsedFunctionLineGraph, JKQTPyParsedFunctionLineGraph 
+ in the project. E.g. used by JKQTPXParsedFunctionLineGraph, JKQTPYParsedFunctionLineGraph 
 
  */
 

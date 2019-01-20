@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_filledgraphs.cpp
- * Shows how to use filled graphs with JKQtPlotter
+ * Shows how to use filled graphs with JKQTPLotter
  *
- * \ref JKQtPlotterFilledGraphs
+ * \ref JKQTPLotterFilledGraphs
  */
 
 #include <QApplication>
@@ -13,8 +13,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create 4 datacolumns with length 256 entries in the datastore
     //    these will later hold the RGB-histogram and a linear x-values vector
@@ -25,11 +25,11 @@ int main(int argc, char* argv[])
     size_t columnR=ds->addColumn(256, "historam_R");
     size_t columnG=ds->addColumn(256, "historam_G");
     size_t columnB=ds->addColumn(256, "historam_B");
-    //      - in addition JKQTPcolumn objects are generated, which can be used to access
+    //      - in addition JKQTPColumn objects are generated, which can be used to access
     //        the data in the columns
-    JKQTPcolumn cG=ds->getColumn(columnG);
-    JKQTPcolumn cR=ds->getColumn(columnR);
-    JKQTPcolumn cB=ds->getColumn(columnB);
+    JKQTPColumn cG=ds->getColumn(columnG);
+    JKQTPColumn cR=ds->getColumn(columnR);
+    JKQTPColumn cB=ds->getColumn(columnB);
     //      - now all columns for RGB are initialized to 0
     cR.setAll(0);
     cG.setAll(0);
@@ -53,9 +53,9 @@ int main(int argc, char* argv[])
 
 
     // 4. now we add three semi-transparent, filled curve plots, one for each histogram
-    JKQTPfilledCurveXGraph* graphR=new JKQTPfilledCurveXGraph(&plot);
-    JKQTPfilledCurveXGraph* graphG=new JKQTPfilledCurveXGraph(&plot);
-    JKQTPfilledCurveXGraph* graphB=new JKQTPfilledCurveXGraph(&plot);
+    JKQTPFilledCurveXGraph* graphR=new JKQTPFilledCurveXGraph(&plot);
+    JKQTPFilledCurveXGraph* graphG=new JKQTPFilledCurveXGraph(&plot);
+    JKQTPFilledCurveXGraph* graphB=new JKQTPFilledCurveXGraph(&plot);
 
     // set graph titles
     graphR->set_title("R-channel");

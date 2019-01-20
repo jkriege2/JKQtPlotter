@@ -1,7 +1,7 @@
 /** \example test_multiplot.cpp
- * JKQtPlotter: Examples: Laying out Several Plots
+ * JKQTPLotter: Examples: Laying out Several Plots
  *
- * \ref JKQtPlotterMultiPlotLayout
+ * \ref JKQTPLotterMultiPlotLayout
  */
 
 #include <QApplication>
@@ -18,23 +18,23 @@ int main(int argc, char* argv[])
 
     // 1. create a widget
     QWidget mainWidget;
-    mainWidget.setWindowTitle("JKQtPlotter(s) in a QGridLayout");
+    mainWidget.setWindowTitle("JKQTPLotter(s) in a QGridLayout");
 
     // 2. Create a QGridLayout for the plots and add it to the widget.
     QGridLayout* layout=new QGridLayout();
     mainWidget.setLayout(layout);
 
     // 3.1 create a main plotter widget and add it to the layout
-    JKQtPlotter* plotMain=new JKQtPlotter(&mainWidget);
+    JKQTPLotter* plotMain=new JKQTPLotter(&mainWidget);
     layout->addWidget(plotMain, 0,0);
-    JKQTPdatastore* ds=plotMain->getDatastore();
+    JKQTPDatastore* ds=plotMain->getDatastore();
 
     // 3.2 create a second and third plotter widget and add them to the
     //     layout below and at the bottom right of the plotMain.
     //     Also configure it to use the same datastore as plotMain
-    JKQtPlotter* plotResid=new JKQtPlotter(false, &mainWidget, ds);
+    JKQTPLotter* plotResid=new JKQTPLotter(false, &mainWidget, ds);
     layout->addWidget(plotResid, 1,0);
-    JKQtPlotter* plotResidHist=new JKQtPlotter(false, &mainWidget, ds);
+    JKQTPLotter* plotResidHist=new JKQTPLotter(false, &mainWidget, ds);
     layout->addWidget(plotResidHist, 1,1);
 
     // 3.3 synchronize width/x-axis of plotResid to width/x-axis of plotMain
@@ -90,27 +90,27 @@ int main(int argc, char* argv[])
     std::pair<size_t,size_t> cH=ds->addCopiedMap(histogram, "histX", "histY");
 
     // 5.1 plot of the data
-    JKQTPxyLineGraph* graphD=new JKQTPxyLineGraph(plotMain);
+    JKQTPXYLineGraph* graphD=new JKQTPXYLineGraph(plotMain);
     graphD->set_xColumn(cX);
     graphD->set_yColumn(cY);
     graphD->set_drawLine(false);
-    graphD->set_symbol(JKQTPcross);
+    graphD->set_symbol(JKQTPCross);
     graphD->set_symbolSize(10);
     graphD->set_title("measurement data");
     plotMain->addGraph(graphD);
 
     // 5.2 plot of the graph as an interpreted function, set as string "2*(1+cos(x))"
-    JKQTPxParsedFunctionLineGraph* graphFit=new JKQTPxParsedFunctionLineGraph(plotMain);
+    JKQTPXParsedFunctionLineGraph* graphFit=new JKQTPXParsedFunctionLineGraph(plotMain);
     graphFit->set_function("2*(1+cos(x))");
     graphFit->set_title("fit");
     plotMain->addGraph(graphFit);
 
     // 5.3 residuals plot
-    JKQTPxyLineGraph* graphResid=new JKQTPxyLineGraph(plotResid);
+    JKQTPXYLineGraph* graphResid=new JKQTPXYLineGraph(plotResid);
     graphResid->set_xColumn(cX);
     graphResid->set_yColumn(cRY);
     graphResid->set_drawLine(false);
-    graphResid->set_symbol(JKQTPplus);
+    graphResid->set_symbol(JKQTPPlus);
     graphResid->set_symbolSize(10);
     graphResid->set_drawLine(true);
     graphResid->set_lineWidth(0.5);
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
     plotResid->addGraph(graphResid);
 
     // 5.3 residual histogram plot
-    JKQTPbarHorizontalGraph* graphResidHist=new JKQTPbarHorizontalGraph(plotResidHist);
+    JKQTPBarHorizontalGraph* graphResidHist=new JKQTPBarHorizontalGraph(plotResidHist);
     graphResidHist->set_xColumn(cH.second);
     graphResidHist->set_yColumn(cH.first);
     graphResidHist->set_title("histogram");

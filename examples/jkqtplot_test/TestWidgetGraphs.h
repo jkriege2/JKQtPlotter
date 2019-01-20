@@ -43,8 +43,8 @@ class TestWidgetGraphs : public QWidget
 
         void setSortOrder2(int index);
 
-        void setKeyLayout2(JKQTPkeyLayout layout);
-        void setKeyPos2(JKQTPkeyPosition layout);
+        void setKeyLayout2(JKQTPKeyLayout layout);
+        void setKeyPos2(JKQTPKeyPosition layout);
 
     protected:
         double x1[N1], x2[N2], x2r[N2]/*, x3[N3]*/;
@@ -53,15 +53,15 @@ class TestWidgetGraphs : public QWidget
         double b1[N3], b2[N3], b3[N3];
 
 
-        JKQTPoverlayVerticalLine* ovl1;
-        JKQtPlotter* plot;
-        JKQtPlotter* plotLOG;
-        JKQtPlotter* plotBot;
-        JKQtPlotter* plotBot2;
+        JKQTPOverlayVerticalLine* ovl1;
+        JKQTPLotter* plot;
+        JKQTPLotter* plotLOG;
+        JKQTPLotter* plotBot;
+        JKQTPLotter* plotBot2;
 
-        JKQTPplotElement* plteErrors;
-        JKQTPplotElement* plteSymbols;
-        JKQTPxyLineErrorGraph* pltePlot2;
+        JKQTPPlotElement* plteErrors;
+        JKQTPPlotElement* plteSymbols;
+        JKQTPXYLineErrorGraph* pltePlot2;
 
 
         int ovlCnt;

@@ -32,8 +32,8 @@
 
 
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQtBasePlotter *parent):
-    JKQTPsingleColumnGraph(parent)
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTBasePlotter *parent):
+    JKQTPSingleColumnGraph(parent)
 {
     baseline=0;
     yPeaks=true;
@@ -41,8 +41,8 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQtBasePlotter *parent):
     drawBaseline=true;
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtBasePlotter *parent):
-    JKQTPsingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTBasePlotter *parent):
+    JKQTPSingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
 {
     yPeaks=true;
     this->baseline=baseline;
@@ -50,8 +50,8 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, doub
     drawBaseline=true;
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtBasePlotter *parent):
-    JKQTPsingleColumnGraph(dataColumn, parent)
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTBasePlotter *parent):
+    JKQTPSingleColumnGraph(dataColumn, parent)
 {
     yPeaks=true;
     this->baseline=baseline;
@@ -60,8 +60,8 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, doub
 }
 
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQtPlotter *parent):
-    JKQTPsingleColumnGraph(parent)
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTPLotter *parent):
+    JKQTPSingleColumnGraph(parent)
 {
     baseline=0;
     yPeaks=true;
@@ -69,8 +69,8 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQtPlotter *parent):
     drawBaseline=true;
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtPlotter *parent):
-    JKQTPsingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPLotter *parent):
+    JKQTPSingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
 {
     yPeaks=true;
     this->baseline=baseline;
@@ -78,8 +78,8 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, doub
     drawBaseline=true;
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtPlotter *parent):
-    JKQTPsingleColumnGraph(dataColumn, parent)
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPLotter *parent):
+    JKQTPSingleColumnGraph(dataColumn, parent)
 {
     yPeaks=true;
     this->baseline=baseline;
@@ -117,7 +117,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
     JKQTPAutoOutputTimer jkaaot("JKQTPPeakStreamGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
     if (dataColumn<0) return;
 

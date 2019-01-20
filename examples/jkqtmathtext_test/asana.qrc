@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/JKQTmathText/fonts">
+    <qresource prefix="/JKQTMathText/fonts">
         <file alias="asana-math.otf">asana/Asana-Math.otf</file>
     </qresource>
 </RCC>

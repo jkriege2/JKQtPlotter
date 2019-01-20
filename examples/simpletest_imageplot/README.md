@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Simple math image plot {#JKQtPlotterImagePlot}
-This project (see `./examples/simpletest_imageplot/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
+# Example (JKQTPLotter): Simple math image plot {#JKQTPLotterImagePlot}
+This project (see `./examples/simpletest_imageplot/`) simply creates a JKQTPLotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot.cpp`](../simpletest_imageplot/jkqtplotter_simpletest_imageplot.cpp):
 ```.cpp
@@ -17,12 +17,12 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
     const int NX=100; // image dimension in x-direction [pixels]
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cAiryDisk=ds->addCopiedImageAsColumn(airydisk, NX, NY, "imagedata");

@@ -36,8 +36,8 @@
 
 
 
-JKQTPbarVerticalGraph::JKQTPbarVerticalGraph(JKQtBasePlotter* parent):
-    JKQTPxyGraph(parent)
+JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTBasePlotter* parent):
+    JKQTPXYGraph(parent)
 {
     baseline=0.0;
     color=QColor("black");
@@ -56,8 +56,8 @@ JKQTPbarVerticalGraph::JKQTPbarVerticalGraph(JKQtBasePlotter* parent):
 }
 
 
-JKQTPbarVerticalGraph::JKQTPbarVerticalGraph(JKQtPlotter* parent):
-    JKQTPxyGraph(parent)
+JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTPLotter* parent):
+    JKQTPXYGraph(parent)
 {
     baseline=0.0;
     color=QColor("black");
@@ -75,7 +75,7 @@ JKQTPbarVerticalGraph::JKQTPbarVerticalGraph(JKQtPlotter* parent):
     }
 }
 
-void JKQTPbarVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBarVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
     QPen np(Qt::NoPen);
@@ -91,17 +91,17 @@ void JKQTPbarVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF&
     painter.restore();
 }
 
-QColor JKQTPbarVerticalGraph::getKeyLabelColor() {
+QColor JKQTPBarVerticalGraph::getKeyLabelColor() {
     return fillColor;
 }
 
 
-void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPbarHorizontalGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPBarHorizontalGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
@@ -193,7 +193,7 @@ void JKQTPbarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsAfter(painter);
 }
 
-bool JKQTPbarVerticalGraph::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTPBarVerticalGraph::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     bool start=true;
     minx=0;
     maxx=0;
@@ -201,7 +201,7 @@ bool JKQTPbarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
 
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
@@ -251,7 +251,7 @@ bool JKQTPbarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
     return !start;
 }
 
-bool JKQTPbarVerticalGraph::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTPBarVerticalGraph::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     miny=0;
     maxy=0;
     smallestGreaterZero=0;
@@ -263,7 +263,7 @@ bool JKQTPbarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
 
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
@@ -305,13 +305,13 @@ bool JKQTPbarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
     return true;
 }
 
-void JKQTPbarVerticalGraph::autoscaleBarWidthAndShift(double maxWidth, double shrinkFactor)
+void JKQTPBarVerticalGraph::autoscaleBarWidthAndShift(double maxWidth, double shrinkFactor)
 {
     if (parent) {
         double cntH=0;
         for (size_t i=0; i<parent->getGraphCount(); i++) {
-            JKQTPplotElement* g=parent->getGraph(i);
-            JKQTPbarVerticalGraph* gb=qobject_cast<JKQTPbarVerticalGraph*>(g);
+            JKQTPPlotElement* g=parent->getGraph(i);
+            JKQTPBarVerticalGraph* gb=qobject_cast<JKQTPBarVerticalGraph*>(g);
             if (gb && gb->isHorizontal()==isHorizontal()) {
                 cntH++;
             }
@@ -322,8 +322,8 @@ void JKQTPbarVerticalGraph::autoscaleBarWidthAndShift(double maxWidth, double sh
         double dH=maxWidth/(cntH);
         double h=0.1+dH/2.0;
         for (size_t i=0; i<parent->getGraphCount(); i++) {
-            JKQTPplotElement* g=parent->getGraph(i);
-            JKQTPbarVerticalGraph* gb=qobject_cast<JKQTPbarVerticalGraph*>(g);
+            JKQTPPlotElement* g=parent->getGraph(i);
+            JKQTPBarVerticalGraph* gb=qobject_cast<JKQTPBarVerticalGraph*>(g);
             if (gb && gb->isHorizontal()==isHorizontal()) {
                 if (cntH>1) {
                     gb->width=widthH;
@@ -339,7 +339,7 @@ void JKQTPbarVerticalGraph::autoscaleBarWidthAndShift(double maxWidth, double sh
     }
 }
 
-void JKQTPbarVerticalGraph::autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth) {
+void JKQTPBarVerticalGraph::autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth) {
     autoscaleBarWidthAndShift(groupWidth, 1);
 }
 
@@ -352,24 +352,24 @@ void JKQTPbarVerticalGraph::autoscaleBarWidthAndShiftSeparatedGroups(double grou
 
 
 
-JKQTPbarHorizontalGraph::JKQTPbarHorizontalGraph(JKQtBasePlotter *parent):
-    JKQTPbarVerticalGraph(parent)
+JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTBasePlotter *parent):
+    JKQTPBarVerticalGraph(parent)
 {
 
 }
 
-JKQTPbarHorizontalGraph::JKQTPbarHorizontalGraph(JKQtPlotter *parent):
-    JKQTPbarVerticalGraph(parent)
+JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTPLotter *parent):
+    JKQTPBarVerticalGraph(parent)
 {
 
 }
 
-void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPbarVerticalGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPBarVerticalGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
@@ -462,7 +462,7 @@ void JKQTPbarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsAfter(painter);
 }
 
-bool JKQTPbarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTPBarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     minx=0;
     maxx=0;
     smallestGreaterZero=0;
@@ -474,7 +474,7 @@ bool JKQTPbarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
 
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(xColumn)).getRows());
     // interpret data ranges
@@ -516,7 +516,7 @@ bool JKQTPbarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
     return true;
 }
 
-bool JKQTPbarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTPBarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     bool start=true;
     miny=0;
     maxy=0;
@@ -524,7 +524,7 @@ bool JKQTPbarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
 
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     // interpret data ranges
@@ -573,7 +573,7 @@ bool JKQTPbarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
     return !start;
 }
 
-bool JKQTPbarHorizontalGraph::isHorizontal() const
+bool JKQTPBarHorizontalGraph::isHorizontal() const
 {
     return true;
 }
@@ -584,14 +584,14 @@ bool JKQTPbarHorizontalGraph::isHorizontal() const
 
 
 
-QBrush JKQTPbarVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
+QBrush JKQTPBarVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
     QBrush b;
     b.setColor(fillColor);
     b.setStyle(fillStyle);
     return b;
 }
 
-QPen JKQTPbarVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
+QPen JKQTPBarVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
     p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
@@ -602,55 +602,55 @@ QPen JKQTPbarVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     return p;
 }
 
-double JKQTPbarVerticalGraph::getParentStackedMax(int /*index*/) const
+double JKQTPBarVerticalGraph::getParentStackedMax(int /*index*/) const
 {
     return false;
 }
 
-bool JKQTPbarVerticalGraph::hasStackParent() const
+bool JKQTPBarVerticalGraph::hasStackParent() const
 {
     return false;
 }
 
-double JKQTPbarVerticalGraph::getStackedMax(int /*index*/) const
+double JKQTPBarVerticalGraph::getStackedMax(int /*index*/) const
 {
     return baseline;
 }
 
 
 
-bool JKQTPbarVerticalGraph::isHorizontal() const
+bool JKQTPBarVerticalGraph::isHorizontal() const
 {
     return false;
 }
 
-void JKQTPbarVerticalGraph::set_fillColor_and_darkenedColor(QColor fill, int colorDarker)
+void JKQTPBarVerticalGraph::set_fillColor_and_darkenedColor(QColor fill, int colorDarker)
 {
     set_fillColor(fill);
     set_color(fill.darker(colorDarker));
 }
 
-JKQTPbarHorizontalErrorGraph::JKQTPbarHorizontalErrorGraph(JKQtBasePlotter *parent):
-    JKQTPbarHorizontalGraph(parent), JKQTPxGraphErrors()
+JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTBasePlotter *parent):
+    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPbarHorizontalErrorGraph::JKQTPbarHorizontalErrorGraph(JKQtPlotter *parent):
-    JKQTPbarHorizontalGraph(parent), JKQTPxGraphErrors()
+JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTPLotter *parent):
+    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPbarHorizontalErrorGraph::usesColumn(int c) const
+bool JKQTPBarHorizontalErrorGraph::usesColumn(int c) const
 {
-    return JKQTPbarHorizontalGraph::usesColumn(c)|| JKQTPxGraphErrors::errorUsesColumn(c);
+    return JKQTPBarHorizontalGraph::usesColumn(c)|| JKQTPXGraphErrors::errorUsesColumn(c);
 }
 
-bool JKQTPbarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {
-    if (xErrorColumn<0 || xErrorStyle==JKQTPnoError) {
-        return JKQTPbarHorizontalGraph::getXMinMax(minx, maxx, smallestGreaterZero);
+    if (xErrorColumn<0 || xErrorStyle==JKQTPNoError) {
+        return JKQTPBarHorizontalGraph::getXMinMax(minx, maxx, smallestGreaterZero);
     } else {
         bool start=false;
         minx=0;
@@ -659,7 +659,7 @@ bool JKQTPbarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
 
         if (parent==nullptr) return false;
 
-        JKQTPdatastore* datastore=parent->getDatastore();
+        JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
@@ -696,32 +696,32 @@ bool JKQTPbarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
     }
 }
 
-void JKQTPbarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
+void JKQTPBarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift);
     else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift, &sortedIndices);
 }
 
-JKQTPbarVerticalErrorGraph::JKQTPbarVerticalErrorGraph(JKQtBasePlotter *parent):
-    JKQTPbarVerticalGraph(parent), JKQTPyGraphErrors()
+JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
+    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPbarVerticalErrorGraph::JKQTPbarVerticalErrorGraph(JKQtPlotter *parent):
-    JKQTPbarVerticalGraph(parent), JKQTPyGraphErrors()
+JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTPLotter *parent):
+    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPbarVerticalErrorGraph::usesColumn(int c) const
+bool JKQTPBarVerticalErrorGraph::usesColumn(int c) const
 {
-    return JKQTPbarVerticalGraph::usesColumn(c)|| JKQTPyGraphErrors::errorUsesColumn(c);
+    return JKQTPBarVerticalGraph::usesColumn(c)|| JKQTPYGraphErrors::errorUsesColumn(c);
 }
 
-bool JKQTPbarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
 {
-    if (yErrorColumn<0 || yErrorStyle==JKQTPnoError) {
+    if (yErrorColumn<0 || yErrorStyle==JKQTPNoError) {
         miny=0;
         maxy=0;
         smallestGreaterZero=0;
@@ -733,7 +733,7 @@ bool JKQTPbarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
 
         if (parent==nullptr) return false;
 
-        JKQTPdatastore* datastore=parent->getDatastore();
+        JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
@@ -781,7 +781,7 @@ bool JKQTPbarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
 
         if (parent==nullptr) return false;
 
-        JKQTPdatastore* datastore=parent->getDatastore();
+        JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         // interpret data ranges
@@ -818,36 +818,36 @@ bool JKQTPbarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
     }
 }
 
-void JKQTPbarVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
+void JKQTPBarVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
     //plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
     else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0, &sortedIndices);
 }
 
-JKQTPbarVerticalStackableGraph::JKQTPbarVerticalStackableGraph(JKQtBasePlotter *parent):
-    JKQTPbarVerticalGraph(parent), stackParent(nullptr)
+JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTBasePlotter *parent):
+    JKQTPBarVerticalGraph(parent), stackParent(nullptr)
 {
 
 }
 
-JKQTPbarVerticalStackableGraph::JKQTPbarVerticalStackableGraph(JKQtPlotter *parent):
-    JKQTPbarVerticalGraph(parent), stackParent(nullptr)
+JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTPLotter *parent):
+    JKQTPBarVerticalGraph(parent), stackParent(nullptr)
 {
 
 }
 
-void JKQTPbarVerticalStackableGraph::stackUpon(JKQTPbarVerticalStackableGraph *parentGraph)
+void JKQTPBarVerticalStackableGraph::stackUpon(JKQTPBarVerticalStackableGraph *parentGraph)
 {
     stackParent=parentGraph;
 }
 
-void JKQTPbarVerticalStackableGraph::dontStackUpon()
+void JKQTPBarVerticalStackableGraph::dontStackUpon()
 {
     stackParent=nullptr;
 }
 
-double JKQTPbarVerticalStackableGraph::getParentStackedMax(int index) const
+double JKQTPBarVerticalStackableGraph::getParentStackedMax(int index) const
 {
     if (stackParent) {
         return stackParent->getStackedMax(index);
@@ -856,23 +856,23 @@ double JKQTPbarVerticalStackableGraph::getParentStackedMax(int index) const
     }
 }
 
-bool JKQTPbarVerticalStackableGraph::hasStackParent() const
+bool JKQTPBarVerticalStackableGraph::hasStackParent() const
 {
     return stackParent!=nullptr;
 }
 
-const JKQTPbarVerticalStackableGraph *JKQTPbarVerticalStackableGraph::getStackParent() const
+const JKQTPBarVerticalStackableGraph *JKQTPBarVerticalStackableGraph::getStackParent() const
 {
     return stackParent;
 }
 
 
 
-double JKQTPbarVerticalStackableGraph::getStackedMax(int index) const
+double JKQTPBarVerticalStackableGraph::getStackedMax(int index) const
 {
     double height=0;
     if (parent!=nullptr) {
-        JKQTPdatastore* datastore=parent->getDatastore();
+        JKQTPDatastore* datastore=parent->getDatastore();
         height=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(index));
     }
     if (stackParent==nullptr) {
@@ -882,39 +882,39 @@ double JKQTPbarVerticalStackableGraph::getStackedMax(int index) const
     }
 }
 
-JKQTPbarHorizontalStackableGraph::JKQTPbarHorizontalStackableGraph(JKQtBasePlotter *parent):
-    JKQTPbarHorizontalGraph(parent), stackParent(nullptr)
+JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTBasePlotter *parent):
+    JKQTPBarHorizontalGraph(parent), stackParent(nullptr)
 {
 
 }
 
-JKQTPbarHorizontalStackableGraph::JKQTPbarHorizontalStackableGraph(JKQtPlotter *parent):
-    JKQTPbarHorizontalGraph(parent), stackParent(nullptr)
+JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTPLotter *parent):
+    JKQTPBarHorizontalGraph(parent), stackParent(nullptr)
 {
 
 }
 
-void JKQTPbarHorizontalStackableGraph::stackUpon(JKQTPbarHorizontalStackableGraph *parentGraph)
+void JKQTPBarHorizontalStackableGraph::stackUpon(JKQTPBarHorizontalStackableGraph *parentGraph)
 {
     stackParent=parentGraph;
 }
 
-void JKQTPbarHorizontalStackableGraph::dontStackUpon()
+void JKQTPBarHorizontalStackableGraph::dontStackUpon()
 {
     stackParent=nullptr;
 }
 
-const JKQTPbarHorizontalStackableGraph *JKQTPbarHorizontalStackableGraph::getStackParent() const
+const JKQTPBarHorizontalStackableGraph *JKQTPBarHorizontalStackableGraph::getStackParent() const
 {
     return stackParent;
 }
 
 
-double JKQTPbarHorizontalStackableGraph::getStackedMax(int index) const
+double JKQTPBarHorizontalStackableGraph::getStackedMax(int index) const
 {
     double height=0;
     if (parent!=nullptr) {
-        JKQTPdatastore* datastore=parent->getDatastore();
+        JKQTPDatastore* datastore=parent->getDatastore();
         height=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(index));
     }
     if (stackParent==nullptr) {
@@ -924,7 +924,7 @@ double JKQTPbarHorizontalStackableGraph::getStackedMax(int index) const
     }
 }
 
-double JKQTPbarHorizontalStackableGraph::getParentStackedMax(int index) const
+double JKQTPBarHorizontalStackableGraph::getParentStackedMax(int index) const
 {
     if (stackParent) {
         return stackParent->getStackedMax(index);
@@ -933,7 +933,7 @@ double JKQTPbarHorizontalStackableGraph::getParentStackedMax(int index) const
     }
 }
 
-bool JKQTPbarHorizontalStackableGraph::hasStackParent() const
+bool JKQTPBarHorizontalStackableGraph::hasStackParent() const
 {
     return stackParent!=nullptr;
 }

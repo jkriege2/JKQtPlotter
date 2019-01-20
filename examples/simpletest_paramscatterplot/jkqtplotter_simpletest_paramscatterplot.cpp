@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_paramscatterplot.cpp
- * JKQtPlotter: Examples: Scatter Graph with Parametrized Symbols/Colors
+ * JKQTPLotter: Examples: Scatter Graph with Parametrized Symbols/Colors
  *
- * \ref JKQtPlotterParamScatter
+ * \ref JKQTPLotterParamScatter
  */
 
 #include <QApplication>
@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create a vector of x- and y-values for a simple plot (a sine curve)
     //    in addition, a vector P will hold values that will be mapped onto different plot styles
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 
     // 3.1 for graph1, we use dataset X/Y1
     //     and the symbol type is choose according to the contents of column P:
-    JKQTPxyParametrizedScatterGraph* graph1=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph1=new JKQTPXYParametrizedScatterGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY1);
     graph1->set_symbolColumn(columnP);
@@ -71,12 +71,12 @@ int main(int argc, char* argv[])
     // 3.2 for graph2, we use dataset X/Y2
     //     and the symbol color is choose according to the contents of column C
     //     and the actual colors are chose from palette JKQTPMathImageRYGB:
-    JKQTPxyParametrizedScatterGraph* graph2=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph2=new JKQTPXYParametrizedScatterGraph(&plot);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY2);
     graph2->set_colorColumn(columnC);
     graph2->set_palette(JKQTPMathImageRYGB);
-    graph2->set_symbol(JKQTPfilledRect);
+    graph2->set_symbol(JKQTPFilledRect);
     graph2->set_drawLine(true);
     graph2->set_title("2: color");
     graph2->get_colorBarRightAxis()->set_axisLabel("color scale for graph2");
@@ -84,11 +84,11 @@ int main(int argc, char* argv[])
 
     // 3.3 for graph3, we use dataset X/Y3
     //     and the symbol size is choose according to the contents of column S:
-    JKQTPxyParametrizedScatterGraph* graph3=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph3=new JKQTPXYParametrizedScatterGraph(&plot);
     graph3->set_xColumn(columnX);
     graph3->set_yColumn(columnY3);
     graph3->set_sizeColumn(columnS);
-    graph3->set_symbol(JKQTPfilledCircle);
+    graph3->set_symbol(JKQTPFilledCircle);
     graph3->set_drawLine(true);
     graph3->set_title("3: symbol size");
     plot.addGraph(graph3);
@@ -96,13 +96,13 @@ int main(int argc, char* argv[])
     // 3.4 for graph4, we use X/Y4
     //     and the symbol color is choose according to the contents of column RGB,
     //     which directly contains the RGB values, as set with qRgb():
-    JKQTPxyParametrizedScatterGraph* graph4=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph4=new JKQTPXYParametrizedScatterGraph(&plot);
     graph4->set_xColumn(columnX);
     graph4->set_yColumn(columnY4);
     graph4->set_colorColumn(columnRGB);
     graph4->set_colorColumnContainsRGB(true);
     graph4->set_drawLine(true);
-    graph4->set_symbol(JKQTPfilledDownTriangle);
+    graph4->set_symbol(JKQTPFilledDownTriangle);
     graph4->set_title("4: RGB-color");
     plot.addGraph(graph4);
 
@@ -110,7 +110,7 @@ int main(int argc, char* argv[])
     //     and the symbol color and size are choose according to the contents
     //     of columns C and S respectively.
     //     The actual colors are chose from palette JKQTPMathImageBLUEYELLOW:
-    JKQTPxyParametrizedScatterGraph* graph5=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph5=new JKQTPXYParametrizedScatterGraph(&plot);
     graph5->set_xColumn(columnX);
     graph5->set_yColumn(columnY5);
     graph5->set_colorColumn(columnC);
@@ -123,33 +123,33 @@ int main(int argc, char* argv[])
 
     // 3.6 for graph2, we use dataset X/Y6
     //     and the line width is set by column LW:
-    JKQTPxyParametrizedScatterGraph* graph6=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph6=new JKQTPXYParametrizedScatterGraph(&plot);
     graph6->set_xColumn(columnX);
     graph6->set_yColumn(columnY6);
     graph6->set_linewidthColumn(columnLW);
     graph6->set_drawLine(true);
-    graph6->set_symbol(JKQTPnoSymbol);
+    graph6->set_symbol(JKQTPNoSymbol);
     graph6->set_title("6: line width");
     plot.addGraph(graph6);
 
     // 3.7 for graph2, we use dataset X/Y7
     //     and the line width is set by column LW and the color from palette JKQTPMathImageBLUEYELLOW via column C:
-    JKQTPxyParametrizedScatterGraph* graph7=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph7=new JKQTPXYParametrizedScatterGraph(&plot);
     graph7->set_xColumn(columnX);
     graph7->set_yColumn(columnY7);
     graph7->set_linewidthColumn(columnLW);
     graph7->set_drawLine(true);
     graph7->set_colorColumn(columnC);
     graph7->set_palette(JKQTPMathImageBLUEYELLOW);
-    graph7->set_symbol(JKQTPnoSymbol);
+    graph7->set_symbol(JKQTPNoSymbol);
     graph7->set_colorBarRightVisible(false);
     graph7->set_colorBarTopVisible(false);
     graph7->set_title("7: color+line width");
     plot.addGraph(graph7);
 
     // 4. autoscale the plot so the graph is contained and format the coordinate system and key
-    plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideBottomLeft);
-    plot.get_plotter()->set_keyLayout(JKQTPkeyLayoutOneRow);
+    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideBottomLeft);
+    plot.get_plotter()->set_keyLayout(JKQTPKeyLayoutOneRow);
     plot.get_xAxis()->set_axisLabel("x-axis");
     plot.get_yAxis()->set_axisLabel("y-axis");
     plot.get_xAxis()->set_drawGrid(false);

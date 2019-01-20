@@ -36,7 +36,7 @@
 #include "jkqtplottertools/jkqtp_imexport.h"
 
 // forward declarations
-class JKQtBasePlotter;
+class JKQTBasePlotter;
 
 /*! \brief this virtual class is the base for any type of coordinate axis, to be drawn by JKQTplotterBase.
     \ingroup jkqtpbaseplotter_elements
@@ -49,7 +49,7 @@ class JKQtBasePlotter;
     .
 
     Most of the actual draw and measure functions have to be implemented in descendents of this class (namely
-    JKQTPhorizontalAxis and JKQTPverticalAxis, as they are specific to whether the axis is drawn horizontally or
+    JKQTPHorizontalAxis and JKQTPVerticalAxis, as they are specific to whether the axis is drawn horizontally or
     vertically.
 
     Each axis is split up into several parts, as depicted in this image:
@@ -137,16 +137,16 @@ class JKQtBasePlotter;
     nearest but \c ">=" to the given \c minTicks. The Algorithm is described in detail with the function
     calcLinearTickSpacing(). To activate this automatic tick spacing you have to set <code>autoAxisSpacing=true</code>.
  */
-class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
+class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         Q_OBJECT
     protected:
     public:
 
         /** \brief class constructor */
-        explicit JKQTPcoordinateAxis(JKQtBasePlotter* parent);
+        explicit JKQTPCoordinateAxis(JKQTBasePlotter* parent);
         /** \brief class destructor */
-        virtual ~JKQTPcoordinateAxis();
-        virtual void set_parent(JKQtBasePlotter* parent);
+        virtual ~JKQTPCoordinateAxis();
+        virtual void set_parent(JKQTBasePlotter* parent);
         /** \brief loads the plot properties from a QSettings object */
         virtual void loadSettings(QSettings& settings, QString group=QString("plots"));
 
@@ -157,7 +157,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         virtual void saveSettings(QSettings& settings, QString group=QString("plots"));
 
         /** \brief load settings from other axis */
-        virtual void loadSettings(JKQTPcoordinateAxis* settings);
+        virtual void loadSettings(JKQTPCoordinateAxis* settings);
 
         /** \brief return x-pixel coordinate from time coordinate */
         inline double x2p(double x) const {
@@ -238,11 +238,11 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /*! \brief returns the property userLogTickSpacing. \details Description of the parameter userLogTickSpacing is:  <BLOCKQUOTE>\copybrief userLogTickSpacing </BLOCKQUOTE>. \see userLogTickSpacing for more information */ 
         inline double get_userLogTickSpacing() const { return this->userLogTickSpacing; }
         /*! \brief returns the property labelType. \details Description of the parameter labelType is:  <BLOCKQUOTE>\copybrief labelType </BLOCKQUOTE>. \see labelType for more information */ 
-        inline JKQTPCAlabelType get_labelType() const { return this->labelType; }
+        inline JKQTPCALabelType get_labelType() const { return this->labelType; }
         /*! \brief returns the property axisLabel. \details Description of the parameter axisLabel is:  <BLOCKQUOTE>\copybrief axisLabel </BLOCKQUOTE>. \see axisLabel for more information */ 
         inline QString get_axisLabel() const { return this->axisLabel; }
         /*! \brief returns the property labelPosition. \details Description of the parameter labelPosition is:  <BLOCKQUOTE>\copybrief labelPosition </BLOCKQUOTE>. \see labelPosition for more information */ 
-        inline JKQTPlabelPosition get_labelPosition() const { return this->labelPosition; }
+        inline JKQTPLabelPosition get_labelPosition() const { return this->labelPosition; }
         /*! \brief returns the property labelFont. \details Description of the parameter labelFont is:  <BLOCKQUOTE>\copybrief labelFont </BLOCKQUOTE>. \see labelFont for more information */ 
         inline QString get_labelFont() const { return this->labelFont; }
         /*! \brief returns the property labelFontSize. \details Description of the parameter labelFontSize is:  <BLOCKQUOTE>\copybrief labelFontSize </BLOCKQUOTE>. \see labelFontSize for more information */ 
@@ -291,9 +291,9 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         inline JKQTPLabelTickMode get_tickMode() const { return this->tickMode; }
 
         /*! \brief returns the property drawMode1. \details Description of the parameter drawMode1 is:  <BLOCKQUOTE>\copybrief drawMode1 </BLOCKQUOTE>. \see drawMode1 for more information */ 
-        inline JKQTPCAdrawMode get_drawMode1() const { return this->drawMode1; }
+        inline JKQTPCADrawMode get_drawMode1() const { return this->drawMode1; }
         /*! \brief returns the property drawMode2. \details Description of the parameter drawMode2 is:  <BLOCKQUOTE>\copybrief drawMode2 </BLOCKQUOTE>. \see drawMode2 for more information */ 
-        inline JKQTPCAdrawMode get_drawMode2() const { return this->drawMode2; }
+        inline JKQTPCADrawMode get_drawMode2() const { return this->drawMode2; }
         /*! \brief returns the property minorTickWidth. \details Description of the parameter minorTickWidth is:  <BLOCKQUOTE>\copybrief minorTickWidth </BLOCKQUOTE>. \see minorTickWidth for more information */ 
         inline double get_minorTickWidth() const { return this->minorTickWidth; }
         /*! \brief returns the property tickWidth. \details Description of the parameter tickWidth is:  <BLOCKQUOTE>\copybrief tickWidth </BLOCKQUOTE>. \see tickWidth for more information */ 
@@ -325,7 +325,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
             return this->autoLabelDigits; 
         }
         /*! \brief returns the property parent. \details Description of the parameter parent is:  <BLOCKQUOTE>\copybrief parent </BLOCKQUOTE>. \see parent for more information */ 
-        inline JKQtBasePlotter* get_parent() const { return this->parent; }
+        inline JKQTBasePlotter* get_parent() const { return this->parent; }
         /*! \brief sets the property doUpdateScaling to the specified \a __value. 
             \details Description of the parameter doUpdateScaling is: <BLOCKQUOTE>\copybrief doUpdateScaling </BLOCKQUOTE> 
             \see doUpdateScaling for more information */ 
@@ -414,7 +414,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /** \brief sets the property labelType to the specified \a __value.
          *  \details Description of the parameter labelType is:  <BLOCKQUOTE>\copybrief labelType </BLOCKQUOTE>
          *  \see labelType for more information */
-        virtual void set_labelType (JKQTPCAlabelType __value);
+        virtual void set_labelType (JKQTPCALabelType __value);
 
         /** \brief sets the property tickMode to the specified \a __value.
          *  \details Description of the parameter tickMode is:  <BLOCKQUOTE>\copybrief tickMode </BLOCKQUOTE>
@@ -432,7 +432,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
         /** \brief sets the property labelPosition to the specified \a __value.
          *  \details Description of the parameter labelPosition is:  <BLOCKQUOTE>\copybrief labelPosition </BLOCKQUOTE> */
-        virtual void set_labelPosition (JKQTPlabelPosition __value);
+        virtual void set_labelPosition (JKQTPLabelPosition __value);
 
         /** \brief sets the property labelFont to the specified \a __value.
          *  \details Description of the parameter labelFont is:  <BLOCKQUOTE>\copybrief labelFont </BLOCKQUOTE> */
@@ -541,11 +541,11 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
         /** \brief sets the property drawMode1 to the specified \a __value.
          *  \details Description of the parameter drawMode1 is:  <BLOCKQUOTE>\copybrief drawMode1 </BLOCKQUOTE> */
-        virtual void set_drawMode1 (JKQTPCAdrawMode __value);
+        virtual void set_drawMode1 (JKQTPCADrawMode __value);
 
         /** \brief sets the property drawMode2 to the specified \a __value.
          *  \details Description of the parameter drawMode2 is:  <BLOCKQUOTE>\copybrief drawMode2 </BLOCKQUOTE> */
-        virtual void set_drawMode2(JKQTPCAdrawMode __value);
+        virtual void set_drawMode2(JKQTPCADrawMode __value);
 
         /** \brief sets the property minorTickWidth to the specified \a __value.
          *  \details Description of the parameter minorTickWidth is:  <BLOCKQUOTE>\copybrief minorTickWidth </BLOCKQUOTE> */
@@ -611,8 +611,8 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         virtual bool get_parent_otheraxis_inverted() const=0;
         /** \brief pixel offset of (perpendicular) other axis (needed for grids) */
         virtual double get_parent_otheraxis_offset() const=0;
-        /** \brief retun parents JKQTmathText* object */
-        virtual JKQTmathText* get_parent_mathText();
+        /** \brief retun parents JKQTMathText* object */
+        virtual JKQTMathText* get_parent_mathText();
 
 
         /** \brief convert a float to a tick label string */
@@ -621,7 +621,7 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         /** \brief convert a float to a tick label string with a given precision */
         QString floattolabel(double data, int past_comma);
         /** \brief parent plotter class */
-        JKQtBasePlotter* parent;
+        JKQTBasePlotter* parent;
         /** \brief current view: minimum of time axis */
         double axismin;
         /** \brief current view: maximum of time axis */
@@ -686,9 +686,9 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         double def_userLogTickSpacing;
 
         /** \brief indicates how to draw the labels */
-        JKQTPCAlabelType labelType;
+        JKQTPCALabelType labelType;
         /*! \brief default value for property property varname. \see labelType for more information */ 
-        JKQTPCAlabelType def_labelType;
+        JKQTPCALabelType def_labelType;
 
         /** \brief mode of the major ticks */
         JKQTPLabelTickMode tickMode;
@@ -699,9 +699,9 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
         QString axisLabel;
 
         /** \brief position of the axis label */
-        JKQTPlabelPosition labelPosition;
+        JKQTPLabelPosition labelPosition;
         /*! \brief default value for property property varname. \see labelPosition for more information */ 
-        JKQTPlabelPosition def_labelPosition;
+        JKQTPLabelPosition def_labelPosition;
         /** \brief font of the axis labels */
         QString labelFont;
         /*! \brief default value for property property varname. \see labelFont for more information */ 
@@ -733,13 +733,13 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
 
         /** \brief draw mode of the main (left/bottom) axis */
-        JKQTPCAdrawMode drawMode1;
+        JKQTPCADrawMode drawMode1;
         /*! \brief default value for property property varname. \see drawMode1 for more information */ 
-        JKQTPCAdrawMode def_drawMode1;
+        JKQTPCADrawMode def_drawMode1;
         /** \brief draw mode of the secondary (right/top) axis */
-        JKQTPCAdrawMode drawMode2;
+        JKQTPCADrawMode drawMode2;
         /*! \brief default value for property property varname. \see drawMode2 for more information */ 
-        JKQTPCAdrawMode def_drawMode2;
+        JKQTPCADrawMode def_drawMode2;
         /** \brief line width of minor ticks in pixels */
         double minorTickWidth;
         /*! \brief default value for property property varname. \see minorTickWidth for more information */ 
@@ -905,16 +905,16 @@ class LIB_EXPORT JKQTPcoordinateAxis: public QObject {
 
 
 
-/*! \brief implements a vertical axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
+/*! \brief implements a vertical axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
  */
-class LIB_EXPORT JKQTPverticalAxis: public JKQTPcoordinateAxis {
+class LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
     protected:
     public:
         /** \brief class constructor */
-        JKQTPverticalAxis(JKQtBasePlotter* parent);
+        JKQTPVerticalAxis(JKQTBasePlotter* parent);
 
         /** \brief returns the size of the left/bottom axis in pixels */
         virtual QSize getSize1(JKQTPEnhancedPainter& painter) override;
@@ -945,17 +945,17 @@ class LIB_EXPORT JKQTPverticalAxis: public JKQTPcoordinateAxis {
 };
 
 
-/*! \brief implements a position-indipendent vertical axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
+/*! \brief implements a position-indipendent vertical axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
-class LIB_EXPORT JKQTPverticalIndependentAxis: public JKQTPverticalAxis {
+class LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
         Q_OBJECT
     protected:
     public:
         /** \brief class constructor */
-        JKQTPverticalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQtBasePlotter* parent);
+        JKQTPVerticalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent);
         /** \brief set the axis offset */
         virtual void set_axisOffset(double __value) ;
         /** \brief set the axis width */
@@ -986,16 +986,16 @@ class LIB_EXPORT JKQTPverticalIndependentAxis: public JKQTPverticalAxis {
 
 
 
-/*! \brief implements a horizontal axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
+/*! \brief implements a horizontal axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
  */
-class LIB_EXPORT JKQTPhorizontalAxis: public JKQTPcoordinateAxis {
+class LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
     protected:
     public:
         /** \brief class constructor */
-        JKQTPhorizontalAxis(JKQtBasePlotter* parent);
+        JKQTPHorizontalAxis(JKQTBasePlotter* parent);
 
         /** \brief returns the size of the left/bottom axis in pixels */
         virtual QSize getSize1(JKQTPEnhancedPainter& painter) override;
@@ -1027,17 +1027,17 @@ class LIB_EXPORT JKQTPhorizontalAxis: public JKQTPcoordinateAxis {
 };
 
 
-/*! \brief implements a position-indipendent horizontal axis, based on JKQTPcoordinateAxis (for most of documentation: see JKQTPcoordinateAxis).
+/*! \brief implements a position-indipendent horizontal axis, based on JKQTPCoordinateAxis (for most of documentation: see JKQTPCoordinateAxis).
     \ingroup jkqtpbaseplotter_elements
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
-class LIB_EXPORT JKQTPhorizontalIndependentAxis: public JKQTPhorizontalAxis {
+class LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizontalAxis {
         Q_OBJECT
     protected:
     public:
         /** \brief class constructor */
-        JKQTPhorizontalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQtBasePlotter* parent);
+        JKQTPHorizontalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent);
         /** \brief se the axis offset */
         virtual void set_axisOffset(double __value);
         /** \brief se the axis width */

@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Laying out Several Plots {#JKQtPlotterMultiPlotLayout}
-This project (see `./examples/test_multiplot/`) shows how several JKQtPlotter widgets can be combined to in a layout (based on the [Qt layouting system](http://doc.qt.io/qt-5/layout.html)). It also shows how axes in such a layout can be linked to improve user experience.
+# Example (JKQTPLotter): Laying out Several Plots {#JKQTPLotterMultiPlotLayout}
+This project (see `./examples/test_multiplot/`) shows how several JKQTPLotter widgets can be combined to in a layout (based on the [Qt layouting system](http://doc.qt.io/qt-5/layout.html)). It also shows how axes in such a layout can be linked to improve user experience.
 
 The source code of the main application can be found in  [`test_multiplot.cpp`](../test_multiplot/test_multiplot.cpp). 
 
@@ -8,23 +8,23 @@ First three plots are generated and put into a [QGridLayout](http://doc.qt.io/qt
 ```.cpp
 // 1. create a widget
     QWidget mainWidget;
-    mainWidget.setWindowTitle("JKQtPlotter(s) in a QGridLayout");
+    mainWidget.setWindowTitle("JKQTPLotter(s) in a QGridLayout");
 
     // 2. Create a QGridLayout for the plots and add it to the widget.
     QGridLayout* layout=new QGridLayout();
     mainWidget.setLayout(layout);
 
     // 3.1 create a main plotter widget and add it to the layout
-    JKQtPlotter* plotMain=new JKQtPlotter(&mainWidget);
+    JKQTPLotter* plotMain=new JKQTPLotter(&mainWidget);
     layout->addWidget(plotMain, 0,0);
-    JKQTPdatastore* ds=plotMain->getDatastore();
+    JKQTPDatastore* ds=plotMain->getDatastore();
 
     // 3.2 create a second and third plotter widget and add them to the
     //     layout below and at the bottom right of the plotMain.
     //     Also configure it to use the same datastore as plotMain
-    JKQtPlotter* plotResid=new JKQtPlotter(false, &mainWidget, ds);
+    JKQTPLotter* plotResid=new JKQTPLotter(false, &mainWidget, ds);
     layout->addWidget(plotResid, 1,0);
-    JKQtPlotter* plotResidHist=new JKQtPlotter(false, &mainWidget, ds);
+    JKQTPLotter* plotResidHist=new JKQTPLotter(false, &mainWidget, ds);
     layout->addWidget(plotResidHist, 1,1);
 	
     // 3.3 set relative sizes of the plots via the layout (small plots have 1/3 the width and height of the large plot
@@ -94,7 +94,7 @@ The result looks like this:
 
 ![test_multiplot](../../screenshots/test_multiplot.png)
 
-You push the print button (![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/lib/jkqtplotterressources/images/jkqtp_24_print.png)) to open a print preview dialog, which will give an impression of how the three plots will be arranged in a printout:
+You push the print button (![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/lib/jkqtplotterressources/images/jkqtp_24_print.png)) to open a print preview dialog, which will give an impression of how the three plots will be arranged in a printout:
 
 ![test_multiplot](../../screenshots/test_multiplot_printpreview.png)
 

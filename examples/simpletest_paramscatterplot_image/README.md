@@ -1,7 +1,7 @@
-# Example (JKQtPlotter): Draw an Artistic Image with a Parametrized Scatter Graph {#JKQtPlotterParamScatterImage}
-This project (see `./examples/simpletest_paramscatterplot_image/`) demonstrates the capabilities of `JKQTPxyParametrizedScatterGraph` to display parametrized scatters in a rectangular arrangement. See the test program in [`test/simpletest_paramscatterplot`](../simpletest_paramscatterplot) for a basic example of the capabilities of `JKQTPxyParametrizedScatterGraph`.
+# Example (JKQTPLotter): Draw an Artistic Image with a Parametrized Scatter Graph {#JKQTPLotterParamScatterImage}
+This project (see `./examples/simpletest_paramscatterplot_image/`) demonstrates the capabilities of `JKQTPXYParametrizedScatterGraph` to display parametrized scatters in a rectangular arrangement. See the test program in [`test/simpletest_paramscatterplot`](../simpletest_paramscatterplot) for a basic example of the capabilities of `JKQTPXYParametrizedScatterGraph`.
 
-In this example, we load an image, convert it to greyscale and store it, together with x/y-coordinate-vectors in the datastore. Then a `JKQTPxyParametrizedScatterGraph` is used to draw the image as a pointilistic artwork, where each pixel is represented by a disk. The color of the disk is chosen from a color-palette, based on the grey-value. The size of each disk is chosen from the inverse grey value.
+In this example, we load an image, convert it to greyscale and store it, together with x/y-coordinate-vectors in the datastore. Then a `JKQTPXYParametrizedScatterGraph` is used to draw the image as a pointilistic artwork, where each pixel is represented by a disk. The color of the disk is chosen from a color-palette, based on the grey-value. The size of each disk is chosen from the inverse grey value.
 
 First we prepare the data, as described above. The image is loaded and then converted to the required data vectors.
 ```.cpp
@@ -31,13 +31,13 @@ First we prepare the data, as described above. The image is loaded and then conv
     size_t columnS=ds->addCopiedColumn(pointSizes, "pointSizes");
 ```
 
-Now we can use th datavectors to add a `JKQTPxyParametrizedScatterGraph`:
+Now we can use th datavectors to add a `JKQTPXYParametrizedScatterGraph`:
 ```.cpp
-    JKQTPxyParametrizedScatterGraph* graph1=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph1=new JKQTPXYParametrizedScatterGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY);
     graph1->set_sizeColumn(columnS);
-    graph1->set_symbol(JKQTPfilledCircle);
+    graph1->set_symbol(JKQTPFilledCircle);
     graph1->set_colorColumn(columnG);
     graph1->set_palette(JKQTPMathImageMATLAB);
     graph1->set_drawLine(false);

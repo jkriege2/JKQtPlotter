@@ -1,6 +1,6 @@
-# JKQtPlotter: Build as a SHARED library
+# JKQTPLotter: Build as a SHARED library
 
-This directory contains Projects that can be used to build a shared library of JKQtPlotter (i.e. the contents of the directory [`../lib`](../lib)
+This directory contains Projects that can be used to build a shared library of JKQTPLotter (i.e. the contents of the directory [`../lib`](../lib)
 
 ## QMake
 
@@ -8,7 +8,7 @@ This directory contains Projects that can be used to build a shared library of J
 There are several `.PRO`-files, that can be used to build the full library, or a limited subsets. They will produce a dynamic link library that you can include into your projects, e.g. with the following QMake-snippet:
 
 ```.qmake
-# include JKQtPlotter library
+# include JKQTPLotter library
 DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {

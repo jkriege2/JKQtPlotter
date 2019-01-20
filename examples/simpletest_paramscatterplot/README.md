@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Scatter Graph with Parametrized Symbols/Colors {#JKQtPlotterParamScatter}
-This project (see `./examples/simpletest_paramscatterplot/`) demonstrates the capabilities of `JKQTPxyParametrizedScatterGraph`. This graph class plots symbol&line-graphs, juts like [`JKQTPxyLineGraph`](../simpletest_symbols_and_styles/) and in addition modifies several properties of each plot point by data from an additional column. These properties can be modified:
+# Example (JKQTPLotter): Scatter Graph with Parametrized Symbols/Colors {#JKQTPLotterParamScatter}
+This project (see `./examples/simpletest_paramscatterplot/`) demonstrates the capabilities of `JKQTPXYParametrizedScatterGraph`. This graph class plots symbol&line-graphs, juts like [`JKQTPXYLineGraph`](../simpletest_symbols_and_styles/) and in addition modifies several properties of each plot point by data from an additional column. These properties can be modified:
 - symbol size
 - symbol type
 - symbol/line color
@@ -11,9 +11,9 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 
 Then several plots are added that modify different properties.
 
-The simplest case is to modify the symbol type. Simply set the property `symbolColumn` with `graph1->set_symbolColumn(columnP)` to a data column. The values in the data column will be cast to an integer and then will be translated to `JKQTPgraphSymbols`. If the numbers are larger than the available symbol types in `JKQTPgraphSymbols`, the graph will cycle through the available symbols (via a modulo-operation with the max. symbol count!).
+The simplest case is to modify the symbol type. Simply set the property `symbolColumn` with `graph1->set_symbolColumn(columnP)` to a data column. The values in the data column will be cast to an integer and then will be translated to `JKQTPGraphSymbols`. If the numbers are larger than the available symbol types in `JKQTPGraphSymbols`, the graph will cycle through the available symbols (via a modulo-operation with the max. symbol count!).
 ```.cpp
-	JKQTPxyParametrizedScatterGraph* graph1=new JKQTPxyParametrizedScatterGraph(&plot);
+	JKQTPXYParametrizedScatterGraph* graph1=new JKQTPXYParametrizedScatterGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY1);
     graph1->set_symbolColumn(columnP);
@@ -27,22 +27,22 @@ The simplest case is to modify the symbol type. Simply set the property `symbolC
 The next two code snippets show how to modify the size of the symbols and the line width of the lines, connecting the symbols (ensure to set `graph6->set_drawLine(true)`, because otherwise no line will be drawn). The principle is the same as above, but here you need to set the properties `sizeColumn` for the symbol size and `linewidthColumn` for the line width. All values in the line width or symbol size columns are interpreted as sizes in dtp points (pt)!
 ```.cpp
     // symbol size
-    JKQTPxyParametrizedScatterGraph* graph3=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph3=new JKQTPXYParametrizedScatterGraph(&plot);
     graph3->set_xColumn(columnX);
     graph3->set_yColumn(columnY3);
     graph3->set_sizeColumn(columnS);
-    graph3->set_symbol(JKQTPfilledCircle);
+    graph3->set_symbol(JKQTPFilledCircle);
     graph3->set_drawLine(true);
     graph3->set_title("3: symbol size");
     plot.addGraph(graph3);
 
 	// line width
-    JKQTPxyParametrizedScatterGraph* graph6=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph6=new JKQTPXYParametrizedScatterGraph(&plot);
     graph6->set_xColumn(columnX);
     graph6->set_yColumn(columnY6);
     graph6->set_linewidthColumn(columnLW);
     graph6->set_drawLine(true);
-    graph6->set_symbol(JKQTPnoSymbol);
+    graph6->set_symbol(JKQTPNoSymbol);
     graph6->set_title("6: line width");
     plot.addGraph(graph6);
 ```
@@ -62,25 +62,25 @@ Basically the data points in a RGB(A)-column will be interpreted by castig them 
 
 Now you can add the graph. In order to interpret the color column as RGB(A)-values, ensure to set `graph4->set_colorColumnContainsRGB(true)`:
 ```.cpp
-    JKQTPxyParametrizedScatterGraph* graph4=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph4=new JKQTPXYParametrizedScatterGraph(&plot);
     graph4->set_xColumn(columnX);
     graph4->set_yColumn(columnY4);
     graph4->set_colorColumn(columnRGB);
     graph4->set_colorColumnContainsRGB(true);
     graph4->set_drawLine(true);
-    graph4->set_symbol(JKQTPfilledDownTriangle);
+    graph4->set_symbol(JKQTPFilledDownTriangle);
     graph4->set_title("4: RGB-color");
     plot.addGraph(graph4);
 ```
 
 The second variant for setting the color of each datapoint is by mapping the values in the column to a color palette (`JKQTPMathImageRYGB` in this example). For this you simply need to define the color coumn and the palette to use. By default, the color palette spans the full range of values in `colorColumn`:
 ```.cpp
-    JKQTPxyParametrizedScatterGraph* graph2=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph2=new JKQTPXYParametrizedScatterGraph(&plot);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY2);
     graph2->set_colorColumn(columnC);
     graph2->set_palette(JKQTPMathImageRYGB);
-    graph2->set_symbol(JKQTPfilledRect);
+    graph2->set_symbol(JKQTPFilledRect);
     graph2->set_drawLine(true);
     graph2->set_title("2: color");
     graph2->get_colorBarRightAxis()->set_axisLabel("color scale for graph2");
@@ -91,7 +91,7 @@ Note: If you want to set the range manually, use `ste_imageMin()` and `set_image
 
 Note also that it is possible to combine any of parametrizations above in a single graph, by setting two or more columns:
 ```.cpp
-    JKQTPxyParametrizedScatterGraph* graph5=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph5=new JKQTPXYParametrizedScatterGraph(&plot);
     graph5->set_xColumn(columnX);
     graph5->set_yColumn(columnY5);
     graph5->set_colorColumn(columnC);

@@ -30,8 +30,8 @@
 #include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
 
 // forward declarations
-class JKQtBasePlotter;
-class JKQtPlotter;
+class JKQTBasePlotter;
+class JKQTPLotter;
 
 
 
@@ -43,19 +43,19 @@ class JKQtPlotter;
 
     Use the variable \c x in an equation to refer to the free parameter of the curve.
  */
-class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
+class LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
     Q_OBJECT
     public:
 
 
         /** \brief class constructor */
-        JKQTPxParsedFunctionLineGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPXParsedFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPxParsedFunctionLineGraph(JKQtPlotter* parent);
+        JKQTPXParsedFunctionLineGraph(JKQTPLotter* parent);
 
 
         /** \brief class destructor */
-        virtual ~JKQTPxParsedFunctionLineGraph() override;
+        virtual ~JKQTPXParsedFunctionLineGraph() override;
 
         /*! \brief sets the property function to the specified \a __value. 
             \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
@@ -90,7 +90,7 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
         /** \brief INTERNAL data structure
          *  \internal
          */
-        struct JKQTPxParsedFunctionLineGraphFunctionData {
+        struct JKQTPXParsedFunctionLineGraphFunctionData {
             JKQTPMathParser* parser;
             JKQTPMathParser::jkmpNode* node;
             int varcount;
@@ -99,23 +99,23 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
     protected:
         /** \brief the function to be evaluated for the plot.  Use \c x as the free variable, e.g. \c "x^2+2" */
         QString function;
-        JKQTPxParsedFunctionLineGraphFunctionData fdata;
+        JKQTPXParsedFunctionLineGraphFunctionData fdata;
 
         /** \brief the function to be evaluated to add error indicators to the graph. This function is evaluated to an error for every x. Use \c x as the free variable, e.g. \c "x^2+2". */
         QString errorFunction;
-        JKQTPxParsedFunctionLineGraphFunctionData efdata;
+        JKQTPXParsedFunctionLineGraphFunctionData efdata;
 
         // hide functions that should not be used in this class!
-        using JKQTPxFunctionLineGraph::set_plotFunction;
-        using JKQTPxFunctionLineGraph::set_params;
-        using JKQTPxFunctionLineGraph::set_errorPlotFunction;
-        using JKQTPxFunctionLineGraph::set_errorParams;
+        using JKQTPXFunctionLineGraph::set_plotFunction;
+        using JKQTPXFunctionLineGraph::set_params;
+        using JKQTPXFunctionLineGraph::set_errorPlotFunction;
+        using JKQTPXFunctionLineGraph::set_errorParams;
 
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData(bool collectParams=true) override;
 
         /** \brief implements the actual plot function */
-        static double JKQTPxParsedFunctionLineGraphFunction(double x, void *data) ;
+        static double JKQTPXParsedFunctionLineGraphFunction(double x, void *data) ;
 };
 
 
@@ -129,19 +129,19 @@ class LIB_EXPORT JKQTPxParsedFunctionLineGraph: public JKQTPxFunctionLineGraph {
 
     Use the variable \c y in an equation to refer to the free parameter of the curve (\c is also understood for convenience).
  */
-class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
+class LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         Q_OBJECT
     public:
 
 
         /** \brief class constructor */
-        JKQTPyParsedFunctionLineGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPYParsedFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPyParsedFunctionLineGraph(JKQtPlotter* parent);
+        JKQTPYParsedFunctionLineGraph(JKQTPLotter* parent);
 
 
         /** \brief class destructor */
-        virtual ~JKQTPyParsedFunctionLineGraph() override;
+        virtual ~JKQTPYParsedFunctionLineGraph() override;
 
         /*! \brief sets the property function to the specified \a __value. 
             \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
@@ -176,7 +176,7 @@ class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
         /** \brief INTERNAL data structure
          *  \internal
          */
-        struct JKQTPyParsedFunctionLineGraphFunctionData {
+        struct JKQTPYParsedFunctionLineGraphFunctionData {
             JKQTPMathParser* parser;
             JKQTPMathParser::jkmpNode* node;
             int varcount;
@@ -185,21 +185,21 @@ class LIB_EXPORT JKQTPyParsedFunctionLineGraph: public JKQTPyFunctionLineGraph {
     protected:
         /** \brief the function to be evaluated for the plot.  Use \c x as the free variable, e.g. \c "x^2+2" */
         QString function;
-        JKQTPyParsedFunctionLineGraphFunctionData fdata;
+        JKQTPYParsedFunctionLineGraphFunctionData fdata;
 
         /** \brief the function to be evaluated to add error indicators to the graph. This function is evaluated to an error for every x. Use \c x as the free variable, e.g. \c "x^2+2". */
         QString errorFunction;
-        JKQTPyParsedFunctionLineGraphFunctionData efdata;
+        JKQTPYParsedFunctionLineGraphFunctionData efdata;
 
         // hide functions that should not be used in this class!
-        using JKQTPxFunctionLineGraph::set_plotFunction;
-        using JKQTPxFunctionLineGraph::set_params;
-        using JKQTPxFunctionLineGraph::set_errorPlotFunction;
-        using JKQTPxFunctionLineGraph::set_errorParams;
+        using JKQTPXFunctionLineGraph::set_plotFunction;
+        using JKQTPXFunctionLineGraph::set_params;
+        using JKQTPXFunctionLineGraph::set_errorPlotFunction;
+        using JKQTPXFunctionLineGraph::set_errorParams;
 
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData(bool collectParams=true) override;
         /** \brief implements the actual plot function */
-        static double JKQTPyParsedFunctionLineGraphFunction(double x, void *data);
+        static double JKQTPYParsedFunctionLineGraphFunction(double x, void *data);
 };
 #endif // jkqtpgraphsparsedfunction_H

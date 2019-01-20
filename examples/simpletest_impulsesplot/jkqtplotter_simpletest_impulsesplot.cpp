@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_impulsesplot.cpp
- * Shows how to plot impulse graphs with JKQtPlotter
+ * Shows how to plot impulse graphs with JKQTPLotter
  *
- * \ref JKQtPlotterImpulsePlots
+ * \ref JKQTPLotterImpulsePlots
  */
 
 #include <QApplication>
@@ -16,8 +16,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve with lin. increasing errors)
     QVector<double> X, Y;
@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     size_t columnY=ds->addCopiedColumn(Y,  "y");
 
     // 4. create a vertical impulse graph in the plot, which plots the dataset X/Y:
-    JKQTPimpulsesVerticalGraph* graph=new JKQTPimpulsesVerticalGraph(&plot);
+    JKQTPImpulsesVerticalGraph* graph=new JKQTPImpulsesVerticalGraph(&plot);
     graph->set_xColumn(columnX);
     graph->set_yColumn(columnY);
     graph->set_lineWidth(2);

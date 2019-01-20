@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET = jkqtplotter_simpletest_functionplot
 
 
-# include JKQtPlotter source code
+# include JKQTPLotter source code
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {

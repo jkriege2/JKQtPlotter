@@ -31,10 +31,10 @@
 #define jkqtpgraphspeakstream_H_INCLUDED
 
 // forward declarations
-class JKQtBasePlotter;
-class JKQtPlotter;
-class JKQTPcoordinateAxis;
-class JKQTPdatastore;
+class JKQTBasePlotter;
+class JKQTPLotter;
+class JKQTPCoordinateAxis;
+class JKQTPDatastore;
 
 
 /*! \brief interprets data as a stream of x- or y-positions \f$ p_i \f$ (depending in \a yPeaks ) ans plots a line on the height
@@ -45,16 +45,16 @@ class JKQTPdatastore;
     \image html JKQTPPeakStreamGraphY.png "yPeaks=true"
     \image html JKQTPPeakStreamGraphX.png "yPeaks=false"
  */
-class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPsingleColumnGraph {
+class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPPeakStreamGraph(JKQtBasePlotter* parent=nullptr);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtBasePlotter* parent=nullptr);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtBasePlotter* parent=nullptr);
-        JKQTPPeakStreamGraph(JKQtPlotter* parent);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQtPlotter* parent);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQtPlotter* parent);
+        JKQTPPeakStreamGraph(JKQTBasePlotter* parent=nullptr);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTBasePlotter* parent=nullptr);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTBasePlotter* parent=nullptr);
+        JKQTPPeakStreamGraph(JKQTPLotter* parent);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPLotter* parent);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPLotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *

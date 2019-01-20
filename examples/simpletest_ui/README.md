@@ -1,18 +1,18 @@
-# Tutorial (JKQtPlotter): Using a JKQtPlotter inside a Qt User Interface Designer (UI) File {#JKQtPlotterQtCreator}
-This project (see `./examples/simpletest_ui/`) demonstrates how to create add a `JKQtPlotter` inside the Qt Form Editor (e.g. called from of Qt Creator) into a widget. 
+# Tutorial (JKQTPLotter): Using a JKQTPLotter inside a Qt User Interface Designer (UI) File {#JKQTPLotterQtCreator}
+This project (see `./examples/simpletest_ui/`) demonstrates how to create add a `JKQTPLotter` inside the Qt Form Editor (e.g. called from of Qt Creator) into a widget. 
 
-## Instructions on how to use JKQtPlotter in the Qt Form Designer
+## Instructions on how to use JKQTPLotter in the Qt Form Designer
 
 For this to work you have to follow the steps shown below:
 
 1. add a new UI-file to your project and open it in the Form Editor. Then right-click the form and select `Promote Widgets ...`:<br>
-   ![step1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/uidesigner_step1.png)
+   ![step1](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/doc/images/uidesigner_step1.png)
 
-2. In the dialog that opens, you have to define `JKQtPlotter` as a promotion to `QWidget` as shown below. Finally store the settings by clicking `Add` and closing the dialog with `Close`.<br>
-   ![step2](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/uidesigner_step2.png)
+2. In the dialog that opens, you have to define `JKQTPLotter` as a promotion to `QWidget` as shown below. Finally store the settings by clicking `Add` and closing the dialog with `Close`.<br>
+   ![step2](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/doc/images/uidesigner_step2.png)
 
-3. Now you can add a `QWidget`from the side-bar to the form and then promote it to `JKQtPlotter`, by selecting and right-clicking the `QWidget` and then selecting `Promote To | JKQtPlotter`:<br>
-   ![step3](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/uidesigner_step3.png)
+3. Now you can add a `QWidget`from the side-bar to the form and then promote it to `JKQTPLotter`, by selecting and right-clicking the `QWidget` and then selecting `Promote To | JKQTPLotter`:<br>
+   ![step3](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/doc/images/uidesigner_step3.png)
    
    
    
@@ -36,7 +36,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 # output executable name
 TARGET = jkqtplotter_simpletest_ui
 
-# include JKQtPlotter source headers and link against library
+# include JKQTPLotter source headers and link against library
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
@@ -55,7 +55,7 @@ win32-msvc*: DEFINES += _USE_MATH_DEFINES
 
 As you can see there is a main CPP-file (shown below) and a `formwithjkqtplotter.ui`-file with the `formwithjkqtplotter.cpp/.h`-files that are used to implement the functionality behind the form (see next chapter).
 
-The soruce code of the main application is simply instanciating the Form class `FormWithJKQtPlotter` from `formwithjkqtplotter.ui/.h/.cpp`:
+The soruce code of the main application is simply instanciating the Form class `FormWithJKQTPLotter` from `formwithjkqtplotter.ui/.h/.cpp`:
 ```.cpp
 #include <QApplication>
 #include "formwithjkqtplotter.h"
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    FormWithJKQtPlotter plot;
+    FormWithJKQTPLotter plot;
     plot.show();
     plot.resize(600,400);
 
@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-## Form Class `FormWithJKQtPlotter`
+## Form Class `FormWithJKQTPLotter`
 
 The Form was designed in the Qt Form Designer within Qt Creator, using the method described above (see `formwithjkqtplotter.ui`):
 
@@ -84,12 +84,12 @@ In addition the example implements some simple functionality in the `formwithjkq
 #include "formwithjkqtplotter.h"
 #include "ui_formwithjkqtplotter.h"
 
-FormWithJKQtPlotter::FormWithJKQtPlotter(QWidget *parent) :
+FormWithJKQTPLotter::FormWithJKQTPLotter(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FormWithJKQtPlotter)
+    ui(new Ui::FormWithJKQTPLotter)
 {
     ui->setupUi(this);
-    graph=new JKQTPxParsedFunctionLineGraph(ui->plot);
+    graph=new JKQTPXParsedFunctionLineGraph(ui->plot);
     graph->set_function(ui->edtEquation->text());
     graph->set_title(ui->edtEquation->text());
     ui->plot->addGraph(graph);
@@ -99,7 +99,7 @@ FormWithJKQtPlotter::FormWithJKQtPlotter(QWidget *parent) :
 
 Then three slots react to user interactions. First two interactions set the x- or y-axis to linear or logarithmic, depending on the state of the two check-boxes. It also sets the scaling of the axes to meaningful default values:
 ```.cpp
-void FormWithJKQtPlotter::on_chkLogX_toggled(bool checked)
+void FormWithJKQTPLotter::on_chkLogX_toggled(bool checked)
 {
     ui->plot->get_xAxis()->set_logAxis(checked);
     if (checked) {
@@ -109,7 +109,7 @@ void FormWithJKQtPlotter::on_chkLogX_toggled(bool checked)
     }
 }
 
-void FormWithJKQtPlotter::on_chkLogY_toggled(bool checked)
+void FormWithJKQTPLotter::on_chkLogY_toggled(bool checked)
 {
     ui->plot->get_yAxis()->set_logAxis(checked);
     if (checked) {
@@ -122,7 +122,7 @@ void FormWithJKQtPlotter::on_chkLogY_toggled(bool checked)
 
 A third slot is connected to the `clicked()`-event of the `QPushButton` labeled "REPLOT!". This slot reads the function from the `QLineEdit` and updates the plot with it:
 ```.cpp
-void FormWithJKQtPlotter::on_btnReplot_clicked()
+void FormWithJKQTPLotter::on_btnReplot_clicked()
 {
     graph->set_function(ui->edtEquation->text());
     graph->set_title(ui->edtEquation->text());

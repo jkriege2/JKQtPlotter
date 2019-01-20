@@ -1,11 +1,11 @@
-# JKQtPlotter - A Qt Plotting Library
+# JKQTPLotter - A Qt Plotting Library
 This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.11).
 
 This software is licensed under the term of the [GNU Lesser General Public License 2.1 
 (LGPL 2.1)](./LICENSE) or above. 
 
 ## Main Features
-- 2D Plotter class (JKQtPlotter)
+- 2D Plotter class (JKQTPLotter)
   - high-quality plotting
   - no other dependencies than Qt >=4.7 (compatible with Qt 5.xx)
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
@@ -33,16 +33,16 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - extensive library of image plots (inclusing different color-scale modes, RGBA-plots, overlays/masks)
   - contour plots
   - geometric forms/annotations
-  - can be easily extended by deriving a new graph from JKQTPplotElement or JKQTPplotObject
+  - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPPlotObject
 - optional: OpenCV interface
 - extensive set of [Examples/Tutorials](./examples/README.md)
-- extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
+- extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQTPLotter/index.html)
 
-## [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
+## [Documentation](http://jkriege2.github.io/JKQTPLotter/index.html)
 A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
-**[http://jkriege2.github.io/JKQtPlotter/index.html](http://jkriege2.github.io/JKQtPlotter/index.html)**
+**[http://jkriege2.github.io/JKQTPLotter/index.html](http://jkriege2.github.io/JKQTPLotter/index.html)**
 
-Documentation is auto-generated after pushes by [Travis](https://travis-ci.org/jkriege2/JKQtPlotter): [![Build Status](https://travis-ci.org/jkriege2/JKQtPlotter.svg?branch=master)](https://travis-ci.org/jkriege2/JKQtPlotter)
+Documentation is auto-generated after pushes by [Travis](https://travis-ci.org/jkriege2/JKQTPLotter): [![Build Status](https://travis-ci.org/jkriege2/JKQTPLotter.svg?branch=master)](https://travis-ci.org/jkriege2/JKQTPLotter)
 
 ## [Examples](./examples/)
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).

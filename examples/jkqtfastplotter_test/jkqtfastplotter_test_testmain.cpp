@@ -1,5 +1,5 @@
 /** \example jkqtfastplotter_test_testmain.cpp
- * Example of how to use JKQtFastPlotter
+ * Example of how to use JKQTFastPlotter
  */
 
 #include "jkqtfastplotter_test_testmain.h"

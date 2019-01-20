@@ -42,15 +42,15 @@
  *
  *   \note You need to define the Macro JKQTPLOTTER_OPENCV_INTERFACE when compiling this lib to enabled this function.
  */
-inline size_t JKQTPcopyCvMatToColumn(JKQTPdatastore* datastore, const cv::Mat& mat, const QString& name=QString(""), int channel=0);
+inline size_t JKQTPCopyCvMatToColumn(JKQTPDatastore* datastore, const cv::Mat& mat, const QString& name=QString(""), int channel=0);
 
 
 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-namespace JKQTPdatastore_Helper {
-	/** \brief internal helper function for JKQTPcopyCvMatToColumn()
+namespace JKQTPDatastore_Helper {
+	/** \brief internal helper function for JKQTPCopyCvMatToColumn()
 	 * \ingroup jkqtpopencvinterface
 	 * \internal */
     template <typename TPixel>
@@ -67,19 +67,19 @@ namespace JKQTPdatastore_Helper {
     }
 }
 
-inline size_t JKQTPcopyCvMatToColumn(JKQTPdatastore* datastore, const cv::Mat& mat, const QString &name, int channel)
+inline size_t JKQTPCopyCvMatToColumn(JKQTPDatastore* datastore, const cv::Mat& mat, const QString &name, int channel)
 {
     const size_t N=static_cast<size_t>(mat.cols*mat.rows);
     double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
 
-    if (CV_MAT_DEPTH(mat.type())==CV_64F) JKQTPdatastore_Helper::copyDataFromMat<double>(d, mat, channel);
-    else if (CV_MAT_DEPTH(mat.type())==CV_32F) JKQTPdatastore_Helper::copyDataFromMat<float>(d, mat, channel);
-    else if (CV_MAT_DEPTH(mat.type())==CV_32S) JKQTPdatastore_Helper::copyDataFromMat<uint32_t>(d, mat, channel);
-    else if (CV_MAT_DEPTH(mat.type())==CV_16S) JKQTPdatastore_Helper::copyDataFromMat<int16_t>(d, mat, channel);
-    else if (CV_MAT_DEPTH(mat.type())==CV_16U) JKQTPdatastore_Helper::copyDataFromMat<uint16_t>(d, mat, channel);
-    else if (CV_MAT_DEPTH(mat.type())==CV_8S) JKQTPdatastore_Helper::copyDataFromMat<int8_t>(d, mat, channel);
-    else if (CV_MAT_DEPTH(mat.type())==CV_8U) JKQTPdatastore_Helper::copyDataFromMat<uint8_t>(d, mat, channel);
-    else throw std::runtime_error("datatype of cv::Mat not supported by JKQTPdatastore::copyImageToColumn()");
+    if (CV_MAT_DEPTH(mat.type())==CV_64F) JKQTPDatastore_Helper::copyDataFromMat<double>(d, mat, channel);
+    else if (CV_MAT_DEPTH(mat.type())==CV_32F) JKQTPDatastore_Helper::copyDataFromMat<float>(d, mat, channel);
+    else if (CV_MAT_DEPTH(mat.type())==CV_32S) JKQTPDatastore_Helper::copyDataFromMat<uint32_t>(d, mat, channel);
+    else if (CV_MAT_DEPTH(mat.type())==CV_16S) JKQTPDatastore_Helper::copyDataFromMat<int16_t>(d, mat, channel);
+    else if (CV_MAT_DEPTH(mat.type())==CV_16U) JKQTPDatastore_Helper::copyDataFromMat<uint16_t>(d, mat, channel);
+    else if (CV_MAT_DEPTH(mat.type())==CV_8S) JKQTPDatastore_Helper::copyDataFromMat<int8_t>(d, mat, channel);
+    else if (CV_MAT_DEPTH(mat.type())==CV_8U) JKQTPDatastore_Helper::copyDataFromMat<uint8_t>(d, mat, channel);
+    else throw std::runtime_error("datatype of cv::Mat not supported by JKQTPDatastore::copyImageToColumn()");
 
     size_t itemid=datastore->addInternalItem(d, N);
     return datastore->addColumnForItem(itemid, 0, name);

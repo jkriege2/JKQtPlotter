@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Filled Curve Plots {#JKQtPlotterFilledGraphs}
-This project (see `./examples/simpletest_filledgraphs/`) simply creates a JKQtPlotter widget (as a new window) and adds several filled curve graphs (Histograms). Data is initialized from QVector<int> objects.
+# Example (JKQTPLotter): Filled Curve Plots {#JKQTPLotterFilledGraphs}
+This project (see `./examples/simpletest_filledgraphs/`) simply creates a JKQTPLotter widget (as a new window) and adds several filled curve graphs (Histograms). Data is initialized from QVector<int> objects.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_filledgraphs.cpp`](../simpletest_filledgraphs/jkqtplotter_simpletest_filledgraphs.cpp). 
 
@@ -15,12 +15,12 @@ And three columns with 256 entries each, which will be filled with the R-, G- an
     size_t columnB=ds->addColumn(256, "historam_B");
 ```
 	
-In this example we will access the data in the internal datastore directly. This access is possible through objects of type JKQTPcolumn, which is a proxy to the data in one of the columns in a `JKQTdatastore`:
+In this example we will access the data in the internal datastore directly. This access is possible through objects of type JKQTPColumn, which is a proxy to the data in one of the columns in a `JKQTdatastore`:
 
 ```.cpp
-    JKQTPcolumn cG=ds->getColumn(columnG);
-    JKQTPcolumn cR=ds->getColumn(columnR);
-    JKQTPcolumn cB=ds->getColumn(columnB);
+    JKQTPColumn cG=ds->getColumn(columnG);
+    JKQTPColumn cR=ds->getColumn(columnR);
+    JKQTPColumn cB=ds->getColumn(columnB);
 ```
 
 In order to calculate the histograms, first all enries in the columns are set to 0:
@@ -48,10 +48,10 @@ Finally the histogram is calculated:
     cB.scale(100.0/static_cast<double>(image.width()*image.height()));
 ```
 
-Finally three `JKQTPfilledCurveXGraph` objects are generated and added to the plot (here we show the code for the R-channel only):
+Finally three `JKQTPFilledCurveXGraph` objects are generated and added to the plot (here we show the code for the R-channel only):
 
 ```.cpp
-    JKQTPfilledCurveXGraph* graphR=new JKQTPfilledCurveXGraph(&plot);
+    JKQTPFilledCurveXGraph* graphR=new JKQTPFilledCurveXGraph(&plot);
 
     // set graph titles
     graphR->set_title("R-channel");
@@ -75,7 +75,7 @@ The result looks like this:
 
 ![jkqtplotter_simpletest_filledgraphs](../../screenshots/jkqtplotter_simpletest_filledgraphs.png)
 
-If you use `JKQTPfilledCurveYGraph` instead of `JKQTPfilledCurveXGraph`, the curve will not be filled until the y=0-axis, but until the x=0-axis. Of course you will also have to swap the x- and y-data columns. The result will look like this:
+If you use `JKQTPFilledCurveYGraph` instead of `JKQTPFilledCurveXGraph`, the curve will not be filled until the y=0-axis, but until the x=0-axis. Of course you will also have to swap the x- and y-data columns. The result will look like this:
 
 ![jkqtplotter_simpletest_filledgraphs_yaxis](../../screenshots/jkqtplotter_simpletest_filledgraphs_yaxis.png)
 

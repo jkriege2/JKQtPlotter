@@ -37,13 +37,13 @@ class JKQTPEnhancedPainter; // forward
     \param painter the QPainter to draw to
     \param x x-coordinate of the symbol center
     \param y y-coordinate of the symbol center
-    \param symbol type of the symbol to plot, see JKQTPgraphSymbols
+    \param symbol type of the symbol to plot, see JKQTPGraphSymbols
     \param size size (width/height) of the symbol around (\a x , \a y)
     \param symbolLineWidth width of the lines used to draw the symbol
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-LIB_EXPORT void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+LIB_EXPORT void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools_drawing
@@ -51,13 +51,13 @@ LIB_EXPORT void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double 
     \param paintDevice the paint device to draw on
     \param x x-coordinate of the symbol center
     \param y y-coordinate of the symbol center
-    \param symbol type of the symbol to plot, see JKQTPgraphSymbols
+    \param symbol type of the symbol to plot, see JKQTPGraphSymbols
     \param size size (width/height) of the symbol around (\a x , \a y)
     \param symbolLineWidth width of the lines used to draw the symbol
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-LIB_EXPORT void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
 /*! \brief plot an arrow between positions (x1,y1) and (x2,y2)
@@ -68,13 +68,13 @@ LIB_EXPORT void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, J
     \param y1 first y-coordinate of the arrow
     \param x2 second x-coordinate of the arrow
     \param y2 second y-coordinate of the arrow
-    \param symbol type of the symbol to plot, see JKQTPgraphSymbols
+    \param symbol type of the symbol to plot, see JKQTPGraphSymbols
     \param size size (width/height) of the symbol around (\a x , \a y)
     \param symbolLineWidth width of the lines used to draw the symbol
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-//LIB_EXPORT void JKQTPplotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+//LIB_EXPORT void JKQTPPlotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
 /*! \brief draw an ellipse without setting pen or brush, or saving the painter!
@@ -94,7 +94,7 @@ LIB_EXPORT void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, J
 
     \note all angles are given in degrees [0..360]
 */
-LIB_EXPORT QVector<QPointF> JKQTPdrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
+LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
 
 
 #endif // JKQTPDRAWINGTOOLS_H_INCLUDED

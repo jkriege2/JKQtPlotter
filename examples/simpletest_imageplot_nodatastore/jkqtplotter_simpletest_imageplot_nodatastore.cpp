@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_imageplot_nodatastore.cpp
  * Simple math image plot without use of central JKQTdatastore
  *
- * \ref JKQtPlotterImagePlotNoDatastore
+ * \ref JKQTPLotterImagePlotNoDatastore
  */
 
 #include <QApplication>
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting

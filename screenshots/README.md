@@ -1,4 +1,4 @@
-# JKQTPlotter: Screenshots
+# JKQTPLotter: Screenshots
 ## Scatter Plots and Boxplots
 
 ![Scatterplots](./screen_scatter.png)
@@ -32,8 +32,8 @@ Scatter Plots can have symbols where the shape/color/size is parametrized by a d
 
 ## Barcharts
 
-![JKQTPbarVerticalGraphStacked](../doc/images/JKQTPbarVerticalGraphStacked.png)
-![JKQTPbarHorizontalGraphStacked](../doc/images/JKQTPbarHorizontalGraphStacked.png)
+![JKQTPBarVerticalGraphStacked](../doc/images/JKQTPBarVerticalGraphStacked.png)
+![JKQTPBarHorizontalGraphStacked](../doc/images/JKQTPBarHorizontalGraphStacked.png)
 ![jkqtplotter_simpletest_barchart](./jkqtplotter_simpletest_barchart.png)
 
 ## Screenshots of included LaTeX renderer
@@ -46,7 +46,7 @@ Scatter Plots can have symbols where the shape/color/size is parametrized by a d
 
 
 ## QuickFit 3.0 Screenshots
-The library JKQtPlotter was developed initially as a central part of the data evaluation software for biophysics [QuickFit 3.0](https://github.com/jkriege2/QuickFit3). The latter makes heavy use of `JKQtPlotter`, `JKQTmathText` and `JKQtFastPlotter`:
+The library JKQTPLotter was developed initially as a central part of the data evaluation software for biophysics [QuickFit 3.0](https://github.com/jkriege2/QuickFit3). The latter makes heavy use of `JKQTPLotter`, `JKQTMathText` and `JKQTFastPlotter`:
 
 ![QuickFit 3.0 Screenshot](./QF3_screen_dcalc.png)
 ![QuickFit 3.0 Screenshot](./QF3_screen_fccsfit.png)

@@ -32,12 +32,12 @@ Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-void JKQTPplotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPgraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
+void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
     JKQTPEnhancedPainter p(&paintDevice);
-    JKQTPplotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor);
+    JKQTPPlotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor);
 }
 
-void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgraphSymbols symbol, double symbolSize, double symbolLineWidth, QColor color, QColor fillColor) {
+void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, double symbolLineWidth, QColor color, QColor fillColor) {
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
@@ -68,10 +68,10 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
     }
 
     switch(symbol) {
-        case JKQTPdot:
+        case JKQTPDot:
             painter.drawPoint(QPointF(x,y));
             break;
-        case JKQTPcross:{
+        case JKQTPCross:{
                 /*QVector<QLineF> lines;
                 lines<<QLineF(x-w2,y-w2,x+w2,y+w2);
                 lines<<QLineF(x-w2,y+w2,x+w2,y-w2);
@@ -84,19 +84,19 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
                 painter.drawPath(path);
             }
             break;
-        case JKQTPplus:{
+        case JKQTPPlus:{
                 QVector<QLineF> lines;
                 lines<<QLineF(x,y-w2,x,y+w2);
                 lines<<QLineF(x-w2,y,x+w2,y);
                 painter.drawLines(lines);
             }
             break;
-        case JKQTPcircle:{
+        case JKQTPCircle:{
                 QRectF rectangle(x-w2, y-w2, w, w);
                 painter.drawEllipse(rectangle);
             }
             break;
-        case JKQTPtarget:{
+        case JKQTPTarget:{
                 QPainterPath path;
                 QRectF rectangle3(x-w3, y-w3, 2.0*w3, 2.0*w3);
                 path.addEllipse(rectangle3);
@@ -107,19 +107,19 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
                 painter.drawPath(path);
             }
             break;
-        case JKQTPfilledCircle:{
+        case JKQTPFilledCircle:{
                 painter.setBrush(b);
                 QRectF rectangle(x-w2, y-w2, w, w);
                 painter.drawEllipse(rectangle);
             }
             break;
-        case JKQTPrect:{
+        case JKQTPRect:{
                 painter.setBrush(QColor(Qt::transparent));
                 QRectF rectangle(x-w2, y-w2, w, w);
                 painter.drawRect(rectangle);
             }
             break;
-        case JKQTPrectCross:{
+        case JKQTPRectCross:{
                 painter.setBrush(QColor(Qt::transparent));
                 QPainterPath path;
                 path.moveTo(x-w2,y-w2);
@@ -131,7 +131,7 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
                 painter.drawRect(rectangle);
             }
             break;
-        case JKQTPrectPlus:{
+        case JKQTPRectPlus:{
                 painter.setBrush(QColor(Qt::transparent));
                 QVector<QLineF> lines;
                 lines<<QLineF(x,y-w2,x,y+w2);
@@ -141,43 +141,43 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
                 painter.drawRect(rectangle);
             }
             break;
-        case JKQTPfilledRect:{
+        case JKQTPFilledRect:{
                 painter.setBrush(b);
                 QRectF rectangle(x-w2, y-w2, w, w);
                 painter.drawRect(rectangle);
             }
             break;
-        case JKQTPtriangle: {
+        case JKQTPTriangle: {
             painter.setBrush(QColor(Qt::transparent));
             QPolygonF poly;
             poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x, y-w2);
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPfilledTriangle: {
+        case JKQTPFilledTriangle: {
             painter.setBrush(b);
             QPolygonF poly;
             poly<<QPointF(x-w2, y+w2)<<QPointF(x+w2, y+w2)<<QPointF(x, y-w2);
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPdownTriangle: {
+        case JKQTPDownTriangle: {
                 painter.setBrush(QColor(Qt::transparent));
             QPolygonF poly;
             poly<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2)<<QPointF(x, y+w2);
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPfilledDownTriangle: {
+        case JKQTPFilledDownTriangle: {
             painter.setBrush(b);
             QPolygonF poly;
             poly<<QPointF(x-w2, y-w2)<<QPointF(x+w2, y-w2)<<QPointF(x, y+w2);
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPdiamond: {
+        case JKQTPDiamond: {
             QPolygonF poly;
             painter.setBrush(QColor(Qt::transparent));
             poly<<QPointF(x, y-w2)<<QPointF(x+w2, y)<<QPointF(x, y+w2)<<QPointF(x-w2, y);
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPfilledDiamond: {
+        case JKQTPFilledDiamond: {
             painter.setBrush(b);
             QPolygonF poly;
             poly<<QPointF(x, y-w2)<<QPointF(x+w2, y)<<QPointF(x, y+w2)<<QPointF(x-w2, y);
@@ -191,7 +191,7 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
             }
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPfilledStar: {
+        case JKQTPFilledStar: {
             painter.setBrush(b);
             QPolygonF poly;
             for (int i=0; i<star_items*2; i++) {
@@ -199,7 +199,7 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
             }
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPpentagon: {
+        case JKQTPPentagon: {
                 painter.setBrush(QColor(Qt::transparent));
             QPolygonF poly;
             for (int i=0; i<star_items*2; i+=2) {
@@ -207,7 +207,7 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
             }
             painter.drawConvexPolygon(poly);
             } break;
-        case JKQTPasterisc: {
+        case JKQTPAsterisc: {
             //QVector<QLineF> lines;
             QPainterPath path;
             for (int i=0; i<star_items*2; i+=2) {
@@ -218,7 +218,7 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
             //painter.drawLines(lines);
             painter.drawPath(path);
             } break;
-        case JKQTPfilledPentagon: {
+        case JKQTPFilledPentagon: {
             painter.setBrush(b);
             QPolygonF poly;
             for (int i=0; i<star_items*2; i+=2) {
@@ -233,7 +233,7 @@ void JKQTPplotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPgra
 
 
 
-QVector<QPointF> JKQTPdrawEllipse(double x, double y, double a, double b, double angle_start, double angle_end, double alpha, int controlPoints, QPointF* x_start, QPointF* x_end) {
+QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start, double angle_end, double alpha, int controlPoints, QPointF* x_start, QPointF* x_end) {
     QVector<QPointF> result;
     double start=angle_start*M_PI/180.0;
     double stop=angle_end*M_PI/180.0;

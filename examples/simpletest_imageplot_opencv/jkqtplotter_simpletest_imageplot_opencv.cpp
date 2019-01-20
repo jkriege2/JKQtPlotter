@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_imageplot_opencv.cpp
  * Simple math image plot, showin a 1-channel OpenCV cv::Mat
  *
- * \ref JKQtPlotterImagePlotOpenCV
+ * \ref JKQTPLotterImagePlotOpenCV
  */
 
 #include <QApplication>
@@ -21,14 +21,14 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
@@ -56,10 +56,10 @@ int main(int argc, char* argv[])
     }
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    In this step the contents of one channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
-    size_t cAiryDisk=JKQTPcopyCvMatToColumn(ds, airydisk, "imagedata");
+    size_t cAiryDisk=JKQTPCopyCvMatToColumn(ds, airydisk, "imagedata");
 
 
     // 4. create a graph (JKQTPColumnMathImage) with the column created above as data

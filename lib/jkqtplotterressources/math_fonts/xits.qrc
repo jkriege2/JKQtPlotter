@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/JKQTmathText/fonts">
+    <qresource prefix="/JKQTMathText/fonts">
         <file alias="xits-bold.otf">xits/XITS-Bold.otf</file>
         <file alias="xits-bolditalic.otf">xits/XITS-BoldItalic.otf</file>
         <file alias="xits-italic.otf">xits/XITS-Italic.otf</file>

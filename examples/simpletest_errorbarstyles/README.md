@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Different Types of Errorindicators {#JKQtPlotterErrorBarStyles}
-This project (see `./examples/simpletest_errorbarstyles/`) simply creates a JKQtPlotter widget (as a new window) and adds several curves show-casing different styles of error indicators. Data is initialized from two QVector<double> objects.
+# Example (JKQTPLotter): Different Types of Errorindicators {#JKQTPLotterErrorBarStyles}
+This project (see `./examples/simpletest_errorbarstyles/`) simply creates a JKQTPLotter widget (as a new window) and adds several curves show-casing different styles of error indicators. Data is initialized from two QVector<double> objects.
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_errorbarstyles.cpp`](../simpletest_errorbarstyles/jkqtplotter_simpletest_errorbarstyles.cpp). 
 
@@ -11,7 +11,7 @@ First some data is added to the internal datastore (mostly, like explained in se
     //    the array showXandYError indicates whether we want x- and y-error
     //    for a style for all stywhere this is false, only y-error-indicators
     //    are shown
-	QVector<JKQTPerrorPlotstyle> errorStyles    {JKQTPnoError, JKQTPerrorBars, JKQTPerrorSimpleBars, JKQTPerrorLines, JKQTPerrorPolygons, JKQTPerrorBoxes, JKQTPerrorEllipses, JKQTPerrorBarsPolygons, JKQTPerrorBarsLines, JKQTPerrorSimpleBarsLines, JKQTPerrorSimpleBarsPolygons };
+	QVector<JKQTPErrorPlotstyle> errorStyles    {JKQTPNoError, JKQTPErrorBars, JKQTPErrorSimpleBars, JKQTPErrorLines, JKQTPErrorPolygons, JKQTPErrorBoxes, JKQTPErrorEllipses, JKQTPErrorBarsPolygons, JKQTPErrorBarsLines, JKQTPErrorSimpleBarsLines, JKQTPErrorSimpleBarsPolygons };
     QVector<bool>                showXandYError { false      , true          , true                , false          , false             , true           , true              , false                 , false              , false                    , false                        };
 
     for (int errorID=0; errorID<errorStyles.size(); errorID++) {
@@ -22,7 +22,7 @@ First some data is added to the internal datastore (mostly, like explained in se
         }
 
 		// create a graph object
-        JKQTPxyLineErrorGraph* graph=new JKQTPxyLineErrorGraph(&plot);
+        JKQTPXYLineErrorGraph* graph=new JKQTPXYLineErrorGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
         graph->set_xColumn(columnX);
@@ -33,7 +33,7 @@ First some data is added to the internal datastore (mostly, like explained in se
         // set error style, for the y-axis
         graph->set_yErrorStyle(errorStyles[errorID]);
         // no error indicators for the x-values
-        graph->set_xErrorStyle(JKQTPnoError);
+        graph->set_xErrorStyle(JKQTPNoError);
         // ... unless: for some error styles we want error in both directions
         if (showXandYError[errorID]) {
             graph->set_xErrorStyle(errorStyles[errorID]);
@@ -50,7 +50,7 @@ First some data is added to the internal datastore (mostly, like explained in se
 
 
         // set symbol (cross/X) + pen style (and color)dashed)
-        graph->set_symbol(JKQTPcross);
+        graph->set_symbol(JKQTPCross);
         graph->set_style(Qt::DashLine);
         // set symbol size
         graph->set_symbolSize(5);
@@ -60,9 +60,9 @@ First some data is added to the internal datastore (mostly, like explained in se
         graph->set_lineWidth(1);
 
         // graph title is made from symbol+errorStylestyle, we use the LaTeX instruction \verb around the
-        // result of JKQTPerrorPlotstyle2String(), because it contains underscores that would otherwise
+        // result of JKQTPErrorPlotstyle2String(), because it contains underscores that would otherwise
         // lead to lower-case letter, which we don't want
-        graph->set_title("\\verb{"+JKQTPerrorPlotstyle2String(errorStyles[errorID])+"}");
+        graph->set_title("\\verb{"+JKQTPErrorPlotstyle2String(errorStyles[errorID])+"}");
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);
@@ -89,12 +89,12 @@ There are several variables that can be used to further style the error indicato
 	graph->set_errorbarSize(15);
 ```
 
-There are more properties that you can find in the documentation of the mix-in classes `JKQTPxyGraphErrors`, `JKQTPxGraphErrors`, `JKQTPyGraphErrors`, `JKQTPgraphErrors`.
+There are more properties that you can find in the documentation of the mix-in classes `JKQTPXYGraphErrors`, `JKQTPXGraphErrors`, `JKQTPYGraphErrors`, `JKQTPGraphErrors`.
 
 In addition the plot key is moved outside the pot and the grid in the plot is switched off:
 ```.cpp
     // 6. change locaion of key (outside top-right)
-    plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideRightTop);
+    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideRightTop);
     // ... and switch off the grid
     plot.get_xAxis()->set_drawGrid(false);
     plot.get_xAxis()->set_drawMinorGrid(false);
@@ -106,10 +106,10 @@ The result looks like this:
 
 ![jkqtplotter_simpletest_errorbarstyles](../../screenshots/jkqtplotter_simpletest_errorbarstyles.png)
 
-Error bars are implemented in the mixin-classes `JKQTPxyGraphErrors`, `JKQTPxGraphErrors` and `JKQTPyGraphErrors` that are all derived from `JKQTPgraphErrors`. With these it is simple to add error indicators to several different plot styles. Usually you can recognize these by looking at the class name, e.g. `JKQTPxyLineGraph` is a simple line+symbol graph, and `JKQTPxyLineErrorGraph` is the same with error indictaors (see above). There are also several other plots with error indicators:
-  - `JKQTPbarVerticalErrorGraph` for barcharts with errors:<br>![](../../screenshots/jkqtplotter_simpletest_errorbarstyles_barcharts.png)
-  - `JKQTPimpulsesVerticalGraph` for impulse/candle-stick charts with errors:<br>![](../../screenshots/jkqtplotter_simpletest_errorbarstyles_impulses.png)
-  - `JKQTPfilledCurveXErrorGraph` for filled curves with errors:<br>![](../../screenshots/jkqtplotter_simpletest_errorbarstyles_filledcurves.png)
+Error bars are implemented in the mixin-classes `JKQTPXYGraphErrors`, `JKQTPXGraphErrors` and `JKQTPYGraphErrors` that are all derived from `JKQTPGraphErrors`. With these it is simple to add error indicators to several different plot styles. Usually you can recognize these by looking at the class name, e.g. `JKQTPXYLineGraph` is a simple line+symbol graph, and `JKQTPXYLineErrorGraph` is the same with error indictaors (see above). There are also several other plots with error indicators:
+  - `JKQTPBarVerticalErrorGraph` for barcharts with errors:<br>![](../../screenshots/jkqtplotter_simpletest_errorbarstyles_barcharts.png)
+  - `JKQTPImpulsesVerticalGraph` for impulse/candle-stick charts with errors:<br>![](../../screenshots/jkqtplotter_simpletest_errorbarstyles_impulses.png)
+  - `JKQTPFilledCurveXErrorGraph` for filled curves with errors:<br>![](../../screenshots/jkqtplotter_simpletest_errorbarstyles_filledcurves.png)
 .
 
 

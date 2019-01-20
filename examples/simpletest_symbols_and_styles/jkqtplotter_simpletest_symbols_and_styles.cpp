@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_symbols_and_styles.cpp
- * JKQtPlotter: Examples: Line Graph with Different Symbols and Line Styles
+ * JKQTPLotter: Examples: Line Graph with Different Symbols and Line Styles
  *
- * \ref JKQtPlotterSymbolsAndStyles
+ * \ref JKQTPLotterSymbolsAndStyles
  */
 
 #include <QApplication>
@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data a vector of x-values for a simple plot (a sine curve)
     QVector<double> X;
@@ -34,24 +34,24 @@ int main(int argc, char* argv[])
     //    pen styles from the vector pens
     QVector<Qt::PenStyle> pens {Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
     int ipen=0;
-    for (int symbolID=0; symbolID<=JKQTPmaxSymbolID; symbolID++) {
+    for (int symbolID=0; symbolID<=JKQTPMaxSymbolID; symbolID++) {
         // generate some plot data
         QVector<double> Y;
         for (auto& xx: X) {
             Y<<sin(xx)+static_cast<double>(symbolID)*1.5;
         }
 
-        JKQTPxyLineGraph* graph=new JKQTPxyLineGraph(&plot);
+        JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
         graph->set_xColumn(columnX);
         graph->set_yColumn(ds->addCopiedColumn(Y, "y"+QString::number(symbolID)));
 
         // set symbol + pen style and color
-        graph->set_symbol(static_cast<JKQTPgraphSymbols>(symbolID));
+        graph->set_symbol(static_cast<JKQTPGraphSymbols>(symbolID));
         graph->set_style(pens[ipen]);
-        QString lname=JKQTP_QPenStyle2String(graph->get_style());
-        graph->set_drawLine(static_cast<JKQTPgraphSymbols>(symbolID)!=JKQTPdot);
+        QString lname=jkqtp_QPenStyle2String(graph->get_style());
+        graph->set_drawLine(static_cast<JKQTPGraphSymbols>(symbolID)!=JKQTPDot);
         if (!graph->get_drawLine()) lname="";
         // set symbol size
         graph->set_symbolSize(14);
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
         graph->set_lineWidth(1);
 
         // graph title is made from symbol+penstyle
-        graph->set_title(JKQTPgraphSymbols2NameString(static_cast<JKQTPgraphSymbols>(graph->get_symbol()))+QString(", ")+lname);
+        graph->set_title(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->get_symbol()))+QString(", ")+lname);
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);

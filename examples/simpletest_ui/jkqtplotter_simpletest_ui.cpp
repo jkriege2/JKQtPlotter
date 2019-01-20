@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    FormWithJKQtPlotter plot;
+    FormWithJKQTPLotter plot;
     plot.show();
     plot.resize(600,400);
 

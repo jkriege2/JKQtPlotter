@@ -33,7 +33,7 @@
 #define jkqtpelementsoverlay_H
 
 // forward declarations
-class JKQtBasePlotter;
+class JKQTBasePlotter;
 
 /*! \brief this virtual base class describes an interface for graph overlay elements, which are simple geometric
            forms drawn ONTO the graphe, so a redraw of the overlays does NOT require a redraw of the graph.
@@ -41,19 +41,19 @@ class JKQtBasePlotter;
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class LIB_EXPORT JKQTPoverlayElement : public QObject {
+class LIB_EXPORT JKQTPOverlayElement : public QObject {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayElement(JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayElement(JKQTBasePlotter *parent = 0);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter)=0;
 
         /** \brief returns the parent painter class */
-        inline JKQtBasePlotter* getParent() { return parent; }
+        inline JKQTBasePlotter* getParent() { return parent; }
 
         /** \brief sets the parent painter class */
-        virtual void setParent(JKQtBasePlotter* parent);
+        virtual void setParent(JKQTBasePlotter* parent);
 
         /*! \brief sets the property color to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
@@ -184,7 +184,7 @@ class LIB_EXPORT JKQTPoverlayElement : public QObject {
 
     protected:
         /** \brief the plotter object this object belongs to */
-        JKQtBasePlotter* parent;
+        JKQTBasePlotter* parent;
 
         QColor color;
         QColor fillColor;
@@ -238,10 +238,10 @@ class LIB_EXPORT JKQTPoverlayElement : public QObject {
 /*! \brief baseclass for a two-position overlay
    \ingroup jkqtplotter_overlays
  */
-class LIB_EXPORT JKQTPoverlayTwoPositionOverlay : public JKQTPoverlayElement {
+class LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
 
         /*! \brief sets the property x1 to the specified \a __value. 
             \details Description of the parameter x1 is: <BLOCKQUOTE>\copybrief x1 </BLOCKQUOTE> 
@@ -311,10 +311,10 @@ class LIB_EXPORT JKQTPoverlayTwoPositionOverlay : public JKQTPoverlayElement {
 /*! \brief baseclass for one-coordinate indicator overlays (horizontal/vertical lines
    \ingroup jkqtplotter_overlays
  */
-class LIB_EXPORT JKQTPoverlayOneCoordOverlay : public JKQTPoverlayElement {
+class LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayOneCoordOverlay(double pos, JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayOneCoordOverlay(double pos, JKQTBasePlotter *parent = 0);
 
         /*! \brief sets the property position to the specified \a __value. 
             \details Description of the parameter position is: <BLOCKQUOTE>\copybrief position </BLOCKQUOTE> 
@@ -339,10 +339,10 @@ class LIB_EXPORT JKQTPoverlayOneCoordOverlay : public JKQTPoverlayElement {
 /*! \brief baseclass for two-coordinate indicator overlays (horizontal/vertical lines
    \ingroup jkqtplotter_overlays
  */
-class LIB_EXPORT JKQTPoverlayTwoCoordOverlay : public JKQTPoverlayOneCoordOverlay {
+class LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverlay {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayTwoCoordOverlay(double pos, double pos2, JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent = 0);
 
         /*! \brief sets the property position2 to the specified \a __value. 
             \details Description of the parameter position2 is: <BLOCKQUOTE>\copybrief position2 </BLOCKQUOTE> 
@@ -370,11 +370,11 @@ class LIB_EXPORT JKQTPoverlayTwoCoordOverlay : public JKQTPoverlayOneCoordOverla
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class LIB_EXPORT JKQTPoverlayVerticalLine : public JKQTPoverlayOneCoordOverlay {
+class LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayVerticalLine(double pos, JKQtBasePlotter *parent = 0);
-        explicit JKQTPoverlayVerticalLine(double pos, QString text, JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalLine(double pos, QString text, JKQTBasePlotter *parent = 0);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -387,11 +387,11 @@ class LIB_EXPORT JKQTPoverlayVerticalLine : public JKQTPoverlayOneCoordOverlay {
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class LIB_EXPORT JKQTPoverlayVerticalRange : public JKQTPoverlayTwoCoordOverlay {
+class LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayVerticalRange(double pos, double pos2, JKQtBasePlotter *parent = 0);
-        explicit JKQTPoverlayVerticalRange(double pos, double pos2, QString text, JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalRange(double pos, double pos2, QString text, JKQTBasePlotter *parent = 0);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -419,10 +419,10 @@ class LIB_EXPORT JKQTPoverlayVerticalRange : public JKQTPoverlayTwoCoordOverlay 
    \ingroup jkqtplotter_overlays
 
  */
-class LIB_EXPORT JKQTPoverlayLine : public JKQTPoverlayTwoPositionOverlay {
+class LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayLine(double x1, double y1, double x2, double y2, JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayLine(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -450,10 +450,10 @@ class LIB_EXPORT JKQTPoverlayLine : public JKQTPoverlayTwoPositionOverlay {
    \ingroup jkqtplotter_overlays
 
  */
-class LIB_EXPORT JKQTPoverlayRectangle : public JKQTPoverlayTwoPositionOverlay {
+class LIB_EXPORT JKQTPOverlayRectangle : public JKQTPOverlayTwoPositionOverlay {
         Q_OBJECT
     public:
-        explicit JKQTPoverlayRectangle(double x1, double y1, double x2, double y2, JKQtBasePlotter *parent = 0);
+        explicit JKQTPOverlayRectangle(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);

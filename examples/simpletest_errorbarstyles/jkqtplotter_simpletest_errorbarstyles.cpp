@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_errorbarstyles.cpp
- * Shows how to use different error indicator styles with JKQtPlotter
+ * Shows how to use different error indicator styles with JKQTPLotter
  *
- * \ref JKQtPlotterErrorBarStyles
+ * \ref JKQTPLotterErrorBarStyles
  */
 
 #include <QApplication>
@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data a vector of x-values for a simple plot
     //    and generate some values for varying errors
@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
     //    the array showXandYError indicates whether we want x- and y-error
     //    for a style for all stywhere this is false, only y-error-indicators
     //    are shown
-    QVector<JKQTPerrorPlotstyle> errorStyles    {JKQTPnoError, JKQTPerrorBars, JKQTPerrorSimpleBars, JKQTPerrorLines, JKQTPerrorPolygons, JKQTPerrorBoxes, JKQTPerrorEllipses, JKQTPerrorBarsPolygons, JKQTPerrorBarsLines, JKQTPerrorSimpleBarsLines, JKQTPerrorSimpleBarsPolygons };
+    QVector<JKQTPErrorPlotstyle> errorStyles    {JKQTPNoError, JKQTPErrorBars, JKQTPErrorSimpleBars, JKQTPErrorLines, JKQTPErrorPolygons, JKQTPErrorBoxes, JKQTPErrorEllipses, JKQTPErrorBarsPolygons, JKQTPErrorBarsLines, JKQTPErrorSimpleBarsLines, JKQTPErrorSimpleBarsPolygons };
     QVector<bool>                showXandYError { false      , true          , true                , false          , false             , true           , true              , false                 , false              , false                    , false                        };
 
     for (int errorID=0; errorID<errorStyles.size(); errorID++) {
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
             Y<<xx*0.5+static_cast<double>(errorID)*2.5;
         }
 
-        JKQTPxyLineErrorGraph* graph=new JKQTPxyLineErrorGraph(&plot);
+        JKQTPXYLineErrorGraph* graph=new JKQTPXYLineErrorGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
         graph->set_xColumn(columnX);
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
         // set error style, for the y-axis
         graph->set_yErrorStyle(errorStyles[errorID]);
         // no error indicators for the x-values
-        graph->set_xErrorStyle(JKQTPnoError);
+        graph->set_xErrorStyle(JKQTPNoError);
         // ... unless: for some error styles we want error in both directions
         if (showXandYError[errorID]) {
             graph->set_xErrorStyle(errorStyles[errorID]);
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
 
 
         // set symbol (cross/X) + pen style (and color)dashed)
-        graph->set_symbol(JKQTPcross);
+        graph->set_symbol(JKQTPCross);
         graph->set_style(Qt::DashLine);
         // set symbol size
         graph->set_symbolSize(5);
@@ -89,9 +89,9 @@ int main(int argc, char* argv[])
         graph->set_lineWidth(1);
 
         // graph title is made from symbol+errorStylestyle, we use the LaTeX instruction \verb around the
-        // result of JKQTPerrorPlotstyle2String(), because it contains underscores that would otherwise
+        // result of JKQTPErrorPlotstyle2String(), because it contains underscores that would otherwise
         // lead to lower-case letter, which we don't want
-        graph->set_title("\\verb{"+JKQTPerrorPlotstyle2String(errorStyles[errorID])+"}");
+        graph->set_title("\\verb{"+JKQTPErrorPlotstyle2String(errorStyles[errorID])+"}");
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
     plot.zoomToFit();
 
     // 6. change locaion of key (outside top-right)
-    plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideRightTop);
+    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideRightTop);
     // ... and switch off the grid
     plot.get_xAxis()->set_drawGrid(false);
     plot.get_xAxis()->set_drawMinorGrid(false);

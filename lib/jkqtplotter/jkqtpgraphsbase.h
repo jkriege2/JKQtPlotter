@@ -35,15 +35,15 @@
 #define jkqtpgraphsbase_H
 
 // forward declarations
-class JKQtPlotter;
-class JKQTPdatastore;
+class JKQTPLotter;
+class JKQTPDatastore;
 
-/** \brief this virtual base class of every element, which is part of a JKQtPlotter plot and may appear in its key
+/** \brief this virtual base class of every element, which is part of a JKQTPLotter plot and may appear in its key
  *         (basically any type of graph, except overlay elements!)
  * \ingroup jkqtplotter_basegraphs
  *
  * Each possible graph is represented by a child of this class. So additional plots may be created by
- * deriving new JKQTPgraph classes. To do so implement/overwrite these functions:
+ * deriving new JKQTPGraph classes. To do so implement/overwrite these functions:
  *   - void draw(JKQTPEnhancedPainter& painter);
  *   - void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
  *   - bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
@@ -58,16 +58,16 @@ class JKQTPdatastore;
  * .
  *
  */
-class LIB_EXPORT JKQTPplotElement: public QObject {
+class LIB_EXPORT JKQTPPlotElement: public QObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        explicit JKQTPplotElement(JKQtBasePlotter* parent=nullptr);
+        explicit JKQTPPlotElement(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        explicit JKQTPplotElement(JKQtPlotter* parent);
+        explicit JKQTPPlotElement(JKQTPLotter* parent);
 
         /** \brief default wirtual destructor */
-        virtual ~JKQTPplotElement() ;
+        virtual ~JKQTPPlotElement() ;
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter)=0;
@@ -121,11 +121,11 @@ class LIB_EXPORT JKQTPplotElement: public QObject {
         }
 
         /** \brief returns the parent painter class */
-        inline JKQtBasePlotter* getParent() { return parent; }
+        inline JKQTBasePlotter* getParent() { return parent; }
         /** \brief sets the parent painter class */
-        virtual void setParent(JKQtBasePlotter* parent);
+        virtual void setParent(JKQTBasePlotter* parent);
         /** \brief sets the parent painter class */
-        virtual void setParent(JKQtPlotter* parent);
+        virtual void setParent(JKQTPLotter* parent);
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -143,7 +143,7 @@ class LIB_EXPORT JKQTPplotElement: public QObject {
 
     protected:
         /** \brief the plotter object this object belongs to */
-        JKQtBasePlotter* parent;
+        JKQTBasePlotter* parent;
 
         /** \brief title of the plot (for display in key!). If no title is supplied, no key entry is drawn. */
         QString title;
@@ -199,30 +199,30 @@ class LIB_EXPORT JKQTPplotElement: public QObject {
 };
 
 /** \brief this virtual base class of the (data-column based) graphs,
- *         which are part of a JKQtPlotter plot and which use the coordinate system
- *         of the JKQtPlotter (i.e. the two coordinate axes get_xAxis() and get_yAxis())
+ *         which are part of a JKQTPLotter plot and which use the coordinate system
+ *         of the JKQTPLotter (i.e. the two coordinate axes get_xAxis() and get_yAxis())
  *         as basis for the graphs
  * \ingroup jkqtplotter_basegraphs
  *
  * This class adds several features to work with data columns. In addition this class adds protected
  * functions that do coordinate transforms based on the current coordinate system, of the paren
- * JKQtPlotter (i.e. using the axes JKQtPlott:xAxis and JKQtPlotter::yAxis as basis for the plotting).
+ * JKQTPLotter (i.e. using the axes JKQTPLott:xAxis and JKQTPLotter::yAxis as basis for the plotting).
  *
  * There are two properties datarange_start and datarange_end. By default they are -1 and therefore ignored.
  * if they are != -1 the plotter only displays the datapoints with the indexes [datarange_start .. datarange_end]
  * although there might be more data points available (range [0 .. maxDataPoints]). The datarange is cut at the
  * full range, i.e. if datarange_end>maxDataPoints the plotter displays [datarange_start .. maxDataPoints].
  */
-class LIB_EXPORT JKQTPgraph: public JKQTPplotElement {
+class LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        explicit JKQTPgraph(JKQtBasePlotter* parent=nullptr);
+        explicit JKQTPGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        explicit JKQTPgraph(JKQtPlotter* parent);
+        explicit JKQTPGraph(JKQTPLotter* parent);
 
         /** \brief default wirtual destructor */
-        virtual ~JKQTPgraph() ;
+        virtual ~JKQTPGraph() ;
 
 
         /*! \brief sets the property datarange_start to the specified \a __value. 
@@ -286,28 +286,28 @@ class LIB_EXPORT JKQTPgraph: public JKQTPplotElement {
          */
         bool getDataMinMax(int column, double& minx, double& maxx, double& smallestGreaterZero);
 
-        friend class JKQTPgraphErrors;
+        friend class JKQTPGraphErrors;
 
 };
 
 
-/** \brief this is the virtual base class of all JKQTPplotElement's in a JKQtPlotter plot that
+/** \brief this is the virtual base class of all JKQTPPlotElement's in a JKQTPLotter plot that
  *         represent geometric forms or annotations. They have extended coordinate transform capabilities, because
  *         in addition to using the plot coordinates, you can also choose to use different other
  *         coordinate systems
  * \ingroup jkqtplotter_basegraphs
  *
  */
-class LIB_EXPORT JKQTPplotObject: public JKQTPplotElement {
+class LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        explicit JKQTPplotObject(JKQtBasePlotter* parent=nullptr);
+        explicit JKQTPPlotObject(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        explicit JKQTPplotObject(JKQtPlotter* parent);
+        explicit JKQTPPlotObject(JKQTPLotter* parent);
 
         /** \brief default wirtual destructor */
-        virtual ~JKQTPplotObject() ;
+        virtual ~JKQTPPlotObject() ;
 
 
     protected:
@@ -317,7 +317,7 @@ class LIB_EXPORT JKQTPplotObject: public JKQTPplotElement {
 
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used as base for all graphs that use at least two columns
+/*! \brief This virtual JKQTPGraph descendent may be used as base for all graphs that use at least two columns
            that specify x and y coordinates for the single plot points.
     \ingroup jkqtplotter_basegraphs
 
@@ -327,7 +327,7 @@ class LIB_EXPORT JKQTPplotObject: public JKQTPplotElement {
     .
 
  */
-class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
+class LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
         Q_OBJECT
     public:
         enum DataSortOrder {
@@ -338,9 +338,9 @@ class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
 
 
         /** \brief class constructor */
-        JKQTPxyGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPXYGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPxyGraph(JKQtPlotter* parent);
+        JKQTPXYGraph(JKQTPLotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -353,7 +353,7 @@ class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int column) const override;
 
         /*! \brief sets the property xColumn to the specified \a __value. 
@@ -433,13 +433,13 @@ class LIB_EXPORT JKQTPxyGraph: public JKQTPgraph {
 };
 
 
-/*! \brief This virtual JKQTPgraph descendent may be used as base for all graphs that use at least one column
+/*! \brief This virtual JKQTPGraph descendent may be used as base for all graphs that use at least one column
            of data
     \ingroup jkqtplotter_basegraphs
 
 
  */
-class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
+class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         Q_OBJECT
     public:
         enum DataSortOrder {
@@ -447,14 +447,14 @@ class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
             Sorted=1
         };
         /** \brief class constructor */
-        JKQTPsingleColumnGraph(JKQtBasePlotter* parent=nullptr);
-        JKQTPsingleColumnGraph(int dataColumn, JKQtBasePlotter* parent=nullptr);
-        JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style=Qt::SolidLine, double lineWidth=2.0, JKQtBasePlotter* parent=nullptr);
-        JKQTPsingleColumnGraph(JKQtPlotter* parent);
-        JKQTPsingleColumnGraph(int dataColumn, JKQtPlotter* parent);
-        JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQtPlotter* parent);
-        JKQTPsingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQtPlotter* parent);
-        JKQTPsingleColumnGraph(int dataColumn, QColor color, JKQtPlotter* parent);
+        JKQTPSingleColumnGraph(JKQTBasePlotter* parent=nullptr);
+        JKQTPSingleColumnGraph(int dataColumn, JKQTBasePlotter* parent=nullptr);
+        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style=Qt::SolidLine, double lineWidth=2.0, JKQTBasePlotter* parent=nullptr);
+        JKQTPSingleColumnGraph(JKQTPLotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, JKQTPLotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTPLotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPLotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPLotter* parent);
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor();
 
@@ -535,14 +535,14 @@ class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
         /*! \brief sets the property sortData to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copybrief sortData </BLOCKQUOTE> \see sortData for more information */
         void set_sortData(int __value);
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:
         /** \brief the column that contains the datapoints */
         int dataColumn;
 
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */
@@ -581,17 +581,17 @@ class LIB_EXPORT JKQTPsingleColumnGraph: public JKQTPgraph {
     \ingroup jkqtplotter_basegraphserrors
 
     This class is meant to be used with multiple inheritance. I.e. if you implemented some kind of plot
-    you may derive an error plot class in which you will have to overwrite the JKQTPgraph::drawErrorsBefor()
+    you may derive an error plot class in which you will have to overwrite the JKQTPGraph::drawErrorsBefor()
     or drawErrorsAfter() so it calls the plotErrorIndicators() method from this class. In addition this class
     will add some public datamemebers and methods to your class that allow to specify the properties of the
     error indicators (plot properties: color, width, ... and columns for the data).
 
  */
-class LIB_EXPORT JKQTPgraphErrors {
+class LIB_EXPORT JKQTPGraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPgraphErrors(QColor graphColor=QColor("black"));
-        virtual ~JKQTPgraphErrors();
+        JKQTPGraphErrors(QColor graphColor=QColor("black"));
+        virtual ~JKQTPGraphErrors();
 
         /*! \brief sets the property errorColor to the specified \a __value. 
             \details Description of the parameter errorColor is: <BLOCKQUOTE>\copybrief errorColor </BLOCKQUOTE> 
@@ -698,37 +698,37 @@ class LIB_EXPORT JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. This method is called by
-         *         the JKQTPgraph descendents */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph,  int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
+         *         the JKQTPGraph descendents */
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph,  int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int datarange_start=-1, int datarange_end=-1, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
+        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int datarange_start=-1, int datarange_end=-1, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         /** \brief this function can be used to set the color of the error indicators automatically
          *
          * return \c true and the colors to use, if applicable, the default implementation returns false */
-        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor);
+        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor);
 
 
-        virtual double getXErrorU(int i, JKQTPdatastore* ds) const;
-        virtual double getXErrorL(int i, JKQTPdatastore* ds) const;
-        virtual double getYErrorU(int i, JKQTPdatastore* ds) const;
-        virtual double getYErrorL(int i, JKQTPdatastore* ds) const;
+        virtual double getXErrorU(int i, JKQTPDatastore* ds) const;
+        virtual double getXErrorL(int i, JKQTPDatastore* ds) const;
+        virtual double getYErrorU(int i, JKQTPDatastore* ds) const;
+        virtual double getYErrorL(int i, JKQTPDatastore* ds) const;
 
         //** \brief plot a single error indicator */
-        //void intPlotXYErrorIndicator(JKQTPEnhancedPainter& painter, double x, double xperror, double xmerror, double y, double yperror, double ymerror, JKQTPerrorPlotstyle xErrorStyle=JKQTPnoError, JKQTPerrorPlotstyle yErrorStyle=JKQTPnoError, double lastx=0, double lastxperror=0, double lastxmerror=0, double lasty=0, double lastyperror=0, double lastymerror=0);
+        //void intPlotXYErrorIndicator(JKQTPEnhancedPainter& painter, double x, double xperror, double xmerror, double y, double yperror, double ymerror, JKQTPErrorPlotstyle xErrorStyle=JKQTPNoError, JKQTPErrorPlotstyle yErrorStyle=JKQTPNoError, double lastx=0, double lastxperror=0, double lastxmerror=0, double lasty=0, double lastyperror=0, double lastymerror=0);
 };
 
 
-/*! \brief This class adds data fields for error indicators in x direction to a JKQTPgraph descendent.
+/*! \brief This class adds data fields for error indicators in x direction to a JKQTPGraph descendent.
     \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPgraphErrors
+    \see JKQTPGraphErrors
  */
-class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
+class LIB_EXPORT JKQTPXGraphErrors: public JKQTPGraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPxGraphErrors(QColor graphColor=QColor("black"));
+        JKQTPXGraphErrors(QColor graphColor=QColor("black"));
 
         /*! \brief sets the property xErrorSymmetric to the specified \a __value. 
             \details Description of the parameter xErrorSymmetric is: <BLOCKQUOTE>\copybrief xErrorSymmetric </BLOCKQUOTE> 
@@ -751,14 +751,14 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
         /*! \brief sets the property xErrorStyle to the specified \a __value. 
             \details Description of the parameter xErrorStyle is: <BLOCKQUOTE>\copybrief xErrorStyle </BLOCKQUOTE> 
             \see xErrorStyle for more information */ 
-        inline virtual void set_xErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        inline virtual void set_xErrorStyle(const JKQTPErrorPlotstyle & __value)  
         {
             this->xErrorStyle = __value;
         } 
         /*! \brief returns the property xErrorStyle. 
             \details Description of the parameter xErrorStyle is: <BLOCKQUOTE>\copybrief xErrorStyle </BLOCKQUOTE> 
             \see xErrorStyle for more information */ 
-        inline virtual JKQTPerrorPlotstyle get_xErrorStyle() const  
+        inline virtual JKQTPErrorPlotstyle get_xErrorStyle() const  
         {
             return this->xErrorStyle; 
         }
@@ -778,27 +778,27 @@ class LIB_EXPORT JKQTPxGraphErrors: public JKQTPgraphErrors {
         /** \brief indicates whether the x-errors are symmetric (from one column only) */
         bool  xErrorSymmetric;
         /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPerrorPlotstyle xErrorStyle;
+        JKQTPErrorPlotstyle xErrorStyle;
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
 
-        virtual double getXErrorU(int i, JKQTPdatastore* ds) const override;
-        virtual double getXErrorL(int i, JKQTPdatastore* ds) const override;
+        virtual double getXErrorU(int i, JKQTPDatastore* ds) const override;
+        virtual double getXErrorL(int i, JKQTPDatastore* ds) const override;
 
 };
 
 
 /*! \brief This class adds data fields for error indicators in y direction to a class.
     \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPgraphErrors
+    \see JKQTPGraphErrors
 
  */
-class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
+class LIB_EXPORT JKQTPYGraphErrors: public JKQTPGraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPyGraphErrors(QColor graphColor=QColor("black"));
+        JKQTPYGraphErrors(QColor graphColor=QColor("black"));
 
         /*! \brief sets the property yErrorSymmetric to the specified \a __value. 
             \details Description of the parameter yErrorSymmetric is: <BLOCKQUOTE>\copybrief yErrorSymmetric </BLOCKQUOTE> 
@@ -821,18 +821,18 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
         /*! \brief sets the property yErrorStyle to the specified \a __value. 
             \details Description of the parameter yErrorStyle is: <BLOCKQUOTE>\copybrief yErrorStyle </BLOCKQUOTE> 
             \see yErrorStyle for more information */ 
-        inline virtual void set_yErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        inline virtual void set_yErrorStyle(const JKQTPErrorPlotstyle & __value)  
         {
             this->yErrorStyle = __value;
         } 
         /*! \brief returns the property yErrorStyle. 
             \details Description of the parameter yErrorStyle is: <BLOCKQUOTE>\copybrief yErrorStyle </BLOCKQUOTE> 
             \see yErrorStyle for more information */ 
-        inline virtual JKQTPerrorPlotstyle get_yErrorStyle() const  
+        inline virtual JKQTPErrorPlotstyle get_yErrorStyle() const  
         {
             return this->yErrorStyle; 
         }
-        /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
+        /** \copydoc JKQTPGraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c) const override;
 
         /** \brief set the column from which to read the error values for y-error indicators */
@@ -843,7 +843,7 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
         /** \brief the column that contains the error of the x-component of the datapoints */
         int yErrorColumn;
         /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPerrorPlotstyle yErrorStyle;
+        JKQTPErrorPlotstyle yErrorStyle;
         /** \brief indicates whether the y-errors are symmetric (from one column only) */
         bool  yErrorSymmetric;
         /** \brief the column that contains the error of the y-component of the datapoints. This is used as the lower error length, if yErrorSymmetric \c ==false. */
@@ -851,22 +851,22 @@ class LIB_EXPORT JKQTPyGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
 
-        virtual double getYErrorU(int i, JKQTPdatastore* ds) const override;
-        virtual double getYErrorL(int i, JKQTPdatastore* ds) const override;
+        virtual double getYErrorU(int i, JKQTPDatastore* ds) const override;
+        virtual double getYErrorL(int i, JKQTPDatastore* ds) const override;
 };
 
 
 /*! \brief This class adds data fields for error indicators in x and y direction to a class.
     \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPgraphErrors
+    \see JKQTPGraphErrors
 
  */
-class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
+class LIB_EXPORT JKQTPXYGraphErrors: public JKQTPGraphErrors {
     public:
         /** \brief class contructor */
-        JKQTPxyGraphErrors(QColor graphColor=QColor("black"));
+        JKQTPXYGraphErrors(QColor graphColor=QColor("black"));
         /*! \brief sets the property xErrorSymmetric to the specified \a __value. 
             \details Description of the parameter xErrorSymmetric is: <BLOCKQUOTE>\copybrief xErrorSymmetric </BLOCKQUOTE> 
             \see xErrorSymmetric for more information */ 
@@ -906,32 +906,32 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
         /*! \brief sets the property yErrorStyle to the specified \a __value. 
             \details Description of the parameter yErrorStyle is: <BLOCKQUOTE>\copybrief yErrorStyle </BLOCKQUOTE> 
             \see yErrorStyle for more information */ 
-        inline virtual void set_yErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        inline virtual void set_yErrorStyle(const JKQTPErrorPlotstyle & __value)  
         {
             this->yErrorStyle = __value;
         } 
         /*! \brief returns the property yErrorStyle. 
             \details Description of the parameter yErrorStyle is: <BLOCKQUOTE>\copybrief yErrorStyle </BLOCKQUOTE> 
             \see yErrorStyle for more information */ 
-        inline virtual JKQTPerrorPlotstyle get_yErrorStyle() const  
+        inline virtual JKQTPErrorPlotstyle get_yErrorStyle() const  
         {
             return this->yErrorStyle; 
         }
         /*! \brief sets the property xErrorStyle to the specified \a __value. 
             \details Description of the parameter xErrorStyle is: <BLOCKQUOTE>\copybrief xErrorStyle </BLOCKQUOTE> 
             \see xErrorStyle for more information */ 
-        inline virtual void set_xErrorStyle(const JKQTPerrorPlotstyle & __value)  
+        inline virtual void set_xErrorStyle(const JKQTPErrorPlotstyle & __value)  
         {
             this->xErrorStyle = __value;
         } 
         /*! \brief returns the property xErrorStyle. 
             \details Description of the parameter xErrorStyle is: <BLOCKQUOTE>\copybrief xErrorStyle </BLOCKQUOTE> 
             \see xErrorStyle for more information */ 
-        inline virtual JKQTPerrorPlotstyle get_xErrorStyle() const  
+        inline virtual JKQTPErrorPlotstyle get_xErrorStyle() const  
         {
             return this->xErrorStyle; 
         }
-        /** \copydoc JKQTPgraphErrors::errorUsesColumn() */
+        /** \copydoc JKQTPGraphErrors::errorUsesColumn() */
         virtual bool errorUsesColumn(int c) const override;
 
         /** \brief set the column from which to read the error values for x-error indicators */
@@ -955,11 +955,11 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
         /** \brief the column that contains the error of the x-component of the datapoints */
         int yErrorColumn;
         /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPerrorPlotstyle yErrorStyle;
+        JKQTPErrorPlotstyle yErrorStyle;
         /** \brief the column that contains the error of the x-component of the datapoints */
         int xErrorColumn;
         /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPerrorPlotstyle xErrorStyle;
+        JKQTPErrorPlotstyle xErrorStyle;
         /** \brief indicates whether the x-errors are symmetric (from one column only) */
         bool  xErrorSymmetric;
         /** \brief indicates whether the y-errors are symmetric (from one column only) */
@@ -971,12 +971,12 @@ class LIB_EXPORT JKQTPxyGraphErrors: public JKQTPgraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
 
-        virtual double getXErrorU(int i, JKQTPdatastore* ds) const override;
-        virtual double getXErrorL(int i, JKQTPdatastore* ds) const override;
-        virtual double getYErrorU(int i, JKQTPdatastore* ds) const override;
-        virtual double getYErrorL(int i, JKQTPdatastore* ds) const override;
+        virtual double getXErrorU(int i, JKQTPDatastore* ds) const override;
+        virtual double getXErrorL(int i, JKQTPDatastore* ds) const override;
+        virtual double getYErrorU(int i, JKQTPDatastore* ds) const override;
+        virtual double getYErrorL(int i, JKQTPDatastore* ds) const override;
 };
 
 

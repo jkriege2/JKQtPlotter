@@ -58,114 +58,114 @@ class LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBox {
 
 
 
-/*! \brief a QComboBox which shows  JKQTPCAdrawMode
+/*! \brief a QComboBox which shows  JKQTPCADrawMode
     \ingroup jkqtpcomboboxes
  */
-class LIB_EXPORT JKQTPCAdrawModeComboBox: public QComboBox {
+class LIB_EXPORT JKQTPCADrawModeComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPCAdrawModeComboBox(QWidget* parent=nullptr);
+        JKQTPCADrawModeComboBox(QWidget* parent=nullptr);
 
-        JKQTPCAdrawMode getDrawMode() const;
-        void setDrawMode(JKQTPCAdrawMode position);
+        JKQTPCADrawMode getDrawMode() const;
+        void setDrawMode(JKQTPCADrawMode position);
     protected:
-        void addDrawMode(JKQTPCAdrawMode position, const QString& name, const QIcon& icon=QIcon());
+        void addDrawMode(JKQTPCADrawMode position, const QString& name, const QIcon& icon=QIcon());
 };
 
 
 
-/*! \brief a QComboBox which shows  JKQTPCAlabelType
+/*! \brief a QComboBox which shows  JKQTPCALabelType
     \ingroup jkqtpcomboboxes
  */
-class LIB_EXPORT JKQTPCAlabelTypeComboBox: public QComboBox {
+class LIB_EXPORT JKQTPCALabelTypeComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPCAlabelTypeComboBox(QWidget* parent=nullptr);
+        JKQTPCALabelTypeComboBox(QWidget* parent=nullptr);
 
-        JKQTPCAlabelType getLabelType() const;
-        void setLabelType(JKQTPCAlabelType position);
+        JKQTPCALabelType getLabelType() const;
+        void setLabelType(JKQTPCALabelType position);
     protected:
-        void addLabelType(JKQTPCAlabelType position, const QString& name, const QIcon& icon=QIcon());
+        void addLabelType(JKQTPCALabelType position, const QString& name, const QIcon& icon=QIcon());
 };
 
 
-/*! \brief a QComboBox which shows  JKQTPlabelPosition
+/*! \brief a QComboBox which shows  JKQTPLabelPosition
     \ingroup jkqtpcomboboxes
  */
-class LIB_EXPORT JKQTPlabelPositionComboBox: public QComboBox {
+class LIB_EXPORT JKQTPLabelPositionComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPlabelPositionComboBox(QWidget* parent=nullptr);
+        JKQTPLabelPositionComboBox(QWidget* parent=nullptr);
 
-        JKQTPlabelPosition getPosition() const;
-        void setPosition(JKQTPlabelPosition position);
+        JKQTPLabelPosition getPosition() const;
+        void setPosition(JKQTPLabelPosition position);
     protected:
-        void addPosition(JKQTPlabelPosition position, const QString& name, const QIcon& icon=QIcon());
+        void addPosition(JKQTPLabelPosition position, const QString& name, const QIcon& icon=QIcon());
 };
 
 
 
-/*! \brief a QComboBox which shows JKQTPkeyPosition
+/*! \brief a QComboBox which shows JKQTPKeyPosition
     \ingroup jkqtpcomboboxes
 
-    \image html JKQTPkeyPositionComboBox.png
+    \image html JKQTPKeyPositionComboBox.png
  */
-class LIB_EXPORT JKQTPkeyPositionComboBox: public QComboBox {
+class LIB_EXPORT JKQTPKeyPositionComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPkeyPositionComboBox(QWidget* parent=nullptr);
+        JKQTPKeyPositionComboBox(QWidget* parent=nullptr);
 
-        JKQTPkeyPosition getPosition() const;
-        void setPosition(JKQTPkeyPosition position);
+        JKQTPKeyPosition getPosition() const;
+        void setPosition(JKQTPKeyPosition position);
     signals:
-        void currentPositionChanged(JKQTPkeyPosition pos);
+        void currentPositionChanged(JKQTPKeyPosition pos);
     protected:
-        void addPosition(JKQTPkeyPosition position, const QString& name, const QIcon& icon=QIcon());
+        void addPosition(JKQTPKeyPosition position, const QString& name, const QIcon& icon=QIcon());
     protected slots:
         void posChanged(int index);
 };
 
 
 
-/*! \brief a QComboBox which shows JKQTPkeyPosition
+/*! \brief a QComboBox which shows JKQTPKeyPosition
     \ingroup jkqtpcomboboxes
  */
-class LIB_EXPORT JKQTPkeyLayoutComboBox: public QComboBox {
+class LIB_EXPORT JKQTPKeyLayoutComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPkeyLayoutComboBox(QWidget* parent=nullptr);
+        JKQTPKeyLayoutComboBox(QWidget* parent=nullptr);
 
-        JKQTPkeyLayout getKeyLayout() const;
-        void setKeyLayout(JKQTPkeyLayout layout);
+        JKQTPKeyLayout getKeyLayout() const;
+        void setKeyLayout(JKQTPKeyLayout layout);
     signals:
-        void currentLayoutChanged(JKQTPkeyLayout layout);
+        void currentLayoutChanged(JKQTPKeyLayout layout);
     protected:
-        void addKeyLayout(JKQTPkeyLayout layout, const QString& name);
+        void addKeyLayout(JKQTPKeyLayout layout, const QString& name);
     protected slots:
         void currentIndexChangedP(int index);
 };
 
 
-/*! \brief a QComboBox which shows JKQTPerrorPlotstyle
+/*! \brief a QComboBox which shows JKQTPErrorPlotstyle
     \ingroup jkqtpcomboboxes
 
-    \image html JKQTPerrorPlotstyleComboBox.png
+    \image html JKQTPErrorPlotstyleComboBox.png
  */
-class LIB_EXPORT JKQTPerrorPlotstyleComboBox: public QComboBox {
+class LIB_EXPORT JKQTPErrorPlotstyleComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPerrorPlotstyleComboBox(QWidget* parent=nullptr);
+        JKQTPErrorPlotstyleComboBox(QWidget* parent=nullptr);
 
-        JKQTPerrorPlotstyle getErrorStyle() const;
-        void setSymbol(JKQTPerrorPlotstyle symbol);
-        void setCurrentErrorStyle(JKQTPerrorPlotstyle symbol);
+        JKQTPErrorPlotstyle getErrorStyle() const;
+        void setSymbol(JKQTPErrorPlotstyle symbol);
+        void setCurrentErrorStyle(JKQTPErrorPlotstyle symbol);
     protected:
-        void addSymbol(JKQTPerrorPlotstyle symbol, const QString& name, const QIcon &icon=QIcon());
+        void addSymbol(JKQTPErrorPlotstyle symbol, const QString& name, const QIcon &icon=QIcon());
 };
 
 
 
-/*! \brief a QComboBox which shows JKQTPgraphSymbols
+/*! \brief a QComboBox which shows JKQTPGraphSymbols
     \ingroup jkqtpcomboboxes
 
     \image html JKQTPSymbolComboBox.png
@@ -175,11 +175,11 @@ class LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
     public:
         JKQTPSymbolComboBox(QWidget* parent=nullptr);
 
-        JKQTPgraphSymbols getSymbol() const;
-        void setSymbol(JKQTPgraphSymbols symbol);
-        void setCurrentSymbol(JKQTPgraphSymbols symbol);
+        JKQTPGraphSymbols getSymbol() const;
+        void setSymbol(JKQTPGraphSymbols symbol);
+        void setCurrentSymbol(JKQTPGraphSymbols symbol);
     protected:
-        void addSymbol(JKQTPgraphSymbols symbol, const QString& name);
+        void addSymbol(JKQTPGraphSymbols symbol, const QString& name);
 };
 
 
@@ -191,16 +191,16 @@ class LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
     public:
         JKQTPLinePlotStyleComboBox(QWidget* parent=nullptr);
 
-        void setDefaultSymbol(JKQTPgraphSymbols symbol);
-        void addUsedSymbol(JKQTPgraphSymbols symbol);
+        void setDefaultSymbol(JKQTPGraphSymbols symbol);
+        void addUsedSymbol(JKQTPGraphSymbols symbol);
 
-        JKQTPgraphSymbols getSymbol() const;
+        JKQTPGraphSymbols getSymbol() const;
         bool getDrawLine() const;
     protected:
         void refill();
-        void addSymbol(JKQTPgraphSymbols symbol, bool line, const QString& name=QString(""), const QVariant& data=QVariant());
-        QList<JKQTPgraphSymbols> symbols;
-        JKQTPgraphSymbols defaultSymbol;
+        void addSymbol(JKQTPGraphSymbols symbol, bool line, const QString& name=QString(""), const QVariant& data=QVariant());
+        QList<JKQTPGraphSymbols> symbols;
+        JKQTPGraphSymbols defaultSymbol;
 };
 
 
@@ -212,41 +212,41 @@ class LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
     public:
         JKQTPLinePlotStyleWithSymbolSizeComboBox(QWidget* parent=nullptr);
 
-        void setDefaultSymbol(JKQTPgraphSymbols symbol, double size);
-        void addUsedSymbol(JKQTPgraphSymbols symbol, double symbolSize, bool line);
+        void setDefaultSymbol(JKQTPGraphSymbols symbol, double size);
+        void addUsedSymbol(JKQTPGraphSymbols symbol, double symbolSize, bool line);
 
-        JKQTPgraphSymbols getSymbol() const;
+        JKQTPGraphSymbols getSymbol() const;
         bool getDrawLine() const;
         double getSymbolSize() const;
     protected:
         void refill();
-        void addSymbol(JKQTPgraphSymbols symbol, bool line, double symbolSize, const QString& name=QString(""), const QVariant& data=QVariant());
+        void addSymbol(JKQTPGraphSymbols symbol, bool line, double symbolSize, const QString& name=QString(""), const QVariant& data=QVariant());
         struct styleData {
-            JKQTPgraphSymbols symbol;
+            JKQTPGraphSymbols symbol;
             bool line;
             double symbolSize;
             bool operator==(const styleData& other)const;
         };
 
         QList<styleData> symbols;
-        JKQTPgraphSymbols defaultSymbol;
+        JKQTPGraphSymbols defaultSymbol;
         double defaultSize;
 };
 
 
-/*! \brief a QComboBox which shows JKQTPstepType
+/*! \brief a QComboBox which shows JKQTPStepType
     \ingroup jkqtpcomboboxes
  */
-class LIB_EXPORT JKQTPstepTypeComboBox: public QComboBox {
+class LIB_EXPORT JKQTPStepTypeComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPstepTypeComboBox(QWidget* parent=nullptr);
+        JKQTPStepTypeComboBox(QWidget* parent=nullptr);
 
-        JKQTPstepType getStepType() const;
-        void setStepType(JKQTPstepType step);
-        void setCurrentStepType(JKQTPstepType step);
+        JKQTPStepType getStepType() const;
+        void setStepType(JKQTPStepType step);
+        void setCurrentStepType(JKQTPStepType step);
     protected:
-        void addStep(JKQTPstepType step, const QString& name, const QIcon &icon=QIcon());
+        void addStep(JKQTPStepType step, const QString& name, const QIcon &icon=QIcon());
 };
 
 

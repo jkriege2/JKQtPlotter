@@ -34,7 +34,7 @@ class TestWidgetPeaksPlots : public QWidget
 
     protected:
 
-        JKQtPlotter* plotPeaks;
+        JKQTPLotter* plotPeaks;
         JKQTPPeakStreamGraph* graphPeakStream1;
         JKQTPPeakStreamGraph* graphPeakStream2;
 

@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_dateaxes.cpp
- * Shows how to use date/time axes with JKQtPlotter
+ * Shows how to use date/time axes with JKQTPLotter
  *
- * \ref JKQtPlotterDateTimeAxes
+ * \ref JKQTPLotterDateTimeAxes
  */
 
 #include <QApplication>
@@ -15,10 +15,10 @@
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
 
-void drawWithDateAxis(JKQtPlotter& plot) {
+void drawWithDateAxis(JKQTPLotter& plot) {
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data vectors with data parsed from a CSV-file
     QVector<double> date;
@@ -43,8 +43,8 @@ void drawWithDateAxis(JKQtPlotter& plot) {
     }
 
     // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
-    JKQTPfilledVerticalRangeGraph* graphTemperatureRange=new JKQTPfilledVerticalRangeGraph(&plot);
-    JKQTPxyLineErrorGraph* graphTemperature=new JKQTPxyLineErrorGraph(&plot);
+    JKQTPFilledVerticalRangeGraph* graphTemperatureRange=new JKQTPFilledVerticalRangeGraph(&plot);
+    JKQTPXYLineErrorGraph* graphTemperature=new JKQTPXYLineErrorGraph(&plot);
 
     // 4. copy data into datastore and immediately set the yColumn
     size_t colDate=ds->addCopiedColumn(date, "date");
@@ -67,7 +67,7 @@ void drawWithDateAxis(JKQtPlotter& plot) {
 
     // 6. average data
     // don't use symbols
-    graphTemperature->set_symbol(JKQTPnoSymbol);
+    graphTemperature->set_symbol(JKQTPNoSymbol);
     // set the line width
     graphTemperature->set_lineWidth(1);
     // draw small symbols
@@ -98,9 +98,9 @@ void drawWithDateAxis(JKQtPlotter& plot) {
     plot.setWindowTitle("Date Axis");
 }
 
-void drawWithTimeAxis(JKQtPlotter& plot) {
+void drawWithTimeAxis(JKQTPLotter& plot) {
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data vectors with data parsed from a CSV-file
     QVector<double> time;
@@ -124,7 +124,7 @@ void drawWithTimeAxis(JKQtPlotter& plot) {
     }
 
     // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
-    JKQTPxyLineErrorGraph* graphTemperature=new JKQTPxyLineErrorGraph(&plot);
+    JKQTPXYLineErrorGraph* graphTemperature=new JKQTPXYLineErrorGraph(&plot);
 
     // 4. copy data into datastore and immediately set the yColumn
     size_t colDate=ds->addCopiedColumn(time, "time");
@@ -134,7 +134,7 @@ void drawWithTimeAxis(JKQtPlotter& plot) {
 
     // 6. average data
     // don't use symbols
-    graphTemperature->set_symbol(JKQTPcross);
+    graphTemperature->set_symbol(JKQTPCross);
     // set the line width
     graphTemperature->set_lineWidth(1);
     // draw small symbols
@@ -169,10 +169,10 @@ void drawWithTimeAxis(JKQtPlotter& plot) {
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    JKQtPlotter plotDate;
+    JKQTPLotter plotDate;
     drawWithDateAxis(plotDate);
     plotDate.move(100,100);
-    JKQtPlotter plotTime;
+    JKQTPLotter plotTime;
     drawWithTimeAxis(plotTime);
     plotTime.move(100,550);
 

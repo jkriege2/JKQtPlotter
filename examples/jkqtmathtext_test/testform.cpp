@@ -148,7 +148,7 @@ TestForm::~TestForm()
 
 
 
-double TestForm::draw(QPainter& painter, double X, double YY, JKQTmathText& mt, QString name, double& durationSizingMS, double&durationTimingMS) {
+double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, QString name, double& durationSizingMS, double&durationTimingMS) {
 
 
     double Y=YY;
@@ -190,34 +190,34 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTmathText& mt, 
     return mt.getDescent(painter)+mt.getAscent(painter)+40;
 }
 
-QTreeWidgetItem *TestForm::createTree(JKQTmathText::MTnode *node, QTreeWidgetItem* parent)
+QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetItem* parent)
 {
     QString name;
-    JKQTmathText::MTtextNode* txtN=dynamic_cast<JKQTmathText::MTtextNode*>(node);
-    JKQTmathText::MTwhitespaceNode* spN=dynamic_cast<JKQTmathText::MTwhitespaceNode*>(node);
-    JKQTmathText::MTsymbolNode* symN=dynamic_cast<JKQTmathText::MTsymbolNode*>(node);
-    JKQTmathText::MTlistNode* lstN=dynamic_cast<JKQTmathText::MTlistNode*>(node);
-    JKQTmathText::MTinstruction1Node* inst1N=dynamic_cast<JKQTmathText::MTinstruction1Node*>(node);
-    JKQTmathText::MTsubscriptNode* subN=dynamic_cast<JKQTmathText::MTsubscriptNode*>(node);
-    JKQTmathText::MTsuperscriptNode* superN=dynamic_cast<JKQTmathText::MTsuperscriptNode*>(node);
-    JKQTmathText::MTbraceNode* braceN=dynamic_cast<JKQTmathText::MTbraceNode*>(node);
-    JKQTmathText::MTsqrtNode* sqrtN=dynamic_cast<JKQTmathText::MTsqrtNode*>(node);
-    JKQTmathText::MTfracNode* fracN=dynamic_cast<JKQTmathText::MTfracNode*>(node);
-    JKQTmathText::MTmatrixNode* matrixN=dynamic_cast<JKQTmathText::MTmatrixNode*>(node);
-    JKQTmathText::MTdecoratedNode* decoN=dynamic_cast<JKQTmathText::MTdecoratedNode*>(node);
+    JKQTMathText::MTtextNode* txtN=dynamic_cast<JKQTMathText::MTtextNode*>(node);
+    JKQTMathText::MTwhitespaceNode* spN=dynamic_cast<JKQTMathText::MTwhitespaceNode*>(node);
+    JKQTMathText::MTsymbolNode* symN=dynamic_cast<JKQTMathText::MTsymbolNode*>(node);
+    JKQTMathText::MTlistNode* lstN=dynamic_cast<JKQTMathText::MTlistNode*>(node);
+    JKQTMathText::MTinstruction1Node* inst1N=dynamic_cast<JKQTMathText::MTinstruction1Node*>(node);
+    JKQTMathText::MTsubscriptNode* subN=dynamic_cast<JKQTMathText::MTsubscriptNode*>(node);
+    JKQTMathText::MTsuperscriptNode* superN=dynamic_cast<JKQTMathText::MTsuperscriptNode*>(node);
+    JKQTMathText::MTbraceNode* braceN=dynamic_cast<JKQTMathText::MTbraceNode*>(node);
+    JKQTMathText::MTsqrtNode* sqrtN=dynamic_cast<JKQTMathText::MTsqrtNode*>(node);
+    JKQTMathText::MTfracNode* fracN=dynamic_cast<JKQTMathText::MTfracNode*>(node);
+    JKQTMathText::MTmatrixNode* matrixN=dynamic_cast<JKQTMathText::MTmatrixNode*>(node);
+    JKQTMathText::MTdecoratedNode* decoN=dynamic_cast<JKQTMathText::MTdecoratedNode*>(node);
 
     QTreeWidgetItem* ti=nullptr;
     if (parent) ti=new QTreeWidgetItem(parent);
     else ti=new QTreeWidgetItem(ui->tree);
 
     if (decoN) {
-        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTmathText::decorationToString(decoN->get_decoration()));
+        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathText::decorationToString(decoN->get_decoration()));
         if (decoN->get_child()) ti->addChild(createTree(decoN->get_child(), ti));
     } else if (matrixN)  {
         int l=matrixN->get_lines();
         int c=matrixN->get_columns();
         name=QString("MTmatrixNode: l*c=%1*%2").arg(l).arg(c);
-        QVector<QVector<JKQTmathText::MTnode*> > children=matrixN->get_children();
+        QVector<QVector<JKQTMathText::MTnode*> > children=matrixN->get_children();
         for (int y=0; y<l; y++) {
             for (int x=0; x<c; x++) {
                 if (children[y].at(x)!=nullptr) {
@@ -228,7 +228,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTmathText::MTnode *node, QTreeWidgetIte
             }
         }
     } else if (fracN)  {
-        name=QString("MTfracNode: mode='%1'").arg(JKQTmathText::fracModeToString(fracN->get_mode()));
+        name=QString("MTfracNode: mode='%1'").arg(JKQTMathText::fracModeToString(fracN->get_mode()));
         if (fracN->get_child1()) ti->addChild(createTree(fracN->get_child1(), ti));
         if (fracN->get_child2()) ti->addChild(createTree(fracN->get_child2(), ti));
     } else if (sqrtN)  {
@@ -248,7 +248,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTmathText::MTnode *node, QTreeWidgetIte
         if (inst1N->get_child()) ti->addChild(createTree(inst1N->get_child(), ti));
     } else if (lstN)  {
         name=QString("MTlistNode");
-        QList<JKQTmathText::MTnode*> list=lstN->get_nodes();
+        QList<JKQTMathText::MTnode*> list=lstN->get_nodes();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }
@@ -308,7 +308,7 @@ void TestForm::updateMath()
     QPixmap pix(W, H);
     pix.fill();
     QPainter painter;
-    JKQTmathText mt(this);
+    JKQTMathText mt(this);
 
 
     double Y=Y1;

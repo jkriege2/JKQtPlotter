@@ -33,13 +33,13 @@
 
     \image html plot_filledcurvexerrorplots.png
  */
-class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
+class LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveXGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPFilledCurveXGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPfilledCurveXGraph(JKQtPlotter* parent);
+        JKQTPFilledCurveXGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -183,7 +183,7 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */
@@ -212,14 +212,14 @@ class LIB_EXPORT JKQTPfilledCurveXGraph: public JKQTPxyGraph {
 
     \image html plot_filledcurvexerrorplots.png
  */
-class LIB_EXPORT JKQTPfilledCurveXErrorGraph: public JKQTPfilledCurveXGraph, public JKQTPyGraphErrors {
+class LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGraph, public JKQTPYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveXErrorGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPFilledCurveXErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPfilledCurveXErrorGraph(JKQtPlotter* parent);
-        /** \copydoc JKQTPgraph::usesColumn() */
+        JKQTPFilledCurveXErrorGraph(JKQTPLotter* parent);
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:
@@ -238,13 +238,13 @@ class LIB_EXPORT JKQTPfilledCurveXErrorGraph: public JKQTPfilledCurveXGraph, pub
 
     \image html plot_filledcurvexplots.png
  */
-class LIB_EXPORT JKQTPfilledCurveYGraph: public JKQTPfilledCurveXGraph {
+class LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveXGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveYGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPFilledCurveYGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPfilledCurveYGraph(JKQtPlotter* parent);
+        JKQTPFilledCurveYGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -257,13 +257,13 @@ class LIB_EXPORT JKQTPfilledCurveYGraph: public JKQTPfilledCurveXGraph {
 
     \image html plot_filledcurveyerrorplots.png
  */
-class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, public JKQTPxGraphErrors {
+class LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGraph, public JKQTPXGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledCurveYErrorGraph(JKQtBasePlotter* parent=nullptr);
-        JKQTPfilledCurveYErrorGraph(JKQtPlotter* parent);
-        /** \copydoc JKQTPgraph::usesColumn() */
+        JKQTPFilledCurveYErrorGraph(JKQTBasePlotter* parent=nullptr);
+        JKQTPFilledCurveYErrorGraph(JKQTPLotter* parent);
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:
@@ -282,25 +282,25 @@ class LIB_EXPORT JKQTPfilledCurveYErrorGraph: public JKQTPfilledCurveYGraph, pub
     \ingroup jkqtplotter_linesymbolgraphs
 
     With set_drawlines(false):
-    \image html JKQTPfilledVerticalRangeGraph.png
+    \image html JKQTPFilledVerticalRangeGraph.png
 
     With set_drawlines(true):
-    \image html JKQTPfilledVerticalRangeGraph_WithLines.png
+    \image html JKQTPFilledVerticalRangeGraph_WithLines.png
  */
-class LIB_EXPORT JKQTPfilledVerticalRangeGraph: public JKQTPxyGraph {
+class LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPfilledVerticalRangeGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPFilledVerticalRangeGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPfilledVerticalRangeGraph(JKQtPlotter* parent);
+        JKQTPFilledVerticalRangeGraph(JKQTPLotter* parent);
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int column) const override;
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -438,7 +438,7 @@ class LIB_EXPORT JKQTPfilledVerticalRangeGraph: public JKQTPxyGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */

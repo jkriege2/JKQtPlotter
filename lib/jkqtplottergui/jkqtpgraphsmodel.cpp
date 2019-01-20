@@ -31,23 +31,23 @@
 
 
 
-JKQTPgraphsModel::JKQTPgraphsModel(JKQtBasePlotter *parent):
+JKQTPGraphsModel::JKQTPGraphsModel(JKQTBasePlotter *parent):
     QAbstractTableModel(parent), m_plotter(parent)
 {
 
 }
 
-int JKQTPgraphsModel::rowCount(const QModelIndex &/*parent*/) const
+int JKQTPGraphsModel::rowCount(const QModelIndex &/*parent*/) const
 {
     return static_cast<int>(m_plotter->getGraphCount());
 }
 
-int JKQTPgraphsModel::columnCount(const QModelIndex &/*parent*/) const
+int JKQTPGraphsModel::columnCount(const QModelIndex &/*parent*/) const
 {
     return 1;
 }
 
-QVariant JKQTPgraphsModel::data(const QModelIndex &index, int role) const
+QVariant JKQTPGraphsModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
        if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->get_title();
@@ -61,7 +61,7 @@ QVariant JKQTPgraphsModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool JKQTPgraphsModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool JKQTPGraphsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (role == Qt::CheckStateRole) {
         if (index.row()<static_cast<int>(m_plotter->getGraphCount())) {
@@ -72,12 +72,12 @@ bool JKQTPgraphsModel::setData(const QModelIndex &index, const QVariant &value, 
     return false;
 }
 
-Qt::ItemFlags JKQTPgraphsModel::flags(const QModelIndex &index) const
+Qt::ItemFlags JKQTPGraphsModel::flags(const QModelIndex &index) const
 {
     return Qt::ItemIsUserCheckable | QAbstractTableModel::flags(index);
 }
 
-void JKQTPgraphsModel::plotUpdated()
+void JKQTPGraphsModel::plotUpdated()
 {
     beginResetModel();
     endResetModel();

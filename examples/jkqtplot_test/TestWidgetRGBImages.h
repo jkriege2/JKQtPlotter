@@ -54,7 +54,7 @@ class TestWidgetRGBImages : public QWidget
         int rgb_colr, rgb_colb, rgb_colg, rgb_cola;
 
 
-        JKQtPlotter* plotImgRGB;
+        JKQTPLotter* plotImgRGB;
         JKQTPRGBMathImage* rgbimg;
         JKQTPColumnRGBMathImage* rgbimg2;
 

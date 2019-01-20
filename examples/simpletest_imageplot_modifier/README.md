@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Simple math image plot {#JKQtPlotterImagePlotModifier}
-This project (see `./examples/simpletest_imageplot_modifier/`) creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here `sin(r)`). Then a second image (linearly scaling from 1 in the center to 0 at the borders) is used to modify the first image. The modification can alter several properties of the original image, like its saturation, its transparency (alpha) ...
+# Example (JKQTPLotter): Simple math image plot {#JKQTPLotterImagePlotModifier}
+This project (see `./examples/simpletest_imageplot_modifier/`) creates a JKQTPLotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here `sin(r)`). Then a second image (linearly scaling from 1 in the center to 0 at the borders) is used to modify the first image. The modification can alter several properties of the original image, like its saturation, its transparency (alpha) ...
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot_modifier.cpp`](../simpletest_imageplot_modifier/jkqtplotter_simpletest_imageplot_modifier.cpp):
 ```.cpp
@@ -17,12 +17,12 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
     const int NX=150; // image dimension in x-direction [pixels]
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cImage=ds->addCopiedImageAsColumn(image, NX, NY, "imagedata");

@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_rgbimageplot_opencv.cpp
- * JKQtPlotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
+ * JKQTPLotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
  *
- * \ref JKQtPlotterImagePlotRGBOpenCV
+ * \ref JKQTPLotterImagePlotRGBOpenCV
  */
 
 #include <QApplication>
@@ -18,14 +18,14 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
 
     // 2. now we open a BMP-file and load it into an OpenCV cv::Mat
@@ -33,12 +33,12 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    In this step the contents of each channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
-    size_t cPictureR=JKQTPcopyCvMatToColumn(ds, picture, "R-channel", 2);
-    size_t cPictureG=JKQTPcopyCvMatToColumn(ds, picture, "G-channel", 1);
-    size_t cPictureB=JKQTPcopyCvMatToColumn(ds, picture, "B-channel", 0);
+    size_t cPictureR=JKQTPCopyCvMatToColumn(ds, picture, "R-channel", 2);
+    size_t cPictureG=JKQTPCopyCvMatToColumn(ds, picture, "G-channel", 1);
+    size_t cPictureB=JKQTPCopyCvMatToColumn(ds, picture, "B-channel", 0);
 
 
     // 4. create a graph (JKQTPColumnRGBMathImage) with the columns created above as data

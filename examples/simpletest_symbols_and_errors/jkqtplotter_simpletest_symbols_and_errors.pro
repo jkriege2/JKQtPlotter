@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET = jkqtplotter_simpletest_symbols_and_errors
 
 
-# include JKQtPlotter source code
+# include JKQTPLotter source code
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {

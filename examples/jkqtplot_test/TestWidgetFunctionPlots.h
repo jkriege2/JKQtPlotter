@@ -46,9 +46,9 @@ class TestWidgetFunctionPlots : public QWidget
 
     protected:
 
-        JKQTPxParsedFunctionLineGraph* pfunc;
-        JKQtPlotter* plotFuncPlt;
-        JKQTPerrorPlotstyleComboBox* pfuncErrorStyle;
+        JKQTPXParsedFunctionLineGraph* pfunc;
+        JKQTPLotter* plotFuncPlt;
+        JKQTPErrorPlotstyleComboBox* pfuncErrorStyle;
         QCheckBox* chkPFuncDrawSamples;
         QCheckBox* chkPFuncDrawLine;
 

@@ -34,8 +34,8 @@
 JKQTPMathImageColorPaletteComboBox::JKQTPMathImageColorPaletteComboBox(QWidget *parent):
     QComboBox(parent)
 {
-    setIconSize(QSize(JKQTP_PALETTE_ICON_WIDTH,16));
-    QStringList pal=JKQTPimagePlot_getPredefinedPalettes();
+    setIconSize(QSize(jkqtp_PALETTE_ICON_WIDTH,16));
+    QStringList pal=JKQTPImagePlot_getPredefinedPalettes();
     clear();
     for (int i=0; i<pal.size(); i++) {
         addItem(JKQTPMathImageGetPaletteIcon(i), pal[i]);
@@ -82,29 +82,29 @@ JKQTPSymbolComboBox::JKQTPSymbolComboBox(QWidget *parent):
 {
     clear();
     setEditable(false);
-    for (int i=0; i<=JKQTPmaxSymbolID; i++) {
-        addSymbol(static_cast<JKQTPgraphSymbols>(i), JKQTPgraphSymbols2NameString(static_cast<JKQTPgraphSymbols>(i)));
+    for (int i=0; i<=JKQTPMaxSymbolID; i++) {
+        addSymbol(static_cast<JKQTPGraphSymbols>(i), JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(i)));
     }
     setCurrentIndex(0);
 }
 
-JKQTPgraphSymbols JKQTPSymbolComboBox::getSymbol() const
+JKQTPGraphSymbols JKQTPSymbolComboBox::getSymbol() const
 {
-    return String2JKQTPgraphSymbols(itemData(currentIndex()).toString());
+    return String2JKQTPGraphSymbols(itemData(currentIndex()).toString());
 }
 
-void JKQTPSymbolComboBox::setSymbol(JKQTPgraphSymbols symbol)
+void JKQTPSymbolComboBox::setSymbol(JKQTPGraphSymbols symbol)
 {
-    int i=findData(JKQTPgraphSymbols2String(symbol));
+    int i=findData(JKQTPGraphSymbols2String(symbol));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPSymbolComboBox::setCurrentSymbol(JKQTPgraphSymbols symbol)
+void JKQTPSymbolComboBox::setCurrentSymbol(JKQTPGraphSymbols symbol)
 {
     setSymbol(symbol);
 }
 
-void JKQTPSymbolComboBox::addSymbol(JKQTPgraphSymbols symbol, const QString &name)
+void JKQTPSymbolComboBox::addSymbol(JKQTPGraphSymbols symbol, const QString &name)
 {
     QPixmap pix(12,12);
     pix.fill(Qt::transparent);
@@ -112,9 +112,9 @@ void JKQTPSymbolComboBox::addSymbol(JKQTPgraphSymbols symbol, const QString &nam
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPplotSymbol(p, 6,6,symbol,10,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, 6,6,symbol,10,1,QColor("blue"), QColor("blue").lighter());
     p.end();
-    addItem(QIcon(pix), name, JKQTPgraphSymbols2String(symbol));
+    addItem(QIcon(pix), name, JKQTPGraphSymbols2String(symbol));
 }
 
 
@@ -126,28 +126,28 @@ JKQTPLinePlotStyleComboBox::JKQTPLinePlotStyleComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    defaultSymbol=JKQTPcross;
+    defaultSymbol=JKQTPCross;
     refill();
     setCurrentIndex(0);
 }
 
-void JKQTPLinePlotStyleComboBox::setDefaultSymbol(JKQTPgraphSymbols symbol)
+void JKQTPLinePlotStyleComboBox::setDefaultSymbol(JKQTPGraphSymbols symbol)
 {
     defaultSymbol=symbol;
     refill();
 }
 
-void JKQTPLinePlotStyleComboBox::addUsedSymbol(JKQTPgraphSymbols symbol)
+void JKQTPLinePlotStyleComboBox::addUsedSymbol(JKQTPGraphSymbols symbol)
 {
     if (!symbols.contains(symbol)) symbols.append(symbol);
     refill();
 }
 
-JKQTPgraphSymbols JKQTPLinePlotStyleComboBox::getSymbol() const
+JKQTPGraphSymbols JKQTPLinePlotStyleComboBox::getSymbol() const
 {
     bool ok=true;
     int idx=itemData(currentIndex()).toInt(&ok);
-    if (idx==-2) return JKQTPnoSymbol;
+    if (idx==-2) return JKQTPNoSymbol;
     if (idx>=0&&ok) return symbols.value(idx, defaultSymbol);
     return defaultSymbol;
 }
@@ -162,23 +162,23 @@ void JKQTPLinePlotStyleComboBox::refill()
     QString txt=currentText();
     setUpdatesEnabled(false);
     clear();
-    addSymbol(JKQTPnoSymbol, true, tr("line"), -2);
-    addSymbol(defaultSymbol, false, JKQTPgraphSymbols2NameString(defaultSymbol), -1);
-    addSymbol(defaultSymbol, true, JKQTPgraphSymbols2NameString(defaultSymbol)+tr("+line"), -1);
+    addSymbol(JKQTPNoSymbol, true, tr("line"), -2);
+    addSymbol(defaultSymbol, false, JKQTPGraphSymbols2NameString(defaultSymbol), -1);
+    addSymbol(defaultSymbol, true, JKQTPGraphSymbols2NameString(defaultSymbol)+tr("+line"), -1);
     for (int i=0; i<symbols.size(); i++) {
         if (symbols[i]!=defaultSymbol) {
-            addSymbol(symbols[i], false, JKQTPgraphSymbols2NameString(symbols[i]), i);
-            addSymbol(symbols[i], true, JKQTPgraphSymbols2NameString(symbols[i])+tr("+line"), i);
+            addSymbol(symbols[i], false, JKQTPGraphSymbols2NameString(symbols[i]), i);
+            addSymbol(symbols[i], true, JKQTPGraphSymbols2NameString(symbols[i])+tr("+line"), i);
         }
     }
-    addSymbol(JKQTPnoSymbol, false, "none", -2);
+    addSymbol(JKQTPNoSymbol, false, "none", -2);
     int idx=findText(txt);
     if (idx>=0) setCurrentIndex(idx);
     else setCurrentIndex(0);
     setUpdatesEnabled(true);
 }
 
-void JKQTPLinePlotStyleComboBox::addSymbol(JKQTPgraphSymbols symbol, bool line, const QString &name, const QVariant &data)
+void JKQTPLinePlotStyleComboBox::addSymbol(JKQTPGraphSymbols symbol, bool line, const QString &name, const QVariant &data)
 {
     QPixmap pix(12,12);
     pix.fill(Qt::transparent);
@@ -186,7 +186,7 @@ void JKQTPLinePlotStyleComboBox::addSymbol(JKQTPgraphSymbols symbol, bool line, 
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPplotSymbol(p, 6,6,symbol,7,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, 6,6,symbol,7,1,QColor("blue"), QColor("blue").lighter());
     p.setPen(QColor("blue"));
     if (line) p.drawLine(0,6,12,6);
     p.end();
@@ -195,205 +195,205 @@ void JKQTPLinePlotStyleComboBox::addSymbol(JKQTPgraphSymbols symbol, bool line, 
 
 
 
-JKQTPerrorPlotstyleComboBox::JKQTPerrorPlotstyleComboBox(QWidget *parent):
+JKQTPErrorPlotstyleComboBox::JKQTPErrorPlotstyleComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addSymbol(JKQTPnoError, tr("none"), QIcon(":/JKQTPlotter/jkqtp_enone.png"));
-    addSymbol(JKQTPerrorLines, tr("error lines"), QIcon(":/JKQTPlotter/jkqtp_elines.png"));
-    addSymbol(JKQTPerrorBars, tr("error bars"), QIcon(":/JKQTPlotter/jkqtp_ebars.png"));
-    addSymbol(JKQTPerrorSimpleBars, tr("simple error bars"), QIcon(":/JKQTPlotter/jkqtp_esbars.png"));
-    addSymbol(JKQTPerrorPolygons, tr("error polygons"), QIcon(":/JKQTPlotter/jkqtp_epoly.png"));
-    addSymbol(JKQTPerrorBarsLines, tr("bars + lines"), QIcon(":/JKQTPlotter/jkqtp_elinesbars.png"));
-    addSymbol(JKQTPerrorBarsPolygons, tr("bars + polygons"), QIcon(":/JKQTPlotter/jkqtp_epolybars.png"));
-    addSymbol(JKQTPerrorSimpleBarsLines, tr("simple bars + lines"), QIcon(":/JKQTPlotter/jkqtp_elinessbars.png"));
-    addSymbol(JKQTPerrorSimpleBarsPolygons, tr("simple bars + polygons"), QIcon(":/JKQTPlotter/jkqtp_epolysbars.png"));
-    addSymbol(JKQTPerrorBoxes, tr("boxes"), QIcon(":/JKQTPlotter/jkqtp_eboxes.png"));
-    addSymbol(JKQTPerrorEllipses, tr("ellipses"), QIcon(":/JKQTPlotter/jkqtp_eellipses.png"));
+    addSymbol(JKQTPNoError, tr("none"), QIcon(":/JKQTPLotter/jkqtp_enone.png"));
+    addSymbol(JKQTPErrorLines, tr("error lines"), QIcon(":/JKQTPLotter/jkqtp_elines.png"));
+    addSymbol(JKQTPErrorBars, tr("error bars"), QIcon(":/JKQTPLotter/jkqtp_ebars.png"));
+    addSymbol(JKQTPErrorSimpleBars, tr("simple error bars"), QIcon(":/JKQTPLotter/jkqtp_esbars.png"));
+    addSymbol(JKQTPErrorPolygons, tr("error polygons"), QIcon(":/JKQTPLotter/jkqtp_epoly.png"));
+    addSymbol(JKQTPErrorBarsLines, tr("bars + lines"), QIcon(":/JKQTPLotter/jkqtp_elinesbars.png"));
+    addSymbol(JKQTPErrorBarsPolygons, tr("bars + polygons"), QIcon(":/JKQTPLotter/jkqtp_epolybars.png"));
+    addSymbol(JKQTPErrorSimpleBarsLines, tr("simple bars + lines"), QIcon(":/JKQTPLotter/jkqtp_elinessbars.png"));
+    addSymbol(JKQTPErrorSimpleBarsPolygons, tr("simple bars + polygons"), QIcon(":/JKQTPLotter/jkqtp_epolysbars.png"));
+    addSymbol(JKQTPErrorBoxes, tr("boxes"), QIcon(":/JKQTPLotter/jkqtp_eboxes.png"));
+    addSymbol(JKQTPErrorEllipses, tr("ellipses"), QIcon(":/JKQTPLotter/jkqtp_eellipses.png"));
     setCurrentIndex(2);
 }
 
-JKQTPerrorPlotstyle JKQTPerrorPlotstyleComboBox::getErrorStyle() const
+JKQTPErrorPlotstyle JKQTPErrorPlotstyleComboBox::getErrorStyle() const
 {
-    return String2JKQTPerrorPlotstyle(itemData(currentIndex()).toString());
+    return String2JKQTPErrorPlotstyle(itemData(currentIndex()).toString());
 }
 
-void JKQTPerrorPlotstyleComboBox::setSymbol(JKQTPerrorPlotstyle symbol)
+void JKQTPErrorPlotstyleComboBox::setSymbol(JKQTPErrorPlotstyle symbol)
 {
-    int i=findData(JKQTPerrorPlotstyle2String(symbol));
+    int i=findData(JKQTPErrorPlotstyle2String(symbol));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPerrorPlotstyleComboBox::setCurrentErrorStyle(JKQTPerrorPlotstyle symbol)
+void JKQTPErrorPlotstyleComboBox::setCurrentErrorStyle(JKQTPErrorPlotstyle symbol)
 {
-    int i=findData(JKQTPerrorPlotstyle2String(symbol));
+    int i=findData(JKQTPErrorPlotstyle2String(symbol));
     if (i>=0) setCurrentIndex(i);
 
 }
 
-void JKQTPerrorPlotstyleComboBox::addSymbol(JKQTPerrorPlotstyle symbol, const QString &name, const QIcon& icon)
+void JKQTPErrorPlotstyleComboBox::addSymbol(JKQTPErrorPlotstyle symbol, const QString &name, const QIcon& icon)
 {
-    addItem(icon, name, JKQTPerrorPlotstyle2String(symbol));
+    addItem(icon, name, JKQTPErrorPlotstyle2String(symbol));
 }
 
 
 
 
 
-JKQTPkeyPositionComboBox::JKQTPkeyPositionComboBox(QWidget *parent):
+JKQTPKeyPositionComboBox::JKQTPKeyPositionComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addPosition(JKQTPkeyInsideTopRight, tr("inside, top-right"), QIcon(":/JKQTPlotter/jkqtp_key_itr.png"));
-    addPosition(JKQTPkeyInsideTopLeft, tr("inside, top-left"), QIcon(":/JKQTPlotter/jkqtp_key_itl.png"));
-    addPosition(JKQTPkeyInsideBottomLeft, tr("inside, bottom-left"), QIcon(":/JKQTPlotter/jkqtp_key_ibl.png"));
-    addPosition(JKQTPkeyInsideBottomRight, tr("inside, bottom-right"), QIcon(":/JKQTPlotter/jkqtp_key_ibr.png"));
-    addPosition(JKQTPkeyOutsideTopRight, tr("outside, top-right"), QIcon(":/JKQTPlotter/jkqtp_key_otr.png"));
-    addPosition(JKQTPkeyOutsideTopLeft, tr("outside, top-left"), QIcon(":/JKQTPlotter/jkqtp_key_otl.png"));
-    addPosition(JKQTPkeyOutsideLeftTop, tr("outside, left-top"), QIcon(":/JKQTPlotter/jkqtp_key_olt.png"));
-    addPosition(JKQTPkeyOutsideLeftBottom, tr("outside, left-bottom"), QIcon(":/JKQTPlotter/jkqtp_key_olb.png"));
-    addPosition(JKQTPkeyOutsideBottomRight, tr("outside, bottom-right"), QIcon(":/JKQTPlotter/jkqtp_key_obr.png"));
-    addPosition(JKQTPkeyOutsideBottomLeft, tr("outside, bottom-left"), QIcon(":/JKQTPlotter/jkqtp_key_obl.png"));
-    addPosition(JKQTPkeyOutsideRightTop, tr("outside, right-top"), QIcon(":/JKQTPlotter/jkqtp_key_ort.png"));
-    addPosition(JKQTPkeyOutsideRightBottom, tr("outside, right-bottom"), QIcon(":/JKQTPlotter/jkqtp_key_orb.png"));
+    addPosition(JKQTPKeyInsideTopRight, tr("inside, top-right"), QIcon(":/JKQTPLotter/jkqtp_key_itr.png"));
+    addPosition(JKQTPKeyInsideTopLeft, tr("inside, top-left"), QIcon(":/JKQTPLotter/jkqtp_key_itl.png"));
+    addPosition(JKQTPKeyInsideBottomLeft, tr("inside, bottom-left"), QIcon(":/JKQTPLotter/jkqtp_key_ibl.png"));
+    addPosition(JKQTPKeyInsideBottomRight, tr("inside, bottom-right"), QIcon(":/JKQTPLotter/jkqtp_key_ibr.png"));
+    addPosition(JKQTPKeyOutsideTopRight, tr("outside, top-right"), QIcon(":/JKQTPLotter/jkqtp_key_otr.png"));
+    addPosition(JKQTPKeyOutsideTopLeft, tr("outside, top-left"), QIcon(":/JKQTPLotter/jkqtp_key_otl.png"));
+    addPosition(JKQTPKeyOutsideLeftTop, tr("outside, left-top"), QIcon(":/JKQTPLotter/jkqtp_key_olt.png"));
+    addPosition(JKQTPKeyOutsideLeftBottom, tr("outside, left-bottom"), QIcon(":/JKQTPLotter/jkqtp_key_olb.png"));
+    addPosition(JKQTPKeyOutsideBottomRight, tr("outside, bottom-right"), QIcon(":/JKQTPLotter/jkqtp_key_obr.png"));
+    addPosition(JKQTPKeyOutsideBottomLeft, tr("outside, bottom-left"), QIcon(":/JKQTPLotter/jkqtp_key_obl.png"));
+    addPosition(JKQTPKeyOutsideRightTop, tr("outside, right-top"), QIcon(":/JKQTPLotter/jkqtp_key_ort.png"));
+    addPosition(JKQTPKeyOutsideRightBottom, tr("outside, right-bottom"), QIcon(":/JKQTPLotter/jkqtp_key_orb.png"));
     setCurrentIndex(0);
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(posChanged(int)));
 }
 
-JKQTPkeyPosition JKQTPkeyPositionComboBox::getPosition() const
+JKQTPKeyPosition JKQTPKeyPositionComboBox::getPosition() const
 {
-    return String2JKQTPkeyPosition(itemData(currentIndex()).toString());
+    return String2JKQTPKeyPosition(itemData(currentIndex()).toString());
 }
 
-void JKQTPkeyPositionComboBox::setPosition(JKQTPkeyPosition position)
+void JKQTPKeyPositionComboBox::setPosition(JKQTPKeyPosition position)
 {
-    int i=findData(JKQTPkeyPosition2String(position));
+    int i=findData(JKQTPKeyPosition2String(position));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPkeyPositionComboBox::addPosition(JKQTPkeyPosition position, const QString &name, const QIcon &icon)
+void JKQTPKeyPositionComboBox::addPosition(JKQTPKeyPosition position, const QString &name, const QIcon &icon)
 {
-    addItem(icon, name, JKQTPkeyPosition2String(position));
+    addItem(icon, name, JKQTPKeyPosition2String(position));
 }
 
-void JKQTPkeyPositionComboBox::posChanged(int index)
+void JKQTPKeyPositionComboBox::posChanged(int index)
 {
-    emit currentPositionChanged(String2JKQTPkeyPosition(itemData(index).toString()));
+    emit currentPositionChanged(String2JKQTPKeyPosition(itemData(index).toString()));
 }
 
-JKQTPkeyLayoutComboBox::JKQTPkeyLayoutComboBox(QWidget *parent):
+JKQTPKeyLayoutComboBox::JKQTPKeyLayoutComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addKeyLayout(JKQTPkeyLayoutOneColumn, tr("one column"));
-    addKeyLayout(JKQTPkeyLayoutOneRow, tr("one row"));
-    addKeyLayout(JKQTPkeyLayoutMultiColumn, tr("multiple columns"));
+    addKeyLayout(JKQTPKeyLayoutOneColumn, tr("one column"));
+    addKeyLayout(JKQTPKeyLayoutOneRow, tr("one row"));
+    addKeyLayout(JKQTPKeyLayoutMultiColumn, tr("multiple columns"));
     setCurrentIndex(0);
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChangedP(int)));
 }
 
-JKQTPkeyLayout JKQTPkeyLayoutComboBox::getKeyLayout() const
+JKQTPKeyLayout JKQTPKeyLayoutComboBox::getKeyLayout() const
 {
-    return String2JKQTPkeyLayout(itemData(currentIndex()).toString());
+    return String2JKQTPKeyLayout(itemData(currentIndex()).toString());
 }
 
-void JKQTPkeyLayoutComboBox::setKeyLayout(JKQTPkeyLayout position)
+void JKQTPKeyLayoutComboBox::setKeyLayout(JKQTPKeyLayout position)
 {
-    int i=findData(JKQTPkeyLayout2String(position));
+    int i=findData(JKQTPKeyLayout2String(position));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPkeyLayoutComboBox::addKeyLayout(JKQTPkeyLayout position, const QString &name)
+void JKQTPKeyLayoutComboBox::addKeyLayout(JKQTPKeyLayout position, const QString &name)
 {
-    addItem(name, JKQTPkeyLayout2String(position));
+    addItem(name, JKQTPKeyLayout2String(position));
 }
 
-void JKQTPkeyLayoutComboBox::currentIndexChangedP(int index)
+void JKQTPKeyLayoutComboBox::currentIndexChangedP(int index)
 {
-    emit currentLayoutChanged(String2JKQTPkeyLayout(itemData(index).toString()));
+    emit currentLayoutChanged(String2JKQTPKeyLayout(itemData(index).toString()));
 }
 
-JKQTPlabelPositionComboBox::JKQTPlabelPositionComboBox(QWidget *parent):
+JKQTPLabelPositionComboBox::JKQTPLabelPositionComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addPosition(JKQTPlabelCenter, tr("center"));
-    addPosition(JKQTPlabelMin, tr("left"));
-    addPosition(JKQTPlabelMax, tr("right"));
+    addPosition(JKQTPLabelCenter, tr("center"));
+    addPosition(JKQTPLabelMin, tr("left"));
+    addPosition(JKQTPLabelMax, tr("right"));
     setCurrentIndex(0);
 }
 
-JKQTPlabelPosition JKQTPlabelPositionComboBox::getPosition() const
+JKQTPLabelPosition JKQTPLabelPositionComboBox::getPosition() const
 {
-    return String2JKQTPlabelPosition(itemData(currentIndex()).toString());
+    return String2JKQTPLabelPosition(itemData(currentIndex()).toString());
 }
 
-void JKQTPlabelPositionComboBox::setPosition(JKQTPlabelPosition position)
+void JKQTPLabelPositionComboBox::setPosition(JKQTPLabelPosition position)
 {
-    int i=findData(JKQTPlabelPosition2String(position));
+    int i=findData(JKQTPLabelPosition2String(position));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPlabelPositionComboBox::addPosition(JKQTPlabelPosition position, const QString &name, const QIcon &icon)
+void JKQTPLabelPositionComboBox::addPosition(JKQTPLabelPosition position, const QString &name, const QIcon &icon)
 {
-    addItem(icon, name, JKQTPlabelPosition2String(position));
+    addItem(icon, name, JKQTPLabelPosition2String(position));
 }
 
-JKQTPCAlabelTypeComboBox::JKQTPCAlabelTypeComboBox(QWidget *parent):
+JKQTPCALabelTypeComboBox::JKQTPCALabelTypeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/JKQTPlotter/jkqtp_ticks_exp.png"));
-    addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/JKQTPlotter/jkqtp_ticks_default.png"));
-    addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/JKQTPlotter/jkqtp_ticks_expchar.png"));
-    addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/JKQTPlotter/jkqtp_ticks_time.png"));
-    addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/JKQTPlotter/jkqtp_ticks_date.png"));
-    addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/JKQTPlotter/jkqtp_ticks_datetime.png"));
+    addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/JKQTPLotter/jkqtp_ticks_exp.png"));
+    addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/JKQTPLotter/jkqtp_ticks_default.png"));
+    addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/JKQTPLotter/jkqtp_ticks_expchar.png"));
+    addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/JKQTPLotter/jkqtp_ticks_time.png"));
+    addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/JKQTPLotter/jkqtp_ticks_date.png"));
+    addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/JKQTPLotter/jkqtp_ticks_datetime.png"));
     setCurrentIndex(0);
 }
 
-JKQTPCAlabelType JKQTPCAlabelTypeComboBox::getLabelType() const
+JKQTPCALabelType JKQTPCALabelTypeComboBox::getLabelType() const
 {
-    return String2JKQTPCAlabelType(itemData(currentIndex()).toString());
+    return String2JKQTPCALabelType(itemData(currentIndex()).toString());
 }
 
-void JKQTPCAlabelTypeComboBox::setLabelType(JKQTPCAlabelType position)
+void JKQTPCALabelTypeComboBox::setLabelType(JKQTPCALabelType position)
 {
-    int i=findData(JKQTPCAlabelType2String(position));
+    int i=findData(JKQTPCALabelType2String(position));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPCAlabelTypeComboBox::addLabelType(JKQTPCAlabelType position, const QString &name, const QIcon& icon)
+void JKQTPCALabelTypeComboBox::addLabelType(JKQTPCALabelType position, const QString &name, const QIcon& icon)
 {
-    addItem(icon, name, JKQTPCAlabelType2String(position));
+    addItem(icon, name, JKQTPCALabelType2String(position));
 }
 
-JKQTPCAdrawModeComboBox::JKQTPCAdrawModeComboBox(QWidget *parent):
+JKQTPCADrawModeComboBox::JKQTPCADrawModeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/JKQTPlotter/jkqtp_axis_complete.png"));
-    addDrawMode(JKQTPCADMticksAndLabels, tr("tick+lab."), QIcon(":/JKQTPlotter/jkqtp_axis_ticksandlabels.png"));
-    addDrawMode(JKQTPCADMticks, tr("tick"), QIcon(":/JKQTPlotter/jkqtp_axis_ticks.png"));
-    addDrawMode(JKQTPCADMline, tr("line"), QIcon(":/JKQTPlotter/jkqtp_axis_line.png"));
-    addDrawMode(JKQTPCADMnone, tr("none"), QIcon(":/JKQTPlotter/jkqtp_axis_none.png"));
+    addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/JKQTPLotter/jkqtp_axis_complete.png"));
+    addDrawMode(JKQTPCADMticksAndLabels, tr("tick+lab."), QIcon(":/JKQTPLotter/jkqtp_axis_ticksandlabels.png"));
+    addDrawMode(JKQTPCADMticks, tr("tick"), QIcon(":/JKQTPLotter/jkqtp_axis_ticks.png"));
+    addDrawMode(JKQTPCADMline, tr("line"), QIcon(":/JKQTPLotter/jkqtp_axis_line.png"));
+    addDrawMode(JKQTPCADMnone, tr("none"), QIcon(":/JKQTPLotter/jkqtp_axis_none.png"));
     setCurrentIndex(0);
 }
 
-JKQTPCAdrawMode JKQTPCAdrawModeComboBox::getDrawMode() const
+JKQTPCADrawMode JKQTPCADrawModeComboBox::getDrawMode() const
 {
-    return String2JKQTPCAdrawMode(itemData(currentIndex()).toString());
+    return String2JKQTPCADrawMode(itemData(currentIndex()).toString());
 }
 
-void JKQTPCAdrawModeComboBox::setDrawMode(JKQTPCAdrawMode position)
+void JKQTPCADrawModeComboBox::setDrawMode(JKQTPCADrawMode position)
 {
-    int i=findData(JKQTPCAdrawMode2String(position));
+    int i=findData(JKQTPCADrawMode2String(position));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPCAdrawModeComboBox::addDrawMode(JKQTPCAdrawMode position, const QString &name, const QIcon &icon)
+void JKQTPCADrawModeComboBox::addDrawMode(JKQTPCADrawMode position, const QString &name, const QIcon &icon)
 {
-    addItem(icon, name, JKQTPCAdrawMode2String(position));
+    addItem(icon, name, JKQTPCADrawMode2String(position));
 }
 
 
@@ -403,20 +403,20 @@ JKQTPLinePlotStyleWithSymbolSizeComboBox::JKQTPLinePlotStyleWithSymbolSizeComboB
     QComboBox(parent)
 {
     setEditable(false);
-    defaultSymbol=JKQTPcross;
+    defaultSymbol=JKQTPCross;
     defaultSize=10;
     refill();
     setCurrentIndex(0);
 }
 
-void JKQTPLinePlotStyleWithSymbolSizeComboBox::setDefaultSymbol(JKQTPgraphSymbols symbol, double size)
+void JKQTPLinePlotStyleWithSymbolSizeComboBox::setDefaultSymbol(JKQTPGraphSymbols symbol, double size)
 {
     defaultSymbol=symbol;
     defaultSize=size;
     refill();
 }
 
-void JKQTPLinePlotStyleWithSymbolSizeComboBox::addUsedSymbol(JKQTPgraphSymbols symbol, double symbolSize, bool line)
+void JKQTPLinePlotStyleWithSymbolSizeComboBox::addUsedSymbol(JKQTPGraphSymbols symbol, double symbolSize, bool line)
 {
     styleData d;
     d.symbol=symbol;
@@ -426,18 +426,18 @@ void JKQTPLinePlotStyleWithSymbolSizeComboBox::addUsedSymbol(JKQTPgraphSymbols s
     refill();
 }
 
-JKQTPgraphSymbols JKQTPLinePlotStyleWithSymbolSizeComboBox::getSymbol() const
+JKQTPGraphSymbols JKQTPLinePlotStyleWithSymbolSizeComboBox::getSymbol() const
 {
     QVariant idxV=itemData(currentIndex());
     bool ok=false;
     int idx=idxV.toInt(&ok);
     if (idxV.isValid() && ok) {
         if (idx>=0 && idx<symbols.size()) return symbols[idx].symbol;
-        if (idx==-4) return JKQTPnoSymbol;
-        if (idx==-3) return JKQTPnoSymbol;
+        if (idx==-4) return JKQTPNoSymbol;
+        if (idx==-3) return JKQTPNoSymbol;
         return defaultSymbol;
     }
-    return JKQTPnoSymbol;
+    return JKQTPNoSymbol;
 }
 
 bool JKQTPLinePlotStyleWithSymbolSizeComboBox::getDrawLine() const
@@ -471,22 +471,22 @@ void JKQTPLinePlotStyleWithSymbolSizeComboBox::refill()
     QString txt=currentText();
     setUpdatesEnabled(false);
     clear();
-    addSymbol(JKQTPnoSymbol, true, defaultSize, tr("line"), -3);
-    addSymbol(defaultSymbol, false, defaultSize, JKQTPgraphSymbols2NameString(defaultSymbol), -2);
-    addSymbol(defaultSymbol, true, defaultSize, JKQTPgraphSymbols2NameString(defaultSymbol)+tr("+line"), -1);
+    addSymbol(JKQTPNoSymbol, true, defaultSize, tr("line"), -3);
+    addSymbol(defaultSymbol, false, defaultSize, JKQTPGraphSymbols2NameString(defaultSymbol), -2);
+    addSymbol(defaultSymbol, true, defaultSize, JKQTPGraphSymbols2NameString(defaultSymbol)+tr("+line"), -1);
     for (int i=0; i<symbols.size(); i++) {
         if (symbols[i].symbol!=defaultSymbol||symbols[i].symbolSize!=defaultSize) {
-            addSymbol(symbols[i].symbol, symbols[i].line, symbols[i].symbolSize, JKQTPgraphSymbols2NameString(symbols[i].symbol), i);
+            addSymbol(symbols[i].symbol, symbols[i].line, symbols[i].symbolSize, JKQTPGraphSymbols2NameString(symbols[i].symbol), i);
         }
     }
-    addSymbol(JKQTPnoSymbol, false, defaultSize, "none", -4);
+    addSymbol(JKQTPNoSymbol, false, defaultSize, "none", -4);
     int idx=findText(txt);
     if (idx>=0) setCurrentIndex(idx);
     else setCurrentIndex(0);
     setUpdatesEnabled(true);
 }
 
-void JKQTPLinePlotStyleWithSymbolSizeComboBox::addSymbol(JKQTPgraphSymbols symbol, bool line, double symbolSize, const QString &name, const QVariant &data)
+void JKQTPLinePlotStyleWithSymbolSizeComboBox::addSymbol(JKQTPGraphSymbols symbol, bool line, double symbolSize, const QString &name, const QVariant &data)
 {
     int pixSize=qMax(16.0, 1.2*symbolSize);
     QPixmap pix(pixSize, pixSize);
@@ -495,7 +495,7 @@ void JKQTPLinePlotStyleWithSymbolSizeComboBox::addSymbol(JKQTPgraphSymbols symbo
     p.begin(&pix);
     p.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
     p.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
-    JKQTPplotSymbol(p, double(pixSize)/2.0,double(pixSize)/2.0,symbol,symbolSize,1,QColor("blue"), QColor("blue").lighter());
+    JKQTPPlotSymbol(p, double(pixSize)/2.0,double(pixSize)/2.0,symbol,symbolSize,1,QColor("blue"), QColor("blue").lighter());
     p.setPen(QColor("blue"));
     if (line) p.drawLine(QLineF(0,double(pixSize)/2.0,pixSize,double(pixSize)/2.0));
     p.end();
@@ -509,36 +509,36 @@ bool JKQTPLinePlotStyleWithSymbolSizeComboBox::styleData::operator==(const JKQTP
 }
 
 
-JKQTPstepTypeComboBox::JKQTPstepTypeComboBox(QWidget *parent):
+JKQTPStepTypeComboBox::JKQTPStepTypeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     clear();
     setEditable(false);
-    addStep(JKQTPstepType::JKQTPstepLeft, JKQTPstepType2String(JKQTPstepType::JKQTPstepLeft));
-    addStep(JKQTPstepType::JKQTPstepCenter, JKQTPstepType2String(JKQTPstepType::JKQTPstepCenter));
-    addStep(JKQTPstepType::JKQTPstepRight, JKQTPstepType2String(JKQTPstepType::JKQTPstepRight));
+    addStep(JKQTPStepType::JKQTPStepLeft, JKQTPStepType2String(JKQTPStepType::JKQTPStepLeft));
+    addStep(JKQTPStepType::JKQTPStepCenter, JKQTPStepType2String(JKQTPStepType::JKQTPStepCenter));
+    addStep(JKQTPStepType::JKQTPStepRight, JKQTPStepType2String(JKQTPStepType::JKQTPStepRight));
     setCurrentIndex(0);
 }
 
-JKQTPstepType JKQTPstepTypeComboBox::getStepType() const
+JKQTPStepType JKQTPStepTypeComboBox::getStepType() const
 {
-    return String2JKQTPstepType(itemData(currentIndex()).toString());
+    return String2JKQTPStepType(itemData(currentIndex()).toString());
 }
 
-void JKQTPstepTypeComboBox::setStepType(JKQTPstepType step)
+void JKQTPStepTypeComboBox::setStepType(JKQTPStepType step)
 {
-    int i=findData(JKQTPstepType2String(step));
+    int i=findData(JKQTPStepType2String(step));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPstepTypeComboBox::setCurrentStepType(JKQTPstepType step)
+void JKQTPStepTypeComboBox::setCurrentStepType(JKQTPStepType step)
 {
     setStepType(step);
 }
 
-void JKQTPstepTypeComboBox::addStep(JKQTPstepType step, const QString &name, const QIcon &icon)
+void JKQTPStepTypeComboBox::addStep(JKQTPStepType step, const QString &name, const QIcon &icon)
 {
-    addItem(icon, name, JKQTPstepType2String(step));
+    addItem(icon, name, JKQTPStepType2String(step));
 }
 
 

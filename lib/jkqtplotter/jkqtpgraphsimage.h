@@ -42,17 +42,17 @@
 /*! \brief base class for plotting an image
     \ingroup jkqtplotter_imagelots_elements
  */
-class LIB_EXPORT JKQTPImageBase: public JKQTPgraph {
+class LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPImageBase(JKQtBasePlotter* parent=nullptr);
+        JKQTPImageBase(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPImageBase(double x, double y, double width, double height, JKQtBasePlotter* parent=nullptr);
+        JKQTPImageBase(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPImageBase(JKQtPlotter* parent);
+        JKQTPImageBase(JKQTPLotter* parent);
         /** \brief class constructor */
-        JKQTPImageBase(double x, double y, double width, double height, JKQtPlotter* parent);
+        JKQTPImageBase(double x, double y, double width, double height, JKQTPLotter* parent);
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
@@ -197,15 +197,15 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 
 
         /** \brief class constructor */
-        JKQTPMathImageBase(JKQtBasePlotter* parent=nullptr);
-        JKQTPMathImageBase(double x, double y, double width, double height, JKQtBasePlotter* parent=nullptr);
-        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=nullptr);
+        JKQTPMathImageBase(JKQTBasePlotter* parent=nullptr);
+        JKQTPMathImageBase(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
+        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
 
 
         /** \brief class constructor */
-        JKQTPMathImageBase(JKQtPlotter* parent);
-        JKQTPMathImageBase(double x, double y, double width, double height, JKQtPlotter* parent=nullptr);
-        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPMathImageBase(JKQTPLotter* parent);
+        JKQTPMathImageBase(double x, double y, double width, double height, JKQTPLotter* parent=nullptr);
+        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
@@ -361,17 +361,17 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
     public:
 
         /** \brief class constructor */
-        JKQTPImage(JKQtBasePlotter* parent=nullptr);
+        JKQTPImage(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPImage(JKQtPlotter* parent);
+        JKQTPImage(JKQTPLotter* parent);
         /** \brief class constructor, which points to an external image (not owned by this object!!!) */
-        JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtBasePlotter* parent=nullptr);
+        JKQTPImage(double x, double y, double width, double height, QImage* image, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor, which points to an external image (not owned by this object!!!) */
-        JKQTPImage(double x, double y, double width, double height, QImage* image, JKQtPlotter* parent);
+        JKQTPImage(double x, double y, double width, double height, QImage* image, JKQTPLotter* parent);
         /** \brief class constructor, which generates an internal image object, by copying \a image */
-        JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQtBasePlotter* parent=nullptr);
+        JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor, which generates an internal image object, by copying \a image */
-        JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQtPlotter* parent);
+        JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQTPLotter* parent);
 
         virtual ~JKQTPImage() override;
 
@@ -404,7 +404,7 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         QAction* actSaveImage;
         QAction* actCopyImage;
     public:
-        virtual void setParent(JKQtBasePlotter* parent) override;
+        virtual void setParent(JKQTBasePlotter* parent) override;
         virtual void set_title(const QString& title) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
@@ -427,15 +427,15 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
     public:
 
         /** \brief class constructor */
-        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQtBasePlotter* parent=nullptr);
-        JKQTPMathImage(JKQtBasePlotter* parent=nullptr);
-        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQtPlotter* parent);
-        JKQTPMathImage(JKQtPlotter* parent);
+        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
+        JKQTPMathImage(JKQTBasePlotter* parent=nullptr);
+        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPLotter* parent);
+        JKQTPMathImage(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        virtual void setParent(JKQtBasePlotter* parent) override;
+        virtual void setParent(JKQTBasePlotter* parent) override;
 
         /*! \brief get list with all available palettes */
         static QStringList getPalettes() ;
@@ -713,13 +713,13 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
             return this->imageNameFontSize; 
         }
         /*! \brief returns the property colorBarRightAxis. \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copybrief colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
-        inline JKQTPverticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
+        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
         /*! \brief returns the property colorBarTopAxis. \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copybrief colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
-        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
+        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
         /*! \brief returns the property modifierColorBarTopAxis. \details Description of the parameter modifierColorBarTopAxis is:  <BLOCKQUOTE>\copybrief modifierColorBarTopAxis </BLOCKQUOTE>. \see modifierColorBarTopAxis for more information */ 
-        inline JKQTPverticalIndependentAxis* get_modifierColorBarTopAxis() const { return this->modifierColorBarTopAxis; }
+        inline JKQTPVerticalIndependentAxis* get_modifierColorBarTopAxis() const { return this->modifierColorBarTopAxis; }
         /*! \brief returns the property modifierColorBarRightAxis . \details Description of the parameter modifierColorBarRightAxis  is:  <BLOCKQUOTE>\copybrief modifierColorBarRightAxis  </BLOCKQUOTE>. \see modifierColorBarRightAxis  for more information */ 
-        inline JKQTPhorizontalIndependentAxis* get_modifierColorBarRightAxis()  const { return this->modifierColorBarRightAxis ; }
+        inline JKQTPHorizontalIndependentAxis* get_modifierColorBarRightAxis()  const { return this->modifierColorBarRightAxis ; }
         /*! \brief sets the property colorBarTopVisible to the specified \a __value. 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copybrief colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
@@ -879,10 +879,10 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
          *
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
-        JKQTPverticalIndependentAxis* colorBarRightAxis;
-        JKQTPhorizontalIndependentAxis* colorBarTopAxis;
-        JKQTPverticalIndependentAxis* modifierColorBarTopAxis;
-        JKQTPhorizontalIndependentAxis* modifierColorBarRightAxis;
+        JKQTPVerticalIndependentAxis* colorBarRightAxis;
+        JKQTPHorizontalIndependentAxis* colorBarTopAxis;
+        JKQTPVerticalIndependentAxis* modifierColorBarTopAxis;
+        JKQTPHorizontalIndependentAxis* modifierColorBarRightAxis;
 
     protected:
         QAction* actSaveImage;
@@ -917,21 +917,21 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
         /** \brief class constructor */
-        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=nullptr);
+        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
 
         /** \brief class constructor */
-        JKQTPRGBMathImage(JKQtBasePlotter* parent=nullptr);
+        JKQTPRGBMathImage(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPRGBMathImage(JKQtPlotter* parent);
+        JKQTPRGBMathImage(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        virtual void setParent(JKQtBasePlotter* parent) override;
+        virtual void setParent(JKQTBasePlotter* parent) override;
 
 
 
@@ -1236,17 +1236,17 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
             return this->imageNameFontSize; 
         }
         /*! \brief returns the property colorBarRightAxis. \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copybrief colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
-        inline JKQTPverticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
+        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
         /*! \brief returns the property colorBarTopAxis. \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copybrief colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
-        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
+        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
         /*! \brief returns the property colorBarRightAxisG. \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copybrief colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */ 
-        inline JKQTPverticalIndependentAxis* get_colorBarRightAxisG() const { return this->colorBarRightAxisG; }
+        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxisG() const { return this->colorBarRightAxisG; }
         /*! \brief returns the property colorBarTopAxisG. \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copybrief colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */ 
-        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxisG() const { return this->colorBarTopAxisG; }
+        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxisG() const { return this->colorBarTopAxisG; }
         /*! \brief returns the property colorBarRightAxisB. \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copybrief colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */ 
-        inline JKQTPverticalIndependentAxis* get_colorBarRightAxisB() const { return this->colorBarRightAxisB; }
+        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxisB() const { return this->colorBarRightAxisB; }
         /*! \brief returns the property colorBarTopAxisB. \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copybrief colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */ 
-        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxisB() const { return this->colorBarTopAxisB; }
+        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxisB() const { return this->colorBarTopAxisB; }
         /*! \brief sets the property colorBarTopVisible to the specified \a __value. 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copybrief colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
@@ -1394,12 +1394,12 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
          *
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
-        JKQTPverticalIndependentAxis* colorBarRightAxis;
-        JKQTPhorizontalIndependentAxis* colorBarTopAxis;
-        JKQTPverticalIndependentAxis* colorBarRightAxisG;
-        JKQTPhorizontalIndependentAxis* colorBarTopAxisG;
-        JKQTPverticalIndependentAxis* colorBarRightAxisB;
-        JKQTPhorizontalIndependentAxis* colorBarTopAxisB;
+        JKQTPVerticalIndependentAxis* colorBarRightAxis;
+        JKQTPHorizontalIndependentAxis* colorBarTopAxis;
+        JKQTPVerticalIndependentAxis* colorBarRightAxisG;
+        JKQTPHorizontalIndependentAxis* colorBarTopAxisG;
+        JKQTPVerticalIndependentAxis* colorBarRightAxisB;
+        JKQTPHorizontalIndependentAxis* colorBarTopAxisB;
 
 
         double internalDataMinG;
@@ -1433,14 +1433,14 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
     public:
 
         /** \brief class constructor */
-        JKQTPColumnMathImage(JKQtBasePlotter* parent=nullptr);
-        JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=nullptr);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQtBasePlotter* parent=nullptr);
+        JKQTPColumnMathImage(JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPColumnMathImage(JKQtPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQtPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPColumnMathImage(JKQTPLotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPLotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
 
         /*! \brief sets the property imageColumn to the specified \a __value. 
             \details Description of the parameter imageColumn is: <BLOCKQUOTE>\copybrief imageColumn </BLOCKQUOTE> 
@@ -1471,7 +1471,7 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
             return this->modifierColumn; 
         }
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
 
@@ -1497,17 +1497,17 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
     public:
 
         /** \brief class constructor */
-        JKQTPColumnRGBMathImage(JKQtBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQtBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPColumnRGBMathImage(JKQtPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQtPlotter* parent);
+        JKQTPColumnRGBMathImage(JKQTPLotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent);
 
         /*! \brief sets the property imageRColumn to the specified \a __value. 
             \details Description of the parameter imageRColumn is: <BLOCKQUOTE>\copybrief imageRColumn </BLOCKQUOTE> 
@@ -1565,7 +1565,7 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         {
             return this->modifierColumn; 
         }
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:
@@ -1591,12 +1591,12 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
     public:
 
         /** \brief class constructor */
-        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtBasePlotter* parent=nullptr);
-        JKQTPOverlayImage(JKQtBasePlotter* parent=nullptr);
+        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
+        JKQTPOverlayImage(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtPlotter* parent);
-        JKQTPOverlayImage(JKQtPlotter* parent);
+        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPLotter* parent);
+        JKQTPOverlayImage(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -1702,7 +1702,7 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         QAction* actCopyImage;
     public:
         virtual void set_title(const QString& title) override;
-        virtual void setParent(JKQtBasePlotter* parent) override;
+        virtual void setParent(JKQTBasePlotter* parent) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -1722,11 +1722,11 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtBasePlotter* parent=nullptr);
-        JKQTPOverlayImageEnhanced(JKQtBasePlotter* parent=nullptr);
+        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
+        JKQTPOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQtPlotter* parent);
-        JKQTPOverlayImageEnhanced(JKQtPlotter* parent);
+        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPLotter* parent);
+        JKQTPOverlayImageEnhanced(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -1736,14 +1736,14 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         /*! \brief sets the property symbol to the specified \a __value. 
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copybrief symbol </BLOCKQUOTE> 
             \see symbol for more information */ 
-        inline virtual void set_symbol(const JKQTPgraphSymbols & __value)  
+        inline virtual void set_symbol(const JKQTPGraphSymbols & __value)  
         {
             this->symbol = __value;
         } 
         /*! \brief returns the property symbol. 
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copybrief symbol </BLOCKQUOTE> 
             \see symbol for more information */ 
-        inline virtual JKQTPgraphSymbols get_symbol() const  
+        inline virtual JKQTPGraphSymbols get_symbol() const  
         {
             return this->symbol; 
         }
@@ -1806,7 +1806,7 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
 
     protected:
         /** \brief which symbol to use for the datapoints */
-        JKQTPgraphSymbols symbol;
+        JKQTPGraphSymbols symbol;
         /** \brief width (in pixels) of the lines used to plot the symbol for the data points */
         double symbolWidth;
 
@@ -1834,8 +1834,8 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
 class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanced {
         Q_OBJECT
     public:
-        JKQTPColumnOverlayImageEnhanced(JKQtBasePlotter* parent=nullptr);
-        JKQTPColumnOverlayImageEnhanced(JKQtPlotter* parent);
+        JKQTPColumnOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnOverlayImageEnhanced(JKQTPLotter* parent);
 
         /*! \brief sets the property imageColumn to the specified \a __value. 
             \details Description of the parameter imageColumn is: <BLOCKQUOTE>\copybrief imageColumn </BLOCKQUOTE> 
@@ -1854,7 +1854,7 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
 
@@ -1887,13 +1887,13 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPContour(JKQtBasePlotter* parent=nullptr);
+        JKQTPContour(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, DataType datatype = JKQTPMathImageBase::DoubleArray, JKQtBasePlotter* parent=nullptr);
+        JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, DataType datatype = JKQTPMathImageBase::DoubleArray, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPContour(JKQtPlotter* parent);
+        JKQTPContour(JKQTPLotter* parent);
         /** \brief class constructor */
-        JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, DataType datatype , JKQtPlotter* parent);
+        JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, DataType datatype , JKQTPLotter* parent);
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
@@ -2014,7 +2014,7 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         {
             return this->relativeLevels; 
         }
-        /** convenience function to work with JKQTPdatastore */
+        /** convenience function to work with JKQTPDatastore */
         void set_imageColumn(size_t columnID);
 
         void addContourLevel(double &level);

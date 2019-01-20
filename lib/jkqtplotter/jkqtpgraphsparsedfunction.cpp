@@ -27,8 +27,8 @@
 #include <utility>
 
 
-JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtBasePlotter *parent):
-    JKQTPxFunctionLineGraph(parent)
+JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *parent):
+    JKQTPXFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();
     fdata.node=nullptr;
@@ -36,7 +36,7 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtBasePlotter *pa
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunction);
+    set_plotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -44,11 +44,11 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtBasePlotter *pa
     errorFunction="";
     errorParameterColumn=-1;
     set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunction);
+    set_errorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 }
 
-JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtPlotter *parent):
-    JKQTPxFunctionLineGraph(parent)
+JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPLotter *parent):
+    JKQTPXFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();
     fdata.node=nullptr;
@@ -56,7 +56,7 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtPlotter *parent
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunction);
+    set_plotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -64,10 +64,10 @@ JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraph(JKQtPlotter *parent
     errorFunction="";
     errorParameterColumn=-1;
     set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunction);
+    set_errorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 }
 
-JKQTPxParsedFunctionLineGraph::~JKQTPxParsedFunctionLineGraph()
+JKQTPXParsedFunctionLineGraph::~JKQTPXParsedFunctionLineGraph()
 {
     if (fdata.node) delete fdata.node;
     delete fdata.parser;
@@ -76,7 +76,7 @@ JKQTPxParsedFunctionLineGraph::~JKQTPxParsedFunctionLineGraph()
 }
 
 
-void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
+void JKQTPXParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 {
     collectParameters();
 
@@ -130,13 +130,13 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     }
 
     set_params(&fdata);
-    set_plotFunction(JKQTPxParsedFunctionLineGraphFunction);
+    set_plotFunction(JKQTPXParsedFunctionLineGraphFunction);
     set_errorParams(&efdata);
-    set_errorPlotFunction(JKQTPxParsedFunctionLineGraphFunction);
+    set_errorPlotFunction(JKQTPXParsedFunctionLineGraphFunction);
 
     //qint64 t=timer.elapsed();
-    JKQTPxFunctionLineGraph::createPlotData(false);
-    //qDebug()<<"createPlotData():   JKQTPxFunctionLineGraph::createPlotData():   "<<timer.elapsed()-t<<"ms";
+    JKQTPXFunctionLineGraph::createPlotData(false);
+    //qDebug()<<"createPlotData():   JKQTPXFunctionLineGraph::createPlotData():   "<<timer.elapsed()-t<<"ms";
 
     /*int count=0;
     doublePair* d=data;
@@ -148,8 +148,8 @@ void JKQTPxParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 }
 
 
-double JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunction(double x, void* data) {
-    JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunctionData* d=(JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunctionData*)data;
+double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(double x, void* data) {
+    JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData* d=(JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData*)data;
     if (d && d->parser && d->node) {
         try {
             d->parser->addVariableDouble("x", x);
@@ -190,8 +190,8 @@ double JKQTPxParsedFunctionLineGraph::JKQTPxParsedFunctionLineGraphFunction(doub
 
 
 
-JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraph(JKQtBasePlotter *parent):
-    JKQTPyFunctionLineGraph(parent)
+JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTBasePlotter *parent):
+    JKQTPYFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();
     fdata.node=nullptr;
@@ -199,7 +199,7 @@ JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraph(JKQtBasePlotter *pa
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraphFunction);
+    set_plotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -207,11 +207,11 @@ JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraph(JKQtBasePlotter *pa
     errorFunction="";
     errorParameterColumn=-1;
     set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraphFunction);
+    set_errorPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 }
 
-JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraph(JKQtPlotter *parent):
-    JKQTPyFunctionLineGraph(parent)
+JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPLotter *parent):
+    JKQTPYFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();
     fdata.node=nullptr;
@@ -219,7 +219,7 @@ JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraph(JKQtPlotter *parent
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraphFunction);
+    set_plotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -227,10 +227,10 @@ JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraph(JKQtPlotter *parent
     errorFunction="";
     errorParameterColumn=-1;
     set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraphFunction);
+    set_errorPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 }
 
-JKQTPyParsedFunctionLineGraph::~JKQTPyParsedFunctionLineGraph()
+JKQTPYParsedFunctionLineGraph::~JKQTPYParsedFunctionLineGraph()
 {
     if (fdata.node) delete fdata.node;
     delete fdata.parser;
@@ -238,7 +238,7 @@ JKQTPyParsedFunctionLineGraph::~JKQTPyParsedFunctionLineGraph()
     delete efdata.parser;
 }
 
-void JKQTPyParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
+void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 {
     collectParameters();
 
@@ -294,13 +294,13 @@ void JKQTPyParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     }
 
     set_params(&fdata);
-    set_plotFunction(JKQTPyParsedFunctionLineGraphFunction);
+    set_plotFunction(JKQTPYParsedFunctionLineGraphFunction);
     set_errorParams(&efdata);
-    set_errorPlotFunction(JKQTPyParsedFunctionLineGraphFunction);
+    set_errorPlotFunction(JKQTPYParsedFunctionLineGraphFunction);
 
     //qint64 t=timer.elapsed();
-    JKQTPyFunctionLineGraph::createPlotData(false);
-    //qDebug()<<"createPlotData():   JKQTPyFunctionLineGraph::createPlotData():   "<<timer.elapsed()-t<<"ms";
+    JKQTPYFunctionLineGraph::createPlotData(false);
+    //qDebug()<<"createPlotData():   JKQTPYFunctionLineGraph::createPlotData():   "<<timer.elapsed()-t<<"ms";
 
     /*int count=0;
     doublePair* d=data;
@@ -311,8 +311,8 @@ void JKQTPyParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     qDebug()<<"refined to "<<count<<" daatapoints";*/
 }
 
-double JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraphFunction(double x, void* data) {
-    JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraphFunctionData* d=(JKQTPyParsedFunctionLineGraph::JKQTPyParsedFunctionLineGraphFunctionData*)data;
+double JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction(double x, void* data) {
+    JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData* d=(JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData*)data;
     if (d && d->parser && d->node) {
         try {
             d->parser->addVariableDouble("x", x);

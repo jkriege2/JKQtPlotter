@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_paramscatterplot_image.cpp
- * JKQtPlotter: Examples: Draw an Artistic Image with a Parametrized Scatter Graph
+ * JKQTPLotter: Examples: Draw an Artistic Image with a Parametrized Scatter Graph
  *
- * \ref JKQtPlotterParamScatterImage
+ * \ref JKQTPLotterParamScatterImage
  */
 
 #include <QApplication>
@@ -15,8 +15,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. Prepare Data
     // 2.1 load image
@@ -48,12 +48,12 @@ int main(int argc, char* argv[])
     // 3.1 Now add a parametrized scatter graph with columnX, columnY for the positions of the
     //     scatter points, where the symbol size is given by column columnS and the color of
     //     each symbol is set from column columnG, via a color palette JKQTPMathImageMATLAB
-    JKQTPxyParametrizedScatterGraph* graph1=new JKQTPxyParametrizedScatterGraph(&plot);
+    JKQTPXYParametrizedScatterGraph* graph1=new JKQTPXYParametrizedScatterGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY);
     graph1->set_sizeColumn(columnS);
     graph1->set_symbolColumn(columnS);
-    graph1->set_symbol(JKQTPfilledTriangle);
+    graph1->set_symbol(JKQTPFilledTriangle);
     graph1->set_colorColumn(columnG);
     graph1->set_palette(JKQTPMathImageOCEAN);
     graph1->set_drawLine(false);

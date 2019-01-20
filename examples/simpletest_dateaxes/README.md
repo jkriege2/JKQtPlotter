@@ -1,7 +1,7 @@
-# Example (JKQtPlotter): Date/Time Axes {#JKQtPlotterDateTimeAxes}
+# Example (JKQTPLotter): Date/Time Axes {#JKQTPLotterDateTimeAxes}
 
 ## Date Axis
-This project (see `./examples/simpletest_dateaxes/`) simply creates a JKQtPlotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
+This project (see `./examples/simpletest_dateaxes/`) simply creates a JKQTPLotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_dateaxes.cpp`](../simpletest_dateaxes/jkqtplotter_simpletest_dateaxes.cpp). 
 
@@ -39,10 +39,10 @@ The parsed data looks like this (data was taken from http://wetter.mpg-ge.de/NOA
 	...
 ```
 
-Then two graphs are added. One of type `JKQTPfilledVerticalRangeGraph` plots the range of min+max temperature for each month:
+Then two graphs are added. One of type `JKQTPFilledVerticalRangeGraph` plots the range of min+max temperature for each month:
 ```.cpp
    // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
-    JKQTPfilledVerticalRangeGraph* graphTemperatureRange=new JKQTPfilledVerticalRangeGraph(&plot);
+    JKQTPFilledVerticalRangeGraph* graphTemperatureRange=new JKQTPFilledVerticalRangeGraph(&plot);
 
     // 4. copy data into datastore and immediately set the yColumn
     size_t colDate=ds->addCopiedColumn(date, "date");
@@ -66,7 +66,7 @@ On top of that plot, a second plot is added, which draws the average temperature
 
 ```.cpp
    // 3. add a plot for the data mean line (graphTemperature) and range (graphTemperatureRange)
-    JKQTPxyLineErrorGraph* graphTemperature=new JKQTPxyLineErrorGraph(&plot);
+    JKQTPXYLineErrorGraph* graphTemperature=new JKQTPXYLineErrorGraph(&plot);
 
     // 4. copy data into datastore and immediately set the yColumn
     size_t colDate=ds->addCopiedColumn(date, "date");
@@ -79,7 +79,7 @@ On top of that plot, a second plot is added, which draws the average temperature
 
     // 6. average data
     // don't use symbols
-    graphTemperature->set_symbol(JKQTPnoSymbol);
+    graphTemperature->set_symbol(JKQTPNoSymbol);
     // set the line width
     graphTemperature->set_lineWidth(1);
     // draw small symbols

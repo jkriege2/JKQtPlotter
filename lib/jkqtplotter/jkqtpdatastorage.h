@@ -45,15 +45,15 @@
 #define JKQTPDATASTORAGE_H
 
 
-class JKQTPcolumn; // forward declaration
-class JKQTPdatastoreItem; // foward declaration
-class JKQTPdatastoreModel; // forward declaration
+class JKQTPColumn; // forward declaration
+class JKQTPDatastoreItem; // foward declaration
+class JKQTPDatastoreModel; // forward declaration
 
 
 /** \brief the types of data in one JKQTdatastoreItem
  * \ingroup jkqtpdatastorage
  *
- * \c JKQTPsingleColumn:
+ * \c JKQTPSingleColumn:
  * \verbatim
 +-----+-----+-----+....................+-----+
 |  0  |  1  |  2  |                    + N-1 |
@@ -61,7 +61,7 @@ class JKQTPdatastoreModel; // forward declaration
 \endverbatim
  *
  *
- * \c JKQTPmatrixColumn:
+ * \c JKQTPMatrixColumn:
  * \verbatim
  ================= COLUMN 1 =================  ================= COLUMN 2 =================
 +-----+-----+-----+....................+-----++-----+-----+-----+....................+-----+ .....
@@ -71,7 +71,7 @@ class JKQTPdatastoreModel; // forward declaration
 \endverbatim
  *
  *
- * \c JKQTPmatrixRow (C standard representation of matrices):
+ * \c JKQTPMatrixRow (C standard representation of matrices):
  * \verbatim
  ================== ROW  1 ==================  ================== ROW  2 ==================
 +-----+-----+-----+....................+-----++-----+-----+-----+....................+-----+ .....
@@ -80,40 +80,40 @@ class JKQTPdatastoreModel; // forward declaration
  =C1== =C2== =C3==                      =CN==  =C1== =C2== =C3==                      =CN==
 \endverbatim
  */
-enum JKQTPdatastoreItemFormat {
-	JKQTPsingleColumn,                /*!< \brief a 1D vector of doubles. (default option) */
-	JKQTPmatrixColumn,                /*!< \brief a 1D vector of double that represents a number of columns. The data is store column after column. */
-	JKQTPmatrixRow                    /*!< \brief a 1D vector of double that represents a number of rows (C standard representation of matrices). The data is stored row after row.*/
+enum JKQTPDatastoreItemFormat {
+	JKQTPSingleColumn,                /*!< \brief a 1D vector of doubles. (default option) */
+	JKQTPMatrixColumn,                /*!< \brief a 1D vector of double that represents a number of columns. The data is store column after column. */
+	JKQTPMatrixRow                    /*!< \brief a 1D vector of double that represents a number of rows (C standard representation of matrices). The data is stored row after row.*/
 };
 
-/** \brief This class manages chunks of memory that are used for column data in JKQtPlotterBase descendents
+/** \brief This class manages chunks of memory that are used for column data in JKQTPLotterBase descendents
  * \ingroup jkqtpdatastorage
  *
- * This class manages a list if JKQTPdatastoreItem onjects that may each contain a chunk of memory, containig
+ * This class manages a list if JKQTPDatastoreItem onjects that may each contain a chunk of memory, containig
  * one or more columns of data. Each item can be accessed with get() by a specific ID which is returned by add().
- * JKQTPcolumn. You may only clear all chunks of memory/items. If you no longer need some of the data, but still want
- * to access the rest you will simply have to destroy all JKQTPcolumn that point to the item with their
- * JKQTPcolumns:datastoreItem property.
+ * JKQTPColumn. You may only clear all chunks of memory/items. If you no longer need some of the data, but still want
+ * to access the rest you will simply have to destroy all JKQTPColumn that point to the item with their
+ * JKQTPColumns:datastoreItem property.
  *
  * \verbatim
 
-+- JKQTPdatastore ---------------------+               std::vector<JKQTPcolumn>:
-|                                      |                   +- JKQTPcolumn ----------------+
-|    +- JKQTPdatastoreItem --------+   |                 0 |   datastore                  |
-|  0 |     JKQTPsingleColumn       |<--|-------------------|---datastoreItem = 0          |
++- JKQTPDatastore ---------------------+               std::vector<JKQTPColumn>:
+|                                      |                   +- JKQTPColumn ----------------+
+|    +- JKQTPDatastoreItem --------+   |                 0 |   datastore                  |
+|  0 |     JKQTPSingleColumn       |<--|-------------------|---datastoreItem = 0          |
 |    |   0 # # # # # # # # # # #<--|---|-------------------|---datastoreOffset = 0        |
 |    |                             |   |                   |                              |
-|    +- JKQTPdatastoreItem --------+   |                   +- JKQTPcolumn ----------------+
-|  1 |     JKQTPsingleColumn       |<--|---\             1 |   datastore                  |
+|    +- JKQTPDatastoreItem --------+   |                   +- JKQTPColumn ----------------+
+|  1 |     JKQTPSingleColumn       |<--|---\             1 |   datastore                  |
 |    |   0 # # # # # # # # # # #<--|---|-\  \--------------|---datastoreItem = 1          |
 |    |                             |   |  \----------------|---datastoreOffset = 0        |
-|    +- JKQTPdatastoreItem --------+   |                   |                              |
+|    +- JKQTPDatastoreItem --------+   |                   |                              |
 |    :                             :   |                   +------------------------------+
 |    :                             :   |                   :                              :
 |    :                             :   |                   :                              :
-|    +- JKQTPdatastoreItem --------+   |                   :                              :
-|N-1 |     JKQTPmatrixRow          |<--|---\               :                              :
-|    |   0 # # # # # # # # # # #   |   |    \              +- JKQTPcolumn ----------------+
+|    +- JKQTPDatastoreItem --------+   |                   :                              :
+|N-1 |     JKQTPMatrixRow          |<--|---\               :                              :
+|    |   0 # # # # # # # # # # #   |   |    \              +- JKQTPColumn ----------------+
 |    |   1 # # # # # # # # # # #   |   |     \         M-1 |   datastore                  |
 |    |   2 # # # # # # # # # # #<--|---|--\   \------------|---datastoreItem = N-1        |
 |    |                             |   |   \---------------|---datastoreOffset = 2        |
@@ -124,48 +124,48 @@ enum JKQTPdatastoreItemFormat {
 
 \endverbatim
  *
- * In addition the JKQTPdatastore manages a std::vector<JKQTPcolumn> which may be used to access the data chunks in the logical
+ * In addition the JKQTPDatastore manages a std::vector<JKQTPColumn> which may be used to access the data chunks in the logical
  * notion of data columns. This class provides a set of interface methods for this list:
  *
  */
-class LIB_EXPORT JKQTPdatastore{
+class LIB_EXPORT JKQTPDatastore{
     private:
         /** \brief a std::vector that contains all items managed by this datastore */
-        QMap<size_t, JKQTPdatastoreItem*> items;
+        QMap<size_t, JKQTPDatastoreItem*> items;
         /** \brief a std::vector of all columns that may be used to access the managed chunks of memory. */
-        QMap<size_t, JKQTPcolumn> columns;
+        QMap<size_t, JKQTPColumn> columns;
 
         size_t maxItemID;
         size_t maxColumnsID;
     protected:
 
         /** \brief add a new column to the datastore and return its ID */
-        size_t addColumn(JKQTPcolumn col);
+        size_t addColumn(JKQTPColumn col);
 
 
     public:
         /** \brief class constructor, generates an empty datastore */
-        JKQTPdatastore();
-        /** \brief class destructor, destroys all subordered JKQTPdatastoreItem objects */
-        ~JKQTPdatastore() {
+        JKQTPDatastore();
+        /** \brief class destructor, destroys all subordered JKQTPDatastoreItem objects */
+        ~JKQTPDatastore() {
             clear();
         }
 
         /** \brief deletes all items from the datastore and possibly frees the memory they manage */
         void clear();
 
-        /** \brief returns the JKQTPdatastoreItem object for the \a i -th item in the store */
-        inline JKQTPdatastoreItem* getItem(size_t i)  {
+        /** \brief returns the JKQTPDatastoreItem object for the \a i -th item in the store */
+        inline JKQTPDatastoreItem* getItem(size_t i)  {
             return items.value(i, nullptr);
         }
 
-        /** \brief returns the JKQTPdatastoreItem object for the \a i -th item in the store */
-        inline const JKQTPdatastoreItem* getItem(size_t i) const {
+        /** \brief returns the JKQTPDatastoreItem object for the \a i -th item in the store */
+        inline const JKQTPDatastoreItem* getItem(size_t i) const {
             return items.value(i, nullptr);
         }
 
         /** \brief add a new item to the datastore and return its ID */
-        size_t addItem(JKQTPdatastoreItem* item);
+        size_t addItem(JKQTPDatastoreItem* item);
 
 
         /** \brief add a new columns/item with \a rows rows to the datastore and return its ID. The item uses internal memory management. */
@@ -189,13 +189,13 @@ class LIB_EXPORT JKQTPdatastore{
         size_t addInternalItem(double* data, size_t rows);
 
         /** \brief add an external memory block to the datastore. It contains \a rows rows and \a columns columns. \a dataformat determined the memory layout*/
-        size_t addItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
+        size_t addItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
 
         /** \brief add one external column to the datastore. It contains \a rows rows. The data is copied and the copy managed internally */
         size_t addCopiedItem(const double *data, size_t rows);
 
         /** \brief add one external data block to the datastore. It contains \a rows rows and \a columns columns. The data is copied and the copy managed internally */
-        size_t addCopiedItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
+        size_t addCopiedItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
 
 
 
@@ -498,12 +498,12 @@ class LIB_EXPORT JKQTPdatastore{
         /** \brief return the num of the first column  with the given name, if none was found this creates a new column with no rows and returns its num */
         size_t ensureColumnNum(const QString& name);
 
-        /** \brief returns the JKQTPcolumn object for the \a i -th column in the store */
-        JKQTPcolumn getColumn(size_t i) const;
+        /** \brief returns the JKQTPColumn object for the \a i -th column in the store */
+        JKQTPColumn getColumn(size_t i) const;
 
 
-        /** \brief returns the JKQTPcolumn object for the \a i -th column in the store */
-        JKQTPcolumn getColumn(int i) const;
+        /** \brief returns the JKQTPColumn object for the \a i -th column in the store */
+        JKQTPColumn getColumn(int i) const;
 
         /** \brief returns the maximum number of rows in all columns */
         size_t getMaxRows();
@@ -591,12 +591,12 @@ class LIB_EXPORT JKQTPdatastore{
 
 
 
-/** \brief stores information about one data column. See JKQTPdatastore for more information.
+/** \brief stores information about one data column. See JKQTPDatastore for more information.
  * \ingroup jkqtpdatastorage
  *
- * \see JKQTPdatastore
+ * \see JKQTPDatastore
  */
-class LIB_EXPORT JKQTPcolumn {
+class LIB_EXPORT JKQTPColumn {
   private:
     /** \brief index of the item in the datastore that contains the data for this column */
     size_t datastoreItem;
@@ -605,28 +605,28 @@ class LIB_EXPORT JKQTPcolumn {
     /** \brief a name describing the column */
     QString name;
     /** \brief pointer to the datastore object used to manage the data of the plot */
-    JKQTPdatastore* datastore;
+    JKQTPDatastore* datastore;
 
     bool valid;
 
   protected:
-    inline JKQTPdatastore* get_datastore() { return datastore; }
-    inline const JKQTPdatastore* get_datastore() const { return datastore; }
+    inline JKQTPDatastore* get_datastore() { return datastore; }
+    inline const JKQTPDatastore* get_datastore() const { return datastore; }
   public:
-    JKQTPcolumn();
+    JKQTPColumn();
     /** \brief class constructor that binds the column to a specific datastore object.
      *
      * The use of this constructor is mandatory. The default constructor (no arguments) is hidden. Also note
      * that you cannot change the binding of a column to a datastore object after creation of the column.
      */
-    JKQTPcolumn(JKQTPdatastore* datastore, const QString& name=QString(""), size_t datastoreItem=0, size_t datastoreOffset=0);
+    JKQTPColumn(JKQTPDatastore* datastore, const QString& name=QString(""), size_t datastoreItem=0, size_t datastoreOffset=0);
 
     inline bool isValid() const { return valid; }
 
     /** \brief class destructor */
-    ~JKQTPcolumn() ;
+    ~JKQTPColumn() ;
 
-    /*! \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copybrief JKQTPcolumn::name </BLOCKQUOTE> \see JKQTPcolumn::name for more information */
+    /*! \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copybrief JKQTPColumn::name </BLOCKQUOTE> \see JKQTPColumn::name for more information */
     inline void set_name (const QString& __value)
     {
       this->name = __value;
@@ -692,7 +692,7 @@ class LIB_EXPORT JKQTPcolumn {
     }
 
     /** \brief returns a pointer to the datastore item representing this column */
-    inline JKQTPdatastoreItem* getDatastoreItem() const { return datastore->getItem(datastoreItem); }
+    inline JKQTPDatastoreItem* getDatastoreItem() const { return datastore->getItem(datastoreItem); }
 
     /** \brief copy data from the given array into the column
      *
@@ -713,10 +713,10 @@ class LIB_EXPORT JKQTPcolumn {
     void setAll(double value);
 
 
-    /*! \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copybrief JKQTPcolumn::datastoreItem </BLOCKQUOTE>. \see JKQTPcolumn::datastoreItem for more information */ \
+    /*! \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copybrief JKQTPColumn::datastoreItem </BLOCKQUOTE>. \see JKQTPColumn::datastoreItem for more information */ \
     inline size_t get_datastoreItem() const  \
     {   return this->datastoreItem;   }
-    /*! \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copybrief JKQTPcolumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPcolumn::datastoreOffset for more information */ \
+    /*! \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copybrief JKQTPColumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPColumn::datastoreOffset for more information */ \
     inline size_t get_datastoreOffset() const  \
     {   return this->datastoreOffset;   }
 };
@@ -725,12 +725,12 @@ class LIB_EXPORT JKQTPcolumn {
 
 
 /** \brief this represents one chunk of memory which can represent one or more columns of data for JKQTBasePlotter.
- *         See JKQTPdatastore for more information.
+ *         See JKQTPDatastore for more information.
  * \ingroup jkqtpdatastorage
  *
  * Each chunk of memory is pointed at by a simple double* pointer \c data. the memory layout of the memory layout of
  * the RAM segment pointed at by \c data is determined by the parameter \c dataformat:
- *   \copydoc JKQTPdatastoreItemFormat
+ *   \copydoc JKQTPDatastoreItemFormat
  *
  * The properties \c columns and \c rows determine how many columns and rows are represented by this item (access via
  * get_columns() and get_rows() ). This class may manage chunks of "internal" and "external" memory (which is indicated by
@@ -741,9 +741,9 @@ class LIB_EXPORT JKQTPcolumn {
  *
  * you can use get() and set() to access the memory chunc.
  *
- * \see JKQTPdatastore
+ * \see JKQTPDatastore
  */
-class LIB_EXPORT JKQTPdatastoreItem {
+class LIB_EXPORT JKQTPDatastoreItem {
   private:
     /** \brief a pointer to the actual data */
     double* data;
@@ -756,27 +756,27 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief number of rows in this item */
     size_t rows;
     /** \brief memory format of the data in this item */
-    JKQTPdatastoreItemFormat dataformat;
+    JKQTPDatastoreItemFormat dataformat;
   protected:
     /** \brief hidden default constructor */
-    JKQTPdatastoreItem();
+    JKQTPDatastoreItem();
   public:
     /** \brief class constructor: initializes the object for internal data storage */
-    JKQTPdatastoreItem(size_t columns, size_t rows);
+    JKQTPDatastoreItem(size_t columns, size_t rows);
     /** \brief class constructor: initializes the object for external data storage */
-    JKQTPdatastoreItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
+    JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
     /** \brief class constructor: initializes the object for external data storage */
-    JKQTPdatastoreItem(JKQTPdatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool internal);
+    JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool internal);
     /** \brief class destructor: frees unfreed internal memory */
-    ~JKQTPdatastoreItem();
+    ~JKQTPDatastoreItem();
 
     /** \brief change the size of all columns to the givne number of rows. The data will be lost */
     void resizeColumns(size_t rows);
 
-    /*! \brief returns the property rows. \details Description of the parameter rows is:  <BLOCKQUOTE>\copybrief JKQTPdatastoreItem::JKQTPdatastoreItemrows </BLOCKQUOTE>. \see JKQTPdatastoreItem::rows for more information */ \
+    /*! \brief returns the property rows. \details Description of the parameter rows is:  <BLOCKQUOTE>\copybrief JKQTPDatastoreItem::JKQTPDatastoreItemrows </BLOCKQUOTE>. \see JKQTPDatastoreItem::rows for more information */ \
     inline size_t get_rows() const
     {   return rows;   }
-    /*! \brief returns the property columns. \details Description of the parameter columns is:  <BLOCKQUOTE>\copybrief JKQTPdatastoreItem::columns </BLOCKQUOTE>. \see JKQTPdatastoreItem::columns for more information */ \
+    /*! \brief returns the property columns. \details Description of the parameter columns is:  <BLOCKQUOTE>\copybrief JKQTPDatastoreItem::columns </BLOCKQUOTE>. \see JKQTPDatastoreItem::columns for more information */ \
     inline size_t get_columns() const
     {   return columns;   }
 
@@ -784,11 +784,11 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline double get(size_t column, size_t row) {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPsingleColumn:
+            case JKQTPSingleColumn:
               return data[row];
-            case JKQTPmatrixColumn:
+            case JKQTPMatrixColumn:
               return data[column*rows+row];
-            case JKQTPmatrixRow:
+            case JKQTPMatrixRow:
               return data[row*columns+column];
         }
         return 0;
@@ -798,11 +798,11 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline double* getPointer(size_t column, size_t row) {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPsingleColumn:
+            case JKQTPSingleColumn:
               return &(data[row]);
-            case JKQTPmatrixColumn:
+            case JKQTPMatrixColumn:
               return &(data[column*rows+row]);
-            case JKQTPmatrixRow:
+            case JKQTPMatrixRow:
               return &(data[row*columns+column]);
         }
         return nullptr;
@@ -811,11 +811,11 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline const double* getPointer(size_t column, size_t row) const {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPsingleColumn:
+            case JKQTPSingleColumn:
               return &(data[row]);
-            case JKQTPmatrixColumn:
+            case JKQTPMatrixColumn:
               return &(data[column*rows+row]);
-            case JKQTPmatrixRow:
+            case JKQTPMatrixRow:
               return &(data[row*columns+column]);
         }
         return nullptr;
@@ -823,13 +823,13 @@ class LIB_EXPORT JKQTPdatastoreItem {
     /** \brief set the data at the position (\a column, \a row ) to \a value. The column index specifies the column inside THIS item, not the global column number. */
     inline void set(size_t column, size_t row, double value) {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPsingleColumn:
+            case JKQTPSingleColumn:
               data[row]=value;
               return;
-            case JKQTPmatrixColumn:
+            case JKQTPMatrixColumn:
               data[column*rows+row]=value;
               return;
-            case JKQTPmatrixRow:
+            case JKQTPMatrixRow:
               data[row*columns+column]=value;
               return;
         }
@@ -837,16 +837,16 @@ class LIB_EXPORT JKQTPdatastoreItem {
 };
 
 
-/** \brief 	QAbstractTableModel descendent that allows to view data in a JKQTPdatastore
+/** \brief 	QAbstractTableModel descendent that allows to view data in a JKQTPDatastore
  * \ingroup jkqtpdatastorage
  *
- * \see JKQTPdatastore
+ * \see JKQTPDatastore
  */
-class LIB_EXPORT JKQTPdatastoreModel: public QAbstractTableModel {
+class LIB_EXPORT JKQTPDatastoreModel: public QAbstractTableModel {
         Q_OBJECT
     public:
-        JKQTPdatastoreModel(JKQTPdatastore* datastore, QObject* parent=nullptr);
-        virtual ~JKQTPdatastoreModel() override;
+        JKQTPDatastoreModel(JKQTPDatastore* datastore, QObject* parent=nullptr);
+        virtual ~JKQTPDatastoreModel() override;
 
 
         virtual QVariant data(const QModelIndex &index, int role) const override;
@@ -859,7 +859,7 @@ class LIB_EXPORT JKQTPdatastoreModel: public QAbstractTableModel {
         void reloadModel();
 
     protected:
-        JKQTPdatastore* datastore;
+        JKQTPDatastore* datastore;
 
 };
 
@@ -868,28 +868,28 @@ class LIB_EXPORT JKQTPdatastoreModel: public QAbstractTableModel {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline void JKQTPcolumn::setValue(size_t n, double val){
+inline void JKQTPColumn::setValue(size_t n, double val){
     if (!datastore) return ;
     if (!datastore->getItem(datastoreItem)) return ;
     datastore->getItem(datastoreItem)->set(datastoreOffset, n, val);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline void JKQTPcolumn::incValue(size_t n, double increment){
+inline void JKQTPColumn::incValue(size_t n, double increment){
     if (!datastore) return ;
     if (!datastore->getItem(datastoreItem)) return ;
     datastore->getItem(datastoreItem)->set(datastoreOffset, n, datastore->getItem(datastoreItem)->get(datastoreOffset, n)+increment);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline double JKQTPcolumn::getValue(size_t n) const {
+inline double JKQTPColumn::getValue(size_t n) const {
     if (!datastore) return 0;
     if (!datastore->getItem(datastoreItem)) return 0;
     return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline double JKQTPcolumn::getValue(int n) const {
+inline double JKQTPColumn::getValue(int n) const {
     if (!datastore) return 0;
     if (!datastore->getItem(datastoreItem)) return 0;
     if (n<0) return 0;
@@ -897,22 +897,22 @@ inline double JKQTPcolumn::getValue(int n) const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline double JKQTPdatastore::get(size_t column, size_t row) const {
+inline double JKQTPDatastore::get(size_t column, size_t row) const {
     return columns[column].getValue(row);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline double JKQTPdatastore::get(int column, size_t row) const {
+inline double JKQTPDatastore::get(int column, size_t row) const {
     return get(static_cast<size_t>(column), static_cast<size_t>(row));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline void JKQTPdatastore::set(size_t column, size_t row, double value)  {
+inline void JKQTPDatastore::set(size_t column, size_t row, double value)  {
     columns[column].setValue(row, value);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-inline void JKQTPdatastore::set(int column, size_t row, double value)  {
+inline void JKQTPDatastore::set(int column, size_t row, double value)  {
     set(static_cast<size_t>(column), static_cast<size_t>(row), value);
 }
 

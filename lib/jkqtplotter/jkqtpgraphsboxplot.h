@@ -44,7 +44,7 @@
 
     \image html plot_boxplotvertical.png
  */
-class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
+class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         Q_OBJECT
     public:
 
@@ -56,9 +56,9 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
 
 
         /** \brief class constructor */
-        JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPBoxplotVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPboxplotVerticalGraph(JKQtPlotter* parent);
+        JKQTPBoxplotVerticalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -79,7 +79,7 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
         /*! \brief sets the property sortData to the specified \a __value. 
@@ -312,14 +312,14 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
         /*! \brief sets the property meanSymbol to the specified \a __value. 
             \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copybrief meanSymbol </BLOCKQUOTE> 
             \see meanSymbol for more information */ 
-        inline virtual void set_meanSymbol(const JKQTPgraphSymbols & __value)  
+        inline virtual void set_meanSymbol(const JKQTPGraphSymbols & __value)  
         {
             this->meanSymbol = __value;
         } 
         /*! \brief returns the property meanSymbol. 
             \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copybrief meanSymbol </BLOCKQUOTE> 
             \see meanSymbol for more information */ 
-        inline virtual JKQTPgraphSymbols get_meanSymbol() const  
+        inline virtual JKQTPGraphSymbols get_meanSymbol() const  
         {
             return this->meanSymbol; 
         }
@@ -353,7 +353,7 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
         }
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */
@@ -384,7 +384,7 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
          *         if we only plot one box&whiskers then this is the width in plot coordinates */
         double boxWidth;
         /** \brief which symbol to use for the mean  */
-        JKQTPgraphSymbols meanSymbol;
+        JKQTPGraphSymbols meanSymbol;
         /** \brief size (diameter in pixels) of the symbol for the mean */
         double meanSymbolSize;
         /** \brief width (in pixels) of the lines used to plot the symbol for the mean */
@@ -411,14 +411,14 @@ class LIB_EXPORT JKQTPboxplotVerticalGraph: public JKQTPgraph {
     the x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
     percentile25Column and percentile75Column.
 
-    \image html plot_boxplothorizontal.png
+    \image html plot_boxplothoricontal.png
  */
-class LIB_EXPORT JKQTPboxplotHorizontalGraph: public JKQTPboxplotVerticalGraph {
+class LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPboxplotHorizontalGraph(JKQtBasePlotter* parent=nullptr);
-        JKQTPboxplotHorizontalGraph(JKQtPlotter* parent);
+        JKQTPBoxplotHorizontalGraph(JKQTBasePlotter* parent=nullptr);
+        JKQTPBoxplotHorizontalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -446,21 +446,22 @@ class LIB_EXPORT JKQTPboxplotHorizontalGraph: public JKQTPboxplotVerticalGraph {
 
 
 /*! \brief This implements a vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> where the data is directly given to the
-           object and not stored in a column, as in JKQTPboxplotVerticalGraph
+           object and not stored in a column, as in JKQTPBoxplotVerticalGraph
     \ingroup jkqtplotter_statgraphs
+    \ingroup jkqtplotter_geoplots
 
     the x position is given in posColumn. All other data are given in the median, min, max,
     percentile25 and percentile75.
 
-    \image html plot_boxplotvertical.png
+    \image html plot_boxplotverticalelement.png
  */
-class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
+class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPboxplotVerticalElement(JKQtBasePlotter* parent=nullptr);
+        JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPboxplotVerticalElement(JKQtPlotter* parent);
+        JKQTPBoxplotVerticalElement(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -666,14 +667,14 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
         /*! \brief sets the property meanSymbol to the specified \a __value. 
             \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copybrief meanSymbol </BLOCKQUOTE> 
             \see meanSymbol for more information */ 
-        inline virtual void set_meanSymbol(const JKQTPgraphSymbols & __value)  
+        inline virtual void set_meanSymbol(const JKQTPGraphSymbols & __value)  
         {
             this->meanSymbol = __value;
         } 
         /*! \brief returns the property meanSymbol. 
             \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copybrief meanSymbol </BLOCKQUOTE> 
             \see meanSymbol for more information */ 
-        inline virtual JKQTPgraphSymbols get_meanSymbol() const  
+        inline virtual JKQTPGraphSymbols get_meanSymbol() const  
         {
             return this->meanSymbol; 
         }
@@ -749,7 +750,7 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
         }
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */
@@ -785,7 +786,7 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
         /** \brief width of box in plot coordinates */
         double boxWidth;
         /** \brief which symbol to use for the mean  */
-        JKQTPgraphSymbols meanSymbol;
+        JKQTPGraphSymbols meanSymbol;
         /** \brief size (diameter in pixels) of the symbol for the mean */
         double meanSymbolSize;
         /** \brief width (in pixels) of the lines used to plot the symbol for the mean */
@@ -797,21 +798,22 @@ class LIB_EXPORT JKQTPboxplotVerticalElement: public JKQTPgraph {
 
 
 /*! \brief This implements a horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> where the data is directly given to the
-           object and not stored in a column, as in JKQTPboxplotVerticalGraph
+           object and not stored in a column, as in JKQTPBoxplotVerticalGraph
     \ingroup jkqtplotter_statgraphs
+    \ingroup jkqtplotter_geoplots
 
     the x position is given in pos. All other data are given in the median, min, max,
     percentile25 and percentile75.
 
-    \image html plot_boxplothorizontal.png
+    \image html plot_boxplothorizontalelement.png
  */
-class LIB_EXPORT JKQTPboxplotHorizontalElement: public JKQTPboxplotVerticalElement {
+class LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPboxplotHorizontalElement(JKQtBasePlotter* parent=nullptr);
+        JKQTPBoxplotHorizontalElement(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPboxplotHorizontalElement(JKQtPlotter* parent);
+        JKQTPBoxplotHorizontalElement(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

@@ -18,7 +18,7 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
     QVBoxLayout* layoutpeaks=new QVBoxLayout(this);
     setLayout(layoutpeaks);
     resize(1000, 800);
-    plotPeaks=new JKQtPlotter(true, this);
+    plotPeaks=new JKQTPLotter(true, this);
     plotPeaks->set_doDrawing(false);
     plotPeaks->get_plotter()->set_plotLabel(tr("\\textbf{peaks stream plot}"));
     plotPeaks->setObjectName("plotPeaks");

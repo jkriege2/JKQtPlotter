@@ -1,7 +1,7 @@
 /** \example speedtestplot.cpp
- * JKQtPlotter: Examples: Simple line-graph with live-data (speed test)
+ * JKQTPLotter: Examples: Simple line-graph with live-data (speed test)
  *
- * \ref JKQtPlotterSpeedTest
+ * \ref JKQTPLotterSpeedTest
  */
 
 #include "speedtestplot.h"
@@ -9,10 +9,10 @@
 
 
 SpeedTestPlot::SpeedTestPlot():
-    JKQtPlotter(), dx(1.0/double(NDATA)*4.0*M_PI), x0(0)
+    JKQTPLotter(), dx(1.0/double(NDATA)*4.0*M_PI), x0(0)
 
 {
-    // 1. optimize JKQtPlotter for speed (by switching off anti-aliasing)
+    // 1. optimize JKQTPLotter for speed (by switching off anti-aliasing)
     get_plotter()->set_useAntiAliasingForGraphs(false);
     get_plotter()->set_useAntiAliasingForSystem(false);
     get_plotter()->set_useAntiAliasingForText(false);
@@ -26,24 +26,24 @@ SpeedTestPlot::SpeedTestPlot():
         Y2[i]=cos(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
     }
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    Here the data from the std::array's is not copied, but only the pointer to
     //    the array is added to the datastore. therefore the datastore does not manage
     //    the memory, oly uses the data stored in it!
-    JKQTPdatastore* ds=getDatastore();
+    JKQTPDatastore* ds=getDatastore();
     size_t columnX=ds->addColumn(X.data(), X.size(), "x");
     size_t columnY=ds->addColumn(Y.data(), Y.size(), "y");
     size_t columnY2=ds->addColumn(Y2.data(), Y2.size(), "y2");
 
     // 4. create two  graphs in the plot, which plots the dataset X/Y:
-    JKQTPxyLineGraph* graph=new JKQTPxyLineGraph(this);
+    JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(this);
     graph->set_xColumn(columnX);
     graph->set_yColumn(columnY);
     graph->set_title(QObject::tr("live sin() graph"));
     graph->set_lineWidth(1);
     addGraph(graph);
 
-    JKQTPxyLineGraph* graph2=new JKQTPxyLineGraph(this);
+    JKQTPXYLineGraph* graph2=new JKQTPXYLineGraph(this);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY2);
     graph2->set_title(QObject::tr("live cos() graph"));

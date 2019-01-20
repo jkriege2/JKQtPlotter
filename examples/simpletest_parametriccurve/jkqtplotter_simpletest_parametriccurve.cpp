@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_parametriccurve.cpp
- * Shows how to plot parametric curves from datapoints with JKQtPlotter
+ * Shows how to plot parametric curves from datapoints with JKQTPLotter
  *
- * \ref JKQtPlotterParametricCurves
+ * \ref JKQTPLotterParametricCurves
  */
 
 #include <QApplication>
@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create two plotter windows that share the same internal datastore (for convenience)
-    JKQtPlotter plot, plot2;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot, plot2;
+    JKQTPDatastore* ds=plot.getDatastore();
     plot2.useExternalDatastore(ds);
 
     // 2. now we create a vector of x- and y-values of the logarithmic spiral
@@ -42,22 +42,22 @@ int main(int argc, char* argv[])
     //    a datacolumn
 
     // 3.1 the basic graph
-    JKQTPxyLineGraph* graph1=new JKQTPxyLineGraph(&plot);
+    JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY);
     graph1->set_drawLine(true);
-    graph1->set_symbol(JKQTPnoSymbol);
+    graph1->set_symbol(JKQTPNoSymbol);
     graph1->set_title("one-colored spiral");
     plot.addGraph(graph1);
 
     // 3.2 for graph2 is the same as graph 1, but in addition, the color of the lines
     //     is set, based on the contents of column R, via the color-palette JKQTPMathImageMATLAB
-    JKQTPxyParametrizedScatterGraph* graph2=new JKQTPxyParametrizedScatterGraph(&plot2);
+    JKQTPXYParametrizedScatterGraph* graph2=new JKQTPXYParametrizedScatterGraph(&plot2);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY);
     graph2->set_colorColumn(columnR);
     graph2->set_palette(JKQTPMathImageMATLAB);
-    graph2->set_symbol(JKQTPnoSymbol);
+    graph2->set_symbol(JKQTPNoSymbol);
     graph2->set_drawLine(true);
     graph2->set_title("colored spiral");
     graph2->get_colorBarRightAxis()->set_axisLabel("color scale radius $r(\\phi)$");

@@ -15,7 +15,7 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     QVBoxLayout* layout1=new QVBoxLayout(this);
     setLayout(layout1);
     resize(1000, 800);
-    JKQtPlotter* plotGeo=new JKQtPlotter(true, this);
+    JKQTPLotter* plotGeo=new JKQTPLotter(true, this);
     plotGeo->set_doDrawing(false);
     plotGeo->setObjectName("plotGeo");
     layout1->addWidget(plotGeo);
@@ -30,21 +30,21 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     plotGeo->get_plotter()->set_axisAspectRatio(1);
 
 
-//    JKQTPgeoLine* line1=new JKQTPgeoLine(plotGeo->get_plotter(), -1, -2, 2, 1.5);
+//    JKQTPGeoLine* line1=new JKQTPGeoLine(plotGeo->get_plotter(), -1, -2, 2, 1.5);
     //plotGeo->get_plotter()->addGraph(line1);
-//    JKQTPgeoLine* line2=new JKQTPgeoLine(plotGeo->get_plotter(), 1, -5, 4, 3, QColor("blue"), 4);
+//    JKQTPGeoLine* line2=new JKQTPGeoLine(plotGeo->get_plotter(), 1, -5, 4, 3, QColor("blue"), 4);
     //plotGeo->get_plotter()->addGraph(line2);
 
-    JKQTPgeoRectangle* rect1=new JKQTPgeoRectangle(plotGeo->get_plotter(), 1,1,2,2, QColor("blue"),2, Qt::SolidLine, QColor("lightblue"));
+    JKQTPGeoRectangle* rect1=new JKQTPGeoRectangle(plotGeo->get_plotter(), 1,1,2,2, QColor("blue"),2, Qt::SolidLine, QColor("lightblue"));
     rect1->set_angle(30);
     //plotGeo->get_plotter()->addGraph(rect1);
-    JKQTPgeoRectangle* rect2=new JKQTPgeoRectangle(plotGeo->get_plotter(), 1,1,2,2, QColor("red"),2);
+    JKQTPGeoRectangle* rect2=new JKQTPGeoRectangle(plotGeo->get_plotter(), 1,1,2,2, QColor("red"),2);
     rect2->set_angle(45);
     //plotGeo->get_plotter()->addGraph(rect2);
-    JKQTPgeoRectangle* rect3=new JKQTPgeoRectangle(plotGeo->get_plotter(), 1,1,2,4, QColor("green"),2);
+    JKQTPGeoRectangle* rect3=new JKQTPGeoRectangle(plotGeo->get_plotter(), 1,1,2,4, QColor("green"),2);
     rect3->set_angle(-30);
     //plotGeo->get_plotter()->addGraph(rect3);
-    JKQTPgeoEllipse* ell3=new JKQTPgeoEllipse(plotGeo->get_plotter(), 1,1,2,4, QColor("green"),2, Qt::SolidLine, QColor("lightgreen"), Qt::CrossPattern);
+    JKQTPGeoEllipse* ell3=new JKQTPGeoEllipse(plotGeo->get_plotter(), 1,1,2,4, QColor("green"),2, Qt::SolidLine, QColor("lightgreen"), Qt::CrossPattern);
     ell3->set_angle(-30);
     //plotGeo->get_plotter()->addGraph(ell3);
 
@@ -55,31 +55,31 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     p.append(QPointF(0,-2));
     p.append(QPointF(M_PI,5.5));
 
-//    JKQTPgeoPolygon* poly=new JKQTPgeoPolygon(plotGeo->get_plotter(), p, QColor("black"), 1.5, Qt::SolidLine, QColor(128,128,0,128));
+//    JKQTPGeoPolygon* poly=new JKQTPGeoPolygon(plotGeo->get_plotter(), p, QColor("black"), 1.5, Qt::SolidLine, QColor(128,128,0,128));
     //plotGeo->get_plotter()->addGraph(poly);
-//    JKQTPgeoPolyLines* lines=new JKQTPgeoPolyLines(plotGeo->get_plotter(), p, QColor(255,255,0), 3);
+//    JKQTPGeoPolyLines* lines=new JKQTPGeoPolyLines(plotGeo->get_plotter(), p, QColor(255,255,0), 3);
     //plotGeo->get_plotter()->addGraph(lines);
 
-    JKQTPgeoEllipse* ell1=new JKQTPgeoEllipse(plotGeo->get_plotter(), 0,0,2,4, QColor("black"),1.5, Qt::DotLine);
+    JKQTPGeoEllipse* ell1=new JKQTPGeoEllipse(plotGeo->get_plotter(), 0,0,2,4, QColor("black"),1.5, Qt::DotLine);
     plotGeo->get_plotter()->addGraph(ell1);
-//    JKQTPgeoArc* arc=new JKQTPgeoArc(plotGeo->get_plotter(), 0,0,2,4,0, 135, QColor("blue"),3, Qt::SolidLine);
+//    JKQTPGeoArc* arc=new JKQTPGeoArc(plotGeo->get_plotter(), 0,0,2,4,0, 135, QColor("blue"),3, Qt::SolidLine);
     //plotGeo->get_plotter()->addGraph(arc);
-//    JKQTPgeoPie* pie=new JKQTPgeoPie(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
+//    JKQTPGeoPie* pie=new JKQTPGeoPie(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
     //plotGeo->get_plotter()->addGraph(pie);
-//    JKQTPgeoChord* chord=new JKQTPgeoChord(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
+//    JKQTPGeoChord* chord=new JKQTPGeoChord(plotGeo->get_plotter(), 0,0,2,4,35, 98, QColor("blue"),3, Qt::SolidLine, QColor(0,0,255,127));
     //plotGeo->get_plotter()->addGraph(chord);
 
-    JKQTPgeoInfiniteLine* iline=new JKQTPgeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,1,1, QColor("blue"), 3);
+    JKQTPGeoInfiniteLine* iline=new JKQTPGeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,1,1, QColor("blue"), 3);
     plotGeo->get_plotter()->addGraph(iline);
-    JKQTPgeoInfiniteLine* iline1=new JKQTPgeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,-1,0, QColor("red"), 3);
+    JKQTPGeoInfiniteLine* iline1=new JKQTPGeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,-1,0, QColor("red"), 3);
     plotGeo->get_plotter()->addGraph(iline1);
-    JKQTPgeoInfiniteLine* iline2=new JKQTPgeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,0,1, QColor("red"), 3);
+    JKQTPGeoInfiniteLine* iline2=new JKQTPGeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,0,1, QColor("red"), 3);
     plotGeo->get_plotter()->addGraph(iline2);
-    JKQTPgeoInfiniteLine* iline3=new JKQTPgeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,-1,0.5, QColor("green"), 3);
+    JKQTPGeoInfiniteLine* iline3=new JKQTPGeoInfiniteLine(plotGeo->get_plotter(), 0.5,1,-1,0.5, QColor("green"), 3);
     iline3->set_two_sided(true);
     plotGeo->get_plotter()->addGraph(iline3);
 
-    JKQTPgeoText* text=new JKQTPgeoText(plotGeo->get_plotter(), -1, -1, "Test $f(x)=\\sqrt{\\sin(x^2)}$ \\textbf{bold}", 12, QColor("red"));
+    JKQTPGeoText* text=new JKQTPGeoText(plotGeo->get_plotter(), -1, -1, "Test $f(x)=\\sqrt{\\sin(x^2)}$ \\textbf{bold}", 12, QColor("red"));
     plotGeo->get_plotter()->addGraph(text);
 
     plotGeo->set_doDrawing(true);

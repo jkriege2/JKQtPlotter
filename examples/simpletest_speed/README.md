@@ -1,12 +1,12 @@
-# Example (JKQtPlotter): Simple line-graph with live-data (speed test) {#JKQtPlotterSpeedTest}
-This project (see `./examples/simpletest_speed/`) simply creates a JKQtPlotter widget (as a new window) and adds two line-graph (a sine and a cosine wave). 
+# Example (JKQTPLotter): Simple line-graph with live-data (speed test) {#JKQTPLotterSpeedTest}
+This project (see `./examples/simpletest_speed/`) simply creates a JKQTPLotter widget (as a new window) and adds two line-graph (a sine and a cosine wave). 
 Data is stored in two [`std::array<double, NDATA>`](https://en.cppreference.com/w/cpp/container/array) objects (`X`, `Y`, and `Y2`) and the data is added as external pointer to the datastore:
 ```.cpp
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    Here the data from the std::array's is not copied, but only the pointer to
     //    the array is added to the datastore. therefore the datastore does not manage
     //    the memory, oly uses the data stored in it!
-    JKQTPdatastore* ds=getDatastore();
+    JKQTPDatastore* ds=getDatastore();
     size_t columnX=ds->addColumn(X.data(), X.size(), "x");
     size_t columnY=ds->addColumn(Y.data(), Y.size(), "y");
     size_t columnY2=ds->addColumn(Y2.data(), Y2.size(), "y2");
@@ -54,7 +54,7 @@ The result looks like this:
 ![jkqtplotter_simpletest_speed1](../../screenshots/jkqtplotter_simpletest_speed.png)
 
 There are different facor affecting the replot speed:
-1. *Anti-Aliasing:* If `JKQtPlotter` uses Anti-Aliasing for plotting, the plots are much nicer, but also about a factor of 3-4 slower. This is due to the increased amount of calculations, necessary in the drawing sub-system of Qt.
+1. *Anti-Aliasing:* If `JKQTPLotter` uses Anti-Aliasing for plotting, the plots are much nicer, but also about a factor of 3-4 slower. This is due to the increased amount of calculations, necessary in the drawing sub-system of Qt.
    You can configrue anti-aliasing with these calls:
    ```.cpp
       plot.get_plotter()->set_useAntiAliasingForGraphs(false);

@@ -13,12 +13,12 @@ TestWidgetLogGraphs::TestWidgetLogGraphs(QWidget *parent) :
     QWidget(parent)
 {
 
-    JKQtPlotter* plotLOG=new JKQtPlotter(this);
+    JKQTPLotter* plotLOG=new JKQTPLotter(this);
     plotLOG->set_doDrawing(false);
     plotLOG->setObjectName("plotLOG");
     plotLOG->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plotLOG/");
 
-    JKQTPdatastore* ds=plotLOG->get_plotter()->getDatastore();
+    JKQTPDatastore* ds=plotLOG->get_plotter()->getDatastore();
     QVector<double> x,y;
     for (unsigned int i=0; i<N2; i++) {
         const double xx=static_cast<double>(i+1)/static_cast<double>(N2)*15.0;
@@ -38,7 +38,7 @@ TestWidgetLogGraphs::TestWidgetLogGraphs(QWidget *parent) :
     resize(1000, 800);
 
 
-    plotLOG->get_plotter()->addGraph(cx2, cy23, "data, $f(x)=5^{x/5}$", JKQTPlines);
+    plotLOG->get_plotter()->addGraph(cx2, cy23, "data, $f(x)=5^{x/5}$", JKQTPLines);
 
 
     plotLOG->set_doDrawing(true);

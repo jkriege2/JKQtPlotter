@@ -9,7 +9,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 # output executable name
 TARGET = jkqtplotter_simpletest_imageplot_opencv
 
-# add OpenCV-interface to JKQTPdatastore
+# add OpenCV-interface to JKQTPDatastore
 DEFINES += JKQTPLOTTER_OPENCV_INTERFACE
 
 

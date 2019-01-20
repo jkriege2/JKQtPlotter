@@ -69,7 +69,7 @@ class JKQTFPPlot;
 /*! \brief a speed optimized plotter class
     \ingroup jkqtfastplotter
 
-    This plotter class is (in contrast to JKQTPlotter) optimized for speed. It allows to plot function graphs/data in
+    This plotter class is (in contrast to JKQTPLotter) optimized for speed. It allows to plot function graphs/data in
     a simple manner. The focus of design was not on a nice output (athough this is not unimportant), but on the speed
     of the output. So the class may be used to di quick plotting of data, i.e. in fast image sequence applications.
 

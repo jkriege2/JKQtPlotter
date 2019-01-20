@@ -53,20 +53,20 @@
 #ifndef JKQTPLOTTER_H
 #define JKQTPLOTTER_H
 
-/** \brief initialized Qt-ressources necessary for JKQtPlotter
+/** \brief initialized Qt-ressources necessary for JKQTPLotter
  *  \ingroup jkqtpplotterclasses
 */
-LIB_EXPORT void initJKQtPlotterResources();
+LIB_EXPORT void initJKQTPLotterResources();
 
 
 /** \brief class to plot function graphs in linear or (semi-)logarithmic scale
  * \ingroup jkqtpplotterclasses
  *
- * This class is an implementation of JKQtPlotterBase. It uses the tools from this base class
+ * This class is an implementation of JKQTPLotterBase. It uses the tools from this base class
  * to display function graphs that use the internal datastore as data source. You can add graphs
- * to this component which are described by a JKQTPplotElement struct.
+ * to this component which are described by a JKQTPPlotElement struct.
  */
-class LIB_EXPORT JKQtPlotter: public QWidget {
+class LIB_EXPORT JKQTPLotter: public QWidget {
         Q_OBJECT
     public:
         enum MouseActionModes {
@@ -98,11 +98,11 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
         /** \brief class constructor
          */
-        explicit JKQtPlotter(bool datastore_internal, QWidget* parent=nullptr, JKQTPdatastore* datast=nullptr);
-        explicit JKQtPlotter(QWidget* parent=nullptr);
+        explicit JKQTPLotter(bool datastore_internal, QWidget* parent=nullptr, JKQTPDatastore* datast=nullptr);
+        explicit JKQTPLotter(QWidget* parent=nullptr);
 
         /** \brief class destructor */
-        virtual ~JKQtPlotter();
+        virtual ~JKQTPLotter();
 
         /** reinitializes the toolbar, i.e. fills in QActions added to the QWidget since its creation/the last call to this function */
         virtual void updateToolbarActions();
@@ -121,9 +121,9 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         }
 
         /** \brief returns the class internally used for plotting */
-        JKQtBasePlotter* get_plotter() const { return plotter; }
+        JKQTBasePlotter* get_plotter() const { return plotter; }
         /** \brief returns the class internally used for plotting */
-        const JKQtBasePlotter* get_constplotter() const { return const_cast<const JKQtBasePlotter*>(plotter); }
+        const JKQTBasePlotter* get_constplotter() const { return const_cast<const JKQTBasePlotter*>(plotter); }
 
         /*! \brief sets the property displayToolbar to the specified \a __value. 
             \details Description of the parameter displayToolbar is: <BLOCKQUOTE>\copybrief displayToolbar </BLOCKQUOTE> 
@@ -268,14 +268,14 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
             \param synchronizeWidth do you want the plot width to be synchronized?
             \param synchronizeHeight do you want the plot height to be synchronized?
         */
-        void synchronizeToMaster(JKQtPlotter* master, bool synchronizeWidth, bool synchronizeHeight);
+        void synchronizeToMaster(JKQTPLotter* master, bool synchronizeWidth, bool synchronizeHeight);
 
         /** \brief switches any synchronization off, that has been created by synchronizeToMaster() */
         void resetMasterSynchronization();
 
 
         /** \brief returns a pointer to the datastore used by this object */
-        inline JKQTPdatastore* getDatastore() { return plotter->getDatastore(); }
+        inline JKQTPDatastore* getDatastore() { return plotter->getDatastore(); }
 
         /** \brief tells the plotter object to use the given external datastore.
          *
@@ -283,12 +283,12 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
          * with external management. If the current datastore is already external, this method will simply replace it by the
          * new one.
          */
-        inline void useExternalDatastore(JKQTPdatastore* newStore) { plotter->useExternalDatastore(newStore); }
+        inline void useExternalDatastore(JKQTPDatastore* newStore) { plotter->useExternalDatastore(newStore); }
 
         /** \brief tells the plotter object to use the given external datastore and treat it as an internal one (i.e. free it
          *         when the plotter object ist destroyed.
          */
-        inline void useAsInternalDatastore(JKQTPdatastore* newStore) { plotter->useAsInternalDatastore(newStore); }
+        inline void useAsInternalDatastore(JKQTPDatastore* newStore) { plotter->useAsInternalDatastore(newStore); }
 
         /** \brief tells the plotter object to use an internal datastore. A new internal datastore object is generated only if
          *         the current datastore is not internal.
@@ -384,13 +384,13 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
             return this->mouseLastClickY; 
         }
 
-        inline JKQTPhorizontalAxis* get_xAxis() { return plotter->get_xAxis(); }
-        inline JKQTPverticalAxis* get_yAxis() { return plotter->get_yAxis(); }
-        inline const JKQTPhorizontalAxis* get_xAxis() const { return plotter->get_xAxis(); }
-        inline const JKQTPverticalAxis* get_yAxis() const { return plotter->get_yAxis(); }
+        inline JKQTPHorizontalAxis* get_xAxis() { return plotter->get_xAxis(); }
+        inline JKQTPVerticalAxis* get_yAxis() { return plotter->get_yAxis(); }
+        inline const JKQTPHorizontalAxis* get_xAxis() const { return plotter->get_xAxis(); }
+        inline const JKQTPVerticalAxis* get_yAxis() const { return plotter->get_yAxis(); }
 
        /** \brief returns description of i'th graph */
-        inline JKQTPplotElement* getGraph(size_t i) { return plotter->getGraph(i); }
+        inline JKQTPPlotElement* getGraph(size_t i) { return plotter->getGraph(i); }
 
         /** \brief returns the number of graphs */
         inline size_t getGraphCount() { return plotter->getGraphCount(); }
@@ -399,10 +399,10 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         inline void deleteGraph(size_t i, bool deletegraph=true) { plotter->deleteGraph(i, deletegraph); }
 
         /** \brief returns \c true, if the given graph is present */
-        inline bool containsGraph(JKQTPplotElement* gr) { return plotter->containsGraph(gr); }
+        inline bool containsGraph(JKQTPPlotElement* gr) { return plotter->containsGraph(gr); }
 
         /** \brief remove the given graph, if it is contained */
-        inline void deleteGraph(JKQTPplotElement* gr, bool deletegraph=true) { plotter->deleteGraph(gr, deletegraph);  };
+        inline void deleteGraph(JKQTPPlotElement* gr, bool deletegraph=true) { plotter->deleteGraph(gr, deletegraph);  };
 
         /** \brief remove all plots
          *
@@ -411,17 +411,17 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         inline void clearGraphs(bool deleteGraphs=true) { plotter->clearGraphs(deleteGraphs); }
 
         /** \brief add a new graph, returns it's position in the graphs list */
-        inline size_t addGraph(JKQTPplotElement* gr) { return plotter->addGraph(gr); }
+        inline size_t addGraph(JKQTPPlotElement* gr) { return plotter->addGraph(gr); }
 
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        inline size_t moveGraphTop(JKQTPplotElement* gr) { return plotter->moveGraphTop(gr); }
+        inline size_t moveGraphTop(JKQTPPlotElement* gr) { return plotter->moveGraphTop(gr); }
 
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
-        inline size_t moveGraphBottom(JKQTPplotElement* gr) { return plotter->moveGraphBottom(gr); }
+        inline size_t moveGraphBottom(JKQTPPlotElement* gr) { return plotter->moveGraphBottom(gr); }
 
-        /** \brief add a new graphs from a QVector<JKQTPplotElement*>, QList<JKQTPplotElement*>, std::vector<JKQTPplotElement*> ... or any standard-iterateable container with JKQTPplotElement*-items */
-        template <class TJKQTPgraphContainer>
-        inline void addGraphs(const TJKQTPgraphContainer& gr) { plotter->addGraphs(gr); }
+        /** \brief add a new graphs from a QVector<JKQTPPlotElement*>, QList<JKQTPPlotElement*>, std::vector<JKQTPPlotElement*> ... or any standard-iterateable container with JKQTPPlotElement*-items */
+        template <class TJKQTPGraphContainer>
+        inline void addGraphs(const TJKQTPGraphContainer& gr) { plotter->addGraphs(gr); }
 
         /** \brief sets minimum and maximum x-value to plot */
         inline void setX(double xminn, double xmaxx) { plotter->setX(xminn, xmaxx); }
@@ -475,7 +475,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         }
 
         /** \brief returns a QPen object for the i-th plot style */
-        inline JKQtBasePlotter::JKQTPPen getPlotStyle(int i) const {
+        inline JKQTBasePlotter::JKQTPPen getPlotStyle(int i) const {
             return get_constplotter()->getPlotStyle(i);
         }
 
@@ -568,11 +568,11 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
 
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
-        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtPlotter* sender);
+        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis */
-        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtPlotter* sender);
+        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis */
-        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQtPlotter* sender);
+        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
 
 
         /** \brief popuplate the given toolbar with all actions shown in a toolbar from this class ... */
@@ -602,7 +602,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
 
 
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
-        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQtPlotter* sender);
+        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
 
         /** \brief emitted when the user draws a rectangle */
         void userClickFinished(double x, double y, Qt::KeyboardModifiers modifiers);
@@ -626,14 +626,14 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
          */
         virtual void modifyContextMenu(QMenu* menu);
 
-        void init(bool datastore_internal, QWidget* parent, JKQTPdatastore* datast);
+        void init(bool datastore_internal, QWidget* parent, JKQTPDatastore* datast);
 
         MouseActionModes mouseActionMode;
 
         bool doDrawing;
 
-        /** \brief JKQtPlotterBase used to plot */
-        JKQtBasePlotter* plotter;
+        /** \brief JKQTPLotterBase used to plot */
+        JKQTBasePlotter* plotter;
 
 
         /** \brief fill color of the zoom rectangle */
@@ -778,7 +778,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         QString customMousePositiontext;
 
         /** \brief the master plotter, this plotter is connected to. */
-        QPointer<JKQtPlotter> masterPlotter;
+        QPointer<JKQTPLotter> masterPlotter;
 
         /** \brief calculate the y-axis shift of the plot, so there is space for the potentially displayed mouse position label */
         int getPlotYOffset();
@@ -809,7 +809,7 @@ class LIB_EXPORT JKQtPlotter: public QWidget {
         void masterPlotScalingRecalculated();
 
         /** \brief called whenever the zoom changes in plotter */
-        void pzoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQtBasePlotter* sender);
+        void pzoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
 
         /** \brief emitted before the plot scaling has been recalculated */
         void intBeforePlotScalingRecalculate();

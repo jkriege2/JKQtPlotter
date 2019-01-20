@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Simple math image plot without use of central JKQTdatastore {#JKQtPlotterImagePlotNoDatastore}
-This project (see `./examples/simpletest_imageplot_nodatastore/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then given to a JKQTPMathImage to visualize it. The data is stored as a pointer directly in the JKQTPMathImage object. There is also a variant JKQTPColumnMathImage of JKQTPMathImage, which references a column in the internal JKQTdatastore and uses the data there for plotting. In both cases data has to be organized as a row-major matrix of values. JKQTPMathImage supports different dataytpes ([u]nit8/16/32/64,float,double see `JKQTPMathImageBase::DataType`) that can be configured e.g. by `set_data()`.
+# Example (JKQTPLotter): Simple math image plot without use of central JKQTdatastore {#JKQTPLotterImagePlotNoDatastore}
+This project (see `./examples/simpletest_imageplot_nodatastore/`) simply creates a JKQTPLotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then given to a JKQTPMathImage to visualize it. The data is stored as a pointer directly in the JKQTPMathImage object. There is also a variant JKQTPColumnMathImage of JKQTPMathImage, which references a column in the internal JKQTdatastore and uses the data there for plotting. In both cases data has to be organized as a row-major matrix of values. JKQTPMathImage supports different dataytpes ([u]nit8/16/32/64,float,double see `JKQTPMathImageBase::DataType`) that can be configured e.g. by `set_data()`.
 
 The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot_nodatastore.cpp`](../simpletest_imageplot_nodatastore/jkqtplotter_simpletest_imageplot_nodatastore.cpp):
 ```.cpp
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting

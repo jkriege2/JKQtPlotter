@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FormWithJKQtPlotter</class>
- <widget class="QWidget" name="FormWithJKQtPlotter">
+ <class>FormWithJKQTPLotter</class>
+ <widget class="QWidget" name="FormWithJKQTPLotter">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -36,7 +36,7 @@
     </widget>
    </item>
    <item row="3" column="0" colspan="3">
-    <widget class="JKQtPlotter" name="plot" native="true"/>
+    <widget class="JKQTPLotter" name="plot" native="true"/>
    </item>
    <item row="1" column="1">
     <widget class="QCheckBox" name="chkLogY">
@@ -63,7 +63,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>JKQtPlotter</class>
+   <class>JKQTPLotter</class>
    <extends>QWidget</extends>
    <header>jkqtplotter/jkqtplotter.h</header>
    <container>1</container>

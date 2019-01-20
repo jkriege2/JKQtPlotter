@@ -34,17 +34,17 @@
 #ifndef NO_JKQTPLOTTER
 #include "jkqtplottertools/jkqtptools.h"
 
-class JKQTPverticalIndependentAxis; // forward
-class JKQTPhorizontalIndependentAxis; // forward
-class JKQtBasePlotter; // forward
+class JKQTPVerticalIndependentAxis; // forward
+class JKQTPHorizontalIndependentAxis; // forward
+class JKQTBasePlotter; // forward
 #endif
 
 /*! \brief Width of the Palette-Icons, generated e.g. by JKQTPMathImageGetPaletteIcon()
     \ingroup jkqtptools_qt */
-#define JKQTP_PALETTE_ICON_WIDTH 64
+#define jkqtp_PALETTE_ICON_WIDTH 64
 /*! \brief Height of the Palette-Icons, generated e.g. by JKQTPMathImageGetPaletteIcon()
     \ingroup jkqtptools_qt */
-#define JKQTP_PALETTE_IMAGEICON_HEIGHT 64
+#define jkqtp_PALETTE_IMAGEICON_HEIGHT 64
 
 
 /*! \brief available palettes for coloring an image
@@ -157,7 +157,7 @@ enum JKQTPRGBMathImageRGBMode {
 
 */
 template <class T>
-inline QVector<T> JKQTPimagePlot_arrayToVector(const T* input, int N) {
+inline QVector<T> JKQTPImagePlot_arrayToVector(const T* input, int N) {
     if (!input || N<=0) return QVector<double>();
     T dummy;
     QVector<T> out(N, dummy);
@@ -170,7 +170,7 @@ inline QVector<T> JKQTPimagePlot_arrayToVector(const T* input, int N) {
 
 */
 template <class T>
-inline QVector<double> JKQTPimagePlot_arrayToDVector(const T* input, int N) {
+inline QVector<double> JKQTPImagePlot_arrayToDVector(const T* input, int N) {
     if (!input || N<=0) return QVector<double>();
     QVector<double> out(N, 0.0);
     for (int i=0; i<N; i++) {
@@ -183,7 +183,7 @@ inline QVector<double> JKQTPimagePlot_arrayToDVector(const T* input, int N) {
     \ingroup jkqtplotter_imagelots_tools
 
 */
-inline QVector<double> JKQTPimagePlot_BarrayToDVector(const bool* input, int N) {
+inline QVector<double> JKQTPImagePlot_BarrayToDVector(const bool* input, int N) {
     if (!input || N<=0) return QVector<double>();
     QVector<double> out(N, 0.0);
     for (int i=0; i<N; i++) {
@@ -197,7 +197,7 @@ inline QVector<double> JKQTPimagePlot_BarrayToDVector(const bool* input, int N) 
 
  */
 template <class T>
-inline double JKQTPimagePlot_getImageMin(T* dbl, int width, int height)
+inline double JKQTPImagePlot_getImageMin(T* dbl, int width, int height)
 {
     if (!dbl || width<=0 || height<=0)
             return 0;
@@ -228,7 +228,7 @@ inline double JKQTPimagePlot_getImageMin(T* dbl, int width, int height)
 
  */
 template <class T>
-inline double JKQTPimagePlot_getImageMax(T* dbl, int width, int height)
+inline double JKQTPImagePlot_getImageMax(T* dbl, int width, int height)
 {
     if (!dbl || width<=0 || height<=0)
             return 0;
@@ -271,7 +271,7 @@ inline double JKQTPimagePlot_getImageMax(T* dbl, int width, int height)
            leave alpha as it is.
 */
 template <class T>
-inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QImage &img, int channel, T minColor, T maxColor, JKQTPRGBMathImageRGBMode rgbMode=JKQTPRGBMathImageModeRGBMode, bool logScale=false, double logBase=10.0)
+inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QImage &img, int channel, T minColor, T maxColor, JKQTPRGBMathImageRGBMode rgbMode=JKQTPRGBMathImageModeRGBMode, bool logScale=false, double logBase=10.0)
 {
     if (!dbl_in || width<=0 || height<=0)
         return;
@@ -508,7 +508,7 @@ inline void JKQTPimagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
 /*! \brief Generate a QList with \a N entries of the value \a defaultValue
     \ingroup jkqtptools_qt */
 template <typename T>
-inline QList<T> JKQTPimagePlot_makeQList(const T& defaultVal, int N=1) {
+inline QList<T> JKQTPImagePlot_makeQList(const T& defaultVal, int N=1) {
     QList<T> l;
     for (int i=0; i<N; i++) l<<defaultVal;
     return l;
@@ -519,7 +519,7 @@ inline QList<T> JKQTPimagePlot_makeQList(const T& defaultVal, int N=1) {
 /*! \brief size of the lookup tables used by JKQTFPimagePlot_array2image()
     \ingroup jkqtplotter_imagelots_tools
 */
-#define JKQTPimagePlot_LUTSIZE 256
+#define JKQTPImagePlot_LUTSIZE 256
 
 /*! \brief build a linearly interpolated palette in \a lut with \a N entries that are provided in \a items
     \ingroup jkqtplotter_imagelots_tools
@@ -529,7 +529,7 @@ inline QList<T> JKQTPimagePlot_makeQList(const T& defaultVal, int N=1) {
 
     \a lut needs to have \c lut_size) entries
 */
-void LIB_EXPORT JKQTPimagePlot_buildDefinedPaletteLinInterpolate(int* lut, QList<QPair<double, QRgb> > items, int lut_size=JKQTPimagePlot_LUTSIZE);
+void LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, QList<QPair<double, QRgb> > items, int lut_size=JKQTPImagePlot_LUTSIZE);
 
 /*! \brief build a linearly interpolated palette in \a lut with \a N entries that are provided as (double, QRgb) value pairss in the variable arguments
     \ingroup jkqtplotter_imagelots_tools
@@ -539,26 +539,26 @@ void LIB_EXPORT JKQTPimagePlot_buildDefinedPaletteLinInterpolate(int* lut, QList
 
     \a lut needs to have \c lut_size) entries
 */
-void LIB_EXPORT JKQTPimagePlot_buildDefinedPaletteLinInterpolate(int* lut, int N, ...);
+void LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, int N, ...);
 
 /*! \brief build a palette in \a lut with \a N entries that are provided in \a items
     \ingroup jkqtplotter_imagelots_tools
 
     The entries in \a items are sorted by the first (double) argument and the full range is distributed
-    over 0 ... JKQTPimagePlot_LUTSIZE.
+    over 0 ... JKQTPImagePlot_LUTSIZE.
 
-    \a lut needs to have \c JKQTPimagePlot_LUTSIZE) entries
+    \a lut needs to have \c JKQTPImagePlot_LUTSIZE) entries
 */
-void LIB_EXPORT JKQTPimagePlot_buildDefinedPalette(int* lut, QList<QPair<double, QRgb> > items);
+void LIB_EXPORT JKQTPImagePlot_buildDefinedPalette(int* lut, QList<QPair<double, QRgb> > items);
 
 /*! \brief build a palette in \a lut with \a N entries that are provided as as (double, QRgb) value pairss in the variable arguments
     \ingroup jkqtplotter_imagelots_tools
 */
-void LIB_EXPORT JKQTPimagePlot_buildDefinedPalette(int* lut, int N, ...);
+void LIB_EXPORT JKQTPImagePlot_buildDefinedPalette(int* lut, int N, ...);
 
 /*! \brief return a list of all globally available LUTs
     \ingroup jkqtplotter_imagelots_tools */
-QStringList LIB_EXPORT JKQTPimagePlot_getPredefinedPalettes();
+QStringList LIB_EXPORT JKQTPImagePlot_getPredefinedPalettes();
 
 
 
@@ -566,12 +566,12 @@ QStringList LIB_EXPORT JKQTPimagePlot_getPredefinedPalettes();
     \ingroup jkqtplotter_imagelots_tools
 	\internal
 	*/
-LIB_EXPORT int* JKQTPimagePlot_getCreateLUT(QList<int *> &lutstore, JKQTPMathImageColorPalette palette);
+LIB_EXPORT int* JKQTPImagePlot_getCreateLUT(QList<int *> &lutstore, JKQTPMathImageColorPalette palette);
 /*! \brief frees a list of LUTs
     \ingroup jkqtplotter_imagelots_tools
 	\internal
 	*/
-void LIB_EXPORT JKQTPimagePlot_freeLUTs(QList<int *> &lutstore);
+void LIB_EXPORT JKQTPImagePlot_freeLUTs(QList<int *> &lutstore);
 
 
 /*! \brief internal global storage object for lookup-tables
@@ -585,7 +585,7 @@ extern LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
 
     This method uses lookup tables which are saved as static variables to convert the 2D array into
     an image. The luts are only created once, and stored then, so mor CPU time is saved. The precompiler define
-    JKQTPimagePlot_LUTSIZE sets the size of the LUTs. Note that if you don't use a specific color palette,
+    JKQTPImagePlot_LUTSIZE sets the size of the LUTs. Note that if you don't use a specific color palette,
     the according LUT won't be calculated and stored!
 
     \param dbl_in pointer to a 1D array of template type \c T representing the image to plot. This array has to be of size \a width * \a height
@@ -603,7 +603,7 @@ extern LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
     \param infColor color to use for pixels that are infinity
 */
 template <class T>
-inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, JKQTPMathImageColorPalette palette, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0, const int* lutUser=0, int lutUserSize=0)
+inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, JKQTPMathImageColorPalette palette, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0, const int* lutUser=0, int lutUserSize=0)
 {    
     if (!dbl_in || width<=0 || height<=0)
             return;
@@ -650,8 +650,8 @@ inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, Q
 
 
     const int* lut_used=nullptr;
-    int lutSize=JKQTPimagePlot_LUTSIZE;
-    if (global_jkqtpimagetools_lutstore.size()<=0) global_jkqtpimagetools_lutstore=JKQTPimagePlot_makeQList<int*>(nullptr, JKQTPimagePlot_getPredefinedPalettes().size()+2);
+    int lutSize=JKQTPImagePlot_LUTSIZE;
+    if (global_jkqtpimagetools_lutstore.size()<=0) global_jkqtpimagetools_lutstore=JKQTPImagePlot_makeQList<int*>(nullptr, JKQTPImagePlot_getPredefinedPalettes().size()+2);
 
 
     img = QImage(width, height, QImage::Format_ARGB32);
@@ -665,7 +665,7 @@ inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, Q
             lutSize=lutUserSize;
             //qDebug()<<"user palette "<<lutUser<<lutUserSize;
         } else {
-            lut_used=JKQTPimagePlot_getCreateLUT(global_jkqtpimagetools_lutstore, palette);
+            lut_used=JKQTPImagePlot_getCreateLUT(global_jkqtpimagetools_lutstore, palette);
         }
 
 
@@ -711,7 +711,7 @@ inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, Q
 
     This method uses lookup tables which are saved as static variables to convert the 2D array into
     an image. The luts are only created once, and stored then, so mor CPU time is saved. The precompiler define
-    JKQTPimagePlot_LUTSIZE sets the size of the LUTs. Note that if you don't use a specific color palette,
+    JKQTPImagePlot_LUTSIZE sets the size of the LUTs. Note that if you don't use a specific color palette,
     the according LUT won't be calculated and stored!
 
     \param dbl_in pointer to a 1D array of template type \c T representing the image to plot. This array has to be of size \a width * \a height
@@ -730,19 +730,19 @@ inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, Q
     \param infColor color to use for pixels that are infinity
 */
 template <class T>
-inline void JKQTPimagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, const int* lutUser, int lutUserSize, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0)
+inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, const int* lutUser, int lutUserSize, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0)
 {
-    JKQTPimagePlot_array2image(dbl_in,  width,  height, img,  JKQTPMathImageUSER_PALETTE, minColor, maxColor,  paletteMinFail,  paletteMaxFail,  minFailColor,  maxFailColor,  nanColor,  infColor,  logScale,  logBase, lutUser, lutUserSize);
+    JKQTPImagePlot_array2image(dbl_in,  width,  height, img,  JKQTPMathImageUSER_PALETTE, minColor, maxColor,  paletteMinFail,  paletteMaxFail,  minFailColor,  maxFailColor,  nanColor,  infColor,  logScale,  logBase, lutUser, lutUserSize);
 }
 
 
 
 
 
-/*! \brief generates a QImage with width \a width and height 1 for the i-th color palette (\a i is based on the list returned by JKQTPimagePlot_getPredefinedPalettes() )
+/*! \brief generates a QImage with width \a width and height 1 for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )
     \ingroup jkqtplotter_imagelots_tools */
 QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(int i, int width);
-/*! \brief generates a QImage with width \a width and height \a height for the i-th color palette (\a i is based on the list returned by JKQTPimagePlot_getPredefinedPalettes() )
+/*! \brief generates a QImage with width \a width and height \a height for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )
     \ingroup jkqtplotter_imagelots_tools */
 QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(int i, int width, int height);
 /*! \brief generates a QImage with width \a width and height 1 for a specific JKQTPMathImageColorPalette
@@ -758,7 +758,7 @@ QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(int* lut, int lut_size, int widt
     \ingroup jkqtplotter_imagelots_tools */
 QImage LIB_EXPORT JKQTPMathImageGetAlphaPaletteImage(int* lut, int lut_size, int width, int height);
 
-/*! \brief generates a QIcon for the i-th color palette (\a i is based on the list returned by JKQTPimagePlot_getPredefinedPalettes() )
+/*! \brief generates a QIcon for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )
     \ingroup jkqtplotter_imagelots_tools */
 QIcon LIB_EXPORT JKQTPMathImageGetPaletteIcon(int i) ;
 
@@ -777,7 +777,7 @@ QIcon LIB_EXPORT JKQTPMathImageGetPaletteIcon(JKQTPMathImageColorPalette palette
 class LIB_EXPORT JKQTPColorPaletteTools {
     public:
 
-        JKQTPColorPaletteTools(JKQtBasePlotter *parent);
+        JKQTPColorPaletteTools(JKQTBasePlotter *parent);
         virtual ~JKQTPColorPaletteTools();
 
         /*! \brief get list with all available palettes */
@@ -821,7 +821,7 @@ class LIB_EXPORT JKQTPColorPaletteTools {
         void cbDrawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
 
 
-        void cbSetParent(JKQtBasePlotter* parent);
+        void cbSetParent(JKQTBasePlotter* parent);
 
 
         /** \brief determine min/max data value of the image */
@@ -833,7 +833,7 @@ class LIB_EXPORT JKQTPColorPaletteTools {
 
 
     protected:
-        JKQtBasePlotter* cbParent;
+        JKQTBasePlotter* cbParent;
 
 
         /** \brief top color bar visible */
@@ -880,8 +880,8 @@ class LIB_EXPORT JKQTPColorPaletteTools {
          *
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
-        JKQTPverticalIndependentAxis* colorBarRightAxis;
-        JKQTPhorizontalIndependentAxis* colorBarTopAxis;
+        JKQTPVerticalIndependentAxis* colorBarRightAxis;
+        JKQTPHorizontalIndependentAxis* colorBarTopAxis;
 
 
 
@@ -1128,13 +1128,13 @@ class LIB_EXPORT JKQTPColorPaletteTools {
         /*! \brief returns the property colorBarRightAxis. 
             \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copybrief colorBarRightAxis </BLOCKQUOTE>. 
             \see colorBarRightAxis for more information */ 
-        inline JKQTPverticalIndependentAxis* get_colorBarRightAxis() const { 
+        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxis() const { 
             return this->colorBarRightAxis; 
         }
         /*! \brief returns the property colorBarTopAxis. 
             \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copybrief colorBarTopAxis </BLOCKQUOTE>. 
             \see colorBarTopAxis for more information */ 
-        inline JKQTPhorizontalIndependentAxis* get_colorBarTopAxis() const { 
+        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxis() const { 
             return this->colorBarTopAxis; 
         }
         /*! \brief sets the property colorBarTopVisible to the specified \a __value. 

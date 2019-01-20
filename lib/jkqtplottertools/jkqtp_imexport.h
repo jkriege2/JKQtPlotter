@@ -1,5 +1,5 @@
-#ifndef JKQTP_IMPORT_H
-#define JKQTP_IMPORT_H
+#ifndef jkqtp_IMPORT_H
+#define jkqtp_IMPORT_H
 
 
 /*
@@ -72,5 +72,5 @@
 
 
 
-#endif // JKQTP_IMPORT_H
+#endif // jkqtp_IMPORT_H
 

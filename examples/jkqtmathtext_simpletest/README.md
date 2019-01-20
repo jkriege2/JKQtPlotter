@@ -1,10 +1,10 @@
-# Example (JKQTmathText): A simple usage example            {#JKQTmathTextSimpleExample}
-JKQTmathText is a hand-written LaTeX-renderer for Qt (implemented in native C++, using Qt). It supports a large set of standard LaTeX markup and can render it to a QPainter.
+# Example (JKQTMathText): A simple usage example            {#JKQTMathTextSimpleExample}
+JKQTMathText is a hand-written LaTeX-renderer for Qt (implemented in native C++, using Qt). It supports a large set of standard LaTeX markup and can render it to a QPainter.
 
 This project (see `./examples/jkqtmathtext_simpletest/`) simply creates a QLabel (as a new window) that displays a rendered LaTeX equation (here the time-dependent Schrödinger equation).
 The QMake project looks like this (see [`jkqtmathtext_simpletest.pro`](../jkqtmathtext_simpletest/jkqtmathtext_simpletest.pro):
 ```.qmake
-# include JKQTmathText source-code, including the open-source XITS fonts
+# include JKQTMathText source-code, including the open-source XITS fonts
 include(../../lib/jkqtmathtext_with_xits.pri)
 SOURCES += jkqtmathtext_simpletest.cpp
 
@@ -37,10 +37,10 @@ int main(int argc, char* argv[])
     pix.fill(QColor("white"));
     QPainter painter;
 
-    // 2. now we create a JKQTmathText object.
-    //    Also we configure the JKQTmathText to use the XITS fonts that
+    // 2. now we create a JKQTMathText object.
+    //    Also we configure the JKQTMathText to use the XITS fonts that
     //    were included in the *.pro-file
-    JKQTmathText mathText;
+    JKQTMathText mathText;
     mathText.useXITS();
     mathText.set_fontSize(20);
 

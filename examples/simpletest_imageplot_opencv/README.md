@@ -1,8 +1,8 @@
-# Example (JKQtPlotter): Simple math image plot, showin a 1-channel OpenCV cv::Mat {#JKQtPlotterImagePlotOpenCV}
-This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQtPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
-To copy the data a special OpenCV Interface function `JKQTPcopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
+# Example (JKQTPLotter): Simple math image plot, showin a 1-channel OpenCV cv::Mat {#JKQTPLotterImagePlotOpenCV}
+This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQTPLotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
+To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
-The function `JKQTPcopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQtPlotter with OPenCV.
+The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQTPLotter with OPenCV.
 
 The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](../simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
 ```.cpp
@@ -22,14 +22,14 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
     
     
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
@@ -57,10 +57,10 @@ int main(int argc, char* argv[])
     }
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    In this step the contents of one channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
-    size_t cAiryDisk=JKQTPcopyCvMatToColumn(ds, airydisk, "imagedata");
+    size_t cAiryDisk=JKQTPCopyCvMatToColumn(ds, airydisk, "imagedata");
 
     
     // 4. create a graph (JKQTPColumnMathImage) with the column created above as data

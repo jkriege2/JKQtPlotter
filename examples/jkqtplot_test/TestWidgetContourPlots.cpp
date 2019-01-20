@@ -16,14 +16,14 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     // contour plot
     QHBoxLayout* layoutContour=new QHBoxLayout(this);
     setLayout(layoutContour);
-    JKQtPlotter* plotContour=new JKQtPlotter(true, this);
+    JKQTPLotter* plotContour=new JKQTPLotter(true, this);
     plotContour->set_doDrawing(false);
     plotContour->get_plotter()->set_plotLabel(tr("\\textbf{hist contour plot}"));
     plotContour->setObjectName("contour");
     plotContour->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "contour/");
     layoutContour->addWidget(plotContour);
 
-    JKQtPlotter* plotDensity=new JKQtPlotter(true, this);
+    JKQTPLotter* plotDensity=new JKQTPLotter(true, this);
     plotContour->set_doDrawing(false);
     plotContour->get_plotter()->set_plotLabel(tr("\\textbf{2D histogram plot with contours}"));
     plotDensity->get_plotter()->set_plotLabel(tr("\\textbf{2D histogram}"));

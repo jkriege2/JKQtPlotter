@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest.cpp
- * A very basic example for the usage of JKQtPlotter
+ * A very basic example for the usage of JKQTPLotter
  *
- * \ref JKQTPlotterSimpleTest
+ * \ref JKQTPLotterSimpleTest
  */
  
 #include <QApplication>
@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve)
     QVector<double> X, Y;
@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
         Y<<sin(x);
     }
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise), so you can
     //          reuse X and Y afterwards!
     //    the variables columnX and columnY will contain the internal column ID of the newly
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     size_t columnY=ds->addCopiedColumn(Y, "y");
 
     // 4. create a graph in the plot, which plots the dataset X/Y:
-    JKQTPxyLineGraph* graph1=new JKQTPxyLineGraph(&plot);
+    JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY);
     graph1->set_title(QObject::tr("sine graph"));

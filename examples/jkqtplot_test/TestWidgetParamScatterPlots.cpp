@@ -17,7 +17,7 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
 
     setLayout(layoutPSP);
     resize(1000, 800);
-    plotPSP=new JKQtPlotter(true, this);
+    plotPSP=new JKQTPLotter(true, this);
     plotPSP->set_doDrawing(false);
     plotPSP->get_plotter()->set_plotLabel(tr("\\textbf{parametrized scatter plots}"));
     plotPSP->setObjectName("plotPSP");
@@ -50,7 +50,7 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
     int psps=plotPSP->getDatastore()->addCopiedColumn(dataS, "size");
     int pspsy=plotPSP->getDatastore()->addCopiedColumn(dataSy, "symbol");
 
-    pltePSPCol=new JKQTPxyParametrizedErrorScatterGraph(plotPSP->get_plotter());
+    pltePSPCol=new JKQTPXYParametrizedErrorScatterGraph(plotPSP->get_plotter());
     pltePSPCol->set_title(tr("changing color"));
     pltePSPCol->set_xColumn(pspx);
     pltePSPCol->set_yColumn(pspy);
@@ -61,7 +61,7 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
     pltePSPCol->set_drawLine(true);
     plotPSP->get_plotter()->addGraph(pltePSPCol);
 
-    pltePSPSize=new JKQTPxyParametrizedScatterGraph(plotPSP->get_plotter());
+    pltePSPSize=new JKQTPXYParametrizedScatterGraph(plotPSP->get_plotter());
     pltePSPSize->set_xColumn(pspx);
     pltePSPSize->set_yColumn(pspy1);
     pltePSPSize->set_sizeColumn(psps);
@@ -69,7 +69,7 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
     plotPSP->get_plotter()->addGraph(pltePSPSize);
 
 
-    pltePSPSymb=new JKQTPxyParametrizedScatterGraph(plotPSP->get_plotter());
+    pltePSPSymb=new JKQTPXYParametrizedScatterGraph(plotPSP->get_plotter());
     pltePSPSymb->set_xColumn(pspx);
     pltePSPSymb->set_yColumn(pspy3);
     pltePSPSymb->set_symbolColumn(pspsy);

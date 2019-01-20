@@ -3,7 +3,7 @@
 \defgroup jkqtfastplotter JKQTFastPlotter: Speed-Optimized Plotter class
 
 	This is an indepent (and fully self-contained) plotter class, which is optimized for drawing speed, rather than
-	output quality. It lacks several of the advanced features of JKQtPlotter, but can be used in cases, where fast
+	output quality. It lacks several of the advanced features of JKQTPLotter, but can be used in cases, where fast
 	update of plots or real-time plotting is required.
 
 	An example for the usage of this class can be found here: \link ../../examples/jkqtfastplotter_test \endlink

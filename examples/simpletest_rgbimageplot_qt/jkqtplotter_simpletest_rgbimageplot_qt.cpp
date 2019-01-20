@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_rgbimageplot_qt.cpp
- * JKQtPlotter: Examples: `QImage` as a Graph
+ * JKQTPLotter: Examples: `QImage` as a Graph
  *
- * \ref JKQtPlotterImagePlotQImageRGB
+ * \ref JKQTPLotterImagePlotQImageRGB
  */
 
 #include <QApplication>
@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)

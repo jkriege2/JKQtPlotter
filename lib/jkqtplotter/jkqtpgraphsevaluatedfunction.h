@@ -39,8 +39,8 @@
 /*! \brief type of functions that may be plottet
     \ingroup jkqtplotter_functiongraphs
 
-    This is the type of functions \f$ y=f(x, \vec{p}) \f$ that may be plottet by JKQTPxFunctionLineGraph
-    and JKQTPyFunctionLineGraph. It is possible to supply parameters \f$ \vec{p} \f$ to the function that
+    This is the type of functions \f$ y=f(x, \vec{p}) \f$ that may be plottet by JKQTPXFunctionLineGraph
+    and JKQTPYFunctionLineGraph. It is possible to supply parameters \f$ \vec{p} \f$ to the function that
     influence its result. Parameters are given as a pointer to some memory location. The function has to
     know on its own how to interpret these.
 */
@@ -49,8 +49,8 @@ typedef std::function<double(double, void*)> jkqtpPlotFunctionType;
 /*! \brief simplified type of functions (without parameters) that may be plottet
     \ingroup jkqtplotter_functiongraphs
 
-    This is the type of functions \f$ y=f(x) \f$ that may be plottet by JKQTPxFunctionLineGraph
-    and JKQTPyFunctionLineGraph.
+    This is the type of functions \f$ y=f(x) \f$ that may be plottet by JKQTPXFunctionLineGraph
+    and JKQTPYFunctionLineGraph.
 */
 typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
@@ -69,7 +69,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
     the following image
     \image html plot_functionplots.png
  */
-class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
+class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         Q_OBJECT
     public:
 
@@ -83,13 +83,13 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         };
 
         /** \brief class constructor */
-        JKQTPxFunctionLineGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPXFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPxFunctionLineGraph(JKQtPlotter* parent);
+        JKQTPXFunctionLineGraph(JKQTPLotter* parent);
 
         /** \brief class destructor */
-        virtual ~JKQTPxFunctionLineGraph();
+        virtual ~JKQTPXFunctionLineGraph();
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -518,7 +518,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
             return this->errorLineWidth; 
         }
 
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
 
@@ -527,7 +527,7 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
         /** \brief returns, which special function is set (or if any is set) */
         SpecialFunction getFunctionType() const;
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         struct doublePair {
@@ -624,13 +624,13 @@ class LIB_EXPORT JKQTPxFunctionLineGraph: public JKQTPgraph {
     \ingroup jkqtplotter_functiongraphs
 
  */
-class LIB_EXPORT JKQTPyFunctionLineGraph: public JKQTPxFunctionLineGraph {
+class LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPyFunctionLineGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPYFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPyFunctionLineGraph(JKQtPlotter* parent);
+        JKQTPYFunctionLineGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

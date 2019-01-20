@@ -50,27 +50,27 @@
 
 
 
-/** \brief initialized Qt-ressources necessary for JKQTmathText
+/** \brief initialized Qt-ressources necessary for JKQTMathText
  *  \ingroup jkqtmathtext
  */
-LIB_EXPORT void initJKQTmathTextResources();
+LIB_EXPORT void initJKQTMathTextResources();
 
 /*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a QPainter
     \ingroup jkqtmathtext
 
     
-    JKQTmathText is a self-contained LaTeX-renderer for Qt. It is used to renderer
-    labels in JKQtPlotter/JKQtBasePlotter, but can be used independently. 
+    JKQTMathText is a self-contained LaTeX-renderer for Qt. It is used to renderer
+    labels in JKQTPLotter/JKQTBasePlotter, but can be used independently. 
     The class does not depend on any library, except Qt. 
     In particular it actually parses a LaTeX string and draws it in pure C++. It does NOT rely
     on an installed LaTeX for the rendering!
     
-    \section JKQTmathTextUsage Usage
-    \subsection JKQTmathTextUsageDirect Direct Usage
+    \section JKQTMathTextUsage Usage
+    \subsection JKQTMathTextUsageDirect Direct Usage
     This small piece of C++ code may serve as an example of the usage and capabilities of the class:
     \code
-    // create a JKQTmathText object.
-    JKQTmathText mathText;
+    // create a JKQTMathText object.
+    JKQTMathText mathText;
 
     // configure its properties to influence the rendering (e.g. fonts to use, font size, ...)
     mathText.useXITS();
@@ -87,7 +87,7 @@ LIB_EXPORT void initJKQTmathTextResources();
     painter.end();
     \endcode
     
-    \subsection JKQTmathTextSizing Determining the size of an equation
+    \subsection JKQTMathTextSizing Determining the size of an equation
     
     In addition there are also functions that allow to calculate the size of the equation, before drawing it (just like the functions in <a href="http://doc.qt.io/qt-5/qfontmetrics.html">QFontMetrics</a> and  <a href="http://doc.qt.io/qt-5/qfontmetricsf.html">QFontMetricsF</a>):
       - getSizeDetail()
@@ -95,28 +95,28 @@ LIB_EXPORT void initJKQTmathTextResources();
       - getAscent(), getDescent()
     .
     
-    \subsection JKQTmathTextErrorHandling Error Handling
+    \subsection JKQTMathTextErrorHandling Error Handling
     
     The class is designed to be as robust as possible and will still return some output, even if the equation contains some errors.
     Nevertheless, several errors are detected while parsing. You can get a list of error messages using get_error_list() after calling parse().
     Also parse() will return \c false if an error occured while parsing.
 
     
-    \subsection JKQTmathTextUsageQLabel Usage within a QLabel class JKQTmathTextLabel
+    \subsection JKQTMathTextUsageQLabel Usage within a QLabel class JKQTMathTextLabel
     
-    Finally, there is also a QLabel-derived class JKQTmathTextLabel which can be used for drawing a LaTeX string onto a Qt form.
+    Finally, there is also a QLabel-derived class JKQTMathTextLabel which can be used for drawing a LaTeX string onto a Qt form.
     
-    \see JKQTmathTextLabel
+    \see JKQTMathTextLabel
 
     
-    \section JKQTmathTextExamples Examples
+    \section JKQTMathTextExamples Examples
 
     Examples for the usage of this class can be found here: 
-      - \ref JKQTmathTextSimpleExample 
+      - \ref JKQTMathTextSimpleExample 
     .
 
 
-    \section JKQTmathTextSuppoertedLaTeX Supported LaTeX Subset
+    \section JKQTMathTextSuppoertedLaTeX Supported LaTeX Subset
     
     The supported LaTeX subset is listes below. Please note that some commands are used differently than in actual LaTeX.
     For example \c \\bf is just a renamed form of \c \\textbf and used as \c \\bf{...} and NOT as \c {\\bf...} .
@@ -152,7 +152,7 @@ LIB_EXPORT void initJKQTmathTextResources();
       - \c \\left~ \c \\right~ : ceil braces |~  ~|
     .
 
-    \section JKQTmathTextSuppoertedFonts Font Handling
+    \section JKQTMathTextSuppoertedFonts Font Handling
     
     Several fonts are defined as properties to the class:
       - A "roman" font used as the standard font ( set_fontRoman() in math-mode set_fontMathRoman() )
@@ -167,7 +167,7 @@ LIB_EXPORT void initJKQTmathTextResources();
       - A "caligraphic" font used to display caligraphic characters ( set_fontCaligraphic() )
     .
     
-    These fonts are generic font classes, which font is actually used can be configured in JKQTmathText class with the \c set_...() functions mentioned above. You can also use these functions to set the fonts used for math rendering in math-mode:
+    These fonts are generic font classes, which font is actually used can be configured in JKQTMathText class with the \c set_...() functions mentioned above. You can also use these functions to set the fonts used for math rendering in math-mode:
       - useSTIX() use the STIX fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a> in math-mode<br>\image html jkqtmathparser_stix.png
       - useXITS() use the XITS fonts from <a href="https://github.com/alif-type/xits">https://github.com/alif-type/xits</a> in math-mode. These are included by default in this library and also activated by default.<br>\image html jkqtmathparser_xits.png
       - useASANA() use the ASANA fonts from <a href="https://ctan.org/tex-archive/fonts/Asana-Math/">https://ctan.org/tex-archive/fonts/Asana-Math/</a> in math-mode<br>\image html jkqtmathparser_asana.png
@@ -184,20 +184,20 @@ LIB_EXPORT void initJKQTmathTextResources();
     .
     
 
-    \section JKQTmathTextToHTML Convert to HTML
+    \section JKQTMathTextToHTML Convert to HTML
     
     The method toHtml() may be used to get a HTML representation of the LaTeX string, if possible (only for simple LaTeX equations!). Whether
     the transformation was possible is returned as a call by value argument!
 
 
  */
-class LIB_EXPORT JKQTmathText : public QObject {
+class LIB_EXPORT JKQTMathText : public QObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTmathText(QObject * parent = nullptr);
+        JKQTMathText(QObject * parent = nullptr);
         /** \brief class destructor */
-        ~JKQTmathText();
+        ~JKQTMathText();
         /** \brief load the object settings from the given QSettings object with the given name prefix */
         void loadSettings(QSettings& settings, QString group=QString("mathtext"));
         /** \brief store the object settings to the given QSettings object with the given name prefix */
@@ -777,7 +777,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
             bool insideMath;
 
 
-            QFont getFont(JKQTmathText* parent) const;
+            QFont getFont(JKQTMathText* parent) const;
             QString toHtmlStart(MTenvironment defaultEv) const;
             QString toHtmlAfter(MTenvironment defaultEv) const;
         };
@@ -787,7 +787,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing one node in the syntax tree */
         class MTnode {
             public:
-                MTnode(JKQTmathText* parent);
+                MTnode(JKQTMathText* parent);
                 virtual ~MTnode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos)=0;
                 void getSize(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
@@ -796,7 +796,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 /** \brief returns true if node is subscript or superscript node */
                 virtual bool isSubOrSuper() { return false; }
                 /** \brief convert node to HTML and returns \c true on success */
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
 
                 /*! \brief returns the property drawBoxes. 
                     \details Description of the parameter drawBoxes is:  <BLOCKQUOTE>\copybrief drawBoxes </BLOCKQUOTE>. 
@@ -807,19 +807,19 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const;
             protected:
-                JKQTmathText* parent;
+                JKQTMathText* parent;
                 bool drawBoxes;
-                void doDrawBoxes(QPainter& painter, double x, double y, JKQTmathText::MTenvironment currentEv);
+                void doDrawBoxes(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv);
         };
 
         /** \brief subclass representing one text node in the syntax tree */
         class MTtextNode: public MTnode {
             public:
-                MTtextNode(JKQTmathText* parent, QString text, bool addWhitespace, bool stripInnerWhitepace=false);
+                MTtextNode(JKQTMathText* parent, QString text, bool addWhitespace, bool stripInnerWhitepace=false);
                 virtual ~MTtextNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 /*! \brief returns the property text. 
                     \details Description of the parameter text is:  <BLOCKQUOTE>\copybrief text </BLOCKQUOTE>. 
                     \see text for more information */ 
@@ -829,36 +829,36 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 virtual QString getTypeName() const override ;
             protected:
                 QString text;
-                virtual QString textTransform(const QString& text, JKQTmathText::MTenvironment currentEv, bool forSize=false);
+                virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
         };
 
         /** \brief subclass representing one text node in the syntax tree */
         class MTplainTextNode: public MTtextNode {
             public:
-                MTplainTextNode(JKQTmathText* parent, QString text, bool addWhitespace, bool stripInnerWhitepace=false);
+                MTplainTextNode(JKQTMathText* parent, QString text, bool addWhitespace, bool stripInnerWhitepace=false);
                 virtual QString getTypeName() const;
             protected:
-                virtual QString textTransform(const QString& text, JKQTmathText::MTenvironment currentEv, bool forSize=false);
+                virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
         };
         /** \brief subclass representing one whitepsace node in the syntax tree */
         class MTwhitespaceNode: public MTtextNode {
             public:
-                MTwhitespaceNode(JKQTmathText* parent);
+                MTwhitespaceNode(JKQTMathText* parent);
                 virtual ~MTwhitespaceNode();
                 virtual QString getTypeName() const;
                 /** \brief convert node to HTML and returns \c true on success */
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
         };
 
         /** \brief subclass representing one symbol (e.g. \c \\alpha , \c \\cdot ...) node in the syntax tree */
         class MTsymbolNode: public MTnode {
             public:
-                MTsymbolNode(JKQTmathText* parent, QString name, bool addWhitespace);
+                MTsymbolNode(JKQTMathText* parent, QString name, bool addWhitespace);
                 virtual ~MTsymbolNode();
                 virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 /*! \brief returns the property symbolName. 
                     \details Description of the parameter symbolName is:  <BLOCKQUOTE>\copybrief symbolName </BLOCKQUOTE>. 
                     \see symbolName for more information */ 
@@ -894,13 +894,13 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing a list of nodes in the syntax tree */
         class MTlistNode: public MTnode {
             public:
-                MTlistNode(JKQTmathText* parent);
+                MTlistNode(JKQTMathText* parent);
                 virtual ~MTlistNode();
                 virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 void addNode(MTnode* n) { nodes.append(n); }
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 /*! \brief returns the property nodes. 
                     \details Description of the parameter nodes is:  <BLOCKQUOTE>\copybrief nodes </BLOCKQUOTE>. 
@@ -916,13 +916,13 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing an instruction node with exactly one argument in the syntax tree */
         class MTinstruction1Node: public MTnode {
             public:
-                MTinstruction1Node(JKQTmathText* parent, QString name, MTnode* child, const QStringList& parameters=QStringList());
+                MTinstruction1Node(JKQTMathText* parent, QString name, MTnode* child, const QStringList& parameters=QStringList());
                 virtual ~MTinstruction1Node();
                 virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief convert node to HTML and returns \c true on success */
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 /*! \brief returns the property child. 
                     \details Description of the parameter child is:  <BLOCKQUOTE>\copybrief child </BLOCKQUOTE>. 
@@ -943,7 +943,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                     return this->parameters; 
                 }
             protected:
-                bool setupMTenvironment(JKQTmathText::MTenvironment &ev);
+                bool setupMTenvironment(JKQTMathText::MTenvironment &ev);
 
                 MTnode* child;
                 QString name;
@@ -955,7 +955,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing an subscript node with exactly one argument in the syntax tree */
         class MTsubscriptNode: public MTnode {
             public:
-                MTsubscriptNode(JKQTmathText* parent, MTnode* child);
+                MTsubscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsubscriptNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
@@ -968,7 +968,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                 inline MTnode* get_child() const { 
                     return this->child; 
                 }
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
             protected:
                 MTnode* child;
@@ -977,7 +977,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing an superscript node with exactly one argument in the syntax tree */
         class MTsuperscriptNode: public MTnode {
             public:
-                MTsuperscriptNode(JKQTmathText* parent, MTnode* child);
+                MTsuperscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsuperscriptNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
@@ -990,7 +990,7 @@ class LIB_EXPORT JKQTmathText : public QObject {
                     return this->child; 
                 }
                 virtual QString getTypeName() const;
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
             protected:
                 MTnode* child;
@@ -999,11 +999,11 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing a brace node  */
         class MTbraceNode: public MTnode {
             public:
-                MTbraceNode(JKQTmathText* parent, QString openbrace, QString closebrace, MTnode* child, bool showRightBrace=true);
+                MTbraceNode(JKQTMathText* parent, QString openbrace, QString closebrace, MTnode* child, bool showRightBrace=true);
                 virtual ~MTbraceNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const;
                 /*! \brief returns the property child. 
@@ -1043,11 +1043,11 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing a sqrt node  */
         class MTsqrtNode: public MTnode {
             public:
-                MTsqrtNode(JKQTmathText* parent, MTnode* child, int degree=2);
+                MTsqrtNode(JKQTMathText* parent, MTnode* child, int degree=2);
                 virtual ~MTsqrtNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const ;
                 /*! \brief returns the property child. 
@@ -1083,12 +1083,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing a \\frac node  */
         class MTfracNode: public MTnode {
             public:
-                MTfracNode(JKQTmathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
+                MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
                 virtual ~MTfracNode();
                 virtual QString getTypeName() const ;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 /*! \brief returns the property child1. 
                     \details Description of the parameter child1 is:  <BLOCKQUOTE>\copybrief child1 </BLOCKQUOTE>. 
@@ -1117,12 +1117,12 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing a \\begin{matrix} node  */
         class MTmatrixNode: public MTnode {
             public:
-                MTmatrixNode(JKQTmathText* parent, QVector<QVector<MTnode*> > children);
+                MTmatrixNode(JKQTMathText* parent, QVector<QVector<MTnode*> > children);
                 virtual ~MTmatrixNode();
                 virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 /*! \brief returns the property children. 
                     \details Description of the parameter children is:  <BLOCKQUOTE>\copybrief children </BLOCKQUOTE>. 
                     \see children for more information */ 
@@ -1167,11 +1167,11 @@ class LIB_EXPORT JKQTmathText : public QObject {
         /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node  */
         class MTdecoratedNode: public MTnode {
             public:
-                MTdecoratedNode(JKQTmathText* parent, MTdecoration decoration, MTnode* child);
+                MTdecoratedNode(JKQTMathText* parent, MTdecoration decoration, MTnode* child);
                 virtual ~MTdecoratedNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTmathText::MTenvironment currentEv, JKQTmathText::MTenvironment defaultEv);
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void set_drawBoxes(bool draw);
                 virtual QString getTypeName() const ;
                 /*! \brief returns the property child. 
@@ -1448,40 +1448,40 @@ class LIB_EXPORT JKQTmathText : public QObject {
 
             bool operator==(const tbrDataH& other) const;
         };
-        static QList<JKQTmathText::tbrData> tbrs;
-        static QHash<JKQTmathText::tbrDataH, QRectF> tbrh;
+        static QList<JKQTMathText::tbrData> tbrs;
+        static QHash<JKQTMathText::tbrDataH, QRectF> tbrh;
         static QRectF getTBR(const QFont &fm, const QString& text,  QPaintDevice *pd);
 };
 
 
 
-inline uint qHash(const JKQTmathText::tbrDataH& data) {
+inline uint qHash(const JKQTMathText::tbrDataH& data) {
     return qHash(data.f.family())+qHash(data.text);
 }
 
 
 
 
-/*! \brief A QLabel-derived class that draws an equation with LaTeX markup using JKQTmathText
+/*! \brief A QLabel-derived class that draws an equation with LaTeX markup using JKQTMathText
     \ingroup jkqtmathtext
 
-    \see JKQTmathText
+    \see JKQTMathText
 */
-class LIB_EXPORT JKQTmathTextLabel: public QLabel {
+class LIB_EXPORT JKQTMathTextLabel: public QLabel {
         Q_OBJECT
     public:
-        explicit JKQTmathTextLabel(QWidget* parent=nullptr);
-        virtual ~JKQTmathTextLabel();
+        explicit JKQTMathTextLabel(QWidget* parent=nullptr);
+        virtual ~JKQTMathTextLabel();
 
-        /** \brief returns the internal JKQTmathText instance used for drawing
+        /** \brief returns the internal JKQTMathText instance used for drawing
          *
          *  Use this function to set the font, font size and other properties of the used renderer.
          */
-        JKQTmathText* getMathText() const;
+        JKQTMathText* getMathText() const;
         /** \brief set the equation to draw */
         void setMath(const QString& text, bool doRepaint=true);
     protected:
-        JKQTmathText* m_mathText;
+        JKQTMathText* m_mathText;
         QString lastText;
         QPixmap buffer;
         bool repaintDo;

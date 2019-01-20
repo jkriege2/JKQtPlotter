@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_symbols_and_errors.cpp
- * JKQtPlotter: Examples: Simple line-graph with error bars
+ * JKQTPLotter: Examples: Simple line-graph with error bars
  *
- * \ref JKQtPlotterSymbolsErrors
+ * \ref JKQTPLotterSymbolsErrors
  */
 
 #include <QApplication>
@@ -16,8 +16,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve with lin. increasing errors)
     double X[Ndata], Y[Ndata], YERROR[Ndata];
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
         YERROR[i]=0.2+double(i)/double(Ndata)*0.25;
     }
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise), so you can
     //          reuse X and Y afterwards!
     //    the variables columnX and columnY will contain the internal column ID of the newly
@@ -37,12 +37,12 @@ int main(int argc, char* argv[])
     size_t columnYE=ds->addCopiedColumn(YERROR, Ndata, "y-error");
 
     // 4. create a graph in the plot, which plots the dataset X/Y:
-    JKQTPxyLineErrorGraph* graph1=new JKQTPxyLineErrorGraph(&plot);
+    JKQTPXYLineErrorGraph* graph1=new JKQTPXYLineErrorGraph(&plot);
     graph1->set_xColumn(columnX);
     graph1->set_yColumn(columnY);
     graph1->set_yErrorColumn(columnYE);
-    graph1->set_symbol(JKQTPfilledStar); // set symbol style
-    graph1->set_yErrorStyle(JKQTPerrorBars); // set error indicator type
+    graph1->set_symbol(JKQTPFilledStar); // set symbol style
+    graph1->set_yErrorStyle(JKQTPErrorBars); // set error indicator type
     graph1->set_drawLine(false); // don't draw a line
     graph1->set_title(QObject::tr("sine graph"));
 

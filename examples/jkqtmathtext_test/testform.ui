@@ -193,7 +193,7 @@
     </layout>
    </item>
    <item row="15" column="0" colspan="2">
-    <widget class="JKQTmathTextLabel" name="labMath">
+    <widget class="JKQTMathTextLabel" name="labMath">
      <property name="text">
       <string>left(left[sqrt{2picdotint_{-infty}^infty f(x);mathrm{d}x}right]right) </string>
      </property>
@@ -418,7 +418,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>JKQTmathTextLabel</class>
+   <class>JKQTMathTextLabel</class>
    <extends>QLabel</extends>
    <header>jkqtmathtext/jkqtmathtext.h</header>
   </customwidget>

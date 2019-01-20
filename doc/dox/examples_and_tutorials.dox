@@ -12,53 +12,53 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <table>
 <tr><th>Screenshot<th>Description<th>Notes
 <tr><td> \image html jkqtplotter_simpletest1_small.png 
-    <td> \subpage JKQTPlotterSimpleTest 
-	<td> `JKQTPxyLineGraph` <br> C++-style QVector arrays of data 
+    <td> \subpage JKQTPLotterSimpleTest 
+	<td> `JKQTPXYLineGraph` <br> C++-style QVector arrays of data 
 <tr><td> \image html jkqtplotter_simpletest_speed_small.png
-    <td> \subpage JKQtPlotterSpeedTest
-    <td> `JKQTPxyLineGraph` <br> external `std::array<double,N>` data, not owned by datastore <br> live-data, measure plotting speed <br> tipps to increas plotting speed 
+    <td> \subpage JKQTPLotterSpeedTest
+    <td> `JKQTPXYLineGraph` <br> external `std::array<double,N>` data, not owned by datastore <br> live-data, measure plotting speed <br> tipps to increas plotting speed 
 <tr><td> \image html jkqtplotter_simpletest_symbols_and_styles_small.png
-    <td> \subpage JKQtPlotterSymbolsAndStyles
-    <td> `JKQTPxyLineGraph` <br> C++ vector of data <br> setting line styles and symbol styles <br> automatic graph coloring 
+    <td> \subpage JKQTPLotterSymbolsAndStyles
+    <td> `JKQTPXYLineGraph` <br> C++ vector of data <br> setting line styles and symbol styles <br> automatic graph coloring 
 <tr><td> \image html jkqtplotter_simpletest_stepplots_small.png
-    <td> \subpage JKQtPlotterStepPlot
-    <td> `JKQTPstepHorizontalGraph` (and `JKQTPxyLineGraph`) <br> C++ vector of data <br> different step modes, filled and line-only 
+    <td> \subpage JKQTPLotterStepPlot
+    <td> `JKQTPStepHorizontalGraph` (and `JKQTPXYLineGraph`) <br> C++ vector of data <br> different step modes, filled and line-only 
 <tr><td> \image html jkqtplotter_simpletest_symbols_and_errors_small.png
-    <td> \subpage JKQtPlotterSymbolsErrors
-    <td> `JKQTPxyLineErrorGraph` <br> C-style arrays of data 
+    <td> \subpage JKQTPLotterSymbolsErrors
+    <td> `JKQTPXYLineErrorGraph` <br> C-style arrays of data 
 <tr><td> \image html jkqtplotter_simpletest_errorbarstyles_small.png
-    <td> \subpage JKQtPlotterErrorBarStyles
-    <td> `JKQTPxyLineErrorGraph` <br> different styles of error indicators for x- and y-errors <br> C++-style QVector for data <br> styling error indicators <br> moving key and formatting plotter grid 
+    <td> \subpage JKQTPLotterErrorBarStyles
+    <td> `JKQTPXYLineErrorGraph` <br> different styles of error indicators for x- and y-errors <br> C++-style QVector for data <br> styling error indicators <br> moving key and formatting plotter grid 
 <tr><td> \image html jkqtplotter_simpletest_barchart_small.png
-    <td> \subpage JKQtPlotterBarcharts
-    <td> `JKQTPbarVerticalGraph` <br> C-style arrays of data 
-<tr><td> \image html JKQTPbarHorizontalGraphStacked_small.png
-    <td> \subpage JKQtPlotterStackedBarChart
-    <td> `JKQTPbarVerticalStackableGraph`, `JKQTPbarHorizontalStackableGraph` <br> C++-style vectors of data 
+    <td> \subpage JKQTPLotterBarcharts
+    <td> `JKQTPBarVerticalGraph` <br> C-style arrays of data 
+<tr><td> \image html JKQTPBarHorizontalGraphStacked_small.png
+    <td> \subpage JKQTPLotterStackedBarChart
+    <td> `JKQTPBarVerticalStackableGraph`, `JKQTPBarHorizontalStackableGraph` <br> C++-style vectors of data 
 <tr><td> \image html jkqtplotter_simpletest_filledgraphs_small.png
-    <td> \subpage JKQtPlotterFilledGraphs
-    <td> `JKQTPbarVerticalGraph` <br> setting/altering data in `JKQTPdatstore` directly <br>  transparent plots <br> calculating histograms 
+    <td> \subpage JKQTPLotterFilledGraphs
+    <td> `JKQTPBarVerticalGraph` <br> setting/altering data in `JKQTPDatstore` directly <br>  transparent plots <br> calculating histograms 
 <tr><td> \image html jkqtplotter_simpletest_impulsesplot_small.png
-    <td> \subpage JKQtPlotterImpulsePlots
-    <td> `JKQTPimpulsesVerticalGraph` and `JKQTPimpulsesHorizontalGraph` <br> C++-style QVector as plot data 
+    <td> \subpage JKQTPLotterImpulsePlots
+    <td> `JKQTPImpulsesVerticalGraph` and `JKQTPImpulsesHorizontalGraph` <br> C++-style QVector as plot data 
 <tr><td> \image html jkqtplotter_simpletest_paramscatterplot_small.png
-    <td> \subpage JKQtPlotterParamScatter
-    <td> `JKQTPxyParametrizedScatterGraph` <br> C++-style QVector as plot data <br> modify scatter/points/line-graph properties by data 
+    <td> \subpage JKQTPLotterParamScatter
+    <td> `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> modify scatter/points/line-graph properties by data 
 <tr><td> \image html jkqtplotter_simpletest_paramscatterplot_image_small.png
-    <td> \subpage JKQtPlotterParamScatterImage
-    <td> `JKQTPxyParametrizedScatterGraph` <br> C++-style QVector as plot data <br> rectangular arrangement of scatters <br> generative computer graphics 
+    <td> \subpage JKQTPLotterParamScatterImage
+    <td> `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> rectangular arrangement of scatters <br> generative computer graphics 
 <tr><td> \image html jkqtplotter_simpletest_parametriccurve_small.png
-    <td> \subpage JKQtPlotterParametricCurves
-    <td> `JKQTPxyLineGraph` and `JKQTPxyParametrizedScatterGraph` <br> C++-style QVector as plot data <br> parametric curve plotting 
+    <td> \subpage JKQTPLotterParametricCurves
+    <td> `JKQTPXYLineGraph` and `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> parametric curve plotting 
 <tr><td> \image html jkqtplotter_simpletest_functionplot_small.png
-    <td> \subpage JKQtPlotterFunctionPlots
-    <td> `JKQTPxFunctionLineGraph`  <br> diretly plotting C/C++-functions 
+    <td> \subpage JKQTPLotterFunctionPlots
+    <td> `JKQTPXFunctionLineGraph`  <br> diretly plotting C/C++-functions 
 <tr><td> \image html jkqtplotter_simpletest_parsedfunctionplot_small.png
-    <td> \subpage JKQtPlotterParsedFunctionPlot
-    <td> `JKQTPxParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator 
+    <td> \subpage JKQTPLotterParsedFunctionPlot
+    <td> `JKQTPXParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator 
 <tr><td> \image html jkqtplotter_simpletest_geometric_small.png
-    <td> \subpage JKQtPlotterGeometricGraphs
-    <td> `JKQTPplotObject`, `JKQTPgeoArc`, `JKQTPgeoLine`, `JKQTPgeoRectangle`, ...
+    <td> \subpage JKQTPLotterGeometricGraphs
+    <td> `JKQTPPlotObject`, `JKQTPGeoArc`, `JKQTPGeoLine`, `JKQTPGeoRectangle`, ...
 </table>
 
 
@@ -67,11 +67,11 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes         
 <tr><td> \image html jkqtplotter_simpletest_logaxes_small.png
-    <td> \subpage JKQtPlotterLogAxes
-    <td> `JKQTPxyLineGraph` and `JKQTPgeoText` <br> C++ vector of data <br> logarithmic axes and styling <br> plot line styles <br> internal LaTeX parser <br> add commenting text to a graph 
+    <td> \subpage JKQTPLotterLogAxes
+    <td> `JKQTPXYLineGraph` and `JKQTPGeoText` <br> C++ vector of data <br> logarithmic axes and styling <br> plot line styles <br> internal LaTeX parser <br> add commenting text to a graph 
 <tr><td> \image html jkqtplotter_simpletest_dateaxes_timeaxis_small.png
-    <td> \subpage JKQtPlotterDateTimeAxes
-    <td> `JKQTPxyLineGraph` and `JKQTPfilledVerticalRangeGraph` <br> C++ vector of data <br> date/time axes <br> plot min/max range graph <br> internal LaTeX parser <br> data from CSV files 
+    <td> \subpage JKQTPLotterDateTimeAxes
+    <td> `JKQTPXYLineGraph` and `JKQTPFilledVerticalRangeGraph` <br> C++ vector of data <br> date/time axes <br> plot min/max range graph <br> internal LaTeX parser <br> data from CSV files 
 </table>
 
 
@@ -81,22 +81,22 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html jkqtplotter_simpletest_rgbimageplot_qt_small.png
-    <td> \subpage JKQtPlotterImagePlotQImageRGB
+    <td> \subpage JKQTPLotterImagePlotQImageRGB
     <td> `JKQTPImage` <br> `QImage` drawn onto a plot with arbitrary scaling) 
 <tr><td> \image html jkqtplotter_simpletest_imageplot_small.png
-    <td> \subpage JKQtPlotterImagePlot
+    <td> \subpage JKQTPLotterImagePlot
     <td> `JKQTPColumnMathImage` <br> image data copied from C-style row-major array into a single column of the internal datastore <br> Describes several options of the image plotting classes (different ways of color coding, what to do with data above/below the limits etc.) 
 <tr><td> \image html jkqtplotter_simpletest_imageplot_modifier_small.png
-    <td> \subpage JKQtPlotterImagePlotModifier
+    <td> \subpage JKQTPLotterImagePlotModifier
     <td> `JKQTPColumnMathImage` <br> image data copied from C-style row-major array into a single column of the internal datastore <br> Image is modified by a second image to display two data dimensions at the same time 
 <tr><td> \image html jkqtplotter_simpletest_imageplot_nodatastore_small.png
-    <td> \subpage JKQtPlotterImagePlotNoDatastore
+    <td> \subpage JKQTPLotterImagePlotNoDatastore
     <td> `JKQTPMathImage` <br> image data in a C-style row-major array, not using internal datastore 
 <tr><td> \image html jkqtplotter_simpletest_imageplot_opencv_small.png
-    <td> \subpage JKQtPlotterImagePlotOpenCV
+    <td> \subpage JKQTPLotterImagePlotOpenCV
     <td> `JKQTPColumnMathImage` <br> image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore 
 <tr><td> \image html jkqtplotter_simpletest_rgbimageplot_opencv_small.png
-    <td> \subpage JKQtPlotterImagePlotRGBOpenCV
+    <td> \subpage JKQTPLotterImagePlotRGBOpenCV
     <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore 
 </table>
 
@@ -107,11 +107,11 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html test_multiplot_small.png
-    <td> \subpage JKQtPlotterMultiPlotLayout
+    <td> \subpage JKQTPLotterMultiPlotLayout
     <td> Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview 
 <tr><td> \image html jkqtplotter_simpletest_ui_small.png
-    <td> \subpage JKQtPlotterQtCreator
-    <td> using Qt Form Designer <br> parsed function plots (`JKQTPxParsedFunctionLineGraph`) </table>
+    <td> \subpage JKQTPLotterQtCreator
+    <td> using Qt Form Designer <br> parsed function plots (`JKQTPXParsedFunctionLineGraph`) </table>
 </table>
 	
 	
@@ -121,8 +121,8 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html jkqtmathtext_simpletest_small.png
-    <td> \subpage JKQTmathTextSimpleExample 
-	<td> JKQTmathText<br>render LaTeX markup (Schrödinger's equation)
+    <td> \subpage JKQTMathTextSimpleExample 
+	<td> JKQTMathText<br>render LaTeX markup (Schrödinger's equation)
 </table>
 
 

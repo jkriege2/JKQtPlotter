@@ -31,13 +31,13 @@
 
     \image html plot_impulsesxplots.png
  */
-class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
+class LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalGraph(JKQtPlotter* parent);
+        JKQTPImpulsesHorizontalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -95,7 +95,7 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
         double lineWidth;
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
@@ -111,13 +111,13 @@ class LIB_EXPORT JKQTPimpulsesHorizontalGraph: public JKQTPxyGraph {
 
     \image html plot_impulsesxerrorsplots.png
  */
-class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizontalGraph, public JKQTPxGraphErrors {
+class LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHorizontalGraph, public JKQTPXGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesHorizontalErrorGraph(JKQtBasePlotter* parent=nullptr);
-        JKQTPimpulsesHorizontalErrorGraph(JKQtPlotter* parent);
-        /** \copydoc JKQTPgraph::usesColumn() */
+        JKQTPImpulsesHorizontalErrorGraph(JKQTBasePlotter* parent=nullptr);
+        JKQTPImpulsesHorizontalErrorGraph(JKQTPLotter* parent);
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:
@@ -134,13 +134,13 @@ class LIB_EXPORT JKQTPimpulsesHorizontalErrorGraph: public JKQTPimpulsesHorizont
 
     \image html plot_impulsesyplots.png
  */
-class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph {
+class LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesVerticalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPImpulsesVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPimpulsesVerticalGraph(JKQtPlotter* parent);
+        JKQTPImpulsesVerticalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -153,14 +153,14 @@ class LIB_EXPORT JKQTPimpulsesVerticalGraph: public JKQTPimpulsesHorizontalGraph
 
     \image html plot_impulsesyerrorsplots.png
  */
-class LIB_EXPORT JKQTPimpulsesVerticalErrorGraph: public JKQTPimpulsesVerticalGraph, public JKQTPyGraphErrors {
+class LIB_EXPORT JKQTPImpulsesVerticalErrorGraph: public JKQTPImpulsesVerticalGraph, public JKQTPYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPimpulsesVerticalErrorGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPImpulsesVerticalErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPimpulsesVerticalErrorGraph(JKQtPlotter* parent);
-        /** \copydoc JKQTPgraph::usesColumn() */
+        JKQTPImpulsesVerticalErrorGraph(JKQTPLotter* parent);
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:

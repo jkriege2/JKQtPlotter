@@ -35,10 +35,10 @@
 #define jkqtpgraphs_H
 
 // forward declarations
-class JKQtBasePlotter;
-class JKQtPlotter;
-class JKQTPcoordinateAxis;
-class JKQTPdatastore;
+class JKQTBasePlotter;
+class JKQTPLotter;
+class JKQTPCoordinateAxis;
+class JKQTPDatastore;
 //class JKQTPColorPaletteTools;
 
 
@@ -51,13 +51,13 @@ class JKQTPdatastore;
 
     \image html plot_lineplots.png
  */
-class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
+class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPxyLineGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPXYLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPxyLineGraph(JKQtPlotter* parent);
+        JKQTPXYLineGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -125,14 +125,14 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
         /*! \brief sets the property symbol to the specified \a __value. 
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copybrief symbol </BLOCKQUOTE> 
             \see symbol for more information */ 
-        inline virtual void set_symbol(const JKQTPgraphSymbols & __value)  
+        inline virtual void set_symbol(const JKQTPGraphSymbols & __value)  
         {
             this->symbol = __value;
         } 
         /*! \brief returns the property symbol. 
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copybrief symbol </BLOCKQUOTE> 
             \see symbol for more information */ 
-        inline virtual JKQTPgraphSymbols get_symbol() const  
+        inline virtual JKQTPGraphSymbols get_symbol() const  
         {
             return this->symbol; 
         }
@@ -214,7 +214,7 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
         /** \brief color of the graph */
         QColor color;
@@ -225,7 +225,7 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
         /** \brief width (pixels) of the graph */
         double lineWidth;
         /** \brief which symbol to use for the datapoints */
-        JKQTPgraphSymbols symbol;
+        JKQTPGraphSymbols symbol;
         /** \brief size (diameter in pixels) of the symbol for the data points */
         double symbolSize;
         /** \brief width (in pixels) of the lines used to plot the symbol for the data points */
@@ -250,18 +250,18 @@ class LIB_EXPORT JKQTPxyLineGraph: public JKQTPxyGraph {
 
 
 
-/*! \brief This implements xy scatter plots (like JKQTPxyLineGraph), but the color and size of the symbols may be taken from a column.
+/*! \brief This implements xy scatter plots (like JKQTPXYLineGraph), but the color and size of the symbols may be taken from a column.
     \ingroup jkqtplotter_linesymbolgraphs
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
  */
-class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, public JKQTPColorPaletteTools {
+class LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteTools {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPxyParametrizedScatterGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPXYParametrizedScatterGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPxyParametrizedScatterGraph(JKQtPlotter* parent);
+        JKQTPXYParametrizedScatterGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -413,7 +413,7 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
             return this->gridSymbolFractionSize; 
         }
 
-        virtual void setParent(JKQtBasePlotter* parent) override;
+        virtual void setParent(JKQTBasePlotter* parent) override;
 
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
@@ -433,7 +433,7 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
 
         /** \brief determine min/max data value of the image */
         virtual void cbGetDataMinMax(double& imin, double& imax) override;
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
 
@@ -464,7 +464,7 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
         double getLocalLineWidth(int i);
         double getLocalSymbolSize(int i);
         QColor getLocalColor(int i);
-        JKQTPgraphSymbols getLocalSymbolType(int i);
+        JKQTPGraphSymbols getLocalSymbolType(int i);
 
 
         /** \brief internally used to store the range of the color column */
@@ -484,13 +484,13 @@ class LIB_EXPORT JKQTPxyParametrizedScatterGraph: public JKQTPxyLineGraph, publi
     \image html plot_errorlinelineplots.png
     \image html plot_errorpolygonlineplots.png
  */
-class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyGraphErrors {
+class LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPxyLineErrorGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPXYLineErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPxyLineErrorGraph(JKQtPlotter* parent);
+        JKQTPXYLineErrorGraph(JKQTPLotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -502,7 +502,7 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
          * The result is given in the two parameters which are call-by-reference parameters!
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:
@@ -512,16 +512,16 @@ class LIB_EXPORT JKQTPxyLineErrorGraph: public JKQTPxyLineGraph, public JKQTPxyG
 
 
 
-/*! \brief This implements xy scatter plots (like JKQTPxyLineGraph), but the color and size of the symbols may be taken from a column. with errorbars
+/*! \brief This implements xy scatter plots (like JKQTPXYLineGraph), but the color and size of the symbols may be taken from a column. with errorbars
     \ingroup jkqtplotter_linesymbolgraphs
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
  */
-class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrizedScatterGraph, public JKQTPxyGraphErrors {
+class LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrizedScatterGraph, public JKQTPXYGraphErrors {
         Q_OBJECT
     public:
-        JKQTPxyParametrizedErrorScatterGraph(JKQtBasePlotter* parent=nullptr);
-        JKQTPxyParametrizedErrorScatterGraph(JKQtPlotter* parent);
+        JKQTPXYParametrizedErrorScatterGraph(JKQTBasePlotter* parent=nullptr);
+        JKQTPXYParametrizedErrorScatterGraph(JKQTPLotter* parent);
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -534,7 +534,7 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
          * The result is given in the two parameters which are call-by-reference parameters!
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPgraph::usesColumn() */
+        /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
     protected:
@@ -544,7 +544,7 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
         /** \brief this function can be used to set the color of the error indicators automatically
          *
          * return \c true and the colors to use, if applicable, the default implementation returns false */
-        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQtBasePlotter* parent, JKQTPgraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPerrorPlotstyle xErrorStyle, JKQTPerrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor) override;
+        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor) override;
 
 };
 
@@ -558,24 +558,24 @@ class LIB_EXPORT JKQTPxyParametrizedErrorScatterGraph: public JKQTPxyParametrize
     \f$ \left(x_i, f(x_i)\right) \f$.
 
     If you want the \f$ x_i \f$ values in the center of the steps, use
-    \code JKQTPstepHorizontalGraph::set_xCentered(true) \endcode . In that case the steps
+    \code JKQTPStepHorizontalGraph::set_xCentered(true) \endcode . In that case the steps
     go from \f$ \left(x_{i-1}, f(x_{i-1})\right) \f$ to \f$ \left(x_{i}-\delta/2, f(x_{i-1})\right) \f$ ,
     then to \f$ \left(x_{i}-\delta/2, f(x_{i})\right) \f$ and finally
     to \f$ \left(x_{i}, f(x_{i})\right) \f$ where \f$ \delta=(x_{i}-x_{i-1}) \f$ .
 
-    This diagram shows a plot with \code JKQTPstepHorizontalGraph::set_valuesCentered(false) \endcode :
+    This diagram shows a plot with \code JKQTPStepHorizontalGraph::set_valuesCentered(false) \endcode :
     \image html plot_stephorplot1.png
 
-    This diagram shows a plot with \code JKQTPstepHorizontalGraph::set_valuesCentered(true) \endcode :
+    This diagram shows a plot with \code JKQTPStepHorizontalGraph::set_valuesCentered(true) \endcode :
     \image html plot_stephorplot2.png
  */
-class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
+class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPstepHorizontalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPStepHorizontalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPstepHorizontalGraph(JKQtPlotter* parent);
+        JKQTPStepHorizontalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -685,14 +685,14 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         /*! \brief sets the property stepType to the specified \a __value. 
             \details Description of the parameter stepType is: <BLOCKQUOTE>\copybrief stepType </BLOCKQUOTE> 
             \see stepType for more information */ 
-        inline virtual void set_stepType(const JKQTPstepType & __value)  
+        inline virtual void set_stepType(const JKQTPStepType & __value)  
         {
             this->stepType = __value;
         } 
         /*! \brief returns the property stepType. 
             \details Description of the parameter stepType is: <BLOCKQUOTE>\copybrief stepType </BLOCKQUOTE> 
             \see stepType for more information */ 
-        inline virtual JKQTPstepType get_stepType() const  
+        inline virtual JKQTPStepType get_stepType() const  
         {
             return this->stepType; 
         }
@@ -712,9 +712,9 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
         /** \brief indicates whether to fill the space between the curve and the x-axis */
         bool fillCurve;
         /** \brief specifies whether the steps elongate to the left, the right, or are centered around the \f$ x_i \f$ values. */
-        JKQTPstepType stepType;
+        JKQTPStepType stepType;
 
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;
@@ -731,24 +731,24 @@ class LIB_EXPORT JKQTPstepHorizontalGraph: public JKQTPxyGraph {
     \f$ \left(f(y_i), y_i\right) \f$.
 
     If you want the \f$ y_i \f$ values in the center of the steps, use
-    \code JKQTPstepHorizontalGraph::set_valuesCentered(true) \endcode . In that case the steps
+    \code JKQTPStepHorizontalGraph::set_valuesCentered(true) \endcode . In that case the steps
     go from \f$ \left(f(y_{i-1}), y_{i-1})\right) \f$ to \f$ \left(f(y_{i-1}), y_{i}-\delta/2\right) \f$ ,
     then to \f$ \left(f(y_{i}, y_{i}-\delta/2\right) \f$ and finally
     to \f$ \left(f(y_{i}), y_{i}\right) \f$ where \f$ \delta=(y_{i}-y_{i-1}) \f$ .
 
-    This diagram shows a plot with \code JKQTPstepHorizontalGraph::set_xCentered(false) \endcode :
+    This diagram shows a plot with \code JKQTPStepHorizontalGraph::set_xCentered(false) \endcode :
     \image html plot_stepverplot1.png
 
-    This diagram shows a plot with \code JKQTPstepHorizontalGraph::set_xCentered(true) \endcode :
+    This diagram shows a plot with \code JKQTPStepHorizontalGraph::set_xCentered(true) \endcode :
     \image html plot_stepverplot2.png
  */
-class LIB_EXPORT JKQTPstepVerticalGraph: public JKQTPstepHorizontalGraph {
+class LIB_EXPORT JKQTPStepVerticalGraph: public JKQTPStepHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPstepVerticalGraph(JKQtBasePlotter* parent=nullptr);
+        JKQTPStepVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPstepVerticalGraph(JKQtPlotter* parent);
+        JKQTPStepVerticalGraph(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -767,13 +767,13 @@ class LIB_EXPORT JKQTPstepVerticalGraph: public JKQTPstepHorizontalGraph {
     \ingroup jkqtplotter_diverse
 
  */
-class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
+class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPhorizontalRange(JKQtBasePlotter* parent=nullptr);
+        JKQTPHorizontalRange(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPhorizontalRange(JKQtPlotter* parent);
+        JKQTPHorizontalRange(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -1114,7 +1114,7 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
         /** \brief fill style, if the curve should be filled */
         Qt::BrushStyle fillStyle;
 
-        /** \brief which plot style to use from the parent plotter (via JKQtPlotterBase::getPlotStyle() and JKQtPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;
@@ -1132,13 +1132,13 @@ class LIB_EXPORT JKQTPhorizontalRange: public JKQTPgraph {
     \ingroup jkqtplotter_diverse
 
  */
-class LIB_EXPORT JKQTPverticalRange: public JKQTPhorizontalRange {
+class LIB_EXPORT JKQTPVerticalRange: public JKQTPHorizontalRange {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPverticalRange(JKQtBasePlotter* parent=nullptr);
+        JKQTPVerticalRange(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPverticalRange(JKQtPlotter* parent);
+        JKQTPVerticalRange(JKQTPLotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

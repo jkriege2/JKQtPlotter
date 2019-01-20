@@ -20,7 +20,7 @@
 HighResTimer ht;
 
 
-double draw(QPainter& painter, double X, double YY, JKQTmathText& mt, QString name) {
+double draw(QPainter& painter, double X, double YY, JKQTMathText& mt, QString name) {
     double Y=YY;
     painter.save();
     ht.start();
@@ -67,7 +67,7 @@ void timingTest(QPainter& painter, QString text, QString name, double fontSize) 
     std::cout<<"testing '"<<name.toStdString()<<"':\nparse [ms],\tsize [ms],\tdraw [ms]\n---------------------------------------------\n";
     for (int i=0; i<N; i++) {
         double t;
-        JKQTmathText mt;
+        JKQTMathText mt;
         mt.set_fontSize(fontSize);
         ht.start();    mt.parse(text);         t=ht.get_time()/1000.0;
         sum_parse+=t;
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
     QPixmap pix(W, H), pix2(W,H);
     pix.fill();
     QPainter painter;
-    JKQTmathText mt(&win);
+    JKQTMathText mt(&win);
 
     double Y=Y1;
 

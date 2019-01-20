@@ -27,7 +27,7 @@ TestMain::TestMain(QWidget *parent) :
 {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     #ifdef Q_WS_WIN
-        JKQtBasePlotter::registerPaintDeviceAdapter(new JKQTPEmfEngineAdapter());
+        JKQTBasePlotter::registerPaintDeviceAdapter(new JKQTPEmfEngineAdapter());
     #endif
 #endif
 

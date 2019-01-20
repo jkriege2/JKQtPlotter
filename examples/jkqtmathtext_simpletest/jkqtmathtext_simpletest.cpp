@@ -1,7 +1,7 @@
 /** \example jkqtmathtext_simpletest.cpp
- * A very basic example for the usage of JKQTmathText
+ * A very basic example for the usage of JKQTMathText
  *
- * \ref JKQTmathTextSimpleExample
+ * \ref JKQTMathTextSimpleExample
  */
  
 #include <QApplication>
@@ -21,10 +21,10 @@ int main(int argc, char* argv[])
     pix.fill(QColor("white"));
     QPainter painter;
 
-    // 2. now we create a JKQTmathText object.
-    //    Also we configure the JKQTmathText to use the XITS fonts that
+    // 2. now we create a JKQTMathText object.
+    //    Also we configure the JKQTMathText to use the XITS fonts that
     //    were included in the *.pro-file
-    JKQTmathText mathText;
+    JKQTMathText mathText;
     mathText.useXITS();
     mathText.set_fontSize(20);
 

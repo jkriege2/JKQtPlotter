@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_stackedbars.cpp
- * JKQtPlotter: Examples: Simple stacked barchart
+ * JKQTPLotter: Examples: Simple stacked barchart
  *
- * \ref JKQtPlotterStackedBarChart
+ * \ref JKQTPLotterStackedBarChart
  */
 
 #include <QApplication>
@@ -11,12 +11,12 @@
 
 
 template<class TGRAPH>
-void addGraph(JKQtPlotter& plot, bool swapXY) {
+void addGraph(JKQTPLotter& plot, bool swapXY) {
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
     QVector<double> year, percentage_other, percentage_coaloil, percentage_gas, percentage_nuclear, percentage_green;
@@ -28,7 +28,7 @@ void addGraph(JKQtPlotter& plot, bool swapXY) {
     percentage_green    << 3.6      << 4.4      << 6.2      << 9.5      << 15.8     << 28.1;
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise)
     //    the variables cYear, cOther ... will contain the internal column ID of the
     //    newly created columns with names "year" and "other" ... and the (copied) data
@@ -88,8 +88,8 @@ void addGraph(JKQtPlotter& plot, bool swapXY) {
     //          type JKQTBasePlotter, which does the actual plotting.
     //          So many properties of the plot are only available in this internal
     //          object, which you can access by plot.get_plotter().
-    plot.get_plotter()->set_keyPosition(JKQTPkeyOutsideTopRight);
-    plot.get_plotter()->set_keyLayout(JKQTPkeyLayoutOneRow);
+    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideTopRight);
+    plot.get_plotter()->set_keyLayout(JKQTPKeyLayoutOneRow);
 
     // 8 autoscale the plot so the graph is contained
     plot.zoomToFit();
@@ -104,13 +104,13 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plotV;
-    addGraph<JKQTPbarVerticalStackableGraph>(plotV, false);
-    plotV.setWindowTitle("JKQTPbarVerticalStackableGraph");
+    JKQTPLotter plotV;
+    addGraph<JKQTPBarVerticalStackableGraph>(plotV, false);
+    plotV.setWindowTitle("JKQTPBarVerticalStackableGraph");
 
-    JKQtPlotter plotH;
-    addGraph<JKQTPbarHorizontalStackableGraph>(plotH, true);
-    plotH.setWindowTitle("JKQTPbarHorizontalStackableGraph");
+    JKQTPLotter plotH;
+    addGraph<JKQTPBarHorizontalStackableGraph>(plotH, true);
+    plotH.setWindowTitle("JKQTPBarHorizontalStackableGraph");
 
     plotV.move(100,100);
     plotH.move(750,100);

@@ -31,17 +31,17 @@
 
 #include <QAbstractTableModel>
 
-class JKQtBasePlotter; // forward
-/** \brief data model with all plots ina JKQtBasePlotter (+ allows to switch them visible/invisible)
+class JKQTBasePlotter; // forward
+/** \brief data model with all plots ina JKQTBasePlotter (+ allows to switch them visible/invisible)
   * \ingroup jkqtpgraphsmodel
   *
-  * \image html JKQTPgraphsModel.png
+  * \image html JKQTPGraphsModel.png
   */
-class JKQTPgraphsModel : public QAbstractTableModel
+class JKQTPGraphsModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    JKQTPgraphsModel(JKQtBasePlotter *parent);
+    JKQTPGraphsModel(JKQTBasePlotter *parent);
     int rowCount(const QModelIndex &parent = QModelIndex()) const override ;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -50,7 +50,7 @@ public:
 public slots:
     void plotUpdated();
 private:
-    JKQtBasePlotter* m_plotter;
+    JKQTBasePlotter* m_plotter;
 };
 
 

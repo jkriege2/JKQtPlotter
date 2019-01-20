@@ -36,8 +36,8 @@
 
 
 
-JKQTPfilledCurveXGraph::JKQTPfilledCurveXGraph(JKQtBasePlotter* parent):
-    JKQTPxyGraph(parent)
+JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTBasePlotter* parent):
+    JKQTPXYGraph(parent)
 {
     baseline=0.0;
     drawSelectionLine=false;
@@ -59,8 +59,8 @@ JKQTPfilledCurveXGraph::JKQTPfilledCurveXGraph(JKQtBasePlotter* parent):
     }
 }
 
-JKQTPfilledCurveXGraph::JKQTPfilledCurveXGraph(JKQtPlotter *parent):
-    JKQTPxyGraph(parent)
+JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTPLotter *parent):
+    JKQTPXYGraph(parent)
 {
     baseline=0.0;
     drawSelectionLine=false;
@@ -82,12 +82,12 @@ JKQTPfilledCurveXGraph::JKQTPfilledCurveXGraph(JKQtPlotter *parent):
     }
 }
 
-void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPfilledCurveXGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPFilledCurveXGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
@@ -210,7 +210,7 @@ void JKQTPfilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsAfter(painter);
 }
 
-void JKQTPfilledCurveXGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPFilledCurveXGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
     QPen np(Qt::NoPen);
@@ -229,7 +229,7 @@ void JKQTPfilledCurveXGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF
     painter.restore();
 }
 
-QColor JKQTPfilledCurveXGraph::getKeyLabelColor() {
+QColor JKQTPFilledCurveXGraph::getKeyLabelColor() {
     return color;
 }
 
@@ -246,23 +246,23 @@ QColor JKQTPfilledCurveXGraph::getKeyLabelColor() {
 
 
 
-JKQTPfilledCurveYGraph::JKQTPfilledCurveYGraph(JKQtBasePlotter* parent):
-    JKQTPfilledCurveXGraph(parent)
+JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTBasePlotter* parent):
+    JKQTPFilledCurveXGraph(parent)
 {
 }
 
-JKQTPfilledCurveYGraph::JKQTPfilledCurveYGraph(JKQtPlotter *parent):
-    JKQTPfilledCurveXGraph(parent)
+JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTPLotter *parent):
+    JKQTPFilledCurveXGraph(parent)
 {
 
 }
 
-void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPfilledCurveYGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPFilledCurveYGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
@@ -391,7 +391,7 @@ void JKQTPfilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-QPen JKQTPfilledCurveXGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
+QPen JKQTPFilledCurveXGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
     p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
@@ -402,7 +402,7 @@ QPen JKQTPfilledCurveXGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
 }
 
 
-QBrush JKQTPfilledCurveXGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
+QBrush JKQTPFilledCurveXGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
     QBrush b;
     b.setColor(fillColor);
     b.setStyle(fillStyle);
@@ -410,58 +410,58 @@ QBrush JKQTPfilledCurveXGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const
 }
 
 
-JKQTPfilledCurveXErrorGraph::JKQTPfilledCurveXErrorGraph(JKQtBasePlotter *parent):
-    JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
+JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTBasePlotter *parent):
+    JKQTPFilledCurveXGraph(parent), JKQTPYGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPfilledCurveXErrorGraph::JKQTPfilledCurveXErrorGraph(JKQtPlotter *parent):
-    JKQTPfilledCurveXGraph(parent), JKQTPyGraphErrors()
+JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTPLotter *parent):
+    JKQTPFilledCurveXGraph(parent), JKQTPYGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPfilledCurveXErrorGraph::usesColumn(int c) const
+bool JKQTPFilledCurveXErrorGraph::usesColumn(int c) const
 {
-    return JKQTPfilledCurveXGraph::usesColumn(c)|| JKQTPyGraphErrors::errorUsesColumn(c);
+    return JKQTPFilledCurveXGraph::usesColumn(c)|| JKQTPYGraphErrors::errorUsesColumn(c);
 }
 
-void JKQTPfilledCurveXErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
+void JKQTPFilledCurveXErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
     else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
 }
 
-JKQTPfilledCurveYErrorGraph::JKQTPfilledCurveYErrorGraph(JKQtBasePlotter *parent):
-    JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
+JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTBasePlotter *parent):
+    JKQTPFilledCurveYGraph(parent), JKQTPXGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPfilledCurveYErrorGraph::JKQTPfilledCurveYErrorGraph(JKQtPlotter *parent):
-    JKQTPfilledCurveYGraph(parent), JKQTPxGraphErrors()
+JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTPLotter *parent):
+    JKQTPFilledCurveYGraph(parent), JKQTPXGraphErrors()
 {
     setErrorColorFromGraphColor(color);
 }
 
-bool JKQTPfilledCurveYErrorGraph::usesColumn(int c) const
+bool JKQTPFilledCurveYErrorGraph::usesColumn(int c) const
 {
-    return JKQTPfilledCurveYGraph::usesColumn(c)|| JKQTPxGraphErrors::errorUsesColumn(c);
+    return JKQTPFilledCurveYGraph::usesColumn(c)|| JKQTPXGraphErrors::errorUsesColumn(c);
 }
 
-void JKQTPfilledCurveYErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
+void JKQTPFilledCurveYErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPxyGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
     else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
 
 }
 
 
 
-JKQTPfilledVerticalRangeGraph::JKQTPfilledVerticalRangeGraph(JKQtBasePlotter *parent):
-    JKQTPxyGraph(parent)
+JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTBasePlotter *parent):
+    JKQTPXYGraph(parent)
 {
     drawSelectionLine=false;
     selectionLineColor=Qt::transparent;
@@ -482,8 +482,8 @@ JKQTPfilledVerticalRangeGraph::JKQTPfilledVerticalRangeGraph(JKQtBasePlotter *pa
     }
 }
 
-JKQTPfilledVerticalRangeGraph::JKQTPfilledVerticalRangeGraph(JKQtPlotter *parent):
-    JKQTPxyGraph(parent)
+JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTPLotter *parent):
+    JKQTPXYGraph(parent)
 {
     drawSelectionLine=false;
     selectionLineColor=Qt::transparent;
@@ -504,7 +504,7 @@ JKQTPfilledVerticalRangeGraph::JKQTPfilledVerticalRangeGraph(JKQtPlotter *parent
     }
 }
 
-bool JKQTPfilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+bool JKQTPFilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
 {
     bool start=true;
     miny=0;
@@ -513,7 +513,7 @@ bool JKQTPfilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, doubl
 
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
     // interpret data ranges
@@ -552,18 +552,18 @@ bool JKQTPfilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, doubl
     return !start;
 }
 
-bool JKQTPfilledVerticalRangeGraph::usesColumn(int column) const
+bool JKQTPFilledVerticalRangeGraph::usesColumn(int column) const
 {
-    return JKQTPxyGraph::usesColumn(column)||(column==yColumn2);
+    return JKQTPXYGraph::usesColumn(column)||(column==yColumn2);
 }
 
-void JKQTPfilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
+void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
 {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPfilledCurveXGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPFilledCurveXGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
@@ -657,7 +657,7 @@ void JKQTPfilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
     drawErrorsAfter(painter);
 }
 
-void JKQTPfilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+void JKQTPFilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
     painter.save();
     QRectF r=rect;
@@ -671,12 +671,12 @@ void JKQTPfilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
     painter.restore();
 }
 
-QColor JKQTPfilledVerticalRangeGraph::getKeyLabelColor()
+QColor JKQTPFilledVerticalRangeGraph::getKeyLabelColor()
 {
     return color;
 }
 
-QBrush JKQTPfilledVerticalRangeGraph::getBrush(JKQTPEnhancedPainter &/*painter*/) const
+QBrush JKQTPFilledVerticalRangeGraph::getBrush(JKQTPEnhancedPainter &/*painter*/) const
 {
     QBrush b;
     b.setColor(fillColor);
@@ -684,7 +684,7 @@ QBrush JKQTPfilledVerticalRangeGraph::getBrush(JKQTPEnhancedPainter &/*painter*/
     return b;
 }
 
-QPen JKQTPfilledVerticalRangeGraph::getLinePen(JKQTPEnhancedPainter &painter) const
+QPen JKQTPFilledVerticalRangeGraph::getLinePen(JKQTPEnhancedPainter &painter) const
 {
     QPen p;
     p.setColor(color);

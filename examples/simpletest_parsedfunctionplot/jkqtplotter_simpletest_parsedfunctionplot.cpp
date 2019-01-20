@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_parsedfunctionplot.cpp
- * JKQtPlotter: Examples: Plotting Parsed Mathematical Functions as Line Graphs
+ * JKQTPLotter: Examples: Plotting Parsed Mathematical Functions as Line Graphs
  *
- * \ref JKQtPlotterParsedFunctionPlot
+ * \ref JKQTPLotterParsedFunctionPlot
  */
 
 #include <QApplication>
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a window that conatins a line-edit to edit a function
-    //    and a JKQtPlotter to display the function, combine everything in a layout
+    //    and a JKQTPLotter to display the function, combine everything in a layout
     QWidget mainWin;
     QLineEdit* edit=new QLineEdit(&mainWin);
     edit->setToolTip("enter a function in dependence of the variable <tt>x</tt> and press ENTER to update the graph");
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     spinP2->setValue(4);
     spinP2->setRange(-10000,10000);
     spinP2->setToolTip("enter a Value for parameter <tt>p1</tt> and press ENTER to update the graph");
-    JKQtPlotter* plot=new JKQtPlotter(&mainWin);
+    JKQTPLotter* plot=new JKQTPLotter(&mainWin);
     QFormLayout* flayout=new QFormLayout;
     QVBoxLayout* layout=new QVBoxLayout;
     mainWin.setLayout(layout);
@@ -44,9 +44,9 @@ int main(int argc, char* argv[])
     layout->addLayout(flayout);
     layout->addWidget(plot);
 
-    // 2. now we add a JKQTPxParsedFunctionLineGraph object, which will draw the function from
+    // 2. now we add a JKQTPXParsedFunctionLineGraph object, which will draw the function from
     //    the line edit
-    JKQTPxParsedFunctionLineGraph* parsedFunc=new JKQTPxParsedFunctionLineGraph(plot);
+    JKQTPXParsedFunctionLineGraph* parsedFunc=new JKQTPXParsedFunctionLineGraph(plot);
     plot->addGraph(parsedFunc);
     //    finally we connect the line edit with the graph, whenever RETURN is pressed,
     //    the graph is updated:

@@ -1,5 +1,5 @@
-# Example (JKQtPlotter): Line Graph with Logarithmic y-axis {#JKQtPlotterLogAxes}
-This project (see `./examples/simpletest_logaxes/`) simply creates a JKQtPlotter widget (as a new window) and several line-graphs of different resonance curves. 
+# Example (JKQTPLotter): Line Graph with Logarithmic y-axis {#JKQTPLotterLogAxes}
+This project (see `./examples/simpletest_logaxes/`) simply creates a JKQTPLotter widget (as a new window) and several line-graphs of different resonance curves. 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp`](../simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->set_style()`). The colors are set automtically from an internal default palette. The main loop looks like this:
 
@@ -12,14 +12,14 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
             Y<<1.0/sqrt(sqr(1-sqr(xx))+sqr(2*xx*D[id]));
         }
 
-        JKQTPxyLineGraph* graph=new JKQTPxyLineGraph(&plot);
+        JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
         graph->set_xColumn(columnX);
         graph->set_yColumn(ds->addCopiedColumn(Y, "y"+QString::number(id)));
 
         // don't use symbols
-        graph->set_symbol(JKQTPnoSymbol);
+        graph->set_symbol(JKQTPNoSymbol);
         // use one of different pens
         graph->set_style(pens[id%pens.size()]);
         // set width of graph line
@@ -33,10 +33,10 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
     }
 ```
 
-Then a `JKQTPgeoText` is added to the graph, which shows the function plotted in the plot:
+Then a `JKQTPGeoText` is added to the graph, which shows the function plotted in the plot:
 ```.cpp
     // 4. Also we add a text-element in the plot to show the plotted function
-    //    This element (JKQTPgeoText) is taken from the set of geometric elements
+    //    This element (JKQTPGeoText) is taken from the set of geometric elements
     //    and is simply parametrized by a position (1.25/10) and the text to display.
     //    In addition you can also set the font size (here to 15)
     //    Use '$...$' around the actual math string to ensure rendering with a math font
@@ -44,7 +44,7 @@ Then a `JKQTPgeoText` is added to the graph, which shows the function plotted in
     //    and loaded in the library). If you don't use the math-mode modifiers, the default 
     //    font of the other rendering text is used, which might not be suitable for
     //    high-quality math rendering.
-    plot.addGraph(new JKQTPgeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
+    plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
 ```
 The difference between not using and using `$...$` for the equation can be seen here:
 - no $-math-mode: ![](../../screenshots/jkqtplotter_simpletest_logaxes_lowqmathrendering.png)   

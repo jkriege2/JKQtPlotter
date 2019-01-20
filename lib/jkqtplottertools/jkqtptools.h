@@ -71,39 +71,14 @@
   #define JKTOOLS_TIMER_USE_TIME
 #endif
 
-#ifndef __WINDOWS__
-# ifndef __LINUX__
-#  warning("these methods are ment to be used under windows or linux ... no other system were tested")
-# endif
-#endif
-
-/* This just distinguishes between the different path formats on Windows and Unix:
- *   - on Windows you use a backslash '\' do separate directories
- *   - in Unix you use a slash '/' to separate directories
- */
-#ifdef __WINDOWS__
-  /** \brief a separator between two directories in a path between \c " quotes */
-  #define JKQTPPATHSEPARATOR_STRING "\\"
-  /** \brief a separator between two directories in a path between \c ' quotes */
-  #define JKQTPPATHSEPARATOR_CHAR '\\'
-  #include<windows.h>
-  #include <io.h>
-#else
-  /** \brief a separator between two directories in a path between \c " quotes */
-  #define JKQTPPATHSEPARATOR_STRING "/"
-  /** \brief a separator between two directories in a path between \c ' quotes */
-  #define JKQTPPATHSEPARATOR_CHAR '/'
-  #include <unistd.h>
-  #include <dirent.h>
-#endif
 
 
 
 
 class JKQTPEnhancedPainter; // forward
-class JKQtBasePlotter; // forward declaration
+class JKQTBasePlotter; // forward declaration
 
-/** \brief smallest linewidth any line in JKQtPlotter may have
+/** \brief smallest linewidth any line in JKQTPLotter may have
  * \ingroup jkqtptools
  */
 #define JKQTPLOTTER_ABS_MIN_LINEWIDTH 0.02
@@ -121,28 +96,28 @@ inline T JKQTPIsOKFloat(T v) {
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTP_QPenStyle2String(Qt::PenStyle style);
+LIB_EXPORT QString jkqtp_QPenStyle2String(Qt::PenStyle style);
 
 /** \brief converts a QString into a Qt::PenStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::PenStyle JKQTP_String2QPenStyle(QString style);
+LIB_EXPORT Qt::PenStyle jkqtp_String2QPenStyle(QString style);
 /** \brief converts a QT::BrushStyle into a string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTP_QBrushStyle2String(Qt::BrushStyle style);
+LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
 
 /** \brief converts a QString into a Qt::BrushStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::BrushStyle JKQTP_String2QBrushStyle(QString style);
+LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(QString style);
 
 
 
 
 /** \brief display mode for an axis
  * \ingroup jkqtptools */
-enum JKQTPCAdrawMode {
+enum JKQTPCADrawMode {
     JKQTPCADMcomplete=0, /*!< \brief draw axis with ticks, ticklabels and axis label */
     JKQTPCADMticksAndLabels, /*!< \brief draw axis with ticks and tick labels */
     JKQTPCADMticks, /*!< \brief draw axis with ticks */
@@ -150,20 +125,20 @@ enum JKQTPCAdrawMode {
     JKQTPCADMnone /*!< \brief draw no axis */
 };
 
-/** \brief converts a JKQTPCAdrawMode variable into a human-readable string
+/** \brief converts a JKQTPCADrawMode variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPCAdrawMode2String(JKQTPCAdrawMode pos);
+LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
 
-/** \brief converts a string into a JKQTPCAdrawMode
+/** \brief converts a string into a JKQTPCADrawMode
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPCAdrawMode String2JKQTPCAdrawMode(QString pos);
+LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(QString pos);
 
 
 /** \brief display mode for the axis labels
  * \ingroup jkqtptools */
-enum JKQTPCAlabelType {
+enum JKQTPCALabelType {
     JKQTPCALTdefault, /*!< \brief simply print the numbers */
     JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. \c 5µ for \f$ 5\cdot 10^{-6} \f$ , \cd 3k for \f$ 3\cdot 10^3 \f$ ... */
     JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... */
@@ -193,107 +168,100 @@ LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
 LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(QString pos);
 
 
-/** \brief converts a JKQTPCAlabelType variable into a human-readable string
+/** \brief converts a JKQTPCALabelType variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPCAlabelType2String(JKQTPCAlabelType pos);
+LIB_EXPORT QString JKQTPCALabelType2String(JKQTPCALabelType pos);
 
-/** \brief converts a string into a JKQTPCAlabelType
+/** \brief converts a string into a JKQTPCALabelType
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPCAlabelType String2JKQTPCAlabelType(QString pos);
+LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(QString pos);
 
 /** \brief position of the axis labels
  * \ingroup jkqtptools
  */
-enum JKQTPlabelPosition {
-    JKQTPlabelMin=0,            /*!< \brief the axis label is near the min value of the axis (left/bottom) */
-	JKQTPlabelMax,            /*!< \brief the axis label is near the max value of the axis (right/top) */
-	JKQTPlabelCenter          /*!< \brief the label is at the center of the axis */
+enum JKQTPLabelPosition {
+    JKQTPLabelMin=0,            /*!< \brief the axis label is near the min value of the axis (left/bottom) */
+	JKQTPLabelMax,            /*!< \brief the axis label is near the max value of the axis (right/top) */
+	JKQTPLabelCenter          /*!< \brief the label is at the center of the axis */
 };
 
 
-/** \brief converts a JKQTPlabelPosition variable into a human-readable string
+/** \brief converts a JKQTPLabelPosition variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPlabelPosition2String(JKQTPlabelPosition pos);
+LIB_EXPORT QString JKQTPLabelPosition2String(JKQTPLabelPosition pos);
 
-/** \brief converts a string into a JKQTPlabelPosition
+/** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPlabelPosition String2JKQTPlabelPosition(QString pos);
+LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(QString pos);
 
 /** \brief position of the key
  * \ingroup jkqtptools
  */
-enum JKQTPkeyPosition {
-    JKQTPkeyOutsideTopRight=0,            /*!< \brief the key is positioned on the right side of the graph */
-    JKQTPkeyOutsideTopLeft,             /*!< \brief the key is positioned on the left side of the graph */
-    JKQTPkeyOutsideLeftTop,              /*!< \brief the key is positioned above the graph */
-    JKQTPkeyOutsideLeftBottom,           /*!< \brief the key is positioned below the graph */
-    JKQTPkeyOutsideRightBottom,            /*!< \brief the key is positioned on the right side of the graph */
-    JKQTPkeyOutsideRightTop,             /*!< \brief the key is positioned on the left side of the graph */
-    JKQTPkeyOutsideBottomLeft,              /*!< \brief the key is positioned above the graph */
-    JKQTPkeyOutsideBottomRight,           /*!< \brief the key is positioned below the graph */
-    JKQTPkeyInsideTopRight,             /*!< \brief the key is positioned inside on the right side of the graph, but inside the graph*/
-    JKQTPkeyInsideTopLeft,              /*!< \brief the key is positioned inside on the left side of the graph */
-    JKQTPkeyInsideBottomLeft,               /*!< \brief the key is positioned inside on the upper bound of the graph */
-    JKQTPkeyInsideBottomRight             /*!< \brief the key is positioned inside on the lower bound of the graph */
+enum JKQTPKeyPosition {
+    JKQTPKeyOutsideTopRight=0,            /*!< \brief the key is positioned on the right side of the graph */
+    JKQTPKeyOutsideTopLeft,             /*!< \brief the key is positioned on the left side of the graph */
+    JKQTPKeyOutsideLeftTop,              /*!< \brief the key is positioned above the graph */
+    JKQTPKeyOutsideLeftBottom,           /*!< \brief the key is positioned below the graph */
+    JKQTPKeyOutsideRightBottom,            /*!< \brief the key is positioned on the right side of the graph */
+    JKQTPKeyOutsideRightTop,             /*!< \brief the key is positioned on the left side of the graph */
+    JKQTPKeyOutsideBottomLeft,              /*!< \brief the key is positioned above the graph */
+    JKQTPKeyOutsideBottomRight,           /*!< \brief the key is positioned below the graph */
+    JKQTPKeyInsideTopRight,             /*!< \brief the key is positioned inside on the right side of the graph, but inside the graph*/
+    JKQTPKeyInsideTopLeft,              /*!< \brief the key is positioned inside on the left side of the graph */
+    JKQTPKeyInsideBottomLeft,               /*!< \brief the key is positioned inside on the upper bound of the graph */
+    JKQTPKeyInsideBottomRight             /*!< \brief the key is positioned inside on the lower bound of the graph */
 };
 
 
-/** \brief converts a JKQTPlabelPosition variable into a human-readable string
+/** \brief converts a JKQTPLabelPosition variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPkeyPosition2String(JKQTPkeyPosition pos);
+LIB_EXPORT QString JKQTPKeyPosition2String(JKQTPKeyPosition pos);
 
-/** \brief converts a string into a JKQTPlabelPosition
+/** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPkeyPosition String2JKQTPkeyPosition(QString pos);
+LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(QString pos);
 
 /** \brief layout of the key
  * \ingroup jkqtptools
  */
-enum JKQTPkeyLayout {
-    JKQTPkeyLayoutOneColumn,            /*!< \brief the key consists of one column */
-    JKQTPkeyLayoutOneRow,            /*!< \brief the key consists of one row */
-    JKQTPkeyLayoutMultiColumn,           /*!< \brief the key consists of multiple columns */
+enum JKQTPKeyLayout {
+    JKQTPKeyLayoutOneColumn,            /*!< \brief the key consists of one column */
+    JKQTPKeyLayoutOneRow,            /*!< \brief the key consists of one row */
+    JKQTPKeyLayoutMultiColumn,           /*!< \brief the key consists of multiple columns */
 };
 
 
-/** \brief converts a JKQTPkeyLayout variable into a human-readable string
+/** \brief converts a JKQTPKeyLayout variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPkeyLayout2String(JKQTPkeyLayout pos);
+LIB_EXPORT QString JKQTPKeyLayout2String(JKQTPKeyLayout pos);
 
-/** \brief converts a String into a JKQTPkeyLayout
+/** \brief converts a String into a JKQTPKeyLayout
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPkeyLayout String2JKQTPkeyLayout(QString pos);
+LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(QString pos);
 
 
 
 /** \brief used to represent the position of other graphs in \ref jkqtplotter_base_saveprint
  * \ingroup jkqtptools
+ * \internal
  */
-typedef struct {
-    size_t x;
-    size_t y;
-    JKQtBasePlotter* plotter;
-} JKQTPgridPrintingItem;
+struct JKQTPGridPrintingItem {
+    /** \brief logic x-position of a graph, relative to the current JKQtPlotter */
+    int x;
+    /** \brief logic y-position of a graph, relative to the current JKQtPlotter */
+    int y;
+    /** \brief JKQTBasePlotter */
+    JKQTBasePlotter* plotter;
+};
 
-
-
-
-/**
- * \brief create a property variable and a default variable for it. Also creates a doxygen comment for the default variable
- * \ingroup jkqtptools
- */
-#define JKQTPPROPERTY(type,varname) \
-  type varname; \
-  /*! \brief default value for property property varname. \see varname for more information */ \
-  type def_##varname;
 
 /**
  * \brief saves the given property (for which also a def_property exists) into the given settings object
@@ -312,92 +280,92 @@ typedef struct {
 /** \brief plot styles for the error information
  * \ingroup jkqtptools
  */
-enum JKQTPerrorPlotstyle {
-    JKQTPerrorEllipses=10,           /*!< \brief an ellipse spanned by the errors */
-    JKQTPerrorBoxes=9,           /*!< \brief a box spanned by the errors */
-    JKQTPerrorSimpleBarsPolygons=8,           /*!< \brief simplified error barsand polygons  for each data point */
-    JKQTPerrorSimpleBarsLines=7,           /*!< \brief simplified error bars and line for each data point */
-    JKQTPerrorSimpleBars=6,           /*!< \brief simplified error bars for each data point */
-    JKQTPerrorLines=5,                /*!< \brief a second and third graph line above and below the actual data which indicates the error value */
-	JKQTPerrorBars=4,                 /*!< \brief error bars for each data point */
-	JKQTPerrorPolygons=3,              /*!< \brief line error lines, but with filled range in between */
-	JKQTPerrorBarsLines=2,            /*!< \brief error bars and lines for each data point */
-	JKQTPerrorBarsPolygons=1,         /*!< \brief error bars and polygons for each data point */
-	JKQTPnoError=0                    /*!< \brief don't show error information */
+enum JKQTPErrorPlotstyle {
+    JKQTPErrorEllipses=10,           /*!< \brief an ellipse spanned by the errors */
+    JKQTPErrorBoxes=9,           /*!< \brief a box spanned by the errors */
+    JKQTPErrorSimpleBarsPolygons=8,           /*!< \brief simplified error barsand polygons  for each data point */
+    JKQTPErrorSimpleBarsLines=7,           /*!< \brief simplified error bars and line for each data point */
+    JKQTPErrorSimpleBars=6,           /*!< \brief simplified error bars for each data point */
+    JKQTPErrorLines=5,                /*!< \brief a second and third graph line above and below the actual data which indicates the error value */
+	JKQTPErrorBars=4,                 /*!< \brief error bars for each data point */
+	JKQTPErrorPolygons=3,              /*!< \brief line error lines, but with filled range in between */
+	JKQTPErrorBarsLines=2,            /*!< \brief error bars and lines for each data point */
+	JKQTPErrorBarsPolygons=1,         /*!< \brief error bars and polygons for each data point */
+	JKQTPNoError=0                    /*!< \brief don't show error information */
 };
 
 
 
 
-/** \brief converts a JKQTPerrorPlotstyle variable into a human-readable string
+/** \brief converts a JKQTPErrorPlotstyle variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPerrorPlotstyle2String(JKQTPerrorPlotstyle pos);
+LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
 
-/** \brief converts a String into a JKQTPerrorPlotstyle
+/** \brief converts a String into a JKQTPErrorPlotstyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPerrorPlotstyle String2JKQTPerrorPlotstyle(QString pos);
+LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(QString pos);
 
 /** \brief plot styles for a graph
  * \ingroup jkqtptools
  */
-enum JKQTPgraphPlotstyle {
-	JKQTPlines,                /*!< \brief plot y=f(x), connect the datapoints by straight lines */
-	JKQTPfilledCurveX,         /*!< \brief plot y=f(x), as filled curve (filled until the y=0/x-axis) */
-	JKQTPfilledCurveY,         /*!< \brief plot x=f(y), as filled curve (filled until the x=0/y-axis) */
-	JKQTPpoints,               /*!< \brief plot y=f(x), plot each datapoint with a symbol */
-	JKQTPlinesPoints,          /*!< \brief plot y=f(x), plot each datapoint with a symbol and connect them by straight lines */
-	JKQTPimpulsesHorizontal,   /*!< \brief plot y=f(x), plot each datapoint as a line from (x,0) to (x,f(x))  */
-	JKQTPimpulsesVertical,     /*!< \brief plot x=f(y), plot each datapoint as a line from (0,f(x)) to (x,f(x))  */
-	JKQTPstepsX,               /*!< \brief plot y=f(x), as a step curve */
-	JKQTPstepsY                /*!< \brief plot x=f(y), as a step curve */
+enum JKQTPGraphPlotstyle {
+	JKQTPLines,                /*!< \brief plot y=f(x), connect the datapoints by straight lines */
+	JKQTPFilledCurveX,         /*!< \brief plot y=f(x), as filled curve (filled until the y=0/x-axis) */
+	JKQTPFilledCurveY,         /*!< \brief plot x=f(y), as filled curve (filled until the x=0/y-axis) */
+	JKQTPPoints,               /*!< \brief plot y=f(x), plot each datapoint with a symbol */
+	JKQTPLinesPoints,          /*!< \brief plot y=f(x), plot each datapoint with a symbol and connect them by straight lines */
+	JKQTPImpulsesHorizontal,   /*!< \brief plot y=f(x), plot each datapoint as a line from (x,0) to (x,f(x))  */
+	JKQTPImpulsesVertical,     /*!< \brief plot x=f(y), plot each datapoint as a line from (0,f(x)) to (x,f(x))  */
+	JKQTPStepsX,               /*!< \brief plot y=f(x), as a step curve */
+	JKQTPStepsY                /*!< \brief plot x=f(y), as a step curve */
 };
 
 /** \brief symbols that can be used to plot a datapoint for a graph
  * \ingroup jkqtptools
  */
-enum JKQTPgraphSymbols {
-    JKQTPnoSymbol=0,             /*!< \brief plots no symbol at all (usefull together with error bars) */
-    JKQTPdot=1,                 /*!< \brief a small dot \image html symbols/symbol_symbol_dot.png */
-    JKQTPcross=2,               /*!< \brief a X cross \image html symbols/symbol_symbol_cross.png */
-    JKQTPplus=3,                /*!< \brief a + cross \image html symbols/symbol_symbol_plus.png */
-    JKQTPcircle=4,              /*!< \brief an unfilled circle \image html symbols/symbol_symbol_circle.png */
-    JKQTPfilledCircle=5,        /*!< \brief a filled circle \image html symbols/symbol_symbol_filled_circle.png */
-    JKQTPrect=6,                /*!< \brief an unfilled rectangle \image html symbols/symbol_symbol_rect.png */
-    JKQTPfilledRect=7,          /*!< \brief a filled rectangle \image html symbols/symbol_symbol_filled_rect.png */
-    JKQTPtriangle=8,            /*!< \brief an unfilled triangle (tip at top) \image html symbols/symbol_symbol_triangle.png */
-    JKQTPfilledTriangle=9,      /*!< \brief a filled triangle (tip at top) \image html symbols/symbol_symbol_filled_triangle.png */
-    JKQTPdownTriangle=10,        /*!< \brief an unfilled triangle (tip at bottom) \image html symbols/symbol_symbol_down_triangle.png */
-    JKQTPfilledDownTriangle=11,  /*!< \brief a filled triangle (tip at bottom) \image html symbols/symbol_symbol_filled_down_triangle.png */
-    JKQTPdiamond=12,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_diamond.png */
-    JKQTPfilledDiamond=13,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_diamond.png */
+enum JKQTPGraphSymbols {
+    JKQTPNoSymbol=0,             /*!< \brief plots no symbol at all (usefull together with error bars) */
+    JKQTPDot=1,                 /*!< \brief a small dot \image html symbols/symbol_symbol_dot.png */
+    JKQTPCross=2,               /*!< \brief a X cross \image html symbols/symbol_symbol_cross.png */
+    JKQTPPlus=3,                /*!< \brief a + cross \image html symbols/symbol_symbol_plus.png */
+    JKQTPCircle=4,              /*!< \brief an unfilled circle \image html symbols/symbol_symbol_circle.png */
+    JKQTPFilledCircle=5,        /*!< \brief a filled circle \image html symbols/symbol_symbol_filled_circle.png */
+    JKQTPRect=6,                /*!< \brief an unfilled rectangle \image html symbols/symbol_symbol_rect.png */
+    JKQTPFilledRect=7,          /*!< \brief a filled rectangle \image html symbols/symbol_symbol_filled_rect.png */
+    JKQTPTriangle=8,            /*!< \brief an unfilled triangle (tip at top) \image html symbols/symbol_symbol_triangle.png */
+    JKQTPFilledTriangle=9,      /*!< \brief a filled triangle (tip at top) \image html symbols/symbol_symbol_filled_triangle.png */
+    JKQTPDownTriangle=10,        /*!< \brief an unfilled triangle (tip at bottom) \image html symbols/symbol_symbol_down_triangle.png */
+    JKQTPFilledDownTriangle=11,  /*!< \brief a filled triangle (tip at bottom) \image html symbols/symbol_symbol_filled_down_triangle.png */
+    JKQTPDiamond=12,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_diamond.png */
+    JKQTPFilledDiamond=13,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_diamond.png */
     JKQTPstar=14,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_star.png */
-    JKQTPfilledStar=15,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_star.png */
-    JKQTPpentagon=16,                /*!< \brief an unfilled pentagon \image html symbols/symbol_symbol_pentagon.png */
-    JKQTPfilledPentagon=17,          /*!< \brief a filled pentagon \image html symbols/symbol_symbol_filled_pentagon.png */
-    JKQTPasterisc=18,          /*!< \brief an asterisc star '*' \image html symbols/symbol_symbol_asterisc.png */
+    JKQTPFilledStar=15,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_star.png */
+    JKQTPPentagon=16,                /*!< \brief an unfilled pentagon \image html symbols/symbol_symbol_pentagon.png */
+    JKQTPFilledPentagon=17,          /*!< \brief a filled pentagon \image html symbols/symbol_symbol_filled_pentagon.png */
+    JKQTPAsterisc=18,          /*!< \brief an asterisc star '*' \image html symbols/symbol_symbol_asterisc.png */
 
-    JKQTPtarget=19,              /*!< \brief a target symbol (circle with cross) \image html symbols/symbol_symbol_target.png */
-    JKQTPrectCross=20,              /*!< \brief a square symbol with a cross inside \image html symbols/symbol_symbol_rect_cross.png */
-    JKQTPrectPlus=21,              /*!< \brief a square symbol with a plus inside \image html symbols/symbol_symbol_rect_plus.png */
+    JKQTPTarget=19,              /*!< \brief a target symbol (circle with cross) \image html symbols/symbol_symbol_target.png */
+    JKQTPRectCross=20,              /*!< \brief a square symbol with a cross inside \image html symbols/symbol_symbol_rect_cross.png */
+    JKQTPRectPlus=21,              /*!< \brief a square symbol with a plus inside \image html symbols/symbol_symbol_rect_plus.png */
 
-    JKQTPmaxSymbolID=JKQTPrectPlus
+    JKQTPMaxSymbolID=JKQTPRectPlus
 };
 
-/** \brief converts a JKQTPgraphSymbols variable into a identifier string
+/** \brief converts a JKQTPGraphSymbols variable into a identifier string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPgraphSymbols2String(JKQTPgraphSymbols pos);
-/** \brief converts a JKQTPgraphSymbols variable into a human-readable string
+LIB_EXPORT QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos);
+/** \brief converts a JKQTPGraphSymbols variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPgraphSymbols2NameString(JKQTPgraphSymbols pos);
+LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
 
-/** \brief converts a String into a JKQTPgraphSymbols
+/** \brief converts a String into a JKQTPGraphSymbols
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPgraphSymbols String2JKQTPgraphSymbols(QString pos);
+LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(QString pos);
 
 
 /** \brief convert a double to a string, using the loacle "C"
@@ -609,7 +577,7 @@ LIB_EXPORT std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsig
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
  */
-inline QString JKQTP_QColor2String(QColor color) {
+inline QString jkqtp_QColor2String(QColor color) {
     return QString(jkqtp_rgbtostring(static_cast<unsigned char>((color).red()), static_cast<unsigned char>((color).green()), static_cast<unsigned char>((color).blue()), static_cast<unsigned char>((color).alpha())).c_str());
 }
 
@@ -660,21 +628,21 @@ inline constexpr double jkqtp_todouble(const bool& d) {
 /** \brief plot styles for the error information
  * \ingroup jkqtptools
  */
-enum JKQTPstepType {
-    JKQTPstepLeft=0,           /*!< \brief datapoint is on the left edge of the hor. step line */
-    JKQTPstepCenter=1,           /*!< \brief datapoint is centered on the hor. step line */
-    JKQTPstepRight=2,         /*!< \brief datapoint is on the right edge of the hor. step line */
+enum JKQTPStepType {
+    JKQTPStepLeft=0,           /*!< \brief datapoint is on the left edge of the hor. step line */
+    JKQTPStepCenter=1,           /*!< \brief datapoint is centered on the hor. step line */
+    JKQTPStepRight=2,         /*!< \brief datapoint is on the right edge of the hor. step line */
 };
 
 
-/** \brief converts a JKQTPstepType variable into a human-readable string
+/** \brief converts a JKQTPStepType variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPstepType2String(JKQTPstepType pos);
+LIB_EXPORT QString JKQTPStepType2String(JKQTPStepType pos);
 
-/** \brief converts a String into a JKQTPstepType
+/** \brief converts a String into a JKQTPStepType
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPstepType String2JKQTPstepType(QString pos);
+LIB_EXPORT JKQTPStepType String2JKQTPStepType(QString pos);
 
 #endif // JKQTPTOOLS_H_INCLUDED

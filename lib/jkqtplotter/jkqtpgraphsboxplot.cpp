@@ -37,8 +37,8 @@
 
 
 
-JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent):
-    JKQTPgraph(parent)
+JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTBasePlotter* parent):
+    JKQTPGraph(parent)
 {
     posColumn=-1;
     medianColumn=-1;
@@ -53,7 +53,7 @@ JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent):
     whiskerStyle=Qt::SolidLine;
     lineWidth=1;
     boxWidth=0.4;
-    meanSymbol=JKQTPplus;
+    meanSymbol=JKQTPPlus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
     sortData=Unsorted;
@@ -68,8 +68,8 @@ JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtBasePlotter* parent):
 }
 
 
-JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtPlotter* parent):
-    JKQTPgraph(parent)
+JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTPLotter* parent):
+    JKQTPGraph(parent)
 {
     posColumn=-1;
     medianColumn=-1;
@@ -84,7 +84,7 @@ JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtPlotter* parent):
     whiskerStyle=Qt::SolidLine;
     lineWidth=1;
     boxWidth=0.4;
-    meanSymbol=JKQTPplus;
+    meanSymbol=JKQTPPlus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
     sortData=Unsorted;
@@ -99,12 +99,12 @@ JKQTPboxplotVerticalGraph::JKQTPboxplotVerticalGraph(JKQtPlotter* parent):
 }
 
 
-void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPboxplotVerticalGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPBoxplotVerticalGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
@@ -230,7 +230,7 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (percentile25Column>=0 && percentile75Column>=0) painter.drawRect(QRectF(xmi, p75, fabs(xma-xmi), fabs(p75-p25)));
             if (medianColumn>=0) lines_p.append(QLineF(xmi+p.widthF()/2.0, median, xma-p.widthF()/2.0, median));
             if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                JKQTPplotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
             }
 
 
@@ -250,7 +250,7 @@ void JKQTPboxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 }
 
 
-bool JKQTPboxplotVerticalGraph::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTPBoxplotVerticalGraph::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     bool start=true;
     minx=0;
     maxx=0;
@@ -259,7 +259,7 @@ bool JKQTPboxplotVerticalGraph::getXMinMax(double& minx, double& maxx, double& s
     if (posColumn<0) return false;
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
     // interpret data ranges
@@ -299,7 +299,7 @@ bool JKQTPboxplotVerticalGraph::getXMinMax(double& minx, double& maxx, double& s
     return !start;
 }
 
-bool JKQTPboxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTPBoxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     bool start=true;
     miny=0;
     maxy=0;
@@ -309,7 +309,7 @@ bool JKQTPboxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
 
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(medianColumn).getRows();
     // interpret data ranges
@@ -357,18 +357,18 @@ bool JKQTPboxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
     return !start;
 }
 
-bool JKQTPboxplotVerticalGraph::usesColumn(int c) const
+bool JKQTPBoxplotVerticalGraph::usesColumn(int c) const
 {
     return (c==meanColumn)||(c==posColumn)||(c==medianColumn)||(c==minColumn)||(c==maxColumn)||(c==percentile25Column)||(c==percentile75Column);
 }
 
-void JKQTPboxplotVerticalGraph::set_sortData(int __value) {
+void JKQTPBoxplotVerticalGraph::set_sortData(int __value) {
     sortData=(DataSortOrder)__value;
     if (__value>0) sortData=Sorted;
 }
 
 
-void JKQTPboxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
     p.setJoinStyle(Qt::RoundJoin);
@@ -407,14 +407,14 @@ void JKQTPboxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRe
     painter.restore();
 }
 
-QColor JKQTPboxplotVerticalGraph::getKeyLabelColor() {
+QColor JKQTPBoxplotVerticalGraph::getKeyLabelColor() {
     return color;
 }
 
 
 
 
-void JKQTPboxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
@@ -454,7 +454,7 @@ void JKQTPboxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, Q
     painter.restore();
 }
 
-bool JKQTPboxplotHorizontalGraph::getXMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTPBoxplotHorizontalGraph::getXMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     bool start=true;
     miny=0;
     maxy=0;
@@ -464,7 +464,7 @@ bool JKQTPboxplotHorizontalGraph::getXMinMax(double& miny, double& maxy, double&
 
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(medianColumn).getRows();
     // interpret data ranges
@@ -511,7 +511,7 @@ bool JKQTPboxplotHorizontalGraph::getXMinMax(double& miny, double& maxy, double&
     return !start;
 }
 
-bool JKQTPboxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTPBoxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     bool start=true;
     minx=0;
     maxx=0;
@@ -520,7 +520,7 @@ bool JKQTPboxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double&
     if (posColumn<0) return false;
     if (parent==nullptr) return false;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
     // interpret data ranges
@@ -560,22 +560,22 @@ bool JKQTPboxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double&
     return !start;
 }
 
-JKQTPboxplotHorizontalGraph::JKQTPboxplotHorizontalGraph(JKQtBasePlotter *parent):
-    JKQTPboxplotVerticalGraph(parent)
+JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTBasePlotter *parent):
+    JKQTPBoxplotVerticalGraph(parent)
 {
 }
 
-JKQTPboxplotHorizontalGraph::JKQTPboxplotHorizontalGraph(JKQtPlotter *parent):
-    JKQTPboxplotVerticalGraph(parent)
+JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTPLotter *parent):
+    JKQTPBoxplotVerticalGraph(parent)
 {
 }
 
-void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPboxplotHorizontalGraph::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPBoxplotHorizontalGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
@@ -703,7 +703,7 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (medianColumn>=0) lines_p.append(QLineF(median, ymi-p.widthF()/2.0, median, yma+p.widthF()/2.0));
 
             if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                JKQTPplotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
             }
 
             //first=true;
@@ -741,8 +741,8 @@ void JKQTPboxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtBasePlotter* parent):
-    JKQTPgraph(parent)
+JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent):
+    JKQTPPlotObject(parent)
 {
     pos=0;
     median=0;
@@ -759,7 +759,7 @@ JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtBasePlotter* parent
     whiskerStyle=Qt::SolidLine;
     lineWidth=1;
     boxWidth=0.4;
-    meanSymbol=JKQTPplus;
+    meanSymbol=JKQTPPlus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
 
@@ -772,8 +772,8 @@ JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtBasePlotter* parent
 
 }
 
-JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtPlotter* parent):
-    JKQTPgraph(parent)
+JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTPLotter* parent):
+    JKQTPPlotObject(parent)
 {
     pos=0;
     median=0;
@@ -790,7 +790,7 @@ JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtPlotter* parent):
     whiskerStyle=Qt::SolidLine;
     lineWidth=1;
     boxWidth=0.4;
-    meanSymbol=JKQTPplus;
+    meanSymbol=JKQTPPlus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
 
@@ -802,13 +802,13 @@ JKQTPboxplotVerticalElement::JKQTPboxplotVerticalElement(JKQtPlotter* parent):
     }
 
 }
-void JKQTPboxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPboxplotVerticalElement::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPBoxplotVerticalElement::draw");
 #endif
     if (parent==nullptr) return;
 
-    drawErrorsBefore(painter);
+    //drawErrorsBefore(painter);
 
     painter.save();
 
@@ -871,18 +871,18 @@ void JKQTPboxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 
         if (drawMean) {
             double mean=transformY(this->mean);
-            JKQTPplotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+            JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
         }
 
 
     }
     painter.restore();
 
-    drawErrorsAfter(painter);
+    //drawErrorsAfter(painter);
 }
 
 
-bool JKQTPboxplotVerticalElement::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTPBoxplotVerticalElement::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     minx=0;
     maxx=0;
     smallestGreaterZero=0;
@@ -901,7 +901,7 @@ bool JKQTPboxplotVerticalElement::getXMinMax(double& minx, double& maxx, double&
     return true;
 }
 
-bool JKQTPboxplotVerticalElement::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTPBoxplotVerticalElement::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     miny=0;
     maxy=0;
     smallestGreaterZero=0;
@@ -937,7 +937,7 @@ bool JKQTPboxplotVerticalElement::getYMinMax(double& miny, double& maxy, double&
 }
 
 
-void JKQTPboxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
@@ -977,14 +977,14 @@ void JKQTPboxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, Q
     painter.restore();
 }
 
-QColor JKQTPboxplotVerticalElement::getKeyLabelColor() {
+QColor JKQTPBoxplotVerticalElement::getKeyLabelColor() {
     return color;
 }
 
 
 
 
-void JKQTPboxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPBoxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
@@ -1025,7 +1025,7 @@ void JKQTPboxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter,
     painter.restore();
 }
 
-bool JKQTPboxplotHorizontalElement::getXMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+bool JKQTPBoxplotHorizontalElement::getXMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     miny=0;
     maxy=0;
     smallestGreaterZero=0;
@@ -1060,7 +1060,7 @@ bool JKQTPboxplotHorizontalElement::getXMinMax(double& miny, double& maxy, doubl
         return true;
 }
 
-bool JKQTPboxplotHorizontalElement::getYMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTPBoxplotHorizontalElement::getYMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     minx=0;
     maxx=0;
     smallestGreaterZero=0;
@@ -1079,23 +1079,23 @@ bool JKQTPboxplotHorizontalElement::getYMinMax(double& minx, double& maxx, doubl
     return true;
 }
 
-JKQTPboxplotHorizontalElement::JKQTPboxplotHorizontalElement(JKQtBasePlotter *parent):
-    JKQTPboxplotVerticalElement(parent)
+JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTBasePlotter *parent):
+    JKQTPBoxplotVerticalElement(parent)
 {
 }
 
-JKQTPboxplotHorizontalElement::JKQTPboxplotHorizontalElement(JKQtPlotter *parent):
-    JKQTPboxplotVerticalElement(parent)
+JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTPLotter *parent):
+    JKQTPBoxplotVerticalElement(parent)
 {
 }
 
-void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
+void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPboxplotHorizontalElement::draw");
+    JKQTPAutoOutputTimer jkaaot("JKQTPBoxplotHorizontalElement::draw");
 #endif
     if (parent==nullptr) return;
 
-    drawErrorsBefore(painter);
+    //drawErrorsBefore(painter);
 
     painter.save();
 
@@ -1159,13 +1159,13 @@ void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
         if (drawMean) {
             double mean=transformY(this->mean);
-            JKQTPplotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+            JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
         }
 
     }
     painter.restore();
 
-    drawErrorsAfter(painter);
+    //drawErrorsAfter(painter);
 }
 
 
@@ -1173,7 +1173,7 @@ void JKQTPboxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-QPen JKQTPboxplotVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
+QPen JKQTPBoxplotVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
     p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
@@ -1183,7 +1183,7 @@ QPen JKQTPboxplotVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const 
     return p;
 }
 
-void JKQTPboxplotVerticalGraph::intSortData()
+void JKQTPBoxplotVerticalGraph::intSortData()
 {
     sortedIndices.clear();
 
@@ -1191,7 +1191,7 @@ void JKQTPboxplotVerticalGraph::intSortData()
 
     if (parent==nullptr)  return ;
 
-    JKQTPdatastore* datastore=parent->getDatastore();
+    JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
     // interpret data ranges
@@ -1211,7 +1211,7 @@ void JKQTPboxplotVerticalGraph::intSortData()
 
     QVector<double> datas;
 
-    if (sortData==JKQTPboxplotVerticalGraph::Sorted) {
+    if (sortData==JKQTPBoxplotVerticalGraph::Sorted) {
 
         for (int i=0; i<imax; i++) {
             double xv=datastore->get(posColumn,i);
@@ -1225,21 +1225,21 @@ void JKQTPboxplotVerticalGraph::intSortData()
     }
 }
 
-QBrush JKQTPboxplotVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
+QBrush JKQTPBoxplotVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
     QBrush b;
     b.setColor(fillColor);
     b.setStyle(fillStyle);
     return b;
 }
 
-QBrush JKQTPboxplotVerticalElement::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
+QBrush JKQTPBoxplotVerticalElement::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
     QBrush b;
     b.setColor(fillColor);
     b.setStyle(fillStyle);
     return b;
 }
 
-QPen JKQTPboxplotVerticalElement::getLinePen(JKQTPEnhancedPainter& painter) const {
+QPen JKQTPBoxplotVerticalElement::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
     p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));

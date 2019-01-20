@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_logaxes.cpp
- * Shows how to use logarithmic axes with JKQtPlotter
+ * Shows how to use logarithmic axes with JKQTPLotter
  *
- * \ref JKQtPlotterLogAxes
+ * \ref JKQTPLotterLogAxes
  */
 
 #include <QApplication>
@@ -17,8 +17,8 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQtPlotter plot;
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPLotter plot;
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data a vector of x-values for a simple plot (resonance curve with different damping value D)
     //    see https://en.wikipedia.org/wiki/Resonance
@@ -42,14 +42,14 @@ int main(int argc, char* argv[])
             Y<<1.0/sqrt(sqr(1-sqr(xx))+sqr(2*xx*D[id]));
         }
 
-        JKQTPxyLineGraph* graph=new JKQTPxyLineGraph(&plot);
+        JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
         graph->set_xColumn(columnX);
         graph->set_yColumn(ds->addCopiedColumn(Y, "y"+QString::number(id)));
 
         // don't use symbols
-        graph->set_symbol(JKQTPnoSymbol);
+        graph->set_symbol(JKQTPNoSymbol);
         // use one of different pens
         graph->set_style(pens[id%pens.size()]);
         // set width of graph line
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     }
 
     // 4. Also we add a text-element in the plot to show the plotted function
-    //    This element (JKQTPgeoText) is taken from the set of geometric elements
+    //    This element (JKQTPGeoText) is taken from the set of geometric elements
     //    and is simply parametrized by a position (1.25/10) and the text to display.
     //    In addition you can also set the font size (here to 15)
     //    Use '$...$' around the actual math string to ensure rendering with a math font
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
     //    and loaded in the library). If you don't use the math-mode modifiers, the default
     //    font of the other rendering text is used, which might not be suitable for
     //    high-quality math rendering.
-    plot.addGraph(new JKQTPgeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
+    plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
 
     // 5. set y-axis to logarithmic (x-axis would be analogous, but using `plot.get_xAxis()`)
     plot.get_yAxis()->set_logAxis(true);

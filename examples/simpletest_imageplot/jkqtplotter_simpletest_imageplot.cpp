@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_imageplot.cpp
- * Shows how to plot colored math images/matrices with JKQtPlotter
+ * Shows how to plot colored math images/matrices with JKQTPLotter
  *
- * \ref JKQtPlotterImagePlot
+ * \ref JKQTPLotterImagePlot
  */
 
 #include <QApplication>
@@ -18,12 +18,12 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQtPlotter plot;
+    JKQTPLotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPdatastore* ds=plot.getDatastore();
+    JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
     const int NX=100; // image dimension in x-direction [pixels]
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQtPlotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cAiryDisk=ds->addCopiedImageAsColumn(airydisk, NX, NY, "imagedata");

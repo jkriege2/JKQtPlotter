@@ -16,9 +16,9 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
 
     QVBoxLayout* plotFuncLayout=new QVBoxLayout(this);
     setLayout(plotFuncLayout);
-    plotFuncPlt=new JKQtPlotter(true, this);
+    plotFuncPlt=new JKQTPLotter(true, this);
     plotFuncLayout->addWidget(plotFuncPlt);
-    pfunc=new JKQTPxParsedFunctionLineGraph(plotFuncPlt->get_plotter());
+    pfunc=new JKQTPXParsedFunctionLineGraph(plotFuncPlt->get_plotter());
     pfunc->set_function("x^2/10+sin(x*pi*10)");
     pfunc->set_errorFunction("x^2/20");
     pfunc->set_drawErrorPolygons(true);
@@ -26,7 +26,7 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     plotFuncPlt->addGraph(pfunc);
     plotFuncPlt->update_plot();
 
-    pfuncErrorStyle=new JKQTPerrorPlotstyleComboBox(this);
+    pfuncErrorStyle=new JKQTPErrorPlotstyleComboBox(this);
     pfuncErrorStyle->setCurrentIndex(3);
     plotFuncLayout->addWidget(pfuncErrorStyle);
     connect(pfuncErrorStyle, SIGNAL(currentIndexChanged(int)), this, SLOT(setPFuncStyle()));
@@ -84,8 +84,8 @@ void TestWidgetFunctionPlots::setPFuncStyle()
 {
     pfunc->set_drawErrorLines(false);
     pfunc->set_drawErrorPolygons(false);
-    if (pfuncErrorStyle->getErrorStyle()==JKQTPerrorLines) pfunc->set_drawErrorLines(true);
-    if (pfuncErrorStyle->getErrorStyle()==JKQTPerrorPolygons) pfunc->set_drawErrorPolygons(true);
+    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorLines) pfunc->set_drawErrorLines(true);
+    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorPolygons) pfunc->set_drawErrorPolygons(true);
     pfunc->set_drawLine(chkPFuncDrawLine->isChecked());
     pfunc->set_displaySamplePoints(chkPFuncDrawSamples->isChecked());
     plotFuncPlt->update_plot();
