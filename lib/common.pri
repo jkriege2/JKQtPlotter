@@ -2,7 +2,7 @@
 !win32-msvc* {
     QMAKE_CXXFLAGS += -fexceptions
 } else {
-    QMAKE_CXXFLAGS += /EHsc
+    QMAKE_CXXFLAGS += /EHsc /std:c++14
     # To enable M_PI, M_E,...
     DEFINES += _USE_MATH_DEFINES
     # To fix error: C2338: va_start argument must not
