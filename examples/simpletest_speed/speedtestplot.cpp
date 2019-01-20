@@ -1,7 +1,7 @@
 /** \example speedtestplot.cpp
- * JKQTPLotter: Examples: Simple line-graph with live-data (speed test)
+ * JKQTPlotter: Examples: Simple line-graph with live-data (speed test)
  *
- * \ref JKQTPLotterSpeedTest
+ * \ref JKQTPlotterSpeedTest
  */
 
 #include "speedtestplot.h"
@@ -9,10 +9,10 @@
 
 
 SpeedTestPlot::SpeedTestPlot():
-    JKQTPLotter(), dx(1.0/double(NDATA)*4.0*M_PI), x0(0)
+    JKQTPlotter(), dx(1.0/double(NDATA)*4.0*M_PI), x0(0)
 
 {
-    // 1. optimize JKQTPLotter for speed (by switching off anti-aliasing)
+    // 1. optimize JKQTPlotter for speed (by switching off anti-aliasing)
     get_plotter()->set_useAntiAliasingForGraphs(false);
     get_plotter()->set_useAntiAliasingForSystem(false);
     get_plotter()->set_useAntiAliasingForText(false);
@@ -26,7 +26,7 @@ SpeedTestPlot::SpeedTestPlot():
         Y2[i]=cos(x)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
     }
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Here the data from the std::array's is not copied, but only the pointer to
     //    the array is added to the datastore. therefore the datastore does not manage
     //    the memory, oly uses the data stored in it!

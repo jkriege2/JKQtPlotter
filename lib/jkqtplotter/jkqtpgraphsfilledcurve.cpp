@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -59,7 +59,7 @@ JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTBasePlotter* parent):
     }
 }
 
-JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTPLotter *parent):
+JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTPlotter *parent):
     JKQTPXYGraph(parent)
 {
     baseline=0.0;
@@ -251,7 +251,7 @@ JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTBasePlotter* parent):
 {
 }
 
-JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTPLotter *parent):
+JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTPlotter *parent):
     JKQTPFilledCurveXGraph(parent)
 {
 
@@ -416,7 +416,7 @@ JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTBasePlotter *parent
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTPLotter *parent):
+JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTPlotter *parent):
     JKQTPFilledCurveXGraph(parent), JKQTPYGraphErrors()
 {
     setErrorColorFromGraphColor(color);
@@ -440,7 +440,7 @@ JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTBasePlotter *parent
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTPLotter *parent):
+JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTPlotter *parent):
     JKQTPFilledCurveYGraph(parent), JKQTPXGraphErrors()
 {
     setErrorColorFromGraphColor(color);
@@ -482,7 +482,7 @@ JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTBasePlotter *pa
     }
 }
 
-JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTPLotter *parent):
+JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTPlotter *parent):
     JKQTPXYGraph(parent)
 {
     drawSelectionLine=false;

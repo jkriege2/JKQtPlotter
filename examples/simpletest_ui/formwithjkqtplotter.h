@@ -5,23 +5,23 @@
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 
 namespace Ui {
-    class FormWithJKQTPLotter;
+    class FormWithJKQTPlotter;
 }
 
-class FormWithJKQTPLotter : public QWidget
+class FormWithJKQTPlotter : public QWidget
 {
         Q_OBJECT
 
     public:
-        explicit FormWithJKQTPLotter(QWidget *parent = nullptr);
-        ~FormWithJKQTPLotter();
+        explicit FormWithJKQTPlotter(QWidget *parent = nullptr);
+        ~FormWithJKQTPlotter();
     protected slots:
         void on_chkLogX_toggled(bool checked);
         void on_chkLogY_toggled(bool checked);
         void on_btnReplot_clicked();
 
     private:
-        Ui::FormWithJKQTPLotter *ui;
+        Ui::FormWithJKQTPlotter *ui;
 
         JKQTPXParsedFunctionLineGraph* graph;
 };

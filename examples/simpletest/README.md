@@ -1,5 +1,5 @@
-# Example (JKQTPLotter): Very simple line-graph             {#JKQTPLotterSimpleTest}
-This project (see `./examples/simpletest/`) simply creates a JKQTPLotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
+# Example (JKQTPlotter): Very simple line-graph             {#JKQTPlotterSimpleTest}
+This project (see `./examples/simpletest/`) simply creates a JKQTPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
 The QMake project looks like this (see [`jkqtplotter_simpletest.pro`](../simpletest/jkqtplotter_simpletest.pro):
 ```.qmake
 # source code for this simple demo
@@ -13,7 +13,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 # output executable name
 TARGET = jkqtplotter_simpletest
 
-# include JKQTPLotter source headers and link against library
+# include JKQTPlotter source headers and link against library
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
@@ -23,7 +23,7 @@ CONFIG (debug, debug|release) {
 }
 ```
 
-Alternatively to linking agains a `libjkqtplotter`, you can also directy add the JKQTPLotter sources to the project:
+Alternatively to linking agains a `libjkqtplotter`, you can also directy add the JKQTPlotter sources to the project:
 ```.qmake
 # source code for this simple demo
 SOURCES = jkqtplotter_simpletest.cpp 
@@ -36,10 +36,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 # output executable name
 TARGET = jkqtplotter_simpletest
 
-# include JKQTPLotter source code
+# include JKQTPlotter source code
 include(../../lib/jkqtplotter.pri)
 ```
-The soruce code of the main application is (see [`jkqtplotter_simpletest.cpp`](../simpletest/jkqtplotter_simpletest.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest.cpp`](../simpletest/jkqtplotter_simpletest.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
     // 1. create a plotter window and get a pointer to the internal datastore 
 	//    (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve)
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
         Y<<sin(x);
     }
 
-    // 3. make data available to JKQTPLotter by adding it to the internal 
+    // 3. make data available to JKQTPlotter by adding it to the internal 
 	//    datastore.
     //    Note: In this step the data is copied (of not specified otherwise), so
     //          you can reuse X and Y afterwards!

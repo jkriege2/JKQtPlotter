@@ -44,8 +44,8 @@ class TestWidgetBarcharts : public QWidget
     protected:
 
 
-        JKQTPLotter* plotBarchart;
-        JKQTPLotter* plotBarchart2;
+        JKQTPlotter* plotBarchart;
+        JKQTPlotter* plotBarchart2;
         QCheckBox* chkBarLog;
         QSpinBox* spinBarLabelAngel;
         QSpinBox* spinBarLabelAngel2;

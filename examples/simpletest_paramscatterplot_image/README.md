@@ -1,4 +1,4 @@
-# Example (JKQTPLotter): Draw an Artistic Image with a Parametrized Scatter Graph {#JKQTPLotterParamScatterImage}
+# Example (JKQTPlotter): Draw an Artistic Image with a Parametrized Scatter Graph {#JKQTPlotterParamScatterImage}
 This project (see `./examples/simpletest_paramscatterplot_image/`) demonstrates the capabilities of `JKQTPXYParametrizedScatterGraph` to display parametrized scatters in a rectangular arrangement. See the test program in [`test/simpletest_paramscatterplot`](../simpletest_paramscatterplot) for a basic example of the capabilities of `JKQTPXYParametrizedScatterGraph`.
 
 In this example, we load an image, convert it to greyscale and store it, together with x/y-coordinate-vectors in the datastore. Then a `JKQTPXYParametrizedScatterGraph` is used to draw the image as a pointilistic artwork, where each pixel is represented by a disk. The color of the disk is chosen from a color-palette, based on the grey-value. The size of each disk is chosen from the inverse grey value.

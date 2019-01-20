@@ -19,10 +19,10 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     ovlTime.start();
 
 
-    plot=new JKQTPLotter(true, this);
+    plot=new JKQTPlotter(true, this);
     plot->set_doDrawing(false);
-    plotBot=new JKQTPLotter(false, this, plot->getDatastore());
-    plotBot2=new JKQTPLotter(false, this, plot->getDatastore());
+    plotBot=new JKQTPlotter(false, this, plot->getDatastore());
+    plotBot2=new JKQTPlotter(false, this, plot->getDatastore());
     ovl1=new JKQTPOverlayVerticalLine(0.0, tr("test"), plot->get_plotter());
     plot->get_plotter()->addOverlayElement(ovl1);
     plot->setObjectName("plot");
@@ -48,7 +48,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     resize(1000, 800);
 
     plotBot->synchronizeToMaster(plot, true, false);
-    connect(plot, SIGNAL(zoomChangedLocally(double,double,double,double,JKQTPLotter*)), plotBot, SLOT(synchronizeXAxis(double,double,double,double,JKQTPLotter*)));
+    connect(plot, SIGNAL(zoomChangedLocally(double,double,double,double,JKQTPlotter*)), plotBot, SLOT(synchronizeXAxis(double,double,double,double,JKQTPlotter*)));
     plot->get_plotter()->set_gridPrinting(true);
     plot->get_plotter()->addGridPrintingPlotter(0,1,plotBot->get_plotter());
     plot->get_plotter()->addGridPrintingPlotter(0,2,plotBot2->get_plotter());

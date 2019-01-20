@@ -69,7 +69,7 @@ class JKQTFPPlot;
 /*! \brief a speed optimized plotter class
     \ingroup jkqtfastplotter
 
-    This plotter class is (in contrast to JKQTPLotter) optimized for speed. It allows to plot function graphs/data in
+    This plotter class is (in contrast to JKQTPlotter) optimized for speed. It allows to plot function graphs/data in
     a simple manner. The focus of design was not on a nice output (athough this is not unimportant), but on the speed
     of the output. So the class may be used to di quick plotting of data, i.e. in fast image sequence applications.
 
@@ -171,9 +171,9 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
          */
         int internalPlotBorderTop;
 
-        /** \brief plot width in pixels inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth) */
+        /** \brief plot width in pt inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth) */
         int plotWidth;
-        /** \brief plot height in pixels inside the widget (calculated by calcPlotScaling() from plotBorderTop, plotBorderBottom and widgetHeight) */
+        /** \brief plot height in pt inside the widget (calculated by calcPlotScaling() from plotBorderTop, plotBorderBottom and widgetHeight) */
         int plotHeight;
 
         /** \brief color of the coordinate system */
@@ -308,7 +308,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
 
         /** \brief aspect ration of the plot, only used when maintainAspectRation is \c true
          *
-         * The aspect ratio is defined as \c width/height of the plot in pixels.
+         * The aspect ratio is defined as \c width/height of the plot in pt.
          * So if you want to have a plot spanning \c x=0..20 and \c y=0..10 where each 1x1 square should be
          * as wide as high  you will have to set aspectRatio to \c 2 .
          *
@@ -1236,13 +1236,13 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         QColor color;
         /** \brief style of the graph */
         Qt::PenStyle style;
-        /** \brief width of the graph (in pixels) */
+        /** \brief width of the graph (in pt) */
         double width;
         /** \brief color of the graph */
         QColor errorColor;
         /** \brief style of the graph */
         Qt::PenStyle errorStyle;
-        /** \brief width of the graph (in pixels) */
+        /** \brief width of the graph (in pt) */
         double errorWidth;
     public:
         /*! \brief class constructor
@@ -1253,7 +1253,7 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPLinePlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
         /*! \brief class constructor
@@ -1263,7 +1263,7 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPLinePlot(JKQTFastPlotter* parent, QVector<double>* x, QVector<double>* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
 
@@ -1485,7 +1485,7 @@ class LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPVCrossPlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
 
@@ -1496,7 +1496,7 @@ class LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPVCrossPlot(JKQTFastPlotter* parent, QVector<double>* x, QVector<double>* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
 
@@ -1544,7 +1544,7 @@ class LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPVBarPlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
 
@@ -1555,7 +1555,7 @@ class LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPVBarPlot(JKQTFastPlotter* parent, QVector<double>* x, QVector<double>* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
 
@@ -1581,7 +1581,7 @@ class LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         QColor color;
         /** \brief style of the graph */
         Qt::PenStyle style;
-        /** \brief width of the graph (in pixels) */
+        /** \brief width of the graph (in pt) */
         double width;
         /** \brief fill color of the graph */
         QColor fillColor;
@@ -1596,7 +1596,7 @@ class LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPXRangePlot(JKQTFastPlotter* parent, double xmin, double xmax, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1, Qt::BrushStyle fillStyle=Qt::NoBrush) ;
 
@@ -1775,7 +1775,7 @@ class LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         QColor color;
         /** \brief style of the graph */
         Qt::PenStyle style;
-        /** \brief width of the graph (in pixels) */
+        /** \brief width of the graph (in pt) */
         double width;
         /** \brief fill color of the graph */
         QColor fillColor;
@@ -1790,7 +1790,7 @@ class LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
             \param y points to the y values in the plot
             \param color color of the plot
             \param style style of the graph
-            \param width width of the plot (in pixels)
+            \param width width of the plot (in pt)
          */
         JKQTFPYRangePlot(JKQTFastPlotter* parent, double ymin, double ymax, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1, Qt::BrushStyle fillStyle=Qt::NoBrush) ;
 
@@ -2667,9 +2667,9 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         void* image;
         /** \brief format of the image */
         JKQTFPImageFormat imageFormat;
-        /** \brief width of image in pixels */
+        /** \brief width of image in pt */
         unsigned int width;
-        /** \brief height of image in pixels */
+        /** \brief height of image in pt */
         unsigned int height;
         /** \brief minimum x value of the image */
         double xmin;
@@ -2687,7 +2687,7 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         double colorMax;
         /** \brief draw color bar */
         bool drawColorBar;
-        /** \brief color bar width in pixels */
+        /** \brief color bar width in pt */
         int colorBarWidth;
         /** \brief rotation of the image when plotting in units of 90 degrees (counter clock wise) */
         int rotation;
@@ -3090,9 +3090,9 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         void* imageBlue;
         /** \brief format of the image */
         JKQTFPImageFormat imageFormatBlue;
-        /** \brief width of image in pixels */
+        /** \brief width of image in pt */
         unsigned int width;
-        /** \brief height of image in pixels */
+        /** \brief height of image in pt */
         unsigned int height;
         /** \brief minimum x value of the image */
         double xmin;
@@ -3495,9 +3495,9 @@ class LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
     protected:
         /** \brief image to plot */
         bool* image;
-        /** \brief width of image in pixels */
+        /** \brief width of image in pt */
         unsigned int width;
-        /** \brief height of image in pixels */
+        /** \brief height of image in pt */
         unsigned int height;
         /** \brief minimum x value of the image */
         double xmin;
@@ -3681,7 +3681,7 @@ class LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
     protected:
         /** \brief width of scale bar */
         double width;
-        /** \brief line width of scale bar */
+        /** \brief line width of scale bar, given in pt */
         double lineWidth;
         /** \brief color of scale bar */
         QColor color;
@@ -3823,7 +3823,7 @@ class LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
     protected:
         /** \brief distance between grid lines */
         double width;
-        /** \brief line width of grid lines */
+        /** \brief line width of grid lines, given in pt */
         double lineWidth;
         /** \brief color of the grid */
         QColor color;

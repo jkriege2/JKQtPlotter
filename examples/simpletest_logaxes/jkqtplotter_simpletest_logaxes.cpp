@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_logaxes.cpp
- * Shows how to use logarithmic axes with JKQTPLotter
+ * Shows how to use logarithmic axes with JKQTPlotter
  *
- * \ref JKQTPLotterLogAxes
+ * \ref JKQTPlotterLogAxes
  */
 
 #include <QApplication>
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data a vector of x-values for a simple plot (resonance curve with different damping value D)

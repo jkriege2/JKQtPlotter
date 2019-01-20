@@ -1,6 +1,6 @@
-# Example (JKQTPLotter): Simple impulse plots {#JKQTPLotterImpulsePlots}
-This project (see `./examples/simpletest_impulsesplot/`) simply creates a JKQTPLotter widget (as a new window) and adds a single impulse graph. 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_impulsesplot.cpp`](../simpletest_impulsesplot/jkqtplotter_simpletest_impulsesplot.cpp).
+# Example (JKQTPlotter): Simple impulse plots {#JKQTPlotterImpulsePlots}
+This project (see `./examples/simpletest_impulsesplot/`) simply creates a JKQTPlotter widget (as a new window) and adds a single impulse graph. 
+The source code of the main application is (see [`jkqtplotter_simpletest_impulsesplot.cpp`](../simpletest_impulsesplot/jkqtplotter_simpletest_impulsesplot.cpp).
 
 
 

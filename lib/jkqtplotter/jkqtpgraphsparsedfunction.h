@@ -31,7 +31,7 @@
 
 // forward declarations
 class JKQTBasePlotter;
-class JKQTPLotter;
+class JKQTPlotter;
 
 
 
@@ -51,7 +51,7 @@ class LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
         /** \brief class constructor */
         JKQTPXParsedFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPXParsedFunctionLineGraph(JKQTPLotter* parent);
+        JKQTPXParsedFunctionLineGraph(JKQTPlotter* parent);
 
 
         /** \brief class destructor */
@@ -137,7 +137,7 @@ class LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         /** \brief class constructor */
         JKQTPYParsedFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPYParsedFunctionLineGraph(JKQTPLotter* parent);
+        JKQTPYParsedFunctionLineGraph(JKQTPlotter* parent);
 
 
         /** \brief class destructor */

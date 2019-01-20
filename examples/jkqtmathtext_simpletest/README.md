@@ -18,7 +18,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = jkqtmathtext_simpletest
 ```
-And the soruce code of the main application is (see [`jkqtmathtext_simpletest.cpp`](../jkqtmathtext_simpletest/jkqtmathtext_simpletest.cpp):
+And the source code of the main application is (see [`jkqtmathtext_simpletest.cpp`](../jkqtmathtext_simpletest/jkqtmathtext_simpletest.cpp):
 ```.cpp
 #include <QApplication>
 #include <QLabel>

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -50,19 +50,19 @@ JKQTPEnhancedTableView::JKQTPEnhancedTableView(QWidget *parent):
     setContextMenuPolicy(Qt::ActionsContextMenu);
     QAction* act;
 
-    act=new QAction(QIcon(":/JKQTPLotter/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (for Excel ...)"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (for Excel ...)"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToExcel()));
     addAction(act);
-    act=new QAction(QIcon(":/JKQTPLotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (for Excel ...) without header row/column"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (for Excel ...) without header row/column"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToExcelNoHead()));
     addAction(act);
-    act=new QAction(QIcon(":/JKQTPLotter/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (as CSV)"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16.png"), tr("Copy Selection to Clipboard (as CSV)"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToCSV()));
     addAction(act);
-    act=new QAction(QIcon(":/JKQTPLotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (as CSV ...) without header row/column"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_copy16_nohead.png"), tr("Copy Selection to clipboard (as CSV ...) without header row/column"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(copySelectionToCSVNoHead()));
     addAction(act);
-    act=new QAction(QIcon(":/JKQTPLotter/jkqtp_printtable.png"), tr("Print Table"), this);
+    act=new QAction(QIcon(":/JKQTPlotter/jkqtp_printtable.png"), tr("Print Table"), this);
     connect(act, SIGNAL(triggered()), this, SLOT(print()));
     addAction(act);
     printAction=act;

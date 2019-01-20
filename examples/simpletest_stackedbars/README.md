@@ -1,7 +1,7 @@
-# Example (JKQTPLotter): Simple stacked barchart {#JKQTPLotterStackedBarChart}
-This project (see `./examples/simpletest_stackedbars/`) simply creates a JKQTPLotter widget (as a new window) and adds several stacked barcharts.
+# Example (JKQTPlotter): Simple stacked barchart {#JKQTPlotterStackedBarChart}
+This project (see `./examples/simpletest_stackedbars/`) simply creates a JKQTPlotter widget (as a new window) and adds several stacked barcharts.
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp`](../simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp`](../simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-	JKQTPLotter plot;
+	JKQTPlotter plot;
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
     percentage_green    << 3.6      << 4.4      << 6.2      << 9.5      << 15.8     << 28.1;
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise)
     //    the variables cYear, cOther ... will contain the internal column ID of the
     //    newly created columns with names "year" and "other" ... and the (copied) data
@@ -104,8 +104,8 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![JKQTPBarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/doc/images/JKQTPBarVerticalGraphStacked.png)
+![JKQTPBarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPBarVerticalGraphStacked.png)
 
 If you use `JKQTPBarHorizontalGraphStacked` instead of `JKQTPBarVerticalStackableGraph`, you'll get a result like this: 
-![JKQTPBarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPLotter/master/doc/images/JKQTPBarHorizontalGraphStacked.png)
+![JKQTPBarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPBarHorizontalGraphStacked.png)
 

@@ -78,7 +78,7 @@
 class JKQTPEnhancedPainter; // forward
 class JKQTBasePlotter; // forward declaration
 
-/** \brief smallest linewidth any line in JKQTPLotter may have
+/** \brief smallest linewidth any line in JKQTPlotter may have
  * \ingroup jkqtptools
  */
 #define JKQTPLOTTER_ABS_MIN_LINEWIDTH 0.02
@@ -87,7 +87,7 @@ class JKQTBasePlotter; // forward declaration
  * \ingroup jkqtptools
  */
 template <typename T>
-inline T JKQTPIsOKFloat(T v) {
+inline bool JKQTPIsOKFloat(T v) {
     return std::isfinite(v)&&(!std::isinf(v))&&(!std::isnan(v));
 }
 

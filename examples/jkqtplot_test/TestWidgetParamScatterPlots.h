@@ -40,7 +40,7 @@ class TestWidgetParamScatterPlots : public QWidget
 
     protected:
 
-        JKQTPLotter* plotPSP;
+        JKQTPlotter* plotPSP;
         JKQTPXYParametrizedErrorScatterGraph* pltePSPCol;
         JKQTPXYParametrizedScatterGraph* pltePSPSize;
         JKQTPXYParametrizedScatterGraph* pltePSPSymb;

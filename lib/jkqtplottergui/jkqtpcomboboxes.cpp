@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
     
 
@@ -199,17 +199,17 @@ JKQTPErrorPlotstyleComboBox::JKQTPErrorPlotstyleComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addSymbol(JKQTPNoError, tr("none"), QIcon(":/JKQTPLotter/jkqtp_enone.png"));
-    addSymbol(JKQTPErrorLines, tr("error lines"), QIcon(":/JKQTPLotter/jkqtp_elines.png"));
-    addSymbol(JKQTPErrorBars, tr("error bars"), QIcon(":/JKQTPLotter/jkqtp_ebars.png"));
-    addSymbol(JKQTPErrorSimpleBars, tr("simple error bars"), QIcon(":/JKQTPLotter/jkqtp_esbars.png"));
-    addSymbol(JKQTPErrorPolygons, tr("error polygons"), QIcon(":/JKQTPLotter/jkqtp_epoly.png"));
-    addSymbol(JKQTPErrorBarsLines, tr("bars + lines"), QIcon(":/JKQTPLotter/jkqtp_elinesbars.png"));
-    addSymbol(JKQTPErrorBarsPolygons, tr("bars + polygons"), QIcon(":/JKQTPLotter/jkqtp_epolybars.png"));
-    addSymbol(JKQTPErrorSimpleBarsLines, tr("simple bars + lines"), QIcon(":/JKQTPLotter/jkqtp_elinessbars.png"));
-    addSymbol(JKQTPErrorSimpleBarsPolygons, tr("simple bars + polygons"), QIcon(":/JKQTPLotter/jkqtp_epolysbars.png"));
-    addSymbol(JKQTPErrorBoxes, tr("boxes"), QIcon(":/JKQTPLotter/jkqtp_eboxes.png"));
-    addSymbol(JKQTPErrorEllipses, tr("ellipses"), QIcon(":/JKQTPLotter/jkqtp_eellipses.png"));
+    addSymbol(JKQTPNoError, tr("none"), QIcon(":/JKQTPlotter/jkqtp_enone.png"));
+    addSymbol(JKQTPErrorLines, tr("error lines"), QIcon(":/JKQTPlotter/jkqtp_elines.png"));
+    addSymbol(JKQTPErrorBars, tr("error bars"), QIcon(":/JKQTPlotter/jkqtp_ebars.png"));
+    addSymbol(JKQTPErrorSimpleBars, tr("simple error bars"), QIcon(":/JKQTPlotter/jkqtp_esbars.png"));
+    addSymbol(JKQTPErrorPolygons, tr("error polygons"), QIcon(":/JKQTPlotter/jkqtp_epoly.png"));
+    addSymbol(JKQTPErrorBarsLines, tr("bars + lines"), QIcon(":/JKQTPlotter/jkqtp_elinesbars.png"));
+    addSymbol(JKQTPErrorBarsPolygons, tr("bars + polygons"), QIcon(":/JKQTPlotter/jkqtp_epolybars.png"));
+    addSymbol(JKQTPErrorSimpleBarsLines, tr("simple bars + lines"), QIcon(":/JKQTPlotter/jkqtp_elinessbars.png"));
+    addSymbol(JKQTPErrorSimpleBarsPolygons, tr("simple bars + polygons"), QIcon(":/JKQTPlotter/jkqtp_epolysbars.png"));
+    addSymbol(JKQTPErrorBoxes, tr("boxes"), QIcon(":/JKQTPlotter/jkqtp_eboxes.png"));
+    addSymbol(JKQTPErrorEllipses, tr("ellipses"), QIcon(":/JKQTPlotter/jkqtp_eellipses.png"));
     setCurrentIndex(2);
 }
 
@@ -244,18 +244,18 @@ JKQTPKeyPositionComboBox::JKQTPKeyPositionComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addPosition(JKQTPKeyInsideTopRight, tr("inside, top-right"), QIcon(":/JKQTPLotter/jkqtp_key_itr.png"));
-    addPosition(JKQTPKeyInsideTopLeft, tr("inside, top-left"), QIcon(":/JKQTPLotter/jkqtp_key_itl.png"));
-    addPosition(JKQTPKeyInsideBottomLeft, tr("inside, bottom-left"), QIcon(":/JKQTPLotter/jkqtp_key_ibl.png"));
-    addPosition(JKQTPKeyInsideBottomRight, tr("inside, bottom-right"), QIcon(":/JKQTPLotter/jkqtp_key_ibr.png"));
-    addPosition(JKQTPKeyOutsideTopRight, tr("outside, top-right"), QIcon(":/JKQTPLotter/jkqtp_key_otr.png"));
-    addPosition(JKQTPKeyOutsideTopLeft, tr("outside, top-left"), QIcon(":/JKQTPLotter/jkqtp_key_otl.png"));
-    addPosition(JKQTPKeyOutsideLeftTop, tr("outside, left-top"), QIcon(":/JKQTPLotter/jkqtp_key_olt.png"));
-    addPosition(JKQTPKeyOutsideLeftBottom, tr("outside, left-bottom"), QIcon(":/JKQTPLotter/jkqtp_key_olb.png"));
-    addPosition(JKQTPKeyOutsideBottomRight, tr("outside, bottom-right"), QIcon(":/JKQTPLotter/jkqtp_key_obr.png"));
-    addPosition(JKQTPKeyOutsideBottomLeft, tr("outside, bottom-left"), QIcon(":/JKQTPLotter/jkqtp_key_obl.png"));
-    addPosition(JKQTPKeyOutsideRightTop, tr("outside, right-top"), QIcon(":/JKQTPLotter/jkqtp_key_ort.png"));
-    addPosition(JKQTPKeyOutsideRightBottom, tr("outside, right-bottom"), QIcon(":/JKQTPLotter/jkqtp_key_orb.png"));
+    addPosition(JKQTPKeyInsideTopRight, tr("inside, top-right"), QIcon(":/JKQTPlotter/jkqtp_key_itr.png"));
+    addPosition(JKQTPKeyInsideTopLeft, tr("inside, top-left"), QIcon(":/JKQTPlotter/jkqtp_key_itl.png"));
+    addPosition(JKQTPKeyInsideBottomLeft, tr("inside, bottom-left"), QIcon(":/JKQTPlotter/jkqtp_key_ibl.png"));
+    addPosition(JKQTPKeyInsideBottomRight, tr("inside, bottom-right"), QIcon(":/JKQTPlotter/jkqtp_key_ibr.png"));
+    addPosition(JKQTPKeyOutsideTopRight, tr("outside, top-right"), QIcon(":/JKQTPlotter/jkqtp_key_otr.png"));
+    addPosition(JKQTPKeyOutsideTopLeft, tr("outside, top-left"), QIcon(":/JKQTPlotter/jkqtp_key_otl.png"));
+    addPosition(JKQTPKeyOutsideLeftTop, tr("outside, left-top"), QIcon(":/JKQTPlotter/jkqtp_key_olt.png"));
+    addPosition(JKQTPKeyOutsideLeftBottom, tr("outside, left-bottom"), QIcon(":/JKQTPlotter/jkqtp_key_olb.png"));
+    addPosition(JKQTPKeyOutsideBottomRight, tr("outside, bottom-right"), QIcon(":/JKQTPlotter/jkqtp_key_obr.png"));
+    addPosition(JKQTPKeyOutsideBottomLeft, tr("outside, bottom-left"), QIcon(":/JKQTPlotter/jkqtp_key_obl.png"));
+    addPosition(JKQTPKeyOutsideRightTop, tr("outside, right-top"), QIcon(":/JKQTPlotter/jkqtp_key_ort.png"));
+    addPosition(JKQTPKeyOutsideRightBottom, tr("outside, right-bottom"), QIcon(":/JKQTPlotter/jkqtp_key_orb.png"));
     setCurrentIndex(0);
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(posChanged(int)));
 }
@@ -343,12 +343,12 @@ JKQTPCALabelTypeComboBox::JKQTPCALabelTypeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/JKQTPLotter/jkqtp_ticks_exp.png"));
-    addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/JKQTPLotter/jkqtp_ticks_default.png"));
-    addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/JKQTPLotter/jkqtp_ticks_expchar.png"));
-    addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/JKQTPLotter/jkqtp_ticks_time.png"));
-    addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/JKQTPLotter/jkqtp_ticks_date.png"));
-    addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/JKQTPLotter/jkqtp_ticks_datetime.png"));
+    addLabelType(JKQTPCALTexponent, tr("exponent"), QIcon(":/JKQTPlotter/jkqtp_ticks_exp.png"));
+    addLabelType(JKQTPCALTdefault, tr("default"), QIcon(":/JKQTPlotter/jkqtp_ticks_default.png"));
+    addLabelType(JKQTPCALTexponentCharacter, tr("character"), QIcon(":/JKQTPlotter/jkqtp_ticks_expchar.png"));
+    addLabelType(JKQTPCALTtime, tr("time"), QIcon(":/JKQTPlotter/jkqtp_ticks_time.png"));
+    addLabelType(JKQTPCALTdate, tr("date"), QIcon(":/JKQTPlotter/jkqtp_ticks_date.png"));
+    addLabelType(JKQTPCALTdatetime, tr("datetime"), QIcon(":/JKQTPlotter/jkqtp_ticks_datetime.png"));
     setCurrentIndex(0);
 }
 
@@ -372,11 +372,11 @@ JKQTPCADrawModeComboBox::JKQTPCADrawModeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     setEditable(false);
-    addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/JKQTPLotter/jkqtp_axis_complete.png"));
-    addDrawMode(JKQTPCADMticksAndLabels, tr("tick+lab."), QIcon(":/JKQTPLotter/jkqtp_axis_ticksandlabels.png"));
-    addDrawMode(JKQTPCADMticks, tr("tick"), QIcon(":/JKQTPLotter/jkqtp_axis_ticks.png"));
-    addDrawMode(JKQTPCADMline, tr("line"), QIcon(":/JKQTPLotter/jkqtp_axis_line.png"));
-    addDrawMode(JKQTPCADMnone, tr("none"), QIcon(":/JKQTPLotter/jkqtp_axis_none.png"));
+    addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/JKQTPlotter/jkqtp_axis_complete.png"));
+    addDrawMode(JKQTPCADMticksAndLabels, tr("tick+lab."), QIcon(":/JKQTPlotter/jkqtp_axis_ticksandlabels.png"));
+    addDrawMode(JKQTPCADMticks, tr("tick"), QIcon(":/JKQTPlotter/jkqtp_axis_ticks.png"));
+    addDrawMode(JKQTPCADMline, tr("line"), QIcon(":/JKQTPlotter/jkqtp_axis_line.png"));
+    addDrawMode(JKQTPCADMnone, tr("none"), QIcon(":/JKQTPlotter/jkqtp_axis_none.png"));
     setCurrentIndex(0);
 }
 

@@ -19,7 +19,7 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     layouti->addLayout(layWid);
     setLayout(layouti);
     resize(1000, 800);
-    plotImg=new JKQTPLotter(true, this);
+    plotImg=new JKQTPlotter(true, this);
     plotImg->set_doDrawing(false);
     plotImg->get_plotter()->set_plotLabel(tr("\\textbf{image plot}"));
     plotImg->setObjectName("plotImg");

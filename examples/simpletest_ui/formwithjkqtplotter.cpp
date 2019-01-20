@@ -1,15 +1,15 @@
 /** \example formwithjkqtplotter.cpp
- * JKQTPLotter: Examples: Using a JKQTPLotter inside a Qt User Interface Designer (UI) File
+ * JKQTPlotter: Examples: Using a JKQTPlotter inside a Qt User Interface Designer (UI) File
  *
- * \ref JKQTPLotterQtCreator
+ * \ref JKQTPlotterQtCreator
  */
 
 #include "formwithjkqtplotter.h"
 #include "ui_formwithjkqtplotter.h"
 
-FormWithJKQTPLotter::FormWithJKQTPLotter(QWidget *parent) :
+FormWithJKQTPlotter::FormWithJKQTPlotter(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FormWithJKQTPLotter)
+    ui(new Ui::FormWithJKQTPlotter)
 {
     ui->setupUi(this);
     graph=new JKQTPXParsedFunctionLineGraph(ui->plot);
@@ -19,12 +19,12 @@ FormWithJKQTPLotter::FormWithJKQTPLotter(QWidget *parent) :
     ui->plot->setXY(-10,10,-10,10);
 }
 
-FormWithJKQTPLotter::~FormWithJKQTPLotter()
+FormWithJKQTPlotter::~FormWithJKQTPlotter()
 {
     delete ui;
 }
 
-void FormWithJKQTPLotter::on_chkLogX_toggled(bool checked)
+void FormWithJKQTPlotter::on_chkLogX_toggled(bool checked)
 {
     ui->plot->get_xAxis()->set_logAxis(checked);
     if (checked) {
@@ -34,7 +34,7 @@ void FormWithJKQTPLotter::on_chkLogX_toggled(bool checked)
     }
 }
 
-void FormWithJKQTPLotter::on_chkLogY_toggled(bool checked)
+void FormWithJKQTPlotter::on_chkLogY_toggled(bool checked)
 {
     ui->plot->get_yAxis()->set_logAxis(checked);
     if (checked) {
@@ -44,7 +44,7 @@ void FormWithJKQTPLotter::on_chkLogY_toggled(bool checked)
     }
 }
 
-void FormWithJKQTPLotter::on_btnReplot_clicked()
+void FormWithJKQTPlotter::on_btnReplot_clicked()
 {
     graph->set_function(ui->edtEquation->text());
     graph->set_title(ui->edtEquation->text());

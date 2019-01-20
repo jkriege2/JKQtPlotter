@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_imageplot_opencv.cpp
  * Simple math image plot, showin a 1-channel OpenCV cv::Mat
  *
- * \ref JKQTPLotterImagePlotOpenCV
+ * \ref JKQTPlotterImagePlotOpenCV
  */
 
 #include <QApplication>
@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPLotter plot;
+    JKQTPlotter plot;
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     }
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of one channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
     size_t cAiryDisk=JKQTPCopyCvMatToColumn(ds, airydisk, "imagedata");

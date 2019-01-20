@@ -1,6 +1,6 @@
 /*!
 
-\defgroup jkqtptools Tool Functions and Definitions for JKQTPLotter
+\defgroup jkqtptools Tool Functions and Definitions for JKQTPlotter
 
 This group contains a set of tools that I've written over the years to enhance the
 C++ standard library.
@@ -27,9 +27,9 @@ C++ standard library.
 
 
 
-\defgroup jkqtplotter JKQTPLotter: Qt based Scientific Plotter Class
+\defgroup jkqtplotter JKQTPlotter: Qt based Scientific Plotter Class
 
-A Qt based plotter for 2D scientific graphs. Main Plotting widget is JKQTPLotter.
+A Qt based plotter for 2D scientific graphs. Main Plotting widget is JKQTPlotter.
 
 
 \defgroup jkqtpdatastorage Data Storage Classes/System
@@ -44,11 +44,11 @@ classes.
 \defgroup jkqtpopencvinterface OpenCV Interfaceing Tools
 \ingroup jkqtpdatastorage
 
-Classes and functions in this group allow JKQTPLotter to directly work with <a href="https://opencv.org/">OpenCV</a> data structures.
+Classes and functions in this group allow JKQTPlotter to directly work with <a href="https://opencv.org/">OpenCV</a> data structures.
 
 Examples:
-  - \ref JKQTPLotterImagePlotOpenCV  
-  - \ref JKQTPLotterImagePlotRGBOpenCV 
+  - \ref JKQTPlotterImagePlotOpenCV  
+  - \ref JKQTPlotterImagePlotRGBOpenCV 
 .
 
 \defgroup jkqtpplotterclasses Plotter Class & Plotter Widget
@@ -59,14 +59,14 @@ coordinate system management an actual plotter widget ...
 
 There are two main classes:
   - JKQTBasePlotter is a QObject-derived class that implements all the plotting logic and drawing code. It does not implement a Qt widget though.
-  - JKQTPLotter is a QWidget-based class that contains a JKQTBasePlotter and uses it to draw plots onto a Qt form.
+  - JKQTPlotter is a QWidget-based class that contains a JKQTBasePlotter and uses it to draw plots onto a Qt form.
 .
 
 
 \defgroup jkqtplotter_elements Plot Elements
 \ingroup jkqtplotter
 
-This group assembles all classes that represent different elements of a plot (managed by JKQTBasePlotter/JKQTPLotter).
+This group assembles all classes that represent different elements of a plot (managed by JKQTBasePlotter/JKQTPlotter).
 There are these major subgroups:
   - \ref jkqtpbaseplotter_elements contains all non-graph objects, i.e. things like coordinate axes and so on
   - \ref jkqtplotter_graphsgroup contains the actual graph classes
@@ -77,7 +77,7 @@ There are these major subgroups:
 \ingroup jkqtplotter_elements
 
 This group contains some tool classes that implement basic elements of the plot (coordinate axes, key, ...).
-These classes are used by JKQTPLotterBase to output the plot
+These classes are used by JKQTPlotterBase to output the plot
 
 
 \defgroup jkqtplotter_graphsgroup Graph Classes
@@ -109,7 +109,7 @@ These classes are used by JKQTPLotterBase to output the plot
 \ingroup jkqtplotter_graphsgroup
 
 Examples:
-  - \ref JKQTPLotterGeometricGraphs
+  - \ref JKQTPlotterGeometricGraphs
 .
 
 \defgroup jkqtplotter_diverse Diverse Other Graphs (Ranges, ...)
@@ -133,17 +133,17 @@ Examples:
 
 
 
-\defgroup jkqtpqtwidgetsttools Qt Widgets/Tools to work with JKQTPLotter
+\defgroup jkqtpqtwidgetsttools Qt Widgets/Tools to work with JKQTPlotter
 \ingroup jkqtplotter
 
-This group assembles several Qt widgets and tool classes that are linked to JKQTPLotter/JKQTBasePlotter and allow to build advanced GUIs for these (e.g. model/view access to internal data ...)
+This group assembles several Qt widgets and tool classes that are linked to JKQTPlotter/JKQTBasePlotter and allow to build advanced GUIs for these (e.g. model/view access to internal data ...)
 
-\defgroup jkqtpgraphsmodel Qt Data Models to Access Graphs in a JKQTBasePlotter/JKQTPLotter
+\defgroup jkqtpgraphsmodel Qt Data Models to Access Graphs in a JKQTBasePlotter/JKQTPlotter
 \ingroup jkqtpqtwidgetsttools
 
-Data models in this group allow to access different internal data from a JKQTBasePlotter/JKQTPLotter and in part to manipulate these.
+Data models in this group allow to access different internal data from a JKQTBasePlotter/JKQTPlotter and in part to manipulate these.
 
-\defgroup jkqtpcomboboxes Comboboxes for Properties of JKQTBasePlotter/JKQTPLotter
+\defgroup jkqtpcomboboxes Comboboxes for Properties of JKQTBasePlotter/JKQTPlotter
 \ingroup jkqtpqtwidgetsttools
 
 This group contains several QComboBox-derived classes that can be used to select different enum-values (e.g. with JKQTPMathImageColorPaletteComboBox you can select a color-palette from JKQTPMathImageColorPalette ).

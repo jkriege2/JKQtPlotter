@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -41,7 +41,7 @@
 
 
 
-JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTPLotter* parent):
+JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTPlotter* parent):
     JKQTPXYGraph(parent)
 {
     sortData=JKQTPXYGraph::Unsorted;
@@ -211,8 +211,8 @@ void JKQTPXYLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect
     p.setStyle(style);
     p.setWidthF(lineWidth);
     painter.setPen(p);
-    int y=rect.top()+rect.height()/2.0;
-    if (drawLine) painter.drawLine(rect.left(), y, rect.right(), y);
+    double y=rect.top()+rect.height()/2.0;
+    if (drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, getKeyLabelColor(), fillColor);
     painter.restore();
 }
@@ -226,7 +226,7 @@ JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTBasePlotter *parent):
     JKQTPXYLineGraph(parent), JKQTPXYGraphErrors()
 { setErrorColorFromGraphColor(color); }
 
-JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTPLotter *parent):
+JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTPlotter *parent):
     JKQTPXYLineGraph(parent), JKQTPXYGraphErrors()
 { setErrorColorFromGraphColor(color);  }
 
@@ -375,7 +375,7 @@ JKQTPStepHorizontalGraph::JKQTPStepHorizontalGraph(JKQTBasePlotter* parent):
 }
 
 
-JKQTPStepHorizontalGraph::JKQTPStepHorizontalGraph(JKQTPLotter* parent):
+JKQTPStepHorizontalGraph::JKQTPStepHorizontalGraph(JKQTPlotter* parent):
     JKQTPXYGraph(parent)
 {
     color=QColor("red");
@@ -564,7 +564,7 @@ JKQTPStepVerticalGraph::JKQTPStepVerticalGraph(JKQTBasePlotter *parent):
 {
 }
 
-JKQTPStepVerticalGraph::JKQTPStepVerticalGraph(JKQTPLotter *parent):
+JKQTPStepVerticalGraph::JKQTPStepVerticalGraph(JKQTPlotter *parent):
     JKQTPStepHorizontalGraph(parent)
 {
 
@@ -735,7 +735,7 @@ JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTBasePlotter* parent):
 }
 
 
-JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTPLotter* parent):
+JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTPlotter* parent):
     JKQTPGraph(parent)
 {
     color=QColor("red").darker();
@@ -909,7 +909,7 @@ JKQTPVerticalRange::JKQTPVerticalRange(JKQTBasePlotter* parent):
 {
 }
 
-JKQTPVerticalRange::JKQTPVerticalRange(JKQTPLotter* parent):
+JKQTPVerticalRange::JKQTPVerticalRange(JKQTPlotter* parent):
     JKQTPHorizontalRange(parent)
 {
 }
@@ -1105,7 +1105,7 @@ JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter
     gridSymbolFractionSize=0.9;
 }
 
-JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTPLotter *parent):
+JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTPlotter *parent):
     JKQTPXYLineGraph(parent),
     JKQTPColorPaletteTools(parent->get_plotter())
 {
@@ -1482,7 +1482,7 @@ JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTB
     JKQTPXYParametrizedScatterGraph(parent), JKQTPXYGraphErrors()
 {  setErrorColorFromGraphColor(color); }
 
-JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTPLotter *parent):
+JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTPlotter *parent):
     JKQTPXYParametrizedScatterGraph(parent), JKQTPXYGraphErrors()
 { setErrorColorFromGraphColor(color);  }
 

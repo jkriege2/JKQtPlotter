@@ -1,6 +1,6 @@
-# Example (JKQTPLotter): Plotting Mathematical Functions as Line Graphs {#JKQTPLotterFunctionPlots}
+# Example (JKQTPlotter): Plotting Mathematical Functions as Line Graphs {#JKQTPlotterFunctionPlots}
 ## Basics
-This project (see `./examples/simpletest_functionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. See [test/simpletest_parsedfunctionplot](../simpletest_parsedfunctionplot) for an example of how to use an internal equation parser provided with JKQTPLotter instead of directly defining functions.
+This project (see `./examples/simpletest_functionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. See [test/simpletest_parsedfunctionplot](../simpletest_parsedfunctionplot) for an example of how to use an internal equation parser provided with JKQTPlotter instead of directly defining functions.
 
 ## Simple C++ inline function
 The first example shows how to plot a C++ inline function: 
@@ -110,7 +110,7 @@ This code snippets above result in a plot like this:
 ## Notes
 Note that all the different variants to provide parameters can be used with all types of functions!
 
-Also see the example [Plotting Parsed Mathematical Functions as Line Graphs](../simpletest_parsedfunctionplot) for details on how the actual plotting algorithm works. That example also shows how to define a function as a string, which is then parsed and evaluated by an expression parser library embedded in JKQTPLotter.
+Also see the example [Plotting Parsed Mathematical Functions as Line Graphs](../simpletest_parsedfunctionplot) for details on how the actual plotting algorithm works. That example also shows how to define a function as a string, which is then parsed and evaluated by an expression parser library embedded in JKQTPlotter.
 
 All examples above use the graph class `JKQTPXFunctionLineGraph`, which plots a function `y=f(x)`. If you want to plot a function `x=f(y)`, you can use the class `JKQTPYFunctionLineGraph` instead. If in the examples above, we exchange all `JKQTPXFunctionLineGraph` for `JKQTPYFunctionLineGraph`, the graphs will be rotated by 90 degree, as all functions are interpreted as `x=f(y)`:
 

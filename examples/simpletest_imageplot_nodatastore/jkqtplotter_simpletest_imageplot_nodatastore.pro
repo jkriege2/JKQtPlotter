@@ -11,7 +11,7 @@ CONFIG += qt
 QT += core gui xml svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
-# include JKQTPLotter source code
+# include JKQTPlotter source code
 DEPENDPATH += . ../../lib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {

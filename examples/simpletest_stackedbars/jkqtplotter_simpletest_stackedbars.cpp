@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_stackedbars.cpp
- * JKQTPLotter: Examples: Simple stacked barchart
+ * JKQTPlotter: Examples: Simple stacked barchart
  *
- * \ref JKQTPLotterStackedBarChart
+ * \ref JKQTPlotterStackedBarChart
  */
 
 #include <QApplication>
@@ -11,7 +11,7 @@
 
 
 template<class TGRAPH>
-void addGraph(JKQTPLotter& plot, bool swapXY) {
+void addGraph(JKQTPlotter& plot, bool swapXY) {
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
@@ -28,7 +28,7 @@ void addGraph(JKQTPLotter& plot, bool swapXY) {
     percentage_green    << 3.6      << 4.4      << 6.2      << 9.5      << 15.8     << 28.1;
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise)
     //    the variables cYear, cOther ... will contain the internal column ID of the
     //    newly created columns with names "year" and "other" ... and the (copied) data
@@ -104,11 +104,11 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPLotter plotV;
+    JKQTPlotter plotV;
     addGraph<JKQTPBarVerticalStackableGraph>(plotV, false);
     plotV.setWindowTitle("JKQTPBarVerticalStackableGraph");
 
-    JKQTPLotter plotH;
+    JKQTPlotter plotH;
     addGraph<JKQTPBarHorizontalStackableGraph>(plotH, true);
     plotH.setWindowTitle("JKQTPBarHorizontalStackableGraph");
 

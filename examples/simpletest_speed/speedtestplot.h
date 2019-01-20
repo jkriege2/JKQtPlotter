@@ -8,7 +8,7 @@
 
 #define NDATA 500
 
-class SpeedTestPlot: public JKQTPLotter {
+class SpeedTestPlot: public JKQTPlotter {
         Q_OBJECT
     protected:
         std::array<double, NDATA> X, Y, Y2;

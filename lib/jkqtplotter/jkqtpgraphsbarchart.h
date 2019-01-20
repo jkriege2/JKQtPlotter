@@ -55,7 +55,7 @@
     \image html plot_bargraphverplot.png
 
 
-    You can use JKQTPLotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
+    You can use JKQTPlotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
     automatically. The y-columns are given as a QVector<int> to this function.
 
 
@@ -66,7 +66,7 @@ class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
         /** \brief class constructor */
         JKQTPBarVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBarVerticalGraph(JKQTPLotter* parent);
+        JKQTPBarVerticalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -219,7 +219,7 @@ class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
         QColor fillColor;
         /** \brief linestyle of the graph lines */
         Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
+        /** \brief width (pt) of the graph, given in pt */
         double lineWidth;
         /** \brief fill style, if the curve should be filled */
         Qt::BrushStyle fillStyle;
@@ -240,7 +240,7 @@ class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
          */
         double baseline;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
 
@@ -289,7 +289,7 @@ class LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
         /** \brief class constructor */
         JKQTPBarVerticalStackableGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBarVerticalStackableGraph(JKQTPLotter* parent);
+        JKQTPBarVerticalStackableGraph(JKQTPlotter* parent);
         /** \brief stacks this barchart upon the given \a parentGraph */
         void stackUpon(JKQTPBarVerticalStackableGraph* parentGraph);
         /** \brief unstacks this graph (i.e. deletes the parent graph in the stack) */
@@ -328,7 +328,7 @@ class LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, publi
         /** \brief class constructor */
         JKQTPBarVerticalErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBarVerticalErrorGraph(JKQTPLotter* parent);
+        JKQTPBarVerticalErrorGraph(JKQTPlotter* parent);
 
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
@@ -359,7 +359,7 @@ class LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
         /** \brief class constructor */
         JKQTPBarHorizontalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBarHorizontalGraph(JKQTPLotter* parent);
+        JKQTPBarHorizontalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -395,7 +395,7 @@ class LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGrap
         /** \brief class constructor */
         JKQTPBarHorizontalStackableGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBarHorizontalStackableGraph(JKQTPLotter* parent);
+        JKQTPBarHorizontalStackableGraph(JKQTPlotter* parent);
         /** \brief stacks this barchart upon the given \a parentGraph */
         void stackUpon(JKQTPBarHorizontalStackableGraph* parentGraph);
         /** \brief unstacks this graph (i.e. deletes the parent graph in the stack) */
@@ -434,7 +434,7 @@ class LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizontalGraph, p
         /** \brief class constructor */
         JKQTPBarHorizontalErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBarHorizontalErrorGraph(JKQTPLotter* parent);
+        JKQTPBarHorizontalErrorGraph(JKQTPlotter* parent);
 
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;

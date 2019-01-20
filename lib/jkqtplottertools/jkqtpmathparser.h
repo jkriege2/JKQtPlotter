@@ -132,7 +132,11 @@
    - rand, srand
    - ceil, floor, trunc, round,
    - fmod, min, max
-   - floattostr, booltostr
+   - floattostr, booltostr/bool2str, inttostr, num2str
+   - tosystempathseparator
+   - setdefault
+   - strdate
+   - cmdparam, argv
  .
 
  these functions are registere by calling jkMathParser::addStandardFunctions().
@@ -188,35 +192,35 @@
 
  \section jkmp_example Simple Example of Usage
  \code
- try {
-    jkMathParser mp; // instanciate
-    jkmpNode* n;
-    jkmpResult r;
-    // parse some numeric expression
-    n=mp.parse("pi^2+4*sin(65*pi/exp(3.45))");
-    r=n->evaluate();
-    cout<<r.num<<endl;
-    //delete n;
+     try {
+        jkMathParser mp; // instanciate
+        jkmpNode* n;
+        jkmpResult r;
+        // parse some numeric expression
+        n=mp.parse("pi^2+4*sin(65*pi/exp(3.45))");
+        r=n->evaluate();
+        cout<<r.num<<endl;
+        //delete n;
 
-    // parse some boolean expression
-    n=mp.parse("true==false");
-    r=n->evaluate();
-    if (r.type==jkmpBool) {
-        if (r.boolean) cout<<"true";
-        else cout<<"false";
-    }
-    if (r.type==jkmpDouble) cout<<r.num<<endl;
-    if (r.type==jkmpString) cout<<r.str<<endl;
-    delete n;
+        // parse some boolean expression
+        n=mp.parse("true==false");
+        r=n->evaluate();
+        if (r.type==jkmpBool) {
+            if (r.boolean) cout<<"true";
+            else cout<<"false";
+        }
+        if (r.type==jkmpDouble) cout<<r.num<<endl;
+        if (r.type==jkmpString) cout<<r.str<<endl;
+        delete n;
 
-    // parse some string expression
-    n=mp.parse("var1='false'; var1+'true'");
-    r=n->evaluate();
-    if (r.type==jkmpString) cout<<r.str<<endl;
-    delete n;
- } catch(std::exception& E) {
-    cout<<"ERROR!!!\n  "<<E.what()<<endl<<endl;
- }
+        // parse some string expression
+        n=mp.parse("var1='false'; var1+'true'");
+        r=n->evaluate();
+        if (r.type==jkmpString) cout<<r.str<<endl;
+        delete n;
+     } catch(std::exception& E) {
+        cout<<"ERROR!!!\n  "<<E.what()<<endl<<endl;
+     }
  \endcode
 
 
@@ -230,17 +234,17 @@
  error handling function. This can be usefull in programs that don't support exceptions.
  To do so, use this cod:
  \code
- void error(std::string message) {
-   cout<<"error: "+message;
-   system("PAUSE");
-   abort();
- }
+     void error(std::string message) {
+       cout<<"error: "+message;
+       system("PAUSE");
+       abort();
+     }
 
- int main() {
-   jkMathParser mp;
-   mp.set_exception_function(error);  // make error ahndler known
-   ...
- }
+     int main() {
+       jkMathParser mp;
+       mp.set_exception_function(error);  // make error ahndler known
+       ...
+     }
  \endcode
  */
 class JKQTPMathParser
@@ -340,7 +344,7 @@ class JKQTPMathParser
                   case jkmpBool: return jkqtp_booltostr(boolean);
               }
               return "";
-          };
+          }
 
           /** \brief convert the value this struct representens into a std::string and adds the name of the datatype in \c [...] */
           inline std::string toTypeString() {
@@ -351,7 +355,7 @@ class JKQTPMathParser
               }
               return "";
           }
-        } ;
+        };
 
 
         /** \brief This struct is for managing variables. Unlike jkmpResult this struct
@@ -393,14 +397,14 @@ class JKQTPMathParser
          * All error handling has to be done inside the function definition. Here is a
          * simple example:
          * \code
-         * jkmpResult Abs(jkmpResult* params, unsigned char n){
-         *   jkmpResult r;
-         *   r.type=jkmpDouble;
-         *   if (n!=1) jkmpError("abs accepts 1 argument");
-         *   if (params[0].type!=jkmpDouble) jkmpError("abs needs double argument");
-         *   r.num=fabs(params[0].num);
-         *   return r;
-         * }
+         *    jkmpResult Abs(jkmpResult* params, unsigned char n){
+         *        jkmpResult r;
+         *        r.type=jkmpDouble;
+         *        if (n!=1) jkmpError("abs accepts 1 argument");
+         *        if (params[0].type!=jkmpDouble) jkmpError("abs needs double argument");
+         *        r.num=fabs(params[0].num);
+         *        return r;
+         *    }
          * \endcode
          */
         typedef jkmpResult (*jkmpEvaluateFunc)(jkmpResult*, unsigned char, JKQTPMathParser*);

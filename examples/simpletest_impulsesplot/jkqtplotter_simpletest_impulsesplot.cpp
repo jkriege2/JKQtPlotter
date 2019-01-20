@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_impulsesplot.cpp
- * Shows how to plot impulse graphs with JKQTPLotter
+ * Shows how to plot impulse graphs with JKQTPlotter
  *
- * \ref JKQTPLotterImpulsePlots
+ * \ref JKQTPlotterImpulsePlots
  */
 
 #include <QApplication>
@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve with lin. increasing errors)

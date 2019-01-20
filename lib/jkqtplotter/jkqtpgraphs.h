@@ -36,7 +36,7 @@
 
 // forward declarations
 class JKQTBasePlotter;
-class JKQTPLotter;
+class JKQTPlotter;
 class JKQTPCoordinateAxis;
 class JKQTPDatastore;
 //class JKQTPColorPaletteTools;
@@ -57,7 +57,7 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         /** \brief class constructor */
         JKQTPXYLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPXYLineGraph(JKQTPLotter* parent);
+        JKQTPXYLineGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -214,7 +214,7 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
         /** \brief color of the graph */
         QColor color;
@@ -222,13 +222,13 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         QColor fillColor;
         /** \brief linestyle of the graph lines */
         Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
+        /** \brief width (pixels) of the graph, given in pt */
         double lineWidth;
         /** \brief which symbol to use for the datapoints */
         JKQTPGraphSymbols symbol;
-        /** \brief size (diameter in pixels) of the symbol for the data points */
+        /** \brief size (diameter in pt) of the symbol for the data points, given in pt */
         double symbolSize;
-        /** \brief width (in pixels) of the lines used to plot the symbol for the data points */
+        /** \brief width (in pt) of the lines used to plot the symbol for the data points, given in pt */
         double symbolWidth;
         /** \brief indicates whether to draw a line or not */
         bool drawLine;
@@ -261,7 +261,7 @@ class LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, publi
         /** \brief class constructor */
         JKQTPXYParametrizedScatterGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPXYParametrizedScatterGraph(JKQTPLotter* parent);
+        JKQTPXYParametrizedScatterGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -490,7 +490,7 @@ class LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYG
         /** \brief class constructor */
         JKQTPXYLineErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPXYLineErrorGraph(JKQTPLotter* parent);
+        JKQTPXYLineErrorGraph(JKQTPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -521,7 +521,7 @@ class LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrize
         Q_OBJECT
     public:
         JKQTPXYParametrizedErrorScatterGraph(JKQTBasePlotter* parent=nullptr);
-        JKQTPXYParametrizedErrorScatterGraph(JKQTPLotter* parent);
+        JKQTPXYParametrizedErrorScatterGraph(JKQTPlotter* parent);
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -575,7 +575,7 @@ class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         /** \brief class constructor */
         JKQTPStepHorizontalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPStepHorizontalGraph(JKQTPLotter* parent);
+        JKQTPStepHorizontalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -703,7 +703,7 @@ class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         QColor fillColor;
         /** \brief linestyle of the graph lines */
         Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
+        /** \brief width (pixels) of the graph, given in pt */
         double lineWidth;
         /** \brief fill style, if the curve should be filled */
         Qt::BrushStyle fillStyle;
@@ -714,7 +714,7 @@ class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         /** \brief specifies whether the steps elongate to the left, the right, or are centered around the \f$ x_i \f$ values. */
         JKQTPStepType stepType;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;
@@ -748,7 +748,7 @@ class LIB_EXPORT JKQTPStepVerticalGraph: public JKQTPStepHorizontalGraph {
         /** \brief class constructor */
         JKQTPStepVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPStepVerticalGraph(JKQTPLotter* parent);
+        JKQTPStepVerticalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -773,7 +773,7 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         /** \brief class constructor */
         JKQTPHorizontalRange(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPHorizontalRange(JKQTPLotter* parent);
+        JKQTPHorizontalRange(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -1107,14 +1107,14 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         Qt::PenStyle style;
         /** \brief linestyle of the center line graph lines */
         Qt::PenStyle centerStyle;
-        /** \brief width (pixels) of the graph */
+        /** \brief width (pt) of the graph, given in pt */
         double lineWidth;
-        /** \brief width (pixels) of the center line graph */
+        /** \brief width (pt) of the center line graph, given in pt */
         double centerLineWidth;
         /** \brief fill style, if the curve should be filled */
         Qt::BrushStyle fillStyle;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;
@@ -1138,7 +1138,7 @@ class LIB_EXPORT JKQTPVerticalRange: public JKQTPHorizontalRange {
         /** \brief class constructor */
         JKQTPVerticalRange(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPVerticalRange(JKQTPLotter* parent);
+        JKQTPVerticalRange(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

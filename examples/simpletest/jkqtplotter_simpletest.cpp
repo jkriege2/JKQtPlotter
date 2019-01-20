@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest.cpp
- * A very basic example for the usage of JKQTPLotter
+ * A very basic example for the usage of JKQTPlotter
  *
- * \ref JKQTPLotterSimpleTest
+ * \ref JKQTPlotterSimpleTest
  */
  
 #include <QApplication>
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve)
@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
         Y<<sin(x);
     }
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise), so you can
     //          reuse X and Y afterwards!
     //    the variables columnX and columnY will contain the internal column ID of the newly

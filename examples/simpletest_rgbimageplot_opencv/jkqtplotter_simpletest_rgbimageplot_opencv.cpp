@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_rgbimageplot_opencv.cpp
- * JKQTPLotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
+ * JKQTPlotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
  *
- * \ref JKQTPLotterImagePlotRGBOpenCV
+ * \ref JKQTPlotterImagePlotRGBOpenCV
  */
 
 #include <QApplication>
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPLotter plot;
+    JKQTPlotter plot;
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of each channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
     size_t cPictureR=JKQTPCopyCvMatToColumn(ds, picture, "R-channel", 2);

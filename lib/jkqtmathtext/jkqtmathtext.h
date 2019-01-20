@@ -60,7 +60,7 @@ LIB_EXPORT void initJKQTMathTextResources();
 
     
     JKQTMathText is a self-contained LaTeX-renderer for Qt. It is used to renderer
-    labels in JKQTPLotter/JKQTBasePlotter, but can be used independently. 
+    labels in JKQTPlotter/JKQTBasePlotter, but can be used independently. 
     The class does not depend on any library, except Qt. 
     In particular it actually parses a LaTeX string and draws it in pure C++. It does NOT rely
     on an installed LaTeX for the rendering!
@@ -117,39 +117,70 @@ LIB_EXPORT void initJKQTMathTextResources();
 
 
     \section JKQTMathTextSuppoertedLaTeX Supported LaTeX Subset
-    
+    \subsection JKQTMathTextSuppoertedLaTeXSimple Simple Instructions
     The supported LaTeX subset is listes below. Please note that some commands are used differently than in actual LaTeX.
     For example \c \\bf is just a renamed form of \c \\textbf and used as \c \\bf{...} and NOT as \c {\\bf...} .
 
       - \c $ : enter/leave math mode
-      - \c \\bf{...} \c \\textbf{...} \c \\mathbf{...}:  draw the contained text in bold face
-      - \c \\it{...} \c \\textit{...} \c \\mathit{...} :  draw the contained text in italic face
-      - \c \\rm{...} \c \\textrm{...} \c \\mathrm{...} \c \\mbox{...} :  draw the contained text in normal upright roman font face
-      - \c \\sf{...} \c \\textsf{...} \c \\mathsf{...} :  draw the contained text in normal upright sans-serif font face
-      - \c \\script{...} \c \\textscript{...} \c \\mathscript{...} :  draw the contained text in a script font face
-      - \c \\sc{...} : draw the text in small caps
-      - \c \\ul{...} \c \\underline{...} \c \\underlined{...} : draw the text with underlining
-      - \c \\tt{...} \c \\texttt{...} \c \\mathtt{...} : draw text in typewriter font
-      - \c \\alpha ... : display the according greek letter
-      - \c ^{...} : display the contents of braces in superscript
-      - \c _{...} : display the contents of braces in subscript
+      - \c \\bf{...} \c \\textbf{...} \c \\mathbf{...}:  draw the contained text in bold face \image html jkqtmathtext_bold.png
+      - \c \\it{...} \c \\textit{...} \c \\mathit{...} :  draw the contained text in italic face \image html jkqtmathtext_italic.png
+      - \c \\rm{...} \c \\textrm{...} \c \\mathrm{...} \c \\mbox{...} :  draw the contained text in normal upright roman font face \image html jkqtmathtext_fonts.png
+      - \c \\sf{...} \c \\textsf{...} \c \\mathsf{...} :  draw the contained text in normal upright sans-serif font face \image html jkqtmathtext_fonts.png
+      - \c \\script{...} \c \\textscript{...} \c \\mathscript{...} :  draw the contained text in a script font face \image html jkqtmathtext_fonts.png
+      - \c \\sc{...} : draw the text in small caps \image html jkqtmathtext_sc.png
+      - \c \\ul{...} \c \\underline{...} \c \\underlined{...} : draw the text with underlining \image html jkqtmathtext_ul.png
+      - \c \\ol{...} \c \\overline{...} \c \\overlined{...} : draw the text with overlining \image html jkqtmathtext_ol.png
+      - \c \\tt{...} \c \\texttt{...} \c \\mathtt{...} : draw text in typewriter font \image html jkqtmathtext_fonts.png
+      - \c \\textcolor{color}{...} \c \\color{color} \c \\mathcolor{color}{...} : draw colored text \image html jkqtmathtext_colored.png
+      - \c \\boxed{...} : draw text with a box around it \image html jkqtmathtext_boxed.png
+      - \c \\colorbox{color}{...} : draw a colored box around text \image html jkqtmathtext_colorbox.png
+      - \c \\alpha ... : display the according greek letter \image html jkqtmathtext_greek.png
+      - \c ^{...} \c _{...} : display the contents of braces in superscript/subscript \image html jkqtmathtext_supersub.png
+        <br>Special subscript/superscript typesetting applies, when the sub/super follows \c \\sum \c \\Prod ...: \image html jkqtmathtext_specialsubsuper.png
       - \c \\{ / \\} : display opening/closing brace
       - \c \\_ : display underscore
       - \c \\sum \c \\prod \c \\int ... : plot special symbol. Note that depending on the fontEncoding the available
                                           symbols may differ (there are not all symbols defined in the MS Windows Symbol
                                           font!). Best coverage should be given by Unicode font encoding with a good
-                                          unicode font installed!
+                                          unicode font installed!<br>\image html jkqtmathtext_symbols.png
+      - <code>\\vec{x} \\dot{x} \\ddot{x} \\overline{x} \\underline{x} \\hat{x} \\tilde{x} \\uul{x} \\ool{x} \\bar{x} \\arrow{x} </code>: Decorations over/under symbols \image html jkqtmathtext_mathdeco.png
+      - <code>\\verb{don't parse this _aaa\LaTeX} </code>: interpret enclosed text as verbose \image html jkqtmathtext_verb.png
     .
 
+    \subsection JKQTMathTextSuppoertedLaTeXBraces Braces ...
     Braces in math mode are adjusted in size, so they are a small bit (factor \c brace_factor ) larger than the contents.
     To enable this you have to write braces with \c \\left and \c \\right. These types of braces are defined (slight
     differences to LaTeX standard):
-      - \c \\left( \c \\right) : default meaning ()
-      - \c \\left[ \c \\right] : default meaning []
-      - \c \\left\\{ \c \\right\\} : default meaning {}
-      - \c \\left< \c \\right> : "averaging" braces <>
-      - \c \\left\\_ \c \\right\\_ : floor braces |_  _|
-      - \c \\left~ \c \\right~ : ceil braces |~  ~|
+      - \c \\left( \c \\right) : default meaning (), \image html jkqtmathtext_brace_round.png
+      - \c \\left[ \c \\right] : default meaning [], \image html jkqtmathtext_brace_rect.png
+      - \c \\left\\{ \c \\right\\} : default meaning {}, \image html jkqtmathtext_brace_curly.png
+      - \c \\left< \c \\right> : "averaging" braces , \image html jkqtmathtext_brace_tri.png
+      - \c \c \\left\\lfloor \c \\right\\rfloor : floor braces , \image html jkqtmathtext_brace_floor.png
+      - \c \\left~ \c \\right~ \c \\left\\lceil \c \\right\\rceil : ceil braces , \image html jkqtmathtext_brace_ceil.png
+      - \c \\left| \c \\right| : absolute value braces | |, \image html jkqtmathtext_brace_oneline.png
+      - \c \\left\| \c \\right\| : norm braces || ||, \image html jkqtmathtext_brace_dblline.png
+      - You can use \c \\left. or \c \\right. to have only right or only left brace
+    .
+
+    \subsection JKQTMathTextSuppoertedLaTeXUnderOver Undersetting, Oversetting, Underbraces, Overbraces ...
+    There are also instructions that allow to under/overset braces, arrows, ...:
+      - <code>$\underbrace{x+x+...+x}{k\ \mathrm{times}}$</code> \image html jkqtmathtext_brace_underbrace.png
+      - <code>$\overbrace{x+x+...+x}{k\ \mathrm{times}}$</code> \image html jkqtmathtext_brace_overbrace.png
+      - <code>$\overset{main}{over}$</code> \image html jkqtmathtext_brace_overset.png
+      - <code>$\underset{main}{under}$</code> \image html jkqtmathtext_brace_underset.png
+    .
+
+    \subsection JKQTMathTextSuppoertedLaTeXMatrix Matrix/Array Type Instructions
+    Several Matrix/Array-typed LaTeX instructions are supported:
+      - <code>$\frac{...}{...}$</code>, <code>$\tfrac{...}{...}$</code> (70% smaller font), <code>$\dfrac{...}{...}$</code> \image html jkqtmathtext_brace_frac.png
+      - <code>$\stackrel{...}{...}$ $\binom{...}{...}$</code> \image html jkqtmathtext_brace_stackrel.png
+      - <code>$\begin{cases} ... & ... \\ ... & ... \end{cases}$</code> \image html jkqtmathtext_brace_begincases.png
+      - <code>$\begin{array} a & b & ...\\ c & d & ...\end{array}$</code> <code>$\begin{matrix} a & b & ...\\ c & d & ...\end{matrix}$</code> \image html jkqtmathtext_array.png
+      - <code>$\begin{pmatrix} a & b & ...\\ c & d & ...\end{pmatrix}$</code> \image html jkqtmathtext_pmatrix.png
+      - <code>$\begin{bmatrix} a & b & ...\\ c & d & ...\end{bmatrix}$</code> \image html jkqtmathtext_bmatrix.png
+      - <code>$\begin{Bmatrix} a & b & ...\\ c & d & ...\end{Bmatrix}$</code> \image html jkqtmathtext_bbmatrix.png
+      - <code>$\begin{vmatrix} a & b & ...\\ c & d & ...\end{vmatrix}$</code> \image html jkqtmathtext_vmatrix.png
+      - <code>$\begin{Vmatrix} a & b & ...\\ c & d & ...\end{Vmatrix}$</code> \image html jkqtmathtext_vvmatrix.png
     .
 
     \section JKQTMathTextSuppoertedFonts Font Handling

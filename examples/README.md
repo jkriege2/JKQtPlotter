@@ -1,4 +1,4 @@
-# Example (JKQTPLotter): Examples & Tutorials {#exampleProjectsTutorials}
+# Example (JKQTPlotter): Examples & Tutorials {#exampleProjectsTutorials}
 This section assembles some simple examples of usage. 
 You can find more (complex) examples for the classes in this repository in the subfolder "test". 
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
@@ -23,6 +23,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](../screenshots/jkqtplotter_simpletest_functionplot_small.png)](./simpletest_functionplot) | [Plotting Mathematical Functions as Line Graphs](./simpletest_functionplot) | `JKQTPXFunctionLineGraph`  <br> diretly plotting C/C++-functions |
 | [![](../screenshots/jkqtplotter_simpletest_parsedfunctionplot_small.png)](./simpletest_parsedfunctionplot) | [Plotting Parsed Mathematical Functions as Line Graphs](./simpletest_parsedfunctionplot) | `JKQTPXParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator |
 | [![](../screenshots/jkqtplotter_simpletest_geometric_small.png)](./simpletest_geometric) | [Plotting Geometric Objects](./simpletest_geometric) |  |
+| [![](../screenshots/jkqtplotter_simpletest_boxplot_small.png)](./simpletest_boxplot) | [Plotting Box Plots](./simpletest_boxplot) | `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph` |
 
 ## Styling the Plot, Keys, Axes, ...
 
@@ -43,17 +44,31 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](../screenshots/jkqtplotter_simpletest_imageplot_opencv_small.png)](./simpletest_imageplot_opencv) | [1-channel OpenCV cv::Mat Image Plot](./simpletest_imageplot_opencv) | `JKQTPColumnMathImage` <br> image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore |
 | [![](../screenshots/jkqtplotter_simpletest_rgbimageplot_opencv_small.png)](./simpletest_rgbimageplot_opencv) | [RGB OpenCV cv::Mat Image Plot](./simpletest_rgbimageplot_opencv) | `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore |
 
+
+
 ## GUI Tools and Plot Layout
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](../screenshots/test_multiplot_small.png)](./test_multiplot) | [Layouting Several Plots](./test_multiplot) | Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview |
-| [![](../screenshots/jkqtplotter_simpletest_ui_small.png)](./simpletest_ui) | [Placing JKQTPLotter into a Qt User-Interface-XML-file (`*.ui`)](./simpletest_ui) | using Qt Form Designer <br> parsed function plots (`JKQTPXParsedFunctionLineGraph`) |
+| [![](../screenshots/jkqtplotter_simpletest_ui_small.png)](./simpletest_ui) | [Placing JKQTPlotter into a Qt User-Interface-XML-file (`*.ui`)](./simpletest_ui) | using Qt Form Designer <br> parsed function plots (`JKQTPXParsedFunctionLineGraph`) |
+
+
+
+## More Complex Examples
+
+| Screenshot    | Description   | Notes         |
+|:-------------:| ------------- | ------------- |
+| [![](../screenshots/test_multiplot_small.png)](./test_multiplot) | [Layouting Several Plots](./test_multiplot) | Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview |
+| [![](../screenshots/test_distributionplot_small.png)](./test_distributionplot) | [Plotting a Statistical Distribution of Data](./test_distributionplot) | Combines several different graphs to draw random values, their distribution and some statistical properties |
+
+
 
 ## Tools and Special Features
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
-| [![](../screenshots/jkqtmathtext_simpletest_small.png)](./jkqtmathtext_simpletest) | [JKQTMathText: LaTeX Renderer](./jkqtmathtext_simpletest) |  |
+| [![](../screenshots/jkqtmathtext_simpletest_small.png)](./jkqtmathtext_simpletest) | [JKQTMathText: Simple Demonstration](./jkqtmathtext_simpletest) |  |
+| [![](../screenshots/jkqtmathtext_testapp_small.png)](./jkqtmathtext_test) | [JKQTMathText: Full Testing Application](./jkqtmathtext_test) |  |
 
 

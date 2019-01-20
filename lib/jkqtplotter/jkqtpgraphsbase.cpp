@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -39,7 +39,7 @@ JKQTPPlotElement::JKQTPPlotElement(JKQTBasePlotter* parent):
     setParent(parent);
 }
 
-JKQTPPlotElement::JKQTPPlotElement(JKQTPLotter *parent):
+JKQTPPlotElement::JKQTPPlotElement(JKQTPlotter *parent):
     QObject(parent->get_plotter())
 {
     title="";
@@ -58,7 +58,7 @@ JKQTPGraph::JKQTPGraph(JKQTBasePlotter* parent):
     datarange_start=datarange_end=-1;
 }
 
-JKQTPGraph::JKQTPGraph(JKQTPLotter *parent):
+JKQTPGraph::JKQTPGraph(JKQTPlotter *parent):
     JKQTPPlotElement(parent)
 {
     datarange_start=datarange_end=-1;
@@ -94,7 +94,7 @@ void JKQTPPlotElement::setParent(JKQTBasePlotter* parent) {
     QObject::setParent(parent);
 }
 
-void JKQTPPlotElement::setParent(JKQTPLotter *parent)
+void JKQTPPlotElement::setParent(JKQTPlotter *parent)
 {
     setParent(parent->get_plotter());
 }
@@ -207,7 +207,7 @@ JKQTPXYGraph::JKQTPXYGraph(JKQTBasePlotter* parent):
 
 }
 
-JKQTPXYGraph::JKQTPXYGraph(JKQTPLotter *parent):
+JKQTPXYGraph::JKQTPXYGraph(JKQTPlotter *parent):
     JKQTPGraph(parent)
 {
     sortData=Unsorted;
@@ -356,7 +356,7 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt:
 }
 
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTPLotter *parent):
+JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTPlotter *parent):
     JKQTPGraph(parent)
 {
     sortData=Unsorted;
@@ -375,7 +375,7 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTPLotter *parent):
 
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, JKQTPLotter *parent):
+JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, JKQTPlotter *parent):
     JKQTPGraph(parent)
 {
     sortData=Unsorted;
@@ -394,7 +394,7 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, JKQTPLotter *pare
     }
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTPLotter *parent):
+JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTPlotter *parent):
     JKQTPGraph(parent)
 {
     sortData=Unsorted;
@@ -405,7 +405,7 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt:
     parentPlotStyle=-1;
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPLotter *parent):
+JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPlotter *parent):
     JKQTPGraph(parent)
 {
     sortData=Unsorted;
@@ -416,7 +416,7 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt:
     parentPlotStyle=-1;
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPLotter *parent):
+JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPlotter *parent):
     JKQTPGraph(parent)
 {
     sortData=Unsorted;
@@ -1203,7 +1203,7 @@ JKQTPPlotObject::JKQTPPlotObject(JKQTBasePlotter *parent):
 
 }
 
-JKQTPPlotObject::JKQTPPlotObject(JKQTPLotter *parent):
+JKQTPPlotObject::JKQTPPlotObject(JKQTPlotter *parent):
     JKQTPPlotElement(parent)
 {
 

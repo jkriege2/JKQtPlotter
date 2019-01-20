@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_filledgraphs.cpp
- * Shows how to use filled graphs with JKQTPLotter
+ * Shows how to use filled graphs with JKQTPlotter
  *
- * \ref JKQTPLotterFilledGraphs
+ * \ref JKQTPlotterFilledGraphs
  */
 
 #include <QApplication>
@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create 4 datacolumns with length 256 entries in the datastore

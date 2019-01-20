@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_geometric.cpp
- * Shows how to plot several geometric forms with JKQTPLotter
+ * Shows how to plot several geometric forms with JKQTPlotter
  *
- * \ref JKQTPLotterGeometricGraphs
+ * \ref JKQTPlotterGeometricGraphs
  */
 
 #include <QApplication>
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window
-    JKQTPLotter plot;
+    JKQTPlotter plot;
 
     // 2. format graph:
     // 2.1 set the graph scales manually

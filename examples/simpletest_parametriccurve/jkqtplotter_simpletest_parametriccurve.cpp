@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_parametriccurve.cpp
- * Shows how to plot parametric curves from datapoints with JKQTPLotter
+ * Shows how to plot parametric curves from datapoints with JKQTPlotter
  *
- * \ref JKQTPLotterParametricCurves
+ * \ref JKQTPlotterParametricCurves
  */
 
 #include <QApplication>
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create two plotter windows that share the same internal datastore (for convenience)
-    JKQTPLotter plot, plot2;
+    JKQTPlotter plot, plot2;
     JKQTPDatastore* ds=plot.getDatastore();
     plot2.useExternalDatastore(ds);
 

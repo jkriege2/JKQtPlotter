@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
     
 
@@ -162,7 +162,7 @@ QSizeF JKQTBasePlotter::getTextSizeSize(const QString &fontName, double fontSize
 #undef JKQTBP_DEBUGTIMING
 
 /**************************************************************************************************************************
- * JKQTPLotterBase
+ * JKQTPlotterBase
  **************************************************************************************************************************/
 JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTPDatastore* datast):
     QObject(parent), m_plotsModel(nullptr), xAxis(nullptr), yAxis(nullptr)
@@ -214,48 +214,48 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
 
     emitSignals=true;
 
-    actSavePlot=new QAction(QIcon(":/JKQTPLotter/jkqtp_saveplot.png"), "Save Plot", this);
+    actSavePlot=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveplot.png"), "Save Plot", this);
     actSavePlot->setToolTip("Save plot as image file (PDF, PS; PNG, ...).");
-    actSaveData=new QAction(QIcon(":/JKQTPLotter/jkqtp_savedata.png"), "Save Data", this);
+    actSaveData=new QAction(QIcon(":/JKQTPlotter/jkqtp_savedata.png"), "Save Data", this);
     actSaveData->setToolTip("Save Data of the plot as file (CSV, ...).");
-    actCopyData=new QAction(QIcon(":/JKQTPLotter/jkqtp_copydata.png"), "Copy Data", this);
+    actCopyData=new QAction(QIcon(":/JKQTPlotter/jkqtp_copydata.png"), "Copy Data", this);
     actCopyData->setToolTip("Copy Data of the plot to the clipboard to be pasted into Excel etc.");
-    actCopyMatlab=new QAction(QIcon(":/JKQTPLotter/jkqtp_copymatlab.png"), "Copy Data to Matlab", this);
+    actCopyMatlab=new QAction(QIcon(":/JKQTPlotter/jkqtp_copymatlab.png"), "Copy Data to Matlab", this);
     actCopyMatlab->setToolTip("Copy Data of the plot to the clipboard in Matlab script format.");
-    actCopyPixelImage=new QAction(QIcon(":/JKQTPLotter/jkqtp_copyimg.png"), "Copy Image", this);
+    actCopyPixelImage=new QAction(QIcon(":/JKQTPlotter/jkqtp_copyimg.png"), "Copy Image", this);
     actCopyPixelImage->setToolTip("Copy the plot as a pixel image to the clipboard");
 
 
-    actSavePDF=new QAction(QIcon(":/JKQTPLotter/jkqtp_savepdf.png"), "Save P&DF", this);
+    actSavePDF=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepdf.png"), "Save P&DF", this);
     actSavePDF->setToolTip("Save as PDF");
     //toolbar->addAction(actSavePDF);
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    actSavePS=new QAction(QIcon(":/JKQTPLotter/jkqtp_saveps.png"), "Save P&S", this);
+    actSavePS=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveps.png"), "Save P&S", this);
     actSavePS->setToolTip("Save as PostScript");
     //toolbar->addAction(actSavePS);
 #endif
-    actSaveSVG=new QAction(QIcon(":/JKQTPLotter/jkqtp_savesvg.png"), "Save S&VG", this);
+    actSaveSVG=new QAction(QIcon(":/JKQTPlotter/jkqtp_savesvg.png"), "Save S&VG", this);
     actSaveSVG->setToolTip("Save as Scalable Vector Graphics (SVG)");
     //toolbar->addAction(actSaveSVG);
-    actSavePix=new QAction(QIcon(":/JKQTPLotter/jkqtp_savepix.png"), "Save &Image", this);
+    actSavePix=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepix.png"), "Save &Image", this);
     actSavePix->setToolTip("Save as Pixel Image (PNG, JPEG, TIFF ...)");
     //toolbar->addAction(actSavePix);
 
-    actPrint=new QAction(QIcon(":/JKQTPLotter/jkqtp_print.png"), "&Print", this);
+    actPrint=new QAction(QIcon(":/JKQTPlotter/jkqtp_print.png"), "&Print", this);
     actPrint->setToolTip("Print");
     //toolbar->addSeparator();
-    actSaveCSV=new QAction(QIcon(":/JKQTPLotter/jkqtp_savecsv.png"), "Save &CSV", this);
+    actSaveCSV=new QAction(QIcon(":/JKQTPlotter/jkqtp_savecsv.png"), "Save &CSV", this);
     actSaveCSV->setToolTip("Save the data which is used for the plot as Comma Separated Values (CSV)");
     //toolbar->addAction(actSaveCSV);
     //toolbar->addSeparator();
-    actZoomAll=new QAction(QIcon(":/JKQTPLotter/jkqtp_zoomall.png"), "Zoom &All", this);
+    actZoomAll=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomall.png"), "Zoom &All", this);
     actZoomAll->setToolTip("Zoom to view all data");
-    actZoomIn=new QAction(QIcon(":/JKQTPLotter/jkqtp_zoomin.png"), "Zoom &In", this);
+    actZoomIn=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomin.png"), "Zoom &In", this);
     actZoomIn->setToolTip("Zoom in around the center of the plot");
-    actZoomOut=new QAction(QIcon(":/JKQTPLotter/jkqtp_zoomout.png"), "Zoom &Out", this);
+    actZoomOut=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomout.png"), "Zoom &Out", this);
     actZoomOut->setToolTip("Zoom out");
 
-    actShowPlotData=new QAction(QIcon(":/JKQTPLotter/jkqtp_showplotdata.png"), "&Show Plot Data", this);
+    actShowPlotData=new QAction(QIcon(":/JKQTPlotter/jkqtp_showplotdata.png"), "&Show Plot Data", this);
     actShowPlotData->setToolTip("opens a dialog that contains all data used for the plot in a table.");
 
 
@@ -746,7 +746,7 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
 
     if (emitSignals) emit beforePlotScalingRecalculate();
-    //qDebug()<<"start JKQTPLotterBase::calcPlotScaling";
+    //qDebug()<<"start JKQTPlotterBase::calcPlotScaling";
     // if the key is plotted outside , then we have to add place for it (i.e. change the plotBorders
     iplotBorderBottom=plotBorderBottom;
     iplotBorderLeft=plotBorderLeft;
@@ -848,7 +848,7 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
         }
     }
 
-    //qDebug()<<"  end JKQTPLotterBase::calcPlotScaling";
+    //qDebug()<<"  end JKQTPlotterBase::calcPlotScaling";
 
 
     // synchronize to a master-plotter
@@ -949,28 +949,28 @@ void JKQTBasePlotter::plotSystemGrid(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::plotSystemGrid");
 #endif
-    //qDebug()<<"start JKQTPLotterBase::plotSystemGrid";
+    //qDebug()<<"start JKQTPlotterBase::plotSystemGrid";
     xAxis->drawGrids(painter);
     yAxis->drawGrids(painter);
-    //qDebug()<<"  end JKQTPLotterBase::plotSystemGrid";
+    //qDebug()<<"  end JKQTPlotterBase::plotSystemGrid";
 }
 
 void JKQTBasePlotter::plotSystemXAxis(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::plotSystemXAxis");
 #endif
-    //qDebug()<<"start JKQTPLotterBase::plotSystemXAxis";
+    //qDebug()<<"start JKQTPlotterBase::plotSystemXAxis";
     xAxis->drawAxes(painter);
-    //qDebug()<<"  end JKQTPLotterBase::plotSystemXAxis";
+    //qDebug()<<"  end JKQTPlotterBase::plotSystemXAxis";
 }
 
 void JKQTBasePlotter::plotSystemYAxis(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::plotSystemYAxis");
 #endif
-    //qDebug()<<"start JKQTPLotterBase::plotSystemYAxis";
+    //qDebug()<<"start JKQTPlotterBase::plotSystemYAxis";
     yAxis->drawAxes(painter);
-    //qDebug()<<"  end JKQTPLotterBase::plotSystemYAxis";
+    //qDebug()<<"  end JKQTPlotterBase::plotSystemYAxis";
 }
 
 
@@ -1010,7 +1010,7 @@ void JKQTBasePlotter::plotKey(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::plotKey");
 #endif
-    //qDebug()<<"start JKQTPLotterBase::plotKey";
+    //qDebug()<<"start JKQTPlotterBase::plotKey";
 
     QFont kf(keyFont, keyFontSize*fontSizeMultiplier);
     QFontMetricsF kfm(kf);
@@ -1126,7 +1126,7 @@ void JKQTBasePlotter::plotKey(JKQTPEnhancedPainter& painter) {
         painter.restore();
 
     }
-    //qDebug()<<"  end JKQTPLotterBase::plotKey";
+    //qDebug()<<"  end JKQTPlotterBase::plotKey";
 }
 
 void JKQTBasePlotter::plotOverlays(JKQTPEnhancedPainter &painter) {
@@ -1156,7 +1156,7 @@ void JKQTBasePlotter::paintPlot(JKQTPEnhancedPainter& painter, bool drawOverlays
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::paintPlot");
 #endif
-    //qDebug()<<"start JKQTPLotterBase::paintPlot";
+    //qDebug()<<"start JKQTPlotterBase::paintPlot";
     // draw background
     painter.save();
     painter.setPen(backgroundColor);
@@ -1194,7 +1194,7 @@ void JKQTBasePlotter::paintPlot(JKQTPEnhancedPainter& painter, bool drawOverlays
     if (showKey) plotKey(painter);
     painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, useAntiAliasingForText);
     if (drawOverlays) plotOverlays(painter);
-    //qDebug()<<"  end JKQTPLotterBase::paintPlot";
+    //qDebug()<<"  end JKQTPlotterBase::paintPlot";
 }
 
 void JKQTBasePlotter::paintOverlays(JKQTPEnhancedPainter &painter) {
@@ -1462,7 +1462,7 @@ void JKQTBasePlotter::printpreview(QPrinter *p, bool setabsolutesize) {
     QGridLayout* layout=new QGridLayout();
     dlg->setLayout(layout);
     dlg->setWindowTitle(tr("Graph print/export preview ..."));
-    dlg->setWindowIcon(QIcon(":/JKQTPLotter/jkqtp_exportprintpreview.png"));
+    dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
     printPreview=new QPrintPreviewWidget(p, dlg);
     connect(printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printpreviewPaintRequested(QPrinter*)));
 
@@ -1602,7 +1602,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     printAspect=gridPrintingSize.height()/gridPrintingSize.width();
     if (printer) printPageSizeMM=printer->pageRect(QPrinter::Millimeter).size();
     else printPageSizeMM=QSizeF(paintDevice->widthMM(), paintDevice->heightMM());
-    printSizeX_Millimeter=double(gridPrintingSize.width())/96.0*25.4;//double(resolution)*25.4; // convert current widget size in pixels to millimeters, assuming 96dpi (default screen resolution)
+    printSizeX_Millimeter=double(gridPrintingSize.width())/96.0*25.4;//double(resolution)*25.4; // convert current widget size in pt to millimeters, assuming 96dpi (default screen resolution)
     printSizeY_Millimeter=double(gridPrintingSize.height())/96.0*25.4;//double(resolution)*25.4;
     if (printsizeX_inMM>0) printSizeX_Millimeter=printsizeX_inMM;
     if (printsizeY_inMM>0) printSizeY_Millimeter=printsizeY_inMM;
@@ -1626,7 +1626,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     QGridLayout* layout=new QGridLayout();
     dlg->setLayout(layout);
     dlg->setWindowTitle(tr("Graph print/export preview ..."));
-    dlg->setWindowIcon(QIcon(":/JKQTPLotter/jkqtp_exportprintpreview.png"));
+    dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
 
     bool delPrinter=false;
     if (svg) {
@@ -1819,7 +1819,7 @@ bool JKQTBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
     QGridLayout* layout=new QGridLayout();
     dlg->setLayout(layout);
     dlg->setWindowTitle(tr("Graph export preview ..."));
-    dlg->setWindowIcon(QIcon(":/JKQTPLotter/jkqtp_exportprintpreview.png"));
+    dlg->setWindowIcon(QIcon(":/JKQTPlotter/jkqtp_exportprintpreview.png"));
     /*printPreview=new QPrintPreviewWidget(p, dlg);
     connect(printPreview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printpreviewPaintRequested(QPrinter*)));*/
     QScrollArea* scroll=new QScrollArea(dlg);
@@ -3514,7 +3514,7 @@ void JKQTBasePlotter::plotGraphs(JKQTPEnhancedPainter& painter){
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::plotGraphs"));
 #endif
     if (datastore==nullptr || graphs.isEmpty()) return;
-    //qDebug()<<"start JKQTPLotterBase::plotGraphs()";
+    //qDebug()<<"start JKQTPlotterBase::plotGraphs()";
     if (useClipping) {
         QRegion cregion(iplotBorderLeft, iplotBorderTop, plotWidth, plotHeight);
         painter.setClipping(true);
@@ -3555,7 +3555,7 @@ void JKQTBasePlotter::plotGraphs(JKQTPEnhancedPainter& painter){
         }
     }
 
-    //qDebug()<<"  end JKQTPLotterBase::plotGraphs()";
+    //qDebug()<<"  end JKQTPlotterBase::plotGraphs()";
 }
 
 
@@ -3904,7 +3904,7 @@ void JKQTBasePlotter::getGraphsYMinMax(double& miny, double& maxy, double& small
 
 
 void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool includeY0, double scaleX, double scaleY) {
-    //std::cout<<"JKQTPLotterBase::zoomToFit():\n";
+    //std::cout<<"JKQTPlotterBase::zoomToFit():\n";
     double xxmin;
     double xxmax;
     double xsmallestGreaterZero;
@@ -4430,7 +4430,7 @@ void JKQTBasePlotter::showPlotData() {
     QVBoxLayout* layout=new QVBoxLayout();
     dlg->setLayout(layout);
     QToolBar* tb=new QToolBar("toolbar", dlg);
-    QAction* actClose=new QAction(QIcon(":/JKQTPLotter/jkqtp_exit.png"), tr("&Close Window"), dlg);
+    QAction* actClose=new QAction(QIcon(":/JKQTPlotter/jkqtp_exit.png"), tr("&Close Window"), dlg);
     connect(actClose, SIGNAL(triggered()), dlg, SLOT(accept()));
     tb->addAction(actClose);
     tb->addSeparator();

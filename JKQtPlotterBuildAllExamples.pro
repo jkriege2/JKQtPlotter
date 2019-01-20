@@ -25,9 +25,6 @@ jkqtplot_test.depends = jkqtplotterlib
 jkqtplotter_simpletest.file = examples/simpletest/jkqtplotter_simpletest.pro
 jkqtplotter_simpletest.depends = jkqtplotterlib
 
-test_multiplot.file = examples/test_multiplot/test_multiplot.pro
-test_multiplot.depends = jkqtplotterlib
-
 jkqtfastplotter_test.file = $$PWD/examples/jkqtfastplotter_test/jkqtfastplotter_test.pro
 jkqtfastplotter_test.depends = jkqtplotterlib
 
@@ -64,6 +61,26 @@ addSimpleTest(parsedfunctionplot)
 addSimpleTest(functionplot)
 addSimpleTest(geometric)
 addSimpleTest(ui)
+addSimpleTest(boxplot)
 #addSimpleTest(imageplot_nodatastore)
 #addSimpleTest(rgbimageplot_opencv)
 #addSimpleTest(imageplot_opencv)
+
+
+
+defineTest(addTest) {
+    test_name = $$1
+    SUBDIRS += test_$${test_name}
+
+    test_$${test_name}.file = examples/test_$${test_name}/test_$${test_name}.pro
+    test_$${test_name}.depends = jkqtplotterlib
+
+    export (test_$${test_name}.file)
+    export (test_$${test_name}.depends)
+
+    export (SUBDIRS)
+}
+
+addTest(multiplot)
+addTest(distributionplot)
+

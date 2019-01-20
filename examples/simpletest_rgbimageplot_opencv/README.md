@@ -1,8 +1,8 @@
-# Example (JKQTPLotter): Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQTPLotterImagePlotRGBOpenCV}
-This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQTPLotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
+# Example (JKQTPlotter): Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQTPlotterImagePlotRGBOpenCV}
+This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
-The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQTPLotter with OPenCV.
+The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQTPlotter with OPenCV.
 
 The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](../simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
 ```.cpp
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPLotter plot;
+    JKQTPlotter plot;
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of each channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
     size_t cPictureR=JKQTPCopyCvMatToColumn(ds, picture, "R-channel", 2);
@@ -97,6 +97,6 @@ The result looks like this:
 
 ![jkqtplotter_simpletest_imageplot](../../screenshots/jkqtplotter_simpletest_rgbimageplot_opencv.png)
 
-The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQTPLotter has its 0 at the bottom-left (right-handed coordinate system).
+The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQTPlotter has its 0 at the bottom-left (right-handed coordinate system).
 
 

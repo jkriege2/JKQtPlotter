@@ -1,6 +1,6 @@
-# Example (JKQTPLotter): Plotting Parsed Mathematical Functions as Line Graphs {#JKQTPLotterParsedFunctionPlot}
+# Example (JKQTPlotter): Plotting Parsed Mathematical Functions as Line Graphs {#JKQTPlotterParsedFunctionPlot}
 ## Plot Function f(x)
-This project (see `./examples/simpletest_parsedfunctionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions are defined as strings that will be evaluated with the equation parser, integrated into JKQTPLotter. 
+This project (see `./examples/simpletest_parsedfunctionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions are defined as strings that will be evaluated with the equation parser, integrated into JKQTPlotter. 
 
 Note: See the example [Plotting Mathematical Functions as Line Graphs](../simpletest_functionplot) if you don't want to draw parsed functions, but want to provide a C function, or C++ functor!
 
@@ -10,11 +10,11 @@ Adding an evaluated funtion to a graph is very simple:
     parsedFunc->set_function("sin(x*8)*exp(-x/4)");
     parsedFunc->set_title("user function");
 ```
-As you can see a graph of the type `JKQTPXParsedFunctionLineGraph` is used, which plots a function that depends on the variable `x`. The given function is parsed and evaluated (see [`lib/jkqtplottertools/jkqtpmathparser.h`](https://github.com/jkriege2/JKQTPLotter/blob/master/lib/jkqtplottertools/jkqtpmathparser.h) for details on the features of the math parser). An intelligent drawing algorithm chooses the number of control points for drawing a smooth graph, with sufficient amount of details, by evaluating locally the slope of the function.
+As you can see a graph of the type `JKQTPXParsedFunctionLineGraph` is used, which plots a function that depends on the variable `x`. The given function is parsed and evaluated (see [`lib/jkqtplottertools/jkqtpmathparser.h`](https://github.com/jkriege2/JKQTPlotter/blob/master/lib/jkqtplottertools/jkqtpmathparser.h) for details on the features of the math parser). An intelligent drawing algorithm chooses the number of control points for drawing a smooth graph, with sufficient amount of details, by evaluating locally the slope of the function.
 
 In the example in [`test/simpletest_parsedfunctionplot/simpletest_parsedfunctionplot.cpp`](../simpletest_parsedfunctionplot/simpletest_parsedfunctionplot.cpp) we do not simply set a fixed function, but add a `QLineEdit` which allows to edit the function and redraws it, once ENTER is pressed:
 ```.cpp
-    JKQTPLotter* plot=new JKQTPLotter(&mainWin);
+    JKQTPlotter* plot=new JKQTPlotter(&mainWin);
     QLineEdit* edit=new QLineEdit(&mainWin);
     edit->setToolTip("enter a function in dependence of the variable <tt>x</tt> and press ENTER to update the graph");
     

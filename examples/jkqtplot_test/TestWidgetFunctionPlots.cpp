@@ -16,7 +16,7 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
 
     QVBoxLayout* plotFuncLayout=new QVBoxLayout(this);
     setLayout(plotFuncLayout);
-    plotFuncPlt=new JKQTPLotter(true, this);
+    plotFuncPlt=new JKQTPlotter(true, this);
     plotFuncLayout->addWidget(plotFuncPlt);
     pfunc=new JKQTPXParsedFunctionLineGraph(plotFuncPlt->get_plotter());
     pfunc->set_function("x^2/10+sin(x*pi*10)");

@@ -35,10 +35,10 @@
 #define jkqtpgraphsbase_H
 
 // forward declarations
-class JKQTPLotter;
+class JKQTPlotter;
 class JKQTPDatastore;
 
-/** \brief this virtual base class of every element, which is part of a JKQTPLotter plot and may appear in its key
+/** \brief this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its key
  *         (basically any type of graph, except overlay elements!)
  * \ingroup jkqtplotter_basegraphs
  *
@@ -64,7 +64,7 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
         /** \brief class constructor */
         explicit JKQTPPlotElement(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        explicit JKQTPPlotElement(JKQTPLotter* parent);
+        explicit JKQTPPlotElement(JKQTPlotter* parent);
 
         /** \brief default wirtual destructor */
         virtual ~JKQTPPlotElement() ;
@@ -125,7 +125,7 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
         /** \brief sets the parent painter class */
         virtual void setParent(JKQTBasePlotter* parent);
         /** \brief sets the parent painter class */
-        virtual void setParent(JKQTPLotter* parent);
+        virtual void setParent(JKQTPlotter* parent);
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -199,14 +199,14 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
 };
 
 /** \brief this virtual base class of the (data-column based) graphs,
- *         which are part of a JKQTPLotter plot and which use the coordinate system
- *         of the JKQTPLotter (i.e. the two coordinate axes get_xAxis() and get_yAxis())
+ *         which are part of a JKQTPlotter plot and which use the coordinate system
+ *         of the JKQTPlotter (i.e. the two coordinate axes get_xAxis() and get_yAxis())
  *         as basis for the graphs
  * \ingroup jkqtplotter_basegraphs
  *
  * This class adds several features to work with data columns. In addition this class adds protected
  * functions that do coordinate transforms based on the current coordinate system, of the paren
- * JKQTPLotter (i.e. using the axes JKQTPLott:xAxis and JKQTPLotter::yAxis as basis for the plotting).
+ * JKQTPlotter (i.e. using the axes JKQTPLott:xAxis and JKQTPlotter::yAxis as basis for the plotting).
  *
  * There are two properties datarange_start and datarange_end. By default they are -1 and therefore ignored.
  * if they are != -1 the plotter only displays the datapoints with the indexes [datarange_start .. datarange_end]
@@ -219,7 +219,7 @@ class LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
         /** \brief class constructor */
         explicit JKQTPGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        explicit JKQTPGraph(JKQTPLotter* parent);
+        explicit JKQTPGraph(JKQTPlotter* parent);
 
         /** \brief default wirtual destructor */
         virtual ~JKQTPGraph() ;
@@ -291,7 +291,7 @@ class LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
 };
 
 
-/** \brief this is the virtual base class of all JKQTPPlotElement's in a JKQTPLotter plot that
+/** \brief this is the virtual base class of all JKQTPPlotElement's in a JKQTPlotter plot that
  *         represent geometric forms or annotations. They have extended coordinate transform capabilities, because
  *         in addition to using the plot coordinates, you can also choose to use different other
  *         coordinate systems
@@ -304,7 +304,7 @@ class LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
         /** \brief class constructor */
         explicit JKQTPPlotObject(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        explicit JKQTPPlotObject(JKQTPLotter* parent);
+        explicit JKQTPPlotObject(JKQTPlotter* parent);
 
         /** \brief default wirtual destructor */
         virtual ~JKQTPPlotObject() ;
@@ -340,7 +340,7 @@ class LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
         /** \brief class constructor */
         JKQTPXYGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPXYGraph(JKQTPLotter* parent);
+        JKQTPXYGraph(JKQTPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -446,15 +446,21 @@ class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
             Unsorted=0,
             Sorted=1
         };
+
+        enum class DataDirection {
+            X,
+            Y
+        };
+
         /** \brief class constructor */
         JKQTPSingleColumnGraph(JKQTBasePlotter* parent=nullptr);
         JKQTPSingleColumnGraph(int dataColumn, JKQTBasePlotter* parent=nullptr);
         JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style=Qt::SolidLine, double lineWidth=2.0, JKQTBasePlotter* parent=nullptr);
-        JKQTPSingleColumnGraph(JKQTPLotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, JKQTPLotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTPLotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPLotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPLotter* parent);
+        JKQTPSingleColumnGraph(JKQTPlotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, JKQTPlotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTPlotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPlotter* parent);
+        JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPlotter* parent);
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor();
 
@@ -542,14 +548,14 @@ class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         /** \brief the column that contains the datapoints */
         int dataColumn;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */
         QColor color;
         /** \brief linestyle of the graph lines */
         Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
+        /** \brief width (pt) of the graph, given in pt */
         double lineWidth;
 
         QPen getLinePen(JKQTPEnhancedPainter &painter) const;

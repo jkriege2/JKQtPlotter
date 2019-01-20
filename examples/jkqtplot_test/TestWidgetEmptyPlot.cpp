@@ -14,7 +14,7 @@ TestWidgetEmptyPlot::TestWidgetEmptyPlot(QWidget *parent) :
 
     #define NEMPTY 500
 
-    JKQTPLotter* plotEmpty=new JKQTPLotter(true, this);
+    JKQTPlotter* plotEmpty=new JKQTPlotter(true, this);
     JKQTPXYLineGraph* efunc=new JKQTPXYLineGraph(plotEmpty->get_plotter());
     double xef[NEMPTY], efy[NEMPTY];
     for (int i=0; i<NEMPTY; i++) {

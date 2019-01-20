@@ -39,10 +39,55 @@
 /*! \brief This implements vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplots</a>
     \ingroup jkqtplotter_statgraphs
 
-    the x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
+    The x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
     percentile25Column and percentile75Column.
 
     \image html plot_boxplotvertical.png
+
+    The different features of a boxplot are:
+
+    \image html boxplots.png
+
+    \note There are additional classes to draw a single boxplot element: JKQTPBoxplotHorizontalElement and JKQTPBoxplotVerticalElement.
+          In these you can set the data values, as they are NOT drawn from a data column. This can be useful, if you e.g. want to
+          draw the statistical properties of a distribution.
+
+    \section BoxplotOutliers Outliers
+
+    If you also want to display outliers, as shown here with circles:
+
+    \image html boxplot_outliers.png
+
+    You need to add them as (x,y)-pairs to the datastore and add a separate JKQTPXYLineGraph that shows these. See \ref JKQTPlotterBoxplotsGraphs for details. Here is an example code-snippet:
+
+    \code
+        // 4. create a graph of vertical boxplots:
+        JKQTPBoxplotVerticalGraph* graph=new JKQTPBoxplotVerticalGraph(&plot);
+        graph->set_posColumn(columnPOS);
+        graph->set_minColumn(columnMIN);
+        graph->set_percentile25Column(columnQ25);
+        graph->set_medianColumn(columnMEDIAN);
+        graph->set_meanColumn(columnMEAN);
+        graph->set_percentile75Column(columnQ75);
+        graph->set_maxColumn(columnMAX);
+        graph->set_title("vertical Boxplots");
+
+        // 5. outliers need to be drawn separately
+        JKQTPXYLineGraph* graphOutliers=new JKQTPXYLineGraph(&plot);
+        graphOutliers->set_xColumn(columnOUTLIERSX);
+        graphOutliers->set_yColumn(columnOUTLIERSY);
+        graphOutliers->set_title("outliers");
+        // make the color a darker shade of the color of graph
+        graphOutliers->set_color(graph->get_color().darker());
+        graphOutliers->set_fillColor(QColor("white"));
+        // draw outliers as small circles, without lines
+        graphOutliers->set_symbol(JKQTPCircle);
+        graphOutliers->set_drawLine(false);
+        graphOutliers->set_symbolSize(7);
+    \endcode
+
+    \see \ref JKQTPlotterBoxplotsGraphs
+
  */
 class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         Q_OBJECT
@@ -58,7 +103,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         /** \brief class constructor */
         JKQTPBoxplotVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBoxplotVerticalGraph(JKQTPLotter* parent);
+        JKQTPBoxplotVerticalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -353,7 +398,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         }
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */
@@ -378,16 +423,16 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         Qt::BrushStyle fillStyle;
         /** \brief linestyle of the whisker lines */
         Qt::PenStyle whiskerStyle;
-        /** \brief width (pixels) of the graph */
+        /** \brief width (pt) of the graph, given in pt */
         double lineWidth;
         /** \brief width of box in percent of distance between the current two posColumn values
          *         if we only plot one box&whiskers then this is the width in plot coordinates */
         double boxWidth;
         /** \brief which symbol to use for the mean  */
         JKQTPGraphSymbols meanSymbol;
-        /** \brief size (diameter in pixels) of the symbol for the mean */
+        /** \brief size (diameter in pt) of the symbol for the mean */
         double meanSymbolSize;
-        /** \brief width (in pixels) of the lines used to plot the symbol for the mean */
+        /** \brief width (in pt) of the lines used to plot the symbol for the mean */
         double meanSymbolWidth;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;
@@ -412,13 +457,18 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
     percentile25Column and percentile75Column.
 
     \image html plot_boxplothoricontal.png
+
+    \note See the documentation of JKQTPBoxplotVerticalGraph for details on the properties of this class!
+
+    \see JKQTPBoxplotVerticalGraph \ref JKQTPlotterBoxplotsGraphs
+
  */
 class LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
         JKQTPBoxplotHorizontalGraph(JKQTBasePlotter* parent=nullptr);
-        JKQTPBoxplotHorizontalGraph(JKQTPLotter* parent);
+        JKQTPBoxplotHorizontalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -445,15 +495,20 @@ class LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
 
 
 
-/*! \brief This implements a vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> where the data is directly given to the
-           object and not stored in a column, as in JKQTPBoxplotVerticalGraph
+/*! \brief This implements a single vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> as a "geometric element",
+           where the data is directly given to the object and not stored in a column, as in JKQTPBoxplotVerticalGraph
     \ingroup jkqtplotter_statgraphs
     \ingroup jkqtplotter_geoplots
+
+
+    \image html plot_boxplotverticalelement.png
 
     the x position is given in posColumn. All other data are given in the median, min, max,
     percentile25 and percentile75.
 
-    \image html plot_boxplotverticalelement.png
+    The different features of a boxplot are:
+
+    \image html boxplots.png
  */
 class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         Q_OBJECT
@@ -461,7 +516,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         /** \brief class constructor */
         JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBoxplotVerticalElement(JKQTPLotter* parent);
+        JKQTPBoxplotVerticalElement(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -750,7 +805,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         }
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */
@@ -783,13 +838,13 @@ class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         Qt::PenStyle whiskerStyle;
         /** \brief width (pixels) of the graph */
         double lineWidth;
-        /** \brief width of box in plot coordinates */
+        /** \brief width of box, given in pt */
         double boxWidth;
         /** \brief which symbol to use for the mean  */
         JKQTPGraphSymbols meanSymbol;
-        /** \brief size (diameter in pixels) of the symbol for the mean */
+        /** \brief size (diameter in pt) of the symbol for the mean */
         double meanSymbolSize;
-        /** \brief width (in pixels) of the lines used to plot the symbol for the mean */
+        /** \brief width (in pt) of the lines used to plot the symbol for the mean */
         double meanSymbolWidth;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;
@@ -806,6 +861,10 @@ class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
     percentile25 and percentile75.
 
     \image html plot_boxplothorizontalelement.png
+
+    \note See JKQTPBoxplotVerticalElement for a detailed documentation
+
+    \see JKQTPBoxplotVerticalElement
  */
 class LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
         Q_OBJECT
@@ -813,7 +872,7 @@ class LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalEleme
         /** \brief class constructor */
         JKQTPBoxplotHorizontalElement(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPBoxplotHorizontalElement(JKQTPLotter* parent);
+        JKQTPBoxplotHorizontalElement(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

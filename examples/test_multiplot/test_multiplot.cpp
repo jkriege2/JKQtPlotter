@@ -1,7 +1,7 @@
 /** \example test_multiplot.cpp
- * JKQTPLotter: Examples: Laying out Several Plots
+ * JKQTPlotter: Examples: Laying out Several Plots
  *
- * \ref JKQTPLotterMultiPlotLayout
+ * \ref JKQTPlotterMultiPlotLayout
  */
 
 #include <QApplication>
@@ -18,23 +18,23 @@ int main(int argc, char* argv[])
 
     // 1. create a widget
     QWidget mainWidget;
-    mainWidget.setWindowTitle("JKQTPLotter(s) in a QGridLayout");
+    mainWidget.setWindowTitle("JKQTPlotter(s) in a QGridLayout");
 
     // 2. Create a QGridLayout for the plots and add it to the widget.
     QGridLayout* layout=new QGridLayout();
     mainWidget.setLayout(layout);
 
     // 3.1 create a main plotter widget and add it to the layout
-    JKQTPLotter* plotMain=new JKQTPLotter(&mainWidget);
+    JKQTPlotter* plotMain=new JKQTPlotter(&mainWidget);
     layout->addWidget(plotMain, 0,0);
     JKQTPDatastore* ds=plotMain->getDatastore();
 
     // 3.2 create a second and third plotter widget and add them to the
     //     layout below and at the bottom right of the plotMain.
     //     Also configure it to use the same datastore as plotMain
-    JKQTPLotter* plotResid=new JKQTPLotter(false, &mainWidget, ds);
+    JKQTPlotter* plotResid=new JKQTPlotter(false, &mainWidget, ds);
     layout->addWidget(plotResid, 1,0);
-    JKQTPLotter* plotResidHist=new JKQTPLotter(false, &mainWidget, ds);
+    JKQTPlotter* plotResidHist=new JKQTPlotter(false, &mainWidget, ds);
     layout->addWidget(plotResidHist, 1,1);
 
     // 3.3 synchronize width/x-axis of plotResid to width/x-axis of plotMain

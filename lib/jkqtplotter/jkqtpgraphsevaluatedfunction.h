@@ -86,7 +86,7 @@ class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         JKQTPXFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(JKQTPLotter* parent);
+        JKQTPXFunctionLineGraph(JKQTPlotter* parent);
 
         /** \brief class destructor */
         virtual ~JKQTPXFunctionLineGraph();
@@ -527,7 +527,7 @@ class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief returns, which special function is set (or if any is set) */
         SpecialFunction getFunctionType() const;
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         struct doublePair {
@@ -630,7 +630,7 @@ class LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         /** \brief class constructor */
         JKQTPYFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPYFunctionLineGraph(JKQTPLotter* parent);
+        JKQTPYFunctionLineGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_paramscatterplot.cpp
- * JKQTPLotter: Examples: Scatter Graph with Parametrized Symbols/Colors
+ * JKQTPlotter: Examples: Scatter Graph with Parametrized Symbols/Colors
  *
- * \ref JKQTPLotterParamScatter
+ * \ref JKQTPlotterParamScatter
  */
 
 #include <QApplication>
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create a vector of x- and y-values for a simple plot (a sine curve)

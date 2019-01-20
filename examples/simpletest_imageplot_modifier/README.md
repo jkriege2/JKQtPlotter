@@ -1,7 +1,7 @@
-# Example (JKQTPLotter): Simple math image plot {#JKQTPLotterImagePlotModifier}
-This project (see `./examples/simpletest_imageplot_modifier/`) creates a JKQTPLotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here `sin(r)`). Then a second image (linearly scaling from 1 in the center to 0 at the borders) is used to modify the first image. The modification can alter several properties of the original image, like its saturation, its transparency (alpha) ...
+# Example (JKQTPlotter): Simple math image plot {#JKQTPlotterImagePlotModifier}
+This project (see `./examples/simpletest_imageplot_modifier/`) creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here `sin(r)`). Then a second image (linearly scaling from 1 in the center to 0 at the borders) is used to modify the first image. The modification can alter several properties of the original image, like its saturation, its transparency (alpha) ...
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot_modifier.cpp`](../simpletest_imageplot_modifier/jkqtplotter_simpletest_imageplot_modifier.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_modifier.cpp`](../simpletest_imageplot_modifier/jkqtplotter_simpletest_imageplot_modifier.cpp):
 ```.cpp
 #include <QApplication>
 #include <cmath>
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cImage=ds->addCopiedImageAsColumn(image, NX, NY, "imagedata");

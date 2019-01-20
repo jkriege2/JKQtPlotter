@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -68,7 +68,7 @@ JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTBasePlotter* parent):
 }
 
 
-JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTPLotter* parent):
+JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTPlotter* parent):
     JKQTPGraph(parent)
 {
     posColumn=-1;
@@ -565,7 +565,7 @@ JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTBasePlotter *parent
 {
 }
 
-JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTPLotter *parent):
+JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTPlotter *parent):
     JKQTPBoxplotVerticalGraph(parent)
 {
 }
@@ -758,7 +758,7 @@ JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent
     fillStyle=Qt::SolidPattern;
     whiskerStyle=Qt::SolidLine;
     lineWidth=1;
-    boxWidth=0.4;
+    boxWidth=16;
     meanSymbol=JKQTPPlus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
@@ -772,7 +772,7 @@ JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent
 
 }
 
-JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTPLotter* parent):
+JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTPlotter* parent):
     JKQTPPlotObject(parent)
 {
     pos=0;
@@ -789,7 +789,7 @@ JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTPLotter* parent):
     fillStyle=Qt::SolidPattern;
     whiskerStyle=Qt::SolidLine;
     lineWidth=1;
-    boxWidth=0.4;
+    boxWidth=16;
     meanSymbol=JKQTPPlus;
     meanSymbolWidth=1;
     meanSymbolSize=12;
@@ -890,7 +890,7 @@ bool JKQTPBoxplotVerticalElement::getXMinMax(double& minx, double& maxx, double&
     if (parent==nullptr) return false;
 
     double xv=pos;
-    double w=boxWidth;
+    double w=0;
     double xma=xv+w;
     double xmi=xv-w;
     maxx=xma;
@@ -1025,58 +1025,59 @@ void JKQTPBoxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter,
     painter.restore();
 }
 
-bool JKQTPBoxplotHorizontalElement::getXMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
-    miny=0;
-    maxy=0;
-    smallestGreaterZero=0;
-
-    if (parent==nullptr) return false;
-
-
-        double p25=percentile25;
-        double p75=percentile75;
-        if (drawMedian) {
-            maxy=median;
-            miny=median;
-        } else {
-            maxy=p75;
-            miny=p25;
-        }
-        if (p25>maxy) maxy=p25;
-        if (p25<miny) miny=p25;
-        if (p75>maxy) maxy=p75;
-        if (p75<miny) miny=p75;
-        if (min>maxy) maxy=min;
-        if (drawMinMax && (min<miny)) miny=min;
-        if (drawMinMax && (max>maxy)) maxy=max;
-        if (drawMinMax && (max<miny)) miny=max;
-
-        double xvsgz;
-        xvsgz=median; SmallestGreaterZeroCompare_xvsgz();
-        xvsgz=p25; SmallestGreaterZeroCompare_xvsgz();
-        xvsgz=p75; SmallestGreaterZeroCompare_xvsgz();
-        xvsgz=min; SmallestGreaterZeroCompare_xvsgz();
-        xvsgz=max; SmallestGreaterZeroCompare_xvsgz();
-        return true;
-}
-
-bool JKQTPBoxplotHorizontalElement::getYMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
+bool JKQTPBoxplotHorizontalElement::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     minx=0;
     maxx=0;
     smallestGreaterZero=0;
 
     if (parent==nullptr) return false;
 
+
+    double p25=percentile25;
+    double p75=percentile75;
+    if (drawMedian) {
+        maxx=median;
+        minx=median;
+    } else {
+        maxx=p75;
+        minx=p25;
+    }
+    if (p25>maxx) maxx=p25;
+    if (p25<minx) minx=p25;
+    if (p75>maxx) maxx=p75;
+    if (p75<minx) minx=p75;
+    if (min>maxx) maxx=min;
+    if (drawMinMax && (min<minx)) minx=min;
+    if (drawMinMax && (max>maxx)) maxx=max;
+    if (drawMinMax && (max<minx)) minx=max;
+
+    double xvsgz;
+    xvsgz=median; SmallestGreaterZeroCompare_xvsgz();
+    xvsgz=p25; SmallestGreaterZeroCompare_xvsgz();
+    xvsgz=p75; SmallestGreaterZeroCompare_xvsgz();
+    xvsgz=min; SmallestGreaterZeroCompare_xvsgz();
+    xvsgz=max; SmallestGreaterZeroCompare_xvsgz();
+    return true;
+}
+
+bool JKQTPBoxplotHorizontalElement::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
+    miny=0;
+    maxy=0;
+    smallestGreaterZero=0;
+
+    if (parent==nullptr) return false;
+
     double xv=pos;
-    double w=boxWidth;
+    double w=0;
     double xma=xv+w;
     double xmi=xv-w;
-    maxx=xma;
-    minx=xmi;
+    maxy=xma;
+    miny=xmi;
     double xvsgz;
     xvsgz=xmi; SmallestGreaterZeroCompare_xvsgz();
     xvsgz=xma; SmallestGreaterZeroCompare_xvsgz();
     return true;
+
 }
 
 JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTBasePlotter *parent):
@@ -1084,7 +1085,7 @@ JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTBasePlotter *pa
 {
 }
 
-JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTPLotter *parent):
+JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTPlotter *parent):
     JKQTPBoxplotVerticalElement(parent)
 {
 }
@@ -1135,7 +1136,7 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
         double max=transformX(maxv);
         double median=transformX(medianv);
 
-        double w=boxWidth;
+        double w= parent->pt2px(painter, boxWidth);
         double yma=y+w/2.0;
         double ymi=y-w/2.0;
 

@@ -1,7 +1,7 @@
-# Example (JKQTPLotter): Simple math image plot {#JKQTPLotterImagePlot}
-This project (see `./examples/simpletest_imageplot/`) simply creates a JKQTPLotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
+# Example (JKQTPlotter): Simple math image plot {#JKQTPlotterImagePlot}
+This project (see `./examples/simpletest_imageplot/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_imageplot.cpp`](../simpletest_imageplot/jkqtplotter_simpletest_imageplot.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_imageplot.cpp`](../simpletest_imageplot/jkqtplotter_simpletest_imageplot.cpp):
 ```.cpp
 #include <QApplication>
 #include <cmath>
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cAiryDisk=ds->addCopiedImageAsColumn(airydisk, NX, NY, "imagedata");

@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_dateaxes.cpp
- * Shows how to use date/time axes with JKQTPLotter
+ * Shows how to use date/time axes with JKQTPlotter
  *
- * \ref JKQTPLotterDateTimeAxes
+ * \ref JKQTPlotterDateTimeAxes
  */
 
 #include <QApplication>
@@ -15,7 +15,7 @@
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
 
-void drawWithDateAxis(JKQTPLotter& plot) {
+void drawWithDateAxis(JKQTPlotter& plot) {
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPDatastore* ds=plot.getDatastore();
@@ -98,7 +98,7 @@ void drawWithDateAxis(JKQTPLotter& plot) {
     plot.setWindowTitle("Date Axis");
 }
 
-void drawWithTimeAxis(JKQTPLotter& plot) {
+void drawWithTimeAxis(JKQTPlotter& plot) {
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPDatastore* ds=plot.getDatastore();
 
@@ -169,10 +169,10 @@ void drawWithTimeAxis(JKQTPLotter& plot) {
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
-    JKQTPLotter plotDate;
+    JKQTPlotter plotDate;
     drawWithDateAxis(plotDate);
     plotDate.move(100,100);
-    JKQTPLotter plotTime;
+    JKQTPlotter plotTime;
     drawWithTimeAxis(plotTime);
     plotTime.move(100,550);
 

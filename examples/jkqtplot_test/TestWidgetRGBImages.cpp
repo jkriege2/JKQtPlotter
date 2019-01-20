@@ -19,7 +19,7 @@ TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
     QFormLayout* frm=new QFormLayout(nullptr);
     winrgb->setLayout(layoutrgb);
     winrgb->resize(1000, 800);
-    plotImgRGB=new JKQTPLotter(true, winrgb);
+    plotImgRGB=new JKQTPlotter(true, winrgb);
     plotImgRGB->set_doDrawing(false);
     plotImgRGB->get_plotter()->set_plotLabel(tr("\\textbf{RGB image plot}"));
     plotImgRGB->setObjectName("plotImgRGB");

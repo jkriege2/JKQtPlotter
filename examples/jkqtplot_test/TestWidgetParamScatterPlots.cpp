@@ -17,7 +17,7 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
 
     setLayout(layoutPSP);
     resize(1000, 800);
-    plotPSP=new JKQTPLotter(true, this);
+    plotPSP=new JKQTPlotter(true, this);
     plotPSP->set_doDrawing(false);
     plotPSP->get_plotter()->set_plotLabel(tr("\\textbf{parametrized scatter plots}"));
     plotPSP->setObjectName("plotPSP");

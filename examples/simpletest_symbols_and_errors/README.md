@@ -1,7 +1,7 @@
-# Example (JKQTPLotter): Simple line-graph with error bars {#JKQTPLotterSymbolsErrors}
-This project (see `./examples/simpletest_symbols_and_errors/`) simply creates a JKQTPLotter widget (as a new window) and adds a single line-graph (a sine-wave) that has y-errorbars. In addition, this example shows how to change some of the axis properties and how to use LaTeX markup to format axis labels (can actually be used for all labels in JKQTPLotter). Also, in comparison to the last example, here we initialize the data from C-type arrays (double*), instead of QVector<double> objects.
+# Example (JKQTPlotter): Simple line-graph with error bars {#JKQTPlotterSymbolsErrors}
+This project (see `./examples/simpletest_symbols_and_errors/`) simply creates a JKQTPlotter widget (as a new window) and adds a single line-graph (a sine-wave) that has y-errorbars. In addition, this example shows how to change some of the axis properties and how to use LaTeX markup to format axis labels (can actually be used for all labels in JKQTPlotter). Also, in comparison to the last example, here we initialize the data from C-type arrays (double*), instead of QVector<double> objects.
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_symbols_and_errors.cpp`](../simpletest_symbols_and_errors/jkqtplotter_simpletest_symbols_and_errors.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_symbols_and_errors.cpp`](../simpletest_symbols_and_errors/jkqtplotter_simpletest_symbols_and_errors.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve with lin. increasing errors)
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
         YERROR[i]=0.2+double(i)/double(Ndata)*0.25;
     }
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise), so you can
     //          reuse X and Y afterwards!
     //    the variables columnX and columnY will contain the internal column ID of the newly

@@ -47,7 +47,7 @@ class TestWidgetImages : public QWidget
 
         JKQTPMathImage* pimg2;
         JKQTPMathImage* pimg3;
-        JKQTPLotter* plotImg;
+        JKQTPlotter* plotImg;
 
         
 };

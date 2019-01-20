@@ -56,7 +56,7 @@ class LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject {
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
          */
-        explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPLotter* parent);
+        explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
 
 
         /*! \brief sets the property color to the specified \a __value. 
@@ -148,7 +148,7 @@ class LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine {
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPLotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPlotter* parent);
         /*! \brief class contructor
 
             \param color color of drawing
@@ -156,20 +156,20 @@ class LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine {
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPLotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
         /*! \brief class contructor
 
             \param color color of drawing
             \param fillColor color of the filling in the drawing
             \param lineWidth lineWidth of drawing
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPLotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPlotter* parent);
         /*! \brief class contructor
 
             \param color color of drawing
             \param fillColor color of the filling in the drawing
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPLotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPlotter* parent);
 
         /*! \brief sets the property fillColor to the specified \a __value. 
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE> 
@@ -248,7 +248,7 @@ class LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject {
             \param color color of drawing
             \param fillColor fill color of the symbol (if filled)
          */
-        JKQTPGeoSymbol(JKQTPLotter* parent, double x, double y, JKQTPGraphSymbols symbol=JKQTPCross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
+        JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol=JKQTPCross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
 
         /*! \brief sets the property color to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
@@ -406,7 +406,7 @@ class LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
             \param color color of drawing
             \param fontSize base font size of text
          */
-        JKQTPGeoText(JKQTPLotter* parent, double x, double y, QString text, double fontSize=10, QColor color=QColor("black"));
+        JKQTPGeoText(JKQTPlotter* parent, double x, double y, QString text, double fontSize=10, QColor color=QColor("black"));
 
         /*! \brief sets the property color to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
@@ -538,7 +538,7 @@ class LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPGeoLine(JKQTPLotter* parent, double x1, double y1, double x2, double y2, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -646,7 +646,7 @@ class LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPGeoInfiniteLine(JKQTPLotter* parent, double x, double y, double dx, double dy, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -761,7 +761,7 @@ class LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPGeoPolyLines(JKQTPLotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
             \param parent the parent plotter class
@@ -779,7 +779,7 @@ class LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPGeoPolyLines(JKQTPLotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoPolyLines(JKQTPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -853,7 +853,7 @@ class LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
             \param fillColor filling color of rectangle
             \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTPLotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
             \param parent the parent plotter class
@@ -883,7 +883,7 @@ class LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
             \param fillColor filling color of rectangle
             \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTPLotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
             \param parent the parent plotter class
@@ -907,7 +907,7 @@ class LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
             \param fillColor filling color of rectangle
             \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTPLotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoRectangle(JKQTPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
 
@@ -1033,7 +1033,7 @@ class LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
             \param fillColor color of the filling
             \param fillStyle style of the filling
          */
-        JKQTPGeoPolygon(JKQTPLotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoPolygon(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
         /*! \brief class constructor
 
@@ -1055,7 +1055,7 @@ class LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
             \param fillColor color of the filling
             \param fillStyle style of the filling
          */
-        JKQTPGeoPolygon(JKQTPLotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoPolygon(JKQTPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -1134,7 +1134,7 @@ class LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
             \param fillColor filling color of ellipse
             \param fillStyle filling style of ellipse
          */
-        JKQTPGeoEllipse(JKQTPLotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
             \param parent the parent plotter class
@@ -1164,7 +1164,7 @@ class LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
             \param fillColor filling color of rectangle
             \param fillStyle filling style of rectangle
          */
-        JKQTPGeoEllipse(JKQTPLotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
             \param parent the parent plotter class
@@ -1188,7 +1188,7 @@ class LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
             \param fillColor filling color of rectangle
             \param fillStyle filling style of rectangle
          */
-        JKQTPGeoEllipse(JKQTPLotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoEllipse(JKQTPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -1247,7 +1247,7 @@ class LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
             \param style line style
 
          */
-        JKQTPGeoArc(JKQTPLotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
@@ -1429,7 +1429,7 @@ class LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
             \param fillColor filling color of ellipse
             \param fillStyle filling style of ellipse
          */
-        JKQTPGeoPie(JKQTPLotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoPie(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -1514,7 +1514,7 @@ class LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
             \param fillColor filling color of ellipse
             \param fillStyle filling style of ellipse
          */
-        JKQTPGeoChord(JKQTPLotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoChord(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;

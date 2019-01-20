@@ -206,10 +206,10 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief add a new tick label to the axis */
         void addAxisTickLabels(const double* x, const QString* label, int items);
 
-        /** \brief returns the size of the left/bottom axis in pixels */
+        /** \brief returns the size of the left/bottom axis in pt */
         virtual QSize getSize1(JKQTPEnhancedPainter& painter)=0;
 
-        /** \brief returns the size of the right/top axis in pixels */
+        /** \brief returns the size of the right/top axis in pt */
         virtual QSize getSize2(JKQTPEnhancedPainter& painter)=0;
 
         /** \brief draw axes  */
@@ -740,19 +740,19 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         JKQTPCADrawMode drawMode2;
         /*! \brief default value for property property varname. \see drawMode2 for more information */ 
         JKQTPCADrawMode def_drawMode2;
-        /** \brief line width of minor ticks in pixels */
+        /** \brief line width of minor ticks in pt */
         double minorTickWidth;
         /*! \brief default value for property property varname. \see minorTickWidth for more information */ 
         double def_minorTickWidth;
-        /** \brief line width of ticks in pixels */
+        /** \brief line width of ticks in pt */
         double tickWidth;
         /*! \brief default value for property property varname. \see tickWidth for more information */ 
         double def_tickWidth;
-        /** \brief line width of axis in pixels */
+        /** \brief line width of axis in pt */
         double lineWidth;
         /*! \brief default value for property property varname. \see lineWidth for more information */ 
         double def_lineWidth;
-        /** \brief line width of 0-line in pixels */
+        /** \brief line width of 0-line in pt */
         double lineWidthZeroAxis;
         /*! \brief default value for property property varname. \see lineWidthZeroAxis for more information */ 
         double def_lineWidthZeroAxis;
@@ -916,10 +916,10 @@ class LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
         /** \brief class constructor */
         JKQTPVerticalAxis(JKQTBasePlotter* parent);
 
-        /** \brief returns the size of the left/bottom axis in pixels */
+        /** \brief returns the size of the left/bottom axis in pt */
         virtual QSize getSize1(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief returns the size of the right/top axis in pixels */
+        /** \brief returns the size of the right/top axis in pt */
         virtual QSize getSize2(JKQTPEnhancedPainter& painter) override;
 
         /** \brief draw axes */
@@ -997,10 +997,10 @@ class LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
         /** \brief class constructor */
         JKQTPHorizontalAxis(JKQTBasePlotter* parent);
 
-        /** \brief returns the size of the left/bottom axis in pixels */
+        /** \brief returns the size of the left/bottom axis in pt */
         virtual QSize getSize1(JKQTPEnhancedPainter& painter) override;
 
-        /** \brief returns the size of the right/top axis in pixels */
+        /** \brief returns the size of the right/top axis in pt */
         virtual QSize getSize2(JKQTPEnhancedPainter& painter) override;
 
         /** \brief draw axes */

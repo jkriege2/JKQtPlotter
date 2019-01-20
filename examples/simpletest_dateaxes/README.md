@@ -1,7 +1,7 @@
-# Example (JKQTPLotter): Date/Time Axes {#JKQTPLotterDateTimeAxes}
+# Example (JKQTPlotter): Date/Time Axes {#JKQTPlotterDateTimeAxes}
 
 ## Date Axis
-This project (see `./examples/simpletest_dateaxes/`) simply creates a JKQTPLotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
+This project (see `./examples/simpletest_dateaxes/`) simply creates a JKQTPlotter widget (as a new window) with the X-axis showing time or date(-time) values, formated as such. 
 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_dateaxes.cpp`](../simpletest_dateaxes/jkqtplotter_simpletest_dateaxes.cpp). 
 

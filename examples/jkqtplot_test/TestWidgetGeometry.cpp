@@ -15,7 +15,7 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     QVBoxLayout* layout1=new QVBoxLayout(this);
     setLayout(layout1);
     resize(1000, 800);
-    JKQTPLotter* plotGeo=new JKQTPLotter(true, this);
+    JKQTPlotter* plotGeo=new JKQTPlotter(true, this);
     plotGeo->set_doDrawing(false);
     plotGeo->setObjectName("plotGeo");
     layout1->addWidget(plotGeo);

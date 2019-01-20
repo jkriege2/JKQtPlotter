@@ -58,7 +58,7 @@ QT += core gui xml svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 
-# include JKQTPLotter source code
+# include JKQTPlotter source code
 DEPENDPATH += $$PWD
 #$$PWD/../../lib
 INCLUDEPATH += ../../lib

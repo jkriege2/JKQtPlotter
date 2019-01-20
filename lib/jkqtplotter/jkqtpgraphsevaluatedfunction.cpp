@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -81,7 +81,7 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
     errorFillColor.setAlphaF(0.5);
 }
 
-JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPLotter* parent):
+JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPlotter* parent):
     JKQTPGraph(parent)
 {
     functionType=SpecialFunction::UserFunction;
@@ -552,7 +552,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
 JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(parent) {}
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPLotter *parent):JKQTPXFunctionLineGraph(parent) {}
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPlotter *parent):JKQTPXFunctionLineGraph(parent) {}
 
 void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER

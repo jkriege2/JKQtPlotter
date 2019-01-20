@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -47,7 +47,7 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *pa
     set_errorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 }
 
-JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPLotter *parent):
+JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent):
     JKQTPXFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();
@@ -210,7 +210,7 @@ JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTBasePlotter *pa
     set_errorPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 }
 
-JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPLotter *parent):
+JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPlotter *parent):
     JKQTPYFunctionLineGraph(parent)
 {
     fdata.parser=new JKQTPMathParser();

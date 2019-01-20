@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_symbols_and_errors.cpp
- * JKQTPLotter: Examples: Simple line-graph with error bars
+ * JKQTPlotter: Examples: Simple line-graph with error bars
  *
- * \ref JKQTPLotterSymbolsErrors
+ * \ref JKQTPlotterSymbolsErrors
  */
 
 #include <QApplication>
@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve with lin. increasing errors)
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
         YERROR[i]=0.2+double(i)/double(Ndata)*0.25;
     }
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise), so you can
     //          reuse X and Y afterwards!
     //    the variables columnX and columnY will contain the internal column ID of the newly

@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_imageplot_modifier.cpp
- * Shows how to plot colored math images/matrices modified by a second data-column/image with JKQTPLotter
+ * Shows how to plot colored math images/matrices modified by a second data-column/image with JKQTPlotter
  *
- * \ref JKQTPLotterImagePlotModifier
+ * \ref JKQTPlotterImagePlotModifier
  */
 
 #include <QApplication>
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cImage=ds->addCopiedImageAsColumn(image, NX, NY, "imagedata");

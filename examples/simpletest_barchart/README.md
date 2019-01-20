@@ -1,7 +1,7 @@
-# Example (JKQTPLotter): Simple barchart {#JKQTPLotterBarcharts}
-This project (see [`simpletest_barchart`](../simpletest_barchart) simply creates a JKQTPLotter widget (as a new window) and adds several barcharts. They are ordered in groups.
+# Example (JKQTPlotter): Simple barchart {#JKQTPlotterBarcharts}
+This project (see [`simpletest_barchart`](../simpletest_barchart) simply creates a JKQTPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
 
-The soruce code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp`](../simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp`](../simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     double Y2[Ndata]={       -5,       -3,        1,        3,       6};
     double Y3[Ndata]={        6,        2,        5,        3,       6};
 
-    // 3. make data available to JKQTPLotter by adding it to the internal datastore.
+    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    Note: In this step the data is copied (of not specified otherwise)
     //    the variables columnX and columnY... will contain the internal column ID of the
     //    newly created columns with names "x" and "y..." and the (copied) data from X

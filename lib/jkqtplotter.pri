@@ -20,6 +20,7 @@ HEADERS += \
            $$PWD/jkqtplotter/jkqtpgraphsimpulses.h \
            $$PWD/jkqtplotter/jkqtpgraphsparsedfunction.h \
            $$PWD/jkqtplotter/jkqtpgraphspeakstream.h \
+           $$PWD/jkqtplotter/jkqtpgraphssinglecolumnsymbols.h \
            $$PWD/jkqtplotter/jkqtplotter.h \
            $$PWD/jkqtplottergui/jkqtpcomboboxes.h \
            $$PWD/jkqtplottergui/jkqtpenhancedspinboxes.h \
@@ -52,6 +53,7 @@ SOURCES += \
            $$PWD/jkqtplotter/jkqtpgraphsimpulses.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsparsedfunction.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphspeakstream.cpp  \
+           $$PWD/jkqtplotter/jkqtpgraphssinglecolumnsymbols.cpp  \
            $$PWD/jkqtplotter/jkqtplotter.cpp \
            $$PWD/jkqtplottergui/jkqtpcomboboxes.cpp \
            $$PWD/jkqtplottergui/jkqtpenhancedspinboxes.cpp \

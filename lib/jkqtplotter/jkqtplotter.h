@@ -53,20 +53,20 @@
 #ifndef JKQTPLOTTER_H
 #define JKQTPLOTTER_H
 
-/** \brief initialized Qt-ressources necessary for JKQTPLotter
+/** \brief initialized Qt-ressources necessary for JKQTPlotter
  *  \ingroup jkqtpplotterclasses
 */
-LIB_EXPORT void initJKQTPLotterResources();
+LIB_EXPORT void initJKQTPlotterResources();
 
 
 /** \brief class to plot function graphs in linear or (semi-)logarithmic scale
  * \ingroup jkqtpplotterclasses
  *
- * This class is an implementation of JKQTPLotterBase. It uses the tools from this base class
+ * This class is an implementation of JKQTPlotterBase. It uses the tools from this base class
  * to display function graphs that use the internal datastore as data source. You can add graphs
  * to this component which are described by a JKQTPPlotElement struct.
  */
-class LIB_EXPORT JKQTPLotter: public QWidget {
+class LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
         enum MouseActionModes {
@@ -98,24 +98,24 @@ class LIB_EXPORT JKQTPLotter: public QWidget {
 
         /** \brief class constructor
          */
-        explicit JKQTPLotter(bool datastore_internal, QWidget* parent=nullptr, JKQTPDatastore* datast=nullptr);
-        explicit JKQTPLotter(QWidget* parent=nullptr);
+        explicit JKQTPlotter(bool datastore_internal, QWidget* parent=nullptr, JKQTPDatastore* datast=nullptr);
+        explicit JKQTPlotter(QWidget* parent=nullptr);
 
         /** \brief class destructor */
-        virtual ~JKQTPLotter();
+        virtual ~JKQTPlotter();
 
         /** reinitializes the toolbar, i.e. fills in QActions added to the QWidget since its creation/the last call to this function */
         virtual void updateToolbarActions();
 
 
-        /** \brief set the width/height of the icons in the toolbar in pixels */
+        /** \brief set the width/height of the icons in the toolbar in pt */
         inline void set_toolbarIconSize(int value) {
             toolbarIconSize=value;
             QSize s=QSize(toolbarIconSize, toolbarIconSize);
             toolbar->setIconSize(s);
         }
 
-        /** \brief get the width/height of the icons in the toolbar in pixels */
+        /** \brief get the width/height of the icons in the toolbar in pt */
         inline int get_toolbarIconSize() {
             return toolbarIconSize;
         }
@@ -268,7 +268,7 @@ class LIB_EXPORT JKQTPLotter: public QWidget {
             \param synchronizeWidth do you want the plot width to be synchronized?
             \param synchronizeHeight do you want the plot height to be synchronized?
         */
-        void synchronizeToMaster(JKQTPLotter* master, bool synchronizeWidth, bool synchronizeHeight);
+        void synchronizeToMaster(JKQTPlotter* master, bool synchronizeWidth, bool synchronizeHeight);
 
         /** \brief switches any synchronization off, that has been created by synchronizeToMaster() */
         void resetMasterSynchronization();
@@ -568,11 +568,11 @@ class LIB_EXPORT JKQTPLotter: public QWidget {
 
 
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
-        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
+        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis */
-        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
+        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis */
-        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
+        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
 
         /** \brief popuplate the given toolbar with all actions shown in a toolbar from this class ... */
@@ -602,7 +602,7 @@ class LIB_EXPORT JKQTPLotter: public QWidget {
 
 
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
-        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPLotter* sender);
+        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
         /** \brief emitted when the user draws a rectangle */
         void userClickFinished(double x, double y, Qt::KeyboardModifiers modifiers);
@@ -632,7 +632,7 @@ class LIB_EXPORT JKQTPLotter: public QWidget {
 
         bool doDrawing;
 
-        /** \brief JKQTPLotterBase used to plot */
+        /** \brief JKQTPlotterBase used to plot */
         JKQTBasePlotter* plotter;
 
 
@@ -646,7 +646,7 @@ class LIB_EXPORT JKQTPLotter: public QWidget {
         /*! \brief default value for property property varname. \see userActionCompositionMode for more information */ 
         QPainter::CompositionMode def_userActionCompositionMode;
 
-        /** \brief width/height of the icons in the plotter toolbar in pixels */
+        /** \brief width/height of the icons in the plotter toolbar in pt */
         int toolbarIconSize;
         /*! \brief default value for property property varname. \see toolbarIconSize for more information */ 
         int def_toolbarIconSize;
@@ -778,7 +778,7 @@ class LIB_EXPORT JKQTPLotter: public QWidget {
         QString customMousePositiontext;
 
         /** \brief the master plotter, this plotter is connected to. */
-        QPointer<JKQTPLotter> masterPlotter;
+        QPointer<JKQTPlotter> masterPlotter;
 
         /** \brief calculate the y-axis shift of the plot, so there is space for the potentially displayed mouse position label */
         int getPlotYOffset();

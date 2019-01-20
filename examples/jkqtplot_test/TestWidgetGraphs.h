@@ -54,10 +54,10 @@ class TestWidgetGraphs : public QWidget
 
 
         JKQTPOverlayVerticalLine* ovl1;
-        JKQTPLotter* plot;
-        JKQTPLotter* plotLOG;
-        JKQTPLotter* plotBot;
-        JKQTPLotter* plotBot2;
+        JKQTPlotter* plot;
+        JKQTPlotter* plotLOG;
+        JKQTPlotter* plotBot;
+        JKQTPlotter* plotBot2;
 
         JKQTPPlotElement* plteErrors;
         JKQTPPlotElement* plteSymbols;

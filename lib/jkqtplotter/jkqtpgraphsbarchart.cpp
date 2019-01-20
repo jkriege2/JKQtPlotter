@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -56,7 +56,7 @@ JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTBasePlotter* parent):
 }
 
 
-JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTPLotter* parent):
+JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTPlotter* parent):
     JKQTPXYGraph(parent)
 {
     baseline=0.0;
@@ -358,7 +358,7 @@ JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTBasePlotter *parent):
 
 }
 
-JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTPLotter *parent):
+JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTPlotter *parent):
     JKQTPBarVerticalGraph(parent)
 {
 
@@ -636,7 +636,7 @@ JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTBasePlotter *pare
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTPLotter *parent):
+JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTPlotter *parent):
     JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors()
 {
     setErrorColorFromGraphColor(color);
@@ -708,7 +708,7 @@ JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTPLotter *parent):
+JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTPlotter *parent):
     JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors()
 {
     setErrorColorFromGraphColor(color);
@@ -831,7 +831,7 @@ JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTBasePlotter *
 
 }
 
-JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTPLotter *parent):
+JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTPlotter *parent):
     JKQTPBarVerticalGraph(parent), stackParent(nullptr)
 {
 
@@ -888,7 +888,7 @@ JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTBasePlott
 
 }
 
-JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTPLotter *parent):
+JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTPlotter *parent):
     JKQTPBarHorizontalGraph(parent), stackParent(nullptr)
 {
 

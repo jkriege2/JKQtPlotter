@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_functionplot.cpp
- * Shows how to plot Mathematical Functions as Line Graphs with JKQTPLotter (as evaluated C/C++ functions)
+ * Shows how to plot Mathematical Functions as Line Graphs with JKQTPlotter (as evaluated C/C++ functions)
  *
- * \ref JKQTPLotterFunctionPlots
+ * \ref JKQTPlotterFunctionPlots
  */
 
 #include <QApplication>
@@ -29,9 +29,9 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a window that conatins a line-edit to edit a function
-    //    and a JKQTPLotter to display the function, combine everything in a layout
+    //    and a JKQTPlotter to display the function, combine everything in a layout
     QWidget mainWin;
-    JKQTPLotter* plot=new JKQTPLotter(&mainWin);
+    JKQTPlotter* plot=new JKQTPlotter(&mainWin);
     QVBoxLayout* layout=new QVBoxLayout;
     mainWin.setLayout(layout);
     layout->addWidget(plot);

@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger & Sebastian Isbaner (contour plot)
+    Copyright (c) 2008-2019 Jan W. Krieger & Sebastian Isbaner (contour plot)
 
     
 
@@ -52,7 +52,7 @@ JKQTPImageBase::JKQTPImageBase(JKQTBasePlotter *parent):
     this->y=0;
 }
 
-JKQTPImageBase::JKQTPImageBase(double x, double y, double width, double height, JKQTPLotter* parent):
+JKQTPImageBase::JKQTPImageBase(double x, double y, double width, double height, JKQTPlotter* parent):
     JKQTPGraph(parent)
 {
     title="";
@@ -62,7 +62,7 @@ JKQTPImageBase::JKQTPImageBase(double x, double y, double width, double height, 
     this->y=y;
 }
 
-JKQTPImageBase::JKQTPImageBase(JKQTPLotter *parent):
+JKQTPImageBase::JKQTPImageBase(JKQTPlotter *parent):
     JKQTPGraph(parent)
 {
     title="";
@@ -166,14 +166,14 @@ JKQTPImage::JKQTPImage(double x, double y, double width, double height, QImage* 
     createImageActions();
 }
 
-JKQTPImage::JKQTPImage(JKQTPLotter *parent):
+JKQTPImage::JKQTPImage(JKQTPlotter *parent):
     JKQTPImageBase(parent), image_owned(false)
 {
     this->image=nullptr;
     createImageActions();
 }
 
-JKQTPImage::JKQTPImage(double x, double y, double width, double height, QImage* image, JKQTPLotter* parent):
+JKQTPImage::JKQTPImage(double x, double y, double width, double height, QImage* image, JKQTPlotter* parent):
     JKQTPImageBase(x, y, width, height, parent), image_owned(false)
 {
     this->image=image;
@@ -187,7 +187,7 @@ JKQTPImage::JKQTPImage(double x, double y, double width, double height, const QI
     createImageActions();
 }
 
-JKQTPImage::JKQTPImage(double x, double y, double width, double height, const QImage &image, JKQTPLotter *parent):
+JKQTPImage::JKQTPImage(double x, double y, double width, double height, const QImage &image, JKQTPlotter *parent):
     JKQTPImageBase(x, y, width, height, parent), image_owned(true)
 {
     this->image=new QImage(image);
@@ -206,7 +206,7 @@ void JKQTPImage::draw(JKQTPEnhancedPainter& painter)  {
 
 void JKQTPImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
-    painter.drawImage(rect, QPixmap(":/JKQTPLotter/jkqtp_plot_image.png").toImage());
+    painter.drawImage(rect, QPixmap(":/JKQTPlotter/jkqtp_plot_image.png").toImage());
 }
 
 void JKQTPImage::set_image(const QImage &image)
@@ -335,7 +335,7 @@ JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double 
 }
 
 
-JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPLotter* parent):
+JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent):
     JKQTPImageBase(x, y, width, height, parent)
 {
     this->data=data;
@@ -375,7 +375,7 @@ JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double 
     modifierMode=ModifyNone;
 }
 
-JKQTPMathImageBase::JKQTPMathImageBase(JKQTPLotter *parent):
+JKQTPMathImageBase::JKQTPMathImageBase(JKQTPlotter *parent):
     JKQTPImageBase(parent)
 {
     this->data=nullptr;
@@ -387,7 +387,7 @@ JKQTPMathImageBase::JKQTPMathImageBase(JKQTPLotter *parent):
     modifierMode=ModifyNone;
 }
 
-JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPLotter *parent):
+JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPlotter *parent):
     JKQTPImageBase(x,y,width,height,parent)
 {
     this->data=nullptr;
@@ -731,14 +731,14 @@ JKQTPMathImage::JKQTPMathImage(JKQTBasePlotter *parent):
 
 
 
-JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPLotter* parent):
+JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent):
     JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent)
 {
     initJKQTPMathImage();
     this->palette=palette;
 }
 
-JKQTPMathImage::JKQTPMathImage(JKQTPLotter *parent):
+JKQTPMathImage::JKQTPMathImage(JKQTPlotter *parent):
     JKQTPMathImageBase(0, 0, 1, 1, JKQTPMathImageBase::UInt8Array, nullptr, 0, 0, parent)
 {
     initJKQTPMathImage();
@@ -1288,7 +1288,7 @@ JKQTPOverlayImage::JKQTPOverlayImage(JKQTBasePlotter *parent):
     this->trueColor=QColor("red");
 }
 
-JKQTPOverlayImage::JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPLotter* parent):
+JKQTPOverlayImage::JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPlotter* parent):
     JKQTPImageBase(x, y, width, height, parent)
 {
     actSaveImage=new QAction(tr("Save JKQTPOverlayImage ..."), this);
@@ -1302,7 +1302,7 @@ JKQTPOverlayImage::JKQTPOverlayImage(double x, double y, double width, double he
     this->falseColor=QColor(Qt::transparent);
 }
 
-JKQTPOverlayImage::JKQTPOverlayImage(JKQTPLotter *parent):
+JKQTPOverlayImage::JKQTPOverlayImage(JKQTPlotter *parent):
     JKQTPImageBase(0,0,1,1, parent)
 {
     actSaveImage=new QAction(tr("Save JKQTPOverlayImage ..."), this);
@@ -1392,7 +1392,7 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTBasePlotter *parent):
     rectanglesAsImageOverlay=false;
 }
 
-JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPLotter* parent):
+JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPlotter* parent):
     JKQTPOverlayImage(x, y, width, height, data, Nx, Ny, colTrue, parent)
 {
     symbol=JKQTPTarget;
@@ -1402,7 +1402,7 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double 
     rectanglesAsImageOverlay=false;
 }
 
-JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTPLotter *parent):
+JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTPlotter *parent):
     JKQTPOverlayImage(0,0,1,1,nullptr,0,0, QColor("red"), parent)
 {
     symbol=JKQTPTarget;
@@ -1576,7 +1576,7 @@ JKQTPRGBMathImage::JKQTPRGBMathImage(double x, double y, double width, double he
 }
 
 
-JKQTPRGBMathImage::JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPLotter *parent):
+JKQTPRGBMathImage::JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPlotter *parent):
     JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent)
 {
     initObject();
@@ -1589,7 +1589,7 @@ JKQTPRGBMathImage::JKQTPRGBMathImage(JKQTBasePlotter *parent):
 }
 
 
-JKQTPRGBMathImage::JKQTPRGBMathImage(JKQTPLotter *parent):
+JKQTPRGBMathImage::JKQTPRGBMathImage(JKQTPlotter *parent):
     JKQTPMathImageBase(0,0,0,0, DoubleArray, nullptr, 0, 0, parent)
 {
     initObject();
@@ -2104,7 +2104,7 @@ double JKQTPRGBMathImage::getValueAt(double x, double y, int channel)
 
 void JKQTPRGBMathImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
-    painter.drawImage(rect, QPixmap(":/JKQTPLotter/jkqtp_plot_rgbimage.png").toImage());
+    painter.drawImage(rect, QPixmap(":/JKQTPlotter/jkqtp_plot_rgbimage.png").toImage());
 }
 
 void JKQTPRGBMathImage::set_title(const QString &title)
@@ -2301,7 +2301,7 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, dou
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(JKQTPLotter *parent):
+JKQTPColumnMathImage::JKQTPColumnMathImage(JKQTPlotter *parent):
     JKQTPMathImage(parent)
 {
     this->modifierColumn=-1;
@@ -2309,7 +2309,7 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(JKQTPLotter *parent):
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPLotter *parent):
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPlotter *parent):
     JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
 {
     this->modifierColumn=-1;
@@ -2317,14 +2317,14 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, dou
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPLotter *parent):
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPlotter *parent):
     JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,palette,parent)
 {
     this->modifierColumn=-1;
     this->imageColumn=imageColumn;
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter *parent):
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter *parent):
     JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
 {
     this->modifierColumn=-1;
@@ -2363,7 +2363,7 @@ JKQTPColumnOverlayImageEnhanced::JKQTPColumnOverlayImageEnhanced(JKQTBasePlotter
     imageColumn=-1;
 }
 
-JKQTPColumnOverlayImageEnhanced::JKQTPColumnOverlayImageEnhanced(JKQTPLotter *parent):
+JKQTPColumnOverlayImageEnhanced::JKQTPColumnOverlayImageEnhanced(JKQTPlotter *parent):
     JKQTPOverlayImageEnhanced(parent)
 {
     imageColumn=-1;
@@ -2436,7 +2436,7 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(JKQTPLotter *parent):
+JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(JKQTPlotter *parent):
     JKQTPRGBMathImage(0,0,0,0,DoubleArray,nullptr,0,0,parent)
 {
     this->modifierColumn=-1;
@@ -2446,7 +2446,7 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(JKQTPLotter *parent):
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPLotter *parent):
+JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPlotter *parent):
     JKQTPRGBMathImage(x,y,width,height,DoubleArray,nullptr,Nx,Ny,parent)
 {
     this->modifierColumn=-1;
@@ -2456,7 +2456,7 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter *parent):
+JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter *parent):
     JKQTPRGBMathImage(x,y,width,height,DoubleArray,nullptr,Nx,Ny,parent)
 {
     this->modifierColumn=-1;
@@ -2466,7 +2466,7 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter *parent):
+JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter *parent):
     JKQTPRGBMathImage(x,y,width,height,DoubleArray,nullptr,Nx,Ny,parent)
 {
     this->modifierColumn=-1;
@@ -2476,7 +2476,7 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQTPLotter *parent):
+JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter *parent):
     JKQTPRGBMathImage(x,y,width,height,DoubleArray,nullptr,Nx,Ny,parent)
 {
     this->modifierColumn=-1;
@@ -2939,7 +2939,7 @@ JKQTPContour::JKQTPContour(double x, double y, double width, double height, void
 }
 
 
-JKQTPContour::JKQTPContour(JKQTPLotter *parent) :
+JKQTPContour::JKQTPContour(JKQTPlotter *parent) :
     JKQTPMathImage(parent)
 {
     lineColor=QColor("red");
@@ -2957,7 +2957,7 @@ JKQTPContour::JKQTPContour(JKQTPLotter *parent) :
     }
 }
 
-JKQTPContour::JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, DataType datatype, JKQTPLotter* parent) :
+JKQTPContour::JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, DataType datatype, JKQTPlotter* parent) :
     JKQTPMathImage( x, y, width, height, datatype, data, Nx, Ny, palette, parent)
 {
     lineColor=QColor("red");

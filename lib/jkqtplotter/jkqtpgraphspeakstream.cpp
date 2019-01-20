@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -60,7 +60,7 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, doub
 }
 
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTPLotter *parent):
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTPlotter *parent):
     JKQTPSingleColumnGraph(parent)
 {
     baseline=0;
@@ -69,7 +69,7 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTPLotter *parent):
     drawBaseline=true;
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPLotter *parent):
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPlotter *parent):
     JKQTPSingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
 {
     yPeaks=true;
@@ -78,7 +78,7 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, doub
     drawBaseline=true;
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPLotter *parent):
+JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPlotter *parent):
     JKQTPSingleColumnGraph(dataColumn, parent)
 {
     yPeaks=true;

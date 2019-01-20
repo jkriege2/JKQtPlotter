@@ -39,7 +39,7 @@ class LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
         /** \brief class constructor */
         JKQTPFilledCurveXGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPFilledCurveXGraph(JKQTPLotter* parent);
+        JKQTPFilledCurveXGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -183,7 +183,7 @@ class LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */
@@ -218,7 +218,7 @@ class LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGraph, pub
         /** \brief class constructor */
         JKQTPFilledCurveXErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPFilledCurveXErrorGraph(JKQTPLotter* parent);
+        JKQTPFilledCurveXErrorGraph(JKQTPlotter* parent);
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
@@ -244,7 +244,7 @@ class LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveXGraph {
         /** \brief class constructor */
         JKQTPFilledCurveYGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPFilledCurveYGraph(JKQTPLotter* parent);
+        JKQTPFilledCurveYGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -262,7 +262,7 @@ class LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGraph, pub
     public:
         /** \brief class constructor */
         JKQTPFilledCurveYErrorGraph(JKQTBasePlotter* parent=nullptr);
-        JKQTPFilledCurveYErrorGraph(JKQTPLotter* parent);
+        JKQTPFilledCurveYErrorGraph(JKQTPlotter* parent);
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
@@ -293,7 +293,7 @@ class LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph {
         /** \brief class constructor */
         JKQTPFilledVerticalRangeGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPFilledVerticalRangeGraph(JKQTPLotter* parent);
+        JKQTPFilledVerticalRangeGraph(JKQTPlotter* parent);
         /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
@@ -438,7 +438,7 @@ class LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */

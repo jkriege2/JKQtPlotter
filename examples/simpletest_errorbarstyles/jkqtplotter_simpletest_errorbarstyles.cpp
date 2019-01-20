@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_errorbarstyles.cpp
- * Shows how to use different error indicator styles with JKQTPLotter
+ * Shows how to use different error indicator styles with JKQTPlotter
  *
- * \ref JKQTPLotterErrorBarStyles
+ * \ref JKQTPlotterErrorBarStyles
  */
 
 #include <QApplication>
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data a vector of x-values for a simple plot

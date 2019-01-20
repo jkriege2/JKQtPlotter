@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_paramscatterplot_image.cpp
- * JKQTPLotter: Examples: Draw an Artistic Image with a Parametrized Scatter Graph
+ * JKQTPlotter: Examples: Draw an Artistic Image with a Parametrized Scatter Graph
  *
- * \ref JKQTPLotterParamScatterImage
+ * \ref JKQTPlotterParamScatterImage
  */
 
 #include <QApplication>
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPLotter plot;
+    JKQTPlotter plot;
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. Prepare Data

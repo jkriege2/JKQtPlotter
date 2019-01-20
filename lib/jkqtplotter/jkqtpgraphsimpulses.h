@@ -37,7 +37,7 @@ class LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
         /** \brief class constructor */
         JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPImpulsesHorizontalGraph(JKQTPLotter* parent);
+        JKQTPImpulsesHorizontalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -95,7 +95,7 @@ class LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
         double lineWidth;
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTPLotterBase::getPlotStyle() and JKQTPLotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
@@ -116,7 +116,7 @@ class LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHorizont
     public:
         /** \brief class constructor */
         JKQTPImpulsesHorizontalErrorGraph(JKQTBasePlotter* parent=nullptr);
-        JKQTPImpulsesHorizontalErrorGraph(JKQTPLotter* parent);
+        JKQTPImpulsesHorizontalErrorGraph(JKQTPlotter* parent);
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
@@ -140,7 +140,7 @@ class LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizontalGraph
         /** \brief class constructor */
         JKQTPImpulsesVerticalGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPImpulsesVerticalGraph(JKQTPLotter* parent);
+        JKQTPImpulsesVerticalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -159,7 +159,7 @@ class LIB_EXPORT JKQTPImpulsesVerticalErrorGraph: public JKQTPImpulsesVerticalGr
         /** \brief class constructor */
         JKQTPImpulsesVerticalErrorGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPImpulsesVerticalErrorGraph(JKQTPLotter* parent);
+        JKQTPImpulsesVerticalErrorGraph(JKQTPlotter* parent);
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 

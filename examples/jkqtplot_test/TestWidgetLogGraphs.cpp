@@ -13,7 +13,7 @@ TestWidgetLogGraphs::TestWidgetLogGraphs(QWidget *parent) :
     QWidget(parent)
 {
 
-    JKQTPLotter* plotLOG=new JKQTPLotter(this);
+    JKQTPlotter* plotLOG=new JKQTPlotter(this);
     plotLOG->set_doDrawing(false);
     plotLOG->setObjectName("plotLOG");
     plotLOG->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plotLOG/");

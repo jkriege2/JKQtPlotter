@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_parsedfunctionplot.cpp
- * JKQTPLotter: Examples: Plotting Parsed Mathematical Functions as Line Graphs
+ * JKQTPlotter: Examples: Plotting Parsed Mathematical Functions as Line Graphs
  *
- * \ref JKQTPLotterParsedFunctionPlot
+ * \ref JKQTPlotterParsedFunctionPlot
  */
 
 #include <QApplication>
@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     // 1. create a window that conatins a line-edit to edit a function
-    //    and a JKQTPLotter to display the function, combine everything in a layout
+    //    and a JKQTPlotter to display the function, combine everything in a layout
     QWidget mainWin;
     QLineEdit* edit=new QLineEdit(&mainWin);
     edit->setToolTip("enter a function in dependence of the variable <tt>x</tt> and press ENTER to update the graph");
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     spinP2->setValue(4);
     spinP2->setRange(-10000,10000);
     spinP2->setToolTip("enter a Value for parameter <tt>p1</tt> and press ENTER to update the graph");
-    JKQTPLotter* plot=new JKQTPLotter(&mainWin);
+    JKQTPlotter* plot=new JKQTPlotter(&mainWin);
     QFormLayout* flayout=new QFormLayout;
     QVBoxLayout* layout=new QVBoxLayout;
     mainWin.setLayout(layout);

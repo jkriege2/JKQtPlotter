@@ -32,7 +32,7 @@
 
 // forward declarations
 class JKQTBasePlotter;
-class JKQTPLotter;
+class JKQTPlotter;
 class JKQTPCoordinateAxis;
 class JKQTPDatastore;
 
@@ -52,9 +52,9 @@ class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
         JKQTPPeakStreamGraph(JKQTBasePlotter* parent=nullptr);
         JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTBasePlotter* parent=nullptr);
         JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTBasePlotter* parent=nullptr);
-        JKQTPPeakStreamGraph(JKQTPLotter* parent);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPLotter* parent);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPLotter* parent);
+        JKQTPPeakStreamGraph(JKQTPlotter* parent);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPlotter* parent);
+        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *

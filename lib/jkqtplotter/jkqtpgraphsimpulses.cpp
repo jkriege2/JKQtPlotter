@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -48,7 +48,7 @@ JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* pare
     }
 }
 
-JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTPLotter* parent):
+JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTPlotter* parent):
     JKQTPXYGraph(parent)
 {
     baseline=0;
@@ -169,7 +169,7 @@ JKQTPImpulsesVerticalGraph::JKQTPImpulsesVerticalGraph(JKQTBasePlotter* parent):
 {
 }
 
-JKQTPImpulsesVerticalGraph::JKQTPImpulsesVerticalGraph(JKQTPLotter *parent):
+JKQTPImpulsesVerticalGraph::JKQTPImpulsesVerticalGraph(JKQTPlotter *parent):
     JKQTPImpulsesHorizontalGraph(parent)
 {
 
@@ -269,7 +269,7 @@ JKQTPImpulsesHorizontalErrorGraph::JKQTPImpulsesHorizontalErrorGraph(JKQTBasePlo
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPImpulsesHorizontalErrorGraph::JKQTPImpulsesHorizontalErrorGraph(JKQTPLotter *parent):
+JKQTPImpulsesHorizontalErrorGraph::JKQTPImpulsesHorizontalErrorGraph(JKQTPlotter *parent):
     JKQTPImpulsesHorizontalGraph(parent), JKQTPXGraphErrors()
 {
     setErrorColorFromGraphColor(color);
@@ -292,7 +292,7 @@ JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTBasePlotter
     setErrorColorFromGraphColor(color);
 }
 
-JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTPLotter *parent):
+JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTPlotter *parent):
     JKQTPImpulsesVerticalGraph(parent), JKQTPYGraphErrors()
 {
     setErrorColorFromGraphColor(color);

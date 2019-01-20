@@ -1,6 +1,6 @@
-# JKQTPLotter: Build as a STATIC library
+# JKQTPlotter: Build as a STATIC library
 
-This directory contains Projects that can be used to build a static library of JKQTPLotter (i.e. the contents of the directory [`../lib`](../lib)
+This directory contains Projects that can be used to build a static library of JKQTPlotter (i.e. the contents of the directory [`../lib`](../lib)
 
 ## QMake
 
@@ -8,7 +8,7 @@ This directory contains Projects that can be used to build a static library of J
 There are several `.PRO`-files, that can be used to build the full library, or a limited subsets. They will produce a static link libraries that you can include into your projects, e.g. with the following QMake-snippet:
 
 ```.qmake
-# include JKQTPLotter library
+# include JKQTPlotter library
 DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {

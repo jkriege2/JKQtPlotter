@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2018 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -35,7 +35,7 @@ JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle 
     title="";
 }
 
-JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPLotter* parent):
+JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent):
     JKQTPPlotObject(parent)
 {
     this->color=color;
@@ -77,27 +77,27 @@ JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double li
     this->fillStyle=fillStyle;
 }
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPLotter* parent):
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPlotter* parent):
     JKQTPGeoBaseLine(color, lineWidth, style, parent)
 {
     this->fillColor=fillColor;
     this->fillStyle=fillStyle;
 }
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPLotter* parent):
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent):
     JKQTPGeoBaseLine(color, lineWidth, style, parent)
 {
     this->fillColor=fillColor;
     this->fillStyle=Qt::SolidPattern;
 }
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPLotter* parent):
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPlotter* parent):
     JKQTPGeoBaseLine(color, lineWidth, Qt::SolidLine, parent)
 {
     this->fillColor=fillColor;
     this->fillStyle=Qt::SolidPattern;
 }
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPLotter* parent):
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPlotter* parent):
     JKQTPGeoBaseLine(color, 2.0, Qt::SolidLine, parent)
 {
     this->fillColor=fillColor;
@@ -144,7 +144,7 @@ JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, QString 
     this->color=color;
 }
 
-JKQTPGeoText::JKQTPGeoText(JKQTPLotter* parent, double x, double y, QString text, double fontSize, QColor color):
+JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, QString text, double fontSize, QColor color):
     JKQTPPlotObject(parent)
 {
     this->x=x;
@@ -211,7 +211,7 @@ JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double
     this->y2=y2;
 }
 
-JKQTPGeoLine::JKQTPGeoLine(JKQTPLotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth, Qt::PenStyle style):
+JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth, Qt::PenStyle style):
     JKQTPGeoBaseLine(color, lineWidth, style, parent)
 {
     this->x1=x1;
@@ -262,7 +262,7 @@ JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, do
     this->two_sided=false;
 }
 
-JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTPLotter* parent, double x, double y, double dx, double dy, QColor color, double lineWidth, Qt::PenStyle style):
+JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy, QColor color, double lineWidth, Qt::PenStyle style):
     JKQTPGeoBaseLine(color, lineWidth, style, parent)
 {
     this->x=x;
@@ -422,7 +422,7 @@ JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPoi
 {
     this->points=points;
 }
-JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPLotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
+JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
     JKQTPGeoBaseLine(color, lineWidth, style, parent)
 {
     this->points=points;
@@ -433,7 +433,7 @@ JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter *parent, QColor color, doub
 
 }
 
-JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPLotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
+JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
     JKQTPGeoBaseLine(color, lineWidth, style, parent)
 {
 
@@ -498,7 +498,7 @@ JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTBasePlotter* parent, double x, double y
     this->height=height;
 }
 
-JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPLotter* parent, double x, double y, double width, double height, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
     this->x=x;
@@ -518,7 +518,7 @@ JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTBasePlotter *parent, double x, double y
     this->height=height;
 }
 
-JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPLotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
     this->x=x;
@@ -538,7 +538,7 @@ JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTBasePlotter *parent, QPointF bottomleft
     this->y=bottomleft.y()+this->height/2.0;
 }
 
-JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPLotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
     this->angle=0;
@@ -619,7 +619,7 @@ JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTBasePlotter* parent, const QVector<QPointF>
 {
     this->points=points;
 }
-JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTPLotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
     this->points=points;
@@ -629,7 +629,7 @@ JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTBasePlotter* parent, QColor color, double l
     JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
 }
-JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTPLotter* parent, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoPolygon::JKQTPGeoPolygon(JKQTPlotter* parent, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, fillStyle, parent)
 {
 }
@@ -689,7 +689,7 @@ JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTBasePlotter* parent, double x, double y, do
     controlPoints=180;
 }
 
-JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTPLotter* parent, double x, double y, double width, double height, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoRectangle(parent, x, y, width, height, color, lineWidth, style, fillColor, fillStyle)
 {
     controlPoints=180;
@@ -701,7 +701,7 @@ JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTBasePlotter *parent, double x, double y, do
     controlPoints=180;
 }
 
-JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTPLotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTPlotter *parent, double x, double y, double width, double height, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoRectangle(parent, x, y, width, height, angle, color, lineWidth, style, fillColor, fillStyle)
 {
     controlPoints=180;
@@ -713,7 +713,7 @@ JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTBasePlotter *parent, QPointF bottomleft, QP
     controlPoints=180;
 }
 
-JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTPLotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoEllipse::JKQTPGeoEllipse(JKQTPlotter *parent, QPointF bottomleft, QPointF topright, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoRectangle(parent, bottomleft, topright, color, lineWidth, style, fillColor, fillStyle)
 {
     controlPoints=180;
@@ -748,7 +748,7 @@ JKQTPGeoArc::JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double wid
     this->controlPoints=180;
 }
 
-JKQTPGeoArc::JKQTPGeoArc(JKQTPLotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style):
+JKQTPGeoArc::JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style):
     JKQTPGeoBaseLine(color, lineWidth, style, parent)
 {
     this->angleStart=angleStart;
@@ -811,7 +811,7 @@ JKQTPGeoPie::JKQTPGeoPie(JKQTBasePlotter* parent, double x, double y, double wid
     this->angleStop=angleStop;
 }
 
-JKQTPGeoPie::JKQTPGeoPie(JKQTPLotter* parent, double x, double y, double width, double height,double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoPie::JKQTPGeoPie(JKQTPlotter* parent, double x, double y, double width, double height,double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoEllipse(parent, x, y, width, height, color, lineWidth, style, fillColor, fillStyle)
 {
     this->angleStart=angleStart;
@@ -870,7 +870,7 @@ JKQTPGeoChord::JKQTPGeoChord(JKQTBasePlotter* parent, double x, double y, double
 
 }
 
-JKQTPGeoChord::JKQTPGeoChord(JKQTPLotter* parent, double x, double y, double width, double height,double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
+JKQTPGeoChord::JKQTPGeoChord(JKQTPlotter* parent, double x, double y, double width, double height,double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle):
     JKQTPGeoPie(parent, x, y, width, height, angleStart, angleStop, color, lineWidth, style, fillColor, fillStyle)
 {
 
@@ -927,7 +927,7 @@ JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQT
     this->symbolWidth=1;
 }
 
-JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPLotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
     JKQTPPlotObject(parent)
 {
     this->x=x;

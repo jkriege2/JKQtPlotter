@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="JKQTPLotter/">
+    <qresource prefix="JKQTPlotter/">
         <file alias="jkqtp_savedata.png">images/jkqtp_savedata.png</file>
         <file alias="jkqtp_saveplot.png">images/jkqtp_saveplot.png</file>
         <file alias="jkqtp_print.png">images/jkqtp_24_print.png</file>

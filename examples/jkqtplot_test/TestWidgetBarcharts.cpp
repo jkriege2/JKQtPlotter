@@ -17,7 +17,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     QVBoxLayout* barchartLayout=new QVBoxLayout(this);
     setLayout(barchartLayout);
     resize(1000, 800);
-    plotBarchart=new JKQTPLotter(true, this);
+    plotBarchart=new JKQTPlotter(true, this);
     plotBarchart->set_doDrawing(false);
     plotBarchart->get_plotter()->set_plotLabel(tr("\\textbf{bar charts}"));
     plotBarchart->setObjectName("plotBarchart");
@@ -74,7 +74,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
 
 
 
-    plotBarchart2=new JKQTPLotter(false, this, plotBarchart->getDatastore());
+    plotBarchart2=new JKQTPlotter(false, this, plotBarchart->getDatastore());
     plotBarchart2->set_doDrawing(false);
     plotBarchart2->get_plotter()->set_plotLabel(tr("\\textbf{bar charts}"));
     plotBarchart2->setObjectName("plotBarchart2");
