@@ -36,7 +36,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPPlotObject
 - optional: OpenCV interface
 - extensive set of [Examples/Tutorials](./examples/README.md)
-- extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQTPlotter/index.html)
+- extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
 
 ## [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
 A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
