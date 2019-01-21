@@ -82,5 +82,5 @@ defineTest(addTest) {
 }
 
 addTest(multiplot)
-addTest(distributionplot)
+#addTest(distributionplot)
 
