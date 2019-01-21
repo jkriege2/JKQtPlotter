@@ -38,11 +38,11 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 - extensive set of [Examples/Tutorials](./examples/README.md)
 - extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQTPlotter/index.html)
 
-## [Documentation](http://jkriege2.github.io/JKQTPlotter/index.html)
+## [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)
 A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
-**[http://jkriege2.github.io/JKQTPlotter/index.html](http://jkriege2.github.io/JKQTPlotter/index.html)**
+**[http://jkriege2.github.io/JKQTPlotter/index.html](http://jkriege2.github.io/JKQtPlotter/index.html)**
 
-Documentation is auto-generated after pushes by [Travis](https://travis-ci.org/jkriege2/JKQTPlotter): [![Build Status](https://travis-ci.org/jkriege2/JKQTPlotter.svg?branch=master)](https://travis-ci.org/jkriege2/JKQTPlotter)
+Documentation is auto-generated after pushes by [Travis](https://travis-ci.org/jkriege2/JKQtPlotter): [![Build Status](https://travis-ci.org/jkriege2/JKQtPlotter.svg?branch=master)](https://travis-ci.org/jkriege2/JKQtPlotter)
 
 ## [Examples](./examples/)
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).
