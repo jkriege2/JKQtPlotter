@@ -58,14 +58,14 @@ class LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
         virtual ~JKQTPXParsedFunctionLineGraph() override;
 
         /*! \brief sets the property function to the specified \a __value. 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual void set_function(const QString & __value)  
         {
             this->function = __value;
         } 
         /*! \brief returns the property function. 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual QString get_function() const  
         {
@@ -73,14 +73,14 @@ class LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
         }
 
         /*! \brief sets the property errorFunction to the specified \a __value. 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual void set_errorFunction(const QString & __value)  
         {
             this->errorFunction = __value;
         } 
         /*! \brief returns the property errorFunction. 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual QString get_errorFunction() const  
         {
@@ -144,14 +144,14 @@ class LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         virtual ~JKQTPYParsedFunctionLineGraph() override;
 
         /*! \brief sets the property function to the specified \a __value. 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual void set_function(const QString & __value)  
         {
             this->function = __value;
         } 
         /*! \brief returns the property function. 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copybrief function </BLOCKQUOTE> 
+            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
             \see function for more information */ 
         inline virtual QString get_function() const  
         {
@@ -159,14 +159,14 @@ class LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         }
 
         /*! \brief sets the property errorFunction to the specified \a __value. 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual void set_errorFunction(const QString & __value)  
         {
             this->errorFunction = __value;
         } 
         /*! \brief returns the property errorFunction. 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copybrief errorFunction </BLOCKQUOTE> 
+            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
             \see errorFunction for more information */ 
         inline virtual QString get_errorFunction() const  
         {

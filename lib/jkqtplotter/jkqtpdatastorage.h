@@ -626,7 +626,7 @@ class LIB_EXPORT JKQTPColumn {
     /** \brief class destructor */
     ~JKQTPColumn() ;
 
-    /*! \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copybrief JKQTPColumn::name </BLOCKQUOTE> \see JKQTPColumn::name for more information */
+    /*! \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copydoc JKQTPColumn::name </BLOCKQUOTE> \see JKQTPColumn::name for more information */
     inline void set_name (const QString& __value)
     {
       this->name = __value;
@@ -713,10 +713,10 @@ class LIB_EXPORT JKQTPColumn {
     void setAll(double value);
 
 
-    /*! \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copybrief JKQTPColumn::datastoreItem </BLOCKQUOTE>. \see JKQTPColumn::datastoreItem for more information */ \
+    /*! \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreItem </BLOCKQUOTE>. \see JKQTPColumn::datastoreItem for more information */ \
     inline size_t get_datastoreItem() const  \
     {   return this->datastoreItem;   }
-    /*! \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copybrief JKQTPColumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPColumn::datastoreOffset for more information */ \
+    /*! \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPColumn::datastoreOffset for more information */ \
     inline size_t get_datastoreOffset() const  \
     {   return this->datastoreOffset;   }
 };
@@ -773,10 +773,10 @@ class LIB_EXPORT JKQTPDatastoreItem {
     /** \brief change the size of all columns to the givne number of rows. The data will be lost */
     void resizeColumns(size_t rows);
 
-    /*! \brief returns the property rows. \details Description of the parameter rows is:  <BLOCKQUOTE>\copybrief JKQTPDatastoreItem::JKQTPDatastoreItemrows </BLOCKQUOTE>. \see JKQTPDatastoreItem::rows for more information */ \
+    /*! \brief returns the property rows. \details Description of the parameter rows is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::JKQTPDatastoreItemrows </BLOCKQUOTE>. \see JKQTPDatastoreItem::rows for more information */ \
     inline size_t get_rows() const
     {   return rows;   }
-    /*! \brief returns the property columns. \details Description of the parameter columns is:  <BLOCKQUOTE>\copybrief JKQTPDatastoreItem::columns </BLOCKQUOTE>. \see JKQTPDatastoreItem::columns for more information */ \
+    /*! \brief returns the property columns. \details Description of the parameter columns is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::columns </BLOCKQUOTE>. \see JKQTPDatastoreItem::columns for more information */ \
     inline size_t get_columns() const
     {   return columns;   }
 

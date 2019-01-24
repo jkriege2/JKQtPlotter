@@ -56,126 +56,126 @@ class LIB_EXPORT JKQTPOverlayElement : public QObject {
         virtual void setParent(JKQTBasePlotter* parent);
 
         /*! \brief sets the property color to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual void set_color(const QColor & __value)  
         {
             this->color = __value;
         } 
         /*! \brief returns the property color. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual QColor get_color() const  
         {
             return this->color; 
         }
         /*! \brief sets the property fillColor to the specified \a __value. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE> 
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
         inline virtual void set_fillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
         /*! \brief returns the property fillColor. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE> 
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
         inline virtual QColor get_fillColor() const  
         {
             return this->fillColor; 
         }
         /*! \brief sets the property lineStyle to the specified \a __value. 
-            \details Description of the parameter lineStyle is: <BLOCKQUOTE>\copybrief lineStyle </BLOCKQUOTE> 
+            \details Description of the parameter lineStyle is: <BLOCKQUOTE>\copydoc lineStyle </BLOCKQUOTE> 
             \see lineStyle for more information */ 
         inline virtual void set_lineStyle(const Qt::PenStyle & __value)  
         {
             this->lineStyle = __value;
         } 
         /*! \brief returns the property lineStyle. 
-            \details Description of the parameter lineStyle is: <BLOCKQUOTE>\copybrief lineStyle </BLOCKQUOTE> 
+            \details Description of the parameter lineStyle is: <BLOCKQUOTE>\copydoc lineStyle </BLOCKQUOTE> 
             \see lineStyle for more information */ 
         inline virtual Qt::PenStyle get_lineStyle() const  
         {
             return this->lineStyle; 
         }
         /*! \brief sets the property fillStyle to the specified \a __value. 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copybrief fillStyle </BLOCKQUOTE> 
+            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
         inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
         /*! \brief returns the property fillStyle. 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copybrief fillStyle </BLOCKQUOTE> 
+            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
         inline virtual Qt::BrushStyle get_fillStyle() const  
         {
             return this->fillStyle; 
         }
         /*! \brief sets the property lineWidth to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE> 
+            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual void set_lineWidth(double __value)  
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE> 
+            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual double get_lineWidth() const  
         {
             return this->lineWidth; 
         }
         /*! \brief sets the property text to the specified \a __value. 
-            \details Description of the parameter text is: <BLOCKQUOTE>\copybrief text </BLOCKQUOTE> 
+            \details Description of the parameter text is: <BLOCKQUOTE>\copydoc text </BLOCKQUOTE> 
             \see text for more information */ 
         inline virtual void set_text(const QString & __value)  
         {
             this->text = __value;
         } 
         /*! \brief returns the property text. 
-            \details Description of the parameter text is: <BLOCKQUOTE>\copybrief text </BLOCKQUOTE> 
+            \details Description of the parameter text is: <BLOCKQUOTE>\copydoc text </BLOCKQUOTE> 
             \see text for more information */ 
         inline virtual QString get_text() const  
         {
             return this->text; 
         }
         /*! \brief sets the property fontName to the specified \a __value. 
-            \details Description of the parameter fontName is: <BLOCKQUOTE>\copybrief fontName </BLOCKQUOTE> 
+            \details Description of the parameter fontName is: <BLOCKQUOTE>\copydoc fontName </BLOCKQUOTE> 
             \see fontName for more information */ 
         inline virtual void set_fontName(const QString & __value)  
         {
             this->fontName = __value;
         } 
         /*! \brief returns the property fontName. 
-            \details Description of the parameter fontName is: <BLOCKQUOTE>\copybrief fontName </BLOCKQUOTE> 
+            \details Description of the parameter fontName is: <BLOCKQUOTE>\copydoc fontName </BLOCKQUOTE> 
             \see fontName for more information */ 
         inline virtual QString get_fontName() const  
         {
             return this->fontName; 
         }
         /*! \brief sets the property fontSize to the specified \a __value. 
-            \details Description of the parameter fontSize is: <BLOCKQUOTE>\copybrief fontSize </BLOCKQUOTE> 
+            \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
         inline virtual void set_fontSize(double __value)  
         {
             this->fontSize = __value;
         } 
         /*! \brief returns the property fontSize. 
-            \details Description of the parameter fontSize is: <BLOCKQUOTE>\copybrief fontSize </BLOCKQUOTE> 
+            \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
         inline virtual double get_fontSize() const  
         {
             return this->fontSize; 
         }
         /*! \brief sets the property visible to the specified \a __value. 
-            \details Description of the parameter visible is: <BLOCKQUOTE>\copybrief visible </BLOCKQUOTE> 
+            \details Description of the parameter visible is: <BLOCKQUOTE>\copydoc visible </BLOCKQUOTE> 
             \see visible for more information */ 
         inline virtual void set_visible(bool __value)  
         {
             this->visible = __value;
         } 
         /*! \brief returns the property visible. 
-            \details Description of the parameter visible is: <BLOCKQUOTE>\copybrief visible </BLOCKQUOTE> 
+            \details Description of the parameter visible is: <BLOCKQUOTE>\copydoc visible </BLOCKQUOTE> 
             \see visible for more information */ 
         inline virtual bool get_visible() const  
         {
@@ -244,56 +244,56 @@ class LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
         explicit JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
 
         /*! \brief sets the property x1 to the specified \a __value. 
-            \details Description of the parameter x1 is: <BLOCKQUOTE>\copybrief x1 </BLOCKQUOTE> 
+            \details Description of the parameter x1 is: <BLOCKQUOTE>\copydoc x1 </BLOCKQUOTE> 
             \see x1 for more information */ 
         inline virtual void set_x1(double __value)  
         {
             this->x1 = __value;
         } 
         /*! \brief returns the property x1. 
-            \details Description of the parameter x1 is: <BLOCKQUOTE>\copybrief x1 </BLOCKQUOTE> 
+            \details Description of the parameter x1 is: <BLOCKQUOTE>\copydoc x1 </BLOCKQUOTE> 
             \see x1 for more information */ 
         inline virtual double get_x1() const  
         {
             return this->x1; 
         }
         /*! \brief sets the property x2 to the specified \a __value. 
-            \details Description of the parameter x2 is: <BLOCKQUOTE>\copybrief x2 </BLOCKQUOTE> 
+            \details Description of the parameter x2 is: <BLOCKQUOTE>\copydoc x2 </BLOCKQUOTE> 
             \see x2 for more information */ 
         inline virtual void set_x2(double __value)  
         {
             this->x2 = __value;
         } 
         /*! \brief returns the property x2. 
-            \details Description of the parameter x2 is: <BLOCKQUOTE>\copybrief x2 </BLOCKQUOTE> 
+            \details Description of the parameter x2 is: <BLOCKQUOTE>\copydoc x2 </BLOCKQUOTE> 
             \see x2 for more information */ 
         inline virtual double get_x2() const  
         {
             return this->x2; 
         }
         /*! \brief sets the property y1 to the specified \a __value. 
-            \details Description of the parameter y1 is: <BLOCKQUOTE>\copybrief y1 </BLOCKQUOTE> 
+            \details Description of the parameter y1 is: <BLOCKQUOTE>\copydoc y1 </BLOCKQUOTE> 
             \see y1 for more information */ 
         inline virtual void set_y1(double __value)  
         {
             this->y1 = __value;
         } 
         /*! \brief returns the property y1. 
-            \details Description of the parameter y1 is: <BLOCKQUOTE>\copybrief y1 </BLOCKQUOTE> 
+            \details Description of the parameter y1 is: <BLOCKQUOTE>\copydoc y1 </BLOCKQUOTE> 
             \see y1 for more information */ 
         inline virtual double get_y1() const  
         {
             return this->y1; 
         }
         /*! \brief sets the property y2 to the specified \a __value. 
-            \details Description of the parameter y2 is: <BLOCKQUOTE>\copybrief y2 </BLOCKQUOTE> 
+            \details Description of the parameter y2 is: <BLOCKQUOTE>\copydoc y2 </BLOCKQUOTE> 
             \see y2 for more information */ 
         inline virtual void set_y2(double __value)  
         {
             this->y2 = __value;
         } 
         /*! \brief returns the property y2. 
-            \details Description of the parameter y2 is: <BLOCKQUOTE>\copybrief y2 </BLOCKQUOTE> 
+            \details Description of the parameter y2 is: <BLOCKQUOTE>\copydoc y2 </BLOCKQUOTE> 
             \see y2 for more information */ 
         inline virtual double get_y2() const  
         {
@@ -317,14 +317,14 @@ class LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
         explicit JKQTPOverlayOneCoordOverlay(double pos, JKQTBasePlotter *parent = 0);
 
         /*! \brief sets the property position to the specified \a __value. 
-            \details Description of the parameter position is: <BLOCKQUOTE>\copybrief position </BLOCKQUOTE> 
+            \details Description of the parameter position is: <BLOCKQUOTE>\copydoc position </BLOCKQUOTE> 
             \see position for more information */ 
         inline virtual void set_position(double __value)  
         {
             this->position = __value;
         } 
         /*! \brief returns the property position. 
-            \details Description of the parameter position is: <BLOCKQUOTE>\copybrief position </BLOCKQUOTE> 
+            \details Description of the parameter position is: <BLOCKQUOTE>\copydoc position </BLOCKQUOTE> 
             \see position for more information */ 
         inline virtual double get_position() const  
         {
@@ -345,14 +345,14 @@ class LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverla
         explicit JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent = 0);
 
         /*! \brief sets the property position2 to the specified \a __value. 
-            \details Description of the parameter position2 is: <BLOCKQUOTE>\copybrief position2 </BLOCKQUOTE> 
+            \details Description of the parameter position2 is: <BLOCKQUOTE>\copydoc position2 </BLOCKQUOTE> 
             \see position2 for more information */ 
         inline virtual void set_position2(double __value)  
         {
             this->position2 = __value;
         } 
         /*! \brief returns the property position2. 
-            \details Description of the parameter position2 is: <BLOCKQUOTE>\copybrief position2 </BLOCKQUOTE> 
+            \details Description of the parameter position2 is: <BLOCKQUOTE>\copydoc position2 </BLOCKQUOTE> 
             \see position2 for more information */ 
         inline virtual double get_position2() const  
         {
@@ -397,14 +397,14 @@ class LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay 
         virtual void draw(JKQTPEnhancedPainter& painter);
 
         /*! \brief sets the property inverted to the specified \a __value. 
-            \details Description of the parameter inverted is: <BLOCKQUOTE>\copybrief inverted </BLOCKQUOTE> 
+            \details Description of the parameter inverted is: <BLOCKQUOTE>\copydoc inverted </BLOCKQUOTE> 
             \see inverted for more information */ 
         inline virtual void set_inverted(bool __value)  
         {
             this->inverted = __value;
         } 
         /*! \brief returns the property inverted. 
-            \details Description of the parameter inverted is: <BLOCKQUOTE>\copybrief inverted </BLOCKQUOTE> 
+            \details Description of the parameter inverted is: <BLOCKQUOTE>\copydoc inverted </BLOCKQUOTE> 
             \see inverted for more information */ 
         inline virtual bool get_inverted() const  
         {
@@ -428,14 +428,14 @@ class LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay {
         virtual void draw(JKQTPEnhancedPainter& painter);
 
         /*! \brief sets the property infinite to the specified \a __value. 
-            \details Description of the parameter infinite is: <BLOCKQUOTE>\copybrief infinite </BLOCKQUOTE> 
+            \details Description of the parameter infinite is: <BLOCKQUOTE>\copydoc infinite </BLOCKQUOTE> 
             \see infinite for more information */ 
         inline virtual void set_infinite(bool __value)  
         {
             this->infinite = __value;
         } 
         /*! \brief returns the property infinite. 
-            \details Description of the parameter infinite is: <BLOCKQUOTE>\copybrief infinite </BLOCKQUOTE> 
+            \details Description of the parameter infinite is: <BLOCKQUOTE>\copydoc infinite </BLOCKQUOTE> 
             \see infinite for more information */ 
         inline virtual bool get_infinite() const  
         {

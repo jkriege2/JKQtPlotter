@@ -83,28 +83,28 @@ class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         /*! \brief sets the property position to the specified \a __value.
-            \details Description of the parameter position is: <BLOCKQUOTE>\copybrief position </BLOCKQUOTE>
+            \details Description of the parameter position is: <BLOCKQUOTE>\copydoc position </BLOCKQUOTE>
             \see position for more information */
         inline virtual void set_position(double __value)
         {
             this->position = __value;
         }
         /*! \brief returns the property position.
-            \details Description of the parameter position is: <BLOCKQUOTE>\copybrief position </BLOCKQUOTE>
+            \details Description of the parameter position is: <BLOCKQUOTE>\copydoc position </BLOCKQUOTE>
             \see position for more information */
         inline virtual double get_position() const
         {
             return this->position;
         }
         /*! \brief sets the property width to the specified \a __value.
-            \details Description of the parameter width is: <BLOCKQUOTE>\copybrief width </BLOCKQUOTE>
+            \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE>
             \see width for more information */
         inline virtual void set_width(double __value)
         {
             this->width = __value;
         }
         /*! \brief returns the property width.
-            \details Description of the parameter width is: <BLOCKQUOTE>\copybrief width </BLOCKQUOTE>
+            \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE>
             \see width for more information */
         inline virtual double get_width() const
         {
@@ -112,14 +112,14 @@ class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
         }
 
         /*! \brief sets the property dataDirection to the specified \a __value.
-            \details Description of the parameter dataDirection is: <BLOCKQUOTE>\copybrief dataDirection </BLOCKQUOTE>
+            \details Description of the parameter dataDirection is: <BLOCKQUOTE>\copydoc dataDirection </BLOCKQUOTE>
             \see dataDirection for more information */
         inline virtual void set_dataDirection(DataDirection __value)
         {
             this->dataDirection = __value;
         }
         /*! \brief returns the property dataDirection.
-            \details Description of the parameter dataDirection is: <BLOCKQUOTE>\copybrief dataDirection </BLOCKQUOTE>
+            \details Description of the parameter dataDirection is: <BLOCKQUOTE>\copydoc dataDirection </BLOCKQUOTE>
             \see dataDirection for more information */
         inline virtual DataDirection get_dataDirection() const
         {
@@ -127,14 +127,14 @@ class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
         }
 
         /*! \brief sets the property positionScatterStyle to the specified \a __value.
-            \details Description of the parameter positionScatterStyle is: <BLOCKQUOTE>\copybrief positionScatterStyle </BLOCKQUOTE>
+            \details Description of the parameter positionScatterStyle is: <BLOCKQUOTE>\copydoc positionScatterStyle </BLOCKQUOTE>
             \see positionScatterStyle for more information */
         inline virtual void set_positionScatterStyle(ScatterStyle __value)
         {
             this->positionScatterStyle = __value;
         }
         /*! \brief returns the property positionScatterStyle.
-            \details Description of the parameter positionScatterStyle is: <BLOCKQUOTE>\copybrief positionScatterStyle </BLOCKQUOTE>
+            \details Description of the parameter positionScatterStyle is: <BLOCKQUOTE>\copydoc positionScatterStyle </BLOCKQUOTE>
             \see positionScatterStyle for more information */
         inline virtual ScatterStyle get_positionScatterStyle() const
         {
@@ -144,56 +144,56 @@ class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
 
 
         /*! \brief sets the property fillColor to the specified \a __value.
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE>
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
             \see fillColor for more information */
         inline virtual void set_fillColor(const QColor & __value)
         {
             this->fillColor = __value;
         }
         /*! \brief returns the property fillColor.
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copybrief fillColor </BLOCKQUOTE>
+            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
             \see fillColor for more information */
         inline virtual QColor get_fillColor() const
         {
             return this->fillColor;
         }
         /*! \brief sets the property symbol to the specified \a __value.
-            \details Description of the parameter symbol is: <BLOCKQUOTE>\copybrief symbol </BLOCKQUOTE>
+            \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE>
             \see symbol for more information */
         inline virtual void set_symbol(const JKQTPGraphSymbols & __value)
         {
             this->symbol = __value;
         }
         /*! \brief returns the property symbol.
-            \details Description of the parameter symbol is: <BLOCKQUOTE>\copybrief symbol </BLOCKQUOTE>
+            \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE>
             \see symbol for more information */
         inline virtual JKQTPGraphSymbols get_symbol() const
         {
             return this->symbol;
         }
         /*! \brief sets the property symbolWidth to the specified \a __value.
-            \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copybrief symbolWidth </BLOCKQUOTE>
+            \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE>
             \see symbolWidth for more information */
         inline virtual void set_symbolWidth(double __value)
         {
             this->symbolWidth = __value;
         }
         /*! \brief returns the property symbolWidth.
-            \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copybrief symbolWidth </BLOCKQUOTE>
+            \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE>
             \see symbolWidth for more information */
         inline virtual double get_symbolWidth() const
         {
             return this->symbolWidth;
         }
         /*! \brief sets the property symbolSize to the specified \a __value.
-            \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copybrief symbolSize </BLOCKQUOTE>
+            \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copydoc symbolSize </BLOCKQUOTE>
             \see symbolSize for more information */
         inline virtual void set_symbolSize(double __value)
         {
             this->symbolSize = __value;
         }
         /*! \brief returns the property symbolSize.
-            \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copybrief symbolSize </BLOCKQUOTE>
+            \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copydoc symbolSize </BLOCKQUOTE>
             \see symbolSize for more information */
         inline virtual double get_symbolSize() const
         {

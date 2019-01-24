@@ -47,42 +47,42 @@ class LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
         virtual QColor getKeyLabelColor() override;
 
         /*! \brief sets the property color to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual void set_color(const QColor & __value)  
         {
             this->color = __value;
         } 
         /*! \brief returns the property color. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copybrief color </BLOCKQUOTE> 
+            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
             \see color for more information */ 
         inline virtual QColor get_color() const  
         {
             return this->color; 
         }
         /*! \brief sets the property lineWidth to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE> 
+            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual void set_lineWidth(double __value)  
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copybrief lineWidth </BLOCKQUOTE> 
+            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual double get_lineWidth() const  
         {
             return this->lineWidth; 
         }
         /*! \brief sets the property baseline to the specified \a __value. 
-            \details Description of the parameter baseline is: <BLOCKQUOTE>\copybrief baseline </BLOCKQUOTE> 
+            \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
         inline virtual void set_baseline(double __value)  
         {
             this->baseline = __value;
         } 
         /*! \brief returns the property baseline. 
-            \details Description of the parameter baseline is: <BLOCKQUOTE>\copybrief baseline </BLOCKQUOTE> 
+            \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
         inline virtual double get_baseline() const  
         {

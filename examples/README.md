@@ -46,12 +46,20 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 
 
-## GUI Tools and Plot Layout
+## GUI Tools 
+
+| Screenshot    | Description   | Notes         |
+|:-------------:| ------------- | ------------- |
+| [![](../screenshots/jkqtplotter_simpletest_ui_small.png)](./simpletest_ui) | [Placing JKQTPlotter into a Qt User-Interface-XML-file (`*.ui`)](./simpletest_ui) | using Qt Form Designer <br> parsed function plots (`JKQTPXParsedFunctionLineGraph`) |
+| [![](../screenshots/jkqtplotter_test_user_interaction_small.png)](./test_user_interaction) | [User Interaction](./test_user_interaction) | different possibilities of user-interaction in JKQtPlotter |
+
+
+
+## Plot Layout & Styling
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](../screenshots/test_multiplot_small.png)](./test_multiplot) | [Layouting Several Plots](./test_multiplot) | Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview |
-| [![](../screenshots/jkqtplotter_simpletest_ui_small.png)](./simpletest_ui) | [Placing JKQTPlotter into a Qt User-Interface-XML-file (`*.ui`)](./simpletest_ui) | using Qt Form Designer <br> parsed function plots (`JKQTPXParsedFunctionLineGraph`) |
 
 
 

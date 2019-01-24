@@ -74,56 +74,56 @@ class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         /*! \brief sets the property baseline to the specified \a __value. 
-            \details Description of the parameter baseline is: <BLOCKQUOTE>\copybrief baseline </BLOCKQUOTE> 
+            \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
         inline virtual void set_baseline(double __value)  
         {
             this->baseline = __value;
         } 
         /*! \brief returns the property baseline. 
-            \details Description of the parameter baseline is: <BLOCKQUOTE>\copybrief baseline </BLOCKQUOTE> 
+            \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
         inline virtual double get_baseline() const  
         {
             return this->baseline; 
         }
         /*! \brief sets the property peakHeight to the specified \a __value. 
-            \details Description of the parameter peakHeight is: <BLOCKQUOTE>\copybrief peakHeight </BLOCKQUOTE> 
+            \details Description of the parameter peakHeight is: <BLOCKQUOTE>\copydoc peakHeight </BLOCKQUOTE> 
             \see peakHeight for more information */ 
         inline virtual void set_peakHeight(double __value)  
         {
             this->peakHeight = __value;
         } 
         /*! \brief returns the property peakHeight. 
-            \details Description of the parameter peakHeight is: <BLOCKQUOTE>\copybrief peakHeight </BLOCKQUOTE> 
+            \details Description of the parameter peakHeight is: <BLOCKQUOTE>\copydoc peakHeight </BLOCKQUOTE> 
             \see peakHeight for more information */ 
         inline virtual double get_peakHeight() const  
         {
             return this->peakHeight; 
         }
         /*! \brief sets the property yPeaks to the specified \a __value. 
-            \details Description of the parameter yPeaks is: <BLOCKQUOTE>\copybrief yPeaks </BLOCKQUOTE> 
+            \details Description of the parameter yPeaks is: <BLOCKQUOTE>\copydoc yPeaks </BLOCKQUOTE> 
             \see yPeaks for more information */ 
         inline virtual void set_yPeaks(bool __value)  
         {
             this->yPeaks = __value;
         } 
         /*! \brief returns the property yPeaks. 
-            \details Description of the parameter yPeaks is: <BLOCKQUOTE>\copybrief yPeaks </BLOCKQUOTE> 
+            \details Description of the parameter yPeaks is: <BLOCKQUOTE>\copydoc yPeaks </BLOCKQUOTE> 
             \see yPeaks for more information */ 
         inline virtual bool get_yPeaks() const  
         {
             return this->yPeaks; 
         }
         /*! \brief sets the property drawBaseline to the specified \a __value. 
-            \details Description of the parameter drawBaseline is: <BLOCKQUOTE>\copybrief drawBaseline </BLOCKQUOTE> 
+            \details Description of the parameter drawBaseline is: <BLOCKQUOTE>\copydoc drawBaseline </BLOCKQUOTE> 
             \see drawBaseline for more information */ 
         inline virtual void set_drawBaseline(bool __value)  
         {
             this->drawBaseline = __value;
         } 
         /*! \brief returns the property drawBaseline. 
-            \details Description of the parameter drawBaseline is: <BLOCKQUOTE>\copybrief drawBaseline </BLOCKQUOTE> 
+            \details Description of the parameter drawBaseline is: <BLOCKQUOTE>\copydoc drawBaseline </BLOCKQUOTE> 
             \see drawBaseline for more information */ 
         inline virtual bool get_drawBaseline() const  
         {

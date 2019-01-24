@@ -53,6 +53,13 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     init(datastore_internal, parent, datast);
 }
 
+JKQTPlotter::JKQTPlotter(JKQTPDatastore *datast, QWidget *parent):
+    QWidget(parent, Qt::Widget)
+{
+    initJKQTPlotterResources();
+    init(false, parent, datast);
+}
+
 JKQTPlotter::JKQTPlotter(QWidget *parent):
     QWidget(parent, Qt::Widget)
 {
@@ -97,8 +104,6 @@ void JKQTPlotter::init(bool datastore_internal, QWidget* parent, JKQTPDatastore*
     def_mousePositionTemplate=QString("(%1; %2)"); mousePositionTemplate=def_mousePositionTemplate;
 
     displayMousePosition=true;
-    displayCustomMousePosition=false;
-    customMousePositiontext="";
     displayToolbar=true;
     toolbarAlwaysOn=false;
     mouseActionMode=JKQTPlotter::ZoomRectangle;
@@ -151,6 +156,92 @@ void JKQTPlotter::updateToolbarActions()
     toolbar->addSeparator();
     populateToolbar(toolbar);
 
+}
+
+void JKQTPlotter::set_toolbarIconSize(int value) {
+    toolbarIconSize=value;
+    QSize s=QSize(toolbarIconSize, toolbarIconSize);
+    toolbar->setIconSize(s);
+}
+
+int JKQTPlotter::get_toolbarIconSize() {
+    return toolbarIconSize;
+}
+
+void JKQTPlotter::set_displayToolbar(bool __value)
+{
+    if (this->displayToolbar != __value) {
+        this->displayToolbar = __value;
+        updateToolbar();
+    }
+}
+
+bool JKQTPlotter::get_displayToolbar() const
+{
+    return this->displayToolbar;
+}
+
+void JKQTPlotter::set_toolbarAlwaysOn(bool __value)
+{
+    if (this->toolbarAlwaysOn != __value) {
+        this->toolbarAlwaysOn = __value;
+        updateToolbar();
+    }
+}
+
+bool JKQTPlotter::get_toolbarAlwaysOn() const
+{
+    return this->toolbarAlwaysOn;
+}
+
+void JKQTPlotter::set_displayMousePosition(bool __value)
+{
+    this->displayMousePosition = __value;
+}
+
+bool JKQTPlotter::get_displayMousePosition() const
+{
+    return this->displayMousePosition;
+}
+
+
+void JKQTPlotter::set_userActionColor(const QColor &__value)
+{
+    if (this->userActionColor != __value) {
+        this->userActionColor = __value;
+        update();
+    }
+}
+
+QColor JKQTPlotter::get_userActionColor() const
+{
+    return this->userActionColor;
+}
+
+void JKQTPlotter::set_userActionCompositionMode(const QPainter::CompositionMode &__value)
+{
+    if (this->userActionCompositionMode != __value) {
+        this->userActionCompositionMode = __value;
+        update();
+    }
+}
+
+QPainter::CompositionMode JKQTPlotter::get_userActionCompositionMode() const
+{
+    return this->userActionCompositionMode;
+}
+
+void JKQTPlotter::set_mouseActionMode(const JKQTPlotter::MouseActionModes &__value)
+{
+    if (this->mouseActionMode != __value) {
+        this->mouseActionMode = __value;
+        updateCursor();
+    }
+}
+
+JKQTPlotter::MouseActionModes JKQTPlotter::get_mouseActionMode() const
+{
+    return this->mouseActionMode;
 }
 
 void JKQTPlotter::loadSettings(QSettings& settings, QString group) {
@@ -667,11 +758,7 @@ void JKQTPlotter::paintEvent(QPaintEvent *event){
         p->drawRect(geometry());
         p->restore();
         if (displayMousePosition ) {
-            if (displayCustomMousePosition) {
-                p->drawText(plotter->get_iplotBorderLeft(), getPlotYOffset()-1, customMousePositiontext);
-            } else {
-                p->drawText(plotter->get_iplotBorderLeft(), getPlotYOffset()-1, mousePositionTemplate.arg(mousePosX).arg(mousePosY));
-            }
+            p->drawText(plotter->get_iplotBorderLeft(), getPlotYOffset()-1, mousePositionTemplate.arg(mousePosX).arg(mousePosY));
         }
 
         int plotImageWidth=width();
@@ -789,6 +876,10 @@ void JKQTPlotter::resetMasterSynchronization() {
     update_plot();
 }
 
+bool JKQTPlotter::get_doDrawing() const {
+    return doDrawing;
+}
+
 void JKQTPlotter::pzoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* /*sender*/) {
     emit zoomChangedLocally(newxmin, newxmax, newymin, newymax, this);
     minSize=QSize(plotter->get_iplotBorderLeft()+plotter->get_iplotBorderRight()+10, plotter->get_iplotBorderTop()+plotter->get_iplotBorderBottom()+10);
@@ -811,6 +902,30 @@ void JKQTPlotter::set_zoomByMouseRectangle(bool zomByrectangle) {
     else mouseActionMode=JKQTPlotter::NoMouseAction;
 }
 
+void JKQTPlotter::set_rightMouseButtonAction(const JKQTPlotter::RightMouseButtonAction &__value)
+{
+    this->rightMouseButtonAction = __value;
+}
+
+JKQTPlotter::RightMouseButtonAction JKQTPlotter::get_rightMouseButtonAction() const
+{
+    return this->rightMouseButtonAction;
+}
+
+void JKQTPlotter::set_leftDoubleClickAction(const JKQTPlotter::LeftDoubleClickAction &__value)
+{
+    this->leftDoubleClickAction = __value;
+}
+
+JKQTPlotter::LeftDoubleClickAction JKQTPlotter::get_leftDoubleClickAction() const
+{
+    return this->leftDoubleClickAction;
+}
+
+QMenu *JKQTPlotter::get_menuSpecialContextMenu() const {
+    return this->menuSpecialContextMenu;
+}
+
 void JKQTPlotter::set_menuSpecialContextMenu(QMenu *menu)
 {
     menuSpecialContextMenu=menu;
@@ -818,6 +933,32 @@ void JKQTPlotter::set_menuSpecialContextMenu(QMenu *menu)
         menuSpecialContextMenu->setParent(this);
         menuSpecialContextMenu->close();
     }
+}
+
+void JKQTPlotter::set_zoomByMouseWheel(bool __value)
+{
+    this->zoomByMouseWheel = __value;
+}
+
+bool JKQTPlotter::get_zoomByMouseWheel() const
+{
+    return this->zoomByMouseWheel;
+}
+
+double JKQTPlotter::get_mouseContextX() const {
+    return this->mouseContextX;
+}
+
+double JKQTPlotter::get_mouseContextY() const {
+    return this->mouseContextY;
+}
+
+int JKQTPlotter::get_mouseLastClickX() const {
+    return this->mouseLastClickX;
+}
+
+int JKQTPlotter::get_mouseLastClickY() const {
+    return this->mouseLastClickY;
 }
 
 void JKQTPlotter::setMagnification(double m)
@@ -857,11 +998,6 @@ void JKQTPlotter::populateToolbar(QToolBar *toolbar) const
 
 }
 
-void JKQTPlotter::setMousePositionLabel(const QString &text)
-{
-    customMousePositiontext=text;
-    if (displayCustomMousePosition) update();
-}
 
 void JKQTPlotter::openContextMenu()
 {

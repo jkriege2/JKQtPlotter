@@ -40,14 +40,14 @@ class LIB_EXPORT JKVanishQToolBar: public QToolBar {
         /** \brief class constructor */
         JKVanishQToolBar(QWidget* parent=nullptr);
         /*! \brief sets the property toolbarVanishes to the specified \a __value. 
-            \details Description of the parameter toolbarVanishes is: <BLOCKQUOTE>\copybrief toolbarVanishes </BLOCKQUOTE> 
+            \details Description of the parameter toolbarVanishes is: <BLOCKQUOTE>\copydoc toolbarVanishes </BLOCKQUOTE> 
             \see toolbarVanishes for more information */ 
         inline virtual void set_toolbarVanishes(bool __value)  
         {
             this->toolbarVanishes = __value;
         } 
         /*! \brief returns the property toolbarVanishes. 
-            \details Description of the parameter toolbarVanishes is: <BLOCKQUOTE>\copybrief toolbarVanishes </BLOCKQUOTE> 
+            \details Description of the parameter toolbarVanishes is: <BLOCKQUOTE>\copydoc toolbarVanishes </BLOCKQUOTE> 
             \see toolbarVanishes for more information */ 
         inline virtual bool get_toolbarVanishes() const  
         {

@@ -832,14 +832,14 @@ class JKQTPMathParser
         virtual ~JKQTPMathParser();
 
         /*! \brief sets the property data to the specified \a __value. 
-            \details Description of the parameter data is: <BLOCKQUOTE>\copybrief data </BLOCKQUOTE> 
+            \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
         inline virtual void set_data(void* __value)  
         {
             this->data = __value;
         } 
         /*! \brief returns the property data. 
-            \details Description of the parameter data is: <BLOCKQUOTE>\copybrief data </BLOCKQUOTE> 
+            \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
         inline virtual void* get_data() const  
         {
