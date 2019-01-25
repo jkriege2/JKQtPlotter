@@ -4,9 +4,6 @@
  * \ref JKQTPlotterDistributionPlot
  */
  
-#include <map>
-#include <random>
-#include <cmath>
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"
@@ -14,6 +11,9 @@
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include "jkqtplotter/jkqtpgraphssinglecolumnsymbols.h"
 #include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
+#include <map>
+#include <random>
+#include <cmath>
 
 int main(int argc, char* argv[])
 {
