@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 
     // set step style
     graph->set_stepType(JKQTPStepLeft);
-    graph->set_lineWidth(1);
+    graph->setLineWidth(1);
     graph->set_fillCurve(true);
     graph->set_drawLine(true);
     graph->set_title("JKQTPStepLeft, filled");
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
 
     // set step style
     graph->set_stepType(JKQTPStepCenter);
-    graph->set_lineWidth(1);
+    graph->setLineWidth(1);
     graph->set_fillCurve(false);
     graph->set_drawLine(true);
     graph->set_title("JKQTPStepCenter");
@@ -103,7 +103,7 @@ int main(int argc, char* argv[])
 
     // set step style
     graph->set_stepType(JKQTPStepRight);
-    graph->set_lineWidth(1);
+    graph->setLineWidth(1);
     graph->set_fillCurve(false);
     graph->set_drawLine(true);
     graph->set_title("JKQTPStepRight");

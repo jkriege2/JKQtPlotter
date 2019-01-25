@@ -106,7 +106,7 @@ class LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
         JKQTPXParsedFunctionLineGraphFunctionData efdata;
 
         // hide functions that should not be used in this class!
-        using JKQTPXFunctionLineGraph::set_plotFunction;
+        using JKQTPXFunctionLineGraph::setPlotFunction;
         using JKQTPXFunctionLineGraph::set_params;
         using JKQTPXFunctionLineGraph::set_errorPlotFunction;
         using JKQTPXFunctionLineGraph::set_errorParams;
@@ -192,7 +192,7 @@ class LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         JKQTPYParsedFunctionLineGraphFunctionData efdata;
 
         // hide functions that should not be used in this class!
-        using JKQTPXFunctionLineGraph::set_plotFunction;
+        using JKQTPXFunctionLineGraph::setPlotFunction;
         using JKQTPXFunctionLineGraph::set_params;
         using JKQTPXFunctionLineGraph::set_errorPlotFunction;
         using JKQTPXFunctionLineGraph::set_errorParams;

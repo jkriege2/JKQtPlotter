@@ -20,9 +20,9 @@ int main(int argc, char* argv[])
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
+    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
 
 
     // 2. now we open a BMP-file and load it into an OpenCV cv::Mat
@@ -49,12 +49,12 @@ int main(int argc, char* argv[])
     plot.addGraph(graph);
 
     // 5. set axis labels
-    plot.get_xAxis()->set_axisLabel("x [pixels]");
-    plot.get_yAxis()->set_axisLabel("y [pixels]");
+    plot.getXAxis()->setAxisLabel("x [pixels]");
+    plot.getYAxis()->setAxisLabel("y [pixels]");
 
     // 6. fix axis aspect ratio to width/height, so pixels are square
-    plot.get_plotter()->set_maintainAspectRatio(true);
-    plot.get_plotter()->set_aspectRatio(double(image.width())/double(image.height()));
+    plot.getPlotter()->setMaintainAspectRatio(true);
+    plot.getPlotter()->setAspectRatio(double(image.width())/double(image.height()));
 
     // 7. autoscale the plot so the graph is contained
     plot.zoomToFit();

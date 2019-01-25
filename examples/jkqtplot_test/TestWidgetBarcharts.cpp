@@ -18,12 +18,12 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     setLayout(barchartLayout);
     resize(1000, 800);
     plotBarchart=new JKQTPlotter(true, this);
-    plotBarchart->set_doDrawing(false);
-    plotBarchart->get_plotter()->set_plotLabel(tr("\\textbf{bar charts}"));
+    plotBarchart->setPlotUpdateEnabled(false);
+    plotBarchart->getPlotter()->setPlotLabel(tr("\\textbf{bar charts}"));
     plotBarchart->setObjectName("plotBarchart");
-    plotBarchart->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
-    plotBarchart->get_plotter()->get_xAxis()->set_labelType(JKQTPCALTdate);
-    plotBarchart->get_plotter()->get_xAxis()->set_tickDateFormat("dd. MMM yyyy");
+    plotBarchart->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
+    plotBarchart->getPlotter()->getXAxis()->set_labelType(JKQTPCALTdate);
+    plotBarchart->getPlotter()->getXAxis()->set_tickDateFormat("dd. MMM yyyy");
 
     barchartLayout->addWidget(plotBarchart);
 
@@ -47,16 +47,16 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     size_t bcpy2=plotBarchart->getDatastore()->addCopiedColumn(dataBCY2, "y2");
     size_t bcpye2=plotBarchart->getDatastore()->addCopiedColumn(dataBCYE2, "ye2");
 
-    JKQTPBarVerticalErrorGraph* plteBar1=new JKQTPBarVerticalErrorGraph(plotBarchart->get_plotter());
+    JKQTPBarVerticalErrorGraph* plteBar1=new JKQTPBarVerticalErrorGraph(plotBarchart->getPlotter());
     plteBar1->set_title(tr("bars 1"));
     plteBar1->set_xColumn(bcpxd);
     plteBar1->set_yColumn(bcpy1);
     plteBar1->set_yErrorColumn(bcpye1);
     plteBar1->set_width(0.45);
     plteBar1->set_shift(-0.25);
-    plotBarchart->get_plotter()->addGraph(plteBar1);
+    plotBarchart->getPlotter()->addGraph(plteBar1);
 
-    JKQTPBarVerticalErrorGraph* plteBar2=new JKQTPBarVerticalErrorGraph(plotBarchart->get_plotter());
+    JKQTPBarVerticalErrorGraph* plteBar2=new JKQTPBarVerticalErrorGraph(plotBarchart->getPlotter());
     plteBar2->set_xColumn(bcpxd);
     plteBar2->set_yColumn(bcpy2);
     plteBar2->set_yErrorColumn(bcpye2);
@@ -65,33 +65,33 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     plteBar2->set_shift(0.25);
     plteBar2->set_baseline(0.5);
     plteBar2->set_yErrorSymmetric(false);
-    plotBarchart->get_plotter()->addGraph(plteBar2);
+    plotBarchart->getPlotter()->addGraph(plteBar2);
 
     plteBar2->autoscaleBarWidthAndShift();
-    plotBarchart->set_doDrawing(true);
+    plotBarchart->setPlotUpdateEnabled(true);
     plotBarchart->zoomToFit();
 
 
 
 
     plotBarchart2=new JKQTPlotter(false, this, plotBarchart->getDatastore());
-    plotBarchart2->set_doDrawing(false);
-    plotBarchart2->get_plotter()->set_plotLabel(tr("\\textbf{bar charts}"));
+    plotBarchart2->setPlotUpdateEnabled(false);
+    plotBarchart2->getPlotter()->setPlotLabel(tr("\\textbf{bar charts}"));
     plotBarchart2->setObjectName("plotBarchart2");
-    plotBarchart2->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
+    plotBarchart2->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
 
     barchartLayout->addWidget(plotBarchart2);
 
-    JKQTPBarHorizontalErrorGraph* plteBar3=new JKQTPBarHorizontalErrorGraph(plotBarchart2->get_plotter());
+    JKQTPBarHorizontalErrorGraph* plteBar3=new JKQTPBarHorizontalErrorGraph(plotBarchart2->getPlotter());
     plteBar3->set_title(tr("bars 1"));
     plteBar3->set_yColumn(bcpx);
     plteBar3->set_xColumn(bcpy1);
     plteBar3->set_xErrorColumn(bcpye1);
     plteBar3->set_width(0.45);
     plteBar3->set_shift(-0.25);
-    plotBarchart2->get_plotter()->addGraph(plteBar3);
+    plotBarchart2->getPlotter()->addGraph(plteBar3);
 
-    JKQTPBarHorizontalErrorGraph* plteBar4=new JKQTPBarHorizontalErrorGraph(plotBarchart2->get_plotter());
+    JKQTPBarHorizontalErrorGraph* plteBar4=new JKQTPBarHorizontalErrorGraph(plotBarchart2->getPlotter());
     plteBar4->set_yColumn(bcpx);
     plteBar4->set_xColumn(bcpy2);
     plteBar4->set_xErrorColumn(bcpye2);
@@ -99,10 +99,10 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
     plteBar4->set_width(0.45);
     plteBar4->set_shift(0.25);
     plteBar4->set_xErrorSymmetric(false);
-    plotBarchart2->get_plotter()->addGraph(plteBar4);
+    plotBarchart2->getPlotter()->addGraph(plteBar4);
 
     plteBar4->autoscaleBarWidthAndShift(0.9, 1);
-    plotBarchart2->set_doDrawing(true);
+    plotBarchart2->setPlotUpdateEnabled(true);
     plotBarchart2->zoomToFit();
 
     chkBarLog=new QCheckBox(tr("log-log plots"), this);
@@ -134,22 +134,22 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
 
 void TestWidgetBarcharts::setBarchartLogLog(bool checked)
 {
-    plotBarchart->get_xAxis()->set_logAxis(checked);
-    plotBarchart->get_yAxis()->set_logAxis(checked);
+    plotBarchart->getXAxis()->set_logAxis(checked);
+    plotBarchart->getYAxis()->set_logAxis(checked);
     plotBarchart->zoomToFit();
-    plotBarchart2->get_xAxis()->set_logAxis(checked);
-    plotBarchart2->get_yAxis()->set_logAxis(checked);
+    plotBarchart2->getXAxis()->set_logAxis(checked);
+    plotBarchart2->getYAxis()->set_logAxis(checked);
     plotBarchart2->zoomToFit();
 }
 
 void TestWidgetBarcharts::setBarchartAngele(int angle)
 {
-    plotBarchart->get_xAxis()->set_tickLabelAngle(angle);
-    plotBarchart->get_xAxis()->set_drawMode2(JKQTPCADMcomplete);
+    plotBarchart->getXAxis()->set_tickLabelAngle(angle);
+    plotBarchart->getXAxis()->set_drawMode2(JKQTPCADMcomplete);
 }
 
 void TestWidgetBarcharts::setBarchartAngele2(int angle)
 {
-    plotBarchart->get_yAxis()->set_tickLabelAngle(angle);
-    plotBarchart->get_yAxis()->set_drawMode2(JKQTPCADMcomplete);
+    plotBarchart->getYAxis()->set_tickLabelAngle(angle);
+    plotBarchart->getYAxis()->set_drawMode2(JKQTPCADMcomplete);
 }

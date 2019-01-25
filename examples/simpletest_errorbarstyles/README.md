@@ -57,7 +57,7 @@ First some data is added to the internal datastore (mostly, like explained in se
         // set width of symbol lines
         graph->set_symbolWidth(1);
         // set width of graph line
-        graph->set_lineWidth(1);
+        graph->setLineWidth(1);
 
         // graph title is made from symbol+errorStylestyle, we use the LaTeX instruction \verb around the
         // result of JKQTPErrorPlotstyle2String(), because it contains underscores that would otherwise
@@ -94,12 +94,12 @@ There are more properties that you can find in the documentation of the mix-in c
 In addition the plot key is moved outside the pot and the grid in the plot is switched off:
 ```.cpp
     // 6. change locaion of key (outside top-right)
-    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideRightTop);
+    plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideRightTop);
     // ... and switch off the grid
-    plot.get_xAxis()->set_drawGrid(false);
-    plot.get_xAxis()->set_drawMinorGrid(false);
-    plot.get_yAxis()->set_drawGrid(false);
-    plot.get_yAxis()->set_drawMinorGrid(false);
+    plot.getXAxis()->set_drawGrid(false);
+    plot.getXAxis()->set_drawMinorGrid(false);
+    plot.getYAxis()->set_drawGrid(false);
+    plot.getYAxis()->set_drawMinorGrid(false);
 ```
 
 The result looks like this:

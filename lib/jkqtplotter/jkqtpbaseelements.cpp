@@ -121,15 +121,15 @@ void JKQTPCoordinateAxis::set_parent(JKQTBasePlotter* parent) {
     QObject::setParent(parent);
 }
 
-void JKQTPCoordinateAxis::update_plot() {
+void JKQTPCoordinateAxis::replotPlot() {
     //if (paramsChanged)  {
         calcPlotScaling();
-        parent->update_plot();
+        parent->replotPlot();
     //}
 }
 
 JKQTMathText* JKQTPCoordinateAxis::get_parent_mathText() {
-    return parent->get_mathText();
+    return parent->getMathText();
 }
 
 
@@ -196,40 +196,40 @@ void JKQTPCoordinateAxis::loadSettings(JKQTPCoordinateAxis* settings) {
 
 void JKQTPCoordinateAxis::clearAxisTickLabels() {
     tickLabels.clear();
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabel(double x, QString label) {
     tickLabels.append(qMakePair(x, label));
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const QVector<double> &x, const QStringList &label) {
     for (int i=0; i<qMin(x.size(), label.size()); i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const double *x, const QStringList &label) {
     for (int i=0; i<label.size(); i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const QVector<double> &x, const QString *label) {
     for (int i=0; i<x.size(); i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const double *x, const QString *label, int items) {
     for (int i=0; i<items; i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::loadSettings(QSettings& settings, QString group) {
@@ -804,7 +804,7 @@ void JKQTPCoordinateAxis::setRange(double aamin, double aamax) {
     if (oldamin!=axismin || oldamax!=axismax) {
         paramsChanged=true;
         calcPlotScaling();
-        update_plot();
+        replotPlot();
     }
 }
 
@@ -817,25 +817,25 @@ void JKQTPCoordinateAxis::setNoAbsoluteRange() {
 void JKQTPCoordinateAxis::set_tickSpacing(double __value) {
     this->tickSpacing = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_axisMinWidth(double __value) {
+void JKQTPCoordinateAxis::setAxisMinWidth(double __value) {
     this->axisMinWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_autoAxisSpacing(bool __value) {
     this->autoAxisSpacing = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickLabelsEnabled(bool __value) {
     this->minorTickLabelsEnabled = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_logAxis(bool __value)
@@ -849,31 +849,31 @@ void JKQTPCoordinateAxis::set_logAxis(bool __value)
     if (this->isLogAxis() && this->minorTicks==def_minorTicks) {
         this->minorTicks=9;
     }
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_logAxisBase(double __value) {
     this->logAxisBase = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_userTickSpacing(double __value) {
+void JKQTPCoordinateAxis::setUserTickSpacing(double __value) {
     this->userTickSpacing = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_userLogTickSpacing(double __value) {
+void JKQTPCoordinateAxis::setUserLogTickSpacing(double __value) {
     this->userLogTickSpacing = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelType(JKQTPCALabelType __value) {
     this->labelType = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickMode(JKQTPLabelTickMode __value)
@@ -887,239 +887,239 @@ void JKQTPCoordinateAxis::set_tickMode(int __value) {
     set_tickMode(JKQTPLabelTickMode(__value));
 }
 
-void JKQTPCoordinateAxis::set_axisLabel(QString __value) {
+void JKQTPCoordinateAxis::setAxisLabel(QString __value) {
     this->axisLabel = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelPosition(JKQTPLabelPosition __value) {
     this->labelPosition = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelFont(QString __value) {
     this->labelFont = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelFontSize(double __value) {
     this->labelFontSize = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickLabelFont(QString __value) {
     this->tickLabelFont = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickTimeFormat(QString __value) {
     this->tickTimeFormat = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickDateFormat(QString __value) {
     this->tickDateFormat = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickDateTimeFormat(QString __value) {
     this->tickDateTimeFormat = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickLabelFontSize(double __value) {
     this->tickLabelFontSize = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickLabelFontSize(double __value) {
     this->minorTickLabelFontSize = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickLabelFullNumber(bool __value) {
     this->minorTickLabelFullNumber = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minTicks(unsigned int __value) {
     this->minTicks = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTicks(unsigned int __value) {
     this->minorTicks = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTicks(int __value) {
     this->minorTicks = qMax(int(0), __value);
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickOutsideLength(double __value) {
     this->tickOutsideLength = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickOutsideLength(double __value) {
     this->minorTickOutsideLength = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickInsideLength(double __value) {
     this->tickInsideLength = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickInsideLength(double __value) {
     this->minorTickInsideLength = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_axisColor(QColor __value) {
+void JKQTPCoordinateAxis::setAxisColor(QColor __value) {
     this->axisColor = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_showZeroAxis(bool __value) {
+void JKQTPCoordinateAxis::setShowZeroAxis(bool __value) {
     this->showZeroAxis = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_inverted(bool __value) {
     this->inverted = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_gridColor(QColor __value) {
+void JKQTPCoordinateAxis::setGridColor(QColor __value) {
     this->gridColor = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorGridColor(QColor __value) {
     this->minorGridColor = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_gridWidth(double __value) {
+void JKQTPCoordinateAxis::setGridWidth(double __value) {
     this->gridWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_gridStyle(Qt::PenStyle __value) {
+void JKQTPCoordinateAxis::setGridStyle(Qt::PenStyle __value) {
     this->gridStyle = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorGridWidth(double __value) {
     this->minorGridWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorGridStyle(Qt::PenStyle __value) {
     this->minorGridStyle = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawMode1(JKQTPCADrawMode __value) {
     this->drawMode1 = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawMode2(JKQTPCADrawMode __value) {
     this->drawMode2 = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickWidth(double __value) {
     this->minorTickWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickWidth(double __value) {
     this->tickWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_lineWidth(double __value) {
+void JKQTPCoordinateAxis::setLineWidth(double __value) {
     this->lineWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPCoordinateAxis::set_lineWidthZeroAxis(double __value) {
+void JKQTPCoordinateAxis::setLineWidthZeroAxis(double __value) {
     this->lineWidthZeroAxis = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickLabelDistance(double __value) {
     this->tickLabelDistance = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelDistance(double __value) {
     this->labelDistance = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelDigits(int __value) {
     this->labelDigits = __value;
     this->paramsChanged=true;
     this->autoLabelDigits=false;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawGrid(bool __value) {
     this->drawGrid = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawMinorGrid(bool __value) {
     this->drawMinorGrid = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickLabelAngle(double __value) {
     this->tickLabelAngle = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 
@@ -1138,7 +1138,7 @@ void JKQTPCoordinateAxis::setAbsoluteRange(double amin, double amax) {
     setRange(axismin, axismax);
     /*paramsChanged=true;
     calcPlotScaling();
-    update_plot();*/
+    replotPlot();*/
 }
 
 double JKQTPCoordinateAxis::getNextLabelDistance(double x) {
@@ -1214,10 +1214,10 @@ QSizeF JKQTPCoordinateAxis::getMaxTickLabelSize(JKQTPEnhancedPainter& painter, d
     getNextLabel(x, label, true);
     QFont f;
     f.setFamily(tickLabelFont);
-    f.setPointSizeF(tickLabelFontSize*parent->get_fontSizeMultiplier());
+    f.setPointSizeF(tickLabelFontSize*parent->getFontSizeMultiplier());
     QFontMetricsF fm(f);
-    //get_parent_mathText()->set_fontSize(f.pointSizeF());
-    //get_parent_mathText()->set_fontRoman(f.family());
+    //get_parent_mathText()->setFontSize(f.pointSizeF());
+    //get_parent_mathText()->setFontRoman(f.family());
     bool first=true;
     int cnt=0;
     while (getNextLabel(x, label, first) && cnt<50) {
@@ -1265,11 +1265,11 @@ JKQTPVerticalAxis::JKQTPVerticalAxis(JKQTBasePlotter* parent):
 }
 
 double JKQTPVerticalAxis::get_parent_plotwidth() const {
-    return parent->get_plotHeight();
+    return parent->getPlotHeight();
 }
 
 double JKQTPVerticalAxis::get_parent_plotoffset() const {
-    return parent->get_iplotBorderTop();
+    return parent->getInternalPlotBorderTop();
 }
 
 QSize JKQTPVerticalAxis::getSize1(JKQTPEnhancedPainter& painter) {
@@ -1280,11 +1280,11 @@ QSize JKQTPVerticalAxis::getSize1(JKQTPEnhancedPainter& painter) {
     if (drawMode1==JKQTPCADMticksAndLabels) return QSize(parent->pt2px(painter, tickOutsideLength+tickLabelDistance)+tlwidth, get_parent_plotwidth());
 
     // find out size of axis label
-    /*get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(labelFont);
+    /*get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(labelFont);
     get_parent_mathText()->parse(axisLabel);
     double lwidth=get_parent_mathText()->getSize(painter).height();*/
-    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->get_fontSizeMultiplier(), axisLabel, painter).height();
+    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     if (drawMode1==JKQTPCADMcomplete) return QSize(parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)+tlwidth+lwidth, get_parent_plotwidth());
 
     return QSize(0,0);
@@ -1298,11 +1298,11 @@ QSize JKQTPVerticalAxis::getSize2(JKQTPEnhancedPainter& painter) {
     if (drawMode2==JKQTPCADMticksAndLabels) return QSize(parent->pt2px(painter, tickOutsideLength+tickLabelDistance)+tlwidth, get_parent_plotwidth());
 
     // find out size of axis label
-    /*get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(labelFont);
+    /*get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(labelFont);
     get_parent_mathText()->parse(axisLabel);
     double lwidth=get_parent_mathText()->getSize(painter).height();*/
-    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->get_fontSizeMultiplier(), axisLabel, painter).height();
+    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     if (drawMode2==JKQTPCADMcomplete) return QSize(parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)+tlwidth+lwidth, get_parent_plotwidth());
 
     return QSize(0,0);
@@ -1320,7 +1320,7 @@ double JKQTPVerticalAxis::get_parent_otheraxis_width() const {
 
 bool JKQTPVerticalAxis::get_parent_otheraxis_inverted() const
 {
-    return parent->get_xAxis()->get_inverted();
+    return parent->getXAxis()->get_inverted();
 }
 
 void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
@@ -1328,11 +1328,11 @@ void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
     painter.save();
     QPen pg=painter.pen();
     pg.setColor(gridColor);
-    pg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, gridWidth*parent->get_lineWidthMultiplier())));
+    pg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, gridWidth*parent->getLineWidthMultiplier())));
     pg.setStyle(gridStyle);
     QPen pmg=painter.pen();
     pmg.setColor(minorGridColor);
-    pmg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter,  minorGridWidth*parent->get_lineWidthMultiplier())));
+    pmg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter,  minorGridWidth*parent->getLineWidthMultiplier())));
     pmg.setStyle(minorGridStyle);
     //double top=x2p(axismax);
     //double bottom=x2p(axismin);
@@ -1399,9 +1399,9 @@ void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
 
 void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, const QString& label, double fontSize)
 {
-    get_parent_mathText()->set_fontSize(fontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(tickLabelFont);
-    get_parent_mathText()->set_fontColor(axisColor);
+    get_parent_mathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(tickLabelFont);
+    get_parent_mathText()->setFontColor(axisColor);
 
     get_parent_mathText()->parse(label);
     double width, ascent, descent, strikeoutPos;
@@ -1439,9 +1439,9 @@ void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx,
 
 void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize)
 {
-    get_parent_mathText()->set_fontSize(fontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(tickLabelFont);
-    get_parent_mathText()->set_fontColor(axisColor);
+    get_parent_mathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(tickLabelFont);
+    get_parent_mathText()->setFontColor(axisColor);
 
     get_parent_mathText()->parse(label);
     double width, ascent, descent, strikeoutPos;
@@ -1517,25 +1517,25 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     painter.save();
     QPen pmain=painter.pen();
     pmain.setColor(axisColor);
-    pmain.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    pmain.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     pmain.setStyle(Qt::SolidLine);
 
     QPen ptick=pmain;
-    ptick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, tickWidth*parent->get_lineWidthMultiplier())));
+    ptick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, tickWidth*parent->getLineWidthMultiplier())));
 
     QPen pmtick=ptick;
-    pmtick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, minorTickWidth*parent->get_lineWidthMultiplier())));
+    pmtick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, minorTickWidth*parent->getLineWidthMultiplier())));
 
-    get_parent_mathText()->set_fontSize(tickLabelFontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(tickLabelFont);
-    get_parent_mathText()->set_fontColor(axisColor);
+    get_parent_mathText()->setFontSize(tickLabelFontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(tickLabelFont);
+    get_parent_mathText()->setFontColor(axisColor);
 
     painter.setPen(pmain);
 
     // plot thick axis at y==0
     if (showZeroAxis && (0>axismin) && (0<axismax)) {
         QPen pmain1=pmain;
-        pmain1.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidthZeroAxis*parent->get_lineWidthMultiplier())));
+        pmain1.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidthZeroAxis*parent->getLineWidthMultiplier())));
         painter.setPen(pmain1);
         QLineF l(left-parent->pt2px(painter, tickOutsideLength), x2p(0), right+parent->pt2px(painter, tickOutsideLength), x2p(0));
         painter.drawLine(l);
@@ -1668,8 +1668,8 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     // plot axis label
     if (!axisLabel.isEmpty() && (drawMode1==JKQTPCADMcomplete)) {
-        get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-        get_parent_mathText()->set_fontRoman(labelFont);
+        get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+        get_parent_mathText()->setFontRoman(labelFont);
         get_parent_mathText()->parse(axisLabel);
         double width, ascent, descent, strikeoutPos;
         get_parent_mathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
@@ -1697,8 +1697,8 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         painter.restore();
     }
     if (!axisLabel.isEmpty() && (drawMode2==JKQTPCADMcomplete)) {
-        get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-        get_parent_mathText()->set_fontRoman(labelFont);
+        get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+        get_parent_mathText()->setFontRoman(labelFont);
         get_parent_mathText()->parse(axisLabel);
 
 
@@ -1745,34 +1745,34 @@ JKQTPVerticalIndependentAxis::JKQTPVerticalIndependentAxis(double axisOffset, do
     this->otherAxisInverted=false;
 }
 
-void JKQTPVerticalIndependentAxis::set_axisOffset(double __value) {
+void JKQTPVerticalIndependentAxis::setAxisOffset(double __value) {
     this->axisOffset = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPVerticalIndependentAxis::set_axisWidth(double __value) {
+void JKQTPVerticalIndependentAxis::setAxisWidth(double __value) {
     this->axisWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPVerticalIndependentAxis::set_otherAxisOffset(double __value) {
     this->otherAxisOffset = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPVerticalIndependentAxis::set_otherAxisWidth(double __value) {
     this->otherAxisWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPVerticalIndependentAxis::set_otherAxisInverted(bool __value) {
     this->otherAxisInverted = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 double JKQTPVerticalIndependentAxis::get_parent_plotwidth() const { return axisWidth; }
@@ -1802,11 +1802,11 @@ JKQTPHorizontalAxis::JKQTPHorizontalAxis(JKQTBasePlotter* parent):
 }
 
 double JKQTPHorizontalAxis::get_parent_plotwidth() const {
-    return parent->get_plotWidth();
+    return parent->getPlotWidth();
 }
 
 double JKQTPHorizontalAxis::get_parent_plotoffset() const {
-    return parent->get_iplotBorderLeft();
+    return parent->getInternalPlotBorderLeft();
 }
 
 QSize JKQTPHorizontalAxis::getSize1(JKQTPEnhancedPainter& painter) {
@@ -1817,11 +1817,11 @@ QSize JKQTPHorizontalAxis::getSize1(JKQTPEnhancedPainter& painter) {
     if (drawMode1==JKQTPCADMticksAndLabels) return QSize(get_parent_plotwidth(),parent->pt2px(painter, tickOutsideLength+tickLabelDistance)+tlwidth);
 
     // find out size of axis label
-    /*get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(labelFont);
+    /*get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(labelFont);
     get_parent_mathText()->parse(axisLabel);
     double lwidth=get_parent_mathText()->getSize(painter).height();*/
-    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->get_fontSizeMultiplier(), axisLabel, painter).height();
+    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
 
     if (drawMode1==JKQTPCADMcomplete) return QSize(get_parent_plotwidth(),parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)+tlwidth+lwidth);
 
@@ -1836,11 +1836,11 @@ QSize JKQTPHorizontalAxis::getSize2(JKQTPEnhancedPainter& painter) {
     if (drawMode2==JKQTPCADMticksAndLabels) return QSize(get_parent_plotwidth(),parent->pt2px(painter, tickOutsideLength+tickLabelDistance)+tlwidth);
 
     // find out size of axis label
-    /*get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(labelFont);
+    /*get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(labelFont);
     get_parent_mathText()->parse(axisLabel);
     double lwidth=get_parent_mathText()->getSize(painter).height();*/
-    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->get_fontSizeMultiplier(), axisLabel, painter).height();
+    double lwidth=parent->getTextSizeSize(labelFont, labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     if (drawMode2==JKQTPCADMcomplete) return QSize(get_parent_plotwidth(),parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)+tlwidth+lwidth);
 
     return QSize(0,0);
@@ -1858,7 +1858,7 @@ double JKQTPHorizontalAxis::get_parent_otheraxis_width() const {
 
 bool JKQTPHorizontalAxis::get_parent_otheraxis_inverted() const
 {
-    return parent->get_yAxis()->get_inverted();
+    return parent->getYAxis()->get_inverted();
 }
 
 void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
@@ -1876,11 +1876,11 @@ void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
     }
     QPen pg=painter.pen();
     pg.setColor(gridColor);
-    pg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, gridWidth*parent->get_fontSizeMultiplier())));
+    pg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, gridWidth*parent->getFontSizeMultiplier())));
     pg.setStyle(gridStyle);
     QPen pmg=painter.pen();
     pmg.setColor(minorGridColor);
-    pmg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, minorGridWidth*parent->get_lineWidthMultiplier())));
+    pmg.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, minorGridWidth*parent->getLineWidthMultiplier())));
     pmg.setStyle(minorGridStyle);
 
     double x=tickStart;
@@ -1927,9 +1927,9 @@ void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
 
 void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize, double ascentMax, double /*descentMax*/)
 {
-    get_parent_mathText()->set_fontSize(fontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(tickLabelFont);
-    get_parent_mathText()->set_fontColor(axisColor);
+    get_parent_mathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(tickLabelFont);
+    get_parent_mathText()->setFontColor(axisColor);
 
     get_parent_mathText()->parse(label);
 
@@ -1957,9 +1957,9 @@ void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double x
 
 void JKQTPHorizontalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx, double yy, const QString &label, double fontSize, double /*ascentMax*/, double descentMax)
 {
-    get_parent_mathText()->set_fontSize(fontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(tickLabelFont);
-    get_parent_mathText()->set_fontColor(axisColor);
+    get_parent_mathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(tickLabelFont);
+    get_parent_mathText()->setFontColor(axisColor);
 
     get_parent_mathText()->parse(label);
 
@@ -2025,18 +2025,18 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     QPen pmain=painter.pen();
     pmain.setColor(axisColor);
-    pmain.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    pmain.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     pmain.setStyle(Qt::SolidLine);
 
     QPen ptick=pmain;
-    ptick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, tickWidth*parent->get_lineWidthMultiplier())));
+    ptick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, tickWidth*parent->getLineWidthMultiplier())));
 
     QPen pmtick=ptick;
-    pmtick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, minorTickWidth*parent->get_lineWidthMultiplier())));
+    pmtick.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, minorTickWidth*parent->getLineWidthMultiplier())));
 
-    get_parent_mathText()->set_fontSize(tickLabelFontSize*parent->get_fontSizeMultiplier());
-    get_parent_mathText()->set_fontRoman(tickLabelFont);
-    get_parent_mathText()->set_fontColor(axisColor);
+    get_parent_mathText()->setFontSize(tickLabelFontSize*parent->getFontSizeMultiplier());
+    get_parent_mathText()->setFontRoman(tickLabelFont);
+    get_parent_mathText()->setFontColor(axisColor);
 
     painter.setPen(pmain);
 
@@ -2115,7 +2115,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
                             painter.save();
                             QFont f;
                             f.setFamily(tickLabelFont);
-                            f.setPointSizeF(minorTickLabelFontSize*parent->get_fontSizeMultiplier());
+                            f.setPointSizeF(minorTickLabelFontSize*parent->getFontSizeMultiplier());
                             painter.setFont(f);
                             painter.setPen(axisColor);
                             QFontMetrics fm(f);
@@ -2170,7 +2170,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
                             painter.save();
                             QFont f;
                             f.setFamily(tickLabelFont);
-                            f.setPointSizeF(minorTickLabelFontSize*parent->get_fontSizeMultiplier());
+                            f.setPointSizeF(minorTickLabelFontSize*parent->getFontSizeMultiplier());
                             painter.setFont(f);
                             painter.setPen(axisColor);
                             QFontMetrics fm(f);
@@ -2247,8 +2247,8 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     // plot axis label
     if (!axisLabel.isEmpty() && (drawMode1==JKQTPCADMcomplete)) {
-        get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-        get_parent_mathText()->set_fontRoman(labelFont);
+        get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+        get_parent_mathText()->setFontRoman(labelFont);
         get_parent_mathText()->parse(axisLabel);
         double width, ascent, descent, strikeoutPos;
         get_parent_mathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
@@ -2275,8 +2275,8 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         painter.restore();
     }
     if (!axisLabel.isEmpty() && (drawMode2==JKQTPCADMcomplete)) {
-        get_parent_mathText()->set_fontSize(labelFontSize*parent->get_fontSizeMultiplier());
-        get_parent_mathText()->set_fontRoman(labelFont);
+        get_parent_mathText()->setFontSize(labelFontSize*parent->getFontSizeMultiplier());
+        get_parent_mathText()->setFontRoman(labelFont);
         get_parent_mathText()->parse(axisLabel);
 
 
@@ -2327,34 +2327,34 @@ JKQTPHorizontalIndependentAxis::JKQTPHorizontalIndependentAxis(double axisOffset
     this->otherAxisInverted=false;
 }
 
-void JKQTPHorizontalIndependentAxis::set_axisOffset(double __value) {
+void JKQTPHorizontalIndependentAxis::setAxisOffset(double __value) {
     this->axisOffset = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
-void JKQTPHorizontalIndependentAxis::set_axisWidth(double __value) {
+void JKQTPHorizontalIndependentAxis::setAxisWidth(double __value) {
     this->axisWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPHorizontalIndependentAxis::set_otherAxisOffset(double __value) {
     this->otherAxisOffset = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPHorizontalIndependentAxis::set_otherAxisWidth(double __value) {
     this->otherAxisWidth = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 void JKQTPHorizontalIndependentAxis::set_otherAxisInverted(bool __value) {
     this->otherAxisInverted = __value;
     this->paramsChanged=true;
-    update_plot();
+    replotPlot();
 }
 
 double JKQTPHorizontalIndependentAxis::get_parent_plotwidth() const { return axisWidth; }

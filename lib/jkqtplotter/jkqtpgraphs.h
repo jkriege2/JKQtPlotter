@@ -111,14 +111,14 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -214,7 +214,7 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
         /** \brief color of the graph */
         QColor color;
@@ -327,21 +327,21 @@ class LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, publi
         /*! \brief sets the property linewidthColumn to the specified \a __value. 
             \details Description of the parameter linewidthColumn is: <BLOCKQUOTE>\copydoc linewidthColumn </BLOCKQUOTE>
             \see linewidthColumn for more information */ 
-        inline virtual void set_linewidthColumn(int __value)  
+        inline virtual void setLinewidthColumn(int __value)  
         {
             this->linewidthColumn = __value;
         } 
         /*! \brief returns the property linewidthColumn. 
             \details Description of the parameter linewidthColumn is: <BLOCKQUOTE>\copydoc linewidthColumn </BLOCKQUOTE>
             \see linewidthColumn for more information */ 
-        inline virtual int get_linewidthColumn() const  
+        inline virtual int getLinewidthColumn() const  
         {
             return this->linewidthColumn; 
         }
         /*! \brief sets the property linewidthColumn to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter linewidthColumn is:  <BLOCKQUOTE>\copydoc linewidthColumn </BLOCKQUOTE>
         	\see linewidthColumn for more information */ 
-        inline virtual void set_linewidthColumn( size_t __value) { this->linewidthColumn = static_cast<int>(__value); }
+        inline virtual void setLinewidthColumn( size_t __value) { this->linewidthColumn = static_cast<int>(__value); }
         /*! \brief sets the property colorColumnContainsRGB to the specified \a __value. 
             \details Description of the parameter colorColumnContainsRGB is: <BLOCKQUOTE>\copydoc colorColumnContainsRGB </BLOCKQUOTE>
             \see colorColumnContainsRGB for more information */ 
@@ -359,56 +359,56 @@ class LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, publi
         /*! \brief sets the property gridModeForSymbolSize to the specified \a __value. 
             \details Description of the parameter gridModeForSymbolSize is: <BLOCKQUOTE>\copydoc gridModeForSymbolSize </BLOCKQUOTE>
             \see gridModeForSymbolSize for more information */ 
-        inline virtual void set_gridModeForSymbolSize(bool __value)  
+        inline virtual void setGridModeForSymbolSize(bool __value)  
         {
             this->gridModeForSymbolSize = __value;
         } 
         /*! \brief returns the property gridModeForSymbolSize. 
             \details Description of the parameter gridModeForSymbolSize is: <BLOCKQUOTE>\copydoc gridModeForSymbolSize </BLOCKQUOTE>
             \see gridModeForSymbolSize for more information */ 
-        inline virtual bool get_gridModeForSymbolSize() const  
+        inline virtual bool getGridModeForSymbolSize() const  
         {
             return this->gridModeForSymbolSize; 
         }
         /*! \brief sets the property gridDeltaX to the specified \a __value. 
             \details Description of the parameter gridDeltaX is: <BLOCKQUOTE>\copydoc gridDeltaX </BLOCKQUOTE>
             \see gridDeltaX for more information */ 
-        inline virtual void set_gridDeltaX(double __value)
+        inline virtual void setGridDeltaX(double __value)
         {
             this->gridDeltaX = __value;
         } 
         /*! \brief returns the property gridDeltaX. 
             \details Description of the parameter gridDeltaX is: <BLOCKQUOTE>\copydoc gridDeltaX </BLOCKQUOTE>
             \see gridDeltaX for more information */ 
-        inline virtual double get_gridDeltaX() const  
+        inline virtual double getGridDeltaX() const  
         {
             return this->gridDeltaX; 
         }
         /*! \brief sets the property gridDeltaY to the specified \a __value. 
             \details Description of the parameter gridDeltaY is: <BLOCKQUOTE>\copydoc gridDeltaY </BLOCKQUOTE>
             \see gridDeltaY for more information */ 
-        inline virtual void set_gridDeltaY(double __value)
+        inline virtual void setGridDeltaY(double __value)
         {
             this->gridDeltaY = __value;
         } 
         /*! \brief returns the property gridDeltaY. 
             \details Description of the parameter gridDeltaY is: <BLOCKQUOTE>\copydoc gridDeltaY </BLOCKQUOTE>
             \see gridDeltaY for more information */ 
-        inline virtual double get_gridDeltaY() const  
+        inline virtual double getGridDeltaY() const  
         {
             return this->gridDeltaY; 
         }
         /*! \brief sets the property gridSymbolFractionSize to the specified \a __value. 
             \details Description of the parameter gridSymbolFractionSize is: <BLOCKQUOTE>\copydoc gridSymbolFractionSize </BLOCKQUOTE>
             \see gridSymbolFractionSize for more information */ 
-        inline virtual void set_gridSymbolFractionSize(double __value)
+        inline virtual void setGridSymbolFractionSize(double __value)
         {
             this->gridSymbolFractionSize = __value;
         } 
         /*! \brief returns the property gridSymbolFractionSize. 
             \details Description of the parameter gridSymbolFractionSize is: <BLOCKQUOTE>\copydoc gridSymbolFractionSize </BLOCKQUOTE>
             \see gridSymbolFractionSize for more information */ 
-        inline virtual double get_gridSymbolFractionSize() const  
+        inline virtual double getGridSymbolFractionSize() const  
         {
             return this->gridSymbolFractionSize; 
         }
@@ -643,14 +643,14 @@ class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -714,7 +714,7 @@ class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         /** \brief specifies whether the steps elongate to the left, the right, or are centered around the \f$ x_i \f$ values. */
         JKQTPStepType stepType;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;
@@ -854,14 +854,14 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -1009,14 +1009,14 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         /*! \brief sets the property plotCenterLine to the specified \a __value. 
             \details Description of the parameter plotCenterLine is: <BLOCKQUOTE>\copydoc plotCenterLine </BLOCKQUOTE>
             \see plotCenterLine for more information */ 
-        inline virtual void set_plotCenterLine(bool __value)  
+        inline virtual void setPlotCenterLine(bool __value)  
         {
             this->plotCenterLine = __value;
         } 
         /*! \brief returns the property plotCenterLine. 
             \details Description of the parameter plotCenterLine is: <BLOCKQUOTE>\copydoc plotCenterLine </BLOCKQUOTE>
             \see plotCenterLine for more information */ 
-        inline virtual bool get_plotCenterLine() const  
+        inline virtual bool getPlotCenterLine() const  
         {
             return this->plotCenterLine; 
         }
@@ -1037,14 +1037,14 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         /*! \brief sets the property plotRange to the specified \a __value. 
             \details Description of the parameter plotRange is: <BLOCKQUOTE>\copydoc plotRange </BLOCKQUOTE>
             \see plotRange for more information */ 
-        inline virtual void set_plotRange(bool __value)  
+        inline virtual void setPlotRange(bool __value)  
         {
             this->plotRange = __value;
         } 
         /*! \brief returns the property plotRange. 
             \details Description of the parameter plotRange is: <BLOCKQUOTE>\copydoc plotRange </BLOCKQUOTE>
             \see plotRange for more information */ 
-        inline virtual bool get_plotRange() const  
+        inline virtual bool getPlotRange() const  
         {
             return this->plotRange; 
         }
@@ -1065,14 +1065,14 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         /*! \brief sets the property plotRangeLines to the specified \a __value. 
             \details Description of the parameter plotRangeLines is: <BLOCKQUOTE>\copydoc plotRangeLines </BLOCKQUOTE>
             \see plotRangeLines for more information */ 
-        inline virtual void set_plotRangeLines(bool __value)  
+        inline virtual void setPlotRangeLines(bool __value)  
         {
             this->plotRangeLines = __value;
         } 
         /*! \brief returns the property plotRangeLines. 
             \details Description of the parameter plotRangeLines is: <BLOCKQUOTE>\copydoc plotRangeLines </BLOCKQUOTE>
             \see plotRangeLines for more information */ 
-        inline virtual bool get_plotRangeLines() const  
+        inline virtual bool getPlotRangeLines() const  
         {
             return this->plotRangeLines; 
         }
@@ -1114,7 +1114,7 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         /** \brief fill style, if the curve should be filled */
         Qt::BrushStyle fillStyle;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         QBrush getBrush(JKQTPEnhancedPainter& painter) const;

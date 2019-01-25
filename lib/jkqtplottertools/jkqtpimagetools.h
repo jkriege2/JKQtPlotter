@@ -911,7 +911,7 @@ class LIB_EXPORT JKQTPColorPaletteTools {
         /*! \brief returns the property rangeMinFailAction. 
             \details Description of the parameter rangeMinFailAction is: <BLOCKQUOTE>\copydoc rangeMinFailAction </BLOCKQUOTE> 
             \see rangeMinFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction get_rangeMinFailAction() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMinFail() const  
         {
             return this->rangeMinFailAction; 
         }
@@ -925,7 +925,7 @@ class LIB_EXPORT JKQTPColorPaletteTools {
         /*! \brief returns the property rangeMaxFailAction. 
             \details Description of the parameter rangeMaxFailAction is: <BLOCKQUOTE>\copydoc rangeMaxFailAction </BLOCKQUOTE> 
             \see rangeMaxFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction get_rangeMaxFailAction() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMaxFail() const  
         {
             return this->rangeMaxFailAction; 
         }
@@ -988,14 +988,14 @@ class LIB_EXPORT JKQTPColorPaletteTools {
         /*! \brief sets the property showColorBar to the specified \a __value. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
-        inline virtual void set_showColorBar(bool __value)  
+        inline virtual void setShowColorBar(bool __value)  
         {
             this->showColorBar = __value;
         } 
         /*! \brief returns the property showColorBar. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
-        inline virtual bool get_showColorBar() const  
+        inline virtual bool getShowColorBar() const  
         {
             return this->showColorBar; 
         }

@@ -40,7 +40,7 @@ JKQTPPlotElement::JKQTPPlotElement(JKQTBasePlotter* parent):
 }
 
 JKQTPPlotElement::JKQTPPlotElement(JKQTPlotter *parent):
-    QObject(parent->get_plotter())
+    QObject(parent->getPlotter())
 {
     title="";
     visible=true;
@@ -72,7 +72,7 @@ JKQTPGraph::~JKQTPGraph()
 QImage JKQTPPlotElement::generateKeyMarker(QSize size)
 {
     QImage img(size.width(),size.height(),QImage::Format_ARGB32);
-    if (parent) img.fill(parent->get_keyBackgroundColor());
+    if (parent) img.fill(parent->getKeyBackgroundColor());
     {
         JKQTPEnhancedPainter painter(&img);
         painter.setRenderHint(QPainter::Antialiasing, true);
@@ -96,7 +96,7 @@ void JKQTPPlotElement::setParent(JKQTBasePlotter* parent) {
 
 void JKQTPPlotElement::setParent(JKQTPlotter *parent)
 {
-    setParent(parent->get_plotter());
+    setParent(parent->getPlotter());
 }
 
 
@@ -144,19 +144,19 @@ void JKQTPPlotElement::drawOutside(JKQTPEnhancedPainter& /*painter*/, QRect /*le
 }
 
 double JKQTPPlotElement::transformX(double x) const {
-    return parent->get_xAxis()->x2p(x);
+    return parent->getXAxis()->x2p(x);
 }
 
 double JKQTPPlotElement::transformY(double y) const {
-    return parent->get_yAxis()->x2p(y);
+    return parent->getYAxis()->x2p(y);
 }
 
 double JKQTPPlotElement::backtransformX(double x) const {
-    return parent->get_xAxis()->p2x(x);
+    return parent->getXAxis()->p2x(x);
 }
 
 double JKQTPPlotElement::backtransformY(double y) const {
-    return parent->get_yAxis()->p2x(y);
+    return parent->getYAxis()->p2x(y);
 }
 
 
@@ -445,7 +445,7 @@ QPen JKQTPSingleColumnGraph::getLinePen(JKQTPEnhancedPainter& painter) const
 {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -540,7 +540,7 @@ void JKQTPGraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     b.setStyle(errorFillStyle);
     QPen p=painter.pen();
     p.setColor(errorColor);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorWidth*parent->getLineWidthMultiplier())));
     p.setStyle(errorStyle);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

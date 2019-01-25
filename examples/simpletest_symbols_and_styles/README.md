@@ -27,7 +27,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
         // set width of symbol lines
         graph->set_symbolWidth(1.5);
         // set width of graph line
-        graph->set_lineWidth(1);
+        graph->setLineWidth(1);
 		
         // graph title is made from symbol+penstyle
         graph->set_title(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->get_symbol()))+QString(", ")+jkqtp_QPenStyle2String(graph->get_style()));
@@ -40,7 +40,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
     }
 ```
 
-In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->set_symbolSize(14)`), the line-width used to draw them (`graph->set_symbolWidth(1.5)`) and the line width of the graph line (`graph->set_lineWidth(1)`). If you want to switch off the line altogether, use `graph->set_drawLine(false`.
+In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->set_symbolSize(14)`), the line-width used to draw them (`graph->set_symbolWidth(1.5)`) and the line width of the graph line (`graph->setLineWidth(1)`). If you want to switch off the line altogether, use `graph->set_drawLine(false`.
 
 The result looks like this:
 

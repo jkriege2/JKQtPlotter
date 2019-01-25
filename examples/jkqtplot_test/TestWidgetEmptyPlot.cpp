@@ -15,7 +15,7 @@ TestWidgetEmptyPlot::TestWidgetEmptyPlot(QWidget *parent) :
     #define NEMPTY 500
 
     JKQTPlotter* plotEmpty=new JKQTPlotter(true, this);
-    JKQTPXYLineGraph* efunc=new JKQTPXYLineGraph(plotEmpty->get_plotter());
+    JKQTPXYLineGraph* efunc=new JKQTPXYLineGraph(plotEmpty->getPlotter());
     double xef[NEMPTY], efy[NEMPTY];
     for (int i=0; i<NEMPTY; i++) {
         xef[i]=i;
@@ -24,7 +24,7 @@ TestWidgetEmptyPlot::TestWidgetEmptyPlot(QWidget *parent) :
     efunc->set_xColumn(plotEmpty->getDatastore()->addCopiedColumn(xef, NEMPTY, "x"));
     efunc->set_yColumn(plotEmpty->getDatastore()->addCopiedColumn(efy, NEMPTY, "y"));
     plotEmpty->addGraph(efunc);
-    plotEmpty->get_yAxis()->set_logAxis(true);
+    plotEmpty->getYAxis()->set_logAxis(true);
     plotEmpty->zoomToFit();
     plotEmpty->setY(0,0);
 

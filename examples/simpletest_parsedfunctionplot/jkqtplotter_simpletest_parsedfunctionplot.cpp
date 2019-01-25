@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
             parsedFunc->set_function(edit->text());
             parsedFunc->set_paramsV(spinP1->value(), spinP2->value());
             parsedFunc->set_displaySamplePoints(check->isChecked());
-            plot->update_plot();
+            plot->replotPlot();
        };
     QObject::connect(edit, &QLineEdit::returnPressed, updateGraphFunctor);
     QObject::connect(edit, &QLineEdit::editingFinished, updateGraphFunctor);
@@ -68,8 +68,8 @@ int main(int argc, char* argv[])
 
 
     // 3. set some axis properties (we use LaTeX for nice equation rendering)
-    plot->get_xAxis()->set_axisLabel(QObject::tr("x-axis"));
-    plot->get_yAxis()->set_axisLabel(QObject::tr("y-axis"));
+    plot->getXAxis()->setAxisLabel(QObject::tr("x-axis"));
+    plot->getYAxis()->setAxisLabel(QObject::tr("y-axis"));
 
 
     // 4. scale the plot so the graph is contained

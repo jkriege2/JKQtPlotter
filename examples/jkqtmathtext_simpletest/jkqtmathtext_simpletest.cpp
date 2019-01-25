@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     //    were included in the *.pro-file
     JKQTMathText mathText;
     mathText.useXITS();
-    mathText.set_fontSize(20);
+    mathText.setFontSize(20);
 
     // 3. now we parse some LaTeX code (the Schroedinger's equation), so
     //    we can draw it onto the QPixmap in the next step

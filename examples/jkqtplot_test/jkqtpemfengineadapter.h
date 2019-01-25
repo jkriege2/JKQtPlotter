@@ -6,7 +6,7 @@
 #include <QStringList>
 #include "../../../jkqtpbaseplotter.h"
 
-class JKQTPEmfEngineAdapter : public JKQTBasePlotter::JKQTPPaintDeviceAdapter
+class JKQTPEmfEngineAdapter : public JKQTPPaintDeviceAdapter
 {
     public:
         JKQTPEmfEngineAdapter();

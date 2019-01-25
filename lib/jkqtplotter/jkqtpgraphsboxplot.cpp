@@ -112,7 +112,7 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -230,7 +230,7 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (percentile25Column>=0 && percentile75Column>=0) painter.drawRect(QRectF(xmi, p75, fabs(xma-xmi), fabs(p75-p25)));
             if (medianColumn>=0) lines_p.append(QLineF(xmi+p.widthF()/2.0, median, xma-p.widthF()/2.0, median));
             if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
             }
 
 
@@ -373,7 +373,7 @@ void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRe
     QPen p=painter.pen();
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);    p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     QPen pw=p;
     pw.setStyle(whiskerStyle);
@@ -418,7 +418,7 @@ void JKQTPBoxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, Q
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -583,7 +583,7 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -703,7 +703,7 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             if (medianColumn>=0) lines_p.append(QLineF(median, ymi-p.widthF()/2.0, median, yma+p.widthF()/2.0));
 
             if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
             }
 
             //first=true;
@@ -814,7 +814,7 @@ void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -871,7 +871,7 @@ void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 
         if (drawMean) {
             double mean=transformY(this->mean);
-            JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+            JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
         }
 
 
@@ -941,7 +941,7 @@ void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, Q
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -988,7 +988,7 @@ void JKQTPBoxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter,
     painter.save();
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -1102,7 +1102,7 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -1160,7 +1160,7 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
         if (drawMean) {
             double mean=transformY(this->mean);
-            JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+            JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
         }
 
     }
@@ -1177,7 +1177,7 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 QPen JKQTPBoxplotVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
 
@@ -1243,7 +1243,7 @@ QBrush JKQTPBoxplotVerticalElement::getBrush(JKQTPEnhancedPainter& /*painter*/) 
 QPen JKQTPBoxplotVerticalElement::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
 

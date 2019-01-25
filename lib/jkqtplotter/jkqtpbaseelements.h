@@ -38,7 +38,7 @@
 // forward declarations
 class JKQTBasePlotter;
 
-/*! \brief this virtual class is the base for any type of coordinate axis, to be drawn by JKQTplotterBase.
+/*! \brief this virtual class is the base for any type of coordinate axis, to be drawn by JKQTBasePlotter.
     \ingroup jkqtpbaseplotter_elements
 
     This class implements all the functionality needed for a coordinate axis:
@@ -234,13 +234,13 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /*! \brief returns the property logAxisBase. \details Description of the parameter logAxisBase is:  <BLOCKQUOTE>\copydoc logAxisBase </BLOCKQUOTE>. \see logAxisBase for more information */ 
         inline double get_logAxisBase() const { return this->logAxisBase; }
         /*! \brief returns the property userTickSpacing. \details Description of the parameter userTickSpacing is:  <BLOCKQUOTE>\copydoc userTickSpacing </BLOCKQUOTE>. \see userTickSpacing for more information */ 
-        inline double get_userTickSpacing() const { return this->userTickSpacing; }
+        inline double getUserTickSpacing() const { return this->userTickSpacing; }
         /*! \brief returns the property userLogTickSpacing. \details Description of the parameter userLogTickSpacing is:  <BLOCKQUOTE>\copydoc userLogTickSpacing </BLOCKQUOTE>. \see userLogTickSpacing for more information */ 
-        inline double get_userLogTickSpacing() const { return this->userLogTickSpacing; }
+        inline double getUserLogTickSpacing() const { return this->userLogTickSpacing; }
         /*! \brief returns the property labelType. \details Description of the parameter labelType is:  <BLOCKQUOTE>\copydoc labelType </BLOCKQUOTE>. \see labelType for more information */ 
         inline JKQTPCALabelType get_labelType() const { return this->labelType; }
         /*! \brief returns the property axisLabel. \details Description of the parameter axisLabel is:  <BLOCKQUOTE>\copydoc axisLabel </BLOCKQUOTE>. \see axisLabel for more information */ 
-        inline QString get_axisLabel() const { return this->axisLabel; }
+        inline QString getAxisLabel() const { return this->axisLabel; }
         /*! \brief returns the property labelPosition. \details Description of the parameter labelPosition is:  <BLOCKQUOTE>\copydoc labelPosition </BLOCKQUOTE>. \see labelPosition for more information */ 
         inline JKQTPLabelPosition get_labelPosition() const { return this->labelPosition; }
         /*! \brief returns the property labelFont. \details Description of the parameter labelFont is:  <BLOCKQUOTE>\copydoc labelFont </BLOCKQUOTE>. \see labelFont for more information */ 
@@ -266,17 +266,17 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /*! \brief returns the property minorTickOutsideLength. \details Description of the parameter minorTickOutsideLength is:  <BLOCKQUOTE>\copydoc minorTickOutsideLength </BLOCKQUOTE>. \see minorTickOutsideLength for more information */ 
         inline double get_minorTickOutsideLength() const { return this->minorTickOutsideLength; }
         /*! \brief returns the property axisColor. \details Description of the parameter axisColor is:  <BLOCKQUOTE>\copydoc axisColor </BLOCKQUOTE>. \see axisColor for more information */ 
-        inline QColor get_axisColor() const { return this->axisColor; }
+        inline QColor getAxisColor() const { return this->axisColor; }
         /*! \brief returns the property showZeroAxis. \details Description of the parameter showZeroAxis is:  <BLOCKQUOTE>\copydoc showZeroAxis </BLOCKQUOTE>. \see showZeroAxis for more information */ 
-        inline bool get_showZeroAxis() const { return this->showZeroAxis; }
+        inline bool getShowZeroAxis() const { return this->showZeroAxis; }
         /*! \brief returns the property gridColor. \details Description of the parameter gridColor is:  <BLOCKQUOTE>\copydoc gridColor </BLOCKQUOTE>. \see gridColor for more information */ 
-        inline QColor get_gridColor() const { return this->gridColor; }
+        inline QColor getGridColor() const { return this->gridColor; }
         /*! \brief returns the property minorGridColor. \details Description of the parameter minorGridColor is:  <BLOCKQUOTE>\copydoc minorGridColor </BLOCKQUOTE>. \see minorGridColor for more information */ 
         inline QColor get_minorGridColor() const { return this->minorGridColor; }
         /*! \brief returns the property gridWidth. \details Description of the parameter gridWidth is:  <BLOCKQUOTE>\copydoc gridWidth </BLOCKQUOTE>. \see gridWidth for more information */ 
-        inline double get_gridWidth() const { return this->gridWidth; }
+        inline double getGridWidth() const { return this->gridWidth; }
         /*! \brief returns the property gridStyle. \details Description of the parameter gridStyle is:  <BLOCKQUOTE>\copydoc gridStyle </BLOCKQUOTE>. \see gridStyle for more information */ 
-        inline Qt::PenStyle get_gridStyle() const { return this->gridStyle; }
+        inline Qt::PenStyle getGridStyle() const { return this->gridStyle; }
         /*! \brief returns the property minorGridWidth. \details Description of the parameter minorGridWidth is:  <BLOCKQUOTE>\copydoc minorGridWidth </BLOCKQUOTE>. \see minorGridWidth for more information */ 
         inline double get_minorGridWidth() const { return this->minorGridWidth; }
         /*! \brief returns the property minorGridStyle. \details Description of the parameter minorGridStyle is:  <BLOCKQUOTE>\copydoc minorGridStyle </BLOCKQUOTE>. \see minorGridStyle for more information */ 
@@ -299,9 +299,9 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /*! \brief returns the property tickWidth. \details Description of the parameter tickWidth is:  <BLOCKQUOTE>\copydoc tickWidth </BLOCKQUOTE>. \see tickWidth for more information */ 
         inline double get_tickWidth() const { return this->tickWidth; }
         /*! \brief returns the property lineWidth. \details Description of the parameter lineWidth is:  <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>. \see lineWidth for more information */ 
-        inline double get_lineWidth() const { return this->lineWidth; }
+        inline double getLineWidth() const { return this->lineWidth; }
         /*! \brief returns the property lineWidthZeroAxis. \details Description of the parameter lineWidthZeroAxis is:  <BLOCKQUOTE>\copydoc lineWidthZeroAxis </BLOCKQUOTE>. \see lineWidthZeroAxis for more information */ 
-        inline double get_lineWidthZeroAxis() const { return this->lineWidthZeroAxis; }
+        inline double getLineWidthZeroAxis() const { return this->lineWidthZeroAxis; }
         /*! \brief returns the property tickLabelDistance. \details Description of the parameter tickLabelDistance is:  <BLOCKQUOTE>\copydoc tickLabelDistance </BLOCKQUOTE>. \see tickLabelDistance for more information */ 
         inline double get_tickLabelDistance() const { return this->tickLabelDistance; }
         /*! \brief returns the property labelDistance. \details Description of the parameter labelDistance is:  <BLOCKQUOTE>\copydoc labelDistance </BLOCKQUOTE>. \see labelDistance for more information */ 
@@ -379,7 +379,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief sets the property axisMinWidth to the specified \a __value.
          *  \details Description of the parameter tickSpacing is:  <BLOCKQUOTE>\copydoc axisMinWidth </BLOCKQUOTE>
          *  \see axisMinWidth for more information */
-        virtual void set_axisMinWidth(double __value);
+        virtual void setAxisMinWidth(double __value);
 
         /** \brief sets the property autoAxisSpacing to the specified \a __value.
          *  \details Description of the parameter autoAxisSpacing is:  <BLOCKQUOTE>\copydoc autoAxisSpacing </BLOCKQUOTE>
@@ -404,12 +404,12 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief sets the property userTickSpacing to the specified \a __value.
          *  \details Description of the parameter userTickSpacing is:  <BLOCKQUOTE>\copydoc userTickSpacing </BLOCKQUOTE>
          *  \see userTickSpacing for more information */
-        virtual void set_userTickSpacing (double __value);
+        virtual void setUserTickSpacing (double __value);
 
         /** \brief sets the property userLogTickSpacing to the specified \a __value.
          *  \details Description of the parameter userLogTickSpacing is:  <BLOCKQUOTE>\copydoc userLogTickSpacing </BLOCKQUOTE>
          *  \see userLogTickSpacing for more information */
-        virtual void set_userLogTickSpacing (double __value);
+        virtual void setUserLogTickSpacing (double __value);
 
         /** \brief sets the property labelType to the specified \a __value.
          *  \details Description of the parameter labelType is:  <BLOCKQUOTE>\copydoc labelType </BLOCKQUOTE>
@@ -428,7 +428,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief sets the property axisLabel to the specified \a __value.
          *  \details Description of the parameter axisLabel is:  <BLOCKQUOTE>\copydoc axisLabel </BLOCKQUOTE>
          *  \see axisLabel for more information */
-        virtual void set_axisLabel (QString __value);
+        virtual void setAxisLabel (QString __value);
 
         /** \brief sets the property labelPosition to the specified \a __value.
          *  \details Description of the parameter labelPosition is:  <BLOCKQUOTE>\copydoc labelPosition </BLOCKQUOTE> */
@@ -504,11 +504,11 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property axisColor to the specified \a __value.
          *  \details Description of the parameter axisColor is:  <BLOCKQUOTE>\copydoc axisColor </BLOCKQUOTE> */
-        virtual void set_axisColor (QColor __value);
+        virtual void setAxisColor (QColor __value);
 
         /** \brief sets the property showZeroAxis to the specified \a __value.
          *  \details Description of the parameter showZeroAxis is:  <BLOCKQUOTE>\copydoc showZeroAxis </BLOCKQUOTE> */
-        virtual void set_showZeroAxis(bool __value);
+        virtual void setShowZeroAxis(bool __value);
 
         /** \brief sets the property inverted to the specified \a __value.
          *  \details Description of the parameter inverted is:  <BLOCKQUOTE>\copydoc inverted </BLOCKQUOTE> */
@@ -516,7 +516,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property gridColor to the specified \a __value.
          *  \details Description of the parameter gridColor is:  <BLOCKQUOTE>\copydoc gridColor </BLOCKQUOTE> */
-        virtual void set_gridColor(QColor __value);
+        virtual void setGridColor(QColor __value);
 
         /** \brief sets the property minorGridColor to the specified \a __value.
          *  \details Description of the parameter minorGridColor is:  <BLOCKQUOTE>\copydoc minorGridColor </BLOCKQUOTE> */
@@ -524,11 +524,11 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property gridWidth to the specified \a __value.
          *  \details Description of the parameter gridWidth is:  <BLOCKQUOTE>\copydoc gridWidth </BLOCKQUOTE> */
-        virtual void set_gridWidth (double __value);
+        virtual void setGridWidth (double __value);
 
         /** \brief sets the property gridStyle to the specified \a __value.
          *  \details Description of the parameter gridStyle is:  <BLOCKQUOTE>\copydoc gridStyle </BLOCKQUOTE> */
-        virtual void set_gridStyle(Qt::PenStyle __value);
+        virtual void setGridStyle(Qt::PenStyle __value);
 
         /** \brief sets the property minorGridWidth to the specified \a __value.
          *  \details Description of the parameter minorGridWidth is:  <BLOCKQUOTE>\copydoc minorGridWidth </BLOCKQUOTE> */
@@ -557,11 +557,11 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property lineWidth to the specified \a __value.
          *  \details Description of the parameter lineWidth is:  <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> */
-        virtual void set_lineWidth (double __value);
+        virtual void setLineWidth (double __value);
 
         /** \brief sets the property lineWidthZeroAxis to the specified \a __value.
          *  \details Description of the parameter lineWidthZeroAxis is:  <BLOCKQUOTE>\copydoc lineWidthZeroAxis </BLOCKQUOTE> */
-        virtual void set_lineWidthZeroAxis (double __value);
+        virtual void setLineWidthZeroAxis (double __value);
 
         /** \brief sets the property tickLabelDistance to the specified \a __value.
          *  \details Description of the parameter tickLabelDistance is:  <BLOCKQUOTE>\copydoc tickLabelDistance </BLOCKQUOTE> */
@@ -592,8 +592,8 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         bool paramsChanged;
         bool doUpdateScaling;
 
-        /** \brief simply calls the update_plot method of the parent plotter class */
-        void update_plot();
+        /** \brief simply calls the replotPlot method of the parent plotter class */
+        void replotPlot();
         /** \brief a list of tick labels.
          *
          *  If this list contains items, this class will NOT plot a standard x-axis,
@@ -957,9 +957,9 @@ class LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
         /** \brief class constructor */
         JKQTPVerticalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent);
         /** \brief set the axis offset */
-        virtual void set_axisOffset(double __value) ;
+        virtual void setAxisOffset(double __value) ;
         /** \brief set the axis width */
-        virtual void set_axisWidth(double __value) ;
+        virtual void setAxisWidth(double __value) ;
         /** \brief set the other axis offset */
         virtual void set_otherAxisOffset(double __value) ;
         /** \brief set the other axis width */
@@ -1039,9 +1039,9 @@ class LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizontalAxis {
         /** \brief class constructor */
         JKQTPHorizontalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent);
         /** \brief se the axis offset */
-        virtual void set_axisOffset(double __value);
+        virtual void setAxisOffset(double __value);
         /** \brief se the axis width */
-        virtual void set_axisWidth(double __value);
+        virtual void setAxisWidth(double __value);
         /** \brief set the other axis offset */
         virtual void set_otherAxisOffset(double __value);
         /** \brief set the other axis width */

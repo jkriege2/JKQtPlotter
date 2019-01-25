@@ -484,7 +484,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         /*! \brief returns the property rangeMinFailAction. 
             \details Description of the parameter rangeMinFailAction is: <BLOCKQUOTE>\copydoc rangeMinFailAction </BLOCKQUOTE> 
             \see rangeMinFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction get_rangeMinFailAction() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMinFail() const  
         {
             return this->rangeMinFailAction; 
         }
@@ -498,7 +498,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         /*! \brief returns the property rangeMaxFailAction. 
             \details Description of the parameter rangeMaxFailAction is: <BLOCKQUOTE>\copydoc rangeMaxFailAction </BLOCKQUOTE> 
             \see rangeMaxFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction get_rangeMaxFailAction() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMaxFail() const  
         {
             return this->rangeMaxFailAction; 
         }
@@ -561,14 +561,14 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         /*! \brief sets the property showColorBar to the specified \a __value. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
-        inline virtual void set_showColorBar(bool __value)
+        inline virtual void setShowColorBar(bool __value)
         {
             this->showColorBar = __value;
         } 
         /*! \brief returns the property showColorBar. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
-        inline virtual bool get_showColorBar() const  
+        inline virtual bool getShowColorBar() const  
         {
             return this->showColorBar; 
         }
@@ -1005,14 +1005,14 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         /*! \brief sets the property showColorBar to the specified \a __value. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
-        inline virtual void set_showColorBar(bool __value)
+        inline virtual void setShowColorBar(bool __value)
         {
             this->showColorBar = __value;
         } 
         /*! \brief returns the property showColorBar. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
-        inline virtual bool get_showColorBar() const  
+        inline virtual bool getShowColorBar() const  
         {
             return this->showColorBar; 
         }
@@ -1905,14 +1905,14 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         /*! \brief sets the property lineColor to the specified \a __value. 
             \details Description of the parameter lineColor is: <BLOCKQUOTE>\copydoc lineColor </BLOCKQUOTE> 
             \see lineColor for more information */ 
-        inline virtual void set_lineColor(const QColor & __value)  
+        inline virtual void setLineColor(const QColor & __value)  
         {
             this->lineColor = __value;
         } 
         /*! \brief returns the property lineColor. 
             \details Description of the parameter lineColor is: <BLOCKQUOTE>\copydoc lineColor </BLOCKQUOTE> 
             \see lineColor for more information */ 
-        inline virtual QColor get_lineColor() const  
+        inline virtual QColor getLineColor() const  
         {
             return this->lineColor; 
         }
@@ -1933,14 +1933,14 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }

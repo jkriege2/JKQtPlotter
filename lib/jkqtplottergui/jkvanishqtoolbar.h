@@ -31,6 +31,9 @@
 
 /** \brief a modified a href="http://doc.trolltech.com/4.5/qtoolbar.html">QToolBar</a> which vanishes when the mouse leaves the toolbar.
  * \ingroup jkqtptools_qtwidgets
+ *
+ * \image html jkqtplotter_toolbar_hidden.png "Hidden Toolbar"
+ * \image html jkqtplotter_toolbar_shown.png "Shown Toolbar"
  */
 class LIB_EXPORT JKVanishQToolBar: public QToolBar {
         Q_OBJECT

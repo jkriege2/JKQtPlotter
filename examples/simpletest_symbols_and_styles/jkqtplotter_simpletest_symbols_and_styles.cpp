@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
         // set width of symbol lines
         graph->set_symbolWidth(1.5);
         // set width of graph line
-        graph->set_lineWidth(1);
+        graph->setLineWidth(1);
 
         // graph title is made from symbol+penstyle
         graph->set_title(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->get_symbol()))+QString(", ")+lname);

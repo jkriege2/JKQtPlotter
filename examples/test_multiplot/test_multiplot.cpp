@@ -38,15 +38,15 @@ int main(int argc, char* argv[])
     layout->addWidget(plotResidHist, 1,1);
 
     // 3.3 synchronize width/x-axis of plotResid to width/x-axis of plotMain
-    plotResid->get_plotter()->synchronizeToMaster(plotMain->get_plotter(), true, false, true, true);
+    plotResid->getPlotter()->synchronizeToMaster(plotMain->getPlotter(), true, false, true, true);
 
     // 3.4 synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
-    plotResidHist->get_plotter()->synchronizeToMaster(plotResid->get_plotter(), false, true, true, true);
+    plotResidHist->getPlotter()->synchronizeToMaster(plotResid->getPlotter(), false, true, true, true);
 
     // 3.5 ensure that the plot are printed/exported in whole, when printing in plotMain
-    plotMain->get_plotter()->set_gridPrinting(true);
-    plotMain->get_plotter()->addGridPrintingPlotter(0,1,plotResid->get_plotter());
-    plotMain->get_plotter()->addGridPrintingPlotter(1,1,plotResidHist->get_plotter());
+    plotMain->getPlotter()->setGridPrinting(true);
+    plotMain->getPlotter()->addGridPrintingPlotter(0,1,plotResid->getPlotter());
+    plotMain->getPlotter()->addGridPrintingPlotter(1,1,plotResidHist->getPlotter());
 
     // 3.6 set relative sizes of the plots via the layout (small plots have 1/3 the width and height of the large plot
     layout->setRowStretch(0,3);
@@ -113,7 +113,7 @@ int main(int argc, char* argv[])
     graphResid->set_symbol(JKQTPPlus);
     graphResid->set_symbolSize(10);
     graphResid->set_drawLine(true);
-    graphResid->set_lineWidth(0.5);
+    graphResid->setLineWidth(0.5);
     graphResid->set_title("residuals");
     plotResid->addGraph(graphResid);
 
@@ -125,24 +125,24 @@ int main(int argc, char* argv[])
     plotResidHist->addGraph(graphResidHist);
 
     // 6.1 axis labels, distributed over the several plots
-    plotMain->get_yAxis()->set_axisLabel("y axis");
-    plotResid->get_xAxis()->set_axisLabel("x axis");
-    plotResid->get_yAxis()->set_axisLabel("residuals");
-    plotResidHist->get_xAxis()->set_axisLabel("frequency");
+    plotMain->getYAxis()->setAxisLabel("y axis");
+    plotResid->getXAxis()->setAxisLabel("x axis");
+    plotResid->getYAxis()->setAxisLabel("residuals");
+    plotResidHist->getXAxis()->setAxisLabel("frequency");
     // 6.2 switch off the tick labels on the axes that directly face another plot
-    plotMain->get_xAxis()->set_drawMode1(JKQTPCADMticks);
-    plotResidHist->get_yAxis()->set_drawMode1(JKQTPCADMticks);
+    plotMain->getXAxis()->set_drawMode1(JKQTPCADMticks);
+    plotResidHist->getYAxis()->set_drawMode1(JKQTPCADMticks);
     // 6.3 show tick labels on the rhs y-axis of the residual histogram plot
-    plotResidHist->get_yAxis()->set_drawMode2(JKQTPCADMticksAndLabels);
+    plotResidHist->getYAxis()->set_drawMode2(JKQTPCADMticksAndLabels);
     // 6.4 hide keys in all plots but the main plot
-    plotResid->get_plotter()->set_showKey(false);
-    plotResidHist->get_plotter()->set_showKey(false);
+    plotResid->getPlotter()->setShowKey(false);
+    plotResidHist->getPlotter()->setShowKey(false);
     // 6.5 hide position label and toolbars in the plots except main plot
-    plotResid->set_displayToolbar(false);
-    plotResid->set_displayMousePosition(false);
-    plotResidHist->set_displayToolbar(false);
-    plotResidHist->set_displayMousePosition(false);
-    plotMain->set_toolbarAlwaysOn(true);
+    plotResid->setToolbarVisible(false);
+    plotResid->setMousePositionShown(false);
+    plotResidHist->setToolbarVisible(false);
+    plotResidHist->setMousePositionShown(false);
+    plotMain->setToolbarVisible(true);
 
 
     // 7. scale plots automatically to data

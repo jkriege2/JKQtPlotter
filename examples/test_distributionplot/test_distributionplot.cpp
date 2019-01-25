@@ -21,9 +21,9 @@ int main(int argc, char* argv[])
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPlotter plot;
-    plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
+    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create random values drawn from a gaussian distribution
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
     // 6. draw the theoretical distribution as function graph:
     JKQTPXFunctionLineGraph* graphTheoDist=new JKQTPXFunctionLineGraph(&plot);
     // define the gaussian function used for the random number generator
-    graphTheoDist->set_plotFunction([&th_mean,&th_std](double x) -> double {
+    graphTheoDist->setPlotFunction([&th_mean,&th_std](double x) -> double {
         return 1.0/(th_std*sqrt(2.0*M_PI))*exp(-0.5*(x-th_mean)*(x-th_mean)/th_std/th_std);
     });
     // set title:
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
     plot.setXY(-6,16,-0.1,0.2);
 
     // 10. Move key to top-left
-    plot.get_plotter()->set_keyPosition(JKQTPKeyInsideTopLeft);
+    plot.getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
 
     // 11. show plotter and make it a decent size
     plot.show();

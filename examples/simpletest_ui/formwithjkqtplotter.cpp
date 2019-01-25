@@ -26,7 +26,7 @@ FormWithJKQTPlotter::~FormWithJKQTPlotter()
 
 void FormWithJKQTPlotter::on_chkLogX_toggled(bool checked)
 {
-    ui->plot->get_xAxis()->set_logAxis(checked);
+    ui->plot->getXAxis()->set_logAxis(checked);
     if (checked) {
         ui->plot->setX(1e-3,10);
     } else {
@@ -36,7 +36,7 @@ void FormWithJKQTPlotter::on_chkLogX_toggled(bool checked)
 
 void FormWithJKQTPlotter::on_chkLogY_toggled(bool checked)
 {
-    ui->plot->get_yAxis()->set_logAxis(checked);
+    ui->plot->getYAxis()->set_logAxis(checked);
     if (checked) {
         ui->plot->setY(1e-3,10);
     } else {
@@ -48,5 +48,5 @@ void FormWithJKQTPlotter::on_btnReplot_clicked()
 {
     graph->set_function(ui->edtEquation->text());
     graph->set_title(ui->edtEquation->text());
-    ui->plot->update_plot();
+    ui->plot->replotPlot();
 }

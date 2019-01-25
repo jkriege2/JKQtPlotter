@@ -31,7 +31,7 @@ In the example in [`test/simpletest_parsedfunctionplot/simpletest_parsedfunction
        [=]() {
         parsedFunc->set_title("user function: \\verb{"+edit->text()+"}");
         parsedFunc->set_function(edit->text());
-        plot->update_plot();
+        plot->replotPlot();
        };
     QObject::connect(edit, &QLineEdit::returnPressed, updateGraphFunctor);
     QObject::connect(edit, &QLineEdit::editingFinished, updateGraphFunctor);

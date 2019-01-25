@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     JKQTPImpulsesVerticalGraph* graph=new JKQTPImpulsesVerticalGraph(&plot);
     graph->set_xColumn(columnX);
     graph->set_yColumn(columnY);
-    graph->set_lineWidth(2);
+    graph->setLineWidth(2);
     graph->set_color(QColor("red"));
     graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
 
@@ -43,12 +43,12 @@ int main(int argc, char* argv[])
     plot.addGraph(graph);
 
     // 6. set some axis properties (we use LaTeX for nice equation rendering)
-    plot.get_xAxis()->set_axisLabel(QObject::tr("x-axis"));
-    plot.get_yAxis()->set_axisLabel(QObject::tr("y-axis"));
+    plot.getXAxis()->setAxisLabel(QObject::tr("x-axis"));
+    plot.getYAxis()->setAxisLabel(QObject::tr("y-axis"));
 
     // 7. switch the grid off
-    plot.get_xAxis()->set_drawGrid(false);
-    plot.get_yAxis()->set_drawGrid(false);
+    plot.getXAxis()->set_drawGrid(false);
+    plot.getYAxis()->set_drawGrid(false);
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();

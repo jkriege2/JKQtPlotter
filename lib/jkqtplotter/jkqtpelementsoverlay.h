@@ -86,14 +86,14 @@ class LIB_EXPORT JKQTPOverlayElement : public QObject {
         /*! \brief sets the property lineStyle to the specified \a __value. 
             \details Description of the parameter lineStyle is: <BLOCKQUOTE>\copydoc lineStyle </BLOCKQUOTE> 
             \see lineStyle for more information */ 
-        inline virtual void set_lineStyle(const Qt::PenStyle & __value)  
+        inline virtual void setLineStyle(const Qt::PenStyle & __value)  
         {
             this->lineStyle = __value;
         } 
         /*! \brief returns the property lineStyle. 
             \details Description of the parameter lineStyle is: <BLOCKQUOTE>\copydoc lineStyle </BLOCKQUOTE> 
             \see lineStyle for more information */ 
-        inline virtual Qt::PenStyle get_lineStyle() const  
+        inline virtual Qt::PenStyle getLineStyle() const  
         {
             return this->lineStyle; 
         }
@@ -114,14 +114,14 @@ class LIB_EXPORT JKQTPOverlayElement : public QObject {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)  
+        inline virtual void setLineWidth(double __value)  
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -142,28 +142,28 @@ class LIB_EXPORT JKQTPOverlayElement : public QObject {
         /*! \brief sets the property fontName to the specified \a __value. 
             \details Description of the parameter fontName is: <BLOCKQUOTE>\copydoc fontName </BLOCKQUOTE> 
             \see fontName for more information */ 
-        inline virtual void set_fontName(const QString & __value)  
+        inline virtual void setFontName(const QString & __value)  
         {
             this->fontName = __value;
         } 
         /*! \brief returns the property fontName. 
             \details Description of the parameter fontName is: <BLOCKQUOTE>\copydoc fontName </BLOCKQUOTE> 
             \see fontName for more information */ 
-        inline virtual QString get_fontName() const  
+        inline virtual QString getFontName() const  
         {
             return this->fontName; 
         }
         /*! \brief sets the property fontSize to the specified \a __value. 
             \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
-        inline virtual void set_fontSize(double __value)  
+        inline virtual void setFontSize(double __value)  
         {
             this->fontSize = __value;
         } 
         /*! \brief returns the property fontSize. 
             \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
-        inline virtual double get_fontSize() const  
+        inline virtual double getFontSize() const  
         {
             return this->fontSize; 
         }

@@ -20,21 +20,21 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
 
     plot=new JKQTPlotter(true, this);
-    plot->set_doDrawing(false);
+    plot->setPlotUpdateEnabled(false);
     plotBot=new JKQTPlotter(false, this, plot->getDatastore());
     plotBot2=new JKQTPlotter(false, this, plot->getDatastore());
-    ovl1=new JKQTPOverlayVerticalLine(0.0, tr("test"), plot->get_plotter());
-    plot->get_plotter()->addOverlayElement(ovl1);
+    ovl1=new JKQTPOverlayVerticalLine(0.0, tr("test"), plot->getPlotter());
+    plot->getPlotter()->addOverlayElement(ovl1);
     plot->setObjectName("plot");
     plotBot->setObjectName("plotBot");
     plotBot2->setObjectName("plotBot2");
-    plot->get_plotter()->set_plotLabel("Plot Label $1.\\alpha$");
-    plot->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
-    plotBot->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
-    plotBot2->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
+    plot->getPlotter()->setPlotLabel("Plot Label $1.\\alpha$");
+    plot->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
+    plotBot->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
+    plotBot2->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot/");
 
     QListView* listPlots=new QListView(this);
-    listPlots->setModel(plot->get_plotter()->getPlotsModel());
+    listPlots->setModel(plot->getPlotter()->getPlotsModel());
     listPlots->setMaximumWidth(256);
     QVBoxLayout* layout=new QVBoxLayout(this);
     QGridLayout* layout_grid=new QGridLayout(this);
@@ -49,21 +49,21 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     plotBot->synchronizeToMaster(plot, true, false);
     connect(plot, SIGNAL(zoomChangedLocally(double,double,double,double,JKQTPlotter*)), plotBot, SLOT(synchronizeXAxis(double,double,double,double,JKQTPlotter*)));
-    plot->get_plotter()->set_gridPrinting(true);
-    plot->get_plotter()->addGridPrintingPlotter(0,1,plotBot->get_plotter());
-    plot->get_plotter()->addGridPrintingPlotter(0,2,plotBot2->get_plotter());
+    plot->getPlotter()->setGridPrinting(true);
+    plot->getPlotter()->addGridPrintingPlotter(0,1,plotBot->getPlotter());
+    plot->getPlotter()->addGridPrintingPlotter(0,2,plotBot2->getPlotter());
 
-    plot->get_plotter()->get_xAxis()->set_axisLabel("$x$ axis with greek letters $\\sqrt{\\alpha\\cdot\\beta}$");
-    plot->get_plotter()->get_yAxis()->set_axisLabel("$y$-axis label $f(x)=\\sin\\left(x^2\\right)$ [unit]");
+    plot->getPlotter()->getXAxis()->setAxisLabel("$x$ axis with greek letters $\\sqrt{\\alpha\\cdot\\beta}$");
+    plot->getPlotter()->getYAxis()->setAxisLabel("$y$-axis label $f(x)=\\sin\\left(x^2\\right)$ [unit]");
 
-    plotBot->get_plotter()->get_xAxis()->set_axisLabel(plot->get_plotter()->get_xAxis()->get_axisLabel());
-    plotBot->get_plotter()->get_yAxis()->set_axisLabel("$y$-axis 2 [unit]");
-    plotBot2->get_plotter()->get_xAxis()->set_axisLabel(plot->get_plotter()->get_xAxis()->get_axisLabel());
-    plotBot2->get_plotter()->get_yAxis()->set_axisLabel("$y$-axis 3 [unit]");
-    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(2.5, "tick 1");
-    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(7.5, "tick 2");
-    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(12.5, "tick 3");
-    plotBot2->get_plotter()->get_xAxis()->addAxisTickLabel(17.5, "tick 4");
+    plotBot->getPlotter()->getXAxis()->setAxisLabel(plot->getPlotter()->getXAxis()->getAxisLabel());
+    plotBot->getPlotter()->getYAxis()->setAxisLabel("$y$-axis 2 [unit]");
+    plotBot2->getPlotter()->getXAxis()->setAxisLabel(plot->getPlotter()->getXAxis()->getAxisLabel());
+    plotBot2->getPlotter()->getYAxis()->setAxisLabel("$y$-axis 3 [unit]");
+    plotBot2->getPlotter()->getXAxis()->addAxisTickLabel(2.5, "tick 1");
+    plotBot2->getPlotter()->getXAxis()->addAxisTickLabel(7.5, "tick 2");
+    plotBot2->getPlotter()->getXAxis()->addAxisTickLabel(12.5, "tick 3");
+    plotBot2->getPlotter()->getXAxis()->addAxisTickLabel(17.5, "tick 4");
 
 
     for (unsigned int i=0; i<N1; i++) {
@@ -75,7 +75,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
         y21r[i]=double(rand()%100)/10.0-5.0;
         y21re[i]=y21r[i]*double(rand()%10)/40.0;
     }
-    JKQTPDatastore* ds=plot->get_plotter()->getDatastore();
+    JKQTPDatastore* ds=plot->getPlotter()->getDatastore();
 
     //size_t cx1=ds->addColumn(x1, N1, "x1");
     //size_t cy11=ds->addColumn(y11, N1, "y11");
@@ -104,19 +104,19 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     size_t cy21re=ds->addColumn(y21re, N2, "y21re");
 
 
-    size_t id=plot->get_plotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPFilledCurveX);
-    JKQTPFilledCurveXGraph* fcxgr=qobject_cast<JKQTPFilledCurveXGraph*>(plot->get_plotter()->getGraph(id));
+    size_t id=plot->getPlotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPFilledCurveX);
+    JKQTPFilledCurveXGraph* fcxgr=qobject_cast<JKQTPFilledCurveXGraph*>(plot->getPlotter()->getGraph(id));
     if (fcxgr) {
         fcxgr->set_baseline(2);
     }
 
-    size_t yeb=plot->get_plotter()->addGraphWithXYError(cx2, cy21, cy22, cy22, "sine with errors", JKQTPFilledCurveX);
-    plteErrors=plot->get_plotter()->getGraph(yeb);
+    size_t yeb=plot->getPlotter()->addGraphWithXYError(cx2, cy21, cy22, cy22, "sine with errors", JKQTPFilledCurveX);
+    plteErrors=plot->getPlotter()->getGraph(yeb);
     setErrorStyle(0);
-    yeb=plot->get_plotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPLinesPoints);
-    plteSymbols=plot->get_plotter()->getGraph(yeb);
+    yeb=plot->getPlotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPLinesPoints);
+    plteSymbols=plot->getPlotter()->getGraph(yeb);
 
-    pltePlot2=new JKQTPXYLineErrorGraph(plotBot->get_plotter());
+    pltePlot2=new JKQTPXYLineErrorGraph(plotBot->getPlotter());
     pltePlot2->set_xColumn(cx2r);
     pltePlot2->set_yColumn(cy21r);
     pltePlot2->set_title(tr("random numbers"));
@@ -124,7 +124,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     pltePlot2->set_yErrorColumn(cy21re);
     pltePlot2->set_yErrorStyle(JKQTPErrorBarsPolygons);
     pltePlot2->set_symbol(JKQTPFilledStar);
-    plotBot->get_plotter()->addGraph(pltePlot2);
+    plotBot->getPlotter()->addGraph(pltePlot2);
     plotBot->zoomToFit();
 
 
@@ -142,8 +142,8 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
         b2[i]=1.5+cos(i+M_PI/8.0);
         b3[i]=1.5+sin(i);
 
-        //plot->get_xAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
-        //plot->get_yAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
+        //plot->getXAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
+        //plot->getYAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));
     }
 
     size_t cbp=ds->addLinearColumn(N3, 2, N3+2, "boxplot_x");
@@ -162,23 +162,23 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     cb.push_back(ds->addColumn(b3, N3, "b3"));
     QStringList ts;
     ts<<"bars 1"<<"bars 2"<<"bars 3";
-    plot->get_plotter()->addVerticalBargraph(cb, cbp, ts);
+    plot->getPlotter()->addVerticalBargraph(cb, cbp, ts);
 
-    JKQTPVerticalRange* r1=new JKQTPVerticalRange(plot->get_plotter());
+    JKQTPVerticalRange* r1=new JKQTPVerticalRange(plot->getPlotter());
     r1->set_rangeMin(5);
     r1->set_rangeMax(10);
     r1->set_rangeCenter(7.5);
     r1->set_title("vert. range");
-    plot->get_plotter()->addGraph(r1);
+    plot->getPlotter()->addGraph(r1);
 
-    JKQTPHorizontalRange* r2=new JKQTPHorizontalRange(plot->get_plotter());
+    JKQTPHorizontalRange* r2=new JKQTPHorizontalRange(plot->getPlotter());
     r2->set_rangeMin(5);
     r2->set_rangeMax(10);
     r2->set_rangeCenter(7.5);
     r2->set_title("hor. range");
-    plot->get_plotter()->addGraph(r2);
+    plot->getPlotter()->addGraph(r2);
 
-    JKQTPBoxplotVerticalGraph* box=new JKQTPBoxplotVerticalGraph(plotBot2->get_plotter());
+    JKQTPBoxplotVerticalGraph* box=new JKQTPBoxplotVerticalGraph(plotBot2->getPlotter());
     box->set_posColumn(cbxbox);
     box->set_medianColumn(cbmed);
     box->set_meanColumn(cbmean);
@@ -192,7 +192,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     /*JKQTPYFunctionLineGraph* g=new JKQTPYFunctionLineGraph(&plot);
     g->set_title("function 1");
-    g->set_plotFunction(f1);
+    g->setPlotFunction(f1);
     g->set_errorFunction(f1e);
     g->set_drawErrorLines(true);
     g->set_drawErrorPolygons(false);
@@ -201,7 +201,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     /*JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(&plot);
     g->set_title("function 2");
-    g->set_plotFunction(f2);
+    g->setPlotFunction(f2);
     plot->addGraph(g);*/
 
     /*JKQTPStepVerticalGraph* g=new JKQTPStepVerticalGraph(&plot);
@@ -212,22 +212,22 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     plot->addGraph(g);
     plot->addGraph(cy11, cx1, "$\\sin(x)$", JKQTPPoints);*/
 
-    plot->set_doDrawing(true);
-    plot->get_plotter()->zoomToFit(true, false);//, true);
-    plot->get_plotter()->set_keyAutosize(true);
+    plot->setPlotUpdateEnabled(true);
+    plot->getPlotter()->zoomToFit(true, false);//, true);
+    plot->getPlotter()->setKeyAutosize(true);
 
     QCheckBox* chklogX=new QCheckBox("logarithmic X-axis", this);
     QCheckBox* chklogY=new QCheckBox("logarithmic Y-axis", this);
-    connect(chklogX, SIGNAL(toggled(bool)), plot->get_plotter()->get_xAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogY, SIGNAL(toggled(bool)), plot->get_plotter()->get_yAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogX, SIGNAL(toggled(bool)), plotBot2->get_plotter()->get_xAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogY, SIGNAL(toggled(bool)), plotBot2->get_plotter()->get_yAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogX, SIGNAL(toggled(bool)), plot->getPlotter()->getXAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogY, SIGNAL(toggled(bool)), plot->getPlotter()->getYAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogX, SIGNAL(toggled(bool)), plotBot2->getPlotter()->getXAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogY, SIGNAL(toggled(bool)), plotBot2->getPlotter()->getYAxis(), SLOT(set_logAxis(bool)));
     layout->addWidget(chklogX);
     layout->addWidget(chklogY);
     QCheckBox* chkInvertX=new QCheckBox("invert X-axis", this);
     QCheckBox* chkInvertY=new QCheckBox("invert Y-axis", this);
-    connect(chkInvertX, SIGNAL(toggled(bool)), plot->get_plotter()->get_xAxis(), SLOT(set_inverted(bool)));
-    connect(chkInvertY, SIGNAL(toggled(bool)), plot->get_plotter()->get_yAxis(), SLOT(set_inverted(bool)));
+    connect(chkInvertX, SIGNAL(toggled(bool)), plot->getPlotter()->getXAxis(), SLOT(set_inverted(bool)));
+    connect(chkInvertY, SIGNAL(toggled(bool)), plot->getPlotter()->getYAxis(), SLOT(set_inverted(bool)));
     layout->addWidget(chkInvertX);
     layout->addWidget(chkInvertY);
     layout->addWidget(chkInvertX);
@@ -312,7 +312,7 @@ void TestWidgetGraphs::setErrorStyle(int /*index*/)
         if (ey) {
             ey->set_yErrorStyle(String2JKQTPErrorPlotstyle(cmb->itemData(cmb->currentIndex()).toString()));
         }
-        plot->update_plot();
+        plot->replotPlot();
     }
 }
 
@@ -325,7 +325,7 @@ void TestWidgetGraphs::setESSymbol(int /*index*/)
             exy->set_symbol(String2JKQTPGraphSymbols(cmb->itemData(cmb->currentIndex()).toString()));
         }
 
-        plot->update_plot();
+        plot->replotPlot();
     }
 }
 
@@ -335,25 +335,25 @@ void TestWidgetGraphs::setSortOrder2(int index)
     if (index==0) pltePlot2->set_sortData(JKQTPXYGraph::Unsorted);
     if (index==1) pltePlot2->set_sortData(JKQTPXYLineGraph::SortedX);
     if (index==2) pltePlot2->set_sortData(JKQTPXYLineGraph::SortedY);
-    plotBot->update_plot();
+    plotBot->replotPlot();
 }
 
 void TestWidgetGraphs::setKeyLayout2(JKQTPKeyLayout layout)
 {
-    plot->get_plotter()->set_keyLayout(layout);
-    plotBot->get_plotter()->set_keyLayout(layout);
-    plotBot2->get_plotter()->set_keyLayout(layout);
-    plot->update_plot();
-    plotBot->update_plot();
-    plotBot2->update_plot();
+    plot->getPlotter()->setKeyLayout(layout);
+    plotBot->getPlotter()->setKeyLayout(layout);
+    plotBot2->getPlotter()->setKeyLayout(layout);
+    plot->replotPlot();
+    plotBot->replotPlot();
+    plotBot2->replotPlot();
 }
 
 void TestWidgetGraphs::setKeyPos2(JKQTPKeyPosition layout)
 {
-    plot->get_plotter()->set_keyPosition(layout);
-    plotBot->get_plotter()->set_keyPosition(layout);
-    plotBot2->get_plotter()->set_keyPosition(layout);
-    plot->update_plot();
-    plotBot->update_plot();
-    plotBot2->update_plot();
+    plot->getPlotter()->setKeyPosition(layout);
+    plotBot->getPlotter()->setKeyPosition(layout);
+    plotBot2->getPlotter()->setKeyPosition(layout);
+    plot->replotPlot();
+    plotBot->replotPlot();
+    plotBot2->replotPlot();
 }

@@ -170,14 +170,14 @@ class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -200,24 +200,24 @@ class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
          *
          *  \details Description of the parameter varname is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void set_plotFunction (jkqtpPlotFunctionType && __value);
+        virtual void setPlotFunction (jkqtpPlotFunctionType && __value);
         /** \brief sets the property plotFunction to the specified \a __value.
          *
          *  \details Description of the parameter varname is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void set_plotFunction (const jkqtpPlotFunctionType & __value);
+        virtual void setPlotFunction (const jkqtpPlotFunctionType & __value);
         /** \brief sets the property plotFunction to the specified \a __value.
          *
          *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void set_plotFunction (jkqtpSimplePlotFunctionType && __value);
+        virtual void setPlotFunction (jkqtpSimplePlotFunctionType && __value);
         /** \brief sets the property plotFunction to the specified \a __value.
          *
          *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void set_plotFunction (const jkqtpSimplePlotFunctionType & __value);
+        virtual void setPlotFunction (const jkqtpSimplePlotFunctionType & __value);
         /*! \brief returns the property plotFunction. \see plotFunction for more information */ \
-        virtual jkqtpPlotFunctionType get_plotFunction () const;
+        virtual jkqtpPlotFunctionType getPlotFunction () const;
         /*! \brief returns the property simplePlotFunction. \see simplePlotFunction for more information */ \
         virtual jkqtpSimplePlotFunctionType get_simplePlotFunction () const;
 
@@ -316,14 +316,14 @@ class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /*! \brief sets the property plotRefinement to the specified \a __value. 
             \details Description of the parameter plotRefinement is: <BLOCKQUOTE>\copydoc plotRefinement </BLOCKQUOTE> 
             \see plotRefinement for more information */ 
-        inline virtual void set_plotRefinement(bool __value)
+        inline virtual void setPlotRefinement(bool __value)
         {
             this->plotRefinement = __value;
         } 
         /*! \brief returns the property plotRefinement. 
             \details Description of the parameter plotRefinement is: <BLOCKQUOTE>\copydoc plotRefinement </BLOCKQUOTE> 
             \see plotRefinement for more information */ 
-        inline virtual bool get_plotRefinement() const  
+        inline virtual bool getPlotRefinement() const  
         {
             return this->plotRefinement; 
         }
@@ -527,7 +527,7 @@ class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief returns, which special function is set (or if any is set) */
         SpecialFunction getFunctionType() const;
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         struct doublePair {

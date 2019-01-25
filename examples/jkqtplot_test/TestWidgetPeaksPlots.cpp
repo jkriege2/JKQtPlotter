@@ -19,10 +19,10 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
     setLayout(layoutpeaks);
     resize(1000, 800);
     plotPeaks=new JKQTPlotter(true, this);
-    plotPeaks->set_doDrawing(false);
-    plotPeaks->get_plotter()->set_plotLabel(tr("\\textbf{peaks stream plot}"));
+    plotPeaks->setPlotUpdateEnabled(false);
+    plotPeaks->getPlotter()->setPlotLabel(tr("\\textbf{peaks stream plot}"));
     plotPeaks->setObjectName("plotPeaks");
-    plotPeaks->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
+    plotPeaks->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_peaks/");
 
     QCheckBox* chkDrawBaseline=new QCheckBox(tr("draw baseline"), this);
     chkDrawBaseline->setChecked(true);
@@ -44,14 +44,14 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
     int phot1=plotPeaks->getDatastore()->addCopiedColumn(photons1, "photons 1");
     int phot2=plotPeaks->getDatastore()->addCopiedColumn(photons2, "photons 2");
 
-    graphPeakStream1=new JKQTPPeakStreamGraph(phot1, 0.05, 1, QColor("darkgreen"), plotPeaks->get_plotter());
+    graphPeakStream1=new JKQTPPeakStreamGraph(phot1, 0.05, 1, QColor("darkgreen"), plotPeaks->getPlotter());
     graphPeakStream1->set_title("channel 1");
-    plotPeaks->get_plotter()->addGraph(graphPeakStream1);
-    graphPeakStream2=new JKQTPPeakStreamGraph(phot2, -0.05, -1, QColor("darkred"), plotPeaks->get_plotter());
+    plotPeaks->getPlotter()->addGraph(graphPeakStream1);
+    graphPeakStream2=new JKQTPPeakStreamGraph(phot2, -0.05, -1, QColor("darkred"), plotPeaks->getPlotter());
     graphPeakStream2->set_title("channel 2");
-    plotPeaks->get_plotter()->addGraph(graphPeakStream2);
+    plotPeaks->getPlotter()->addGraph(graphPeakStream2);
 
-    plotPeaks->set_doDrawing(true);
+    plotPeaks->setPlotUpdateEnabled(true);
     plotPeaks->zoomToFit();
 
 
@@ -65,12 +65,12 @@ void TestWidgetPeaksPlots::setDrawBaseline(bool checked)
 {
     graphPeakStream1->set_drawBaseline(checked);
     graphPeakStream2->set_drawBaseline(checked);
-    plotPeaks->update_plot();
+    plotPeaks->replotPlot();
 }
 
 void TestWidgetPeaksPlots::setYPeaks(bool checked)
 {
     graphPeakStream1->set_yPeaks(checked);
     graphPeakStream2->set_yPeaks(checked);
-    plotPeaks->update_plot();
+    plotPeaks->replotPlot();
 }

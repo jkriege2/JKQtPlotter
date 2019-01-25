@@ -70,9 +70,9 @@ int main(int argc, char* argv[])
     col.setAlphaF(0.25); graphG->set_fillColor(col);
     col=QColor("blue"); graphB->set_color(col);
     col.setAlphaF(0.25); graphB->set_fillColor(col);
-    graphR->set_lineWidth(1);
-    graphG->set_lineWidth(1);
-    graphB->set_lineWidth(1);
+    graphR->setLineWidth(1);
+    graphG->setLineWidth(1);
+    graphB->setLineWidth(1);
 
     // set data
     graphR->set_xColumn(columnX); graphR->set_yColumn(columnR);
@@ -86,8 +86,8 @@ int main(int argc, char* argv[])
     plot.addGraph(graphR);
 
     // 5. set axis labels
-    plot.get_xAxis()->set_axisLabel("R/G/B-value");
-    plot.get_yAxis()->set_axisLabel("normalized frequency [%]");
+    plot.getXAxis()->setAxisLabel("R/G/B-value");
+    plot.getYAxis()->setAxisLabel("normalized frequency [%]");
 
 
     // 4. set the maximum size of the plot to 0..100% and 0..256

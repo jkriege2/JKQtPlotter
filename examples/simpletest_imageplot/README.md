@@ -19,9 +19,9 @@ int main(int argc, char* argv[])
 
     JKQTPlotter plot;
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
+    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
     // color-map is "MATLAB"
     graph->set_palette(JKQTPMathImageMATLAB);
     // get coordinate axis of color-bar and set its label
-    graph->get_colorBarRightAxis()->set_axisLabel("light intensity [A.U.]");
+    graph->get_colorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
     // determine min/max of data automatically and use it to set the range of the color-scale
     graph->set_autoImageRange(true);
 
@@ -88,13 +88,13 @@ int main(int argc, char* argv[])
 
 	
     // 6. set axis labels
-    plot.get_xAxis()->set_axisLabel("x [{\\mu}m]");
-    plot.get_yAxis()->set_axisLabel("y [{\\mu}m]");
+    plot.getXAxis()->setAxisLabel("x [{\\mu}m]");
+    plot.getYAxis()->setAxisLabel("y [{\\mu}m]");
 
 	
     // 7. fix axis and plot aspect ratio to 1
-    plot.get_plotter()->set_maintainAspectRatio(true);
-    plot.get_plotter()->set_maintainAxisAspectRatio(true);
+    plot.getPlotter()->setMaintainAspectRatio(true);
+    plot.getPlotter()->setMaintainAxisAspectRatio(true);
 
     // 8 autoscale the plot so the graph is contained
     plot.zoomToFit();

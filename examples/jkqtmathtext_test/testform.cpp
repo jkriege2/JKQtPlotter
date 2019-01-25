@@ -214,7 +214,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
         name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathText::decorationToString(decoN->get_decoration()));
         if (decoN->get_child()) ti->addChild(createTree(decoN->get_child(), ti));
     } else if (matrixN)  {
-        int l=matrixN->get_lines();
+        int l=matrixN->getLines();
         int c=matrixN->get_columns();
         name=QString("MTmatrixNode: l*c=%1*%2").arg(l).arg(c);
         QVector<QVector<JKQTMathText::MTnode*> > children=matrixN->get_children();
@@ -235,7 +235,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
         name=QString("MTsqrtNode: deg=%1").arg(sqrtN->get_degree());
         if (sqrtN->get_child()) ti->addChild(createTree(sqrtN->get_child(), ti));
     } else if (braceN)  {
-        name=QString("MTbraceNode: l='%1', r='%2', showR=%3").arg(braceN->get_openbrace()).arg(braceN->get_closebrace()).arg(braceN->get_showRightBrace());
+        name=QString("MTbraceNode: l='%1', r='%2', showR=%3").arg(braceN->get_openbrace()).arg(braceN->get_closebrace()).arg(braceN->getShowRightBrace());
         if (braceN->get_child()) ti->addChild(createTree(braceN->get_child(), ti));
     } else if (superN)  {
         name=QString("MTsuperscriptNode");
@@ -321,12 +321,12 @@ void TestForm::updateMath()
     ht.start();
 
 
-    mt.set_fontRoman(ui->cmbUnicodeSerif->currentFont().family());
-    mt.set_fontMathRoman(ui->cmbUnicodeSerif->currentFont().family());
-    mt.set_fontSans(ui->cmbUnicodeSans->currentFont().family());
-    mt.set_fontMathSans(ui->cmbUnicodeSans->currentFont().family());
-    mt.set_fontTypewriter(ui->cmbUnicodeFixed->currentFont().family());
-    mt.set_fontSymbol(ui->cmbUnicodeSymbol->currentFont().family());
+    mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family());
+    mt.setFontMathRoman(ui->cmbUnicodeSerif->currentFont().family());
+    mt.setFontSans(ui->cmbUnicodeSans->currentFont().family());
+    mt.setFontMathSans(ui->cmbUnicodeSans->currentFont().family());
+    mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family());
+    mt.setFontSymbol(ui->cmbUnicodeSymbol->currentFont().family());
 
     switch (ui->cmbFont->currentIndex()) {
         case 1: mt.useXITS(); break;
@@ -359,7 +359,7 @@ void TestForm::updateMath()
         bool ok=true;
         int size=sl[i].trimmed().toUInt(&ok);
         if (!ok) size=10+i*5;
-        mt.set_fontSize(size);
+        mt.setFontSize(size);
         double durationSizingMS=0, durationTimingMS=0;
         Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3pt").arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size), durationSizingMS, durationTimingMS);
 

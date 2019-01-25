@@ -24,9 +24,9 @@ int main(int argc, char* argv[])
 
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
+    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
     JKQTPDatastore* ds=plot.getDatastore();
 
 
@@ -73,12 +73,12 @@ int main(int argc, char* argv[])
     plot.addGraph(graph);
 
     // 6. set axis labels
-    plot.get_xAxis()->set_axisLabel("x [pixels]");
-    plot.get_yAxis()->set_axisLabel("y [pixels]");
+    plot.getXAxis()->setAxisLabel("x [pixels]");
+    plot.getYAxis()->setAxisLabel("y [pixels]");
 
     // 7. fix axis aspect ratio to width/height, so pixels are square
-    plot.get_plotter()->set_maintainAspectRatio(true);
-    plot.get_plotter()->set_aspectRatio(double(picture.cols)/double(picture.rows));
+    plot.getPlotter()->setMaintainAspectRatio(true);
+    plot.getPlotter()->setAspectRatio(double(picture.cols)/double(picture.rows));
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();

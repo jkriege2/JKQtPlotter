@@ -53,7 +53,7 @@ QPen JKQTPGeoBaseLine::getPen(JKQTPEnhancedPainter& painter) {
     QPen p;
     p.setColor(color);
     p.setStyle(style);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     return p;
 }
 
@@ -170,12 +170,12 @@ bool JKQTPGeoText::getYMinMax(double& miny, double& maxy, double& smallestGreate
 void JKQTPGeoText::draw(JKQTPEnhancedPainter& painter) {
     painter.save();
 #ifdef USE_XITS_FONTS
-    parent->get_mathText()->useXITS();
+    parent->getMathText()->useXITS();
 #endif
-    parent->get_mathText()->set_fontSize(fontSize*parent->get_fontSizeMultiplier());
-    parent->get_mathText()->set_fontColor(color);
-    parent->get_mathText()->parse(text);
-    parent->get_mathText()->draw(painter, transformX(x), transformY(y));
+    parent->getMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
+    parent->getMathText()->setFontColor(color);
+    parent->getMathText()->parse(text);
+    parent->getMathText()->draw(painter, transformX(x), transformY(y));
     painter.restore();
 }
 
@@ -290,10 +290,10 @@ bool JKQTPGeoInfiniteLine::getYMinMax(double& miny, double& maxy, double& smalle
 
 void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
 
-    double xmin=parent->get_xAxis()->getMin();
-    double xmax=parent->get_xAxis()->getMax();
-    double ymin=parent->get_yAxis()->getMin();
-    double ymax=parent->get_yAxis()->getMax();
+    double xmin=parent->getXAxis()->getMin();
+    double xmax=parent->getXAxis()->getMax();
+    double ymin=parent->getYAxis()->getMin();
+    double ymax=parent->getYAxis()->getMax();
     QRectF bbox(QPointF(xmin, ymin), QPointF(xmax, ymax));
     bool doDraw=false;
     double x2=x, y2=y;
@@ -971,7 +971,7 @@ void JKQTPGeoSymbol::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
     const double minSize=qMin(rect.width(), rect.height());
     double symbolSize=parent->pt2px(painter, this->symbolSize);
     if (symbolSize>minSize*0.9) symbolSize=minSize*0.9;
-    double symbolWidth=parent->pt2px(painter, this->symbolWidth*parent->get_lineWidthMultiplier());
+    double symbolWidth=parent->pt2px(painter, this->symbolWidth*parent->getLineWidthMultiplier());
     if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
 
     painter.save();

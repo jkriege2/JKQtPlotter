@@ -35,6 +35,9 @@ class JKQTBasePlotter; // forward
 /** \brief data model with all plots ina JKQTBasePlotter (+ allows to switch them visible/invisible)
   * \ingroup jkqtpgraphsmodel
   *
+  * This class is derived from <a href="http://doc.qt.io/qt-5/qabstracttablemodel.html">QAbstractTableModel</a> and implements a model where
+  * some properties are editable. It is designed to be used together with e.g. <a href="http://doc.qt.io/qt-5/qlistview.html">QListView</a>.
+  *
   * \image html JKQTPGraphsModel.png
   */
 class JKQTPGraphsModel : public QAbstractTableModel

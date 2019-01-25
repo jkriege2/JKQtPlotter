@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
     graph2->set_symbol(JKQTPFilledRect);
     graph2->set_drawLine(true);
     graph2->set_title("2: color");
-    graph2->get_colorBarRightAxis()->set_axisLabel("color scale for graph2");
+    graph2->get_colorBarRightAxis()->setAxisLabel("color scale for graph2");
     plot.addGraph(graph2);
 
     // 3.3 for graph3, we use dataset X/Y3
@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
     graph5->set_palette(JKQTPMathImageBLUEYELLOW);
     graph5->set_drawLine(true);
     graph5->set_title("5: color+size");
-    graph5->get_colorBarRightAxis()->set_axisLabel("color scale for graph5");
+    graph5->get_colorBarRightAxis()->setAxisLabel("color scale for graph5");
     plot.addGraph(graph5);
 
     // 3.6 for graph2, we use dataset X/Y6
@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
     JKQTPXYParametrizedScatterGraph* graph6=new JKQTPXYParametrizedScatterGraph(&plot);
     graph6->set_xColumn(columnX);
     graph6->set_yColumn(columnY6);
-    graph6->set_linewidthColumn(columnLW);
+    graph6->setLinewidthColumn(columnLW);
     graph6->set_drawLine(true);
     graph6->set_symbol(JKQTPNoSymbol);
     graph6->set_title("6: line width");
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
     JKQTPXYParametrizedScatterGraph* graph7=new JKQTPXYParametrizedScatterGraph(&plot);
     graph7->set_xColumn(columnX);
     graph7->set_yColumn(columnY7);
-    graph7->set_linewidthColumn(columnLW);
+    graph7->setLinewidthColumn(columnLW);
     graph7->set_drawLine(true);
     graph7->set_colorColumn(columnC);
     graph7->set_palette(JKQTPMathImageBLUEYELLOW);
@@ -148,12 +148,12 @@ int main(int argc, char* argv[])
     plot.addGraph(graph7);
 
     // 4. autoscale the plot so the graph is contained and format the coordinate system and key
-    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideBottomLeft);
-    plot.get_plotter()->set_keyLayout(JKQTPKeyLayoutOneRow);
-    plot.get_xAxis()->set_axisLabel("x-axis");
-    plot.get_yAxis()->set_axisLabel("y-axis");
-    plot.get_xAxis()->set_drawGrid(false);
-    plot.get_yAxis()->set_drawGrid(false);
+    plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideBottomLeft);
+    plot.getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
+    plot.getXAxis()->setAxisLabel("x-axis");
+    plot.getYAxis()->setAxisLabel("y-axis");
+    plot.getXAxis()->set_drawGrid(false);
+    plot.getYAxis()->set_drawGrid(false);
     plot.zoomToFit();
 
     // 5. show plotter and make it a decent size

@@ -200,7 +200,7 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
 
 /** \brief this virtual base class of the (data-column based) graphs,
  *         which are part of a JKQTPlotter plot and which use the coordinate system
- *         of the JKQTPlotter (i.e. the two coordinate axes get_xAxis() and get_yAxis())
+ *         of the JKQTPlotter (i.e. the two coordinate axes getXAxis() and getYAxis())
  *         as basis for the graphs
  * \ingroup jkqtplotter_basegraphs
  *
@@ -513,14 +513,14 @@ class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -548,7 +548,7 @@ class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         /** \brief the column that contains the datapoints */
         int dataColumn;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */

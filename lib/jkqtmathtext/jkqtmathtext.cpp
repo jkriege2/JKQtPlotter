@@ -138,17 +138,17 @@ QFont JKQTMathText::MTenvironment::getFont(JKQTMathText* parent) const {
     QFont f;
     switch (font) {
         case MTEsans:
-                if (insideMath) f.setFamily(parent->get_fontMathSans());
-                else f.setFamily(parent->get_fontSans());
+                if (insideMath) f.setFamily(parent->getFontMathSans());
+                else f.setFamily(parent->getFontSans());
                 break;
-        case MTEtypewriter: f.setFamily(parent->get_fontTypewriter()); break;
-        case MTEscript: f.setFamily(parent->get_fontScript()); break;
+        case MTEtypewriter: f.setFamily(parent->getFontTypewriter()); break;
+        case MTEscript: f.setFamily(parent->getFontScript()); break;
         case MTEroman:
-                if (insideMath) f.setFamily(parent->get_fontMathRoman());
-                else f.setFamily(parent->get_fontRoman());
+                if (insideMath) f.setFamily(parent->getFontMathRoman());
+                else f.setFamily(parent->getFontRoman());
                 break;
-        case MTEcaligraphic: f.setFamily(parent->get_fontCaligraphic()); break;
-        case MTEblackboard: f.setFamily(parent->get_fontBlackboard()); break;
+        case MTEcaligraphic: f.setFamily(parent->getFontCaligraphic()); break;
+        case MTEblackboard: f.setFamily(parent->getFontBlackboard()); break;
     };
     f.setBold(bold);
     f.setItalic(italic);
@@ -271,7 +271,7 @@ void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
                                  text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
             f.setItalic(false);
-            f.setFamily(parent->get_fontBraces());
+            f.setFamily(parent->getFontBraces());
         }
     QString txt=textTransform(text, currentEv, true);
     QFontMetricsF fm(f, painter.device());
@@ -324,7 +324,7 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
                                  text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
             f.setItalic(false);
-            f.setFamily(parent->get_fontBraces());
+            f.setFamily(parent->getFontBraces());
         }
 
 
@@ -384,7 +384,7 @@ QString JKQTMathText::MTtextNode::getTypeName() const
 QString JKQTMathText::MTtextNode::textTransform(const QString &text, JKQTMathText::MTenvironment currentEv, bool /*forSize*/)
 {
     QString txt=text;
-    if (parent->get_fontEncoding()==MTFEunicode) {
+    if (parent->getFontEncoding()==MTFEunicode) {
         if (currentEv.insideMath) {
             txt="";
             for (int i=0; i<text.size(); i++) {
@@ -403,7 +403,7 @@ QString JKQTMathText::MTtextNode::textTransform(const QString &text, JKQTMathTex
             txt=txt.replace("  ", " ");
         }
     }
-    if (currentEv.font==MTEblackboard && parent->get_fontEncoding()==MTFEunicode) {
+    if (currentEv.font==MTEblackboard && parent->getFontEncoding()==MTFEunicode) {
         txt="";
         for (int i=0; i<text.size(); i++) {
             QChar c=text[i];
@@ -424,7 +424,7 @@ QString JKQTMathText::MTtextNode::textTransform(const QString &text, JKQTMathTex
 
         }
     }
-    if (currentEv.font==MTEcaligraphic && parent->get_fontEncoding()==MTFEunicode) {
+    if (currentEv.font==MTEcaligraphic && parent->getFontEncoding()==MTFEunicode) {
         txt="";
         for (int i=0; i<text.size(); i++) {
             QChar c=text[i];
@@ -1550,7 +1550,7 @@ void JKQTMathText::MTbraceNode::getBraceWidth(QPainter &/*painter*/, JKQTMathTex
     /*QFont evf=ev.getFont(parent);
     if (ev.insideMath) evf.setItalic(false);
     ev.italic=false;
-    while (ev.fontSize<10*parent->get_fontSize()) {
+    while (ev.fontSize<10*parent->getFontSize()) {
         const QFontMetricsF fme(evf, painter.device());
         if (fme.ascent()>overallHeight) break;
         ev.fontSize+=0.5;
@@ -2543,7 +2543,7 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, QString name, boo
         symbol = itsimplehia.value();
         heightIsAscent = true; 
       } else {
-        if (parent->get_fontEncoding() == MTFEwinSymbol) {
+        if (parent->getFontEncoding() == MTFEwinSymbol) {
           // first we start with greek characters
           font = MTSFgreek;
           italic = -1;
@@ -2606,7 +2606,7 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, QString name, boo
             //else if (n=="") symbol=QChar(0x);
           }
         }
-        else if (parent->get_fontEncoding() == MTFEunicode) { // use UNICODE encoding for special characters
+        else if (parent->getFontEncoding() == MTFEunicode) { // use UNICODE encoding for special characters
          // first we start with greek characters
           font = MTSFdefault; //MTSFgreek;
           //std::cout<<"encoding unicode\n";
@@ -2667,7 +2667,7 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, QString name, boo
             //else if (n=="") symbol=QChar(0x);
           }
         }
-        else if (parent->get_fontEncoding() == MTFElatex) { // use UNICODE encoding for special characters
+        else if (parent->getFontEncoding() == MTFElatex) { // use UNICODE encoding for special characters
          // first we start with greek characters
           font = MTSFdefault; //MTSFgreek;
           //std::cout<<"encoding unicode\n";
@@ -2738,12 +2738,12 @@ QString JKQTMathText::MTsymbolNode::getTypeName() const
 QFont JKQTMathText::MTsymbolNode::getFontName(symbolFont f, QFont& fi) {
     QFont fr=fi;
     switch(f) {
-        case MTSFgreek: fr.setFamily(parent->get_fontGreek()); break;
-        case MTSFsymbol: fr.setFamily(parent->get_fontSymbol()); break;
-        case MTSFbraces: fr.setFamily(parent->get_fontBraces()); break;
-        case MTSFintegrals: fr.setFamily(parent->get_fontIntegrals()); break;
-        case MTSFcaligraphic: fr.setFamily(parent->get_fontCaligraphic()); break;
-        case MTSFblackboard: fr.setFamily(parent->get_fontBlackboard()); break;
+        case MTSFgreek: fr.setFamily(parent->getFontGreek()); break;
+        case MTSFsymbol: fr.setFamily(parent->getFontSymbol()); break;
+        case MTSFbraces: fr.setFamily(parent->getFontBraces()); break;
+        case MTSFintegrals: fr.setFamily(parent->getFontIntegrals()); break;
+        case MTSFcaligraphic: fr.setFamily(parent->getFontCaligraphic()); break;
+        case MTSFblackboard: fr.setFamily(parent->getFontBlackboard()); break;
         default: break;
     }
     return fr;
@@ -4213,7 +4213,7 @@ JKQTMathTextLabel::JKQTMathTextLabel(QWidget *parent):
 {
     m_mathText=new JKQTMathText(this);
     m_mathText->useXITS();
-    m_mathText->set_fontSize(font().pointSizeF()*1.3);
+    m_mathText->setFontSize(font().pointSizeF()*1.3);
     lastText="";
     repaintDo=true;
     buffer=QPixmap();

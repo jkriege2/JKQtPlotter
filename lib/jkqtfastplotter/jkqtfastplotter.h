@@ -82,7 +82,7 @@ class JKQTFPPlot;
         plot selections ... over the plot, without having to replot the plots.
       - The definition of the coordinate system as well as the definition the system ticks ... is reduced to the absolute
         minimum.
-      - The method set_doDrawing() allows to prevent replotting of the class contents, e.g. when you want to set
+      - The method setPlotUpdateEnabled() allows to prevent replotting of the class contents, e.g. when you want to set
         a multitude of parameters without triggering a replot every time.
     .
 
@@ -479,94 +479,94 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /*! \brief sets the property plotBorderLeft to the specified \a __value. 
             \details Description of the parameter plotBorderLeft is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderLeft </BLOCKQUOTE>
             \see plotBorderLeft for more information */ 
-        inline virtual void set_plotBorderLeft(int __value)
+        inline virtual void setPlotBorderLeft(int __value)
         {
             if (this->plotBorderLeft != __value) {
                 this->plotBorderLeft = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderLeft. 
             \details Description of the parameter plotBorderLeft is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderLeft </BLOCKQUOTE>
             \see plotBorderLeft for more information */ 
-        inline virtual int get_plotBorderLeft() const  
+        inline virtual int getPlotBorderLeft() const  
         {
             return this->plotBorderLeft; 
         }
         /*! \brief sets the property plotBorderBottom to the specified \a __value. 
             \details Description of the parameter plotBorderBottom is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderBottom </BLOCKQUOTE>
             \see plotBorderBottom for more information */ 
-        inline virtual void set_plotBorderBottom(int __value)
+        inline virtual void setPlotBorderBottom(int __value)
         {
             if (this->plotBorderBottom != __value) {
                 this->plotBorderBottom = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderBottom. 
             \details Description of the parameter plotBorderBottom is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderBottom </BLOCKQUOTE>
             \see plotBorderBottom for more information */ 
-        inline virtual int get_plotBorderBottom() const  
+        inline virtual int getPlotBorderBottom() const  
         {
             return this->plotBorderBottom; 
         }
         /*! \brief sets the property plotBorderRight to the specified \a __value. 
             \details Description of the parameter plotBorderRight is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderRight </BLOCKQUOTE>
             \see plotBorderRight for more information */ 
-        inline virtual void set_plotBorderRight(int __value)
+        inline virtual void setPlotBorderRight(int __value)
         {
             if (this->plotBorderRight != __value) {
                 this->plotBorderRight = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderRight. 
             \details Description of the parameter plotBorderRight is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderRight </BLOCKQUOTE>
             \see plotBorderRight for more information */ 
-        inline virtual int get_plotBorderRight() const  
+        inline virtual int getPlotBorderRight() const  
         {
             return this->plotBorderRight; 
         }
         /*! \brief sets the property plotBorderTop to the specified \a __value. 
             \details Description of the parameter plotBorderTop is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderTop </BLOCKQUOTE>
             \see plotBorderTop for more information */ 
-        inline virtual void set_plotBorderTop(int __value)
+        inline virtual void setPlotBorderTop(int __value)
         {
             if (this->plotBorderTop != __value) {
                 this->plotBorderTop = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderTop. 
             \details Description of the parameter plotBorderTop is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderTop </BLOCKQUOTE>
             \see plotBorderTop for more information */ 
-        inline virtual int get_plotBorderTop() const  
+        inline virtual int getPlotBorderTop() const  
         {
             return this->plotBorderTop; 
         }
         /*! \brief returns the property plotWidth. 
             \details Description of the parameter plotWidth is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotWidth </BLOCKQUOTE>. 
             \see plotWidth for more information */ 
-        inline int get_plotWidth() const { 
+        inline int getPlotWidth() const { 
             return this->plotWidth; 
         }
         /*! \brief returns the property plotHeight. 
             \details Description of the parameter plotHeight is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotHeight </BLOCKQUOTE>. 
             \see plotHeight for more information */ 
-        inline int get_plotHeight() const { 
+        inline int getPlotHeight() const { 
             return this->plotHeight; 
         }
         /*! \brief sets the property doDrawing to the specified \a __value. 
             \details Description of the parameter doDrawing is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::doDrawing </BLOCKQUOTE>
             \see doDrawing for more information */ 
-        inline virtual void set_doDrawing(bool __value)
+        inline virtual void setPlotUpdateEnabled(bool __value)
         {
             this->doDrawing = __value;
         } 
         /*! \brief returns the property doDrawing. 
             \details Description of the parameter doDrawing is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::doDrawing </BLOCKQUOTE>
             \see doDrawing for more information */ 
-        inline virtual bool get_doDrawing() const  
+        inline virtual bool isPlotUpdateEnabled() const  
         {
             return this->doDrawing; 
         }
@@ -621,47 +621,47 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /*! \brief returns the property xAxisLog. 
             \details Description of the parameter xAxisLog is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLog </BLOCKQUOTE>. 
             \see xAxisLog for more information */ 
-        inline bool get_xAxisLog() const { 
+        inline bool getXAxisLog() const { 
             return this->xAxisLog; 
         }
         /*! \brief returns the property yAxisLog. 
             \details Description of the parameter yAxisLog is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLog </BLOCKQUOTE>. 
             \see yAxisLog for more information */ 
-        inline bool get_yAxisLog() const { 
+        inline bool getYAxisLog() const { 
             return this->yAxisLog; 
         }
 
         /*! \brief sets the property backgroundColor to the specified \a __value. 
             \details Description of the parameter backgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::backgroundColor </BLOCKQUOTE>
             \see backgroundColor for more information */ 
-        inline virtual void set_backgroundColor(const QColor & __value)  
+        inline virtual void setBackgroundColor(const QColor & __value)  
         {
             if (this->backgroundColor != __value) {
                 this->backgroundColor = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property backgroundColor. 
             \details Description of the parameter backgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::backgroundColor </BLOCKQUOTE>
             \see backgroundColor for more information */ 
-        inline virtual QColor get_backgroundColor() const  
+        inline virtual QColor getBackgroundColor() const  
         {
             return this->backgroundColor; 
         }
         /*! \brief sets the property plotBackgroundColor to the specified \a __value. 
             \details Description of the parameter plotBackgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBackgroundColor </BLOCKQUOTE>
             \see plotBackgroundColor for more information */ 
-        inline virtual void set_plotBackgroundColor(const QColor & __value)  
+        inline virtual void setPlotBackgroundColor(const QColor & __value)  
         {
             if (this->plotBackgroundColor != __value) {
                 this->plotBackgroundColor = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property plotBackgroundColor. 
             \details Description of the parameter plotBackgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBackgroundColor </BLOCKQUOTE>
             \see plotBackgroundColor for more information */ 
-        inline virtual QColor get_plotBackgroundColor() const  
+        inline virtual QColor getPlotBackgroundColor() const  
         {
             return this->plotBackgroundColor; 
         }
@@ -672,7 +672,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->drawGrid != __value) {
                 this->drawGrid = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property drawGrid. 
@@ -685,51 +685,51 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /*! \brief sets the property gridColor to the specified \a __value. 
             \details Description of the parameter gridColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridColor </BLOCKQUOTE>
             \see gridColor for more information */ 
-        inline virtual void set_gridColor(const QColor & __value)  
+        inline virtual void setGridColor(const QColor & __value)  
         {
             if (this->gridColor != __value) {
                 this->gridColor = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property gridColor. 
             \details Description of the parameter gridColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridColor </BLOCKQUOTE>
             \see gridColor for more information */ 
-        inline virtual QColor get_gridColor() const  
+        inline virtual QColor getGridColor() const  
         {
             return this->gridColor; 
         }
         /*! \brief sets the property gridStyle to the specified \a __value. 
             \details Description of the parameter gridStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridStyle </BLOCKQUOTE>
             \see gridStyle for more information */ 
-        inline virtual void set_gridStyle(const Qt::PenStyle & __value)  
+        inline virtual void setGridStyle(const Qt::PenStyle & __value)  
         {
             if (this->gridStyle != __value) {
                 this->gridStyle = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property gridStyle. 
             \details Description of the parameter gridStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridStyle </BLOCKQUOTE>
             \see gridStyle for more information */ 
-        inline virtual Qt::PenStyle get_gridStyle() const  
+        inline virtual Qt::PenStyle getGridStyle() const  
         {
             return this->gridStyle; 
         }
         /*! \brief sets the property gridWidth to the specified \a __value. 
             \details Description of the parameter gridWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridWidth </BLOCKQUOTE>
             \see gridWidth for more information */ 
-        inline virtual void set_gridWidth(double __value)
+        inline virtual void setGridWidth(double __value)
         {
             if (this->gridWidth != __value) {
                 this->gridWidth = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property gridWidth. 
             \details Description of the parameter gridWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridWidth </BLOCKQUOTE>
             \see gridWidth for more information */ 
-        inline virtual double get_gridWidth() const  
+        inline virtual double getGridWidth() const  
         {
             return this->gridWidth; 
         }
@@ -740,7 +740,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->labelFontSize != __value) {
                 this->labelFontSize = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property labelFontSize. 
@@ -757,7 +757,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->labelFontName != __value) {
                 this->labelFontName = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property labelFontName. 
@@ -774,7 +774,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->tickFontSize != __value) {
                 this->tickFontSize = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property tickFontSize. 
@@ -791,7 +791,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->tickFontName != __value) {
                 this->tickFontName = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property tickFontName. 
@@ -808,7 +808,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->tickLength != __value) {
                 this->tickLength = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property tickLength. 
@@ -825,7 +825,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->drawSystemBox != __value) {
                 this->drawSystemBox = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property drawSystemBox. 
@@ -842,7 +842,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->drawZeroAxes != __value) {
                 this->drawZeroAxes = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property drawZeroAxes. 
@@ -859,7 +859,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->systemColor != __value) {
                 this->systemColor = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property systemColor. 
@@ -876,7 +876,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->systemWidth != __value) {
                 this->systemWidth = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property systemWidth. 
@@ -893,7 +893,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xZeroTick != __value) {
                 this->xZeroTick = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property xZeroTick. 
@@ -910,7 +910,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yZeroTick != __value) {
                 this->yZeroTick = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property yZeroTick. 
@@ -927,7 +927,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xTickDistance != __value) {
                 this->xTickDistance = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property xTickDistance. 
@@ -944,7 +944,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yTickDistance != __value) {
                 this->yTickDistance = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property yTickDistance. 
@@ -961,13 +961,13 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xAxisLabel != __value) {
                 this->xAxisLabel = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property xAxisLabel. 
             \details Description of the parameter xAxisLabel is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLabel </BLOCKQUOTE>
             \see xAxisLabel for more information */ 
-        inline virtual QString get_xAxisLabel() const  
+        inline virtual QString getXAxisLabel() const  
         {
             return this->xAxisLabel; 
         }
@@ -978,47 +978,47 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yAxisLabel != __value) {
                 this->yAxisLabel = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property yAxisLabel. 
             \details Description of the parameter yAxisLabel is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLabel </BLOCKQUOTE>
             \see yAxisLabel for more information */ 
-        inline virtual QString get_yAxisLabel() const  
+        inline virtual QString getYAxisLabel() const  
         {
             return this->yAxisLabel; 
         }
         /*! \brief sets the property aspectRatio to the specified \a __value. 
             \details Description of the parameter aspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::aspectRatio </BLOCKQUOTE>
             \see aspectRatio for more information */ 
-        inline virtual void set_aspectRatio(double __value)
+        inline virtual void setAspectRatio(double __value)
         {
             if (this->aspectRatio != __value) {
                 this->aspectRatio = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property aspectRatio. 
             \details Description of the parameter aspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::aspectRatio </BLOCKQUOTE>
             \see aspectRatio for more information */ 
-        inline virtual double get_aspectRatio() const  
+        inline virtual double getAspectRatio() const  
         {
             return this->aspectRatio; 
         }
         /*! \brief sets the property maintainAspectRatio to the specified \a __value. 
             \details Description of the parameter maintainAspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::maintainAspectRatio </BLOCKQUOTE>
             \see maintainAspectRatio for more information */ 
-        inline virtual void set_maintainAspectRatio(bool __value)
+        inline virtual void setMaintainAspectRatio(bool __value)
         {
             if (this->maintainAspectRatio != __value) {
                 this->maintainAspectRatio = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property maintainAspectRatio. 
             \details Description of the parameter maintainAspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::maintainAspectRatio </BLOCKQUOTE>
             \see maintainAspectRatio for more information */ 
-        inline virtual bool get_maintainAspectRatio() const  
+        inline virtual bool doesMaintainAspectRatio() const  
         {
             return this->maintainAspectRatio; 
         }
@@ -1029,13 +1029,13 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xAxisLabelVisible != __value) {
                 this->xAxisLabelVisible = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property xAxisLabelVisible. 
             \details Description of the parameter xAxisLabelVisible is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLabelVisible </BLOCKQUOTE>
             \see xAxisLabelVisible for more information */ 
-        inline virtual bool get_xAxisLabelVisible() const  
+        inline virtual bool getXAxisLabelVisible() const  
         {
             return this->xAxisLabelVisible; 
         }
@@ -1046,13 +1046,13 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yAxisLabelVisible != __value) {
                 this->yAxisLabelVisible = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property yAxisLabelVisible. 
             \details Description of the parameter yAxisLabelVisible is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLabelVisible </BLOCKQUOTE>
             \see yAxisLabelVisible for more information */ 
-        inline virtual bool get_yAxisLabelVisible() const  
+        inline virtual bool getYAxisLabelVisible() const  
         {
             return this->yAxisLabelVisible; 
         }
@@ -1063,7 +1063,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->synchronizeX != __value) {
                 this->synchronizeX = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property synchronizeX. 
@@ -1080,7 +1080,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->synchronizeY != __value) {
                 this->synchronizeY = __value; 
-                update_plot(); 
+                replotPlot(); 
             } 
         } 
         /*! \brief returns the property synchronizeY. 
@@ -1120,9 +1120,9 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /** \brief copy the current plot image to the clipboard */
         void copyImage();
         /** \brief replot everything (slowest possible plotting) */
-        void update_plot();
+        void replotPlot();
         /** \brief replot everything (slowest possible plotting) and forces a repaint calling QWidget::repaint() */
-        void update_plot_immediate();
+        void replotPlot_immediate();
         /** \brief replot only the data
          *
          *  This internally calls QWidget::update(), so no immediate repaint() is forced! If you want an immediate update,
@@ -1134,27 +1134,27 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
 
         /** \brief set xMin*/
         void set_xMin(double value){
-            set_doDrawing(false);
+            setPlotUpdateEnabled(false);
             setXRange(value,xMax,xAxisLog);
-            set_doDrawing(true);
+            setPlotUpdateEnabled(true);
         }
         /** \brief set xMax*/
         void set_xMax(double value){
-            set_doDrawing(false);
+            setPlotUpdateEnabled(false);
             setXRange(xMin,value,xAxisLog);
-            set_doDrawing(true);
+            setPlotUpdateEnabled(true);
         }
         /** \brief set yMin*/
         void set_yMin(double value){
-            set_doDrawing(false);
+            setPlotUpdateEnabled(false);
             setYRange(value,yMax,yAxisLog);
-            set_doDrawing(true);
+            setPlotUpdateEnabled(true);
         }
         /** \brief set yMax*/
         void set_yMax(double value){
-            set_doDrawing(false);
+            setPlotUpdateEnabled(false);
             setYRange(yMin,value,yAxisLog);
-            set_doDrawing(true);
+            setPlotUpdateEnabled(true);
         }
 
 
@@ -1709,7 +1709,7 @@ class LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         /*! \brief sets the property showCenterline to the specified \a __value. 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual void set_showCenterline(bool __value)
+        inline virtual void setShowCenterline(bool __value)
         {
             if (this->showCenterline != __value) {
                 this->showCenterline = __value; 
@@ -1719,7 +1719,7 @@ class LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         /*! \brief returns the property showCenterline. 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual bool get_showCenterline() const  
+        inline virtual bool getShowCenterline() const  
         {
             return this->showCenterline; 
         }
@@ -1903,7 +1903,7 @@ class LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         /*! \brief sets the property showCenterline to the specified \a __value. 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual void set_showCenterline(bool __value)
+        inline virtual void setShowCenterline(bool __value)
         {
             if (this->showCenterline != __value) {
                 this->showCenterline = __value; 
@@ -1913,7 +1913,7 @@ class LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         /*! \brief returns the property showCenterline. 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual bool get_showCenterline() const  
+        inline virtual bool getShowCenterline() const  
         {
             return this->showCenterline; 
         }
@@ -3628,7 +3628,7 @@ class LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
         /*! \brief sets the property showAsSymbols to the specified \a __value. 
             \details Description of the parameter showAsSymbols is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::showAsSymbols </BLOCKQUOTE>
             \see showAsSymbols for more information */ 
-        inline virtual void set_showAsSymbols(bool __value)
+        inline virtual void setShowAsSymbols(bool __value)
         {
             if (this->showAsSymbols != __value) {
                 this->showAsSymbols = __value; 
@@ -3638,7 +3638,7 @@ class LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
         /*! \brief returns the property showAsSymbols. 
             \details Description of the parameter showAsSymbols is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::showAsSymbols </BLOCKQUOTE>
             \see showAsSymbols for more information */ 
-        inline virtual bool get_showAsSymbols() const  
+        inline virtual bool getShowAsSymbols() const  
         {
             return this->showAsSymbols; 
         }
@@ -3722,7 +3722,7 @@ class LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             if (this->lineWidth != __value) {
                 this->lineWidth = __value; 
@@ -3732,7 +3732,7 @@ class LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -3773,7 +3773,7 @@ class LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         /*! \brief sets the property font to the specified \a __value. 
             \details Description of the parameter font is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::font </BLOCKQUOTE>
             \see font for more information */ 
-        inline virtual void set_font(const QFont & __value)  
+        inline virtual void setFont(const QFont & __value)  
         {
             if (this->font != __value) {
                 this->font = __value; 
@@ -3783,7 +3783,7 @@ class LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         /*! \brief returns the property font. 
             \details Description of the parameter font is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::font </BLOCKQUOTE>
             \see font for more information */ 
-        inline virtual QFont get_font() const  
+        inline virtual QFont getFont() const  
         {
             return this->font; 
         }
@@ -3859,7 +3859,7 @@ class LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             if (this->lineWidth != __value) {
                 this->lineWidth = __value; 
@@ -3869,7 +3869,7 @@ class LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }

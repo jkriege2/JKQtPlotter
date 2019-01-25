@@ -74,7 +74,7 @@ LIB_EXPORT void initJKQTMathTextResources();
 
     // configure its properties to influence the rendering (e.g. fonts to use, font size, ...)
     mathText.useXITS();
-    mathText.set_fontSize(20);
+    mathText.setFontSize(20);
 
     // parse some LaTeX code (the Schroedinger's equation)
     mathText.parse("$\\left[-\\frac{\\hbar^2}{2m}\\frac{\\partial^2}{\\partial x^2}+V(x)\\right]\\Psi(x)=\\mathrm{i}\\hbar\\frac{\\partial}{\\partial t}\\Psi(x)$");
@@ -186,16 +186,16 @@ LIB_EXPORT void initJKQTMathTextResources();
     \section JKQTMathTextSuppoertedFonts Font Handling
     
     Several fonts are defined as properties to the class:
-      - A "roman" font used as the standard font ( set_fontRoman() in math-mode set_fontMathRoman() )
-      - A "sans-serif" font which may be activated with \c \\sf ... ( set_fontSans() in math-mode set_fontMathSans() )
-      - A "typewriter" font which may be activated with \c \\tt ... ( set_fontTypewriter() )
-      - A "script" font which may be activated with \c \\script ... ( set_fontScript() )
-      - A greek font which is used to display greek letters \c \\alpha ... ( set_fontGreek() )
+      - A "roman" font used as the standard font ( setFontRoman() in math-mode setFontMathRoman() )
+      - A "sans-serif" font which may be activated with \c \\sf ... ( setFontSans() in math-mode setFontMathSans() )
+      - A "typewriter" font which may be activated with \c \\tt ... ( setFontTypewriter() )
+      - A "script" font which may be activated with \c \\script ... ( setFontScript() )
+      - A greek font which is used to display greek letters \c \\alpha ... ( setFontGreek() )
       - A symbol font used to display special (math) symbols.
       - A "roman" font used as the standard font in math mode
       - A "sans-serif" used as sans serif font in math mode
-      - A "blackboard" font used to display double stroked characters (set_fontBlackboard() )
-      - A "caligraphic" font used to display caligraphic characters ( set_fontCaligraphic() )
+      - A "blackboard" font used to display double stroked characters (setFontBlackboard() )
+      - A "caligraphic" font used to display caligraphic characters ( setFontCaligraphic() )
     .
     
     These fonts are generic font classes, which font is actually used can be configured in JKQTMathText class with the \c set_...() functions mentioned above. You can also use these functions to set the fonts used for math rendering in math-mode:
@@ -310,251 +310,251 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /*! \brief sets the property fontColor to the specified \a __value. 
             \details Description of the parameter fontColor is: <BLOCKQUOTE>\copydoc fontColor </BLOCKQUOTE> 
             \see fontColor for more information */ 
-        inline virtual void set_fontColor(const QColor & __value)  
+        inline virtual void setFontColor(const QColor & __value)  
         {
             this->fontColor = __value;
         } 
         /*! \brief returns the property fontColor. 
             \details Description of the parameter fontColor is: <BLOCKQUOTE>\copydoc fontColor </BLOCKQUOTE> 
             \see fontColor for more information */ 
-        inline virtual QColor get_fontColor() const  
+        inline virtual QColor getFontColor() const  
         {
             return this->fontColor; 
         }
         /*! \brief sets the property fontSize to the specified \a __value. 
             \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
-        inline virtual void set_fontSize(double __value)
+        inline virtual void setFontSize(double __value)
         {
             this->fontSize = __value;
         } 
         /*! \brief returns the property fontSize. 
             \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
-        inline virtual double get_fontSize() const  
+        inline virtual double getFontSize() const  
         {
             return this->fontSize; 
         }
         /*! \brief sets the property fontRoman to the specified \a __value. 
             \details Description of the parameter fontRoman is: <BLOCKQUOTE>\copydoc fontRoman </BLOCKQUOTE> 
             \see fontRoman for more information */ 
-        inline virtual void set_fontRoman(const QString & __value)  
+        inline virtual void setFontRoman(const QString & __value)  
         {
             this->fontRoman = __value;
         } 
         /*! \brief returns the property fontRoman. 
             \details Description of the parameter fontRoman is: <BLOCKQUOTE>\copydoc fontRoman </BLOCKQUOTE> 
             \see fontRoman for more information */ 
-        inline virtual QString get_fontRoman() const  
+        inline virtual QString getFontRoman() const  
         {
             return this->fontRoman; 
         }
         /*! \brief sets the property fontSans to the specified \a __value. 
             \details Description of the parameter fontSans is: <BLOCKQUOTE>\copydoc fontSans </BLOCKQUOTE> 
             \see fontSans for more information */ 
-        inline virtual void set_fontSans(const QString & __value)  
+        inline virtual void setFontSans(const QString & __value)  
         {
             this->fontSans = __value;
         } 
         /*! \brief returns the property fontSans. 
             \details Description of the parameter fontSans is: <BLOCKQUOTE>\copydoc fontSans </BLOCKQUOTE> 
             \see fontSans for more information */ 
-        inline virtual QString get_fontSans() const  
+        inline virtual QString getFontSans() const  
         {
             return this->fontSans; 
         }
         /*! \brief sets the property fontTypewriter to the specified \a __value. 
             \details Description of the parameter fontTypewriter is: <BLOCKQUOTE>\copydoc fontTypewriter </BLOCKQUOTE> 
             \see fontTypewriter for more information */ 
-        inline virtual void set_fontTypewriter(const QString & __value)  
+        inline virtual void setFontTypewriter(const QString & __value)  
         {
             this->fontTypewriter = __value;
         } 
         /*! \brief returns the property fontTypewriter. 
             \details Description of the parameter fontTypewriter is: <BLOCKQUOTE>\copydoc fontTypewriter </BLOCKQUOTE> 
             \see fontTypewriter for more information */ 
-        inline virtual QString get_fontTypewriter() const  
+        inline virtual QString getFontTypewriter() const  
         {
             return this->fontTypewriter; 
         }
         /*! \brief sets the property fontScript to the specified \a __value. 
             \details Description of the parameter fontScript is: <BLOCKQUOTE>\copydoc fontScript </BLOCKQUOTE> 
             \see fontScript for more information */ 
-        inline virtual void set_fontScript(const QString & __value)  
+        inline virtual void setFontScript(const QString & __value)  
         {
             this->fontScript = __value;
         } 
         /*! \brief returns the property fontScript. 
             \details Description of the parameter fontScript is: <BLOCKQUOTE>\copydoc fontScript </BLOCKQUOTE> 
             \see fontScript for more information */ 
-        inline virtual QString get_fontScript() const  
+        inline virtual QString getFontScript() const  
         {
             return this->fontScript; 
         }
         /*! \brief sets the property fontGreek to the specified \a __value. 
             \details Description of the parameter fontGreek is: <BLOCKQUOTE>\copydoc fontGreek </BLOCKQUOTE> 
             \see fontGreek for more information */ 
-        inline virtual void set_fontGreek(const QString & __value)  
+        inline virtual void setFontGreek(const QString & __value)  
         {
             this->fontGreek = __value;
         } 
         /*! \brief returns the property fontGreek. 
             \details Description of the parameter fontGreek is: <BLOCKQUOTE>\copydoc fontGreek </BLOCKQUOTE> 
             \see fontGreek for more information */ 
-        inline virtual QString get_fontGreek() const  
+        inline virtual QString getFontGreek() const  
         {
             return this->fontGreek; 
         }
         /*! \brief sets the property fontSymbol to the specified \a __value. 
             \details Description of the parameter fontSymbol is: <BLOCKQUOTE>\copydoc fontSymbol </BLOCKQUOTE> 
             \see fontSymbol for more information */ 
-        inline virtual void set_fontSymbol(const QString & __value)  
+        inline virtual void setFontSymbol(const QString & __value)  
         {
             this->fontSymbol = __value;
         } 
         /*! \brief returns the property fontSymbol. 
             \details Description of the parameter fontSymbol is: <BLOCKQUOTE>\copydoc fontSymbol </BLOCKQUOTE> 
             \see fontSymbol for more information */ 
-        inline virtual QString get_fontSymbol() const  
+        inline virtual QString getFontSymbol() const  
         {
             return this->fontSymbol; 
         }
         /*! \brief sets the property fontBraces to the specified \a __value. 
             \details Description of the parameter fontBraces is: <BLOCKQUOTE>\copydoc fontBraces </BLOCKQUOTE> 
             \see fontBraces for more information */ 
-        inline virtual void set_fontBraces(const QString & __value)  
+        inline virtual void setFontBraces(const QString & __value)  
         {
             this->fontBraces = __value;
         } 
         /*! \brief returns the property fontBraces. 
             \details Description of the parameter fontBraces is: <BLOCKQUOTE>\copydoc fontBraces </BLOCKQUOTE> 
             \see fontBraces for more information */ 
-        inline virtual QString get_fontBraces() const  
+        inline virtual QString getFontBraces() const  
         {
             return this->fontBraces; 
         }
         /*! \brief sets the property fontIntegrals to the specified \a __value. 
             \details Description of the parameter fontIntegrals is: <BLOCKQUOTE>\copydoc fontIntegrals </BLOCKQUOTE> 
             \see fontIntegrals for more information */ 
-        inline virtual void set_fontIntegrals(const QString & __value)  
+        inline virtual void setFontIntegrals(const QString & __value)  
         {
             this->fontIntegrals = __value;
         } 
         /*! \brief returns the property fontIntegrals. 
             \details Description of the parameter fontIntegrals is: <BLOCKQUOTE>\copydoc fontIntegrals </BLOCKQUOTE> 
             \see fontIntegrals for more information */ 
-        inline virtual QString get_fontIntegrals() const  
+        inline virtual QString getFontIntegrals() const  
         {
             return this->fontIntegrals; 
         }
         /*! \brief sets the property fontCaligraphic to the specified \a __value. 
             \details Description of the parameter fontCaligraphic is: <BLOCKQUOTE>\copydoc fontCaligraphic </BLOCKQUOTE> 
             \see fontCaligraphic for more information */ 
-        inline virtual void set_fontCaligraphic(const QString & __value)  
+        inline virtual void setFontCaligraphic(const QString & __value)  
         {
             this->fontCaligraphic = __value;
         } 
         /*! \brief returns the property fontCaligraphic. 
             \details Description of the parameter fontCaligraphic is: <BLOCKQUOTE>\copydoc fontCaligraphic </BLOCKQUOTE> 
             \see fontCaligraphic for more information */ 
-        inline virtual QString get_fontCaligraphic() const  
+        inline virtual QString getFontCaligraphic() const  
         {
             return this->fontCaligraphic; 
         }
         /*! \brief sets the property fontBlackboard to the specified \a __value. 
             \details Description of the parameter fontBlackboard is: <BLOCKQUOTE>\copydoc fontBlackboard </BLOCKQUOTE> 
             \see fontBlackboard for more information */ 
-        inline virtual void set_fontBlackboard(const QString & __value)  
+        inline virtual void setFontBlackboard(const QString & __value)  
         {
             this->fontBlackboard = __value;
         } 
         /*! \brief returns the property fontBlackboard. 
             \details Description of the parameter fontBlackboard is: <BLOCKQUOTE>\copydoc fontBlackboard </BLOCKQUOTE> 
             \see fontBlackboard for more information */ 
-        inline virtual QString get_fontBlackboard() const  
+        inline virtual QString getFontBlackboard() const  
         {
             return this->fontBlackboard; 
         }
         /*! \brief sets the property fontMathRoman to the specified \a __value. 
             \details Description of the parameter fontMathRoman is: <BLOCKQUOTE>\copydoc fontMathRoman </BLOCKQUOTE> 
             \see fontMathRoman for more information */ 
-        inline virtual void set_fontMathRoman(const QString & __value)  
+        inline virtual void setFontMathRoman(const QString & __value)  
         {
             this->fontMathRoman = __value;
         } 
         /*! \brief returns the property fontMathRoman. 
             \details Description of the parameter fontMathRoman is: <BLOCKQUOTE>\copydoc fontMathRoman </BLOCKQUOTE> 
             \see fontMathRoman for more information */ 
-        inline virtual QString get_fontMathRoman() const  
+        inline virtual QString getFontMathRoman() const  
         {
             return this->fontMathRoman; 
         }
         /*! \brief sets the property fontMathSans to the specified \a __value. 
             \details Description of the parameter fontMathSans is: <BLOCKQUOTE>\copydoc fontMathSans </BLOCKQUOTE> 
             \see fontMathSans for more information */ 
-        inline virtual void set_fontMathSans(const QString & __value)  
+        inline virtual void setFontMathSans(const QString & __value)  
         {
             this->fontMathSans = __value;
         } 
         /*! \brief returns the property fontMathSans. 
             \details Description of the parameter fontMathSans is: <BLOCKQUOTE>\copydoc fontMathSans </BLOCKQUOTE> 
             \see fontMathSans for more information */ 
-        inline virtual QString get_fontMathSans() const  
+        inline virtual QString getFontMathSans() const  
         {
             return this->fontMathSans; 
         }
         /*! \brief sets the property fontLatexPrefix to the specified \a __value. 
             \details Description of the parameter fontLatexPrefix is: <BLOCKQUOTE>\copydoc fontLatexPrefix </BLOCKQUOTE> 
             \see fontLatexPrefix for more information */ 
-        inline virtual void set_fontLatexPrefix(const QString & __value)  
+        inline virtual void setFontLatexPrefix(const QString & __value)  
         {
             this->fontLatexPrefix = __value;
         } 
         /*! \brief returns the property fontLatexPrefix. 
             \details Description of the parameter fontLatexPrefix is: <BLOCKQUOTE>\copydoc fontLatexPrefix </BLOCKQUOTE> 
             \see fontLatexPrefix for more information */ 
-        inline virtual QString get_fontLatexPrefix() const  
+        inline virtual QString getFontLatexPrefix() const  
         {
             return this->fontLatexPrefix; 
         }
         /*! \brief sets the property fontLatexPostfix to the specified \a __value. 
             \details Description of the parameter fontLatexPostfix is: <BLOCKQUOTE>\copydoc fontLatexPostfix </BLOCKQUOTE> 
             \see fontLatexPostfix for more information */ 
-        inline virtual void set_fontLatexPostfix(const QString & __value)  
+        inline virtual void setFontLatexPostfix(const QString & __value)  
         {
             this->fontLatexPostfix = __value;
         } 
         /*! \brief returns the property fontLatexPostfix. 
             \details Description of the parameter fontLatexPostfix is: <BLOCKQUOTE>\copydoc fontLatexPostfix </BLOCKQUOTE> 
             \see fontLatexPostfix for more information */ 
-        inline virtual QString get_fontLatexPostfix() const  
+        inline virtual QString getFontLatexPostfix() const  
         {
             return this->fontLatexPostfix; 
         }
         /*! \brief sets the property fontEncoding to the specified \a __value. 
             \details Description of the parameter fontEncoding is: <BLOCKQUOTE>\copydoc fontEncoding </BLOCKQUOTE> 
             \see fontEncoding for more information */ 
-        inline virtual void set_fontEncoding(const MTfontEncoding & __value)  
+        inline virtual void setFontEncoding(const MTfontEncoding & __value)  
         {
             this->fontEncoding = __value;
         } 
         /*! \brief returns the property fontEncoding. 
             \details Description of the parameter fontEncoding is: <BLOCKQUOTE>\copydoc fontEncoding </BLOCKQUOTE> 
             \see fontEncoding for more information */ 
-        inline virtual MTfontEncoding get_fontEncoding() const  
+        inline virtual MTfontEncoding getFontEncoding() const  
         {
             return this->fontEncoding; 
         }
         /*! \brief returns the property useSTIXfonts. 
             \details Description of the parameter useSTIXfonts is:  <BLOCKQUOTE>\copydoc useSTIXfonts </BLOCKQUOTE>. 
             \see useSTIXfonts for more information */ 
-        inline bool get_useSTIXfonts() const { 
+        inline bool isUsingSTIXfonts() const { 
             return this->useSTIXfonts; 
         }
         /*! \brief returns the property useXITSfonts. 
             \details Description of the parameter useXITSfonts is:  <BLOCKQUOTE>\copydoc useXITSfonts </BLOCKQUOTE>. 
             \see useXITSfonts for more information */ 
-        inline bool get_useXITSfonts() const { 
+        inline bool isUsingXITSfonts() const { 
             return this->useXITSfonts; 
         }
         /*! \brief sets the property brace_factor to the specified \a __value. 
@@ -770,14 +770,14 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /*! \brief sets the property useUnparsed to the specified \a __value. 
             \details Description of the parameter useUnparsed is: <BLOCKQUOTE>\copydoc useUnparsed </BLOCKQUOTE> 
             \see useUnparsed for more information */ 
-        inline virtual void set_useUnparsed(bool __value)
+        inline virtual void setUseUnparsed(bool __value)
         {
             this->useUnparsed = __value;
         } 
         /*! \brief returns the property useUnparsed. 
             \details Description of the parameter useUnparsed is: <BLOCKQUOTE>\copydoc useUnparsed </BLOCKQUOTE> 
             \see useUnparsed for more information */ 
-        inline virtual bool get_useUnparsed() const  
+        inline virtual bool isUsingUnparsed() const  
         {
             return this->useUnparsed; 
         }
@@ -1058,7 +1058,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
                 /*! \brief returns the property showRightBrace. 
                     \details Description of the parameter showRightBrace is:  <BLOCKQUOTE>\copydoc showRightBrace </BLOCKQUOTE>. 
                     \see showRightBrace for more information */ 
-                inline bool get_showRightBrace() const { 
+                inline bool getShowRightBrace() const { 
                     return this->showRightBrace; 
                 }
             protected:
@@ -1169,7 +1169,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
                 /*! \brief returns the property lines. 
                     \details Description of the parameter lines is:  <BLOCKQUOTE>\copydoc lines </BLOCKQUOTE>. 
                     \see lines for more information */ 
-                inline int get_lines() const { 
+                inline int getLines() const { 
                     return this->lines; 
                 }
             protected:

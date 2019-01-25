@@ -108,7 +108,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
 
@@ -135,9 +135,9 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     painter.save();
 
 //    double x0=transformX(0);
-//    if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+//    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
     double y0=transformY(0);
-    if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
+    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
     double delta=1;
     double deltap=0;
     double deltam=0;
@@ -154,7 +154,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         if (hasStackPar) {
             double stackLastY=getParentStackedMax(i);
             const double yvold=yv;
-            yv0=transformY(stackLastY)-(get_lineWidth());
+            yv0=transformY(stackLastY)-(getLineWidth());
             yv=stackLastY+yvold;
         }
         if (sr<0 && lr<0) { // only one x-value
@@ -376,7 +376,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
 
@@ -402,9 +402,9 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imax<0) imax=0;
 
     double x0=transformX(0);
-    if (parent->get_xAxis()->isLogAxis()) x0=transformX(parent->get_xAxis()->getMin());
+    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
 //    double y0=transformY(0);
-//    if (parent->get_yAxis()->isLogAxis()) y0=transformY(parent->get_yAxis()->getMin());
+//    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
     double delta=1;
     double deltap=0;
     double deltam=0;
@@ -422,7 +422,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         if (hasStackPar) {
             double stackLastX=getParentStackedMax(i);
             const double xvold=xv;
-            xv0=transformX(stackLastX)+(get_lineWidth());
+            xv0=transformX(stackLastX)+(getLineWidth());
             xv=stackLastX+xvold;
         }
 
@@ -594,7 +594,7 @@ QBrush JKQTPBarVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const 
 QPen JKQTPBarVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

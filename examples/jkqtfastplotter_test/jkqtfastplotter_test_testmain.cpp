@@ -32,19 +32,19 @@ TestMain::TestMain(QWidget *parent) :
     w->setLayout(gl);
 
     JKQTFastPlotter* pl1=new JKQTFastPlotter(w);
-    pl1->set_maintainAspectRatio(true);
+    pl1->setMaintainAspectRatio(true);
     gl->addWidget(pl1, 0, 0);
     JKQTFastPlotter* pl2=new JKQTFastPlotter(w);
     pl2->setMaximumWidth(100);
     pl2->set_synchronizeY(pl1);
     pl2->set_yAxisLabelVisible(false);
-    pl2->set_plotBorderLeft(10);
-    pl2->set_plotBorderRight(2);
-    w->connect(pl1, SIGNAL(replotting()), pl2, SLOT(update_plot()));
+    pl2->setPlotBorderLeft(10);
+    pl2->setPlotBorderRight(2);
+    w->connect(pl1, SIGNAL(replotting()), pl2, SLOT(replotPlot()));
     gl->addWidget(pl2, 0, 1);
     JKQTFastPlotter* pl3=new JKQTFastPlotter(w);
     pl3->set_synchronizeX(pl1);
-    w->connect(pl1, SIGNAL(replotting()), pl3, SLOT(update_plot()));
+    w->connect(pl1, SIGNAL(replotting()), pl3, SLOT(replotPlot()));
     gl->addWidget(pl3, 1, 0);
 
 

@@ -271,8 +271,8 @@ void JKQTPImage::saveImagePlotAsImage(const QString &filename, const QByteArray 
 {
     if (parent && image) {
         parent->loadUserSettings();
-        QString currentSaveDirectory=parent->get_currentSaveDirectory();
-        QString currentFileFormat=parent->get_currentFileFormat();
+        QString currentSaveDirectory=parent->getCurrentSaveDirectory();
+        QString currentFileFormat=parent->getCurrentFileFormat();
         QString fn=filename;
         QStringList filt;
         QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
@@ -288,8 +288,8 @@ void JKQTPImage::saveImagePlotAsImage(const QString &filename, const QByteArray 
             if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
         }
 
-        parent->set_currentFileFormat(currentFileFormat);
-        parent->set_currentSaveDirectory(currentSaveDirectory);
+        parent->setCurrentFileFormat(currentFileFormat);
+        parent->setCurrentSaveDirectory(currentSaveDirectory);
         parent->saveUserSettings();
         if (!fn.isEmpty()) {
             int filtID=filt.indexOf(selFormat);
@@ -650,43 +650,43 @@ void JKQTPMathImage::initJKQTPMathImage() {
     connect(actCopyPalette, SIGNAL(triggered()), this, SLOT(copyColorbarPlotAsImage()));
 
     colorBarRightAxis=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxis->loadSettings(parent->get_yAxis());
+    if (parent) colorBarRightAxis->loadSettings(parent->getYAxis());
     colorBarRightAxis->set_drawMode1(JKQTPCADMline);
     colorBarRightAxis->set_drawMode2(JKQTPCADMcomplete);
-    colorBarRightAxis->set_axisLabel("");
+    colorBarRightAxis->setAxisLabel("");
     colorBarRightAxis->set_minTicks(5);
     colorBarRightAxis->set_minorTicks(0);
     colorBarRightAxis->set_tickOutsideLength(0);
     colorBarRightAxis->set_minorTickOutsideLength(0);
-    colorBarRightAxis->set_showZeroAxis(false);
+    colorBarRightAxis->setShowZeroAxis(false);
     colorBarTopAxis=new JKQTPHorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxis->loadSettings(parent->get_xAxis());
+    if (parent) colorBarTopAxis->loadSettings(parent->getXAxis());
     colorBarTopAxis->set_drawMode1(JKQTPCADMline);
     colorBarTopAxis->set_drawMode2(JKQTPCADMcomplete);
-    colorBarTopAxis->set_axisLabel("");
+    colorBarTopAxis->setAxisLabel("");
     colorBarTopAxis->set_minTicks(3);
     colorBarTopAxis->set_minorTicks(0);
     colorBarTopAxis->set_tickOutsideLength(0);
     colorBarTopAxis->set_minorTickOutsideLength(0);
-    colorBarTopAxis->set_showZeroAxis(false);
+    colorBarTopAxis->setShowZeroAxis(false);
 
     modifierColorBarTopAxis=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) modifierColorBarTopAxis->loadSettings(parent->get_xAxis());
+    if (parent) modifierColorBarTopAxis->loadSettings(parent->getXAxis());
     modifierColorBarTopAxis->set_drawMode1(JKQTPCADMline);
     modifierColorBarTopAxis->set_drawMode2(JKQTPCADMcomplete);
-    modifierColorBarTopAxis->set_axisLabel("");
+    modifierColorBarTopAxis->setAxisLabel("");
     modifierColorBarTopAxis->set_minTicks(3);
-    modifierColorBarTopAxis->set_showZeroAxis(false);
+    modifierColorBarTopAxis->setShowZeroAxis(false);
     modifierColorBarTopAxis->set_minorTicks(0);
     modifierColorBarTopAxis->set_tickOutsideLength(0);
     modifierColorBarTopAxis->set_minorTickOutsideLength(0);
     modifierColorBarRightAxis=new JKQTPHorizontalIndependentAxis (0, 100, 0, 100, parent);
-    if (parent) modifierColorBarRightAxis->loadSettings(parent->get_yAxis());
+    if (parent) modifierColorBarRightAxis->loadSettings(parent->getYAxis());
     modifierColorBarRightAxis->set_drawMode1(JKQTPCADMline);
     modifierColorBarRightAxis->set_drawMode2(JKQTPCADMcomplete);
-    modifierColorBarRightAxis->set_axisLabel("");
+    modifierColorBarRightAxis->setAxisLabel("");
     modifierColorBarRightAxis->set_minTicks(5);
-    modifierColorBarRightAxis->set_showZeroAxis(false);
+    modifierColorBarRightAxis->setShowZeroAxis(false);
     modifierColorBarRightAxis->set_minorTicks(0);
     modifierColorBarRightAxis->set_tickOutsideLength(0);
     modifierColorBarRightAxis->set_minorTickOutsideLength(0);
@@ -695,8 +695,8 @@ void JKQTPMathImage::initJKQTPMathImage() {
     this->colorBarTopVisible=true;
     this->colorBarRightVisible=true;
     this->palette=JKQTPMathImageGRAY;
-    this->imageNameFontName=parent->get_keyFont();
-    this->imageNameFontSize=parent->get_keyFontSize();
+    this->imageNameFontName=parent->getKeyFont();
+    this->imageNameFontSize=parent->getKeyFontSize();
     this->imageName="";
     this->showColorBar=true;
     this->colorBarWidth=14;
@@ -781,8 +781,8 @@ void JKQTPMathImage::saveImagePlotAsImage(const QString &filename, const QByteAr
 {
     if (parent) {
         parent->loadUserSettings();
-        QString currentSaveDirectory=parent->get_currentSaveDirectory();
-        QString currentFileFormat=parent->get_currentFileFormat();
+        QString currentSaveDirectory=parent->getCurrentSaveDirectory();
+        QString currentFileFormat=parent->getCurrentFileFormat();
         QString fn=filename;
         QStringList filt;
         QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
@@ -798,8 +798,8 @@ void JKQTPMathImage::saveImagePlotAsImage(const QString &filename, const QByteAr
             if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
         }
 
-        parent->set_currentFileFormat(currentFileFormat);
-        parent->set_currentSaveDirectory(currentSaveDirectory);
+        parent->setCurrentFileFormat(currentFileFormat);
+        parent->setCurrentSaveDirectory(currentSaveDirectory);
         parent->saveUserSettings();
         if (!fn.isEmpty()) {
             int filtID=filt.indexOf(selFormat);
@@ -831,8 +831,8 @@ void JKQTPMathImage::saveColorbarPlotAsImage(const QString &filename, const QByt
 {
     if (parent) {
         parent->loadUserSettings();
-        QString currentSaveDirectory=parent->get_currentSaveDirectory();
-        QString currentFileFormat=parent->get_currentFileFormat();
+        QString currentSaveDirectory=parent->getCurrentSaveDirectory();
+        QString currentFileFormat=parent->getCurrentFileFormat();
         QString fn=filename;
         QStringList filt;
         QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
@@ -848,8 +848,8 @@ void JKQTPMathImage::saveColorbarPlotAsImage(const QString &filename, const QByt
             if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
         }
 
-        parent->set_currentFileFormat(currentFileFormat);
-        parent->set_currentSaveDirectory(currentSaveDirectory);
+        parent->setCurrentFileFormat(currentFileFormat);
+        parent->setCurrentSaveDirectory(currentSaveDirectory);
         parent->saveUserSettings();
         if (!fn.isEmpty()) {
             int filtID=filt.indexOf(selFormat);
@@ -894,15 +894,15 @@ void JKQTPMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpac
         if (colorBarRightVisible) {
             rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
             colorBarRightAxis->setRange(internalDataMin, internalDataMax);
-            colorBarRightAxis->set_axisWidth(colorBarRelativeHeight*parent->get_plotHeight());
+            colorBarRightAxis->setAxisWidth(colorBarRelativeHeight*parent->getPlotHeight());
             modifierColorBarRightAxis->setRange(internalModifierMin, internalModifierMax);
-            modifierColorBarRightAxis->set_axisWidth(parent->pt2px(painter, colorBarModifiedWidth));
+            modifierColorBarRightAxis->setAxisWidth(parent->pt2px(painter, colorBarModifiedWidth));
             QSize s=colorBarRightAxis->getSize2(painter);
-            /*parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-            parent->get_mathText()->set_fontRoman(imageNameFontName);
-            parent->get_mathText()->parse(imageName);
-            QSizeF names=parent->get_mathText()->getSize(painter);*/
-            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->get_fontSizeMultiplier(), imageName, painter);
+            /*parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+            parent->getMathText()->setFontRoman(imageNameFontName);
+            parent->getMathText()->parse(imageName);
+            QSizeF names=parent->getMathText()->getSize(painter);*/
+            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->getFontSizeMultiplier(), imageName, painter);
             rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+qMax((double)s.width(), (double)names.width());
             //qDebug()<<"osr: "<<imageName<<rightSpace<<colorBarModifiedWidth<<colorBarWidth;
             if (modifierMode!=ModifyNone) {
@@ -913,15 +913,15 @@ void JKQTPMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpac
         if (colorBarTopVisible) {
             //topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
             colorBarTopAxis->setRange(internalDataMin, internalDataMax);
-            colorBarTopAxis->set_axisWidth(colorBarRelativeHeight*parent->get_plotWidth());
+            colorBarTopAxis->setAxisWidth(colorBarRelativeHeight*parent->getPlotWidth());
             modifierColorBarTopAxis->setRange(internalModifierMin, internalModifierMax);
-            modifierColorBarTopAxis->set_axisWidth(parent->pt2px(painter, colorBarModifiedWidth));
+            modifierColorBarTopAxis->setAxisWidth(parent->pt2px(painter, colorBarModifiedWidth));
             QSize s=colorBarTopAxis->getSize2(painter);
-            /*parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-            parent->get_mathText()->set_fontRoman(imageNameFontName);
-            parent->get_mathText()->parse(imageName);
-            QSizeF names=parent->get_mathText()->getSize(painter);*/
-            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->get_fontSizeMultiplier(), imageName, painter);
+            /*parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+            parent->getMathText()->setFontRoman(imageNameFontName);
+            parent->getMathText()->parse(imageName);
+            QSizeF names=parent->getMathText()->getSize(painter);*/
+            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->getFontSizeMultiplier(), imageName, painter);
             //qDebug()<<topSpace<<s<<imageName<<names;
             //qDebug()<<colorBarWidth<<colorBarOffset<<parent->pt2px(painter, colorBarWidth+colorBarOffset);
             topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+qMax((double)s.height(), (double)names.height());
@@ -946,7 +946,7 @@ void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftSpac
             QImage b=drawOutsidePalette(200);
 
 
-            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->get_fontSizeMultiplier(), imageName, painter);
+            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->getFontSizeMultiplier(), imageName, painter);
 
             double icolorBarRelativeHeight=colorBarRelativeHeight;
             int barHeight=rightSpace.height()*icolorBarRelativeHeight;
@@ -961,31 +961,31 @@ void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftSpac
             QRect cb(rightSpace.x()+parent->pt2px(painter, colorBarOffset), rightSpace.top()+(rightSpace.height()-barHeight)/2, parent->pt2px(painter, (modifierMode==ModifyNone)?colorBarWidth:colorBarModifiedWidth), barHeight);
             painter.drawImage(cb, b.mirrored(true, false));
             QPen p=painter.pen();
-            p.setColor(colorBarRightAxis->get_axisColor());
-            p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, colorBarRightAxis->get_lineWidth()*parent->get_lineWidthMultiplier())));
+            p.setColor(colorBarRightAxis->getAxisColor());
+            p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, colorBarRightAxis->getLineWidth()*parent->getLineWidthMultiplier())));
             painter.setPen(p);
             painter.drawRect(cb);
 
             colorBarRightAxis->setRange(internalDataMin, internalDataMax);
-            colorBarRightAxis->set_axisWidth(cb.height());
-            colorBarRightAxis->set_axisOffset(cb.top());
+            colorBarRightAxis->setAxisWidth(cb.height());
+            colorBarRightAxis->setAxisOffset(cb.top());
             colorBarRightAxis->set_otherAxisOffset(cb.left());
             colorBarRightAxis->set_otherAxisWidth(cb.width());
             colorBarRightAxis->drawAxes(painter);
 
             if (modifierMode!=ModifyNone) {
                 modifierColorBarRightAxis->setRange(internalModifierMin, internalModifierMax);
-                modifierColorBarRightAxis->set_axisWidth(parent->pt2px(painter, colorBarModifiedWidth));
-                modifierColorBarRightAxis->set_axisOffset(cb.left());
+                modifierColorBarRightAxis->setAxisWidth(parent->pt2px(painter, colorBarModifiedWidth));
+                modifierColorBarRightAxis->setAxisOffset(cb.left());
                 modifierColorBarRightAxis->set_otherAxisOffset(cb.top());
                 modifierColorBarRightAxis->set_otherAxisWidth(cb.height());
                 modifierColorBarRightAxis->drawAxes(painter);
             }
 
-            parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-            parent->get_mathText()->set_fontRoman(imageNameFontName);
-            parent->get_mathText()->parse(imageName);
-            parent->get_mathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRect(rightSpace.x(), rightSpace.y(), rightSpace.width(), (rightSpace.height()-barHeight)/2));
+            parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+            parent->getMathText()->setFontRoman(imageNameFontName);
+            parent->getMathText()->parse(imageName);
+            parent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRect(rightSpace.x(), rightSpace.y(), rightSpace.width(), (rightSpace.height()-barHeight)/2));
 
             painter.restore();
         }
@@ -999,7 +999,7 @@ void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftSpac
             QImage b=drawOutsidePalette(200);
 
 
-            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->get_fontSizeMultiplier(), imageName, painter);
+            QSizeF names=parent->getTextSizeSize(imageNameFontName, imageNameFontSize*parent->getFontSizeMultiplier(), imageName, painter);
 
             double icolorBarRelativeHeight=colorBarRelativeHeight;
             int barWidth=topSpace.width()*icolorBarRelativeHeight;
@@ -1016,32 +1016,32 @@ void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftSpac
             rm.rotate(90);
             painter.drawImage(cb, b.transformed(rm));
             QPen p=painter.pen();
-            p.setColor(colorBarTopAxis->get_axisColor());
-            p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, colorBarTopAxis->get_lineWidth()*parent->get_lineWidthMultiplier())));
+            p.setColor(colorBarTopAxis->getAxisColor());
+            p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, colorBarTopAxis->getLineWidth()*parent->getLineWidthMultiplier())));
             painter.setPen(p);
             painter.drawRect(cb);
 
 
             colorBarTopAxis->setRange(internalDataMin, internalDataMax);
-            colorBarTopAxis->set_axisWidth(cb.width());
-            colorBarTopAxis->set_axisOffset(cb.left());
+            colorBarTopAxis->setAxisWidth(cb.width());
+            colorBarTopAxis->setAxisOffset(cb.left());
             colorBarTopAxis->set_otherAxisOffset(cb.top());
             colorBarTopAxis->set_otherAxisWidth(cb.height());
             colorBarTopAxis->drawAxes(painter);
 
             if (modifierMode!=ModifyNone) {
                 modifierColorBarTopAxis->setRange(internalModifierMin, internalModifierMax);
-                modifierColorBarTopAxis->set_axisWidth(parent->pt2px(painter, colorBarModifiedWidth));
-                modifierColorBarTopAxis->set_axisOffset(cb.top());
+                modifierColorBarTopAxis->setAxisWidth(parent->pt2px(painter, colorBarModifiedWidth));
+                modifierColorBarTopAxis->setAxisOffset(cb.top());
                 modifierColorBarTopAxis->set_otherAxisOffset(cb.left());
                 modifierColorBarTopAxis->set_otherAxisWidth(cb.width());
                 modifierColorBarTopAxis->drawAxes(painter);
             }
 
-            parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-            parent->get_mathText()->set_fontRoman(imageNameFontName);
-            parent->get_mathText()->parse(imageName);
-            parent->get_mathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRect(topSpace.right()-(topSpace.width()-barWidth)/2, topSpace.y(), (topSpace.width()-barWidth)/2, topSpace.height()));
+            parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+            parent->getMathText()->setFontRoman(imageNameFontName);
+            parent->getMathText()->parse(imageName);
+            parent->getMathText()->draw(painter, Qt::AlignHCenter|Qt::AlignVCenter, QRect(topSpace.right()-(topSpace.width()-barWidth)/2, topSpace.y(), (topSpace.width()-barWidth)/2, topSpace.height()));
 
             painter.restore();
         }
@@ -1413,7 +1413,7 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTPlotter *parent):
 }
 void JKQTPOverlayImageEnhanced::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     if (drawAsRectangles) JKQTPOverlayImage::drawKeyMarker(painter, rect);
-    else JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), trueColor, trueColor.lighter());
+    else JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
 }
 
 void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
@@ -1448,7 +1448,7 @@ void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
                 } else {
                     QPointF p=(p1+p2)/2.0;
                     if (data[ix+iy*Nx]) {
-                        JKQTPPlotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), trueColor, trueColor.lighter());
+                        JKQTPPlotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
                     }
                 }
             }
@@ -1483,64 +1483,64 @@ void JKQTPRGBMathImage::initObject()
 
     rgbMode=JKQTPRGBMathImageModeRGBMode;
     colorBarRightAxis=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxis->loadSettings(parent->get_yAxis());
+    if (parent) colorBarRightAxis->loadSettings(parent->getYAxis());
     colorBarRightAxis->set_drawMode1(JKQTPCADMline);
     colorBarRightAxis->set_drawMode2(JKQTPCADMcomplete);
-    colorBarRightAxis->set_axisLabel("");
+    colorBarRightAxis->setAxisLabel("");
     colorBarRightAxis->set_minTicks(5);
     colorBarRightAxis->set_minorTicks(0);
     colorBarRightAxis->set_tickOutsideLength(0);
     colorBarRightAxis->set_minorTickOutsideLength(0);
-    colorBarRightAxis->set_showZeroAxis(false);
+    colorBarRightAxis->setShowZeroAxis(false);
     colorBarTopAxis=new JKQTPHorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxis->loadSettings(parent->get_xAxis());
+    if (parent) colorBarTopAxis->loadSettings(parent->getXAxis());
     colorBarTopAxis->set_drawMode1(JKQTPCADMline);
     colorBarTopAxis->set_drawMode2(JKQTPCADMcomplete);
-    colorBarTopAxis->set_axisLabel("");
+    colorBarTopAxis->setAxisLabel("");
     colorBarTopAxis->set_minTicks(3);
     colorBarTopAxis->set_minorTicks(0);
     colorBarTopAxis->set_tickOutsideLength(0);
     colorBarTopAxis->set_minorTickOutsideLength(0);
-    colorBarTopAxis->set_showZeroAxis(false);
+    colorBarTopAxis->setShowZeroAxis(false);
 
     colorBarRightAxisG=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxisG->loadSettings(parent->get_yAxis());
+    if (parent) colorBarRightAxisG->loadSettings(parent->getYAxis());
     colorBarRightAxisG->set_drawMode1(JKQTPCADMline);
     colorBarRightAxisG->set_drawMode2(JKQTPCADMcomplete);
-    colorBarRightAxisG->set_axisLabel("");
+    colorBarRightAxisG->setAxisLabel("");
     colorBarRightAxisG->set_minTicks(5);
-    colorBarRightAxisG->set_showZeroAxis(false);
+    colorBarRightAxisG->setShowZeroAxis(false);
     colorBarRightAxisG->set_minorTicks(0);
     colorBarRightAxisG->set_tickOutsideLength(0);
     colorBarRightAxisG->set_minorTickOutsideLength(0);
     colorBarTopAxisG=new JKQTPHorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxisG->loadSettings(parent->get_xAxis());
+    if (parent) colorBarTopAxisG->loadSettings(parent->getXAxis());
     colorBarTopAxisG->set_drawMode1(JKQTPCADMline);
     colorBarTopAxisG->set_drawMode2(JKQTPCADMcomplete);
-    colorBarTopAxisG->set_axisLabel("");
+    colorBarTopAxisG->setAxisLabel("");
     colorBarTopAxisG->set_minTicks(3);
-    colorBarTopAxisG->set_showZeroAxis(false);
+    colorBarTopAxisG->setShowZeroAxis(false);
     colorBarTopAxisG->set_minorTicks(0);
     colorBarTopAxisG->set_tickOutsideLength(0);
     colorBarTopAxisG->set_minorTickOutsideLength(0);
 
     colorBarRightAxisB=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarRightAxisB->loadSettings(parent->get_yAxis());
+    if (parent) colorBarRightAxisB->loadSettings(parent->getYAxis());
     colorBarRightAxisB->set_drawMode1(JKQTPCADMline);
     colorBarRightAxisB->set_drawMode2(JKQTPCADMcomplete);
-    colorBarRightAxisB->set_axisLabel("");
+    colorBarRightAxisB->setAxisLabel("");
     colorBarRightAxisB->set_minTicks(5);
-    colorBarRightAxisB->set_showZeroAxis(false);
+    colorBarRightAxisB->setShowZeroAxis(false);
     colorBarRightAxisB->set_minorTicks(0);
     colorBarRightAxisB->set_tickOutsideLength(0);
     colorBarRightAxisB->set_minorTickOutsideLength(0);
     colorBarTopAxisB=new JKQTPHorizontalIndependentAxis(0, 100, 0, 100, parent);
-    if (parent) colorBarTopAxisB->loadSettings(parent->get_xAxis());
+    if (parent) colorBarTopAxisB->loadSettings(parent->getXAxis());
     colorBarTopAxisB->set_drawMode1(JKQTPCADMline);
     colorBarTopAxisB->set_drawMode2(JKQTPCADMcomplete);
-    colorBarTopAxisB->set_axisLabel("");
+    colorBarTopAxisB->setAxisLabel("");
     colorBarTopAxisB->set_minTicks(3);
-    colorBarTopAxisB->set_showZeroAxis(false);
+    colorBarTopAxisB->setShowZeroAxis(false);
     colorBarTopAxisB->set_minorTicks(0);
     colorBarTopAxisB->set_tickOutsideLength(0);
     colorBarTopAxisB->set_minorTickOutsideLength(0);
@@ -1548,8 +1548,8 @@ void JKQTPRGBMathImage::initObject()
 
     this->colorBarTopVisible=true;
     this->colorBarRightVisible=true;
-    this->imageNameFontName=parent->get_keyFont();
-    this->imageNameFontSize=parent->get_keyFontSize();
+    this->imageNameFontName=parent->getKeyFont();
+    this->imageNameFontSize=parent->getKeyFontSize();
     this->imageName="";
     this->showColorBar=true;
     this->colorBarWidth=14;
@@ -1642,29 +1642,29 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
             if (colorBarRightVisible) {
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarRightAxis->setRange(internalDataMin, internalDataMax);
-                colorBarRightAxis->set_axisWidth(sizeFactor*colorBarRelativeHeight*parent->get_plotHeight());
-                colorBarRightAxisB->set_axisLabel(imageName);
+                colorBarRightAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
+                colorBarRightAxisB->setAxisLabel(imageName);
                 QSize s=colorBarRightAxis->getSize2(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+(double)s.width();
                 /*QSize s=colorBarRightAxis->getSize2(painter);
-                parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-                parent->get_mathText()->set_fontRoman(imageNameFontName);
-                parent->get_mathText()->parse(imageName);
-                QSizeF names=parent->get_mathText()->getSize(painter);
+                parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+                parent->getMathText()->setFontRoman(imageNameFontName);
+                parent->getMathText()->parse(imageName);
+                QSizeF names=parent->getMathText()->getSize(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=colorBarWidth+colorBarOffset+qMax((double)s.width(), (double)names.width());*/
             }
             if (colorBarTopVisible) {
                 //if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxis->setRange(internalDataMin, internalDataMax);
-                colorBarTopAxis->set_axisWidth(sizeFactor*colorBarRelativeHeight*parent->get_plotWidth());
-                colorBarTopAxisB->set_axisLabel(imageName);
+                colorBarTopAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
+                colorBarTopAxisB->setAxisLabel(imageName);
                 QSize s=colorBarTopAxisB->getSize2(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+(double)s.height();
                 /*QSize s=colorBarTopAxis->getSize2(painter);
-                parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-                parent->get_mathText()->set_fontRoman(imageNameFontName);
-                parent->get_mathText()->parse(imageName);
-                QSizeF names=parent->get_mathText()->getSize(painter);
+                parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+                parent->getMathText()->setFontRoman(imageNameFontName);
+                parent->getMathText()->parse(imageName);
+                QSizeF names=parent->getMathText()->getSize(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=colorBarWidth+colorBarOffset+qMax((double)s.height(), (double)names.height());*/
             }
             firstC=true;
@@ -1675,29 +1675,29 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
             if (colorBarRightVisible) {
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarRightAxisG->setRange(internalDataMinG, internalDataMaxG);
-                colorBarRightAxisG->set_axisWidth(sizeFactor*colorBarRelativeHeight*parent->get_plotHeight());
-                colorBarRightAxisB->set_axisLabel(imageNameG);
+                colorBarRightAxisG->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
+                colorBarRightAxisB->setAxisLabel(imageNameG);
                 QSize s=colorBarRightAxis->getSize2(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+(double)s.width();
                 /*QSize s=colorBarRightAxis->getSize2(painter);
-                parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-                parent->get_mathText()->set_fontRoman(imageNameFontName);
-                parent->get_mathText()->parse(imageNameG);
-                QSizeF names=parent->get_mathText()->getSize(painter);
+                parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+                parent->getMathText()->setFontRoman(imageNameFontName);
+                parent->getMathText()->parse(imageNameG);
+                QSizeF names=parent->getMathText()->getSize(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=colorBarWidth+colorBarOffset+qMax((double)s.width(), (double)names.width());*/
             }
             if (colorBarTopVisible) {
                 //if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxisG->setRange(internalDataMinG, internalDataMaxG);
-                colorBarTopAxisG->set_axisWidth(sizeFactor*colorBarRelativeHeight*parent->get_plotWidth());
-                colorBarTopAxisB->set_axisLabel(imageNameG);
+                colorBarTopAxisG->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
+                colorBarTopAxisB->setAxisLabel(imageNameG);
                 QSize s=colorBarTopAxisB->getSize2(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+(double)s.height();
                 /*QSize s=colorBarTopAxisG->getSize2(painter);
-                parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-                parent->get_mathText()->set_fontRoman(imageNameFontName);
-                parent->get_mathText()->parse(imageNameG);
-                QSizeF names=parent->get_mathText()->getSize(painter);
+                parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+                parent->getMathText()->setFontRoman(imageNameFontName);
+                parent->getMathText()->parse(imageNameG);
+                QSizeF names=parent->getMathText()->getSize(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=colorBarWidth+colorBarOffset+qMax((double)s.height(), (double)names.height());*/
             }
             firstC=true;
@@ -1708,28 +1708,28 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
             if (colorBarRightVisible) {
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarRightAxisB->setRange(internalDataMinB, internalDataMaxB);
-                colorBarRightAxisB->set_axisWidth(sizeFactor*colorBarRelativeHeight*parent->get_plotHeight());
-                colorBarRightAxisB->set_axisLabel(imageNameB);
+                colorBarRightAxisB->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
+                colorBarRightAxisB->setAxisLabel(imageNameB);
                 QSize s=colorBarRightAxis->getSize2(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+(double)s.width();
                 /*
-                parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-                parent->get_mathText()->set_fontRoman(imageNameFontName);
-                parent->get_mathText()->parse(imageNameB);
-                QSizeF names=parent->get_mathText()->getSize(painter);
+                parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+                parent->getMathText()->setFontRoman(imageNameFontName);
+                parent->getMathText()->parse(imageNameB);
+                QSizeF names=parent->getMathText()->getSize(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=colorBarWidth+colorBarOffset+qMax((double)s.width(), (double)names.width());*/
             }
             if (colorBarTopVisible) {
                 //if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxisB->setRange(internalDataMinB, internalDataMaxB);
-                colorBarTopAxisB->set_axisWidth(sizeFactor*colorBarRelativeHeight*parent->get_plotWidth());
-                colorBarTopAxisB->set_axisLabel(imageNameB);
+                colorBarTopAxisB->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
+                colorBarTopAxisB->setAxisLabel(imageNameB);
                 QSize s=colorBarTopAxisB->getSize2(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+(double)s.height();
-                /*parent->get_mathText()->set_fontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
-                parent->get_mathText()->set_fontRoman(imageNameFontName);
-                parent->get_mathText()->parse(imageNameB);
-                QSizeF names=parent->get_mathText()->getSize(painter);
+                /*parent->getMathText()->setFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
+                parent->getMathText()->setFontRoman(imageNameFontName);
+                parent->getMathText()->parse(imageNameB);
+                QSizeF names=parent->getMathText()->getSize(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=colorBarWidth+colorBarOffset+qMax((double)s.height(), (double)names.height());*/
             }
             firstC=true;
@@ -1901,19 +1901,19 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 QRect cb(rX, rY, parent->pt2px(painter, colorBarWidth), gbarHeight);
                 painter.drawImage(cb, l[li].paletteImage.mirrored(true, false));
                 QPen p=painter.pen();
-                p.setColor(l[li].colorBarRightAxis->get_axisColor());
-                p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarRightAxis->get_lineWidth()*parent->get_lineWidthMultiplier())));
+                p.setColor(l[li].colorBarRightAxis->getAxisColor());
+                p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarRightAxis->getLineWidth()*parent->getLineWidthMultiplier())));
                 painter.setPen(p);
                 painter.drawRect(cb);
 
                 l[li].colorBarRightAxis->setRange(l[li].internalDataMin, l[li].internalDataMax);
-                l[li].colorBarRightAxis->set_axisWidth(cb.height());
-                l[li].colorBarRightAxis->set_axisOffset(cb.top());
+                l[li].colorBarRightAxis->setAxisWidth(cb.height());
+                l[li].colorBarRightAxis->setAxisOffset(cb.top());
                 l[li].colorBarRightAxis->set_otherAxisOffset(cb.left());
                 l[li].colorBarRightAxis->set_otherAxisWidth(cb.width());
-                l[li].colorBarRightAxis->set_labelFontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
+                l[li].colorBarRightAxis->set_labelFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
                 l[li].colorBarRightAxis->set_labelFont(imageNameFontName);
-                l[li].colorBarRightAxis->set_axisLabel(l[li].name);
+                l[li].colorBarRightAxis->setAxisLabel(l[li].name);
                 l[li].colorBarRightAxis->drawAxes(painter);
 
                 painter.restore();
@@ -1933,20 +1933,20 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 mt.rotate(90);
                 painter.drawImage(cb, l[li].paletteImage.transformed(mt));
                 QPen p=painter.pen();
-                p.setColor(l[li].colorBarTopAxis->get_axisColor());
-                p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarTopAxis->get_lineWidth()*parent->get_lineWidthMultiplier())));
+                p.setColor(l[li].colorBarTopAxis->getAxisColor());
+                p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarTopAxis->getLineWidth()*parent->getLineWidthMultiplier())));
                 painter.setPen(p);
                 painter.drawRect(cb);
 
 
                 l[li].colorBarTopAxis->setRange(l[li].internalDataMin, l[li].internalDataMax);
-                l[li].colorBarTopAxis->set_axisWidth(cb.width());
-                l[li].colorBarTopAxis->set_axisOffset(cb.left());
+                l[li].colorBarTopAxis->setAxisWidth(cb.width());
+                l[li].colorBarTopAxis->setAxisOffset(cb.left());
                 l[li].colorBarTopAxis->set_otherAxisOffset(cb.top());
                 l[li].colorBarTopAxis->set_otherAxisWidth(cb.height());
-                l[li].colorBarTopAxis->set_labelFontSize(imageNameFontSize*parent->get_fontSizeMultiplier());
+                l[li].colorBarTopAxis->set_labelFontSize(imageNameFontSize*parent->getFontSizeMultiplier());
                 l[li].colorBarTopAxis->set_labelFont(imageNameFontName);
-                l[li].colorBarTopAxis->set_axisLabel(l[li].name);
+                l[li].colorBarTopAxis->setAxisLabel(l[li].name);
                 l[li].colorBarTopAxis->drawAxes(painter);
 
                 painter.restore();
@@ -2120,8 +2120,8 @@ void JKQTPRGBMathImage::saveImagePlotAsImage(const QString &filename, const QByt
 {
     if (parent) {
         parent->loadUserSettings();
-        QString currentSaveDirectory=parent->get_currentSaveDirectory();
-        QString currentFileFormat=parent->get_currentFileFormat();
+        QString currentSaveDirectory=parent->getCurrentSaveDirectory();
+        QString currentFileFormat=parent->getCurrentFileFormat();
         QString fn=filename;
         QStringList filt;
         QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
@@ -2137,8 +2137,8 @@ void JKQTPRGBMathImage::saveImagePlotAsImage(const QString &filename, const QByt
             if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
         }
 
-        parent->set_currentFileFormat(currentFileFormat);
-        parent->set_currentSaveDirectory(currentSaveDirectory);
+        parent->setCurrentFileFormat(currentFileFormat);
+        parent->setCurrentSaveDirectory(currentSaveDirectory);
         parent->saveUserSettings();
         if (!fn.isEmpty()) {
             int filtID=filt.indexOf(selFormat);
@@ -2623,8 +2623,8 @@ void JKQTPOverlayImage::saveImagePlotAsImage(const QString &filename, const QByt
 {
     if (parent) {
         parent->loadUserSettings();
-        QString currentSaveDirectory=parent->get_currentSaveDirectory();
-        QString currentFileFormat=parent->get_currentFileFormat();
+        QString currentSaveDirectory=parent->getCurrentSaveDirectory();
+        QString currentFileFormat=parent->getCurrentFileFormat();
         QString fn=filename;
         QStringList filt;
         QList<QByteArray> writerformats=QImageWriter::supportedImageFormats();
@@ -2640,8 +2640,8 @@ void JKQTPOverlayImage::saveImagePlotAsImage(const QString &filename, const QByt
             if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
         }
 
-        parent->set_currentFileFormat(currentFileFormat);
-        parent->set_currentSaveDirectory(currentSaveDirectory);
+        parent->setCurrentFileFormat(currentFileFormat);
+        parent->setCurrentSaveDirectory(currentSaveDirectory);
         parent->saveUserSettings();
         if (!fn.isEmpty()) {
             int filtID=filt.indexOf(selFormat);
@@ -2694,7 +2694,7 @@ void JKQTPContour::draw(JKQTPEnhancedPainter &painter)
     QPen p;
     p.setStyle(style);
     p.setColor(lineColor);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
 
     painter.setPen(p);
     QImage colorLevels = getPaletteImage(palette,numberOfLevels);

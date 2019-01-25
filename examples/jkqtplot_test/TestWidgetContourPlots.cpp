@@ -17,18 +17,18 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     QHBoxLayout* layoutContour=new QHBoxLayout(this);
     setLayout(layoutContour);
     JKQTPlotter* plotContour=new JKQTPlotter(true, this);
-    plotContour->set_doDrawing(false);
-    plotContour->get_plotter()->set_plotLabel(tr("\\textbf{hist contour plot}"));
+    plotContour->setPlotUpdateEnabled(false);
+    plotContour->getPlotter()->setPlotLabel(tr("\\textbf{hist contour plot}"));
     plotContour->setObjectName("contour");
-    plotContour->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "contour/");
+    plotContour->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "contour/");
     layoutContour->addWidget(plotContour);
 
     JKQTPlotter* plotDensity=new JKQTPlotter(true, this);
-    plotContour->set_doDrawing(false);
-    plotContour->get_plotter()->set_plotLabel(tr("\\textbf{2D histogram plot with contours}"));
-    plotDensity->get_plotter()->set_plotLabel(tr("\\textbf{2D histogram}"));
+    plotContour->setPlotUpdateEnabled(false);
+    plotContour->getPlotter()->setPlotLabel(tr("\\textbf{2D histogram plot with contours}"));
+    plotDensity->getPlotter()->setPlotLabel(tr("\\textbf{2D histogram}"));
     plotContour->setObjectName("density");
-    plotContour->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "density/");
+    plotContour->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "density/");
     layoutContour->addWidget(plotDensity);
 
     QVector<double> histAlex;
@@ -50,19 +50,19 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     histAlexNx=(uint)sqrt(histAlex.size());
     histAlexNy=histAlexNx;
 
-    auto ds=plotDensity->get_plotter()->getDatastore();
-    plotContour->get_plotter()->useExternalDatastore(ds);
+    auto ds=plotDensity->getPlotter()->getDatastore();
+    plotContour->getPlotter()->useExternalDatastore(ds);
     // empty datastore and grid
-    plotDensity->get_plotter()->clearGraphs(true);
+    plotDensity->getPlotter()->clearGraphs(true);
     ds->clear();
     plotDensity->setGrid(false);
-    plotDensity->get_plotter()->get_xAxis()->set_axisLabel("X");
-    plotDensity->get_plotter()->get_yAxis()->set_axisLabel("Y");
+    plotDensity->getPlotter()->getXAxis()->setAxisLabel("X");
+    plotDensity->getPlotter()->getYAxis()->setAxisLabel("Y");
 
     size_t colHist2D=ds->addCopiedImageAsColumn(histAlex.data(), histAlexNx, histAlexNy, tr("2Dhist"));
 //    size_t colContour=plotContour->getDatastore()->addCopiedImageAsColumnTranspose(histAlex.data(), histAlexNx, histAlexNy, tr("2Dhist"));
 
-    JKQTPColumnMathImage* densityplot=new JKQTPColumnMathImage(plotDensity->get_plotter());
+    JKQTPColumnMathImage* densityplot=new JKQTPColumnMathImage(plotDensity->getPlotter());
     densityplot->set_x(-0.1);
     densityplot->set_y(-0.1);
     densityplot->set_width(1.1);
@@ -76,7 +76,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     densityplot->set_title("density plot");
     plotDensity->addGraph(densityplot);
 
-    densityplot=new JKQTPColumnMathImage(plotContour->get_plotter());
+    densityplot=new JKQTPColumnMathImage(plotContour->getPlotter());
     densityplot->set_x(-0.1);
     densityplot->set_y(-0.1);
     densityplot->set_width(1.1);
@@ -93,7 +93,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     QList<double> levels;
 //    levels<<5<<10<<25; //    levels<<5.1<<10.1;
     levels<<4<<5<<9<<14;
-    JKQTPContour* cp=new JKQTPContour(plotContour->get_plotter());
+    JKQTPContour* cp=new JKQTPContour(plotContour->getPlotter());
     cp->set_x(-0.1);
     cp->set_y(-0.1);
     cp->set_width(1.1);
@@ -107,8 +107,8 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     plotContour->addGraph(cp);
     plotContour->zoom(-0.1,1.1,-0.1,1.1);
 
-    plotContour->set_doDrawing(true);
-    plotContour->update_plot();
+    plotContour->setPlotUpdateEnabled(true);
+    plotContour->replotPlot();
 
 
 

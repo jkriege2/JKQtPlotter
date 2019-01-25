@@ -47,10 +47,10 @@ install:
   - echo "BUILD ID Qt%QTVER%_%QTABI%_%APPVEYOR_BUILD_VERSION%_%CONFIGURATION%"
 
 build_script:
-  - dir "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"
-  - type "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\random"
-  - dir "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE"
-  - type "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE\random"
+#  - dir "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"
+#  - type "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\random"
+#  - dir "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE"
+#  - type "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE\random"
   - mkdir build
   - cd build
   - echo "Call QMake..."

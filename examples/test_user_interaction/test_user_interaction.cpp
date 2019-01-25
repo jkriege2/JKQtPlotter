@@ -30,33 +30,33 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // Some of the are also available in the context menu and toolbar of the JKQTPlotter
     // others are not
     QMenu* menuPlot=menuBar()->addMenu("Plot-Menu");
-    menuPlot->addAction(plot->get_plotter()->get_actPrint());
+    menuPlot->addAction(plot->getPlotter()->getActionPrint());
     QMenu* menuPlotS=menuPlot->addMenu("Save ...");
-    menuPlotS->addAction(plot->get_plotter()->get_actSaveData());
-    menuPlotS->addAction(plot->get_plotter()->get_actSavePDF()); // not available from JKQTPlotter by default
-    menuPlotS->addAction(plot->get_plotter()->get_actSavePlot());
+    menuPlotS->addAction(plot->getPlotter()->getActionSaveData());
+    menuPlotS->addAction(plot->getPlotter()->getActionSavePDF()); // not available from JKQTPlotter by default
+    menuPlotS->addAction(plot->getPlotter()->getActionSavePlot());
     QMenu* menuPlotZ=menuPlot->addMenu("Zoom ...");
-    menuPlotZ->addAction(plot->get_plotter()->get_actZoomAll());
-    menuPlotZ->addAction(plot->get_plotter()->get_actZoomIn());
-    menuPlotZ->addAction(plot->get_plotter()->get_actZoomOut());
+    menuPlotZ->addAction(plot->getPlotter()->getActionZoomAll());
+    menuPlotZ->addAction(plot->getPlotter()->getActionZoomIn());
+    menuPlotZ->addAction(plot->getPlotter()->getActionZoomOut());
 
     // add a checkbox to show and hide the position display label in the plot
     chkPositionDisplay=new QCheckBox(tr("show mouse cursor position"), this);
-    chkPositionDisplay->setChecked(plot->get_displayMousePosition());
-    connect(chkPositionDisplay, SIGNAL(toggled(bool)), plot, SLOT(set_displayMousePosition(bool)));
+    chkPositionDisplay->setChecked(plot->isMousePositionShown());
+    connect(chkPositionDisplay, SIGNAL(toggled(bool)), plot, SLOT(setMousePositionShown(bool)));
     layChk->addWidget(chkPositionDisplay);
 
     // add a checkbox to en-/disable the toolbar of the JKQTPlotter
     chkShowToolbar=new QCheckBox(tr("enable toolbar"), this);
-    chkShowToolbar->setChecked(plot->get_displayToolbar());
-    connect(chkShowToolbar, SIGNAL(toggled(bool)), plot, SLOT(set_displayToolbar(bool)));
+    chkShowToolbar->setChecked(plot->isToolbarVisible());
+    connect(chkShowToolbar, SIGNAL(toggled(bool)), plot, SLOT(setToolbarVisible(bool)));
     layChk->addWidget(chkShowToolbar);
 
     // add a checkbox to switch the toolbar between always visible and the hiding mode,
     // where it only appears, when the mouse hovers over its designated area
     chkToolbarAlwaysOn=new QCheckBox(tr("toolbar 'always on'"), this);
-    chkToolbarAlwaysOn->setChecked(plot->get_toolbarAlwaysOn());
-    connect(chkToolbarAlwaysOn, SIGNAL(toggled(bool)), plot, SLOT(set_toolbarAlwaysOn(bool)));
+    chkToolbarAlwaysOn->setChecked(plot->isToolbarAlwaysOn());
+    connect(chkToolbarAlwaysOn, SIGNAL(toggled(bool)), plot, SLOT(setToolbarAlwaysOn(bool)));
     layChk->addWidget(chkToolbarAlwaysOn);
 
     // add a checkbox to switch the grid on and off
@@ -109,5 +109,5 @@ void TestUserInteraction::initPlot()
     // 6. autoscale the plot so the graph is contained
     plot->zoomToFit();
 
-    plot->get_plotter()->set_plotLabel("Sine Plots - User-Interaction Example");
+    plot->getPlotter()->setPlotLabel("Sine Plots - User-Interaction Example");
 }

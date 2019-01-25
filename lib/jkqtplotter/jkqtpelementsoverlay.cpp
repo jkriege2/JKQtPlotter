@@ -143,9 +143,9 @@ void JKQTPOverlayVerticalLine::draw(JKQTPEnhancedPainter &painter) {
     if (!text.isEmpty()) {
 
         //JKQTMathText mt(this);
-        JKQTMathText* mt=parent->get_mathText();
-        mt->set_fontSize(fontSize);
-        mt->set_fontColor(color);
+        JKQTMathText* mt=parent->getMathText();
+        mt->setFontSize(fontSize);
+        mt->setFontColor(color);
 #ifdef USE_XITS_FONTS
         mt->useXITS();
 #endif
@@ -205,9 +205,9 @@ void JKQTPOverlayVerticalRange::draw(JKQTPEnhancedPainter &painter) {
 
     if (!text.isEmpty()) {
         //JKQTMathText mt(this);
-        JKQTMathText* mt=parent->get_mathText();
-        mt->set_fontSize(fontSize);
-        mt->set_fontColor(color);
+        JKQTMathText* mt=parent->getMathText();
+        mt->setFontSize(fontSize);
+        mt->setFontColor(color);
 #ifdef USE_XITS_FONTS
         mt->useXITS();
 #endif

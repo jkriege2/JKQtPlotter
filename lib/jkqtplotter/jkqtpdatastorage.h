@@ -86,7 +86,7 @@ enum JKQTPDatastoreItemFormat {
 	JKQTPMatrixRow                    /*!< \brief a 1D vector of double that represents a number of rows (C standard representation of matrices). The data is stored row after row.*/
 };
 
-/** \brief This class manages chunks of memory that are used for column data in JKQTPlotterBase descendents
+/** \brief This class manages chunks of memory that are used for column data in JKQTBasePlotter descendents
  * \ingroup jkqtpdatastorage
  *
  * This class manages a list if JKQTPDatastoreItem onjects that may each contain a chunk of memory, containig

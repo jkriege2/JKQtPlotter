@@ -49,7 +49,7 @@ class LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
 
         void paint(QPainter& painter, QRect pageRec=QRect());
         QSizeF getTotalSize() const;
-        QAction* getPrintAction() const { return printAction; }
+        QAction* getActionPrint() const { return printAction; }
 
     signals:
         void keyPressed(int key, Qt::KeyboardModifiers modifiers, QString text);

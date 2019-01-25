@@ -15,9 +15,9 @@ int main(int argc, char* argv[])
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPlotter plot;
-    plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
+    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the boxplots
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
     plot.zoomToFit();
 
     // 9. Move key to top-left
-    plot.get_plotter()->set_keyPosition(JKQTPKeyInsideTopLeft);
+    plot.getPlotter()->setKeyPosition(JKQTPKeyInsideTopLeft);
 
     // show plotter and make it a decent size
     plot.show();

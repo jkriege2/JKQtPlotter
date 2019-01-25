@@ -60,26 +60,26 @@ int main(int argc, char* argv[])
     graph2->set_symbol(JKQTPNoSymbol);
     graph2->set_drawLine(true);
     graph2->set_title("colored spiral");
-    graph2->get_colorBarRightAxis()->set_axisLabel("color scale radius $r(\\phi)$");
+    graph2->get_colorBarRightAxis()->setAxisLabel("color scale radius $r(\\phi)$");
     plot2.addGraph(graph2);
 
 
     // 4. set the axis scale aspect ratios to 1,
     //    autoscale the plot so the graph is contained
     //    and format the coordinate system and key
-    plot.get_plotter()->set_maintainAspectRatio(true);
-    plot.get_plotter()->set_aspectRatio(1);
-    plot.get_xAxis()->set_axisLabel("x-axis");
-    plot.get_yAxis()->set_axisLabel("y-axis");
-    plot.get_xAxis()->set_drawGrid(false);
-    plot.get_yAxis()->set_drawGrid(false);
+    plot.getPlotter()->setMaintainAspectRatio(true);
+    plot.getPlotter()->setAspectRatio(1);
+    plot.getXAxis()->setAxisLabel("x-axis");
+    plot.getYAxis()->setAxisLabel("y-axis");
+    plot.getXAxis()->set_drawGrid(false);
+    plot.getYAxis()->set_drawGrid(false);
     plot.setXY(-15,15,-15,15);
-    plot2.get_plotter()->set_maintainAspectRatio(true);
-    plot2.get_plotter()->set_aspectRatio(1);
-    plot2.get_xAxis()->set_axisLabel("x-axis");
-    plot2.get_yAxis()->set_axisLabel("y-axis");
-    plot2.get_xAxis()->set_drawGrid(false);
-    plot2.get_yAxis()->set_drawGrid(false);
+    plot2.getPlotter()->setMaintainAspectRatio(true);
+    plot2.getPlotter()->setAspectRatio(1);
+    plot2.getXAxis()->setAxisLabel("x-axis");
+    plot2.getYAxis()->setAxisLabel("y-axis");
+    plot2.getXAxis()->set_drawGrid(false);
+    plot2.getYAxis()->set_drawGrid(false);
     plot2.setXY(-15,15,-15,15);
 
 

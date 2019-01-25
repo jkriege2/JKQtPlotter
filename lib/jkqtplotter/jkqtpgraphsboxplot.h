@@ -328,14 +328,14 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -398,7 +398,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         }
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */
@@ -693,14 +693,14 @@ class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -805,7 +805,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         }
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */

@@ -13,9 +13,9 @@
 template<class TGRAPH>
 void addGraph(JKQTPlotter& plot, bool swapXY) {
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
+    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
@@ -79,17 +79,17 @@ void addGraph(JKQTPlotter& plot, bool swapXY) {
     plot.addGraphs(graphs);
 
     // 6. set axis labels
-    plot.get_xAxis()->set_axisLabel("year");
-    plot.get_yAxis()->set_axisLabel("fraction of energy production in Germany [%]");
+    plot.getXAxis()->setAxisLabel("year");
+    plot.getYAxis()->setAxisLabel("fraction of energy production in Germany [%]");
 
     // 7. finally we move the plot key/legend to the outside, top-right
     //    and lay it out as a single row
     //    NOTE: plot is a descendent of QWidget, which uses an internal object of
     //          type JKQTBasePlotter, which does the actual plotting.
     //          So many properties of the plot are only available in this internal
-    //          object, which you can access by plot.get_plotter().
-    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideTopRight);
-    plot.get_plotter()->set_keyLayout(JKQTPKeyLayoutOneRow);
+    //          object, which you can access by plot.getPlotter().
+    plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideTopRight);
+    plot.getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
 
     // 8 autoscale the plot so the graph is contained
     plot.zoomToFit();

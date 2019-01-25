@@ -90,14 +90,14 @@ class LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)  
+        inline virtual void setLineWidth(double __value)  
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -439,14 +439,14 @@ class LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
         /*! \brief sets the property fontSize to the specified \a __value. 
             \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
-        inline virtual void set_fontSize(double __value)  
+        inline virtual void setFontSize(double __value)  
         {
             this->fontSize = __value;
         } 
         /*! \brief returns the property fontSize. 
             \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
             \see fontSize for more information */ 
-        inline virtual double get_fontSize() const  
+        inline virtual double getFontSize() const  
         {
             return this->fontSize; 
         }

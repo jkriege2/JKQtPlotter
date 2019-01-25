@@ -36,7 +36,7 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *pa
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
+    setPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -56,7 +56,7 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
+    setPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -130,7 +130,7 @@ void JKQTPXParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     }
 
     set_params(&fdata);
-    set_plotFunction(JKQTPXParsedFunctionLineGraphFunction);
+    setPlotFunction(JKQTPXParsedFunctionLineGraphFunction);
     set_errorParams(&efdata);
     set_errorPlotFunction(JKQTPXParsedFunctionLineGraphFunction);
 
@@ -199,7 +199,7 @@ JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTBasePlotter *pa
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
+    setPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -219,7 +219,7 @@ JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPlotter *parent
     function="";
     parameterColumn=-1;
     set_params(&fdata);
-    set_plotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
+    setPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
     efdata.node=nullptr;
@@ -294,7 +294,7 @@ void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     }
 
     set_params(&fdata);
-    set_plotFunction(JKQTPYParsedFunctionLineGraphFunction);
+    setPlotFunction(JKQTPYParsedFunctionLineGraphFunction);
     set_errorParams(&efdata);
     set_errorPlotFunction(JKQTPYParsedFunctionLineGraphFunction);
 

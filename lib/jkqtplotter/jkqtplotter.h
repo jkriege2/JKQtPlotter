@@ -62,9 +62,16 @@ LIB_EXPORT void initJKQTPlotterResources();
 /** \brief class to plot function graphs in linear or (semi-)logarithmic scale
  * \ingroup jkqtpplotterclasses
  *
- * This class is an implementation of JKQTPlotterBase. It uses the tools from this base class
- * to display function graphs that use the internal datastore as data source. You can add graphs
- * to this component which are described by a JKQTPPlotElement struct.
+ * This class is an implementation of JKQTBasePlotter. It uses the tools from this base class
+ * to display function graphs that use the internal datastore as data source. This class mostly
+ * adds the Widget for the output and adds different types of user interactions.
+ *
+ * <b>Please have a look at the documentation of JKQTBasePlotter for details on the management of graphs
+ *    and the formating/styling of the plot and graphs!</b>
+ *
+ * \see JKQTBasePlotter
+ *
+ *
  *
  * \section JKQTPLOTTER_USERINTERACTION User-Interactions
  *
@@ -77,23 +84,25 @@ LIB_EXPORT void initJKQTPlotterResources();
  * \image html jkqtplotter_defaultcontextmenu.png
  *
  * It allows to:
- *   - copy or save the data from the internal JKQTPDatastore
- *   - copy or save the plot to an image file (PNG, PDF, ...), includes a softisticated export-preview dialog:
+ * <ul>
+ *   <li> copy or save the data from the internal JKQTPDatastore</li>
+ *   <li> copy or save the plot to an image file (PNG, PDF, ...), includes a softisticated export-preview dialog:
  *
  *     \image html jkqtplotter_exportpreviewdialog.png
+ *   </li>
+ *   <li> print the plot (includes a softisticated print-preview dialog):
  *
- *   - print the plot (includes a softisticated print-preview dialog):
+ *     \image html jkqtplotter_printpreview.png "Print Preview Dialog"
  *
- *     \image html jkqtplotter_printpreview.png
- *     \image html jkqtplotter_printpreview_relsize_mullinewidth_mulfonts.png
+ *     \image html jkqtplotter_printpreview_relsize_mullinewidth_mulfonts.png "Print Preview Dialog with modified (relative) size, line-width and font-size"
+ *   </li>
+ *   <li> open a dialog with a table of the plot data:
  *
- *   - open a dialog with a table of the plot data:
- *
- *     \image html jkqtplotter_datatabledialog.png
- *
- *   - zoom into/out of the plot and determine an auto-zoom, which shows all of the plot data
- *   - switch the visibility of the different graphs in the plot
- * .
+ *     \image html jkqtplotter_datatabledialog.png "Data Table Dialog (with buttons to save or copy the data)"
+ *   </li>
+ *   <li> zoom into/out of the plot and determine an auto-zoom, which shows all of the plot data</li>
+ *   <li> switch the visibility of the different graphs in the plot</li>
+ * </ul>
  *
  * \subsection JKQTPLOTTER_TOOLBAR Toolbar of JKQTPlotter
  *
@@ -104,7 +113,7 @@ LIB_EXPORT void initJKQTPlotterResources();
  * \image html jkqtplotter_toolbar_hidden.png "Hidden Toolbar"
  * \image html jkqtplotter_toolbar_shown.png "Shown Toolbar"
  *
- * If toolbarAlwaysOn is set to \c true (set_toolbarAlwaysOn() ), the toolbar is always displayed:
+ * If toolbarAlwaysOn is set to \c true (setToolbarAlwaysOn() ), the toolbar is always displayed:
  *
  * \image html jkqtplotter_toolbar_alwayson.png
  *
@@ -115,38 +124,64 @@ LIB_EXPORT void initJKQTPlotterResources();
  * \subsection JKQTPLOTTER_ACTIONS QActions from a JKQTPlotter
  * Often you want to allow the suer to operate a plot from a user-defined QToolBar or a QMenu/QMenuBar in your
  * application (e.g. provide zooming commands ...). there are generally two ways to achieve this:
- *   # Simply connect home-brewn QAction instances to the slots provided by JKQTPlotter and JKQTBasePlotter.
- *     This also allows you to connect different plot properties to edit widgets in your forms.
- *   # For several functions (especially those also present in JKQTPlotter's context-emun, you can also find
- *     readily available QAction instances. these are available from JKQTBasePlotter (e.g. by JKQTBasePlotter::get_actPrint() ...).
- *     From JKQTPlotter you therefor have to use: <code>get_plotter()->get_actPrint()</code>
- * .
- * \see \subpage JKQTPlotterUserInteraction
+ * <ol>
+ *   <li> Simply connect home-brewn QAction instances to the slots provided by JKQTPlotter and JKQTBasePlotter.
+ *        This also allows you to connect different plot properties to edit widgets in your forms.
+ *        \code
+ *          // add a checkbox to show and hide the position display label in the plot
+ *          chkPositionDisplay=new QCheckBox(tr("show mouse cursor position"), this);
+ *          chkPositionDisplay->setChecked(plot->isMousePositionShown());
+ *          connect(chkPositionDisplay, SIGNAL(toggled(bool)), plot, SLOT(setMousePositionShown(bool)));
+ *        \endcode
+ *   </li>
+ *   <li> For several functions (especially those also present in JKQTPlotter's context-emun, you can also find
+ *        readily available QAction instances. these are available from JKQTBasePlotter (e.g. by JKQTBasePlotter::getActionPrint() ...).
+ *        From JKQTPlotter you therefor have to use: <code>getPlotter()->getActionPrint()</code>
+ *        \code
+ *          // add some of the default QActions from the JKQTPlotter to the window menu
+ *          // Some of the are also available in the context menu and toolbar of the JKQTPlotter
+ *          // others are not
+ *          QMenu* menuPlot=menuBar()->addMenu("Plot-Menu");
+ *          menuPlot->addAction(plot->getPlotter()->getActionPrint());
+ *          QMenu* menuPlotS=menuPlot->addMenu("Save ...");
+ *          menuPlotS->addAction(plot->getPlotter()->getActionSaveData());
+ *          menuPlotS->addAction(plot->getPlotter()->getActionSavePDF()); // not available from JKQTPlotter by default
+ *          menuPlotS->addAction(plot->getPlotter()->getActionSavePlot());
+ *        \endcode
+ *   </li>
+ * </ol>
+ * \see \ref JKQTPlotterUserInteraction
  *
  *
  *
- * \subsection JKQTPLOTTER_USERMOUSEINTERACTION User Mouse-Interaction in JKQTPlotter
+ * \subsection JKQTPLOTTER_USERMOUSEINTERACTION Mouse-Interaction in JKQTPlotter
  *
  *
  *
+ * \see \ref JKQTPlotterUserInteraction
  *
  *
  *
  * \section JKQTPLOTTER_USEQTCREATOR  How to use JKQTPlotter in the Qt Form Designer
  *
  * As JKQTPlotter is a standard Qt widget, you can also use it in Qt UI-files designed with the Qt From Designer (e.g. from within QTCreator).
- * For this to work you have to use the "Promote QWidget"-feature of the form designer. The steps you need to take are detailed below:
- *   # add a new UI-file to your project and open it in the Form Editor. Then right-click the form and select `Promote Widgets ...`:<br>
- *    \image html uidesigner_step1.png
+ * For this to work you have to use the <a href="http://doc.qt.io/archives/qt-4.8/designer-using-custom-widgets.html">Promote QWidget"-feature</a> of the form designer. The steps you need to take are detailed below:
+ * <ol>
+ *   <li> add a new UI-file to your project and open it in the Form Editor. Then right-click the form and select `Promote Widgets ...`:
  *
- *   # In the dialog that opens, you have to define `JKQTPlotter` as a promotion to `QWidget` as shown below. Finally store the settings by clicking `Add` and closing the dialog with `Close`.<br>
- *    \image html uidesigner_step2.png
+ *        \image html uidesigner_step1.png
+ *   </li>
+ *   <li> In the dialog that opens, you have to define `JKQTPlotter` as a promotion to `QWidget` as shown below. Finally store the settings by clicking `Add` and closing the dialog with `Close`.
  *
- *   # Now you can add a `QWidget`from the side-bar to the form and then promote it to `JKQTPlotter`, by selecting and right-clicking the `QWidget` and then selecting `Promote To | JKQTPlotter`:<br>
- *    \image html uidesigner_step3.png
- * .
+ *        \image html uidesigner_step2.png
+ *   </li>
+ *   <li> Now you can add a `QWidget`from the side-bar to the form and then promote it to `JKQTPlotter`, by selecting and right-clicking the `QWidget` and then selecting `Promote To | JKQTPlotter`:
  *
- * \see \subpage JKQTPlotterQtCreator
+ *        \image html uidesigner_step3.png
+ *   </li>
+ * </ol>
+ *
+ * \see \ref JKQTPlotterQtCreator
  *
  */
 class LIB_EXPORT JKQTPlotter: public QWidget {
@@ -204,43 +239,43 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
 
         /** \brief set the width/height of the icons in the toolbar in pt */
-        void set_toolbarIconSize(int value);
+        void setToolbarIconSize(int value);
 
         /** \brief get the width/height of the icons in the toolbar in pt */
-        int get_toolbarIconSize();
+        int getToolbarIconSize();
 
         /** \brief returns the class internally used for plotting */
-        JKQTBasePlotter* get_plotter() const { return plotter; }
+        JKQTBasePlotter* getPlotter() const { return plotter; }
         /** \brief returns the class internally used for plotting */
         const JKQTBasePlotter* get_constplotter() const { return const_cast<const JKQTBasePlotter*>(plotter); }
 
         /*! \brief returns the property displayToolbar.
             \details Description of the parameter displayToolbar is: <BLOCKQUOTE>\copydoc displayToolbar </BLOCKQUOTE>
             \see displayToolbar for more information */ 
-        virtual bool get_displayToolbar() const;
+        virtual bool isToolbarVisible() const;
         /*! \brief returns the property toolbarAlwaysOn.
             \details Description of the parameter toolbarAlwaysOn is: <BLOCKQUOTE>\copydoc toolbarAlwaysOn </BLOCKQUOTE>
             \see toolbarAlwaysOn for more information */ 
-        virtual bool get_toolbarAlwaysOn() const;
+        virtual bool isToolbarAlwaysOn() const;
         /*! \brief returns the property displayMousePosition.
             \details Description of the parameter displayMousePosition is: <BLOCKQUOTE>\copydoc displayMousePosition </BLOCKQUOTE>
             \see displayMousePosition for more information */ 
-        virtual bool get_displayMousePosition() const;
+        virtual bool isMousePositionShown() const;
         /*! \brief returns the property userActionColor.
             \details Description of the parameter userActionColor is: <BLOCKQUOTE>\copydoc userActionColor </BLOCKQUOTE>
             \see userActionColor for more information */ 
-        virtual QColor get_userActionColor() const;
+        virtual QColor getUserActionColor() const;
 
         /*! \brief returns the property userActionCompositionMode. 
             \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
             \see userActionCompositionMode for more information */ 
-        virtual QPainter::CompositionMode get_userActionCompositionMode() const;
+        virtual QPainter::CompositionMode getUserActionCompositionMode() const;
 
         /*! \brief returns the current mouseActionMode.
             \details Description of the parameter mouseActionMode is: <BLOCKQUOTE> specifies the user-action mode this JKQtPlotter use when mouse events occur.
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes </BLOCKQUOTE>
             \see mouseActionMode for more information */ 
-        virtual MouseActionModes get_mouseActionMode() const;
+        virtual MouseActionModes getMouseActionMode() const;
 
         /** \brief loads the plot properties from a QSettings object */
         virtual void loadSettings(QSettings& settings, QString group=QString("plots"));
@@ -304,82 +339,73 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         inline void forceInternalDatastore() { plotter->forceInternalDatastore(); }
 
         /** \brief switch emitting of signals, such as zoomChangedLocally() ..., on (sig=true) or off (sig=false) */
-        inline void set_emitSignals(bool sig) { plotter->set_emitSignals(sig); }
+        inline void setEmittingSignalsEnabled(bool sig) { plotter->setEmittingSignalsEnabled(sig); }
         /** \brief determine, whether emitting of signals, such as zoomChangedLocally() ..., is switched on or off */
-        inline bool get_emitSignals() { return plotter; }
+        inline bool isEmittingSignalsEnabled() { return plotter; }
 
-        /** \brief returns, whether updating the plot is currently activated (e.g. you can deactivate this with set_doDrawing() while performing major updates on the plot)
+        /** \brief returns, whether updating the plot is currently activated (e.g. you can deactivate this with setPlotUpdateEnabled() while performing major updates on the plot)
          *
-         * \see set_doDrawing()
+         * \see setPlotUpdateEnabled()
          */
-        bool get_doDrawing() const;
+        bool isPlotUpdateEnabled() const;
         /** \brief sets whether updating the plot is currently activated (e.g. you can sett his to \c false while performing major updates on the plot)
          *
-         * \see get_doDrawing();
+         * \see isPlotUpdateEnabled();
          */
-        void set_doDrawing(bool enable);
+        void setPlotUpdateEnabled(bool enable);
 
-        /*! \brief returns the property rightMouseButtonAction.
-            \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
+        /*! \brief returns the property zoomByMouseRectangle.
+            \details Description of the parameter zoomByMouseRectangle is: <BLOCKQUOTE>\copydoc zoomByMouseRectangle </BLOCKQUOTE>
             \see rightMouseButtonAction for more information */
-        bool get_zoomByMouseRectangle() const;
-
-        /*! \brief sets the property rightMouseButtonAction to the specified \a __value. 
-            \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
-            \see rightMouseButtonAction for more information */ 
-        void set_rightMouseButtonAction(const RightMouseButtonAction & __value);
+        bool getZoomByMouseRectangle() const;
         /*! \brief returns the property rightMouseButtonAction. 
             \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
             \see rightMouseButtonAction for more information */ 
-        virtual RightMouseButtonAction get_rightMouseButtonAction() const;
-        /*! \brief sets the property leftDoubleClickAction to the specified \a __value. 
+        virtual RightMouseButtonAction getActionRightMouseButton() const;
+        /*! \brief returns the property leftDoubleClickAction.
             \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
             \see leftDoubleClickAction for more information */ 
-        void set_leftDoubleClickAction(const LeftDoubleClickAction & __value);
-        /*! \brief returns the property leftDoubleClickAction. 
-            \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
-            \see leftDoubleClickAction for more information */ 
-        virtual LeftDoubleClickAction get_leftDoubleClickAction() const;
+        virtual LeftDoubleClickAction getActionLeftDoubleClick() const;
         /*! \brief returns the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
-        QMenu *get_menuSpecialContextMenu() const;
+        QMenu *getMenuSpecialContextMenu() const;
 
         /*! \brief set the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
-        void set_menuSpecialContextMenu(QMenu* menu);
+        void setMenuSpecialContextMenu(QMenu* menu);
 
         /*! \brief sets the property zoomByMouseWheel to the specified \a __value. 
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
             \see zoomByMouseWheel for more information */ 
-        void set_zoomByMouseWheel(bool __value);
+        void setZoomByMouseWheel(bool __value);
         /*! \brief returns the property zoomByMouseWheel. 
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
             \see zoomByMouseWheel for more information */ 
-        virtual bool get_zoomByMouseWheel() const;
+        virtual bool getZoomByMouseWheel() const;
 
         /** \brief returns the property mouseContextX. 
             \details Description of the parameter mouseContextX is:  <BLOCKQUOTE>\copydoc mouseContextX </BLOCKQUOTE>.
             \see mouseContextX for more information */ 
-        double get_mouseContextX() const;
+        double getMouseContextX() const;
         /** \brief returns the property mouseContextY. 
             \details Description of the parameter mouseContextY is:  <BLOCKQUOTE>\copydoc mouseContextY </BLOCKQUOTE>.
             \see mouseContextY for more information */ 
-        double get_mouseContextY() const;
+        double getMouseContextY() const;
         /** \brief returns the property mouseLastClickX. 
             \details Description of the parameter mouseLastClickX is:  <BLOCKQUOTE>\copydoc mouseLastClickX </BLOCKQUOTE>.
             \see mouseLastClickX for more information */ 
-        int get_mouseLastClickX() const;
+        int getMouseLastClickX() const;
         /** \brief returns the property mouseLastClickY. 
             \details Description of the parameter mouseLastClickY is:  <BLOCKQUOTE>\copydoc mouseLastClickY </BLOCKQUOTE>.
             \see mouseLastClickY for more information */ 
-        int get_mouseLastClickY() const;
+        int getMouseLastClickY() const;
 
         /** \brief returns the coordinate axis object for the x-axis */
-        inline JKQTPHorizontalAxis* get_xAxis() { return plotter->get_xAxis(); }
+        inline JKQTPHorizontalAxis* getXAxis() { return plotter->getXAxis(); }
         /** \brief returns the coordinate axis object for the y-axis */
-        inline JKQTPVerticalAxis* get_yAxis() { return plotter->get_yAxis(); }
+        inline JKQTPVerticalAxis* getYAxis() { return plotter->getYAxis(); }
         /** \brief returns the coordinate axis object for the x-axis as a const pointer */
-        inline const JKQTPHorizontalAxis* get_xAxis() const { return plotter->get_xAxis(); }
+        inline const JKQTPHorizontalAxis* getXAxis() const { return plotter->getXAxis(); }
         /** \brief returns the coordinate axis object for the y-axis as a const pointer */
-        inline const JKQTPVerticalAxis* get_yAxis() const { return plotter->get_yAxis(); }
+        inline const JKQTPVerticalAxis* getYAxis() const { return plotter->getYAxis(); }
 
        /** \brief returns description of i'th graph */
         inline JKQTPPlotElement* getGraph(size_t i) { return plotter->getGraph(i); }
@@ -446,7 +472,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief gets the next unused style id, i.e. the smalles number >=0 which is not contained in usedStyles */
         inline int getNextStyle() {
-            return get_plotter()->getNextStyle();
+            return getPlotter()->getNextStyle();
         }
 
         /** \brief returns a QPen object for the i-th plot style */
@@ -455,13 +481,13 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         }
 
         /** \brief font face for key labels */
-        inline QString get_keyFont() const {
-            return get_constplotter()->get_keyFont();
+        inline QString getKeyFont() const {
+            return get_constplotter()->getKeyFont();
         }
 
         /** \brief font size for key labels [in points] */
-        inline double get_keyFontSize() const {
-            return get_constplotter()->get_keyFontSize();
+        inline double getKeyFontSize() const {
+            return get_constplotter()->getKeyFontSize();
         }
     public slots:
         /** \brief set the current plot magnification */
@@ -533,47 +559,50 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief zooms out of the graph (the same as turning the mouse wheel) by the given factor */
         inline void zoomOut(double factor=2.0) { plotter->zoomOut(factor); }
 
-        /** \brief update the plot */
-        void update_plot();
+        /** \brief update the plot and the overlays */
+        void replotPlot();
 
-        /** \brief update the plot and replot immediately */
-        void replot_plot();
-
-        /** \brief update overlays only */
-        void replot_overlays();
-
-        /** \brief update overlays only */
-        void update_overlays();
+        /** \brief replot overlays only (use replotPlot() to replot the plot and the overlays) */
+        void replotOverlays();
 
         /*! \brief sets the property displayToolbar to the specified \a __value.
             \details Description of the parameter displayToolbar is: <BLOCKQUOTE>\copydoc displayToolbar </BLOCKQUOTE>
             \see displayToolbar for more information */
-        void set_displayToolbar(bool __value);
+        void setToolbarVisible(bool __value);
         /*! \brief sets the property toolbarAlwaysOn to the specified \a __value.
             \details Description of the parameter toolbarAlwaysOn is: <BLOCKQUOTE>\copydoc toolbarAlwaysOn </BLOCKQUOTE>
             \see toolbarAlwaysOn for more information */
-        void set_toolbarAlwaysOn(bool __value);
+        void setToolbarAlwaysOn(bool __value);
         /*! \brief sets the property displayMousePosition to the specified \a __value.
             \details Description of the parameter displayMousePosition is: <BLOCKQUOTE>\copydoc displayMousePosition </BLOCKQUOTE>
             \see displayMousePosition for more information */
-        void set_displayMousePosition(bool __value);
+        void setMousePositionShown(bool __value);
         /*! \brief sets the property userActionColor to the specified \a __value.
             \details Description of the parameter userActionColor is: <BLOCKQUOTE>\copydoc userActionColor </BLOCKQUOTE>
             \see userActionColor for more information */
-        void set_userActionColor(const QColor & __value);
+        void setUserActionColor(const QColor & __value);
         /*! \brief sets the property userActionCompositionMode to the specified \a __value.
             \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
             \see userActionCompositionMode for more information */
-        void set_userActionCompositionMode(const QPainter::CompositionMode & __value);
+        void setUserActionCompositionMode(const QPainter::CompositionMode & __value);
         /*! \brief sets the current mouseActionMode .
             \details Description of the parameter mouseActionMode is: <BLOCKQUOTE> specifies the user-action mode this JKQtPlotter use when mouse events occur.
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes </BLOCKQUOTE>
             \see mouseActionMode for more information */
-        void set_mouseActionMode(const MouseActionModes & __value);
+        void setMouseActionMode(const MouseActionModes & __value);
+        /*! \brief sets the property zoomByMouseRectangle to the specified \a __value.
+            \details Description of the parameter zoomByMouseRectangle is: <BLOCKQUOTE>\copydoc zoomByMouseRectangle </BLOCKQUOTE>
+            \see zoomByMouseRectangle for more information */
+        void setZoomByMouseRectangle(bool zomByrectangle);
+        /*! \brief sets the property leftDoubleClickAction to the specified \a __value.
+            \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
+            \see leftDoubleClickAction for more information */
+        void setLeftDoubleClickAction(const LeftDoubleClickAction & __value);
+
         /*! \brief sets the property rightMouseButtonAction to the specified \a __value.
             \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
             \see rightMouseButtonAction for more information */
-        void set_zoomByMouseRectangle(bool zomByrectangle);
+        void setRightMouseButtonAction(const RightMouseButtonAction & __value);
 
 
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
@@ -665,7 +694,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         bool doDrawing;
 
-        /** \brief JKQTPlotterBase used to plot */
+        /** \brief JKQTBasePlotter used to plot */
         JKQTBasePlotter* plotter;
 
 

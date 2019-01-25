@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
         // use one of different pens
         graph->set_style(pens[id%pens.size()]);
         // set width of graph line
-        graph->set_lineWidth(1.5);
+        graph->setLineWidth(1.5);
 
         // graph title is made from symbol+penstyle
         graph->set_title(QString("$D=\\delta/\\omega_0=%1$").arg(D[id]));
@@ -73,32 +73,32 @@ int main(int argc, char* argv[])
     //    high-quality math rendering.
     plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
 
-    // 5. set y-axis to logarithmic (x-axis would be analogous, but using `plot.get_xAxis()`)
-    plot.get_yAxis()->set_logAxis(true);
+    // 5. set y-axis to logarithmic (x-axis would be analogous, but using `plot.getXAxis()`)
+    plot.getYAxis()->set_logAxis(true);
     //    now we set the number of label ticks to 9 (you give the count if minor between two majors,
     //    so if you want ticks for 1,2,3,...,10,20,30,...,100... you need to use 9:
-    plot.get_yAxis()->set_minorTicks(9);
+    plot.getYAxis()->set_minorTicks(9);
     //    the minor grid is not shown by default. You can switch it on:
-    plot.get_yAxis()->set_drawMinorGrid(true);
+    plot.getYAxis()->set_drawMinorGrid(true);
     //    usually axis ticks are shown as numbers 0.01, 0.1, 1, 10, ... You can also force the scientific
     //    power-of-10 notation, using:
-    plot.get_yAxis()->set_labelType(JKQTPCALTexponent);
+    plot.getYAxis()->set_labelType(JKQTPCALTexponent);
     //    the number of digits in JKQTPCALTexponent determines which labels are drawn in standard-notation,
     //    as compared to power-notation (e.g. if set to 1, the labels 0.1=10^{-1}, 1, 10 are shown in
     //    standard notation, the rest in power-notation. This tweak improves readability)
-    plot.get_yAxis()->set_labelDigits(0);
+    plot.getYAxis()->set_labelDigits(0);
     // minor tick labels are usually not displayed, but you can switch them on, using
-    //plot.get_yAxis()->set_minorTickLabelsEnabled(true);
+    //plot.getYAxis()->set_minorTickLabelsEnabled(true);
     // the axis font sizes can be set with:
-    plot.get_yAxis()->set_tickLabelFontSize(10); // axis tick labels
-    plot.get_yAxis()->set_minorTickLabelFontSize(7); // minor axis tick labels
-    plot.get_yAxis()->set_labelFontSize(14); // axis label size
-    plot.get_xAxis()->set_tickLabelFontSize(10); // axis tick labels
-    plot.get_xAxis()->set_minorTickLabelFontSize(7); // minor axis tick labels
-    plot.get_xAxis()->set_labelFontSize(14); // axis label size
+    plot.getYAxis()->set_tickLabelFontSize(10); // axis tick labels
+    plot.getYAxis()->set_minorTickLabelFontSize(7); // minor axis tick labels
+    plot.getYAxis()->set_labelFontSize(14); // axis label size
+    plot.getXAxis()->set_tickLabelFontSize(10); // axis tick labels
+    plot.getXAxis()->set_minorTickLabelFontSize(7); // minor axis tick labels
+    plot.getXAxis()->set_labelFontSize(14); // axis label size
     //    ... and finally set axis labels (using LaTeX notation and $...$ to improve rendering)
-    plot.get_yAxis()->set_axisLabel("Amplitude $A/A_{stat}$");
-    plot.get_xAxis()->set_axisLabel("relative driving frequency $\\eta=\\omega/\\omega_0$");
+    plot.getYAxis()->setAxisLabel("Amplitude $A/A_{stat}$");
+    plot.getXAxis()->setAxisLabel("relative driving frequency $\\eta=\\omega/\\omega_0$");
 
 
     // 6. autoscale the plot so the graph is contained

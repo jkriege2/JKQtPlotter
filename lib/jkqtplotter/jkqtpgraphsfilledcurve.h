@@ -93,14 +93,14 @@ class LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
         /*! \brief sets the property lineWidth to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual void set_lineWidth(double __value)
+        inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
         /*! \brief returns the property lineWidth. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
-        inline virtual double get_lineWidth() const  
+        inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
@@ -183,7 +183,7 @@ class LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */
@@ -438,7 +438,7 @@ class LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph {
         /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
         QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTPlotterBase::getPlotStyle() and JKQTPlotterBase::getNextStyle() ) */
+        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
         int parentPlotStyle;
 
         /** \brief color of the graph */

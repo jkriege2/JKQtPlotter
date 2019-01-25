@@ -68,7 +68,7 @@ void timingTest(QPainter& painter, QString text, QString name, double fontSize) 
     for (int i=0; i<N; i++) {
         double t;
         JKQTMathText mt;
-        mt.set_fontSize(fontSize);
+        mt.setFontSize(fontSize);
         ht.start();    mt.parse(text);         t=ht.get_time()/1000.0;
         sum_parse+=t;
         sqrsum_parse+=t*t;
@@ -128,11 +128,11 @@ int main(int argc, char* argv[])
     painter.setRenderHint(QPainter::TextAntialiasing);
     ht.start();
 
-    mt.set_fontRoman("Times New Roman");
-    mt.set_fontMathRoman("Times New Roman");
-    mt.set_fontSans("Arial");
-    mt.set_fontMathSans("Arial");
-    mt.set_fontTypewriter("Courier");
+    mt.setFontRoman("Times New Roman");
+    mt.setFontMathRoman("Times New Roman");
+    mt.setFontSans("Arial");
+    mt.setFontMathSans("Arial");
+    mt.setFontTypewriter("Courier");
     mt.parse(mathTest);
     bool okh=true;
     browser.textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");
@@ -141,25 +141,25 @@ int main(int argc, char* argv[])
         std::cout<<mt.get_error_list().join("\n").toStdString()<<std::endl<<std::endl;
     }
     std::cout<<"parse mathTest in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "math, symbol, 10pt");
-    mt.set_fontSize(20);
+    mt.setFontSize(20);
     Y+=draw(painter, X1, Y, mt, "math, symbol, 20pt");
     ht.start();
     mt.parse(symbolTest);
     std::cout<<"parse symbolTest in "<<ht.get_time()/1000.0<<" ms\n";
     browser.textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");
     qDebug()<<"HTML2: ---------------------------------------------\n"<<mt.toHtml(&okh)<<"\nHTML2: --------------------------------------------- ok="<<okh;
-    mt.set_fontSize(12);
+    mt.setFontSize(12);
     Y+=draw(painter, X1, Y, mt, "math, XITS, 12pt");
     ht.start();
     mt.parse(text);
     std::cout<<"parse text in "<<ht.get_time()/1000.0<<" ms\n";
     browser.textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");
     qDebug()<<"HTML2: ---------------------------------------------\n"<<mt.toHtml(&okh)<<"\nHTML2: --------------------------------------------- ok="<<okh;
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "text, symbol, 10pt");
-    mt.set_fontSize(16);
+    mt.setFontSize(16);
     Y+=draw(painter, X1, Y, mt, "text, symbol, 16pt");
 
     Y+=30;
@@ -167,21 +167,21 @@ int main(int argc, char* argv[])
     ht.start();
     mt.parse(mathTest);
     std::cout<<"parse mathTest in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "math, XITS, 10pt");
-    mt.set_fontSize(20);
+    mt.setFontSize(20);
     Y+=draw(painter, X1, Y, mt, "math, XITS, 20pt");
     ht.start();
     mt.parse(symbolTest);
     std::cout<<"parse symbolTest in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(12);
+    mt.setFontSize(12);
     Y+=draw(painter, X1, Y, mt, "math, XITS, 12pt");
     ht.start();
     mt.parse(text);
     std::cout<<"parse text in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "text, XITS, 10pt");
-    mt.set_fontSize(16);
+    mt.setFontSize(16);
     Y+=draw(painter, X1, Y, mt, "text, XITS, 16pt");
 
 
@@ -191,21 +191,21 @@ int main(int argc, char* argv[])
     ht.start();
     mt.parse(mathTest);
     std::cout<<"parse mathTest in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "math, Arial Unicode, 10pt");
-    mt.set_fontSize(20);
+    mt.setFontSize(20);
     Y+=draw(painter, X1, Y, mt, "math, Arial Unicode, 20pt");
     ht.start();
     mt.parse(symbolTest);
     std::cout<<"parse symbolTest in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(12);
+    mt.setFontSize(12);
     Y+=draw(painter, X1, Y, mt, "math, Arial Unicode, 12pt");
     ht.start();
     mt.parse(text);
     std::cout<<"parse text in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "text, Arial Unicode, 10pt");
-    mt.set_fontSize(16);
+    mt.setFontSize(16);
     Y+=draw(painter, X1, Y, mt, "text, Arial Unicode, 16pt");
 
     Y+=30;
@@ -213,21 +213,21 @@ int main(int argc, char* argv[])
     ht.start();
     mt.parse(mathTest);
     std::cout<<"parse mathTest in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "math, STIX, 10pt");
-    mt.set_fontSize(20);
+    mt.setFontSize(20);
     Y+=draw(painter, X1, Y, mt, "math, STIX, 20pt");
     ht.start();
     mt.parse(symbolTest);
     std::cout<<"parse symbolTest in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(12);
+    mt.setFontSize(12);
     Y+=draw(painter, X1, Y, mt, "math, STIX, 12pt");
     ht.start();
     mt.parse(text);
     std::cout<<"parse text in "<<ht.get_time()/1000.0<<" ms\n";
-    mt.set_fontSize(10);
+    mt.setFontSize(10);
     Y+=draw(painter, X1, Y, mt, "text, STIX, 10pt");
-    mt.set_fontSize(16);
+    mt.setFontSize(16);
     Y+=draw(painter, X1, Y, mt, "text, STIX, 16pt");
 
 

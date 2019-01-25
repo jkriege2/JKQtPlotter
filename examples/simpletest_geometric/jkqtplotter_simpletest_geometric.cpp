@@ -20,13 +20,13 @@ int main(int argc, char* argv[])
     // 2.1 set the graph scales manually
     plot.setXY(0,3.05,0,3.05);
     // 2.2 set the asxpect ratio to 1
-    plot.get_plotter()->set_maintainAspectRatio(true);
-    plot.get_plotter()->set_aspectRatio(1);
-    plot.get_plotter()->set_maintainAxisAspectRatio(true);
-    plot.get_plotter()->set_axisAspectRatio(1);
+    plot.getPlotter()->setMaintainAspectRatio(true);
+    plot.getPlotter()->setAspectRatio(1);
+    plot.getPlotter()->setMaintainAxisAspectRatio(true);
+    plot.getPlotter()->setAxisAspectRatio(1);
     // 2.3 set the asxpect ratio to 1
-    plot.get_xAxis()->set_drawGrid(false);
-    plot.get_yAxis()->set_drawGrid(false);
+    plot.getXAxis()->set_drawGrid(false);
+    plot.getYAxis()->set_drawGrid(false);
 
 
     // 3. add some geometric plots

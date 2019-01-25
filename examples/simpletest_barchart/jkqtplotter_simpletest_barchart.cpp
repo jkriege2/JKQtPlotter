@@ -16,9 +16,9 @@ int main(int argc, char* argv[])
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPlotter plot;
-    plot.get_plotter()->set_useAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.get_plotter()->set_useAntiAliasingForText(true); // nicer (but slower) text rendering
+    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
     JKQTPDatastore* ds=plot.getDatastore();
 
     // 2. now we create data for three simple barchart
@@ -69,19 +69,19 @@ int main(int argc, char* argv[])
     // 7. data is grouped into 5 numbere groups (1..5), but we also have string
     //    labels for these groups (stored in L). In order to display these labels,
     //    we have to tell the x-Axis to use these special labels:
-    plot.get_xAxis()->addAxisTickLabels(X, L, Ndata);
+    plot.getXAxis()->addAxisTickLabels(X, L, Ndata);
     //    also we can rotate the labels a bit (by 45 degree), so they fit better
-    plot.get_xAxis()->set_tickLabelAngle(45);
-    plot.get_xAxis()->set_tickLabelFontSize(12);
+    plot.getXAxis()->set_tickLabelAngle(45);
+    plot.getXAxis()->set_tickLabelFontSize(12);
 
     // 8. finally we move the plot key/legend to the outside, top-right
     //    and lay it out as a single row
     //    NOTE: plot is a descendent of QWidget, which uses an internal object of
     //          type JKQTBasePlotter, which does the actual plotting.
     //          So many properties of the plot are only available in this internal
-    //          object, which you can access by plot.get_plotter().
-    plot.get_plotter()->set_keyPosition(JKQTPKeyOutsideTopRight);
-    plot.get_plotter()->set_keyLayout(JKQTPKeyLayoutOneRow);
+    //          object, which you can access by plot.getPlotter().
+    plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideTopRight);
+    plot.getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
 
     // 9 autoscale the plot so the graph is contained
     plot.zoomToFit();

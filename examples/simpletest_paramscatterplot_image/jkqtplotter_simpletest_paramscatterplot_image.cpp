@@ -71,18 +71,18 @@ int main(int argc, char* argv[])
 
 
     // 4. scale the plot so the graph is contained and format the coordinate system
-    plot.get_xAxis()->set_axisLabel("x-axis");
-    plot.get_yAxis()->set_axisLabel("y-axis");
-    plot.get_xAxis()->set_drawGrid(false);
-    plot.get_yAxis()->set_drawGrid(false);
+    plot.getXAxis()->setAxisLabel("x-axis");
+    plot.getYAxis()->setAxisLabel("y-axis");
+    plot.getXAxis()->set_drawGrid(false);
+    plot.getYAxis()->set_drawGrid(false);
     // max. size is the size of the image
     plot.setXY(0,image.width()-1,0,image.height()-1);
     plot.setAbsoluteXY(0,image.width()-1,0,image.height()-1);
     // ensure that axis aspect ration and coordinate system aspect ratio are maintained
-    plot.get_plotter()->set_maintainAspectRatio(true);
-    plot.get_plotter()->set_aspectRatio(1);
-    plot.get_plotter()->set_maintainAxisAspectRatio(true);
-    plot.get_plotter()->set_axisAspectRatio(1);
+    plot.getPlotter()->setMaintainAspectRatio(true);
+    plot.getPlotter()->setAspectRatio(1);
+    plot.getPlotter()->setMaintainAxisAspectRatio(true);
+    plot.getPlotter()->setAxisAspectRatio(1);
 
     // 5. show plotter and make it a decent size
     plot.show();

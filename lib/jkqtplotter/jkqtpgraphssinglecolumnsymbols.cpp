@@ -185,7 +185,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
             }
             plotSymbols.append(QPointF(x,y));
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
             }
         }
     } else {
@@ -211,7 +211,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
             plotSymbols.append(QPointF(x,y));
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                 plotSymbols.append(QPointF(x,y));
-                JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->get_lineWidthMultiplier()), color, fillColor);
+                JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
             }
         }
     }
@@ -229,9 +229,9 @@ void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
     const double maxSize=qMax(rect.width(), rect.height());
     double symbolSize=parent->pt2px(painter, this->symbolSize);
     if (symbolSize>minSize*0.9) symbolSize=minSize*0.9;
-    double symbolWidth=parent->pt2px(painter, this->symbolWidth*parent->get_lineWidthMultiplier());
+    double symbolWidth=parent->pt2px(painter, this->symbolWidth*parent->getLineWidthMultiplier());
     if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
-    double lineWidth=parent->pt2px(painter, this->lineWidth*parent->get_lineWidthMultiplier());
+    double lineWidth=parent->pt2px(painter, this->lineWidth*parent->getLineWidthMultiplier());
     if (lineWidth>0.5*maxSize) lineWidth=0.5*maxSize;
 
     painter.save();
@@ -249,7 +249,7 @@ void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
 QPen JKQTPSingleColumnSymbolsGraph::getSymbolPen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*symbolWidth)));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*symbolWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

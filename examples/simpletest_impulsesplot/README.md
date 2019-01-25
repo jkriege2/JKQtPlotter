@@ -25,7 +25,7 @@ Now an impulse graph object is generated and added to the plot:
     JKQTPImpulsesVerticalGraph* graph=new JKQTPImpulsesVerticalGraph(&plot);
     graph->set_xColumn(columnX);
     graph->set_yColumn(columnY);
-	graph->set_lineWidth(2);
+	graph->setLineWidth(2);
 	graph->set_color(QColor("red"));
     graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
 
@@ -41,7 +41,7 @@ There is an alternative class `JKQTPImpulsesHorizontalGraph` which draws horizon
     JKQTPImpulsesHorizontalGraph* graph=new JKQTPImpulsesHorizontalGraph(&plot);
     graph->set_yColumn(columnX);
     graph->set_xColumn(columnY);
-    graph->set_lineWidth(2);
+    graph->setLineWidth(2);
     graph->set_color(QColor("blue"));
     graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
 ```

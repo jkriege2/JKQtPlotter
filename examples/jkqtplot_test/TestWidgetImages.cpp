@@ -20,27 +20,27 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     setLayout(layouti);
     resize(1000, 800);
     plotImg=new JKQTPlotter(true, this);
-    plotImg->set_doDrawing(false);
-    plotImg->get_plotter()->set_plotLabel(tr("\\textbf{image plot}"));
+    plotImg->setPlotUpdateEnabled(false);
+    plotImg->getPlotter()->setPlotLabel(tr("\\textbf{image plot}"));
     plotImg->setObjectName("plotImg");
-    plotImg->get_plotter()->set_userSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_img/");
+    plotImg->getPlotter()->setUserSettigsFilename(QApplication::applicationDirPath()+"/usersettings.ini", "plot_img/");
 
-    plotImg->get_plotter()->set_maintainAspectRatio(true);
-    plotImg->get_plotter()->set_aspectRatio(3.0/2.0);
-    plotImg->get_plotter()->set_maintainAxisAspectRatio(true);
-    plotImg->get_plotter()->set_axisAspectRatio(4.0);
-    /*plotImg->get_plotter()->get_xAxis()->set_linkedAxis(plotImg->get_plotter()->get_yAxis());
-    plotImg->get_plotter()->get_xAxis()->set_changeWidthToAspectRatio(true);
-    plotImg->get_plotter()->get_xAxis()->set_aspectRatio(1.0);*/
+    plotImg->getPlotter()->setMaintainAspectRatio(true);
+    plotImg->getPlotter()->setAspectRatio(3.0/2.0);
+    plotImg->getPlotter()->setMaintainAxisAspectRatio(true);
+    plotImg->getPlotter()->setAxisAspectRatio(4.0);
+    /*plotImg->getPlotter()->getXAxis()->set_linkedAxis(plotImg->getPlotter()->getYAxis());
+    plotImg->getPlotter()->getXAxis()->set_changeWidthToAspectRatio(true);
+    plotImg->getPlotter()->getXAxis()->setAspectRatio(1.0);*/
 
 
     layouti->addWidget(plotImg);
     plotImg->setXY(0,30,0,20);
     plotImg->setAbsoluteXY(0,30,0,20);
     img1=QImage(":/lena.png");
-    JKQTPImage* pimg1=new JKQTPImage(0,0,10,20, &img1, plotImg->get_plotter());
+    JKQTPImage* pimg1=new JKQTPImage(0,0,10,20, &img1, plotImg->getPlotter());
     pimg1->set_title("LENA");
-    plotImg->get_plotter()->addGraph(pimg1);
+    plotImg->getPlotter()->addGraph(pimg1);
     double* img2=(double*)calloc(100*100,sizeof(double));
     int32_t* img2M=(int32_t*)calloc(100*100,sizeof(int32_t));
     bool* bimg2=(bool*)calloc(100*100,sizeof(bool));
@@ -51,7 +51,7 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
             bimg2[y*100+x]=static_cast<double>(rand())/static_cast<double>(RAND_MAX)>0.9;
         }
     }
-    pimg2=new JKQTPMathImage(10,0,10,10, JKQTPMathImageBase::DoubleArray, img2, 100, 100, JKQTPMathImageGRAY, plotImg->get_plotter());
+    pimg2=new JKQTPMathImage(10,0,10,10, JKQTPMathImageBase::DoubleArray, img2, 100, 100, JKQTPMathImageGRAY, plotImg->getPlotter());
     pimg2->set_imageMin(-1);
     pimg2->set_imageMax(0.5);
     pimg2->set_imageName("left image");
@@ -59,8 +59,8 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     pimg2->set_autoImageRange(false);
     pimg2->set_colorBarTopVisible(true);
     pimg2->set_colorBarRightVisible(false);
-    plotImg->get_plotter()->addGraph(pimg2);
-    pimg3=new JKQTPMathImage(20,0,10,10, JKQTPMathImageBase::DoubleArray, img2, 100, 100, JKQTPMathImageMATLAB, plotImg->get_plotter());
+    plotImg->getPlotter()->addGraph(pimg2);
+    pimg3=new JKQTPMathImage(20,0,10,10, JKQTPMathImageBase::DoubleArray, img2, 100, 100, JKQTPMathImageMATLAB, plotImg->getPlotter());
     pimg3->set_colorBarTopVisible(true);
     pimg3->set_colorBarRightVisible(true);
     pimg3->set_imageMax(0.5);
@@ -73,21 +73,21 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     pimg3->set_dataModifier(img2M, JKQTPMathImageBase::Int32Array);
     pimg3->set_modifierMode(JKQTPMathImageBase::ModifyNone);
     pimg3->set_title("right image");
-    plotImg->get_plotter()->addGraph(pimg3);
+    plotImg->getPlotter()->addGraph(pimg3);
 
     QColor ty=QColor("blue");
     ty.setAlphaF(0.1);
-    JKQTPOverlayImage* oimg1=new JKQTPOverlayImage(10,0,10,10, bimg2, 100, 100, QColor("blue"), plotImg->get_plotter());
+    JKQTPOverlayImage* oimg1=new JKQTPOverlayImage(10,0,10,10, bimg2, 100, 100, QColor("blue"), plotImg->getPlotter());
     oimg1->set_title("overlay");
     oimg1->set_falseColor(ty);
-    plotImg->get_plotter()->addGraph(oimg1);
+    plotImg->getPlotter()->addGraph(oimg1);
 
-    JKQTPOverlayImageEnhanced* oimg2=new JKQTPOverlayImageEnhanced(10,0,10,10, bimg2, 100, 100, QColor("red"), plotImg->get_plotter());
+    JKQTPOverlayImageEnhanced* oimg2=new JKQTPOverlayImageEnhanced(10,0,10,10, bimg2, 100, 100, QColor("red"), plotImg->getPlotter());
     oimg2->set_title("enhanced overlay");
     oimg2->set_drawAsRectangles(false);
-    plotImg->get_plotter()->addGraph(oimg2);
+    plotImg->getPlotter()->addGraph(oimg2);
 
-    plotImg->set_doDrawing(true);
+    plotImg->setPlotUpdateEnabled(true);
     plotImg->zoomToFit();
 
     JKQTPMathImageColorPaletteComboBox* cmbPal=new JKQTPMathImageColorPaletteComboBox(this);
@@ -117,17 +117,17 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
 void TestWidgetImages::setImgPalette(int index)
 {
     pimg3->set_palette(index);
-    plotImg->update_plot();
+    plotImg->replotPlot();
 }
 
 void TestWidgetImages::setImgPalette1(int index)
 {
     pimg2->set_palette(index);
-    plotImg->update_plot();
+    plotImg->replotPlot();
 }
 
 void TestWidgetImages::setImgModifier(int index)
 {
     pimg3->set_modifierMode(JKQTPMathImage::ModifierMode(index));
-    plotImg->update_plot();
+    plotImg->replotPlot();
 }

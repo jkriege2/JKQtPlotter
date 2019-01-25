@@ -13,9 +13,9 @@ SpeedTestPlot::SpeedTestPlot():
 
 {
     // 1. optimize JKQTPlotter for speed (by switching off anti-aliasing)
-    get_plotter()->set_useAntiAliasingForGraphs(false);
-    get_plotter()->set_useAntiAliasingForSystem(false);
-    get_plotter()->set_useAntiAliasingForText(false);
+    getPlotter()->setUseAntiAliasingForGraphs(false);
+    getPlotter()->setUseAntiAliasingForSystem(false);
+    getPlotter()->setUseAntiAliasingForText(false);
 
 
     // 2. now we create data for a simple plot (a sine curve + random[-0.5,0.5])
@@ -40,14 +40,14 @@ SpeedTestPlot::SpeedTestPlot():
     graph->set_xColumn(columnX);
     graph->set_yColumn(columnY);
     graph->set_title(QObject::tr("live sin() graph"));
-    graph->set_lineWidth(1);
+    graph->setLineWidth(1);
     addGraph(graph);
 
     JKQTPXYLineGraph* graph2=new JKQTPXYLineGraph(this);
     graph2->set_xColumn(columnX);
     graph2->set_yColumn(columnY2);
     graph2->set_title(QObject::tr("live cos() graph"));
-    graph2->set_lineWidth(1);
+    graph2->setLineWidth(1);
     addGraph(graph2);
 
     // 6. scale the plot so the graph is contained
@@ -92,7 +92,7 @@ void SpeedTestPlot::plotNewData()
 
     // set new x-range and replot
     setX(X[0], X[NDATA-1]);
-    update_plot();
+    replotPlot();
 
     // calculate and update FPS-rate in window title
     auto tlastalst=t_lastplot;

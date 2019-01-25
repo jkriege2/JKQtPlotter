@@ -18,13 +18,13 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     setLayout(plotFuncLayout);
     plotFuncPlt=new JKQTPlotter(true, this);
     plotFuncLayout->addWidget(plotFuncPlt);
-    pfunc=new JKQTPXParsedFunctionLineGraph(plotFuncPlt->get_plotter());
+    pfunc=new JKQTPXParsedFunctionLineGraph(plotFuncPlt->getPlotter());
     pfunc->set_function("x^2/10+sin(x*pi*10)");
     pfunc->set_errorFunction("x^2/20");
     pfunc->set_drawErrorPolygons(true);
     pfunc->set_style(Qt::DashLine);
     plotFuncPlt->addGraph(pfunc);
-    plotFuncPlt->update_plot();
+    plotFuncPlt->replotPlot();
 
     pfuncErrorStyle=new JKQTPErrorPlotstyleComboBox(this);
     pfuncErrorStyle->setCurrentIndex(3);
@@ -69,11 +69,11 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     connect(edtPFunc, SIGNAL(currentIndexChanged(QString)), this, SLOT(setPFuncE(QString)));
     QCheckBox* chkFLogX=new QCheckBox(tr("x-axis: log-scale"));
     chkFLogX->setChecked(false);
-    connect(chkFLogX, SIGNAL(toggled(bool)), plotFuncPlt->get_xAxis(), SLOT(set_logAxis(bool)));
+    connect(chkFLogX, SIGNAL(toggled(bool)), plotFuncPlt->getXAxis(), SLOT(set_logAxis(bool)));
     plotFuncLayout->addWidget(chkFLogX);
     QCheckBox* chkFLogY=new QCheckBox(tr("y-axis: log-scale"));
     chkFLogY->setChecked(false);
-    connect(chkFLogY, SIGNAL(toggled(bool)), plotFuncPlt->get_yAxis(), SLOT(set_logAxis(bool)));
+    connect(chkFLogY, SIGNAL(toggled(bool)), plotFuncPlt->getYAxis(), SLOT(set_logAxis(bool)));
     plotFuncLayout->addWidget(chkFLogY);
 
 
@@ -88,29 +88,29 @@ void TestWidgetFunctionPlots::setPFuncStyle()
     if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorPolygons) pfunc->set_drawErrorPolygons(true);
     pfunc->set_drawLine(chkPFuncDrawLine->isChecked());
     pfunc->set_displaySamplePoints(chkPFuncDrawSamples->isChecked());
-    plotFuncPlt->update_plot();
+    plotFuncPlt->replotPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncMinPoint(int value)
 {
     pfunc->set_minSamples(value);
-    plotFuncPlt->update_plot();
+    plotFuncPlt->replotPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncMaxRefine(int value)
 {
     pfunc->set_maxRefinementDegree(value);
-    plotFuncPlt->update_plot();
+    plotFuncPlt->replotPlot();
 }
 
 void TestWidgetFunctionPlots::setPFunc(const QString &expression)
 {
     pfunc->set_function(expression);
-    plotFuncPlt->update_plot();
+    plotFuncPlt->replotPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncE(const QString &expression)
 {
     pfunc->set_errorFunction(expression);
-    plotFuncPlt->update_plot();
+    plotFuncPlt->replotPlot();
 }

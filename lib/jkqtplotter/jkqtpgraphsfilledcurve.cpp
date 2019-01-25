@@ -96,7 +96,7 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -128,15 +128,15 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     double xold=-1;
     //double yold=-1;
 //    double x0=transformX(baseline);
-//    if (parent->get_xAxis()->isLogAxis()) {
-//        if (baseline>0 && baseline>parent->get_xAxis()->getMin()) x0=transformX(baseline);
-//        else x0=transformX(parent->get_xAxis()->getMin());
+//    if (parent->getXAxis()->isLogAxis()) {
+//        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
+//        else x0=transformX(parent->getXAxis()->getMin());
 //    }
     double y0=transformY(baseline);
-    if (parent->get_yAxis()->isLogAxis()) {
-        y0=transformY(parent->get_yAxis()->getMin());
-        if (baseline>0 && baseline>parent->get_yAxis()->getMin()) y0=transformY(baseline);
-        else y0=transformY(parent->get_yAxis()->getMin());
+    if (parent->getYAxis()->isLogAxis()) {
+        y0=transformY(parent->getYAxis()->getMin());
+        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
+        else y0=transformY(parent->getYAxis()->getMin());
     }
     bool first=true;
     intSortData();
@@ -271,7 +271,7 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -304,15 +304,15 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
     //double xold=-1;
     double yold=-1;
     double x0=transformX(baseline);
-    if (parent->get_xAxis()->isLogAxis()) {
-        if (baseline>0 && baseline>parent->get_xAxis()->getMin()) x0=transformX(baseline);
-        else x0=transformX(parent->get_xAxis()->getMin());
+    if (parent->getXAxis()->isLogAxis()) {
+        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
+        else x0=transformX(parent->getXAxis()->getMin());
     }
     /*double y0=transformY(baseline);
-    if (parent->get_yAxis()->isLogAxis()) {
-        y0=transformY(parent->get_yAxis()->getMin());
-        if (baseline>0 && baseline>parent->get_yAxis()->getMin()) y0=transformY(baseline);
-        else y0=transformY(parent->get_yAxis()->getMin());
+    if (parent->getYAxis()->isLogAxis()) {
+        y0=transformY(parent->getYAxis()->getMin());
+        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
+        else y0=transformY(parent->getYAxis()->getMin());
     }*/
     bool first=true;
     intSortData();
@@ -394,7 +394,7 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 QPen JKQTPFilledCurveXGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->get_lineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -572,7 +572,7 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -688,7 +688,7 @@ QPen JKQTPFilledVerticalRangeGraph::getLinePen(JKQTPEnhancedPainter &painter) co
 {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->get_lineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

@@ -38,19 +38,19 @@ With this simple setup, all three plots would be arranged by the QLayout, but th
 
 ```.cpp
     // 3.4 synchronize width/x-axis of plotResid to width/x-axis of plotMain
-    plotResid->get_plotter()->synchronizeToMaster(plotMain->get_plotter(), true, false, true, true);
+    plotResid->getPlotter()->synchronizeToMaster(plotMain->getPlotter(), true, false, true, true);
 
     // 3.5 synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
-    plotResidHist->get_plotter()->synchronizeToMaster(plotResid->get_plotter(), false, true, true, true);
+    plotResidHist->getPlotter()->synchronizeToMaster(plotResid->getPlotter(), false, true, true, true);
 ```
 
 Finally: When printing or saving an image of the plots, the plotter will no know anything about the arrangement of the plots and the plots cannot be printed/drawn in the same arrangement as in the window. If you want to arrange the plots in the same layout in a printout, as in the window, you will have to tell the main plot, in which arrangement to print the plots:
 
 ```.cpp
     // 3.6 ensure that the plot are printed/exported in whole, when printing in plotMain
-    plotMain->get_plotter()->set_gridPrinting(true);
-    plotMain->get_plotter()->addGridPrintingPlotter(0,1,plotResid->get_plotter());
-    plotMain->get_plotter()->addGridPrintingPlotter(1,1,plotResidHist->get_plotter());
+    plotMain->getPlotter()->setGridPrinting(true);
+    plotMain->getPlotter()->addGridPrintingPlotter(0,1,plotResid->getPlotter());
+    plotMain->getPlotter()->addGridPrintingPlotter(1,1,plotResidHist->getPlotter());
 ```
 
 In the first line, grid-printing (i.e. the layouted printing of several graphs) is activated. Then the arrangement of the two slave plots `plotResid` and `plotResidHist` is defined as (`x,y`)-shifts with respect to the master plot `plotMain`.
@@ -61,24 +61,24 @@ Finally the axes and plots need a bit of formatting to make them look nicer:
 
 ```.cpp
     // 6.1 axis labels, distributed over the several plots
-    plotMain->get_yAxis()->set_axisLabel("y axis");
-    plotResid->get_xAxis()->set_axisLabel("x axis");
-    plotResid->get_yAxis()->set_axisLabel("residuals");
-    plotResidHist->get_xAxis()->set_axisLabel("frequency");
+    plotMain->getYAxis()->setAxisLabel("y axis");
+    plotResid->getXAxis()->setAxisLabel("x axis");
+    plotResid->getYAxis()->setAxisLabel("residuals");
+    plotResidHist->getXAxis()->setAxisLabel("frequency");
     // 6.2 switch off the tick labels on the axes that directly face another plot
-    plotMain->get_xAxis()->set_drawMode1(JKQTPCADMticks);
-    plotResidHist->get_yAxis()->set_drawMode1(JKQTPCADMticks);
+    plotMain->getXAxis()->set_drawMode1(JKQTPCADMticks);
+    plotResidHist->getYAxis()->set_drawMode1(JKQTPCADMticks);
     // 6.3 show tick labels on the rhs y-axis of the residual histogram plot
-    plotResidHist->get_yAxis()->set_drawMode2(JKQTPCADMticksAndLabels);
+    plotResidHist->getYAxis()->set_drawMode2(JKQTPCADMticksAndLabels);
     // 6.4 hide keys in all plots but the main plot
-    plotResid->get_plotter()->set_showKey(false);
-    plotResidHist->get_plotter()->set_showKey(false);
+    plotResid->getPlotter()->setShowKey(false);
+    plotResidHist->getPlotter()->setShowKey(false);
     // 6.5 hide position label and toolbars in the plots except main plot
-    plotResid->set_displayToolbar(false);
-    plotResid->set_displayMousePosition(false);
-    plotResidHist->set_displayToolbar(false);
-    plotResidHist->set_displayMousePosition(false);
-    plotMain->set_toolbarAlwaysOn(true);
+    plotResid->setToolbarVisible(false);
+    plotResid->setMousePositionShown(false);
+    plotResidHist->setToolbarVisible(false);
+    plotResidHist->setMousePositionShown(false);
+    plotMain->setToolbarVisible(true);
 ```
 
 As a last step, the axes are scaled automatically, so the data fills the plots:

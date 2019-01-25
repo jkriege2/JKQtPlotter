@@ -19,7 +19,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 
     // set step style
     graph->set_stepType(JKQTPStepLeft);
-    graph->set_lineWidth(1);
+    graph->setLineWidth(1);
     graph->set_fillCurve(true);
     graph->set_drawLine(true);
     graph->set_title("JKQTPStepLeft, filled");
@@ -43,7 +43,7 @@ Finally the `JKQTPXYLineGraph` is configured:
     plot.addGraph(graphL);
 ```
 
-In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->set_symbolSize(14)`), the line-width used to draw them (`graph->set_symbolWidth(1.5)`) and the line width of the graph line (`graph->set_lineWidth(1)`). If you want to switch off the line altogether, use `graph->set_drawLine(false`.
+In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->set_symbolSize(14)`), the line-width used to draw them (`graph->set_symbolWidth(1.5)`) and the line width of the graph line (`graph->setLineWidth(1)`). If you want to switch off the line altogether, use `graph->set_drawLine(false`.
 
 The result looks like this:
 

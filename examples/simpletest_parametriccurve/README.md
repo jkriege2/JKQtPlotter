@@ -43,7 +43,7 @@ If you use `JKQTPXYParametrizedScatterGraph` instead of `JKQTPXYLineGraph`, you 
     graph2->set_symbol(JKQTPNoSymbol);
     graph2->set_drawLine(true);
     graph2->set_title("colored spiral");
-    graph2->get_colorBarRightAxis()->set_axisLabel("color scale radius $r(\\phi)$");
+    graph2->get_colorBarRightAxis()->setAxisLabel("color scale radius $r(\\phi)$");
     plot2.addGraph(graph2);
 ```
 

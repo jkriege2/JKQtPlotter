@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     // 2. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
     //    the function is defined as C++ inline function
     JKQTPXFunctionLineGraph* func1=new JKQTPXFunctionLineGraph(plot);
-    func1->set_plotFunction([](double x) { return 0.2*x*x-0.015*x*x*x; });
+    func1->setPlotFunction([](double x) { return 0.2*x*x-0.015*x*x*x; });
     func1->set_title("C++-inline function $0.2x^2-0.015x^3$");
     plot->addGraph(func1);
 
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     //    the function is again defined as C++ inline function, but now uses internal
     //    parameters (handed over to the function as a pointer to QVector<double>
     JKQTPXFunctionLineGraph* func2=new JKQTPXFunctionLineGraph(plot);
-    func2->set_plotFunction([](double x, void* params) {
+    func2->setPlotFunction([](double x, void* params) {
         QVector<double>* p=static_cast<QVector<double>*>(params);
         return p->at(0)*sin(2.0*M_PI*x*p->at(1));
     });
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
     //    the function is again defined as C++ inline function, but now uses external
     //    parameters, which may have any type (here QMap<QString,double)
     JKQTPXFunctionLineGraph* func3=new JKQTPXFunctionLineGraph(plot);
-    func3->set_plotFunction([](double x, void* params) {
+    func3->setPlotFunction([](double x, void* params) {
         QMap<QString,double>* p=static_cast<QMap<QString,double>*>(params);
         return p->value("amplitude")*sin(2.0*M_PI*x*p->value("frequency"));
     });
@@ -74,14 +74,14 @@ int main(int argc, char* argv[])
 
     // 5. of course the function may also be any C+ funtor object:
     JKQTPXFunctionLineGraph* func4=new JKQTPXFunctionLineGraph(plot);
-    func4->set_plotFunction(SincSqr(-8));
+    func4->setPlotFunction(SincSqr(-8));
     func4->set_title("C++ functor $-8*\\sin^2(x)/x^2$");
     plot->addGraph(func4);
 
 
     // 6. now we use a JKQTPXFunctionLineGraph to draw a static C function
     JKQTPXFunctionLineGraph* func5=new JKQTPXFunctionLineGraph(plot);
-    func5->set_plotFunction(&sinc);
+    func5->setPlotFunction(&sinc);
     func5->set_title("static C function $10*\\sin(x)/x$");
     plot->addGraph(func5);
 
@@ -107,9 +107,9 @@ int main(int argc, char* argv[])
 
 
     // 8. set some axis properties (we use LaTeX for nice equation rendering)
-    plot->get_xAxis()->set_axisLabel(QObject::tr("x-axis"));
-    plot->get_yAxis()->set_axisLabel(QObject::tr("y-axis"));
-    plot->get_plotter()->set_keyPosition(JKQTPKeyOutsideBottomLeft);
+    plot->getXAxis()->setAxisLabel(QObject::tr("x-axis"));
+    plot->getYAxis()->setAxisLabel(QObject::tr("y-axis"));
+    plot->getPlotter()->setKeyPosition(JKQTPKeyOutsideBottomLeft);
 
 
     // 4. scale the plot so the graph is contained

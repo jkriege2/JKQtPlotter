@@ -40,7 +40,7 @@ The next two code snippets show how to modify the size of the symbols and the li
     JKQTPXYParametrizedScatterGraph* graph6=new JKQTPXYParametrizedScatterGraph(&plot);
     graph6->set_xColumn(columnX);
     graph6->set_yColumn(columnY6);
-    graph6->set_linewidthColumn(columnLW);
+    graph6->setLinewidthColumn(columnLW);
     graph6->set_drawLine(true);
     graph6->set_symbol(JKQTPNoSymbol);
     graph6->set_title("6: line width");
@@ -83,7 +83,7 @@ The second variant for setting the color of each datapoint is by mapping the val
     graph2->set_symbol(JKQTPFilledRect);
     graph2->set_drawLine(true);
     graph2->set_title("2: color");
-    graph2->get_colorBarRightAxis()->set_axisLabel("color scale for graph2");
+    graph2->get_colorBarRightAxis()->setAxisLabel("color scale for graph2");
     plot.addGraph(graph2);
 ```
 Note: If you want to set the range manually, use `ste_imageMin()` and `set_imageMax()` after setting `set_autoImageRange(false)`.
@@ -99,7 +99,7 @@ Note also that it is possible to combine any of parametrizations above in a sing
     graph5->set_palette(JKQTPMathImageBLUEYELLOW);
     graph5->set_drawLine(true);
     graph5->set_title("5: color+size");
-    graph5->get_colorBarRightAxis()->set_axisLabel("color scale for graph5");
+    graph5->get_colorBarRightAxis()->setAxisLabel("color scale for graph5");
     plot.addGraph(graph5);
 ```
 
