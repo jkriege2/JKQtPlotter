@@ -36,7 +36,7 @@
 
 
 JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *parent):
-    JKQTPSingleColumnGraph(parent)
+    JKQTPSingleColumnGraph(parent), seedValue(123456)
 {
     color=QColor("red");
     style=Qt::SolidLine;
@@ -60,25 +60,9 @@ JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *pa
 
 
 JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTPlotter *parent):
-    JKQTPSingleColumnGraph(parent)
+    JKQTPSingleColumnSymbolsGraph(parent->getPlotter())
 {
-    color=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=2;
-    parentPlotStyle=-1;
-    symbolSize=12;
-    symbolWidth=1;
-    symbol=JKQTPNoSymbol;
-    dataDirection=DataDirection::Y;
-    position=0;
 
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-    }
-    fillColor=color;
 }
 
 
@@ -146,7 +130,8 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
     if (imax<0) imax=0;
 
     std::random_device rd; // random number generators:
-    std::mt19937 gen{rd()};
+    std::minstd_rand gen{rd()};
+    gen.seed(seedValue);
     std::uniform_real_distribution<> dRandomScatter{position-width/2.0, position+width/2.0};
 
     const double symSize=parent->pt2px(painter, symbolSize);

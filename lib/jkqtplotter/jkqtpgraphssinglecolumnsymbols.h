@@ -199,6 +199,14 @@ class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
         {
             return this->symbolSize;
         }
+        /** \copydoc seedValue */
+        inline void setSeedValue(unsigned int val) {
+            seedValue=val;
+        }
+        /** \copydoc seedValue */
+        inline unsigned int getSeedValue() const {
+            return seedValue;
+        }
     protected:
         /** \brief interpret the data from dataColumn either as X- or Y-data */
         DataDirection dataDirection;
@@ -216,6 +224,11 @@ class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
         double symbolSize;
         /** \brief width (in pt) of the lines used to plot the symbol for the data points */
         double symbolWidth;
+        /** \brief seed value for the pseudo-random number generator used for drawing.
+         *
+         * This seed is used instead of e.g. the system time to ensure that replotting results in the
+         * same plot every time. ou can set the seed using setSeedvalue() ) */
+        unsigned int seedValue;
 
         QPen getSymbolPen(JKQTPEnhancedPainter& painter) const;
         QBrush getBrush(JKQTPEnhancedPainter &painter) const;
