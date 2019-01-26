@@ -149,7 +149,7 @@ void JKQTPXParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 
 
 double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(double x, void* data) {
-    JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData* d=(JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData*)data;
+    JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData* d=static_cast<JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData*>(data);
     if (d && d->parser && d->node) {
         try {
             d->parser->addVariableDouble("x", x);
@@ -312,7 +312,7 @@ void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 }
 
 double JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction(double x, void* data) {
-    JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData* d=(JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData*)data;
+    JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData* d=static_cast<JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData*>(data);
     if (d && d->parser && d->node) {
         try {
             d->parser->addVariableDouble("x", x);

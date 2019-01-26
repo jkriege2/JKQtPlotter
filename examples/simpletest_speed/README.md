@@ -37,7 +37,7 @@ void SpeedTestPlot::plotNewData()
 
     // set new x-range and replot
     setX(X[0], X[NDATA-1]);
-    replotPlot();
+    redrawPlot();
 
     // calculate and update FPS-rate in window title
     auto tlastalst=t_lastplot;

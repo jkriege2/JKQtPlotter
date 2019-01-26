@@ -199,13 +199,13 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /** \brief class constructor */
         JKQTPMathImageBase(JKQTBasePlotter* parent=nullptr);
         JKQTPMathImageBase(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
-        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
 
 
         /** \brief class constructor */
         JKQTPMathImageBase(JKQTPlotter* parent);
         JKQTPMathImageBase(double x, double y, double width, double height, JKQTPlotter* parent=nullptr);
-        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
+        JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
@@ -213,28 +213,28 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /*! \brief sets the property Nx to the specified \a __value. 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual void set_Nx(uint32_t __value)
+        inline virtual void set_Nx(int __value)
         {
             this->Nx = __value;
         } 
         /*! \brief returns the property Nx. 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual uint32_t get_Nx() const  
+        inline virtual int get_Nx() const
         {
             return this->Nx; 
         }
         /*! \brief sets the property Ny to the specified \a __value. 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual void set_Ny(uint32_t __value)
+        inline virtual void set_Ny(int __value)
         {
             this->Ny = __value;
         } 
         /*! \brief returns the property Ny. 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual uint32_t get_Ny() const  
+        inline virtual int get_Ny() const
         {
             return this->Ny; 
         }
@@ -310,8 +310,8 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         }
 
         virtual void set_dataModifier(void* data, DataType datatype);
-        virtual void set_data(void* data, uint32_t Nx, uint32_t Ny, DataType datatype);
-        virtual void set_data(void* data, uint32_t Nx, uint32_t Ny);
+        virtual void set_data(void* data, int Nx, int Ny, DataType datatype);
+        virtual void set_data(void* data, int Nx, int Ny);
         /** \brief determine min/max data value of the image */
         virtual void getDataMinMax(double& imin, double& imax);
         /** \brief determine min/max data value of the image */
@@ -325,9 +325,9 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /** \brief datatype of the data array data */
         DataType datatype;
         /** \brief width of the data array data in pt */
-        uint32_t Nx;
+        int Nx;
         /** \brief height of the data array data in pt */
-        uint32_t Ny;
+        int Ny;
 
         /** \brief points to the data array, holding the modifier image */
         void* dataModifier;
@@ -344,7 +344,7 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         virtual void ensureImageData();
 
         void modifyImage(QImage& img);
-        void modifyImage(QImage& img, void* dataModifier, DataType datatypeModifier, uint32_t Nx, uint32_t Ny, double internalModifierMin, double internalModifierMax);
+        void modifyImage(QImage& img, void* dataModifier, DataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
 
 
 };
@@ -427,9 +427,9 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
     public:
 
         /** \brief class constructor */
-        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
+        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
         JKQTPMathImage(JKQTBasePlotter* parent=nullptr);
-        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
+        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
         JKQTPMathImage(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -913,14 +913,14 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
-
+        using JKQTPMathImageBase::set_data;
 
 
         /** \brief class constructor */
-        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
+        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
 
         /** \brief class constructor */
         JKQTPRGBMathImage(JKQTBasePlotter* parent=nullptr);
@@ -935,11 +935,11 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
 
-        virtual void set_data(void* data, void* dataG, void* dataB, uint32_t Nx, uint32_t Ny, DataType datatype);
-        virtual void set_data(void* data, void* dataG, void* dataB,  uint32_t Nx, uint32_t Ny);
+        virtual void set_data(void* data, void* dataG, void* dataB, int Nx, int Ny, DataType datatype);
+        virtual void set_data(void* data, void* dataG, void* dataB,  int Nx, int Ny);
 
-        virtual void set_data(void* data, uint32_t Nx, uint32_t Ny, DataType datatype);
-        virtual void set_data(void* data,  uint32_t Nx, uint32_t Ny);
+        virtual void set_data(void* data, int Nx, int Ny, DataType datatype) override;
+        virtual void set_data(void* data,  int Nx, int Ny) override ;
 
 
         /** \brief determine min/max data value of the image */
@@ -1434,13 +1434,13 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
 
         /** \brief class constructor */
         JKQTPColumnMathImage(JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPColumnMathImage(JKQTPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTPlotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPlotter* parent);
 
         /*! \brief sets the property imageColumn to the specified \a __value. 
             \details Description of the parameter imageColumn is: <BLOCKQUOTE>\copydoc imageColumn </BLOCKQUOTE> 
@@ -1498,16 +1498,16 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
 
         /** \brief class constructor */
         JKQTPColumnRGBMathImage(JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPColumnRGBMathImage(JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, uint32_t Nx, uint32_t Ny, JKQTPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int Nx, int Ny, JKQTPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int Nx, int Ny, JKQTPlotter* parent);
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, int Nx, int Ny, JKQTPlotter* parent);
 
         /*! \brief sets the property imageRColumn to the specified \a __value. 
             \details Description of the parameter imageRColumn is: <BLOCKQUOTE>\copydoc imageRColumn </BLOCKQUOTE> 
@@ -1591,11 +1591,11 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
     public:
 
         /** \brief class constructor */
-        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
+        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
         JKQTPOverlayImage(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPlotter* parent);
+        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent);
         JKQTPOverlayImage(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -1640,28 +1640,28 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /*! \brief sets the property Nx to the specified \a __value. 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual void set_Nx(uint32_t __value)
+        inline virtual void set_Nx(int __value)
         {
             this->Nx = __value;
         } 
         /*! \brief returns the property Nx. 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual uint32_t get_Nx() const  
+        inline virtual int get_Nx() const
         {
             return this->Nx; 
         }
         /*! \brief sets the property Ny to the specified \a __value. 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual void set_Ny(uint32_t __value)
+        inline virtual void set_Ny(int __value)
         {
             this->Ny = __value;
         } 
         /*! \brief returns the property Ny. 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual uint32_t get_Ny() const  
+        inline virtual int get_Ny() const
         {
             return this->Ny; 
         }
@@ -1680,7 +1680,7 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
             return this->data; 
         }
 
-        void set_data(bool* data, uint32_t Nx, uint32_t Ny);
+        void set_data(bool* data, int Nx, int Ny);
 
         QVector<double> getDataAsDoubleVector() const;
 
@@ -1688,9 +1688,9 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /** \brief points to the data array, holding the image */
         bool* data;
         /** \brief width of the data array data in pt */
-        uint32_t Nx;
+        int Nx;
         /** \brief height of the data array data in pt */
-        uint32_t Ny;
+        int Ny;
 
         /** \brief color for \c true pixels */
         QColor trueColor;
@@ -1722,10 +1722,10 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
+        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
         JKQTPOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, uint32_t Nx, uint32_t Ny, QColor colTrue, JKQTPlotter* parent);
+        JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent);
         JKQTPOverlayImageEnhanced(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -1889,11 +1889,11 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         /** \brief class constructor */
         JKQTPContour(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, DataType datatype = JKQTPMathImageBase::DoubleArray, JKQTBasePlotter* parent=nullptr);
+        JKQTPContour(double x, double y, double width, double height, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, DataType datatype = JKQTPMathImageBase::DoubleArray, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPContour(JKQTPlotter* parent);
         /** \brief class constructor */
-        JKQTPContour(double x, double y, double width, double height, void* data, uint32_t Nx, uint32_t Ny, JKQTPMathImageColorPalette palette, DataType datatype , JKQTPlotter* parent);
+        JKQTPContour(double x, double y, double width, double height, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, DataType datatype , JKQTPlotter* parent);
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 

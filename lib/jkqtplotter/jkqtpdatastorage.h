@@ -525,7 +525,7 @@ class LIB_EXPORT JKQTPDatastore{
          *  - ...
          * .
          */
-        void saveCSV(QString filename, QSet<int> userColumns=QSet<int>(), QString separator=QString(", "), QString decimal_separator=QString("."), QString comment=QString("#"), QString aroundStrings=QString(""), char floatformat='g');
+        void saveCSV(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& separator=QString(", "), const QString& decimal_separator=QString("."), const QString& comment=QString("#"), const QString& aroundStrings=QString(""), char floatformat='g');
         /** \brief save contents of datastore as Comma Separated Values (CSV) file
          *
          * \param txt QTextStream to write to
@@ -543,7 +543,7 @@ class LIB_EXPORT JKQTPDatastore{
          *  - ...
          * .
          */
-        void saveCSV(QTextStream& txt, QSet<int> userColumns=QSet<int>(), QString separator=QString(", "), QString decimal_separator=QString("."), QString comment=QString("#"), QString aroundStrings=QString(""), char floatformat='g');
+        void saveCSV(QTextStream& txt, const QSet<int>& userColumns=QSet<int>(), const QString& separator=QString(", "), const QString& decimal_separator=QString("."), const QString& comment=QString("#"), const QString& aroundStrings=QString(""), char floatformat='g');
 
         /** \brief save contents of datastore as <a href="http://en.wikipedia.org/wiki/SYmbolic_LinK_(SYLK)">SYLK file (SYmbolic LinK)</a>
          *
@@ -551,14 +551,14 @@ class LIB_EXPORT JKQTPDatastore{
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          * \param floatformat a \c printf format string that is used to print floating point numbers to the file
          */
-        void saveSYLK(QString filename, QSet<int> userColumns=QSet<int>(), QString floatformat=QString("%10.10lf"));
+        void saveSYLK(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& floatformat=QString("%10.10lf"));
 
         /** \brief return contents of datastore as QList<QVector<double> >, i.e. a list of column-vectors
          *
          * \param columnNames if \c !=nullptr this will afterwards conatin the column titles
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
-        QList<QVector<double> > getData(QStringList* columnNames=nullptr, QSet<int> userColumns=QSet<int>());
+        QList<QVector<double> > getData(QStringList* columnNames=nullptr, const QSet<int>& userColumns=QSet<int>());
 
         /** \brief save contents of datastore as <a href="http://www.fileformat.info/format/dif/egff.htm">DIF file (data interchange format)</a>
          *
@@ -566,20 +566,20 @@ class LIB_EXPORT JKQTPDatastore{
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          * \param floatformat a \c printf format string that is used to print floating point numbers to the file
          */
-        void saveDIF(QString filename, QSet<int> userColumns=QSet<int>(), QString floatformat=QString("%10.10lf"));
+        void saveDIF(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& floatformat=QString("%10.10lf"));
 
         /** \brief save contents of datastore as a Matlab script
          *
          * \param filename the file to create
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
-        void saveMatlab(QString filename, QSet<int> userColumns=QSet<int>());
+        void saveMatlab(const QString& filename, const QSet<int>& userColumns=QSet<int>());
         /** \brief save contents of datastore as a Matlab script
          *
          * \param txt the QTextStream to write to
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
-        void saveMatlab(QTextStream& txt, QSet<int> userColumns=QSet<int>());
+        void saveMatlab(QTextStream& txt, const QSet<int>& userColumns=QSet<int>());
 
         /** \brief return a list with all columns available in the datastore */
         QStringList getColumnNames() const;

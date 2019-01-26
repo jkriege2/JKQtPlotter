@@ -48,9 +48,7 @@ JKQTPPlotElement::JKQTPPlotElement(JKQTPlotter *parent):
 }
 
 JKQTPPlotElement::~JKQTPPlotElement()
-{
-
-}
+= default;
 
 JKQTPGraph::JKQTPGraph(JKQTBasePlotter* parent):
     JKQTPPlotElement(parent)
@@ -65,9 +63,7 @@ JKQTPGraph::JKQTPGraph(JKQTPlotter *parent):
 }
 
 JKQTPGraph::~JKQTPGraph()
-{
-
-}
+= default;
 
 QImage JKQTPPlotElement::generateKeyMarker(QSize size)
 {
@@ -517,9 +513,7 @@ JKQTPGraphErrors::JKQTPGraphErrors(QColor graphColor) {
 }
 
 JKQTPGraphErrors::~JKQTPGraphErrors()
-{
-
-}
+= default;
 
 
 
@@ -1210,6 +1204,4 @@ JKQTPPlotObject::JKQTPPlotObject(JKQTPlotter *parent):
 }
 
 JKQTPPlotObject::~JKQTPPlotObject()
-{
-
-}
+= default;

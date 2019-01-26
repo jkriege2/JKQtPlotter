@@ -374,7 +374,7 @@ class LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay {
         Q_OBJECT
     public:
         explicit JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *parent = 0);
-        explicit JKQTPOverlayVerticalLine(double pos, QString text, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalLine(double pos, const QString& text, JKQTBasePlotter *parent = 0);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
@@ -391,7 +391,7 @@ class LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay 
         Q_OBJECT
     public:
         explicit JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent = 0);
-        explicit JKQTPOverlayVerticalRange(double pos, double pos2, QString text, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalRange(double pos, double pos2, const QString& text, JKQTBasePlotter *parent = 0);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);

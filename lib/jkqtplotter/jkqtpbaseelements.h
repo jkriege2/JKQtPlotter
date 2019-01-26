@@ -148,13 +148,13 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         virtual ~JKQTPCoordinateAxis();
         virtual void set_parent(JKQTBasePlotter* parent);
         /** \brief loads the plot properties from a QSettings object */
-        virtual void loadSettings(QSettings& settings, QString group=QString("plots"));
+        virtual void loadSettings(const QSettings &settings, const QString& group=QString("plots"));
 
         /** \brief saves the plot properties into a QSettings object.
          *
          * This method only saves those properties that differ from their default value.
          */
-        virtual void saveSettings(QSettings& settings, QString group=QString("plots"));
+        virtual void saveSettings(QSettings& settings, const QString& group=QString("plots")) const;
 
         /** \brief load settings from other axis */
         virtual void loadSettings(JKQTPCoordinateAxis* settings);
@@ -194,7 +194,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         void clearAxisTickLabels();
 
         /** \brief add a new tick label to the axis */
-        void addAxisTickLabel(double x, QString label);
+        void addAxisTickLabel(double x, const QString& label);
 
 
         /** \brief add a new tick label to the axis */
@@ -428,7 +428,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief sets the property axisLabel to the specified \a __value.
          *  \details Description of the parameter axisLabel is:  <BLOCKQUOTE>\copydoc axisLabel </BLOCKQUOTE>
          *  \see axisLabel for more information */
-        virtual void setAxisLabel (QString __value);
+        virtual void setAxisLabel (const QString& __value);
 
         /** \brief sets the property labelPosition to the specified \a __value.
          *  \details Description of the parameter labelPosition is:  <BLOCKQUOTE>\copydoc labelPosition </BLOCKQUOTE> */
@@ -436,7 +436,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property labelFont to the specified \a __value.
          *  \details Description of the parameter labelFont is:  <BLOCKQUOTE>\copydoc labelFont </BLOCKQUOTE> */
-        virtual void set_labelFont (QString __value);
+        virtual void set_labelFont (const QString& __value);
 
         /** \brief sets the property labelFontSize to the specified \a __value.
          *  \details Description of the parameter labelFontSize is:  <BLOCKQUOTE>\copydoc labelFontSize </BLOCKQUOTE> */
@@ -444,22 +444,22 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property tickLabelFont to the specified \a __value.
          *  \details Description of the parameter tickLabelFont is:  <BLOCKQUOTE>\copydoc tickLabelFont </BLOCKQUOTE> */
-        virtual void set_tickLabelFont (QString __value);
+        virtual void set_tickLabelFont (const QString& __value);
 
 
         /** \brief sets the property tickTimeFormat to the specified \a __value.
          *  \details Description of the parameter tickTimeFormat is:  <BLOCKQUOTE>\copydoc tickTimeFormat </BLOCKQUOTE> */
-        virtual void set_tickTimeFormat (QString __value);
+        virtual void set_tickTimeFormat (const QString& __value);
 
 
         /** \brief sets the property tickDateFormat to the specified \a __value.
          *  \details Description of the parameter tickDateFormat is:  <BLOCKQUOTE>\copydoc tickDateFormat </BLOCKQUOTE> */
-        virtual void set_tickDateFormat (QString __value);
+        virtual void set_tickDateFormat (const QString& __value);
 
 
         /** \brief sets the property tickDateTimeFormat to the specified \a __value.
          *  \details Description of the parameter tickDateTimeFormat is:  <BLOCKQUOTE>\copydoc tickDateTimeFormat </BLOCKQUOTE> */
-        virtual void set_tickDateTimeFormat (QString __value);
+        virtual void set_tickDateTimeFormat (const QString& __value);
 
 
         /** \brief sets the property tickLabelFontSize to the specified \a __value.
@@ -504,7 +504,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property axisColor to the specified \a __value.
          *  \details Description of the parameter axisColor is:  <BLOCKQUOTE>\copydoc axisColor </BLOCKQUOTE> */
-        virtual void setAxisColor (QColor __value);
+        virtual void setAxisColor (const QColor& __value);
 
         /** \brief sets the property showZeroAxis to the specified \a __value.
          *  \details Description of the parameter showZeroAxis is:  <BLOCKQUOTE>\copydoc showZeroAxis </BLOCKQUOTE> */
@@ -516,11 +516,11 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
 
         /** \brief sets the property gridColor to the specified \a __value.
          *  \details Description of the parameter gridColor is:  <BLOCKQUOTE>\copydoc gridColor </BLOCKQUOTE> */
-        virtual void setGridColor(QColor __value);
+        virtual void setGridColor(const QColor& __value);
 
         /** \brief sets the property minorGridColor to the specified \a __value.
          *  \details Description of the parameter minorGridColor is:  <BLOCKQUOTE>\copydoc minorGridColor </BLOCKQUOTE> */
-        virtual void set_minorGridColor(QColor __value);
+        virtual void set_minorGridColor(const QColor& __value);
 
         /** \brief sets the property gridWidth to the specified \a __value.
          *  \details Description of the parameter gridWidth is:  <BLOCKQUOTE>\copydoc gridWidth </BLOCKQUOTE> */
@@ -592,8 +592,8 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         bool paramsChanged;
         bool doUpdateScaling;
 
-        /** \brief simply calls the replotPlot method of the parent plotter class */
-        void replotPlot();
+        /** \brief simply calls the redrawPlot method of the parent plotter class */
+        void redrawPlot();
         /** \brief a list of tick labels.
          *
          *  If this list contains items, this class will NOT plot a standard x-axis,

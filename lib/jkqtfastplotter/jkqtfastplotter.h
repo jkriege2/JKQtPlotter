@@ -483,7 +483,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->plotBorderLeft != __value) {
                 this->plotBorderLeft = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderLeft. 
@@ -500,7 +500,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->plotBorderBottom != __value) {
                 this->plotBorderBottom = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderBottom. 
@@ -517,7 +517,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->plotBorderRight != __value) {
                 this->plotBorderRight = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderRight. 
@@ -534,7 +534,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->plotBorderTop != __value) {
                 this->plotBorderTop = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property plotBorderTop. 
@@ -638,7 +638,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->backgroundColor != __value) {
                 this->backgroundColor = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property backgroundColor. 
@@ -655,7 +655,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->plotBackgroundColor != __value) {
                 this->plotBackgroundColor = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property plotBackgroundColor. 
@@ -672,7 +672,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->drawGrid != __value) {
                 this->drawGrid = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property drawGrid. 
@@ -689,7 +689,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->gridColor != __value) {
                 this->gridColor = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property gridColor. 
@@ -706,7 +706,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->gridStyle != __value) {
                 this->gridStyle = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property gridStyle. 
@@ -723,7 +723,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->gridWidth != __value) {
                 this->gridWidth = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property gridWidth. 
@@ -740,7 +740,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->labelFontSize != __value) {
                 this->labelFontSize = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property labelFontSize. 
@@ -757,7 +757,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->labelFontName != __value) {
                 this->labelFontName = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property labelFontName. 
@@ -774,7 +774,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->tickFontSize != __value) {
                 this->tickFontSize = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property tickFontSize. 
@@ -791,7 +791,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->tickFontName != __value) {
                 this->tickFontName = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property tickFontName. 
@@ -808,7 +808,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->tickLength != __value) {
                 this->tickLength = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property tickLength. 
@@ -825,7 +825,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->drawSystemBox != __value) {
                 this->drawSystemBox = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property drawSystemBox. 
@@ -842,7 +842,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->drawZeroAxes != __value) {
                 this->drawZeroAxes = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property drawZeroAxes. 
@@ -859,7 +859,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->systemColor != __value) {
                 this->systemColor = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property systemColor. 
@@ -876,7 +876,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->systemWidth != __value) {
                 this->systemWidth = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property systemWidth. 
@@ -893,7 +893,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xZeroTick != __value) {
                 this->xZeroTick = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property xZeroTick. 
@@ -910,7 +910,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yZeroTick != __value) {
                 this->yZeroTick = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property yZeroTick. 
@@ -927,7 +927,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xTickDistance != __value) {
                 this->xTickDistance = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property xTickDistance. 
@@ -944,7 +944,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yTickDistance != __value) {
                 this->yTickDistance = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property yTickDistance. 
@@ -961,7 +961,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xAxisLabel != __value) {
                 this->xAxisLabel = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property xAxisLabel. 
@@ -978,7 +978,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yAxisLabel != __value) {
                 this->yAxisLabel = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property yAxisLabel. 
@@ -995,7 +995,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->aspectRatio != __value) {
                 this->aspectRatio = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property aspectRatio. 
@@ -1012,7 +1012,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->maintainAspectRatio != __value) {
                 this->maintainAspectRatio = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property maintainAspectRatio. 
@@ -1029,7 +1029,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->xAxisLabelVisible != __value) {
                 this->xAxisLabelVisible = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property xAxisLabelVisible. 
@@ -1046,7 +1046,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->yAxisLabelVisible != __value) {
                 this->yAxisLabelVisible = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property yAxisLabelVisible. 
@@ -1063,7 +1063,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->synchronizeX != __value) {
                 this->synchronizeX = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property synchronizeX. 
@@ -1080,7 +1080,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         {
             if (this->synchronizeY != __value) {
                 this->synchronizeY = __value; 
-                replotPlot(); 
+                redrawPlot(); 
             } 
         } 
         /*! \brief returns the property synchronizeY. 
@@ -1120,9 +1120,9 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /** \brief copy the current plot image to the clipboard */
         void copyImage();
         /** \brief replot everything (slowest possible plotting) */
-        void replotPlot();
+        void redrawPlot();
         /** \brief replot everything (slowest possible plotting) and forces a repaint calling QWidget::repaint() */
-        void replotPlot_immediate();
+        void redrawPlot_immediate();
         /** \brief replot only the data
          *
          *  This internally calls QWidget::update(), so no immediate repaint() is forced! If you want an immediate update,
@@ -1217,7 +1217,7 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         };
     protected:
         /** \brief number of datapoints in the plot */
-        unsigned int N;
+        int N;
         /** \brief pointer to x-coordinate data to display */
         double* x;
         /** \brief pointer to y-coordinate data to display */
@@ -1255,7 +1255,7 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             \param style style of the graph
             \param width width of the plot (in pt)
          */
-        JKQTFPLinePlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
+        JKQTFPLinePlot(JKQTFastPlotter* parent, int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
         /*! \brief class constructor
 
             \param parent parent widget
@@ -1270,7 +1270,7 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        inline void set_data(double* x, double* y, unsigned int N) {
+        inline void set_data(double* x, double* y, int N) {
             this->x=x;
             this->y=y;
             this->yerr=nullptr;
@@ -1279,7 +1279,7 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             replot();
         };
 
-        inline void set_data(double* x, double* y, double* yerr, unsigned int N) {
+        inline void set_data(double* x, double* y, double* yerr, int N) {
             this->x=x;
             this->y=y;
             this->yerr=yerr;
@@ -1312,7 +1312,7 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             replot();
         };
 
-        inline unsigned int get_N() {
+        inline int get_N() {
             if (datatype==JKQTFPLPPointer)
                 return N;
             if (datatype==JKQTFPLPVector)
@@ -1487,7 +1487,7 @@ class LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
             \param style style of the graph
             \param width width of the plot (in pt)
          */
-        JKQTFPVCrossPlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
+        JKQTFPVCrossPlot(JKQTFastPlotter* parent, int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
 
         /*! \brief class constructor
 
@@ -1546,7 +1546,7 @@ class LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
             \param style style of the graph
             \param width width of the plot (in pt)
          */
-        JKQTFPVBarPlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
+        JKQTFPVBarPlot(JKQTFastPlotter* parent, int N, double* x, double* y, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1) ;
 
         /*! \brief class constructor
 
@@ -2100,9 +2100,9 @@ enum JKQTFPColorPalette {
    \details Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
  */
 enum JKQTFPImageFormat {
-    JKQTFP_uint8=0,  /*!< \image 8 bit unsigned int */
-    JKQTFP_uint16=1, /*!< \image 16 bit unsigned int */
-    JKQTFP_uint32=2, /*!< \image 32 bit unsigned int */
+    JKQTFP_uint8=0,  /*!< \image 8 bit int */
+    JKQTFP_uint16=1, /*!< \image 16 bit int */
+    JKQTFP_uint32=2, /*!< \image 32 bit int */
     JKQTFP_float=3,  /*!< \image float */
     JKQTFP_double=4, /*!< \image double */
     JKQTFP_int64=5   /*!< \image 64 bit signed int */
@@ -2124,7 +2124,7 @@ enum JKQTFPImageFormat {
     the according LUT won't be calculated and stored!
 */
 template <class T>
-inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &img, JKQTFPColorPalette palette, T minColor, T maxColor)
+inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &img, JKQTFPColorPalette palette, double minColor, double maxColor)
 {
 	if (!dbl)
 		return;
@@ -2142,7 +2142,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
     if (minColor == maxColor) {
 		for (int i=1; i<width*height; ++i)
 		{
-		    register T v=dbl[i];
+            T v=dbl[i];
 			if (v < min)
 				min = v;
 			else if (v > max)
@@ -2162,26 +2162,26 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
 	double delta=max-min;
 
-    unsigned int* lut_used=nullptr;
-    static unsigned int* lut_red=nullptr;
-    static unsigned int* lut_green=nullptr;
-    static unsigned int* lut_blue=nullptr;
-    static unsigned int* lut_gray=nullptr;
-    static unsigned int* lut_invred=nullptr;
-    static unsigned int* lut_invgreen=nullptr;
-    static unsigned int* lut_invblue=nullptr;
-    static unsigned int* lut_invgray=nullptr;
-    static unsigned int* lut_matlab=nullptr;
-    static unsigned int* lut_rygb=nullptr;
-    static unsigned int* lut_hsv=nullptr;
-    static unsigned int* lut_invhsv=nullptr;
-    static unsigned int* lut_rainbow=nullptr;
-    static unsigned int* lut_hot=nullptr;
-    static unsigned int* lut_ocean=nullptr;
-    static unsigned int* lut_trafficlight=nullptr;
-    static unsigned int* lut_bluemagentayellow=nullptr;
-    static unsigned int* lut_blueyellow=nullptr;
-    static unsigned int* lut_cyan=nullptr;
+    int* lut_used=nullptr;
+    static int* lut_red=nullptr;
+    static int* lut_green=nullptr;
+    static int* lut_blue=nullptr;
+    static int* lut_gray=nullptr;
+    static int* lut_invred=nullptr;
+    static int* lut_invgreen=nullptr;
+    static int* lut_invblue=nullptr;
+    static int* lut_invgray=nullptr;
+    static int* lut_matlab=nullptr;
+    static int* lut_rygb=nullptr;
+    static int* lut_hsv=nullptr;
+    static int* lut_invhsv=nullptr;
+    static int* lut_rainbow=nullptr;
+    static int* lut_hot=nullptr;
+    static int* lut_ocean=nullptr;
+    static int* lut_trafficlight=nullptr;
+    static int* lut_bluemagentayellow=nullptr;
+    static int* lut_blueyellow=nullptr;
+    static int* lut_cyan=nullptr;
 
 
     img = QImage(width, height, QImage::Format_ARGB32_Premultiplied);
@@ -2191,9 +2191,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 	{
         if (palette == JKQTFP_RED)
         {
-            unsigned int** plut=&lut_red;
+            int** plut=&lut_red;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2206,9 +2206,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
         }
         else if (palette == JKQTFP_GREEN)
 		{
-            unsigned int** plut=&lut_green;
+            int** plut=&lut_green;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2221,9 +2221,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_BLUE)
 		{
-            unsigned int** plut=&lut_blue;
+            int** plut=&lut_blue;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2238,9 +2238,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
         else if (palette == JKQTFP_GRAY)
 		{
-            unsigned int** plut=&lut_gray;
+            int** plut=&lut_gray;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2255,9 +2255,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
 		else if (palette == JKQTFP_INVERTEDRED)
 		{
-            unsigned int** plut=&lut_invred;
+            int** plut=&lut_invred;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2270,9 +2270,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTEDGREEN)
 		{
-            unsigned int** plut=&lut_invgreen;
+            int** plut=&lut_invgreen;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2284,9 +2284,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTEDBLUE)
 		{
-            unsigned int** plut=&lut_invblue;
+            int** plut=&lut_invblue;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2298,9 +2298,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTEDGRAY)
 		{
-            unsigned int** plut=&lut_invgray;
+            int** plut=&lut_invgray;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=1.0-(l/static_cast<double>(JKQTFPimagePlot_LUTSIZE));
@@ -2315,9 +2315,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
 		else if (palette == JKQTFP_MATLAB)
 		{
-            unsigned int** plut=&lut_matlab;
+            int** plut=&lut_matlab;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2348,9 +2348,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_RYGB) //gnuplot: 30,-13,-23
 		{
-            unsigned int** plut=&lut_rygb;
+            int** plut=&lut_rygb;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2374,9 +2374,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_HSV)
 		{
-            unsigned int** plut=&lut_hsv;
+            int** plut=&lut_hsv;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2400,9 +2400,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTED_HSV)
 		{
-            unsigned int** plut=&lut_invhsv;
+            int** plut=&lut_invhsv;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2428,7 +2428,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		else if (palette == JKQTFP_RAINBOW) //gnuplot: 33,13,10
 		{
             if (lut_rainbow==nullptr) {
-                lut_rainbow=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                lut_rainbow=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 //std::cout<<"!!! creating rainbow lut\n";
                 if (lut_rainbow!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
@@ -2449,9 +2449,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_HOT) //gnuplot: 21,22,23
 		{
-            unsigned int** plut=&lut_hot;
+            int** plut=&lut_hot;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2476,9 +2476,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_OCEAN) //gnuplot: 23,28,3
 		{
-            unsigned int** plut=&lut_ocean;
+            int** plut=&lut_ocean;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2497,9 +2497,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_BLUEMAGENTAYELLOW) //gnuplot: 30,31,32
 		{
-            unsigned int** plut=&lut_bluemagentayellow;
+            int** plut=&lut_bluemagentayellow;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2526,9 +2526,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_BLUEYELLOW) //gnuplot: 8,9,10
 		{
-            unsigned int** plut=&lut_blueyellow;
+            int** plut=&lut_blueyellow;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2553,9 +2553,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_CYAN)
 		{
-            unsigned int** plut=&lut_cyan;
+            int** plut=&lut_cyan;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2579,9 +2579,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_TRAFFICLIGHT)
 		{
-            unsigned int** plut=&lut_trafficlight;
+            int** plut=&lut_trafficlight;
             if ((*plut)==nullptr) {
-                (*plut)=(unsigned int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(unsigned int));
+                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2608,9 +2608,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
         #endif
         if (lut_used!=nullptr) {
 		    // LUT found: collor the image accordingly
-			for (register int j=0; j<height; ++j) {
+            for (int j=0; j<height; ++j) {
 			    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-				for (register int i=0; i<width; ++i) {
+                for (int i=0; i<width; ++i) {
 					int v = (dbl[j*width+i]-min)/delta*JKQTFPimagePlot_LUTSIZE;
 					v = (v < 0) ? 0 : ( (v > JKQTFPimagePlot_LUTSIZE) ? JKQTFPimagePlot_LUTSIZE : v);
 					line[i]=lut_used[v];
@@ -2668,9 +2668,9 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         /** \brief format of the image */
         JKQTFPImageFormat imageFormat;
         /** \brief width of image in pt */
-        unsigned int width;
+        int width;
         /** \brief height of image in pt */
-        unsigned int height;
+        int height;
         /** \brief minimum x value of the image */
         double xmin;
         /** \brief maximum x value of the image */
@@ -2695,9 +2695,9 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         /*! \brief class constructor
 
          */
-        JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax, JKQTFPColorPalette palette=JKQTFP_MATLAB) ;
+        JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, int width, int height, double xmin, double xmax, double ymin, double ymax, JKQTFPColorPalette palette=JKQTFP_MATLAB) ;
 
-        JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height, JKQTFPColorPalette palette=JKQTFP_MATLAB);
+        JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, int width, int height, JKQTFPColorPalette palette=JKQTFP_MATLAB);
 
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
@@ -2741,7 +2741,7 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         /*! \brief sets the property width to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(const unsigned int & __value)  
+        inline virtual void set_width(int __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
@@ -2751,14 +2751,14 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         /*! \brief returns the property width. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual unsigned int get_width() const  
+        inline virtual int get_width() const
         {
             return this->width; 
         }
         /*! \brief sets the property height to the specified \a __value. 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual void set_height(const unsigned int & __value)  
+        inline virtual void set_height(int __value)
         {
             if (this->height != __value) {
                 this->height = __value; 
@@ -2768,7 +2768,7 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         /*! \brief returns the property height. 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual unsigned int get_height() const  
+        inline virtual int get_height() const
         {
             return this->height; 
         }
@@ -2898,7 +2898,7 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         inline double get_colorMax() const { 
             return this->colorMax; 
         }
-        void set_image(void* image, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height) {
+        void set_image(void* image, JKQTFPImageFormat imageFormat, int width, int height) {
             this->image=image;
             this->imageFormat=imageFormat;
             this->width=width;
@@ -2992,7 +2992,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
     if (minColor == maxColor) {
         for (int i=1; i<width*height; ++i)
         {
-            register T v=dbl[i];
+            T v=dbl[i];
             if (v < min)
                 min = v;
             else if (v > max)
@@ -3016,34 +3016,34 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
     if (min != max) {
         // LUT found: collor the image accordingly
         if (channel==0) {
-            for (register int j=0; j<height; ++j) {
+            for (int j=0; j<height; ++j) {
                 QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                for (register int i=0; i<width; ++i) {
+                for (int i=0; i<width; ++i) {
                     int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                    const register QRgb l=line[i];
+                    const QRgb l=line[i];
                     line[i]=qRgb(v,qGreen(l),qBlue(l));
                     //if (i==j) qDebug()<<dbl[j*width+i]<<v<<hex<<l<<line[i]<<dec;
                 }
             }
         } else if (channel==1) {
-            for (register int j=0; j<height; ++j) {
+            for (int j=0; j<height; ++j) {
                 QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                for (register int i=0; i<width; ++i) {
+                for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                    const register QRgb l=line[i];
+                    const QRgb l=line[i];
                     line[i]=qRgb(qRed(l),v,qBlue(l));
                     //if (i==j) qDebug()<<dbl[j*width+i]<<v<<hex<<l<<line[i]<<dec;
                 }
             }
         } else if (channel==2) {
-            for (register int j=0; j<height; ++j) {
+            for (int j=0; j<height; ++j) {
                 QRgb* line=(QRgb*)(img.scanLine(height-1-j));
-                for (register int i=0; i<width; ++i) {
+                for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
-                    const register QRgb l=line[i];
+                    const QRgb l=line[i];
                     line[i]=qRgb(qRed(l),qGreen(l),v);
                     //if (i==j) qDebug()<<dbl[j*width+i]<<v<<hex<<l<<line[i]<<dec;
                 }
@@ -3091,9 +3091,9 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         /** \brief format of the image */
         JKQTFPImageFormat imageFormatBlue;
         /** \brief width of image in pt */
-        unsigned int width;
+        int width;
         /** \brief height of image in pt */
-        unsigned int height;
+        int height;
         /** \brief minimum x value of the image */
         double xmin;
         /** \brief maximum x value of the image */
@@ -3120,8 +3120,8 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         /*! \brief class constructor
 
          */
-        JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent, void* imageRed, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax) ;
-        JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent, void* imageRed, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height);
+        JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent, void* imageRed, JKQTFPImageFormat imageFormat, int width, int height, double xmin, double xmax, double ymin, double ymax) ;
+        JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent, void* imageRed, JKQTFPImageFormat imageFormat, int width, int height);
         JKQTFPRGBImageOverlayPlot(JKQTFastPlotter* parent);
 
         /** \brief draw the graph */
@@ -3210,7 +3210,7 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         /*! \brief sets the property width to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(const unsigned int & __value)  
+        inline virtual void set_width(int __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
@@ -3220,14 +3220,14 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         /*! \brief returns the property width. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual unsigned int get_width() const  
+        inline virtual int get_width() const
         {
             return this->width; 
         }
         /*! \brief sets the property height to the specified \a __value. 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual void set_height(const unsigned int & __value)  
+        inline virtual void set_height(int __value)
         {
             if (this->height != __value) {
                 this->height = __value; 
@@ -3237,7 +3237,7 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         /*! \brief returns the property height. 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual unsigned int get_height() const  
+        inline virtual int get_height() const
         {
             return this->height; 
         }
@@ -3351,12 +3351,12 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         inline double get_colorMaxBlue() const { 
             return this->colorMaxBlue; 
         }
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, unsigned int width, unsigned int height);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, unsigned int width, unsigned int height);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, unsigned int width, unsigned int height);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax);
+        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height);
+        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height);
+        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height);
+        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height, double xmin, double xmax, double ymin, double ymax);
+        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height, double xmin, double xmax, double ymin, double ymax);
+        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height, double xmin, double xmax, double ymin, double ymax);
     public slots:
         inline void set_rotation(int rotation) {
             if (this->rotation!=rotation) {
@@ -3496,9 +3496,9 @@ class LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
         /** \brief image to plot */
         bool* image;
         /** \brief width of image in pt */
-        unsigned int width;
+        int width;
         /** \brief height of image in pt */
-        unsigned int height;
+        int height;
         /** \brief minimum x value of the image */
         double xmin;
         /** \brief maximum x value of the image */
@@ -3519,14 +3519,14 @@ class LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
         /*! \brief class constructor
 
          */
-        JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax, QColor color=QColor("red"));
+        JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, int width, int height, double xmin, double xmax, double ymin, double ymax, QColor color=QColor("red"));
 
-        JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, unsigned int width, unsigned int height, QColor color=QColor("red"));
+        JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, int width, int height, QColor color=QColor("red"));
 
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        void set_data(bool* image, unsigned int width, unsigned int height) {
+        void set_data(bool* image, int width, int height) {
             this->image=image;
             this->width=width;
             this->height=height;
@@ -3548,13 +3548,13 @@ class LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
         /*! \brief returns the property width. 
             \details Description of the parameter width is:  <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::width </BLOCKQUOTE>. 
             \see width for more information */ 
-        inline unsigned int get_width() const { 
+        inline int get_width() const {
             return this->width; 
         }
         /*! \brief returns the property height. 
             \details Description of the parameter height is:  <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::height </BLOCKQUOTE>. 
             \see height for more information */ 
-        inline unsigned int get_height() const { 
+        inline int get_height() const {
             return this->height; 
         }
         /*! \brief sets the property xmin to the specified \a __value. 

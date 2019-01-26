@@ -40,11 +40,11 @@ TestMain::TestMain(QWidget *parent) :
     pl2->set_yAxisLabelVisible(false);
     pl2->setPlotBorderLeft(10);
     pl2->setPlotBorderRight(2);
-    w->connect(pl1, SIGNAL(replotting()), pl2, SLOT(replotPlot()));
+    w->connect(pl1, SIGNAL(replotting()), pl2, SLOT(redrawPlot()));
     gl->addWidget(pl2, 0, 1);
     JKQTFastPlotter* pl3=new JKQTFastPlotter(w);
     pl3->set_synchronizeX(pl1);
-    w->connect(pl1, SIGNAL(replotting()), pl3, SLOT(replotPlot()));
+    w->connect(pl1, SIGNAL(replotting()), pl3, SLOT(redrawPlot()));
     gl->addWidget(pl3, 1, 0);
 
 

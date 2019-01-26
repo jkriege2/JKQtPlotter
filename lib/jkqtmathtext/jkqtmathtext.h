@@ -230,9 +230,9 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /** \brief class destructor */
         ~JKQTMathText();
         /** \brief load the object settings from the given QSettings object with the given name prefix */
-        void loadSettings(QSettings& settings, QString group=QString("mathtext"));
+        void loadSettings(const QSettings& settings, const QString& group=QString("mathtext"));
         /** \brief store the object settings to the given QSettings object with the given name prefix */
-        void saveSettings(QSettings& settings, QString group=QString("mathtext"));
+        void saveSettings(QSettings& settings, const QString& group=QString("mathtext")) const;
         /** \brief parse the given enhanced string. Returns \c true on success. */
         bool parse(QString text);
         /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
@@ -286,9 +286,9 @@ class LIB_EXPORT JKQTMathText : public QObject {
          * <code>setAnyUnicode("Courier New", "Courier New")</code>:<br>\image html jkqtmathparser_couriernew.png
          * <code>setAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathparser_comicsans.png
          */
-        void useAnyUnicode(QString timesFont=QString(""), QString sansFont=QString(""));
+        void useAnyUnicode(QString timesFont=QString(""), const QString& sansFont=QString(""));
 
-        void useLatexFonts(QString prefix=QString(""), QString postfix=QString(""));
+        void useLatexFonts(QString prefix=QString(""), const QString& postfix=QString(""));
 
         /** \brief convert LaTeX to HTML. returns \c ok=true on success and \c ok=false else. */
         QString toHtml(bool* ok=nullptr, double fontPointSize=10);
@@ -846,7 +846,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing one text node in the syntax tree */
         class MTtextNode: public MTnode {
             public:
-                MTtextNode(JKQTMathText* parent, QString text, bool addWhitespace, bool stripInnerWhitepace=false);
+                MTtextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
                 virtual ~MTtextNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
@@ -866,7 +866,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing one text node in the syntax tree */
         class MTplainTextNode: public MTtextNode {
             public:
-                MTplainTextNode(JKQTMathText* parent, QString text, bool addWhitespace, bool stripInnerWhitepace=false);
+                MTplainTextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
                 virtual QString getTypeName() const;
             protected:
                 virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
@@ -884,7 +884,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing one symbol (e.g. \c \\alpha , \c \\cdot ...) node in the syntax tree */
         class MTsymbolNode: public MTnode {
             public:
-                MTsymbolNode(JKQTMathText* parent, QString name, bool addWhitespace);
+                MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
                 virtual ~MTsymbolNode();
                 virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
@@ -947,7 +947,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing an instruction node with exactly one argument in the syntax tree */
         class MTinstruction1Node: public MTnode {
             public:
-                MTinstruction1Node(JKQTMathText* parent, QString name, MTnode* child, const QStringList& parameters=QStringList());
+                MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters=QStringList());
                 virtual ~MTinstruction1Node();
                 virtual QString getTypeName() const;
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
@@ -1030,7 +1030,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing a brace node  */
         class MTbraceNode: public MTnode {
             public:
-                MTbraceNode(JKQTMathText* parent, QString openbrace, QString closebrace, MTnode* child, bool showRightBrace=true);
+                MTbraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace=true);
                 virtual ~MTbraceNode();
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
@@ -1436,7 +1436,7 @@ class LIB_EXPORT JKQTMathText : public QObject {
         /** \brief tokenizer for the LaTeX parser */
         tokenType getToken();
         /** \brief parse a LaTeX string */
-        MTnode* parseLatexString(bool get, QString quitOnClosingBrace=QString(""), QString quitOnEnvironmentEnd=QString(""));
+        MTnode* parseLatexString(bool get, const QString& quitOnClosingBrace=QString(""), const QString& quitOnEnvironmentEnd=QString(""));
         /** \brief parse a LaTeX math environment */
         MTnode* parseMath(bool get);
 

@@ -294,7 +294,7 @@ void TestWidgetGraphs::moveovl() {
         ovlCnt=0;
         ovlTime.start();
     }
-    plot->update_overlays();
+    plot->redrawOverlays();
     QTimer::singleShot(10, this, SLOT(moveovl()));
 }
 
@@ -312,7 +312,7 @@ void TestWidgetGraphs::setErrorStyle(int /*index*/)
         if (ey) {
             ey->set_yErrorStyle(String2JKQTPErrorPlotstyle(cmb->itemData(cmb->currentIndex()).toString()));
         }
-        plot->replotPlot();
+        plot->redrawPlot();
     }
 }
 
@@ -325,7 +325,7 @@ void TestWidgetGraphs::setESSymbol(int /*index*/)
             exy->set_symbol(String2JKQTPGraphSymbols(cmb->itemData(cmb->currentIndex()).toString()));
         }
 
-        plot->replotPlot();
+        plot->redrawPlot();
     }
 }
 
@@ -335,7 +335,7 @@ void TestWidgetGraphs::setSortOrder2(int index)
     if (index==0) pltePlot2->set_sortData(JKQTPXYGraph::Unsorted);
     if (index==1) pltePlot2->set_sortData(JKQTPXYLineGraph::SortedX);
     if (index==2) pltePlot2->set_sortData(JKQTPXYLineGraph::SortedY);
-    plotBot->replotPlot();
+    plotBot->redrawPlot();
 }
 
 void TestWidgetGraphs::setKeyLayout2(JKQTPKeyLayout layout)
@@ -343,9 +343,9 @@ void TestWidgetGraphs::setKeyLayout2(JKQTPKeyLayout layout)
     plot->getPlotter()->setKeyLayout(layout);
     plotBot->getPlotter()->setKeyLayout(layout);
     plotBot2->getPlotter()->setKeyLayout(layout);
-    plot->replotPlot();
-    plotBot->replotPlot();
-    plotBot2->replotPlot();
+    plot->redrawPlot();
+    plotBot->redrawPlot();
+    plotBot2->redrawPlot();
 }
 
 void TestWidgetGraphs::setKeyPos2(JKQTPKeyPosition layout)
@@ -353,7 +353,7 @@ void TestWidgetGraphs::setKeyPos2(JKQTPKeyPosition layout)
     plot->getPlotter()->setKeyPosition(layout);
     plotBot->getPlotter()->setKeyPosition(layout);
     plotBot2->getPlotter()->setKeyPosition(layout);
-    plot->replotPlot();
-    plotBot->replotPlot();
-    plotBot2->replotPlot();
+    plot->redrawPlot();
+    plotBot->redrawPlot();
+    plotBot2->redrawPlot();
 }

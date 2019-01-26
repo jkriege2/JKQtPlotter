@@ -96,5 +96,5 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
 void TestWidgetParamScatterPlots::setPSPSymmErrors(bool checked)
 {
      pltePSPCol->set_yErrorSymmetric(checked);
-     plotPSP->replotPlot();
+     plotPSP->redrawPlot();
 }

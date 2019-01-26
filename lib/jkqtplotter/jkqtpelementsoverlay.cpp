@@ -122,7 +122,7 @@ JKQTPOverlayVerticalLine::JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *
 
 }
 
-JKQTPOverlayVerticalLine::JKQTPOverlayVerticalLine(double pos, QString text, JKQTBasePlotter *parent):
+JKQTPOverlayVerticalLine::JKQTPOverlayVerticalLine(double pos, const QString& text, JKQTBasePlotter *parent):
     JKQTPOverlayOneCoordOverlay(pos, parent)
 {
     set_text(text);
@@ -169,7 +169,7 @@ JKQTPOverlayVerticalRange::JKQTPOverlayVerticalRange(double pos, double pos2, JK
     inverted=false;
 }
 
-JKQTPOverlayVerticalRange::JKQTPOverlayVerticalRange(double pos, double pos2, QString text, JKQTBasePlotter *parent):
+JKQTPOverlayVerticalRange::JKQTPOverlayVerticalRange(double pos, double pos2, const QString& text, JKQTBasePlotter *parent):
     JKQTPOverlayTwoCoordOverlay(pos, pos2, parent)
 {
     set_text(text);

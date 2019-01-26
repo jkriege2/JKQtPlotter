@@ -235,7 +235,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         virtual ~JKQTPlotter();
 
         /** reinitializes the toolbar, i.e. fills in QActions added to the QWidget since its creation/the last call to this function */
-        virtual void updateToolbarActions();
+        void updateToolbarActions();
 
 
         /** \brief set the width/height of the icons in the toolbar in pt */
@@ -252,39 +252,39 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /*! \brief returns the property displayToolbar.
             \details Description of the parameter displayToolbar is: <BLOCKQUOTE>\copydoc displayToolbar </BLOCKQUOTE>
             \see displayToolbar for more information */ 
-        virtual bool isToolbarVisible() const;
+        bool isToolbarVisible() const;
         /*! \brief returns the property toolbarAlwaysOn.
             \details Description of the parameter toolbarAlwaysOn is: <BLOCKQUOTE>\copydoc toolbarAlwaysOn </BLOCKQUOTE>
             \see toolbarAlwaysOn for more information */ 
-        virtual bool isToolbarAlwaysOn() const;
+        bool isToolbarAlwaysOn() const;
         /*! \brief returns the property displayMousePosition.
             \details Description of the parameter displayMousePosition is: <BLOCKQUOTE>\copydoc displayMousePosition </BLOCKQUOTE>
             \see displayMousePosition for more information */ 
-        virtual bool isMousePositionShown() const;
+        bool isMousePositionShown() const;
         /*! \brief returns the property userActionColor.
             \details Description of the parameter userActionColor is: <BLOCKQUOTE>\copydoc userActionColor </BLOCKQUOTE>
             \see userActionColor for more information */ 
-        virtual QColor getUserActionColor() const;
+        QColor getUserActionColor() const;
 
         /*! \brief returns the property userActionCompositionMode. 
             \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
             \see userActionCompositionMode for more information */ 
-        virtual QPainter::CompositionMode getUserActionCompositionMode() const;
+        QPainter::CompositionMode getUserActionCompositionMode() const;
 
         /*! \brief returns the current mouseActionMode.
             \details Description of the parameter mouseActionMode is: <BLOCKQUOTE> specifies the user-action mode this JKQtPlotter use when mouse events occur.
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes </BLOCKQUOTE>
             \see mouseActionMode for more information */ 
-        virtual MouseActionModes getMouseActionMode() const;
+        MouseActionModes getMouseActionMode() const;
 
         /** \brief loads the plot properties from a QSettings object */
-        virtual void loadSettings(QSettings& settings, QString group=QString("plots"));
+        void loadSettings(const QSettings &settings, const QString& group=QString("plots"));
 
         /** \brief saves the plot properties into a QSettings object.
          *
          * This method only saves those properties that differ from their default value.
          */
-        virtual void saveSettings(QSettings& settings, QString group=QString("plots"));
+        void saveSettings(QSettings& settings, const QString& group=QString("plots")) const;
 
         /** \brief returns the minimum size of the widget */
         QSize minimumSizeHint() const;
@@ -323,25 +323,19 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         inline void useExternalDatastore(JKQTPDatastore* newStore) { plotter->useExternalDatastore(newStore); }
 
-        /** \brief tells the plotter object to use the given external datastore and treat it as an internal one (i.e. free it
-         *         when the plotter object ist destroyed.
-         */
+        /** \copydoc JKQTBasePlotter::useAsInternalDatastore() */
         inline void useAsInternalDatastore(JKQTPDatastore* newStore) { plotter->useAsInternalDatastore(newStore); }
 
-        /** \brief tells the plotter object to use an internal datastore. A new internal datastore object is generated only if
-         *         the current datastore is not internal.
-         */
+        /** \copydoc JKQTBasePlotter::useInternalDatastore() */
         inline void useInternalDatastore() { plotter->useInternalDatastore(); }
 
-        /** \brief tells the plotter object to use an internal datastore (just like useInternalDatastore() ), but forces the
-         *         generation of a new datastore, even if the current one is already internal (the current one will be freed in
-         *         the lather case */
+        /** \copydoc JKQTBasePlotter::forceInternalDatastore() */
         inline void forceInternalDatastore() { plotter->forceInternalDatastore(); }
 
-        /** \brief switch emitting of signals, such as zoomChangedLocally() ..., on (sig=true) or off (sig=false) */
+        /** \copydoc JKQTBasePlotter::setEmittingSignalsEnabled() */
         inline void setEmittingSignalsEnabled(bool sig) { plotter->setEmittingSignalsEnabled(sig); }
-        /** \brief determine, whether emitting of signals, such as zoomChangedLocally() ..., is switched on or off */
-        inline bool isEmittingSignalsEnabled() { return plotter; }
+        /** \copydoc JKQTBasePlotter::isEmittingSignalsEnabled() */
+        inline bool isEmittingSignalsEnabled() { return plotter->isEmittingSignalsEnabled(); }
 
         /** \brief returns, whether updating the plot is currently activated (e.g. you can deactivate this with setPlotUpdateEnabled() while performing major updates on the plot)
          *
@@ -361,11 +355,11 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /*! \brief returns the property rightMouseButtonAction. 
             \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
             \see rightMouseButtonAction for more information */ 
-        virtual RightMouseButtonAction getActionRightMouseButton() const;
+        RightMouseButtonAction getActionRightMouseButton() const;
         /*! \brief returns the property leftDoubleClickAction.
             \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
             \see leftDoubleClickAction for more information */ 
-        virtual LeftDoubleClickAction getActionLeftDoubleClick() const;
+        LeftDoubleClickAction getActionLeftDoubleClick() const;
         /*! \brief returns the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
         QMenu *getMenuSpecialContextMenu() const;
 
@@ -379,7 +373,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /*! \brief returns the property zoomByMouseWheel. 
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
             \see zoomByMouseWheel for more information */ 
-        virtual bool getZoomByMouseWheel() const;
+        bool getZoomByMouseWheel() const;
 
         /** \brief returns the property mouseContextX. 
             \details Description of the parameter mouseContextX is:  <BLOCKQUOTE>\copydoc mouseContextX </BLOCKQUOTE>.
@@ -508,7 +502,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
-        inline void saveImage(QString filename=QString(""), bool displayPreview=true) {
+        inline void saveImage(const QString& filename=QString(""), bool displayPreview=true) {
             plotter->saveImage(filename, displayPreview);
         }
 
@@ -520,7 +514,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          * If \a format is \c "slk" the output will be in SYLK format, if \a format is \c "csv" or \a "dat" the output will be comma separated values
          * and if \a format is \c "txt" the output will be tab separated values.
          */
-        inline void saveData(QString filename=QString(""), QString format=QString("")) {
+        inline void saveData(const QString& filename=QString(""), const QString& format=QString("")) {
             plotter->saveData(filename, format);
         }
 
@@ -560,10 +554,15 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         inline void zoomOut(double factor=2.0) { plotter->zoomOut(factor); }
 
         /** \brief update the plot and the overlays */
-        void replotPlot();
+        void redrawPlot();
 
-        /** \brief replot overlays only (use replotPlot() to replot the plot and the overlays) */
-        void replotOverlays();
+        /** \brief replot overlays only (use redrawPlot() to replot the plot and the overlays)
+         *
+         * You can use this function, if you only changed the overlays but not the graphs in this plotter.
+         * Then only the overlas are redrawn and the old (saved) image of the graphs and the coordinate syste,
+         * is used as a base. This is significantly faster than redrawing the whole plot.
+         */
+        void redrawOverlays();
 
         /*! \brief sets the property displayToolbar to the specified \a __value.
             \details Description of the parameter displayToolbar is: <BLOCKQUOTE>\copydoc displayToolbar </BLOCKQUOTE>
@@ -614,7 +613,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
 
         /** \brief popuplate the given toolbar with all actions shown in a toolbar from this class ... */
-        virtual void populateToolbar(QToolBar* toolbar) const;
+        void populateToolbar(QToolBar* toolbar) const;
 
         /** \brief open the context menu at the mouse position of the last click */
         void openContextMenu();
@@ -684,7 +683,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          *
          *  The plotter will fill the menu with the default items and then call this method. The default implementation does NOTHING.
          */
-        virtual void modifyContextMenu(QMenu* menu);
+        void modifyContextMenu(QMenu* menu);
 
         void init(bool datastore_internal, QWidget* parent, JKQTPDatastore* datast);
 

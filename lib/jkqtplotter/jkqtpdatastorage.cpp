@@ -55,9 +55,7 @@ JKQTPColumn::JKQTPColumn(JKQTPDatastore *datastore, const QString &name, size_t 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPColumn::~JKQTPColumn()
-{
-
-}
+= default;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPColumn::getRows() const {
@@ -521,7 +519,7 @@ size_t JKQTPDatastore::addLinearColumn(size_t rows, double start, double end, co
     double delta=(end-start)/(double)(rows-1);
     JKQTPDatastoreItem* it=new JKQTPDatastoreItem(1, rows);
     for (size_t i=0; i<rows; i++) {
-        it->set(0, i, start+(double)i * delta);
+        it->set(0, i, start+static_cast<double>(i) * delta);
          //std::cout<<"copy@"<<i<<" = "<<data[i]<<std::endl;
     }
     /*items.push_back(it);
@@ -632,7 +630,7 @@ size_t JKQTPDatastore::getMaxRows() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPDatastore::saveCSV(QString filename, QSet<int> userColumns, QString separator, QString decimal_separator, QString comment, QString aroundStrings, char floatformat) {
+void JKQTPDatastore::saveCSV(const QString& filename, const QSet<int>& userColumns, const QString& separator, const QString& decimal_separator, const QString& comment, const QString& aroundStrings, char floatformat) {
     //std::cout<<filename<<"\n";
 
     // find out the decimal and the thousand separator
@@ -647,7 +645,7 @@ void JKQTPDatastore::saveCSV(QString filename, QSet<int> userColumns, QString se
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPDatastore::saveMatlab(QString filename, QSet<int> userColumns) {
+void JKQTPDatastore::saveMatlab(const QString& filename, const QSet<int>& userColumns) {
     //std::cout<<filename<<"\n";
 
     // find out the decimal and the thousand separator
@@ -675,7 +673,7 @@ QStringList JKQTPDatastore::getColumnNames() const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPDatastore::saveMatlab(QTextStream &txt, QSet<int> userColumns) {
+void JKQTPDatastore::saveMatlab(QTextStream &txt, const QSet<int>& userColumns) {
     //std::cout<<filename<<"\n";
 
     // find out the decimal and the thousand separator
@@ -732,7 +730,7 @@ void JKQTPDatastore::saveMatlab(QTextStream &txt, QSet<int> userColumns) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPDatastore::saveCSV(QTextStream& txt, QSet<int> userColumns, QString separator, QString decimal_separator, QString comment, QString aroundStrings, char floatformat) {
+void JKQTPDatastore::saveCSV(QTextStream& txt, const QSet<int>& userColumns, const QString& separator, const QString& decimal_separator, const QString& comment, const QString& aroundStrings, char floatformat) {
     //std::cout<<filename<<"\n";
 
     // find out the decimal and the thousand separator
@@ -784,7 +782,7 @@ void JKQTPDatastore::saveCSV(QTextStream& txt, QSet<int> userColumns, QString se
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPDatastore::saveSYLK(QString filename, QSet<int> userColumns, QString floatformat) {
+void JKQTPDatastore::saveSYLK(const QString& filename, const QSet<int>& userColumns, const QString& floatformat) {
     Q_UNUSED(floatformat)
     // find out the decimal and the thousand separator
     QLocale loc=QLocale::c();
@@ -836,7 +834,7 @@ void JKQTPDatastore::saveSYLK(QString filename, QSet<int> userColumns, QString f
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-QList<QVector<double> > JKQTPDatastore::getData(QStringList *columnNames, QSet<int> userColumns)
+QList<QVector<double> > JKQTPDatastore::getData(QStringList *columnNames, const QSet<int>& userColumns)
 {
     QStringList cl;
     QList<QVector<double> > res;
@@ -867,7 +865,7 @@ QList<QVector<double> > JKQTPDatastore::getData(QStringList *columnNames, QSet<i
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPDatastore::saveDIF(QString filename, QSet<int> userColumns, QString floatformat) {
+void JKQTPDatastore::saveDIF(const QString& filename, const QSet<int>& userColumns, const QString& floatformat) {
     Q_UNUSED(floatformat)
     // find out the decimal and the thousand separator
     QLocale loc=QLocale::c();
@@ -935,8 +933,7 @@ JKQTPDatastoreModel::JKQTPDatastoreModel(JKQTPDatastore *datastore, QObject *par
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPDatastoreModel::~JKQTPDatastoreModel()
-{
-}
+= default;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 QVariant JKQTPDatastoreModel::data(const QModelIndex &index, int role) const {

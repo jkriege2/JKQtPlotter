@@ -126,7 +126,7 @@ void FormWithJKQTPlotter::on_btnReplot_clicked()
 {
     graph->set_function(ui->edtEquation->text());
     graph->set_title(ui->edtEquation->text());
-    ui->plot->replotPlot();
+    ui->plot->redrawPlot();
 }
 ```
 

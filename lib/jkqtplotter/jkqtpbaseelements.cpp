@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -113,18 +113,17 @@ JKQTPCoordinateAxis::JKQTPCoordinateAxis(JKQTBasePlotter* parent): QObject(paren
     paramsChanged=true;
 }
 
-JKQTPCoordinateAxis::~JKQTPCoordinateAxis() {
-}
+JKQTPCoordinateAxis::~JKQTPCoordinateAxis() = default;
 
 void JKQTPCoordinateAxis::set_parent(JKQTBasePlotter* parent) {
     this->parent=parent;
     QObject::setParent(parent);
 }
 
-void JKQTPCoordinateAxis::replotPlot() {
+void JKQTPCoordinateAxis::redrawPlot() {
     //if (paramsChanged)  {
         calcPlotScaling();
-        parent->replotPlot();
+        parent->redrawPlot();
     //}
 }
 
@@ -196,43 +195,43 @@ void JKQTPCoordinateAxis::loadSettings(JKQTPCoordinateAxis* settings) {
 
 void JKQTPCoordinateAxis::clearAxisTickLabels() {
     tickLabels.clear();
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::addAxisTickLabel(double x, QString label) {
+void JKQTPCoordinateAxis::addAxisTickLabel(double x, const QString& label) {
     tickLabels.append(qMakePair(x, label));
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const QVector<double> &x, const QStringList &label) {
     for (int i=0; i<qMin(x.size(), label.size()); i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const double *x, const QStringList &label) {
     for (int i=0; i<label.size(); i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const QVector<double> &x, const QString *label) {
     for (int i=0; i<x.size(); i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::addAxisTickLabels(const double *x, const QString *label, int items) {
     for (int i=0; i<items; i++) {
         tickLabels.append(qMakePair(x[i], label[i]));
     }
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::loadSettings(QSettings& settings, QString group) {
+void JKQTPCoordinateAxis::loadSettings(const QSettings& settings, const QString& group) {
     JKQTPPROPERTYload(settings, group+axisPrefix, showZeroAxis, "show_zero_line", toBool());
     JKQTPPROPERTYload(settings, group+axisPrefix, autoAxisSpacing, "auto_spacing", toBool());
     JKQTPPROPERTYload(settings, group+axisPrefix, logAxis, "log", toBool());
@@ -291,7 +290,7 @@ void JKQTPCoordinateAxis::loadSettings(QSettings& settings, QString group) {
 
 
 
-void JKQTPCoordinateAxis::saveSettings(QSettings& settings, QString group) {
+void JKQTPCoordinateAxis::saveSettings(QSettings& settings, const QString& group) const {
     JKQTPPROPERTYsave(settings, group+axisPrefix, showZeroAxis, "show_zero_line");
     JKQTPPROPERTYsave(settings, group+axisPrefix, autoAxisSpacing, "auto_spacing");
     JKQTPPROPERTYsave(settings, group+axisPrefix, logAxis, "log");
@@ -628,13 +627,13 @@ int JKQTPCoordinateAxis::calcLinearUnitDigits() {
     double minval=tickStart;
     bool equals=true;
     /*for (int i=0; i<20; i++) {
-        equals=equals || (floattolabel((minval+(double)i*tickSpacing), unitdigits)== floattolabel((minval+(double)(i+1)*tickSpacing), unitdigits));
+        equals=equals || (floattolabel((minval+static_cast<double>(i)*tickSpacing), unitdigits)== floattolabel((minval+(double)(i+1)*tickSpacing), unitdigits));
     }*/
     while ((unitdigits<20) && equals) {
         unitdigits++;
         equals=false;
         for (int i=-10; i<10; i++) {
-            QString l1=floattolabel((minval+(double)i*tickSpacing), unitdigits+2);
+            QString l1=floattolabel((minval+static_cast<double>(i)*tickSpacing), unitdigits+2);
             QString l2=floattolabel((minval+(double)(i+1.0)*tickSpacing), unitdigits+2);
             //qDebug()<<"unitdigits="<<unitdigits<<"   l1="<<l1<<"   l2="<<l2;
             equals=equals || (l1==l2);
@@ -804,7 +803,7 @@ void JKQTPCoordinateAxis::setRange(double aamin, double aamax) {
     if (oldamin!=axismin || oldamax!=axismax) {
         paramsChanged=true;
         calcPlotScaling();
-        replotPlot();
+        redrawPlot();
     }
 }
 
@@ -817,25 +816,25 @@ void JKQTPCoordinateAxis::setNoAbsoluteRange() {
 void JKQTPCoordinateAxis::set_tickSpacing(double __value) {
     this->tickSpacing = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setAxisMinWidth(double __value) {
     this->axisMinWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_autoAxisSpacing(bool __value) {
     this->autoAxisSpacing = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickLabelsEnabled(bool __value) {
     this->minorTickLabelsEnabled = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_logAxis(bool __value)
@@ -849,31 +848,31 @@ void JKQTPCoordinateAxis::set_logAxis(bool __value)
     if (this->isLogAxis() && this->minorTicks==def_minorTicks) {
         this->minorTicks=9;
     }
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_logAxisBase(double __value) {
     this->logAxisBase = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setUserTickSpacing(double __value) {
     this->userTickSpacing = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setUserLogTickSpacing(double __value) {
     this->userLogTickSpacing = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelType(JKQTPCALabelType __value) {
     this->labelType = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickMode(JKQTPLabelTickMode __value)
@@ -887,239 +886,239 @@ void JKQTPCoordinateAxis::set_tickMode(int __value) {
     set_tickMode(JKQTPLabelTickMode(__value));
 }
 
-void JKQTPCoordinateAxis::setAxisLabel(QString __value) {
+void JKQTPCoordinateAxis::setAxisLabel(const QString& __value) {
     this->axisLabel = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelPosition(JKQTPLabelPosition __value) {
     this->labelPosition = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::set_labelFont(QString __value) {
+void JKQTPCoordinateAxis::set_labelFont(const QString& __value) {
     this->labelFont = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelFontSize(double __value) {
     this->labelFontSize = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::set_tickLabelFont(QString __value) {
+void JKQTPCoordinateAxis::set_tickLabelFont(const QString& __value) {
     this->tickLabelFont = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::set_tickTimeFormat(QString __value) {
+void JKQTPCoordinateAxis::set_tickTimeFormat(const QString& __value) {
     this->tickTimeFormat = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::set_tickDateFormat(QString __value) {
+void JKQTPCoordinateAxis::set_tickDateFormat(const QString& __value) {
     this->tickDateFormat = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::set_tickDateTimeFormat(QString __value) {
+void JKQTPCoordinateAxis::set_tickDateTimeFormat(const QString& __value) {
     this->tickDateTimeFormat = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickLabelFontSize(double __value) {
     this->tickLabelFontSize = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickLabelFontSize(double __value) {
     this->minorTickLabelFontSize = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickLabelFullNumber(bool __value) {
     this->minorTickLabelFullNumber = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minTicks(unsigned int __value) {
     this->minTicks = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTicks(unsigned int __value) {
     this->minorTicks = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTicks(int __value) {
     this->minorTicks = qMax(int(0), __value);
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickOutsideLength(double __value) {
     this->tickOutsideLength = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickOutsideLength(double __value) {
     this->minorTickOutsideLength = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickInsideLength(double __value) {
     this->tickInsideLength = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickInsideLength(double __value) {
     this->minorTickInsideLength = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::setAxisColor(QColor __value) {
+void JKQTPCoordinateAxis::setAxisColor(const QColor& __value) {
     this->axisColor = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setShowZeroAxis(bool __value) {
     this->showZeroAxis = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_inverted(bool __value) {
     this->inverted = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::setGridColor(QColor __value) {
+void JKQTPCoordinateAxis::setGridColor(const QColor& __value) {
     this->gridColor = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPCoordinateAxis::set_minorGridColor(QColor __value) {
+void JKQTPCoordinateAxis::set_minorGridColor(const QColor& __value) {
     this->minorGridColor = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setGridWidth(double __value) {
     this->gridWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setGridStyle(Qt::PenStyle __value) {
     this->gridStyle = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorGridWidth(double __value) {
     this->minorGridWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorGridStyle(Qt::PenStyle __value) {
     this->minorGridStyle = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawMode1(JKQTPCADrawMode __value) {
     this->drawMode1 = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawMode2(JKQTPCADrawMode __value) {
     this->drawMode2 = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_minorTickWidth(double __value) {
     this->minorTickWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickWidth(double __value) {
     this->tickWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setLineWidth(double __value) {
     this->lineWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setLineWidthZeroAxis(double __value) {
     this->lineWidthZeroAxis = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickLabelDistance(double __value) {
     this->tickLabelDistance = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelDistance(double __value) {
     this->labelDistance = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_labelDigits(int __value) {
     this->labelDigits = __value;
     this->paramsChanged=true;
     this->autoLabelDigits=false;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawGrid(bool __value) {
     this->drawGrid = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_drawMinorGrid(bool __value) {
     this->drawMinorGrid = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPCoordinateAxis::set_tickLabelAngle(double __value) {
     this->tickLabelAngle = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 
@@ -1138,7 +1137,7 @@ void JKQTPCoordinateAxis::setAbsoluteRange(double amin, double amax) {
     setRange(axismin, axismax);
     /*paramsChanged=true;
     calcPlotScaling();
-    replotPlot();*/
+    redrawPlot();*/
 }
 
 double JKQTPCoordinateAxis::getNextLabelDistance(double x) {
@@ -1675,7 +1674,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         get_parent_mathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
 
 
-        QRect rect(0,0, get_parent_plotwidth(), ascent+descent);//plotBorderLeft-30);
+        QRectF rect(0,0, get_parent_plotwidth(), ascent+descent);//plotBorderLeft-30);
         painter.save();
         painter.translate(QPointF(left-parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)-descent-labelMax.width()-labelMax.height(), bottom));
         painter.rotate(-90);
@@ -1702,7 +1701,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         get_parent_mathText()->parse(axisLabel);
 
 
-        QRect rect(0,0, get_parent_plotwidth(), get_parent_mathText()->getSize(painter).height());//plotBorderLeft-30);
+        QRectF rect(0,0, get_parent_plotwidth(), get_parent_mathText()->getSize(painter).height());//plotBorderLeft-30);
         painter.save();
         painter.translate(QPointF(right+parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)+labelMax.width(), bottom));
         painter.rotate(-90);
@@ -1748,31 +1747,31 @@ JKQTPVerticalIndependentAxis::JKQTPVerticalIndependentAxis(double axisOffset, do
 void JKQTPVerticalIndependentAxis::setAxisOffset(double __value) {
     this->axisOffset = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPVerticalIndependentAxis::setAxisWidth(double __value) {
     this->axisWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPVerticalIndependentAxis::set_otherAxisOffset(double __value) {
     this->otherAxisOffset = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPVerticalIndependentAxis::set_otherAxisWidth(double __value) {
     this->otherAxisWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPVerticalIndependentAxis::set_otherAxisInverted(bool __value) {
     this->otherAxisInverted = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 double JKQTPVerticalIndependentAxis::get_parent_plotwidth() const { return axisWidth; }
@@ -2254,7 +2253,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         get_parent_mathText()->getSizeDetail(painter, width, ascent, descent, strikeoutPos);
 
 
-        QRect rect(0,0, get_parent_plotwidth(), ascent+descent);//plotBorderLeft-30);
+        QRectF rect(0,0, get_parent_plotwidth(), ascent+descent);//plotBorderLeft-30);
         painter.save();
         painter.translate(QPointF(left, bottom+parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)+labelMax.height()));
         //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
@@ -2280,7 +2279,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         get_parent_mathText()->parse(axisLabel);
 
 
-        QRect rect(0,0, get_parent_plotwidth(), get_parent_mathText()->getSize(painter).height());//plotBorderLeft-30);
+        QRectF rect(0,0, get_parent_plotwidth(), get_parent_mathText()->getSize(painter).height());//plotBorderLeft-30);
         painter.save();
         painter.translate(QPointF(left, top-parent->pt2px(painter, tickOutsideLength+tickLabelDistance+labelDistance)-labelMax.height()-rect.height()));
         //JKQTPEnhancedPainter::RenderHints h=painter.renderHints();
@@ -2330,31 +2329,31 @@ JKQTPHorizontalIndependentAxis::JKQTPHorizontalIndependentAxis(double axisOffset
 void JKQTPHorizontalIndependentAxis::setAxisOffset(double __value) {
     this->axisOffset = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPHorizontalIndependentAxis::setAxisWidth(double __value) {
     this->axisWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPHorizontalIndependentAxis::set_otherAxisOffset(double __value) {
     this->otherAxisOffset = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPHorizontalIndependentAxis::set_otherAxisWidth(double __value) {
     this->otherAxisWidth = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPHorizontalIndependentAxis::set_otherAxisInverted(bool __value) {
     this->otherAxisInverted = __value;
     this->paramsChanged=true;
-    replotPlot();
+    redrawPlot();
 }
 
 double JKQTPHorizontalIndependentAxis::get_parent_plotwidth() const { return axisWidth; }

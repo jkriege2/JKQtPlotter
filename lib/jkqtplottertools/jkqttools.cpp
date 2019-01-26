@@ -27,12 +27,12 @@
 #include <QLocale>
 #include <QtCore>
 
-void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, QString prefix) {
+void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix) {
     settings.setValue(prefix+"pos", widget->pos());
     settings.setValue(prefix+"size", widget->size());
 }
 
-void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QPoint defaultPosition, QSize defaultSize, QString prefix) {
+void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QPoint defaultPosition, QSize defaultSize, const QString& prefix) {
     QPoint pos = settings.value(prefix+"pos", defaultPosition).toPoint();
     QSize size = settings.value(prefix+"size", defaultSize).toSize();
 
@@ -42,11 +42,11 @@ void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QPoint defaultPo
     widget->move(pos);
 }
 
-void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QString prefix) {
+void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix) {
     jkloadWidgetGeometry(settings, widget, QPoint(10, 10), QSize(100, 100), prefix);
 }
 
-void jksaveSplitter(QSettings& settings, QSplitter* splitter, QString prefix) {
+void jksaveSplitter(QSettings& settings, QSplitter* splitter, const QString& prefix) {
     /*QList<int> sizes=splitter->sizes();
     QString data="";
     for (int i=0; i<sizes.size(); i++) {
@@ -57,7 +57,7 @@ void jksaveSplitter(QSettings& settings, QSplitter* splitter, QString prefix) {
     settings.setValue(prefix+"splitter_sizes", splitter->saveState());
 }
 
-void jkloadSplitter(QSettings& settings, QSplitter* splitter, QString prefix) {
+void jkloadSplitter(QSettings& settings, QSplitter* splitter, const QString& prefix) {
     /*QString data=settings.value(prefix+"splitter_sizes", "").toString();
     QList<int> sizes, s1;
     QStringList sl=data.split(",");
@@ -71,7 +71,7 @@ void jkloadSplitter(QSettings& settings, QSplitter* splitter, QString prefix) {
     splitter->restoreState(settings.value(prefix+"splitter_sizes").toByteArray());
 }
 
-QString jkVariantListToString(const QList<QVariant>& data, QString separator) {
+QString jkVariantListToString(const QList<QVariant>& data, const QString& separator) {
     QString r="";
     QLocale loc=QLocale::c();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);

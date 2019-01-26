@@ -153,19 +153,19 @@ void TestWidgetRGBImages::setRGBColorBars(bool checked)
 {
     rgbimg->set_colorbarsSideBySide(checked);
     rgbimg2->set_colorbarsSideBySide(checked);
-    plotImgRGB->replotPlot();
+    plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::setRGBMode1(int mode)
 {
     rgbimg->set_rgbMode((JKQTPRGBMathImageRGBMode)mode);
-    plotImgRGB->replotPlot();
+    plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::setRGBMode2(int mode)
 {
     rgbimg2->set_rgbMode((JKQTPRGBMathImageRGBMode)mode);
-    plotImgRGB->replotPlot();
+    plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::updateRGBChannels()
@@ -191,13 +191,13 @@ void TestWidgetRGBImages::updateRGBChannels()
         rgbimg->set_dataB(nullptr);
         rgbimg2->set_imageBColumn(-1);
     }
-    plotImgRGB->replotPlot();
+    plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::setRGBModifier(int item)
 {
     rgbimg->set_modifierMode(JKQTPMathImage::ModifierMode(item));
     rgbimg2->set_modifierMode(JKQTPMathImage::ModifierMode(item));
-    plotImgRGB->replotPlot();
+    plotImgRGB->redrawPlot();
 }
 

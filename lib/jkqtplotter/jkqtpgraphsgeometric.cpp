@@ -134,7 +134,7 @@ void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& re
 
 
 
-JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, QString text, double fontSize, QColor color):
+JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QString& text, double fontSize, QColor color):
     JKQTPPlotObject(parent)
 {
     this->x=x;
@@ -144,7 +144,7 @@ JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, QString 
     this->color=color;
 }
 
-JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, QString text, double fontSize, QColor color):
+JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize, QColor color):
     JKQTPPlotObject(parent)
 {
     this->x=x;

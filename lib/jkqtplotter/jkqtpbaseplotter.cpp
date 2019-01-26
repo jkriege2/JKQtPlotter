@@ -75,7 +75,7 @@ JKQTBasePlotter::JKQTBasePlotter()
     initJKQTBasePlotterResources();
 }
 
-void JKQTBasePlotter::setDefaultJKQTBasePrinterUserSettings(QString userSettigsFilename, QString userSettigsPrefix)
+void JKQTBasePlotter::setDefaultJKQTBasePrinterUserSettings(QString userSettigsFilename, const QString& userSettigsPrefix)
 {
     globalUserSettigsFilename=userSettigsFilename;
     globalUserSettigsPrefix=userSettigsPrefix;
@@ -335,6 +335,10 @@ void JKQTBasePlotter::forceInternalDatastore(){
     if (emitPlotSignals) emit plotUpdated();
 }
 
+bool JKQTBasePlotter::isEmittingSignalsEnabled() const {
+    return this->emitSignals;
+}
+
 void JKQTBasePlotter::initSettings() {
     useClipping=true;
     //doDrawing=true;
@@ -463,6 +467,7 @@ void JKQTBasePlotter::zoom(double nxmin, double nxmax, double nymin, double nyma
     if (emitPlotSignals) emit plotUpdated();
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
+
 void JKQTBasePlotter::resize(int wid, int heigh) {
     widgetWidth=wid;
     widgetHeight=heigh;
@@ -481,7 +486,7 @@ void JKQTBasePlotter::setHeight(int heigh) {
     if (emitPlotSignals) emit plotUpdated();
 }
 
-void JKQTBasePlotter::saveSettings(QSettings& settings, QString group){
+void JKQTBasePlotter::saveSettings(QSettings& settings, const QString& group) const{
     QString g=group+"/";
     if (group.isEmpty()) g="";
 
@@ -553,7 +558,7 @@ void JKQTBasePlotter::saveSettings(QSettings& settings, QString group){
 
 }
 
-void JKQTBasePlotter::loadUserSettings(QSettings &settings, QString group) {
+void JKQTBasePlotter::loadUserSettings(const QSettings &settings, const QString& group) {
     currentSaveDirectory=settings.value(group+"currentSaveDirectory", currentSaveDirectory).toString();
     currentFileFormat=settings.value(group+"currentFileFormat", currentFileFormat).toString();
     currentDataFileFormat=settings.value(group+"currentDataFileFormat", currentFileFormat).toString();
@@ -568,22 +573,19 @@ void JKQTBasePlotter::loadUserSettings(QSettings &settings, QString group) {
     printKeepAspect=settings.value(group+"printKeepAspect", printKeepAspect).toBool();
     exportUnitInMM=settings.value(group+"exportUnitInMM", exportUnitInMM).toBool();
     currentPrinter=settings.value(group+"printer", currentPrinter).toString();
-    settings.beginGroup(group+"selections");
-    int count=settings.value("count", 0).toInt();
+    int count=settings.value(group+"selections.count", 0).toInt();
     getDataColumnsByUserSaved.clear();
     for (int i=0; i<count; i++) {
-        settings.beginGroup(QString("item%1").arg(i));
-        QString n=settings.value("name", "").toString();
-        QStringList item=settings.value("items", QStringList()).toStringList();
+        const QString itg=QString("item%1").arg(i);
+        QString n=settings.value(group+"selections."+itg+".name", "").toString();
+        QStringList item=settings.value(group+"selections."+itg+".items", QStringList()).toStringList();
         if (!n.isEmpty()) {
             getDataColumnsByUserSaved[n]=item;
         }
-        settings.endGroup();
     }
-    settings.endGroup();
 }
 
-void JKQTBasePlotter::saveUserSettings(QSettings &settings, QString group) {
+void JKQTBasePlotter::saveUserSettings(QSettings &settings, const QString& group) const {
     settings.setValue(group+"printer", currentPrinter);
     //qDebug()<<settings.fileName()<<group<<currentSaveDirectory<<QDir(currentSaveDirectory).absolutePath();
     settings.setValue(group+"currentSaveDirectory", QDir(currentSaveDirectory).absolutePath());
@@ -613,7 +615,7 @@ void JKQTBasePlotter::saveUserSettings(QSettings &settings, QString group) {
     settings.endGroup();
 }
 
-void JKQTBasePlotter::loadSettings(QSettings& settings, QString group){
+void JKQTBasePlotter::loadSettings(const QSettings &settings, const QString& group){
     QString g=group+"/";
     if (group.isEmpty()) g="";
 
@@ -1320,8 +1322,8 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
             int t_y=0;
             //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
             //std::cout<<"colrowlistsizes     "<<gridPrintingColumns.size()<<", "<<gridPrintingRows.size()<<" ...\n";
-            for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+=gridPrintingColumns[j];  }
-            for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+=gridPrintingRows[j]; }
+            for (int j=0; j<gridPrintingList[i].x; j++) {  t_x+=gridPrintingColumns[j];  }
+            for (int j=0; j<gridPrintingList[i].y; j++) {  t_y+=gridPrintingRows[j]; }
             //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
             painter.translate(t_x, t_y);
             gridPrintingList[i].plotter->paintPlot(painter, drawOverlays);
@@ -1335,7 +1337,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
             gridPrintingList[i].plotter->setLineWidthMultiplier(lwm[i]);
             gridPrintingList[i].plotter->set_paintMagnification(pm[i]);
             gridPrintingList[i].plotter->setBackgroundColor(backg[i]);
-            gridPrintingList[i].plotter->replotPlot();
+            gridPrintingList[i].plotter->redrawPlot();
         }
 
     }
@@ -1386,8 +1388,8 @@ void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pa
             int t_y=0;
             //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
             //std::cout<<"colrowlistsizes     "<<gridPrintingColumns.size()<<", "<<gridPrintingRows.size()<<" ...\n";
-            for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+=gridPrintingColumns[j];  }
-            for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+=gridPrintingRows[j]; }
+            for (int j=0; j<gridPrintingList[i].x; j++) {  t_x+=gridPrintingColumns[j];  }
+            for (int j=0; j<gridPrintingList[i].y; j++) {  t_y+=gridPrintingRows[j]; }
             //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
             painter.translate(t_x, t_y);
             gridPrintingList[i].plotter->paintOverlays(painter);
@@ -2271,7 +2273,7 @@ void JKQTBasePlotter::printpreviewUpdate()
     }
 }
 
-void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, QRect rect, bool drawOverlays) {
+void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QRect& rect, bool drawOverlays) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::draw(rect, %1)").arg(drawOverlays));
 #endif
@@ -2299,7 +2301,7 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, QRect rect, bool drawO
     emitPlotSignals=oldEmitPlotSignals;
 }
 
-void JKQTBasePlotter::drawOverlays(JKQTPEnhancedPainter &painter, QRect rect)
+void JKQTBasePlotter::drawOverlays(JKQTPEnhancedPainter &painter, const QRect& rect)
 {
 
     //resize(rect.width(), rect.height());
@@ -2311,7 +2313,7 @@ void JKQTBasePlotter::drawOverlays(JKQTPEnhancedPainter &painter, QRect rect)
     painter.restore();
 }
 
-void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, QPoint pos, bool drawOverlays) {
+void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QPoint& pos, bool drawOverlays) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::draw(pos, %1)").arg(drawOverlays));
 #endif
@@ -2339,7 +2341,7 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, QPoint pos, bool drawO
     emitPlotSignals=oldEmitPlotSignals;
 }
 
-void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, QRect rect, bool drawOverlays) {
+void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect, bool drawOverlays) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGrid(rect, %1)").arg(drawOverlays));
 #endif
@@ -2385,7 +2387,7 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, QRect rect, boo
 }
 
 
-void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, QPoint pos, bool drawOverlays) {
+void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos, bool drawOverlays) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGrid(pos, %1)").arg(drawOverlays));
 #endif
@@ -2431,7 +2433,7 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, QPoint pos, boo
     emitPlotSignals=oldEmitPlotSignals;
 }
 
-void JKQTBasePlotter::drawNonGridOverlays(JKQTPEnhancedPainter& painter, QPoint pos) {
+void JKQTBasePlotter::drawNonGridOverlays(JKQTPEnhancedPainter& painter, const QPoint& pos) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGridOverlays(point)"));
 #endif
@@ -2448,6 +2450,16 @@ void JKQTBasePlotter::drawNonGridOverlays(JKQTPEnhancedPainter& painter, QPoint 
     paintOverlays(painter);
     painter.restore();
     painter.restore();
+}
+
+void JKQTBasePlotter::setEmittingPlotSignalsEnabled(bool __value)
+{
+    this->emitPlotSignals = __value;
+}
+
+bool JKQTBasePlotter::isEmittingPlotSignalsEnabled() const
+{
+    return this->emitPlotSignals;
 }
 
 void JKQTBasePlotter::registerAdditionalAction(const QString &key, QAction *act)
@@ -2524,7 +2536,7 @@ void JKQTBasePlotter::copyDataMatlab() {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveData(QString filename, QString format) {
+void JKQTBasePlotter::saveData(const QString& filename, const QString &format) {
     loadUserSettings();
     QStringList fileformats;
     QStringList fileformatIDs;
@@ -2618,7 +2630,7 @@ void JKQTBasePlotter::saveData(QString filename, QString format) {
     }
 }
 
-void JKQTBasePlotter::saveAsCSV(QString filename) {
+void JKQTBasePlotter::saveAsCSV(const QString& filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2634,7 +2646,7 @@ void JKQTBasePlotter::saveAsCSV(QString filename) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsSYLK(QString filename) {
+void JKQTBasePlotter::saveAsSYLK(const QString& filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2650,7 +2662,7 @@ void JKQTBasePlotter::saveAsSYLK(QString filename) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsMatlab(QString filename) {
+void JKQTBasePlotter::saveAsMatlab(const QString& filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2666,7 +2678,7 @@ void JKQTBasePlotter::saveAsMatlab(QString filename) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsDIF(QString filename) {
+void JKQTBasePlotter::saveAsDIF(const QString& filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2682,7 +2694,7 @@ void JKQTBasePlotter::saveAsDIF(QString filename) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsSemicolonSV(QString filename) {
+void JKQTBasePlotter::saveAsSemicolonSV(const QString& filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2698,7 +2710,7 @@ void JKQTBasePlotter::saveAsSemicolonSV(QString filename) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsTabSV(QString filename) {
+void JKQTBasePlotter::saveAsTabSV(const QString& filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2714,7 +2726,7 @@ void JKQTBasePlotter::saveAsTabSV(QString filename) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsGerExcelCSV(QString filename) {
+void JKQTBasePlotter::saveAsGerExcelCSV(const QString& filename) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2730,7 +2742,7 @@ void JKQTBasePlotter::saveAsGerExcelCSV(QString filename) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsPDF(QString filename, bool displayPreview) {
+void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -2763,7 +2775,7 @@ void JKQTBasePlotter::saveAsPDF(QString filename, bool displayPreview) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsPS(QString filename, bool displayPreview) {
+void JKQTBasePlotter::saveAsPS(const QString& filename, bool displayPreview) {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     loadUserSettings();
     QString fn=filename;
@@ -2800,7 +2812,7 @@ void JKQTBasePlotter::saveAsPS(QString filename, bool displayPreview) {
 }
 
 
-void JKQTBasePlotter::saveImage(QString filename, bool displayPreview) {
+void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     QStringList filt;
@@ -2905,7 +2917,7 @@ void JKQTBasePlotter::saveImage(QString filename, bool displayPreview) {
 }
 
 
-void JKQTBasePlotter::saveAsPixelImage(QString filename, bool displayPreview, const QByteArray& outputFormat) {
+void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPreview, const QByteArray& outputFormat) {
     loadUserSettings();
     QString fn=filename;
     QStringList filt;
@@ -3091,7 +3103,7 @@ void JKQTBasePlotter::copyPixelImage() {
 
 }
 
-void JKQTBasePlotter::saveAsSVG(QString filename, bool displayPreview) {
+void JKQTBasePlotter::saveAsSVG(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     if (fn.isEmpty()) {
@@ -3218,7 +3230,7 @@ void JKQTBasePlotter::synchronizeXYAxis(double newxmin, double newxmax, double n
     setXY(newxmin, newxmax, newymin, newymax);
 }
 
-size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPGraphPlotstyle graphStyle) {
+size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& title, JKQTPGraphPlotstyle graphStyle) {
     if (graphStyle==JKQTPImpulsesHorizontal) {
         JKQTPImpulsesHorizontalGraph* gr=new JKQTPImpulsesHorizontalGraph(this);
         gr->set_title(title);
@@ -3267,7 +3279,7 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, 
     return -1;
 }
 
-size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, QString title, JKQTPGraphPlotstyle graphStyle, QColor color, JKQTPGraphSymbols symbol, Qt::PenStyle penstyle, double width) {
+size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& title, JKQTPGraphPlotstyle graphStyle, QColor color, JKQTPGraphSymbols symbol, Qt::PenStyle penstyle, double width) {
     if (graphStyle==JKQTPImpulsesHorizontal) {
         JKQTPImpulsesHorizontalGraph* gr=new JKQTPImpulsesHorizontalGraph(this);
         gr->set_title(title);
@@ -3400,7 +3412,7 @@ void JKQTBasePlotter::addVerticalBargraph(QVector<size_t> xColumns, size_t yColu
     }
 }
 
-size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_t xErrorColumn, QString title, JKQTPGraphPlotstyle graphStyle, JKQTPErrorPlotstyle errorStyle){
+size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_t xErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle, JKQTPErrorPlotstyle errorStyle){
     if (graphStyle==JKQTPImpulsesHorizontal) {
         JKQTPImpulsesHorizontalErrorGraph* gr=new JKQTPImpulsesHorizontalErrorGraph(this);
         gr->set_title(title);
@@ -3444,7 +3456,7 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
 
 }
 
-size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_t yErrorColumn, QString title, JKQTPGraphPlotstyle graphStyle, JKQTPErrorPlotstyle errorStyle){
+size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_t yErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle, JKQTPErrorPlotstyle errorStyle){
     if (graphStyle==JKQTPImpulsesVertical) {
         JKQTPImpulsesVerticalErrorGraph* gr=new JKQTPImpulsesVerticalErrorGraph(this);
         gr->set_title(title);
@@ -3488,7 +3500,7 @@ size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_
     }
 }
 
-size_t JKQTBasePlotter::addGraphWithXYError(size_t xColumn, size_t yColumn, size_t xErrorColumn, size_t yErrorColumn, QString title, JKQTPGraphPlotstyle graphStyle){
+size_t JKQTBasePlotter::addGraphWithXYError(size_t xColumn, size_t yColumn, size_t xErrorColumn, size_t yErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle){
     JKQTPXYLineErrorGraph* gr=new JKQTPXYLineErrorGraph(this);
     gr->set_title(title);
     gr->set_xColumn(xColumn);
@@ -3839,7 +3851,7 @@ void JKQTBasePlotter::loadUserSettings()
     }
 }
 
-void JKQTBasePlotter::saveUserSettings()
+void JKQTBasePlotter::saveUserSettings() const
 {
     if (!userSettigsFilename.isEmpty()) {
         QSettings set(userSettigsFilename, QSettings::IniFormat);
@@ -4529,5 +4541,4 @@ QPaintDevice *JKQTPPaintDeviceAdapter::createPaintdeviceMM(const QString &filena
     return createPaintdevice(filename, widthMM/25.4*QApplication::desktop()->logicalDpiX(), heightMM/25.4*QApplication::desktop()->logicalDpiY());
 }
 
-JKQTPSaveDataAdapter::~JKQTPSaveDataAdapter() {
-}
+JKQTPSaveDataAdapter::~JKQTPSaveDataAdapter() = default;

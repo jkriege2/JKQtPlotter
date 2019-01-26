@@ -195,9 +195,7 @@ JKQTMathText::MTnode::MTnode(JKQTMathText* parent) {
 }
 
 JKQTMathText::MTnode::~MTnode()
-{
-
-}
+= default;
 
 void JKQTMathText::MTnode::getSize(QPainter &painter, JKQTMathText::MTenvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
 {
@@ -241,7 +239,7 @@ void JKQTMathText::MTnode::doDrawBoxes(QPainter& painter, double x, double y, JK
 }
 
 
-JKQTMathText::MTtextNode::MTtextNode(JKQTMathText* parent, QString textIn, bool addWhitespace, bool stripInnerWhitepace):
+JKQTMathText::MTtextNode::MTtextNode(JKQTMathText* parent, const QString& textIn, bool addWhitespace, bool stripInnerWhitepace):
     JKQTMathText::MTnode(parent)
 {
     QString text=textIn;
@@ -262,8 +260,7 @@ JKQTMathText::MTtextNode::MTtextNode(JKQTMathText* parent, QString textIn, bool 
     //qDebug()<<"MTtextNode( text="<<text<<" addWhitespace="<<addWhitespace<<")   [=> this->text="<<this->text<<"]";
 }
 
-JKQTMathText::MTtextNode::~MTtextNode() {
-}
+JKQTMathText::MTtextNode::~MTtextNode() = default;
 
 void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     QFont f=currentEv.getFont(parent);
@@ -459,7 +456,7 @@ QString JKQTMathText::MTtextNode::textTransform(const QString &text, JKQTMathTex
 
 
 
-JKQTMathText::MTinstruction1Node::MTinstruction1Node(JKQTMathText* parent, QString name, MTnode* child, const QStringList& parameters):
+JKQTMathText::MTinstruction1Node::MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters):
     JKQTMathText::MTnode(parent)
 {
     this->name=name;
@@ -1310,7 +1307,7 @@ void JKQTMathText::MTsuperscriptNode::set_drawBoxes(bool draw)
 
 
 
-JKQTMathText::MTbraceNode::MTbraceNode(JKQTMathText* parent, QString openbrace, QString closebrace, MTnode* child, bool showRightBrace):
+JKQTMathText::MTbraceNode::MTbraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace):
     JKQTMathText::MTnode(parent)
 {
     this->child=child;
@@ -2008,7 +2005,7 @@ void JKQTMathText::MTlistNode::set_drawBoxes(bool draw)
 
 
 
-JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, QString name, bool addWhitespace):
+JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace):
     JKQTMathText::MTnode(parent)
 {
     double mathFontFactor=1.8;
@@ -2727,8 +2724,7 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, QString name, boo
     //std::cout<<"symbol node '"<<symbolName.toStdString()<<"': symbol='"<<symbol.toStdString()<<"'\n";
 }
 
-JKQTMathText::MTsymbolNode::~MTsymbolNode() {
-}
+JKQTMathText::MTsymbolNode::~MTsymbolNode() = default;
 
 QString JKQTMathText::MTsymbolNode::getTypeName() const
 {
@@ -3238,7 +3234,7 @@ JKQTMathText::~JKQTMathText() {
     unparsedNode=nullptr;
 }
 
-void JKQTMathText::loadSettings(QSettings& settings, QString group){
+void JKQTMathText::loadSettings(const QSettings& settings, const QString& group){
     fontSize=settings.value(group+"font_size", fontSize).toDouble();
     fontColor=QColor(settings.value(group+"font_color", jkqtp_QColor2String(fontColor)).toString());
     fontRoman=settings.value(group+"font_roman", fontRoman).toString();
@@ -3281,7 +3277,7 @@ void JKQTMathText::loadSettings(QSettings& settings, QString group){
 }
 
 
-void JKQTMathText::saveSettings(QSettings& settings, QString group){
+void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const{
     JKQTMTPROPERTYsave(settings, group, fontSize,"font_size");
     if (fontColor!=def_fontColor) settings.setValue(group+"font_color", jkqtp_QColor2String(fontColor));
     JKQTMTPROPERTYsave(settings, group, fontRoman, "font_roman");
@@ -3448,7 +3444,7 @@ void JKQTMathText::useASANA()
     brace_shrink_factor=0.6;
 }
 
-void JKQTMathText::useLatexFonts(QString prefix, QString postfix) {
+void JKQTMathText::useLatexFonts(QString prefix, const QString& postfix) {
     fontLatexPostfix=postfix;
     fontLatexPrefix=prefix;
     fontRoman=prefix+"cmr"+postfix;
@@ -3483,7 +3479,7 @@ QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
     return s;
 }
 
-void JKQTMathText::useAnyUnicode(QString timesFont, QString sansFont) {
+void JKQTMathText::useAnyUnicode(QString timesFont, const QString& sansFont) {
     if (!timesFont.isEmpty()) { fontMathRoman=timesFont; fontRoman=timesFont; }
     if (!sansFont.isEmpty()) { fontMathSans=sansFont; fontSans=sansFont; }
     useSTIXfonts=false;
@@ -3598,7 +3594,7 @@ JKQTMathText::tokenType JKQTMathText::getToken() {
     return currentToken=MTTnone;
 }
 
-JKQTMathText::MTnode* JKQTMathText::parseLatexString(bool get, QString quitOnClosingBrace, QString quitOnEnvironmentEnd) {
+JKQTMathText::MTnode* JKQTMathText::parseLatexString(bool get, const QString& quitOnClosingBrace, const QString& quitOnEnvironmentEnd) {
     //std::cout<<"    entering parseLatexString()\n";
     MTlistNode* nl=new MTlistNode(this);
     if (get) getToken();
@@ -4131,9 +4127,7 @@ JKQTMathText::MTwhitespaceNode::MTwhitespaceNode(JKQTMathText *parent):
 }
 
 JKQTMathText::MTwhitespaceNode::~MTwhitespaceNode()
-{
-
-}
+= default;
 
 QString JKQTMathText::MTwhitespaceNode::getTypeName() const
 {
@@ -4220,8 +4214,7 @@ JKQTMathTextLabel::JKQTMathTextLabel(QWidget *parent):
 }
 
 JKQTMathTextLabel::~JKQTMathTextLabel()
-{
-}
+= default;
 
 JKQTMathText *JKQTMathTextLabel::getMathText() const
 {
@@ -4347,7 +4340,7 @@ bool JKQTMathText::tbrDataH::operator==(const JKQTMathText::tbrDataH &other) con
 }
 
 
-JKQTMathText::MTplainTextNode::MTplainTextNode(JKQTMathText *parent, QString text, bool addWhitespace, bool stripInnerWhitepace):
+JKQTMathText::MTplainTextNode::MTplainTextNode(JKQTMathText *parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace):
     JKQTMathText::MTtextNode(parent, text, addWhitespace, stripInnerWhitepace)
 {
 

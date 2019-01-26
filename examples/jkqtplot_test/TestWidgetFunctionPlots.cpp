@@ -24,7 +24,7 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     pfunc->set_drawErrorPolygons(true);
     pfunc->set_style(Qt::DashLine);
     plotFuncPlt->addGraph(pfunc);
-    plotFuncPlt->replotPlot();
+    plotFuncPlt->redrawPlot();
 
     pfuncErrorStyle=new JKQTPErrorPlotstyleComboBox(this);
     pfuncErrorStyle->setCurrentIndex(3);
@@ -88,29 +88,29 @@ void TestWidgetFunctionPlots::setPFuncStyle()
     if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorPolygons) pfunc->set_drawErrorPolygons(true);
     pfunc->set_drawLine(chkPFuncDrawLine->isChecked());
     pfunc->set_displaySamplePoints(chkPFuncDrawSamples->isChecked());
-    plotFuncPlt->replotPlot();
+    plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncMinPoint(int value)
 {
     pfunc->set_minSamples(value);
-    plotFuncPlt->replotPlot();
+    plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncMaxRefine(int value)
 {
     pfunc->set_maxRefinementDegree(value);
-    plotFuncPlt->replotPlot();
+    plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFunc(const QString &expression)
 {
     pfunc->set_function(expression);
-    plotFuncPlt->replotPlot();
+    plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncE(const QString &expression)
 {
     pfunc->set_errorFunction(expression);
-    plotFuncPlt->replotPlot();
+    plotFuncPlt->redrawPlot();
 }

@@ -396,7 +396,7 @@ class LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
             \param color color of drawing
             \param fontSize base font size of text
          */
-        JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, QString text, double fontSize=10, QColor color=QColor("black"));
+        JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QString& text, double fontSize=10, QColor color=QColor("black"));
         /*! \brief class contructor
 
             \param parent parent plotter widget
@@ -406,7 +406,7 @@ class LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
             \param color color of drawing
             \param fontSize base font size of text
          */
-        JKQTPGeoText(JKQTPlotter* parent, double x, double y, QString text, double fontSize=10, QColor color=QColor("black"));
+        JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize=10, QColor color=QColor("black"));
 
         /*! \brief sets the property color to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 

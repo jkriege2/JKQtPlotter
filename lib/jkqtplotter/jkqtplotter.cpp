@@ -88,8 +88,8 @@ void JKQTPlotter::init(bool datastore_internal, QWidget* parent, JKQTPDatastore*
     mousePosY=0;
     rightMouseButtonAction=JKQTPlotter::RightMouseButtonContextMenu;
 
-    connect(plotter, SIGNAL(plotUpdated()), this, SLOT(replotPlot()));
-    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(replotOverlays()));
+    connect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
+    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     connect(plotter, SIGNAL(beforePlotScalingRecalculate()), this, SLOT(intBeforePlotScalingRecalculate()));
     connect(plotter, SIGNAL(zoomChangedLocally(double, double, double, double, JKQTBasePlotter*)), this, SLOT(pzoomChangedLocally(double, double, double, double, JKQTBasePlotter*)));
 
@@ -136,13 +136,13 @@ void JKQTPlotter::init(bool datastore_internal, QWidget* parent, JKQTPDatastore*
     resize(400,300);
     doDrawing=true;
     plotter->setEmittingSignalsEnabled(true);
-    replotPlot();
+    redrawPlot();
 }
 
 
 JKQTPlotter::~JKQTPlotter() {
-    disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(replotPlot()));
-    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(replotOverlays()));
+    disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
+    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     disconnect(plotter, SIGNAL(beforePlotScalingRecalculate()), this, SLOT(intBeforePlotScalingRecalculate()));
     disconnect(plotter, SIGNAL(zoomChangedLocally(double, double, double, double, JKQTBasePlotter*)), this, SLOT(pzoomChangedLocally(double, double, double, double, JKQTBasePlotter*)));
     delete plotter;
@@ -244,7 +244,7 @@ JKQTPlotter::MouseActionModes JKQTPlotter::getMouseActionMode() const
     return this->mouseActionMode;
 }
 
-void JKQTPlotter::loadSettings(QSettings& settings, QString group) {
+void JKQTPlotter::loadSettings(const QSettings& settings, const QString& group) {
     plotter->loadSettings(settings, group);
 
 
@@ -252,10 +252,10 @@ void JKQTPlotter::loadSettings(QSettings& settings, QString group) {
     mousePositionTemplate=settings.value(group+"mouse_position_template", mousePositionTemplate).toString();
     userActionColor=QColor(settings.value(group+"zoomrect_color", jkqtp_QColor2String(userActionColor)).toString());
 
-    replotPlot();
+    redrawPlot();
 }
 
-void JKQTPlotter::saveSettings(QSettings& settings, QString group) {
+void JKQTPlotter::saveSettings(QSettings& settings, const QString& group) const {
     plotter->saveSettings(settings, group);
 
     if (userActionColor!=def_userActionColor) settings.setValue(group+"zoomrect_color", jkqtp_QColor2String(userActionColor));
@@ -384,10 +384,10 @@ void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
         mouseLastClickX=event->x();
         mouseLastClickY=event->y();
         if (rightMouseButtonAction==JKQTPlotter::RightMouseButtonZoom) {
-            double xmin=plotter->p2x((long)round((double)plotter->getInternalPlotBorderLeft()-(double)plotter->getPlotWidth()/2.0));
-            double xmax=plotter->p2x((long)round((double)plotter->getInternalPlotBorderLeft()+1.5*(double)plotter->getPlotWidth()));
-            double ymin=plotter->p2y((long)round((double)plotter->getInternalPlotBorderTop()+1.5*(double)plotter->getPlotHeight()));
-            double ymax=plotter->p2y((long)round((double)plotter->getInternalPlotBorderTop()-(double)plotter->getPlotHeight()/2.0));
+            double xmin=plotter->p2x((long)round(static_cast<double>(plotter->getInternalPlotBorderLeft())-static_cast<double>(plotter->getPlotWidth())/2.0));
+            double xmax=plotter->p2x((long)round(static_cast<double>(plotter->getInternalPlotBorderLeft())+1.5*static_cast<double>(plotter->getPlotWidth())));
+            double ymin=plotter->p2y((long)round(static_cast<double>(plotter->getInternalPlotBorderTop())+1.5*static_cast<double>(plotter->getPlotHeight())));
+            double ymax=plotter->p2y((long)round(static_cast<double>(plotter->getInternalPlotBorderTop())-static_cast<double>(plotter->getPlotHeight())/2.0));
             if (plotter->getXAxis()->isLogAxis()) {
                 if (xmin<=0) xmin=1;
                 if (xmax<=0) xmax=10;
@@ -398,7 +398,7 @@ void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
             }
             /*plotter->getXAxis->setRange(xmin, xmax);
             plotter->getYAxis->setRange(ymin, ymax);*/
-            //replotPlot();
+            //redrawPlot();
             /*if (plotter->isEmittingSignalsEnabled())*/ emit zoomChangedLocally(xmin, xmax, ymin, ymax, this);
             plotter->setXY(xmin, xmax, ymin, ymax);
             //update();
@@ -483,15 +483,15 @@ void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
         if (rightMouseButtonAction==JKQTPlotter::RightMouseButtonZoom && event->button()==Qt::RightButton) {
             double factor=4.0;
             if (event->button()==Qt::RightButton) factor=1;
-            double xmin=plotter->p2x((long)round((double)event->x()/magnification-(double)plotter->getPlotWidth()/factor));
-            double xmax=plotter->p2x((long)round((double)event->x()/magnification+(double)plotter->getPlotWidth()/factor));
-            double ymin=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()+(double)plotter->getPlotHeight()/factor));
-            double ymax=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()-(double)plotter->getPlotHeight()/factor));
+            double xmin=plotter->p2x((long)round((double)event->x()/magnification-static_cast<double>(plotter->getPlotWidth())/factor));
+            double xmax=plotter->p2x((long)round((double)event->x()/magnification+static_cast<double>(plotter->getPlotWidth())/factor));
+            double ymin=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()+static_cast<double>(plotter->getPlotHeight())/factor));
+            double ymax=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()-static_cast<double>(plotter->getPlotHeight())/factor));
 
             event->accept();
             //xAxis->setRange(xmin, xmax);
             //yAxis->setRange(ymin, ymax);
-            //replotPlot();
+            //redrawPlot();
             /*if (plotter->isEmittingSignalsEnabled())*/ emit zoomChangedLocally(xmin, xmax, ymin, ymax, this);
             plotter->setXY(xmin, xmax, ymin, ymax);
             update();
@@ -518,22 +518,16 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
     if  ( (event->x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
           ((event->y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
         double factor=pow(2.0, 1.0*(double)event->delta()/120.0)*2.0;
-        //std::cout<<(double)event->delta()/120.0<<":   "<<factor<<std::endl;
-        double xmin=plotter->p2x((long)round((double)event->x()/magnification-(double)plotter->getPlotWidth()/factor));
-        double xmax=plotter->p2x((long)round((double)event->x()/magnification+(double)plotter->getPlotWidth()/factor));
-        double ymin=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()+(double)plotter->getPlotHeight()/factor));
-        double ymax=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()-(double)plotter->getPlotHeight()/factor));
+        double xmin=plotter->p2x((long)round((double)event->x()/magnification-static_cast<double>(plotter->getPlotWidth())/factor));
+        double xmax=plotter->p2x((long)round((double)event->x()/magnification+static_cast<double>(plotter->getPlotWidth())/factor));
+        double ymin=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()+static_cast<double>(plotter->getPlotHeight())/factor));
+        double ymax=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()-static_cast<double>(plotter->getPlotHeight())/factor));
 
-        //std::cout<<"t="<<t<<", w="<<w<<"     =>     "<<tmin<<" -- "<<tmax<<std::endl;
         event->accept();
-        /*if (plotter->isEmittingSignalsEnabled())*/ emit zoomChangedLocally(xmin, xmax, ymin, ymax, this);
         plotter->setXY(xmin, xmax, ymin, ymax);
-        //update();
-        /*xAxis->setRange(xmin, xmax);
-        yAxis->setRange(ymin, ymax);
-        //replotPlot();
-        if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);*/
-    } else { event->ignore(); }
+    } else {
+        event->ignore();
+    }
 }
 
 int JKQTPlotter::getPlotYOffset() {
@@ -662,13 +656,13 @@ void JKQTPlotter::synchronizeXYAxis(double newxmin, double newxmax, double newym
     setXY(newxmin, newxmax, newymin, newymax);
 }
 
-void JKQTPlotter::replotOverlays() {
+void JKQTPlotter::redrawOverlays() {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTPlotter::replotOverlays()"));
+    JKQTPAutoOutputTimer jkaaot(QString("JKQTPlotter::redrawOverlays()"));
 #endif
     if (!doDrawing) return;
-    disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(replotPlot()));
-    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(replotOverlays()));
+    disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
+    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     image=imageNoOverlays;
     JKQTPEnhancedPainter painter(&image);
     if (painter.isActive()) {
@@ -676,18 +670,18 @@ void JKQTPlotter::replotOverlays() {
         plotter->drawNonGridOverlays(painter);
     }
     oldImage=image;
-    connect(plotter, SIGNAL(plotUpdated()), this, SLOT(replotPlot()));
-    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(replotOverlays()));
+    connect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
+    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     repaint();
 }
 
-void JKQTPlotter::replotPlot() {
+void JKQTPlotter::redrawPlot() {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTPlotter::replotPlot()"));
+    JKQTPAutoOutputTimer jkaaot(QString("JKQTPlotter::redrawPlot()"));
 #endif
     if (!doDrawing) return;
-    disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(replotPlot()));
-    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(replotOverlays()));
+    disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
+    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     plotter->resize(width()/magnification, height()/magnification-getPlotYOffset());
     JKQTPEnhancedPainter painter(&image);
     if (painter.isActive()) {
@@ -700,8 +694,8 @@ void JKQTPlotter::replotPlot() {
         plotter->drawNonGridOverlays(painter);
     }
     oldImage=image;
-    connect(plotter, SIGNAL(plotUpdated()), this, SLOT(replotPlot()));
-    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(replotOverlays()));
+    connect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
+    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     update();
 }
 
@@ -780,7 +774,7 @@ void JKQTPlotter::delayedResizeEvent()
         sizeChanged=true;
     }
 
-    if (sizeChanged) replotPlot();
+    if (sizeChanged) redrawPlot();
 }
 
 void JKQTPlotter::leaveEvent(QEvent * /*event*/) {
@@ -821,7 +815,7 @@ QSize JKQTPlotter::sizeHint() const {
 void JKQTPlotter::masterPlotScalingRecalculated() {
     if (masterPlotter) {
         if (plotter->getMasterSynchronizeHeight()||plotter->getMasterSynchronizeWidth()) {
-            replotPlot();
+            redrawPlot();
         }
     }
 }
@@ -833,13 +827,13 @@ void JKQTPlotter::synchronizeToMaster(JKQTPlotter* master, bool synchronizeWidth
     plotter->synchronizeToMaster(master->getPlotter(), synchronizeWidth, synchronizeHeight);
     masterPlotter=master;
     if (masterPlotter) connect(masterPlotter->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTPlotter::resetMasterSynchronization() {
     if (masterPlotter) disconnect(masterPlotter->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
     plotter->resetMasterSynchronization();
-    replotPlot();
+    redrawPlot();
 }
 
 bool JKQTPlotter::isPlotUpdateEnabled() const {
@@ -930,7 +924,7 @@ int JKQTPlotter::getMouseLastClickY() const {
 void JKQTPlotter::setMagnification(double m)
 {
     magnification=m;
-    replotPlot();
+    redrawPlot();
 }
 
 bool JKQTPlotter::getZoomByMouseRectangle() const {

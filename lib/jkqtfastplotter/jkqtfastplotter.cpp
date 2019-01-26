@@ -36,14 +36,14 @@
  * \internal
  */
 #define JKQTFPPROPERTYsave(settings, group, var, varname) \
-    if (var!=def_##var) settings.setValue(group+varname, var);
+    if ((var)!=def_##var) (settings).setValue((group)+(varname), var);
 /**
  * \brief loads the given property from the given settings object
  * \ingroup jkqtfastplotter
  * \internal
  */
 #define JKQTFPPROPERTYload(settings, group, var, varname, varconvert) \
-    var=settings.value(group+varname, var).varconvert;
+    var=(settings).value((group)+(varname), var).varconvert;
 
 
 JKQTFPPlot::JKQTFPPlot(JKQTFastPlotter* parent):
@@ -55,9 +55,7 @@ JKQTFPPlot::JKQTFPPlot(JKQTFastPlotter* parent):
 }
 
 JKQTFPPlot::~JKQTFPPlot()
-{
-
-};
+= default;;
 
 void JKQTFPPlot::replot() {
     if (parent) parent->update_data();
@@ -127,7 +125,7 @@ JKQTFastPlotter::JKQTFastPlotter(QWidget *parent) :
     connect(actCopyImage, SIGNAL(triggered()), this, SLOT(copyImage()));
     addAction(actCopyImage);
     setContextMenuPolicy(Qt::ActionsContextMenu);
-    replotPlot();
+    redrawPlot();
     setMouseTracking(true);
 }
 
@@ -138,14 +136,14 @@ void JKQTFastPlotter::clearPlots(bool remove) {
         }
     }
     plots.clear();
-    replotPlot();
+    redrawPlot();
 }
 
 
 void JKQTFastPlotter::addPlot(JKQTFPPlot* g) {
     g->setParent(this);
     plots.append(g);
-    replotPlot();
+    redrawPlot();
 }
 
 
@@ -153,7 +151,7 @@ void JKQTFastPlotter::deletePlot(int i, bool remove) {
     if (i>=0 && i<plots.size()) {
         if (remove) delete plots[i];
         plots.remove(i);
-        replotPlot();
+        redrawPlot();
     }
 }
 
@@ -163,7 +161,7 @@ void JKQTFastPlotter::deletePlot(JKQTFPPlot* g, bool remove) {
     if (i>=0 && i<plots.size()) {
         if (remove) delete plots[i];
         plots.remove(i);
-        replotPlot();
+        redrawPlot();
     }
 }
 
@@ -269,7 +267,7 @@ void JKQTFastPlotter::resizeEvent(QResizeEvent *event) {
          systemImage=newImage;
      }
      //std::cout<<"replotting after resize to ("<<width()<<" x "<<height()<<")...\n";
-     replotPlot();
+     redrawPlot();
      event->accept();
      updateGeometry();
 }
@@ -553,7 +551,7 @@ void JKQTFastPlotter::draw(QPainter* painter, QColor background, QSize* size) {
     backgroundColor=oldb;
 }
 
-void JKQTFastPlotter::replotPlot() {
+void JKQTFastPlotter::redrawPlot() {
     calcPlotScaling();
     if (!doDrawing) {
         doFullRepaint=true;
@@ -572,7 +570,7 @@ void JKQTFastPlotter::replotPlot() {
     update_data();
 }
 
-void JKQTFastPlotter::replotPlot_immediate() {
+void JKQTFastPlotter::redrawPlot_immediate() {
     calcPlotScaling();
     if (!doDrawing) {
         doFullRepaint=true;
@@ -593,7 +591,7 @@ void JKQTFastPlotter::replotPlot_immediate() {
 void JKQTFastPlotter::update_data() {
     if (doFullRepaint) {
         // as doFullRepaint is set false in updtae_plot() this is NO endles loop!!!!!!!
-        replotPlot();
+        redrawPlot();
         return;
     }
     if (!doDrawing) return;
@@ -618,7 +616,7 @@ void JKQTFastPlotter::update_data() {
 void JKQTFastPlotter::update_data_immediate() {
     if (doFullRepaint) {
         // as doFullRepaint is set false in updtae_plot() this is NO endles loop!!!!!!!
-        replotPlot_immediate();
+        redrawPlot_immediate();
         return;
     }
     if (!doDrawing) return;
@@ -782,7 +780,7 @@ void JKQTFastPlotter::setXRange(double min, double max, bool logarithmic) {
     xMax=max;
     xAxisLog=logarithmic;
     calcPlotScaling();
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTFastPlotter::setYRange(double min, double max, bool logarithmic) {
@@ -790,7 +788,7 @@ void JKQTFastPlotter::setYRange(double min, double max, bool logarithmic) {
     yMax=max;
     yAxisLog=logarithmic;
     calcPlotScaling();
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTFastPlotter::setXYRange(double xmin, double xmax, double ymin, double ymax, bool xlogarithmic, bool ylogarithmic) {
@@ -801,7 +799,7 @@ void JKQTFastPlotter::setXYRange(double xmin, double xmax, double ymin, double y
     yMax=ymax;
     yAxisLog=ylogarithmic;
     calcPlotScaling();
-    replotPlot();
+    redrawPlot();
 }
 
 /*
@@ -815,7 +813,7 @@ void JKQTFastPlotter::synchronizeX(JKQTFastPlotter* toWhere) {
     plotBorderRight=toWhere->get_internalPlotBorderRight();
     std::cout<<"syncX:    xMin="<<xMin<<"  xMax="<<xMax<<"  plotBorderLeft="<<plotBorderLeft<<"  plotBorderLeft="<<plotBorderRight<<"\n";
     doDrawing=olddo;
-    replotPlot();
+    redrawPlot();
 }
 
 void JKQTFastPlotter::synchronizeY(JKQTFastPlotter* toWhere) {
@@ -828,7 +826,7 @@ void JKQTFastPlotter::synchronizeY(JKQTFastPlotter* toWhere) {
     plotBorderBottom=toWhere->get_internalPlotBorderBottom();
     std::cout<<"syncY:     yMin="<<yMin<<"  yMax="<<yMax<<"  plotBorderTop="<<plotBorderTop<<"  plotBorderBottom="<<plotBorderBottom<<"\n";
     doDrawing=olddo;
-    replotPlot();
+    redrawPlot();
 }
 */
 
@@ -836,7 +834,7 @@ void JKQTFastPlotter::synchronizeY(JKQTFastPlotter* toWhere) {
 
 
 
-JKQTFPLinePlot::JKQTFPLinePlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color, Qt::PenStyle style, double width):
+JKQTFPLinePlot::JKQTFPLinePlot(JKQTFastPlotter* parent, int N, double* x, double* y, QColor color, Qt::PenStyle style, double width):
     JKQTFPPlot(parent)
 {
     this->N=N;
@@ -892,7 +890,7 @@ void JKQTFPLinePlot::drawGraph(QPainter& painter) {
             path.moveTo(parent->x2p(x[0]), parent->y2p(y[0]));
             //std::cout<<"plotting graph, starting @ ("<<parent->x2p(x[0])<<", "<<parent->y2p(y[0])<<")\n";
         }
-        for (unsigned int i=1; i<N; i++) {
+        for (int i=1; i<N; i++) {
             path.lineTo(parent->x2p(x[i]), parent->y2p(y[i]));
             //std::cout<<"-> ("<<parent->x2p(x[i])<<", "<<parent->y2p(y[i])<<")\n";
         }
@@ -900,13 +898,13 @@ void JKQTFPLinePlot::drawGraph(QPainter& painter) {
             if (N>0){
                 epath.moveTo(parent->x2p(x[0]), parent->y2p(y[0]+yerr[0]));
             }
-            for (unsigned int i=1; i<N; i++) {
+            for (int i=1; i<N; i++) {
                 epath.lineTo(parent->x2p(x[i]), parent->y2p(y[i]+yerr[i]));
             }
             if (N>0){
                 epath.moveTo(parent->x2p(x[0]), parent->y2p(y[0]-yerr[0]));
             }
-            for (unsigned int i=1; i<N; i++) {
+            for (int i=1; i<N; i++) {
                 epath.lineTo(parent->x2p(x[i]), parent->y2p(y[i]-yerr[i]));
             }
         }
@@ -946,7 +944,7 @@ void JKQTFPLinePlot::drawGraph(QPainter& painter) {
 
 
 
-JKQTFPVCrossPlot::JKQTFPVCrossPlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color, Qt::PenStyle style, double width):
+JKQTFPVCrossPlot::JKQTFPVCrossPlot(JKQTFastPlotter* parent, int N, double* x, double* y, QColor color, Qt::PenStyle style, double width):
     JKQTFPLinePlot(parent, N, x, y, color, style, width)
 {
     crossWidth=5;
@@ -974,7 +972,7 @@ void JKQTFPVCrossPlot::drawGraph(QPainter& painter) {
     pe.setJoinStyle(Qt::RoundJoin);
     QPainterPath path, epath;
     if (datatype==JKQTFPLPPointer) {
-        for (unsigned int i=0; i<N; i++) {
+        for (int i=0; i<N; i++) {
             path.moveTo(QPointF(parent->x2p(x[i])-crossWidth/2.0, parent->y2p(y[i])));
             path.lineTo(QPointF(parent->x2p(x[i])+crossWidth/2.0, parent->y2p(y[i])));
             path.moveTo(QPointF(parent->x2p(x[i]), parent->y2p(y[i])-crossWidth/2.0));
@@ -985,13 +983,13 @@ void JKQTFPVCrossPlot::drawGraph(QPainter& painter) {
             if (N>0){
                 epath.moveTo(parent->x2p(x[0]), parent->y2p(y[0]+yerr[0]));
             }
-            for (unsigned int i=1; i<N; i++) {
+            for (int i=1; i<N; i++) {
                 epath.lineTo(parent->x2p(x[i]), parent->y2p(y[i]+yerr[i]));
             }
             if (N>0){
                 epath.moveTo(parent->x2p(x[0]), parent->y2p(y[0]-yerr[0]));
             }
-            for (unsigned int i=1; i<N; i++) {
+            for (int i=1; i<N; i++) {
                 epath.lineTo(parent->x2p(x[i]), parent->y2p(y[i]-yerr[i]));
             }
         }
@@ -1035,7 +1033,7 @@ void JKQTFPVCrossPlot::drawGraph(QPainter& painter) {
 
 
 
-JKQTFPVBarPlot::JKQTFPVBarPlot(JKQTFastPlotter* parent, unsigned int N, double* x, double* y, QColor color, Qt::PenStyle style, double width):
+JKQTFPVBarPlot::JKQTFPVBarPlot(JKQTFastPlotter* parent, int N, double* x, double* y, QColor color, Qt::PenStyle style, double width):
     JKQTFPLinePlot(parent, N, x, y, color, style, width)
 {
 }
@@ -1058,7 +1056,7 @@ void JKQTFPVBarPlot::drawGraph(QPainter& painter) {
     painter.setPen(p);
     if (!parent->getYAxisLog()) {
         if (datatype==JKQTFPLPPointer) {
-            for (unsigned int i=0; i<N; i++) {
+            for (int i=0; i<N; i++) {
                 double xval=parent->x2p(x[i]);
                 QLineF l(xval, parent->y2p(0), xval, parent->y2p(y[i]));
                 if (l.length()>0) painter.drawLine(l);
@@ -1073,7 +1071,7 @@ void JKQTFPVBarPlot::drawGraph(QPainter& painter) {
     } else {
         double starty=parent->get_internalPlotBorderTop()+parent->getPlotHeight();
         if (datatype==JKQTFPLPPointer) {
-            for (unsigned int i=0; i<N; i++) {
+            for (int i=0; i<N; i++) {
                 double v=parent->y2p(y[i]);
                 if (!std::isnan(v) && !std::isinf(v)) {
                     double xval=parent->x2p(x[i]);
@@ -1163,7 +1161,7 @@ void JKQTFPQImagePlot::drawGraph(QPainter& painter) {
 
 
 
-JKQTFPimagePlot::JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax, JKQTFPColorPalette palette):
+JKQTFPimagePlot::JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, int width, int height, double xmin, double xmax, double ymin, double ymax, JKQTFPColorPalette palette):
     JKQTFPPlot(parent)
 {
     this->image=image;
@@ -1182,7 +1180,7 @@ JKQTFPimagePlot::JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPIma
     this->rotation=0;
 }
 
-JKQTFPimagePlot::JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height, JKQTFPColorPalette palette):
+JKQTFPimagePlot::JKQTFPimagePlot(JKQTFastPlotter* parent, void* image, JKQTFPImageFormat imageFormat, int width, int height, JKQTFPColorPalette palette):
     JKQTFPPlot(parent)
 {
     this->image=image;
@@ -1253,12 +1251,12 @@ void JKQTFPimagePlot::drawGraph(QPainter& painter) {
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     QImage img(width, height, QImage::Format_ARGB32);
     switch(imageFormat) {
-        case JKQTFP_uint8: JKQTFPimagePlot_array2image<uint8_t>((uint8_t*)image, width, height, img, palette, colorMin, colorMax); break;
-        case JKQTFP_uint16: JKQTFPimagePlot_array2image<uint16_t>((uint16_t*)image, width, height, img, palette, colorMin, colorMax); break;
-        case JKQTFP_uint32: JKQTFPimagePlot_array2image<uint32_t>((uint32_t*)image, width, height, img, palette, colorMin, colorMax); break;
-        case JKQTFP_int64: JKQTFPimagePlot_array2image<int64_t>((int64_t*)image, width, height, img, palette, colorMin, colorMax); break;
-        case JKQTFP_float: JKQTFPimagePlot_array2image<float>((float*)image, width, height, img, palette, colorMin, colorMax); break;
-        case JKQTFP_double: JKQTFPimagePlot_array2image<double>((double*)image, width, height, img, palette, colorMin, colorMax); break;
+        case JKQTFP_uint8: JKQTFPimagePlot_array2image<uint8_t>(static_cast<uint8_t*>(image), width, height, img, palette, colorMin, colorMax); break;
+        case JKQTFP_uint16: JKQTFPimagePlot_array2image<uint16_t>(static_cast<uint16_t*>(image), width, height, img, palette, colorMin, colorMax); break;
+        case JKQTFP_uint32: JKQTFPimagePlot_array2image<uint32_t>(static_cast<uint32_t*>(image), width, height, img, palette, colorMin, colorMax); break;
+        case JKQTFP_int64: JKQTFPimagePlot_array2image<int64_t>(static_cast<int64_t*>(image), width, height, img, palette, colorMin, colorMax); break;
+        case JKQTFP_float: JKQTFPimagePlot_array2image<float>(static_cast<float*>(image), width, height, img, palette, colorMin, colorMax); break;
+        case JKQTFP_double: JKQTFPimagePlot_array2image<double>(static_cast<double*>(image), width, height, img, palette, colorMin, colorMax); break;
     }
     if (img.isNull()) return;
     double pxmin=parent->x2p(xmin);
@@ -1296,7 +1294,7 @@ void JKQTFPimagePlot::drawGraph(QPainter& painter) {
 
 
 
-JKQTFPimageOverlayPlot::JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax, QColor color):
+JKQTFPimageOverlayPlot::JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, int width, int height, double xmin, double xmax, double ymin, double ymax, QColor color):
     JKQTFPPlot(parent)
 {
     this->image=image;
@@ -1314,7 +1312,7 @@ JKQTFPimageOverlayPlot::JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* im
 }
 
 
-JKQTFPimageOverlayPlot::JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, unsigned int width, unsigned int height, QColor color):
+JKQTFPimageOverlayPlot::JKQTFPimageOverlayPlot(JKQTFastPlotter* parent, bool* image, int width, int height, QColor color):
     JKQTFPPlot(parent)
 {
     this->image=image;
@@ -1353,8 +1351,8 @@ void JKQTFPimageOverlayPlot::drawGraph(QPainter& painter) {
 
     if (showAsSymbols) {
         QList<double> x,y;
-        for (unsigned int j=0; j<height; ++j) {
-            for (unsigned int i=0; i<width; ++i) {
+        for (int j=0; j<height; ++j) {
+            for (int i=0; i<width; ++i) {
                 if (image[j*width+i]) {
                     x<<xmin+(double(i)+0.5)/double(width)*(xmax-xmin);
                     y<<ymin+(double(j)+0.5)/double(height)*(ymax-ymin);
@@ -1378,9 +1376,9 @@ void JKQTFPimageOverlayPlot::drawGraph(QPainter& painter) {
     } else {
         QImage img(width, height, QImage::Format_ARGB32);
         QColor tc(Qt::transparent);
-        for (unsigned int j=0; j<height; ++j) {
+        for (int j=0; j<height; ++j) {
             QRgb* line=(QRgb*)(img.scanLine((int)height-1-(int)j));
-            for (unsigned int i=0; i<width; ++i) {
+            for (int i=0; i<width; ++i) {
                 if (!image[j*width+i]) line[i]=tc.rgba();
                 else line[i]=color.rgba();
             }
@@ -1548,7 +1546,7 @@ void JKQTFPQOverlayLinearGridPlot::drawGraph(QPainter& painter) {
 
 
 
-JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, void *imageRed, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax):
+JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, void *imageRed, JKQTFPImageFormat imageFormat, int width, int height, double xmin, double xmax, double ymin, double ymax):
     JKQTFPPlot(parent)
 {
     this->width=width;
@@ -1572,7 +1570,7 @@ JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, vo
     this->rotation=0;
 }
 
-JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, void *imageRed, JKQTFPImageFormat imageFormat, unsigned int width, unsigned int height):
+JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, void *imageRed, JKQTFPImageFormat imageFormat, int width, int height):
     JKQTFPPlot(parent)
 {
     this->width=width;
@@ -1628,28 +1626,28 @@ void JKQTFPRGBImageOverlayPlot::drawGraph(QPainter &painter) {
     QImage img(width, height, QImage::Format_ARGB32);
     img.fill(0);
     switch(imageFormatRed) {
-        case JKQTFP_uint8: JKQTFPRGBImageOverlayPlot_array2image<uint8_t>((uint8_t*)imageRed, width, height, img, 0, colorMinRed, colorMaxRed); break;
-        case JKQTFP_uint16: JKQTFPRGBImageOverlayPlot_array2image<uint16_t>((uint16_t*)imageRed, width, height, img, 0, colorMinRed, colorMaxRed); break;
-        case JKQTFP_uint32: JKQTFPRGBImageOverlayPlot_array2image<uint32_t>((uint32_t*)imageRed, width, height, img, 0, colorMinRed, colorMaxRed); break;
-        case JKQTFP_int64: JKQTFPRGBImageOverlayPlot_array2image<int64_t>((int64_t*)imageRed, width, height, img, 0, colorMinRed, colorMaxRed); break;
-        case JKQTFP_float: JKQTFPRGBImageOverlayPlot_array2image<float>((float*)imageRed, width, height, img, 0, colorMinRed, colorMaxRed); break;
-        case JKQTFP_double: JKQTFPRGBImageOverlayPlot_array2image<double>((double*)imageRed, width, height, img, 0, colorMinRed, colorMaxRed); break;
+        case JKQTFP_uint8: JKQTFPRGBImageOverlayPlot_array2image<uint8_t>(static_cast<uint8_t*>(imageRed), width, height, img, 0, colorMinRed, colorMaxRed); break;
+        case JKQTFP_uint16: JKQTFPRGBImageOverlayPlot_array2image<uint16_t>(static_cast<uint16_t*>(imageRed), width, height, img, 0, colorMinRed, colorMaxRed); break;
+        case JKQTFP_uint32: JKQTFPRGBImageOverlayPlot_array2image<uint32_t>(static_cast<uint32_t*>(imageRed), width, height, img, 0, colorMinRed, colorMaxRed); break;
+        case JKQTFP_int64: JKQTFPRGBImageOverlayPlot_array2image<int64_t>(static_cast<int64_t*>(imageRed), width, height, img, 0, colorMinRed, colorMaxRed); break;
+        case JKQTFP_float: JKQTFPRGBImageOverlayPlot_array2image<float>(static_cast<float*>(imageRed), width, height, img, 0, colorMinRed, colorMaxRed); break;
+        case JKQTFP_double: JKQTFPRGBImageOverlayPlot_array2image<double>(static_cast<double*>(imageRed), width, height, img, 0, colorMinRed, colorMaxRed); break;
     }
     switch(imageFormatGreen) {
-        case JKQTFP_uint8: JKQTFPRGBImageOverlayPlot_array2image<uint8_t>((uint8_t*)imageGreen, width, height, img, 1, colorMinGreen, colorMaxGreen); break;
-        case JKQTFP_uint16: JKQTFPRGBImageOverlayPlot_array2image<uint16_t>((uint16_t*)imageGreen, width, height, img, 1, colorMinGreen, colorMaxGreen); break;
-        case JKQTFP_uint32: JKQTFPRGBImageOverlayPlot_array2image<uint32_t>((uint32_t*)imageGreen, width, height, img, 1, colorMinGreen, colorMaxGreen); break;
-        case JKQTFP_int64: JKQTFPRGBImageOverlayPlot_array2image<int64_t>((int64_t*)imageGreen, width, height, img, 1, colorMinGreen, colorMaxGreen); break;
-        case JKQTFP_float: JKQTFPRGBImageOverlayPlot_array2image<float>((float*)imageGreen, width, height, img, 1, colorMinGreen, colorMaxGreen); break;
-        case JKQTFP_double: JKQTFPRGBImageOverlayPlot_array2image<double>((double*)imageGreen, width, height, img, 1, colorMinGreen, colorMaxGreen); break;
+        case JKQTFP_uint8: JKQTFPRGBImageOverlayPlot_array2image<uint8_t>(static_cast<uint8_t*>(imageGreen), width, height, img, 1, colorMinGreen, colorMaxGreen); break;
+        case JKQTFP_uint16: JKQTFPRGBImageOverlayPlot_array2image<uint16_t>(static_cast<uint16_t*>(imageGreen), width, height, img, 1, colorMinGreen, colorMaxGreen); break;
+        case JKQTFP_uint32: JKQTFPRGBImageOverlayPlot_array2image<uint32_t>(static_cast<uint32_t*>(imageGreen), width, height, img, 1, colorMinGreen, colorMaxGreen); break;
+        case JKQTFP_int64: JKQTFPRGBImageOverlayPlot_array2image<int64_t>(static_cast<int64_t*>(imageGreen), width, height, img, 1, colorMinGreen, colorMaxGreen); break;
+        case JKQTFP_float: JKQTFPRGBImageOverlayPlot_array2image<float>(static_cast<float*>(imageGreen), width, height, img, 1, colorMinGreen, colorMaxGreen); break;
+        case JKQTFP_double: JKQTFPRGBImageOverlayPlot_array2image<double>(static_cast<double*>(imageGreen), width, height, img, 1, colorMinGreen, colorMaxGreen); break;
     }
     switch(imageFormatBlue) {
-        case JKQTFP_uint8: JKQTFPRGBImageOverlayPlot_array2image<uint8_t>((uint8_t*)imageBlue, width, height, img, 2, colorMinBlue, colorMaxBlue); break;
-        case JKQTFP_uint16: JKQTFPRGBImageOverlayPlot_array2image<uint16_t>((uint16_t*)imageBlue, width, height, img, 2, colorMinBlue, colorMaxBlue); break;
-        case JKQTFP_uint32: JKQTFPRGBImageOverlayPlot_array2image<uint32_t>((uint32_t*)imageBlue, width, height, img, 2, colorMinBlue, colorMaxBlue); break;
-        case JKQTFP_int64: JKQTFPRGBImageOverlayPlot_array2image<int64_t>((int64_t*)imageBlue, width, height, img, 2, colorMinBlue, colorMaxBlue); break;
-        case JKQTFP_float: JKQTFPRGBImageOverlayPlot_array2image<float>((float*)imageBlue, width, height, img, 2, colorMinBlue, colorMaxBlue); break;
-        case JKQTFP_double: JKQTFPRGBImageOverlayPlot_array2image<double>((double*)imageBlue, width, height, img, 2, colorMinBlue, colorMaxBlue); break;
+        case JKQTFP_uint8: JKQTFPRGBImageOverlayPlot_array2image<uint8_t>(static_cast<uint8_t*>(imageBlue), width, height, img, 2, colorMinBlue, colorMaxBlue); break;
+        case JKQTFP_uint16: JKQTFPRGBImageOverlayPlot_array2image<uint16_t>(static_cast<uint16_t*>(imageBlue), width, height, img, 2, colorMinBlue, colorMaxBlue); break;
+        case JKQTFP_uint32: JKQTFPRGBImageOverlayPlot_array2image<uint32_t>(static_cast<uint32_t*>(imageBlue), width, height, img, 2, colorMinBlue, colorMaxBlue); break;
+        case JKQTFP_int64: JKQTFPRGBImageOverlayPlot_array2image<int64_t>(static_cast<int64_t*>(imageBlue), width, height, img, 2, colorMinBlue, colorMaxBlue); break;
+        case JKQTFP_float: JKQTFPRGBImageOverlayPlot_array2image<float>(static_cast<float*>(imageBlue), width, height, img, 2, colorMinBlue, colorMaxBlue); break;
+        case JKQTFP_double: JKQTFPRGBImageOverlayPlot_array2image<double>(static_cast<double*>(imageBlue), width, height, img, 2, colorMinBlue, colorMaxBlue); break;
     }
     if (img.isNull()) return;
     double pxmin=parent->x2p(xmin);
@@ -1669,7 +1667,7 @@ void JKQTFPRGBImageOverlayPlot::drawGraph(QPainter &painter) {
 }
 
 
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, unsigned int width, unsigned int height){
+void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height){
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=nullptr;
@@ -1683,7 +1681,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, unsigned int width, unsigned int height) {
+void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
@@ -1698,7 +1696,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, unsigned int width, unsigned int height) {
+void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
@@ -1716,7 +1714,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 }
 
 
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax){
+void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height, double xmin, double xmax, double ymin, double ymax){
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageRed=nullptr;
@@ -1730,7 +1728,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax) {
+void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height, double xmin, double xmax, double ymin, double ymax) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
@@ -1745,7 +1743,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, unsigned int width, unsigned int height, double xmin, double xmax, double ymin, double ymax) {
+void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height, double xmin, double xmax, double ymin, double ymax) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;

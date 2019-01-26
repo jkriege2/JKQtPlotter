@@ -108,7 +108,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     plotContour->zoom(-0.1,1.1,-0.1,1.1);
 
     plotContour->setPlotUpdateEnabled(true);
-    plotContour->replotPlot();
+    plotContour->redrawPlot();
 
 
 

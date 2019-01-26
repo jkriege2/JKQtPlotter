@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
             parsedFunc->set_function(edit->text());
             parsedFunc->set_paramsV(spinP1->value(), spinP2->value());
             parsedFunc->set_displaySamplePoints(check->isChecked());
-            plot->replotPlot();
+            plot->redrawPlot();
        };
     QObject::connect(edit, &QLineEdit::returnPressed, updateGraphFunctor);
     QObject::connect(edit, &QLineEdit::editingFinished, updateGraphFunctor);

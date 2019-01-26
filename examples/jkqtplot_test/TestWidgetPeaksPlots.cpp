@@ -65,12 +65,12 @@ void TestWidgetPeaksPlots::setDrawBaseline(bool checked)
 {
     graphPeakStream1->set_drawBaseline(checked);
     graphPeakStream2->set_drawBaseline(checked);
-    plotPeaks->replotPlot();
+    plotPeaks->redrawPlot();
 }
 
 void TestWidgetPeaksPlots::setYPeaks(bool checked)
 {
     graphPeakStream1->set_yPeaks(checked);
     graphPeakStream2->set_yPeaks(checked);
-    plotPeaks->replotPlot();
+    plotPeaks->redrawPlot();
 }

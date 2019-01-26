@@ -117,17 +117,17 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
 void TestWidgetImages::setImgPalette(int index)
 {
     pimg3->set_palette(index);
-    plotImg->replotPlot();
+    plotImg->redrawPlot();
 }
 
 void TestWidgetImages::setImgPalette1(int index)
 {
     pimg2->set_palette(index);
-    plotImg->replotPlot();
+    plotImg->redrawPlot();
 }
 
 void TestWidgetImages::setImgModifier(int index)
 {
     pimg3->set_modifierMode(JKQTPMathImage::ModifierMode(index));
-    plotImg->replotPlot();
+    plotImg->redrawPlot();
 }

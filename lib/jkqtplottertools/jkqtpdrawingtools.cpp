@@ -59,7 +59,7 @@ void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGra
         star_items=5;
         double angle=360.0/double(star_items)/180.0*M_PI;
         for (int i=0; i<star_items; i++) {
-            double a=((double)i+0.5)*angle;
+            double a=(static_cast<double>(i)+0.5)*angle;
             starcordsx[i*2]=sin(a);
             starcordsx[i*2+1]=0.5*sin(a+angle/2.0);
             starcordsy[i*2]=cos(a);

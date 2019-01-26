@@ -52,7 +52,7 @@ class LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
         QAction* getActionPrint() const { return printAction; }
 
     signals:
-        void keyPressed(int key, Qt::KeyboardModifiers modifiers, QString text);
+        void keyPressed(int key, Qt::KeyboardModifiers modifiers, const QString& text);
     public slots:
         void copySelectionToExcel(int copyrole=Qt::EditRole, bool storeHead=true);
         void copySelectionToExcelNoHead(int copyrole=Qt::EditRole);
