@@ -45,18 +45,18 @@ int main(int argc, char* argv[])
         JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
-        graph->set_xColumn(columnX);
-        graph->set_yColumn(ds->addCopiedColumn(Y, "y"+QString::number(id)));
+        graph->setXColumn(columnX);
+        graph->setYColumn(ds->addCopiedColumn(Y, "y"+QString::number(id)));
 
         // don't use symbols
-        graph->set_symbol(JKQTPNoSymbol);
+        graph->setSymbol(JKQTPNoSymbol);
         // use one of different pens
-        graph->set_style(pens[id%pens.size()]);
+        graph->setStyle(pens[id%pens.size()]);
         // set width of graph line
         graph->setLineWidth(1.5);
 
         // graph title is made from symbol+penstyle
-        graph->set_title(QString("$D=\\delta/\\omega_0=%1$").arg(D[id]));
+        graph->setTitle(QString("$D=\\delta/\\omega_0=%1$").arg(D[id]));
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);
@@ -74,28 +74,28 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
 
     // 5. set y-axis to logarithmic (x-axis would be analogous, but using `plot.getXAxis()`)
-    plot.getYAxis()->set_logAxis(true);
+    plot.getYAxis()->setLogAxis(true);
     //    now we set the number of label ticks to 9 (you give the count if minor between two majors,
     //    so if you want ticks for 1,2,3,...,10,20,30,...,100... you need to use 9:
-    plot.getYAxis()->set_minorTicks(9);
+    plot.getYAxis()->setMinorTicks(9);
     //    the minor grid is not shown by default. You can switch it on:
-    plot.getYAxis()->set_drawMinorGrid(true);
+    plot.getYAxis()->setDrawMinorGrid(true);
     //    usually axis ticks are shown as numbers 0.01, 0.1, 1, 10, ... You can also force the scientific
     //    power-of-10 notation, using:
-    plot.getYAxis()->set_labelType(JKQTPCALTexponent);
+    plot.getYAxis()->setLabelType(JKQTPCALTexponent);
     //    the number of digits in JKQTPCALTexponent determines which labels are drawn in standard-notation,
     //    as compared to power-notation (e.g. if set to 1, the labels 0.1=10^{-1}, 1, 10 are shown in
     //    standard notation, the rest in power-notation. This tweak improves readability)
-    plot.getYAxis()->set_labelDigits(0);
+    plot.getYAxis()->setLabelDigits(0);
     // minor tick labels are usually not displayed, but you can switch them on, using
-    //plot.getYAxis()->set_minorTickLabelsEnabled(true);
+    //plot.getYAxis()->setMinorTickLabelsEnabled(true);
     // the axis font sizes can be set with:
-    plot.getYAxis()->set_tickLabelFontSize(10); // axis tick labels
-    plot.getYAxis()->set_minorTickLabelFontSize(7); // minor axis tick labels
-    plot.getYAxis()->set_labelFontSize(14); // axis label size
-    plot.getXAxis()->set_tickLabelFontSize(10); // axis tick labels
-    plot.getXAxis()->set_minorTickLabelFontSize(7); // minor axis tick labels
-    plot.getXAxis()->set_labelFontSize(14); // axis label size
+    plot.getYAxis()->setTickLabelFontSize(10); // axis tick labels
+    plot.getYAxis()->setMinorTickLabelFontSize(7); // minor axis tick labels
+    plot.getYAxis()->setLabelFontSize(14); // axis label size
+    plot.getXAxis()->setTickLabelFontSize(10); // axis tick labels
+    plot.getXAxis()->setMinorTickLabelFontSize(7); // minor axis tick labels
+    plot.getXAxis()->setLabelFontSize(14); // axis label size
     //    ... and finally set axis labels (using LaTeX notation and $...$ to improve rendering)
     plot.getYAxis()->setAxisLabel("Amplitude $A/A_{stat}$");
     plot.getXAxis()->setAxisLabel("relative driving frequency $\\eta=\\omega/\\omega_0$");

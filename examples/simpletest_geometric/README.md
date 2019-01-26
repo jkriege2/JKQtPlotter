@@ -18,7 +18,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 	
 	// a one-sided infinite line with slope dy/dx=0.25/0.2
     JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(&plot, 1.7,  0.2, 0.2, 0.25, QColor("green"), 1.5, Qt::PenStyle::DashLine);
-    infLine->set_two_sided(false);
+    infLine->setTwoSided(false);
     infLine->setAlpha(0.5);
     plot.addGraph(infLine);
 

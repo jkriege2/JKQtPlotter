@@ -50,9 +50,9 @@ int JKQTPGraphsModel::columnCount(const QModelIndex &/*parent*/) const
 QVariant JKQTPGraphsModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
-       if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->get_title();
+       if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->getTitle();
     } else if (role == Qt::CheckStateRole) {
-       if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->get_visible()?Qt::Checked:Qt::Unchecked;
+       if (index.row()<static_cast<int>(m_plotter->getGraphCount())) return m_plotter->getGraph(static_cast<size_t>(index.row()))->getVisible()?Qt::Checked:Qt::Unchecked;
     } else if (role == Qt::DecorationRole) {
         if (index.row()<static_cast<int>(m_plotter->getGraphCount())) {
             return m_plotter->getGraph(static_cast<size_t>(index.row()))->generateKeyMarker(QSize(16,16));

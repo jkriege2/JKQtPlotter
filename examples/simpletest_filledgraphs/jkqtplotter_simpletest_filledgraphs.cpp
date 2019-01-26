@@ -58,26 +58,26 @@ int main(int argc, char* argv[])
     JKQTPFilledCurveXGraph* graphB=new JKQTPFilledCurveXGraph(&plot);
 
     // set graph titles
-    graphR->set_title("R-channel");
-    graphG->set_title("G-channel");
-    graphB->set_title("B-channel");
+    graphR->setTitle("R-channel");
+    graphG->setTitle("G-channel");
+    graphB->setTitle("B-channel");
 
     // set graph colors (lines: non-transparent, fill: semi-transparent) and style
     QColor col;
-    col=QColor("red"); graphR->set_color(col);
-    col.setAlphaF(0.25); graphR->set_fillColor(col);
-    col=QColor("green"); graphG->set_color(col);
-    col.setAlphaF(0.25); graphG->set_fillColor(col);
-    col=QColor("blue"); graphB->set_color(col);
-    col.setAlphaF(0.25); graphB->set_fillColor(col);
+    col=QColor("red"); graphR->setColor(col);
+    col.setAlphaF(0.25); graphR->setFillColor(col);
+    col=QColor("green"); graphG->setColor(col);
+    col.setAlphaF(0.25); graphG->setFillColor(col);
+    col=QColor("blue"); graphB->setColor(col);
+    col.setAlphaF(0.25); graphB->setFillColor(col);
     graphR->setLineWidth(1);
     graphG->setLineWidth(1);
     graphB->setLineWidth(1);
 
     // set data
-    graphR->set_xColumn(columnX); graphR->set_yColumn(columnR);
-    graphG->set_xColumn(columnX); graphG->set_yColumn(columnG);
-    graphB->set_xColumn(columnX); graphB->set_yColumn(columnB);
+    graphR->setXColumn(columnX); graphR->setYColumn(columnR);
+    graphG->setXColumn(columnX); graphG->setYColumn(columnG);
+    graphB->setXColumn(columnX); graphB->setYColumn(columnB);
 
 
     // add the graphs to the plot, so they are actually displayed

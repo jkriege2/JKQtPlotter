@@ -37,16 +37,16 @@ SpeedTestPlot::SpeedTestPlot():
 
     // 4. create two  graphs in the plot, which plots the dataset X/Y:
     JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(this);
-    graph->set_xColumn(columnX);
-    graph->set_yColumn(columnY);
-    graph->set_title(QObject::tr("live sin() graph"));
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY);
+    graph->setTitle(QObject::tr("live sin() graph"));
     graph->setLineWidth(1);
     addGraph(graph);
 
     JKQTPXYLineGraph* graph2=new JKQTPXYLineGraph(this);
-    graph2->set_xColumn(columnX);
-    graph2->set_yColumn(columnY2);
-    graph2->set_title(QObject::tr("live cos() graph"));
+    graph2->setXColumn(columnX);
+    graph2->setYColumn(columnY2);
+    graph2->setTitle(QObject::tr("live cos() graph"));
     graph2->setLineWidth(1);
     addGraph(graph2);
 

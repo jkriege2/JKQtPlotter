@@ -46,18 +46,18 @@ Then two graphs are added. One of type `JKQTPFilledVerticalRangeGraph` plots the
 
     // 4. copy data into datastore and immediately set the yColumn
     size_t colDate=ds->addCopiedColumn(date, "date");
-    graphTemperatureRange->set_xColumn(colDate);
-    graphTemperatureRange->set_yColumn(ds->addCopiedColumn(temperature_min, "temperature_min"));
-    graphTemperatureRange->set_yColumn2(ds->addCopiedColumn(temperature_max, "temperature_max"));
+    graphTemperatureRange->setXColumn(colDate);
+    graphTemperatureRange->setYColumn(ds->addCopiedColumn(temperature_min, "temperature_min"));
+    graphTemperatureRange->setYColumn2(ds->addCopiedColumn(temperature_max, "temperature_max"));
 
 
     // 5. min/max range data
     // graph fill color is a lighter shade of the average graph
-    graphTemperatureRange->set_fillColor(graphTemperature->get_color().lighter());
+    graphTemperatureRange->setFillColor(graphTemperature->getColor().lighter());
     // don't draw lines of the data
-    graphTemperatureRange->set_drawLine(false);
+    graphTemperatureRange->setDrawLine(false);
     // plot label in key
-    graphTemperatureRange->set_title("Min/Max Temperature");
+    graphTemperatureRange->setTitle("Min/Max Temperature");
     // add the graph to the plot, so it is actually displayed
     plot.addGraph(graphTemperatureRange);
 ```
@@ -70,8 +70,8 @@ On top of that plot, a second plot is added, which draws the average temperature
 
     // 4. copy data into datastore and immediately set the yColumn
     size_t colDate=ds->addCopiedColumn(date, "date");
-    graphTemperature->set_xColumn(colDate);
-    graphTemperature->set_yColumn(ds->addCopiedColumn(temperature, "temperature"));
+    graphTemperature->setXColumn(colDate);
+    graphTemperature->setYColumn(ds->addCopiedColumn(temperature, "temperature"));
 
 
     // 5. min/max range data
@@ -79,13 +79,13 @@ On top of that plot, a second plot is added, which draws the average temperature
 
     // 6. average data
     // don't use symbols
-    graphTemperature->set_symbol(JKQTPNoSymbol);
+    graphTemperature->setSymbol(JKQTPNoSymbol);
     // set the line width
     graphTemperature->setLineWidth(1);
     // draw small symbols
-    graphTemperature->set_symbolSize(6);
+    graphTemperature->setSymbolSize(6);
     // graph title
-    graphTemperature->set_title("Average Temperature");
+    graphTemperature->setTitle("Average Temperature");
     // add the graph to the plot, so it is actually displayed
     plot.addGraph(graphTemperature);
 ```
@@ -96,10 +96,10 @@ Finally the x-axis is formatted to display dates (see [Qt-Documentation of `QDat
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.getPlotter()->setPlotLabel("\\textbf{Weather in Gelsenkirchen, 2017-2018}");
     // set x-axis date-time-axis
-    plot.getXAxis()->set_labelType(JKQTPCALTdatetime);
+    plot.getXAxis()->setLabelType(JKQTPCALTdatetime);
     plot.getXAxis()->setAxisLabel("Date");
     // set format string for date axis (e.g. Jan '18), see Documentation of QDateTime::toString()
-    plot.getXAxis()->set_tickDateTimeFormat("MMM ''yy");
+    plot.getXAxis()->setTickDateTimeFormat("MMM ''yy");
     // set y-axis temperature axis
     plot.getYAxis()->setAxisLabel("Average Daily Temperature [{\\degree}C]");
 ```
@@ -155,11 +155,11 @@ Axis formating for this example is done like this:
     // set the title above the plot, use LaTeX instructions to make text bold
     plot.getPlotter()->setPlotLabel("\\textbf{Weather in Heidelberg, 14^{th} Oct 2018}");
     // set x-axis date-time-axis
-    plot.getXAxis()->set_labelType(JKQTPCALTtime);
+    plot.getXAxis()->setLabelType(JKQTPCALTtime);
     plot.getXAxis()->setAxisLabel("Time of Day");
     // set format string for time axis with 24-hour and minute only,
     // see QDateTime::toString() documentation for details on format strings
-    plot.getXAxis()->set_tickTimeFormat("HH:mm");
+    plot.getXAxis()->setTickTimeFormat("HH:mm");
     // set y-axis temperature axis
     plot.getYAxis()->setAxisLabel("Temperature [{\\degree}C]");
 ```

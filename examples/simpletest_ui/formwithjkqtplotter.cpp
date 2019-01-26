@@ -13,8 +13,8 @@ FormWithJKQTPlotter::FormWithJKQTPlotter(QWidget *parent) :
 {
     ui->setupUi(this);
     graph=new JKQTPXParsedFunctionLineGraph(ui->plot);
-    graph->set_function(ui->edtEquation->text());
-    graph->set_title(ui->edtEquation->text());
+    graph->setFunction(ui->edtEquation->text());
+    graph->setTitle(ui->edtEquation->text());
     ui->plot->addGraph(graph);
     ui->plot->setXY(-10,10,-10,10);
 }
@@ -26,7 +26,7 @@ FormWithJKQTPlotter::~FormWithJKQTPlotter()
 
 void FormWithJKQTPlotter::on_chkLogX_toggled(bool checked)
 {
-    ui->plot->getXAxis()->set_logAxis(checked);
+    ui->plot->getXAxis()->setLogAxis(checked);
     if (checked) {
         ui->plot->setX(1e-3,10);
     } else {
@@ -36,7 +36,7 @@ void FormWithJKQTPlotter::on_chkLogX_toggled(bool checked)
 
 void FormWithJKQTPlotter::on_chkLogY_toggled(bool checked)
 {
-    ui->plot->getYAxis()->set_logAxis(checked);
+    ui->plot->getYAxis()->setLogAxis(checked);
     if (checked) {
         ui->plot->setY(1e-3,10);
     } else {
@@ -46,7 +46,7 @@ void FormWithJKQTPlotter::on_chkLogY_toggled(bool checked)
 
 void FormWithJKQTPlotter::on_btnReplot_clicked()
 {
-    graph->set_function(ui->edtEquation->text());
-    graph->set_title(ui->edtEquation->text());
+    graph->setFunction(ui->edtEquation->text());
+    graph->setTitle(ui->edtEquation->text());
     ui->plot->redrawPlot();
 }

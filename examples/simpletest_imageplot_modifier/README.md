@@ -54,29 +54,29 @@ int main(int argc, char* argv[])
 	
     // 4. create a graph (JKQTPColumnMathImage) with the column created above as data
     //    The data is color-coded with the color-palette JKQTPMathImageMATLAB
-    //    the converted range of data is determined automatically because set_autoImageRange(true)
+    //    the converted range of data is determined automatically because setAutoImageRange(true)
     JKQTPColumnMathImage* graph=new JKQTPColumnMathImage(&plot);
-    graph->set_title("");
+    graph->setTitle("");
     // image column with the data
-    graph->set_imageColumn(cImage);
+    graph->setImageColumn(cImage);
     // now set the modifier image:
-    graph->set_modifierColumn(cModifier);
-    graph->set_autoModifierRange(true);
+    graph->setModifierColumn(cModifier);
+    graph->setAutoModifierRange(true);
     // ... and specify which image property is modified (here the saturation, but ModifyAlpha for the transparency and ModifyValue from the HSV color-model are also possible):
-    graph->set_modifierMode(JKQTPMathImageBase::ModifySaturation);
+    graph->setModifierMode(JKQTPMathImageBase::ModifySaturation);
     // set size of the data (the datastore does not contain this info, as it only manages 1D columns of data and this is used to assume a row-major ordering
-    graph->set_Nx(NX);
-    graph->set_Ny(NY);
+    graph->setNx(NX);
+    graph->setNy(NY);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
-    graph->set_x(-NX/2.0);
-    graph->set_y(-NX/2.0);
+    graph->setX(-NX/2.0);
+    graph->setY(-NX/2.0);
     // width and height of the image in plot-axis-coordinates
-    graph->set_width(NX);
-    graph->set_height(NY);
+    graph->setWidth(NX);
+    graph->setHeight(NY);
     // color-map is "MATLAB"
-    graph->set_palette(JKQTPMathImageMATLAB);
+    graph->setPalette(JKQTPMathImageMATLAB);
     // determine min/max of data automatically and use it to set the range of the color-scale
-    graph->set_autoImageRange(true);
+    graph->setAutoImageRange(true);
 
 
 	
@@ -113,6 +113,16 @@ and the modifier image on its own would look like this:<br>
 
 Combined the two form this plot:<br>
 ![jkqtplotter_simpletest_imageplot_modifier](../../screenshots/jkqtplotter_simpletest_imageplot_modifier.png)
+
+
+There are several modification modes available (see also documentation of JKQTPMathImageBase::ModifierMode):
+  - no modification `JKQTPMathImageBase::ModifierMode::ModifyNone`: <br>![](../../doc/images/JKQTPMathImageBaseModifyNone.png)
+  - modify the VALUE-channel from the HSV color space `JKQTPMathImageBase::ModifierMode::ModifyValue`: <br>![](../../doc/images/JKQTPMathImageBaseModifyValue.png)
+  - modify the SATURATION-channel from the HSV color space `JKQTPMathImageBase::ModifierMode::ModifySaturation`: <br>![](../../doc/images/JKQTPMathImageBaseModifySaturation.png)
+  - modify the ALPHA/TRANSPARENCY-channel from the RGBA color space `JKQTPMathImageBase::ModifierMode::ModifyAlpha`: <br>![](../../doc/images/JKQTPMathImageBaseModifyAlpha.png)
+  - modify the LUMINANCE-channel from the HSL color space `JKQTPMathImageBase::ModifierMode::ModifyLuminance`: <br>![](../../doc/images/JKQTPMathImageBaseModifyLuminance.png)
+  - modify the VALUE-channel from the HSV color space `JKQTPMathImageBase::ModifierMode::ModifyHue`: <br>![](../../doc/images/JKQTPMathImageBaseModifyHue.png)
+
 
 
 See [`test/simpletest_imageplot`](../simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plotted. You can combine all options there with the modifier feature described here.

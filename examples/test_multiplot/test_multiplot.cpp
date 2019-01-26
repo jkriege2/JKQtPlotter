@@ -91,37 +91,37 @@ int main(int argc, char* argv[])
 
     // 5.1 plot of the data
     JKQTPXYLineGraph* graphD=new JKQTPXYLineGraph(plotMain);
-    graphD->set_xColumn(cX);
-    graphD->set_yColumn(cY);
-    graphD->set_drawLine(false);
-    graphD->set_symbol(JKQTPCross);
-    graphD->set_symbolSize(10);
-    graphD->set_title("measurement data");
+    graphD->setXColumn(cX);
+    graphD->setYColumn(cY);
+    graphD->setDrawLine(false);
+    graphD->setSymbol(JKQTPCross);
+    graphD->setSymbolSize(10);
+    graphD->setTitle("measurement data");
     plotMain->addGraph(graphD);
 
     // 5.2 plot of the graph as an interpreted function, set as string "2*(1+cos(x))"
     JKQTPXParsedFunctionLineGraph* graphFit=new JKQTPXParsedFunctionLineGraph(plotMain);
-    graphFit->set_function("2*(1+cos(x))");
-    graphFit->set_title("fit");
+    graphFit->setFunction("2*(1+cos(x))");
+    graphFit->setTitle("fit");
     plotMain->addGraph(graphFit);
 
     // 5.3 residuals plot
     JKQTPXYLineGraph* graphResid=new JKQTPXYLineGraph(plotResid);
-    graphResid->set_xColumn(cX);
-    graphResid->set_yColumn(cRY);
-    graphResid->set_drawLine(false);
-    graphResid->set_symbol(JKQTPPlus);
-    graphResid->set_symbolSize(10);
-    graphResid->set_drawLine(true);
+    graphResid->setXColumn(cX);
+    graphResid->setYColumn(cRY);
+    graphResid->setDrawLine(false);
+    graphResid->setSymbol(JKQTPPlus);
+    graphResid->setSymbolSize(10);
+    graphResid->setDrawLine(true);
     graphResid->setLineWidth(0.5);
-    graphResid->set_title("residuals");
+    graphResid->setTitle("residuals");
     plotResid->addGraph(graphResid);
 
     // 5.3 residual histogram plot
     JKQTPBarHorizontalGraph* graphResidHist=new JKQTPBarHorizontalGraph(plotResidHist);
-    graphResidHist->set_xColumn(cH.second);
-    graphResidHist->set_yColumn(cH.first);
-    graphResidHist->set_title("histogram");
+    graphResidHist->setXColumn(cH.second);
+    graphResidHist->setYColumn(cH.first);
+    graphResidHist->setTitle("histogram");
     plotResidHist->addGraph(graphResidHist);
 
     // 6.1 axis labels, distributed over the several plots
@@ -130,10 +130,10 @@ int main(int argc, char* argv[])
     plotResid->getYAxis()->setAxisLabel("residuals");
     plotResidHist->getXAxis()->setAxisLabel("frequency");
     // 6.2 switch off the tick labels on the axes that directly face another plot
-    plotMain->getXAxis()->set_drawMode1(JKQTPCADMticks);
-    plotResidHist->getYAxis()->set_drawMode1(JKQTPCADMticks);
+    plotMain->getXAxis()->setDrawMode1(JKQTPCADMticks);
+    plotResidHist->getYAxis()->setDrawMode1(JKQTPCADMticks);
     // 6.3 show tick labels on the rhs y-axis of the residual histogram plot
-    plotResidHist->getYAxis()->set_drawMode2(JKQTPCADMticksAndLabels);
+    plotResidHist->getYAxis()->setDrawMode2(JKQTPCADMticksAndLabels);
     // 6.4 hide keys in all plots but the main plot
     plotResid->getPlotter()->setShowKey(false);
     plotResidHist->getPlotter()->setShowKey(false);

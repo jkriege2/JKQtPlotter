@@ -41,38 +41,38 @@ int main(int argc, char* argv[])
     size_t cGreen=ds->addCopiedColumn(percentage_green, "green energy");
 
     // 4. create graphs in the plot, which plots the dataset year/other, year/coal, ...
-    //    The color of the graphs is set by calling set_fillColor_and_darkenedColor(), which sets the
+    //    The color of the graphs is set by calling setFillColor_and_darkenedColor(), which sets the
     //    fillColor to the given color and makes the outline of the bars (i.e. their "color") a darker
     //    shade of the given color.
     QVector<JKQTPBarVerticalStackableGraph*> graphs;
     graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
-    graphs.back()->set_xColumn(cYear);
-    graphs.back()->set_yColumn(cOther);
-    graphs.back()->set_title(QObject::tr("other sources"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("red"));
+    graphs.back()->setXColumn(cYear);
+    graphs.back()->setYColumn(cOther);
+    graphs.back()->setTitle(QObject::tr("other sources"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("red"));
     graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
-    graphs.back()->set_xColumn(cYear);
-    graphs.back()->set_yColumn(cCoalOil);
-    graphs.back()->set_title(QObject::tr("coal & oil"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("darkgrey"));
+    graphs.back()->setXColumn(cYear);
+    graphs.back()->setYColumn(cCoalOil);
+    graphs.back()->setTitle(QObject::tr("coal & oil"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("darkgrey"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
     graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
-    graphs.back()->set_xColumn(cYear);
-    graphs.back()->set_yColumn(cGas);
-    graphs.back()->set_title(QObject::tr("natural gas"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("blue"));
+    graphs.back()->setXColumn(cYear);
+    graphs.back()->setYColumn(cGas);
+    graphs.back()->setTitle(QObject::tr("natural gas"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("blue"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
     graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
-    graphs.back()->set_xColumn(cYear);
-    graphs.back()->set_yColumn(cNuclear);
-    graphs.back()->set_title(QObject::tr("nuclear energy"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("gold"));
+    graphs.back()->setXColumn(cYear);
+    graphs.back()->setYColumn(cNuclear);
+    graphs.back()->setTitle(QObject::tr("nuclear energy"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("gold"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
     graphs.push_back(new JKQTPBarVerticalStackableGraph(&plot));
-    graphs.back()->set_xColumn(cYear);
-    graphs.back()->set_yColumn(cGreen);
-    graphs.back()->set_title(QObject::tr("green energy"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("darkgreen"));
+    graphs.back()->setXColumn(cYear);
+    graphs.back()->setYColumn(cGreen);
+    graphs.back()->setTitle(QObject::tr("green energy"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("darkgreen"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
 
 

@@ -98,120 +98,120 @@ class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
 
         virtual bool isHorizontal() const;
 
-        /*! \brief sets the property color to the specified \a __value. 
+        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
             \see color for more information */ 
-        inline virtual void set_color(const QColor & __value)  
+        inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color. 
+        /*! \brief returns the property color ( \copybrief color ). 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
             \see color for more information */ 
-        inline virtual QColor get_color() const  
+        inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor to the specified \a __value. 
+        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
-        inline virtual void set_fillColor(const QColor & __value)  
+        inline virtual void setFillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
-        /*! \brief returns the property fillColor. 
+        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
             \see fillColor for more information */ 
-        inline virtual QColor get_fillColor() const  
+        inline virtual QColor getFillColor() const  
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property fillStyle to the specified \a __value. 
+        /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
-        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
-        /*! \brief returns the property fillStyle. 
+        /*! \brief returns the property fillStyle ( \copybrief fillStyle ). 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
             \see fillStyle for more information */ 
-        inline virtual Qt::BrushStyle get_fillStyle() const  
+        inline virtual Qt::BrushStyle getFillStyle() const  
         {
             return this->fillStyle; 
         }
-        /*! \brief sets the property style to the specified \a __value. 
+        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE> 
             \see style for more information */ 
-        inline virtual void set_style(const Qt::PenStyle & __value)  
+        inline virtual void setStyle(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
-        /*! \brief returns the property style. 
+        /*! \brief returns the property style ( \copybrief style ). 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE> 
             \see style for more information */ 
-        inline virtual Qt::PenStyle get_style() const  
+        inline virtual Qt::PenStyle getStyle() const  
         {
             return this->style; 
         }
-        /*! \brief sets the property lineWidth to the specified \a __value. 
+        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual void setLineWidth(double __value)  
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth. 
+        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property shift to the specified \a __value. 
+        /*! \brief sets the property shift ( \copybrief shift ) to the specified \a __value. 
             \details Description of the parameter shift is: <BLOCKQUOTE>\copydoc shift </BLOCKQUOTE> 
             \see shift for more information */ 
-        inline virtual void set_shift(double __value)  
+        inline virtual void setShift(double __value)  
         {
             this->shift = __value;
         } 
-        /*! \brief returns the property shift. 
+        /*! \brief returns the property shift ( \copybrief shift ). 
             \details Description of the parameter shift is: <BLOCKQUOTE>\copydoc shift </BLOCKQUOTE> 
             \see shift for more information */ 
-        inline virtual double get_shift() const  
+        inline virtual double getShift() const  
         {
             return this->shift; 
         }
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE> 
             \see width for more information */ 
-        inline virtual void set_width(double __value)  
+        inline virtual void setWidth(double __value)  
         {
             this->width = __value;
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE> 
             \see width for more information */ 
-        inline virtual double get_width() const  
+        inline virtual double getWidth() const  
         {
             return this->width; 
         }
-        /*! \brief sets the property baseline to the specified \a __value. 
+        /*! \brief sets the property baseline ( \copybrief baseline ) to the specified \a __value. 
             \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
-        inline virtual void set_baseline(double __value)  
+        inline virtual void setBaseline(double __value)  
         {
             this->baseline = __value;
         } 
-        /*! \brief returns the property baseline. 
+        /*! \brief returns the property baseline ( \copybrief baseline ). 
             \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
-        inline virtual double get_baseline() const  
+        inline virtual double getBaseline() const  
         {
             return this->baseline; 
         }
         /** \brief sets the fill color and the color together, where fillColor is set to \a fill and the line-color is set to \c fill.darker(colorDarker) */
-        void set_fillColor_and_darkenedColor(QColor fill, int colorDarker=200);
+        void setFillColor_and_darkenedColor(QColor fill, int colorDarker=200);
     protected:
         /** \brief color of the graph */
         QColor color;
@@ -279,7 +279,7 @@ class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
  *         Optionally several graphs of this type may be stacked on top of each other
  *  \ingroup jkqtplotter_barssticks
  *
- *  Draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
+ *  Draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
  *  \image html JKQTPBarVerticalGraphStacked.png
  *
  */
@@ -301,7 +301,7 @@ class LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
 
         /** \brief if set (!=nullptr), the current plot is drawn stacked onto this plot
          *
-         *  draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
+         *  draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
          */
         JKQTPBarVerticalStackableGraph* stackParent;
 
@@ -385,7 +385,7 @@ class LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
  *         Optionally several graphs of this type may be stacked on top of each other
  *  \ingroup jkqtplotter_barssticks
  *
- *  Draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
+ *  Draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
  *  \image html JKQTPBarHorizontalGraphStacked.png
  *
  */
@@ -407,7 +407,7 @@ class LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGrap
 
         /** \brief if set (!=nullptr), the current plot is drawn stacked onto this plot
          *
-         *  draw stacked barcharts by connecting several plots by calling \c set_stackedParent(belowPlot) for each plot
+         *  draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
          */
         JKQTPBarHorizontalStackableGraph* stackParent;
 

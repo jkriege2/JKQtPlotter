@@ -36,13 +36,13 @@ int main(int argc, char* argv[])
 
     // 4. create a graph in the plot, which plots the dataset X/Y:
     JKQTPXYLineErrorGraph* graph1=new JKQTPXYLineErrorGraph(&plot);
-    graph1->set_xColumn(columnX);
-    graph1->set_yColumn(columnY);
-    graph1->set_yErrorColumn(columnYE);
-    graph1->set_symbol(JKQTPFilledStar); // set symbol style
-    graph1->set_yErrorStyle(JKQTPErrorBars); // set error indicator type
-    graph1->set_drawLine(false); // don't draw a line
-    graph1->set_title(QObject::tr("sine graph"));
+    graph1->setXColumn(columnX);
+    graph1->setYColumn(columnY);
+    graph1->setYErrorColumn(columnYE);
+    graph1->setSymbol(JKQTPFilledStar); // set symbol style
+    graph1->setYErrorStyle(JKQTPErrorBars); // set error indicator type
+    graph1->setDrawLine(false); // don't draw a line
+    graph1->setTitle(QObject::tr("sine graph"));
 
     // 5. add the graph to the plot, so it is actually displayed
     plot.addGraph(graph1);
@@ -54,10 +54,10 @@ int main(int argc, char* argv[])
     // 7. set some axis properties (we use LaTeX for nice equation rendering)
     plot.getXAxis()->setAxisLabel(QObject::tr("x-axis $x$ [mm]"));
     plot.getYAxis()->setAxisLabel(QObject::tr("\\textbf{\\color{red}{y-axis} $\\left(y=\\sin(x)\\pm(0.2+0.25\\cdot x)\\right)$ [A.U.]}"));
-    plot.getXAxis()->set_labelFont("Arial");
-    plot.getYAxis()->set_labelFont("Times New Roman");
-    plot.getYAxis()->set_labelFontSize(12); // large x-axis label
-    plot.getYAxis()->set_tickLabelFontSize(10); // and larger y-axis tick labels
+    plot.getXAxis()->setLabelFont("Arial");
+    plot.getYAxis()->setLabelFont("Times New Roman");
+    plot.getYAxis()->setLabelFontSize(12); // large x-axis label
+    plot.getYAxis()->setTickLabelFontSize(10); // and larger y-axis tick labels
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();

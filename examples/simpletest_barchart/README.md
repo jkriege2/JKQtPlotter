@@ -38,17 +38,17 @@ int main(int argc, char* argv[])
 
     // 4. create graphs in the plot, which plots the dataset X/Y1, X/Y2 and X/Y3:
     JKQTPBarVerticalGraph* graph1=new JKQTPBarVerticalGraph(&plot);
-    graph1->set_xColumn(columnX);
-    graph1->set_yColumn(columnY1);
-    graph1->set_title(QObject::tr("dataset 1"));
+    graph1->setXColumn(columnX);
+    graph1->setYColumn(columnY1);
+    graph1->setTitle(QObject::tr("dataset 1"));
     JKQTPBarVerticalGraph* graph2=new JKQTPBarVerticalGraph(&plot);
-    graph2->set_xColumn(columnX);
-    graph2->set_yColumn(columnY2);
-    graph2->set_title(QObject::tr("dataset 2"));
+    graph2->setXColumn(columnX);
+    graph2->setYColumn(columnY2);
+    graph2->setTitle(QObject::tr("dataset 2"));
     JKQTPBarVerticalGraph* graph3=new JKQTPBarVerticalGraph(&plot);
-    graph3->set_xColumn(columnX);
-    graph3->set_yColumn(columnY3);
-    graph3->set_title(QObject::tr("dataset 3"));
+    graph3->setXColumn(columnX);
+    graph3->setYColumn(columnY3);
+    graph3->setTitle(QObject::tr("dataset 3"));
 
 
     // 5. add the graphs to the plot, so it is actually displayed
@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
     //    we have to tell the x-Axis to use these special labels:
     plot.getXAxis()->addAxisTickLabels(X, L, Ndata);
     //    also we can rotate the labels a bit (by 45 degree), so they fit better
-    plot.getXAxis()->set_tickLabelAngle(45);
-    plot.getXAxis()->set_tickLabelFontSize(12);
+    plot.getXAxis()->setTickLabelAngle(45);
+    plot.getXAxis()->setTickLabelFontSize(12);
 
     // 8. finally we move the plot key/legend to the outside, top-right
     //    and lay it out as a single row

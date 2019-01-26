@@ -156,7 +156,7 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, 
     ht.start();
     QSizeF s=mt.getSize(painter);
     Y=Y+mt.getAscent(painter);
-    durationSizingMS=ht.get_time()/1000.0;
+    durationSizingMS=ht.getTime()/1000.0;
     qDebug()<<"    sizing in "<<durationSizingMS<<" ms\n";
     QPen p=painter.pen();
     p.setColor("lightcoral");
@@ -174,7 +174,7 @@ double TestForm::draw(QPainter& painter, double X, double YY, JKQTMathText& mt, 
     p.setColor("black");
     painter.setPen(p);
     mt.draw(painter, X, Y, ui->chkBoxes->isChecked());
-    durationTimingMS=ht.get_time()/1000.0;
+    durationTimingMS=ht.getTime()/1000.0;
     qDebug()<<"   drawing in "<<durationTimingMS<<" ms";
     p.setColor("blue");
     painter.setPen(p);
@@ -211,13 +211,13 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
     else ti=new QTreeWidgetItem(ui->tree);
 
     if (decoN) {
-        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathText::decorationToString(decoN->get_decoration()));
-        if (decoN->get_child()) ti->addChild(createTree(decoN->get_child(), ti));
+        name=QString("MTdecoratedNode: mode='%1'").arg(JKQTMathText::decorationToString(decoN->getDecoration()));
+        if (decoN->getChild()) ti->addChild(createTree(decoN->getChild(), ti));
     } else if (matrixN)  {
         int l=matrixN->getLines();
-        int c=matrixN->get_columns();
+        int c=matrixN->getColumns();
         name=QString("MTmatrixNode: l*c=%1*%2").arg(l).arg(c);
-        QVector<QVector<JKQTMathText::MTnode*> > children=matrixN->get_children();
+        QVector<QVector<JKQTMathText::MTnode*> > children=matrixN->getChildren();
         for (int y=0; y<l; y++) {
             for (int x=0; x<c; x++) {
                 if (children[y].at(x)!=nullptr) {
@@ -228,36 +228,36 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
             }
         }
     } else if (fracN)  {
-        name=QString("MTfracNode: mode='%1'").arg(JKQTMathText::fracModeToString(fracN->get_mode()));
-        if (fracN->get_child1()) ti->addChild(createTree(fracN->get_child1(), ti));
-        if (fracN->get_child2()) ti->addChild(createTree(fracN->get_child2(), ti));
+        name=QString("MTfracNode: mode='%1'").arg(JKQTMathText::fracModeToString(fracN->getMode()));
+        if (fracN->getChild1()) ti->addChild(createTree(fracN->getChild1(), ti));
+        if (fracN->getChild2()) ti->addChild(createTree(fracN->getChild2(), ti));
     } else if (sqrtN)  {
-        name=QString("MTsqrtNode: deg=%1").arg(sqrtN->get_degree());
-        if (sqrtN->get_child()) ti->addChild(createTree(sqrtN->get_child(), ti));
+        name=QString("MTsqrtNode: deg=%1").arg(sqrtN->getDegree());
+        if (sqrtN->getChild()) ti->addChild(createTree(sqrtN->getChild(), ti));
     } else if (braceN)  {
-        name=QString("MTbraceNode: l='%1', r='%2', showR=%3").arg(braceN->get_openbrace()).arg(braceN->get_closebrace()).arg(braceN->getShowRightBrace());
-        if (braceN->get_child()) ti->addChild(createTree(braceN->get_child(), ti));
+        name=QString("MTbraceNode: l='%1', r='%2', showR=%3").arg(braceN->getOpenbrace()).arg(braceN->getClosebrace()).arg(braceN->getShowRightBrace());
+        if (braceN->getChild()) ti->addChild(createTree(braceN->getChild(), ti));
     } else if (superN)  {
         name=QString("MTsuperscriptNode");
-        if (superN->get_child()) ti->addChild(createTree(superN->get_child(), ti));
+        if (superN->getChild()) ti->addChild(createTree(superN->getChild(), ti));
     } else if (subN)  {
         name=QString("MTsubscriptNode");
-        if (subN->get_child()) ti->addChild(createTree(subN->get_child(), ti));
+        if (subN->getChild()) ti->addChild(createTree(subN->getChild(), ti));
     } else if (inst1N)  {
-        name=QString("MTinstruction1Node: \'%1\'").arg(inst1N->get_name());
-        if (inst1N->get_child()) ti->addChild(createTree(inst1N->get_child(), ti));
+        name=QString("MTinstruction1Node: \'%1\'").arg(inst1N->getName());
+        if (inst1N->getChild()) ti->addChild(createTree(inst1N->getChild(), ti));
     } else if (lstN)  {
         name=QString("MTlistNode");
-        QList<JKQTMathText::MTnode*> list=lstN->get_nodes();
+        QList<JKQTMathText::MTnode*> list=lstN->getNodes();
         for (int i=0; i<list.size(); i++) {
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("MTsymbolNode: \'%1\'").arg(symN->get_symbolName());
+        name=QString("MTsymbolNode: \'%1\'").arg(symN->getSymbolName());
     } else if (spN)  {
-        name=QString("MTwhitespaceNode :\'%1\'").arg(txtN->get_text());
+        name=QString("MTwhitespaceNode :\'%1\'").arg(txtN->getText());
     } else if (txtN)  {
-        name=QString("MTtextNode: \'%1\'").arg(txtN->get_text());
+        name=QString("MTtextNode: \'%1\'").arg(txtN->getText());
 
     } else {
         name=QString("unknown");
@@ -341,16 +341,16 @@ void TestForm::updateMath()
     ht.start();
     double durationParse=0;
     if (mt.parse(mathTest)) {
-        durationParse=ht.get_time()/1000.0;
-        ui->tree->addTopLevelItem(createTree(mt.get_parsedNode()));
+        durationParse=ht.getTime()/1000.0;
+        ui->tree->addTopLevelItem(createTree(mt.getParsedNode()));
     } else {
-        durationParse=ht.get_time()/1000.0;
+        durationParse=ht.getTime()/1000.0;
     }
     ui->labParsingTimes->setText(QString("   %1ms").arg(durationParse, 0, 'f', 3));
     ui->tree->expandAll();
     bool okh=true;
     ui->textBrowser->clear();
-    qDebug()<<"parse mathTest in "<<ht.get_time()/1000.0<<" ms\n";
+    qDebug()<<"parse mathTest in "<<ht.getTime()/1000.0<<" ms\n";
 
     QStringList sl=ui->edtSizes->text().split(",");
     ui->labRenderTimes->setText("");
@@ -364,8 +364,8 @@ void TestForm::updateMath()
         Y+=draw(painter, X1, Y, mt, QString("%1, %2, %3pt").arg(ui->cmbTestset->currentText()).arg(ui->cmbFont->currentText()).arg(size), durationSizingMS, durationTimingMS);
 
         if (i==0) {
-            if (mt.get_error_list().size()>0) {
-                ui->labError->setText("<span color=\"red\">"+mt.get_error_list().join("<br>")+"</span>");
+            if (mt.getErrorList().size()>0) {
+                ui->labError->setText("<span color=\"red\">"+mt.getErrorList().join("<br>")+"</span>");
             } else {
                 ui->labError->setText("<span color=\"green\">OK</span>");
             }
@@ -374,8 +374,8 @@ void TestForm::updateMath()
         ui->labRenderTimes->setText(ui->labRenderTimes->text()+QString("     %1pt: %2ms/%3ms").arg(size).arg(durationSizingMS, 0, 'F', 1).arg(durationTimingMS, 0, 'F', 1));
         ui->textBrowser->textCursor().insertHtml("<hr>"+mt.toHtml(&okh)+"<hr><br><br>");
         qDebug()<<"HTML: ---------------------------------------------\n"<<mt.toHtml(&okh)<<"\nHTML: --------------------------------------------- ok="<<okh;
-        if (mt.get_error_list().size()>0) {
-            qDebug()<<mt.get_error_list().join("\n")<<"\n";
+        if (mt.getErrorList().size()>0) {
+            qDebug()<<mt.getErrorList().join("\n")<<"\n";
         }
     }
 

@@ -51,29 +51,29 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
     int pspsy=plotPSP->getDatastore()->addCopiedColumn(dataSy, "symbol");
 
     pltePSPCol=new JKQTPXYParametrizedErrorScatterGraph(plotPSP->getPlotter());
-    pltePSPCol->set_title(tr("changing color"));
-    pltePSPCol->set_xColumn(pspx);
-    pltePSPCol->set_yColumn(pspy);
-    pltePSPCol->set_colorColumn(pspc);
-    pltePSPCol->set_yErrorColumn(pspy1);
-    pltePSPCol->set_yErrorColumnLower(pspy2);
-    pltePSPCol->set_yErrorSymmetric(true);
-    pltePSPCol->set_drawLine(true);
+    pltePSPCol->setTitle(tr("changing color"));
+    pltePSPCol->setXColumn(pspx);
+    pltePSPCol->setYColumn(pspy);
+    pltePSPCol->setColorColumn(pspc);
+    pltePSPCol->setYErrorColumn(pspy1);
+    pltePSPCol->setYErrorColumnLower(pspy2);
+    pltePSPCol->setYErrorSymmetric(true);
+    pltePSPCol->setDrawLine(true);
     plotPSP->getPlotter()->addGraph(pltePSPCol);
 
     pltePSPSize=new JKQTPXYParametrizedScatterGraph(plotPSP->getPlotter());
-    pltePSPSize->set_xColumn(pspx);
-    pltePSPSize->set_yColumn(pspy1);
-    pltePSPSize->set_sizeColumn(psps);
-    pltePSPSize->set_title(tr("changing size"));
+    pltePSPSize->setXColumn(pspx);
+    pltePSPSize->setYColumn(pspy1);
+    pltePSPSize->setSizeColumn(psps);
+    pltePSPSize->setTitle(tr("changing size"));
     plotPSP->getPlotter()->addGraph(pltePSPSize);
 
 
     pltePSPSymb=new JKQTPXYParametrizedScatterGraph(plotPSP->getPlotter());
-    pltePSPSymb->set_xColumn(pspx);
-    pltePSPSymb->set_yColumn(pspy3);
-    pltePSPSymb->set_symbolColumn(pspsy);
-    pltePSPSymb->set_title(tr("changing symbol"));
+    pltePSPSymb->setXColumn(pspx);
+    pltePSPSymb->setYColumn(pspy3);
+    pltePSPSymb->setSymbolColumn(pspsy);
+    pltePSPSymb->setTitle(tr("changing symbol"));
     plotPSP->getPlotter()->addGraph(pltePSPSymb);
 
     plotPSP->setPlotUpdateEnabled(true);
@@ -95,6 +95,6 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
 
 void TestWidgetParamScatterPlots::setPSPSymmErrors(bool checked)
 {
-     pltePSPCol->set_yErrorSymmetric(checked);
+     pltePSPCol->setYErrorSymmetric(checked);
      plotPSP->redrawPlot();
 }

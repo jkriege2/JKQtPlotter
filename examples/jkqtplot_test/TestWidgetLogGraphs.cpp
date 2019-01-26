@@ -47,64 +47,64 @@ TestWidgetLogGraphs::TestWidgetLogGraphs(QWidget *parent) :
 
     QCheckBox* chklogX=new QCheckBox("logarithmic X-axis", this);
     QCheckBox* chklogY=new QCheckBox("logarithmic Y-axis", this);
-    connect(chklogX, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getXAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogY, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getYAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogX, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getXAxis(), SLOT(setLogAxis(bool)));
+    connect(chklogY, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getYAxis(), SLOT(setLogAxis(bool)));
     layWid->addWidget(chklogX);
     layWid->addWidget(chklogY);
 
 
     QCheckBox* chkXMinorTicks=new QCheckBox("minor X-tick labels", this);
     QCheckBox* chkYMinorTicks=new QCheckBox("minor Y-tick labels", this);
-    connect(chkXMinorTicks, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getXAxis(), SLOT(set_minorTickLabelsEnabled(bool)));
-    connect(chkYMinorTicks, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getYAxis(), SLOT(set_minorTickLabelsEnabled(bool)));
+    connect(chkXMinorTicks, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getXAxis(), SLOT(setMinorTickLabelsEnabled(bool)));
+    connect(chkYMinorTicks, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getYAxis(), SLOT(setMinorTickLabelsEnabled(bool)));
     layWid->addWidget(chkXMinorTicks);
     layWid->addWidget(chkYMinorTicks);
 
     QCheckBox* chkFullNumberMinor=new QCheckBox("full minor numbers", this);
-    connect(chkFullNumberMinor, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getXAxis(), SLOT(set_minorTickLabelFullNumber(bool)));
-    connect(chkFullNumberMinor, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getYAxis(), SLOT(set_minorTickLabelFullNumber(bool)));
+    connect(chkFullNumberMinor, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getXAxis(), SLOT(setMinorTickLabelFullNumber(bool)));
+    connect(chkFullNumberMinor, SIGNAL(toggled(bool)), plotLOG->getPlotter()->getYAxis(), SLOT(setMinorTickLabelFullNumber(bool)));
     layWid->addWidget(chkFullNumberMinor);
 
     QComboBox* cmbTickMode=new QComboBox(this);
     cmbTickMode->addItem("JKQTPLTMLinOrLog");
     cmbTickMode->addItem("JKQTPLTMLin");
     cmbTickMode->addItem("JKQTPLTMPower");
-    connect(cmbTickMode, SIGNAL(currentIndexChanged(int)), plotLOG->getPlotter()->getXAxis(), SLOT(set_tickMode(int)));
+    connect(cmbTickMode, SIGNAL(currentIndexChanged(int)), plotLOG->getPlotter()->getXAxis(), SLOT(setTickMode(int)));
     layWid->addRow("X-Axis TickMode", cmbTickMode);
 
     cmbTickMode=new QComboBox(this);
     cmbTickMode->addItem("JKQTPLTMLinOrLog");
     cmbTickMode->addItem("JKQTPLTMLin");
     cmbTickMode->addItem("JKQTPLTMPower");
-    connect(cmbTickMode, SIGNAL(currentIndexChanged(int)), plotLOG->getPlotter()->getYAxis(), SLOT(set_tickMode(int)));
+    connect(cmbTickMode, SIGNAL(currentIndexChanged(int)), plotLOG->getPlotter()->getYAxis(), SLOT(setTickMode(int)));
     layWid->addRow("Y-Axis TickMode", cmbTickMode);
     cmbTickMode->setCurrentIndex(0);
-    plotLOG->getPlotter()->getYAxis()->set_tickMode(JKQTPLTMLinOrPower);
-    plotLOG->getPlotter()->getYAxis()->set_minorTicks(1);
+    plotLOG->getPlotter()->getYAxis()->setTickMode(JKQTPLTMLinOrPower);
+    plotLOG->getPlotter()->getYAxis()->setMinorTicks(1);
 
-    plotLOG->getPlotter()->getYAxis()->set_drawMode2(JKQTPCADMcomplete);
-    plotLOG->getPlotter()->getXAxis()->set_drawMode2(JKQTPCADMcomplete);
+    plotLOG->getPlotter()->getYAxis()->setDrawMode2(JKQTPCADMcomplete);
+    plotLOG->getPlotter()->getXAxis()->setDrawMode2(JKQTPCADMcomplete);
 
 
 
     QSpinBox* spinMinTicks=new QSpinBox(this);
     spinMinTicks->setRange(0,999);
-    connect(spinMinTicks, SIGNAL(valueChanged(int)), plotLOG->getPlotter()->getXAxis(), SLOT(set_minorTicks(int)));
-    connect(spinMinTicks, SIGNAL(valueChanged(int)), plotLOG->getPlotter()->getYAxis(), SLOT(set_minorTicks(int)));
+    connect(spinMinTicks, SIGNAL(valueChanged(int)), plotLOG->getPlotter()->getXAxis(), SLOT(setMinorTicks(int)));
+    connect(spinMinTicks, SIGNAL(valueChanged(int)), plotLOG->getPlotter()->getYAxis(), SLOT(setMinorTicks(int)));
     layWid->addRow("X/Y-axis minor tick count", spinMinTicks);
     spinMinTicks->setValue(1);
 
     QDoubleSpinBox* spinLOGAngle=new QDoubleSpinBox(this);
     spinLOGAngle->setRange(-90,90);
     spinLOGAngle->setSuffix(QLatin1String("°"));
-    connect(spinLOGAngle, SIGNAL(valueChanged(double)), plotLOG->getPlotter()->getXAxis(), SLOT(set_tickLabelAngle(double)));
+    connect(spinLOGAngle, SIGNAL(valueChanged(double)), plotLOG->getPlotter()->getXAxis(), SLOT(setTickLabelAngle(double)));
     layWid->addRow("X-Axis tick label angle", spinLOGAngle);
     spinLOGAngle->setValue(0);
 
     spinLOGAngle=new QDoubleSpinBox(this);
     spinLOGAngle->setRange(-90,90);
     spinLOGAngle->setSuffix(QLatin1String("°"));
-    connect(spinLOGAngle, SIGNAL(valueChanged(double)), plotLOG->getPlotter()->getYAxis(), SLOT(set_tickLabelAngle(double)));
+    connect(spinLOGAngle, SIGNAL(valueChanged(double)), plotLOG->getPlotter()->getYAxis(), SLOT(setTickLabelAngle(double)));
     layWid->addRow(tr("Y-axis label angle = "), spinLOGAngle);
     spinLOGAngle->setValue(0);
 

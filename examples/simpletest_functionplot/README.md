@@ -7,12 +7,12 @@ The first example shows how to plot a C++ inline function:
 ```.cpp
     JKQTPXFunctionLineGraph* func1=new JKQTPXFunctionLineGraph(plot);
     func1->setPlotFunction([](double x) { return 0.2*x*x-0.015*x*x*x; });
-    func1->set_title("C++-inline function $0.2x^2-0.015x^3$");
+    func1->setTitle("C++-inline function $0.2x^2-0.015x^3$");
     plot->addGraph(func1);
 ```
 
 ## Simple C++ inline function with parameters
-In any such plot function, you can also use parameters, provided via the second parameter. Usually these are "internal parameters", defined by `func2->set_paramsV(p0, p1, ...)`:
+In any such plot function, you can also use parameters, provided via the second parameter. Usually these are "internal parameters", defined by `func2->setParamsV(p0, p1, ...)`:
 ```.cpp
     JKQTPXFunctionLineGraph* func2=new JKQTPXFunctionLineGraph(plot);
     func2->setPlotFunction([](double x, void* params) {
@@ -20,12 +20,12 @@ In any such plot function, you can also use parameters, provided via the second 
         return p->at(0)*sin(2.0*M_PI*x*p->at(1));
     });
     // here we set the parameters p0, p1
-    func2->set_paramsV(5, 0.2);
-    func2->set_title("C++-inline function with int. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
+    func2->setParamsV(5, 0.2);
+    func2->setTitle("C++-inline function with int. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
     plot->addGraph(func2);
 ```
 
-... but generally any pointer can be used as parameter (the set by `set_parameter(static_cast<void*>(myDataObject))`):
+... but generally any pointer can be used as parameter (the set by `setParameter(static_cast<void*>(myDataObject))`):
 ```.cpp
     JKQTPXFunctionLineGraph* func3=new JKQTPXFunctionLineGraph(plot);
     func3->setPlotFunction([](double x, void* params) {
@@ -36,8 +36,8 @@ In any such plot function, you can also use parameters, provided via the second 
     QMap<QString,double> params3;
     params3["amplitude"]=-3;
     params3["frequency"]=0.3;
-    func3->set_params(&params3);
-    func3->set_title("C++-inline function with ext. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
+    func3->setParams(&params3);
+    func3->setTitle("C++-inline function with ext. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
     plot->addGraph(func3);
 ```
 
@@ -58,7 +58,7 @@ You can also use C++ functors (or function objects):
     
     JKQTPXFunctionLineGraph* func4=new JKQTPXFunctionLineGraph(plot);
     func4->setPlotFunction(SincSqr(-8));
-    func4->set_title("C++ functor $-8*\\sin^2(x)/x^2$");
+    func4->setTitle("C++ functor $-8*\\sin^2(x)/x^2$");
     plot->addGraph(func4);
 ```
 
@@ -73,7 +73,7 @@ You can also plot simple static C functions:
 
     JKQTPXFunctionLineGraph* func5=new JKQTPXFunctionLineGraph(plot);
     func5->setPlotFunction(&sinc);
-    func5->set_title("static C function $10*\\sin(x)/x$");
+    func5->setTitle("static C function $10*\\sin(x)/x$");
     plot->addGraph(func5);
 ```
 
@@ -83,8 +83,8 @@ Finally `JKQTPXFunctionLineGraph` provides a small set of special functions (pol
     JKQTPXFunctionLineGraph* func6=new JKQTPXFunctionLineGraph(plot);
     func6->setSpecialFunction(JKQTPXFunctionLineGraph::Line);
     // here we set offset p0=-1 and slope p1=1.5 of the line p0+p1*x
-    func6->set_paramsV(-1,1.5);
-    func6->set_title("special function: linear");
+    func6->setParamsV(-1,1.5);
+    func6->setTitle("special function: linear");
     plot->addGraph(func6);
 ```
 
@@ -97,8 +97,8 @@ JKQTPXFunctionLineGraph* func7=new JKQTPXFunctionLineGraph(plot);
     QVector<double> params;
     params << /*p0=*/1 << /*p1=*/-1.5;
     size_t paramCol=plot->getDatastore()->addCopiedColumn(params);
-    func7->set_parameterColumn(paramCol);
-    func7->set_title("special function: linear");
+    func7->setParameterColumn(paramCol);
+    func7->setTitle("special function: linear");
     plot->addGraph(func7);
 ```
 

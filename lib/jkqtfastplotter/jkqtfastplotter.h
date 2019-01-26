@@ -54,15 +54,6 @@
 // forward declaration
 class JKQTFPPlot;
 
-#ifndef JKQTFASTPLOTTER_NOOPENGL
-#  define JKQTFASTPLOTTER_BASEWIDGET QGLWidget
-#  define JKQTFASTPLOTTER_BASEWIDGET_CONSTRUCTOR(parent) QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel | QGL::Rgba), parent)
-#else
-#  define JKQTFASTPLOTTER_BASEWIDGET QWidget
-#  define JKQTFASTPLOTTER_BASEWIDGET_CONSTRUCTOR(parent) QWidget(parent)
-#endif
-
-
 
 
 
@@ -102,7 +93,7 @@ class JKQTFPPlot;
     .
 
 */
-class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
+class LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         Q_OBJECT
     protected:
         /** \brief indicates whether to do full repaint (system and data) at the next repaint (any of the repaint meothods) */
@@ -129,22 +120,22 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         int plotBorderLeft; 
         /*! \brief default value for property plotBorderLeft. 
             \see plotBorderLeft for more information */ 
-        int def_plotBorderLeft;
+        int default_plotBorderLeft;
         /** \brief free space between widget bottom border and plot bottom border  */
         int plotBorderBottom; 
         /*! \brief default value for property plotBorderBottom. 
             \see plotBorderBottom for more information */ 
-        int def_plotBorderBottom;
+        int default_plotBorderBottom;
         /** \brief free space between widget right border and plot left border */
         int plotBorderRight; 
         /*! \brief default value for property plotBorderRight. 
             \see plotBorderRight for more information */ 
-        int def_plotBorderRight;
+        int default_plotBorderRight;
         /** \brief free space between widget top border and plot bottom border */
         int plotBorderTop; 
         /*! \brief default value for property plotBorderTop. 
             \see plotBorderTop for more information */ 
-        int def_plotBorderTop;
+        int default_plotBorderTop;
 
         /** \brief internally calculated: free space between widget left border and plot left border
          *
@@ -180,17 +171,17 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         QColor systemColor; 
         /*! \brief default value for property systemColor. 
             \see systemColor for more information */ 
-        QColor def_systemColor;
+        QColor default_systemColor;
         /** \brief width of the coordinate (in pixel) */
         double systemWidth; 
         /*! \brief default value for property systemWidth. 
             \see systemWidth for more information */ 
-        double def_systemWidth;
+        double default_systemWidth;
         /** \brief color of the background*/
         QColor backgroundColor; 
         /*! \brief default value for property backgroundColor. 
             \see backgroundColor for more information */ 
-        QColor def_backgroundColor;
+        QColor default_backgroundColor;
         /** \brief color of the plot's background
          *
          *  \note the background is not drawn if this color is set to \c QColor(Qt::transparent) !
@@ -198,64 +189,64 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         QColor plotBackgroundColor; 
         /*! \brief default value for property plotBackgroundColor. 
             \see plotBackgroundColor for more information */ 
-        QColor def_plotBackgroundColor;
+        QColor default_plotBackgroundColor;
         /** \brief indicates whether to draw a system box */
         bool drawSystemBox; 
         /*! \brief default value for property drawSystemBox. 
             \see drawSystemBox for more information */ 
-        bool def_drawSystemBox;
+        bool default_drawSystemBox;
         /** \brief indicates whether to draw axes at x=0/y=0 */
         bool drawZeroAxes; 
         /*! \brief default value for property drawZeroAxes. 
             \see drawZeroAxes for more information */ 
-        bool def_drawZeroAxes;
+        bool default_drawZeroAxes;
 
         /** \brief indicates whether to draw a grid */
         bool drawGrid; 
         /*! \brief default value for property drawGrid. 
             \see drawGrid for more information */ 
-        bool def_drawGrid;
+        bool default_drawGrid;
         /** \brief color of the coordinate grid */
         QColor gridColor; 
         /*! \brief default value for property gridColor. 
             \see gridColor for more information */ 
-        QColor def_gridColor;
+        QColor default_gridColor;
         /** \brief style of the coordinate grid */
         Qt::PenStyle gridStyle; 
         /*! \brief default value for property gridStyle. 
             \see gridStyle for more information */ 
-        Qt::PenStyle def_gridStyle;
+        Qt::PenStyle default_gridStyle;
         /** \brief width of the coordinate grid (in pixel) */
         double gridWidth; 
         /*! \brief default value for property gridWidth. 
             \see gridWidth for more information */ 
-        double def_gridWidth;
+        double default_gridWidth;
         /** \brief font size (in points) of the axis labels */
         double labelFontSize; 
         /*! \brief default value for property labelFontSize. 
             \see labelFontSize for more information */ 
-        double def_labelFontSize;
+        double default_labelFontSize;
         /** \brief font name of the axis labels */
         QString labelFontName; 
         /*! \brief default value for property labelFontName. 
             \see labelFontName for more information */ 
-        QString def_labelFontName;
+        QString default_labelFontName;
         /** \brief font size (in points) of the tick labels */
         double tickFontSize; 
         /*! \brief default value for property tickFontSize. 
             \see tickFontSize for more information */ 
-        double def_tickFontSize;
+        double default_tickFontSize;
         /** \brief font name of the tick labels */
         QString tickFontName; 
         /*! \brief default value for property tickFontName. 
             \see tickFontName for more information */ 
-        QString def_tickFontName;
+        QString default_tickFontName;
 
         /** \brief length of an axis tick (pixels) */
         double tickLength; 
         /*! \brief default value for property tickLength. 
             \see tickLength for more information */ 
-        double def_tickLength;
+        double default_tickLength;
 
 
         /** \brief minimum value of x axis */
@@ -356,7 +347,7 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /** \brief recalculate the scaling of the plot */
         void calcPlotScaling();
 
-        QSize minimumSizeHint() const;
+        QSize minimumSizeHint() const override;
 
         /**  \brief mutex to lock global widget repaint */
         QMutex mutexRepaint;
@@ -416,9 +407,9 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /** \brief return x coordinate coordinate from x-pixel */
         inline double p2x(long x) {
             if (xAxisLog) {
-                return exp(log(10.0)*((double)x-xOffset)/(xScale));
+                return exp(log(10.0)*(static_cast<double>(x)-xOffset)/(xScale));
             } else {
-                return ((double)x-xOffset)/(xScale);
+                return (static_cast<double>(x)-xOffset)/(xScale);
             }
         }
 
@@ -435,666 +426,666 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /** \brief return y coordinate coordinate from y-pixel */
         inline double p2y(long y) {
             if (yAxisLog) {
-                return exp(log(10.0)*((double)y-yOffset)/(-1.0*yScale));
+                return exp(log(10.0)*(static_cast<double>(y)-yOffset)/(-1.0*yScale));
             } else {
-                return ((double)y-yOffset)/(-1.0*yScale);
+                return (static_cast<double>(y)-yOffset)/(-1.0*yScale);
             }
         }
 
-        /*! \brief sets the property dragShapePen to the specified \a __value. 
+        /*! \brief sets the property dragShapePen ( \copybrief dragShapePen ) to the specified \a __value. 
             \details Description of the parameter dragShapePen is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::dragShapePen </BLOCKQUOTE>
             \see dragShapePen for more information */ 
-        inline virtual void set_dragShapePen(const QPen & __value)  
+        inline void setDragShapePen(const QPen & __value)
         {
             if (this->dragShapePen != __value) {
                 this->dragShapePen = __value; 
                 update(); 
             } 
         } 
-        /*! \brief returns the property dragShapePen. 
+        /*! \brief returns the property dragShapePen ( \copybrief dragShapePen ). 
             \details Description of the parameter dragShapePen is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::dragShapePen </BLOCKQUOTE>
             \see dragShapePen for more information */ 
-        inline virtual QPen get_dragShapePen() const  
+        inline QPen getDragShapePen() const
         {
             return this->dragShapePen; 
         }
-        /*! \brief sets the property dragLine to the specified \a __value. 
+        /*! \brief sets the property dragLine ( \copybrief dragLine ) to the specified \a __value. 
             \details Description of the parameter dragLine is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::dragLine </BLOCKQUOTE>
             \see dragLine for more information */ 
-        inline virtual void set_dragLine(bool __value)
+        inline void setDragLine(bool __value)
         {
             if (this->dragLine != __value) {
                 this->dragLine = __value; 
                 update(); 
             } 
         } 
-        /*! \brief returns the property dragLine. 
+        /*! \brief returns the property dragLine ( \copybrief dragLine ). 
             \details Description of the parameter dragLine is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::dragLine </BLOCKQUOTE>
             \see dragLine for more information */ 
-        inline virtual bool get_dragLine() const  
+        inline bool getDragLine() const
         {
             return this->dragLine; 
         }
 
-        /*! \brief sets the property plotBorderLeft to the specified \a __value. 
+        /*! \brief sets the property plotBorderLeft ( \copybrief plotBorderLeft ) to the specified \a __value. 
             \details Description of the parameter plotBorderLeft is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderLeft </BLOCKQUOTE>
             \see plotBorderLeft for more information */ 
-        inline virtual void setPlotBorderLeft(int __value)
+        inline void setPlotBorderLeft(int __value)
         {
             if (this->plotBorderLeft != __value) {
                 this->plotBorderLeft = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property plotBorderLeft. 
+        /*! \brief returns the property plotBorderLeft ( \copybrief plotBorderLeft ). 
             \details Description of the parameter plotBorderLeft is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderLeft </BLOCKQUOTE>
             \see plotBorderLeft for more information */ 
-        inline virtual int getPlotBorderLeft() const  
+        inline int getPlotBorderLeft() const
         {
             return this->plotBorderLeft; 
         }
-        /*! \brief sets the property plotBorderBottom to the specified \a __value. 
+        /*! \brief sets the property plotBorderBottom ( \copybrief plotBorderBottom ) to the specified \a __value. 
             \details Description of the parameter plotBorderBottom is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderBottom </BLOCKQUOTE>
             \see plotBorderBottom for more information */ 
-        inline virtual void setPlotBorderBottom(int __value)
+        inline void setPlotBorderBottom(int __value)
         {
             if (this->plotBorderBottom != __value) {
                 this->plotBorderBottom = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property plotBorderBottom. 
+        /*! \brief returns the property plotBorderBottom ( \copybrief plotBorderBottom ). 
             \details Description of the parameter plotBorderBottom is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderBottom </BLOCKQUOTE>
             \see plotBorderBottom for more information */ 
-        inline virtual int getPlotBorderBottom() const  
+        inline int getPlotBorderBottom() const
         {
             return this->plotBorderBottom; 
         }
-        /*! \brief sets the property plotBorderRight to the specified \a __value. 
+        /*! \brief sets the property plotBorderRight ( \copybrief plotBorderRight ) to the specified \a __value. 
             \details Description of the parameter plotBorderRight is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderRight </BLOCKQUOTE>
             \see plotBorderRight for more information */ 
-        inline virtual void setPlotBorderRight(int __value)
+        inline void setPlotBorderRight(int __value)
         {
             if (this->plotBorderRight != __value) {
                 this->plotBorderRight = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property plotBorderRight. 
+        /*! \brief returns the property plotBorderRight ( \copybrief plotBorderRight ). 
             \details Description of the parameter plotBorderRight is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderRight </BLOCKQUOTE>
             \see plotBorderRight for more information */ 
-        inline virtual int getPlotBorderRight() const  
+        inline int getPlotBorderRight() const
         {
             return this->plotBorderRight; 
         }
-        /*! \brief sets the property plotBorderTop to the specified \a __value. 
+        /*! \brief sets the property plotBorderTop ( \copybrief plotBorderTop ) to the specified \a __value. 
             \details Description of the parameter plotBorderTop is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderTop </BLOCKQUOTE>
             \see plotBorderTop for more information */ 
-        inline virtual void setPlotBorderTop(int __value)
+        inline void setPlotBorderTop(int __value)
         {
             if (this->plotBorderTop != __value) {
                 this->plotBorderTop = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property plotBorderTop. 
+        /*! \brief returns the property plotBorderTop ( \copybrief plotBorderTop ). 
             \details Description of the parameter plotBorderTop is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBorderTop </BLOCKQUOTE>
             \see plotBorderTop for more information */ 
-        inline virtual int getPlotBorderTop() const  
+        inline int getPlotBorderTop() const
         {
             return this->plotBorderTop; 
         }
-        /*! \brief returns the property plotWidth. 
+        /*! \brief returns the property plotWidth ( \copybrief plotWidth ). 
             \details Description of the parameter plotWidth is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotWidth </BLOCKQUOTE>. 
             \see plotWidth for more information */ 
         inline int getPlotWidth() const { 
             return this->plotWidth; 
         }
-        /*! \brief returns the property plotHeight. 
+        /*! \brief returns the property plotHeight ( \copybrief plotHeight ). 
             \details Description of the parameter plotHeight is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotHeight </BLOCKQUOTE>. 
             \see plotHeight for more information */ 
         inline int getPlotHeight() const { 
             return this->plotHeight; 
         }
-        /*! \brief sets the property doDrawing to the specified \a __value. 
+        /*! \brief sets the property doDrawing ( \copybrief doDrawing ) to the specified \a __value. 
             \details Description of the parameter doDrawing is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::doDrawing </BLOCKQUOTE>
             \see doDrawing for more information */ 
-        inline virtual void setPlotUpdateEnabled(bool __value)
+        inline void setPlotUpdateEnabled(bool __value)
         {
             this->doDrawing = __value;
         } 
-        /*! \brief returns the property doDrawing. 
+        /*! \brief returns the property doDrawing ( \copybrief doDrawing ). 
             \details Description of the parameter doDrawing is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::doDrawing </BLOCKQUOTE>
             \see doDrawing for more information */ 
-        inline virtual bool isPlotUpdateEnabled() const  
+        inline bool isPlotUpdateEnabled() const
         {
             return this->doDrawing; 
         }
-        /*! \brief returns the property internalPlotBorderLeft. 
+        /*! \brief returns the property internalPlotBorderLeft ( \copybrief internalPlotBorderLeft ). 
             \details Description of the parameter internalPlotBorderLeft is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::internalPlotBorderLeft </BLOCKQUOTE>. 
             \see internalPlotBorderLeft for more information */ 
-        inline int get_internalPlotBorderLeft() const { 
+        inline int getInternalPlotBorderLeft() const { 
             return this->internalPlotBorderLeft; 
         }
-        /*! \brief returns the property internalPlotBorderBottom. 
+        /*! \brief returns the property internalPlotBorderBottom ( \copybrief internalPlotBorderBottom ). 
             \details Description of the parameter internalPlotBorderBottom is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::internalPlotBorderBottom </BLOCKQUOTE>. 
             \see internalPlotBorderBottom for more information */ 
-        inline int get_internalPlotBorderBottom() const { 
+        inline int getInternalPlotBorderBottom() const { 
             return this->internalPlotBorderBottom; 
         }
-        /*! \brief returns the property internalPlotBorderRight. 
+        /*! \brief returns the property internalPlotBorderRight ( \copybrief internalPlotBorderRight ). 
             \details Description of the parameter internalPlotBorderRight is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::internalPlotBorderRight </BLOCKQUOTE>. 
             \see internalPlotBorderRight for more information */ 
-        inline int get_internalPlotBorderRight() const { 
+        inline int getInternalPlotBorderRight() const { 
             return this->internalPlotBorderRight; 
         }
-        /*! \brief returns the property internalPlotBorderTop. 
+        /*! \brief returns the property internalPlotBorderTop ( \copybrief internalPlotBorderTop ). 
             \details Description of the parameter internalPlotBorderTop is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::internalPlotBorderTop </BLOCKQUOTE>. 
             \see internalPlotBorderTop for more information */ 
-        inline int get_internalPlotBorderTop() const { 
+        inline int getInternalPlotBorderTop() const { 
             return this->internalPlotBorderTop; 
         }
-        /*! \brief returns the property xMin. 
+        /*! \brief returns the property xMin ( \copybrief xMin ). 
             \details Description of the parameter xMin is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::xMin </BLOCKQUOTE>. 
             \see xMin for more information */ 
-        inline double get_xMin() const { 
+        inline double getXMin() const { 
             return this->xMin; 
         }
-        /*! \brief returns the property xMax. 
+        /*! \brief returns the property xMax ( \copybrief xMax ). 
             \details Description of the parameter xMax is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::xMax </BLOCKQUOTE>. 
             \see xMax for more information */ 
-        inline double get_xMax() const { 
+        inline double getXMax() const { 
             return this->xMax; 
         }
-        /*! \brief returns the property yMin. 
+        /*! \brief returns the property yMin ( \copybrief yMin ). 
             \details Description of the parameter yMin is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::yMin </BLOCKQUOTE>. 
             \see yMin for more information */ 
-        inline double get_yMin() const { 
+        inline double getYMin() const { 
             return this->yMin; 
         }
-        /*! \brief returns the property yMax. 
+        /*! \brief returns the property yMax ( \copybrief yMax ). 
             \details Description of the parameter yMax is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::yMax </BLOCKQUOTE>. 
             \see yMax for more information */ 
-        inline double get_yMax() const { 
+        inline double getYMax() const { 
             return this->yMax; 
         }
-        /*! \brief returns the property xAxisLog. 
+        /*! \brief returns the property xAxisLog ( \copybrief xAxisLog ). 
             \details Description of the parameter xAxisLog is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLog </BLOCKQUOTE>. 
             \see xAxisLog for more information */ 
         inline bool getXAxisLog() const { 
             return this->xAxisLog; 
         }
-        /*! \brief returns the property yAxisLog. 
+        /*! \brief returns the property yAxisLog ( \copybrief yAxisLog ). 
             \details Description of the parameter yAxisLog is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLog </BLOCKQUOTE>. 
             \see yAxisLog for more information */ 
         inline bool getYAxisLog() const { 
             return this->yAxisLog; 
         }
 
-        /*! \brief sets the property backgroundColor to the specified \a __value. 
+        /*! \brief sets the property backgroundColor ( \copybrief backgroundColor ) to the specified \a __value. 
             \details Description of the parameter backgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::backgroundColor </BLOCKQUOTE>
             \see backgroundColor for more information */ 
-        inline virtual void setBackgroundColor(const QColor & __value)  
+        inline void setBackgroundColor(const QColor & __value)
         {
             if (this->backgroundColor != __value) {
                 this->backgroundColor = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property backgroundColor. 
+        /*! \brief returns the property backgroundColor ( \copybrief backgroundColor ). 
             \details Description of the parameter backgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::backgroundColor </BLOCKQUOTE>
             \see backgroundColor for more information */ 
-        inline virtual QColor getBackgroundColor() const  
+        inline QColor getBackgroundColor() const
         {
             return this->backgroundColor; 
         }
-        /*! \brief sets the property plotBackgroundColor to the specified \a __value. 
+        /*! \brief sets the property plotBackgroundColor ( \copybrief plotBackgroundColor ) to the specified \a __value. 
             \details Description of the parameter plotBackgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBackgroundColor </BLOCKQUOTE>
             \see plotBackgroundColor for more information */ 
-        inline virtual void setPlotBackgroundColor(const QColor & __value)  
+        inline void setPlotBackgroundColor(const QColor & __value)
         {
             if (this->plotBackgroundColor != __value) {
                 this->plotBackgroundColor = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property plotBackgroundColor. 
+        /*! \brief returns the property plotBackgroundColor ( \copybrief plotBackgroundColor ). 
             \details Description of the parameter plotBackgroundColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::plotBackgroundColor </BLOCKQUOTE>
             \see plotBackgroundColor for more information */ 
-        inline virtual QColor getPlotBackgroundColor() const  
+        inline QColor getPlotBackgroundColor() const
         {
             return this->plotBackgroundColor; 
         }
-        /*! \brief sets the property drawGrid to the specified \a __value. 
+        /*! \brief sets the property drawGrid ( \copybrief drawGrid ) to the specified \a __value. 
             \details Description of the parameter drawGrid is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::drawGrid </BLOCKQUOTE>
             \see drawGrid for more information */ 
-        inline virtual void set_drawGrid(bool __value)
+        inline void setDrawGrid(bool __value)
         {
             if (this->drawGrid != __value) {
                 this->drawGrid = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property drawGrid. 
+        /*! \brief returns the property drawGrid ( \copybrief drawGrid ). 
             \details Description of the parameter drawGrid is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::drawGrid </BLOCKQUOTE>
             \see drawGrid for more information */ 
-        inline virtual bool get_drawGrid() const  
+        inline bool getDrawGrid() const
         {
             return this->drawGrid; 
         }
-        /*! \brief sets the property gridColor to the specified \a __value. 
+        /*! \brief sets the property gridColor ( \copybrief gridColor ) to the specified \a __value. 
             \details Description of the parameter gridColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridColor </BLOCKQUOTE>
             \see gridColor for more information */ 
-        inline virtual void setGridColor(const QColor & __value)  
+        inline void setGridColor(const QColor & __value)
         {
             if (this->gridColor != __value) {
                 this->gridColor = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property gridColor. 
+        /*! \brief returns the property gridColor ( \copybrief gridColor ). 
             \details Description of the parameter gridColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridColor </BLOCKQUOTE>
             \see gridColor for more information */ 
-        inline virtual QColor getGridColor() const  
+        inline QColor getGridColor() const
         {
             return this->gridColor; 
         }
-        /*! \brief sets the property gridStyle to the specified \a __value. 
+        /*! \brief sets the property gridStyle ( \copybrief gridStyle ) to the specified \a __value. 
             \details Description of the parameter gridStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridStyle </BLOCKQUOTE>
             \see gridStyle for more information */ 
-        inline virtual void setGridStyle(const Qt::PenStyle & __value)  
+        inline void setGridStyle(const Qt::PenStyle & __value)
         {
             if (this->gridStyle != __value) {
                 this->gridStyle = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property gridStyle. 
+        /*! \brief returns the property gridStyle ( \copybrief gridStyle ). 
             \details Description of the parameter gridStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridStyle </BLOCKQUOTE>
             \see gridStyle for more information */ 
-        inline virtual Qt::PenStyle getGridStyle() const  
+        inline Qt::PenStyle getGridStyle() const
         {
             return this->gridStyle; 
         }
-        /*! \brief sets the property gridWidth to the specified \a __value. 
+        /*! \brief sets the property gridWidth ( \copybrief gridWidth ) to the specified \a __value. 
             \details Description of the parameter gridWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridWidth </BLOCKQUOTE>
             \see gridWidth for more information */ 
-        inline virtual void setGridWidth(double __value)
+        inline void setGridWidth(double __value)
         {
             if (this->gridWidth != __value) {
                 this->gridWidth = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property gridWidth. 
+        /*! \brief returns the property gridWidth ( \copybrief gridWidth ). 
             \details Description of the parameter gridWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridWidth </BLOCKQUOTE>
             \see gridWidth for more information */ 
-        inline virtual double getGridWidth() const  
+        inline double getGridWidth() const
         {
             return this->gridWidth; 
         }
-        /*! \brief sets the property labelFontSize to the specified \a __value. 
+        /*! \brief sets the property labelFontSize ( \copybrief labelFontSize ) to the specified \a __value. 
             \details Description of the parameter labelFontSize is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::labelFontSize </BLOCKQUOTE>
             \see labelFontSize for more information */ 
-        inline virtual void set_labelFontSize(double __value)
+        inline void setLabelFontSize(double __value)
         {
             if (this->labelFontSize != __value) {
                 this->labelFontSize = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property labelFontSize. 
+        /*! \brief returns the property labelFontSize ( \copybrief labelFontSize ). 
             \details Description of the parameter labelFontSize is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::labelFontSize </BLOCKQUOTE>
             \see labelFontSize for more information */ 
-        inline virtual double get_labelFontSize() const  
+        inline double getLabelFontSize() const
         {
             return this->labelFontSize; 
         }
-        /*! \brief sets the property labelFontName to the specified \a __value. 
+        /*! \brief sets the property labelFontName ( \copybrief labelFontName ) to the specified \a __value. 
             \details Description of the parameter labelFontName is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::labelFontName </BLOCKQUOTE>
             \see labelFontName for more information */ 
-        inline virtual void set_labelFontName(const QString & __value)  
+        inline void setLabelFontName(const QString & __value)
         {
             if (this->labelFontName != __value) {
                 this->labelFontName = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property labelFontName. 
+        /*! \brief returns the property labelFontName ( \copybrief labelFontName ). 
             \details Description of the parameter labelFontName is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::labelFontName </BLOCKQUOTE>
             \see labelFontName for more information */ 
-        inline virtual QString get_labelFontName() const  
+        inline QString getLabelFontName() const
         {
             return this->labelFontName; 
         }
-        /*! \brief sets the property tickFontSize to the specified \a __value. 
+        /*! \brief sets the property tickFontSize ( \copybrief tickFontSize ) to the specified \a __value. 
             \details Description of the parameter tickFontSize is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::tickFontSize </BLOCKQUOTE>
             \see tickFontSize for more information */ 
-        inline virtual void set_tickFontSize(double __value)
+        inline void setTickFontSize(double __value)
         {
             if (this->tickFontSize != __value) {
                 this->tickFontSize = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property tickFontSize. 
+        /*! \brief returns the property tickFontSize ( \copybrief tickFontSize ). 
             \details Description of the parameter tickFontSize is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::tickFontSize </BLOCKQUOTE>
             \see tickFontSize for more information */ 
-        inline virtual double get_tickFontSize() const  
+        inline double getTickFontSize() const
         {
             return this->tickFontSize; 
         }
-        /*! \brief sets the property tickFontName to the specified \a __value. 
+        /*! \brief sets the property tickFontName ( \copybrief tickFontName ) to the specified \a __value. 
             \details Description of the parameter tickFontName is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::tickFontName </BLOCKQUOTE>
             \see tickFontName for more information */ 
-        inline virtual void set_tickFontName(const QString & __value)  
+        inline void setTickFontName(const QString & __value)
         {
             if (this->tickFontName != __value) {
                 this->tickFontName = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property tickFontName. 
+        /*! \brief returns the property tickFontName ( \copybrief tickFontName ). 
             \details Description of the parameter tickFontName is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::tickFontName </BLOCKQUOTE>
             \see tickFontName for more information */ 
-        inline virtual QString get_tickFontName() const  
+        inline QString getTickFontName() const
         {
             return this->tickFontName; 
         }
-        /*! \brief sets the property tickLength to the specified \a __value. 
+        /*! \brief sets the property tickLength ( \copybrief tickLength ) to the specified \a __value. 
             \details Description of the parameter tickLength is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::tickLength </BLOCKQUOTE>
             \see tickLength for more information */ 
-        inline virtual void set_tickLength(double __value)
+        inline void setTickLength(double __value)
         {
             if (this->tickLength != __value) {
                 this->tickLength = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property tickLength. 
+        /*! \brief returns the property tickLength ( \copybrief tickLength ). 
             \details Description of the parameter tickLength is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::tickLength </BLOCKQUOTE>
             \see tickLength for more information */ 
-        inline virtual double get_tickLength() const  
+        inline double getTickLength() const
         {
             return this->tickLength; 
         }
-        /*! \brief sets the property drawSystemBox to the specified \a __value. 
+        /*! \brief sets the property drawSystemBox ( \copybrief drawSystemBox ) to the specified \a __value. 
             \details Description of the parameter drawSystemBox is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::drawSystemBox </BLOCKQUOTE>
             \see drawSystemBox for more information */ 
-        inline virtual void set_drawSystemBox(bool __value)
+        inline void setDrawSystemBox(bool __value)
         {
             if (this->drawSystemBox != __value) {
                 this->drawSystemBox = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property drawSystemBox. 
+        /*! \brief returns the property drawSystemBox ( \copybrief drawSystemBox ). 
             \details Description of the parameter drawSystemBox is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::drawSystemBox </BLOCKQUOTE>
             \see drawSystemBox for more information */ 
-        inline virtual bool get_drawSystemBox() const  
+        inline bool getDrawSystemBox() const
         {
             return this->drawSystemBox; 
         }
-        /*! \brief sets the property drawZeroAxes to the specified \a __value. 
+        /*! \brief sets the property drawZeroAxes ( \copybrief drawZeroAxes ) to the specified \a __value. 
             \details Description of the parameter drawZeroAxes is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::drawZeroAxes </BLOCKQUOTE>
             \see drawZeroAxes for more information */ 
-        inline virtual void set_drawZeroAxes(bool __value)
+        inline void setDrawZeroAxes(bool __value)
         {
             if (this->drawZeroAxes != __value) {
                 this->drawZeroAxes = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property drawZeroAxes. 
+        /*! \brief returns the property drawZeroAxes ( \copybrief drawZeroAxes ). 
             \details Description of the parameter drawZeroAxes is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::drawZeroAxes </BLOCKQUOTE>
             \see drawZeroAxes for more information */ 
-        inline virtual bool get_drawZeroAxes() const  
+        inline bool getDrawZeroAxes() const
         {
             return this->drawZeroAxes; 
         }
-        /*! \brief sets the property systemColor to the specified \a __value. 
+        /*! \brief sets the property systemColor ( \copybrief systemColor ) to the specified \a __value. 
             \details Description of the parameter systemColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::systemColor </BLOCKQUOTE>
             \see systemColor for more information */ 
-        inline virtual void set_systemColor(const QColor & __value)  
+        inline void setSystemColor(const QColor & __value)
         {
             if (this->systemColor != __value) {
                 this->systemColor = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property systemColor. 
+        /*! \brief returns the property systemColor ( \copybrief systemColor ). 
             \details Description of the parameter systemColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::systemColor </BLOCKQUOTE>
             \see systemColor for more information */ 
-        inline virtual QColor get_systemColor() const  
+        inline QColor getSystemColor() const
         {
             return this->systemColor; 
         }
-        /*! \brief sets the property systemWidth to the specified \a __value. 
+        /*! \brief sets the property systemWidth ( \copybrief systemWidth ) to the specified \a __value. 
             \details Description of the parameter systemWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::systemWidth </BLOCKQUOTE>
             \see systemWidth for more information */ 
-        inline virtual void set_systemWidth(double __value)
+        inline void setSystemWidth(double __value)
         {
             if (this->systemWidth != __value) {
                 this->systemWidth = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property systemWidth. 
+        /*! \brief returns the property systemWidth ( \copybrief systemWidth ). 
             \details Description of the parameter systemWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::systemWidth </BLOCKQUOTE>
             \see systemWidth for more information */ 
-        inline virtual double get_systemWidth() const  
+        inline double getSystemWidth() const
         {
             return this->systemWidth; 
         }
-        /*! \brief sets the property xZeroTick to the specified \a __value. 
+        /*! \brief sets the property xZeroTick ( \copybrief xZeroTick ) to the specified \a __value. 
             \details Description of the parameter xZeroTick is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xZeroTick </BLOCKQUOTE>
             \see xZeroTick for more information */ 
-        inline virtual void set_xZeroTick(double __value)
+        inline void setXZeroTick(double __value)
         {
             if (this->xZeroTick != __value) {
                 this->xZeroTick = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property xZeroTick. 
+        /*! \brief returns the property xZeroTick ( \copybrief xZeroTick ). 
             \details Description of the parameter xZeroTick is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xZeroTick </BLOCKQUOTE>
             \see xZeroTick for more information */ 
-        inline virtual double get_xZeroTick() const  
+        inline double getXZeroTick() const
         {
             return this->xZeroTick; 
         }
-        /*! \brief sets the property yZeroTick to the specified \a __value. 
+        /*! \brief sets the property yZeroTick ( \copybrief yZeroTick ) to the specified \a __value. 
             \details Description of the parameter yZeroTick is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yZeroTick </BLOCKQUOTE>
             \see yZeroTick for more information */ 
-        inline virtual void set_yZeroTick(double __value)
+        inline void setYZeroTick(double __value)
         {
             if (this->yZeroTick != __value) {
                 this->yZeroTick = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property yZeroTick. 
+        /*! \brief returns the property yZeroTick ( \copybrief yZeroTick ). 
             \details Description of the parameter yZeroTick is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yZeroTick </BLOCKQUOTE>
             \see yZeroTick for more information */ 
-        inline virtual double get_yZeroTick() const  
+        inline double getYZeroTick() const
         {
             return this->yZeroTick; 
         }
-        /*! \brief sets the property xTickDistance to the specified \a __value. 
+        /*! \brief sets the property xTickDistance ( \copybrief xTickDistance ) to the specified \a __value. 
             \details Description of the parameter xTickDistance is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xTickDistance </BLOCKQUOTE>
             \see xTickDistance for more information */ 
-        inline virtual void set_xTickDistance(double __value)
+        inline void setXTickDistance(double __value)
         {
             if (this->xTickDistance != __value) {
                 this->xTickDistance = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property xTickDistance. 
+        /*! \brief returns the property xTickDistance ( \copybrief xTickDistance ). 
             \details Description of the parameter xTickDistance is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xTickDistance </BLOCKQUOTE>
             \see xTickDistance for more information */ 
-        inline virtual double get_xTickDistance() const  
+        inline double getXTickDistance() const
         {
             return this->xTickDistance; 
         }
-        /*! \brief sets the property yTickDistance to the specified \a __value. 
+        /*! \brief sets the property yTickDistance ( \copybrief yTickDistance ) to the specified \a __value. 
             \details Description of the parameter yTickDistance is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yTickDistance </BLOCKQUOTE>
             \see yTickDistance for more information */ 
-        inline virtual void set_yTickDistance(double __value)
+        inline void setYTickDistance(double __value)
         {
             if (this->yTickDistance != __value) {
                 this->yTickDistance = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property yTickDistance. 
+        /*! \brief returns the property yTickDistance ( \copybrief yTickDistance ). 
             \details Description of the parameter yTickDistance is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yTickDistance </BLOCKQUOTE>
             \see yTickDistance for more information */ 
-        inline virtual double get_yTickDistance() const  
+        inline double getYTickDistance() const
         {
             return this->yTickDistance; 
         }
-        /*! \brief sets the property xAxisLabel to the specified \a __value. 
+        /*! \brief sets the property xAxisLabel ( \copybrief xAxisLabel ) to the specified \a __value. 
             \details Description of the parameter xAxisLabel is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLabel </BLOCKQUOTE>
             \see xAxisLabel for more information */ 
-        inline virtual void set_xAxisLabel(const QString & __value)  
+        inline void setXAxisLabel(const QString & __value)
         {
             if (this->xAxisLabel != __value) {
                 this->xAxisLabel = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property xAxisLabel. 
+        /*! \brief returns the property xAxisLabel ( \copybrief xAxisLabel ). 
             \details Description of the parameter xAxisLabel is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLabel </BLOCKQUOTE>
             \see xAxisLabel for more information */ 
-        inline virtual QString getXAxisLabel() const  
+        inline QString getXAxisLabel() const
         {
             return this->xAxisLabel; 
         }
-        /*! \brief sets the property yAxisLabel to the specified \a __value. 
+        /*! \brief sets the property yAxisLabel ( \copybrief yAxisLabel ) to the specified \a __value. 
             \details Description of the parameter yAxisLabel is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLabel </BLOCKQUOTE>
             \see yAxisLabel for more information */ 
-        inline virtual void set_yAxisLabel(const QString & __value)  
+        inline void setYAxisLabel(const QString & __value)
         {
             if (this->yAxisLabel != __value) {
                 this->yAxisLabel = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property yAxisLabel. 
+        /*! \brief returns the property yAxisLabel ( \copybrief yAxisLabel ). 
             \details Description of the parameter yAxisLabel is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLabel </BLOCKQUOTE>
             \see yAxisLabel for more information */ 
-        inline virtual QString getYAxisLabel() const  
+        inline QString getYAxisLabel() const
         {
             return this->yAxisLabel; 
         }
-        /*! \brief sets the property aspectRatio to the specified \a __value. 
+        /*! \brief sets the property aspectRatio ( \copybrief aspectRatio ) to the specified \a __value. 
             \details Description of the parameter aspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::aspectRatio </BLOCKQUOTE>
             \see aspectRatio for more information */ 
-        inline virtual void setAspectRatio(double __value)
+        inline void setAspectRatio(double __value)
         {
             if (this->aspectRatio != __value) {
                 this->aspectRatio = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property aspectRatio. 
+        /*! \brief returns the property aspectRatio ( \copybrief aspectRatio ). 
             \details Description of the parameter aspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::aspectRatio </BLOCKQUOTE>
             \see aspectRatio for more information */ 
-        inline virtual double getAspectRatio() const  
+        inline double getAspectRatio() const
         {
             return this->aspectRatio; 
         }
-        /*! \brief sets the property maintainAspectRatio to the specified \a __value. 
+        /*! \brief sets the property maintainAspectRatio ( \copybrief maintainAspectRatio ) to the specified \a __value. 
             \details Description of the parameter maintainAspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::maintainAspectRatio </BLOCKQUOTE>
             \see maintainAspectRatio for more information */ 
-        inline virtual void setMaintainAspectRatio(bool __value)
+        inline void setMaintainAspectRatio(bool __value)
         {
             if (this->maintainAspectRatio != __value) {
                 this->maintainAspectRatio = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property maintainAspectRatio. 
+        /*! \brief returns the property maintainAspectRatio ( \copybrief maintainAspectRatio ). 
             \details Description of the parameter maintainAspectRatio is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::maintainAspectRatio </BLOCKQUOTE>
             \see maintainAspectRatio for more information */ 
-        inline virtual bool doesMaintainAspectRatio() const  
+        inline bool doesMaintainAspectRatio() const
         {
             return this->maintainAspectRatio; 
         }
-        /*! \brief sets the property xAxisLabelVisible to the specified \a __value. 
+        /*! \brief sets the property xAxisLabelVisible ( \copybrief xAxisLabelVisible ) to the specified \a __value. 
             \details Description of the parameter xAxisLabelVisible is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLabelVisible </BLOCKQUOTE>
             \see xAxisLabelVisible for more information */ 
-        inline virtual void set_xAxisLabelVisible(bool __value)
+        inline void setXAxisLabelVisible(bool __value)
         {
             if (this->xAxisLabelVisible != __value) {
                 this->xAxisLabelVisible = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property xAxisLabelVisible. 
+        /*! \brief returns the property xAxisLabelVisible ( \copybrief xAxisLabelVisible ). 
             \details Description of the parameter xAxisLabelVisible is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::xAxisLabelVisible </BLOCKQUOTE>
             \see xAxisLabelVisible for more information */ 
-        inline virtual bool getXAxisLabelVisible() const  
+        inline bool getXAxisLabelVisible() const
         {
             return this->xAxisLabelVisible; 
         }
-        /*! \brief sets the property yAxisLabelVisible to the specified \a __value. 
+        /*! \brief sets the property yAxisLabelVisible ( \copybrief yAxisLabelVisible ) to the specified \a __value. 
             \details Description of the parameter yAxisLabelVisible is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLabelVisible </BLOCKQUOTE>
             \see yAxisLabelVisible for more information */ 
-        inline virtual void set_yAxisLabelVisible(bool __value)
+        inline void setYAxisLabelVisible(bool __value)
         {
             if (this->yAxisLabelVisible != __value) {
                 this->yAxisLabelVisible = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property yAxisLabelVisible. 
+        /*! \brief returns the property yAxisLabelVisible ( \copybrief yAxisLabelVisible ). 
             \details Description of the parameter yAxisLabelVisible is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::yAxisLabelVisible </BLOCKQUOTE>
             \see yAxisLabelVisible for more information */ 
-        inline virtual bool getYAxisLabelVisible() const  
+        inline bool getYAxisLabelVisible() const
         {
             return this->yAxisLabelVisible; 
         }
-        /*! \brief sets the property synchronizeX to the specified \a __value. 
+        /*! \brief sets the property synchronizeX ( \copybrief synchronizeX ) to the specified \a __value. 
             \details Description of the parameter synchronizeX is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::synchronizeX </BLOCKQUOTE>
             \see synchronizeX for more information */ 
-        inline virtual void set_synchronizeX(JKQTFastPlotter* & __value)
+        inline void setSynchronizeX(JKQTFastPlotter* & __value)
         {
             if (this->synchronizeX != __value) {
                 this->synchronizeX = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property synchronizeX. 
+        /*! \brief returns the property synchronizeX ( \copybrief synchronizeX ). 
             \details Description of the parameter synchronizeX is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::synchronizeX </BLOCKQUOTE>
             \see synchronizeX for more information */ 
-        inline virtual JKQTFastPlotter* get_synchronizeX() const  
+        inline JKQTFastPlotter* getSynchronizeX() const
         {
             return this->synchronizeX; 
         }
-        /*! \brief sets the property synchronizeY to the specified \a __value. 
+        /*! \brief sets the property synchronizeY ( \copybrief synchronizeY ) to the specified \a __value. 
             \details Description of the parameter synchronizeY is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::synchronizeY </BLOCKQUOTE>
             \see synchronizeY for more information */ 
-        inline virtual void set_synchronizeY(JKQTFastPlotter* & __value)
+        inline void setSynchronizeY(JKQTFastPlotter* & __value)
         {
             if (this->synchronizeY != __value) {
                 this->synchronizeY = __value; 
                 redrawPlot(); 
             } 
         } 
-        /*! \brief returns the property synchronizeY. 
+        /*! \brief returns the property synchronizeY ( \copybrief synchronizeY ). 
             \details Description of the parameter synchronizeY is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::synchronizeY </BLOCKQUOTE>
             \see synchronizeY for more information */ 
-        inline virtual JKQTFastPlotter* get_synchronizeY() const  
+        inline JKQTFastPlotter* getSynchronizeY() const
         {
             return this->synchronizeY; 
         }
 
-        /** \brief draw the contents onto any QPainter, starting at (0,0), returns the size of the whole plot in \a size, if supplied with the default background color */
+        /** \brief draw the contents onto any <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>, starting at (0,0), returns the size of the whole plot in \a size, if supplied with the default background color */
         void draw(QPainter* painter, QSize* size=nullptr);
 
-        /** \brief draw the contents onto any QPainter, starting at (0,0), returns the size of the whole plot in \a size, if supplied with the supplied\a background color */
+        /** \brief draw the contents onto any <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>, starting at (0,0), returns the size of the whole plot in \a size, if supplied with the supplied\a background color */
         void draw(QPainter* painter, QColor background, QSize* size);
 
     signals:
@@ -1122,36 +1113,36 @@ class LIB_EXPORT JKQTFastPlotter : public JKQTFASTPLOTTER_BASEWIDGET {
         /** \brief replot everything (slowest possible plotting) */
         void redrawPlot();
         /** \brief replot everything (slowest possible plotting) and forces a repaint calling QWidget::repaint() */
-        void redrawPlot_immediate();
+        void redrawPlotImmediate();
         /** \brief replot only the data
          *
          *  This internally calls QWidget::update(), so no immediate repaint() is forced! If you want an immediate update,
-         * call update_data_immediate() instead!
+         * call updateDataImmediate() instead!
          */
-        void update_data();
+        void updateData();
         /** \brief replot only the data, forces a redraw by calling QWidget::repaint()  */
-        void update_data_immediate();
+        void updateDataImmediate();
 
         /** \brief set xMin*/
-        void set_xMin(double value){
+        void setXMin(double value){
             setPlotUpdateEnabled(false);
             setXRange(value,xMax,xAxisLog);
             setPlotUpdateEnabled(true);
         }
         /** \brief set xMax*/
-        void set_xMax(double value){
+        void setXMax(double value){
             setPlotUpdateEnabled(false);
             setXRange(xMin,value,xAxisLog);
             setPlotUpdateEnabled(true);
         }
         /** \brief set yMin*/
-        void set_yMin(double value){
+        void setYMin(double value){
             setPlotUpdateEnabled(false);
             setYRange(value,yMax,yAxisLog);
             setPlotUpdateEnabled(true);
         }
         /** \brief set yMax*/
-        void set_yMax(double value){
+        void setYMax(double value){
             setPlotUpdateEnabled(false);
             setYRange(yMin,value,yAxisLog);
             setPlotUpdateEnabled(true);
@@ -1185,6 +1176,7 @@ class LIB_EXPORT JKQTFPPlot: public QObject {
         /** \brief set the parent of the plot */
         void setParent(JKQTFastPlotter* parent) { this->parent=parent; QObject::setParent(parent); }
 
+        /** \brief returns whether this graph is visible inside the plot */
         bool isVisible() const { return this->visible; }
 
         /** \brief draw the graph */
@@ -1270,25 +1262,25 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        inline void set_data(double* x, double* y, int N) {
+        inline void setData(double* x, double* y, int N) {
             this->x=x;
             this->y=y;
             this->yerr=nullptr;
             this->N=N;
             datatype=JKQTFPLPPointer;
             replot();
-        };
+        }
 
-        inline void set_data(double* x, double* y, double* yerr, int N) {
+        inline void setData(double* x, double* y, double* yerr, int N) {
             this->x=x;
             this->y=y;
             this->yerr=yerr;
             this->N=N;
             datatype=JKQTFPLPPointer;
             replot();
-        };
+        }
 
-        inline void set_data(QVector<double>* x, QVector<double>* y) {
+        inline void setData(QVector<double>* x, QVector<double>* y) {
             this->x=nullptr;
             this->y=nullptr;
             this->yerr=nullptr;
@@ -1298,9 +1290,9 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             this->N=x->size();
             datatype=JKQTFPLPVector;
             replot();
-        };
+        }
 
-        inline void set_data(QVector<double>* x, QVector<double>* y, QVector<double>* yerr) {
+        inline void setData(QVector<double>* x, QVector<double>* y, QVector<double>* yerr) {
             this->x=nullptr;
             this->y=nullptr;
             this->yerr=nullptr;
@@ -1310,9 +1302,9 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             this->N=x->size();
             datatype=JKQTFPLPVector;
             replot();
-        };
+        }
 
-        inline int get_N() {
+        inline int getN() {
             if (datatype==JKQTFPLPPointer)
                 return N;
             if (datatype==JKQTFPLPVector)
@@ -1320,147 +1312,147 @@ class LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             return N;
         }
 
-        /*! \brief returns the property x. 
+        /*! \brief returns the property x ( \copybrief x ). 
             \details Description of the parameter x is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::x </BLOCKQUOTE>. 
             \see x for more information */ 
-        inline double* get_x() const { 
+        inline double* getX() const { 
             return this->x; 
         }
-        /*! \brief returns the property y. 
+        /*! \brief returns the property y ( \copybrief y ). 
             \details Description of the parameter y is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::y </BLOCKQUOTE>. 
             \see y for more information */ 
-        inline double* get_y() const { 
+        inline double* getY() const { 
             return this->y; 
         }
-        /*! \brief returns the property yerr. 
+        /*! \brief returns the property yerr ( \copybrief yerr ). 
             \details Description of the parameter yerr is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::yerr </BLOCKQUOTE>. 
             \see yerr for more information */ 
-        inline double* get_yerr() const { 
+        inline double* getYerr() const { 
             return this->yerr; 
         }
-        /*! \brief returns the property xv. 
+        /*! \brief returns the property xv ( \copybrief xv ). 
             \details Description of the parameter xv is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::xv </BLOCKQUOTE>. 
             \see xv for more information */ 
-        inline QVector<double>* get_xv() const { 
+        inline QVector<double>* getXv() const { 
             return this->xv; 
         }
-        /*! \brief returns the property yv. 
+        /*! \brief returns the property yv ( \copybrief yv ). 
             \details Description of the parameter yv is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::yv </BLOCKQUOTE>. 
             \see yv for more information */ 
-        inline QVector<double>* get_yv() const { 
+        inline QVector<double>* getYv() const { 
             return this->yv; 
         }
-        /*! \brief returns the property yerrv. 
+        /*! \brief returns the property yerrv ( \copybrief yerrv ). 
             \details Description of the parameter yerrv is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::yerrv </BLOCKQUOTE>. 
             \see yerrv for more information */ 
-        inline QVector<double>* get_yerrv() const { 
+        inline QVector<double>* getYerrv() const { 
             return this->yerrv; 
         }
-        /*! \brief returns the property datatype. 
+        /*! \brief returns the property datatype ( \copybrief datatype ). 
             \details Description of the parameter datatype is:  <BLOCKQUOTE>\copydoc JKQTFastPlotter::datatype </BLOCKQUOTE>. 
             \see datatype for more information */ 
-        inline DataType get_datatype() const { 
+        inline DataType getDatatype() const { 
             return this->datatype; 
         }
-        /*! \brief sets the property color to the specified \a __value. 
+        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual void set_color(const QColor & __value)  
+        inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
                 this->color = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property color. 
+        /*! \brief returns the property color ( \copybrief color ). 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual QColor get_color() const  
+        inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \brief sets the property style to the specified \a __value. 
+        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual void set_style(const Qt::PenStyle & __value)  
+        inline void setStyle(const Qt::PenStyle & __value)
         {
             if (this->style != __value) {
                 this->style = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property style. 
+        /*! \brief returns the property style ( \copybrief style ). 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual Qt::PenStyle get_style() const  
+        inline Qt::PenStyle getStyle() const
         {
             return this->style; 
         }
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(double __value)
+        inline void setWidth(double __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual double get_width() const  
+        inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \brief sets the property errorColor to the specified \a __value. 
+        /*! \brief sets the property errorColor ( \copybrief errorColor ) to the specified \a __value. 
             \details Description of the parameter errorColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorColor </BLOCKQUOTE>
             \see errorColor for more information */ 
-        inline virtual void set_errorColor(const QColor & __value)  
+        inline void setErrorColor(const QColor & __value)
         {
             if (this->errorColor != __value) {
                 this->errorColor = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property errorColor. 
+        /*! \brief returns the property errorColor ( \copybrief errorColor ). 
             \details Description of the parameter errorColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorColor </BLOCKQUOTE>
             \see errorColor for more information */ 
-        inline virtual QColor get_errorColor() const  
+        inline QColor getErrorColor() const
         {
             return this->errorColor; 
         }
-        /*! \brief sets the property errorStyle to the specified \a __value. 
+        /*! \brief sets the property errorStyle ( \copybrief errorStyle ) to the specified \a __value. 
             \details Description of the parameter errorStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorStyle </BLOCKQUOTE>
             \see errorStyle for more information */ 
-        inline virtual void set_errorStyle(const Qt::PenStyle & __value)  
+        inline void setErrorStyle(const Qt::PenStyle & __value)
         {
             if (this->errorStyle != __value) {
                 this->errorStyle = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property errorStyle. 
+        /*! \brief returns the property errorStyle ( \copybrief errorStyle ). 
             \details Description of the parameter errorStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorStyle </BLOCKQUOTE>
             \see errorStyle for more information */ 
-        inline virtual Qt::PenStyle get_errorStyle() const  
+        inline Qt::PenStyle getErrorStyle() const
         {
             return this->errorStyle; 
         }
-        /*! \brief sets the property errorWidth to the specified \a __value. 
+        /*! \brief sets the property errorWidth ( \copybrief errorWidth ) to the specified \a __value. 
             \details Description of the parameter errorWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorWidth </BLOCKQUOTE>
             \see errorWidth for more information */ 
-        inline virtual void set_errorWidth(double __value)
+        inline void setErrorWidth(double __value)
         {
             if (this->errorWidth != __value) {
                 this->errorWidth = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property errorWidth. 
+        /*! \brief returns the property errorWidth ( \copybrief errorWidth ). 
             \details Description of the parameter errorWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorWidth </BLOCKQUOTE>
             \see errorWidth for more information */ 
-        inline virtual double get_errorWidth() const  
+        inline double getErrorWidth() const
         {
             return this->errorWidth; 
         }
@@ -1503,20 +1495,20 @@ class LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \brief sets the property crossWidth to the specified \a __value. 
+        /*! \brief sets the property crossWidth ( \copybrief crossWidth ) to the specified \a __value. 
             \details Description of the parameter crossWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::crossWidth </BLOCKQUOTE>
             \see crossWidth for more information */ 
-        inline virtual void set_crossWidth(double __value)
+        inline void setCrossWidth(double __value)
         {
             if (this->crossWidth != __value) {
                 this->crossWidth = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property crossWidth. 
+        /*! \brief returns the property crossWidth ( \copybrief crossWidth ). 
             \details Description of the parameter crossWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::crossWidth </BLOCKQUOTE>
             \see crossWidth for more information */ 
-        inline virtual double get_crossWidth() const  
+        inline double getCrossWidth() const
         {
             return this->crossWidth; 
         }
@@ -1603,152 +1595,152 @@ class LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \brief sets the property color to the specified \a __value. 
+        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual void set_color(const QColor & __value)  
+        inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
                 this->color = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property color. 
+        /*! \brief returns the property color ( \copybrief color ). 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual QColor get_color() const  
+        inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor to the specified \a __value. 
+        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::fillColor </BLOCKQUOTE>
             \see fillColor for more information */ 
-        inline virtual void set_fillColor(const QColor & __value)  
+        inline void setFillColor(const QColor & __value)
         {
             if (this->fillColor != __value) {
                 this->fillColor = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property fillColor. 
+        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::fillColor </BLOCKQUOTE>
             \see fillColor for more information */ 
-        inline virtual QColor get_fillColor() const  
+        inline QColor getFillColor() const
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property fillStyle to the specified \a __value. 
+        /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::fillStyle </BLOCKQUOTE>
             \see fillStyle for more information */ 
-        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        inline void setFillStyle(const Qt::BrushStyle & __value)
         {
             if (this->fillStyle != __value) {
                 this->fillStyle = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property fillStyle. 
+        /*! \brief returns the property fillStyle ( \copybrief fillStyle ). 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::fillStyle </BLOCKQUOTE>
             \see fillStyle for more information */ 
-        inline virtual Qt::BrushStyle get_fillStyle() const  
+        inline Qt::BrushStyle getFillStyle() const
         {
             return this->fillStyle; 
         }
-        /*! \brief sets the property style to the specified \a __value. 
+        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual void set_style(const Qt::PenStyle & __value)  
+        inline void setStyle(const Qt::PenStyle & __value)
         {
             if (this->style != __value) {
                 this->style = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property style. 
+        /*! \brief returns the property style ( \copybrief style ). 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual Qt::PenStyle get_style() const  
+        inline Qt::PenStyle getStyle() const
         {
             return this->style; 
         }
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(double __value)
+        inline void setWidth(double __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual double get_width() const  
+        inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \brief returns the property xmin. 
+        /*! \brief returns the property xmin ( \copybrief xmin ). 
             \details Description of the parameter xmin is:  <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::xmin </BLOCKQUOTE>. 
             \see xmin for more information */ 
-        inline double get_xmin() const { 
+        inline double getXmin() const { 
             return this->xmin; 
         }
-        /*! \brief returns the property xmax. 
+        /*! \brief returns the property xmax ( \copybrief xmax ). 
             \details Description of the parameter xmax is:  <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::xmax </BLOCKQUOTE>. 
             \see xmax for more information */ 
-        inline double get_xmax() const { 
+        inline double getXmax() const { 
             return this->xmax; 
         }
-        /*! \brief returns the property centerline. 
+        /*! \brief returns the property centerline ( \copybrief centerline ). 
             \details Description of the parameter centerline is:  <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::centerline </BLOCKQUOTE>. 
             \see centerline for more information */ 
-        inline double get_centerline() const { 
+        inline double getCenterline() const { 
             return this->centerline; 
         }
-        /*! \brief sets the property showCenterline to the specified \a __value. 
+        /*! \brief sets the property showCenterline ( \copybrief showCenterline ) to the specified \a __value. 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual void setShowCenterline(bool __value)
+        inline void setShowCenterline(bool __value)
         {
             if (this->showCenterline != __value) {
                 this->showCenterline = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property showCenterline. 
+        /*! \brief returns the property showCenterline ( \copybrief showCenterline ). 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual bool getShowCenterline() const  
+        inline bool getShowCenterline() const
         {
             return this->showCenterline; 
         }
     public slots:
-        void set_centerline(int centerline) {
+        void setCenterline(int centerline) {
             if (this->centerline!=centerline) {
                 this->centerline=centerline;
                 replot();
             }
         }
-        void set_xmin(double xmin) {
+        void setXmin(double xmin) {
             if (this->xmin!=xmin) {
                 this->xmin=xmin;
                 replot();
             }
         }
-        void set_xmax(double xmax) {
+        void setXmax(double xmax) {
             if (this->xmax!=xmax) {
                 this->xmax=xmax;
                 replot();
             }
         }
-        void set_xmin(int xmin) {
+        void setXmin(int xmin) {
             if (this->xmin!=xmin) {
                 this->xmin=xmin;
                 replot();
             }
         }
-        void set_xmax(int xmax) {
+        void setXmax(int xmax) {
             if (this->xmax!=xmax) {
                 this->xmax=xmax;
                 replot();
@@ -1797,152 +1789,152 @@ class LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \brief sets the property color to the specified \a __value. 
+        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual void set_color(const QColor & __value)  
+        inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
                 this->color = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property color. 
+        /*! \brief returns the property color ( \copybrief color ). 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual QColor get_color() const  
+        inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor to the specified \a __value. 
+        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::fillColor </BLOCKQUOTE>
             \see fillColor for more information */ 
-        inline virtual void set_fillColor(const QColor & __value)  
+        inline void setFillColor(const QColor & __value)
         {
             if (this->fillColor != __value) {
                 this->fillColor = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property fillColor. 
+        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::fillColor </BLOCKQUOTE>
             \see fillColor for more information */ 
-        inline virtual QColor get_fillColor() const  
+        inline QColor getFillColor() const
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property fillStyle to the specified \a __value. 
+        /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::fillStyle </BLOCKQUOTE>
             \see fillStyle for more information */ 
-        inline virtual void set_fillStyle(const Qt::BrushStyle & __value)  
+        inline void setFillStyle(const Qt::BrushStyle & __value)
         {
             if (this->fillStyle != __value) {
                 this->fillStyle = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property fillStyle. 
+        /*! \brief returns the property fillStyle ( \copybrief fillStyle ). 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::fillStyle </BLOCKQUOTE>
             \see fillStyle for more information */ 
-        inline virtual Qt::BrushStyle get_fillStyle() const  
+        inline Qt::BrushStyle getFillStyle() const
         {
             return this->fillStyle; 
         }
-        /*! \brief sets the property style to the specified \a __value. 
+        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual void set_style(const Qt::PenStyle & __value)  
+        inline void setStyle(const Qt::PenStyle & __value)
         {
             if (this->style != __value) {
                 this->style = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property style. 
+        /*! \brief returns the property style ( \copybrief style ). 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual Qt::PenStyle get_style() const  
+        inline Qt::PenStyle getStyle() const
         {
             return this->style; 
         }
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(double __value)
+        inline void setWidth(double __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual double get_width() const  
+        inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \brief returns the property ymin. 
+        /*! \brief returns the property ymin ( \copybrief ymin ). 
             \details Description of the parameter ymin is:  <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::ymin </BLOCKQUOTE>. 
             \see ymin for more information */ 
-        inline double get_ymin() const { 
+        inline double getYmin() const { 
             return this->ymin; 
         }
-        /*! \brief returns the property ymax. 
+        /*! \brief returns the property ymax ( \copybrief ymax ). 
             \details Description of the parameter ymax is:  <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::ymax </BLOCKQUOTE>. 
             \see ymax for more information */ 
-        inline double get_ymax() const { 
+        inline double getYmax() const { 
             return this->ymax; 
         }
-        /*! \brief returns the property centerline. 
+        /*! \brief returns the property centerline ( \copybrief centerline ). 
             \details Description of the parameter centerline is:  <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::centerline </BLOCKQUOTE>. 
             \see centerline for more information */ 
-        inline double get_centerline() const { 
+        inline double getCenterline() const { 
             return this->centerline; 
         }
-        /*! \brief sets the property showCenterline to the specified \a __value. 
+        /*! \brief sets the property showCenterline ( \copybrief showCenterline ) to the specified \a __value. 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual void setShowCenterline(bool __value)
+        inline void setShowCenterline(bool __value)
         {
             if (this->showCenterline != __value) {
                 this->showCenterline = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property showCenterline. 
+        /*! \brief returns the property showCenterline ( \copybrief showCenterline ). 
             \details Description of the parameter showCenterline is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::showCenterline </BLOCKQUOTE>
             \see showCenterline for more information */ 
-        inline virtual bool getShowCenterline() const  
+        inline bool getShowCenterline() const
         {
             return this->showCenterline; 
         }
     public slots:
-        void set_centerline(int centerline) {
+        void setCenterline(int centerline) {
             if (this->centerline!=centerline) {
                 this->centerline=centerline;
                 replot();
             }
         }
-        void set_ymin(double xmin) {
+        void setYmin(double xmin) {
             if (this->ymin!=xmin) {
                 this->ymin=xmin;
                 replot();
             }
         }
-        void set_ymax(double xmax) {
+        void setYmax(double xmax) {
             if (this->ymax!=xmax) {
                 this->ymax=xmax;
                 replot();
             }
         }
-        void set_ymin(int xmin) {
+        void setYmin(int xmin) {
             if (this->ymin!=xmin) {
                 this->ymin=xmin;
                 replot();
             }
         }
-        void set_ymax(int xmax) {
+        void setYmax(int xmax) {
             if (this->ymax!=xmax) {
                 this->ymax=xmax;
                 replot();
@@ -1979,88 +1971,88 @@ class LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \brief sets the property image to the specified \a __value. 
+        /*! \brief sets the property image ( \copybrief image ) to the specified \a __value. 
             \details Description of the parameter image is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::image </BLOCKQUOTE>
             \see image for more information */ 
-        inline virtual void set_image(QImage* __value)
+        inline void setImage(QImage* __value)
         {
             if (this->image != __value) {
                 this->image = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property image. 
+        /*! \brief returns the property image ( \copybrief image ). 
             \details Description of the parameter image is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::image </BLOCKQUOTE>
             \see image for more information */ 
-        inline virtual QImage* get_image() const  
+        inline QImage* getImage() const
         {
             return this->image; 
         }
-        /*! \brief sets the property xmin to the specified \a __value. 
+        /*! \brief sets the property xmin ( \copybrief xmin ) to the specified \a __value. 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual void set_xmin(double __value)
+        inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
                 this->xmin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmin. 
+        /*! \brief returns the property xmin ( \copybrief xmin ). 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual double get_xmin() const  
+        inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \brief sets the property xmax to the specified \a __value. 
+        /*! \brief sets the property xmax ( \copybrief xmax ) to the specified \a __value. 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual void set_xmax(double __value)
+        inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
                 this->xmax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmax. 
+        /*! \brief returns the property xmax ( \copybrief xmax ). 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual double get_xmax() const  
+        inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \brief sets the property ymin to the specified \a __value. 
+        /*! \brief sets the property ymin ( \copybrief ymin ) to the specified \a __value. 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual void set_ymin(double __value)
+        inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
                 this->ymin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymin. 
+        /*! \brief returns the property ymin ( \copybrief ymin ). 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual double get_ymin() const  
+        inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \brief sets the property ymax to the specified \a __value. 
+        /*! \brief sets the property ymax ( \copybrief ymax ) to the specified \a __value. 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual void set_ymax(double __value)
+        inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
                 this->ymax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymax. 
+        /*! \brief returns the property ymax ( \copybrief ymax ). 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPQImagePlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual double get_ymax() const  
+        inline double getYmax() const
         {
             return this->ymax; 
         }
@@ -2153,7 +2145,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		max = maxColor;
 	}
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"      finding min&max: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -2162,26 +2154,26 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
 	double delta=max-min;
 
-    int* lut_used=nullptr;
-    static int* lut_red=nullptr;
-    static int* lut_green=nullptr;
-    static int* lut_blue=nullptr;
-    static int* lut_gray=nullptr;
-    static int* lut_invred=nullptr;
-    static int* lut_invgreen=nullptr;
-    static int* lut_invblue=nullptr;
-    static int* lut_invgray=nullptr;
-    static int* lut_matlab=nullptr;
-    static int* lut_rygb=nullptr;
-    static int* lut_hsv=nullptr;
-    static int* lut_invhsv=nullptr;
-    static int* lut_rainbow=nullptr;
-    static int* lut_hot=nullptr;
-    static int* lut_ocean=nullptr;
-    static int* lut_trafficlight=nullptr;
-    static int* lut_bluemagentayellow=nullptr;
-    static int* lut_blueyellow=nullptr;
-    static int* lut_cyan=nullptr;
+    QRgb* lut_used=nullptr;
+    static QRgb* lut_red=nullptr;
+    static QRgb* lut_green=nullptr;
+    static QRgb* lut_blue=nullptr;
+    static QRgb* lut_gray=nullptr;
+    static QRgb* lut_invred=nullptr;
+    static QRgb* lut_invgreen=nullptr;
+    static QRgb* lut_invblue=nullptr;
+    static QRgb* lut_invgray=nullptr;
+    static QRgb* lut_matlab=nullptr;
+    static QRgb* lut_rygb=nullptr;
+    static QRgb* lut_hsv=nullptr;
+    static QRgb* lut_invhsv=nullptr;
+    static QRgb* lut_rainbow=nullptr;
+    static QRgb* lut_hot=nullptr;
+    static QRgb* lut_ocean=nullptr;
+    static QRgb* lut_trafficlight=nullptr;
+    static QRgb* lut_bluemagentayellow=nullptr;
+    static QRgb* lut_blueyellow=nullptr;
+    static QRgb* lut_cyan=nullptr;
 
 
     img = QImage(width, height, QImage::Format_ARGB32_Premultiplied);
@@ -2191,9 +2183,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 	{
         if (palette == JKQTFP_RED)
         {
-            int** plut=&lut_red;
+            QRgb** plut=&lut_red;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2206,9 +2198,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
         }
         else if (palette == JKQTFP_GREEN)
 		{
-            int** plut=&lut_green;
+            QRgb** plut=&lut_green;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2221,9 +2213,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_BLUE)
 		{
-            int** plut=&lut_blue;
+            QRgb** plut=&lut_blue;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2238,9 +2230,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
         else if (palette == JKQTFP_GRAY)
 		{
-            int** plut=&lut_gray;
+            QRgb** plut=&lut_gray;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2255,9 +2247,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
 		else if (palette == JKQTFP_INVERTEDRED)
 		{
-            int** plut=&lut_invred;
+            QRgb** plut=&lut_invred;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2270,9 +2262,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTEDGREEN)
 		{
-            int** plut=&lut_invgreen;
+            QRgb** plut=&lut_invgreen;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2284,9 +2276,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTEDBLUE)
 		{
-            int** plut=&lut_invblue;
+            QRgb** plut=&lut_invblue;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2298,9 +2290,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTEDGRAY)
 		{
-            int** plut=&lut_invgray;
+            QRgb** plut=&lut_invgray;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=1.0-(l/static_cast<double>(JKQTFPimagePlot_LUTSIZE));
@@ -2315,9 +2307,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
 		else if (palette == JKQTFP_MATLAB)
 		{
-            int** plut=&lut_matlab;
+            QRgb** plut=&lut_matlab;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2348,9 +2340,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_RYGB) //gnuplot: 30,-13,-23
 		{
-            int** plut=&lut_rygb;
+            QRgb** plut=&lut_rygb;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2374,9 +2366,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_HSV)
 		{
-            int** plut=&lut_hsv;
+            QRgb** plut=&lut_hsv;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2400,9 +2392,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_INVERTED_HSV)
 		{
-            int** plut=&lut_invhsv;
+            QRgb** plut=&lut_invhsv;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2428,7 +2420,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		else if (palette == JKQTFP_RAINBOW) //gnuplot: 33,13,10
 		{
             if (lut_rainbow==nullptr) {
-                lut_rainbow=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                lut_rainbow=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 //std::cout<<"!!! creating rainbow lut\n";
                 if (lut_rainbow!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
@@ -2449,9 +2441,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_HOT) //gnuplot: 21,22,23
 		{
-            int** plut=&lut_hot;
+            QRgb** plut=&lut_hot;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2476,9 +2468,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_OCEAN) //gnuplot: 23,28,3
 		{
-            int** plut=&lut_ocean;
+            QRgb** plut=&lut_ocean;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2497,9 +2489,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_BLUEMAGENTAYELLOW) //gnuplot: 30,31,32
 		{
-            int** plut=&lut_bluemagentayellow;
+            QRgb** plut=&lut_bluemagentayellow;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2526,9 +2518,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_BLUEYELLOW) //gnuplot: 8,9,10
 		{
-            int** plut=&lut_blueyellow;
+            QRgb** plut=&lut_blueyellow;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2553,9 +2545,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_CYAN)
 		{
-            int** plut=&lut_cyan;
+            QRgb** plut=&lut_cyan;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2579,9 +2571,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 		else if (palette == JKQTFP_TRAFFICLIGHT)
 		{
-            int** plut=&lut_trafficlight;
+            QRgb** plut=&lut_trafficlight;
             if ((*plut)==nullptr) {
-                (*plut)=(int*)malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(int));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
                     for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
@@ -2601,7 +2593,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 
         #ifdef DEBUG_TIMING
-        time_gt=timer.get_time();
+        time_gt=timer.getTime();
         time_sum+=time_gt;
         std::cout<<"      calculated/found LUT: "<<time_gt/1000.0<<" ms\n";
         timer.start();
@@ -2609,7 +2601,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
         if (lut_used!=nullptr) {
 		    // LUT found: collor the image accordingly
             for (int j=0; j<height; ++j) {
-			    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                 for (int i=0; i<width; ++i) {
 					int v = (dbl[j*width+i]-min)/delta*JKQTFPimagePlot_LUTSIZE;
 					v = (v < 0) ? 0 : ( (v > JKQTFPimagePlot_LUTSIZE) ? JKQTFPimagePlot_LUTSIZE : v);
@@ -2622,13 +2614,13 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 		}
 	}
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"      creating colored image: "<<time_gt/1000.0<<" ms\n";
     timer.start();
     #endif
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    sum: "<<time_sum/1000.0<<" ms\n";
     timer.start();
@@ -2704,201 +2696,201 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
 
 
 
-        /*! \brief sets the property image to the specified \a __value. 
+        /*! \brief sets the property image ( \copybrief image ) to the specified \a __value. 
             \details Description of the parameter image is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::image </BLOCKQUOTE>
             \see image for more information */ 
-        inline virtual void set_image(void* __value)
+        inline void setImage(void* __value)
         {
             if (this->image != __value) {
                 this->image = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property image. 
+        /*! \brief returns the property image ( \copybrief image ). 
             \details Description of the parameter image is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::image </BLOCKQUOTE>
             \see image for more information */ 
-        inline virtual void* get_image() const  
+        inline void* getImage() const
         {
             return this->image; 
         }
-        /*! \brief sets the property imageFormat to the specified \a __value. 
+        /*! \brief sets the property imageFormat ( \copybrief imageFormat ) to the specified \a __value. 
             \details Description of the parameter imageFormat is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::imageFormat </BLOCKQUOTE>
             \see imageFormat for more information */ 
-        inline virtual void set_imageFormat(const JKQTFPImageFormat & __value)  
+        inline void setImageFormat(const JKQTFPImageFormat & __value)
         {
             if (this->imageFormat != __value) {
                 this->imageFormat = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property imageFormat. 
+        /*! \brief returns the property imageFormat ( \copybrief imageFormat ). 
             \details Description of the parameter imageFormat is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::imageFormat </BLOCKQUOTE>
             \see imageFormat for more information */ 
-        inline virtual JKQTFPImageFormat get_imageFormat() const  
+        inline JKQTFPImageFormat getImageFormat() const
         {
             return this->imageFormat; 
         }
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(int __value)
+        inline void setWidth(int __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual int get_width() const
+        inline int getWidth() const
         {
             return this->width; 
         }
-        /*! \brief sets the property height to the specified \a __value. 
+        /*! \brief sets the property height ( \copybrief height ) to the specified \a __value. 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual void set_height(int __value)
+        inline void setHeight(int __value)
         {
             if (this->height != __value) {
                 this->height = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property height. 
+        /*! \brief returns the property height ( \copybrief height ). 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual int get_height() const
+        inline int getHeight() const
         {
             return this->height; 
         }
-        /*! \brief sets the property xmin to the specified \a __value. 
+        /*! \brief sets the property xmin ( \copybrief xmin ) to the specified \a __value. 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual void set_xmin(double __value)
+        inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
                 this->xmin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmin. 
+        /*! \brief returns the property xmin ( \copybrief xmin ). 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual double get_xmin() const  
+        inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \brief sets the property xmax to the specified \a __value. 
+        /*! \brief sets the property xmax ( \copybrief xmax ) to the specified \a __value. 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual void set_xmax(double __value)
+        inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
                 this->xmax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmax. 
+        /*! \brief returns the property xmax ( \copybrief xmax ). 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual double get_xmax() const  
+        inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \brief sets the property ymin to the specified \a __value. 
+        /*! \brief sets the property ymin ( \copybrief ymin ) to the specified \a __value. 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual void set_ymin(double __value)
+        inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
                 this->ymin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymin. 
+        /*! \brief returns the property ymin ( \copybrief ymin ). 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual double get_ymin() const  
+        inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \brief sets the property ymax to the specified \a __value. 
+        /*! \brief sets the property ymax ( \copybrief ymax ) to the specified \a __value. 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual void set_ymax(double __value)
+        inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
                 this->ymax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymax. 
+        /*! \brief returns the property ymax ( \copybrief ymax ). 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual double get_ymax() const  
+        inline double getYmax() const
         {
             return this->ymax; 
         }
-        /*! \brief sets the property drawColorBar to the specified \a __value. 
+        /*! \brief sets the property drawColorBar ( \copybrief drawColorBar ) to the specified \a __value. 
             \details Description of the parameter drawColorBar is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::drawColorBar </BLOCKQUOTE>
             \see drawColorBar for more information */ 
-        inline virtual void set_drawColorBar(bool __value)
+        inline void setDrawColorBar(bool __value)
         {
             if (this->drawColorBar != __value) {
                 this->drawColorBar = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property drawColorBar. 
+        /*! \brief returns the property drawColorBar ( \copybrief drawColorBar ). 
             \details Description of the parameter drawColorBar is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::drawColorBar </BLOCKQUOTE>
             \see drawColorBar for more information */ 
-        inline virtual bool get_drawColorBar() const  
+        inline bool getDrawColorBar() const
         {
             return this->drawColorBar; 
         }
-        /*! \brief sets the property colorBarWidth to the specified \a __value. 
+        /*! \brief sets the property colorBarWidth ( \copybrief colorBarWidth ) to the specified \a __value. 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::colorBarWidth </BLOCKQUOTE>
             \see colorBarWidth for more information */ 
-        inline virtual void set_colorBarWidth(int __value)
+        inline void setColorBarWidth(int __value)
         {
             if (this->colorBarWidth != __value) {
                 this->colorBarWidth = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property colorBarWidth. 
+        /*! \brief returns the property colorBarWidth ( \copybrief colorBarWidth ). 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc JKQTFPimagePlot::colorBarWidth </BLOCKQUOTE>
             \see colorBarWidth for more information */ 
-        inline virtual int get_colorBarWidth() const  
+        inline int getColorBarWidth() const
         {
             return this->colorBarWidth; 
         }
-        /*! \brief returns the property rotation. 
+        /*! \brief returns the property rotation ( \copybrief rotation ). 
             \details Description of the parameter rotation is:  <BLOCKQUOTE>\copydoc JKQTFPimagePlot::rotation </BLOCKQUOTE>. 
             \see rotation for more information */ 
-        inline int get_rotation() const { 
+        inline int getRotation() const { 
             return this->rotation; 
         }
-        /*! \brief returns the property palette. 
+        /*! \brief returns the property palette ( \copybrief palette ). 
             \details Description of the parameter palette is:  <BLOCKQUOTE>\copydoc JKQTFPimagePlot::palette </BLOCKQUOTE>. 
             \see palette for more information */ 
-        inline JKQTFPColorPalette get_palette() const { 
+        inline JKQTFPColorPalette getPalette() const { 
             return this->palette; 
         }
-        /*! \brief returns the property colorMin. 
+        /*! \brief returns the property colorMin ( \copybrief colorMin ). 
             \details Description of the parameter colorMin is:  <BLOCKQUOTE>\copydoc JKQTFPimagePlot::colorMin </BLOCKQUOTE>. 
             \see colorMin for more information */ 
-        inline double get_colorMin() const { 
+        inline double getColorMin() const { 
             return this->colorMin; 
         }
-        /*! \brief returns the property colorMax. 
+        /*! \brief returns the property colorMax ( \copybrief colorMax ). 
             \details Description of the parameter colorMax is:  <BLOCKQUOTE>\copydoc JKQTFPimagePlot::colorMax </BLOCKQUOTE>. 
             \see colorMax for more information */ 
-        inline double get_colorMax() const { 
+        inline double getColorMax() const { 
             return this->colorMax; 
         }
-        void set_image(void* image, JKQTFPImageFormat imageFormat, int width, int height) {
+        void setImage(void* image, JKQTFPImageFormat imageFormat, int width, int height) {
             this->image=image;
             this->imageFormat=imageFormat;
             this->width=width;
@@ -2906,55 +2898,55 @@ class LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
             replot();
         }
     public slots:
-        void set_rotation(int rotation) {
+        void setRotation(int rotation) {
             if (this->rotation!=rotation) {
                 this->rotation=(JKQTFPColorPalette)rotation;
                 replot();
             }
         }
-        void set_palette(int palette) {
+        void setPalette(int palette) {
             if (this->palette!=palette) {
                 this->palette=(JKQTFPColorPalette)palette;
                 replot();
             }
         };
-        void set_palette(JKQTFPColorPalette palette) {
+        void setPalette(JKQTFPColorPalette palette) {
             if (this->palette!=palette) {
                 this->palette=palette;
                 replot();
             }
         };
-        void set_colorMin(uint32_t colorMin) {
+        void setColorMin(uint32_t colorMin) {
             if (this->colorMin!=colorMin) {
                 this-> colorMin= colorMin;
                 replot();
             }
         }
-        void set_colorMax(uint32_t colorMax) {
+        void setColorMax(uint32_t colorMax) {
             if (this->colorMax!=colorMax) {
                 this->colorMax=colorMax;
                 replot();
             }
         }
-        void set_colorMin(int colorMin) {
+        void setColorMin(int colorMin) {
             if (this->colorMin!=colorMin) {
                 this-> colorMin= colorMin;
                 replot();
             }
         }
-        void set_colorMax(int colorMax) {
+        void setColorMax(int colorMax) {
             if (this->colorMax!=colorMax) {
                 this->colorMax=colorMax;
                 replot();
             }
         }
-        void set_colorMin(double colorMin) {
+        void setColorMin(double colorMin) {
             if (this->colorMin!=colorMin) {
                 this-> colorMin= colorMin;
                 replot();
             }
         }
-        void set_colorMax(double colorMax) {
+        void setColorMax(double colorMax) {
             if (this->colorMax!=colorMax) {
                 this->colorMax=colorMax;
                 replot();
@@ -3003,7 +2995,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
         max = maxColor;
     }
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"      finding min&max: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -3017,7 +3009,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
         // LUT found: collor the image accordingly
         if (channel==0) {
             for (int j=0; j<height; ++j) {
-                QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                 for (int i=0; i<width; ++i) {
                     int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -3028,7 +3020,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
             }
         } else if (channel==1) {
             for (int j=0; j<height; ++j) {
-                QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                 for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -3039,7 +3031,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
             }
         } else if (channel==2) {
             for (int j=0; j<height; ++j) {
-                QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                 for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -3051,12 +3043,12 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
         }
     }
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"      creating colored image: "<<time_gt/1000.0<<" ms\n";
     timer.start();
 
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    sum: "<<time_sum/1000.0<<" ms\n";
     timer.start();
@@ -3132,7 +3124,7 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         /*! \brief sets the properties imageRed and imageFormatRed to the specified \a __value and \a __value2. 
             \details Description of the parameter imageRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageRed </BLOCKQUOTE> \details Description of the parameter imageFormatRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatRed </BLOCKQUOTE>
         	\see imageRed and imageFormatRed for more information */ 
-        inline virtual void set_imageRed (void* __value, JKQTFPImageFormat __value2)  
+        inline void setImageRed (void* __value, JKQTFPImageFormat __value2)
         {
         	bool set=false; 
         	if (this->imageRed != __value) { 
@@ -3147,18 +3139,18 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         		replot(); 
         	} 
         } 
-        /*! \brief returns the property imageRed. 
+        /*! \brief returns the property imageRed ( \copybrief imageRed ). 
             \details Description of the parameter imageRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageRed </BLOCKQUOTE> \details Description of the parameter imageFormatRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatRed </BLOCKQUOTE>
             \see imageRed for more information */ 
-        inline virtual void* get_imageRed () const { return this->imageRed; }
-        /*! \brief returns the property imageFormatRed. 
+        inline void* getImageRed () const { return this->imageRed; }
+        /*! \brief returns the property imageFormatRed ( \copybrief imageFormatRed ). 
             \details Description of the parameter imageRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageRed </BLOCKQUOTE> \details Description of the parameter imageFormatRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatRed </BLOCKQUOTE>
             \see imageFormatRed for more information */
-        inline virtual JKQTFPImageFormat get_imageFormatRed () const { return this->imageFormatRed; }
+        inline JKQTFPImageFormat getImageFormatRed () const { return this->imageFormatRed; }
         /*! \brief sets the properties imageGreen and imageFormatGreen to the specified \a __value and \a __value2. 
             \details Description of the parameter imageGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageGreen </BLOCKQUOTE> \details Description of the parameter imageFormatGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatGreen </BLOCKQUOTE>
         	\see imageGreen and imageFormatGreen for more information */ 
-        inline virtual void set_imageGreen (void* __value, JKQTFPImageFormat __value2)  
+        inline void setImageGreen (void* __value, JKQTFPImageFormat __value2)
         {
         	bool set=false; 
         	if (this->imageGreen != __value) { 
@@ -3173,18 +3165,18 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         		replot(); 
         	} 
         } 
-        /*! \brief returns the property imageGreen. 
+        /*! \brief returns the property imageGreen ( \copybrief imageGreen ). 
             \details Description of the parameter imageGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageGreen </BLOCKQUOTE> \details Description of the parameter imageFormatGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatGreen </BLOCKQUOTE>
             \see imageGreen for more information */ 
-        inline virtual void* get_imageGreen () const { return this->imageGreen; }
-        /*! \brief returns the property imageFormatGreen. 
+        inline void* getImageGreen () const { return this->imageGreen; }
+        /*! \brief returns the property imageFormatGreen ( \copybrief imageFormatGreen ). 
             \details Description of the parameter imageGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageGreen </BLOCKQUOTE> \details Description of the parameter imageFormatGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatGreen </BLOCKQUOTE>
             \see imageFormatGreen for more information */
-        inline virtual JKQTFPImageFormat get_imageFormatGreen () const { return this->imageFormatGreen; }
+        inline JKQTFPImageFormat getImageFormatGreen () const { return this->imageFormatGreen; }
         /*! \brief sets the properties imageBlue and imageFormatBlue to the specified \a __value and \a __value2. 
             \details Description of the parameter imageBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageBlue </BLOCKQUOTE> \details Description of the parameter imageFormatBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatBlue </BLOCKQUOTE>
         	\see imageBlue and imageFormatBlue for more information */ 
-        inline virtual void set_imageBlue (void* __value, JKQTFPImageFormat __value2)  
+        inline void setImageBlue (void* __value, JKQTFPImageFormat __value2)
         {
         	bool set=false; 
         	if (this->imageBlue != __value) { 
@@ -3199,202 +3191,202 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         		replot(); 
         	} 
         } 
-        /*! \brief returns the property imageBlue. 
+        /*! \brief returns the property imageBlue ( \copybrief imageBlue ). 
             \details Description of the parameter imageBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageBlue </BLOCKQUOTE> \details Description of the parameter imageFormatBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatBlue </BLOCKQUOTE>
             \see imageBlue for more information */ 
-        inline virtual void* get_imageBlue () const { return this->imageBlue; }
-        /*! \brief returns the property imageFormatBlue. 
+        inline void* getImageBlue () const { return this->imageBlue; }
+        /*! \brief returns the property imageFormatBlue ( \copybrief imageFormatBlue ). 
             \details Description of the parameter imageBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageBlue </BLOCKQUOTE> \details Description of the parameter imageFormatBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatBlue </BLOCKQUOTE>
             \see imageFormatBlue for more information */
-        inline virtual JKQTFPImageFormat get_imageFormatBlue () const { return this->imageFormatBlue; }
-        /*! \brief sets the property width to the specified \a __value. 
+        inline JKQTFPImageFormat getImageFormatBlue () const { return this->imageFormatBlue; }
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(int __value)
+        inline void setWidth(int __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual int get_width() const
+        inline int getWidth() const
         {
             return this->width; 
         }
-        /*! \brief sets the property height to the specified \a __value. 
+        /*! \brief sets the property height ( \copybrief height ) to the specified \a __value. 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual void set_height(int __value)
+        inline void setHeight(int __value)
         {
             if (this->height != __value) {
                 this->height = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property height. 
+        /*! \brief returns the property height ( \copybrief height ). 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::height </BLOCKQUOTE>
             \see height for more information */ 
-        inline virtual int get_height() const
+        inline int getHeight() const
         {
             return this->height; 
         }
-        /*! \brief sets the property xmin to the specified \a __value. 
+        /*! \brief sets the property xmin ( \copybrief xmin ) to the specified \a __value. 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual void set_xmin(double __value)
+        inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
                 this->xmin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmin. 
+        /*! \brief returns the property xmin ( \copybrief xmin ). 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual double get_xmin() const  
+        inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \brief sets the property xmax to the specified \a __value. 
+        /*! \brief sets the property xmax ( \copybrief xmax ) to the specified \a __value. 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual void set_xmax(double __value)
+        inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
                 this->xmax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmax. 
+        /*! \brief returns the property xmax ( \copybrief xmax ). 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual double get_xmax() const  
+        inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \brief sets the property ymin to the specified \a __value. 
+        /*! \brief sets the property ymin ( \copybrief ymin ) to the specified \a __value. 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual void set_ymin(double __value)
+        inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
                 this->ymin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymin. 
+        /*! \brief returns the property ymin ( \copybrief ymin ). 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual double get_ymin() const  
+        inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \brief sets the property ymax to the specified \a __value. 
+        /*! \brief sets the property ymax ( \copybrief ymax ) to the specified \a __value. 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual void set_ymax(double __value)
+        inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
                 this->ymax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymax. 
+        /*! \brief returns the property ymax ( \copybrief ymax ). 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual double get_ymax() const  
+        inline double getYmax() const
         {
             return this->ymax; 
         }
-        /*! \brief returns the property rotation. 
+        /*! \brief returns the property rotation ( \copybrief rotation ). 
             \details Description of the parameter rotation is:  <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::rotation </BLOCKQUOTE>. 
             \see rotation for more information */ 
-        inline int get_rotation() const { 
+        inline int getRotation() const { 
             return this->rotation; 
         }
-        /*! \brief returns the property colorMinRed. 
+        /*! \brief returns the property colorMinRed ( \copybrief colorMinRed ). 
             \details Description of the parameter colorMinRed is:  <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::colorMinRed </BLOCKQUOTE>. 
             \see colorMinRed for more information */ 
-        inline double get_colorMinRed() const { 
+        inline double getColorMinRed() const { 
             return this->colorMinRed; 
         }
-        /*! \brief returns the property colorMaxRed. 
+        /*! \brief returns the property colorMaxRed ( \copybrief colorMaxRed ). 
             \details Description of the parameter colorMaxRed is:  <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::colorMaxRed </BLOCKQUOTE>. 
             \see colorMaxRed for more information */ 
-        inline double get_colorMaxRed() const { 
+        inline double getColorMaxRed() const { 
             return this->colorMaxRed; 
         }
-        /*! \brief returns the property colorMinGreen. 
+        /*! \brief returns the property colorMinGreen ( \copybrief colorMinGreen ). 
             \details Description of the parameter colorMinGreen is:  <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::colorMinGreen </BLOCKQUOTE>. 
             \see colorMinGreen for more information */ 
-        inline double get_colorMinGreen() const { 
+        inline double getColorMinGreen() const { 
             return this->colorMinGreen; 
         }
-        /*! \brief returns the property colorMaxGreen. 
+        /*! \brief returns the property colorMaxGreen ( \copybrief colorMaxGreen ). 
             \details Description of the parameter colorMaxGreen is:  <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::colorMaxGreen </BLOCKQUOTE>. 
             \see colorMaxGreen for more information */ 
-        inline double get_colorMaxGreen() const { 
+        inline double getColorMaxGreen() const { 
             return this->colorMaxGreen; 
         }
-        /*! \brief returns the property colorMinBlue. 
+        /*! \brief returns the property colorMinBlue ( \copybrief colorMinBlue ). 
             \details Description of the parameter colorMinBlue is:  <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::colorMinBlue </BLOCKQUOTE>. 
             \see colorMinBlue for more information */ 
-        inline double get_colorMinBlue() const { 
+        inline double getColorMinBlue() const { 
             return this->colorMinBlue; 
         }
-        /*! \brief returns the property colorMaxBlue. 
+        /*! \brief returns the property colorMaxBlue ( \copybrief colorMaxBlue ). 
             \details Description of the parameter colorMaxBlue is:  <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::colorMaxBlue </BLOCKQUOTE>. 
             \see colorMaxBlue for more information */ 
-        inline double get_colorMaxBlue() const { 
+        inline double getColorMaxBlue() const { 
             return this->colorMaxBlue; 
         }
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height, double xmin, double xmax, double ymin, double ymax);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height, double xmin, double xmax, double ymin, double ymax);
-        void set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height, double xmin, double xmax, double ymin, double ymax);
+        void setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height);
+        void setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height);
+        void setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height);
+        void setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height, double xmin, double xmax, double ymin, double ymax);
+        void setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height, double xmin, double xmax, double ymin, double ymax);
+        void setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height, double xmin, double xmax, double ymin, double ymax);
     public slots:
-        inline void set_rotation(int rotation) {
+        inline void setRotation(int rotation) {
             if (this->rotation!=rotation) {
                 this->rotation=(JKQTFPColorPalette)rotation;
                 replot();
             }
         }
-        inline void set_colorMinRed(uint32_t colorMin) {
+        inline void setColorMinRed(uint32_t colorMin) {
             if (this->colorMinRed!=colorMin) {
                 this-> colorMinRed= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxRed(uint32_t colorMax) {
+        inline void setColorMaxRed(uint32_t colorMax) {
             if (this->colorMaxRed!=colorMax) {
                 this->colorMaxRed=colorMax;
                 replot();
             }
         }
-        inline void set_colorMinRed(int colorMin) {
+        inline void setColorMinRed(int colorMin) {
             if (this->colorMinRed!=colorMin) {
                 this-> colorMinRed= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxRed(int colorMax) {
+        inline void setColorMaxRed(int colorMax) {
             if (this->colorMaxRed!=colorMax) {
                 this->colorMaxRed=colorMax;
                 replot();
             }
         }
-        inline void set_colorMinRed(double colorMin) {
+        inline void setColorMinRed(double colorMin) {
             if (this->colorMinRed!=colorMin) {
                 this-> colorMinRed= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxRed(double colorMax) {
+        inline void setColorMaxRed(double colorMax) {
             if (this->colorMaxRed!=colorMax) {
                 this->colorMaxRed=colorMax;
                 replot();
@@ -3402,74 +3394,74 @@ class LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         }
 
 
-        inline void set_colorMinGreen(uint32_t colorMin) {
+        inline void setColorMinGreen(uint32_t colorMin) {
             if (this->colorMinGreen!=colorMin) {
                 this-> colorMinGreen= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxGreen(uint32_t colorMax) {
+        inline void setColorMaxGreen(uint32_t colorMax) {
             if (this->colorMaxGreen!=colorMax) {
                 this->colorMaxGreen=colorMax;
                 replot();
             }
         }
-        inline void set_colorMinGreen(int colorMin) {
+        inline void setColorMinGreen(int colorMin) {
             if (this->colorMinGreen!=colorMin) {
                 this-> colorMinGreen= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxGreen(int colorMax) {
+        inline void setColorMaxGreen(int colorMax) {
             if (this->colorMaxGreen!=colorMax) {
                 this->colorMaxGreen=colorMax;
                 replot();
             }
         }
-        inline void set_colorMinGreen(double colorMin) {
+        inline void setColorMinGreen(double colorMin) {
             if (this->colorMinGreen!=colorMin) {
                 this-> colorMinGreen= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxGreen(double colorMax) {
+        inline void setColorMaxGreen(double colorMax) {
             if (this->colorMaxGreen!=colorMax) {
                 this->colorMaxGreen=colorMax;
                 replot();
             }
         }
 
-        inline void set_colorMinBlue(uint32_t colorMin) {
+        inline void setColorMinBlue(uint32_t colorMin) {
             if (this->colorMinBlue!=colorMin) {
                 this-> colorMinBlue= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxBlue(uint32_t colorMax) {
+        inline void setColorMaxBlue(uint32_t colorMax) {
             if (this->colorMaxBlue!=colorMax) {
                 this->colorMaxBlue=colorMax;
                 replot();
             }
         }
-        inline void set_colorMinBlue(int colorMin) {
+        inline void setColorMinBlue(int colorMin) {
             if (this->colorMinBlue!=colorMin) {
                 this-> colorMinBlue= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxBlue(int colorMax) {
+        inline void setColorMaxBlue(int colorMax) {
             if (this->colorMaxBlue!=colorMax) {
                 this->colorMaxBlue=colorMax;
                 replot();
             }
         }
-        inline void set_colorMinBlue(double colorMin) {
+        inline void setColorMinBlue(double colorMin) {
             if (this->colorMinBlue!=colorMin) {
                 this-> colorMinBlue= colorMin;
                 replot();
             }
         }
-        inline void set_colorMaxBlue(double colorMax) {
+        inline void setColorMaxBlue(double colorMax) {
             if (this->colorMaxBlue!=colorMax) {
                 this->colorMaxBlue=colorMax;
                 replot();
@@ -3526,136 +3518,136 @@ class LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        void set_data(bool* image, int width, int height) {
+        void setData(bool* image, int width, int height) {
             this->image=image;
             this->width=width;
             this->height=height;
             replot();
         }
 
-        /*! \brief returns the property image. 
+        /*! \brief returns the property image ( \copybrief image ). 
             \details Description of the parameter image is:  <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::image </BLOCKQUOTE>. 
             \see image for more information */ 
-        inline bool* get_image() const { 
+        inline bool* getImage() const { 
             return this->image; 
         }
-        /*! \brief returns the property rotation. 
+        /*! \brief returns the property rotation ( \copybrief rotation ). 
             \details Description of the parameter rotation is:  <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::rotation </BLOCKQUOTE>. 
             \see rotation for more information */ 
-        inline int get_rotation() const { 
+        inline int getRotation() const { 
             return this->rotation; 
         }
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is:  <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::width </BLOCKQUOTE>. 
             \see width for more information */ 
-        inline int get_width() const {
+        inline int getWidth() const {
             return this->width; 
         }
-        /*! \brief returns the property height. 
+        /*! \brief returns the property height ( \copybrief height ). 
             \details Description of the parameter height is:  <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::height </BLOCKQUOTE>. 
             \see height for more information */ 
-        inline int get_height() const {
+        inline int getHeight() const {
             return this->height; 
         }
-        /*! \brief sets the property xmin to the specified \a __value. 
+        /*! \brief sets the property xmin ( \copybrief xmin ) to the specified \a __value. 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual void set_xmin(double __value)
+        inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
                 this->xmin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmin. 
+        /*! \brief returns the property xmin ( \copybrief xmin ). 
             \details Description of the parameter xmin is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::xmin </BLOCKQUOTE>
             \see xmin for more information */ 
-        inline virtual double get_xmin() const  
+        inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \brief sets the property xmax to the specified \a __value. 
+        /*! \brief sets the property xmax ( \copybrief xmax ) to the specified \a __value. 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual void set_xmax(double __value)
+        inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
                 this->xmax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property xmax. 
+        /*! \brief returns the property xmax ( \copybrief xmax ). 
             \details Description of the parameter xmax is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::xmax </BLOCKQUOTE>
             \see xmax for more information */ 
-        inline virtual double get_xmax() const  
+        inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \brief sets the property ymin to the specified \a __value. 
+        /*! \brief sets the property ymin ( \copybrief ymin ) to the specified \a __value. 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual void set_ymin(double __value)
+        inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
                 this->ymin = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymin. 
+        /*! \brief returns the property ymin ( \copybrief ymin ). 
             \details Description of the parameter ymin is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::ymin </BLOCKQUOTE>
             \see ymin for more information */ 
-        inline virtual double get_ymin() const  
+        inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \brief sets the property ymax to the specified \a __value. 
+        /*! \brief sets the property ymax ( \copybrief ymax ) to the specified \a __value. 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual void set_ymax(double __value)
+        inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
                 this->ymax = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property ymax. 
+        /*! \brief returns the property ymax ( \copybrief ymax ). 
             \details Description of the parameter ymax is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::ymax </BLOCKQUOTE>
             \see ymax for more information */ 
-        inline virtual double get_ymax() const  
+        inline double getYmax() const
         {
             return this->ymax; 
         }
-        /*! \brief sets the property showAsSymbols to the specified \a __value. 
+        /*! \brief sets the property showAsSymbols ( \copybrief showAsSymbols ) to the specified \a __value. 
             \details Description of the parameter showAsSymbols is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::showAsSymbols </BLOCKQUOTE>
             \see showAsSymbols for more information */ 
-        inline virtual void setShowAsSymbols(bool __value)
+        inline void setShowAsSymbols(bool __value)
         {
             if (this->showAsSymbols != __value) {
                 this->showAsSymbols = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property showAsSymbols. 
+        /*! \brief returns the property showAsSymbols ( \copybrief showAsSymbols ). 
             \details Description of the parameter showAsSymbols is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::showAsSymbols </BLOCKQUOTE>
             \see showAsSymbols for more information */ 
-        inline virtual bool getShowAsSymbols() const  
+        inline bool getShowAsSymbols() const
         {
             return this->showAsSymbols; 
         }
-        /*! \brief returns the property color. 
+        /*! \brief returns the property color ( \copybrief color ). 
             \details Description of the parameter color is:  <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::color </BLOCKQUOTE>. 
             \see color for more information */ 
-        inline QColor get_color() const { 
+        inline QColor getColor() const { 
             return this->color; 
         }
     public slots:
-        inline void set_rotation(int rotation) {
+        inline void setRotation(int rotation) {
             if (this->rotation!=rotation) {
                 this->rotation=(JKQTFPColorPalette)rotation;
                 replot();
             }
         }
-        inline void set_color(QColor color) {
+        inline void setColor(QColor color) {
             if (this->color!=color) {
                 this->color=color;
                 replot();
@@ -3702,111 +3694,111 @@ class LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(double __value)
+        inline void setWidth(double __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual double get_width() const  
+        inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \brief sets the property lineWidth to the specified \a __value. 
+        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual void setLineWidth(double __value)
+        inline void setLineWidth(double __value)
         {
             if (this->lineWidth != __value) {
                 this->lineWidth = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property lineWidth. 
+        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual double getLineWidth() const  
+        inline double getLineWidth() const
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property color to the specified \a __value. 
+        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual void set_color(const QColor & __value)  
+        inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
                 this->color = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property color. 
+        /*! \brief returns the property color ( \copybrief color ). 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual QColor get_color() const  
+        inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \brief sets the property label to the specified \a __value. 
+        /*! \brief sets the property label ( \copybrief label ) to the specified \a __value. 
             \details Description of the parameter label is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::label </BLOCKQUOTE>
             \see label for more information */ 
-        inline virtual void set_label(const QString & __value)  
+        inline void setLabel(const QString & __value)
         {
             if (this->label != __value) {
                 this->label = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property label. 
+        /*! \brief returns the property label ( \copybrief label ). 
             \details Description of the parameter label is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::label </BLOCKQUOTE>
             \see label for more information */ 
-        inline virtual QString get_label() const  
+        inline QString getLabel() const
         {
             return this->label; 
         }
-        /*! \brief sets the property font to the specified \a __value. 
+        /*! \brief sets the property font ( \copybrief font ) to the specified \a __value. 
             \details Description of the parameter font is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::font </BLOCKQUOTE>
             \see font for more information */ 
-        inline virtual void setFont(const QFont & __value)  
+        inline void setFont(const QFont & __value)
         {
             if (this->font != __value) {
                 this->font = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property font. 
+        /*! \brief returns the property font ( \copybrief font ). 
             \details Description of the parameter font is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::font </BLOCKQUOTE>
             \see font for more information */ 
-        inline virtual QFont getFont() const  
+        inline QFont getFont() const
         {
             return this->font; 
         }
-        /*! \brief sets the property position to the specified \a __value. 
+        /*! \brief sets the property position ( \copybrief position ) to the specified \a __value. 
             \details Description of the parameter position is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::position </BLOCKQUOTE>
             \see position for more information */ 
-        inline virtual void set_position(const Position & __value)  
+        inline void setPosition(const Position & __value)
         {
             if (this->position != __value) {
                 this->position = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property position. 
+        /*! \brief returns the property position ( \copybrief position ). 
             \details Description of the parameter position is: <BLOCKQUOTE>\copydoc JKQTFPimageOverlayPlot::position </BLOCKQUOTE>
             \see position for more information */ 
-        inline virtual Position get_position() const  
+        inline Position getPosition() const
         {
             return this->position; 
         }
     public slots:
-        void set_position(int pos) {
-            set_position((Position)pos);
+        void setPosition(int pos) {
+            setPosition((Position)pos);
         }
 };
 
@@ -3839,71 +3831,71 @@ class LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual void set_width(double __value)
+        inline void setWidth(double __value)
         {
             if (this->width != __value) {
                 this->width = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::width </BLOCKQUOTE>
             \see width for more information */ 
-        inline virtual double get_width() const  
+        inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \brief sets the property lineWidth to the specified \a __value. 
+        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual void setLineWidth(double __value)
+        inline void setLineWidth(double __value)
         {
             if (this->lineWidth != __value) {
                 this->lineWidth = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property lineWidth. 
+        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::lineWidth </BLOCKQUOTE>
             \see lineWidth for more information */ 
-        inline virtual double getLineWidth() const  
+        inline double getLineWidth() const
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property color to the specified \a __value. 
+        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual void set_color(const QColor & __value)  
+        inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
                 this->color = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property color. 
+        /*! \brief returns the property color ( \copybrief color ). 
             \details Description of the parameter color is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::color </BLOCKQUOTE>
             \see color for more information */ 
-        inline virtual QColor get_color() const  
+        inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \brief sets the property style to the specified \a __value. 
+        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual void set_style(const Qt::PenStyle & __value)  
+        inline void setStyle(const Qt::PenStyle & __value)
         {
             if (this->style != __value) {
                 this->style = __value; 
                 replot(); 
             } 
         } 
-        /*! \brief returns the property style. 
+        /*! \brief returns the property style ( \copybrief style ). 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline virtual Qt::PenStyle get_style() const  
+        inline Qt::PenStyle getStyle() const
         {
             return this->style; 
         }

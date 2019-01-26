@@ -52,10 +52,10 @@ int main(int argc, char* argv[])
     //    the graph is updated:
     auto updateGraphFunctor=
        [=]() {
-            parsedFunc->set_title(QString("user function: \\verb{"+edit->text()+"}, p_1=%1, p_2=%2").arg(spinP1->value()).arg(spinP2->value()));
-            parsedFunc->set_function(edit->text());
-            parsedFunc->set_paramsV(spinP1->value(), spinP2->value());
-            parsedFunc->set_displaySamplePoints(check->isChecked());
+            parsedFunc->setTitle(QString("user function: \\verb{"+edit->text()+"}, p_1=%1, p_2=%2").arg(spinP1->value()).arg(spinP2->value()));
+            parsedFunc->setFunction(edit->text());
+            parsedFunc->setParamsV(spinP1->value(), spinP2->value());
+            parsedFunc->setDisplaySamplePoints(check->isChecked());
             plot->redrawPlot();
        };
     QObject::connect(edit, &QLineEdit::returnPressed, updateGraphFunctor);

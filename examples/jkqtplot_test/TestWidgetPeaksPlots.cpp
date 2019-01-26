@@ -45,10 +45,10 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
     int phot2=plotPeaks->getDatastore()->addCopiedColumn(photons2, "photons 2");
 
     graphPeakStream1=new JKQTPPeakStreamGraph(phot1, 0.05, 1, QColor("darkgreen"), plotPeaks->getPlotter());
-    graphPeakStream1->set_title("channel 1");
+    graphPeakStream1->setTitle("channel 1");
     plotPeaks->getPlotter()->addGraph(graphPeakStream1);
     graphPeakStream2=new JKQTPPeakStreamGraph(phot2, -0.05, -1, QColor("darkred"), plotPeaks->getPlotter());
-    graphPeakStream2->set_title("channel 2");
+    graphPeakStream2->setTitle("channel 2");
     plotPeaks->getPlotter()->addGraph(graphPeakStream2);
 
     plotPeaks->setPlotUpdateEnabled(true);
@@ -63,14 +63,14 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
 
 void TestWidgetPeaksPlots::setDrawBaseline(bool checked)
 {
-    graphPeakStream1->set_drawBaseline(checked);
-    graphPeakStream2->set_drawBaseline(checked);
+    graphPeakStream1->setDrawBaseline(checked);
+    graphPeakStream2->setDrawBaseline(checked);
     plotPeaks->redrawPlot();
 }
 
 void TestWidgetPeaksPlots::setYPeaks(bool checked)
 {
-    graphPeakStream1->set_yPeaks(checked);
-    graphPeakStream2->set_yPeaks(checked);
+    graphPeakStream1->setYPeaks(checked);
+    graphPeakStream2->setYPeaks(checked);
     plotPeaks->redrawPlot();
 }

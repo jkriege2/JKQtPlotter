@@ -8,7 +8,7 @@ SOURCES += jkqtmathtext_test.cpp \
 
 RCC_DIR = rccs
 
-CONFIG += qt windows
+CONFIG += link_prl link_prl qt windows
 
 
 TARGET = jkqtmathtext_test

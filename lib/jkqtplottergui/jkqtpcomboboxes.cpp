@@ -547,7 +547,9 @@ JKQTPImageModifierModeComboBox::JKQTPImageModifierModeComboBox(QWidget * /*paren
     addMode(JKQTPMathImageBase::ModifyNone, tr("none"));
     addMode(JKQTPMathImageBase::ModifyValue, tr("value"));
     addMode(JKQTPMathImageBase::ModifySaturation, tr("saturation"));
-    addMode(JKQTPMathImageBase::ModifyAlpha, tr("alpha"));
+    addMode(JKQTPMathImageBase::ModifyAlpha, tr("alpha/transparency"));
+    addMode(JKQTPMathImageBase::ModifyLuminance, tr("luminance"));
+    addMode(JKQTPMathImageBase::ModifyHue, tr("hue"));
 }
 
 JKQTPMathImageBase::ModifierMode JKQTPImageModifierModeComboBox::getModifierMode() const
@@ -561,10 +563,10 @@ JKQTPMathImageBase::ModifierMode JKQTPImageModifierModeComboBox::getModifierMode
 
 void JKQTPImageModifierModeComboBox::setModifierMode(JKQTPMathImageBase::ModifierMode mode)
 {
-    setCurrentIndex(findData((int)mode));
+    setCurrentIndex(findData(static_cast<int>(mode)));
 }
 
 void JKQTPImageModifierModeComboBox::addMode(JKQTPMathImageBase::ModifierMode mode, const QString &name, const QIcon &icon)
 {
-    addItem(icon, name, (int)mode);
+    addItem(icon, name, static_cast<int>(mode));
 }

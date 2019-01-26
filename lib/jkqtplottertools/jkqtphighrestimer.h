@@ -76,7 +76,7 @@
  *
  * The timer works very simple:
  *   - you can start the timer with start() which means you set a time=0
- *   - then you can query the time difference to the last call of start() by using get_time().
+ *   - then you can query the time difference to the last call of start() by using getTime().
  * .
  *
  * There is also a test method test() which will try to give you a feel for the performance of the timer in
@@ -95,7 +95,7 @@
  * methods need a fixed amount of time. So we can use this method to test whether our system provides a sufficiently
  * accurate time. The 1.68 usec give an upper bound for the timer interval and thus the resolution they do <b>not</b>
  * represent the timer resolution. To get this nominal resolution in a windows system you could use the WinAPI method
- * \c QueryPerformanceFrequency() which is used in the method get_time(). On my system the timer frequency is 3.57955 MHz
+ * \c QueryPerformanceFrequency() which is used in the method getTime(). On my system the timer frequency is 3.57955 MHz
  * which corresponds to a resolution of 0.2794 usec.
  *
  * \par win32 implementation issues:
@@ -105,7 +105,7 @@
  * .
  * \n
  * The first one is used to read times: In the start() method we simply save the current counter value to a variable.
- * In get_time() we can then again use QueryPerformanceCounter() to get the current counter value and then calculate
+ * In getTime() we can then again use QueryPerformanceCounter() to get the current counter value and then calculate
  * the difference between these two. Using QueryPerformanceFrequency() we can calculate the time difference in usecs
  * from the counter value difference using:
  *   \f[ \Delta t=\frac{N_{\mbox{now}}-N_{\mbox{start}}}{\mbox{\texttt{QueryPerformanceFrequency()}}}\cdot 10^{6} \f]
@@ -148,7 +148,7 @@ class JKQTPHighResTimer {
 		/** \brief start the timer */
 		void start();
 		/** \brief get the time since the last call of start() in microseconds */
-		double get_time();
+		double getTime();
 		/** \brief test the resolution
      *
      * mean value and standard deviation of 1000000 timer polls will be evaluated and returned in \c mean
@@ -158,9 +158,9 @@ class JKQTPHighResTimer {
      *
      * To measure the resolution this method uses this code:
      * \code
-double l=get_time(), n;
+double l=getTime(), n;
 for (unsigned long i=0; i<runs; i++) {
-  n=get_time();
+  n=getTime();
   h[i]=n-l;
   l=n;
 }

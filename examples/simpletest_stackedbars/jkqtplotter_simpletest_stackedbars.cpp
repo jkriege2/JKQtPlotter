@@ -40,38 +40,38 @@ void addGraph(JKQTPlotter& plot, bool swapXY) {
     size_t cGreen=ds->addCopiedColumn(percentage_green, "green energy");
 
     // 4. create graphs in the plot, which plots the dataset year/other, year/coal, ...
-    //    The color of the graphs is set by calling set_fillColor_and_darkenedColor(), which sets the
+    //    The color of the graphs is set by calling setFillColor_and_darkenedColor(), which sets the
     //    fillColor to the given color and makes the outline of the bars (i.e. their "color") a darker
     //    shade of the given color.
     QVector<TGRAPH*> graphs;
     graphs.push_back(new TGRAPH(&plot));
-    graphs.back()->set_xColumn((!swapXY)?cYear:cOther);
-    graphs.back()->set_yColumn((!swapXY)?cOther:cYear);
-    graphs.back()->set_title(QObject::tr("other sources"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("red"));
+    graphs.back()->setXColumn((!swapXY)?cYear:cOther);
+    graphs.back()->setYColumn((!swapXY)?cOther:cYear);
+    graphs.back()->setTitle(QObject::tr("other sources"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("red"));
     graphs.push_back(new TGRAPH(&plot));
-    graphs.back()->set_xColumn((!swapXY)?cYear:cCoalOil);
-    graphs.back()->set_yColumn((!swapXY)?cCoalOil:cYear);
-    graphs.back()->set_title(QObject::tr("coal & oil"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("darkgrey"));
+    graphs.back()->setXColumn((!swapXY)?cYear:cCoalOil);
+    graphs.back()->setYColumn((!swapXY)?cCoalOil:cYear);
+    graphs.back()->setTitle(QObject::tr("coal & oil"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("darkgrey"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
     graphs.push_back(new TGRAPH(&plot));
-    graphs.back()->set_xColumn((!swapXY)?cYear:cGas);
-    graphs.back()->set_yColumn((!swapXY)?cGas:cYear);
-    graphs.back()->set_title(QObject::tr("natural gas"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("blue"));
+    graphs.back()->setXColumn((!swapXY)?cYear:cGas);
+    graphs.back()->setYColumn((!swapXY)?cGas:cYear);
+    graphs.back()->setTitle(QObject::tr("natural gas"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("blue"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
     graphs.push_back(new TGRAPH(&plot));
-    graphs.back()->set_xColumn((!swapXY)?cYear:cNuclear);
-    graphs.back()->set_yColumn((!swapXY)?cNuclear:cYear);
-    graphs.back()->set_title(QObject::tr("nuclear energy"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("gold"));
+    graphs.back()->setXColumn((!swapXY)?cYear:cNuclear);
+    graphs.back()->setYColumn((!swapXY)?cNuclear:cYear);
+    graphs.back()->setTitle(QObject::tr("nuclear energy"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("gold"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
     graphs.push_back(new TGRAPH(&plot));
-    graphs.back()->set_xColumn((!swapXY)?cYear:cGreen);
-    graphs.back()->set_yColumn((!swapXY)?cGreen:cYear);
-    graphs.back()->set_title(QObject::tr("green energy"));
-    graphs.back()->set_fillColor_and_darkenedColor(QColor("darkgreen"));
+    graphs.back()->setXColumn((!swapXY)?cYear:cGreen);
+    graphs.back()->setYColumn((!swapXY)?cGreen:cYear);
+    graphs.back()->setTitle(QObject::tr("green energy"));
+    graphs.back()->setFillColor_and_darkenedColor(QColor("darkgreen"));
     graphs.back()->stackUpon(graphs[graphs.size()-2]);
 
 

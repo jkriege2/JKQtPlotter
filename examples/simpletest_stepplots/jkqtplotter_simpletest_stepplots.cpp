@@ -44,22 +44,22 @@ int main(int argc, char* argv[])
     graphL=new JKQTPXYLineGraph(&plot);
 
     // set data for both graphs
-    graph->set_xColumn(columnX); graphL->set_xColumn(graph->get_xColumn());
-    graph->set_yColumn(columnY1); graphL->set_yColumn(graph->get_yColumn());
+    graph->setXColumn(columnX); graphL->setXColumn(graph->getXColumn());
+    graph->setYColumn(columnY1); graphL->setYColumn(graph->getYColumn());
 
     // set step style
-    graph->set_stepType(JKQTPStepLeft);
+    graph->setStepType(JKQTPStepLeft);
     graph->setLineWidth(1);
-    graph->set_fillCurve(true);
-    graph->set_drawLine(true);
-    graph->set_title("JKQTPStepLeft, filled");
+    graph->setFillCurve(true);
+    graph->setDrawLine(true);
+    graph->setTitle("JKQTPStepLeft, filled");
 
     // set symbol + pen style and color for the added circles, copy color
-    graphL->set_symbol(JKQTPGraphSymbols::JKQTPCircle);
-    graphL->set_drawLine(false);
-    graphL->set_symbolSize(9);
-    graphL->set_symbolWidth(1);
-    graphL->set_color(graph->get_color());
+    graphL->setSymbol(JKQTPGraphSymbols::JKQTPCircle);
+    graphL->setDrawLine(false);
+    graphL->setSymbolSize(9);
+    graphL->setSymbolWidth(1);
+    graphL->setColor(graph->getColor());
 
     // add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
@@ -71,22 +71,22 @@ int main(int argc, char* argv[])
     graphL=new JKQTPXYLineGraph(&plot);
 
     // set data for both graphs
-    graph->set_xColumn(columnX); graphL->set_xColumn(graph->get_xColumn());
-    graph->set_yColumn(columnY2); graphL->set_yColumn(graph->get_yColumn());
+    graph->setXColumn(columnX); graphL->setXColumn(graph->getXColumn());
+    graph->setYColumn(columnY2); graphL->setYColumn(graph->getYColumn());
 
     // set step style
-    graph->set_stepType(JKQTPStepCenter);
+    graph->setStepType(JKQTPStepCenter);
     graph->setLineWidth(1);
-    graph->set_fillCurve(false);
-    graph->set_drawLine(true);
-    graph->set_title("JKQTPStepCenter");
+    graph->setFillCurve(false);
+    graph->setDrawLine(true);
+    graph->setTitle("JKQTPStepCenter");
 
     // set symbol + pen style and color for the added circles, copy color
-    graphL->set_symbol(JKQTPGraphSymbols::JKQTPCircle);
-    graphL->set_drawLine(false);
-    graphL->set_symbolSize(9);
-    graphL->set_symbolWidth(1);
-    graphL->set_color(graph->get_color());
+    graphL->setSymbol(JKQTPGraphSymbols::JKQTPCircle);
+    graphL->setDrawLine(false);
+    graphL->setSymbolSize(9);
+    graphL->setSymbolWidth(1);
+    graphL->setColor(graph->getColor());
 
     // add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
@@ -98,22 +98,22 @@ int main(int argc, char* argv[])
     graphL=new JKQTPXYLineGraph(&plot);
 
     // set data for both graphs
-    graph->set_xColumn(columnX); graphL->set_xColumn(graph->get_xColumn());
-    graph->set_yColumn(columnY3); graphL->set_yColumn(graph->get_yColumn());
+    graph->setXColumn(columnX); graphL->setXColumn(graph->getXColumn());
+    graph->setYColumn(columnY3); graphL->setYColumn(graph->getYColumn());
 
     // set step style
-    graph->set_stepType(JKQTPStepRight);
+    graph->setStepType(JKQTPStepRight);
     graph->setLineWidth(1);
-    graph->set_fillCurve(false);
-    graph->set_drawLine(true);
-    graph->set_title("JKQTPStepRight");
+    graph->setFillCurve(false);
+    graph->setDrawLine(true);
+    graph->setTitle("JKQTPStepRight");
 
     // set symbol + pen style and color for the added circles, copy color
-    graphL->set_symbol(JKQTPGraphSymbols::JKQTPCircle);
-    graphL->set_drawLine(false);
-    graphL->set_symbolSize(9);
-    graphL->set_symbolWidth(1);
-    graphL->set_color(graph->get_color());
+    graphL->setSymbol(JKQTPGraphSymbols::JKQTPCircle);
+    graphL->setDrawLine(false);
+    graphL->setSymbolSize(9);
+    graphL->setSymbolWidth(1);
+    graphL->setColor(graph->getColor());
 
     // add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);

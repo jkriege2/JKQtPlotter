@@ -73,59 +73,59 @@ class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-        /*! \brief sets the property baseline to the specified \a __value. 
+        /*! \brief sets the property baseline ( \copybrief baseline ) to the specified \a __value. 
             \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
-        inline virtual void set_baseline(double __value)  
+        inline virtual void setBaseline(double __value)  
         {
             this->baseline = __value;
         } 
-        /*! \brief returns the property baseline. 
+        /*! \brief returns the property baseline ( \copybrief baseline ). 
             \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
             \see baseline for more information */ 
-        inline virtual double get_baseline() const  
+        inline virtual double getBaseline() const  
         {
             return this->baseline; 
         }
-        /*! \brief sets the property peakHeight to the specified \a __value. 
+        /*! \brief sets the property peakHeight ( \copybrief peakHeight ) to the specified \a __value. 
             \details Description of the parameter peakHeight is: <BLOCKQUOTE>\copydoc peakHeight </BLOCKQUOTE> 
             \see peakHeight for more information */ 
-        inline virtual void set_peakHeight(double __value)  
+        inline virtual void setPeakHeight(double __value)  
         {
             this->peakHeight = __value;
         } 
-        /*! \brief returns the property peakHeight. 
+        /*! \brief returns the property peakHeight ( \copybrief peakHeight ). 
             \details Description of the parameter peakHeight is: <BLOCKQUOTE>\copydoc peakHeight </BLOCKQUOTE> 
             \see peakHeight for more information */ 
-        inline virtual double get_peakHeight() const  
+        inline virtual double getPeakHeight() const  
         {
             return this->peakHeight; 
         }
-        /*! \brief sets the property yPeaks to the specified \a __value. 
+        /*! \brief sets the property yPeaks ( \copybrief yPeaks ) to the specified \a __value. 
             \details Description of the parameter yPeaks is: <BLOCKQUOTE>\copydoc yPeaks </BLOCKQUOTE> 
             \see yPeaks for more information */ 
-        inline virtual void set_yPeaks(bool __value)  
+        inline virtual void setYPeaks(bool __value)  
         {
             this->yPeaks = __value;
         } 
-        /*! \brief returns the property yPeaks. 
+        /*! \brief returns the property yPeaks ( \copybrief yPeaks ). 
             \details Description of the parameter yPeaks is: <BLOCKQUOTE>\copydoc yPeaks </BLOCKQUOTE> 
             \see yPeaks for more information */ 
-        inline virtual bool get_yPeaks() const  
+        inline virtual bool getYPeaks() const  
         {
             return this->yPeaks; 
         }
-        /*! \brief sets the property drawBaseline to the specified \a __value. 
+        /*! \brief sets the property drawBaseline ( \copybrief drawBaseline ) to the specified \a __value. 
             \details Description of the parameter drawBaseline is: <BLOCKQUOTE>\copydoc drawBaseline </BLOCKQUOTE> 
             \see drawBaseline for more information */ 
-        inline virtual void set_drawBaseline(bool __value)  
+        inline virtual void setDrawBaseline(bool __value)  
         {
             this->drawBaseline = __value;
         } 
-        /*! \brief returns the property drawBaseline. 
+        /*! \brief returns the property drawBaseline ( \copybrief drawBaseline ). 
             \details Description of the parameter drawBaseline is: <BLOCKQUOTE>\copydoc drawBaseline </BLOCKQUOTE> 
             \see drawBaseline for more information */ 
-        inline virtual bool get_drawBaseline() const  
+        inline virtual bool getDrawBaseline() const  
         {
             return this->drawBaseline; 
         }

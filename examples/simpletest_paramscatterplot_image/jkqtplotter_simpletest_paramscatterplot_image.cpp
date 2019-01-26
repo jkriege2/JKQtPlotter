@@ -49,32 +49,32 @@ int main(int argc, char* argv[])
     //     scatter points, where the symbol size is given by column columnS and the color of
     //     each symbol is set from column columnG, via a color palette JKQTPMathImageMATLAB
     JKQTPXYParametrizedScatterGraph* graph1=new JKQTPXYParametrizedScatterGraph(&plot);
-    graph1->set_xColumn(columnX);
-    graph1->set_yColumn(columnY);
-    graph1->set_sizeColumn(columnS);
-    graph1->set_symbolColumn(columnS);
-    graph1->set_symbol(JKQTPFilledTriangle);
-    graph1->set_colorColumn(columnG);
-    graph1->set_palette(JKQTPMathImageOCEAN);
-    graph1->set_drawLine(false);
-    graph1->set_title("");
+    graph1->setXColumn(columnX);
+    graph1->setYColumn(columnY);
+    graph1->setSizeColumn(columnS);
+    graph1->setSymbolColumn(columnS);
+    graph1->setSymbol(JKQTPFilledTriangle);
+    graph1->setColorColumn(columnG);
+    graph1->setPalette(JKQTPMathImageOCEAN);
+    graph1->setDrawLine(false);
+    graph1->setTitle("");
     plot.addGraph(graph1);
 
     // 3.2 add an image to display the original graphics
     JKQTPImage* graph2=new JKQTPImage(&plot);
-    graph2->set_image(image);
-    graph2->set_x(0);
-    graph2->set_y(0);
-    graph2->set_width(10);
-    graph2->set_height(10);
+    graph2->setImage(image);
+    graph2->setX(0);
+    graph2->setY(0);
+    graph2->setWidth(10);
+    graph2->setHeight(10);
     plot.addGraph(graph2);
 
 
     // 4. scale the plot so the graph is contained and format the coordinate system
     plot.getXAxis()->setAxisLabel("x-axis");
     plot.getYAxis()->setAxisLabel("y-axis");
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
+    plot.getXAxis()->setDrawGrid(false);
+    plot.getYAxis()->setDrawGrid(false);
     // max. size is the size of the image
     plot.setXY(0,image.width()-1,0,image.height()-1);
     plot.setAbsoluteXY(0,image.width()-1,0,image.height()-1);

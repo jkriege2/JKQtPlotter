@@ -25,25 +25,25 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
 Then simples graph just uses the columns X and Y to plot the curve:
 ```.cpp
     JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(&plot);
-    graph1->set_xColumn(columnX);
-    graph1->set_yColumn(columnY);
-    graph1->set_drawLine(true);
-    graph1->set_symbol(JKQTPNoSymbol);
-    graph1->set_title("one-colored spiral");
+    graph1->setXColumn(columnX);
+    graph1->setYColumn(columnY);
+    graph1->setDrawLine(true);
+    graph1->setSymbol(JKQTPNoSymbol);
+    graph1->setTitle("one-colored spiral");
     plot.addGraph(graph1);
 ```
  
 If you use `JKQTPXYParametrizedScatterGraph` instead of `JKQTPXYLineGraph`, you can also modify the color of the line-segments, connecting the datapoints:
 ```.cpp
     JKQTPXYParametrizedScatterGraph* graph2=new JKQTPXYParametrizedScatterGraph(&plot2);
-    graph2->set_xColumn(columnX);
-    graph2->set_yColumn(columnY);
-    graph2->set_colorColumn(columnR);
-    graph2->set_palette(JKQTPMathImageMATLAB);
-    graph2->set_symbol(JKQTPNoSymbol);
-    graph2->set_drawLine(true);
-    graph2->set_title("colored spiral");
-    graph2->get_colorBarRightAxis()->setAxisLabel("color scale radius $r(\\phi)$");
+    graph2->setXColumn(columnX);
+    graph2->setYColumn(columnY);
+    graph2->setColorColumn(columnR);
+    graph2->setPalette(JKQTPMathImageMATLAB);
+    graph2->setSymbol(JKQTPNoSymbol);
+    graph2->setDrawLine(true);
+    graph2->setTitle("colored spiral");
+    graph2->getColorBarRightAxis()->setAxisLabel("color scale radius $r(\\phi)$");
     plot2.addGraph(graph2);
 ```
 

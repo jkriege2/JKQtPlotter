@@ -35,7 +35,7 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *pa
     fdata.varcount=0;
     function="";
     parameterColumn=-1;
-    set_params(&fdata);
+    setParams(&fdata);
     setPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
@@ -43,8 +43,8 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *pa
     efdata.varcount=0;
     errorFunction="";
     errorParameterColumn=-1;
-    set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
+    setErrorParams(&efdata);
+    setErrorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 }
 
 JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent):
@@ -55,7 +55,7 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent
     fdata.varcount=0;
     function="";
     parameterColumn=-1;
-    set_params(&fdata);
+    setParams(&fdata);
     setPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
@@ -63,8 +63,8 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent
     efdata.varcount=0;
     errorFunction="";
     errorParameterColumn=-1;
-    set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
+    setErrorParams(&efdata);
+    setErrorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 }
 
 JKQTPXParsedFunctionLineGraph::~JKQTPXParsedFunctionLineGraph()
@@ -129,10 +129,10 @@ void JKQTPXParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
         //qDebug()<<QString("parser error: %1").arg(E.what());
     }
 
-    set_params(&fdata);
+    setParams(&fdata);
     setPlotFunction(JKQTPXParsedFunctionLineGraphFunction);
-    set_errorParams(&efdata);
-    set_errorPlotFunction(JKQTPXParsedFunctionLineGraphFunction);
+    setErrorParams(&efdata);
+    setErrorPlotFunction(JKQTPXParsedFunctionLineGraphFunction);
 
     //qint64 t=timer.elapsed();
     JKQTPXFunctionLineGraph::createPlotData(false);
@@ -198,7 +198,7 @@ JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTBasePlotter *pa
     fdata.varcount=0;
     function="";
     parameterColumn=-1;
-    set_params(&fdata);
+    setParams(&fdata);
     setPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
@@ -206,8 +206,8 @@ JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTBasePlotter *pa
     efdata.varcount=0;
     errorFunction="";
     errorParameterColumn=-1;
-    set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
+    setErrorParams(&efdata);
+    setErrorPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 }
 
 JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPlotter *parent):
@@ -218,7 +218,7 @@ JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPlotter *parent
     fdata.varcount=0;
     function="";
     parameterColumn=-1;
-    set_params(&fdata);
+    setParams(&fdata);
     setPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 
     efdata.parser=new JKQTPMathParser();
@@ -226,8 +226,8 @@ JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPlotter *parent
     efdata.varcount=0;
     errorFunction="";
     errorParameterColumn=-1;
-    set_errorParams(&efdata);
-    set_errorPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
+    setErrorParams(&efdata);
+    setErrorPlotFunction(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction);
 }
 
 JKQTPYParsedFunctionLineGraph::~JKQTPYParsedFunctionLineGraph()
@@ -293,10 +293,10 @@ void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
         //qDebug()<<QString("parser error: %1").arg(E.what());
     }
 
-    set_params(&fdata);
+    setParams(&fdata);
     setPlotFunction(JKQTPYParsedFunctionLineGraphFunction);
-    set_errorParams(&efdata);
-    set_errorPlotFunction(JKQTPYParsedFunctionLineGraphFunction);
+    setErrorParams(&efdata);
+    setErrorPlotFunction(JKQTPYParsedFunctionLineGraphFunction);
 
     //qint64 t=timer.elapsed();
     JKQTPYFunctionLineGraph::createPlotData(false);

@@ -34,25 +34,25 @@ First we prepare the data, as described above. The image is loaded and then conv
 Now we can use th datavectors to add a `JKQTPXYParametrizedScatterGraph`:
 ```.cpp
     JKQTPXYParametrizedScatterGraph* graph1=new JKQTPXYParametrizedScatterGraph(&plot);
-    graph1->set_xColumn(columnX);
-    graph1->set_yColumn(columnY);
-    graph1->set_sizeColumn(columnS);
-    graph1->set_symbol(JKQTPFilledCircle);
-    graph1->set_colorColumn(columnG);
-    graph1->set_palette(JKQTPMathImageMATLAB);
-    graph1->set_drawLine(false);
-    graph1->set_title("");
+    graph1->setXColumn(columnX);
+    graph1->setYColumn(columnY);
+    graph1->setSizeColumn(columnS);
+    graph1->setSymbol(JKQTPFilledCircle);
+    graph1->setColorColumn(columnG);
+    graph1->setPalette(JKQTPMathImageMATLAB);
+    graph1->setDrawLine(false);
+    graph1->setTitle("");
     plot.addGraph(graph1);
 ```
 
 For illustrative purposes, the original image is shown at the bottom-left:
 ```.cpp
     JKQTPImage* graph2=new JKQTPImage(&plot);
-    graph2->set_image(image);
-    graph2->set_x(0);
-    graph2->set_y(0);
-    graph2->set_width(10);
-    graph2->set_height(10);
+    graph2->setImage(image);
+    graph2->setX(0);
+    graph2->setY(0);
+    graph2->setWidth(10);
+    graph2->setHeight(10);
     plot.addGraph(graph2);
 ```
 
@@ -61,8 +61,8 @@ Finally the plot is styled and the axis aspect ratios are fixed:
     // scale the plot so the graph is contained and format the coordinate system
     plot.getXAxis()->setAxisLabel("x-axis");
     plot.getYAxis()->setAxisLabel("y-axis");
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
+    plot.getXAxis()->setDrawGrid(false);
+    plot.getYAxis()->setDrawGrid(false);
     // max. size is the size of the image
     plot.setXY(0,image.width()-1,0,image.height()-1);
     plot.setAbsoluteXY(0,image.width()-1,0,image.height()-1);
@@ -87,7 +87,7 @@ You can modify the example above in several ways, e.g. by choosing another symbo
 
 ![jkqtplotter_simpletest_paramscatterplot_image_palette_triangle](../../screenshots/jkqtplotter_simpletest_paramscatterplot_image_palette_triangle.png)
 
-... or even  to set a different symbol for each pixel, based on the values in `columnS` (simply add `graph1->set_symbolColumn(columnS)`):
+... or even  to set a different symbol for each pixel, based on the values in `columnS` (simply add `graph1->setSymbolColumn(columnS)`):
 
 
 ![jkqtplotter_simpletest_paramscatterplot_image_varsymbol](../../screenshots/jkqtplotter_simpletest_paramscatterplot_image_varsymbol.png)

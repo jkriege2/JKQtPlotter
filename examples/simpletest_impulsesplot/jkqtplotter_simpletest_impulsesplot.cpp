@@ -33,11 +33,11 @@ int main(int argc, char* argv[])
 
     // 4. create a vertical impulse graph in the plot, which plots the dataset X/Y:
     JKQTPImpulsesVerticalGraph* graph=new JKQTPImpulsesVerticalGraph(&plot);
-    graph->set_xColumn(columnX);
-    graph->set_yColumn(columnY);
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY);
     graph->setLineWidth(2);
-    graph->set_color(QColor("red"));
-    graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
+    graph->setColor(QColor("red"));
+    graph->setTitle(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
 
     // 5. add the graph to the plot, so it is actually displayed
     plot.addGraph(graph);
@@ -47,8 +47,8 @@ int main(int argc, char* argv[])
     plot.getYAxis()->setAxisLabel(QObject::tr("y-axis"));
 
     // 7. switch the grid off
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
+    plot.getXAxis()->setDrawGrid(false);
+    plot.getYAxis()->setDrawGrid(false);
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();

@@ -54,15 +54,15 @@ Finally three `JKQTPFilledCurveXGraph` objects are generated and added to the pl
     JKQTPFilledCurveXGraph* graphR=new JKQTPFilledCurveXGraph(&plot);
 
     // set graph titles
-    graphR->set_title("R-channel");
+    graphR->setTitle("R-channel");
 
     // set graph colors (lines: non-transparent, fill: semi-transparent
     QColor col;
-    col=QColor("red"); graphR->set_color(col);
-    col.setAlphaF(0.25); graphR->set_fillColor(col);
+    col=QColor("red"); graphR->setColor(col);
+    col.setAlphaF(0.25); graphR->setFillColor(col);
 
     // set data
-    graphR->set_xColumn(columnX); graphR->set_yColumn(columnR);
+    graphR->setXColumn(columnX); graphR->setYColumn(columnR);
 
 
     // add the graphs to the plot, so they are actually displayed

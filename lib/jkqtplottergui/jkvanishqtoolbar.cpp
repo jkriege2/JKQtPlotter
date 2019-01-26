@@ -33,6 +33,16 @@ JKVanishQToolBar::JKVanishQToolBar(QWidget *parent): QToolBar(parent){
     toolbarVanishes=true;
 }
 
+bool JKVanishQToolBar::doesToolbarVanish() const
+{
+    return this->toolbarVanishes;
+}
+
+void JKVanishQToolBar::setToolbarVanishesEnabled(bool __value)
+{
+    this->toolbarVanishes = __value;
+}
+
 void JKVanishQToolBar::leaveEvent(QEvent *) {
     if (toolbarVanishes) hide();
 }

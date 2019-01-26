@@ -14,26 +14,26 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
     graphL=new JKQTPXYLineGraph(&plot);
 
     // set data for both graphs
-    graph->set_xColumn(columnX); graphL->set_xColumn(graph->get_xColumn());
-    graph->set_yColumn(columnY1); graphL->set_yColumn(graph->get_yColumn());
+    graph->setXColumn(columnX); graphL->setXColumn(graph->getXColumn());
+    graph->setYColumn(columnY1); graphL->setYColumn(graph->getYColumn());
 
     // set step style
-    graph->set_stepType(JKQTPStepLeft);
+    graph->setStepType(JKQTPStepLeft);
     graph->setLineWidth(1);
-    graph->set_fillCurve(true);
-    graph->set_drawLine(true);
-    graph->set_title("JKQTPStepLeft, filled");
+    graph->setFillCurve(true);
+    graph->setDrawLine(true);
+    graph->setTitle("JKQTPStepLeft, filled");
 ```
-Note that you can configure the step type (left/center/right by `graph->set_stepType(JKQTPStepLeft)`. With `graph->set_fillCurve(true)` you can draw the curve filled until the y=0-axis and with `graph->set_drawLine(true)` you can switch the line along the values on and off (e.g. to only have the filled area, but no line).
+Note that you can configure the step type (left/center/right by `graph->setStepType(JKQTPStepLeft)`. With `graph->setFillCurve(true)` you can draw the curve filled until the y=0-axis and with `graph->setDrawLine(true)` you can switch the line along the values on and off (e.g. to only have the filled area, but no line).
 
 Finally the `JKQTPXYLineGraph` is configured:
 ```.cpp
     // set symbol + pen style and color for the added circles, copy color
-    graphL->set_symbol(JKQTPGraphSymbols::JKQTPCircle);
-    graphL->set_drawLine(false);
-    graphL->set_symbolSize(9);
-    graphL->set_symbolWidth(1);
-    graphL->set_color(graph->get_color());
+    graphL->setSymbol(JKQTPGraphSymbols::JKQTPCircle);
+    graphL->setDrawLine(false);
+    graphL->setSymbolSize(9);
+    graphL->setSymbolWidth(1);
+    graphL->setColor(graph->getColor());
 ```
 
 ... and all graphs are added to the plot:
@@ -43,7 +43,7 @@ Finally the `JKQTPXYLineGraph` is configured:
     plot.addGraph(graphL);
 ```
 
-In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->set_symbolSize(14)`), the line-width used to draw them (`graph->set_symbolWidth(1.5)`) and the line width of the graph line (`graph->setLineWidth(1)`). If you want to switch off the line altogether, use `graph->set_drawLine(false`.
+In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->setSymbolSize(14)`), the line-width used to draw them (`graph->setSymbolWidth(1.5)`) and the line width of the graph line (`graph->setLineWidth(1)`). If you want to switch off the line altogether, use `graph->setDrawLine(false`.
 
 The result looks like this:
 

@@ -28,12 +28,12 @@
 //#define jkqtp_QColor2String(color) QString(jkqtp_rgbtostring((color).red(), (color).green(), (color).blue(), (color).alpha()).c_str())
 
 /**
- * \brief saves the given property (for which also a def_property exists) into the given settings object
+ * \brief saves the given property (for which also a default_property exists) into the given settings object
  * \ingroup jkqtmathtext
  * \internal
  */
 #define JKQTMTPROPERTYsave(settings, group, var, varname) \
-    if (var!=def_##var) settings.setValue(group+varname, var);
+    if (var!=default_##var) settings.setValue(group+varname, var);
 /**
  * \brief loads the given property from the given settings object
  * \ingroup jkqtmathtext
@@ -529,10 +529,10 @@ bool JKQTMathText::MTinstruction1Node::toHtml(QString &html, JKQTMathText::MTenv
     return child->toHtml(html, ev, defaultEv);
 }
 
-void JKQTMathText::MTinstruction1Node::set_drawBoxes(bool draw)
+void JKQTMathText::MTinstruction1Node::setDrawBoxes(bool draw)
 {
     drawBoxes=draw;
-    child->set_drawBoxes(draw);
+    child->setDrawBoxes(draw);
 }
 
 bool JKQTMathText::MTinstruction1Node::setupMTenvironment(JKQTMathText::MTenvironment &ev)
@@ -579,10 +579,10 @@ JKQTMathText::MTsubscriptNode::~MTsubscriptNode() {
 
 void JKQTMathText::MTsubscriptNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     JKQTMathText::MTenvironment ev=currentEv;
-    ev.fontSize=ev.fontSize*parent->get_subsuper_size_factor();
+    ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
 
     QFontMetricsF fm(ev.getFont(parent), painter.device());
-    double shift=parent->get_sub_shift_factor()*parent->getTBR(ev.getFont(parent), "M", painter.device()).height();
+    double shift=parent->getSubShiftFactor()*parent->getTBR(ev.getFont(parent), "M", painter.device()).height();
 
     child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
 
@@ -591,19 +591,19 @@ void JKQTMathText::MTsubscriptNode::getSizeInternal(QPainter& painter, JKQTMathT
     overallHeight=tbr.height()+shift+(overallHeight-baselineHeight);
     baselineHeight=tbr.height();
     strikeoutPos=fmouter.strikeOutPos();
-    if (currentEv.italic) width=width-double(fm.width(' '))*parent->get_italic_correction_factor();
+    if (currentEv.italic) width=width-double(fm.width(' '))*parent->getItalicCorrectionFactor();
 }
 
 double JKQTMathText::MTsubscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
-    ev.fontSize=ev.fontSize*parent->get_subsuper_size_factor();
+    ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
 
     QFontMetricsF fm(ev.getFont(parent), painter.device());
 
-    double shift=parent->get_sub_shift_factor()*parent->getTBR(ev.getFont(parent), "M", painter.device()).height();
+    double shift=parent->getSubShiftFactor()*parent->getTBR(ev.getFont(parent), "M", painter.device()).height();
     double xx=x;
-    if (currentEv.italic) xx=xx-double(fm.width(' '))*parent->get_italic_correction_factor();
+    if (currentEv.italic) xx=xx-double(fm.width(' '))*parent->getItalicCorrectionFactor();
     return child->draw(painter, xx, y+shift, ev);//+0.5*fm.boundingRect("A").width();
 }
 
@@ -625,10 +625,10 @@ bool JKQTMathText::MTsubscriptNode::toHtml(QString &html, JKQTMathText::MTenviro
     return ok;
 }
 
-void JKQTMathText::MTsubscriptNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTsubscriptNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
-    child->set_drawBoxes(draw);
+    child->setDrawBoxes(draw);
 
 }
 
@@ -705,10 +705,10 @@ bool JKQTMathText::MTsqrtNode::toHtml(QString &html, JKQTMathText::MTenvironment
     return ok;
 }
 
-void JKQTMathText::MTsqrtNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTsqrtNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
-    child->set_drawBoxes(draw);
+    child->setDrawBoxes(draw);
 
 }
 
@@ -751,15 +751,15 @@ void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::
     double xw=fm.boundingRect("x").width();
 
     if (mode==MTFMunderbrace || mode==MTFMoverbrace) {
-        ev2.fontSize=ev2.fontSize*parent->get_underbrace_factor();
+        ev2.fontSize=ev2.fontSize*parent->getUnderbraceFactor();
     } else if (mode==MTFMunderset || mode==MTFMoverset) {
-        ev2.fontSize=ev2.fontSize*parent->get_underset_factor();
+        ev2.fontSize=ev2.fontSize*parent->getUndersetFactor();
     } else  if (mode==MTFMfrac) {
-        ev1.fontSize=ev1.fontSize*parent->get_frac_factor();
-        ev2.fontSize=ev2.fontSize*parent->get_frac_factor();
+        ev1.fontSize=ev1.fontSize*parent->getFracFactor();
+        ev2.fontSize=ev2.fontSize*parent->getFracFactor();
     } else  if (mode==MTFMtfrac) {
-        ev1.fontSize=ev1.fontSize*parent->get_frac_factor()*0.7;
-        ev2.fontSize=ev2.fontSize*parent->get_frac_factor()*0.7;
+        ev1.fontSize=ev1.fontSize*parent->getFracFactor()*0.7;
+        ev2.fontSize=ev2.fontSize*parent->getFracFactor()*0.7;
     }
 
 
@@ -775,18 +775,18 @@ void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::
         //std::cout<<"\nxh="<<xh;
         //std::cout<<"\n  baselineHeight1="<<baselineHeight1<<",  overallHeight1="<<overallHeight1;
         //std::cout<<"\n  baselineHeight2="<<baselineHeight2<<",  overallHeight2="<<overallHeight2<<std::endl;
-        //overallHeight=overallHeight1+overallHeight2+sp*(2.0*parent->get_frac_shift_factor());
-        //baselineHeight=overallHeight1+xh*(2.0*parent->get_frac_shift_factor());
-        overallHeight=2.0*qMax(overallHeight1, overallHeight2)+sp*(2.0*parent->get_frac_shift_factor());
-        baselineHeight=qMax(overallHeight1, overallHeight2)+xh*(2.0*parent->get_frac_shift_factor());
+        //overallHeight=overallHeight1+overallHeight2+sp*(2.0*parent->getFracShiftFactor());
+        //baselineHeight=overallHeight1+xh*(2.0*parent->getFracShiftFactor());
+        overallHeight=2.0*qMax(overallHeight1, overallHeight2)+sp*(2.0*parent->getFracShiftFactor());
+        baselineHeight=qMax(overallHeight1, overallHeight2)+xh*(2.0*parent->getFracShiftFactor());
         //std::cout<<"=>  baselineHeight="<<baselineHeight<<",  overallHeight="<<overallHeight<<std::endl;
         width=qMax(width1, width2)+ xw;
         strikeoutPos=sp;
     } else if (mode==MTFMstackrel) {
-        //overallHeight=overallHeight1+overallHeight2+sp*(2.0*parent->get_frac_shift_factor());
-        //baselineHeight=overallHeight1+xh*(2.0*parent->get_frac_shift_factor());
-        overallHeight=2.0*qMax(overallHeight1, overallHeight2)+sp*(2.0*parent->get_frac_shift_factor());
-        baselineHeight=qMax(overallHeight1, overallHeight2)+xh*(2.0*parent->get_frac_shift_factor());
+        //overallHeight=overallHeight1+overallHeight2+sp*(2.0*parent->getFracShiftFactor());
+        //baselineHeight=overallHeight1+xh*(2.0*parent->getFracShiftFactor());
+        overallHeight=2.0*qMax(overallHeight1, overallHeight2)+sp*(2.0*parent->getFracShiftFactor());
+        baselineHeight=qMax(overallHeight1, overallHeight2)+xh*(2.0*parent->getFracShiftFactor());
         width=qMax(width1, width2)+ xw;
         strikeoutPos=sp;
     } else if (mode==MTFMunderbrace) {
@@ -827,15 +827,15 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
     double bw=Ah/2.0;
 
     if (mode==MTFMunderbrace || mode==MTFMoverbrace) {
-        ev2.fontSize=ev2.fontSize*parent->get_underbrace_factor();
+        ev2.fontSize=ev2.fontSize*parent->getUnderbraceFactor();
     } else if (mode==MTFMunderset || mode==MTFMoverset) {
-        ev2.fontSize=ev2.fontSize*parent->get_underset_factor();
+        ev2.fontSize=ev2.fontSize*parent->getUndersetFactor();
     } else  if (mode==MTFMfrac) {
-        ev1.fontSize=ev1.fontSize*parent->get_frac_factor();
-        ev2.fontSize=ev2.fontSize*parent->get_frac_factor();
+        ev1.fontSize=ev1.fontSize*parent->getFracFactor();
+        ev2.fontSize=ev2.fontSize*parent->getFracFactor();
     } else  if (mode==MTFMtfrac) {
-        ev1.fontSize=ev1.fontSize*parent->get_frac_factor()*0.7;
-        ev2.fontSize=ev2.fontSize*parent->get_frac_factor()*0.7;
+        ev1.fontSize=ev1.fontSize*parent->getFracFactor()*0.7;
+        ev2.fontSize=ev2.fontSize*parent->getFracFactor()*0.7;
     }
 
     double width1=0, baselineHeight1=0, overallHeight1=0;//, strikeoutPos1=0;
@@ -863,11 +863,11 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
     if (mode==MTFMfrac || mode==MTFMdfrac || mode==MTFMtfrac) {
         QLineF l(x+xw/4.0, yline, x+width+xw/2.0, yline);
         if (l.length()>0) painter.drawLine(l);
-        child1->draw(painter, x+xw/2.0+(width-width1)/2.0, yline-xh*(parent->get_frac_shift_factor())-descent1, ev1);
-        child2->draw(painter, x+xw/2.0+(width-width2)/2.0, yline+xh*(parent->get_frac_shift_factor())+ascent2, ev2);
+        child1->draw(painter, x+xw/2.0+(width-width1)/2.0, yline-xh*(parent->getFracShiftFactor())-descent1, ev1);
+        child2->draw(painter, x+xw/2.0+(width-width2)/2.0, yline+xh*(parent->getFracShiftFactor())+ascent2, ev2);
     } else if (mode==MTFMstackrel) {
-        child1->draw(painter, x+xw/2.0+(width-width1)/2.0, yline-xh*(parent->get_frac_shift_factor())-descent1, ev1);
-        child2->draw(painter, x+xw/2.0+(width-width2)/2.0, yline+xh*(parent->get_frac_shift_factor())+ascent2, ev2);
+        child1->draw(painter, x+xw/2.0+(width-width1)/2.0, yline-xh*(parent->getFracShiftFactor())-descent1, ev1);
+        child2->draw(painter, x+xw/2.0+(width-width2)/2.0, yline+xh*(parent->getFracShiftFactor())+ascent2, ev2);
     } else if (mode==MTFMunderset) {
         child1->draw(painter, x+xw/2.0+(width-width1)/2.0, y, ev1);
         child2->draw(painter, x+xw/2.0+(width-width2)/2.0, y+descent1+xh/6.0+ascent2, ev2);
@@ -909,11 +909,11 @@ bool JKQTMathText::MTfracNode::toHtml(QString &/*html*/, JKQTMathText::MTenviron
     return ok;
 }
 
-void JKQTMathText::MTfracNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTfracNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
-    child1->set_drawBoxes(draw);
-    child2->set_drawBoxes(draw);
+    child1->setDrawBoxes(draw);
+    child2->setDrawBoxes(draw);
 
 }
 
@@ -958,7 +958,7 @@ void JKQTMathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTMathText
     //double Ah=fm.ascent();
     double xw=fm.boundingRect("x").width();
 
-    //ev1.fontSize=ev1.fontSize*parent->get_frac_factor();
+    //ev1.fontSize=ev1.fontSize*parent->getFracFactor();
 
 
     QVector<double> colwidth, rowheight;
@@ -1002,7 +1002,7 @@ double JKQTMathText::MTmatrixNode::draw(QPainter& painter, double x, double y, J
     //double Ah=fm.ascent();
     double xw=fm.boundingRect("x").width();
 
-    //ev1.fontSize=ev1.fontSize;*parent->get_frac_factor();
+    //ev1.fontSize=ev1.fontSize;*parent->getFracFactor();
 
 
     QVector<double> colwidth, rowheight, rowascent;
@@ -1058,12 +1058,12 @@ bool JKQTMathText::MTmatrixNode::toHtml(QString &/*html*/, JKQTMathText::MTenvir
     return false;
 }
 
-void JKQTMathText::MTmatrixNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTmatrixNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
     for (int i=0; i<lines; i++) {
         for (int j=0; j<children[i].size(); j++) {
-            children[i].at(j)->set_drawBoxes(draw);
+            children[i].at(j)->setDrawBoxes(draw);
         }
     }
 
@@ -1090,7 +1090,7 @@ JKQTMathText::MTdecoratedNode::~MTdecoratedNode() {
 void JKQTMathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     double wc=fm.boundingRect("A").width();
-    double dheightfactor=1.0+parent->get_decoration_height_factor()*2.0;
+    double dheightfactor=1.0+parent->getDecorationHeightFactor()*2.0;
 
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
 
@@ -1110,7 +1110,7 @@ double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y
     //double ll=wc*0.8;
     double a=baselineHeight;
     //double d=overallHeight-baselineHeight;
-    double dheightfactor=parent->get_decoration_height_factor();
+    double dheightfactor=parent->getDecorationHeightFactor();
     double dpos=y-a*(1.0+dheightfactor);
     double dposb=y+qMax((overallHeight-baselineHeight)*(1.0+dheightfactor), fm.xHeight()*dheightfactor);
     double deltax=0;//(wc-ll)/2.0;
@@ -1220,10 +1220,10 @@ bool JKQTMathText::MTdecoratedNode::toHtml(QString &/*html*/, JKQTMathText::MTen
     return false;
 }
 
-void JKQTMathText::MTdecoratedNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTdecoratedNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
-    child->set_drawBoxes(draw);
+    child->setDrawBoxes(draw);
 
 }
 
@@ -1249,29 +1249,29 @@ JKQTMathText::MTsuperscriptNode::~MTsuperscriptNode() {
 
 void JKQTMathText::MTsuperscriptNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
     JKQTMathText::MTenvironment ev=currentEv;
-    ev.fontSize=ev.fontSize*parent->get_subsuper_size_factor();
+    ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
-    double shift=0;//parent->get_super_shift_factor()*fm.ascent();
+    double shift=0;//parent->getSuperShiftFactor()*fm.ascent();
     overallHeight=overallHeight+shift;
     strikeoutPos=fm.strikeOutPos();
-    if (currentEv.italic) width=width+double(fm.width(' '))*parent->get_italic_correction_factor();
+    if (currentEv.italic) width=width+double(fm.width(' '))*parent->getItalicCorrectionFactor();
 }
 
 double JKQTMathText::MTsuperscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
-    ev.fontSize=ev.fontSize*parent->get_subsuper_size_factor();
+    ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
 
     double cwidth, cbaselineHeight, coverallheight, cStrikeoutPos;
     child->getSize(painter, ev, cwidth, cbaselineHeight, coverallheight, cStrikeoutPos);
 
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
 
-    double shift=0;//parent->get_super_shift_factor()*fm.ascent();
+    double shift=0;//parent->getSuperShiftFactor()*fm.ascent();
     //double shift=ev.;
     double xx=x;
-    if (currentEv.italic) xx=xx+double(fm.width(' '))*parent->get_italic_correction_factor();
+    if (currentEv.italic) xx=xx+double(fm.width(' '))*parent->getItalicCorrectionFactor();
 
     return child->draw(painter, xx, y-shift, ev);//+0.5*fm.boundingRect("A").width();
 }
@@ -1295,10 +1295,10 @@ bool JKQTMathText::MTsuperscriptNode::toHtml(QString &html, JKQTMathText::MTenvi
     return ok;
 }
 
-void JKQTMathText::MTsuperscriptNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTsuperscriptNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
-    child->set_drawBoxes(draw);
+    child->setDrawBoxes(draw);
 
 }
 
@@ -1328,10 +1328,10 @@ void JKQTMathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTMathText:
     double bracewidth=0, braceheight=0;
     getBraceWidth(painter, ev, baselineHeight, overallHeight, bracewidth, braceheight);
 
-    bracewidth=bracewidth/parent->get_brace_shrink_factor();
+    bracewidth=bracewidth/parent->getBraceShrinkFactor();
 
-    baselineHeight=/*qMin(baselineHeight, braceheight)*/ baselineHeight*parent->get_brace_factor();
-    overallHeight=qMax(overallHeight, braceheight)*parent->get_brace_factor(); //fm.height();
+    baselineHeight=/*qMin(baselineHeight, braceheight)*/ baselineHeight*parent->getBraceFactor();
+    overallHeight=qMax(overallHeight, braceheight)*parent->getBraceFactor(); //fm.height();
 
     width=width+bracewidth*2.0;
 
@@ -1434,7 +1434,7 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
 
     painter.setPen(pold);
 
-    xnew= child->draw(painter, xnew+bracewidth/parent->get_brace_shrink_factor()-lw, y, currentEv)+lw;
+    xnew= child->draw(painter, xnew+bracewidth/parent->getBraceShrinkFactor()-lw, y, currentEv)+lw;
 
     if (showRightBrace) {
         painter.setPen(p);
@@ -1505,7 +1505,7 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
     }
 
     //qDebug()<<" ==> "<<bc<<fm.boundingRect(bc).width();
-    return xnew+bracewidth/parent->get_brace_shrink_factor()-lw;
+    return xnew+bracewidth/parent->getBraceShrinkFactor()-lw;
 }
 
 bool JKQTMathText::MTbraceNode::toHtml(QString &html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) {
@@ -1530,10 +1530,10 @@ bool JKQTMathText::MTbraceNode::toHtml(QString &html, JKQTMathText::MTenvironmen
     return ok;
 }
 
-void JKQTMathText::MTbraceNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTbraceNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
-    child->set_drawBoxes(draw);
+    child->setDrawBoxes(draw);
 
 }
 
@@ -1553,14 +1553,14 @@ void JKQTMathText::MTbraceNode::getBraceWidth(QPainter &/*painter*/, JKQTMathTex
         ev.fontSize+=0.5;
         evf.setPointSizeF(ev.fontSize);
     }
-    ev.fontSize=ev.fontSize*parent->get_brace_factor();
+    ev.fontSize=ev.fontSize*parent->getBraceFactor();
     evf.setPointSizeF(ev.fontSize);
     QFontMetricsF fm(evf, painter.device());
     QString bc="_X";
-    bracewidth=fm.width("I")*parent->get_brace_shrink_factor();
+    bracewidth=fm.width("I")*parent->getBraceShrinkFactor();
     braceheight=parent->getTBR(evf, bc, painter.device()).height();*/
     double lw=qMax(0.25,ceil(ev.fontSize/12.0));
-    braceheight=overallHeight*parent->get_brace_factor();
+    braceheight=overallHeight*parent->getBraceFactor();
     bracewidth=0.6*pow(braceheight, 0.6);
     if (openbrace=="{" || closebrace=="}")  bracewidth=qMax(bracewidth, lw*3.5);
 
@@ -1620,9 +1620,9 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                 if (dynamic_cast<MTsubscriptNode*>(nodes[i+1])) { // is this subscript?
                     double w1, w2, oh, bh, sp;
                     nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);                    
-                    double shift=parent->get_super_shift_factor()*fm.xHeight()+(oh-bh);//(overallHeight-baselineHeight)+(oh-bh);
+                    double shift=parent->getSuperShiftFactor()*fm.xHeight()+(oh-bh);//(overallHeight-baselineHeight)+(oh-bh);
                     if (wasBrace) {
-                        shift=baselineHeight-parent->get_super_shift_factor()*tbr.height()+(oh-bh);
+                        shift=baselineHeight-parent->getSuperShiftFactor()*tbr.height()+(oh-bh);
                     }
 
 
@@ -1650,9 +1650,9 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                 if (dynamic_cast<MTsuperscriptNode*>(nodes[i+1])) { // is this subscript?
                     double w1, w2, oh, bh, sp;
                     nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);
-                    double shift=parent->get_super_shift_factor()*fm.xHeight()+(oh-bh);//(overallHeight-baselineHeight)+(oh-bh);
+                    double shift=parent->getSuperShiftFactor()*fm.xHeight()+(oh-bh);//(overallHeight-baselineHeight)+(oh-bh);
                     if (wasBrace) {
-                        shift=baselineHeight-parent->get_super_shift_factor()*parent->getTBR(currentEv.getFont(parent), "M", painter.device()).height()+(oh-bh);
+                        shift=baselineHeight-parent->getSuperShiftFactor()*parent->getTBR(currentEv.getFont(parent), "M", painter.device()).height()+(oh-bh);
                     }
 
                     //qDebug()<<"sub_super:   sub: "<<nodes[i]->getTypeName()<<"  w1="<<w1<<" bh"<<bh<<" oh="<<oh<<" sp="<<sp;
@@ -1674,7 +1674,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                 }
             }
         } else if (smb) {
-            QString s=smb->get_symbolName();
+            QString s=smb->getSymbolName();
             if (subsupOperations.contains(s)) {
                 MTsubscriptNode* subn=nullptr;
                 if (i+1<nodes.size()) subn=dynamic_cast<MTsubscriptNode*>(nodes[i+1]);
@@ -1683,16 +1683,16 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                 //std::cout<<"symbol ='"<<s.toStdString()<<"'   subn="<<subn<<"   supn="<<supn<<"\n";
                 if (subn && supn) { // is this subscript and superscript?
                     MTenvironment ev=currentEv;
-                    ev.fontSize=ev.fontSize*parent->get_operatorsubsuper_size_factor();
+                    ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
                     double w1=0, w2=0, w3=0;
                     double oh1=0, oh2=0, oh3=0;
                     double bh1=0, bh2=0, bh3=0;
                     double sp1=0, sp2=0, sp3=0;
                     nodes[i]->getSize(painter, currentEv, w1, bh1, oh1, sp1);
                     //qDebug()<<"sub_super:   node: "<<nodes[i]->getTypeName()<<"  w1="<<w1<<" bh"<<bh1<<" oh="<<oh1<<" sp="<<sp1;
-                    subn->get_child()->getSize(painter, ev, w2, bh2, oh2, sp2);
+                    subn->getChild()->getSize(painter, ev, w2, bh2, oh2, sp2);
                     //qDebug()<<"sub_super:   node: "<<subn->getTypeName()<<"  w2="<<w2<<" bh2"<<bh2<<" oh2="<<oh2<<" sp2="<<sp2;
-                    supn->get_child()->getSize(painter, ev, w3, bh3, oh3, sp3);
+                    supn->getChild()->getSize(painter, ev, w3, bh3, oh3, sp3);
                     //qDebug()<<"sub_super:   node: "<<supn->getTypeName()<<"  w3="<<w3<<" bh3"<<bh3<<" oh3="<<oh3<<" sp3="<<sp3;
                     //double d1=oh1-bh1;
                     //double d2=oh2-bh2;
@@ -1714,13 +1714,13 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                     //qDebug()<<"### subsupop: sub+super2   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
                 /*} else if (subn && supn) { // is this subscript and superscript?
                     MTenvironment ev=currentEv;
-                    ev.fontSize=ev.fontSize*parent->get_operatorsubsuper_size_factor();
+                    ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
                     double w1=0, w2=0, w3=0;
                     double oh1=0, oh2=0, oh3=0;
                     double bh1=0, bh2=0, bh3=0;
                     double sp1=0, sp2=0, sp3=0;
                     nodes[i]->getSize(painter, currentEv, w1, bh1, oh1, sp1);
-                    supn->get_child()->getSize(painter, ev, w3, bh3, oh3, sp3);
+                    supn->getChild()->getSize(painter, ev, w3, bh3, oh3, sp3);
                     //double d1=oh1-bh1;
                     //double d2=oh2-bh2;
                     //double d3=oh3-bh3;
@@ -1741,13 +1741,13 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                     //qDebug()<<"### subsupop: sub+super";*/
                 } else if (subn) { // is this subscript?
                     MTenvironment ev=currentEv;
-                    ev.fontSize=ev.fontSize*parent->get_operatorsubsuper_size_factor();
+                    ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
                     double w1=0, w2=0;
                     double oh1=0, oh2=0;
                     double bh1=0, bh2=0;
                     double sp1=0, sp2=0;//, sp3=0;
                     nodes[i]->getSize(painter, currentEv, w1, bh1, oh1, sp1);
-                    subn->get_child()->getSize(painter, ev, w2, bh2, oh2, sp2);
+                    subn->getChild()->getSize(painter, ev, w2, bh2, oh2, sp2);
                     //double d1=oh1-bh1;
                     //double d2=oh2-bh2;
 
@@ -1775,9 +1775,9 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
             if (dynamic_cast<MTsuperscriptNode*>(nodes[i])) {
                 //QFontMetricsF fm(currentEv.getFont(parent));
                 //QRectF tbr=fm.tightBoundingRect("M");
-                shift=parent->get_super_shift_factor()*tbr.height()+(oh-bh);//((overallHeight-baselineHeight)+(oh-bh));
+                shift=parent->getSuperShiftFactor()*tbr.height()+(oh-bh);//((overallHeight-baselineHeight)+(oh-bh));
                 if (wasBrace) {
-                    shift=baselineHeight-parent->get_super_shift_factor()*tbr.height()+(oh-bh);
+                    shift=baselineHeight-parent->getSuperShiftFactor()*tbr.height()+(oh-bh);
                 }
                 //qDebug()<<"+++ super: bh="<<bh<<" oh="<<oh<<" shift="<<shift<<" wasBrace="<<wasBrace<<" baselineHeight="<<baselineHeight<<" overallHeight="<<overallHeight<<" fm.ascent="<<fm.ascent();
 
@@ -1791,7 +1791,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                 //qDebug()<<"### subsupop: super   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
             } else if (dynamic_cast<MTsubscriptNode*>(nodes[i])) {
                 //QFontMetricsF fm(currentEv.getFont(parent));
-                shift=0;//parent->get_super_shift_factor()*fm.ascent();//((overallHeight-baselineHeight)+(oh-bh));
+                shift=0;//parent->getSuperShiftFactor()*fm.ascent();//((overallHeight-baselineHeight)+(oh-bh));
                 w+=fm.width(" ");
                 if (shift+oh-bh>overallHeight-baselineHeight) {
                     overallHeight=baselineHeight+shift+(oh-bh);
@@ -1844,9 +1844,9 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<MTsubscriptNode*>(nodes[i+1])) { // is this subscript?
 
-                    double shift=-parent->get_super_shift_factor()*tbr.height();
+                    double shift=-parent->getSuperShiftFactor()*tbr.height();
                     if (wasBrace) {
-                        shift=-cbaselineHeight+parent->get_super_shift_factor()*tbr.height();
+                        shift=-cbaselineHeight+parent->getSuperShiftFactor()*tbr.height();
                     }
                     //painter.setPen(QPen("red"));
                     //painter.drawEllipse(xnew-4,ynew+shift-(ccoverallHeight-ccbaselineHeight)-4,8,8);
@@ -1870,9 +1870,9 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                     double ccwidth=0, ccbaselineHeight=0, ccoverallHeight=0, ccstrieoutPos=0;
                     nodes[i]->getSize(painter, currentEv, ccwidth, ccbaselineHeight, ccoverallHeight, ccstrieoutPos);
                     //QRectF tbr=fm.tightBoundingRect("M");
-                    double shift=-parent->get_super_shift_factor()*tbr.height();
+                    double shift=-parent->getSuperShiftFactor()*tbr.height();
                     if (wasBrace) {
-                        shift=-cbaselineHeight+parent->get_super_shift_factor()*tbr.height();
+                        shift=-cbaselineHeight+parent->getSuperShiftFactor()*tbr.height();
                     }
                     //painter.setPen(QPen("red"));
                     //painter.drawEllipse(xnew-4,ynew+shift-(ccoverallHeight-ccbaselineHeight)-4,8,8);
@@ -1884,7 +1884,7 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
             }
         } else {
             if (smb) {
-                QString s=smb->get_symbolName();
+                QString s=smb->getSymbolName();
                 if (subsupOperations.contains(s)) {
                     MTsubscriptNode* subn=nullptr;
                     if (i+1<nodes.size()) subn=dynamic_cast<MTsubscriptNode*>(nodes[i+1]);
@@ -1893,13 +1893,13 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                     //std::cout<<"symbol ='"<<s.toStdString()<<"'   subn="<<subn<<"   supn="<<supn<<"\n";
                     if (subn && supn) { // is this subscript and superscript?
                         MTenvironment ev=currentEv;
-                        ev.fontSize=ev.fontSize*parent->get_operatorsubsuper_size_factor();
+                        ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
                         double w1=0, w2=0, w3=0;
                         double oh1=0, oh2=0, oh3=0;
                         double bh1=0, bh2=0, bh3=0, sp;
                         nodes[i]->getSize(painter, currentEv, w1, bh1, oh1, sp);
-                        subn->get_child()->getSize(painter, ev, w2, bh2, oh2, sp);
-                        supn->get_child()->getSize(painter, ev, w3, bh3, oh3, sp);
+                        subn->getChild()->getSize(painter, ev, w2, bh2, oh2, sp);
+                        supn->getChild()->getSize(painter, ev, w3, bh3, oh3, sp);
                         double d1=oh1-bh1;
                         //double d2=oh2-bh2;
                         double d3=oh3-bh3;
@@ -1909,20 +1909,20 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                         double xn1=nodes[i]->draw(painter, xnew+(w-w1)/2.0, ynew, currentEv);
                         i++;
                         //double xnew2=
-                        double xn2=subn->get_child()->draw(painter, xnew+(w-w2)/2.0, ynew+bh2+d1, ev);
+                        double xn2=subn->getChild()->draw(painter, xnew+(w-w2)/2.0, ynew+bh2+d1, ev);
                         i++;
                         //double xnew3=
-                        double xn3=supn->get_child()->draw(painter, xnew+(w-w3)/2.0, ynew-bh1-d3-fm.xHeight()/4.0, ev);
+                        double xn3=supn->getChild()->draw(painter, xnew+(w-w3)/2.0, ynew-bh1-d3-fm.xHeight()/4.0, ev);
                         doDraw=false;
                         xnew=qMax(qMax(xn1, xn2), xn3)+fm.width(" ");
                     } else if (subn) { // is this subscript and not superscript?
                         MTenvironment ev=currentEv;
-                        ev.fontSize=ev.fontSize*parent->get_operatorsubsuper_size_factor();
+                        ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
                         double w1=0, w2=0;
                         double oh1=0, oh2=0;
                         double bh1=0, bh2=0, sp=0;
                         nodes[i]->getSize(painter, currentEv, w1, bh1, oh1, sp);
-                        subn->get_child()->getSize(painter, ev, w2, bh2, oh2, sp);
+                        subn->getChild()->getSize(painter, ev, w2, bh2, oh2, sp);
                         double d1=oh1-bh1;
                         //double d2=oh2-bh2;
 
@@ -1931,18 +1931,18 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                         double xn2=nodes[i]->draw(painter, xnew+(w-w1)/2.0, ynew, currentEv);
                         i++;
                         //double xnew2=
-                        double xn1=subn->get_child()->draw(painter, xnew+(w-w2)/2.0, ynew+bh2+d1, ev)+fm.width(" ");
+                        double xn1=subn->getChild()->draw(painter, xnew+(w-w2)/2.0, ynew+bh2+d1, ev)+fm.width(" ");
                         doDraw=false;
                         //xnew+=w;
                         xnew=qMax(xn1, xn2);
                     } else if (supn) { // is this subscript and superscript?
                         MTenvironment ev=currentEv;
-                        ev.fontSize=ev.fontSize*parent->get_operatorsubsuper_size_factor();
+                        ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
                         double w1=0,  w3=0;
                         double oh1=0,  oh3=0;
                         double bh1=0,  bh3=0, sp;
                         nodes[i]->getSize(painter, currentEv, w1, bh1, oh1, sp);
-                        supn->get_child()->getSize(painter, ev, w3, bh3, oh3, sp);
+                        supn->getChild()->getSize(painter, ev, w3, bh3, oh3, sp);
                         //double d1=oh1-bh1;
                         //double d2=oh2-bh2;
                         double d3=oh3-bh3;
@@ -1952,7 +1952,7 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                         double xn1=nodes[i]->draw(painter, xnew+(w-w1)/2.0, ynew, currentEv);
                         i++;
                         //double xnew3=
-                        double xn3=supn->get_child()->draw(painter, xnew+(w-w3)/2.0, ynew-bh1-d3-fm.xHeight()/4.0, ev);
+                        double xn3=supn->getChild()->draw(painter, xnew+(w-w3)/2.0, ynew-bh1-d3-fm.xHeight()/4.0, ev);
                         doDraw=false;
                         xnew=qMax(xn1, xn3)+fm.width(" ");
                     }
@@ -1967,9 +1967,9 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                 double ccwidth=0, ccbaselineHeight=0, ccoverallHeight=0, ccstrieoutPos=0;
                 nodes[i]->getSize(painter, currentEv, ccwidth, ccbaselineHeight, ccoverallHeight, ccstrieoutPos);
                 //QRectF tbr=fm.tightBoundingRect("M");
-                double shift=-parent->get_super_shift_factor()*tbr.height();
+                double shift=-parent->getSuperShiftFactor()*tbr.height();
                 if (wasBrace) {
-                    shift=-cbaselineHeight+parent->get_super_shift_factor()*tbr.height();
+                    shift=-cbaselineHeight+parent->getSuperShiftFactor()*tbr.height();
                 }
                 //painter.setPen(QPen("red"));
                 //painter.drawEllipse(xnew-4,ynew+shift-(ccoverallHeight-ccbaselineHeight)-4,8,8);
@@ -1993,11 +1993,11 @@ bool JKQTMathText::MTlistNode::toHtml(QString &html, JKQTMathText::MTenvironment
     return ok;
 }
 
-void JKQTMathText::MTlistNode::set_drawBoxes(bool draw)
+void JKQTMathText::MTlistNode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
     for (int i=0; i<nodes.size(); i++) {
-        nodes[i]->set_drawBoxes(draw);
+        nodes[i]->setDrawBoxes(draw);
     }
 }
 
@@ -2793,7 +2793,7 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
     }
     strikeoutPos=fm.strikeOutPos();
 
-    if (extendWidthInMathmode && currentEv.insideMath) width=width*parent->get_mathoperator_width_factor();
+    if (extendWidthInMathmode && currentEv.insideMath) width=width*parent->getMathoperatorWidthFactor();
 
 }
 
@@ -2819,9 +2819,9 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
 
     double shift=0;
     if (extendWidthInMathmode && currentEv.insideMath) {
-        double origwidth=width/parent->get_mathoperator_width_factor();
+        double origwidth=width/parent->getMathoperatorWidthFactor();
         shift=0.5*(width-origwidth);
-        //width=width*parent->get_mathoperator_width_factor();
+        //width=width*parent->getMathoperatorWidthFactor();
     }
 
     //std::cout<<"symbol '"<<symbolName.toStdString()<<"' = "<<std::hex<<symbol.at(0).digitValue()<<" in font '"<<f.family().toStdString()<<"' ("<<QFontInfo(f).family().toStdString()<<"): "<<fm.inFont(symbol.at(0))<<std::endl;
@@ -3179,42 +3179,42 @@ JKQTMathText::JKQTMathText(QObject* parent):
 
 
 
-    def_fontSize=fontSize=10;
-    def_fontRoman=fontRoman=serifFont;
-    def_fontSans=fontSans=sansFont;
-    def_fontTypewriter=fontTypewriter=typewriterFont;
-    def_fontScript=fontScript=scriptFont;
-    def_fontGreek=fontGreek=symbolFont;
-    def_fontSymbol=fontSymbol=symbolFont;
-    def_fontCaligraphic=fontCaligraphic=decorativeFont;
-    def_fontBlackboard=fontBlackboard=serifFont;
-    def_fontMathRoman=fontMathRoman=serifFont;
-    def_fontMathSans=fontMathSans=sansFont;
-    def_fontBraces=fontBraces=fontMathRoman;
-    def_fontIntegrals=fontIntegrals=fontMathRoman;
-    def_fontEncoding=fontEncoding=MTFEwinSymbol;
-    def_fontLatexPostfix=fontLatexPostfix="10";
-    def_fontLatexPrefix=fontLatexPrefix="jlm_";
-    def_brace_factor=brace_factor=1.04;
-    def_subsuper_size_factor=subsuper_size_factor=0.7;
-    def_italic_correction_factor=italic_correction_factor=0.4;
-    def_sub_shift_factor=sub_shift_factor=0.6;
-    def_super_shift_factor=super_shift_factor=0.5;
-    def_brace_shrink_factor=brace_shrink_factor=0.6;
-    def_fontColor=fontColor=QColor("black");
-    def_useSTIXfonts=useSTIXfonts=false;
-    def_useXITSfonts=useXITSfonts=false;
-    def_useASANAfonts=useASANAfonts=false;
-    def_frac_factor=frac_factor=0.9;
-    def_frac_shift_factor=frac_shift_factor=0.5;
-    def_underbrace_factor=underbrace_factor=0.75;
-    def_underset_factor=underset_factor=0.7;
-    def_decoration_height_factor=decoration_height_factor=0.2;
-    def_brace_y_shift_factor=brace_y_shift_factor=0.7;//-1;
-    def_operatorsubsuper_size_factor=operatorsubsuper_size_factor=0.65;
-    def_mathoperator_width_factor=mathoperator_width_factor=1.5;
+    default_fontSize=fontSize=10;
+    default_fontRoman=fontRoman=serifFont;
+    default_fontSans=fontSans=sansFont;
+    default_fontTypewriter=fontTypewriter=typewriterFont;
+    default_fontScript=fontScript=scriptFont;
+    default_fontGreek=fontGreek=symbolFont;
+    default_fontSymbol=fontSymbol=symbolFont;
+    default_fontCaligraphic=fontCaligraphic=decorativeFont;
+    default_fontBlackboard=fontBlackboard=serifFont;
+    default_fontMathRoman=fontMathRoman=serifFont;
+    default_fontMathSans=fontMathSans=sansFont;
+    default_fontBraces=fontBraces=fontMathRoman;
+    default_fontIntegrals=fontIntegrals=fontMathRoman;
+    default_fontEncoding=fontEncoding=MTFEwinSymbol;
+    default_fontLatexPostfix=fontLatexPostfix="10";
+    default_fontLatexPrefix=fontLatexPrefix="jlm_";
+    default_brace_factor=brace_factor=1.04;
+    default_subsuper_size_factor=subsuper_size_factor=0.7;
+    default_italic_correction_factor=italic_correction_factor=0.4;
+    default_sub_shift_factor=sub_shift_factor=0.6;
+    default_super_shift_factor=super_shift_factor=0.5;
+    default_brace_shrink_factor=brace_shrink_factor=0.6;
+    default_fontColor=fontColor=QColor("black");
+    default_useSTIXfonts=useSTIXfonts=false;
+    default_useXITSfonts=useXITSfonts=false;
+    default_useASANAfonts=useASANAfonts=false;
+    default_frac_factor=frac_factor=0.9;
+    default_frac_shift_factor=frac_shift_factor=0.5;
+    default_underbrace_factor=underbrace_factor=0.75;
+    default_undersetFactor=undersetFactor=0.7;
+    default_decoration_height_factor=decoration_height_factor=0.2;
+    default_brace_y_shift_factor=brace_y_shift_factor=0.7;//-1;
+    default_operatorsubsuper_size_factor=operatorsubsuper_size_factor=0.65;
+    default_mathoperator_width_factor=mathoperator_width_factor=1.5;
 
-    def_expensiveRendering=expensiveRendering=true;
+    default_expensiveRendering=expensiveRendering=true;
     useUnparsed=false;
 
     parsedNode=nullptr;
@@ -3258,7 +3258,7 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     frac_factor=settings.value(group+"frac_factor", frac_factor).toDouble();
     frac_shift_factor=settings.value(group+"frac_shift_factor", frac_shift_factor).toDouble();
     underbrace_factor=settings.value(group+"underbrace_factor", underbrace_factor).toDouble();
-    underset_factor=settings.value(group+"underset_factor", underset_factor).toDouble();
+    undersetFactor=settings.value(group+"undersetFactor", undersetFactor).toDouble();
     brace_y_shift_factor=settings.value(group+"brace_y_shift_factor", brace_y_shift_factor).toDouble();
     decoration_height_factor=settings.value(group+"decoration_height_factor", decoration_height_factor).toDouble();
     operatorsubsuper_size_factor=settings.value(group+"operatorsubsuper_size_factor", operatorsubsuper_size_factor).toDouble();
@@ -3279,7 +3279,7 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
 
 void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const{
     JKQTMTPROPERTYsave(settings, group, fontSize,"font_size");
-    if (fontColor!=def_fontColor) settings.setValue(group+"font_color", jkqtp_QColor2String(fontColor));
+    if (fontColor!=default_fontColor) settings.setValue(group+"font_color", jkqtp_QColor2String(fontColor));
     JKQTMTPROPERTYsave(settings, group, fontRoman, "font_roman");
     JKQTMTPROPERTYsave(settings, group, fontSans, "font_sans");
     JKQTMTPROPERTYsave(settings, group, fontTypewriter, "font_typewriter");
@@ -3304,12 +3304,12 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
     JKQTMTPROPERTYsave(settings, group, frac_factor, "frac_factor");
     JKQTMTPROPERTYsave(settings, group, frac_shift_factor, "frac_shift_factor");
     JKQTMTPROPERTYsave(settings, group, underbrace_factor, "underbrace_factor");
-    JKQTMTPROPERTYsave(settings, group, underset_factor, "underset_factor");
+    JKQTMTPROPERTYsave(settings, group, undersetFactor, "undersetFactor");
     JKQTMTPROPERTYsave(settings, group, operatorsubsuper_size_factor, "operatorsubsuper_size_factor");
     JKQTMTPROPERTYsave(settings, group, mathoperator_width_factor, "mathoperator_width_factor");
     JKQTMTPROPERTYsave(settings, group, brace_y_shift_factor, "brace_y_shift_factor");
     JKQTMTPROPERTYsave(settings, group, decoration_height_factor, "decoration_height_factor");
-    if (fontEncoding!=def_fontEncoding) {
+    if (fontEncoding!=default_fontEncoding) {
         if (fontEncoding==MTFEunicode) settings.setValue(group+"font_encoding", "unicode");
         else if (fontEncoding==MTFEwinSymbol) settings.setValue(group+"font_encoding", "win_symbol");
     }
@@ -4086,7 +4086,7 @@ void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
-        getTree()->set_drawBoxes(drawBoxes);
+        getTree()->setDrawBoxes(drawBoxes);
         getTree()->draw(painter, x, y, ev);
     }
 }
@@ -4096,7 +4096,7 @@ void JKQTMathText::draw(QPainter& painter, int flags, QRectF rect, bool drawBoxe
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
-        getTree()->set_drawBoxes(drawBoxes);
+        getTree()->setDrawBoxes(drawBoxes);
 
         double width=0;
         double baselineHeight=0;
@@ -4139,7 +4139,7 @@ bool JKQTMathText::MTwhitespaceNode::toHtml(QString &html, JKQTMathText::MTenvir
     return true;
 }
 
-void JKQTMathText::MTnode::set_drawBoxes(bool draw)
+void JKQTMathText::MTnode::setDrawBoxes(bool draw)
 {
     this->drawBoxes=draw;
 }
@@ -4240,9 +4240,9 @@ void JKQTMathTextLabel::internalPaint()
         QSizeF size;
         {
             repaintDo=false;
-            //qDebug()<<"internalPaint(): parse "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->get_error_list().join("\n")<<"\n\n";
+            //qDebug()<<"internalPaint(): parse "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->getErrorList().join("\n")<<"\n\n";
             if (!m_mathText->parse(lastText)) {
-                qDebug()<<"JKQTMathTextLabel::internalPaint(): parse '"<<lastText<<"': "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->get_error_list().join("\n")<<"\n\n";
+                qDebug()<<"JKQTMathTextLabel::internalPaint(): parse '"<<lastText<<"': "<<m_mathText->parse(lastText)<<"\n  "<<m_mathText->getErrorList().join("\n")<<"\n\n";
             }
 
             if (buffer.width()<=0 || buffer.height()<=0) buffer=QPixmap(1000,100);

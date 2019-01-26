@@ -69,59 +69,59 @@ class LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        /*! \brief sets the property x to the specified \a __value. 
+        /*! \brief sets the property x ( \copybrief x ) to the specified \a __value. 
             \details Description of the parameter x is: <BLOCKQUOTE>\copydoc x </BLOCKQUOTE> 
             \see x for more information */ 
-        inline virtual void set_x(double __value)
+        inline virtual void setX(double __value)
         {
             this->x = __value;
         } 
-        /*! \brief returns the property x. 
+        /*! \brief returns the property x ( \copybrief x ). 
             \details Description of the parameter x is: <BLOCKQUOTE>\copydoc x </BLOCKQUOTE> 
             \see x for more information */ 
-        inline virtual double get_x() const  
+        inline virtual double getX() const  
         {
             return this->x; 
         }
-        /*! \brief sets the property y to the specified \a __value. 
+        /*! \brief sets the property y ( \copybrief y ) to the specified \a __value. 
             \details Description of the parameter y is: <BLOCKQUOTE>\copydoc y </BLOCKQUOTE> 
             \see y for more information */ 
-        inline virtual void set_y(double __value)
+        inline virtual void setY(double __value)
         {
             this->y = __value;
         } 
-        /*! \brief returns the property y. 
+        /*! \brief returns the property y ( \copybrief y ). 
             \details Description of the parameter y is: <BLOCKQUOTE>\copydoc y </BLOCKQUOTE> 
             \see y for more information */ 
-        inline virtual double get_y() const  
+        inline virtual double getY() const  
         {
             return this->y; 
         }
-        /*! \brief sets the property width to the specified \a __value. 
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value. 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE> 
             \see width for more information */ 
-        inline virtual void set_width(double __value)
+        inline virtual void setWidth(double __value)
         {
             this->width = __value;
         } 
-        /*! \brief returns the property width. 
+        /*! \brief returns the property width ( \copybrief width ). 
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE> 
             \see width for more information */ 
-        inline virtual double get_width() const  
+        inline virtual double getWidth() const  
         {
             return this->width; 
         }
-        /*! \brief sets the property height to the specified \a __value. 
+        /*! \brief sets the property height ( \copybrief height ) to the specified \a __value. 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc height </BLOCKQUOTE> 
             \see height for more information */ 
-        inline virtual void set_height(double __value)
+        inline virtual void setHeight(double __value)
         {
             this->height = __value;
         } 
-        /*! \brief returns the property height. 
+        /*! \brief returns the property height ( \copybrief height ). 
             \details Description of the parameter height is: <BLOCKQUOTE>\copydoc height </BLOCKQUOTE> 
             \see height for more information */ 
-        inline virtual double get_height() const  
+        inline virtual double getHeight() const  
         {
             return this->height; 
         }
@@ -158,41 +158,34 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
     public:
         /** \brief possible datatypes of the data array, plotted by this class. */
         enum DataType {
-            FloatArray,
-            DoubleArray,
-            UInt8Array,
-            UInt16Array,
-            UInt32Array,
-            UInt64Array,
-            Int8Array,
-            Int16Array,
-            Int32Array,
-            Int64Array
+            FloatArray, /*!< Data is of type \c float */
+            DoubleArray, /*!< Data is of type \c double */
+            UInt8Array, /*!< Data is of type \c uint8_t */
+            UInt16Array, /*!< Data is of type \c uint16_t */
+            UInt32Array, /*!< Data is of type \c uint32_t */
+            UInt64Array, /*!< Data is of type \c uint8_t */
+            Int8Array, /*!< Data is of type \c int8_t */
+            Int16Array, /*!< Data is of type \c int16_t */
+            Int32Array, /*!< Data is of type \c int32_t */
+            Int64Array /*!< Data is of type \c int64_t */
         };
 
+        /** \brief describes how to modify a rendered image with a second data array \see ModifierModeToString(), StringToModifierMode(), JKQTPImageModifierModeComboBox */
         enum ModifierMode {
-            ModifyNone=0,
-            ModifyValue=1,
-            ModifySaturation=2,
-            ModifyAlpha=3
+            ModifyNone=0,  /*!< no modification \image html JKQTPMathImageBaseModifyNone.png */
+            ModifyValue=1,  /*!< modify the VALUE-channel from the HSV color space \image html JKQTPMathImageBaseModifyValue.png */
+            ModifySaturation=2,/*!< modify the SATURATION-channel from the HSV color space \image html JKQTPMathImageBaseModifySaturation.png */
+            ModifyAlpha=3,/*!< modify the ALPHA/TRANSPARENCY-channel from the RGBA color space \image html JKQTPMathImageBaseModifyAlpha.png */
+            ModifyTransparency=ModifyAlpha,/*!< \see ModifyAlpha */
+            ModifyLuminance=4,/*!< modify the LUMINANCE-channel from the HSL color space \image html JKQTPMathImageBaseModifyLuminance.png */
+            ModifyHue=5,/*!< modify the VALUE-channel from the HSV color space \image html JKQTPMathImageBaseModifyHue.png */
         };
 
-        static ModifierMode StringToModifierMode(const QString& mode) {
-            QString m=mode.toLower();
-            if (m=="value" ) return ModifyValue;
-            if (m=="saturation" ) return ModifySaturation;
-            if (m=="alpha" ) return ModifyAlpha;
+        /** \brief convert a ModifierMode to a string \see ModifierModeToString(), ModifierMode */
+        static ModifierMode StringToModifierMode(const QString& mode);
 
-            return ModifyNone;
-        }
-
-        static QString ModifierModeToString(const ModifierMode& mode) {
-
-            if (mode==ModifyValue) return "value";
-            if (mode==ModifySaturation) return "saturation";
-            if (mode==ModifyAlpha) return "alpha";
-            return "none";
-        }
+        /** \brief convert a string to a ModifierMode \see StringToModifierMode(), ModifierMode */
+        static QString ModifierModeToString(const ModifierMode& mode);
 
 
 
@@ -210,108 +203,108 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-        /*! \brief sets the property Nx to the specified \a __value. 
+        /*! \brief sets the property Nx ( \copybrief Nx ) to the specified \a __value. 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual void set_Nx(int __value)
+        inline virtual void setNx(int __value)
         {
             this->Nx = __value;
         } 
-        /*! \brief returns the property Nx. 
+        /*! \brief returns the property Nx ( \copybrief Nx ). 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual int get_Nx() const
+        inline virtual int getNx() const
         {
             return this->Nx; 
         }
-        /*! \brief sets the property Ny to the specified \a __value. 
+        /*! \brief sets the property Ny ( \copybrief Ny ) to the specified \a __value. 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual void set_Ny(int __value)
+        inline virtual void setNy(int __value)
         {
             this->Ny = __value;
         } 
-        /*! \brief returns the property Ny. 
+        /*! \brief returns the property Ny ( \copybrief Ny ). 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual int get_Ny() const
+        inline virtual int getNy() const
         {
             return this->Ny; 
         }
-        /*! \brief sets the property data to the specified \a __value. 
+        /*! \brief sets the property data ( \copybrief data ) to the specified \a __value. 
             \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
-        inline virtual void set_data(void* __value)  
+        inline virtual void setData(void* __value)  
         {
             this->data = __value;
         } 
-        /*! \brief returns the property data. 
+        /*! \brief returns the property data ( \copybrief data ). 
             \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
-        inline virtual void* get_data() const  
+        inline virtual void* getData() const  
         {
             return this->data; 
         }
-        /*! \brief sets the property datatype to the specified \a __value. 
+        /*! \brief sets the property datatype ( \copybrief datatype ) to the specified \a __value. 
             \details Description of the parameter datatype is: <BLOCKQUOTE>\copydoc datatype </BLOCKQUOTE> 
             \see datatype for more information */ 
-        inline virtual void set_datatype(const DataType & __value)  
+        inline virtual void setDatatype(const DataType & __value)  
         {
             this->datatype = __value;
         } 
-        /*! \brief returns the property datatype. 
+        /*! \brief returns the property datatype ( \copybrief datatype ). 
             \details Description of the parameter datatype is: <BLOCKQUOTE>\copydoc datatype </BLOCKQUOTE> 
             \see datatype for more information */ 
-        inline virtual DataType get_datatype() const  
+        inline virtual DataType getDatatype() const  
         {
             return this->datatype; 
         }
-        /*! \brief sets the property dataModifier to the specified \a __value. 
+        /*! \brief sets the property dataModifier ( \copybrief dataModifier ) to the specified \a __value. 
             \details Description of the parameter dataModifier is: <BLOCKQUOTE>\copydoc dataModifier </BLOCKQUOTE> 
             \see dataModifier for more information */ 
-        inline virtual void set_dataModifier(void* __value)  
+        inline virtual void setDataModifier(void* __value)  
         {
             this->dataModifier = __value;
         } 
-        /*! \brief returns the property dataModifier. 
+        /*! \brief returns the property dataModifier ( \copybrief dataModifier ). 
             \details Description of the parameter dataModifier is: <BLOCKQUOTE>\copydoc dataModifier </BLOCKQUOTE> 
             \see dataModifier for more information */ 
-        inline virtual void* get_dataModifier() const  
+        inline virtual void* getDataModifier() const  
         {
             return this->dataModifier; 
         }
-        /*! \brief sets the property datatypeModifier to the specified \a __value. 
+        /*! \brief sets the property datatypeModifier ( \copybrief datatypeModifier ) to the specified \a __value. 
             \details Description of the parameter datatypeModifier is: <BLOCKQUOTE>\copydoc datatypeModifier </BLOCKQUOTE> 
             \see datatypeModifier for more information */ 
-        inline virtual void set_datatypeModifier(const DataType & __value)  
+        inline virtual void setDatatypeModifier(const DataType & __value)  
         {
             this->datatypeModifier = __value;
         } 
-        /*! \brief returns the property datatypeModifier. 
+        /*! \brief returns the property datatypeModifier ( \copybrief datatypeModifier ). 
             \details Description of the parameter datatypeModifier is: <BLOCKQUOTE>\copydoc datatypeModifier </BLOCKQUOTE> 
             \see datatypeModifier for more information */ 
-        inline virtual DataType get_datatypeModifier() const  
+        inline virtual DataType getDatatypeModifier() const  
         {
             return this->datatypeModifier; 
         }
-        /*! \brief sets the property modifierMode to the specified \a __value. 
+        /*! \brief sets the property modifierMode ( \copybrief modifierMode ) to the specified \a __value. 
             \details Description of the parameter modifierMode is: <BLOCKQUOTE>\copydoc modifierMode </BLOCKQUOTE> 
             \see modifierMode for more information */ 
-        inline virtual void set_modifierMode(const ModifierMode & __value)  
+        inline virtual void setModifierMode(const ModifierMode & __value)  
         {
             this->modifierMode = __value;
         } 
-        /*! \brief returns the property modifierMode. 
+        /*! \brief returns the property modifierMode ( \copybrief modifierMode ). 
             \details Description of the parameter modifierMode is: <BLOCKQUOTE>\copydoc modifierMode </BLOCKQUOTE> 
             \see modifierMode for more information */ 
-        inline virtual ModifierMode get_modifierMode() const  
+        inline virtual ModifierMode getModifierMode() const  
         {
             return this->modifierMode; 
         }
 
-        virtual void set_dataModifier(void* data, DataType datatype);
-        virtual void set_data(void* data, int Nx, int Ny, DataType datatype);
-        virtual void set_data(void* data, int Nx, int Ny);
+        virtual void setDataModifier(void* data, DataType datatype);
+        virtual void setData(void* data, int Nx, int Ny, DataType datatype);
+        virtual void setData(void* data, int Nx, int Ny);
         /** \brief determine min/max data value of the image */
         virtual void getDataMinMax(double& imin, double& imax);
         /** \brief determine min/max data value of the image */
@@ -382,16 +375,16 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
         /** \brief copy an external image into an internally owned copy */
-        virtual void set_image(const QImage& image);
+        virtual void setImage(const QImage& image);
 
         /** \brief set an external image to be plotted, the image will NOT BE OWNED by the graph-object */
-        virtual void set_image(QImage* image);
+        virtual void setImage(QImage* image);
 
         /** \brief deletes the internal image */
         void clear_image();
 
-        /*! \brief returns the property image. \details Description of the parameter image is:  <BLOCKQUOTE>\copydoc image </BLOCKQUOTE>. \see image for more information */ 
-        inline QImage* get_image() const { return this->image; }
+        /*! \brief returns the property image ( \copybrief image ). \details Description of the parameter image is:  <BLOCKQUOTE>\copydoc image </BLOCKQUOTE>. \see image for more information */ 
+        inline QImage* getImage() const { return this->image; }
     protected:
         /** \brief the image to be plotted. This is freed by the destructor, iff \a image_owned is set to \c true (.e.g by QImage-copy-constructors) */
         QImage* image;
@@ -405,7 +398,7 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         QAction* actCopyImage;
     public:
         virtual void setParent(JKQTBasePlotter* parent) override;
-        virtual void set_title(const QString& title) override;
+        virtual void setTitle(const QString& title) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -460,338 +453,338 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         static QImage getPaletteKeyImage(JKQTPMathImageColorPalette palette, int width, int height) ;
 
 
-        /*! \brief sets the property palette to the specified \a __value. 
+        /*! \brief sets the property palette ( \copybrief palette ) to the specified \a __value. 
             \details Description of the parameter palette is: <BLOCKQUOTE>\copydoc palette </BLOCKQUOTE> 
             \see palette for more information */ 
-        inline virtual void set_palette(const JKQTPMathImageColorPalette & __value)  
+        inline virtual void setPalette(const JKQTPMathImageColorPalette & __value)  
         {
             this->palette = __value;
         } 
-        /*! \brief returns the property palette. 
+        /*! \brief returns the property palette ( \copybrief palette ). 
             \details Description of the parameter palette is: <BLOCKQUOTE>\copydoc palette </BLOCKQUOTE> 
             \see palette for more information */ 
-        inline virtual JKQTPMathImageColorPalette get_palette() const  
+        inline virtual JKQTPMathImageColorPalette getPalette() const  
         {
             return this->palette; 
         }
-        /*! \brief sets the property rangeMinFailAction to the specified \a __value. 
+        /*! \brief sets the property rangeMinFailAction ( \copybrief rangeMinFailAction ) to the specified \a __value. 
             \details Description of the parameter rangeMinFailAction is: <BLOCKQUOTE>\copydoc rangeMinFailAction </BLOCKQUOTE> 
             \see rangeMinFailAction for more information */ 
-        inline virtual void set_rangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
+        inline virtual void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
         {
             this->rangeMinFailAction = __value;
         } 
-        /*! \brief returns the property rangeMinFailAction. 
+        /*! \brief returns the property rangeMinFailAction ( \copybrief rangeMinFailAction ). 
             \details Description of the parameter rangeMinFailAction is: <BLOCKQUOTE>\copydoc rangeMinFailAction </BLOCKQUOTE> 
             \see rangeMinFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMinFail() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getActionRangeMinFail() const  
         {
             return this->rangeMinFailAction; 
         }
-        /*! \brief sets the property rangeMaxFailAction to the specified \a __value. 
+        /*! \brief sets the property rangeMaxFailAction ( \copybrief rangeMaxFailAction ) to the specified \a __value. 
             \details Description of the parameter rangeMaxFailAction is: <BLOCKQUOTE>\copydoc rangeMaxFailAction </BLOCKQUOTE> 
             \see rangeMaxFailAction for more information */ 
-        inline virtual void set_rangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
+        inline virtual void setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
         {
             this->rangeMaxFailAction = __value;
         } 
-        /*! \brief returns the property rangeMaxFailAction. 
+        /*! \brief returns the property rangeMaxFailAction ( \copybrief rangeMaxFailAction ). 
             \details Description of the parameter rangeMaxFailAction is: <BLOCKQUOTE>\copydoc rangeMaxFailAction </BLOCKQUOTE> 
             \see rangeMaxFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMaxFail() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getActionRangeMaxFail() const  
         {
             return this->rangeMaxFailAction; 
         }
-        /*! \brief sets the property rangeMinFailColor to the specified \a __value. 
+        /*! \brief sets the property rangeMinFailColor ( \copybrief rangeMinFailColor ) to the specified \a __value. 
             \details Description of the parameter rangeMinFailColor is: <BLOCKQUOTE>\copydoc rangeMinFailColor </BLOCKQUOTE> 
             \see rangeMinFailColor for more information */ 
-        inline virtual void set_rangeMinFailColor(const QColor & __value)  
+        inline virtual void setRangeMinFailColor(const QColor & __value)  
         {
             this->rangeMinFailColor = __value;
         } 
-        /*! \brief returns the property rangeMinFailColor. 
+        /*! \brief returns the property rangeMinFailColor ( \copybrief rangeMinFailColor ). 
             \details Description of the parameter rangeMinFailColor is: <BLOCKQUOTE>\copydoc rangeMinFailColor </BLOCKQUOTE> 
             \see rangeMinFailColor for more information */ 
-        inline virtual QColor get_rangeMinFailColor() const  
+        inline virtual QColor getRangeMinFailColor() const  
         {
             return this->rangeMinFailColor; 
         }
-        /*! \brief sets the property rangeMaxFailColor to the specified \a __value. 
+        /*! \brief sets the property rangeMaxFailColor ( \copybrief rangeMaxFailColor ) to the specified \a __value. 
             \details Description of the parameter rangeMaxFailColor is: <BLOCKQUOTE>\copydoc rangeMaxFailColor </BLOCKQUOTE> 
             \see rangeMaxFailColor for more information */ 
-        inline virtual void set_rangeMaxFailColor(const QColor & __value)  
+        inline virtual void setRangeMaxFailColor(const QColor & __value)  
         {
             this->rangeMaxFailColor = __value;
         } 
-        /*! \brief returns the property rangeMaxFailColor. 
+        /*! \brief returns the property rangeMaxFailColor ( \copybrief rangeMaxFailColor ). 
             \details Description of the parameter rangeMaxFailColor is: <BLOCKQUOTE>\copydoc rangeMaxFailColor </BLOCKQUOTE> 
             \see rangeMaxFailColor for more information */ 
-        inline virtual QColor get_rangeMaxFailColor() const  
+        inline virtual QColor getRangeMaxFailColor() const  
         {
             return this->rangeMaxFailColor; 
         }
-        /*! \brief sets the property nanColor to the specified \a __value. 
+        /*! \brief sets the property nanColor ( \copybrief nanColor ) to the specified \a __value. 
             \details Description of the parameter nanColor is: <BLOCKQUOTE>\copydoc nanColor </BLOCKQUOTE> 
             \see nanColor for more information */ 
-        inline virtual void set_nanColor(const QColor & __value)  
+        inline virtual void setNanColor(const QColor & __value)  
         {
             this->nanColor = __value;
         } 
-        /*! \brief returns the property nanColor. 
+        /*! \brief returns the property nanColor ( \copybrief nanColor ). 
             \details Description of the parameter nanColor is: <BLOCKQUOTE>\copydoc nanColor </BLOCKQUOTE> 
             \see nanColor for more information */ 
-        inline virtual QColor get_nanColor() const  
+        inline virtual QColor getNanColor() const  
         {
             return this->nanColor; 
         }
-        /*! \brief sets the property infColor to the specified \a __value. 
+        /*! \brief sets the property infColor ( \copybrief infColor ) to the specified \a __value. 
             \details Description of the parameter infColor is: <BLOCKQUOTE>\copydoc infColor </BLOCKQUOTE> 
             \see infColor for more information */ 
-        inline virtual void set_infColor(const QColor & __value)  
+        inline virtual void setInfColor(const QColor & __value)  
         {
             this->infColor = __value;
         } 
-        /*! \brief returns the property infColor. 
+        /*! \brief returns the property infColor ( \copybrief infColor ). 
             \details Description of the parameter infColor is: <BLOCKQUOTE>\copydoc infColor </BLOCKQUOTE> 
             \see infColor for more information */ 
-        inline virtual QColor get_infColor() const  
+        inline virtual QColor getInfColor() const  
         {
             return this->infColor; 
         }
-        /*! \brief sets the property showColorBar to the specified \a __value. 
+        /*! \brief sets the property showColorBar ( \copybrief showColorBar ) to the specified \a __value. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
         inline virtual void setShowColorBar(bool __value)
         {
             this->showColorBar = __value;
         } 
-        /*! \brief returns the property showColorBar. 
+        /*! \brief returns the property showColorBar ( \copybrief showColorBar ). 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
         inline virtual bool getShowColorBar() const  
         {
             return this->showColorBar; 
         }
-        /*! \brief sets the property colorBarWidth to the specified \a __value. 
+        /*! \brief sets the property colorBarWidth ( \copybrief colorBarWidth ) to the specified \a __value. 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc colorBarWidth </BLOCKQUOTE> 
             \see colorBarWidth for more information */ 
-        inline virtual void set_colorBarWidth(int __value)
+        inline virtual void setColorBarWidth(int __value)
         {
             this->colorBarWidth = __value;
         } 
-        /*! \brief returns the property colorBarWidth. 
+        /*! \brief returns the property colorBarWidth ( \copybrief colorBarWidth ). 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc colorBarWidth </BLOCKQUOTE> 
             \see colorBarWidth for more information */ 
-        inline virtual int get_colorBarWidth() const  
+        inline virtual int getColorBarWidth() const  
         {
             return this->colorBarWidth; 
         }
-        /*! \brief sets the property colorBarModifiedWidth to the specified \a __value. 
+        /*! \brief sets the property colorBarModifiedWidth ( \copybrief colorBarModifiedWidth ) to the specified \a __value. 
             \details Description of the parameter colorBarModifiedWidth is: <BLOCKQUOTE>\copydoc colorBarModifiedWidth </BLOCKQUOTE> 
             \see colorBarModifiedWidth for more information */ 
-        inline virtual void set_colorBarModifiedWidth(int __value)
+        inline virtual void setColorBarModifiedWidth(int __value)
         {
             this->colorBarModifiedWidth = __value;
         } 
-        /*! \brief returns the property colorBarModifiedWidth. 
+        /*! \brief returns the property colorBarModifiedWidth ( \copybrief colorBarModifiedWidth ). 
             \details Description of the parameter colorBarModifiedWidth is: <BLOCKQUOTE>\copydoc colorBarModifiedWidth </BLOCKQUOTE> 
             \see colorBarModifiedWidth for more information */ 
-        inline virtual int get_colorBarModifiedWidth() const  
+        inline virtual int getColorBarModifiedWidth() const  
         {
             return this->colorBarModifiedWidth; 
         }
-        /*! \brief sets the property colorBarOffset to the specified \a __value. 
+        /*! \brief sets the property colorBarOffset ( \copybrief colorBarOffset ) to the specified \a __value. 
             \details Description of the parameter colorBarOffset is: <BLOCKQUOTE>\copydoc colorBarOffset </BLOCKQUOTE> 
             \see colorBarOffset for more information */ 
-        inline virtual void set_colorBarOffset(int __value)
+        inline virtual void setColorBarOffset(int __value)
         {
             this->colorBarOffset = __value;
         } 
-        /*! \brief returns the property colorBarOffset. 
+        /*! \brief returns the property colorBarOffset ( \copybrief colorBarOffset ). 
             \details Description of the parameter colorBarOffset is: <BLOCKQUOTE>\copydoc colorBarOffset </BLOCKQUOTE> 
             \see colorBarOffset for more information */ 
-        inline virtual int get_colorBarOffset() const  
+        inline virtual int getColorBarOffset() const  
         {
             return this->colorBarOffset; 
         }
-        /*! \brief sets the property colorBarRelativeHeight to the specified \a __value. 
+        /*! \brief sets the property colorBarRelativeHeight ( \copybrief colorBarRelativeHeight ) to the specified \a __value. 
             \details Description of the parameter colorBarRelativeHeight is: <BLOCKQUOTE>\copydoc colorBarRelativeHeight </BLOCKQUOTE> 
             \see colorBarRelativeHeight for more information */ 
-        inline virtual void set_colorBarRelativeHeight(double __value)
+        inline virtual void setColorBarRelativeHeight(double __value)
         {
             this->colorBarRelativeHeight = __value;
         } 
-        /*! \brief returns the property colorBarRelativeHeight. 
+        /*! \brief returns the property colorBarRelativeHeight ( \copybrief colorBarRelativeHeight ). 
             \details Description of the parameter colorBarRelativeHeight is: <BLOCKQUOTE>\copydoc colorBarRelativeHeight </BLOCKQUOTE> 
             \see colorBarRelativeHeight for more information */ 
-        inline virtual double get_colorBarRelativeHeight() const  
+        inline virtual double getColorBarRelativeHeight() const  
         {
             return this->colorBarRelativeHeight; 
         }
-        /*! \brief sets the property imageMin to the specified \a __value. 
+        /*! \brief sets the property imageMin ( \copybrief imageMin ) to the specified \a __value. 
             \details Description of the parameter imageMin is: <BLOCKQUOTE>\copydoc imageMin </BLOCKQUOTE> 
             \see imageMin for more information */ 
-        inline virtual void set_imageMin(double __value)
+        inline virtual void setImageMin(double __value)
         {
             this->imageMin = __value;
         } 
-        /*! \brief returns the property imageMin. 
+        /*! \brief returns the property imageMin ( \copybrief imageMin ). 
             \details Description of the parameter imageMin is: <BLOCKQUOTE>\copydoc imageMin </BLOCKQUOTE> 
             \see imageMin for more information */ 
-        inline virtual double get_imageMin() const  
+        inline virtual double getImageMin() const  
         {
             return this->imageMin; 
         }
-        /*! \brief sets the property imageMax to the specified \a __value. 
+        /*! \brief sets the property imageMax ( \copybrief imageMax ) to the specified \a __value. 
             \details Description of the parameter imageMax is: <BLOCKQUOTE>\copydoc imageMax </BLOCKQUOTE> 
             \see imageMax for more information */ 
-        inline virtual void set_imageMax(double __value)
+        inline virtual void setImageMax(double __value)
         {
             this->imageMax = __value;
         } 
-        /*! \brief returns the property imageMax. 
+        /*! \brief returns the property imageMax ( \copybrief imageMax ). 
             \details Description of the parameter imageMax is: <BLOCKQUOTE>\copydoc imageMax </BLOCKQUOTE> 
             \see imageMax for more information */ 
-        inline virtual double get_imageMax() const  
+        inline virtual double getImageMax() const  
         {
             return this->imageMax; 
         }
-        /*! \brief sets the property autoImageRange to the specified \a __value. 
+        /*! \brief sets the property autoImageRange ( \copybrief autoImageRange ) to the specified \a __value. 
             \details Description of the parameter autoImageRange is: <BLOCKQUOTE>\copydoc autoImageRange </BLOCKQUOTE> 
             \see autoImageRange for more information */ 
-        inline virtual void set_autoImageRange(bool __value)
+        inline virtual void setAutoImageRange(bool __value)
         {
             this->autoImageRange = __value;
         } 
-        /*! \brief returns the property autoImageRange. 
+        /*! \brief returns the property autoImageRange ( \copybrief autoImageRange ). 
             \details Description of the parameter autoImageRange is: <BLOCKQUOTE>\copydoc autoImageRange </BLOCKQUOTE> 
             \see autoImageRange for more information */ 
-        inline virtual bool get_autoImageRange() const  
+        inline virtual bool getAutoImageRange() const  
         {
             return this->autoImageRange; 
         }
-        /*! \brief sets the property imageName to the specified \a __value. 
+        /*! \brief sets the property imageName ( \copybrief imageName ) to the specified \a __value. 
             \details Description of the parameter imageName is: <BLOCKQUOTE>\copydoc imageName </BLOCKQUOTE> 
             \see imageName for more information */ 
-        inline virtual void set_imageName(const QString & __value)  
+        inline virtual void setImageName(const QString & __value)  
         {
             this->imageName = __value;
         } 
-        /*! \brief returns the property imageName. 
+        /*! \brief returns the property imageName ( \copybrief imageName ). 
             \details Description of the parameter imageName is: <BLOCKQUOTE>\copydoc imageName </BLOCKQUOTE> 
             \see imageName for more information */ 
-        inline virtual QString get_imageName() const  
+        inline virtual QString getImageName() const  
         {
             return this->imageName; 
         }
-        /*! \brief sets the property imageNameFontName to the specified \a __value. 
+        /*! \brief sets the property imageNameFontName ( \copybrief imageNameFontName ) to the specified \a __value. 
             \details Description of the parameter imageNameFontName is: <BLOCKQUOTE>\copydoc imageNameFontName </BLOCKQUOTE> 
             \see imageNameFontName for more information */ 
-        inline virtual void set_imageNameFontName(const QString & __value)  
+        inline virtual void setImageNameFontName(const QString & __value)  
         {
             this->imageNameFontName = __value;
         } 
-        /*! \brief returns the property imageNameFontName. 
+        /*! \brief returns the property imageNameFontName ( \copybrief imageNameFontName ). 
             \details Description of the parameter imageNameFontName is: <BLOCKQUOTE>\copydoc imageNameFontName </BLOCKQUOTE> 
             \see imageNameFontName for more information */ 
-        inline virtual QString get_imageNameFontName() const  
+        inline virtual QString getImageNameFontName() const  
         {
             return this->imageNameFontName; 
         }
-        /*! \brief sets the property imageNameFontSize to the specified \a __value. 
+        /*! \brief sets the property imageNameFontSize ( \copybrief imageNameFontSize ) to the specified \a __value. 
             \details Description of the parameter imageNameFontSize is: <BLOCKQUOTE>\copydoc imageNameFontSize </BLOCKQUOTE> 
             \see imageNameFontSize for more information */ 
-        inline virtual void set_imageNameFontSize(double __value)
+        inline virtual void setImageNameFontSize(double __value)
         {
             this->imageNameFontSize = __value;
         } 
-        /*! \brief returns the property imageNameFontSize. 
+        /*! \brief returns the property imageNameFontSize ( \copybrief imageNameFontSize ). 
             \details Description of the parameter imageNameFontSize is: <BLOCKQUOTE>\copydoc imageNameFontSize </BLOCKQUOTE> 
             \see imageNameFontSize for more information */ 
-        inline virtual double get_imageNameFontSize() const  
+        inline virtual double getImageNameFontSize() const  
         {
             return this->imageNameFontSize; 
         }
-        /*! \brief returns the property colorBarRightAxis. \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
-        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
-        /*! \brief returns the property colorBarTopAxis. \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
-        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
-        /*! \brief returns the property modifierColorBarTopAxis. \details Description of the parameter modifierColorBarTopAxis is:  <BLOCKQUOTE>\copydoc modifierColorBarTopAxis </BLOCKQUOTE>. \see modifierColorBarTopAxis for more information */ 
-        inline JKQTPVerticalIndependentAxis* get_modifierColorBarTopAxis() const { return this->modifierColorBarTopAxis; }
-        /*! \brief returns the property modifierColorBarRightAxis . \details Description of the parameter modifierColorBarRightAxis  is:  <BLOCKQUOTE>\copydoc modifierColorBarRightAxis  </BLOCKQUOTE>. \see modifierColorBarRightAxis  for more information */ 
-        inline JKQTPHorizontalIndependentAxis* get_modifierColorBarRightAxis()  const { return this->modifierColorBarRightAxis ; }
-        /*! \brief sets the property colorBarTopVisible to the specified \a __value. 
+        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
+        inline JKQTPVerticalIndependentAxis* getColorBarRightAxis() const { return this->colorBarRightAxis; }
+        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
+        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const { return this->colorBarTopAxis; }
+        /*! \brief returns the property modifierColorBarTopAxis ( \copybrief modifierColorBarTopAxis ). \details Description of the parameter modifierColorBarTopAxis is:  <BLOCKQUOTE>\copydoc modifierColorBarTopAxis </BLOCKQUOTE>. \see modifierColorBarTopAxis for more information */ 
+        inline JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const { return this->modifierColorBarTopAxis; }
+        /*! \brief returns the property modifierColorBarRightAxis ( \copybrief modifierColorBarRightAxis ). \details Description of the parameter modifierColorBarRightAxis  is:  <BLOCKQUOTE>\copydoc modifierColorBarRightAxis  </BLOCKQUOTE>. \see modifierColorBarRightAxis  for more information */ 
+        inline JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis()  const { return this->modifierColorBarRightAxis ; }
+        /*! \brief sets the property colorBarTopVisible ( \copybrief colorBarTopVisible ) to the specified \a __value. 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copydoc colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
-        inline virtual void set_colorBarTopVisible(bool __value)
+        inline virtual void setColorBarTopVisible(bool __value)
         {
             this->colorBarTopVisible = __value;
         } 
-        /*! \brief returns the property colorBarTopVisible. 
+        /*! \brief returns the property colorBarTopVisible ( \copybrief colorBarTopVisible ). 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copydoc colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
-        inline virtual bool get_colorBarTopVisible() const  
+        inline virtual bool getColorBarTopVisible() const  
         {
             return this->colorBarTopVisible; 
         }
-        /*! \brief sets the property colorBarRightVisible to the specified \a __value. 
+        /*! \brief sets the property colorBarRightVisible ( \copybrief colorBarRightVisible ) to the specified \a __value. 
             \details Description of the parameter colorBarRightVisible is: <BLOCKQUOTE>\copydoc colorBarRightVisible </BLOCKQUOTE> 
             \see colorBarRightVisible for more information */ 
-        inline virtual void set_colorBarRightVisible(bool __value)
+        inline virtual void setColorBarRightVisible(bool __value)
         {
             this->colorBarRightVisible = __value;
         } 
-        /*! \brief returns the property colorBarRightVisible. 
+        /*! \brief returns the property colorBarRightVisible ( \copybrief colorBarRightVisible ). 
             \details Description of the parameter colorBarRightVisible is: <BLOCKQUOTE>\copydoc colorBarRightVisible </BLOCKQUOTE> 
             \see colorBarRightVisible for more information */ 
-        inline virtual bool get_colorBarRightVisible() const  
+        inline virtual bool getColorBarRightVisible() const  
         {
             return this->colorBarRightVisible; 
         }
-        /*! \brief sets the property autoModifierRange to the specified \a __value. 
+        /*! \brief sets the property autoModifierRange ( \copybrief autoModifierRange ) to the specified \a __value. 
             \details Description of the parameter autoModifierRange is: <BLOCKQUOTE>\copydoc autoModifierRange </BLOCKQUOTE> 
             \see autoModifierRange for more information */ 
-        inline virtual void set_autoModifierRange(bool __value)
+        inline virtual void setAutoModifierRange(bool __value)
         {
             this->autoModifierRange = __value;
         } 
-        /*! \brief returns the property autoModifierRange. 
+        /*! \brief returns the property autoModifierRange ( \copybrief autoModifierRange ). 
             \details Description of the parameter autoModifierRange is: <BLOCKQUOTE>\copydoc autoModifierRange </BLOCKQUOTE> 
             \see autoModifierRange for more information */ 
-        inline virtual bool get_autoModifierRange() const  
+        inline virtual bool getAutoModifierRange() const  
         {
             return this->autoModifierRange; 
         }
-        /*! \brief sets the property modifierMin to the specified \a __value. 
+        /*! \brief sets the property modifierMin ( \copybrief modifierMin ) to the specified \a __value. 
             \details Description of the parameter modifierMin is: <BLOCKQUOTE>\copydoc modifierMin </BLOCKQUOTE> 
             \see modifierMin for more information */ 
-        inline virtual void set_modifierMin(double __value)
+        inline virtual void setModifierMin(double __value)
         {
             this->modifierMin = __value;
         } 
-        /*! \brief returns the property modifierMin. 
+        /*! \brief returns the property modifierMin ( \copybrief modifierMin ). 
             \details Description of the parameter modifierMin is: <BLOCKQUOTE>\copydoc modifierMin </BLOCKQUOTE> 
             \see modifierMin for more information */ 
-        inline virtual double get_modifierMin() const  
+        inline virtual double getModifierMin() const  
         {
             return this->modifierMin; 
         }
-        /*! \brief sets the property modifierMax to the specified \a __value. 
+        /*! \brief sets the property modifierMax ( \copybrief modifierMax ) to the specified \a __value. 
             \details Description of the parameter modifierMax is: <BLOCKQUOTE>\copydoc modifierMax </BLOCKQUOTE> 
             \see modifierMax for more information */ 
-        inline virtual void set_modifierMax(double __value)
+        inline virtual void setModifierMax(double __value)
         {
             this->modifierMax = __value;
         } 
-        /*! \brief returns the property modifierMax. 
+        /*! \brief returns the property modifierMax ( \copybrief modifierMax ). 
             \details Description of the parameter modifierMax is: <BLOCKQUOTE>\copydoc modifierMax </BLOCKQUOTE> 
             \see modifierMax for more information */ 
-        inline virtual double get_modifierMax() const  
+        inline virtual double getModifierMax() const  
         {
             return this->modifierMax; 
         }
 
-        void set_palette(int pal);
+        void setPalette(int pal);
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -808,7 +801,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
 
         /*! \brief returns a QImage, which contains the plaette drawn outside the plot. \a steps is the number of data-setps (and the size of the output image) used for the palette image. */
-        virtual QImage drawOutsidePalette(int steps=200);
+        virtual QImage drawOutsidePalette(uint8_t steps=200);
 
         /*! \brief return the plotted image only as a QImage */
         virtual QImage drawImage();
@@ -890,7 +883,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         QAction* actSavePalette;
         QAction* actCopyPalette;
     public:
-        virtual void set_title(const QString& title) override;
+        virtual void setTitle(const QString& title) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -913,7 +906,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
-        using JKQTPMathImageBase::set_data;
+        using JKQTPMathImageBase::setData;
 
 
         /** \brief class constructor */
@@ -935,371 +928,371 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
 
-        virtual void set_data(void* data, void* dataG, void* dataB, int Nx, int Ny, DataType datatype);
-        virtual void set_data(void* data, void* dataG, void* dataB,  int Nx, int Ny);
+        virtual void setData(void* data, void* dataG, void* dataB, int Nx, int Ny, DataType datatype);
+        virtual void setData(void* data, void* dataG, void* dataB,  int Nx, int Ny);
 
-        virtual void set_data(void* data, int Nx, int Ny, DataType datatype) override;
-        virtual void set_data(void* data,  int Nx, int Ny) override ;
+        virtual void setData(void* data, int Nx, int Ny, DataType datatype) override;
+        virtual void setData(void* data,  int Nx, int Ny) override ;
 
 
         /** \brief determine min/max data value of the image */
         virtual void getDataMinMax(double& imin, double& imax) override;
 
 
-        /*! \brief sets the property dataG to the specified \a __value. 
+        /*! \brief sets the property dataG ( \copybrief dataG ) to the specified \a __value. 
             \details Description of the parameter dataG is: <BLOCKQUOTE>\copydoc dataG </BLOCKQUOTE> 
             \see dataG for more information */ 
-        inline virtual void set_dataG(void* __value)  
+        inline virtual void setDataG(void* __value)  
         {
             this->dataG = __value;
         } 
-        /*! \brief returns the property dataG. 
+        /*! \brief returns the property dataG ( \copybrief dataG ). 
             \details Description of the parameter dataG is: <BLOCKQUOTE>\copydoc dataG </BLOCKQUOTE> 
             \see dataG for more information */ 
-        inline virtual void* get_dataG() const  
+        inline virtual void* getDataG() const  
         {
             return this->dataG; 
         }
-        /*! \brief sets the property datatypeG to the specified \a __value. 
+        /*! \brief sets the property datatypeG ( \copybrief datatypeG ) to the specified \a __value. 
             \details Description of the parameter datatypeG is: <BLOCKQUOTE>\copydoc datatypeG </BLOCKQUOTE> 
             \see datatypeG for more information */ 
-        inline virtual void set_datatypeG(const DataType & __value)  
+        inline virtual void setDatatypeG(const DataType & __value)  
         {
             this->datatypeG = __value;
         } 
-        /*! \brief returns the property datatypeG. 
+        /*! \brief returns the property datatypeG ( \copybrief datatypeG ). 
             \details Description of the parameter datatypeG is: <BLOCKQUOTE>\copydoc datatypeG </BLOCKQUOTE> 
             \see datatypeG for more information */ 
-        inline virtual DataType get_datatypeG() const  
+        inline virtual DataType getDatatypeG() const  
         {
             return this->datatypeG; 
         }
-        /*! \brief sets the property dataB to the specified \a __value. 
+        /*! \brief sets the property dataB ( \copybrief dataB ) to the specified \a __value. 
             \details Description of the parameter dataB is: <BLOCKQUOTE>\copydoc dataB </BLOCKQUOTE> 
             \see dataB for more information */ 
-        inline virtual void set_dataB(void* __value)  
+        inline virtual void setDataB(void* __value)  
         {
             this->dataB = __value;
         } 
-        /*! \brief returns the property dataB. 
+        /*! \brief returns the property dataB ( \copybrief dataB ). 
             \details Description of the parameter dataB is: <BLOCKQUOTE>\copydoc dataB </BLOCKQUOTE> 
             \see dataB for more information */ 
-        inline virtual void* get_dataB() const  
+        inline virtual void* getDataB() const  
         {
             return this->dataB; 
         }
-        /*! \brief sets the property datatypeB to the specified \a __value. 
+        /*! \brief sets the property datatypeB ( \copybrief datatypeB ) to the specified \a __value. 
             \details Description of the parameter datatypeB is: <BLOCKQUOTE>\copydoc datatypeB </BLOCKQUOTE> 
             \see datatypeB for more information */ 
-        inline virtual void set_datatypeB(const DataType & __value)  
+        inline virtual void setDatatypeB(const DataType & __value)  
         {
             this->datatypeB = __value;
         } 
-        /*! \brief returns the property datatypeB. 
+        /*! \brief returns the property datatypeB ( \copybrief datatypeB ). 
             \details Description of the parameter datatypeB is: <BLOCKQUOTE>\copydoc datatypeB </BLOCKQUOTE> 
             \see datatypeB for more information */ 
-        inline virtual DataType get_datatypeB() const  
+        inline virtual DataType getDatatypeB() const  
         {
             return this->datatypeB; 
         }
-        /*! \brief sets the property showColorBar to the specified \a __value. 
+        /*! \brief sets the property showColorBar ( \copybrief showColorBar ) to the specified \a __value. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
         inline virtual void setShowColorBar(bool __value)
         {
             this->showColorBar = __value;
         } 
-        /*! \brief returns the property showColorBar. 
+        /*! \brief returns the property showColorBar ( \copybrief showColorBar ). 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
         inline virtual bool getShowColorBar() const  
         {
             return this->showColorBar; 
         }
-        /*! \brief sets the property colorBarWidth to the specified \a __value. 
+        /*! \brief sets the property colorBarWidth ( \copybrief colorBarWidth ) to the specified \a __value. 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc colorBarWidth </BLOCKQUOTE> 
             \see colorBarWidth for more information */ 
-        inline virtual void set_colorBarWidth(int __value)
+        inline virtual void setColorBarWidth(int __value)
         {
             this->colorBarWidth = __value;
         } 
-        /*! \brief returns the property colorBarWidth. 
+        /*! \brief returns the property colorBarWidth ( \copybrief colorBarWidth ). 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc colorBarWidth </BLOCKQUOTE> 
             \see colorBarWidth for more information */ 
-        inline virtual int get_colorBarWidth() const  
+        inline virtual int getColorBarWidth() const  
         {
             return this->colorBarWidth; 
         }
-        /*! \brief sets the property colorBarOffset to the specified \a __value. 
+        /*! \brief sets the property colorBarOffset ( \copybrief colorBarOffset ) to the specified \a __value. 
             \details Description of the parameter colorBarOffset is: <BLOCKQUOTE>\copydoc colorBarOffset </BLOCKQUOTE> 
             \see colorBarOffset for more information */ 
-        inline virtual void set_colorBarOffset(int __value)
+        inline virtual void setColorBarOffset(int __value)
         {
             this->colorBarOffset = __value;
         } 
-        /*! \brief returns the property colorBarOffset. 
+        /*! \brief returns the property colorBarOffset ( \copybrief colorBarOffset ). 
             \details Description of the parameter colorBarOffset is: <BLOCKQUOTE>\copydoc colorBarOffset </BLOCKQUOTE> 
             \see colorBarOffset for more information */ 
-        inline virtual int get_colorBarOffset() const  
+        inline virtual int getColorBarOffset() const  
         {
             return this->colorBarOffset; 
         }
-        /*! \brief sets the property colorBarRelativeHeight to the specified \a __value. 
+        /*! \brief sets the property colorBarRelativeHeight ( \copybrief colorBarRelativeHeight ) to the specified \a __value. 
             \details Description of the parameter colorBarRelativeHeight is: <BLOCKQUOTE>\copydoc colorBarRelativeHeight </BLOCKQUOTE> 
             \see colorBarRelativeHeight for more information */ 
-        inline virtual void set_colorBarRelativeHeight(double __value)
+        inline virtual void setColorBarRelativeHeight(double __value)
         {
             this->colorBarRelativeHeight = __value;
         } 
-        /*! \brief returns the property colorBarRelativeHeight. 
+        /*! \brief returns the property colorBarRelativeHeight ( \copybrief colorBarRelativeHeight ). 
             \details Description of the parameter colorBarRelativeHeight is: <BLOCKQUOTE>\copydoc colorBarRelativeHeight </BLOCKQUOTE> 
             \see colorBarRelativeHeight for more information */ 
-        inline virtual double get_colorBarRelativeHeight() const  
+        inline virtual double getColorBarRelativeHeight() const  
         {
             return this->colorBarRelativeHeight; 
         }
-        /*! \brief sets the property imageMin to the specified \a __value. 
+        /*! \brief sets the property imageMin ( \copybrief imageMin ) to the specified \a __value. 
             \details Description of the parameter imageMin is: <BLOCKQUOTE>\copydoc imageMin </BLOCKQUOTE> 
             \see imageMin for more information */ 
-        inline virtual void set_imageMin(double __value)
+        inline virtual void setImageMin(double __value)
         {
             this->imageMin = __value;
         } 
-        /*! \brief returns the property imageMin. 
+        /*! \brief returns the property imageMin ( \copybrief imageMin ). 
             \details Description of the parameter imageMin is: <BLOCKQUOTE>\copydoc imageMin </BLOCKQUOTE> 
             \see imageMin for more information */ 
-        inline virtual double get_imageMin() const  
+        inline virtual double getImageMin() const  
         {
             return this->imageMin; 
         }
-        inline void set_imageMinR(double m) {
-            set_imageMin(m);
+        inline void setImageMinR(double m) {
+            setImageMin(m);
         }
-        /*! \brief sets the property imageMax to the specified \a __value. 
+        /*! \brief sets the property imageMax ( \copybrief imageMax ) to the specified \a __value. 
             \details Description of the parameter imageMax is: <BLOCKQUOTE>\copydoc imageMax </BLOCKQUOTE> 
             \see imageMax for more information */ 
-        inline virtual void set_imageMax(double __value)
+        inline virtual void setImageMax(double __value)
         {
             this->imageMax = __value;
         } 
-        /*! \brief returns the property imageMax. 
+        /*! \brief returns the property imageMax ( \copybrief imageMax ). 
             \details Description of the parameter imageMax is: <BLOCKQUOTE>\copydoc imageMax </BLOCKQUOTE> 
             \see imageMax for more information */ 
-        inline virtual double get_imageMax() const  
+        inline virtual double getImageMax() const  
         {
             return this->imageMax; 
         }
-        inline void set_imageMaxR(double m) {
-            set_imageMax(m);
+        inline void setImageMaxR(double m) {
+            setImageMax(m);
         }
-        /*! \brief sets the property imageMinG to the specified \a __value. 
+        /*! \brief sets the property imageMinG ( \copybrief imageMinG ) to the specified \a __value. 
             \details Description of the parameter imageMinG is: <BLOCKQUOTE>\copydoc imageMinG </BLOCKQUOTE> 
             \see imageMinG for more information */ 
-        inline virtual void set_imageMinG(double __value)
+        inline virtual void setImageMinG(double __value)
         {
             this->imageMinG = __value;
         } 
-        /*! \brief returns the property imageMinG. 
+        /*! \brief returns the property imageMinG ( \copybrief imageMinG ). 
             \details Description of the parameter imageMinG is: <BLOCKQUOTE>\copydoc imageMinG </BLOCKQUOTE> 
             \see imageMinG for more information */ 
-        inline virtual double get_imageMinG() const  
+        inline virtual double getImageMinG() const  
         {
             return this->imageMinG; 
         }
-        /*! \brief sets the property imageMaxG to the specified \a __value. 
+        /*! \brief sets the property imageMaxG ( \copybrief imageMaxG ) to the specified \a __value. 
             \details Description of the parameter imageMaxG is: <BLOCKQUOTE>\copydoc imageMaxG </BLOCKQUOTE> 
             \see imageMaxG for more information */ 
-        inline virtual void set_imageMaxG(double __value)
+        inline virtual void setImageMaxG(double __value)
         {
             this->imageMaxG = __value;
         } 
-        /*! \brief returns the property imageMaxG. 
+        /*! \brief returns the property imageMaxG ( \copybrief imageMaxG ). 
             \details Description of the parameter imageMaxG is: <BLOCKQUOTE>\copydoc imageMaxG </BLOCKQUOTE> 
             \see imageMaxG for more information */ 
-        inline virtual double get_imageMaxG() const  
+        inline virtual double getImageMaxG() const  
         {
             return this->imageMaxG; 
         }
-        /*! \brief sets the property imageMinB to the specified \a __value. 
+        /*! \brief sets the property imageMinB ( \copybrief imageMinB ) to the specified \a __value. 
             \details Description of the parameter imageMinB is: <BLOCKQUOTE>\copydoc imageMinB </BLOCKQUOTE> 
             \see imageMinB for more information */ 
-        inline virtual void set_imageMinB(double __value)
+        inline virtual void setImageMinB(double __value)
         {
             this->imageMinB = __value;
         } 
-        /*! \brief returns the property imageMinB. 
+        /*! \brief returns the property imageMinB ( \copybrief imageMinB ). 
             \details Description of the parameter imageMinB is: <BLOCKQUOTE>\copydoc imageMinB </BLOCKQUOTE> 
             \see imageMinB for more information */ 
-        inline virtual double get_imageMinB() const  
+        inline virtual double getImageMinB() const  
         {
             return this->imageMinB; 
         }
-        /*! \brief sets the property imageMaxB to the specified \a __value. 
+        /*! \brief sets the property imageMaxB ( \copybrief imageMaxB ) to the specified \a __value. 
             \details Description of the parameter imageMaxB is: <BLOCKQUOTE>\copydoc imageMaxB </BLOCKQUOTE> 
             \see imageMaxB for more information */ 
-        inline virtual void set_imageMaxB(double __value)
+        inline virtual void setImageMaxB(double __value)
         {
             this->imageMaxB = __value;
         } 
-        /*! \brief returns the property imageMaxB. 
+        /*! \brief returns the property imageMaxB ( \copybrief imageMaxB ). 
             \details Description of the parameter imageMaxB is: <BLOCKQUOTE>\copydoc imageMaxB </BLOCKQUOTE> 
             \see imageMaxB for more information */ 
-        inline virtual double get_imageMaxB() const  
+        inline virtual double getImageMaxB() const  
         {
             return this->imageMaxB; 
         }
-        /*! \brief sets the property autoImageRange to the specified \a __value. 
+        /*! \brief sets the property autoImageRange ( \copybrief autoImageRange ) to the specified \a __value. 
             \details Description of the parameter autoImageRange is: <BLOCKQUOTE>\copydoc autoImageRange </BLOCKQUOTE> 
             \see autoImageRange for more information */ 
-        inline virtual void set_autoImageRange(bool __value)
+        inline virtual void setAutoImageRange(bool __value)
         {
             this->autoImageRange = __value;
         } 
-        /*! \brief returns the property autoImageRange. 
+        /*! \brief returns the property autoImageRange ( \copybrief autoImageRange ). 
             \details Description of the parameter autoImageRange is: <BLOCKQUOTE>\copydoc autoImageRange </BLOCKQUOTE> 
             \see autoImageRange for more information */ 
-        inline virtual bool get_autoImageRange() const  
+        inline virtual bool getAutoImageRange() const  
         {
             return this->autoImageRange; 
         }
-        /*! \brief sets the property imageName to the specified \a __value. 
+        /*! \brief sets the property imageName ( \copybrief imageName ) to the specified \a __value. 
             \details Description of the parameter imageName is: <BLOCKQUOTE>\copydoc imageName </BLOCKQUOTE> 
             \see imageName for more information */ 
-        inline virtual void set_imageName(const QString & __value)  
+        inline virtual void setImageName(const QString & __value)  
         {
             this->imageName = __value;
         } 
-        /*! \brief returns the property imageName. 
+        /*! \brief returns the property imageName ( \copybrief imageName ). 
             \details Description of the parameter imageName is: <BLOCKQUOTE>\copydoc imageName </BLOCKQUOTE> 
             \see imageName for more information */ 
-        inline virtual QString get_imageName() const  
+        inline virtual QString getImageName() const  
         {
             return this->imageName; 
         }
-        inline void set_imageNameR(const QString& m) {
-            set_imageName(m);
+        inline void setImageNameR(const QString& m) {
+            setImageName(m);
         }
-        /*! \brief sets the property imageNameG to the specified \a __value. 
+        /*! \brief sets the property imageNameG ( \copybrief imageNameG ) to the specified \a __value. 
             \details Description of the parameter imageNameG is: <BLOCKQUOTE>\copydoc imageNameG </BLOCKQUOTE> 
             \see imageNameG for more information */ 
-        inline virtual void set_imageNameG(const QString & __value)  
+        inline virtual void setImageNameG(const QString & __value)  
         {
             this->imageNameG = __value;
         } 
-        /*! \brief returns the property imageNameG. 
+        /*! \brief returns the property imageNameG ( \copybrief imageNameG ). 
             \details Description of the parameter imageNameG is: <BLOCKQUOTE>\copydoc imageNameG </BLOCKQUOTE> 
             \see imageNameG for more information */ 
-        inline virtual QString get_imageNameG() const  
+        inline virtual QString getImageNameG() const  
         {
             return this->imageNameG; 
         }
-        /*! \brief sets the property imageNameB to the specified \a __value. 
+        /*! \brief sets the property imageNameB ( \copybrief imageNameB ) to the specified \a __value. 
             \details Description of the parameter imageNameB is: <BLOCKQUOTE>\copydoc imageNameB </BLOCKQUOTE> 
             \see imageNameB for more information */ 
-        inline virtual void set_imageNameB(const QString & __value)  
+        inline virtual void setImageNameB(const QString & __value)  
         {
             this->imageNameB = __value;
         } 
-        /*! \brief returns the property imageNameB. 
+        /*! \brief returns the property imageNameB ( \copybrief imageNameB ). 
             \details Description of the parameter imageNameB is: <BLOCKQUOTE>\copydoc imageNameB </BLOCKQUOTE> 
             \see imageNameB for more information */ 
-        inline virtual QString get_imageNameB() const  
+        inline virtual QString getImageNameB() const  
         {
             return this->imageNameB; 
         }
-        /*! \brief sets the property imageNameFontName to the specified \a __value. 
+        /*! \brief sets the property imageNameFontName ( \copybrief imageNameFontName ) to the specified \a __value. 
             \details Description of the parameter imageNameFontName is: <BLOCKQUOTE>\copydoc imageNameFontName </BLOCKQUOTE> 
             \see imageNameFontName for more information */ 
-        inline virtual void set_imageNameFontName(const QString & __value)  
+        inline virtual void setImageNameFontName(const QString & __value)  
         {
             this->imageNameFontName = __value;
         } 
-        /*! \brief returns the property imageNameFontName. 
+        /*! \brief returns the property imageNameFontName ( \copybrief imageNameFontName ). 
             \details Description of the parameter imageNameFontName is: <BLOCKQUOTE>\copydoc imageNameFontName </BLOCKQUOTE> 
             \see imageNameFontName for more information */ 
-        inline virtual QString get_imageNameFontName() const  
+        inline virtual QString getImageNameFontName() const  
         {
             return this->imageNameFontName; 
         }
-        /*! \brief sets the property imageNameFontSize to the specified \a __value. 
+        /*! \brief sets the property imageNameFontSize ( \copybrief imageNameFontSize ) to the specified \a __value. 
             \details Description of the parameter imageNameFontSize is: <BLOCKQUOTE>\copydoc imageNameFontSize </BLOCKQUOTE> 
             \see imageNameFontSize for more information */ 
-        inline virtual void set_imageNameFontSize(double __value)
+        inline virtual void setImageNameFontSize(double __value)
         {
             this->imageNameFontSize = __value;
         } 
-        /*! \brief returns the property imageNameFontSize. 
+        /*! \brief returns the property imageNameFontSize ( \copybrief imageNameFontSize ). 
             \details Description of the parameter imageNameFontSize is: <BLOCKQUOTE>\copydoc imageNameFontSize </BLOCKQUOTE> 
             \see imageNameFontSize for more information */ 
-        inline virtual double get_imageNameFontSize() const  
+        inline virtual double getImageNameFontSize() const  
         {
             return this->imageNameFontSize; 
         }
-        /*! \brief returns the property colorBarRightAxis. \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
-        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxis() const { return this->colorBarRightAxis; }
-        /*! \brief returns the property colorBarTopAxis. \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
-        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxis() const { return this->colorBarTopAxis; }
-        /*! \brief returns the property colorBarRightAxisG. \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */ 
-        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxisG() const { return this->colorBarRightAxisG; }
-        /*! \brief returns the property colorBarTopAxisG. \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */ 
-        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxisG() const { return this->colorBarTopAxisG; }
-        /*! \brief returns the property colorBarRightAxisB. \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */ 
-        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxisB() const { return this->colorBarRightAxisB; }
-        /*! \brief returns the property colorBarTopAxisB. \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */ 
-        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxisB() const { return this->colorBarTopAxisB; }
-        /*! \brief sets the property colorBarTopVisible to the specified \a __value. 
+        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
+        inline JKQTPVerticalIndependentAxis* getColorBarRightAxis() const { return this->colorBarRightAxis; }
+        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
+        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const { return this->colorBarTopAxis; }
+        /*! \brief returns the property colorBarRightAxisG ( \copybrief colorBarRightAxisG ). \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */ 
+        inline JKQTPVerticalIndependentAxis* getColorBarRightAxisG() const { return this->colorBarRightAxisG; }
+        /*! \brief returns the property colorBarTopAxisG ( \copybrief colorBarTopAxisG ). \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */ 
+        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxisG() const { return this->colorBarTopAxisG; }
+        /*! \brief returns the property colorBarRightAxisB ( \copybrief colorBarRightAxisB ). \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */ 
+        inline JKQTPVerticalIndependentAxis* getColorBarRightAxisB() const { return this->colorBarRightAxisB; }
+        /*! \brief returns the property colorBarTopAxisB ( \copybrief colorBarTopAxisB ). \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */ 
+        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxisB() const { return this->colorBarTopAxisB; }
+        /*! \brief sets the property colorBarTopVisible ( \copybrief colorBarTopVisible ) to the specified \a __value. 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copydoc colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
-        inline virtual void set_colorBarTopVisible(bool __value)
+        inline virtual void setColorBarTopVisible(bool __value)
         {
             this->colorBarTopVisible = __value;
         } 
-        /*! \brief returns the property colorBarTopVisible. 
+        /*! \brief returns the property colorBarTopVisible ( \copybrief colorBarTopVisible ). 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copydoc colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
-        inline virtual bool get_colorBarTopVisible() const  
+        inline virtual bool getColorBarTopVisible() const  
         {
             return this->colorBarTopVisible; 
         }
-        /*! \brief sets the property colorBarRightVisible to the specified \a __value. 
+        /*! \brief sets the property colorBarRightVisible ( \copybrief colorBarRightVisible ) to the specified \a __value. 
             \details Description of the parameter colorBarRightVisible is: <BLOCKQUOTE>\copydoc colorBarRightVisible </BLOCKQUOTE> 
             \see colorBarRightVisible for more information */ 
-        inline virtual void set_colorBarRightVisible(bool __value)
+        inline virtual void setColorBarRightVisible(bool __value)
         {
             this->colorBarRightVisible = __value;
         } 
-        /*! \brief returns the property colorBarRightVisible. 
+        /*! \brief returns the property colorBarRightVisible ( \copybrief colorBarRightVisible ). 
             \details Description of the parameter colorBarRightVisible is: <BLOCKQUOTE>\copydoc colorBarRightVisible </BLOCKQUOTE> 
             \see colorBarRightVisible for more information */ 
-        inline virtual bool get_colorBarRightVisible() const  
+        inline virtual bool getColorBarRightVisible() const  
         {
             return this->colorBarRightVisible; 
         }
-        /*! \brief sets the property colorbarsSideBySide to the specified \a __value. 
+        /*! \brief sets the property colorbarsSideBySide ( \copybrief colorbarsSideBySide ) to the specified \a __value. 
             \details Description of the parameter colorbarsSideBySide is: <BLOCKQUOTE>\copydoc colorbarsSideBySide </BLOCKQUOTE> 
             \see colorbarsSideBySide for more information */ 
-        inline virtual void set_colorbarsSideBySide(bool __value)
+        inline virtual void setColorbarsSideBySide(bool __value)
         {
             this->colorbarsSideBySide = __value;
         } 
-        /*! \brief returns the property colorbarsSideBySide. 
+        /*! \brief returns the property colorbarsSideBySide ( \copybrief colorbarsSideBySide ). 
             \details Description of the parameter colorbarsSideBySide is: <BLOCKQUOTE>\copydoc colorbarsSideBySide </BLOCKQUOTE> 
             \see colorbarsSideBySide for more information */ 
-        inline virtual bool get_colorbarsSideBySide() const  
+        inline virtual bool getColorbarsSideBySide() const  
         {
             return this->colorbarsSideBySide; 
         }
-        /*! \brief sets the property rgbMode to the specified \a __value. 
+        /*! \brief sets the property rgbMode ( \copybrief rgbMode ) to the specified \a __value. 
             \details Description of the parameter rgbMode is: <BLOCKQUOTE>\copydoc rgbMode </BLOCKQUOTE> 
             \see rgbMode for more information */ 
-        inline virtual void set_rgbMode(const JKQTPRGBMathImageRGBMode & __value)  
+        inline virtual void setRgbMode(const JKQTPRGBMathImageRGBMode & __value)  
         {
             this->rgbMode = __value;
         } 
-        /*! \brief returns the property rgbMode. 
+        /*! \brief returns the property rgbMode ( \copybrief rgbMode ). 
             \details Description of the parameter rgbMode is: <BLOCKQUOTE>\copydoc rgbMode </BLOCKQUOTE> 
             \see rgbMode for more information */ 
-        inline virtual JKQTPRGBMathImageRGBMode get_rgbMode() const  
+        inline virtual JKQTPRGBMathImageRGBMode getRgbMode() const  
         {
             return this->rgbMode; 
         }
@@ -1411,7 +1404,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         QAction* actSaveImage;
         QAction* actCopyImage;
     public:
-        virtual void set_title(const QString& title) override;
+        virtual void setTitle(const QString& title) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
         void copyImagePlotAsImage();
@@ -1442,31 +1435,31 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
         JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPlotter* parent);
 
-        /*! \brief sets the property imageColumn to the specified \a __value. 
+        /*! \brief sets the property imageColumn ( \copybrief imageColumn ) to the specified \a __value. 
             \details Description of the parameter imageColumn is: <BLOCKQUOTE>\copydoc imageColumn </BLOCKQUOTE> 
             \see imageColumn for more information */ 
-        inline virtual void set_imageColumn(int __value)
+        inline virtual void setImageColumn(int __value)
         {
             this->imageColumn = __value;
         } 
-        /*! \brief returns the property imageColumn. 
+        /*! \brief returns the property imageColumn ( \copybrief imageColumn ). 
             \details Description of the parameter imageColumn is: <BLOCKQUOTE>\copydoc imageColumn </BLOCKQUOTE> 
             \see imageColumn for more information */ 
-        inline virtual int get_imageColumn() const  
+        inline virtual int getImageColumn() const  
         {
             return this->imageColumn; 
         }
-        /*! \brief sets the property modifierColumn to the specified \a __value. 
+        /*! \brief sets the property modifierColumn ( \copybrief modifierColumn ) to the specified \a __value. 
             \details Description of the parameter modifierColumn is: <BLOCKQUOTE>\copydoc modifierColumn </BLOCKQUOTE> 
             \see modifierColumn for more information */ 
-        inline virtual void set_modifierColumn(int __value)
+        inline virtual void setModifierColumn(int __value)
         {
             this->modifierColumn = __value;
         } 
-        /*! \brief returns the property modifierColumn. 
+        /*! \brief returns the property modifierColumn ( \copybrief modifierColumn ). 
             \details Description of the parameter modifierColumn is: <BLOCKQUOTE>\copydoc modifierColumn </BLOCKQUOTE> 
             \see modifierColumn for more information */ 
-        inline virtual int get_modifierColumn() const  
+        inline virtual int getModifierColumn() const  
         {
             return this->modifierColumn; 
         }
@@ -1509,59 +1502,59 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int Nx, int Ny, JKQTPlotter* parent);
         JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, int Nx, int Ny, JKQTPlotter* parent);
 
-        /*! \brief sets the property imageRColumn to the specified \a __value. 
+        /*! \brief sets the property imageRColumn ( \copybrief imageRColumn ) to the specified \a __value. 
             \details Description of the parameter imageRColumn is: <BLOCKQUOTE>\copydoc imageRColumn </BLOCKQUOTE> 
             \see imageRColumn for more information */ 
-        inline virtual void set_imageRColumn(int __value)
+        inline virtual void setImageRColumn(int __value)
         {
             this->imageRColumn = __value;
         } 
-        /*! \brief returns the property imageRColumn. 
+        /*! \brief returns the property imageRColumn ( \copybrief imageRColumn ). 
             \details Description of the parameter imageRColumn is: <BLOCKQUOTE>\copydoc imageRColumn </BLOCKQUOTE> 
             \see imageRColumn for more information */ 
-        inline virtual int get_imageRColumn() const  
+        inline virtual int getImageRColumn() const  
         {
             return this->imageRColumn; 
         }
-        /*! \brief sets the property imageGColumn to the specified \a __value. 
+        /*! \brief sets the property imageGColumn ( \copybrief imageGColumn ) to the specified \a __value. 
             \details Description of the parameter imageGColumn is: <BLOCKQUOTE>\copydoc imageGColumn </BLOCKQUOTE> 
             \see imageGColumn for more information */ 
-        inline virtual void set_imageGColumn(int __value)
+        inline virtual void setImageGColumn(int __value)
         {
             this->imageGColumn = __value;
         } 
-        /*! \brief returns the property imageGColumn. 
+        /*! \brief returns the property imageGColumn ( \copybrief imageGColumn ). 
             \details Description of the parameter imageGColumn is: <BLOCKQUOTE>\copydoc imageGColumn </BLOCKQUOTE> 
             \see imageGColumn for more information */ 
-        inline virtual int get_imageGColumn() const  
+        inline virtual int getImageGColumn() const  
         {
             return this->imageGColumn; 
         }
-        /*! \brief sets the property imageBColumn to the specified \a __value. 
+        /*! \brief sets the property imageBColumn ( \copybrief imageBColumn ) to the specified \a __value. 
             \details Description of the parameter imageBColumn is: <BLOCKQUOTE>\copydoc imageBColumn </BLOCKQUOTE> 
             \see imageBColumn for more information */ 
-        inline virtual void set_imageBColumn(int __value)
+        inline virtual void setImageBColumn(int __value)
         {
             this->imageBColumn = __value;
         } 
-        /*! \brief returns the property imageBColumn. 
+        /*! \brief returns the property imageBColumn ( \copybrief imageBColumn ). 
             \details Description of the parameter imageBColumn is: <BLOCKQUOTE>\copydoc imageBColumn </BLOCKQUOTE> 
             \see imageBColumn for more information */ 
-        inline virtual int get_imageBColumn() const  
+        inline virtual int getImageBColumn() const  
         {
             return this->imageBColumn; 
         }
-        /*! \brief sets the property modifierColumn to the specified \a __value. 
+        /*! \brief sets the property modifierColumn ( \copybrief modifierColumn ) to the specified \a __value. 
             \details Description of the parameter modifierColumn is: <BLOCKQUOTE>\copydoc modifierColumn </BLOCKQUOTE> 
             \see modifierColumn for more information */ 
-        inline virtual void set_modifierColumn(int __value)
+        inline virtual void setModifierColumn(int __value)
         {
             this->modifierColumn = __value;
         } 
-        /*! \brief returns the property modifierColumn. 
+        /*! \brief returns the property modifierColumn ( \copybrief modifierColumn ). 
             \details Description of the parameter modifierColumn is: <BLOCKQUOTE>\copydoc modifierColumn </BLOCKQUOTE> 
             \see modifierColumn for more information */ 
-        inline virtual int get_modifierColumn() const  
+        inline virtual int getModifierColumn() const  
         {
             return this->modifierColumn; 
         }
@@ -1609,78 +1602,78 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        /*! \brief sets the property trueColor to the specified \a __value. 
+        /*! \brief sets the property trueColor ( \copybrief trueColor ) to the specified \a __value. 
             \details Description of the parameter trueColor is: <BLOCKQUOTE>\copydoc trueColor </BLOCKQUOTE> 
             \see trueColor for more information */ 
-        inline virtual void set_trueColor(const QColor & __value)  
+        inline virtual void setTrueColor(const QColor & __value)  
         {
             this->trueColor = __value;
         } 
-        /*! \brief returns the property trueColor. 
+        /*! \brief returns the property trueColor ( \copybrief trueColor ). 
             \details Description of the parameter trueColor is: <BLOCKQUOTE>\copydoc trueColor </BLOCKQUOTE> 
             \see trueColor for more information */ 
-        inline virtual QColor get_trueColor() const  
+        inline virtual QColor getTrueColor() const  
         {
             return this->trueColor; 
         }
-        /*! \brief sets the property falseColor to the specified \a __value. 
+        /*! \brief sets the property falseColor ( \copybrief falseColor ) to the specified \a __value. 
             \details Description of the parameter falseColor is: <BLOCKQUOTE>\copydoc falseColor </BLOCKQUOTE> 
             \see falseColor for more information */ 
-        inline virtual void set_falseColor(const QColor & __value)  
+        inline virtual void setFalseColor(const QColor & __value)  
         {
             this->falseColor = __value;
         } 
-        /*! \brief returns the property falseColor. 
+        /*! \brief returns the property falseColor ( \copybrief falseColor ). 
             \details Description of the parameter falseColor is: <BLOCKQUOTE>\copydoc falseColor </BLOCKQUOTE> 
             \see falseColor for more information */ 
-        inline virtual QColor get_falseColor() const  
+        inline virtual QColor getFalseColor() const  
         {
             return this->falseColor; 
         }
-        /*! \brief sets the property Nx to the specified \a __value. 
+        /*! \brief sets the property Nx ( \copybrief Nx ) to the specified \a __value. 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual void set_Nx(int __value)
+        inline virtual void setNx(int __value)
         {
             this->Nx = __value;
         } 
-        /*! \brief returns the property Nx. 
+        /*! \brief returns the property Nx ( \copybrief Nx ). 
             \details Description of the parameter Nx is: <BLOCKQUOTE>\copydoc Nx </BLOCKQUOTE> 
             \see Nx for more information */ 
-        inline virtual int get_Nx() const
+        inline virtual int getNx() const
         {
             return this->Nx; 
         }
-        /*! \brief sets the property Ny to the specified \a __value. 
+        /*! \brief sets the property Ny ( \copybrief Ny ) to the specified \a __value. 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual void set_Ny(int __value)
+        inline virtual void setNy(int __value)
         {
             this->Ny = __value;
         } 
-        /*! \brief returns the property Ny. 
+        /*! \brief returns the property Ny ( \copybrief Ny ). 
             \details Description of the parameter Ny is: <BLOCKQUOTE>\copydoc Ny </BLOCKQUOTE> 
             \see Ny for more information */ 
-        inline virtual int get_Ny() const
+        inline virtual int getNy() const
         {
             return this->Ny; 
         }
-        /*! \brief sets the property data to the specified \a __value. 
+        /*! \brief sets the property data ( \copybrief data ) to the specified \a __value. 
             \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
-        inline virtual void set_data(bool*  __value)
+        inline virtual void setData(bool*  __value)
         {
             this->data = __value;
         } 
-        /*! \brief returns the property data. 
+        /*! \brief returns the property data ( \copybrief data ). 
             \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
-        inline virtual bool* get_data() const  
+        inline virtual bool* getData() const  
         {
             return this->data; 
         }
 
-        void set_data(bool* data, int Nx, int Ny);
+        void setData(bool* data, int Nx, int Ny);
 
         QVector<double> getDataAsDoubleVector() const;
 
@@ -1701,7 +1694,7 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         QAction* actSaveImage;
         QAction* actCopyImage;
     public:
-        virtual void set_title(const QString& title) override;
+        virtual void setTitle(const QString& title) override;
         virtual void setParent(JKQTBasePlotter* parent) override;
     public slots:
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
@@ -1733,73 +1726,73 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-        /*! \brief sets the property symbol to the specified \a __value. 
+        /*! \brief sets the property symbol ( \copybrief symbol ) to the specified \a __value. 
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE> 
             \see symbol for more information */ 
-        inline virtual void set_symbol(const JKQTPGraphSymbols & __value)  
+        inline virtual void setSymbol(const JKQTPGraphSymbols & __value)  
         {
             this->symbol = __value;
         } 
-        /*! \brief returns the property symbol. 
+        /*! \brief returns the property symbol ( \copybrief symbol ). 
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE> 
             \see symbol for more information */ 
-        inline virtual JKQTPGraphSymbols get_symbol() const  
+        inline virtual JKQTPGraphSymbols getSymbol() const  
         {
             return this->symbol; 
         }
-        /*! \brief sets the property symbolWidth to the specified \a __value. 
+        /*! \brief sets the property symbolWidth ( \copybrief symbolWidth ) to the specified \a __value. 
             \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE> 
             \see symbolWidth for more information */ 
-        inline virtual void set_symbolWidth(double __value)
+        inline virtual void setSymbolWidth(double __value)
         {
             this->symbolWidth = __value;
         } 
-        /*! \brief returns the property symbolWidth. 
+        /*! \brief returns the property symbolWidth ( \copybrief symbolWidth ). 
             \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE> 
             \see symbolWidth for more information */ 
-        inline virtual double get_symbolWidth() const  
+        inline virtual double getSymbolWidth() const  
         {
             return this->symbolWidth; 
         }
-        /*! \brief sets the property drawAsRectangles to the specified \a __value. 
+        /*! \brief sets the property drawAsRectangles ( \copybrief drawAsRectangles ) to the specified \a __value. 
             \details Description of the parameter drawAsRectangles is: <BLOCKQUOTE>\copydoc drawAsRectangles </BLOCKQUOTE> 
             \see drawAsRectangles for more information */ 
-        inline virtual void set_drawAsRectangles(bool __value)
+        inline virtual void setDrawAsRectangles(bool __value)
         {
             this->drawAsRectangles = __value;
         } 
-        /*! \brief returns the property drawAsRectangles. 
+        /*! \brief returns the property drawAsRectangles ( \copybrief drawAsRectangles ). 
             \details Description of the parameter drawAsRectangles is: <BLOCKQUOTE>\copydoc drawAsRectangles </BLOCKQUOTE> 
             \see drawAsRectangles for more information */ 
-        inline virtual bool get_drawAsRectangles() const  
+        inline virtual bool getDrawAsRectangles() const  
         {
             return this->drawAsRectangles; 
         }
-        /*! \brief sets the property rectanglesAsImageOverlay to the specified \a __value. 
+        /*! \brief sets the property rectanglesAsImageOverlay ( \copybrief rectanglesAsImageOverlay ) to the specified \a __value. 
             \details Description of the parameter rectanglesAsImageOverlay is: <BLOCKQUOTE>\copydoc rectanglesAsImageOverlay </BLOCKQUOTE> 
             \see rectanglesAsImageOverlay for more information */ 
-        inline virtual void set_rectanglesAsImageOverlay(bool __value)
+        inline virtual void setRectanglesAsImageOverlay(bool __value)
         {
             this->rectanglesAsImageOverlay = __value;
         } 
-        /*! \brief returns the property rectanglesAsImageOverlay. 
+        /*! \brief returns the property rectanglesAsImageOverlay ( \copybrief rectanglesAsImageOverlay ). 
             \details Description of the parameter rectanglesAsImageOverlay is: <BLOCKQUOTE>\copydoc rectanglesAsImageOverlay </BLOCKQUOTE> 
             \see rectanglesAsImageOverlay for more information */ 
-        inline virtual bool get_rectanglesAsImageOverlay() const  
+        inline virtual bool getRectanglesAsImageOverlay() const  
         {
             return this->rectanglesAsImageOverlay; 
         }
-        /*! \brief sets the property symbolSizeFactor to the specified \a __value. 
+        /*! \brief sets the property symbolSizeFactor ( \copybrief symbolSizeFactor ) to the specified \a __value. 
             \details Description of the parameter symbolSizeFactor is: <BLOCKQUOTE>\copydoc symbolSizeFactor </BLOCKQUOTE> 
             \see symbolSizeFactor for more information */ 
-        inline virtual void set_symbolSizeFactor(double __value)
+        inline virtual void setSymbolSizeFactor(double __value)
         {
             this->symbolSizeFactor = __value;
         } 
-        /*! \brief returns the property symbolSizeFactor. 
+        /*! \brief returns the property symbolSizeFactor ( \copybrief symbolSizeFactor ). 
             \details Description of the parameter symbolSizeFactor is: <BLOCKQUOTE>\copydoc symbolSizeFactor </BLOCKQUOTE> 
             \see symbolSizeFactor for more information */ 
-        inline virtual double get_symbolSizeFactor() const  
+        inline virtual double getSymbolSizeFactor() const  
         {
             return this->symbolSizeFactor; 
         }
@@ -1837,17 +1830,17 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
         JKQTPColumnOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);
         JKQTPColumnOverlayImageEnhanced(JKQTPlotter* parent);
 
-        /*! \brief sets the property imageColumn to the specified \a __value. 
+        /*! \brief sets the property imageColumn ( \copybrief imageColumn ) to the specified \a __value. 
             \details Description of the parameter imageColumn is: <BLOCKQUOTE>\copydoc imageColumn </BLOCKQUOTE> 
             \see imageColumn for more information */ 
-        inline virtual void set_imageColumn(int __value)
+        inline virtual void setImageColumn(int __value)
         {
             this->imageColumn = __value;
         } 
-        /*! \brief returns the property imageColumn. 
+        /*! \brief returns the property imageColumn ( \copybrief imageColumn ). 
             \details Description of the parameter imageColumn is: <BLOCKQUOTE>\copydoc imageColumn </BLOCKQUOTE> 
             \see imageColumn for more information */ 
-        inline virtual int get_imageColumn() const  
+        inline virtual int getImageColumn() const  
         {
             return this->imageColumn; 
         }
@@ -1902,120 +1895,120 @@ class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         /** \brief creates at least nLevels contour levels with logarithmic spacing. FIXME: Has not been tested yet */
         void createContourLevelsLog(int nLevels=3,int m=2);
 
-        /*! \brief sets the property lineColor to the specified \a __value. 
+        /*! \brief sets the property lineColor ( \copybrief lineColor ) to the specified \a __value. 
             \details Description of the parameter lineColor is: <BLOCKQUOTE>\copydoc lineColor </BLOCKQUOTE> 
             \see lineColor for more information */ 
         inline virtual void setLineColor(const QColor & __value)  
         {
             this->lineColor = __value;
         } 
-        /*! \brief returns the property lineColor. 
+        /*! \brief returns the property lineColor ( \copybrief lineColor ). 
             \details Description of the parameter lineColor is: <BLOCKQUOTE>\copydoc lineColor </BLOCKQUOTE> 
             \see lineColor for more information */ 
         inline virtual QColor getLineColor() const  
         {
             return this->lineColor; 
         }
-        /*! \brief sets the property style to the specified \a __value. 
+        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE> 
             \see style for more information */ 
-        inline virtual void set_style(const Qt::PenStyle & __value)  
+        inline virtual void setStyle(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
-        /*! \brief returns the property style. 
+        /*! \brief returns the property style ( \copybrief style ). 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE> 
             \see style for more information */ 
-        inline virtual Qt::PenStyle get_style() const  
+        inline virtual Qt::PenStyle getStyle() const  
         {
             return this->style; 
         }
-        /*! \brief sets the property lineWidth to the specified \a __value. 
+        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth. 
+        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
             \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
             \see lineWidth for more information */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property ignoreOnPlane to the specified \a __value. 
+        /*! \brief sets the property ignoreOnPlane ( \copybrief ignoreOnPlane ) to the specified \a __value. 
             \details Description of the parameter ignoreOnPlane is: <BLOCKQUOTE>\copydoc ignoreOnPlane </BLOCKQUOTE> 
             \see ignoreOnPlane for more information */ 
-        inline virtual void set_ignoreOnPlane(bool __value)
+        inline virtual void setIgnoreOnPlane(bool __value)
         {
             this->ignoreOnPlane = __value;
         } 
-        /*! \brief returns the property ignoreOnPlane. 
+        /*! \brief returns the property ignoreOnPlane ( \copybrief ignoreOnPlane ). 
             \details Description of the parameter ignoreOnPlane is: <BLOCKQUOTE>\copydoc ignoreOnPlane </BLOCKQUOTE> 
             \see ignoreOnPlane for more information */ 
-        inline virtual bool get_ignoreOnPlane() const  
+        inline virtual bool getIgnoreOnPlane() const  
         {
             return this->ignoreOnPlane; 
         }
-        /*! \brief sets the property numberOfLevels to the specified \a __value. 
+        /*! \brief sets the property numberOfLevels ( \copybrief numberOfLevels ) to the specified \a __value. 
             \details Description of the parameter numberOfLevels is: <BLOCKQUOTE>\copydoc numberOfLevels </BLOCKQUOTE> 
             \see numberOfLevels for more information */ 
-        inline virtual void set_numberOfLevels(int __value)
+        inline virtual void setNumberOfLevels(int __value)
         {
             this->numberOfLevels = __value;
         } 
-        /*! \brief returns the property numberOfLevels. 
+        /*! \brief returns the property numberOfLevels ( \copybrief numberOfLevels ). 
             \details Description of the parameter numberOfLevels is: <BLOCKQUOTE>\copydoc numberOfLevels </BLOCKQUOTE> 
             \see numberOfLevels for more information */ 
-        inline virtual int get_numberOfLevels() const  
+        inline virtual int getNumberOfLevels() const  
         {
             return this->numberOfLevels; 
         }
-        /*! \brief sets the property colorFromPalette to the specified \a __value. 
+        /*! \brief sets the property colorFromPalette ( \copybrief colorFromPalette ) to the specified \a __value. 
             \details Description of the parameter colorFromPalette is: <BLOCKQUOTE>\copydoc colorFromPalette </BLOCKQUOTE> 
             \see colorFromPalette for more information */ 
-        inline virtual void set_colorFromPalette(bool __value)
+        inline virtual void setColorFromPalette(bool __value)
         {
             this->colorFromPalette = __value;
         } 
-        /*! \brief returns the property colorFromPalette. 
+        /*! \brief returns the property colorFromPalette ( \copybrief colorFromPalette ). 
             \details Description of the parameter colorFromPalette is: <BLOCKQUOTE>\copydoc colorFromPalette </BLOCKQUOTE> 
             \see colorFromPalette for more information */ 
-        inline virtual bool get_colorFromPalette() const  
+        inline virtual bool getColorFromPalette() const  
         {
             return this->colorFromPalette; 
         }
-        /*! \brief sets the property contourLevels to the specified \a __value. 
+        /*! \brief sets the property contourLevels ( \copybrief contourLevels ) to the specified \a __value. 
             \details Description of the parameter contourLevels is: <BLOCKQUOTE>\copydoc contourLevels </BLOCKQUOTE> 
             \see contourLevels for more information */ 
-        inline virtual void set_contourLevels(const QList<double> & __value)  
+        inline virtual void setContourLevels(const QList<double> & __value)  
         {
             this->contourLevels = __value;
         } 
-        /*! \brief returns the property contourLevels. 
+        /*! \brief returns the property contourLevels ( \copybrief contourLevels ). 
             \details Description of the parameter contourLevels is: <BLOCKQUOTE>\copydoc contourLevels </BLOCKQUOTE> 
             \see contourLevels for more information */ 
-        inline virtual QList<double> get_contourLevels() const  
+        inline virtual QList<double> getContourLevels() const  
         {
             return this->contourLevels; 
         }
-        /*! \brief sets the property relativeLevels to the specified \a __value. 
+        /*! \brief sets the property relativeLevels ( \copybrief relativeLevels ) to the specified \a __value. 
             \details Description of the parameter relativeLevels is: <BLOCKQUOTE>\copydoc relativeLevels </BLOCKQUOTE> 
             \see relativeLevels for more information */ 
-        inline virtual void set_relativeLevels(bool __value)
+        inline virtual void setRelativeLevels(bool __value)
         {
             this->relativeLevels = __value;
         } 
-        /*! \brief returns the property relativeLevels. 
+        /*! \brief returns the property relativeLevels ( \copybrief relativeLevels ). 
             \details Description of the parameter relativeLevels is: <BLOCKQUOTE>\copydoc relativeLevels </BLOCKQUOTE> 
             \see relativeLevels for more information */ 
-        inline virtual bool get_relativeLevels() const  
+        inline virtual bool getRelativeLevels() const  
         {
             return this->relativeLevels; 
         }
         /** convenience function to work with JKQTPDatastore */
-        void set_imageColumn(size_t columnID);
+        void setImageColumn(size_t columnID);
 
         void addContourLevel(double &level);
 

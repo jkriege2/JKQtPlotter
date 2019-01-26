@@ -31,12 +31,12 @@
 
 
 /**
- * \brief saves the given property (for which also a def_property exists) into the given settings object
+ * \brief saves the given property (for which also a default_property exists) into the given settings object
  * \ingroup jkqtfastplotter
  * \internal
  */
 #define JKQTFPPROPERTYsave(settings, group, var, varname) \
-    if ((var)!=def_##var) (settings).setValue((group)+(varname), var);
+    if ((var)!=default_##var) (settings).setValue((group)+(varname), var);
 /**
  * \brief loads the given property from the given settings object
  * \ingroup jkqtfastplotter
@@ -58,7 +58,7 @@ JKQTFPPlot::~JKQTFPPlot()
 = default;;
 
 void JKQTFPPlot::replot() {
-    if (parent) parent->update_data();
+    if (parent) parent->updateData();
 };
 
 void JKQTFPPlot::paint(QPainter& painter) {
@@ -66,7 +66,7 @@ void JKQTFPPlot::paint(QPainter& painter) {
 }
 
 JKQTFastPlotter::JKQTFastPlotter(QWidget *parent) :
-    JKQTFASTPLOTTER_BASEWIDGET_CONSTRUCTOR(parent)//, mutexRepaint(QMutex::Recursive), mutexRepaintData(QMutex::Recursive), mutexRepaintSystem(QMutex::Recursive)
+    QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel | QGL::Rgba), parent)//, mutexRepaint(QMutex::Recursive), mutexRepaintData(QMutex::Recursive), mutexRepaintSystem(QMutex::Recursive)
 {
     mouseDragStart=QPoint(0,0);
     mouseDragEnd=QPoint(0,0);
@@ -76,29 +76,29 @@ JKQTFastPlotter::JKQTFastPlotter(QWidget *parent) :
     dragShapePen.setStyle(Qt::DashLine);
     dragLine=false;
     doFullRepaint=false;
-    plotBorderLeft=def_plotBorderLeft=50;
-    plotBorderRight=def_plotBorderRight=30;
-    plotBorderTop=def_plotBorderTop=5;
-    plotBorderBottom=def_plotBorderBottom=30;
+    plotBorderLeft=default_plotBorderLeft=50;
+    plotBorderRight=default_plotBorderRight=30;
+    plotBorderTop=default_plotBorderTop=5;
+    plotBorderBottom=default_plotBorderBottom=30;
 
     synchronizeX=nullptr;
     synchronizeY=nullptr;
 
-    backgroundColor=def_backgroundColor=palette().color(QPalette::Window);
-    plotBackgroundColor=def_plotBackgroundColor=QColor("white");
-    drawGrid=def_drawGrid=true;
-    gridColor=def_gridColor=QColor("lightgrey");
-    gridStyle=def_gridStyle=Qt::DashLine;
-    gridWidth=def_gridWidth=1;
-    labelFontSize=def_labelFontSize=font().pointSizeF();
-    labelFontName=def_labelFontName=font().family();
-    tickFontSize=def_tickFontSize=font().pointSizeF();
-    tickFontName=def_tickFontName=font().family();
-    tickLength=def_tickLength=3;
-    drawSystemBox=def_drawSystemBox=true;
-    drawZeroAxes=def_drawZeroAxes=true;
-    systemColor=def_systemColor=QColor("black");
-    systemWidth=def_systemWidth=2;
+    backgroundColor=default_backgroundColor=palette().color(QPalette::Window);
+    plotBackgroundColor=default_plotBackgroundColor=QColor("white");
+    drawGrid=default_drawGrid=true;
+    gridColor=default_gridColor=QColor("lightgrey");
+    gridStyle=default_gridStyle=Qt::DashLine;
+    gridWidth=default_gridWidth=1;
+    labelFontSize=default_labelFontSize=font().pointSizeF();
+    labelFontName=default_labelFontName=font().family();
+    tickFontSize=default_tickFontSize=font().pointSizeF();
+    tickFontName=default_tickFontName=font().family();
+    tickLength=default_tickLength=3;
+    drawSystemBox=default_drawSystemBox=true;
+    drawZeroAxes=default_drawZeroAxes=true;
+    systemColor=default_systemColor=QColor("black");
+    systemWidth=default_systemWidth=2;
     xZeroTick=0;
     yZeroTick=0;
     xTickDistance=1;
@@ -260,7 +260,7 @@ void JKQTFastPlotter::mouseReleaseEvent(QMouseEvent *event)
 }
 
 void JKQTFastPlotter::resizeEvent(QResizeEvent *event) {
-     JKQTFASTPLOTTER_BASEWIDGET::resizeEvent(event);
+     QGLWidget::resizeEvent(event);
      if (width() > image.width() || height() > image.height()) {
          QImage newImage(QSize(width(), height()), QImage::Format_ARGB32);
          image=newImage;
@@ -274,7 +274,7 @@ void JKQTFastPlotter::resizeEvent(QResizeEvent *event) {
 
 QSize JKQTFastPlotter::minimumSizeHint() const
 {
-    if (isVisible()) return QSize((int)round((plotBorderLeft+plotBorderRight)*2.0), (int)round((plotBorderTop+plotBorderBottom)*2.0));
+    if (isVisible()) return QSize(static_cast<int>(round((plotBorderLeft+plotBorderRight)*2.0)), static_cast<int>(round((plotBorderTop+plotBorderBottom)*2.0)));
     else return QSize(0,0);
 }
 
@@ -298,7 +298,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
     painter.fillRect(QRectF(internalPlotBorderLeft, internalPlotBorderTop, plotWidth, plotHeight), QBrush(plotBackgroundColor));
 
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    filling backgrounds: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -325,7 +325,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
     QFontMetricsF fmLabels(fLabels, &systemImage);
 
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    creating pens ...: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -412,7 +412,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
         cntr++;
     }
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    calcing system & grid: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -427,7 +427,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
         painter.drawPath(gridPath);
     }
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    drawing grid: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -438,7 +438,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
     painter.setPen(pSystem);
     painter.drawPath(systemPath);
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    drawing system: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -460,7 +460,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
         painter.restore();
     }
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    drawing labels: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -483,7 +483,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
         if (yMin<=0 && 0<=yMax) painter.drawLine(QLineF(internalPlotBorderLeft, y2p(0), internalPlotBorderLeft+plotWidth, y2p(0)));
     }
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"    drawing boxes and axes: "<<time_gt/1000.0<<" ms\n";
     timer.start();
@@ -491,7 +491,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
 
     painter.restore();
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"  sum: "<<time_sum/1000.0<<" ms\n";
     timer.start();
@@ -513,7 +513,7 @@ void JKQTFastPlotter::plotGraphs(QPainter& painter) {
         #endif
         plots[i]->paint(painter);
         #ifdef DEBUG_TIMING
-        time_gt=timer.get_time();
+        time_gt=timer.getTime();
         time_sum+=time_gt;
         std::cout<<"    drawing graph "<<i<<": "<<time_gt/1000.0<<" ms\n";
         timer.start();
@@ -521,7 +521,7 @@ void JKQTFastPlotter::plotGraphs(QPainter& painter) {
     }
     painter.restore();
     #ifdef DEBUG_TIMING
-    time_gt=timer.get_time();
+    time_gt=timer.getTime();
     time_sum+=time_gt;
     std::cout<<"  sum: "<<time_sum/1000.0<<" ms\n";
     timer.start();
@@ -567,10 +567,10 @@ void JKQTFastPlotter::redrawPlot() {
     delete painter;
     mutexRepaintSystem.unlock();
     doFullRepaint=false;
-    update_data();
+    updateData();
 }
 
-void JKQTFastPlotter::redrawPlot_immediate() {
+void JKQTFastPlotter::redrawPlotImmediate() {
     calcPlotScaling();
     if (!doDrawing) {
         doFullRepaint=true;
@@ -585,12 +585,12 @@ void JKQTFastPlotter::redrawPlot_immediate() {
     delete painter;
     mutexRepaintSystem.unlock();
     doFullRepaint=false;
-    update_data_immediate();
+    updateDataImmediate();
 }
 
-void JKQTFastPlotter::update_data() {
+void JKQTFastPlotter::updateData() {
     if (doFullRepaint) {
-        // as doFullRepaint is set false in updtae_plot() this is NO endles loop!!!!!!!
+        // as doFullRepaint is set false in updatePlot() this is NO endles loop!!!!!!!
         redrawPlot();
         return;
     }
@@ -613,10 +613,10 @@ void JKQTFastPlotter::update_data() {
     update();
 }
 
-void JKQTFastPlotter::update_data_immediate() {
+void JKQTFastPlotter::updateDataImmediate() {
     if (doFullRepaint) {
-        // as doFullRepaint is set false in updtae_plot() this is NO endles loop!!!!!!!
-        redrawPlot_immediate();
+        // as doFullRepaint is set false in updatePlot() this is NO endles loop!!!!!!!
+        redrawPlotImmediate();
         return;
     }
     if (!doDrawing) return;
@@ -649,9 +649,9 @@ void JKQTFastPlotter::calcPlotScaling() {
     ////////////////////////////////////////////////////////////////////
     if (xAxisLog) {
         if (xMin<=0) xMin=1e-30;
-        if (xMax<=0) xMax=xMin+pow(10.0, (int)log10(xMin));
+        if (xMax<=0) xMax=xMin+pow(10.0, static_cast<int>(log10(xMin)));
         if (xMax==xMin) {
-            xMax=xMin+pow(10.0, (int)log10(xMin)+1);
+            xMax=xMin+pow(10.0, static_cast<int>(log10(xMin))+1);
         }
     }
     if (xMin>xMax) {
@@ -672,9 +672,9 @@ void JKQTFastPlotter::calcPlotScaling() {
 
     if (yAxisLog) {
         if (yMin<=0) yMin=1e-30;
-        if (yMax<=0) yMax=yMin+pow(10.0, (int)log10(yMin));
+        if (yMax<=0) yMax=yMin+pow(10.0, static_cast<int>(log10(yMin)));
         if (yMax==xMin) {
-            yMax=yMin+pow(10.0, (int)log10(yMin)+1);
+            yMax=yMin+pow(10.0, static_cast<int>(log10(yMin))+1);
         }
     }
     if (yMin>yMax) {
@@ -694,17 +694,15 @@ void JKQTFastPlotter::calcPlotScaling() {
     ////////////////////////////////////////////////////////////////////
     // ENSURE ASPECT RATIO (if activated)
     ////////////////////////////////////////////////////////////////////
-    //double pixelWidth=xWidth/(double)plotWidth;
-    //double pixelHeight=yWidth/(double)plotHeight;
     if (maintainAspectRatio && (!xAxisLog) && (!yAxisLog)) {
-        double currRatio=(double)plotWidth/(double)plotHeight;
+        double currRatio=static_cast<double>(plotWidth)/static_cast<double>(plotHeight);
         double newPlotWidth=plotWidth;
         double newPlotHeight=plotHeight;
         if (currRatio!=aspectRatio) {
             if (aspectRatio<=currRatio) {
-                newPlotWidth=aspectRatio*(double)plotHeight;
+                newPlotWidth=aspectRatio*static_cast<double>(plotHeight);
             } else {
-                newPlotHeight=(double)plotWidth/aspectRatio;
+                newPlotHeight=static_cast<double>(plotWidth)/aspectRatio;
             }
         }
         double dx=plotWidth-newPlotWidth;
@@ -722,18 +720,18 @@ void JKQTFastPlotter::calcPlotScaling() {
     // PLOTTER SYNCHRONIZATION
     ////////////////////////////////////////////////////////////////////
     if (synchronizeX!=nullptr) {
-        internalPlotBorderLeft=synchronizeX->get_internalPlotBorderLeft();
-        internalPlotBorderRight=synchronizeX->get_internalPlotBorderRight();
-        xMin=synchronizeX->get_xMin();
-        xMax=synchronizeX->get_xMax();
+        internalPlotBorderLeft=synchronizeX->getInternalPlotBorderLeft();
+        internalPlotBorderRight=synchronizeX->getInternalPlotBorderRight();
+        xMin=synchronizeX->getXMin();
+        xMax=synchronizeX->getXMax();
         xAxisLog=synchronizeX->getXAxisLog();
         xAxisLabel=synchronizeX->getXAxisLabel();
     }
     if (synchronizeY!=nullptr) {
-        internalPlotBorderTop=synchronizeY->get_internalPlotBorderTop();
-        internalPlotBorderBottom=synchronizeY->get_internalPlotBorderBottom();
-        yMin=synchronizeY->get_yMin();
-        yMax=synchronizeY->get_yMax();
+        internalPlotBorderTop=synchronizeY->getInternalPlotBorderTop();
+        internalPlotBorderBottom=synchronizeY->getInternalPlotBorderBottom();
+        yMin=synchronizeY->getYMin();
+        yMax=synchronizeY->getYMax();
         yAxisLog=synchronizeY->getYAxisLog();
         yAxisLabel=synchronizeY->getYAxisLabel();
     }
@@ -806,11 +804,11 @@ void JKQTFastPlotter::setXYRange(double xmin, double xmax, double ymin, double y
 void JKQTFastPlotter::synchronizeX(JKQTFastPlotter* toWhere) {
     bool olddo=doDrawing;
     doDrawing=false;
-    xMin=toWhere->get_xMin();
-    xMax=toWhere->get_xMax();
+    xMin=toWhere->getXMin();
+    xMax=toWhere->getXMax();
     xAxisLog=toWhere->getXAxisLog();
-    plotBorderLeft=toWhere->get_internalPlotBorderLeft();
-    plotBorderRight=toWhere->get_internalPlotBorderRight();
+    plotBorderLeft=toWhere->getInternalPlotBorderLeft();
+    plotBorderRight=toWhere->getInternalPlotBorderRight();
     std::cout<<"syncX:    xMin="<<xMin<<"  xMax="<<xMax<<"  plotBorderLeft="<<plotBorderLeft<<"  plotBorderLeft="<<plotBorderRight<<"\n";
     doDrawing=olddo;
     redrawPlot();
@@ -819,11 +817,11 @@ void JKQTFastPlotter::synchronizeX(JKQTFastPlotter* toWhere) {
 void JKQTFastPlotter::synchronizeY(JKQTFastPlotter* toWhere) {
     bool olddo=doDrawing;
     doDrawing=false;
-    yMin=toWhere->get_yMin();
-    yMax=toWhere->get_yMax();
+    yMin=toWhere->getYMin();
+    yMax=toWhere->getYMax();
     yAxisLog=toWhere->getYAxisLog();
-    plotBorderTop=toWhere->get_internalPlotBorderTop();
-    plotBorderBottom=toWhere->get_internalPlotBorderBottom();
+    plotBorderTop=toWhere->getInternalPlotBorderTop();
+    plotBorderBottom=toWhere->getInternalPlotBorderBottom();
     std::cout<<"syncY:     yMin="<<yMin<<"  yMax="<<yMax<<"  plotBorderTop="<<plotBorderTop<<"  plotBorderBottom="<<plotBorderBottom<<"\n";
     doDrawing=olddo;
     redrawPlot();
@@ -1069,7 +1067,7 @@ void JKQTFPVBarPlot::drawGraph(QPainter& painter) {
             }
         }
     } else {
-        double starty=parent->get_internalPlotBorderTop()+parent->getPlotHeight();
+        double starty=parent->getInternalPlotBorderTop()+parent->getPlotHeight();
         if (datatype==JKQTFPLPPointer) {
             for (int i=0; i<N; i++) {
                 double v=parent->y2p(y[i]);
@@ -1109,7 +1107,7 @@ JKQTFPXRangePlot::JKQTFPXRangePlot(JKQTFastPlotter* parent, double xmin, double 
 }
 
 void JKQTFPXRangePlot::drawGraph(QPainter& painter) {
-    QRectF r(QPointF(parent->x2p(xmin), parent->get_internalPlotBorderTop()), QPointF(parent->x2p(xmax), parent->get_internalPlotBorderTop()+parent->getPlotHeight()));
+    QRectF r(QPointF(parent->x2p(xmin), parent->getInternalPlotBorderTop()), QPointF(parent->x2p(xmax), parent->getInternalPlotBorderTop()+parent->getPlotHeight()));
     QBrush b(fillStyle);
     b.setColor(fillColor);
     QPen p(color);
@@ -1118,7 +1116,7 @@ void JKQTFPXRangePlot::drawGraph(QPainter& painter) {
     painter.setPen(p);
     painter.fillRect(r, b);
     if (showCenterline) {
-        painter.drawLine(parent->x2p(centerline), parent->get_internalPlotBorderTop(), parent->x2p(centerline), parent->get_internalPlotBorderTop()+parent->getPlotHeight());
+        painter.drawLine(parent->x2p(centerline), parent->getInternalPlotBorderTop(), parent->x2p(centerline), parent->getInternalPlotBorderTop()+parent->getPlotHeight());
     }
     painter.drawRect(r);
 }
@@ -1231,7 +1229,7 @@ QIcon JKQTFPimagePlot_getPaletteIcon(int i) {
     for (int j=0; j<32; j++) {
         pic[j]=j;
     }
-    JKQTFPimagePlot_array2image<double>(pic, 32, 1, img, (JKQTFPColorPalette)i, 0, 31);
+    JKQTFPimagePlot_array2image<double>(pic, 32, 1, img, static_cast<JKQTFPColorPalette>(i), 0, 31);
     QPixmap pix(16,8);
     QRect r(0,0,15,7);
     QPainter p(&pix);
@@ -1279,7 +1277,7 @@ void JKQTFPimagePlot::drawGraph(QPainter& painter) {
         QImage b(1, 200, QImage::Format_ARGB32);
         JKQTFPimagePlot_array2image<uint8_t>(d, 1, 200, b, palette, 0, 199);
         //std::cout<<"bar.width="<<b.width()<<"   bar.height="<<b.height()<<"\n";
-        QRectF r(parent->get_internalPlotBorderLeft()+parent->getPlotWidth()+parent->get_tickLength()*2, parent->get_internalPlotBorderTop()+parent->getPlotHeight()*0.15, colorBarWidth, parent->getPlotHeight()*0.8);
+        QRectF r(parent->getInternalPlotBorderLeft()+parent->getPlotWidth()+parent->getTickLength()*2, parent->getInternalPlotBorderTop()+parent->getPlotHeight()*0.15, colorBarWidth, parent->getPlotHeight()*0.8);
         //std::cout<<"r.left="<<r.left()<<"   r.top="<<r.top()<<"      r.width="<<r.width()<<"   r.height="<<r.height()<<"\n";
         bool c=painter.hasClipping();
         painter.setClipping(false);
@@ -1377,7 +1375,7 @@ void JKQTFPimageOverlayPlot::drawGraph(QPainter& painter) {
         QImage img(width, height, QImage::Format_ARGB32);
         QColor tc(Qt::transparent);
         for (int j=0; j<height; ++j) {
-            QRgb* line=(QRgb*)(img.scanLine((int)height-1-(int)j));
+            QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
             for (int i=0; i<width; ++i) {
                 if (!image[j*width+i]) line[i]=tc.rgba();
                 else line[i]=color.rgba();
@@ -1415,8 +1413,8 @@ JKQTFPQScaleBarXPlot::JKQTFPQScaleBarXPlot(JKQTFastPlotter* parent, double width
     this->color=color;
     this->position=JKQTFPQScaleBarXPlot::TopRight;
     if (parent) {
-        this->font.setFamily(parent->get_labelFontName());
-        this->font.setPointSizeF(parent->get_labelFontSize());
+        this->font.setFamily(parent->getLabelFontName());
+        this->font.setPointSizeF(parent->getLabelFontSize());
     }
 }
 
@@ -1424,10 +1422,10 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
     painter.save();
 
 
-    QRectF r(QPointF(parent->get_internalPlotBorderLeft(), parent->get_internalPlotBorderTop()), QPointF(parent->get_internalPlotBorderLeft()+parent->getPlotWidth(), parent->get_internalPlotBorderTop()+parent->getPlotHeight()));
+    QRectF r(QPointF(parent->getInternalPlotBorderLeft(), parent->getInternalPlotBorderTop()), QPointF(parent->getInternalPlotBorderLeft()+parent->getPlotWidth(), parent->getInternalPlotBorderTop()+parent->getPlotHeight()));
 
     double borderfraction=0.1;
-    int yDistance=(double)parent->getPlotHeight()*borderfraction;
+    int yDistance=static_cast<double>(parent->getPlotHeight())*borderfraction;
 
     QPen p(color);
     p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, lineWidth));
@@ -1437,9 +1435,9 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
     double yy1, yy2, xx1, xx2, x1, x2;//, y2, y1;
 
     if (position==JKQTFPQScaleBarXPlot::TopRight) {
-        yy1=parent->get_internalPlotBorderTop()+yDistance;
+        yy1=parent->getInternalPlotBorderTop()+yDistance;
         yy2=yy1;
-        x2=parent->get_xMax()-borderfraction*(parent->get_xMax()-parent->get_xMin());
+        x2=parent->getXMax()-borderfraction*(parent->getXMax()-parent->getXMin());
         x1=x2-width;
         xx1=parent->x2p(x1);
         xx2=parent->x2p(x2);
@@ -1448,9 +1446,9 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         QFontMetrics fm=painter.fontMetrics();
         painter.drawText(xx1+(xx2-xx1)/2-fm.width(s)/2, yy1+3*lineWidth+fm.ascent(), s);
     } else if (position==JKQTFPQScaleBarXPlot::TopLeft) {
-        yy1=parent->get_internalPlotBorderTop()+yDistance;
+        yy1=parent->getInternalPlotBorderTop()+yDistance;
         yy2=yy1;
-        x1=parent->get_xMin()+borderfraction*(parent->get_xMax()-parent->get_xMin());
+        x1=parent->getXMin()+borderfraction*(parent->getXMax()-parent->getXMin());
         x2=x1+width;
         xx1=parent->x2p(x1);
         xx2=parent->x2p(x2);
@@ -1459,9 +1457,9 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         QFontMetrics fm=painter.fontMetrics();
         painter.drawText(xx1+(xx2-xx1)/2-fm.width(s)/2, yy1+3*lineWidth+fm.ascent(), s);
     } else if (position==JKQTFPQScaleBarXPlot::BottomLeft) {
-        yy1=parent->get_internalPlotBorderTop()+parent->getPlotHeight()-yDistance;
+        yy1=parent->getInternalPlotBorderTop()+parent->getPlotHeight()-yDistance;
         yy2=yy1;
-        x1=parent->get_xMin()+borderfraction*(parent->get_xMax()-parent->get_xMin());
+        x1=parent->getXMin()+borderfraction*(parent->getXMax()-parent->getXMin());
         x2=x1+width;
         xx1=parent->x2p(x1);
         xx2=parent->x2p(x2);
@@ -1470,9 +1468,9 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         QFontMetrics fm=painter.fontMetrics();
         painter.drawText(xx1+(xx2-xx1)/2-fm.width(s)/2, yy1-3*lineWidth-fm.descent(), s);
     } else if (position==JKQTFPQScaleBarXPlot::BottomRight) {
-        yy1=parent->get_internalPlotBorderTop()+parent->getPlotHeight()-yDistance;
+        yy1=parent->getInternalPlotBorderTop()+parent->getPlotHeight()-yDistance;
         yy2=yy1;
-        x2=parent->get_xMax()-borderfraction*(parent->get_xMax()-parent->get_xMin());
+        x2=parent->getXMax()-borderfraction*(parent->getXMax()-parent->getXMin());
         x1=x2-width;
         xx1=parent->x2p(x1);
         xx2=parent->x2p(x2);
@@ -1488,7 +1486,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
 
 
 QIcon JKQTFPimagePlot_getPaletteIcon(JKQTFPColorPalette palette) {
-    return JKQTFPimagePlot_getPaletteIcon((int)palette);
+    return JKQTFPimagePlot_getPaletteIcon(static_cast<int>(palette));
 };
 
 
@@ -1509,10 +1507,10 @@ void JKQTFPQOverlayLinearGridPlot::drawGraph(QPainter& painter) {
     p.setColor(color);
     p.setStyle(style);
 
-    double xmin=parent->get_xMin();
-    double xmax=parent->get_xMax();
-    double ymin=parent->get_yMin();
-    double ymax=parent->get_yMax();
+    double xmin=parent->getXMin();
+    double xmax=parent->getXMax();
+    double ymin=parent->getYMin();
+    double ymax=parent->getYMax();
 
     double xstart=(floor(xmin/width)-1.0)*width;
     double ystart=(floor(ymin/width)-1.0)*width;
@@ -1522,8 +1520,8 @@ void JKQTFPQOverlayLinearGridPlot::drawGraph(QPainter& painter) {
     int cntr=0; // used to stop plotting after 1000 grid lines
     while (x<=xmax && cntr<1000) {
         if (xmin<=x && x<=xmax) {
-            gridPath.moveTo(parent->x2p(x), parent->get_internalPlotBorderTop());
-            gridPath.lineTo(parent->x2p(x), parent->get_internalPlotBorderTop()+parent->getPlotHeight());
+            gridPath.moveTo(parent->x2p(x), parent->getInternalPlotBorderTop());
+            gridPath.lineTo(parent->x2p(x), parent->getInternalPlotBorderTop()+parent->getPlotHeight());
         }
         x+=width;
         cntr++;
@@ -1532,8 +1530,8 @@ void JKQTFPQOverlayLinearGridPlot::drawGraph(QPainter& painter) {
     cntr=0;
     while (y<=ymax && cntr<1000) {
         if (ymin<=y && y<=ymax) {
-            gridPath.moveTo(parent->get_internalPlotBorderLeft(), parent->y2p(y));
-            gridPath.lineTo(parent->get_internalPlotBorderLeft()+parent->getPlotWidth(), parent->y2p(y));
+            gridPath.moveTo(parent->getInternalPlotBorderLeft(), parent->y2p(y));
+            gridPath.lineTo(parent->getInternalPlotBorderLeft()+parent->getPlotWidth(), parent->y2p(y));
         }
         y+=width;
         cntr++;
@@ -1597,12 +1595,12 @@ JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent, vo
 JKQTFPRGBImageOverlayPlot::JKQTFPRGBImageOverlayPlot(JKQTFastPlotter *parent):
     JKQTFPPlot(parent)
 {
-    this->width=width;
-    this->height=height;
+    this->width=0;
+    this->height=0;
     this->xmin=0;
-    this->xmax=width-1;
+    this->xmax=11;
     this->ymin=0;
-    this->ymax=height-1;
+    this->ymax=11;
     colorMinRed=0;
     colorMaxRed=0;
     this->imageRed=nullptr;
@@ -1667,7 +1665,7 @@ void JKQTFPRGBImageOverlayPlot::drawGraph(QPainter &painter) {
 }
 
 
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height){
+void JKQTFPRGBImageOverlayPlot::setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height){
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=nullptr;
@@ -1681,7 +1679,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height) {
+void JKQTFPRGBImageOverlayPlot::setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
@@ -1696,7 +1694,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height) {
+void JKQTFPRGBImageOverlayPlot::setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
@@ -1714,7 +1712,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 }
 
 
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height, double xmin, double xmax, double ymin, double ymax){
+void JKQTFPRGBImageOverlayPlot::setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, int width, int height, double xmin, double xmax, double ymin, double ymax){
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageRed=nullptr;
@@ -1728,7 +1726,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height, double xmin, double xmax, double ymin, double ymax) {
+void JKQTFPRGBImageOverlayPlot::setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, int width, int height, double xmin, double xmax, double ymin, double ymax) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
@@ -1743,7 +1741,7 @@ void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imag
 
     replot();
 }
-void JKQTFPRGBImageOverlayPlot::set_image(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height, double xmin, double xmax, double ymin, double ymax) {
+void JKQTFPRGBImageOverlayPlot::setImage(void* imageRed, JKQTFPImageFormat imageFormatRed, void* imageGreen, JKQTFPImageFormat imageFormatGreen, void* imageBlue, JKQTFPImageFormat imageFormatBlue, int width, int height, double xmin, double xmax, double ymin, double ymax) {
     this->imageRed=imageRed;
     this->imageFormatRed=imageFormatRed;
     this->imageGreen=imageGreen;
@@ -1776,7 +1774,7 @@ JKQTFPYRangePlot::JKQTFPYRangePlot(JKQTFastPlotter *parent, double xmin, double 
 }
 
 void JKQTFPYRangePlot::drawGraph(QPainter& painter) {
-    QRectF r(QPointF(parent->get_internalPlotBorderLeft(), parent->y2p(ymin)), QPointF(parent->get_internalPlotBorderLeft()+parent->getPlotWidth(), parent->y2p(ymax)));
+    QRectF r(QPointF(parent->getInternalPlotBorderLeft(), parent->y2p(ymin)), QPointF(parent->getInternalPlotBorderLeft()+parent->getPlotWidth(), parent->y2p(ymax)));
     QBrush b(fillStyle);
     b.setColor(fillColor);
     QPen p(color);
@@ -1785,7 +1783,7 @@ void JKQTFPYRangePlot::drawGraph(QPainter& painter) {
     painter.setPen(p);
     painter.fillRect(r, b);
     if (showCenterline) {
-        painter.drawLine(parent->get_internalPlotBorderLeft(), parent->y2p(centerline), parent->get_internalPlotBorderLeft()+parent->getPlotWidth(), parent->y2p(centerline));
+        painter.drawLine(parent->getInternalPlotBorderLeft(), parent->y2p(centerline), parent->getInternalPlotBorderLeft()+parent->getPlotWidth(), parent->y2p(centerline));
     }
     painter.drawRect(r);
 }

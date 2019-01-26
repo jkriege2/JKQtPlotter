@@ -53,7 +53,7 @@ win32-msvc*: DEFINES += _USE_MATH_DEFINES
 TARGET = jkqtplot_test
 
 # configure Qt
-CONFIG += qt
+CONFIG += link_prl qt
 QT += core gui xml svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 

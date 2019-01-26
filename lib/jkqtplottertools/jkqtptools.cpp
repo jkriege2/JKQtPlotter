@@ -63,7 +63,7 @@ std::string jkqtp_tolower(const std::string& s){
   return d;
 };
 
- bool jkqtp_strtobool(std::string data){
+ bool jkqtp_strtobool(const std::string& data){
     std::string d=jkqtp_tolower(data);
   if (d=="true") return true;
   if (d=="t") return true;
@@ -168,7 +168,7 @@ std::string jkqtp_tolower(const std::string& s){
   return r;
 }
 
- std::string jkqtp_floattounitstr(double dataa, std::string unitname){
+ std::string jkqtp_floattounitstr(double dataa, const std::string& unitname){
   if (dataa==0) return jkqtp_floattostr(dataa)+unitname;
   std::string u="";
   double factor=1;
@@ -234,7 +234,7 @@ std::string jkqtp_tolower(const std::string& s){
    //if ((-past_comma<exp) && (exp<past_comma)) return res;
 
    //std::cout<<"adata="<<adata<<"   log(adata)/log(10)="<<log(adata)/log(10.0)<<"   exp="<<exp<<"   adata/pow(10, exp)="<<adata/pow(10.0, (double)exp)<<"\n";
-   std::string v=jkqtp_floattostr(data/pow(10.0, (double)exp), past_comma, remove_trail0);
+   std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
    //std::cout<<"floattolatexstr: v="<<v<<"   exp="<<exp<<std::endl;
    if (v!="1" && v!="10")  return v+std::string("{\\times}10^{")+jkqtp_inttostr(exp)+"}";
    if (v=="10") exp=exp+1;
@@ -252,7 +252,7 @@ std::string jkqtp_tolower(const std::string& s){
    if ((minNoExponent<=fabs(data)) && (fabs(data)<maxNoExponent)) return res;
    //if ((-past_comma<exp) && (exp<past_comma)) result= res;
    else {
-       std::string v=jkqtp_floattostr(data/pow(10.0, (double)exp), past_comma, remove_trail0);
+       std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
        if (v!="1") result= v+std::string("&times;10<sup>")+jkqtp_inttostr(exp)+"</sup>";
        else result=std::string("10<sup>")+jkqtp_inttostr(exp)+"</sup>";
    }
@@ -274,7 +274,7 @@ QString jkqtp_QPenStyle2String(Qt::PenStyle style) {
     }
 }
 
-Qt::PenStyle jkqtp_String2QPenStyle(QString style) {
+Qt::PenStyle jkqtp_String2QPenStyle(const QString& style) {
     QString s=style.toLower().trimmed();
     if (s=="dash" || s=="--") return Qt::DashLine;
     if (s=="dot" || s=="." || s=="..") return Qt::DotLine;
@@ -309,7 +309,7 @@ QString jkqtp_QBrushStyle2String(Qt::BrushStyle style) {
     }
 }
 
-Qt::BrushStyle jkqtp_String2QBrushStyle(QString style) {
+Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style) {
     QString s=style.toLower().trimmed();
     if (s=="none") return Qt::NoBrush;
     if (s=="d1") return Qt::Dense1Pattern;
@@ -344,7 +344,7 @@ QString JKQTPCADrawMode2String(JKQTPCADrawMode pos) {
     return "";
 }
 
-JKQTPCADrawMode String2JKQTPCADrawMode(QString pos) {
+JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="all") return JKQTPCADMcomplete;
     if (s=="ticks+labels") return JKQTPCADMticksAndLabels;
@@ -366,7 +366,7 @@ QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos) {
     return "";
 }
 
-JKQTPLabelTickMode String2JKQTPLabelTickMode(QString pos) {
+JKQTPLabelTickMode String2JKQTPLabelTickMode(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="lin_or_power") return JKQTPLTMLinOrPower;
     if (s=="lin") return JKQTPLTMLin;
@@ -388,7 +388,7 @@ QString JKQTPCALabelType2String(JKQTPCALabelType pos) {
     return "";
 }
 
-JKQTPCALabelType String2JKQTPCALabelType(QString pos) {
+JKQTPCALabelType String2JKQTPCALabelType(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="default") return JKQTPCALTdefault;
     if (s=="exponent_character") return JKQTPCALTexponentCharacter;
@@ -408,7 +408,7 @@ QString JKQTPLabelPosition2String(JKQTPLabelPosition pos) {
     return "";
 }
 
-JKQTPLabelPosition String2JKQTPLabelPosition(QString pos) {
+JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="min") return JKQTPLabelMin;
     if (s=="max") return JKQTPLabelMax;
@@ -436,7 +436,7 @@ QString JKQTPKeyPosition2String(JKQTPKeyPosition pos) {
     return "";
 }
 
-JKQTPKeyPosition String2JKQTPKeyPosition(QString pos) {
+JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="outside_bottom" || s=="outsidebottom" || s=="outside_leftbottom" || s=="outsideleftbottom" || s=="olb") return JKQTPKeyOutsideLeftBottom;
     if (s=="outside_left" || s=="outsideleft" || s=="outside_topleft" || s=="outsidetopleft" || s=="otl") return JKQTPKeyOutsideTopLeft;
@@ -465,7 +465,7 @@ QString JKQTPKeyLayout2String(JKQTPKeyLayout pos) {
     return "";
 }
 
-JKQTPKeyLayout String2JKQTPKeyLayout(QString pos) {
+JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="one_column" || s=="onecolumn" || s=="one") return JKQTPKeyLayoutOneColumn;
     if (s=="one_row" || s=="onerow") return JKQTPKeyLayoutOneRow;
@@ -491,7 +491,7 @@ QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos) {
     return "";
 }
 
-JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(QString pos) {
+JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="error_lines") return JKQTPErrorLines;
     if (s=="error_box") return JKQTPErrorBoxes;
@@ -565,7 +565,7 @@ QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos) {
     }
     return "";
 }
-JKQTPGraphSymbols String2JKQTPGraphSymbols(QString pos)  {
+JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos)  {
     QString s=pos.trimmed().toLower();
     if (s=="symbol_dot"||s=="dot"||s==".") return JKQTPDot;
     if (s=="symbol_cross"||s=="cross"||s=="x") return JKQTPCross;
@@ -781,13 +781,13 @@ std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b,
                 return rgbTbl[i].name;
             }
         }
-        return jkqtp_format("#%02X%02X%02X", (int)r, (int)g, (int)b);
+        return jkqtp_format("#%02X%02X%02X", static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
     }
     // if we reach this, we have an unnamed transparent color
-    return jkqtp_format("#%02X%02X%02X%02X", (int)r, (int)g, (int)b, (int)a);
+    return jkqtp_format("#%02X%02X%02X%02X", static_cast<int>(r), static_cast<int>(g), static_cast<int>(b), static_cast<int>(a));
 }
 
-std::string jkqtp_to_valid_variable_name(std::string input) {
+std::string jkqtp_to_valid_variable_name(const std::string& input) {
     std::string out="";
     for (size_t i=0; i<input.size(); i++) {
         if (isalpha(input[i])) {
@@ -853,7 +853,7 @@ QString JKQTPStepType2String(JKQTPStepType pos)
     return "";
 }
 
-JKQTPStepType String2JKQTPStepType(QString pos)
+JKQTPStepType String2JKQTPStepType(const QString& pos)
 {
     QString s=pos.trimmed().toLower();
     if (s=="step_left"||s=="left"||s=="l") return JKQTPStepLeft;

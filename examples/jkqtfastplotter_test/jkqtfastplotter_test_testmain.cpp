@@ -36,14 +36,14 @@ TestMain::TestMain(QWidget *parent) :
     gl->addWidget(pl1, 0, 0);
     JKQTFastPlotter* pl2=new JKQTFastPlotter(w);
     pl2->setMaximumWidth(100);
-    pl2->set_synchronizeY(pl1);
-    pl2->set_yAxisLabelVisible(false);
+    pl2->setSynchronizeY(pl1);
+    pl2->setYAxisLabelVisible(false);
     pl2->setPlotBorderLeft(10);
     pl2->setPlotBorderRight(2);
     w->connect(pl1, SIGNAL(replotting()), pl2, SLOT(redrawPlot()));
     gl->addWidget(pl2, 0, 1);
     JKQTFastPlotter* pl3=new JKQTFastPlotter(w);
-    pl3->set_synchronizeX(pl1);
+    pl3->setSynchronizeX(pl1);
     w->connect(pl1, SIGNAL(replotting()), pl3, SLOT(redrawPlot()));
     gl->addWidget(pl3, 1, 0);
 
@@ -81,7 +81,7 @@ TestMain::TestMain(QWidget *parent) :
     col.setAlpha(127);
     JKQTFPimageOverlayPlot* p5o=new JKQTFPimageOverlayPlot(pl3, ovrl, IMAGE_N, IMAGE_N, 0, 10, 0, 10, col);
     JKQTFPXRangePlot* p6=new JKQTFPXRangePlot(pl1, 2.25, 7.75);
-    p6->set_fillStyle(Qt::SolidPattern);
+    p6->setFillStyle(Qt::SolidPattern);
     JKQTFPQScaleBarXPlot* sb=new JKQTFPQScaleBarXPlot(pl1, 1, QString("%1 mm"));
 
     pl1->addPlot(p6);
@@ -100,14 +100,14 @@ TestMain::TestMain(QWidget *parent) :
     QComboBox* spin=new QComboBox(w);
     spin->addItems(JKQTFPimagePlot_getPalettes());
     gl->addWidget(spin, 2,0);
-    connect(spin, SIGNAL(currentIndexChanged(int)), p5, SLOT(set_palette(int)));
+    connect(spin, SIGNAL(currentIndexChanged(int)), p5, SLOT(setPalette(int)));
     QComboBox* scale=new QComboBox(w);
     scale->addItem("TopLeft");
     scale->addItem("TopRight");
     scale->addItem("BottomLeft");
     scale->addItem("BottomRight");
     gl->addWidget(scale, 3,0);
-    connect(scale, SIGNAL(currentIndexChanged(int)), sb, SLOT(set_position(int)));
+    connect(scale, SIGNAL(currentIndexChanged(int)), sb, SLOT(setPosition(int)));
 
     t->addTab(w, tr("Basic Test"));
 
@@ -126,7 +126,7 @@ TestMain::TestMain(QWidget *parent) :
     }
 
     prgb=new JKQTFPRGBImageOverlayPlot(p21);
-    prgb->set_image(imageRed, JKQTFP_double, imageGreen, JKQTFP_double, imageBlue, JKQTFP_double, IMAGE_N, IMAGE_N,0,10,0,10);
+    prgb->setImage(imageRed, JKQTFP_double, imageGreen, JKQTFP_double, imageBlue, JKQTFP_double, IMAGE_N, IMAGE_N,0,10,0,10);
     p21->addPlot(prgb);
 
     QCheckBox* c=new QCheckBox(tr("red channel"), w);
@@ -167,24 +167,24 @@ TestMain::~TestMain() {
 
 void TestMain::enableRed(bool enabled) {
     if (enabled) {
-        prgb->set_imageRed(imageRed, JKQTFP_double);
+        prgb->setImageRed(imageRed, JKQTFP_double);
     } else {
-        prgb->set_imageRed(NULL, JKQTFP_double);
+        prgb->setImageRed(NULL, JKQTFP_double);
     }
 }
 
 void TestMain::enableGreen(bool enabled) {
     if (enabled) {
-        prgb->set_imageGreen(imageGreen, JKQTFP_double);
+        prgb->setImageGreen(imageGreen, JKQTFP_double);
     } else {
-        prgb->set_imageGreen(NULL, JKQTFP_double);
+        prgb->setImageGreen(NULL, JKQTFP_double);
     }
 }
 
 void TestMain::enableBlue(bool enabled) {
     if (enabled) {
-        prgb->set_imageBlue(imageBlue, JKQTFP_double);
+        prgb->setImageBlue(imageBlue, JKQTFP_double);
     } else {
-        prgb->set_imageBlue(NULL, JKQTFP_double);
+        prgb->setImageBlue(NULL, JKQTFP_double);
     }
 }

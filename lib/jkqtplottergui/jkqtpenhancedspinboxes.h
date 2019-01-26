@@ -33,6 +33,7 @@
 /*! \brief enhanced QDoubleSpinBox
     \ingroup jkqtptools_qtwidgets
 
+    This class adds an event editingFinished() to QDoubleSpinBox.
 */
 class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
         Q_OBJECT
@@ -50,6 +51,7 @@ class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
 /*! \brief enhanced QDoubleSpinBox
     \ingroup jkqtptools_qtwidgets
 
+    This class adds an event editingFinished() to QDoubleSpinBox.
 */
 class LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
         Q_OBJECT

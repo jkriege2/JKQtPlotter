@@ -129,6 +129,8 @@ class LIB_EXPORT JKQTPKeyPositionComboBox: public QComboBox {
 
 /*! \brief a QComboBox which shows JKQTPKeyPosition
     \ingroup jkqtpcomboboxes
+
+    \image html JKQTPKeyLayoutComboBox.png
  */
 class LIB_EXPORT JKQTPKeyLayoutComboBox: public QComboBox {
         Q_OBJECT
@@ -236,6 +238,8 @@ class LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
 
 /*! \brief a QComboBox which shows JKQTPStepType
     \ingroup jkqtpcomboboxes
+
+    \see JKQTPStepType
  */
 class LIB_EXPORT JKQTPStepTypeComboBox: public QComboBox {
         Q_OBJECT
@@ -252,6 +256,8 @@ class LIB_EXPORT JKQTPStepTypeComboBox: public QComboBox {
 
 /*! \brief a QComboBox which shows  JKQTPMathImageBase::ModifierMode
     \ingroup jkqtpcomboboxes
+
+    \see JKQTPMathImageBase::ModifierMode
  */
 class LIB_EXPORT JKQTPImageModifierModeComboBox: public QComboBox {
         Q_OBJECT

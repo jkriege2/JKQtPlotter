@@ -271,7 +271,7 @@ inline double JKQTPImagePlot_getImageMax(T* dbl, int width, int height)
            leave alpha as it is.
 */
 template <class T>
-inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QImage &img, int channel, T minColor, T maxColor, JKQTPRGBMathImageRGBMode rgbMode=JKQTPRGBMathImageModeRGBMode, bool logScale=false, double logBase=10.0)
+inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QImage &img, int channel, double minColor, double maxColor, JKQTPRGBMathImageRGBMode rgbMode=JKQTPRGBMathImageModeRGBMode, bool logScale=false, double logBase=10.0)
 {
     if (!dbl_in || width<=0 || height<=0)
         return;
@@ -319,7 +319,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
             //qDebug()<<"RGBMode";
             if (channel==0) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -330,7 +330,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==1) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -341,7 +341,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==2) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -350,12 +350,23 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                         line[i]=qRgb(qRed(l),qGreen(l),v);
                     }
                 }
+            } else if (channel==3) {
+                for (int j=0; j<height; ++j) {
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
+                    for (int i=0; i<width; ++i) {
+                        int v = (dbl[j*width+i]-min)*255/delta;
+                        v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
+                        const QRgb l=line[i];
+                        //if (j==5) qDebug()<<"b: "<<qRed(l)<<qGreen(l)<<v<<qAlpha(255);
+                        line[i]=qRgba(qRed(l),qGreen(l),qBlue(l), v);
+                    }
+                }
             }
         } else if (rgbMode==JKQTPRGBMathImageModeCMYMode) {
             //qDebug()<<"RGBMode";
             if (channel==0) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -366,7 +377,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==1) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -377,7 +388,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==2) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -390,7 +401,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
         } else if (rgbMode==JKQTPRGBMathImageModeHSVMode) {
             if (channel==0) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*220.0/delta);
                         v = (v < 0) ? 0 : ( (v > 360) ? 360 : v);
@@ -403,7 +414,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==1) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -416,7 +427,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==2) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -432,7 +443,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
         } else if (rgbMode==JKQTPRGBMathImageModeHSLMode) {
             if (channel==0) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = trunc(double(dbl[j*width+i]-min)*255.0/delta);
                         v = (v < 0) ? 0 : ( (v > 360) ? 360 : v);
@@ -443,7 +454,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==1) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -454,7 +465,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
                 }
             } else if (channel==2) {
                 for (int j=0; j<height; ++j) {
-                    QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                    QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                     for (int i=0; i<width; ++i) {
                         int v = (dbl[j*width+i]-min)*255/delta;
                         v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -468,7 +479,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
         }
         if (channel==3) {
            for (int j=0; j<height; ++j) {
-               QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+               QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                for (int i=0; i<width; ++i) {
                    int v = (dbl[j*width+i]-min)*255/delta;
                    v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -478,7 +489,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
            }
         } else if (channel==4) {
             for (int j=0; j<height; ++j) {
-                QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                 for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -489,7 +500,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
             }
         } else if (channel==5) {
             for (int j=0; j<height; ++j) {
-                QRgb* line=(QRgb*)(img.scanLine(height-1-j));
+                QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                 for (int i=0; i<width; ++i) {
                     int v = (dbl[j*width+i]-min)*255/delta;
                     v = (v < 0) ? 0 : ( (v > 255) ? 255 : v);
@@ -603,7 +614,7 @@ extern LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
     \param infColor color to use for pixels that are infinity
 */
 template <class T>
-inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, JKQTPMathImageColorPalette palette, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0, const int* lutUser=0, int lutUserSize=0)
+inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, JKQTPMathImageColorPalette palette, double minColor, double maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0, const int* lutUser=0, int lutUserSize=0)
 {    
     if (!dbl_in || width<=0 || height<=0)
             return;
@@ -730,7 +741,7 @@ inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, Q
     \param infColor color to use for pixels that are infinity
 */
 template <class T>
-inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, const int* lutUser, int lutUserSize, T minColor, T maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0)
+inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, const int* lutUser, int lutUserSize, double minColor, double maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0)
 {
     JKQTPImagePlot_array2image(dbl_in,  width,  height, img,  JKQTPMathImageUSER_PALETTE, minColor, maxColor,  paletteMinFail,  paletteMaxFail,  minFailColor,  maxFailColor,  nanColor,  infColor,  logScale,  logBase, lutUser, lutUserSize);
 }
@@ -804,7 +815,7 @@ class LIB_EXPORT JKQTPColorPaletteTools {
 
 
 
-        void set_palette(int pal);
+        void setPalette(int pal);
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -887,281 +898,281 @@ class LIB_EXPORT JKQTPColorPaletteTools {
 
     public:
 
-        /*! \brief sets the property palette to the specified \a __value. 
+        /*! \brief sets the property palette ( \copybrief palette ) to the specified \a __value. 
             \details Description of the parameter palette is: <BLOCKQUOTE>\copydoc palette </BLOCKQUOTE> 
             \see palette for more information */ 
-        inline virtual void set_palette(const JKQTPMathImageColorPalette & __value)  
+        inline virtual void setPalette(const JKQTPMathImageColorPalette & __value)  
         {
             this->palette = __value;
         } 
-        /*! \brief returns the property palette. 
+        /*! \brief returns the property palette ( \copybrief palette ). 
             \details Description of the parameter palette is: <BLOCKQUOTE>\copydoc palette </BLOCKQUOTE> 
             \see palette for more information */ 
-        inline virtual JKQTPMathImageColorPalette get_palette() const  
+        inline virtual JKQTPMathImageColorPalette getPalette() const  
         {
             return this->palette; 
         }
-        /*! \brief sets the property rangeMinFailAction to the specified \a __value. 
+        /*! \brief sets the property rangeMinFailAction ( \copybrief rangeMinFailAction ) to the specified \a __value. 
             \details Description of the parameter rangeMinFailAction is: <BLOCKQUOTE>\copydoc rangeMinFailAction </BLOCKQUOTE> 
             \see rangeMinFailAction for more information */ 
-        inline virtual void set_rangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
+        inline virtual void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
         {
             this->rangeMinFailAction = __value;
         } 
-        /*! \brief returns the property rangeMinFailAction. 
+        /*! \brief returns the property rangeMinFailAction ( \copybrief rangeMinFailAction ). 
             \details Description of the parameter rangeMinFailAction is: <BLOCKQUOTE>\copydoc rangeMinFailAction </BLOCKQUOTE> 
             \see rangeMinFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMinFail() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getActionRangeMinFail() const  
         {
             return this->rangeMinFailAction; 
         }
-        /*! \brief sets the property rangeMaxFailAction to the specified \a __value. 
+        /*! \brief sets the property rangeMaxFailAction ( \copybrief rangeMaxFailAction ) to the specified \a __value. 
             \details Description of the parameter rangeMaxFailAction is: <BLOCKQUOTE>\copydoc rangeMaxFailAction </BLOCKQUOTE> 
             \see rangeMaxFailAction for more information */ 
-        inline virtual void set_rangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
+        inline virtual void setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
         {
             this->rangeMaxFailAction = __value;
         } 
-        /*! \brief returns the property rangeMaxFailAction. 
+        /*! \brief returns the property rangeMaxFailAction ( \copybrief rangeMaxFailAction ). 
             \details Description of the parameter rangeMaxFailAction is: <BLOCKQUOTE>\copydoc rangeMaxFailAction </BLOCKQUOTE> 
             \see rangeMaxFailAction for more information */ 
-        inline virtual JKQTPMathImageColorRangeFailAction getAction_rangeMaxFail() const  
+        inline virtual JKQTPMathImageColorRangeFailAction getActionRangeMaxFail() const  
         {
             return this->rangeMaxFailAction; 
         }
-        /*! \brief sets the property rangeMinFailColor to the specified \a __value. 
+        /*! \brief sets the property rangeMinFailColor ( \copybrief rangeMinFailColor ) to the specified \a __value. 
             \details Description of the parameter rangeMinFailColor is: <BLOCKQUOTE>\copydoc rangeMinFailColor </BLOCKQUOTE> 
             \see rangeMinFailColor for more information */ 
-        inline virtual void set_rangeMinFailColor(const QColor & __value)  
+        inline virtual void setRangeMinFailColor(const QColor & __value)  
         {
             this->rangeMinFailColor = __value;
         } 
-        /*! \brief returns the property rangeMinFailColor. 
+        /*! \brief returns the property rangeMinFailColor ( \copybrief rangeMinFailColor ). 
             \details Description of the parameter rangeMinFailColor is: <BLOCKQUOTE>\copydoc rangeMinFailColor </BLOCKQUOTE> 
             \see rangeMinFailColor for more information */ 
-        inline virtual QColor get_rangeMinFailColor() const  
+        inline virtual QColor getRangeMinFailColor() const  
         {
             return this->rangeMinFailColor; 
         }
-        /*! \brief sets the property rangeMaxFailColor to the specified \a __value. 
+        /*! \brief sets the property rangeMaxFailColor ( \copybrief rangeMaxFailColor ) to the specified \a __value. 
             \details Description of the parameter rangeMaxFailColor is: <BLOCKQUOTE>\copydoc rangeMaxFailColor </BLOCKQUOTE> 
             \see rangeMaxFailColor for more information */ 
-        inline virtual void set_rangeMaxFailColor(const QColor & __value)  
+        inline virtual void setRangeMaxFailColor(const QColor & __value)  
         {
             this->rangeMaxFailColor = __value;
         } 
-        /*! \brief returns the property rangeMaxFailColor. 
+        /*! \brief returns the property rangeMaxFailColor ( \copybrief rangeMaxFailColor ). 
             \details Description of the parameter rangeMaxFailColor is: <BLOCKQUOTE>\copydoc rangeMaxFailColor </BLOCKQUOTE> 
             \see rangeMaxFailColor for more information */ 
-        inline virtual QColor get_rangeMaxFailColor() const  
+        inline virtual QColor getRangeMaxFailColor() const  
         {
             return this->rangeMaxFailColor; 
         }
-        /*! \brief sets the property nanColor to the specified \a __value. 
+        /*! \brief sets the property nanColor ( \copybrief nanColor ) to the specified \a __value. 
             \details Description of the parameter nanColor is: <BLOCKQUOTE>\copydoc nanColor </BLOCKQUOTE> 
             \see nanColor for more information */ 
-        inline virtual void set_nanColor(const QColor & __value)  
+        inline virtual void setNanColor(const QColor & __value)  
         {
             this->nanColor = __value;
         } 
-        /*! \brief returns the property nanColor. 
+        /*! \brief returns the property nanColor ( \copybrief nanColor ). 
             \details Description of the parameter nanColor is: <BLOCKQUOTE>\copydoc nanColor </BLOCKQUOTE> 
             \see nanColor for more information */ 
-        inline virtual QColor get_nanColor() const  
+        inline virtual QColor getNanColor() const  
         {
             return this->nanColor; 
         }
-        /*! \brief sets the property infColor to the specified \a __value. 
+        /*! \brief sets the property infColor ( \copybrief infColor ) to the specified \a __value. 
             \details Description of the parameter infColor is: <BLOCKQUOTE>\copydoc infColor </BLOCKQUOTE> 
             \see infColor for more information */ 
-        inline virtual void set_infColor(const QColor & __value)  
+        inline virtual void setInfColor(const QColor & __value)  
         {
             this->infColor = __value;
         } 
-        /*! \brief returns the property infColor. 
+        /*! \brief returns the property infColor ( \copybrief infColor ). 
             \details Description of the parameter infColor is: <BLOCKQUOTE>\copydoc infColor </BLOCKQUOTE> 
             \see infColor for more information */ 
-        inline virtual QColor get_infColor() const  
+        inline virtual QColor getInfColor() const  
         {
             return this->infColor; 
         }
-        /*! \brief sets the property showColorBar to the specified \a __value. 
+        /*! \brief sets the property showColorBar ( \copybrief showColorBar ) to the specified \a __value. 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
         inline virtual void setShowColorBar(bool __value)  
         {
             this->showColorBar = __value;
         } 
-        /*! \brief returns the property showColorBar. 
+        /*! \brief returns the property showColorBar ( \copybrief showColorBar ). 
             \details Description of the parameter showColorBar is: <BLOCKQUOTE>\copydoc showColorBar </BLOCKQUOTE> 
             \see showColorBar for more information */ 
         inline virtual bool getShowColorBar() const  
         {
             return this->showColorBar; 
         }
-        /*! \brief sets the property colorBarWidth to the specified \a __value. 
+        /*! \brief sets the property colorBarWidth ( \copybrief colorBarWidth ) to the specified \a __value. 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc colorBarWidth </BLOCKQUOTE> 
             \see colorBarWidth for more information */ 
-        inline virtual void set_colorBarWidth(int __value)  
+        inline virtual void setColorBarWidth(int __value)  
         {
             this->colorBarWidth = __value;
         } 
-        /*! \brief returns the property colorBarWidth. 
+        /*! \brief returns the property colorBarWidth ( \copybrief colorBarWidth ). 
             \details Description of the parameter colorBarWidth is: <BLOCKQUOTE>\copydoc colorBarWidth </BLOCKQUOTE> 
             \see colorBarWidth for more information */ 
-        inline virtual int get_colorBarWidth() const  
+        inline virtual int getColorBarWidth() const  
         {
             return this->colorBarWidth; 
         }
-        /*! \brief sets the property colorBarOffset to the specified \a __value. 
+        /*! \brief sets the property colorBarOffset ( \copybrief colorBarOffset ) to the specified \a __value. 
             \details Description of the parameter colorBarOffset is: <BLOCKQUOTE>\copydoc colorBarOffset </BLOCKQUOTE> 
             \see colorBarOffset for more information */ 
-        inline virtual void set_colorBarOffset(int __value)  
+        inline virtual void setColorBarOffset(int __value)  
         {
             this->colorBarOffset = __value;
         } 
-        /*! \brief returns the property colorBarOffset. 
+        /*! \brief returns the property colorBarOffset ( \copybrief colorBarOffset ). 
             \details Description of the parameter colorBarOffset is: <BLOCKQUOTE>\copydoc colorBarOffset </BLOCKQUOTE> 
             \see colorBarOffset for more information */ 
-        inline virtual int get_colorBarOffset() const  
+        inline virtual int getColorBarOffset() const  
         {
             return this->colorBarOffset; 
         }
-        /*! \brief sets the property colorBarRelativeHeight to the specified \a __value. 
+        /*! \brief sets the property colorBarRelativeHeight ( \copybrief colorBarRelativeHeight ) to the specified \a __value. 
             \details Description of the parameter colorBarRelativeHeight is: <BLOCKQUOTE>\copydoc colorBarRelativeHeight </BLOCKQUOTE> 
             \see colorBarRelativeHeight for more information */ 
-        inline virtual void set_colorBarRelativeHeight(double __value)  
+        inline virtual void setColorBarRelativeHeight(double __value)  
         {
             this->colorBarRelativeHeight = __value;
         } 
-        /*! \brief returns the property colorBarRelativeHeight. 
+        /*! \brief returns the property colorBarRelativeHeight ( \copybrief colorBarRelativeHeight ). 
             \details Description of the parameter colorBarRelativeHeight is: <BLOCKQUOTE>\copydoc colorBarRelativeHeight </BLOCKQUOTE> 
             \see colorBarRelativeHeight for more information */ 
-        inline virtual double get_colorBarRelativeHeight() const  
+        inline virtual double getColorBarRelativeHeight() const  
         {
             return this->colorBarRelativeHeight; 
         }
-        /*! \brief sets the property imageMin to the specified \a __value. 
+        /*! \brief sets the property imageMin ( \copybrief imageMin ) to the specified \a __value. 
             \details Description of the parameter imageMin is: <BLOCKQUOTE>\copydoc imageMin </BLOCKQUOTE> 
             \see imageMin for more information */ 
-        inline virtual void set_imageMin(double __value)  
+        inline virtual void setImageMin(double __value)  
         {
             this->imageMin = __value;
         } 
-        /*! \brief returns the property imageMin. 
+        /*! \brief returns the property imageMin ( \copybrief imageMin ). 
             \details Description of the parameter imageMin is: <BLOCKQUOTE>\copydoc imageMin </BLOCKQUOTE> 
             \see imageMin for more information */ 
-        inline virtual double get_imageMin() const  
+        inline virtual double getImageMin() const  
         {
             return this->imageMin; 
         }
-        /*! \brief sets the property imageMax to the specified \a __value. 
+        /*! \brief sets the property imageMax ( \copybrief imageMax ) to the specified \a __value. 
             \details Description of the parameter imageMax is: <BLOCKQUOTE>\copydoc imageMax </BLOCKQUOTE> 
             \see imageMax for more information */ 
-        inline virtual void set_imageMax(double __value)  
+        inline virtual void setImageMax(double __value)  
         {
             this->imageMax = __value;
         } 
-        /*! \brief returns the property imageMax. 
+        /*! \brief returns the property imageMax ( \copybrief imageMax ). 
             \details Description of the parameter imageMax is: <BLOCKQUOTE>\copydoc imageMax </BLOCKQUOTE> 
             \see imageMax for more information */ 
-        inline virtual double get_imageMax() const  
+        inline virtual double getImageMax() const  
         {
             return this->imageMax; 
         }
-        /*! \brief sets the property autoImageRange to the specified \a __value. 
+        /*! \brief sets the property autoImageRange ( \copybrief autoImageRange ) to the specified \a __value. 
             \details Description of the parameter autoImageRange is: <BLOCKQUOTE>\copydoc autoImageRange </BLOCKQUOTE> 
             \see autoImageRange for more information */ 
-        inline virtual void set_autoImageRange(bool __value)  
+        inline virtual void setAutoImageRange(bool __value)  
         {
             this->autoImageRange = __value;
         } 
-        /*! \brief returns the property autoImageRange. 
+        /*! \brief returns the property autoImageRange ( \copybrief autoImageRange ). 
             \details Description of the parameter autoImageRange is: <BLOCKQUOTE>\copydoc autoImageRange </BLOCKQUOTE> 
             \see autoImageRange for more information */ 
-        inline virtual bool get_autoImageRange() const  
+        inline virtual bool getAutoImageRange() const  
         {
             return this->autoImageRange; 
         }
-        /*! \brief sets the property imageName to the specified \a __value. 
+        /*! \brief sets the property imageName ( \copybrief imageName ) to the specified \a __value. 
             \details Description of the parameter imageName is: <BLOCKQUOTE>\copydoc imageName </BLOCKQUOTE> 
             \see imageName for more information */ 
-        inline virtual void set_imageName(const QString & __value)  
+        inline virtual void setImageName(const QString & __value)  
         {
             this->imageName = __value;
         } 
-        /*! \brief returns the property imageName. 
+        /*! \brief returns the property imageName ( \copybrief imageName ). 
             \details Description of the parameter imageName is: <BLOCKQUOTE>\copydoc imageName </BLOCKQUOTE> 
             \see imageName for more information */ 
-        inline virtual QString get_imageName() const  
+        inline virtual QString getImageName() const  
         {
             return this->imageName; 
         }
-        /*! \brief sets the property imageNameFontName to the specified \a __value. 
+        /*! \brief sets the property imageNameFontName ( \copybrief imageNameFontName ) to the specified \a __value. 
             \details Description of the parameter imageNameFontName is: <BLOCKQUOTE>\copydoc imageNameFontName </BLOCKQUOTE> 
             \see imageNameFontName for more information */ 
-        inline virtual void set_imageNameFontName(const QString & __value)  
+        inline virtual void setImageNameFontName(const QString & __value)  
         {
             this->imageNameFontName = __value;
         } 
-        /*! \brief returns the property imageNameFontName. 
+        /*! \brief returns the property imageNameFontName ( \copybrief imageNameFontName ). 
             \details Description of the parameter imageNameFontName is: <BLOCKQUOTE>\copydoc imageNameFontName </BLOCKQUOTE> 
             \see imageNameFontName for more information */ 
-        inline virtual QString get_imageNameFontName() const  
+        inline virtual QString getImageNameFontName() const  
         {
             return this->imageNameFontName; 
         }
-        /*! \brief sets the property imageNameFontSize to the specified \a __value. 
+        /*! \brief sets the property imageNameFontSize ( \copybrief imageNameFontSize ) to the specified \a __value. 
             \details Description of the parameter imageNameFontSize is: <BLOCKQUOTE>\copydoc imageNameFontSize </BLOCKQUOTE> 
             \see imageNameFontSize for more information */ 
-        inline virtual void set_imageNameFontSize(double __value)  
+        inline virtual void setImageNameFontSize(double __value)  
         {
             this->imageNameFontSize = __value;
         } 
-        /*! \brief returns the property imageNameFontSize. 
+        /*! \brief returns the property imageNameFontSize ( \copybrief imageNameFontSize ). 
             \details Description of the parameter imageNameFontSize is: <BLOCKQUOTE>\copydoc imageNameFontSize </BLOCKQUOTE> 
             \see imageNameFontSize for more information */ 
-        inline virtual double get_imageNameFontSize() const  
+        inline virtual double getImageNameFontSize() const  
         {
             return this->imageNameFontSize; 
         }
-        /*! \brief returns the property colorBarRightAxis. 
+        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). 
             \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. 
             \see colorBarRightAxis for more information */ 
-        inline JKQTPVerticalIndependentAxis* get_colorBarRightAxis() const { 
+        inline JKQTPVerticalIndependentAxis* getColorBarRightAxis() const { 
             return this->colorBarRightAxis; 
         }
-        /*! \brief returns the property colorBarTopAxis. 
+        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). 
             \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. 
             \see colorBarTopAxis for more information */ 
-        inline JKQTPHorizontalIndependentAxis* get_colorBarTopAxis() const { 
+        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const { 
             return this->colorBarTopAxis; 
         }
-        /*! \brief sets the property colorBarTopVisible to the specified \a __value. 
+        /*! \brief sets the property colorBarTopVisible ( \copybrief colorBarTopVisible ) to the specified \a __value. 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copydoc colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
-        inline virtual void set_colorBarTopVisible(bool __value)  
+        inline virtual void setColorBarTopVisible(bool __value)  
         {
             this->colorBarTopVisible = __value;
         } 
-        /*! \brief returns the property colorBarTopVisible. 
+        /*! \brief returns the property colorBarTopVisible ( \copybrief colorBarTopVisible ). 
             \details Description of the parameter colorBarTopVisible is: <BLOCKQUOTE>\copydoc colorBarTopVisible </BLOCKQUOTE> 
             \see colorBarTopVisible for more information */ 
-        inline virtual bool get_colorBarTopVisible() const  
+        inline virtual bool getColorBarTopVisible() const  
         {
             return this->colorBarTopVisible; 
         }
-        /*! \brief sets the property colorBarRightVisible to the specified \a __value. 
+        /*! \brief sets the property colorBarRightVisible ( \copybrief colorBarRightVisible ) to the specified \a __value. 
             \details Description of the parameter colorBarRightVisible is: <BLOCKQUOTE>\copydoc colorBarRightVisible </BLOCKQUOTE> 
             \see colorBarRightVisible for more information */ 
-        inline virtual void set_colorBarRightVisible(bool __value)  
+        inline virtual void setColorBarRightVisible(bool __value)  
         {
             this->colorBarRightVisible = __value;
         } 
-        /*! \brief returns the property colorBarRightVisible. 
+        /*! \brief returns the property colorBarRightVisible ( \copybrief colorBarRightVisible ). 
             \details Description of the parameter colorBarRightVisible is: <BLOCKQUOTE>\copydoc colorBarRightVisible </BLOCKQUOTE> 
             \see colorBarRightVisible for more information */ 
-        inline virtual bool get_colorBarRightVisible() const  
+        inline virtual bool getColorBarRightVisible() const  
         {
             return this->colorBarRightVisible; 
         }

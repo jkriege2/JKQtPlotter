@@ -107,7 +107,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     size_t id=plot->getPlotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPFilledCurveX);
     JKQTPFilledCurveXGraph* fcxgr=qobject_cast<JKQTPFilledCurveXGraph*>(plot->getPlotter()->getGraph(id));
     if (fcxgr) {
-        fcxgr->set_baseline(2);
+        fcxgr->setBaseline(2);
     }
 
     size_t yeb=plot->getPlotter()->addGraphWithXYError(cx2, cy21, cy22, cy22, "sine with errors", JKQTPFilledCurveX);
@@ -117,13 +117,13 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     plteSymbols=plot->getPlotter()->getGraph(yeb);
 
     pltePlot2=new JKQTPXYLineErrorGraph(plotBot->getPlotter());
-    pltePlot2->set_xColumn(cx2r);
-    pltePlot2->set_yColumn(cy21r);
-    pltePlot2->set_title(tr("random numbers"));
-    pltePlot2->set_drawLine(true);
-    pltePlot2->set_yErrorColumn(cy21re);
-    pltePlot2->set_yErrorStyle(JKQTPErrorBarsPolygons);
-    pltePlot2->set_symbol(JKQTPFilledStar);
+    pltePlot2->setXColumn(cx2r);
+    pltePlot2->setYColumn(cy21r);
+    pltePlot2->setTitle(tr("random numbers"));
+    pltePlot2->setDrawLine(true);
+    pltePlot2->setYErrorColumn(cy21re);
+    pltePlot2->setYErrorStyle(JKQTPErrorBarsPolygons);
+    pltePlot2->setSymbol(JKQTPFilledStar);
     plotBot->getPlotter()->addGraph(pltePlot2);
     plotBot->zoomToFit();
 
@@ -165,50 +165,50 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     plot->getPlotter()->addVerticalBargraph(cb, cbp, ts);
 
     JKQTPVerticalRange* r1=new JKQTPVerticalRange(plot->getPlotter());
-    r1->set_rangeMin(5);
-    r1->set_rangeMax(10);
-    r1->set_rangeCenter(7.5);
-    r1->set_title("vert. range");
+    r1->setRangeMin(5);
+    r1->setRangeMax(10);
+    r1->setRangeCenter(7.5);
+    r1->setTitle("vert. range");
     plot->getPlotter()->addGraph(r1);
 
     JKQTPHorizontalRange* r2=new JKQTPHorizontalRange(plot->getPlotter());
-    r2->set_rangeMin(5);
-    r2->set_rangeMax(10);
-    r2->set_rangeCenter(7.5);
-    r2->set_title("hor. range");
+    r2->setRangeMin(5);
+    r2->setRangeMax(10);
+    r2->setRangeCenter(7.5);
+    r2->setTitle("hor. range");
     plot->getPlotter()->addGraph(r2);
 
     JKQTPBoxplotVerticalGraph* box=new JKQTPBoxplotVerticalGraph(plotBot2->getPlotter());
-    box->set_posColumn(cbxbox);
-    box->set_medianColumn(cbmed);
-    box->set_meanColumn(cbmean);
-    box->set_minColumn(cbmin);
-    box->set_maxColumn(cbmax);
-    box->set_percentile25Column(cbp25);
-    box->set_percentile75Column(cbp75);
-    box->set_title("Boxplot");
+    box->setPosColumn(cbxbox);
+    box->setMedianColumn(cbmed);
+    box->setMeanColumn(cbmean);
+    box->setMinColumn(cbmin);
+    box->setMaxColumn(cbmax);
+    box->setPercentile25Column(cbp25);
+    box->setPercentile75Column(cbp75);
+    box->setTitle("Boxplot");
     plotBot2->addGraph(box);
     plotBot2->zoomToFit();
 
     /*JKQTPYFunctionLineGraph* g=new JKQTPYFunctionLineGraph(&plot);
-    g->set_title("function 1");
+    g->setTitle("function 1");
     g->setPlotFunction(f1);
-    g->set_errorFunction(f1e);
-    g->set_drawErrorLines(true);
-    g->set_drawErrorPolygons(false);
-    g->set_color(QColor("red"));
+    g->setErrorFunction(f1e);
+    g->setDrawErrorLines(true);
+    g->setDrawErrorPolygons(false);
+    g->setColor(QColor("red"));
     plot->addGraph(g);*/
 
     /*JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(&plot);
-    g->set_title("function 2");
+    g->setTitle("function 2");
     g->setPlotFunction(f2);
     plot->addGraph(g);*/
 
     /*JKQTPStepVerticalGraph* g=new JKQTPStepVerticalGraph(&plot);
-    g->set_xColumn(cy11);
-    g->set_yColumn(cx1);
-    g->set_fillCurve(true);
-    g->set_valuesCentered(true);
+    g->setXColumn(cy11);
+    g->setYColumn(cx1);
+    g->setFillCurve(true);
+    g->setValuesCentered(true);
     plot->addGraph(g);
     plot->addGraph(cy11, cx1, "$\\sin(x)$", JKQTPPoints);*/
 
@@ -218,16 +218,16 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     QCheckBox* chklogX=new QCheckBox("logarithmic X-axis", this);
     QCheckBox* chklogY=new QCheckBox("logarithmic Y-axis", this);
-    connect(chklogX, SIGNAL(toggled(bool)), plot->getPlotter()->getXAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogY, SIGNAL(toggled(bool)), plot->getPlotter()->getYAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogX, SIGNAL(toggled(bool)), plotBot2->getPlotter()->getXAxis(), SLOT(set_logAxis(bool)));
-    connect(chklogY, SIGNAL(toggled(bool)), plotBot2->getPlotter()->getYAxis(), SLOT(set_logAxis(bool)));
+    connect(chklogX, SIGNAL(toggled(bool)), plot->getPlotter()->getXAxis(), SLOT(setLogAxis(bool)));
+    connect(chklogY, SIGNAL(toggled(bool)), plot->getPlotter()->getYAxis(), SLOT(setLogAxis(bool)));
+    connect(chklogX, SIGNAL(toggled(bool)), plotBot2->getPlotter()->getXAxis(), SLOT(setLogAxis(bool)));
+    connect(chklogY, SIGNAL(toggled(bool)), plotBot2->getPlotter()->getYAxis(), SLOT(setLogAxis(bool)));
     layout->addWidget(chklogX);
     layout->addWidget(chklogY);
     QCheckBox* chkInvertX=new QCheckBox("invert X-axis", this);
     QCheckBox* chkInvertY=new QCheckBox("invert Y-axis", this);
-    connect(chkInvertX, SIGNAL(toggled(bool)), plot->getPlotter()->getXAxis(), SLOT(set_inverted(bool)));
-    connect(chkInvertY, SIGNAL(toggled(bool)), plot->getPlotter()->getYAxis(), SLOT(set_inverted(bool)));
+    connect(chkInvertX, SIGNAL(toggled(bool)), plot->getPlotter()->getXAxis(), SLOT(setInverted(bool)));
+    connect(chkInvertY, SIGNAL(toggled(bool)), plot->getPlotter()->getYAxis(), SLOT(setInverted(bool)));
     layout->addWidget(chkInvertX);
     layout->addWidget(chkInvertY);
     layout->addWidget(chkInvertX);
@@ -285,12 +285,12 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 }
 
 void TestWidgetGraphs::moveovl() {
-    ovl1->set_position(ovl1->get_position()+0.1);
-    if (ovl1->get_position()>30) ovl1->set_position(0);
+    ovl1->setPosition(ovl1->getPosition()+0.1);
+    if (ovl1->getPosition()>30) ovl1->setPosition(0);
     ovlCnt++;
     if (ovlCnt>20) {
         double fps=double(ovlCnt)/(double(ovlTime.elapsed())/1000.0);
-        ovl1->set_text(QString("%1 fps").arg(fps));
+        ovl1->setText(QString("%1 fps").arg(fps));
         ovlCnt=0;
         ovlTime.start();
     }
@@ -307,10 +307,10 @@ void TestWidgetGraphs::setErrorStyle(int /*index*/)
 //        JKQTPXGraphErrors* ex=dynamic_cast<JKQTPXGraphErrors*>(plteErrors);
         JKQTPYGraphErrors* ey=dynamic_cast<JKQTPYGraphErrors*>(plteErrors);
         if (exy) {
-            exy->set_yErrorStyle(String2JKQTPErrorPlotstyle(cmb->itemData(cmb->currentIndex()).toString()));
+            exy->setYErrorStyle(String2JKQTPErrorPlotstyle(cmb->itemData(cmb->currentIndex()).toString()));
         }
         if (ey) {
-            ey->set_yErrorStyle(String2JKQTPErrorPlotstyle(cmb->itemData(cmb->currentIndex()).toString()));
+            ey->setYErrorStyle(String2JKQTPErrorPlotstyle(cmb->itemData(cmb->currentIndex()).toString()));
         }
         plot->redrawPlot();
     }
@@ -322,7 +322,7 @@ void TestWidgetGraphs::setESSymbol(int /*index*/)
     if (cmb) {
         JKQTPXYLineGraph* exy=dynamic_cast<JKQTPXYLineGraph*>(plteSymbols);
         if (exy) {
-            exy->set_symbol(String2JKQTPGraphSymbols(cmb->itemData(cmb->currentIndex()).toString()));
+            exy->setSymbol(String2JKQTPGraphSymbols(cmb->itemData(cmb->currentIndex()).toString()));
         }
 
         plot->redrawPlot();
@@ -332,9 +332,9 @@ void TestWidgetGraphs::setESSymbol(int /*index*/)
 
 void TestWidgetGraphs::setSortOrder2(int index)
 {
-    if (index==0) pltePlot2->set_sortData(JKQTPXYGraph::Unsorted);
-    if (index==1) pltePlot2->set_sortData(JKQTPXYLineGraph::SortedX);
-    if (index==2) pltePlot2->set_sortData(JKQTPXYLineGraph::SortedY);
+    if (index==0) pltePlot2->setSortData(JKQTPXYGraph::Unsorted);
+    if (index==1) pltePlot2->setSortData(JKQTPXYLineGraph::SortedX);
+    if (index==2) pltePlot2->setSortData(JKQTPXYLineGraph::SortedY);
     plotBot->redrawPlot();
 }
 

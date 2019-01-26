@@ -52,42 +52,42 @@ TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
         }
     }
     rgbimg=new JKQTPRGBMathImage(0,0,10,10, JKQTPMathImageBase::DoubleArray, rgb_rimg2, 100, 100, plotImgRGB->getPlotter());
-    rgbimg->set_imageMin(-1);
-    rgbimg->set_imageMax(0.5);
-    rgbimg->set_imageMinB(-1);
-    rgbimg->set_imageMaxB(0.5);
-    rgbimg->set_imageName("R image");
-    rgbimg->set_imageNameG("G image");
-    rgbimg->set_imageNameB("B image");
-    rgbimg->set_data(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageBase::DoubleArray);
-    rgbimg->set_dataModifier(rgb_aimg2, JKQTPMathImageBase::DoubleArray);
-    rgbimg->set_modifierMode(JKQTPMathImageBase::ModifyNone);
+    rgbimg->setImageMin(-1);
+    rgbimg->setImageMax(0.5);
+    rgbimg->setImageMinB(-1);
+    rgbimg->setImageMaxB(0.5);
+    rgbimg->setImageName("R image");
+    rgbimg->setImageNameG("G image");
+    rgbimg->setImageNameB("B image");
+    rgbimg->setData(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageBase::DoubleArray);
+    rgbimg->setDataModifier(rgb_aimg2, JKQTPMathImageBase::DoubleArray);
+    rgbimg->setModifierMode(JKQTPMathImageBase::ModifyNone);
     plotImgRGB->getPlotter()->addGraph(rgbimg);
-    rgbimg->set_autoImageRange(false);
-    rgbimg->set_colorBarTopVisible(true);
-    rgbimg->set_colorBarRightVisible(true);
-    rgbimg->set_colorbarsSideBySide(chkColorbars->isChecked());
+    rgbimg->setAutoImageRange(false);
+    rgbimg->setColorBarTopVisible(true);
+    rgbimg->setColorBarRightVisible(true);
+    rgbimg->setColorbarsSideBySide(chkColorbars->isChecked());
     rgbimg2=new JKQTPColumnRGBMathImage(10,0,10,10,100,100, plotImgRGB->getPlotter());
-    rgbimg2->set_imageMin(-1);
-    rgbimg2->set_imageMax(0.5);
-    rgbimg2->set_imageMinB(-1);
-    rgbimg2->set_imageMaxB(0.5);
-    rgbimg2->set_imageName("R image");
-    rgbimg2->set_imageNameG("G image");
-    rgbimg2->set_imageNameB("B image");
-    rgbimg2->set_Nx(100);
-    rgbimg2->set_Ny(100);
-    rgbimg2->set_imageRColumn(rgb_colr=plotImgRGB->getDatastore()->addCopiedColumn(rgb_bimg2, 100*100, "R"));
-    rgbimg2->set_imageGColumn(rgb_colg=plotImgRGB->getDatastore()->addCopiedColumn(rgb_gimg2, 100*100, "G"));
-    rgbimg2->set_imageBColumn(rgb_colb=plotImgRGB->getDatastore()->addCopiedColumn(rgb_rimg2, 100*100, "B"));
-    rgbimg2->set_modifierColumn(rgb_cola=plotImgRGB->getDatastore()->addCopiedColumn(rgb_aimg2, 100*100, "alpha"));
-    rgbimg2->set_modifierMode(JKQTPMathImageBase::ModifyNone);
-    //rgbimg2->set_data(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageBase::DoubleArray);
+    rgbimg2->setImageMin(-1);
+    rgbimg2->setImageMax(0.5);
+    rgbimg2->setImageMinB(-1);
+    rgbimg2->setImageMaxB(0.5);
+    rgbimg2->setImageName("R image");
+    rgbimg2->setImageNameG("G image");
+    rgbimg2->setImageNameB("B image");
+    rgbimg2->setNx(100);
+    rgbimg2->setNy(100);
+    rgbimg2->setImageRColumn(rgb_colr=plotImgRGB->getDatastore()->addCopiedColumn(rgb_bimg2, 100*100, "R"));
+    rgbimg2->setImageGColumn(rgb_colg=plotImgRGB->getDatastore()->addCopiedColumn(rgb_gimg2, 100*100, "G"));
+    rgbimg2->setImageBColumn(rgb_colb=plotImgRGB->getDatastore()->addCopiedColumn(rgb_rimg2, 100*100, "B"));
+    rgbimg2->setModifierColumn(rgb_cola=plotImgRGB->getDatastore()->addCopiedColumn(rgb_aimg2, 100*100, "alpha"));
+    rgbimg2->setModifierMode(JKQTPMathImageBase::ModifyNone);
+    //rgbimg2->setData(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageBase::DoubleArray);
     plotImgRGB->getPlotter()->addGraph(rgbimg2);
-    rgbimg2->set_autoImageRange(true);
-    rgbimg2->set_colorBarTopVisible(true);
-    rgbimg2->set_colorBarRightVisible(true);
-    rgbimg2->set_colorbarsSideBySide(chkColorbars->isChecked());
+    rgbimg2->setAutoImageRange(true);
+    rgbimg2->setColorBarTopVisible(true);
+    rgbimg2->setColorBarRightVisible(true);
+    rgbimg2->setColorbarsSideBySide(chkColorbars->isChecked());
     plotImgRGB->setAbsoluteXY(0,20,0,10);
     plotImgRGB->setPlotUpdateEnabled(true);
     //plotImgRGB->zoomToFit();
@@ -151,53 +151,53 @@ TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
 
 void TestWidgetRGBImages::setRGBColorBars(bool checked)
 {
-    rgbimg->set_colorbarsSideBySide(checked);
-    rgbimg2->set_colorbarsSideBySide(checked);
+    rgbimg->setColorbarsSideBySide(checked);
+    rgbimg2->setColorbarsSideBySide(checked);
     plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::setRGBMode1(int mode)
 {
-    rgbimg->set_rgbMode((JKQTPRGBMathImageRGBMode)mode);
+    rgbimg->setRgbMode((JKQTPRGBMathImageRGBMode)mode);
     plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::setRGBMode2(int mode)
 {
-    rgbimg2->set_rgbMode((JKQTPRGBMathImageRGBMode)mode);
+    rgbimg2->setRgbMode((JKQTPRGBMathImageRGBMode)mode);
     plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::updateRGBChannels()
 {
     if (chkRGBUseR->isChecked()) {
-        rgbimg->set_data(rgb_rimg2, 100, 100);
-        rgbimg2->set_imageRColumn(rgb_colr);
+        rgbimg->setData(rgb_rimg2, 100, 100);
+        rgbimg2->setImageRColumn(rgb_colr);
     } else {
-        rgbimg->set_data(nullptr, 100, 100);
-        rgbimg2->set_imageRColumn(-1);
+        rgbimg->setData(nullptr, 100, 100);
+        rgbimg2->setImageRColumn(-1);
     }
     if (chkRGBUseG->isChecked()) {
-        rgbimg->set_dataG(rgb_gimg2);
-        rgbimg2->set_imageGColumn(rgb_colg);
+        rgbimg->setDataG(rgb_gimg2);
+        rgbimg2->setImageGColumn(rgb_colg);
     } else {
-        rgbimg->set_dataG(nullptr);
-        rgbimg2->set_imageGColumn(-1);
+        rgbimg->setDataG(nullptr);
+        rgbimg2->setImageGColumn(-1);
     }
     if (chkRGBUseB->isChecked()) {
-        rgbimg->set_dataB(rgb_bimg2);
-        rgbimg2->set_imageBColumn(rgb_colb);
+        rgbimg->setDataB(rgb_bimg2);
+        rgbimg2->setImageBColumn(rgb_colb);
     } else {
-        rgbimg->set_dataB(nullptr);
-        rgbimg2->set_imageBColumn(-1);
+        rgbimg->setDataB(nullptr);
+        rgbimg2->setImageBColumn(-1);
     }
     plotImgRGB->redrawPlot();
 }
 
 void TestWidgetRGBImages::setRGBModifier(int item)
 {
-    rgbimg->set_modifierMode(JKQTPMathImage::ModifierMode(item));
-    rgbimg2->set_modifierMode(JKQTPMathImage::ModifierMode(item));
+    rgbimg->setModifierMode(JKQTPMathImage::ModifierMode(item));
+    rgbimg2->setModifierMode(JKQTPMathImage::ModifierMode(item));
     plotImgRGB->redrawPlot();
 }
 

@@ -66,10 +66,10 @@ Finally the axes and plots need a bit of formatting to make them look nicer:
     plotResid->getYAxis()->setAxisLabel("residuals");
     plotResidHist->getXAxis()->setAxisLabel("frequency");
     // 6.2 switch off the tick labels on the axes that directly face another plot
-    plotMain->getXAxis()->set_drawMode1(JKQTPCADMticks);
-    plotResidHist->getYAxis()->set_drawMode1(JKQTPCADMticks);
+    plotMain->getXAxis()->setDrawMode1(JKQTPCADMticks);
+    plotResidHist->getYAxis()->setDrawMode1(JKQTPCADMticks);
     // 6.3 show tick labels on the rhs y-axis of the residual histogram plot
-    plotResidHist->getYAxis()->set_drawMode2(JKQTPCADMticksAndLabels);
+    plotResidHist->getYAxis()->setDrawMode2(JKQTPCADMticksAndLabels);
     // 6.4 hide keys in all plots but the main plot
     plotResid->getPlotter()->setShowKey(false);
     plotResidHist->getPlotter()->setShowKey(false);

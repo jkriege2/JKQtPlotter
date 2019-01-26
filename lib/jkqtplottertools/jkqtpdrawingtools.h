@@ -34,7 +34,7 @@ class JKQTPEnhancedPainter; // forward
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools_drawing
 
-    \param painter the QPainter to draw to
+    \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
     \param x x-coordinate of the symbol center
     \param y y-coordinate of the symbol center
     \param symbol type of the symbol to plot, see JKQTPGraphSymbols
@@ -63,7 +63,7 @@ LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, J
 /*! \brief plot an arrow between positions (x1,y1) and (x2,y2)
    \ingroup jkqtptools_drawing
 
-    \param painter the QPainter to draw to
+    \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
     \param x1 first x-coordinate of the arrow
     \param y1 first y-coordinate of the arrow
     \param x2 second x-coordinate of the arrow

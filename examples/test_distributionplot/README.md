@@ -55,30 +55,30 @@ After adding all necessary data to the JKQTDatastore:
 
     // 4. create a graph of horizontal boxplots:
     JKQTPSingleColumnSymbolsGraph* graphRANDVALS=new JKQTPSingleColumnSymbolsGraph(&plot);
-    graphRANDVALS->set_dataColumn(columnRANDVAL);
+    graphRANDVALS->setDataColumn(columnRANDVAL);
     // draw data as symbols at (x,y)=(data,-0.07):
-    graphRANDVALS->set_dataDirection(JKQTPSingleColumnSymbolsGraph::DataDirection::X);
-    graphRANDVALS->set_position(-0.07);
+    graphRANDVALS->setDataDirection(JKQTPSingleColumnSymbolsGraph::DataDirection::X);
+    graphRANDVALS->setPosition(-0.07);
     // data should scatter around position=-0.07 with a width=0.08 (i.e. from position-width/2 ... position+width/2)
-    //graphRANDVALS->set_width(0.08);
-    //graphRANDVALS->set_positionScatterStyle(JKQTPSingleColumnSymbolsGraph::RandomScatter);
+    //graphRANDVALS->setWidth(0.08);
+    //graphRANDVALS->setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::RandomScatter);
     // data should scatter around position=-0.07 in a BeeSwarmScatter-Plot
-    graphRANDVALS->set_positionScatterStyle(JKQTPSingleColumnSymbolsGraph::BeeSwarmScatter);
+    graphRANDVALS->setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::BeeSwarmScatter);
     // choose small filled circles as symbols, JKQTPGraphSymbols::set their color:
-    graphRANDVALS->set_symbol(JKQTPFilledCircle);
-    graphRANDVALS->set_symbolSize(5);
-    graphRANDVALS->set_color(QColor("red"));
-    graphRANDVALS->set_fillColor(graphRANDVALS->get_color().lighter(180));
+    graphRANDVALS->setSymbol(JKQTPFilledCircle);
+    graphRANDVALS->setSymbolSize(5);
+    graphRANDVALS->setColor(QColor("red"));
+    graphRANDVALS->setFillColor(graphRANDVALS->getColor().lighter(180));
     // set title:
-    graphRANDVALS->set_title("Random Data");
+    graphRANDVALS->setTitle("Random Data");
 
 
     // 5. draw the histogram as barchart:
     JKQTPBarVerticalGraph* graphHIST=new JKQTPBarVerticalGraph(&plot);
-    graphHIST->set_xColumn(columnHIST.first);
-    graphHIST->set_yColumn(columnHIST.second);
+    graphHIST->setXColumn(columnHIST.first);
+    graphHIST->setYColumn(columnHIST.second);
     // set title:
-    graphHIST->set_title("Histogram");
+    graphHIST->setTitle("Histogram");
 
 
     // 6. draw the theoretical distribution as function graph:
@@ -88,28 +88,28 @@ After adding all necessary data to the JKQTDatastore:
         return 1.0/(th_std*sqrt(2.0*M_PI))*exp(-0.5*(x-th_mean)*(x-th_mean)/th_std/th_std);
     });
     // set title:
-    graphTheoDist->set_title(QString("Theoretical Distribution $\\mu=%1, \\sigma=%2$").arg(th_mean,0, 'f', 1).arg(th_std,0, 'f', 1));
+    graphTheoDist->setTitle(QString("Theoretical Distribution $\\mu=%1, \\sigma=%2$").arg(th_mean,0, 'f', 1).arg(th_std,0, 'f', 1));
 
 
 
     // 7. create a graph of horizontal boxplots:
     JKQTPBoxplotHorizontalElement* graphBoxPlot=new JKQTPBoxplotHorizontalElement(&plot);
-    graphBoxPlot->set_pos(0.15);
-    graphBoxPlot->set_min(rndMin);
-    graphBoxPlot->set_percentile25(rndQ25);
-    graphBoxPlot->set_mean(rndMean);
-    graphBoxPlot->set_median(rndMedian);
-    graphBoxPlot->set_percentile75(rndQ75);
-    graphBoxPlot->set_max(rndMax);
-    graphBoxPlot->set_boxWidth(24);
-    graphBoxPlot->set_meanSymbolSize(16);
-    graphBoxPlot->set_meanSymbolWidth(2);
-    graphBoxPlot->set_title("Statistical Properties");
-    graphBoxPlot->set_color(QColor("blue"));
+    graphBoxPlot->setPos(0.15);
+    graphBoxPlot->setMin(rndMin);
+    graphBoxPlot->setPercentile25(rndQ25);
+    graphBoxPlot->setMean(rndMean);
+    graphBoxPlot->setMedian(rndMedian);
+    graphBoxPlot->setPercentile75(rndQ75);
+    graphBoxPlot->setMax(rndMax);
+    graphBoxPlot->setBoxWidth(24);
+    graphBoxPlot->setMeanSymbolSize(16);
+    graphBoxPlot->setMeanSymbolWidth(2);
+    graphBoxPlot->setTitle("Statistical Properties");
+    graphBoxPlot->setColor(QColor("blue"));
     // make fill collor a lighter shade of the outline color
-    graphBoxPlot->set_fillColor(graphBoxPlot->get_color().lighter(180));
+    graphBoxPlot->setFillColor(graphBoxPlot->getColor().lighter(180));
     // make whiskers dashed
-    graphBoxPlot->set_whiskerStyle(Qt::DashLine);
+    graphBoxPlot->setWhiskerStyle(Qt::DashLine);
 
 
     // 8. add the graphs to the plot, so it is actually displayed

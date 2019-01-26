@@ -61,7 +61,7 @@ JKQTPColumn::~JKQTPColumn()
 size_t JKQTPColumn::getRows() const {
     if (!valid || !datastore) return 0;
     JKQTPDatastoreItem* i=datastore->getItem(datastoreItem);
-    if (i) return i->get_rows();
+    if (i) return i->getRows();
     else return 0;
 }
 
@@ -185,10 +185,10 @@ JKQTPDatastoreItem::JKQTPDatastoreItem(size_t columns, size_t rows){
     this->allocated=false;
     if (columns>1) {
         this->dataformat=JKQTPMatrixRow;
-        this->data=(double*)calloc(columns*rows, sizeof(double));
+        this->data=static_cast<double*>(calloc(columns*rows, sizeof(double)));
     } else {
         this->dataformat=JKQTPSingleColumn;
-        this->data=(double*)calloc(rows, sizeof(double));
+        this->data=static_cast<double*>(calloc(rows, sizeof(double)));
     }
     this->columns=columns;
     this->rows=rows;
@@ -201,7 +201,7 @@ void JKQTPDatastoreItem::resizeColumns(size_t new_rows) {
         free(data);
         data=nullptr;
     }
-    data=(double*)calloc(columns*new_rows, sizeof(double));
+    data=static_cast<double*>(calloc(columns*new_rows, sizeof(double)));
     rows=new_rows;
     internal=true;
     allocated=true;
@@ -290,7 +290,7 @@ void JKQTPDatastore::deleteAllColumns(const QString& name, bool removeItems) {
     QMapIterator<size_t, JKQTPColumn> it(columns);
     while (it.hasNext()) {
         it.next();
-        if (it.value().get_name()==name) {
+        if (it.value().getName()==name) {
             ids.append(it.key());
         }
     }
@@ -305,7 +305,7 @@ void JKQTPDatastore::deleteAllPrefixedColumns(QString prefix, bool removeItems) 
     QMapIterator<size_t, JKQTPColumn> it(columns);
     while (it.hasNext()) {
         it.next();
-        if (it.value().get_name().startsWith(prefix)) {
+        if (it.value().getName().startsWith(prefix)) {
             ids.append(it.key());
         }
     }
@@ -318,12 +318,12 @@ void JKQTPDatastore::deleteAllPrefixedColumns(QString prefix, bool removeItems) 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPDatastore::deleteColumn(size_t column, bool removeItems) {
     if (removeItems) {
-        size_t dsitem=columns[column].get_datastoreItem();
+        size_t dsitem=columns[column].getDatastoreItemNum();
         int cnt=0;
         QMapIterator<size_t, JKQTPColumn> it(columns);
         while (it.hasNext()) {
             it.next();
-            if (it.value().get_datastoreItem()==dsitem) {
+            if (it.value().getDatastoreItemNum()==dsitem) {
                 cnt++;
             }
         }
@@ -341,18 +341,18 @@ int JKQTPDatastore::getColumnNum(const QString& name) {
     QMapIterator<size_t, JKQTPColumn> it(columns);
     while (it.hasNext()) {
         it.next();
-        if (it.value().get_name()==name) return it.key();
+        if (it.value().getName()==name) return it.key();
     }
     return -1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-size_t JKQTPDatastore::ensureColumnNum(const QString& name) {
+int JKQTPDatastore::ensureColumnNum(const QString& name) {
     if (columns.size()<=0) return -1;
     QMapIterator<size_t, JKQTPColumn> it(columns);
     while (it.hasNext()) {
         it.next();
-        if (it.value().get_name()==name) return it.key();
+        if (it.value().getName()==name) return it.key();
     }
     return addColumn(0, name);
 }
@@ -494,7 +494,7 @@ size_t JKQTPDatastore::copyColumn(size_t old_column, size_t start, size_t stride
 {
     JKQTPColumn old=columns[old_column];
     size_t rows=old.getRows();
-    double* d=(double*)malloc(rows*sizeof(double));
+    double* d=static_cast<double*>(malloc(rows*sizeof(double)));
     double* dd=old.getPointer(0);
     int j=0;
     for (size_t i=start; i<rows; i+=stride) {
@@ -516,7 +516,7 @@ size_t JKQTPDatastore::copyColumn(size_t old_column, const QString& name)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::addLinearColumn(size_t rows, double start, double end, const QString& name) {
-    double delta=(end-start)/(double)(rows-1);
+    double delta=(end-start)/static_cast<double>(rows-1);
     JKQTPDatastoreItem* it=new JKQTPDatastoreItem(1, rows);
     for (size_t i=0; i<rows; i++) {
         it->set(0, i, start+static_cast<double>(i) * delta);
@@ -541,7 +541,7 @@ int JKQTPDatastore::getNextLowerIndex(size_t column, size_t row, int start, int 
         const double v=col.getValue(row);
         int res=-1;
         for ( int i=start; i<=end; i++) {
-            if (i!=(int)row) {
+            if (i!=static_cast<int>(row)) {
                 const double v1=col.getValue(i);
                 const double dd=v1-v;
                 if ((dd<0) && ((fabs(dd)<d)||(d==0.0))) {
@@ -575,7 +575,7 @@ int JKQTPDatastore::getNextHigherIndex(size_t column, size_t row, int start, int
         const double v=col.getValue(row);
         int res=-1;
         for ( int i=start; i<=end; i++) {
-            if (i!=(int)row) {
+            if (i!=static_cast<int>(row)) {
                 const double v1=col.getValue(i);
                 const double dd=v1-v;
                 if ((dd>0) && ((fabs(dd)<d)||(d==0.0))) {
@@ -666,7 +666,7 @@ QStringList JKQTPDatastore::getColumnNames() const {
     int col=0;
     while (it.hasNext()) {
         it.next();
-        names.append(it.value().get_name());
+        names.append(it.value().getName());
         col++;
     }
     return names;
@@ -690,7 +690,7 @@ void JKQTPDatastore::saveMatlab(QTextStream &txt, const QSet<int>& userColumns) 
         while (it.hasNext()) {
             it.next();
             if (!first) txt<<separator;
-            txt<<aroundStrings<<it.value().get_name()<<aroundStrings;
+            txt<<aroundStrings<<it.value().getName()<<aroundStrings;
             first=false;
         }
         txt<<"\n";
@@ -704,7 +704,7 @@ void JKQTPDatastore::saveMatlab(QTextStream &txt, const QSet<int>& userColumns) 
         if (userColumns.isEmpty() || userColumns.contains(i)) {
 
             // convert the column name into a variable name (name cleanup!) If the column name is empty, we  use a default name ("column")
-            QString newvarbase=jkqtp_to_valid_variable_name(it.value().get_name().toStdString()).c_str();
+            QString newvarbase=jkqtp_to_valid_variable_name(it.value().getName().toStdString()).c_str();
             if (newvarbase.isEmpty()) newvarbase="column";
             int cnt=1;
             QString newvar=newvarbase;
@@ -715,7 +715,7 @@ void JKQTPDatastore::saveMatlab(QTextStream &txt, const QSet<int>& userColumns) 
                 cnt++;
             }
             varnames.insert(newvar);
-            txt<<QString("% data from columne %1 ('%2')\n").arg(col+1).arg(it.value().get_name());
+            txt<<QString("% data from columne %1 ('%2')\n").arg(col+1).arg(it.value().getName());
             txt<<QString("%1 = [ ").arg(newvar);
             for (size_t i=0; i<it.value().getRows(); i++) {
                 txt<<loc.toString(get(it.key(), i))<<" ";
@@ -749,7 +749,7 @@ void JKQTPDatastore::saveCSV(QTextStream& txt, const QSet<int>& userColumns, con
             it.next();
             if (userColumns.isEmpty() || userColumns.contains(i)) {
                 if (!first) txt<<separator;
-                txt<<aroundStrings<<it.value().get_name()<<aroundStrings;
+                txt<<aroundStrings<<it.value().getName()<<aroundStrings;
                 first=false;
             }
             i++;
@@ -802,7 +802,7 @@ void JKQTPDatastore::saveSYLK(const QString& filename, const QSet<int>& userColu
     while (it.hasNext()) {
         it.next();
         if (userColumns.isEmpty() || userColumns.contains(i)) {
-            txt<<"C;Y1;X"<<c<<";K\""<<it.value().get_name()<<"\"\n";
+            txt<<"C;Y1;X"<<c<<";K\""<<it.value().getName()<<"\"\n";
             txt<<"F;Y1;X"<<c<<";SDB\n";
             c++;
         }
@@ -851,7 +851,7 @@ QList<QVector<double> > JKQTPDatastore::getData(QStringList *columnNames, const 
                 dat<<it.value().getValue(i);
             }
 
-            cl<<it.value().get_name();
+            cl<<it.value().getName();
             res<<dat;
             c++;
         }
@@ -892,7 +892,7 @@ void JKQTPDatastore::saveDIF(const QString& filename, const QSet<int>& userColum
     while (it.hasNext()) {
         it.next();
         if (userColumns.isEmpty() || userColumns.contains(i)) {
-            txt<<QString("1,0\n\"%1\"\n").arg(columns[c].get_name());
+            txt<<QString("1,0\n\"%1\"\n").arg(columns[c].getName());
             c++;
         }
         i++;
@@ -960,7 +960,7 @@ QVariant JKQTPDatastoreModel::headerData(int section, Qt::Orientation orientatio
     if (datastore) {
         if (role==Qt::DisplayRole) {
             if (orientation==Qt::Horizontal) {
-                if (section>=0 && section<(int64_t)datastore->getColumnCount()) {
+                if (section>=0 && section<static_cast<int64_t>(datastore->getColumnCount())) {
                     //qDebug()<<"columns: "<<datastore->getColumnNames().size()<<datastore->getColumnIDs().size()<<": "<<datastore->getColumnNames();
                     return datastore->getColumnNames().value(section);
                 }

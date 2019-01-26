@@ -25,8 +25,8 @@ int main(int argc, char* argv[])
     plot.getPlotter()->setMaintainAxisAspectRatio(true);
     plot.getPlotter()->setAxisAspectRatio(1);
     // 2.3 set the asxpect ratio to 1
-    plot.getXAxis()->set_drawGrid(false);
-    plot.getYAxis()->set_drawGrid(false);
+    plot.getXAxis()->setDrawGrid(false);
+    plot.getYAxis()->setDrawGrid(false);
 
 
     // 3. add some geometric plots
@@ -48,11 +48,11 @@ int main(int argc, char* argv[])
     p<<QPointF(1, 0.1)<<QPointF(1.3, 0.9)<<QPointF(1.6, 0.3)<<QPointF(1.9, 0.8);
     plot.addGraph(new JKQTPGeoPolyLines(&plot, p, QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine));
     JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(&plot, 1.7,  0.2, 0.2, 0.25, QColor("green"), 1.5, Qt::PenStyle::DashLine);
-    infLine->set_two_sided(false);
+    infLine->setTwoSided(false);
     infLine->setAlpha(0.5);
     plot.addGraph(infLine);
     infLine=new JKQTPGeoInfiniteLine(&plot, 1.7,  0.2, 0.2, -0.15, QColor("blue"), 1.5, Qt::PenStyle::SolidLine);
-    infLine->set_two_sided(true);
+    infLine->setTwoSided(true);
     infLine->setAlpha(0.5);
     plot.addGraph(infLine);
 

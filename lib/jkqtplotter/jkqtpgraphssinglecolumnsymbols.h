@@ -82,120 +82,120 @@ class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-        /*! \brief sets the property position to the specified \a __value.
+        /*! \brief sets the property position ( \copybrief position ) to the specified \a __value.
             \details Description of the parameter position is: <BLOCKQUOTE>\copydoc position </BLOCKQUOTE>
             \see position for more information */
-        inline virtual void set_position(double __value)
+        inline virtual void setPosition(double __value)
         {
             this->position = __value;
         }
-        /*! \brief returns the property position.
+        /*! \brief returns the property position ( \copybrief position ).
             \details Description of the parameter position is: <BLOCKQUOTE>\copydoc position </BLOCKQUOTE>
             \see position for more information */
-        inline virtual double get_position() const
+        inline virtual double getPosition() const
         {
             return this->position;
         }
-        /*! \brief sets the property width to the specified \a __value.
+        /*! \brief sets the property width ( \copybrief width ) to the specified \a __value.
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE>
             \see width for more information */
-        inline virtual void set_width(double __value)
+        inline virtual void setWidth(double __value)
         {
             this->width = __value;
         }
-        /*! \brief returns the property width.
+        /*! \brief returns the property width ( \copybrief width ).
             \details Description of the parameter width is: <BLOCKQUOTE>\copydoc width </BLOCKQUOTE>
             \see width for more information */
-        inline virtual double get_width() const
+        inline virtual double getWidth() const
         {
             return this->width;
         }
 
-        /*! \brief sets the property dataDirection to the specified \a __value.
+        /*! \brief sets the property dataDirection ( \copybrief dataDirection ) to the specified \a __value.
             \details Description of the parameter dataDirection is: <BLOCKQUOTE>\copydoc dataDirection </BLOCKQUOTE>
             \see dataDirection for more information */
-        inline virtual void set_dataDirection(DataDirection __value)
+        inline virtual void setDataDirection(DataDirection __value)
         {
             this->dataDirection = __value;
         }
-        /*! \brief returns the property dataDirection.
+        /*! \brief returns the property dataDirection ( \copybrief dataDirection ).
             \details Description of the parameter dataDirection is: <BLOCKQUOTE>\copydoc dataDirection </BLOCKQUOTE>
             \see dataDirection for more information */
-        inline virtual DataDirection get_dataDirection() const
+        inline virtual DataDirection getDataDirection() const
         {
             return this->dataDirection;
         }
 
-        /*! \brief sets the property positionScatterStyle to the specified \a __value.
+        /*! \brief sets the property positionScatterStyle ( \copybrief positionScatterStyle ) to the specified \a __value.
             \details Description of the parameter positionScatterStyle is: <BLOCKQUOTE>\copydoc positionScatterStyle </BLOCKQUOTE>
             \see positionScatterStyle for more information */
-        inline virtual void set_positionScatterStyle(ScatterStyle __value)
+        inline virtual void setPositionScatterStyle(ScatterStyle __value)
         {
             this->positionScatterStyle = __value;
         }
-        /*! \brief returns the property positionScatterStyle.
+        /*! \brief returns the property positionScatterStyle ( \copybrief positionScatterStyle ).
             \details Description of the parameter positionScatterStyle is: <BLOCKQUOTE>\copydoc positionScatterStyle </BLOCKQUOTE>
             \see positionScatterStyle for more information */
-        inline virtual ScatterStyle get_positionScatterStyle() const
+        inline virtual ScatterStyle getPositionScatterStyle() const
         {
             return this->positionScatterStyle;
         }
 
 
 
-        /*! \brief sets the property fillColor to the specified \a __value.
+        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value.
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
             \see fillColor for more information */
-        inline virtual void set_fillColor(const QColor & __value)
+        inline virtual void setFillColor(const QColor & __value)
         {
             this->fillColor = __value;
         }
-        /*! \brief returns the property fillColor.
+        /*! \brief returns the property fillColor ( \copybrief fillColor ).
             \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
             \see fillColor for more information */
-        inline virtual QColor get_fillColor() const
+        inline virtual QColor getFillColor() const
         {
             return this->fillColor;
         }
-        /*! \brief sets the property symbol to the specified \a __value.
+        /*! \brief sets the property symbol ( \copybrief symbol ) to the specified \a __value.
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE>
             \see symbol for more information */
-        inline virtual void set_symbol(const JKQTPGraphSymbols & __value)
+        inline virtual void setSymbol(const JKQTPGraphSymbols & __value)
         {
             this->symbol = __value;
         }
-        /*! \brief returns the property symbol.
+        /*! \brief returns the property symbol ( \copybrief symbol ).
             \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE>
             \see symbol for more information */
-        inline virtual JKQTPGraphSymbols get_symbol() const
+        inline virtual JKQTPGraphSymbols getSymbol() const
         {
             return this->symbol;
         }
-        /*! \brief sets the property symbolWidth to the specified \a __value.
+        /*! \brief sets the property symbolWidth ( \copybrief symbolWidth ) to the specified \a __value.
             \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE>
             \see symbolWidth for more information */
-        inline virtual void set_symbolWidth(double __value)
+        inline virtual void setSymbolWidth(double __value)
         {
             this->symbolWidth = __value;
         }
-        /*! \brief returns the property symbolWidth.
+        /*! \brief returns the property symbolWidth ( \copybrief symbolWidth ).
             \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE>
             \see symbolWidth for more information */
-        inline virtual double get_symbolWidth() const
+        inline virtual double getSymbolWidth() const
         {
             return this->symbolWidth;
         }
-        /*! \brief sets the property symbolSize to the specified \a __value.
+        /*! \brief sets the property symbolSize ( \copybrief symbolSize ) to the specified \a __value.
             \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copydoc symbolSize </BLOCKQUOTE>
             \see symbolSize for more information */
-        inline virtual void set_symbolSize(double __value)
+        inline virtual void setSymbolSize(double __value)
         {
             this->symbolSize = __value;
         }
-        /*! \brief returns the property symbolSize.
+        /*! \brief returns the property symbolSize ( \copybrief symbolSize ).
             \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copydoc symbolSize </BLOCKQUOTE>
             \see symbolSize for more information */
-        inline virtual double get_symbolSize() const
+        inline virtual double getSymbolSize() const
         {
             return this->symbolSize;
         }

@@ -99,9 +99,9 @@ void JKQTPlotter::init(bool datastore_internal, QWidget* parent, JKQTPDatastore*
     toolbarIconSize=16;
     mouseDragingRectangle=false;
 
-    def_userActionColor=QColor("steelblue"); userActionColor=def_userActionColor;
-    def_userActionCompositionMode=QPainter::CompositionMode_SourceOver; userActionCompositionMode=def_userActionCompositionMode;
-    def_mousePositionTemplate=QString("(%1; %2)"); mousePositionTemplate=def_mousePositionTemplate;
+    default_userActionColor=QColor("steelblue"); userActionColor=default_userActionColor;
+    default_userActionCompositionMode=QPainter::CompositionMode_SourceOver; userActionCompositionMode=default_userActionCompositionMode;
+    default_mousePositionTemplate=QString("(%1; %2)"); mousePositionTemplate=default_mousePositionTemplate;
 
     displayMousePosition=true;
     displayToolbar=true;
@@ -258,9 +258,9 @@ void JKQTPlotter::loadSettings(const QSettings& settings, const QString& group) 
 void JKQTPlotter::saveSettings(QSettings& settings, const QString& group) const {
     plotter->saveSettings(settings, group);
 
-    if (userActionColor!=def_userActionColor) settings.setValue(group+"zoomrect_color", jkqtp_QColor2String(userActionColor));
-    if (toolbarIconSize!=def_toolbarIconSize) settings.setValue(group+"toolbar_icon_size", toolbarIconSize);
-    if (mousePositionTemplate!=def_mousePositionTemplate) settings.setValue(group+"mouse_position_template", mousePositionTemplate);
+    if (userActionColor!=default_userActionColor) settings.setValue(group+"zoomrect_color", jkqtp_QColor2String(userActionColor));
+    if (toolbarIconSize!=default_toolbarIconSize) settings.setValue(group+"toolbar_icon_size", toolbarIconSize);
+    if (mousePositionTemplate!=default_mousePositionTemplate) settings.setValue(group+"mouse_position_template", mousePositionTemplate);
 }
 
 
@@ -483,10 +483,10 @@ void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
         if (rightMouseButtonAction==JKQTPlotter::RightMouseButtonZoom && event->button()==Qt::RightButton) {
             double factor=4.0;
             if (event->button()==Qt::RightButton) factor=1;
-            double xmin=plotter->p2x((long)round((double)event->x()/magnification-static_cast<double>(plotter->getPlotWidth())/factor));
-            double xmax=plotter->p2x((long)round((double)event->x()/magnification+static_cast<double>(plotter->getPlotWidth())/factor));
-            double ymin=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()+static_cast<double>(plotter->getPlotHeight())/factor));
-            double ymax=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()-static_cast<double>(plotter->getPlotHeight())/factor));
+            double xmin=plotter->p2x((long)round(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor));
+            double xmax=plotter->p2x((long)round(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor));
+            double ymin=plotter->p2y((long)round(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor));
+            double ymax=plotter->p2y((long)round(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight())/factor));
 
             event->accept();
             //xAxis->setRange(xmin, xmax);
@@ -517,11 +517,11 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
     // only react on wheel turns inside the widget, turning forward will zoom out and turning backwards will zoom in by a factor of 2
     if  ( (event->x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
           ((event->y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
-        double factor=pow(2.0, 1.0*(double)event->delta()/120.0)*2.0;
-        double xmin=plotter->p2x((long)round((double)event->x()/magnification-static_cast<double>(plotter->getPlotWidth())/factor));
-        double xmax=plotter->p2x((long)round((double)event->x()/magnification+static_cast<double>(plotter->getPlotWidth())/factor));
-        double ymin=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()+static_cast<double>(plotter->getPlotHeight())/factor));
-        double ymax=plotter->p2y((long)round((double)event->y()/magnification-(double)getPlotYOffset()-static_cast<double>(plotter->getPlotHeight())/factor));
+        double factor=pow(2.0, 1.0*static_cast<double>(event->delta())/120.0)*2.0;
+        double xmin=plotter->p2x((long)round(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor));
+        double xmax=plotter->p2x((long)round(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor));
+        double ymin=plotter->p2y((long)round(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor));
+        double ymax=plotter->p2y((long)round(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight())/factor));
 
         event->accept();
         plotter->setXY(xmin, xmax, ymin, ymax);
@@ -563,11 +563,11 @@ void JKQTPlotter::initContextMenu()
     contextMenu->addSeparator();
     QMenu* menVisibleGroup=new QMenu(tr("Graph Visibility"), contextMenu);
     for (size_t i=0; i<getPlotter()->getGraphCount(); i++) {
-        QString tit=getPlotter()->getGraph(i)->get_title();
+        QString tit=getPlotter()->getGraph(i)->getTitle();
         if (tit.isEmpty()) tit=tr("Graph %1").arg(static_cast<int>(i));
         QAction* act=new QAction(tit, menVisibleGroup);
         act->setCheckable(true);
-        act->setChecked(getPlotter()->getGraph(i)->get_visible());
+        act->setChecked(getPlotter()->getGraph(i)->getVisible());
         act->setIcon(QIcon(QPixmap::fromImage(getPlotter()->getGraph(i)->generateKeyMarker(QSize(16,16)))));
         act->setData(static_cast<int>(i));
         connect(act, SIGNAL(toggled(bool)), this, SLOT(reactGraphVisible(bool)));
@@ -785,11 +785,11 @@ void JKQTPlotter::updateToolbar()
 {
     if (displayToolbar) {
         if (toolbarAlwaysOn) {
-            toolbar->set_toolbarVanishes(false);
+            toolbar->setToolbarVanishesEnabled(false);
             toolbar->show();
             toolbar->move(1,1);
         } else {
-            toolbar->set_toolbarVanishes(true);
+            toolbar->setToolbarVanishesEnabled(true);
         }
     } else {
         toolbar->hide();
@@ -803,11 +803,11 @@ QSize JKQTPlotter::minimumSizeHint() const {
 
     if (minSize.width()>m.width()) m.setWidth(minSize.width());
     if (minSize.height()>m.height()) m.setHeight(minSize.height());
-    return m;//QSize((int)round((plotter->getInternalPlotBorderLeft()+plotter->getInternalPlotBorderRight())*1.5), (int)round((plotter->getInternalPlotBorderTop()+plotter->getInternalPlotBorderBottom())*1.5));
+    return m;
 }
 
 QSize JKQTPlotter::sizeHint() const {
-    return QWidget::sizeHint(); //minimumSizeHint()+QSize(200,100);
+    return QWidget::sizeHint();
 }
 
 

@@ -95,15 +95,15 @@ void TestUserInteraction::initPlot()
 
     // 4. create a graph in the plot, which plots the dataset X/Y:
     JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(plot);
-    graph1->set_xColumn(columnX);
-    graph1->set_yColumn(columnY1);
-    graph1->set_title(QObject::tr("sine graph"));
+    graph1->setXColumn(columnX);
+    graph1->setYColumn(columnY1);
+    graph1->setTitle(QObject::tr("sine graph"));
     plot->addGraph(graph1);
 
     JKQTPXYLineGraph* graph2=new JKQTPXYLineGraph(plot);
-    graph2->set_xColumn(columnX);
-    graph2->set_yColumn(columnY2);
-    graph2->set_title(QObject::tr("sine*exp graph"));
+    graph2->setXColumn(columnX);
+    graph2->setYColumn(columnY2);
+    graph2->setTitle(QObject::tr("sine*exp graph"));
     plot->addGraph(graph2);
 
     // 6. autoscale the plot so the graph is contained

@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -451,7 +451,7 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("yn accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("yn needs double argument");
-      r.num=yn((int)params[0].num, params[1].num);
+      r.num=yn(static_cast<int>(params[0].num), params[1].num);
       return r;
     }
 
@@ -460,7 +460,7 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("jn accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("jn needs double argument");
-      r.num=jn((int)params[0].num, params[1].num);
+      r.num=jn(static_cast<int>(params[0].num), params[1].num);
       return r;
     }
 
@@ -470,7 +470,7 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       if (n!=1) p->jkmpError("srand accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("srand needs double argument");
       r.num=0;
-      srand((unsigned int)params[0].num);
+      srand(static_cast<unsigned int>(params[0].num));
       return r;
     }
 
@@ -523,7 +523,7 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("fmod accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("fmod needs double argument");
-      r.num=fmod((int)params[0].num, params[1].num);
+      r.num=fmod(static_cast<int>(params[0].num), params[1].num);
       return r;
     }
 
@@ -532,7 +532,7 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("min accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("min needs double argument");
-      r.num=fmin((int)params[0].num, params[1].num);
+      r.num=fmin(static_cast<int>(params[0].num), params[1].num);
       return r;
     }
 
@@ -541,7 +541,7 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("max accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("max needs double argument");
-      r.num=fmax((int)params[0].num, params[1].num);
+      r.num=fmax(static_cast<int>(params[0].num), params[1].num);
       return r;
     }
 
@@ -594,8 +594,9 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
 
 
 
-    inline std::string strip(std::string s) {
+    inline std::string strip(const std::string& s) {
       std::string r;
+      r.reserve(s.size());
       for (size_t i=0; i<s.size(); i++){
         if ((s[i]!=' ')&&(s[i]!='\t')&&(s[i]!='\r')&&(s[i]!='\n')) {
           r+=s[i];
@@ -611,33 +612,33 @@ std::string JKQTPMathParser::tokentostring(JKQTPMathParser::jkmpTokenType token)
         case END: return "END";
         case PRINT: return "PRINT (;)";
         case PARAMETER_DIV: return "PARAMETER_DIV (,)";
-	    case STRING_DELIM: return "STRING_DELIM (' or \")";
-	    case NAME: return "NAME";
-	    case NUMBER: return "NUMBER";
-	    case PLUS: return "PLUS (+)";
-	    case MINUS: return "MINUS (-)";
-	    case MUL: return "MUL (*)";
-	    case DIV: return "DIV (/)";
-	    case MODULO: return "MODULO (%)";
-	    case ASSIGN: return "ASSIGN (=)";
-	    case LBRACKET: return "LBRACKET '('";
-	    case RBRACKET: return "RBRACKET ')'";
-	    case POWER: return "POWER (^)";
-	    case FACTORIAL_LOGIC_NOT: return "FACTORIAL_LOGIC_NOT (!)";
-	    case LOGIC_NOT: return "LOGIC_NOT (!/not)";
-	    case LOGIC_AND: return "LOGIC_AND (&&/and)";
-	    case LOGIC_OR: return "LOGIC_OR (||/or)";
-	    case LOGIC_XOR: return "LOGIC_XOR (xor)";
-	    case LOGIC_NOR: return "LOGIC_NOR (nor)";
-	    case LOGIC_NAND: return "LOGIC_NAND (nand)";
-	    case LOGIC_TRUE: return "LOGIC_TRUE (true)";
-	    case LOGIC_FALSE: return "LOGIC_FALSE (false)";
-	    case COMP_EQUALT: return "COMP_EQUALT (==)";
-	    case COMP_UNEQUAL: return "COMP_UNEQUAL (!=)";
-	    case COMP_GREATER: return "COMP_GREATER (>)";
-	    case COMP_SMALLER: return "COMP_SMALLER (<)";
-	    case COMP_GEQUAL: return "COMP_GEQUAL (>=)";
-	    case COMP_SEQUAL: return "COMP_SEQUAL (<=)";
+        case STRING_DELIM: return "STRING_DELIM (' or \")";
+        case NAME: return "NAME";
+        case NUMBER: return "NUMBER";
+        case PLUS: return "PLUS (+)";
+        case MINUS: return "MINUS (-)";
+        case MUL: return "MUL (*)";
+        case DIV: return "DIV (/)";
+        case MODULO: return "MODULO (%)";
+        case ASSIGN: return "ASSIGN (=)";
+        case LBRACKET: return "LBRACKET '('";
+        case RBRACKET: return "RBRACKET ')'";
+        case POWER: return "POWER (^)";
+        case FACTORIAL_LOGIC_NOT: return "FACTORIAL_LOGIC_NOT (!)";
+        case LOGIC_NOT: return "LOGIC_NOT (!/not)";
+        case LOGIC_AND: return "LOGIC_AND (&&/and)";
+        case LOGIC_OR: return "LOGIC_OR (||/or)";
+        case LOGIC_XOR: return "LOGIC_XOR (xor)";
+        case LOGIC_NOR: return "LOGIC_NOR (nor)";
+        case LOGIC_NAND: return "LOGIC_NAND (nand)";
+        case LOGIC_TRUE: return "LOGIC_TRUE (true)";
+        case LOGIC_FALSE: return "LOGIC_FALSE (false)";
+        case COMP_EQUALT: return "COMP_EQUALT (==)";
+        case COMP_UNEQUAL: return "COMP_UNEQUAL (!=)";
+        case COMP_GREATER: return "COMP_GREATER (>)";
+        case COMP_SMALLER: return "COMP_SMALLER (<)";
+        case COMP_GEQUAL: return "COMP_GEQUAL (>=)";
+        case COMP_SEQUAL: return "COMP_SEQUAL (<=)";
     }
     return "unknown";
 }
@@ -647,33 +648,33 @@ std::string JKQTPMathParser::currenttokentostring() {
         case END: return "END";
         case PRINT: return "PRINT (;)";
         case PARAMETER_DIV: return "PARAMETER_DIV (,)";
-	    case STRING_DELIM: return "STRING_DELIM (' or \")";
-	    case NAME: return jkqtp_format("NAME (%s)", StringValue.c_str());
-	    case NUMBER: return jkqtp_format("NUMBER (%lf)", NumberValue);
-	    case PLUS: return "PLUS (+)";
-	    case MINUS: return "MINUS (-)";
-	    case MUL: return "MUL (*)";
-	    case DIV: return "DIV (/)";
-	    case MODULO: return "MODULO (%)";
-	    case ASSIGN: return "ASSIGN (=)";
-	    case LBRACKET: return "LBRACKET '('";
-	    case RBRACKET: return "RBRACKET ')'";
-	    case POWER: return "POWER (^)";
-	    case FACTORIAL_LOGIC_NOT: return "FACTORIAL_LOGIC_NOT (!)";
-	    case LOGIC_NOT: return "LOGIC_NOT (!/not)";
-	    case LOGIC_AND: return "LOGIC_AND (&/and)";
-	    case LOGIC_OR: return "LOGIC_OR (|/or)";
-	    case LOGIC_XOR: return "LOGIC_XOR (xor)";
-	    case LOGIC_NOR: return "LOGIC_NOR (nor)";
-	    case LOGIC_NAND: return "LOGIC_NAND (nand)";
-	    case LOGIC_TRUE: return "LOGIC_TRUE (true)";
-	    case LOGIC_FALSE: return "LOGIC_FALSE (false)";
-	    case COMP_EQUALT: return "COMP_EQUALT (==)";
-	    case COMP_UNEQUAL: return "COMP_UNEQUAL (!=)";
-	    case COMP_GREATER: return "COMP_GREATER (>)";
-	    case COMP_SMALLER: return "COMP_SMALLER (<)";
-	    case COMP_GEQUAL: return "COMP_GEQUAL (>=)";
-	    case COMP_SEQUAL: return "COMP_SEQUAL (<=)";
+        case STRING_DELIM: return "STRING_DELIM (' or \")";
+        case NAME: return jkqtp_format("NAME (%s)", StringValue.c_str());
+        case NUMBER: return jkqtp_format("NUMBER (%lf)", NumberValue);
+        case PLUS: return "PLUS (+)";
+        case MINUS: return "MINUS (-)";
+        case MUL: return "MUL (*)";
+        case DIV: return "DIV (/)";
+        case MODULO: return "MODULO (%)";
+        case ASSIGN: return "ASSIGN (=)";
+        case LBRACKET: return "LBRACKET '('";
+        case RBRACKET: return "RBRACKET ')'";
+        case POWER: return "POWER (^)";
+        case FACTORIAL_LOGIC_NOT: return "FACTORIAL_LOGIC_NOT (!)";
+        case LOGIC_NOT: return "LOGIC_NOT (!/not)";
+        case LOGIC_AND: return "LOGIC_AND (&/and)";
+        case LOGIC_OR: return "LOGIC_OR (|/or)";
+        case LOGIC_XOR: return "LOGIC_XOR (xor)";
+        case LOGIC_NOR: return "LOGIC_NOR (nor)";
+        case LOGIC_NAND: return "LOGIC_NAND (nand)";
+        case LOGIC_TRUE: return "LOGIC_TRUE (true)";
+        case LOGIC_FALSE: return "LOGIC_FALSE (false)";
+        case COMP_EQUALT: return "COMP_EQUALT (==)";
+        case COMP_UNEQUAL: return "COMP_UNEQUAL (!=)";
+        case COMP_GREATER: return "COMP_GREATER (>)";
+        case COMP_SMALLER: return "COMP_SMALLER (<)";
+        case COMP_GEQUAL: return "COMP_GEQUAL (>=)";
+        case COMP_SEQUAL: return "COMP_SEQUAL (<=)";
     }
     return "unknown";
 }
@@ -695,101 +696,100 @@ JKQTPMathParser::JKQTPMathParser() {
 }
 
 void JKQTPMathParser::addStandardVariables(){
-	addVariableDouble("pi", M_PI);
-	addVariableDouble("e", M_E);
-	addVariableDouble("sqrt2", sqrt(2));
-	addVariableString("version", "0.2");
-	addVariableDouble("log2e", M_LOG2E);
-	addVariableDouble("log10e", M_LOG10E);
-	addVariableDouble("ln2", M_LN2);
-	addVariableDouble("ln10", M_LN10);
-  	addVariableDouble("h", 6.6260689633E-34);
-  	addVariableDouble("hbar", 1.05457162853E-34);
-  	addVariableDouble("epsilon0", 8.854187817E-12);
-  	addVariableDouble("mu0", 12.566370614E-7);
-  	addVariableDouble("c", 299792458);
-  	addVariableDouble("ce", 1.60217648740E-19);
-  	addVariableDouble("muB", 927.40091523E-26);
-  	addVariableDouble("muB_eV", 5.788381755579E-5);
-  	addVariableDouble("muN", 5.0507832413E-27);
-  	addVariableDouble("muN_eV", 3.152451232645E-8);
-  	addVariableDouble("me", 9.1093821545E-31);
-  	addVariableDouble("mp", 1.67262163783E-27);
-  	addVariableDouble("mn", 1.67492721184E-27);
-  	addVariableDouble("NA", 6.0221417930E23);
-  	addVariableDouble("kB", 1.380650424E-23);
-  	addVariableDouble("kB_eV", 8.61734315E-5);
+    addVariableDouble("pi", M_PI);
+    addVariableDouble("e", M_E);
+    addVariableDouble("sqrt2", sqrt(2));
+    addVariableString("version", "0.2");
+    addVariableDouble("log2e", M_LOG2E);
+    addVariableDouble("log10e", M_LOG10E);
+    addVariableDouble("ln2", M_LN2);
+    addVariableDouble("ln10", M_LN10);
+    addVariableDouble("h", 6.6260689633E-34);
+    addVariableDouble("hbar", 1.05457162853E-34);
+    addVariableDouble("epsilon0", 8.854187817E-12);
+    addVariableDouble("mu0", 12.566370614E-7);
+    addVariableDouble("c", 299792458);
+    addVariableDouble("ce", 1.60217648740E-19);
+    addVariableDouble("muB", 927.40091523E-26);
+    addVariableDouble("muB_eV", 5.788381755579E-5);
+    addVariableDouble("muN", 5.0507832413E-27);
+    addVariableDouble("muN_eV", 3.152451232645E-8);
+    addVariableDouble("me", 9.1093821545E-31);
+    addVariableDouble("mp", 1.67262163783E-27);
+    addVariableDouble("mn", 1.67492721184E-27);
+    addVariableDouble("NA", 6.0221417930E23);
+    addVariableDouble("kB", 1.380650424E-23);
+    addVariableDouble("kB_eV", 8.61734315E-5);
 }
 
 void JKQTPMathParser::addStandardFunctions(){
-	addFunction("sinc", fSinc);
-	addFunction("asin", fASin);
-	addFunction("acos", fACos);
-	addFunction("atan", fATan);
-	addFunction("atan2", fATan2);
-	addFunction("sin", fSin);
-	addFunction("cos", fCos);
-	addFunction("tan", fTan);
-	addFunction("sinh", fSinh);
-	addFunction("cosh", fCosh);
-	addFunction("tanh", fTanh);
-	addFunction("log", fLog);
-	addFunction("log2", fLog2);
-	addFunction("log10", fLog10);
-	addFunction("exp", fExp);
-	addFunction("sqrt", fSqrt);
+    addFunction("sinc", fSinc);
+    addFunction("asin", fASin);
+    addFunction("acos", fACos);
+    addFunction("atan", fATan);
+    addFunction("atan2", fATan2);
+    addFunction("sin", fSin);
+    addFunction("cos", fCos);
+    addFunction("tan", fTan);
+    addFunction("sinh", fSinh);
+    addFunction("cosh", fCosh);
+    addFunction("tanh", fTanh);
+    addFunction("log", fLog);
+    addFunction("log2", fLog2);
+    addFunction("log10", fLog10);
+    addFunction("exp", fExp);
+    addFunction("sqrt", fSqrt);
     addFunction("cbrt", fCbrt);
     addFunction("sqr", fSqr);
-	addFunction("abs", fAbs);
-	addFunction("if", fIf);
-	addFunction("erf", fErf);
-	addFunction("erfc", fErfc);
-	addFunction("lgamma", flGamma);
-	addFunction("tgamma", ftGamma);
-	addFunction("j0", fJ0);
-	addFunction("j1", fJ1);
-	addFunction("jn", fJn);
-	addFunction("y0", fY0);
-	addFunction("y1", fY1);
-	addFunction("yn", fYn);
-	addFunction("rand", fRand);
-	addFunction("srand", fSRand);
-	addFunction("ceil", fCeil);
-	addFunction("floor", fFloor);
-	addFunction("trunc", fTrunc);
-	addFunction("round", fRound);
-	addFunction("fmod", fFMod);
-	addFunction("min", fMin);
-	addFunction("max", fMax);
-	addFunction("inttostr", fIntToStr);
-	addFunction("floattostr", fFloatToStr);
-	addFunction("num2str", fFloatToStr);
-	addFunction("booltostr", fBoolToStr);
-	addFunction("bool2str", fBoolToStr);
-	addFunction("gauss", QFSPIMLightsheetEvaluationItem_fGauss);
-	addFunction("slit", fSlit);
-	addFunction("theta", fTheta);
-	addFunction("tanc", fTanc);
-	addFunction("sigmoid", fSigmoid);
-	addFunction("sign", fSign);
-	addFunction("tosystempathseparator", fToSystemPathSeparator);
-	addFunction("setdefault", fSetDefault);
+    addFunction("abs", fAbs);
+    addFunction("if", fIf);
+    addFunction("erf", fErf);
+    addFunction("erfc", fErfc);
+    addFunction("lgamma", flGamma);
+    addFunction("tgamma", ftGamma);
+    addFunction("j0", fJ0);
+    addFunction("j1", fJ1);
+    addFunction("jn", fJn);
+    addFunction("y0", fY0);
+    addFunction("y1", fY1);
+    addFunction("yn", fYn);
+    addFunction("rand", fRand);
+    addFunction("srand", fSRand);
+    addFunction("ceil", fCeil);
+    addFunction("floor", fFloor);
+    addFunction("trunc", fTrunc);
+    addFunction("round", fRound);
+    addFunction("fmod", fFMod);
+    addFunction("min", fMin);
+    addFunction("max", fMax);
+    addFunction("inttostr", fIntToStr);
+    addFunction("floattostr", fFloatToStr);
+    addFunction("num2str", fFloatToStr);
+    addFunction("booltostr", fBoolToStr);
+    addFunction("bool2str", fBoolToStr);
+    addFunction("gauss", QFSPIMLightsheetEvaluationItem_fGauss);
+    addFunction("slit", fSlit);
+    addFunction("theta", fTheta);
+    addFunction("tanc", fTanc);
+    addFunction("sigmoid", fSigmoid);
+    addFunction("sign", fSign);
+    addFunction("tosystempathseparator", fToSystemPathSeparator);
+    addFunction("setdefault", fSetDefault);
     addFunction("strdate", fStrDate);
-	addFunction("cmdparam", fCMDParam);
-	addFunction("argv", fCMDParam);
+    addFunction("cmdparam", fCMDParam);
+    addFunction("argv", fCMDParam);
 }
 
 // class destructor
 JKQTPMathParser::~JKQTPMathParser()
 {
-	clearFunctions();
-	clearVariables();
+    clearFunctions();
+    clearVariables();
 }
 
-// f�gt eine Variable hinzu. Der Speicher wird extern verwaltet
-void JKQTPMathParser::addVariableDouble(std::string name, double* v)
+void JKQTPMathParser::addVariableDouble(const std::string& ni, double* v)
 {
-    name=strip(name);
+    std::string name=strip(ni);
     jkmpVariable nv;
     nv.type=JKQTPMathParser::jkmpDouble;
     nv.num=v;
@@ -797,9 +797,9 @@ void JKQTPMathParser::addVariableDouble(std::string name, double* v)
     variables[name]=nv;
 }
 
-void JKQTPMathParser::addVariableString(std::string name, std::string* v)
+void JKQTPMathParser::addVariableString(const std::string& ni, std::string* v)
 {
-    name=strip(name);
+    std::string name=strip(ni);
     jkmpVariable nv;
     nv.type=JKQTPMathParser::jkmpString;
     nv.str=v;
@@ -807,9 +807,9 @@ void JKQTPMathParser::addVariableString(std::string name, std::string* v)
     variables[name]=nv;
 }
 
-void JKQTPMathParser::addVariableBoolean(std::string name, bool* v)
+void JKQTPMathParser::addVariableBoolean(const std::string& ni, bool* v)
 {
-    name=strip(name);
+    std::string name=strip(ni);
     jkmpVariable nv;
     nv.type=JKQTPMathParser::jkmpBool;
     nv.boolean=v;
@@ -817,21 +817,19 @@ void JKQTPMathParser::addVariableBoolean(std::string name, bool* v)
     variables[name]=nv;
 }
 
-void JKQTPMathParser::addVariableDouble(std::string name, double v)
+void JKQTPMathParser::addVariableDouble(const std::string& name, double v)
 {
-    name=strip(name);
     jkmpVariable nv;
     nv.type=JKQTPMathParser::jkmpDouble;
-    nv.num=new double;//(double*)malloc(sizeof(double));
+    nv.num=new double;//static_cast<double*>(malloc(sizeof(double)));
     nv.internal=true;
     *(nv.num)=v;
 //  std::cout<<*(nv.num)<<std::endl;
-    variables[name]=nv;
+    variables[strip(name)]=nv;
 }
 
-void JKQTPMathParser::addVariableString(std::string name, std::string v)
+void JKQTPMathParser::addVariableString(const std::string& name, const std::string& v)
 {
-    name=strip(name);
     jkmpVariable nv;
     nv.type=JKQTPMathParser::jkmpString;
     nv.str=new std::string;
@@ -840,18 +838,17 @@ void JKQTPMathParser::addVariableString(std::string name, std::string v)
     variables[strip(name)]=nv;
 }
 
-void JKQTPMathParser::addVariableBoolean(std::string name, bool v)
+void JKQTPMathParser::addVariableBoolean(const std::string& name, bool v)
 {
-    name=strip(name);
     jkmpVariable nv;
     nv.type=JKQTPMathParser::jkmpBool;
     nv.boolean=new bool;
     nv.internal=true;
     *(nv.boolean)=v;
-    variables[name]=nv;
+    variables[strip(name)]=nv;
 }
 
-void JKQTPMathParser::addVariable(std::string name, JKQTPMathParser::jkmpResult result)
+void JKQTPMathParser::addVariable(const std::string& name, JKQTPMathParser::jkmpResult result)
 {
     switch(result.type) {
         case jkmpDouble:
@@ -898,7 +895,7 @@ std::vector<std::pair<std::string, JKQTPMathParser::jkmpVariable> > JKQTPMathPar
 }
 
 
-void JKQTPMathParser::deleteVariable(std::string name) {
+void JKQTPMathParser::deleteVariable(const std::string& name) {
     if (variableExists(name)) {
         jkmpVariable v=variables[name];
         if (v.internal) {
@@ -927,7 +924,7 @@ void JKQTPMathParser::clearVariables(){
 }
 
 // gibt den aktuellen Wert einer Variablen zur�ck
-JKQTPMathParser::jkmpResult JKQTPMathParser::getVariable(std::string name)
+JKQTPMathParser::jkmpResult JKQTPMathParser::getVariable(const std::string& name)
 {
     if (variableExists(name)) {
         jkmpVariable v=variables[name];
@@ -951,7 +948,7 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::getVariable(std::string name)
     return res;
 }
 
-JKQTPMathParser::jkmpResult JKQTPMathParser::getVariableOrInvalid(std::string name)
+JKQTPMathParser::jkmpResult JKQTPMathParser::getVariableOrInvalid(const std::string& name)
 {
     if (variableExists(name)) {
         jkmpVariable v=variables[name];
@@ -971,10 +968,10 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::getVariableOrInvalid(std::string na
     return res;
 }
 
-JKQTPMathParser::jkmpVariable JKQTPMathParser::getVariableDef(std::string name)
+JKQTPMathParser::jkmpVariable JKQTPMathParser::getVariableDef(const std::string& name)
 {
   if (variableExists(name)) {
-  	return variables[name];
+    return variables[name];
   } else {
     // error
     //std::cout <<"error for:  '"<<name<<"'"<<std::endl;
@@ -983,9 +980,9 @@ JKQTPMathParser::jkmpVariable JKQTPMathParser::getVariableDef(std::string name)
   return jkmpVariable();
 }
 
-JKQTPMathParser::jkmpEvaluateFunc JKQTPMathParser::getFunctionDef(std::string name){
+JKQTPMathParser::jkmpEvaluateFunc JKQTPMathParser::getFunctionDef(const std::string& name){
   if (functionExists(name)) {
-  	return functions[name].function;
+    return functions[name].function;
   } else {
     // error
     //std::cout <<name<<std::endl;
@@ -994,7 +991,7 @@ JKQTPMathParser::jkmpEvaluateFunc JKQTPMathParser::getFunctionDef(std::string na
   return nullptr;
 }
 
-void JKQTPMathParser::addTempVariable(std::string name, JKQTPMathParser::jkmpResult value) {
+void JKQTPMathParser::addTempVariable(const std::string& name, JKQTPMathParser::jkmpResult value) {
   jkmpTempVariable v;
   v.name=name;
   v.type=value.type;
@@ -1005,18 +1002,18 @@ void JKQTPMathParser::addTempVariable(std::string name, JKQTPMathParser::jkmpRes
   tempvariables.push_back(v);
 }
 
-void JKQTPMathParser::setVariableDouble(std::string name, double value) {
+void JKQTPMathParser::setVariableDouble(const std::string& name, double value) {
     JKQTPMathParser::jkmpResult r;
     r.type=JKQTPMathParser::jkmpDouble;
     r.num=value;
     setVariable(name, r);
 }
 
-void JKQTPMathParser::setVariable(std::string name, JKQTPMathParser::jkmpResult value)
+void JKQTPMathParser::setVariable(const std::string& name, JKQTPMathParser::jkmpResult value)
 {
-	bool nexist=!variableExists(name);
-	jkmpVariable v=variables[name];
-	v.type=value.type;
+    bool nexist=!variableExists(name);
+    jkmpVariable v=variables[name];
+    v.type=value.type;
     if (value.type==JKQTPMathParser::jkmpDouble) {
     if (nexist) {v.num=new double; v.internal=true;}
     *(v.num)=value.num;
@@ -1032,11 +1029,11 @@ void JKQTPMathParser::setVariable(std::string name, JKQTPMathParser::jkmpResult 
 
 
 // wertet eine Funktion aus
-JKQTPMathParser::jkmpResult JKQTPMathParser::evaluateFunction(std::string name, JKQTPMathParser::jkmpResult* params, unsigned char n)
+JKQTPMathParser::jkmpResult JKQTPMathParser::evaluateFunction(const std::string& name, JKQTPMathParser::jkmpResult* params, unsigned char n)
 {
   if (functionExists(name)) {
     //std::cout <<"found"    ;
-  	return functions[name].function(params, n, this);
+    return functions[name].function(params, n, this);
   } else {
     // error
     //jkmpError("function does not exist")
@@ -1048,7 +1045,7 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::evaluateFunction(std::string name, 
 
 }
 
-void JKQTPMathParser::addFunction(std::string name, jkmpEvaluateFunc function) {
+void JKQTPMathParser::addFunction(const std::string& name, jkmpEvaluateFunc function) {
   jkmpFunctionDescriptor f;
   f.function=function;
   f.name=name;
@@ -1057,138 +1054,138 @@ void JKQTPMathParser::addFunction(std::string name, jkmpEvaluateFunc function) {
 
 
 JKQTPMathParser::jkmpTokenType JKQTPMathParser::getToken(){
-	char ch=0;
-	while(program->get(ch) && isspace(ch)) {
-		;
-	}
+    char ch=0;
+    while(program->get(ch) && isspace(ch)) {
+        ;
+    }
 
 
-	switch (ch) {
-		case 0:
-		case -1:
-			return CurrentToken=END;
-		case ';':
-			return CurrentToken=PRINT;
-		case '*':
-			return CurrentToken=MUL;
-		case '/':
-			return CurrentToken=DIV;
-		case '%':
-			return CurrentToken=MODULO;
-		case '+':
-			return CurrentToken=PLUS;
-		case '-':
-			return CurrentToken=MINUS;
-		case '(':
-			return CurrentToken=LBRACKET;
-		case ')':
-			return CurrentToken=RBRACKET;
-		case ',':
-			return CurrentToken=PARAMETER_DIV;
-		case '"':
-			return CurrentToken=STRING_DELIM;
-		case '^':
-			return CurrentToken=POWER;
-		case '!':{
-			char ch1=0;
-			if (*program) program->get(ch1);
-			if (ch1=='=') return CurrentToken=COMP_UNEQUAL;
-			// else
-			program->putback(ch1);
-			return CurrentToken=FACTORIAL_LOGIC_NOT;
-		}
-		case '&':{
-			char ch1=0;
-			if (*program) program->get(ch1);
-			if (ch1=='&') return CurrentToken=LOGIC_AND;
-			// else
-			program->putback(ch1);
-			jkmpError("undefined operator '&'; Did you mean LOGICAL_AND ('&&' / 'and')?");
+    switch (ch) {
+        case 0:
+        case -1:
+            return CurrentToken=END;
+        case ';':
+            return CurrentToken=PRINT;
+        case '*':
+            return CurrentToken=MUL;
+        case '/':
+            return CurrentToken=DIV;
+        case '%':
+            return CurrentToken=MODULO;
+        case '+':
+            return CurrentToken=PLUS;
+        case '-':
+            return CurrentToken=MINUS;
+        case '(':
+            return CurrentToken=LBRACKET;
+        case ')':
+            return CurrentToken=RBRACKET;
+        case ',':
+            return CurrentToken=PARAMETER_DIV;
+        case '"':
+            return CurrentToken=STRING_DELIM;
+        case '^':
+            return CurrentToken=POWER;
+        case '!':{
+            char ch1=0;
+            if (*program) program->get(ch1);
+            if (ch1=='=') return CurrentToken=COMP_UNEQUAL;
+            // else
+            program->putback(ch1);
+            return CurrentToken=FACTORIAL_LOGIC_NOT;
+        }
+        case '&':{
+            char ch1=0;
+            if (*program) program->get(ch1);
+            if (ch1=='&') return CurrentToken=LOGIC_AND;
+            // else
+            program->putback(ch1);
+            jkmpError("undefined operator '&'; Did you mean LOGICAL_AND ('&&' / 'and')?");
             break;
-		}
-		case '|':{
-			char ch1=0;
-			if (*program) program->get(ch1);
-			if (ch1=='|') return CurrentToken=LOGIC_OR;
-			// else
-			program->putback(ch1);
-			jkmpError("undefined operator '|'; Did you mean LOGICAL_OR ('||' / 'or')?");
+        }
+        case '|':{
+            char ch1=0;
+            if (*program) program->get(ch1);
+            if (ch1=='|') return CurrentToken=LOGIC_OR;
+            // else
+            program->putback(ch1);
+            jkmpError("undefined operator '|'; Did you mean LOGICAL_OR ('||' / 'or')?");
             break;
-		}
-		case '=':{
-			char ch1=0;
-			if (*program) program->get(ch1);
-			if (ch1=='=') return CurrentToken=COMP_EQUALT;
-			// else
-			program->putback(ch1);
-			return CurrentToken=ASSIGN;
-		}
-		case '>':{
-			char ch1=0;
-			if (*program) program->get(ch1);
-			if (ch1=='=') return CurrentToken=COMP_GEQUAL;
-			// else
-			program->putback(ch1);
-			return CurrentToken=COMP_GREATER;
-		}
-		case '<':{
-			char ch1=0;
-			if (*program) program->get(ch1);
-			if (ch1=='=') return CurrentToken=COMP_SEQUAL;
-			// else
-			program->putback(ch1);
-			return CurrentToken=COMP_SMALLER;
-		}
-		case '0': case '1': case '2': case '3': case '4':
-		case '5': case '6': case '7': case '8': case '9':{
-			program->putback(ch);
-			(*program) >> NumberValue;
-			return CurrentToken=NUMBER;
-		}
-		default:
-			if (isalpha(ch) || (ch=='_')) { // try to recognize NAME, LOGIC_TRUE, LOGIC_FALSE, DIFF_LBRACKET
-				StringValue=ch;
-				while (program->get(ch) && (isalnum(ch) || (ch=='_') || (ch=='.'))) {
+        }
+        case '=':{
+            char ch1=0;
+            if (*program) program->get(ch1);
+            if (ch1=='=') return CurrentToken=COMP_EQUALT;
+            // else
+            program->putback(ch1);
+            return CurrentToken=ASSIGN;
+        }
+        case '>':{
+            char ch1=0;
+            if (*program) program->get(ch1);
+            if (ch1=='=') return CurrentToken=COMP_GEQUAL;
+            // else
+            program->putback(ch1);
+            return CurrentToken=COMP_GREATER;
+        }
+        case '<':{
+            char ch1=0;
+            if (*program) program->get(ch1);
+            if (ch1=='=') return CurrentToken=COMP_SEQUAL;
+            // else
+            program->putback(ch1);
+            return CurrentToken=COMP_SMALLER;
+        }
+        case '0': case '1': case '2': case '3': case '4':
+        case '5': case '6': case '7': case '8': case '9':{
+            program->putback(ch);
+            (*program) >> NumberValue;
+            return CurrentToken=NUMBER;
+        }
+        default:
+            if (isalpha(ch) || (ch=='_')) { // try to recognize NAME, LOGIC_TRUE, LOGIC_FALSE, DIFF_LBRACKET
+                StringValue=ch;
+                while (program->get(ch) && (isalnum(ch) || (ch=='_') || (ch=='.'))) {
                     if (isalnum(ch) || (ch=='_') || (ch=='.')) {
                         StringValue.push_back(ch);
                     }
-				}
+                }
 
-				program->putback(ch); // now put the last thing read back int the stream, as it
-									  // could belong to the next token
+                program->putback(ch); // now put the last thing read back int the stream, as it
+                                      // could belong to the next token
 
-				if (StringValue=="true") return CurrentToken=LOGIC_TRUE;
-				if (StringValue=="false") return CurrentToken=LOGIC_FALSE;
-				if (StringValue=="and") return CurrentToken=LOGIC_AND;
-				if (StringValue=="or") return CurrentToken=LOGIC_OR;
-				if (StringValue=="xor") return CurrentToken=LOGIC_XOR;
-				if (StringValue=="not") return CurrentToken=LOGIC_NOT;
-				if (StringValue=="nor") return CurrentToken=LOGIC_NOR;
-				if (StringValue=="nand") return CurrentToken=LOGIC_NAND;
+                if (StringValue=="true") return CurrentToken=LOGIC_TRUE;
+                if (StringValue=="false") return CurrentToken=LOGIC_FALSE;
+                if (StringValue=="and") return CurrentToken=LOGIC_AND;
+                if (StringValue=="or") return CurrentToken=LOGIC_OR;
+                if (StringValue=="xor") return CurrentToken=LOGIC_XOR;
+                if (StringValue=="not") return CurrentToken=LOGIC_NOT;
+                if (StringValue=="nor") return CurrentToken=LOGIC_NOR;
+                if (StringValue=="nand") return CurrentToken=LOGIC_NAND;
 
-				return CurrentToken=NAME;
-			}
-			// the parser has found an unknown token. an exception will be thrown
-			//std::cout<<StringValue<<",   "<<ch<<std::endl;
+                return CurrentToken=NAME;
+            }
+            // the parser has found an unknown token. an exception will be thrown
+            //std::cout<<StringValue<<",   "<<ch<<std::endl;
             jkmpError(jkqtp_format("unknown token currentCharacter='%s', currentString='%s'", jkqtp_chartostr(ch).c_str(), StringValue.c_str()));
-	}
+    }
     return END;
 }
 
 
-JKQTPMathParser::jkmpNode* JKQTPMathParser::parse(std::string prog){
-	program=new std::istringstream(prog);
+JKQTPMathParser::jkmpNode* JKQTPMathParser::parse(const std::string& prog){
+    program=new std::istringstream(prog);
     JKQTPMathParser::jkmpNode* res=nullptr;
     JKQTPMathParser::jkmpNodeList* resList=new JKQTPMathParser::jkmpNodeList(this);
-	while(true) {
-		getToken();
+    while(true) {
+        getToken();
         if (CurrentToken == END) {
             break;
         }
         res= logicalExpression(false);
         resList->add(res);
-	}
-	delete program;
+    }
+    delete program;
     if (resList->getCount()==1) {
         delete resList;
         return res;
@@ -1197,7 +1194,7 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::parse(std::string prog){
     }
 }
 
-JKQTPMathParser::jkmpResult JKQTPMathParser::evaluate(std::string prog) {
+JKQTPMathParser::jkmpResult JKQTPMathParser::evaluate(const std::string& prog) {
     JKQTPMathParser::jkmpNode* res=parse(prog);
     JKQTPMathParser::jkmpResult r=res->evaluate();
     delete res;
@@ -1207,229 +1204,229 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::evaluate(std::string prog) {
 JKQTPMathParser::jkmpNode* JKQTPMathParser::logicalExpression(bool get){
     JKQTPMathParser::jkmpNode* left=logicalTerm(get);
 
-	for(;;) // forever, do until you find anything else than an expressions
-		switch(CurrentToken) {
-			case LOGIC_OR:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPor, left, logicalTerm(true), this, nullptr);
-				break;
-			case LOGIC_XOR:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPxor, left, logicalTerm(true), this, nullptr);
-				break;
-			case LOGIC_NOR:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPnor, left, logicalTerm(true), this, nullptr);
-				break;
-			default:
-				return left;
-		}
+    for(;;) // forever, do until you find anything else than an expressions
+        switch(CurrentToken) {
+            case LOGIC_OR:
+                left= new jkmpBinaryBoolNode(jkmpLOPor, left, logicalTerm(true), this, nullptr);
+                break;
+            case LOGIC_XOR:
+                left= new jkmpBinaryBoolNode(jkmpLOPxor, left, logicalTerm(true), this, nullptr);
+                break;
+            case LOGIC_NOR:
+                left= new jkmpBinaryBoolNode(jkmpLOPnor, left, logicalTerm(true), this, nullptr);
+                break;
+            default:
+                return left;
+        }
 }
 
 JKQTPMathParser::jkmpNode* JKQTPMathParser::logicalTerm(bool get){
     JKQTPMathParser::jkmpNode* left=compExpression(get);
 
-	for(;;) // forever, do until you find anything else than an expressions
-		switch(CurrentToken) {
-			case LOGIC_AND:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPand, left, compExpression(true), this, nullptr);
-				break;
-			case LOGIC_NAND:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryBoolNode(jkmpLOPnand, left, compExpression(true), this, nullptr);
-				break;
-			default:
-				return left;
-		}
+    for(;;) // forever, do until you find anything else than an expressions
+        switch(CurrentToken) {
+            case LOGIC_AND:
+                left= new jkmpBinaryBoolNode(jkmpLOPand, left, compExpression(true), this, nullptr);
+                break;
+            case LOGIC_NAND:
+                left= new jkmpBinaryBoolNode(jkmpLOPnand, left, compExpression(true), this, nullptr);
+                break;
+            default:
+                return left;
+        }
 }
 
 JKQTPMathParser::jkmpNode* JKQTPMathParser::compExpression(bool get){
     JKQTPMathParser::jkmpNode* left=mathExpression(get);
 
-	for(;;) // forever, do until you find anything else than an expressions
-		switch(CurrentToken) {
-			case COMP_EQUALT:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPequal, left, mathExpression(true), this, nullptr);
-				break;
-			case COMP_UNEQUAL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPnequal, left, mathExpression(true), this, nullptr);
-				break;
-			case COMP_GREATER:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPgreater, left, mathExpression(true), this, nullptr);
-				break;
-			case COMP_SMALLER:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPlesser, left, mathExpression(true), this, nullptr);
-				break;
-			case COMP_GEQUAL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPgreaterequal, left, mathExpression(true), this, nullptr);
-				break;
-			case COMP_SEQUAL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpCompareNode(jkmpCOMPlesserequal, left, mathExpression(true), this, nullptr);
-				break;
-			default:
-				return left;
-		}
+    for(;;) // forever, do until you find anything else than an expressions
+        switch(CurrentToken) {
+            case COMP_EQUALT:
+                left= new jkmpCompareNode(jkmpCOMPequal, left, mathExpression(true), this, nullptr);
+                break;
+            case COMP_UNEQUAL:
+                left= new jkmpCompareNode(jkmpCOMPnequal, left, mathExpression(true), this, nullptr);
+                break;
+            case COMP_GREATER:
+                left= new jkmpCompareNode(jkmpCOMPgreater, left, mathExpression(true), this, nullptr);
+                break;
+            case COMP_SMALLER:
+                left= new jkmpCompareNode(jkmpCOMPlesser, left, mathExpression(true), this, nullptr);
+                break;
+            case COMP_GEQUAL:
+                left= new jkmpCompareNode(jkmpCOMPgreaterequal, left, mathExpression(true), this, nullptr);
+                break;
+            case COMP_SEQUAL:
+                left= new jkmpCompareNode(jkmpCOMPlesserequal, left, mathExpression(true), this, nullptr);
+                break;
+            default:
+                return left;
+        }
 }
 
 
 JKQTPMathParser::jkmpNode* JKQTPMathParser::mathExpression(bool get){
     JKQTPMathParser::jkmpNode* left=mathTerm(get);
 
-	for(;;) // forever, do until you find anything else than an expressions
-		switch(CurrentToken) {
-			case PLUS:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('+', left, mathTerm(true), this, nullptr);
-				break;
-			case MINUS:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('-', left, mathTerm(true), this, nullptr);
-				break;
-			default:
-				return left;
-		}
+    for(;;) // forever, do until you find anything else than an expressions
+        switch(CurrentToken) {
+            case PLUS:
+                left= new jkmpBinaryArithmeticNode('+', left, mathTerm(true), this, nullptr);
+                break;
+            case MINUS:
+                left= new jkmpBinaryArithmeticNode('-', left, mathTerm(true), this, nullptr);
+                break;
+            default:
+                return left;
+        }
 }
 
 JKQTPMathParser::jkmpNode* JKQTPMathParser::mathTerm(bool get){
     JKQTPMathParser::jkmpNode* left=primary(get);
 
-	for(;;) // forever, do until you find anything else than a term
-		switch(CurrentToken) {
-			case MUL:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('*', left, primary(true), this, nullptr);
-				break;
-			case DIV:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('/', left, primary(true), this, nullptr);
-				break;
-			case MODULO:
-                left= (JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('%', left, primary(true), this, nullptr);
-				break;
-			default:
-				return left;
-		}
+    for(;;) // forever, do until you find anything else than a term
+        switch(CurrentToken) {
+            case MUL:
+                left= new jkmpBinaryArithmeticNode('*', left, primary(true), this, nullptr);
+                break;
+            case DIV:
+                left= new jkmpBinaryArithmeticNode('/', left, primary(true), this, nullptr);
+                break;
+            case MODULO:
+                left= new jkmpBinaryArithmeticNode('%', left, primary(true), this, nullptr);
+                break;
+            default:
+                return left;
+        }
 }
 
 JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
     JKQTPMathParser::jkmpNode* res=nullptr;
 
-	if (get) getToken();
+    if (get) getToken();
 
-	switch(CurrentToken) {
-		case NUMBER: {
+    switch(CurrentToken) {
+        case NUMBER: {
             JKQTPMathParser::jkmpResult val;
             val.type=JKQTPMathParser::jkmpDouble;
-			val.num=NumberValue;
-			getToken();
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
-			break;
-		}
+            val.num=NumberValue;
+            getToken();
+            res= new jkmpConstantNode(val, this, nullptr);
+            break;
+        }
 
-		case NAME: {
-			//jkMathParser::jkmpNode* def=nullptr;
- 			std::string varname=StringValue;
-    	getToken();
- 			if (CurrentToken == ASSIGN) { // assign a variable name
-    			res=new jkmpVariableAssignNode(varname, logicalExpression(true), this, nullptr);
- 			} else if (CurrentToken == LBRACKET) { // function found
-                JKQTPMathParser::jkmpNode** params=(JKQTPMathParser::jkmpNode**)malloc(255*sizeof(JKQTPMathParser::jkmpNode*));
-    			unsigned char num=0;
+        case NAME: {
+            //jkMathParser::jkmpNode* def=nullptr;
+            std::string varname=StringValue;
+        getToken();
+            if (CurrentToken == ASSIGN) { // assign a variable name
+                res=new jkmpVariableAssignNode(varname, logicalExpression(true), this, nullptr);
+            } else if (CurrentToken == LBRACKET) { // function found
+                JKQTPMathParser::jkmpNode** params=static_cast<JKQTPMathParser::jkmpNode**>(malloc(255*sizeof(JKQTPMathParser::jkmpNode*)));
+                unsigned char num=0;
 
 
-          	getToken();
-          	while ((CurrentToken != RBRACKET)&&(CurrentToken!=END)) {
+            getToken();
+            while ((CurrentToken != RBRACKET)&&(CurrentToken!=END)) {
                 JKQTPMathParser::jkmpNode* parameter=logicalExpression(num>0);
-          		params[num]=parameter;
-          		num++;
-             	if ((CurrentToken!=RBRACKET)&&(CurrentToken!=PARAMETER_DIV)&&(CurrentToken!=END))
+                params[num]=parameter;
+                num++;
+                if ((CurrentToken!=RBRACKET)&&(CurrentToken!=PARAMETER_DIV)&&(CurrentToken!=END))
                  jkmpError(jkqtp_format("')' or ',' expected, but '%s' found", currenttokentostring().c_str()));
-          	}
+            }
 
-    				if ( CurrentToken != RBRACKET ) jkmpError(jkqtp_format("')' expected, but '%s' found", currenttokentostring().c_str()));;
+                    if ( CurrentToken != RBRACKET ) jkmpError(jkqtp_format("')' expected, but '%s' found", currenttokentostring().c_str()));;
                     JKQTPMathParser::jkmpNode** p=nullptr;
             if (num>0) {
-               p=(JKQTPMathParser::jkmpNode**)malloc(sizeof(JKQTPMathParser::jkmpNode*) * num);
+               p=static_cast<JKQTPMathParser::jkmpNode**>(malloc(sizeof(JKQTPMathParser::jkmpNode*) * num));
                for (int i=0; i<num; i++) {
                  p[i]=params[i];
                }
             }
-	    			res=new jkmpFunctionNode(varname, p, num, this, nullptr);
-	    			free(params);
-	    			getToken();
+                    res=new jkmpFunctionNode(varname, p, num, this, nullptr);
+                    free(params);
+                    getToken();
 
-  		} else {
-          res=(JKQTPMathParser::jkmpNode*)new jkmpVariableNode(varname, this, nullptr);
- 			}
-			//res= def;
-			break;
+        } else {
+          res=new jkmpVariableNode(varname, this, nullptr);
+            }
+            //res= def;
+            break;
 
-		}
+        }
 
-		case STRING_DELIM: {// found primary: "data" == string constant
+        case STRING_DELIM: {// found primary: "data" == string constant
             JKQTPMathParser::jkmpResult val;
             val.type=JKQTPMathParser::jkmpString;
-			val.str=readDelim('"');
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
-			getToken();
-			break;
-		}
+            val.str=readDelim('"');
+            res= new jkmpConstantNode(val, this, nullptr);
+            getToken();
+            break;
+        }
 
-		case MINUS:  // found primary:  - primary
-            res= (JKQTPMathParser::jkmpNode*)new jkmpUnaryNode('-', primary(true), this, nullptr);
-			break;
+        case MINUS:  // found primary:  - primary
+            res= new jkmpUnaryNode('-', primary(true), this, nullptr);
+            break;
 
-		case LOGIC_NOT:
-            res= (JKQTPMathParser::jkmpNode*)new jkmpUnaryNode('!', primary(true), this, nullptr);
-			break;
+        case LOGIC_NOT:
+            res= new jkmpUnaryNode('!', primary(true), this, nullptr);
+            break;
 
-		case LBRACKET: { // found primary ( expression )
+        case LBRACKET: { // found primary ( expression )
             JKQTPMathParser::jkmpNode* expr=logicalExpression(true);
-			if (CurrentToken != RBRACKET) jkmpError(jkqtp_format("')' expected, but '%s' found", currenttokentostring().c_str()));
-			getToken(); // swallow ")"
-			res= expr;
-			break;
-		}
-		case FACTORIAL_LOGIC_NOT:
+            if (CurrentToken != RBRACKET) jkmpError(jkqtp_format("')' expected, but '%s' found", currenttokentostring().c_str()));
+            getToken(); // swallow ")"
+            res= expr;
+            break;
+        }
+        case FACTORIAL_LOGIC_NOT:
     case LOGIC_TRUE: {// found 'true'
             JKQTPMathParser::jkmpResult val;
             val.type=JKQTPMathParser::jkmpBool;
-			val.boolean=true;
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
-			getToken();
-			break;
+            val.boolean=true;
+            res= new jkmpConstantNode(val, this, nullptr);
+            getToken();
+            break;
    }
-		case LOGIC_FALSE: {// found 'false'
+        case LOGIC_FALSE: {// found 'false'
             JKQTPMathParser::jkmpResult val;
             val.type=JKQTPMathParser::jkmpBool;
-			val.boolean=false;
-            res= (JKQTPMathParser::jkmpNode*)new jkmpConstantNode(val, this, nullptr);
-			getToken();
-			break;
+            val.boolean=false;
+            res= new jkmpConstantNode(val, this, nullptr);
+            getToken();
+            break;
    }
 
-		default:
-   		jkmpError("primary expected");
+        default:
+        jkmpError("primary expected");
 
-	}
+    }
 
-	if (CurrentToken==POWER) {
-        res=(JKQTPMathParser::jkmpNode*)new jkmpBinaryArithmeticNode('^', res, primary(true), this, nullptr);
-	}
+    if (CurrentToken==POWER) {
+        res=new jkmpBinaryArithmeticNode('^', res, primary(true), this, nullptr);
+    }
 
-	return res;
+    return res;
 
 }
 
 std::string JKQTPMathParser::readDelim(char delimiter){
-	std::string res="";
-	char ch=0;
+    std::string res="";
+    char ch=0;
 
- 	while(program->get(ch)) {
-		if (ch==delimiter ) {
-		    char ch1=program->peek();
-		    if (ch1==delimiter) {
-		            program->get(ch);
-		            res=res+delimiter;
+    while(program->get(ch)) {
+        if (ch==delimiter ) {
+            char ch1=program->peek();
+            if (ch1==delimiter) {
+                    program->get(ch);
+                    res=res+delimiter;
             } else {
                 break;
             }
-		} else if ((*program) && (ch!=delimiter)) res=res+ch;
-	}
+        } else if ((*program) && (ch!=delimiter)) res=res+ch;
+    }
 
-	return res;
+    return res;
 }
 
 
@@ -1751,7 +1748,7 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpBinaryBoolNode::evaluate(){
 
 JKQTPMathParser::jkmpBinaryBoolNode::~jkmpBinaryBoolNode() { delete left; delete right;}
 
-JKQTPMathParser::jkmpVariableNode::jkmpVariableNode(std::string name, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par) {
+JKQTPMathParser::jkmpVariableNode::jkmpVariableNode(const std::string& name, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par) {
   var=name;
   setParser(p);
   setParent(par);
@@ -1774,7 +1771,7 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpNodeList::evaluate(){
   JKQTPMathParser::jkmpResult res;
   //std::cout<<"Nodelist.count()="<<n<<std::endl;
   if (n>0) {
-     for (int i=0; i<n; i++) {
+     for (size_t i=0; i<static_cast<size_t>(n); i++) {
         res=list[i]->evaluate();
      }
      return res;
@@ -1785,19 +1782,12 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpNodeList::evaluate(){
 
 JKQTPMathParser::jkmpNodeList::jkmpNodeList(JKQTPMathParser *p) { setParser(p); setParent(nullptr); }
 
-JKQTPMathParser::jkmpNodeList::~jkmpNodeList() {
-    /*  if (getCount()>0) {
-     for (int i=0; i<getCount(); i++) {
-        delete list[i];
-     }
-  };
-  list.clear();*/
-}
+JKQTPMathParser::jkmpNodeList::~jkmpNodeList() = default;
 
 
 JKQTPMathParser::jkmpVariableAssignNode::~jkmpVariableAssignNode() {delete child;}
 
-JKQTPMathParser::jkmpVariableAssignNode::jkmpVariableAssignNode(std::string var, JKQTPMathParser::jkmpNode* c, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par){
+JKQTPMathParser::jkmpVariableAssignNode::jkmpVariableAssignNode(const std::string& var, JKQTPMathParser::jkmpNode* c, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par){
   child=c;
   child->setParent(this);
   setParser(p);
@@ -1813,7 +1803,7 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpVariableAssignNode::evaluate(){
   return res;
 }
 
-JKQTPMathParser::jkmpFunctionNode::jkmpFunctionNode(std::string name, JKQTPMathParser::jkmpNode** c, unsigned char num, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par) {
+JKQTPMathParser::jkmpFunctionNode::jkmpFunctionNode(const std::string& name, JKQTPMathParser::jkmpNode** c, unsigned char num, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par) {
   child=c;
   n=num;
   fun=name;
@@ -1847,7 +1837,7 @@ JKQTPMathParser::jkmpFunctionNode::~jkmpFunctionNode() {
   }*/
     if ((child!=nullptr) && (n>0)) {
       for (int i=0; i<n; i++) {
-	delete child[i];
+        delete child[i];
       }
       free(child);
     }
@@ -1872,28 +1862,28 @@ JKQTPMathParser::jkmpVariable::jkmpVariable()
 }
 
 void JKQTPMathParser::setArgCV(int argc, char **argv) {
-	this->argc=argc;
-	this->argv=argv;
+    this->argc=argc;
+    this->argv=argv;
 }
 
-std::string JKQTPMathParser::getArgCVParam(std::string name, std::string defaultResult) {
+std::string JKQTPMathParser::getArgCVParam(const std::string& name, const std::string& defaultResult) {
         if (!argv ) return defaultResult;
         if (argc<=1) return defaultResult;
-	for (int i=1; i<argc; i++) {
-		if (name==std::string(argv[i]) && i+1<argc) {
-		    return std::string(argv[i+1]);
-		}
-	}
-	return defaultResult;
+    for (int i=1; i<argc; i++) {
+        if (name==std::string(argv[i]) && i+1<argc) {
+            return std::string(argv[i+1]);
+        }
+    }
+    return defaultResult;
 }
 
-JKQTPMathParser::jkmpNode::~jkmpNode() {}
+JKQTPMathParser::jkmpNode::~jkmpNode() = default;
 
 JKQTPMathParser::jkmpConstantNode::jkmpConstantNode(JKQTPMathParser::jkmpResult d, JKQTPMathParser *p, JKQTPMathParser::jkmpNode *par) { data=d; setParser(p); setParent(par); }
 
 JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpConstantNode::evaluate() { return data; }
 
-JKQTPMathParser::jkmpException::~jkmpException() {   }
+JKQTPMathParser::jkmpException::~jkmpException() = default;
 
 const char *JKQTPMathParser::jkmpException::what() const noexcept {
     return getMessage().c_str();

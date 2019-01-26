@@ -101,7 +101,7 @@ LIB_EXPORT QString jkqtp_QPenStyle2String(Qt::PenStyle style);
 /** \brief converts a QString into a Qt::PenStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::PenStyle jkqtp_String2QPenStyle(QString style);
+LIB_EXPORT Qt::PenStyle jkqtp_String2QPenStyle(const QString& style);
 /** \brief converts a QT::BrushStyle into a string
  * \ingroup jkqtptools
  */
@@ -110,7 +110,7 @@ LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
 /** \brief converts a QString into a Qt::BrushStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(QString style);
+LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style);
 
 
 
@@ -133,7 +133,7 @@ LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
 /** \brief converts a string into a JKQTPCADrawMode
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(QString pos);
+LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
 
 
 /** \brief display mode for the axis labels
@@ -165,7 +165,7 @@ LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
 /** \brief converts a string into a JKQTPLabelTickMode
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(QString pos);
+LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(const QString& pos);
 
 
 /** \brief converts a JKQTPCALabelType variable into a human-readable string
@@ -176,7 +176,7 @@ LIB_EXPORT QString JKQTPCALabelType2String(JKQTPCALabelType pos);
 /** \brief converts a string into a JKQTPCALabelType
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(QString pos);
+LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& pos);
 
 /** \brief position of the axis labels
  * \ingroup jkqtptools
@@ -196,7 +196,7 @@ LIB_EXPORT QString JKQTPLabelPosition2String(JKQTPLabelPosition pos);
 /** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(QString pos);
+LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos);
 
 /** \brief position of the key
  * \ingroup jkqtptools
@@ -225,7 +225,7 @@ LIB_EXPORT QString JKQTPKeyPosition2String(JKQTPKeyPosition pos);
 /** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(QString pos);
+LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos);
 
 /** \brief layout of the key
  * \ingroup jkqtptools
@@ -245,7 +245,7 @@ LIB_EXPORT QString JKQTPKeyLayout2String(JKQTPKeyLayout pos);
 /** \brief converts a String into a JKQTPKeyLayout
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(QString pos);
+LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
 
 
 
@@ -264,11 +264,11 @@ struct JKQTPGridPrintingItem {
 
 
 /**
- * \brief saves the given property (for which also a def_property exists) into the given settings object
+ * \brief saves the given property (for which also a default_property exists) into the given settings object
  * \ingroup jkqtptools
  */
 #define JKQTPPROPERTYsave(settings, group, var, varname) \
-    if (var!=def_##var) settings.setValue(group+varname, var);
+    if (var!=default_##var) settings.setValue(group+varname, var);
 /**
  * \brief loads the given property from the given settings object
  * \ingroup jkqtptools
@@ -281,17 +281,17 @@ struct JKQTPGridPrintingItem {
  * \ingroup jkqtptools
  */
 enum JKQTPErrorPlotstyle {
-    JKQTPErrorEllipses=10,           /*!< \brief an ellipse spanned by the errors */
-    JKQTPErrorBoxes=9,           /*!< \brief a box spanned by the errors */
-    JKQTPErrorSimpleBarsPolygons=8,           /*!< \brief simplified error barsand polygons  for each data point */
-    JKQTPErrorSimpleBarsLines=7,           /*!< \brief simplified error bars and line for each data point */
-    JKQTPErrorSimpleBars=6,           /*!< \brief simplified error bars for each data point */
-    JKQTPErrorLines=5,                /*!< \brief a second and third graph line above and below the actual data which indicates the error value */
-	JKQTPErrorBars=4,                 /*!< \brief error bars for each data point */
-	JKQTPErrorPolygons=3,              /*!< \brief line error lines, but with filled range in between */
-	JKQTPErrorBarsLines=2,            /*!< \brief error bars and lines for each data point */
-	JKQTPErrorBarsPolygons=1,         /*!< \brief error bars and polygons for each data point */
-	JKQTPNoError=0                    /*!< \brief don't show error information */
+    JKQTPErrorEllipses=10,           /*!< \brief an ellipse spanned by the errors \image html JKQTPErrorEllipses.png */
+    JKQTPErrorBoxes=9,               /*!< \brief a box spanned by the errors \image html JKQTPErrorBoxes.png */
+    JKQTPErrorSimpleBarsPolygons=8,  /*!< \brief simplified error barsand polygons  for each data point \image html JKQTPErrorSimpleBarsPolygons.png */
+    JKQTPErrorSimpleBarsLines=7,     /*!< \brief simplified error bars and line for each data point \image html JKQTPErrorSimpleBarsLines.png */
+    JKQTPErrorSimpleBars=6,          /*!< \brief simplified error bars for each data point \image html JKQTPErrorSimpleBars.png */
+    JKQTPErrorLines=5,               /*!< \brief a second and third graph line above and below the actual data which indicates the error value \image html JKQTPErrorLines.png */
+    JKQTPErrorBars=4,                /*!< \brief error bars for each data point \image html JKQTPErrorBars.png */
+    JKQTPErrorPolygons=3,            /*!< \brief line error lines, but with filled range in between \image html JKQTPErrorPolygons.png */
+    JKQTPErrorBarsLines=2,           /*!< \brief error bars and lines for each data point \image html JKQTPErrorBarsLines.png */
+    JKQTPErrorBarsPolygons=1,        /*!< \brief error bars and polygons for each data point \image html JKQTPErrorBarsPolygons.png */
+    JKQTPNoError=0                   /*!< \brief don't show error information \image html JKQTPNoError.png */
 };
 
 
@@ -305,7 +305,7 @@ LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
 /** \brief converts a String into a JKQTPErrorPlotstyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(QString pos);
+LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos);
 
 /** \brief plot styles for a graph
  * \ingroup jkqtptools
@@ -365,7 +365,7 @@ LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
 /** \brief converts a String into a JKQTPGraphSymbols
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(QString pos);
+LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
 
 
 /** \brief convert a double to a string, using the loacle "C"
@@ -521,7 +521,7 @@ LIB_EXPORT std::string jkqtp_tolower(const std::string& s);
 /** \brief convert a string to a boolean
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT bool jkqtp_strtobool(std::string data);
+LIB_EXPORT bool jkqtp_strtobool(const std::string& data);
 /** \brief convert a string to upper-case
  * \ingroup jkqtptools_string
  */
@@ -560,7 +560,7 @@ LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool rem
 /** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000,"g") will result in "1kg"
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, std::string unitname);
+LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, const std::string& unitname);
 /** \brief convert a boolean to a string
  * \ingroup jkqtptools_string
  */
@@ -584,7 +584,7 @@ inline QString jkqtp_QColor2String(QColor color) {
 /** \brief clean a string to be usable as a variable name, e.g. in an expression parser, or a C++-expression
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_to_valid_variable_name(std::string input);
+LIB_EXPORT std::string jkqtp_to_valid_variable_name(const std::string& input);
 
 /** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000) will result in "1k"
  * \ingroup jkqtptools_string
@@ -627,11 +627,13 @@ inline constexpr double jkqtp_todouble(const bool& d) {
 
 /** \brief plot styles for the error information
  * \ingroup jkqtptools
+ *
+ * \see JKQTPStepTypeComboBox
  */
 enum JKQTPStepType {
-    JKQTPStepLeft=0,           /*!< \brief datapoint is on the left edge of the hor. step line */
-    JKQTPStepCenter=1,           /*!< \brief datapoint is centered on the hor. step line */
-    JKQTPStepRight=2,         /*!< \brief datapoint is on the right edge of the hor. step line */
+    JKQTPStepLeft=0,           /*!< \brief datapoint is on the left edge of the hor. step line \image html JKQTPStepLeft.png */
+    JKQTPStepCenter=1,           /*!< \brief datapoint is centered on the hor. step line \image html JKQTPStepCenter.png */
+    JKQTPStepRight=2,         /*!< \brief datapoint is on the right edge of the hor. step line \image html JKQTPStepRight.png */
 };
 
 
@@ -643,6 +645,6 @@ LIB_EXPORT QString JKQTPStepType2String(JKQTPStepType pos);
 /** \brief converts a String into a JKQTPStepType
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPStepType String2JKQTPStepType(QString pos);
+LIB_EXPORT JKQTPStepType String2JKQTPStepType(const QString& pos);
 
 #endif // JKQTPTOOLS_H_INCLUDED

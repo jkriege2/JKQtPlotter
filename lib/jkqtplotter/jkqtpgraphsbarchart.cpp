@@ -624,10 +624,10 @@ bool JKQTPBarVerticalGraph::isHorizontal() const
     return false;
 }
 
-void JKQTPBarVerticalGraph::set_fillColor_and_darkenedColor(QColor fill, int colorDarker)
+void JKQTPBarVerticalGraph::setFillColor_and_darkenedColor(QColor fill, int colorDarker)
 {
-    set_fillColor(fill);
-    set_color(fill.darker(colorDarker));
+    setFillColor(fill);
+    setColor(fill.darker(colorDarker));
 }
 
 JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTBasePlotter *parent):

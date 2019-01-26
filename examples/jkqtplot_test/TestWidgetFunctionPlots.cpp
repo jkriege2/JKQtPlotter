@@ -19,10 +19,10 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     plotFuncPlt=new JKQTPlotter(true, this);
     plotFuncLayout->addWidget(plotFuncPlt);
     pfunc=new JKQTPXParsedFunctionLineGraph(plotFuncPlt->getPlotter());
-    pfunc->set_function("x^2/10+sin(x*pi*10)");
-    pfunc->set_errorFunction("x^2/20");
-    pfunc->set_drawErrorPolygons(true);
-    pfunc->set_style(Qt::DashLine);
+    pfunc->setFunction("x^2/10+sin(x*pi*10)");
+    pfunc->setErrorFunction("x^2/20");
+    pfunc->setDrawErrorPolygons(true);
+    pfunc->setStyle(Qt::DashLine);
     plotFuncPlt->addGraph(pfunc);
     plotFuncPlt->redrawPlot();
 
@@ -38,17 +38,17 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     plotFuncLayout->addWidget(chkPFuncDrawLine);
     connect(chkPFuncDrawLine, SIGNAL(toggled(bool)), this, SLOT(setPFuncStyle()));
     QSpinBox* spinPFunc=new QSpinBox(this);
-    spinPFunc->setValue(pfunc->get_minSamples());
+    spinPFunc->setValue(pfunc->getMinSamples());
     plotFuncLayout->addWidget(new QLabel(tr("min samples:"), this));
     plotFuncLayout->addWidget(spinPFunc);
     connect(spinPFunc, SIGNAL(valueChanged(int)), this, SLOT(setPFuncMinPoint(int)));
     spinPFunc=new QSpinBox(this);
-    spinPFunc->setValue(pfunc->get_maxRefinementDegree());
+    spinPFunc->setValue(pfunc->getMaxRefinementDegree());
     plotFuncLayout->addWidget(new QLabel(tr("max refinement degree:"), this));
     plotFuncLayout->addWidget(spinPFunc);
     connect(spinPFunc, SIGNAL(valueChanged(int)), this, SLOT(setPFuncMaxRefine(int)));
     QComboBox* edtPFunc=new QComboBox(this);
-    edtPFunc->addItem(pfunc->get_function());
+    edtPFunc->addItem(pfunc->getFunction());
     edtPFunc->addItem("x");
     edtPFunc->addItem("x^2");
     edtPFunc->addItem("x^2-x^3");
@@ -58,7 +58,7 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     plotFuncLayout->addWidget(edtPFunc);
     connect(edtPFunc, SIGNAL(currentIndexChanged(QString)), this, SLOT(setPFunc(QString)));
     edtPFunc=new QComboBox(this);
-    edtPFunc->addItem(pfunc->get_errorFunction());
+    edtPFunc->addItem(pfunc->getErrorFunction());
     edtPFunc->addItem("");
     edtPFunc->addItem("x");
     edtPFunc->addItem("cos(x)");
@@ -69,11 +69,11 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     connect(edtPFunc, SIGNAL(currentIndexChanged(QString)), this, SLOT(setPFuncE(QString)));
     QCheckBox* chkFLogX=new QCheckBox(tr("x-axis: log-scale"));
     chkFLogX->setChecked(false);
-    connect(chkFLogX, SIGNAL(toggled(bool)), plotFuncPlt->getXAxis(), SLOT(set_logAxis(bool)));
+    connect(chkFLogX, SIGNAL(toggled(bool)), plotFuncPlt->getXAxis(), SLOT(setLogAxis(bool)));
     plotFuncLayout->addWidget(chkFLogX);
     QCheckBox* chkFLogY=new QCheckBox(tr("y-axis: log-scale"));
     chkFLogY->setChecked(false);
-    connect(chkFLogY, SIGNAL(toggled(bool)), plotFuncPlt->getYAxis(), SLOT(set_logAxis(bool)));
+    connect(chkFLogY, SIGNAL(toggled(bool)), plotFuncPlt->getYAxis(), SLOT(setLogAxis(bool)));
     plotFuncLayout->addWidget(chkFLogY);
 
 
@@ -82,35 +82,35 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
 
 void TestWidgetFunctionPlots::setPFuncStyle()
 {
-    pfunc->set_drawErrorLines(false);
-    pfunc->set_drawErrorPolygons(false);
-    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorLines) pfunc->set_drawErrorLines(true);
-    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorPolygons) pfunc->set_drawErrorPolygons(true);
-    pfunc->set_drawLine(chkPFuncDrawLine->isChecked());
-    pfunc->set_displaySamplePoints(chkPFuncDrawSamples->isChecked());
+    pfunc->setDrawErrorLines(false);
+    pfunc->setDrawErrorPolygons(false);
+    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorLines) pfunc->setDrawErrorLines(true);
+    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorPolygons) pfunc->setDrawErrorPolygons(true);
+    pfunc->setDrawLine(chkPFuncDrawLine->isChecked());
+    pfunc->setDisplaySamplePoints(chkPFuncDrawSamples->isChecked());
     plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncMinPoint(int value)
 {
-    pfunc->set_minSamples(value);
+    pfunc->setMinSamples(value);
     plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncMaxRefine(int value)
 {
-    pfunc->set_maxRefinementDegree(value);
+    pfunc->setMaxRefinementDegree(value);
     plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFunc(const QString &expression)
 {
-    pfunc->set_function(expression);
+    pfunc->setFunction(expression);
     plotFuncPlt->redrawPlot();
 }
 
 void TestWidgetFunctionPlots::setPFuncE(const QString &expression)
 {
-    pfunc->set_errorFunction(expression);
+    pfunc->setErrorFunction(expression);
     plotFuncPlt->redrawPlot();
 }

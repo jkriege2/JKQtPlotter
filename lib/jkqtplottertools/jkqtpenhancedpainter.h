@@ -29,7 +29,7 @@
 
 
 
-/*! \brief this class extends the QPainter
+/*! \brief this class extends the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
     \ingroup jkqtptools_drawing
 
 

@@ -69,8 +69,7 @@ JKQTPEnhancedTableView::JKQTPEnhancedTableView(QWidget *parent):
 }
 
 JKQTPEnhancedTableView::~JKQTPEnhancedTableView()
-{
-}
+= default;
 
 
 QString JKQTPEnhancedTableView::toHtml(int borderWidth, bool /*non_breaking*/, int fontSizePt) const
@@ -585,13 +584,13 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
                     int rh=rowHeight(r);
                     if (pw%pagesWide==0) {
                         x=0;
-                        option.rect = QRect((int)x, (int)y, (int)vhw, rh);
+                        option.rect = QRect(static_cast<int>(x), static_cast<int>(y), static_cast<int>(vhw), rh);
                         //verticalHeader()->itemDelegate()->paint(&painter, option, model()->index(r, c, QModelIndex()));
                         x=vhw;
                     }
                     for (int c=pageCols[pw]; c<pageCols[pw+1]; c++) {
                         double cw=columnWidth(c);
-                        option.rect = QRect((int)x, (int)y, (int)cw, rh);
+                        option.rect = QRect(static_cast<int>(x), static_cast<int>(y), static_cast<int>(cw), rh);
                         itemDelegate()->paint(&painter, option, model()->index(r, c, QModelIndex()));
                         painter.setPen(cellPen);
                         painter.drawRect(option.rect);
@@ -604,10 +603,10 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
                 if (ph==0) {
                     y=0;
                     int x=0;
-                    if (pw%pagesWide==0) x=(int)vhw;
+                    if (pw%pagesWide==0) x=static_cast<int>(vhw);
                     painter.setPen(headerPen);
                     for (int c=pageCols[pw]; c<pageCols[pw+1]; c++) {
-                        QRect rec=QRect(x, (int)y, columnWidth(c), (int)hhh);
+                        QRect rec=QRect(x, static_cast<int>(y), columnWidth(c), static_cast<int>(hhh));
                         painter.fillRect(rec, QColor("lightgrey"));
                         painter.setFont(headerFont);
                         painter.setPen(headerPen);
@@ -623,7 +622,7 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
                     int x=0;
                     if (ph==0) y=hhh;
                     for (int r=pageRows[ph]; r<pageRows[ph+1]; r++) {
-                        QRect rec=QRect(x, (int)y, (int)vhw, rowHeight(r));
+                        QRect rec=QRect(x, static_cast<int>(y), static_cast<int>(vhw), rowHeight(r));
                         painter.fillRect(rec, QColor("lightgrey"));
                         painter.setPen(headerPen);
                         painter.setFont(headerFont);

@@ -247,26 +247,26 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief returns the class internally used for plotting */
         JKQTBasePlotter* getPlotter() const { return plotter; }
         /** \brief returns the class internally used for plotting */
-        const JKQTBasePlotter* get_constplotter() const { return const_cast<const JKQTBasePlotter*>(plotter); }
+        const JKQTBasePlotter* getConstplotter() const { return const_cast<const JKQTBasePlotter*>(plotter); }
 
-        /*! \brief returns the property displayToolbar.
+        /*! \brief returns the property displayToolbar ( \copybrief displayToolbar ).
             \details Description of the parameter displayToolbar is: <BLOCKQUOTE>\copydoc displayToolbar </BLOCKQUOTE>
             \see displayToolbar for more information */ 
         bool isToolbarVisible() const;
-        /*! \brief returns the property toolbarAlwaysOn.
+        /*! \brief returns the property toolbarAlwaysOn ( \copybrief toolbarAlwaysOn ).
             \details Description of the parameter toolbarAlwaysOn is: <BLOCKQUOTE>\copydoc toolbarAlwaysOn </BLOCKQUOTE>
             \see toolbarAlwaysOn for more information */ 
         bool isToolbarAlwaysOn() const;
-        /*! \brief returns the property displayMousePosition.
+        /*! \brief returns the property displayMousePosition ( \copybrief displayMousePosition ).
             \details Description of the parameter displayMousePosition is: <BLOCKQUOTE>\copydoc displayMousePosition </BLOCKQUOTE>
             \see displayMousePosition for more information */ 
         bool isMousePositionShown() const;
-        /*! \brief returns the property userActionColor.
+        /*! \brief returns the property userActionColor ( \copybrief userActionColor ).
             \details Description of the parameter userActionColor is: <BLOCKQUOTE>\copydoc userActionColor </BLOCKQUOTE>
             \see userActionColor for more information */ 
         QColor getUserActionColor() const;
 
-        /*! \brief returns the property userActionCompositionMode. 
+        /*! \brief returns the property userActionCompositionMode ( \copybrief userActionCompositionMode ). 
             \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
             \see userActionCompositionMode for more information */ 
         QPainter::CompositionMode getUserActionCompositionMode() const;
@@ -348,46 +348,44 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void setPlotUpdateEnabled(bool enable);
 
-        /*! \brief returns the property zoomByMouseRectangle.
-            \details Description of the parameter zoomByMouseRectangle is: <BLOCKQUOTE>\copydoc zoomByMouseRectangle </BLOCKQUOTE>
-            \see rightMouseButtonAction for more information */
+        /*! \brief checks whether to \c getMouseActionMode()==JKQTPlotter::ZoomRectangle */
         bool getZoomByMouseRectangle() const;
-        /*! \brief returns the property rightMouseButtonAction. 
+        /*! \brief returns the property rightMouseButtonAction ( \copybrief rightMouseButtonAction ). 
             \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
             \see rightMouseButtonAction for more information */ 
         RightMouseButtonAction getActionRightMouseButton() const;
-        /*! \brief returns the property leftDoubleClickAction.
+        /*! \brief returns the property leftDoubleClickAction ( \copybrief leftDoubleClickAction ).
             \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
             \see leftDoubleClickAction for more information */ 
         LeftDoubleClickAction getActionLeftDoubleClick() const;
-        /*! \brief returns the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
+        /*! \brief returns the property menuSpecialContextMenu ( \copybrief menuSpecialContextMenu ). \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
         QMenu *getMenuSpecialContextMenu() const;
 
-        /*! \brief set the property menuSpecialContextMenu. \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
+        /*! \brief set the property menuSpecialContextMenu ( \copybrief menuSpecialContextMenu ). \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
         void setMenuSpecialContextMenu(QMenu* menu);
 
-        /*! \brief sets the property zoomByMouseWheel to the specified \a __value. 
+        /*! \brief sets the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ) to the specified \a __value. 
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
             \see zoomByMouseWheel for more information */ 
         void setZoomByMouseWheel(bool __value);
-        /*! \brief returns the property zoomByMouseWheel. 
+        /*! \brief returns the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ). 
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
             \see zoomByMouseWheel for more information */ 
         bool getZoomByMouseWheel() const;
 
-        /** \brief returns the property mouseContextX. 
+        /** \brief returns the property mouseContextX ( \copybrief mouseContextX ). 
             \details Description of the parameter mouseContextX is:  <BLOCKQUOTE>\copydoc mouseContextX </BLOCKQUOTE>.
             \see mouseContextX for more information */ 
         double getMouseContextX() const;
-        /** \brief returns the property mouseContextY. 
+        /** \brief returns the property mouseContextY ( \copybrief mouseContextY ). 
             \details Description of the parameter mouseContextY is:  <BLOCKQUOTE>\copydoc mouseContextY </BLOCKQUOTE>.
             \see mouseContextY for more information */ 
         double getMouseContextY() const;
-        /** \brief returns the property mouseLastClickX. 
+        /** \brief returns the property mouseLastClickX ( \copybrief mouseLastClickX ). 
             \details Description of the parameter mouseLastClickX is:  <BLOCKQUOTE>\copydoc mouseLastClickX </BLOCKQUOTE>.
             \see mouseLastClickX for more information */ 
         int getMouseLastClickX() const;
-        /** \brief returns the property mouseLastClickY. 
+        /** \brief returns the property mouseLastClickY ( \copybrief mouseLastClickY ). 
             \details Description of the parameter mouseLastClickY is:  <BLOCKQUOTE>\copydoc mouseLastClickY </BLOCKQUOTE>.
             \see mouseLastClickY for more information */ 
         int getMouseLastClickY() const;
@@ -471,17 +469,17 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief returns a QPen object for the i-th plot style */
         inline JKQTBasePlotter::JKQTPPen getPlotStyle(int i) const {
-            return get_constplotter()->getPlotStyle(i);
+            return getConstplotter()->getPlotStyle(i);
         }
 
         /** \brief font face for key labels */
         inline QString getKeyFont() const {
-            return get_constplotter()->getKeyFont();
+            return getConstplotter()->getKeyFont();
         }
 
         /** \brief font size for key labels [in points] */
         inline double getKeyFontSize() const {
-            return get_constplotter()->getKeyFontSize();
+            return getConstplotter()->getKeyFontSize();
         }
     public slots:
         /** \brief set the current plot magnification */
@@ -564,23 +562,23 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void redrawOverlays();
 
-        /*! \brief sets the property displayToolbar to the specified \a __value.
+        /*! \brief sets the property displayToolbar ( \copybrief displayToolbar ) to the specified \a __value.
             \details Description of the parameter displayToolbar is: <BLOCKQUOTE>\copydoc displayToolbar </BLOCKQUOTE>
             \see displayToolbar for more information */
         void setToolbarVisible(bool __value);
-        /*! \brief sets the property toolbarAlwaysOn to the specified \a __value.
+        /*! \brief sets the property toolbarAlwaysOn ( \copybrief toolbarAlwaysOn ) to the specified \a __value.
             \details Description of the parameter toolbarAlwaysOn is: <BLOCKQUOTE>\copydoc toolbarAlwaysOn </BLOCKQUOTE>
             \see toolbarAlwaysOn for more information */
         void setToolbarAlwaysOn(bool __value);
-        /*! \brief sets the property displayMousePosition to the specified \a __value.
+        /*! \brief sets the property displayMousePosition ( \copybrief displayMousePosition ) to the specified \a __value.
             \details Description of the parameter displayMousePosition is: <BLOCKQUOTE>\copydoc displayMousePosition </BLOCKQUOTE>
             \see displayMousePosition for more information */
         void setMousePositionShown(bool __value);
-        /*! \brief sets the property userActionColor to the specified \a __value.
+        /*! \brief sets the property userActionColor ( \copybrief userActionColor ) to the specified \a __value.
             \details Description of the parameter userActionColor is: <BLOCKQUOTE>\copydoc userActionColor </BLOCKQUOTE>
             \see userActionColor for more information */
         void setUserActionColor(const QColor & __value);
-        /*! \brief sets the property userActionCompositionMode to the specified \a __value.
+        /*! \brief sets the property userActionCompositionMode ( \copybrief userActionCompositionMode ) to the specified \a __value.
             \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
             \see userActionCompositionMode for more information */
         void setUserActionCompositionMode(const QPainter::CompositionMode & __value);
@@ -589,16 +587,14 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes </BLOCKQUOTE>
             \see mouseActionMode for more information */
         void setMouseActionMode(const MouseActionModes & __value);
-        /*! \brief sets the property zoomByMouseRectangle to the specified \a __value.
-            \details Description of the parameter zoomByMouseRectangle is: <BLOCKQUOTE>\copydoc zoomByMouseRectangle </BLOCKQUOTE>
-            \see zoomByMouseRectangle for more information */
+        /*! \brief equivalent to \c setMouseActionMode(JKQTPlotter::ZoomRectangle) */
         void setZoomByMouseRectangle(bool zomByrectangle);
-        /*! \brief sets the property leftDoubleClickAction to the specified \a __value.
+        /*! \brief sets the property leftDoubleClickAction ( \copybrief leftDoubleClickAction ) to the specified \a __value.
             \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
             \see leftDoubleClickAction for more information */
         void setLeftDoubleClickAction(const LeftDoubleClickAction & __value);
 
-        /*! \brief sets the property rightMouseButtonAction to the specified \a __value.
+        /*! \brief sets the property rightMouseButtonAction ( \copybrief rightMouseButtonAction ) to the specified \a __value.
             \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
             \see rightMouseButtonAction for more information */
         void setRightMouseButtonAction(const RightMouseButtonAction & __value);
@@ -699,18 +695,18 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief fill color of the zoom rectangle */
         QColor userActionColor;
-        /*! \brief default value for property property varname. \see userActionColor for more information */ 
-        QColor def_userActionColor;
+        /*! \brief default value for property property userActionColor. \see userActionColor for more information */ 
+        QColor default_userActionColor;
 
         /** \brief fill color of the zoom rectangle */
         QPainter::CompositionMode userActionCompositionMode;
-        /*! \brief default value for property property varname. \see userActionCompositionMode for more information */ 
-        QPainter::CompositionMode def_userActionCompositionMode;
+        /*! \brief default value for property property userActionCompositionMode. \see userActionCompositionMode for more information */ 
+        QPainter::CompositionMode default_userActionCompositionMode;
 
         /** \brief width/height of the icons in the plotter toolbar in pt */
         int toolbarIconSize;
-        /*! \brief default value for property property varname. \see toolbarIconSize for more information */ 
-        int def_toolbarIconSize;
+        /*! \brief default value for property property toolbarIconSize. \see toolbarIconSize for more information */ 
+        int default_toolbarIconSize;
 
         /** \brief this is set \c true if we are drawing a zoom rectangle */
         bool mouseDragingRectangle;
@@ -861,8 +857,8 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see mousePositionTemplate, \ref JKQTPlotterUserInteraction */
         QString mousePositionTemplate;
-        /*! \brief default value for property property varname. \see mousePositionTemplate for more information */ 
-        QString def_mousePositionTemplate;
+        /*! \brief default value for property property mousePositionTemplate. \see mousePositionTemplate for more information */ 
+        QString default_mousePositionTemplate;
 
         /** \brief the master plotter, this plotter is connected to. */
         QPointer<JKQTPlotter> masterPlotter;

@@ -1301,7 +1301,7 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
         } else {
             QImage img;
             double colorval[]={0,1};
-            JKQTPImagePlot_array2image<double>(colorval, 2, 1, img, get_palette(), double(0.0), double(1.0));
+            JKQTPImagePlot_array2image<double>(colorval, 2, 1, img, getPalette(), double(0.0), double(1.0));
             color1=img.pixel(0,0);
             color2=img.pixel(1,0);
         }

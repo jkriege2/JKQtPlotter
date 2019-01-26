@@ -32,8 +32,7 @@ JKQTPHighResTimer::JKQTPHighResTimer() {
   start();
 }
 
-JKQTPHighResTimer::~JKQTPHighResTimer() {
-}
+JKQTPHighResTimer::~JKQTPHighResTimer() = default;
 
 void JKQTPHighResTimer::start(){
   #ifdef __LINUX__
@@ -41,20 +40,20 @@ void JKQTPHighResTimer::start(){
   #ifdef __WINDOWS__
       LARGE_INTEGER fr;
       QueryPerformanceFrequency(&fr);
-      freq=(double)(fr.QuadPart);
+      freq=static_cast<double>(fr.QuadPart);
       QueryPerformanceCounter(&last);
   #else
       gettimeofday(&last,0);
   #endif
 };
 
-double JKQTPHighResTimer::get_time(){
+double JKQTPHighResTimer::getTime(){
   #ifdef __LINUX__
   #endif
   #ifdef __WINDOWS__
       LARGE_INTEGER now;
       QueryPerformanceCounter(&now);
-      return ((double)(now.QuadPart-last.QuadPart)/freq)*1e6;
+      return (static_cast<double>(now.QuadPart-last.QuadPart)/freq)*1e6;
   #else
     struct timeval tv;
     gettimeofday(&tv,0);
@@ -71,13 +70,13 @@ double JKQTPHighResTimer::get_time(){
 
 void JKQTPHighResTimer::test(double* mean, double* stddev, unsigned long* histogram, double* histogram_x, unsigned long histogram_size){
   unsigned long runs=1000000;
-  double* h=(double*)malloc(runs*sizeof(double));
+  double* h=static_cast<double*>(malloc(runs*sizeof(double)));
   *mean = 0;
   *stddev = 0;
   /* time measurement */
-  double l=get_time(), n;
+  double l=getTime(), n;
   for (unsigned long i=0; i<runs; i++) {
-    n=get_time();
+    n=getTime();
     h[i]=n-l;
     l=n;
     //printf("%lf\n",h[i]);
@@ -104,7 +103,7 @@ void JKQTPHighResTimer::test(double* mean, double* stddev, unsigned long* histog
 
   /* compute standard deviation */
   for (unsigned long i=1; i<runs; i++) {
-    (*stddev)=(*stddev)+((double)h[i]-*mean)*((double)h[i]-*mean)/(double)(runs-2);
+    (*stddev)=(*stddev)+(static_cast<double>(h[i])-*mean)*(static_cast<double>(h[i])-*mean)/static_cast<double>(runs-2);
     if (histogram_size>0) {
       unsigned long bin=(unsigned int)floor((h[i]-mymin)/binwidth);
       if (/*bin>=0 &&*/ bin<histogram_size) histogram[bin]++;

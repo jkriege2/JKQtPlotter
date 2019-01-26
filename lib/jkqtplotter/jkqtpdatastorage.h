@@ -496,7 +496,7 @@ class LIB_EXPORT JKQTPDatastore{
         int getColumnNum(const QString& name);
 
         /** \brief return the num of the first column  with the given name, if none was found this creates a new column with no rows and returns its num */
-        size_t ensureColumnNum(const QString& name);
+        int ensureColumnNum(const QString& name);
 
         /** \brief returns the JKQTPColumn object for the \a i -th column in the store */
         JKQTPColumn getColumn(size_t i) const;
@@ -610,8 +610,8 @@ class LIB_EXPORT JKQTPColumn {
     bool valid;
 
   protected:
-    inline JKQTPDatastore* get_datastore() { return datastore; }
-    inline const JKQTPDatastore* get_datastore() const { return datastore; }
+    inline JKQTPDatastore* getDatastore() { return datastore; }
+    inline const JKQTPDatastore* getDatastore() const { return datastore; }
   public:
     JKQTPColumn();
     /** \brief class constructor that binds the column to a specific datastore object.
@@ -626,13 +626,13 @@ class LIB_EXPORT JKQTPColumn {
     /** \brief class destructor */
     ~JKQTPColumn() ;
 
-    /*! \brief sets the property name to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copydoc JKQTPColumn::name </BLOCKQUOTE> \see JKQTPColumn::name for more information */
-    inline void set_name (const QString& __value)
+    /*! \brief sets the property name ( \copybrief name ) to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copydoc JKQTPColumn::name </BLOCKQUOTE> \see JKQTPColumn::name for more information */
+    inline void setName (const QString& __value)
     {
       this->name = __value;
     }
-    /*! \brief returns the property name. \see name for more information */
-    inline QString get_name () const
+    /*! \brief returns the property name ( \copybrief name ). \see name for more information */
+    inline QString getName () const
     {
       return this->name;
     }
@@ -713,11 +713,11 @@ class LIB_EXPORT JKQTPColumn {
     void setAll(double value);
 
 
-    /*! \brief returns the property datastoreItem. \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreItem </BLOCKQUOTE>. \see JKQTPColumn::datastoreItem for more information */ \
-    inline size_t get_datastoreItem() const  \
+    /*! \brief returns the property datastoreItem ( \copybrief datastoreItem ). \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreItem </BLOCKQUOTE>. \see JKQTPColumn::datastoreItem for more information */ \
+    inline size_t getDatastoreItemNum() const  \
     {   return this->datastoreItem;   }
-    /*! \brief returns the property datastoreOffset. \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPColumn::datastoreOffset for more information */ \
-    inline size_t get_datastoreOffset() const  \
+    /*! \brief returns the property datastoreOffset ( \copybrief datastoreOffset ). \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPColumn::datastoreOffset for more information */ \
+    inline size_t getDatastoreOffset() const  \
     {   return this->datastoreOffset;   }
 };
 
@@ -733,7 +733,7 @@ class LIB_EXPORT JKQTPColumn {
  *   \copydoc JKQTPDatastoreItemFormat
  *
  * The properties \c columns and \c rows determine how many columns and rows are represented by this item (access via
- * get_columns() and get_rows() ). This class may manage chunks of "internal" and "external" memory (which is indicated by
+ * getColumns() and getRows() ). This class may manage chunks of "internal" and "external" memory (which is indicated by
  * the boolean property \c internal. Internal memory will be allocated (in the constructor) and freed (in the destructor) by this
  * object. External memory may be accessed via this class, but will neither by allocated nor freed. These tasks are up to the
  * user. Use this option, if you don't want to generate copies of huge datasets, or you want to change the data while the program
@@ -773,11 +773,11 @@ class LIB_EXPORT JKQTPDatastoreItem {
     /** \brief change the size of all columns to the givne number of rows. The data will be lost */
     void resizeColumns(size_t rows);
 
-    /*! \brief returns the property rows. \details Description of the parameter rows is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::JKQTPDatastoreItemrows </BLOCKQUOTE>. \see JKQTPDatastoreItem::rows for more information */ \
-    inline size_t get_rows() const
+    /*! \brief returns the property rows ( \copybrief rows ). \details Description of the parameter rows is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::JKQTPDatastoreItemrows </BLOCKQUOTE>. \see JKQTPDatastoreItem::rows for more information */ \
+    inline size_t getRows() const
     {   return rows;   }
-    /*! \brief returns the property columns. \details Description of the parameter columns is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::columns </BLOCKQUOTE>. \see JKQTPDatastoreItem::columns for more information */ \
-    inline size_t get_columns() const
+    /*! \brief returns the property columns ( \copybrief columns ). \details Description of the parameter columns is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::columns </BLOCKQUOTE>. \see JKQTPDatastoreItem::columns for more information */ \
+    inline size_t getColumns() const
     {   return columns;   }
 
 

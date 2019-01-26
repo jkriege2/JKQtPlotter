@@ -7,7 +7,7 @@ TARGET = jkqtplotter_simpletest_imageplot_nodatastore
 SOURCES = jkqtplotter_simpletest_imageplot_nodatastore.cpp
 
 # configure Qt
-CONFIG += qt
+CONFIG += link_prl qt
 QT += core gui xml svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 

@@ -237,7 +237,7 @@ QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double
     QVector<QPointF> result;
     double start=angle_start*M_PI/180.0;
     double stop=angle_end*M_PI/180.0;
-    double step=(stop-start)/(double)controlPoints;
+    double step=(stop-start)/static_cast<double>(controlPoints);
     while (fabs(stop-start)/step<10) step=step/2.0;
     double sina=sin(1.0*alpha/180.0*M_PI);
     double cosa=cos(1.0*alpha/180.0*M_PI);

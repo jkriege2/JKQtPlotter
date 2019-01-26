@@ -43,27 +43,27 @@ int main(int argc, char* argv[])
 
     // 4. create a graph (JKQTPColumnRGBMathImage) with the columns created above as data
     JKQTPColumnRGBMathImage* graph=new JKQTPColumnRGBMathImage(&plot);
-    graph->set_title("");
+    graph->setTitle("");
     // set size of the data (the datastore does not contain this info, as it only manages 1D columns of data and this is used to assume a row-major ordering
-    graph->set_Nx(picture.cols);
-    graph->set_Ny(picture.rows);
+    graph->setNx(picture.cols);
+    graph->setNy(picture.rows);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
-    graph->set_x(0);
-    graph->set_y(0);
+    graph->setX(0);
+    graph->setY(0);
     // width and height of the image in plot-axis-coordinates
-    graph->set_width(picture.cols);
-    graph->set_height(picture.rows);
+    graph->setWidth(picture.cols);
+    graph->setHeight(picture.rows);
     // image column with the data
-    graph->set_imageRColumn(cPictureR);
-    graph->set_imageGColumn(cPictureG);
-    graph->set_imageBColumn(cPictureB);
+    graph->setImageRColumn(cPictureR);
+    graph->setImageGColumn(cPictureG);
+    graph->setImageBColumn(cPictureB);
     // determine min/max of each channel manually
-    graph->set_imageMinR(0);
-    graph->set_imageMaxR(255);
-    graph->set_imageMinG(0);
-    graph->set_imageMaxG(255);
-    graph->set_imageMinB(0);
-    graph->set_imageMaxB(255);
+    graph->setImageMinR(0);
+    graph->setImageMaxR(255);
+    graph->setImageMinG(0);
+    graph->setImageMaxG(255);
+    graph->setImageMinB(0);
+    graph->setImageMaxB(255);
 
 
 

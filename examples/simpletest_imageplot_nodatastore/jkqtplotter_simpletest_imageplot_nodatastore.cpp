@@ -53,27 +53,27 @@ int main(int argc, char* argv[])
 
     // 3. create a graph (JKQTPMathImage) with referencing the data created above as data
     //    The data is color-coded with the color-palette JKQTPMathImageBLUEYELLOW
-    //    the converted range of data is determined automatically because set_autoImageRange(true)
+    //    the converted range of data is determined automatically because setAutoImageRange(true)
     JKQTPMathImage* graph=new JKQTPMathImage(&plot);
-    graph->set_title("");
+    graph->setTitle("");
     // set array as datasource, with correct size NX*NY and datatype JKQTPMathImageBase::DataType::DoubleArray
-    graph->set_data(airydisk, NX, NY, JKQTPMathImageBase::DataType::DoubleArray);
+    graph->setData(airydisk, NX, NY, JKQTPMathImageBase::DataType::DoubleArray);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
-    graph->set_x(-w/2.0);
-    graph->set_y(-h/2.0);
+    graph->setX(-w/2.0);
+    graph->setY(-h/2.0);
     // width and height of the image in plot-axis-coordinates
-    graph->set_width(w);
-    graph->set_height(h);
+    graph->setWidth(w);
+    graph->setHeight(h);
     // color-map is "BLUEYELLOW"
-    graph->set_palette(JKQTPMathImageBLUEYELLOW);
+    graph->setPalette(JKQTPMathImageBLUEYELLOW);
     // get coordinate axis of color-bar and set its label
-    graph->get_colorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
+    graph->getColorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
     // determine min/max of data automatically and use it to set the range of the color-scale
-    graph->set_autoImageRange(true);
+    graph->setAutoImageRange(true);
     // you can set the color-scale range manually by using:
-    //   graph->set_autoImageRange(false);
-    //   graph->set_imageMin(0);
-    //   graph->set_imageMax(10);
+    //   graph->setAutoImageRange(false);
+    //   graph->setImageMin(0);
+    //   graph->setImageMax(10);
 	
 	
     // 4. add the graphs to the plot, so it is actually displayed

@@ -32,25 +32,25 @@ After adding all necessary data to the JKQTDatastore:
 ```.cpp
     // 4. create a graph of vertical boxplots:
     JKQTPBoxplotVerticalGraph* graph=new JKQTPBoxplotVerticalGraph(&plot);
-    graph->set_posColumn(columnPOS);
-    graph->set_minColumn(columnMIN);
-    graph->set_percentile25Column(columnQ25);
-    graph->set_medianColumn(columnMEDIAN);
-    graph->set_meanColumn(columnMEAN);
-    graph->set_percentile75Column(columnQ75);
-    graph->set_maxColumn(columnMAX);
-    graph->set_title("vertical Boxplots");
+    graph->setPosColumn(columnPOS);
+    graph->setMinColumn(columnMIN);
+    graph->setPercentile25Column(columnQ25);
+    graph->setMedianColumn(columnMEDIAN);
+    graph->setMeanColumn(columnMEAN);
+    graph->setPercentile75Column(columnQ75);
+    graph->setMaxColumn(columnMAX);
+    graph->setTitle("vertical Boxplots");
 ```
 
 You can further style the plot by e.g. setting:
 
 ```.cpp
     // 4.1 make fill collor a lighter shade of the outline color
-    graph->set_fillColor(graphh->get_color().lighter());
+    graph->setFillColor(graphh->getColor().lighter());
     // 4.2 make whiskers dashed
-    graph->set_whiskerStyle(Qt::DashLine);
+    graph->setWhiskerStyle(Qt::DashLine);
     // 4.3 change mean symbol
-    graph->set_meanSymbol(JKQTPstar);
+    graph->setMeanSymbol(JKQTPstar);
 ```
 
 The result looks like this:
@@ -75,14 +75,14 @@ In addition to the simple box plots, the image above also shows outliers as smal
 
     // 5. outliers need to be drawn separately
     JKQTPXYLineGraph* graphOutliers=new JKQTPXYLineGraph(&plot);
-    graphOutliers->set_xColumn(columnOUTLIERSX);
-    graphOutliers->set_yColumn(columnOUTLIERSY);
-    graphOutliers->set_title("outliers");
+    graphOutliers->setXColumn(columnOUTLIERSX);
+    graphOutliers->setYColumn(columnOUTLIERSY);
+    graphOutliers->setTitle("outliers");
     // make the color a darker shade of the color of graph
-    graphOutliers->set_color(graph->get_color().darker());
-    graphOutliers->set_fillColor(QColor("white"));
+    graphOutliers->setColor(graph->getColor().darker());
+    graphOutliers->setFillColor(QColor("white"));
     // draw outliers as small circles, without lines
-    graphOutliers->set_symbol(JKQTPCircle);
-    graphOutliers->set_drawLine(false);
-    graphOutliers->set_symbolSize(7);
+    graphOutliers->setSymbol(JKQTPCircle);
+    graphOutliers->setDrawLine(false);
+    graphOutliers->setSymbolSize(7);
 ```

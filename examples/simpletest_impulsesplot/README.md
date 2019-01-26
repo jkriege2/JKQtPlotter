@@ -23,11 +23,11 @@ First data for a curve is calculated and stored in `QVector<double>`:
 Now an impulse graph object is generated and added to the plot:
 ```.cpp
     JKQTPImpulsesVerticalGraph* graph=new JKQTPImpulsesVerticalGraph(&plot);
-    graph->set_xColumn(columnX);
-    graph->set_yColumn(columnY);
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY);
 	graph->setLineWidth(2);
-	graph->set_color(QColor("red"));
-    graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
+	graph->setColor(QColor("red"));
+    graph->setTitle(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
 
     plot.addGraph(graph);
 ```
@@ -39,11 +39,11 @@ The result looks like this:
 There is an alternative class `JKQTPImpulsesHorizontalGraph` which draws horizontal impulse plots:
 ```.cpp
     JKQTPImpulsesHorizontalGraph* graph=new JKQTPImpulsesHorizontalGraph(&plot);
-    graph->set_yColumn(columnX);
-    graph->set_xColumn(columnY);
+    graph->setYColumn(columnX);
+    graph->setXColumn(columnY);
     graph->setLineWidth(2);
-    graph->set_color(QColor("blue"));
-    graph->set_title(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
+    graph->setColor(QColor("blue"));
+    graph->setTitle(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
 ```
 
 This code snippet results in a plot like this:

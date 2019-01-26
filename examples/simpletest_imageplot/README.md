@@ -60,26 +60,26 @@ int main(int argc, char* argv[])
 	
     // 4. create a graph (JKQTPColumnMathImage) with the column created above as data
     //    The data is color-coded with the color-palette JKQTPMathImageMATLAB
-    //    the converted range of data is determined automatically because set_autoImageRange(true)
+    //    the converted range of data is determined automatically because setAutoImageRange(true)
     JKQTPColumnMathImage* graph=new JKQTPColumnMathImage(&plot);
-    graph->set_title("");
+    graph->setTitle("");
     // image column with the data
-    graph->set_imageColumn(cAiryDisk);
+    graph->setImageColumn(cAiryDisk);
     // set size of the data (the datastore does not contain this info, as it only manages 1D columns of data and this is used to assume a row-major ordering
-    graph->set_Nx(NX);
-    graph->set_Ny(NY);
+    graph->setNx(NX);
+    graph->setNy(NY);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
-    graph->set_x(-w/2.0);
-    graph->set_y(-h/2.0);
+    graph->setX(-w/2.0);
+    graph->setY(-h/2.0);
     // width and height of the image in plot-axis-coordinates
-    graph->set_width(w);
-    graph->set_height(h);
+    graph->setWidth(w);
+    graph->setHeight(h);
     // color-map is "MATLAB"
-    graph->set_palette(JKQTPMathImageMATLAB);
+    graph->setPalette(JKQTPMathImageMATLAB);
     // get coordinate axis of color-bar and set its label
-    graph->get_colorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
+    graph->getColorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
     // determine min/max of data automatically and use it to set the range of the color-scale
-    graph->set_autoImageRange(true);
+    graph->setAutoImageRange(true);
 
 	
 	
@@ -116,28 +116,28 @@ The result looks like this:
 There are several ways to modify the plot:
   1. You can set the color scale manually (here 0..2), by using
     ```
-    graph->set_autoImageRange(false);
-    graph->set_imageMin(0);
-    graph->set_imageMax(2);
+    graph->setAutoImageRange(false);
+    graph->setImageMin(0);
+    graph->setImageMax(2);
 	```
 	instead of 
     ```
-    graph->set_autoImageRange(true);
+    graph->setAutoImageRange(true);
 	```
 	from above. The result will look like this:<br>
 	![jkqtplotter_simpletest_imageplot__scale02](../../screenshots/jkqtplotter_simpletest_imageplot__scale02.png)<br>
 	Note how the color scale is not used completely, because data really only scales between 0 and 1.
   2. If you set the color-range to 0.1 .. 0.8 with
     ```
-    graph->set_autoImageRange(false);
-    graph->set_imageMin(0.1);
-    graph->set_imageMax(0.8);
+    graph->setAutoImageRange(false);
+    graph->setImageMin(0.1);
+    graph->setImageMax(0.8);
 	```
 	Then there will be datapoints above or below the range of the colorscale. The default behaviour of the graph is to use the first color of the palette for every pixel with a value below the minimum (here 0.1) and the last color in the palette for every pixel with a value above the maximum.<br>
 	![jkqtplotter_simpletest_imageplot__smallscalelimitcolor](../../screenshots/jkqtplotter_simpletest_imageplot__smallscalelimitcolor.png)<br>
-	You can change this behaviour by `set_rangeMinFailAction(),set_rangeMaxFailAction()` with one of these parameters:
+	You can change this behaviour by `setRangeMinFailAction(),setRangeMaxFailAction()` with one of these parameters:
 	  - `JKQTPMathImageLastPaletteColor`: the default behaviour explained above
-	  - `JKQTPMathImageGivenColor`: use a color set by `set_rangeMinFailColor(),set_rangeMaxFailColor()` (here e.g. black for min and grey for max)<br>
+	  - `JKQTPMathImageGivenColor`: use a color set by `setRangeMinFailColor(),setRangeMaxFailColor()` (here e.g. black for min and grey for max)<br>
 	    ![jkqtplotter_simpletest_imageplot__smallscalecolor](../../screenshots/jkqtplotter_simpletest_imageplot__smallscalecolor.png)
 	  - `JKQTPMathImageTransparent`: draw pixels transparent<br>
 	    ![jkqtplotter_simpletest_imageplot__smallscaletransparent](../../screenshots/jkqtplotter_simpletest_imageplot__smallscaletransparent.png)

@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     //    the function is defined as C++ inline function
     JKQTPXFunctionLineGraph* func1=new JKQTPXFunctionLineGraph(plot);
     func1->setPlotFunction([](double x) { return 0.2*x*x-0.015*x*x*x; });
-    func1->set_title("C++-inline function $0.2x^2-0.015x^3$");
+    func1->setTitle("C++-inline function $0.2x^2-0.015x^3$");
     plot->addGraph(func1);
 
     // 3. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
@@ -52,8 +52,8 @@ int main(int argc, char* argv[])
         return p->at(0)*sin(2.0*M_PI*x*p->at(1));
     });
     // here we set the parameters p0, p1
-    func2->set_paramsV(5, 0.2);
-    func2->set_title("C++-inline function with int. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
+    func2->setParamsV(5, 0.2);
+    func2->setTitle("C++-inline function with int. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
     plot->addGraph(func2);
 
     // 4. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
@@ -68,29 +68,29 @@ int main(int argc, char* argv[])
     QMap<QString,double> params3;
     params3["amplitude"]=-3;
     params3["frequency"]=0.3;
-    func3->set_params(&params3);
-    func3->set_title("C++-inline function with ext. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
+    func3->setParams(&params3);
+    func3->setTitle("C++-inline function with ext. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
     plot->addGraph(func3);
 
     // 5. of course the function may also be any C+ funtor object:
     JKQTPXFunctionLineGraph* func4=new JKQTPXFunctionLineGraph(plot);
     func4->setPlotFunction(SincSqr(-8));
-    func4->set_title("C++ functor $-8*\\sin^2(x)/x^2$");
+    func4->setTitle("C++ functor $-8*\\sin^2(x)/x^2$");
     plot->addGraph(func4);
 
 
     // 6. now we use a JKQTPXFunctionLineGraph to draw a static C function
     JKQTPXFunctionLineGraph* func5=new JKQTPXFunctionLineGraph(plot);
     func5->setPlotFunction(&sinc);
-    func5->set_title("static C function $10*\\sin(x)/x$");
+    func5->setTitle("static C function $10*\\sin(x)/x$");
     plot->addGraph(func5);
 
     // 7. finally JKQTPXFunctionLineGraph defines a small set of common functions
     JKQTPXFunctionLineGraph* func6=new JKQTPXFunctionLineGraph(plot);
     func6->setSpecialFunction(JKQTPXFunctionLineGraph::Line);
     // here we set offset p0=-1 and slope p1=1.5 of the line p0+p1*x
-    func6->set_paramsV(-1,1.5);
-    func6->set_title("special function: linear p_0=-1, p_1=1.5");
+    func6->setParamsV(-1,1.5);
+    func6->setTitle("special function: linear p_0=-1, p_1=1.5");
     plot->addGraph(func6);
 
     // 7. finally JKQTPXFunctionLineGraph defines a small set of common functions
@@ -101,8 +101,8 @@ int main(int argc, char* argv[])
     QVector<double> params;
     params << /*p0=*/1 << /*p1=*/-1.5;
     size_t paramCol=plot->getDatastore()->addCopiedColumn(params);
-    func7->set_parameterColumn(paramCol);
-    func7->set_title("special function: linear p_0=1, p_1=-1.5");
+    func7->setParameterColumn(paramCol);
+    func7->setTitle("special function: linear p_0=1, p_1=-1.5");
     plot->addGraph(func7);
 
 

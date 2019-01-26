@@ -21,10 +21,10 @@ TestWidgetEmptyPlot::TestWidgetEmptyPlot(QWidget *parent) :
         xef[i]=i;
         efy[i]=double(i%5)*1e-308;
     }
-    efunc->set_xColumn(plotEmpty->getDatastore()->addCopiedColumn(xef, NEMPTY, "x"));
-    efunc->set_yColumn(plotEmpty->getDatastore()->addCopiedColumn(efy, NEMPTY, "y"));
+    efunc->setXColumn(plotEmpty->getDatastore()->addCopiedColumn(xef, NEMPTY, "x"));
+    efunc->setYColumn(plotEmpty->getDatastore()->addCopiedColumn(efy, NEMPTY, "y"));
     plotEmpty->addGraph(efunc);
-    plotEmpty->getYAxis()->set_logAxis(true);
+    plotEmpty->getYAxis()->setLogAxis(true);
     plotEmpty->zoomToFit();
     plotEmpty->setY(0,0);
 

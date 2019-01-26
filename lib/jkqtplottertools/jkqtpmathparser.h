@@ -234,7 +234,7 @@
  error handling function. This can be usefull in programs that don't support exceptions.
  To do so, use this cod:
  \code
-     void error(std::string message) {
+     void error(const std::string& message) {
        cout<<"error: "+message;
        system("PAUSE");
        abort();
@@ -242,7 +242,7 @@
 
      int main() {
        jkMathParser mp;
-       mp.set_exception_function(error);  // make error ahndler known
+       mp.setException_function(error);  // make error ahndler known
        ...
      }
  \endcode
@@ -570,7 +570,7 @@ class JKQTPMathParser
              *  \param p a pointer to a jkMathParser object
              *  \param par a pointer to the parent node
              */
-            jkmpVariableAssignNode(std::string var, jkmpNode* c, JKQTPMathParser* p, jkmpNode* par);
+            jkmpVariableAssignNode(const std::string& var, jkmpNode* c, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief evaluate this node */
             virtual jkmpResult evaluate() override;
@@ -608,7 +608,7 @@ class JKQTPMathParser
              *  \param p a pointer to a jkMathParser object
              *  \param par a pointer to the parent node
              */
-            jkmpVariableNode(std::string name, JKQTPMathParser* p, jkmpNode* par);
+            jkmpVariableNode(const std::string& name, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief evaluate this node */
             virtual jkmpResult evaluate() override;
@@ -638,7 +638,7 @@ class JKQTPMathParser
              *  \param p a pointer to a jkMathParser object
              *  \param par a pointer to the parent node
              */
-            jkmpFunctionNode(std::string name, jkmpNode** c, unsigned char num, JKQTPMathParser* p, jkmpNode* par);
+            jkmpFunctionNode(const std::string& name, jkmpNode** c, unsigned char num, JKQTPMathParser* p, jkmpNode* par);
 
             /** \brief standard destructor, also destroy the children (recursively) */
             virtual ~jkmpFunctionNode() override;
@@ -703,7 +703,7 @@ class JKQTPMathParser
                 }
 
                 /** \brief constructor with supplied error message */
-                inline jkmpException(std::string msg) {
+                inline jkmpException(const std::string& msg) {
                     errormessage=msg;
                 }
 
@@ -726,7 +726,7 @@ class JKQTPMathParser
 
         /** \brief function that throws an exception or calls an error handler 
          *  \ingroup jkmpErrorhandling */
-        inline void jkmpError(std::string st) {
+        inline void jkmpError(const std::string& st) {
             if (jkmathparser_exception_function!=nullptr) {
                 jkmathparser_exception_function(st);
             } else {
@@ -742,13 +742,13 @@ class JKQTPMathParser
     public:
         /** \brief activate error handling by use of an exception function
          *  \ingroup jkmpErrorhandling  */
-        inline void set_exception_function(jkmpexceptionf exception_function) {
+        inline void setException_function(jkmpexceptionf exception_function) {
             jkmathparser_exception_function=exception_function;
         }
 
         /** \brief deactivate error handling by use of an exception function
          *  \ingroup jkmpErrorhandling  */
-        inline void reset_exception_function() {
+        inline void resetException_function() {
             jkmathparser_exception_function=nullptr;
         }
 
@@ -812,13 +812,13 @@ class JKQTPMathParser
         double NumberValue;
 
         /** \brief set the defining struct of the given variable */
-        void setVariable(std::string name, jkmpResult value);
+        void setVariable(const std::string& name, jkmpResult value);
         /** \brief set the defining struct of the given variable */
-        void setVariableDouble(std::string name, double value);
+        void setVariableDouble(const std::string& name, double value);
 
 
         /** \brief  adds a temporary variable */
-        void addTempVariable(std::string name, jkmpResult value);
+        void addTempVariable(const std::string& name, jkmpResult value);
 
     protected:
         int argc;
@@ -831,17 +831,17 @@ class JKQTPMathParser
         /** \brief class destructor */
         virtual ~JKQTPMathParser();
 
-        /*! \brief sets the property data to the specified \a __value. 
+        /*! \brief sets the property data ( \copybrief data ) to the specified \a __value. 
             \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
-        inline virtual void set_data(void* __value)  
+        inline virtual void setData(void* __value)  
         {
             this->data = __value;
         } 
-        /*! \brief returns the property data. 
+        /*! \brief returns the property data ( \copybrief data ). 
             \details Description of the parameter data is: <BLOCKQUOTE>\copydoc data </BLOCKQUOTE> 
             \see data for more information */ 
-        inline virtual void* get_data() const  
+        inline virtual void* getData() const  
         {
             return this->data; 
         }
@@ -850,60 +850,60 @@ class JKQTPMathParser
          * \param name name of the new function
          * \param function a pointer to the implementation
          */
-        void addFunction(std::string name, jkmpEvaluateFunc function);
+        void addFunction(const std::string& name, jkmpEvaluateFunc function);
 
         /** \brief  register a new external variable of type double
          * \param name name of the new variable
          * \param v pointer to the variable memory
          */
-        void addVariableDouble(std::string name, double* v);
+        void addVariableDouble(const std::string& name, double* v);
 
         /** \brief  register a new external variable of type string
          * \param name name of the new variable
          * \param v pointer to the variable memory
          */
-        void addVariableString(std::string name, std::string* v);
+        void addVariableString(const std::string& name, std::string* v);
 
         /** \brief  register a new external variable of type boolean
          * \param name name of the new variable
          * \param v pointer to the variable memory
          */
-        void addVariableBoolean(std::string name, bool* v);
+        void addVariableBoolean(const std::string& name, bool* v);
 
 
         /** \brief  register a new internal variable of type double
          * \param name name of the new variable
          * \param v initial value of this variable
          */
-        void addVariableDouble(std::string name, double v);
+        void addVariableDouble(const std::string& name, double v);
 
         /** \brief  register a new internal variable of type string
          * \param name name of the new variable
          * \param v initial value of this variable
          */
-        void addVariableString(std::string name, std::string v);
+        void addVariableString(const std::string& name, const std::string& v);
 
         /** \brief  register a new internal variable of type boolean
          * \param name name of the new variable
          * \param v initial value of this variable
          */
-        void addVariableBoolean(std::string name, bool v);
+        void addVariableBoolean(const std::string& name, bool v);
 
         /** \brief  register a new internal variable of type boolean
          * \param name name of the new variable
          * \param v initial value of this variable
          */
-        void addVariable(std::string name, jkmpResult result);
+        void addVariable(const std::string& name, jkmpResult result);
 
 
 
         /** \brief  returns the value of the given variable */
-        jkmpResult getVariable(std::string name);
+        jkmpResult getVariable(const std::string& name);
         /** \brief  returns the value of the given variable */
-        jkmpResult getVariableOrInvalid(std::string name);
+        jkmpResult getVariableOrInvalid(const std::string& name);
 
         /** \brief  returns the defining structure of the given variable */
-        jkmpVariable getVariableDef(std::string name);
+        jkmpVariable getVariableDef(const std::string& name);
 
 
         /** \brief  evaluates a registered function
@@ -911,13 +911,13 @@ class JKQTPMathParser
          * \param params array of the input parameters
          * \param n number of input parameters (<=8)
          */
-        jkmpResult evaluateFunction(std::string name, jkmpResult* params, unsigned char n);
+        jkmpResult evaluateFunction(const std::string& name, jkmpResult* params, unsigned char n);
 
         /** \brief  returns the defining structure of the given function */
-        jkmpEvaluateFunc getFunctionDef(std::string name);
+        jkmpEvaluateFunc getFunctionDef(const std::string& name);
 
         /** \brief  tests whether a temporary variable exists */
-        inline bool tempvariableExists(std::string name){
+        inline bool tempvariableExists(const std::string& name){
           if (tempvariables.size()<=0)  return false;
           for (int i=tempvariables.size()-1; i>=0; i--) {
             if (tempvariables[i].name==name) return true;
@@ -926,10 +926,10 @@ class JKQTPMathParser
         }
 
         /** \brief  tests whether a variable exists */
-        inline bool variableExists(std::string name){ return tempvariableExists(name)||(variables.find(name)!=variables.end()); };
+        inline bool variableExists(const std::string& name){ return tempvariableExists(name)||(variables.find(name)!=variables.end()); };
 
         /** \brief  tests whether a function exists */
-        inline bool functionExists(std::string name){ return !(functions.find(name)==functions.end()); };
+        inline bool functionExists(const std::string& name){ return !(functions.find(name)==functions.end()); };
 
         /** \brief  deletes all defined variables. the memory of internal variables
          * will be released. the external memory will not be released.
@@ -937,7 +937,7 @@ class JKQTPMathParser
         void clearVariables();
 
         /** \brief  delete the specified variabale and releases its internal memory.*/
-        void deleteVariable(std::string name);
+        void deleteVariable(const std::string& name);
 
         /** \brief  clears the list of internal functions*/
         inline void clearFunctions() {functions.clear();}
@@ -949,10 +949,10 @@ class JKQTPMathParser
         void addStandardFunctions();
 
         /** \brief  parses the given expression*/
-        jkmpNode* parse(std::string prog);
+        jkmpNode* parse(const std::string& prog);
 
         /** \brief evaluate the given expression */
-        jkmpResult evaluate(std::string prog);
+        jkmpResult evaluate(const std::string& prog);
 
         /** \brief  prints a list of all registered variables */
         void printVariables();
@@ -964,7 +964,7 @@ class JKQTPMathParser
         void setArgCV(int argc, char **argv);
 
         /** \brief return one of programs command-line arguments, or \a defaultResult if it is not present */
-        std::string getArgCVParam(std::string name, std::string defaultResult);
+        std::string getArgCVParam(const std::string& name, const std::string& defaultResult);
 };
 
 #endif // JKQTPMATHPARSER_H

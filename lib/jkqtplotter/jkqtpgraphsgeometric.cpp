@@ -605,7 +605,7 @@ void JKQTPGeoRectangle::draw(JKQTPEnhancedPainter& painter) {
 }
 
 
-void JKQTPGeoRectangle::set_bottomleftrectangle(double x, double y, double width, double height) {
+void JKQTPGeoRectangle::setBottomleftrectangle(double x, double y, double width, double height) {
     this->x=x+width/2.0;
     this->y=y+height/2.0;
     this->width=width;

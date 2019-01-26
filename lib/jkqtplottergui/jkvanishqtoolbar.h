@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -29,7 +29,7 @@
 #include "jkqtplottertools/jkqtptools.h"
 #include <QToolBar>
 
-/** \brief a modified a href="http://doc.trolltech.com/4.5/qtoolbar.html">QToolBar</a> which vanishes when the mouse leaves the toolbar.
+/** \brief a modified <a href="http://doc.trolltech.com/4.5/qtoolbar.html">QToolBar</a> which vanishes when the mouse leaves the toolbar.
  * \ingroup jkqtptools_qtwidgets
  *
  * \image html jkqtplotter_toolbar_hidden.png "Hidden Toolbar"
@@ -42,21 +42,13 @@ class LIB_EXPORT JKVanishQToolBar: public QToolBar {
         JKVanishQToolBar(const QString& title, QWidget* parent=nullptr);
         /** \brief class constructor */
         JKVanishQToolBar(QWidget* parent=nullptr);
-        /*! \brief sets the property toolbarVanishes to the specified \a __value. 
-            \details Description of the parameter toolbarVanishes is: <BLOCKQUOTE>\copydoc toolbarVanishes </BLOCKQUOTE> 
-            \see toolbarVanishes for more information */ 
-        inline virtual void set_toolbarVanishes(bool __value)  
-        {
-            this->toolbarVanishes = __value;
-        } 
-        /*! \brief returns the property toolbarVanishes. 
-            \details Description of the parameter toolbarVanishes is: <BLOCKQUOTE>\copydoc toolbarVanishes </BLOCKQUOTE> 
-            \see toolbarVanishes for more information */ 
-        inline virtual bool get_toolbarVanishes() const  
-        {
-            return this->toolbarVanishes; 
-        }
+        /** \brief is the auto-vanishing feature of this toolbar activated? */
+        bool doesToolbarVanish() const;
+    public slots:
+        /** \brief enable or disable the auto-vanishing feature of this toolbar  */
+        void setToolbarVanishesEnabled(bool __value);
     protected:
+        /** \brief is the auto-vanishing feature of this toolbar activated? */
         bool toolbarVanishes;
         /** \brief this event triggers the vanishing of the toolbar */
         void leaveEvent ( QEvent * /*event*/ );

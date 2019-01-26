@@ -44,24 +44,24 @@ int main(int argc, char* argv[])
         JKQTPXYLineGraph* graph=new JKQTPXYLineGraph(&plot);
 
         // copy data into datastore and immediately set the yColumn
-        graph->set_xColumn(columnX);
-        graph->set_yColumn(ds->addCopiedColumn(Y, "y"+QString::number(symbolID)));
+        graph->setXColumn(columnX);
+        graph->setYColumn(ds->addCopiedColumn(Y, "y"+QString::number(symbolID)));
 
         // set symbol + pen style and color
-        graph->set_symbol(static_cast<JKQTPGraphSymbols>(symbolID));
-        graph->set_style(pens[ipen]);
-        QString lname=jkqtp_QPenStyle2String(graph->get_style());
-        graph->set_drawLine(static_cast<JKQTPGraphSymbols>(symbolID)!=JKQTPDot);
-        if (!graph->get_drawLine()) lname="";
+        graph->setSymbol(static_cast<JKQTPGraphSymbols>(symbolID));
+        graph->setStyle(pens[ipen]);
+        QString lname=jkqtp_QPenStyle2String(graph->getStyle());
+        graph->setDrawLine(static_cast<JKQTPGraphSymbols>(symbolID)!=JKQTPDot);
+        if (!graph->getDrawLine()) lname="";
         // set symbol size
-        graph->set_symbolSize(14);
+        graph->setSymbolSize(14);
         // set width of symbol lines
-        graph->set_symbolWidth(1.5);
+        graph->setSymbolWidth(1.5);
         // set width of graph line
         graph->setLineWidth(1);
 
         // graph title is made from symbol+penstyle
-        graph->set_title(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->get_symbol()))+QString(", ")+lname);
+        graph->setTitle(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->getSymbol()))+QString(", ")+lname);
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);

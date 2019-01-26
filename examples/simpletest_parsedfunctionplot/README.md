@@ -7,8 +7,8 @@ Note: See the example [Plotting Mathematical Functions as Line Graphs](../simple
 Adding an evaluated funtion to a graph is very simple: 
 ```.cpp
     JKQTPXParsedFunctionLineGraph* parsedFunc=new JKQTPXParsedFunctionLineGraph(plot);
-    parsedFunc->set_function("sin(x*8)*exp(-x/4)");
-    parsedFunc->set_title("user function");
+    parsedFunc->setFunction("sin(x*8)*exp(-x/4)");
+    parsedFunc->setTitle("user function");
 ```
 As you can see a graph of the type `JKQTPXParsedFunctionLineGraph` is used, which plots a function that depends on the variable `x`. The given function is parsed and evaluated (see [`lib/jkqtplottertools/jkqtpmathparser.h`](https://github.com/jkriege2/JKQTPlotter/blob/master/lib/jkqtplottertools/jkqtpmathparser.h) for details on the features of the math parser). An intelligent drawing algorithm chooses the number of control points for drawing a smooth graph, with sufficient amount of details, by evaluating locally the slope of the function.
 
@@ -29,8 +29,8 @@ In the example in [`test/simpletest_parsedfunctionplot/simpletest_parsedfunction
     //    the graph is updated:
     auto updateGraphFunctor=
        [=]() {
-        parsedFunc->set_title("user function: \\verb{"+edit->text()+"}");
-        parsedFunc->set_function(edit->text());
+        parsedFunc->setTitle("user function: \\verb{"+edit->text()+"}");
+        parsedFunc->setFunction(edit->text());
         plot->redrawPlot();
        };
     QObject::connect(edit, &QLineEdit::returnPressed, updateGraphFunctor);
@@ -49,9 +49,9 @@ As shown in [Plotting Mathematical Functions as Line Graphs](../simpletest_funct
 
 ```.cpp
     JKQTPXParsedFunctionLineGraph* parsedFunc=new JKQTPXParsedFunctionLineGraph(plot);
-    parsedFunc->set_function("sin(x*p1)*exp(-x/p2)");
-    parsedFunc->set_paramV(/*p1=*/8, /*p2=*/4);
-    parsedFunc->set_title("user function");
+    parsedFunc->setFunction("sin(x*p1)*exp(-x/p2)");
+    parsedFunc->setParamV(/*p1=*/8, /*p2=*/4);
+    parsedFunc->setTitle("user function");
 ```
 
 ## Plot Function f(y)
@@ -65,7 +65,7 @@ The adaptive capabilities of the rendering algorithm can be seen, when plotting 
 
 ![jkqtplotter_simpletest_parsedfunctionplot_2overx.png](../../screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx.png)
 
-With an additional checkbox in this example, you can switch drawing the actual sample points of the drawing algorithm on and off, by calling `parsedFunc->set_displaySamplePoints(...)`. This can be used to debug the drawing algorithm and explore its parameters (which you can set with `set_minSamples()`, `set_maxRefinementDegree()`, `set_slopeTolerance()`, `set_minPixelPerSample()`). Here is an example of a 2/x function with shown sample points:
+With an additional checkbox in this example, you can switch drawing the actual sample points of the drawing algorithm on and off, by calling `parsedFunc->setDisplaySamplePoints(...)`. This can be used to debug the drawing algorithm and explore its parameters (which you can set with `setMinSamples()`, `setMaxRefinementDegree()`, `setSlopeTolerance()`, `setMinPixelPerSample()`). Here is an example of a 2/x function with shown sample points:
 
 ![jkqtplotter_simpletest_parsedfunctionplot_2overx_samplepoints.png](../../screenshots/jkqtplotter_simpletest_parsedfunctionplot_2overx_samplepoints.png)
 

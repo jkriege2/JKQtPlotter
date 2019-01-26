@@ -294,8 +294,8 @@ JKQTBasePlotter::~JKQTBasePlotter(){
 }
 
 void JKQTBasePlotter::setGrid(bool val) {
-    xAxis->set_drawGrid(val);
-    yAxis->set_drawGrid(val);
+    xAxis->setDrawGrid(val);
+    yAxis->setDrawGrid(val);
 };
 
 void JKQTBasePlotter::useExternalDatastore(JKQTPDatastore* newStore){
@@ -343,15 +343,15 @@ void JKQTBasePlotter::initSettings() {
     useClipping=true;
     //doDrawing=true;
 
-    maintainAspectRatio=def_maintainAspectRatio=false;
-    aspectRatio=def_aspectRatio=1;
+    maintainAspectRatio=default_maintainAspectRatio=false;
+    aspectRatio=default_aspectRatio=1;
 
-    maintainAxisAspectRatio=def_maintainAxisAspectRatio=false;
-    axisAspectRatio=def_axisAspectRatio=1;
+    maintainAxisAspectRatio=default_maintainAxisAspectRatio=false;
+    axisAspectRatio=default_axisAspectRatio=1;
 
-    def_useAntiAliasingForSystem=false; useAntiAliasingForSystem=def_useAntiAliasingForSystem;
-    def_useAntiAliasingForGraphs=true; useAntiAliasingForGraphs=def_useAntiAliasingForGraphs;
-    def_useAntiAliasingForText=true; useAntiAliasingForText=def_useAntiAliasingForText;
+    default_useAntiAliasingForSystem=false; useAntiAliasingForSystem=default_useAntiAliasingForSystem;
+    default_useAntiAliasingForGraphs=true; useAntiAliasingForGraphs=default_useAntiAliasingForGraphs;
+    default_useAntiAliasingForText=true; useAntiAliasingForText=default_useAntiAliasingForText;
 
     gridPrinting=false;
     gridPrintingList.clear();
@@ -359,10 +359,10 @@ void JKQTBasePlotter::initSettings() {
     gridPrintingCurrentY=0;
 
 
-    def_plotBorderLeft=5; iplotBorderLeft_nographs=iplotBorderLeft=plotBorderLeft=def_plotBorderLeft;
-    def_plotBorderRight=5; iplotBorderRight_nographs=iplotBorderRight=plotBorderRight=def_plotBorderRight;
-    def_plotBorderTop=5; iplotBorderTop_nographs=iplotBorderTop=plotBorderTop=def_plotBorderTop;
-    def_plotBorderBottom=5; iplotBorderBottom_nographs=iplotBorderBottom=plotBorderBottom=def_plotBorderBottom;
+    default_plotBorderLeft=5; iplotBorderLeft_nographs=iplotBorderLeft=plotBorderLeft=default_plotBorderLeft;
+    default_plotBorderRight=5; iplotBorderRight_nographs=iplotBorderRight=plotBorderRight=default_plotBorderRight;
+    default_plotBorderTop=5; iplotBorderTop_nographs=iplotBorderTop=plotBorderTop=default_plotBorderTop;
+    default_plotBorderBottom=5; iplotBorderBottom_nographs=iplotBorderBottom=plotBorderBottom=default_plotBorderBottom;
 
     //plotWidth=700;
     //plotHeight=150;
@@ -370,68 +370,68 @@ void JKQTBasePlotter::initSettings() {
     xAxis->setRange(-10, 10);
     yAxis->setRange(-10, 10);
 
-    def_keyFont="Arial"; keyFont=def_keyFont;
-    def_keyFontSize=9; keyFontSize=def_keyFontSize;
+    default_keyFont="Arial"; keyFont=default_keyFont;
+    default_keyFontSize=9; keyFontSize=default_keyFontSize;
 
 
-    def_keyXOffset=0.5; keyXOffset=def_keyXOffset;
-    def_keyYOffset=0.5; keyYOffset=def_keyYOffset;
-    def_keyXSeparation=0.75; keyXSeparation=def_keyXSeparation;
-    def_keyYSeparation=0.75; keyYSeparation=def_keyYSeparation;
-    def_keyFrameColor=QColor("black"); keyFrameColor=def_keyFrameColor;
-    def_keyFrameWidth=1; keyFrameWidth=def_keyFrameWidth;
-    def_showKeyFrame=true; showKeyFrame=def_showKeyFrame;
-    def_keyBackgroundColor=QColor("white"); keyBackgroundColor=def_keyBackgroundColor;
-    def_showKey=true; showKey=def_showKey;
-    def_key_item_width=20; key_item_width=def_key_item_width;
-    def_key_item_height=2.2; key_item_height=def_key_item_height;
-    def_key_line_length=3; key_line_length=def_key_line_length;
-    def_keyXMargin=0.5; keyXMargin=def_keyXMargin;
-    def_keyYMargin=0.5; keyYMargin=def_keyYMargin;
-    def_keyPosition=JKQTPKeyInsideTopRight; keyPosition=def_keyPosition;
-    def_keyLayout=JKQTPKeyLayoutOneColumn; keyLayout=def_keyLayout;
-    def_keyAutosize=true; keyAutosize=def_keyAutosize;
+    default_keyXOffset=0.5; keyXOffset=default_keyXOffset;
+    default_keyYOffset=0.5; keyYOffset=default_keyYOffset;
+    default_keyXSeparation=0.75; keyXSeparation=default_keyXSeparation;
+    default_keyYSeparation=0.75; keyYSeparation=default_keyYSeparation;
+    default_keyFrameColor=QColor("black"); keyFrameColor=default_keyFrameColor;
+    default_keyFrameWidth=1; keyFrameWidth=default_keyFrameWidth;
+    default_showKeyFrame=true; showKeyFrame=default_showKeyFrame;
+    default_keyBackgroundColor=QColor("white"); keyBackgroundColor=default_keyBackgroundColor;
+    default_showKey=true; showKey=default_showKey;
+    default_key_item_width=20; key_item_width=default_key_item_width;
+    default_key_item_height=2.2; key_item_height=default_key_item_height;
+    default_key_line_length=3; key_line_length=default_key_line_length;
+    default_keyXMargin=0.5; keyXMargin=default_keyXMargin;
+    default_keyYMargin=0.5; keyYMargin=default_keyYMargin;
+    default_keyPosition=JKQTPKeyInsideTopRight; keyPosition=default_keyPosition;
+    default_keyLayout=JKQTPKeyLayoutOneColumn; keyLayout=default_keyLayout;
+    default_keyAutosize=true; keyAutosize=default_keyAutosize;
 
-    def_exportBackgroundColor=QColor("white"); exportBackgroundColor=def_exportBackgroundColor;
-    def_backgroundColor=QColor("white"); backgroundColor=def_backgroundColor;
-    def_plotBackgroundColor=QColor("white"); plotBackgroundColor=def_plotBackgroundColor;
-    def_graphColor=QColor("red"); graphColor=def_graphColor;
+    default_exportBackgroundColor=QColor("white"); exportBackgroundColor=default_exportBackgroundColor;
+    default_backgroundColor=QColor("white"); backgroundColor=default_backgroundColor;
+    default_plotBackgroundColor=QColor("white"); plotBackgroundColor=default_plotBackgroundColor;
+    default_graphColor=QColor("red"); graphColor=default_graphColor;
     manyGraphsColorCount=15;
-    def_manyGraphsColor[0]=graphColor;
-    def_manyGraphsColor[1]=QColor("green");
-    def_manyGraphsColor[2]=QColor("blue");
-    def_manyGraphsColor[3]=QColor("fuchsia");
-    def_manyGraphsColor[4]=QColor("darkorange");
-    def_manyGraphsColor[5]=QColor("navy");
-    def_manyGraphsColor[6]=QColor("firebrick");
-    def_manyGraphsColor[7]=QColor("darkgreen");
-    def_manyGraphsColor[8]=QColor("darkmagenta");
-    def_manyGraphsColor[9]=QColor("darkgreen");
-    def_manyGraphsColor[10]=QColor("darkslateblue");
-    def_manyGraphsColor[11]=QColor("maroon");
-    def_manyGraphsColor[12]=QColor("indianred");
-    def_manyGraphsColor[13]=QColor("darkolivegreen");
-    def_manyGraphsColor[14]=QColor("mediumpurple");
-    def_manyGraphsColor[15]=QColor("darkcyan");
+    default_manyGraphsColor[0]=graphColor;
+    default_manyGraphsColor[1]=QColor("green");
+    default_manyGraphsColor[2]=QColor("blue");
+    default_manyGraphsColor[3]=QColor("fuchsia");
+    default_manyGraphsColor[4]=QColor("darkorange");
+    default_manyGraphsColor[5]=QColor("navy");
+    default_manyGraphsColor[6]=QColor("firebrick");
+    default_manyGraphsColor[7]=QColor("darkgreen");
+    default_manyGraphsColor[8]=QColor("darkmagenta");
+    default_manyGraphsColor[9]=QColor("darkgreen");
+    default_manyGraphsColor[10]=QColor("darkslateblue");
+    default_manyGraphsColor[11]=QColor("maroon");
+    default_manyGraphsColor[12]=QColor("indianred");
+    default_manyGraphsColor[13]=QColor("darkolivegreen");
+    default_manyGraphsColor[14]=QColor("mediumpurple");
+    default_manyGraphsColor[15]=QColor("darkcyan");
     for (int i=0; i<manyGraphsColorCount; i++) {
-        manyGraphsColor[i]=def_manyGraphsColor[i];
+        manyGraphsColor[i]=default_manyGraphsColor[i];
         //std::cout<<manyGraphsColor[i].red()<<", "<<manyGraphsColor[i].green()<<", "<<manyGraphsColor[i].blue()<<"    ";
         //std::cout<<"init: manyGraphsColor["<<i<<"] = "<<jkqtp_QColor2String(manyGraphsColor[i]).toStdString()<<" = "<<manyGraphsColor[i].name().toStdString()<<std::endl;
-        //std::cout<<"init: def_manyGraphsColor["<<i<<"] = "<<jkqtp_QColor2String(def_manyGraphsColor[i]).toStdString()<<" = "<<def_manyGraphsColor[i].name().toStdString()<<std::endl;
+        //std::cout<<"init: default_manyGraphsColor["<<i<<"] = "<<jkqtp_QColor2String(default_manyGraphsColor[i]).toStdString()<<" = "<<default_manyGraphsColor[i].name().toStdString()<<std::endl;
     }
-    def_manyGraphsStyle[0]=Qt::SolidLine;
-    def_manyGraphsStyle[1]=Qt::DashLine;
-    def_manyGraphsStyle[2]=Qt::DotLine;
-    def_manyGraphsStyle[3]=Qt::DashDotLine;
-    def_manyGraphsStyle[4]=Qt::DashDotDotLine;
-    for (int i=0; i<=4; i++) { manyGraphsStyle[i]=def_manyGraphsStyle[i]; }
-    def_graphWidth=2; graphWidth=def_graphWidth;
-    def_CSVdecimalSeparator="."; CSVdecimalSeparator=def_CSVdecimalSeparator;
-    def_CSVcommentInitializer="# "; CSVcommentInitializer=def_CSVcommentInitializer;
+    default_manyGraphsStyle[0]=Qt::SolidLine;
+    default_manyGraphsStyle[1]=Qt::DashLine;
+    default_manyGraphsStyle[2]=Qt::DotLine;
+    default_manyGraphsStyle[3]=Qt::DashDotLine;
+    default_manyGraphsStyle[4]=Qt::DashDotDotLine;
+    for (int i=0; i<=4; i++) { manyGraphsStyle[i]=default_manyGraphsStyle[i]; }
+    default_graphWidth=2; graphWidth=default_graphWidth;
+    default_CSVdecimalSeparator="."; CSVdecimalSeparator=default_CSVdecimalSeparator;
+    default_CSVcommentInitializer="# "; CSVcommentInitializer=default_CSVcommentInitializer;
 
     plotLabel="";
-    def_plotLabelFontname=plotLabelFontname=def_keyFont;
-    def_plotLabelFontSize=plotLabelFontSize=12;
+    default_plotLabelFontname=plotLabelFontname=default_keyFont;
+    default_plotLabelFontSize=plotLabelFontSize=12;
 
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -490,56 +490,56 @@ void JKQTBasePlotter::saveSettings(QSettings& settings, const QString& group) co
     QString g=group+"/";
     if (group.isEmpty()) g="";
 
-    if (aspectRatio!=def_aspectRatio) settings.setValue(g+"apect_ratio", aspectRatio);
-    if (maintainAspectRatio!=def_maintainAspectRatio) settings.setValue(g+"maintain_apect_ratio", maintainAspectRatio);
-    if (axisAspectRatio!=def_axisAspectRatio) settings.setValue(g+"axis_apect_ratio", axisAspectRatio);
-    if (maintainAxisAspectRatio!=def_maintainAxisAspectRatio) settings.setValue(g+"maintain_axis_apect_ratio", maintainAxisAspectRatio);
-    if (CSVdecimalSeparator!=def_CSVdecimalSeparator) settings.setValue(g+"csv_decimal_separator", CSVdecimalSeparator);
-    if (CSVcommentInitializer!=def_CSVcommentInitializer) settings.setValue(g+"csv_comment_initializer", CSVcommentInitializer);
+    if (aspectRatio!=default_aspectRatio) settings.setValue(g+"apect_ratio", aspectRatio);
+    if (maintainAspectRatio!=default_maintainAspectRatio) settings.setValue(g+"maintain_apect_ratio", maintainAspectRatio);
+    if (axisAspectRatio!=default_axisAspectRatio) settings.setValue(g+"axis_apect_ratio", axisAspectRatio);
+    if (maintainAxisAspectRatio!=default_maintainAxisAspectRatio) settings.setValue(g+"maintain_axis_apect_ratio", maintainAxisAspectRatio);
+    if (CSVdecimalSeparator!=default_CSVdecimalSeparator) settings.setValue(g+"csv_decimal_separator", CSVdecimalSeparator);
+    if (CSVcommentInitializer!=default_CSVcommentInitializer) settings.setValue(g+"csv_comment_initializer", CSVcommentInitializer);
 
-    if (plotBorderLeft!=def_plotBorderLeft) settings.setValue(g+"plot_border_left", plotBorderLeft);
-    if (plotBorderRight!=def_plotBorderRight) settings.setValue(g+"plot_border_right", plotBorderRight);
-    if (plotBorderTop!=def_plotBorderTop) settings.setValue(g+"plot_border_top", plotBorderTop);
-    if (plotBorderBottom!=def_plotBorderBottom) settings.setValue(g+"plot_border_bottom", plotBorderBottom);
+    if (plotBorderLeft!=default_plotBorderLeft) settings.setValue(g+"plot_border_left", plotBorderLeft);
+    if (plotBorderRight!=default_plotBorderRight) settings.setValue(g+"plot_border_right", plotBorderRight);
+    if (plotBorderTop!=default_plotBorderTop) settings.setValue(g+"plot_border_top", plotBorderTop);
+    if (plotBorderBottom!=default_plotBorderBottom) settings.setValue(g+"plot_border_bottom", plotBorderBottom);
 
-    if (keyXOffset!=def_keyXOffset) settings.setValue(g+"key_xoffset", keyXOffset);
-    if (keyYOffset!=def_keyYOffset) settings.setValue(g+"key_yoffset", keyYOffset);
-    if (keyXMargin!=def_keyXMargin) settings.setValue(g+"key_xmargin", keyXMargin);
-    if (keyYMargin!=def_keyYMargin) settings.setValue(g+"key_ymargin", keyYMargin);
-    if (keyXSeparation!=def_keyXSeparation) settings.setValue(g+"key_xseparation", keyXSeparation);
-    if (keyYSeparation!=def_keyYSeparation) settings.setValue(g+"key_yseparation", keyYSeparation);
-    if (keyFrameColor!=def_keyFrameColor) settings.setValue(g+"key_frame_color", jkqtp_QColor2String(keyFrameColor));
-    if (keyFrameWidth!=def_keyFrameWidth) settings.setValue(g+"key_frame_width", keyFrameWidth);
-    if (showKeyFrame!=def_showKeyFrame) settings.setValue(g+"show_key_frame", showKeyFrame);
-    if (keyBackgroundColor!=def_keyBackgroundColor) settings.setValue(g+"key_background_color", jkqtp_QColor2String(keyBackgroundColor));
-    if (showKey!=def_showKey) settings.setValue(g+"show_key", showKey);
-    if (keyPosition!=def_keyPosition) settings.setValue(g+"key_position", JKQTPKeyPosition2String(keyPosition));
-    if (keyLayout!=def_keyLayout) settings.setValue(g+"key_layout", JKQTPKeyLayout2String(keyLayout));
+    if (keyXOffset!=default_keyXOffset) settings.setValue(g+"key_xoffset", keyXOffset);
+    if (keyYOffset!=default_keyYOffset) settings.setValue(g+"key_yoffset", keyYOffset);
+    if (keyXMargin!=default_keyXMargin) settings.setValue(g+"key_xmargin", keyXMargin);
+    if (keyYMargin!=default_keyYMargin) settings.setValue(g+"key_ymargin", keyYMargin);
+    if (keyXSeparation!=default_keyXSeparation) settings.setValue(g+"key_xseparation", keyXSeparation);
+    if (keyYSeparation!=default_keyYSeparation) settings.setValue(g+"key_yseparation", keyYSeparation);
+    if (keyFrameColor!=default_keyFrameColor) settings.setValue(g+"key_frame_color", jkqtp_QColor2String(keyFrameColor));
+    if (keyFrameWidth!=default_keyFrameWidth) settings.setValue(g+"key_frame_width", keyFrameWidth);
+    if (showKeyFrame!=default_showKeyFrame) settings.setValue(g+"show_key_frame", showKeyFrame);
+    if (keyBackgroundColor!=default_keyBackgroundColor) settings.setValue(g+"key_background_color", jkqtp_QColor2String(keyBackgroundColor));
+    if (showKey!=default_showKey) settings.setValue(g+"show_key", showKey);
+    if (keyPosition!=default_keyPosition) settings.setValue(g+"key_position", JKQTPKeyPosition2String(keyPosition));
+    if (keyLayout!=default_keyLayout) settings.setValue(g+"key_layout", JKQTPKeyLayout2String(keyLayout));
 
-    if (useAntiAliasingForSystem!=def_useAntiAliasingForSystem) settings.setValue(g+"use_antialiasing_for_system", useAntiAliasingForSystem);
-    if (useAntiAliasingForGraphs!=def_useAntiAliasingForGraphs) settings.setValue(g+"use_antialiasing_for_graphs", useAntiAliasingForGraphs);
-    if (useAntiAliasingForText!=def_useAntiAliasingForText) settings.setValue(g+"use_antialiasing_for_text", useAntiAliasingForText);
+    if (useAntiAliasingForSystem!=default_useAntiAliasingForSystem) settings.setValue(g+"use_antialiasing_for_system", useAntiAliasingForSystem);
+    if (useAntiAliasingForGraphs!=default_useAntiAliasingForGraphs) settings.setValue(g+"use_antialiasing_for_graphs", useAntiAliasingForGraphs);
+    if (useAntiAliasingForText!=default_useAntiAliasingForText) settings.setValue(g+"use_antialiasing_for_text", useAntiAliasingForText);
 
-    if (backgroundColor!=def_backgroundColor) settings.setValue(g+"background_color", jkqtp_QColor2String(backgroundColor));
-    if (exportBackgroundColor!=def_exportBackgroundColor) settings.setValue(g+"exportBackgroundColor", jkqtp_QColor2String(exportBackgroundColor));
-    if (plotBackgroundColor!=def_plotBackgroundColor) settings.setValue(g+"plot_background_color", jkqtp_QColor2String(plotBackgroundColor));
-    if (graphColor!=def_graphColor) settings.setValue(g+"graph_color", jkqtp_QColor2String(graphColor));
-    if (graphWidth!=def_graphWidth) settings.setValue(g+"graph_linewidth", graphWidth);
+    if (backgroundColor!=default_backgroundColor) settings.setValue(g+"background_color", jkqtp_QColor2String(backgroundColor));
+    if (exportBackgroundColor!=default_exportBackgroundColor) settings.setValue(g+"exportBackgroundColor", jkqtp_QColor2String(exportBackgroundColor));
+    if (plotBackgroundColor!=default_plotBackgroundColor) settings.setValue(g+"plot_background_color", jkqtp_QColor2String(plotBackgroundColor));
+    if (graphColor!=default_graphColor) settings.setValue(g+"graph_color", jkqtp_QColor2String(graphColor));
+    if (graphWidth!=default_graphWidth) settings.setValue(g+"graph_linewidth", graphWidth);
 
 
-    if (keyFont!=def_keyFont) settings.setValue(g+"key_fontname", keyFont);
-    if (keyFontSize!=def_keyFontSize) settings.setValue(g+"key_fontsize", keyFontSize);
-    if (key_item_width!=def_key_item_width) settings.setValue(g+"key_item_width", key_item_width);
-    if (key_item_height!=def_key_item_height) settings.setValue(g+"key_item_height", key_item_height);
-    if (key_line_length!=def_key_line_length) settings.setValue(g+"key_line_width", key_line_length);
-    if (keyAutosize!=def_keyAutosize) settings.setValue(g+"key_autosize", keyAutosize);
+    if (keyFont!=default_keyFont) settings.setValue(g+"key_fontname", keyFont);
+    if (keyFontSize!=default_keyFontSize) settings.setValue(g+"key_fontsize", keyFontSize);
+    if (key_item_width!=default_key_item_width) settings.setValue(g+"key_item_width", key_item_width);
+    if (key_item_height!=default_key_item_height) settings.setValue(g+"key_item_height", key_item_height);
+    if (key_line_length!=default_key_line_length) settings.setValue(g+"key_line_width", key_line_length);
+    if (keyAutosize!=default_keyAutosize) settings.setValue(g+"key_autosize", keyAutosize);
 
-    if (plotLabelFontname!=def_plotLabelFontname) settings.setValue(g+"plotLabelFontname", plotLabelFontname);
-    if (plotLabelFontSize!=def_plotLabelFontSize) settings.setValue(g+"plotLabelFontSize", plotLabelFontSize);
+    if (plotLabelFontname!=default_plotLabelFontname) settings.setValue(g+"plotLabelFontname", plotLabelFontname);
+    if (plotLabelFontSize!=default_plotLabelFontSize) settings.setValue(g+"plotLabelFontSize", plotLabelFontSize);
 
     bool palette_changed=false;
     for (int cnt=0; cnt<manyGraphsColorCount; cnt++) {
-        if (manyGraphsColor[cnt]!=def_manyGraphsColor[cnt]) {
+        if (manyGraphsColor[cnt]!=default_manyGraphsColor[cnt]) {
             palette_changed=true;
             break;
         }
@@ -653,8 +653,8 @@ void JKQTBasePlotter::loadSettings(const QSettings &settings, const QString& gro
     useAntiAliasingForGraphs=settings.value(g+"use_antialiasing_for_graphs", useAntiAliasingForGraphs).toBool();
     useAntiAliasingForText=settings.value(g+"use_antialiasing_for_text", useAntiAliasingForText).toBool();
 
-    backgroundColor=QColor(settings.value(g+"background_color", def_backgroundColor).toString());
-    exportBackgroundColor=QColor(settings.value(g+"exportBackgroundColor", def_exportBackgroundColor).toString());
+    backgroundColor=QColor(settings.value(g+"background_color", default_backgroundColor).toString());
+    exportBackgroundColor=QColor(settings.value(g+"exportBackgroundColor", default_exportBackgroundColor).toString());
     plotBackgroundColor=QColor(settings.value(g+"plot_background_color", jkqtp_QColor2String(plotBackgroundColor)).toString());
     graphColor=QColor(settings.value(g+"graph_color", jkqtp_QColor2String(graphColor)).toString());
     graphWidth=settings.value(g+"graph_linewidth", graphWidth).toDouble();
@@ -688,7 +688,7 @@ void JKQTBasePlotter::loadSettings(const QSettings &settings, const QString& gro
 
     /*for (int i=0; i<manyGraphsColorCount; i++) {
         std::cout<<"manyGraphsColor["<<i<<"] = "<<jkqtp_QColor2String(manyGraphsColor[i]).toStdString()<<std::endl;
-        std::cout<<"def_manyGraphsColor["<<i<<"] = "<<jkqtp_QColor2String(def_manyGraphsColor[i]).toStdString()<<std::endl;
+        std::cout<<"default_manyGraphsColor["<<i<<"] = "<<jkqtp_QColor2String(default_manyGraphsColor[i]).toStdString()<<std::endl;
     }*/
     xAxis->loadSettings(settings, g+"xaxis_");
     yAxis->loadSettings(settings, g+"yaxis_");
@@ -840,7 +840,7 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
 
     // read additional space required by graphs
     for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]->get_visible()) {
+        if (graphs[i]->getVisible()) {
             int leftSpace, rightSpace, topSpace, bottomSpace;
             graphs[i]->getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
             iplotBorderBottom+=bottomSpace;
@@ -1144,7 +1144,7 @@ void JKQTBasePlotter::plotOverlays(JKQTPEnhancedPainter &painter) {
 
     for (int j=0; j<overlays.size(); j++) {
         JKQTPOverlayElement* g=overlays[j];
-        if (g->get_visible()) g->draw(painter);
+        if (g->getVisible()) g->draw(painter);
     }
 
     if (useClipping) {
@@ -1257,9 +1257,9 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
     calcPlotScaling(painter);
 
     if (!gridPrinting) {
-        double scale=(double)pageRect.width()/(double)widgetWidth*paintMagnification;
-        if (/*(scale*(double)widgetWidth>(double)pageRect.width()) ||*/ (scale*(double)widgetHeight/paintMagnification>(double)pageRect.height()) && scaleIfTooLarge) {
-            scale=(double)pageRect.height()/(double)widgetHeight*paintMagnification;
+        double scale=static_cast<double>(pageRect.width())/static_cast<double>(widgetWidth)*paintMagnification;
+        if (/*(scale*static_cast<double>(widgetWidth)>static_cast<double>(pageRect.width())) ||*/ (scale*static_cast<double>(widgetHeight)/paintMagnification>static_cast<double>(pageRect.height())) && scaleIfTooLarge) {
+            scale=static_cast<double>(pageRect.height())/static_cast<double>(widgetHeight)*paintMagnification;
         }
         if (!scaleIfTooSmall && scale>1.0) scale=1.0;
         if (!scaleIfTooLarge && !scaleIfTooSmall) scale=1.0;
@@ -1278,19 +1278,19 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
         for (int i=0; i< gridPrintingList.size(); i++) {
             fsm.append(gridPrintingList[i].plotter->getFontSizeMultiplier());
             lwm.append(gridPrintingList[i].plotter->getLineWidthMultiplier());
-            pm.append(gridPrintingList[i].plotter->get_paintMagnification());
+            pm.append(gridPrintingList[i].plotter->getPaintMagnification());
             backg.append(gridPrintingList[i].plotter->getExportBackgroundColor());
             gridPrintingList[i].plotter->setFontSizeMultiplier(fontSizeMultiplier);
             gridPrintingList[i].plotter->setLineWidthMultiplier(lineWidthMultiplier);
-            gridPrintingList[i].plotter->set_paintMagnification(paintMagnification);
+            gridPrintingList[i].plotter->setPaintMagnification(paintMagnification);
             gridPrintingList[i].plotter->setBackgroundColor(gridPrintingList[i].plotter->getExportBackgroundColor());
             gridPrintingList[i].plotter->calcPlotScaling(painter);
         }
         gridPrintingCalc(); // ensure the grid plot has been calculated
         // scale the plot so it fits on the page
-        double scale=(double)pageRect.width()/(double)gridPrintingSize.width();
-        if (/*(scale*(double)gridPrintingSize.width()>(double)pageRect.width()) ||*/ (scale*(double)gridPrintingSize.height()>(double)pageRect.height()) && scaleIfTooLarge) {
-            scale=(double)pageRect.height()/(double)gridPrintingSize.height();
+        double scale=static_cast<double>(pageRect.width())/static_cast<double>(gridPrintingSize.width());
+        if (/*(scale*static_cast<double>(gridPrintingSize.width())>static_cast<double>(pageRect.width())) ||*/ (scale*static_cast<double>(gridPrintingSize.height())>static_cast<double>(pageRect.height())) && scaleIfTooLarge) {
+            scale=static_cast<double>(pageRect.height())/static_cast<double>(gridPrintingSize.height());
         }
         if (!scaleIfTooSmall && scale>1.0) scale=1.0;
         if (!scaleIfTooLarge && !scaleIfTooSmall) scale=1.0;
@@ -1335,7 +1335,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
         for (int i=0; i< gridPrintingList.size(); i++) {
             gridPrintingList[i].plotter->setFontSizeMultiplier(fsm[i]);
             gridPrintingList[i].plotter->setLineWidthMultiplier(lwm[i]);
-            gridPrintingList[i].plotter->set_paintMagnification(pm[i]);
+            gridPrintingList[i].plotter->setPaintMagnification(pm[i]);
             gridPrintingList[i].plotter->setBackgroundColor(backg[i]);
             gridPrintingList[i].plotter->redrawPlot();
         }
@@ -1347,9 +1347,9 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
 void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pageRect)
 {
     if (!gridPrinting) {
-        double scale=(double)pageRect.width()/(double)widgetWidth*paintMagnification;
-        if (/*(scale*(double)widgetWidth/paintMagnification>(double)pageRect.width()) ||*/ (scale*(double)widgetHeight>(double)pageRect.height())) {
-            scale=(double)pageRect.height()/(double)widgetHeight;
+        double scale=static_cast<double>(pageRect.width())/static_cast<double>(widgetWidth)*paintMagnification;
+        if (/*(scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(pageRect.width())) ||*/ (scale*static_cast<double>(widgetHeight)>static_cast<double>(pageRect.height()))) {
+            scale=static_cast<double>(pageRect.height())/static_cast<double>(widgetHeight);
         }
         painter.save();
         // scale the plot so it fits on the page
@@ -1359,9 +1359,9 @@ void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pa
     } else {
         gridPrintingCalc(); // ensure the grid plot has been calculated
         // scale the plot so it fits on the page
-        double scale=(double)pageRect.width()/(double)gridPrintingSize.width();
-        if (/*(scale*(double)gridPrintingSize.width()>(double)pageRect.width()) ||*/ (scale*(double)gridPrintingSize.height()>(double)pageRect.height())) {
-            scale=(double)pageRect.height()/(double)gridPrintingSize.height();
+        double scale=static_cast<double>(pageRect.width())/static_cast<double>(gridPrintingSize.width());
+        if (/*(scale*static_cast<double>(gridPrintingSize.width())>static_cast<double>(pageRect.width())) ||*/ (scale*static_cast<double>(gridPrintingSize.height())>static_cast<double>(pageRect.height()))) {
+            scale=static_cast<double>(pageRect.height())/static_cast<double>(gridPrintingSize.height());
         }
         painter.save();
         painter.scale(scale, scale);
@@ -2022,8 +2022,8 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     qDebug()<<"printer resolution = "<<printer->resolution()<<" dpi";
     qDebug()<<"\nplotLabelFontSize = "<<plotLabelFontSize<<" pt";
     qDebug()<<"keyFontSize = "<<keyFontSize<<" pt";
-    qDebug()<<"x-axis label fontsize = "<<xAxis->get_labelFontSize()<<" pt";
-    qDebug()<<"y-axis label fontsize = "<<yAxis->get_labelFontSize()<<" pt";
+    qDebug()<<"x-axis label fontsize = "<<xAxis->getLabelFontSize()<<" pt";
+    qDebug()<<"y-axis label fontsize = "<<yAxis->getLabelFontSize()<<" pt";
 #endif
     gridPaint(painter, printer->pageRect().size(), true, printScaleToPagesize, printScaleToPagesize);
     painter.end();
@@ -2122,8 +2122,8 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
     qDebug()<<"printer resolution = "<<paintDevice->logicalDpiX()<<" dpi";
     qDebug()<<"\nplotLabelFontSize = "<<plotLabelFontSize<<" pt";
     qDebug()<<"keyFontSize = "<<keyFontSize<<" pt";
-    qDebug()<<"x-axis label fontsize = "<<xAxis->get_labelFontSize()<<" pt";
-    qDebug()<<"y-axis label fontsize = "<<yAxis->get_labelFontSize()<<" pt";
+    qDebug()<<"x-axis label fontsize = "<<xAxis->getLabelFontSize()<<" pt";
+    qDebug()<<"y-axis label fontsize = "<<yAxis->getLabelFontSize()<<" pt";
 #endif
     if (printer) gridPaint(painter, printer->pageRect().size(), true, printScaleToPagesize, printScaleToPagesize);
     else if (svg) gridPaint(painter, svg->size(), true, printScaleToPagesize, printScaleToPagesize);
@@ -2295,7 +2295,7 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QRect& rect, boo
 #endif
     gridPaint(painter, rect.size(), drawOverlays);
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::draw ... gridPaint       = " <<time.nsecsElapsed()/1000<<" usecs = "<<(double)time.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::draw ... gridPaint       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
 #endif
     painter.restore();
     emitPlotSignals=oldEmitPlotSignals;
@@ -2335,7 +2335,7 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QPoint& pos, boo
 #endif
     gridPaint(painter, rect.size(), drawOverlays);
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::draw ... gridPaint       = " <<time.nsecsElapsed()/1000<<" usecs = "<<(double)time.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::draw ... gridPaint       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
 #endif
     painter.restore();
     emitPlotSignals=oldEmitPlotSignals;
@@ -2362,11 +2362,11 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& re
 #endif
     calcPlotScaling(painter);
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::drawNonGrid ... calcPlotScaling = " <<time.nsecsElapsed()/1000<<" usecs = "<<(double)time.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::drawNonGrid ... calcPlotScaling = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
 #endif
-    double scale=(double)rect.width()/(double)widgetWidth*paintMagnification;
-    if ((scale*(double)widgetWidth/paintMagnification>(double)rect.width()) || (scale*(double)widgetHeight/paintMagnification>(double)rect.height())) {
-        scale=(double)rect.height()/(double)widgetHeight*paintMagnification;
+    double scale=static_cast<double>(rect.width())/static_cast<double>(widgetWidth)*paintMagnification;
+    if ((scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(rect.width())) || (scale*static_cast<double>(widgetHeight)/paintMagnification>static_cast<double>(rect.height()))) {
+        scale=static_cast<double>(rect.height())/static_cast<double>(widgetHeight)*paintMagnification;
     }
     painter.save();
     // scale the plot so it fits on the page
@@ -2376,12 +2376,12 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& re
 #endif
     paintPlot(painter, drawOverlays);
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::drawNonGrid ... paintPlot       = " <<time.nsecsElapsed()/1000<<" usecs = "<<(double)time.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::drawNonGrid ... paintPlot       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
 #endif
     painter.restore();
     painter.restore();
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::drawNonGrid ... DONE            = "<<timeAll.nsecsElapsed()/1000<<" usecs = "<<(double)timeAll.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::drawNonGrid ... DONE            = "<<timeAll.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(timeAll.nsecsElapsed())/1000000.0<<" msecs";
 #endif
     emitPlotSignals=oldEmitPlotSignals;
 }
@@ -2409,11 +2409,11 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& p
 #endif
     calcPlotScaling(painter);
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::drawNonGrid ... calcPlotScaling = " <<time.nsecsElapsed()/1000<<" usecs = "<<(double)time.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::drawNonGrid ... calcPlotScaling = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
 #endif
-    double scale=(double)rect.width()/(double)widgetWidth*paintMagnification;
-    if ((scale*(double)widgetWidth/paintMagnification>(double)rect.width()) || (scale*(double)widgetHeight/paintMagnification>(double)rect.height())) {
-        scale=(double)rect.height()/(double)widgetHeight*paintMagnification;
+    double scale=static_cast<double>(rect.width())/static_cast<double>(widgetWidth)*paintMagnification;
+    if ((scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(rect.width())) || (scale*static_cast<double>(widgetHeight)/paintMagnification>static_cast<double>(rect.height()))) {
+        scale=static_cast<double>(rect.height())/static_cast<double>(widgetHeight)*paintMagnification;
     }
     painter.save();
     // scale the plot so it fits on the page
@@ -2423,12 +2423,12 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& p
 #endif
     paintPlot(painter, drawOverlays);
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::drawNonGrid ... paintPlot       = " <<time.nsecsElapsed()/1000<<" usecs = "<<(double)time.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::drawNonGrid ... paintPlot       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
 #endif
     painter.restore();
     painter.restore();
 #ifdef JKQTBP_DEBUGTIMING
-    qDebug()<<on<<"::drawNonGrid ... DONE            = "<<timeAll.nsecsElapsed()/1000<<" usecs = "<<(double)timeAll.nsecsElapsed()/1000000.0<<" msecs";
+    qDebug()<<on<<"::drawNonGrid ... DONE            = "<<timeAll.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(timeAll.nsecsElapsed())/1000000.0<<" msecs";
 #endif
     emitPlotSignals=oldEmitPlotSignals;
 }
@@ -2440,9 +2440,9 @@ void JKQTBasePlotter::drawNonGridOverlays(JKQTPEnhancedPainter& painter, const Q
     QRect rect=QRect(pos, QSize(widgetWidth/paintMagnification, widgetHeight/paintMagnification));
     painter.save();
     painter.translate(rect.topLeft());
-    double scale=(double)rect.width()/(double)widgetWidth*paintMagnification;
-    if ((scale*(double)widgetWidth/paintMagnification>(double)rect.width()) || (scale*(double)widgetHeight/paintMagnification>(double)rect.height())) {
-        scale=(double)rect.height()/(double)widgetHeight*paintMagnification;
+    double scale=static_cast<double>(rect.width())/static_cast<double>(widgetWidth)*paintMagnification;
+    if ((scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(rect.width())) || (scale*static_cast<double>(widgetHeight)/paintMagnification>static_cast<double>(rect.height()))) {
+        scale=static_cast<double>(rect.height())/static_cast<double>(widgetHeight)*paintMagnification;
     }
     painter.save();
     // scale the plot so it fits on the page
@@ -3233,47 +3233,47 @@ void JKQTBasePlotter::synchronizeXYAxis(double newxmin, double newxmax, double n
 size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& title, JKQTPGraphPlotstyle graphStyle) {
     if (graphStyle==JKQTPImpulsesHorizontal) {
         JKQTPImpulsesHorizontalGraph* gr=new JKQTPImpulsesHorizontalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPImpulsesVertical) {
         JKQTPImpulsesVerticalGraph* gr=new JKQTPImpulsesVerticalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPFilledCurveX) {
         JKQTPFilledCurveXGraph* gr=new JKQTPFilledCurveXGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPFilledCurveY) {
         JKQTPFilledCurveYGraph* gr=new JKQTPFilledCurveYGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsX) {
         JKQTPStepHorizontalGraph* gr=new JKQTPStepHorizontalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsY) {
         JKQTPStepVerticalGraph* gr=new JKQTPStepVerticalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
         return addGraph(gr);
     } else {
         JKQTPXYLineGraph* gr=new JKQTPXYLineGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        if (graphStyle==JKQTPPoints) { gr->set_symbol(JKQTPPlus); gr->set_drawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->set_symbol(JKQTPPlus);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
         return addGraph(gr);
     }
     return -1;
@@ -3282,71 +3282,71 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
 size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& title, JKQTPGraphPlotstyle graphStyle, QColor color, JKQTPGraphSymbols symbol, Qt::PenStyle penstyle, double width) {
     if (graphStyle==JKQTPImpulsesHorizontal) {
         JKQTPImpulsesHorizontalGraph* gr=new JKQTPImpulsesHorizontalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_color(color);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setColor(color);
         gr->setLineWidth(width);
         return addGraph(gr);
     } else if (graphStyle==JKQTPImpulsesVertical) {
         JKQTPImpulsesVerticalGraph* gr=new JKQTPImpulsesVerticalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_color(color);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setColor(color);
         gr->setLineWidth(width);
         return addGraph(gr);
     } else if (graphStyle==JKQTPFilledCurveX) {
         JKQTPFilledCurveXGraph* gr=new JKQTPFilledCurveXGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_color(QColor("black"));
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setColor(QColor("black"));
         gr->setLineWidth(width);
-        gr->set_style(penstyle);
-        gr->set_fillColor(color);
+        gr->setStyle(penstyle);
+        gr->setFillColor(color);
         return addGraph(gr);
     } else if (graphStyle==JKQTPFilledCurveY) {
         JKQTPFilledCurveYGraph* gr=new JKQTPFilledCurveYGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_color(QColor("black"));
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setColor(QColor("black"));
         gr->setLineWidth(width);
-        gr->set_style(penstyle);
-        gr->set_fillColor(color);
+        gr->setStyle(penstyle);
+        gr->setFillColor(color);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsX) {
         JKQTPStepHorizontalGraph* gr=new JKQTPStepHorizontalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_color(QColor("black"));
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setColor(QColor("black"));
         gr->setLineWidth(width);
-        gr->set_style(penstyle);
-        gr->set_fillColor(color);
+        gr->setStyle(penstyle);
+        gr->setFillColor(color);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsY) {
         JKQTPStepVerticalGraph* gr=new JKQTPStepVerticalGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_color(QColor("black"));
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setColor(QColor("black"));
         gr->setLineWidth(width);
-        gr->set_style(penstyle);
-        gr->set_fillColor(color);
+        gr->setStyle(penstyle);
+        gr->setFillColor(color);
         return addGraph(gr);
     } else {
         JKQTPXYLineGraph* gr=new JKQTPXYLineGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
         gr->setLineWidth(width);
-        gr->set_style(penstyle);
-        gr->set_color(color);
-        gr->set_symbol(symbol);
-        if (graphStyle==JKQTPPoints) { gr->set_symbol(JKQTPPlus); gr->set_drawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->set_symbol(JKQTPPlus);
+        gr->setStyle(penstyle);
+        gr->setColor(color);
+        gr->setSymbol(symbol);
+        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
         return addGraph(gr);
     }
     return -1;
@@ -3354,41 +3354,41 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
 
 size_t JKQTBasePlotter::addHorizontalBoxplot(QString title, int posColumn, int medianColumn, int minColumn, int maxColumn, int percentile25Column, int percentile75Column, int meanColumn) {
     JKQTPBoxplotHorizontalGraph* box=new JKQTPBoxplotHorizontalGraph(this);
-    box->set_posColumn(posColumn);
-    box->set_medianColumn(medianColumn);
-    box->set_meanColumn(meanColumn);
-    box->set_minColumn(minColumn);
-    box->set_maxColumn(maxColumn);
-    box->set_percentile25Column(percentile25Column);
-    box->set_percentile75Column(percentile75Column);
-    box->set_title(title);
+    box->setPosColumn(posColumn);
+    box->setMedianColumn(medianColumn);
+    box->setMeanColumn(meanColumn);
+    box->setMinColumn(minColumn);
+    box->setMaxColumn(maxColumn);
+    box->setPercentile25Column(percentile25Column);
+    box->setPercentile75Column(percentile75Column);
+    box->setTitle(title);
     return addGraph(box);
 }
 
 size_t JKQTBasePlotter::addVerticalBoxplot(QString title, int posColumn, int medianColumn, int minColumn, int maxColumn, int percentile25Column, int percentile75Column, int meanColumn) {
     JKQTPBoxplotVerticalGraph* box=new JKQTPBoxplotVerticalGraph(this);
-    box->set_posColumn(posColumn);
-    box->set_medianColumn(medianColumn);
-    box->set_meanColumn(meanColumn);
-    box->set_minColumn(minColumn);
-    box->set_maxColumn(maxColumn);
-    box->set_percentile25Column(percentile25Column);
-    box->set_percentile75Column(percentile75Column);
-    box->set_title(title);
+    box->setPosColumn(posColumn);
+    box->setMedianColumn(medianColumn);
+    box->setMeanColumn(meanColumn);
+    box->setMinColumn(minColumn);
+    box->setMaxColumn(maxColumn);
+    box->setPercentile25Column(percentile25Column);
+    box->setPercentile75Column(percentile75Column);
+    box->setTitle(title);
     return addGraph(box);
 }
 
 void JKQTBasePlotter::addHorizontalBargraph(size_t xColumn, QVector<size_t> yColumns, QStringList titles) {
     double w=0.9;
-    double width=w/(double)yColumns.size();
+    double width=w/static_cast<double>(yColumns.size());
     double s=-1.0*w/2.0+width/2.0;
     for (int i=0; i<yColumns.size(); i++) {
         JKQTPBarVerticalGraph* g=new JKQTPBarVerticalGraph(this);
-        g->set_title(titles[i]);
-        g->set_xColumn(xColumn);
-        g->set_yColumn(yColumns[i]);
-        g->set_shift(s);
-        g->set_width(width);
+        g->setTitle(titles[i]);
+        g->setXColumn(xColumn);
+        g->setYColumn(yColumns[i]);
+        g->setShift(s);
+        g->setWidth(width);
         //std::cout<<"shift="<<s<<"   width="<<width<<std::endl;
         s=s+width;
         addGraph(g);
@@ -3397,15 +3397,15 @@ void JKQTBasePlotter::addHorizontalBargraph(size_t xColumn, QVector<size_t> yCol
 
 void JKQTBasePlotter::addVerticalBargraph(QVector<size_t> xColumns, size_t yColumn, QStringList titles) {
     double w=0.9;
-    double width=w/(double)xColumns.size();
+    double width=w/static_cast<double>(xColumns.size());
     double s=-1.0*w/2.0+width/2.0;
     for (int i=0; i<xColumns.size(); i++) {
         JKQTPBarHorizontalGraph* g=new JKQTPBarHorizontalGraph(this);
-        g->set_title(titles[i]);
-        g->set_xColumn(xColumns[i]);
-        g->set_yColumn(yColumn);
-        g->set_shift(s);
-        g->set_width(width);
+        g->setTitle(titles[i]);
+        g->setXColumn(xColumns[i]);
+        g->setYColumn(yColumn);
+        g->setShift(s);
+        g->setWidth(width);
         //std::cout<<"shift="<<s<<"   width="<<width<<std::endl;
         s=s+width;
         addGraph(g);
@@ -3415,42 +3415,42 @@ void JKQTBasePlotter::addVerticalBargraph(QVector<size_t> xColumns, size_t yColu
 size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_t xErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle, JKQTPErrorPlotstyle errorStyle){
     if (graphStyle==JKQTPImpulsesHorizontal) {
         JKQTPImpulsesHorizontalErrorGraph* gr=new JKQTPImpulsesHorizontalErrorGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_xErrorStyle(errorStyle);
-        gr->set_xErrorColumn(xErrorColumn);
-        gr->set_errorColor(gr->get_color().darker());
-        QColor fc=gr->get_color();
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setXErrorStyle(errorStyle);
+        gr->setXErrorColumn(xErrorColumn);
+        gr->setErrorColor(gr->getColor().darker());
+        QColor fc=gr->getColor();
         fc.setAlphaF(0.5);
-        gr->set_errorFillColor(fc);
+        gr->setErrorFillColor(fc);
         return addGraph(gr);
     } else if (graphStyle==JKQTPFilledCurveY) {
         JKQTPFilledCurveYErrorGraph* gr=new JKQTPFilledCurveYErrorGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_xErrorStyle(errorStyle);
-        gr->set_xErrorColumn(xErrorColumn);
-        gr->set_errorColor(gr->get_color());
-        QColor fc=gr->get_color();
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setXErrorStyle(errorStyle);
+        gr->setXErrorColumn(xErrorColumn);
+        gr->setErrorColor(gr->getColor());
+        QColor fc=gr->getColor();
         fc.setAlphaF(0.5);
-        gr->set_errorFillColor(fc);
+        gr->setErrorFillColor(fc);
         return addGraph(gr);
     } else {
         JKQTPXYLineErrorGraph* gr=new JKQTPXYLineErrorGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_yErrorColumn(xErrorColumn);
-        gr->set_yErrorStyle(errorStyle);
-        gr->set_xErrorStyle(JKQTPNoError);
-        gr->set_errorColor(gr->get_color());
-        QColor fc=gr->get_color();
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setYErrorColumn(xErrorColumn);
+        gr->setYErrorStyle(errorStyle);
+        gr->setXErrorStyle(JKQTPNoError);
+        gr->setErrorColor(gr->getColor());
+        QColor fc=gr->getColor();
         fc.setAlphaF(0.5);
-        gr->set_errorFillColor(fc);
-        if (graphStyle==JKQTPPoints) { gr->set_symbol(JKQTPPlus); gr->set_drawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->set_symbol(JKQTPPlus);
+        gr->setErrorFillColor(fc);
+        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
         return addGraph(gr);
     }
 
@@ -3459,62 +3459,62 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
 size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_t yErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle, JKQTPErrorPlotstyle errorStyle){
     if (graphStyle==JKQTPImpulsesVertical) {
         JKQTPImpulsesVerticalErrorGraph* gr=new JKQTPImpulsesVerticalErrorGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_yErrorStyle(errorStyle);
-        gr->set_yErrorColumn(yErrorColumn);
-        gr->set_errorColor(gr->get_color().darker());
-        gr->set_errorWidth(gr->getLineWidth()/3.0);
-        QColor fc=gr->get_color();
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setYErrorStyle(errorStyle);
+        gr->setYErrorColumn(yErrorColumn);
+        gr->setErrorColor(gr->getColor().darker());
+        gr->setErrorWidth(gr->getLineWidth()/3.0);
+        QColor fc=gr->getColor();
         fc.setAlphaF(0.5);
-        gr->set_errorFillColor(fc);
+        gr->setErrorFillColor(fc);
         return addGraph(gr);
     } else if (graphStyle==JKQTPFilledCurveX) {
         JKQTPFilledCurveXErrorGraph* gr=new JKQTPFilledCurveXErrorGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_yErrorStyle(errorStyle);
-        gr->set_yErrorColumn(yErrorColumn);
-        gr->set_errorColor(gr->get_color());
-        QColor fc=gr->get_color();
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setYErrorStyle(errorStyle);
+        gr->setYErrorColumn(yErrorColumn);
+        gr->setErrorColor(gr->getColor());
+        QColor fc=gr->getColor();
         fc.setAlphaF(0.5);
-        gr->set_errorFillColor(fc);
+        gr->setErrorFillColor(fc);
         return addGraph(gr);
     } else {
         JKQTPXYLineErrorGraph* gr=new JKQTPXYLineErrorGraph(this);
-        gr->set_title(title);
-        gr->set_xColumn(xColumn);
-        gr->set_yColumn(yColumn);
-        gr->set_yErrorColumn(yErrorColumn);
-        gr->set_yErrorStyle(errorStyle);
-        gr->set_xErrorStyle(JKQTPNoError);
-        gr->set_errorColor(gr->get_color());
-        QColor fc=gr->get_color();
+        gr->setTitle(title);
+        gr->setXColumn(xColumn);
+        gr->setYColumn(yColumn);
+        gr->setYErrorColumn(yErrorColumn);
+        gr->setYErrorStyle(errorStyle);
+        gr->setXErrorStyle(JKQTPNoError);
+        gr->setErrorColor(gr->getColor());
+        QColor fc=gr->getColor();
         fc.setAlphaF(0.5);
-        gr->set_errorFillColor(fc);
-        if (graphStyle==JKQTPPoints) { gr->set_symbol(JKQTPPlus); gr->set_drawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->set_symbol(JKQTPPlus);
+        gr->setErrorFillColor(fc);
+        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
         return addGraph(gr);
     }
 }
 
 size_t JKQTBasePlotter::addGraphWithXYError(size_t xColumn, size_t yColumn, size_t xErrorColumn, size_t yErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle){
     JKQTPXYLineErrorGraph* gr=new JKQTPXYLineErrorGraph(this);
-    gr->set_title(title);
-    gr->set_xColumn(xColumn);
-    gr->set_yColumn(yColumn);
-    gr->set_yErrorColumn(yErrorColumn);
-    gr->set_yErrorStyle(JKQTPErrorBars);
-    gr->set_xErrorColumn(xErrorColumn);
-    gr->set_xErrorStyle(JKQTPErrorBars);
-    gr->set_errorColor(gr->get_color());
-    QColor fc=gr->get_color();
+    gr->setTitle(title);
+    gr->setXColumn(xColumn);
+    gr->setYColumn(yColumn);
+    gr->setYErrorColumn(yErrorColumn);
+    gr->setYErrorStyle(JKQTPErrorBars);
+    gr->setXErrorColumn(xErrorColumn);
+    gr->setXErrorStyle(JKQTPErrorBars);
+    gr->setErrorColor(gr->getColor());
+    QColor fc=gr->getColor();
     fc.setAlphaF(0.5);
-    gr->set_errorFillColor(fc);
-    if (graphStyle==JKQTPPoints) { gr->set_symbol(JKQTPPlus); gr->set_drawLine(false); }
-    else if (graphStyle==JKQTPLinesPoints) gr->set_symbol(JKQTPPlus);
+    gr->setErrorFillColor(fc);
+    if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
+    else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
     return addGraph(gr);
 
 }
@@ -3542,8 +3542,8 @@ void JKQTBasePlotter::plotGraphs(JKQTPEnhancedPainter& painter){
     for (int j=0; j<graphs.size(); j++) {
         //int leftSpace, rightSpace, topSpace, bottomSpace;
         JKQTPPlotElement* g=graphs[j];
-        //qDebug()<<"  drawing JKQTPPlotElement"<<j<<g->get_title()<<g->metaObject()->className();
-        if (g->get_visible()) g->draw(painter);
+        //qDebug()<<"  drawing JKQTPPlotElement"<<j<<g->getTitle()<<g->metaObject()->className();
+        if (g->getVisible()) g->draw(painter);
     }
 
     if (useClipping) {
@@ -3553,7 +3553,7 @@ void JKQTBasePlotter::plotGraphs(JKQTPEnhancedPainter& painter){
     for (int j=0; j<graphs.size(); j++) {
         int leftSpace, rightSpace, topSpace, bottomSpace;
         JKQTPPlotElement* g=graphs[j];
-        if (g->get_visible()) {
+        if (g->getVisible()) {
             g->getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
             ibTop+=topSpace;
             ibLeft+=leftSpace;
@@ -3596,10 +3596,10 @@ void JKQTBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
         for (int i=0; i<graphs.size(); i++) {
             JKQTPPlotElement* g=graphs[i];
 #ifdef JKQTBP_AUTOTIMER
-            jkaaot.write(QString("one-col: graph %1: %2").arg(i).arg(g->get_title()));
+            jkaaot.write(QString("one-col: graph %1: %2").arg(i).arg(g->getTitle()));
 #endif
-            if (!g->get_title().isEmpty() && g->get_visible()) {
-                QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->get_title(),painter);//  mt.getSize(painter);
+            if (!g->getTitle().isEmpty() && g->getVisible()) {
+                QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->getTitle(),painter);//  mt.getSize(painter);
                 double itheight=qMax(key_item_height*kfm.width('X'), fs.height());
                 QRectF rect(x, y+1.5*lineWidthMultiplier, key_line_length*kfm.width('X'), itheight-3.0*lineWidthMultiplier);
                 g->drawKeyMarker(painter, rect);
@@ -3607,7 +3607,7 @@ void JKQTBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 mathText.setFontSize(keyFontSize*fontSizeMultiplier);
                 mathText.setFontRoman(keyFont);
 
-                mathText.parse(g->get_title());
+                mathText.parse(g->getTitle());
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, QRectF(x+(key_line_length+keyXSeparation)*kfm.width('X'),y, key_text_width, itheight));
                 //if (itheight<key_item_height*kfm.height()) itheight=key_item_height*kfm.height();
                 //y=y+itheight+(keyYSeparation)*kfm.height();
@@ -3619,10 +3619,10 @@ void JKQTBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
         for (int i=0; i<graphs.size(); i++) {
             JKQTPPlotElement* g=graphs[i];
 #ifdef JKQTBP_AUTOTIMER
-            jkaaot.write(QString("one-row: graph %1: %2").arg(i).arg(g->get_title()));
+            jkaaot.write(QString("one-row: graph %1: %2").arg(i).arg(g->getTitle()));
 #endif
-            if (!g->get_title().isEmpty() && g->get_visible()) {
-                QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->get_title(),painter);//  mt.getSize(painter);
+            if (!g->getTitle().isEmpty() && g->getVisible()) {
+                QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->getTitle(),painter);//  mt.getSize(painter);
                 double itheight=qMax(key_item_height*kfm.width('X'), fs.height());
                 QRectF rect(x, y+1.5*lineWidthMultiplier, key_line_length*kfm.width('X'), itheight-3.0*lineWidthMultiplier);
                 g->drawKeyMarker(painter, rect);
@@ -3630,7 +3630,7 @@ void JKQTBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 mathText.setFontSize(keyFontSize*fontSizeMultiplier);
                 mathText.setFontRoman(keyFont);
 
-                mathText.parse(g->get_title());
+                mathText.parse(g->getTitle());
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, QRectF(x+(key_line_length+keyXSeparation)*kfm.width('X'),y, fs.width(), itheight));
                 //if (itheight<key_item_height*kfm.height()) itheight=key_item_height*kfm.height();
                 //y=y+itheight+(keyYSeparation)*kfm.height();
@@ -3638,7 +3638,7 @@ void JKQTBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
             }
         }
     } else if (keyLayout==JKQTPKeyLayoutMultiColumn) {
-        //int columns=floor(static_cast<double>(plotWidth)/(double)(key_item_width*kfm.width('X')));
+        //int columns=floor(static_cast<double>(plotWidth)/static_cast<double>(key_item_width*kfm.width('X')));
         bool colfirst=true;
 
         if (keyPosition==JKQTPKeyInsideTopLeft || keyPosition==JKQTPKeyInsideTopRight
@@ -3653,17 +3653,17 @@ void JKQTBasePlotter::plotKeyContents(JKQTPEnhancedPainter& painter, double x, d
         for (int i=0; i<graphs.size(); i++) {
             JKQTPPlotElement* g=graphs[i];
 #ifdef JKQTBP_AUTOTIMER
-            jkaaot.write(QString("multi-col: graph %1: %2").arg(i).arg(g->get_title()));
+            jkaaot.write(QString("multi-col: graph %1: %2").arg(i).arg(g->getTitle()));
 #endif
-            if (!g->get_title().isEmpty() && g->get_visible()) {
-                //QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->get_title(),painter);//  mt.getSize(painter);
+            if (!g->getTitle().isEmpty() && g->getVisible()) {
+                //QSizeF fs=getTextSizeSize(keyFont,keyFontSize*fontSizeMultiplier,g->getTitle(),painter);//  mt.getSize(painter);
                 double itheight=qMax(key_item_height*kfm.width('X'), key_text_height);
                 QRectF rect(xx, yy+1.5*lineWidthMultiplier, key_line_length*kfm.width('X'), itheight-3.0*lineWidthMultiplier);
                 g->drawKeyMarker(painter, rect);
                 mathText.setFontColor(QColor("black"));
                 mathText.setFontSize(keyFontSize*fontSizeMultiplier);
                 mathText.setFontRoman(keyFont);
-                mathText.parse(g->get_title());
+                mathText.parse(g->getTitle());
                 //QSizeF fs=mt.getSize(painter);
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, QRectF(xx+(key_line_length+keyXSeparation)*kfm.width('X'),yy, key_text_width, key_text_height));
 
@@ -3719,12 +3719,12 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
 
 
         for (int i=0; i<graphs.size(); i++) {
-            if (graphs[i]->get_title().isEmpty() || !graphs[i]->get_visible()) {
+            if (graphs[i]->getTitle().isEmpty() || !graphs[i]->getVisible()) {
                 keyHeight--;
             } else {
-                //mt.parse(graphs[i]->get_title());
+                //mt.parse(graphs[i]->getTitle());
                 //QSizeF fs=mt.getSize(painter);
-                QSizeF fs=getTextSizeSize(keyFont, keyFontSize*fontSizeMultiplier, graphs[i]->get_title(), painter);
+                QSizeF fs=getTextSizeSize(keyFont, keyFontSize*fontSizeMultiplier, graphs[i]->getTitle(), painter);
                 if (fs.width()>w) w=fs.width();
                 if (text_height && fs.height()>*text_height) *text_height=fs.height();
                 h=h+qMax(key_item_height*kfm.width('X'), fs.height())+keyYSeparation*kfm.width('X');
@@ -3750,12 +3750,12 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
 
 
         for (int i=0; i<graphs.size(); i++) {
-            if (graphs[i]->get_title().isEmpty() || !graphs[i]->get_visible()) {
+            if (graphs[i]->getTitle().isEmpty() || !graphs[i]->getVisible()) {
                 keyWidth--;
             } else {
-                //mt.parse(graphs[i]->get_title());
+                //mt.parse(graphs[i]->getTitle());
                 //QSizeF fs=mt.getSize(painter);
-                QSizeF fs=getTextSizeSize(keyFont, keyFontSize*fontSizeMultiplier, graphs[i]->get_title(), painter);
+                QSizeF fs=getTextSizeSize(keyFont, keyFontSize*fontSizeMultiplier, graphs[i]->getTitle(), painter);
                 if (fs.height()>h) h=fs.height();
                 if (text_width && fs.width()>*text_width) *text_width=fs.width();
                 w=w+fs.width()+(key_line_length+2.0*keyXSeparation)*kfm.width('X');
@@ -3786,12 +3786,12 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
 
 
         for (int i=0; i<graphs.size(); i++) {
-            if (graphs[i]->get_title().isEmpty() || !graphs[i]->get_visible()) {
+            if (graphs[i]->getTitle().isEmpty() || !graphs[i]->getVisible()) {
                 keyHeight--;
             } else {
-                //mt.parse(graphs[i]->get_title());
+                //mt.parse(graphs[i]->getTitle());
                 //QSizeF fs=mt.getSize(painter);
-                QSizeF fs=getTextSizeSize(keyFont, keyFontSize*fontSizeMultiplier, graphs[i]->get_title(), painter);
+                QSizeF fs=getTextSizeSize(keyFont, keyFontSize*fontSizeMultiplier, graphs[i]->getTitle(), painter);
                 if (fs.width()>w) w=fs.width();
                 if ( fs.height()>txtH) txtH=fs.height();
             }
@@ -3806,18 +3806,18 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         double columns=floor(double(plotWidth)/(w+(2.0*keyXSeparation+key_line_length)*kfm.width('X')));
         if (!keyAutosize) columns=floor(double(plotWidth)/((key_item_width+2.0*keyXSeparation+key_line_length)*kfm.width('X')));
         columns=qMin(columns, keyHeight);
-        int lines=(int)ceil((double)keyHeight/(double)columns);
-        lines=qMin((double)lines, keyHeight);
+        int lines=static_cast<int>(ceil(static_cast<double>(keyHeight)/static_cast<double>(columns)));
+        lines=qMin(static_cast<double>(lines), keyHeight);
 
         if (keyPosition==JKQTPKeyInsideTopLeft || keyPosition==JKQTPKeyInsideTopRight
             || keyPosition==JKQTPKeyOutsideTopLeft || keyPosition==JKQTPKeyOutsideTopRight) {
             if (keyAutosize) {
-                lines=(int)floor(static_cast<double>(plotHeight)/(double)(txtH+(keyYSeparation)*kfm.width('X')));
+                lines=static_cast<int>(floor(static_cast<double>(plotHeight)/static_cast<double>(txtH+(keyYSeparation)*kfm.width('X'))));
             } else {
-                lines=(int)floor(static_cast<double>(plotHeight)/(double)((key_item_height+keyYSeparation)*kfm.width('X')));
+                lines=static_cast<int>(floor(static_cast<double>(plotHeight)/static_cast<double>((key_item_height+keyYSeparation)*kfm.width('X'))));
             }
-            columns=(int)ceil((double)keyHeight/(double)lines);
-            lines=qMin((double)lines, keyHeight);
+            columns=static_cast<int>(ceil(static_cast<double>(keyHeight)/static_cast<double>(lines)));
+            lines=qMin(static_cast<double>(lines), keyHeight);
 
         }
 
@@ -3868,7 +3868,7 @@ void JKQTBasePlotter::getGraphsXMinMax(double& minx, double& maxx, double& small
     maxx=0;
     smallestGreaterZero=0;
     for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]->get_visible()) {
+        if (graphs[i]->getVisible()) {
             double gminx=0;
             double gmaxx=0;
             double gsmallestGreaterZero=0;
@@ -3895,7 +3895,7 @@ void JKQTBasePlotter::getGraphsYMinMax(double& miny, double& maxy, double& small
     maxy=0;
     smallestGreaterZero=0;
     for (int i=0; i<graphs.size(); i++) {
-        if (graphs[i]->get_visible()) {
+        if (graphs[i]->getVisible()) {
             double gminy=0;
             double gmaxy=0;
             double gsmallestGreaterZero=0;
@@ -3935,7 +3935,7 @@ void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool inc
                 if ((xxmin<=1e-305)&&(xxmax<=1e-305)) {xxmin=0.1; xxmax=1.0; }
                 else if ((xxmin<=1e-305)&&(xxmax>0)) {
                     if (xsmallestGreaterZero>10.0*DBL_MIN) xxmin=xsmallestGreaterZero;
-                    else xxmin=xxmax/xAxis->get_logAxisBase();
+                    else xxmin=xxmax/xAxis->getLogAxisBase();
                 }
                 if (doScale) {
                     double d=scaleX*(log(xxmax)-log(xxmin));  // new width
@@ -3976,11 +3976,11 @@ void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool inc
             yymax=yAxis->getMax();
             doScale=false;
         }
-        if (yAxis->get_logAxis()) {
+        if (yAxis->getLogAxis()) {
             if ((yymin<=1e-305)&&(yymax<=1e-305)) {yymin=0.1; yymax=1.0; }
             else if ((yymin<=1e-305)&&(yymax>0)) {
                 if (ysmallestGreaterZero>10.0*DBL_MIN) yymin=ysmallestGreaterZero;
-                else yymin=yymax/yAxis->get_logAxisBase();
+                else yymin=yymax/yAxis->getLogAxisBase();
             }
             if (doScale) {
                 double d=scaleY*(log(yymax)-log(yymin));  // new width
@@ -3994,7 +3994,7 @@ void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool inc
             yymin=c-d/2.0;
             yymax=c+d/2.0;
         }
-        if (includeY0 && !yAxis->get_logAxis()) {
+        if (includeY0 && !yAxis->getLogAxis()) {
             if (yymin>0) yymin=0;
             else if (yymax<0) yymax=0;
         }
@@ -4155,7 +4155,7 @@ void JKQTBasePlotter::setAllGraphsInvisible()
 {
     for (int i=0; i<graphs.size(); i++) {
         JKQTPPlotElement* g=graphs[i];
-        g->set_visible(false);
+        g->setVisible(false);
     }
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -4164,7 +4164,7 @@ void JKQTBasePlotter::setAllGraphsVisible()
 {
     for (int i=0; i<graphs.size(); i++) {
         JKQTPPlotElement* g=graphs[i];
-        g->set_visible(true);
+        g->setVisible(true);
     }
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -4172,7 +4172,7 @@ void JKQTBasePlotter::setAllGraphsVisible()
 void JKQTBasePlotter::setGraphVisible(int i, bool visible)
 {
     JKQTPPlotElement* g=graphs.value(i, nullptr);
-    if (g) g->set_visible(visible);
+    if (g) g->setVisible(visible);
     if (emitPlotSignals) emit plotUpdated();
 }
 
@@ -4180,10 +4180,10 @@ void JKQTBasePlotter::setOnlyGraphVisible(int gr)
 {
     for (int i=0; i<graphs.size(); i++) {
         JKQTPPlotElement* g=graphs[i];
-        g->set_visible(false);
+        g->setVisible(false);
     }
     JKQTPPlotElement* g=graphs.value(gr, nullptr);
-    if (g) g->set_visible(true);
+    if (g) g->setVisible(true);
     if (emitPlotSignals) emit plotUpdated();
 }
 
@@ -4191,11 +4191,11 @@ void JKQTBasePlotter::setOnlyNthGraphsVisible(int start, int n)
 {
     for (int i=0; i<graphs.size(); i++) {
         JKQTPPlotElement* g=graphs[i];
-        g->set_visible(false);
+        g->setVisible(false);
     }
     for (int i=start; i<graphs.size(); i+=n) {
         JKQTPPlotElement* g=graphs.value(i, nullptr);
-        if (g) g->set_visible(true);
+        if (g) g->setVisible(true);
     }
     if (emitPlotSignals) emit plotUpdated();
 }
@@ -4257,8 +4257,8 @@ void JKQTBasePlotter::setGraphsDataRange(int datarange_start, int datarange_end)
     for (int i=0; i<graphs.size(); i++) {
         JKQTPGraph* g=dynamic_cast<JKQTPGraph*>(graphs[i]);
         if (g) {
-            g->set_datarange_start(datarange_start);
-            g->set_datarange_end(datarange_end);
+            g->setDatarangeStart(datarange_start);
+            g->setDatarange_end(datarange_end);
         }
     }
 }
@@ -4468,8 +4468,8 @@ void JKQTBasePlotter::showPlotData() {
 void JKQTBasePlotter::setEmittingSignalsEnabled(bool enabled)
 {
     emitSignals=enabled;
-    xAxis->set_doUpdateScaling(enabled);
-    yAxis->set_doUpdateScaling(enabled);
+    xAxis->setDoUpdateScaling(enabled);
+    yAxis->setDoUpdateScaling(enabled);
 }
 
 

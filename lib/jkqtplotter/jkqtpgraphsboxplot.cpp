@@ -362,7 +362,7 @@ bool JKQTPBoxplotVerticalGraph::usesColumn(int c) const
     return (c==meanColumn)||(c==posColumn)||(c==medianColumn)||(c==minColumn)||(c==maxColumn)||(c==percentile25Column)||(c==percentile75Column);
 }
 
-void JKQTPBoxplotVerticalGraph::set_sortData(int __value) {
+void JKQTPBoxplotVerticalGraph::setSortData(int __value) {
     sortData=(DataSortOrder)__value;
     if (__value>0) sortData=Sorted;
 }

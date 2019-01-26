@@ -61,30 +61,30 @@ int main(int argc, char* argv[])
 	
     // 4. create a graph (JKQTPColumnMathImage) with the column created above as data
     //    The data is color-coded with the color-palette JKQTPMathImageMATLAB
-    //    the converted range of data is determined automatically because set_autoImageRange(true)
+    //    the converted range of data is determined automatically because setAutoImageRange(true)
     JKQTPColumnMathImage* graph=new JKQTPColumnMathImage(&plot);
-    graph->set_title("");
+    graph->setTitle("");
     // image column with the data
-    graph->set_imageColumn(cAiryDisk);
+    graph->setImageColumn(cAiryDisk);
     // set size of the data (the datastore does not contain this info, as it only manages 1D columns of data and this is used to assume a row-major ordering
-    graph->set_Nx(NX);
-    graph->set_Ny(NY);
+    graph->setNx(NX);
+    graph->setNy(NY);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
-    graph->set_x(-w/2.0);
-    graph->set_y(-h/2.0);
+    graph->setX(-w/2.0);
+    graph->setY(-h/2.0);
     // width and height of the image in plot-axis-coordinates
-    graph->set_width(w);
-    graph->set_height(h);
+    graph->setWidth(w);
+    graph->setHeight(h);
     // color-map is "MATLAB"
-    graph->set_palette(JKQTPMathImageMATLAB);
+    graph->setPalette(JKQTPMathImageMATLAB);
     // get coordinate axis of color-bar and set its label
-    graph->get_colorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
+    graph->getColorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
     // determine min/max of data automatically and use it to set the range of the color-scale
-    graph->set_autoImageRange(true);
+    graph->setAutoImageRange(true);
     // you can set the color-scale range manually by using:
-    //   graph->set_autoImageRange(false);
-    //   graph->set_imageMin(0);
-    //   graph->set_imageMax(10);
+    //   graph->setAutoImageRange(false);
+    //   graph->setImageMin(0);
+    //   graph->setImageMax(10);
 	
 	
     // 5. add the graphs to the plot, so it is actually displayed

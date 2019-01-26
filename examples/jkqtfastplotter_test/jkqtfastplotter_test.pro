@@ -12,7 +12,7 @@ HEADERS += jkqtfastplotter_test_testmain.h
 
 RCC_DIR = .rccs
 
-CONFIG += qt windows
+CONFIG += link_prl qt windows
 
 QT += core gui opengl
 

@@ -39,6 +39,7 @@ class JKQTBasePlotter; // forward
   * some properties are editable. It is designed to be used together with e.g. <a href="http://doc.qt.io/qt-5/qlistview.html">QListView</a>.
   *
   * \image html JKQTPGraphsModel.png
+  *
   */
 class JKQTPGraphsModel : public QAbstractTableModel
 {

@@ -36,9 +36,9 @@ int main(int argc, char* argv[])
 
     // 4. create a graph in the plot, which plots the dataset X/Y:
     JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(&plot);
-    graph1->set_xColumn(columnX);
-    graph1->set_yColumn(columnY);
-    graph1->set_title(QObject::tr("sine graph"));
+    graph1->setXColumn(columnX);
+    graph1->setYColumn(columnY);
+    graph1->setTitle(QObject::tr("sine graph"));
 
     // 5. add the graph to the plot, so it is actually displayed
     plot.addGraph(graph1);

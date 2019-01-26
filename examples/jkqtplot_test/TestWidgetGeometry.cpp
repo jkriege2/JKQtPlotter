@@ -22,8 +22,8 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     plotGeo->setXY(0,1,0,1);
     plotGeo->getPlotter()->getXAxis()->setAxisLabel("$x$ [mm]");
     plotGeo->getPlotter()->getYAxis()->setAxisLabel("$y$ [mm]");
-    /*plotGeo->getPlotter()->getXAxis()->set_linkedAxis(plotGeo->getPlotter()->getYAxis());
-    plotGeo->getPlotter()->getXAxis()->set_changeWidthToAspectRatio(true);*/
+    /*plotGeo->getPlotter()->getXAxis()->setLinkedAxis(plotGeo->getPlotter()->getYAxis());
+    plotGeo->getPlotter()->getXAxis()->setChangeWidthToAspectRatio(true);*/
     plotGeo->getPlotter()->setMaintainAspectRatio(true);
     plotGeo->getPlotter()->setAspectRatio(1);
     plotGeo->getPlotter()->setMaintainAxisAspectRatio(true);
@@ -36,16 +36,16 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     //plotGeo->getPlotter()->addGraph(line2);
 
     JKQTPGeoRectangle* rect1=new JKQTPGeoRectangle(plotGeo->getPlotter(), 1,1,2,2, QColor("blue"),2, Qt::SolidLine, QColor("lightblue"));
-    rect1->set_angle(30);
+    rect1->setAngle(30);
     //plotGeo->getPlotter()->addGraph(rect1);
     JKQTPGeoRectangle* rect2=new JKQTPGeoRectangle(plotGeo->getPlotter(), 1,1,2,2, QColor("red"),2);
-    rect2->set_angle(45);
+    rect2->setAngle(45);
     //plotGeo->getPlotter()->addGraph(rect2);
     JKQTPGeoRectangle* rect3=new JKQTPGeoRectangle(plotGeo->getPlotter(), 1,1,2,4, QColor("green"),2);
-    rect3->set_angle(-30);
+    rect3->setAngle(-30);
     //plotGeo->getPlotter()->addGraph(rect3);
     JKQTPGeoEllipse* ell3=new JKQTPGeoEllipse(plotGeo->getPlotter(), 1,1,2,4, QColor("green"),2, Qt::SolidLine, QColor("lightgreen"), Qt::CrossPattern);
-    ell3->set_angle(-30);
+    ell3->setAngle(-30);
     //plotGeo->getPlotter()->addGraph(ell3);
 
     QVector<QPointF> p;
@@ -76,7 +76,7 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     JKQTPGeoInfiniteLine* iline2=new JKQTPGeoInfiniteLine(plotGeo->getPlotter(), 0.5,1,0,1, QColor("red"), 3);
     plotGeo->getPlotter()->addGraph(iline2);
     JKQTPGeoInfiniteLine* iline3=new JKQTPGeoInfiniteLine(plotGeo->getPlotter(), 0.5,1,-1,0.5, QColor("green"), 3);
-    iline3->set_two_sided(true);
+    iline3->setTwoSided(true);
     plotGeo->getPlotter()->addGraph(iline3);
 
     JKQTPGeoText* text=new JKQTPGeoText(plotGeo->getPlotter(), -1, -1, "Test $f(x)=\\sqrt{\\sin(x^2)}$ \\textbf{bold}", 12, QColor("red"));
