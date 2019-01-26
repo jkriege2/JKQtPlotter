@@ -191,15 +191,15 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes */
         enum MouseActionModes {
             NoMouseAction=0, /*!< \brief no action is to be performed */
-            DragPlotWindow=1, /*!< \brief the user can draw the current plot window while keeping the left mouse-button pushed down (=panning) */
-            PanPlot=DragPlotWindow, /*!< \copydoc DragPlotWindow */
-            ZoomRectangle=2, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
-            RectangleEvents=3, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
-            CircleEvents=4, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() */
-            EllipseEvents=5, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
-            LineEvents=6, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
-            ScribbleEvents=7, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
-            ClickEvents=8 /*!< \brief sinply call userClickFinished() for every single-click of the mouse button */
+            PanPlotOnMove, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed whenever the mouse moves */
+            PanPlotOnRelease, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed when the left mouse button is released */
+            ZoomRectangle, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
+            RectangleEvents, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
+            CircleEvents, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() */
+            EllipseEvents, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
+            LineEvents, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
+            ScribbleEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
+            ClickEvents /*!< \brief sinply call userClickFinished() for every single-click of the mouse button */
         };
 
         /** \brief options of how to react to a right mouse button click */
@@ -365,11 +365,6 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /*! \brief set the property menuSpecialContextMenu ( \copybrief menuSpecialContextMenu ). \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
         void setMenuSpecialContextMenu(QMenu* menu);
-
-        /*! \brief sets the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ) to the specified \a __value. 
-            \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
-            \see zoomByMouseWheel for more information */ 
-        void setZoomByMouseWheel(bool __value);
         /*! \brief returns the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ). 
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
             \see zoomByMouseWheel for more information */ 
@@ -591,6 +586,12 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         void setMouseActionMode(const MouseActionModes & __value);
         /*! \brief equivalent to \c setMouseActionMode(JKQTPlotter::ZoomRectangle) */
         void setZoomByMouseRectangle(bool zomByrectangle);
+
+        /*! \brief sets the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ) to the specified \a __value.
+            \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
+            \see zoomByMouseWheel for more information */
+        void setZoomByMouseWheel(bool __value);
+
         /*! \brief sets the property leftDoubleClickAction ( \copybrief leftDoubleClickAction ) to the specified \a __value.
             \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
             \see leftDoubleClickAction for more information */
@@ -798,16 +799,30 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief this is set \c true if we are drawing a zoom rectangle */
         bool mouseDragingRectangle;
 
-        /** \brief when zooming by moving the mouse this contains the x-coordinate the user clicked on */
+        /** \brief when draging the mouse this contains the x-coordinate the user clicked on (in plot coordinates) */
         double mouseDragRectXStart;
 
-        /** \brief when zooming by moving the mouse this contains the x-coordinate the mouse is currently
+        /** \brief when draging the mouse this contains the x-coordinate the user clicked on (in pixels) */
+        int mouseDragRectXStartPixel;
+
+        /** \brief when draging the mouse this contains the x-coordinate the mouse is currently
+         *         pointing to (in pixels) */
+        int mouseDragRectXEndPixel;
+
+        /** \brief when draging the mouse this contains the y-coordinate the mouse is currently
+         *         pointing to (in pixels) */
+        int mouseDragRectYEndPixel;
+
+        /** \brief when draging the mouse this contains the x-coordinate the mouse is currently
          *         pointing to
          */
         double mouseDragRectXEnd;
 
-        /** \brief when zooming by moving the mouse this contains the y-coordinate the user clicked on */
+        /** \brief when draging the mouse this contains the y-coordinate the user clicked on (in plot coordinates) */
         double mouseDragRectYStart;
+
+        /** \brief when zooming by moving the mouse this contains the y-coordinate the user clicked on (in pixels) */
+        int mouseDragRectYStartPixel;
 
         /** \brief when zooming by moving the mouse this contains the y-coordinate the mouse is currently
          *         pointing to

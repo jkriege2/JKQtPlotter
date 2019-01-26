@@ -557,6 +557,11 @@ QString JKQTPCoordinateAxis::floattolabel(double data) {
     QLocale loc=QLocale::system();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);
 
+    double belowIsZero=1e-300;
+    if (!getLogAxis()) {
+        belowIsZero=fabs(getMax()-getMin())*1e-6;
+    }
+
     switch(labelType) {
         case JKQTPCALTdefault: {
                 QString res=loc.toString(data, 'f', past_comma);
@@ -569,7 +574,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data) {
                 return res;
             }; break;
         case JKQTPCALTexponent: {
-                return QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, 1e-300, pow(10, -past_comma), pow(10, past_comma+1)).c_str());
+                return QString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, pow(10, -past_comma), pow(10, past_comma+1)).c_str());
             }; break;
         case JKQTPCALTexponentCharacter: {
                 return QString(jkqtp_floattounitstr(data, past_comma, remove_trail0).c_str());

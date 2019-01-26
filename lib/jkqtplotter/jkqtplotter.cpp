@@ -334,15 +334,22 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
           (mouseActionMode==JKQTPlotter::CircleEvents) ||
           (mouseActionMode==JKQTPlotter::EllipseEvents) ||
           (mouseActionMode==JKQTPlotter::ScribbleEvents) ||
+          (mouseActionMode==JKQTPlotter::PanPlotOnMove) ||
+          (mouseActionMode==JKQTPlotter::PanPlotOnRelease) ||
           (mouseActionMode==JKQTPlotter::LineEvents) ) &&
             mouseDragingRectangle && (event->buttons() & Qt::LeftButton))
     {
-        if (mouseActionMode==JKQTPlotter::ScribbleEvents) {
+        if (mouseActionMode==JKQTPlotter::ScribbleEvents || mouseActionMode==JKQTPlotter::PanPlotOnMove) {
+            // start is last event position
             mouseDragRectXStart=mouseDragRectXEnd;
             mouseDragRectYStart=mouseDragRectYEnd;
-        }
+            mouseDragRectXStartPixel=mouseDragRectXEndPixel;
+            mouseDragRectYStartPixel=mouseDragRectYEndPixel;
+         }
         mouseDragRectXEnd=plotter->p2x(event->x()/magnification);
         mouseDragRectYEnd=plotter->p2y((event->y()-getPlotYOffset())/magnification);
+        mouseDragRectXEndPixel=event->x();
+        mouseDragRectYEndPixel=event->y();
         paintUserAction();
         event->accept();
         //std::cout<<mouseZoomingTStart<<" -- "<<mouseZoomingTEnd<<std::endl;
@@ -351,6 +358,17 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
         }
         if ((mouseActionMode==JKQTPlotter::ScribbleEvents) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
             emit userScribbleClick(mouseDragRectXEnd, mouseDragRectYEnd, event->modifiers(), false, false);
+        }
+        if ((mouseActionMode==JKQTPlotter::PanPlotOnMove) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
+            QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
+            if  ( (mouseLastClickX/magnification<plotter->getInternalPlotBorderLeft()) || (mouseLastClickX/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+                zoomRect.translate(0, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
+            } else if (((mouseLastClickY-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((mouseLastClickY-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+                zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, 0);
+            } else {
+                zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
+            }
+            setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
         }
     } else {
         event->accept();
@@ -374,6 +392,8 @@ void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
         {
             mouseDragRectXStart=plotter->p2x(event->x()/magnification);
             mouseDragRectYStart=plotter->p2y((event->y()-getPlotYOffset())/magnification);
+            mouseDragRectXEndPixel=mouseDragRectXStartPixel=event->x();
+            mouseDragRectYEndPixel=mouseDragRectYStartPixel=event->y();
             mouseDragingRectangle=true;
             oldImage=image;
             event->accept();
@@ -425,6 +445,8 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
     if (mouseDragingRectangle && event->button()==Qt::LeftButton) {
         mouseDragRectXEnd=plotter->p2x(event->x()/magnification);
         mouseDragRectYEnd=plotter->p2y((event->y()-getPlotYOffset())/magnification);
+        mouseDragRectXEndPixel=event->x();
+        mouseDragRectYEndPixel=event->y();
         image=oldImage;
         //update();
         mouseDragingRectangle=false;
@@ -445,6 +467,16 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
 
                 emit zoomChangedLocally(xmin, xmax, ymin, ymax, this);
                 plotter->setXY(xmin, xmax, ymin, ymax);
+            } else if (mouseActionMode==JKQTPlotter::PanPlotOnRelease) {
+                QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
+                if  ( (mouseLastClickX/magnification<plotter->getInternalPlotBorderLeft()) || (mouseLastClickX/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+                    zoomRect.translate(0, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
+                } else if (((mouseLastClickY-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((mouseLastClickY-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+                    zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, 0);
+                } else {
+                    zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
+                }
+                setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
             } else if (mouseActionMode==JKQTPlotter::RectangleEvents) {
                 emit userRectangleFinished(x1, y1, x2-x1, y2-y1, event->modifiers());
             } else if (mouseActionMode==JKQTPlotter::CircleEvents) {
@@ -515,8 +547,8 @@ void JKQTPlotter::keyReleaseEvent(QKeyEvent *event) {
 
 void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
     // only react on wheel turns inside the widget, turning forward will zoom out and turning backwards will zoom in by a factor of 2
-    if  ( (event->x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
-          ((event->y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+    if  ( zoomByMouseWheel && ((event->x()/magnification>=plotter->getInternalPlotBorderLeft()) && (event->x()/magnification<=plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft())  &&
+          ((event->y()-getPlotYOffset())/magnification>=plotter->getInternalPlotBorderTop()) && ((event->y()-getPlotYOffset())/magnification<=plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) ) {
         double factor=pow(2.0, 1.0*static_cast<double>(event->delta())/120.0)*2.0;
         double xmin=plotter->p2x((long)round(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor));
         double xmax=plotter->p2x((long)round(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor));
@@ -620,7 +652,9 @@ void JKQTPlotter::updateCursor() {
         QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_rectangle.png");
         QBitmap mask(":/JKQTPlotter/jkqtp_cursor_rectangle_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));
-    } else if (mouseActionMode==JKQTPlotter::CircleEvents) {
+    } else if (mouseActionMode==JKQTPlotter::PanPlotOnMove || mouseActionMode==JKQTPlotter::PanPlotOnRelease) {
+        setCursor(QCursor(Qt::OpenHandCursor));
+     } else if (mouseActionMode==JKQTPlotter::CircleEvents) {
         QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_circle.png");
         QBitmap mask(":/JKQTPlotter/jkqtp_cursor_circle_mask.png");
         setCursor(QCursor(cursor, mask, 9, 14));

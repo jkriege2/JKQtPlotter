@@ -19,12 +19,14 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     layout=new QGridLayout;
     layForm=new QFormLayout;
     layChk=new QHBoxLayout;
+    layChk2=new QHBoxLayout;
     layout->addLayout(layChk,0,0);
-    layout->addLayout(layForm,1,0);
+    layout->addLayout(layChk2,1,0);
+    layout->addLayout(layForm,2,0);
 
     // generate a JKQTPlotter and initialize some plot data
     plot=new JKQTPlotter(this);
-    layout->addWidget(plot,2,0);
+    layout->addWidget(plot,3,0);
     initPlot();
 
     // add some of the default QActions from the JKQTPlotter to the window menu
@@ -66,11 +68,40 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     connect(chkGrid, SIGNAL(toggled(bool)), plot, SLOT(setGrid(bool)));
     layChk->addWidget(chkGrid);
 
+    // add a checkbox to switch the grid on and off
+    chkLogX=new QCheckBox(tr("X log-scale"), this);
+    chkLogX->setChecked(false);
+    connect(chkLogX, SIGNAL(toggled(bool)), plot->getXAxis(), SLOT(setLogAxis(bool)));
+    layChk2->addWidget(chkLogX);
+    chkLogY=new QCheckBox(tr("Y log-scale"), this);
+    chkLogY->setChecked(false);
+    connect(chkLogY, SIGNAL(toggled(bool)), plot->getYAxis(), SLOT(setLogAxis(bool)));
+    layChk2->addWidget(chkLogY);
+
+    // add a spin box for plot magnification
+    cmbMagnification=new QComboBox(this);
+    cmbMagnification->addItem("25%", 0.25);
+    cmbMagnification->addItem("50%", 0.50);
+    cmbMagnification->addItem("75%", 0.75);
+    cmbMagnification->addItem("100%", 1);
+    cmbMagnification->addItem("150%", 1.5);
+    cmbMagnification->addItem("200%", 2);
+    layForm->addRow("plot magnification:", cmbMagnification);
+    connect(cmbMagnification, SIGNAL(currentIndexChanged(int)), this, SLOT(setPlotMagnification(int)));
+    cmbMagnification->setCurrentIndex(3);
+
+    // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
+    chkZoomByMouseWheel=new QCheckBox(this);
+    chkZoomByMouseWheel->setChecked(plot->getZoomByMouseWheel());
+    layForm->addRow("zoom by mouse wheel:", chkZoomByMouseWheel);
+    connect(chkZoomByMouseWheel, SIGNAL(toggled(bool)), plot, SLOT(setZoomByMouseWheel(bool)));
+
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
     cmbMouseAction=new QComboBox(this);
     layForm->addRow("mouse action:", cmbMouseAction);
     cmbMouseAction->addItem("NoMouseAction");
-    cmbMouseAction->addItem("PanPlot=DragPlotWindow");
+    cmbMouseAction->addItem("PanPlotOnMove");
+    cmbMouseAction->addItem("PanPlotOnRelease");
     cmbMouseAction->addItem("ZoomRectangle");
     cmbMouseAction->addItem("RectangleEvents");
     cmbMouseAction->addItem("CircleEvents");
@@ -108,6 +139,11 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
 void TestUserInteraction::setLeftMouseAction(int index)
 {
     plot->setMouseActionMode(static_cast<JKQTPlotter::MouseActionModes>(index));
+}
+
+void TestUserInteraction::setPlotMagnification(int index)
+{
+    plot->setMagnification(cmbMagnification->itemData(index).toDouble());
 }
 
 void TestUserInteraction::plotMouseMove(double x, double y)

@@ -22,6 +22,7 @@ class TestUserInteraction : public QMainWindow
 
     public slots:
         void setLeftMouseAction(int index);
+        void setPlotMagnification(int index);
 
         void plotMouseMove(double x, double y);
         void plotMouseClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
@@ -40,15 +41,20 @@ class TestUserInteraction : public QMainWindow
         JKQTPlotter* plot;
         QGridLayout* layout;
         QHBoxLayout* layChk;
+        QHBoxLayout* layChk2;
         QFormLayout* layForm;
         QCheckBox* chkPositionDisplay;
         QCheckBox* chkShowToolbar;
         QCheckBox* chkToolbarAlwaysOn;
         QCheckBox* chkGrid;
         QComboBox* cmbMouseAction;
+        QCheckBox* chkLogX;
+        QCheckBox* chkLogY;
+        QCheckBox* chkZoomByMouseWheel;
         QLabel* labMouseAction;
         QLabel* labMouseMoved;
         QLabel* labMouseClicked;
+        QComboBox* cmbMagnification;
         JKQTPXYLineGraph* graph1;
         JKQTPXYLineGraph* graph2;
 

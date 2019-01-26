@@ -1101,12 +1101,12 @@ class LIB_EXPORT JKQTBasePlotter: public QObject {
         }
 
         /** \brief return time coordinate coordinate from x-pixel */
-        inline double p2x(long x) const {
+        inline double p2x(double x) const {
             return xAxis->p2x(x);
         }
 
         /** \brief return y coordinate coordinate from y-pixel */
-        inline double p2y(long y) const {
+        inline double p2y(double y) const {
             return yAxis->p2x(y);
         }
 
