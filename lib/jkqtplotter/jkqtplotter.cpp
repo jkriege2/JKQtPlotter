@@ -347,7 +347,7 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
         event->accept();
         //std::cout<<mouseZoomingTStart<<" -- "<<mouseZoomingTEnd<<std::endl;
         if (mouseActionMode==JKQTPlotter::ZoomRectangle) {
-            emit plotNewZoomRectangle(mouseDragRectXStart, mouseDragRectXEnd, mouseDragRectYStart, mouseDragRectYEnd);
+            emit plotNewZoomRectangle(mouseDragRectXStart, mouseDragRectXEnd, mouseDragRectYStart, mouseDragRectYEnd, event->modifiers());
         }
         if ((mouseActionMode==JKQTPlotter::ScribbleEvents) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
             emit userScribbleClick(mouseDragRectXEnd, mouseDragRectYEnd, event->modifiers(), false, false);

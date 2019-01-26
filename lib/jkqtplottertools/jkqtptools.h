@@ -139,11 +139,11 @@ LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
 /** \brief display mode for the axis labels
  * \ingroup jkqtptools */
 enum JKQTPCALabelType {
-    JKQTPCALTdefault, /*!< \brief simply print the numbers */
-    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. \c 5µ for \f$ 5\cdot 10^{-6} \f$ , \cd 3k for \f$ 3\cdot 10^3 \f$ ... */
-    JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... */
-    JKQTPCALTdate, /*!< \brief show numbers as dates */
-    JKQTPCALTtime, /*!< \brief show numbers as times */
+    JKQTPCALTdefault, /*!< \brief simply print the numbers \image html JKQTPCALTdefault.png */
+    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. \c 5µ for \f$ 5\cdot 10^{-6} \f$ , \cd 3k for \f$ 3\cdot 10^3 \f$ ...  */
+    JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... \image html JKQTPCALTexponent.png */
+    JKQTPCALTdate, /*!< \brief show numbers as dates \image html JKQTPCALTdate.png */
+    JKQTPCALTtime, /*!< \brief show numbers as times \image html JKQTPCALTtime.png*/
     JKQTPCALTdatetime, /*!< \brief show numbers as times */
 };
 

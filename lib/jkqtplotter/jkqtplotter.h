@@ -59,7 +59,7 @@
 LIB_EXPORT void initJKQTPlotterResources();
 
 
-/** \brief class to plot function graphs in linear or (semi-)logarithmic scale
+/** \brief plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)
  * \ingroup jkqtpplotterclasses
  *
  * This class is an implementation of JKQTBasePlotter. It uses the tools from this base class
@@ -190,14 +190,16 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief availble user-action mode this JKQtPlotter use when mouse events occur.
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes */
         enum MouseActionModes {
-            ZoomRectangle, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
-            RectangleEvents, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
-            CircleEvents, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() */
-            EllipseEvents, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
-            LineEvents, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
-            ScribbleEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
-            NoMouseAction, /*!< \brief no action is to be performed */
-            ClickEvents /*!< \brief sinply call userClickFinished() for every single-click of the mouse button */
+            NoMouseAction=0, /*!< \brief no action is to be performed */
+            DragPlotWindow=1, /*!< \brief the user can draw the current plot window while keeping the left mouse-button pushed down (=panning) */
+            PanPlot=DragPlotWindow, /*!< \copydoc DragPlotWindow */
+            ZoomRectangle=2, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
+            RectangleEvents=3, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
+            CircleEvents=4, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() */
+            EllipseEvents=5, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
+            LineEvents=6, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
+            ScribbleEvents=7, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
+            ClickEvents=8 /*!< \brief sinply call userClickFinished() for every single-click of the mouse button */
         };
 
         /** \brief options of how to react to a right mouse button click */
@@ -640,36 +642,121 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         inline void setXY(double xminn, double xmaxx, double yminn, double ymaxx) { plotter->setXY(xminn, xmaxx, yminn, ymaxx); }
 
     signals:
-        /** \brief signal: emitted whenever the mouse moved over the plot */
+        /** \brief emitted whenever the mouse moves
+         *
+         * \param x x-position of the mouse (in plot coordinates)
+         * \param y y-position of the mouse (in plot coordinates)
+         */
         void plotMouseMove(double x, double y);
-        /** \brief signal: emitted whenever the mouse was clicked over the plot */
+        /** \brief emitted when a single-click event from the mouse occurs inside the plot
+         *
+         * \param x x-position of the mouse (in plot coordinates)
+         * \param y y-position of the mouse (in plot coordinates)
+         * \param modifiers key-modifiers when the click occured
+         * \param button mouse-button that was used for the click
+         */
         void plotMouseClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
-        /** \brief signal: emitted whenever the mouse was clicked over the plot */
+        /** \brief emitted when a double-click event from the mouse occurs inside the plot
+         *
+         * \param x x-position of the mouse (in plot coordinates)
+         * \param y y-position of the mouse (in plot coordinates)
+         * \param modifiers key-modifiers when the click occured
+         * \param button mouse-button that was used for the click
+         */
         void plotMouseDoubleClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
-        /** \brief signal: emitted whenever a zoom rectangle is drawn (and it's size changes) */
-        void plotNewZoomRectangle(double mouseDragRectXStart, double mouseDragRectXEnd, double mouseDragRectYStart, double mouseDragRectYEnd);
+        /** \brief emitted when mouseActionMode==JKQTPlotter::ZoomRectangle and the drawing of the new zoom rectangle is finished (=mouse key released)
+         *
+         * \param mouseDragRectXStart start of the selected x-range (in plot coordinates)
+         * \param mouseDragRectXEnd end of the selected x-range (in plot coordinates)
+         * \param mouseDragRectYStart start of the selected x-range (in plot coordinates)
+         * \param mouseDragRectYEnd end of the selected x-range (in plot coordinates)
+         * \param modifiers key-modifiers when the click occured
+         */
+        void plotNewZoomRectangle(double mouseDragRectXStart, double mouseDragRectXEnd, double mouseDragRectYStart, double mouseDragRectYEnd, Qt::KeyboardModifiers modifiers);
         /** \brief emitted when the plot scaling has been recalculated */
         void plotScalingRecalculated();
         /** \brief emitted before the plot scaling has been recalculated */
         void beforePlotScalingRecalculate();
-        /** \brief emitted when a context-emnu was opened at the given position */
+        /** \brief emitted whenever a context menu is opened. You can modify the menu via the parameter \a contextMenu!
+         *
+         * \param x x-position of the context-menu (in plot coordinates)
+         * \param y y-position of the context-menu (in plot coordinates)
+         * \param contextMenu QMenu-object of the context menu. This object may be altered to display additional items ... Here is an example:
+         *                    \code
+         *                      contextMenu->addSeparator();
+         *                      QAction* act=contextMenu->addMenu(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y))->addAction("user-added action");
+         *                      connect(act, &QAction::triggered, [x,y]() { QMessageBox::warning(nullptr, tr("Plot Context Menu"),
+         *                                                                                       tr("Context Menu was opened at x/y=%1/%2!").arg(x).arg(y),
+         *                                                                                       QMessageBox::Ok,
+         *                                                                                       QMessageBox::Ok); });
+         *                    \endcode
+         */
         void contextMenuOpened(double x, double y, QMenu* contextMenu);
 
 
-        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
+        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse)
+         *
+         * \param newxmin start of the selected x-range (in plot coordinates)
+         * \param newxmax end of the selected x-range (in plot coordinates)
+         * \param newymin start of the selected x-range (in plot coordinates)
+         * \param newymax end of the selected x-range (in plot coordinates)
+         * \param sender JKQTPlotter sending this event
+         *
+         * This signal is designed to be connected to these slots: synchronizeXAxis(), synchronizeYAxis(), synchronizeXYAxis()
+         */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
-        /** \brief emitted when the user clicks the plot */
+        /** \brief emitted when mouseActionMode==JKQTPlotter::ClickEvents and a click event from the mouse occurs inside the plot
+         *
+         * \param x x-position of the mouse (in plot coordinates)
+         * \param y y-position of the mouse (in plot coordinates)
+         * \param modifiers key-modifiers when the click occured
+         */
         void userClickFinished(double x, double y, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when the user scribbles */
+        /** \brief emitted when mouseActionMode==JKQTPlotter::ScribbleEvents and a click event from the mouse occurs inside the plot,
+         *         or the mouse moved while the left button is pressed down
+         *
+         * \param x x-position of the mouse (in plot coordinates)
+         * \param y y-position of the mouse (in plot coordinates)
+         * \param modifiers key-modifiers when the event was generated
+         * \param first if \c true: this is the first event of a series that starts with pressing the mouse-button down, within the series, this is \c false
+         * \param last if \c true: this is the last event of a series that ends when releasing the mouse-button, within the series, this is \c false
+         */
         void userScribbleClick(double x, double y, Qt::KeyboardModifiers modifiers, bool first, bool last);
-        /** \brief emitted when the user draws a rectangle */
+        /** \brief emitted when mouseActionMode==JKQTPlotter::RectangleEvents and the drawing of the new rectangle is finished (=mouse key released)
+         *
+         * \param x x-coordinate of the bottom left corner of the rectangle (in plot coordinates)
+         * \param y y-coordinate of the bottom left corner of the rectangle (in plot coordinates)
+         * \param width width of the rectangle (in plot coordinates)
+         * \param height height of the rectangle (in plot coordinates)
+         * \param modifiers key-modifiers when the rectangle was finished
+         */
         void userRectangleFinished(double x, double y, double width, double height, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when the user draws a line */
+        /** \brief emitted when mouseActionMode==JKQTPlotter::LineEvents and the drawing of the new line is finished (=mouse key released)
+         *
+         * \param x1 x-coordinate of the start of the line (in plot coordinates)
+         * \param y1 y-coordinate of the start of the line (in plot coordinates)
+         * \param x2 x-coordinate of the end of the line (in plot coordinates)
+         * \param y2 y-coordinate of the end of the line (in plot coordinates)
+         * \param modifiers key-modifiers when the rectangle was finished
+         */
         void userLineFinished(double x1, double y1, double x2, double y2, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when the user draws a circle */
+        /** \brief emitted when mouseActionMode==JKQTPlotter::CircleEvents and the drawing of the new circle is finished (=mouse key released)
+         *
+         * \param x x-coordinate of the center of the circle (in plot coordinates)
+         * \param y y-coordinate of the center of the circle (in plot coordinates)
+         * \param radius radius of the circle (in plot coordinates)
+         * \param modifiers key-modifiers when the rectangle was finished
+         */
         void userCircleFinished(double x, double y, double radius, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when the user draws an ellipse */
+        /** \brief emitted when mouseActionMode==JKQTPlotter::EllipseEvents and the drawing of the new ellipse is finished (=mouse key released)
+         *
+         * \param x x-coordinate of the center of the ellipse (in plot coordinates)
+         * \param y y-coordinate of the center of the ellipse (in plot coordinates)
+         * \param radiusX half-axis in x-direction of the ellipse (in plot coordinates)
+         * \param radiusY half-axis in y-direction of the ellipse (in plot coordinates)
+         * \param modifiers key-modifiers when the rectangle was finished
+         */
         void userEllipseFinished(double x, double y, double radiusX, double radiusY, Qt::KeyboardModifiers modifiers);
 
 

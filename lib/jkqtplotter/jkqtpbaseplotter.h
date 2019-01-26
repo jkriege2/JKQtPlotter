@@ -95,7 +95,7 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
         virtual QPaintDevice* createPaintdeviceMM(const QString& filename, double widthMM, double heightMM) const;
 };
 
-/** \brief base class for 2D plotter classes
+/** \brief base class for 2D plotter classes (used by the plotter widget JKQTPlotter)
  * \ingroup jkqtpplotterclasses
  *
  * This class implements basic functionalities for the plotter classes. Those are:
@@ -109,9 +109,9 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
  * .
  *
  * This class is NOT a widget, if you need a plotting widget, use JKQTPlotter. This class may be used to
- * plot onto any JKQTPEnhancedPainter.
+ * plot using a JKQTPEnhancedPainter.
  *
- *
+ * \see JKQTPlotter
  *
  * \section jkqtplotter_base_datastore Data Storage
  * As already mentioned this class does not provide means to draw graphs, but it contains a basic mechanism to associate

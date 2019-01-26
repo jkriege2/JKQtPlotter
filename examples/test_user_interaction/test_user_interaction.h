@@ -21,7 +21,20 @@ class TestUserInteraction : public QMainWindow
     signals:
 
     public slots:
+        void setLeftMouseAction(int index);
 
+        void plotMouseMove(double x, double y);
+        void plotMouseClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
+        void plotMouseDoubleClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
+        void plotNewZoomRectangle(double mouseDragRectXStart, double mouseDragRectXEnd, double mouseDragRectYStart, double mouseDragRectYEnd, Qt::KeyboardModifiers modifiers);
+        void contextMenuOpened(double x, double y, QMenu* contextMenu);
+        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
+        void userClickFinished(double x, double y, Qt::KeyboardModifiers modifiers);
+        void userScribbleClick(double x, double y, Qt::KeyboardModifiers modifiers, bool first, bool last);
+        void userRectangleFinished(double x, double y, double width, double height, Qt::KeyboardModifiers modifiers);
+        void userLineFinished(double x1, double y1, double x2, double y2, Qt::KeyboardModifiers modifiers);
+        void userCircleFinished(double x, double y, double radius, Qt::KeyboardModifiers modifiers);
+        void userEllipseFinished(double x, double y, double radiusX, double radiusY, Qt::KeyboardModifiers modifiers);
     protected:
         void initPlot();
         JKQTPlotter* plot;
@@ -32,8 +45,15 @@ class TestUserInteraction : public QMainWindow
         QCheckBox* chkShowToolbar;
         QCheckBox* chkToolbarAlwaysOn;
         QCheckBox* chkGrid;
+        QComboBox* cmbMouseAction;
+        QLabel* labMouseAction;
+        QLabel* labMouseMoved;
+        QLabel* labMouseClicked;
         JKQTPXYLineGraph* graph1;
         JKQTPXYLineGraph* graph2;
+
+        static QString MouseButton2String(Qt::MouseButton button);
+        static QString KeyboradMod2String(Qt::KeyboardModifiers modifiers);
 };
 
 #endif // TEST_USER_INTERACTION_H
