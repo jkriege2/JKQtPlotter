@@ -3390,10 +3390,10 @@ void JKQTMathText::useXITS()
     //fontSans=fam;
     fontMathRoman=fam;
     fontMathSans=fam;
-    fontTypewriter=fam;
+    //fontTypewriter=fam;
     fontBlackboard=fam;
-    fontCaligraphic=fam;
-    fontScript=fam;
+    //fontCaligraphic=fam;
+    //fontScript=fam;
     fontBraces=fam;
     fontSymbol=fam;
     fontGreek=fam;

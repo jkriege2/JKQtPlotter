@@ -97,20 +97,59 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     connect(chkZoomByMouseWheel, SIGNAL(toggled(bool)), plot, SLOT(setZoomByMouseWheel(bool)));
 
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
-    cmbMouseAction=new QComboBox(this);
-    layForm->addRow("mouse action:", cmbMouseAction);
-    cmbMouseAction->addItem("NoMouseAction");
-    cmbMouseAction->addItem("PanPlotOnMove");
-    cmbMouseAction->addItem("PanPlotOnRelease");
-    cmbMouseAction->addItem("ZoomRectangle");
-    cmbMouseAction->addItem("RectangleEvents");
-    cmbMouseAction->addItem("CircleEvents");
-    cmbMouseAction->addItem("EllipseEvents");
-    cmbMouseAction->addItem("LineEvents");
-    cmbMouseAction->addItem("ScribbleEvents");
-    cmbMouseAction->addItem("ClickEvents");
-    connect(cmbMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftMouseAction(int)));
-    setLeftMouseAction(cmbMouseAction->currentIndex());
+    cmbLeftNoModMouseAction=new QComboBox(this);
+    layForm->addRow("mouse action: left-click, no modifiers", cmbLeftNoModMouseAction);
+    cmbLeftNoModMouseAction->addItem("PanPlotOnMove");
+    cmbLeftNoModMouseAction->addItem("PanPlotOnRelease");
+    cmbLeftNoModMouseAction->addItem("ZoomRectangle");
+    cmbLeftNoModMouseAction->addItem("RectangleEvents");
+    cmbLeftNoModMouseAction->addItem("CircleEvents");
+    cmbLeftNoModMouseAction->addItem("EllipseEvents");
+    cmbLeftNoModMouseAction->addItem("LineEvents");
+    cmbLeftNoModMouseAction->addItem("ScribbleEvents");
+    cmbLeftNoModMouseAction->addItem("NoMouseAction");
+    cmbLeftNoModMouseAction->setCurrentIndex(2);
+    connect(cmbLeftNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftMouseAction(int)));
+    setLeftMouseAction(cmbLeftNoModMouseAction->currentIndex());
+
+    // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
+    cmbLeftCtrlModMouseAction=new QComboBox(this);
+    layForm->addRow("mouse action: left-click, Ctrl modifier", cmbLeftCtrlModMouseAction);
+    cmbLeftCtrlModMouseAction->addItem("PanPlotOnMove");
+    cmbLeftCtrlModMouseAction->addItem("PanPlotOnRelease");
+    cmbLeftCtrlModMouseAction->addItem("ZoomRectangle");
+    cmbLeftCtrlModMouseAction->addItem("RectangleEvents");
+    cmbLeftCtrlModMouseAction->addItem("CircleEvents");
+    cmbLeftCtrlModMouseAction->addItem("EllipseEvents");
+    cmbLeftCtrlModMouseAction->addItem("LineEvents");
+    cmbLeftCtrlModMouseAction->addItem("ScribbleEvents");
+    cmbLeftCtrlModMouseAction->addItem("NoMouseAction");
+    cmbLeftCtrlModMouseAction->setCurrentIndex(0);
+    connect(cmbLeftCtrlModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftCtrlMouseAction(int)));
+    setLeftCtrlMouseAction(cmbLeftCtrlModMouseAction->currentIndex());
+
+    // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
+    cmbRightNoModMouseAction=new QComboBox(this);
+    layForm->addRow("mouse action: right-click, no modifiers", cmbRightNoModMouseAction);
+    cmbRightNoModMouseAction->addItem("PanPlotOnMove");
+    cmbRightNoModMouseAction->addItem("PanPlotOnRelease");
+    cmbRightNoModMouseAction->addItem("ZoomRectangle");
+    cmbRightNoModMouseAction->addItem("RectangleEvents");
+    cmbRightNoModMouseAction->addItem("CircleEvents");
+    cmbRightNoModMouseAction->addItem("EllipseEvents");
+    cmbRightNoModMouseAction->addItem("LineEvents");
+    cmbRightNoModMouseAction->addItem("ScribbleEvents");
+    cmbRightNoModMouseAction->addItem("ContextMenu");
+    cmbRightNoModMouseAction->setCurrentIndex(5);
+    connect(cmbRightNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightMouseAction(int)));
+    setRightMouseAction(cmbRightNoModMouseAction->currentIndex());
+
+    // add a QComboBox that allows to set whether the right mouse button may show the context menu on a single click
+    chkRightClickShowsContextMenu=new QCheckBox(this);
+    chkRightClickShowsContextMenu->setChecked(plot->isRightClickShowsContextMenuEnabled());
+    layForm->addRow("mouse action: right-click shows context menu:", chkRightClickShowsContextMenu);
+    connect(chkRightClickShowsContextMenu, SIGNAL(toggled(bool)), plot, SLOT(enableRightClickShowsContextMenu(bool)));
+
     // and add a QLabel to show the different events of the JKQTPlotter:
     labMouseMoved=new QLabel(this);
     layForm->addRow("last mouse moved:", labMouseMoved);
@@ -124,7 +163,6 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     connect(plot, SIGNAL(plotNewZoomRectangle(double, double, double, double, Qt::KeyboardModifiers)), this, SLOT(plotNewZoomRectangle(double, double, double, double, Qt::KeyboardModifiers)));
     connect(plot, SIGNAL(contextMenuOpened(double, double, QMenu*)), this, SLOT(contextMenuOpened(double, double, QMenu*)));
     connect(plot, SIGNAL(zoomChangedLocally(double, double, double, double, JKQTPlotter*)), this, SLOT(zoomChangedLocally(double, double, double, double, JKQTPlotter*)));
-    connect(plot, SIGNAL(userClickFinished(double, double, Qt::KeyboardModifiers)), this, SLOT(userClickFinished(double, double, Qt::KeyboardModifiers)));
     connect(plot, SIGNAL(userScribbleClick(double, double, Qt::KeyboardModifiers, bool, bool)), this, SLOT(userScribbleClick(double, double, Qt::KeyboardModifiers, bool, bool)));
     connect(plot, SIGNAL(userRectangleFinished(double, double, double, double, Qt::KeyboardModifiers)), this, SLOT(userRectangleFinished(double, double, double, double, Qt::KeyboardModifiers)));
     connect(plot, SIGNAL(userLineFinished(double, double, double, double, Qt::KeyboardModifiers)), this, SLOT(userLineFinished(double, double, double, double, Qt::KeyboardModifiers)));
@@ -138,7 +176,20 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
 
 void TestUserInteraction::setLeftMouseAction(int index)
 {
-    plot->setMouseActionMode(static_cast<JKQTPlotter::MouseActionModes>(index));
+    if (index==cmbLeftNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::NoModifier);
+    else plot->registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseActionMode>(index));
+}
+
+void TestUserInteraction::setLeftCtrlMouseAction(int index)
+{
+    if (index==cmbLeftCtrlModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::ControlModifier);
+    else plot->registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, static_cast<JKQTPlotter::MouseActionMode>(index));
+}
+
+void TestUserInteraction::setRightMouseAction(int index)
+{
+    if (index==cmbRightNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::RightButton, Qt::NoModifier);
+    else plot->registerMouseDragAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseActionMode>(index));
 }
 
 void TestUserInteraction::setPlotMagnification(int index)
@@ -182,11 +233,6 @@ void TestUserInteraction::zoomChangedLocally(double newxmin, double newxmax, dou
     labMouseAction->setText(QString("zoomChangedLocally(x=%1..%2, y=%3..%4)").arg(newxmin).arg(newxmax).arg(newymin).arg(newymax));
 }
 
-void TestUserInteraction::userClickFinished(double x, double y, Qt::KeyboardModifiers modifiers)
-{
-    labMouseAction->setText(QString("userClickFinished(%1, %2, modifiers=%3)").arg(x).arg(y).arg(KeyboradMod2String(modifiers)));
-}
-
 void TestUserInteraction::userScribbleClick(double x, double y, Qt::KeyboardModifiers modifiers, bool first, bool last)
 {
     static int counter=0;
@@ -207,12 +253,12 @@ void TestUserInteraction::userLineFinished(double x1, double y1, double x2, doub
 
 void TestUserInteraction::userCircleFinished(double x, double y, double radius, Qt::KeyboardModifiers modifiers)
 {
-    labMouseAction->setText(QString("userRectangleFinished(x=%1, y=%2, radius=%3, modifiers=%4)").arg(x).arg(y).arg(radius).arg(KeyboradMod2String(modifiers)));
+    labMouseAction->setText(QString("userCircleFinished(x=%1, y=%2, radius=%3, modifiers=%4)").arg(x).arg(y).arg(radius).arg(KeyboradMod2String(modifiers)));
 }
 
 void TestUserInteraction::userEllipseFinished(double x, double y, double radiusX, double radiusY, Qt::KeyboardModifiers modifiers)
 {
-    labMouseAction->setText(QString("userRectangleFinished(x=%1, y=%2, radiusX=%3, radiusY=%4, modifiers=%5)").arg(x).arg(y).arg(radiusX).arg(radiusY).arg(KeyboradMod2String(modifiers)));
+    labMouseAction->setText(QString("userEllipseFinished(x=%1, y=%2, radiusX=%3, radiusY=%4, modifiers=%5)").arg(x).arg(y).arg(radiusX).arg(radiusY).arg(KeyboradMod2String(modifiers)));
 }
 
 QString TestUserInteraction::KeyboradMod2String(Qt::KeyboardModifiers modifiers) {

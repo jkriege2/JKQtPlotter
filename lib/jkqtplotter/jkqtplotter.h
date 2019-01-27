@@ -156,7 +156,31 @@ LIB_EXPORT void initJKQTPlotterResources();
  *
  * \subsection JKQTPLOTTER_USERMOUSEINTERACTION Mouse-Interaction in JKQTPlotter
  *
+ * JKQTPlotter offers several methods that allow to customize, how it reacts to mouse actions:
+ *   - registerMouseDragAction() tells JKQTPlotter to perform a certain action (selected from JKQTPlotter::MouseActionMode)
+ *     when a specified mouse button is pushed while a specified (or no) keyborad modifiers (e.g. CTRL,ALT,SHIFT...) is pressed.
+ *     By default JKQTPlotter calls these two registers in its constructors:
+ *     \code
+ *          registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, JKQTPlotter::MouseActionMode::ZoomRectangle);
+ *          registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, JKQTPlotter::MouseActionMode::PanPlotOnMove);
+ *     \endcode
+ *     Therefore by default you can draw a zoom rectangle with the left mouse button without modifiers
+ *     and you can pan/drag the plot with the left mouse-button while keeping CTRL pressed.
+ *   - deregisterMouseDragAction() deletes a previously defined unser-interaction
+ *   - clearAllRegisteredMouseDragActions() deletes all previously specified user-actions
+ * .
  *
+ * The right mouse button has a special role: If it is single-clicked and no JKQTPlotter::MouseActionMode is specified
+ * for the vent, it opens the context menu, unless you call \c enableRightClickShowsContextMenu(false) .
+ *
+ * For any mouse-click, one of the following signals is emitted:
+ *   - plotMouseClicked() for any single-click (during the pressDown-Event!)
+ *   - plotMouseDoubleClicked() for any double-click
+ * .
+ * In addition the signal plotMouseMove() is called whenever the mouse moves over the plot.
+ * Additional signals may be emitted, depending on the currently active JKQTPlotter::MouseActionMode.
+ *
+ * Pressing the ESC key will stop the current JKQTPlotter::MouseActionMode.
  *
  * \see \ref JKQTPlotterUserInteraction
  *
@@ -189,9 +213,8 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
     public:
         /** \brief availble user-action mode this JKQtPlotter use when mouse events occur.
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes */
-        enum MouseActionModes {
-            NoMouseAction=0, /*!< \brief no action is to be performed */
-            PanPlotOnMove, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed whenever the mouse moves */
+        enum MouseActionMode {
+            PanPlotOnMove=0, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed whenever the mouse moves */
             PanPlotOnRelease, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed when the left mouse button is released */
             ZoomRectangle, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
             RectangleEvents, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
@@ -199,7 +222,6 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             EllipseEvents, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
             LineEvents, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
             ScribbleEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
-            ClickEvents /*!< \brief sinply call userClickFinished() for every single-click of the mouse button */
         };
 
         /** \brief options of how to react to a right mouse button click */
@@ -209,7 +231,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             RightMouseButtonContextMenu=2 /*!< \brief show the context menu when clicking the right mouse button */
         };
 
-        /** \brief options of how to react to a left mouse button double-click (single-click events are described by MouseActionModes) */
+        /** \brief options of how to react to a left mouse button double-click (single-click events are described by MouseActionMode) */
         enum LeftDoubleClickAction {
             LeftDoubleClickDefault, /*!< \brief */
             LeftDoubleClickContextMenu, /*!< \brief open the context menu when the left mouse button is double-clicked */
@@ -273,11 +295,6 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \see userActionCompositionMode for more information */ 
         QPainter::CompositionMode getUserActionCompositionMode() const;
 
-        /*! \brief returns the current mouseActionMode.
-            \details Description of the parameter mouseActionMode is: <BLOCKQUOTE> specifies the user-action mode this JKQtPlotter use when mouse events occur.
-         *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes </BLOCKQUOTE>
-            \see mouseActionMode for more information */ 
-        MouseActionModes getMouseActionMode() const;
 
         /** \brief loads the plot properties from a QSettings object */
         void loadSettings(const QSettings &settings, const QString& group=QString("plots"));
@@ -350,8 +367,14 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void setPlotUpdateEnabled(bool enable);
 
-        /*! \brief checks whether to \c getMouseActionMode()==JKQTPlotter::ZoomRectangle */
-        bool getZoomByMouseRectangle() const;
+        /** \brief registeres a certain mouse action \a action to be executed when a mouse drag operation is
+         *         initialized with the given \a button and \a modifier */
+        void registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier, MouseActionMode action);
+        /** \brief deregisteres the mouse action to be executed when a mouse drag operation is
+         *         initialized with the given \a button and \a modifier */
+        void deregisterMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier);
+        /** \brief clear all registeres mouse actions */
+        void clearAllRegisteredMouseDragActions();
         /*! \brief returns the property rightMouseButtonAction ( \copybrief rightMouseButtonAction ). 
             \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
             \see rightMouseButtonAction for more information */ 
@@ -478,6 +501,13 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         inline double getKeyFontSize() const {
             return getConstplotter()->getKeyFontSize();
         }
+
+
+        /** \brief checks, whether showing the context menu on a right-button click on the mouse is enabled
+         *  \see enableRightClickShowsContextMenu(), disableRightClickShowsContextMenu(), JKQTPLOTTER_USERMOUSEINTERACTION
+         */
+        bool isRightClickShowsContextMenuEnabled() const;
+
     public slots:
         /** \brief set the current plot magnification */
         void setMagnification(double m);
@@ -579,13 +609,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
             \see userActionCompositionMode for more information */
         void setUserActionCompositionMode(const QPainter::CompositionMode & __value);
-        /*! \brief sets the current mouseActionMode .
-            \details Description of the parameter mouseActionMode is: <BLOCKQUOTE> specifies the user-action mode this JKQtPlotter use when mouse events occur.
-         *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes </BLOCKQUOTE>
-            \see mouseActionMode for more information */
-        void setMouseActionMode(const MouseActionModes & __value);
-        /*! \brief equivalent to \c setMouseActionMode(JKQTPlotter::ZoomRectangle) */
-        void setZoomByMouseRectangle(bool zomByrectangle);
+
 
         /*! \brief sets the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ) to the specified \a __value.
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
@@ -602,6 +626,14 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \see rightMouseButtonAction for more information */
         void setRightMouseButtonAction(const RightMouseButtonAction & __value);
 
+        /** \brief enables showing the context menu on a right-button click on the mouse
+         *  \see disableRightClickShowsContextMenu(), JKQTPLOTTER_USERMOUSEINTERACTION
+         */
+        void enableRightClickShowsContextMenu(bool enabled=true);
+        /** \brief disables showing the context menu on a right-button click on the mouse
+         *  \see enableRightClickShowsContextMenu(), JKQTPLOTTER_USERMOUSEINTERACTION
+         */
+        void disableRightClickShowsContextMenu(bool disabled=true);
 
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
         void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
@@ -665,7 +697,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          * \param button mouse-button that was used for the click
          */
         void plotMouseDoubleClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
-        /** \brief emitted when mouseActionMode==JKQTPlotter::ZoomRectangle and the drawing of the new zoom rectangle is finished (=mouse key released)
+        /** \brief emitted when the mouse action JKQTPlotter::ZoomRectangle and the drawing of the new zoom rectangle is finished (=mouse key released)
          *
          * \param mouseDragRectXStart start of the selected x-range (in plot coordinates)
          * \param mouseDragRectXEnd end of the selected x-range (in plot coordinates)
@@ -707,14 +739,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
-        /** \brief emitted when mouseActionMode==JKQTPlotter::ClickEvents and a click event from the mouse occurs inside the plot
-         *
-         * \param x x-position of the mouse (in plot coordinates)
-         * \param y y-position of the mouse (in plot coordinates)
-         * \param modifiers key-modifiers when the click occured
-         */
-        void userClickFinished(double x, double y, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when mouseActionMode==JKQTPlotter::ScribbleEvents and a click event from the mouse occurs inside the plot,
+        /** \brief emitted when the mouse action JKQTPlotter::ScribbleEvents and a click event from the mouse occurs inside the plot,
          *         or the mouse moved while the left button is pressed down
          *
          * \param x x-position of the mouse (in plot coordinates)
@@ -724,7 +749,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          * \param last if \c true: this is the last event of a series that ends when releasing the mouse-button, within the series, this is \c false
          */
         void userScribbleClick(double x, double y, Qt::KeyboardModifiers modifiers, bool first, bool last);
-        /** \brief emitted when mouseActionMode==JKQTPlotter::RectangleEvents and the drawing of the new rectangle is finished (=mouse key released)
+        /** \brief emitted when the mouse action JKQTPlotter::RectangleEvents and the drawing of the new rectangle is finished (=mouse key released)
          *
          * \param x x-coordinate of the bottom left corner of the rectangle (in plot coordinates)
          * \param y y-coordinate of the bottom left corner of the rectangle (in plot coordinates)
@@ -733,7 +758,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          * \param modifiers key-modifiers when the rectangle was finished
          */
         void userRectangleFinished(double x, double y, double width, double height, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when mouseActionMode==JKQTPlotter::LineEvents and the drawing of the new line is finished (=mouse key released)
+        /** \brief emitted when the mouse action JKQTPlotter::LineEvents and the drawing of the new line is finished (=mouse key released)
          *
          * \param x1 x-coordinate of the start of the line (in plot coordinates)
          * \param y1 y-coordinate of the start of the line (in plot coordinates)
@@ -742,7 +767,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          * \param modifiers key-modifiers when the rectangle was finished
          */
         void userLineFinished(double x1, double y1, double x2, double y2, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when mouseActionMode==JKQTPlotter::CircleEvents and the drawing of the new circle is finished (=mouse key released)
+        /** \brief emitted when the mouse action JKQTPlotter::CircleEvents and the drawing of the new circle is finished (=mouse key released)
          *
          * \param x x-coordinate of the center of the circle (in plot coordinates)
          * \param y y-coordinate of the center of the circle (in plot coordinates)
@@ -750,7 +775,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          * \param modifiers key-modifiers when the rectangle was finished
          */
         void userCircleFinished(double x, double y, double radius, Qt::KeyboardModifiers modifiers);
-        /** \brief emitted when mouseActionMode==JKQTPlotter::EllipseEvents and the drawing of the new ellipse is finished (=mouse key released)
+        /** \brief emitted when the mouse action JKQTPlotter::EllipseEvents and the drawing of the new ellipse is finished (=mouse key released)
          *
          * \param x x-coordinate of the center of the ellipse (in plot coordinates)
          * \param y y-coordinate of the center of the ellipse (in plot coordinates)
@@ -763,6 +788,34 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
     protected:
 
+        /** \brief ties a MouseActionMode to a mouse-button and a keyboard-modifier
+         *  \internal
+         */
+        struct LIB_EXPORT MouseDragAction {
+                /** \brief constructs an invalid object */
+                MouseDragAction();
+                MouseDragAction(Qt::MouseButton _mouseButton, Qt::KeyboardModifier _modifier, MouseActionMode _mode);
+                MouseActionMode mode;
+                Qt::KeyboardModifier modifier;
+                Qt::MouseButton mouseButton;
+                bool isValid() const;
+                void clear();
+            private:
+                bool valid;
+        };
+
+        /** \brief the currently executed MouseDragAction */
+        MouseDragAction currentMouseDragAction;
+
+        /** \brief lists all availble mouse action modes */
+        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseActionMode> registeredMouseActionModes;
+
+        /** \brief searches registeredMouseActionModes for a matching action */
+        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseActionMode>::const_iterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
+
+        /** \brief specifies whether to show the context menu, when the right button of the mouse is clicked */
+        bool rightClickShowsContextMenu;
+
         /** \brief you may overwrite this method to modify the given context emnu before it is displayed.
          *
          *  The plotter will fill the menu with the default items and then call this method. The default implementation does NOTHING.
@@ -770,10 +823,6 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         void modifyContextMenu(QMenu* menu);
 
         void init(bool datastore_internal, QWidget* parent, JKQTPDatastore* datast);
-
-        /** \brief specifies the user-action mode this JKQtPlotter use when mouse events occur.
-         *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes */
-        MouseActionModes mouseActionMode;
 
         bool doDrawing;
 
@@ -889,19 +938,14 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief event handler for a mouse down event
          *
-         * If the left mouse button is pressed down this starts the drawing of a zoom rectangle with
-         * the mouse. This method sets mouseZooming to \c true and stores the current time in the private
-         * property mouseZoomingTStart. All this is only executed when the mouse is inside the coordinate
-         * system.
-         *
-         * If the right mouse button is clicked this zooms out of the coordinate system by a factor of two.
+         * This event determines the action to be performed from registeredMouseActionModes
+         * and then sets currentMouseDragAction accordingly and starts the mouse action.
          */
         void mousePressEvent ( QMouseEvent * event );
 
         /** \brief event handler for a mouse release event
          *
-         * If the left mouse button is released (and mouseZooming is \c true ) this stops drawing a
-         * zoom rectangle and emits a tzoomChangedLocally() event.
+         * this finishes the action, started by mousePressEvent()
          */
         void mouseReleaseEvent ( QMouseEvent * event );
 
@@ -916,7 +960,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief resizes the internal representation (image) of the graphs */
         void resizeEvent(QResizeEvent *event);
 
-
+        /** \brief called, when the mouse leaves the widget, hides the toolbar (if visible) */
         void leaveEvent ( QEvent * event );
 
         /** \brief specifies whether to display a toolbar with buttons when the mouse is in the upper border of the plot
@@ -1007,5 +1051,13 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
 };
 
+/** \brief qHash-variant used by JKQTPlotter
+ *  \internal
+ *  \ingroup jkqtpplotterclasses
+*/
+template<>
+inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifier> &key, uint seed ) noexcept(noexcept(qHash(key.first, seed)) && noexcept(qHash(key.second, seed))) {
+    return static_cast<uint>(key.first)+static_cast<uint>(key.second);
+}
 
 #endif // JKQTPLOTTER_H
