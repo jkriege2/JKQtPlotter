@@ -25,6 +25,7 @@ class TestUserInteraction : public QMainWindow
         void setLeftCtrlMouseAction(int index);
         void setRightMouseAction(int index);
         void setPlotMagnification(int index);
+        void setRightClickContextMenu(int index);
 
         void plotMouseMove(double x, double y);
         void plotMouseClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
@@ -51,7 +52,7 @@ class TestUserInteraction : public QMainWindow
         QComboBox* cmbLeftNoModMouseAction;
         QComboBox* cmbLeftCtrlModMouseAction;
         QComboBox* cmbRightNoModMouseAction;
-        QCheckBox* chkRightClickShowsContextMenu;
+        QComboBox* cmbRightClickContextMenu;
         QCheckBox* chkLogX;
         QCheckBox* chkLogY;
         QCheckBox* chkZoomByMouseWheel;

@@ -106,9 +106,9 @@ void JKQTPlotter::init(bool datastore_internal, QWidget* parent, JKQTPDatastore*
     displayMousePosition=true;
     displayToolbar=true;
     toolbarAlwaysOn=false;
-    rightClickShowsContextMenu=true;
-    registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, MouseActionMode::ZoomRectangle);
-    registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, MouseActionMode::PanPlotOnMove);
+    contextMenuMode=ContextMenuModes::StandardContextMenu;
+    registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, MouseDragActions::ZoomRectangle);
+    registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, MouseDragActions::PanPlotOnMove);
 
     zoomByMouseWheel=true;
 
@@ -273,22 +273,22 @@ void JKQTPlotter::paintUserAction() {
                 double y2=plotter->y2p(mouseDragRectYEnd)*magnification;
                 double dx=x2-x1;
                 double dy=y2-y1;
-                if ((currentMouseDragAction.mode==JKQTPlotter::ZoomRectangle) || (currentMouseDragAction.mode==JKQTPlotter::RectangleEvents)) {
+                if ((currentMouseDragAction.mode==JKQTPlotter::ZoomRectangle) || (currentMouseDragAction.mode==JKQTPlotter::DrawRectangleForEvent)) {
                     painter.setOpacity(0.2);
                     painter.fillRect(QRectF(x1, y1, x2-x1, y2-y1), QBrush(userActionColor));
                     painter.setOpacity(1.0);
                     painter.drawRect(QRectF(x1, y1, x2-x1, y2-y1));
-                } else if (currentMouseDragAction.mode==JKQTPlotter::CircleEvents) {
+                } else if (currentMouseDragAction.mode==JKQTPlotter::DrawCircleForEvent) {
                     QColor zc=userActionColor;
                     zc.setAlphaF(0.2);
                     painter.setBrush(QBrush(zc));
                     painter.drawEllipse(QPointF(x1, y1), qMin(fabs(dx), fabs(dy)), qMin(fabs(dx), fabs(dy)));
-                } else  if (currentMouseDragAction.mode==JKQTPlotter::EllipseEvents) {
+                } else  if (currentMouseDragAction.mode==JKQTPlotter::DrawEllipseForEvent) {
                     QColor zc=userActionColor;
                     zc.setAlphaF(0.2);
                     painter.setBrush(QBrush(zc));
                     painter.drawEllipse(QPointF(x1, y1), fabs(dx), fabs(dy));
-                } else  if (currentMouseDragAction.mode==JKQTPlotter::LineEvents) {
+                } else  if (currentMouseDragAction.mode==JKQTPlotter::DrawLineForEvent) {
                     QPen pp=p;
                     pp.setColor(userActionColor);
                     painter.setPen(pp);
@@ -321,16 +321,16 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
     }
     if (currentMouseDragAction.isValid()) {
         if (( (currentMouseDragAction.mode==JKQTPlotter::ZoomRectangle) ||
-              (currentMouseDragAction.mode==JKQTPlotter::RectangleEvents) ||
-              (currentMouseDragAction.mode==JKQTPlotter::CircleEvents) ||
-              (currentMouseDragAction.mode==JKQTPlotter::EllipseEvents) ||
-              (currentMouseDragAction.mode==JKQTPlotter::ScribbleEvents) ||
+              (currentMouseDragAction.mode==JKQTPlotter::DrawRectangleForEvent) ||
+              (currentMouseDragAction.mode==JKQTPlotter::DrawCircleForEvent) ||
+              (currentMouseDragAction.mode==JKQTPlotter::DrawEllipseForEvent) ||
+              (currentMouseDragAction.mode==JKQTPlotter::ScribbleForEvents) ||
               (currentMouseDragAction.mode==JKQTPlotter::PanPlotOnMove) ||
               (currentMouseDragAction.mode==JKQTPlotter::PanPlotOnRelease) ||
-              (currentMouseDragAction.mode==JKQTPlotter::LineEvents) ) &&
+              (currentMouseDragAction.mode==JKQTPlotter::DrawLineForEvent) ) &&
                 mouseDragingRectangle)
         {
-            if (currentMouseDragAction.mode==JKQTPlotter::ScribbleEvents || currentMouseDragAction.mode==JKQTPlotter::PanPlotOnMove) {
+            if (currentMouseDragAction.mode==JKQTPlotter::ScribbleForEvents || currentMouseDragAction.mode==JKQTPlotter::PanPlotOnMove) {
                 // start is last event position
                 mouseDragRectXStart=mouseDragRectXEnd;
                 mouseDragRectYStart=mouseDragRectYEnd;
@@ -347,7 +347,7 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
             if (currentMouseDragAction.mode==JKQTPlotter::ZoomRectangle) {
                 emit plotNewZoomRectangle(mouseDragRectXStart, mouseDragRectXEnd, mouseDragRectYStart, mouseDragRectYEnd, event->modifiers());
             }
-            if ((currentMouseDragAction.mode==JKQTPlotter::ScribbleEvents) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
+            if ((currentMouseDragAction.mode==JKQTPlotter::ScribbleForEvents) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
                 emit userScribbleClick(mouseDragRectXEnd, mouseDragRectYEnd, event->modifiers(), false, false);
             }
             if ((currentMouseDragAction.mode==JKQTPlotter::PanPlotOnMove) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
@@ -393,9 +393,9 @@ void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
         mouseDragRectYEndPixel=mouseDragRectYStartPixel=event->y();
         mouseDragingRectangle=true;
         oldImage=image;
-        if (currentMouseDragAction.mode==JKQTPlotter::ScribbleEvents) emit userScribbleClick(mouseDragRectXStart, mouseDragRectYStart, event->modifiers(), true, false);
+        if (currentMouseDragAction.mode==JKQTPlotter::ScribbleForEvents) emit userScribbleClick(mouseDragRectXStart, mouseDragRectYStart, event->modifiers(), true, false);
         event->accept();
-    } else if (event->button()==Qt::RightButton && event->modifiers()==Qt::NoModifier && rightClickShowsContextMenu) {
+    } else if (event->button()==Qt::RightButton && event->modifiers()==Qt::NoModifier && contextMenuMode!=NoContextMenu) {
         mouseLastClickX=event->x();
         mouseLastClickY=event->y();
         openContextMenu(event->x(), event->y());
@@ -450,18 +450,18 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
                     zoomRect.translate(mouseDragRectXStartPixel-mouseDragRectXEndPixel, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
                 }
                 setXY(plotter->p2x(zoomRect.left()), plotter->p2x(zoomRect.right()), plotter->p2y(zoomRect.bottom()), plotter->p2y(zoomRect.top()));
-            } else if (currentMouseDragAction.mode==JKQTPlotter::RectangleEvents) {
+            } else if (currentMouseDragAction.mode==JKQTPlotter::DrawRectangleForEvent) {
                 emit userRectangleFinished(x1, y1, x2-x1, y2-y1, event->modifiers());
-            } else if (currentMouseDragAction.mode==JKQTPlotter::CircleEvents) {
+            } else if (currentMouseDragAction.mode==JKQTPlotter::DrawCircleForEvent) {
                 emit userCircleFinished(x1, y1, qMin(fabs(x2-x1), fabs(y2-y1)), event->modifiers());
-            } else if (currentMouseDragAction.mode==JKQTPlotter::EllipseEvents) {
+            } else if (currentMouseDragAction.mode==JKQTPlotter::DrawEllipseForEvent) {
                 emit userEllipseFinished(x1, y1, fabs(x2-x1), fabs(y2-y1), event->modifiers());
-            } else if (currentMouseDragAction.mode==JKQTPlotter::LineEvents) {
+            } else if (currentMouseDragAction.mode==JKQTPlotter::DrawLineForEvent) {
                 emit userLineFinished(x1, y1, x2, y2, event->modifiers());
             }
         }
         if (currentMouseDragAction.mode!=JKQTPlotter::ZoomRectangle) update();
-        if (currentMouseDragAction.mode==JKQTPlotter::ScribbleEvents) emit userScribbleClick(x1, y1, event->modifiers(), false, true);
+        if (currentMouseDragAction.mode==JKQTPlotter::ScribbleForEvents) emit userScribbleClick(x1, y1, event->modifiers(), false, true);
         event->accept();
     }
 
@@ -478,7 +478,7 @@ void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
         mouseLastClickY=event->y();
         if (event->button()==Qt::LeftButton) {
             if (leftDoubleClickAction==LeftDoubleClickContextMenu) {
-                openContextMenu(event->x(), event->y());
+                openStandardContextMenu(event->x(), event->y());
                 event->accept();
             } else if (leftDoubleClickAction==LeftDoubleClickSpecialContextMenu) {
                 openSpecialContextMenu(event->x(), event->y());
@@ -631,25 +631,25 @@ void JKQTPlotter::updateCursor() {
             static QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_zoom.png");
             static QBitmap mask(":/JKQTPlotter/jkqtp_cursor_zoom_mask.png");
             setCursor(QCursor(cursor, mask, 9, 14));
-        } else if (currentMouseDragAction.mode==JKQTPlotter::RectangleEvents) {
+        } else if (currentMouseDragAction.mode==JKQTPlotter::DrawRectangleForEvent) {
             static QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_rectangle.png");
             static QBitmap mask(":/JKQTPlotter/jkqtp_cursor_rectangle_mask.png");
             setCursor(QCursor(cursor, mask, 9, 14));
         } else if (currentMouseDragAction.mode==JKQTPlotter::PanPlotOnMove || currentMouseDragAction.mode==JKQTPlotter::PanPlotOnRelease) {
             setCursor(QCursor(Qt::ClosedHandCursor));
-        } else if (currentMouseDragAction.mode==JKQTPlotter::CircleEvents) {
+        } else if (currentMouseDragAction.mode==JKQTPlotter::DrawCircleForEvent) {
             static QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_circle.png");
             static QBitmap mask(":/JKQTPlotter/jkqtp_cursor_circle_mask.png");
             setCursor(QCursor(cursor, mask, 9, 14));
-        } else if (currentMouseDragAction.mode==JKQTPlotter::EllipseEvents) {
+        } else if (currentMouseDragAction.mode==JKQTPlotter::DrawEllipseForEvent) {
             static QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_ellipse.png");
             static QBitmap mask(":/JKQTPlotter/jkqtp_cursor_ellipse_mask.png");
             setCursor(QCursor(cursor, mask, 9, 14));
-        } else if (currentMouseDragAction.mode==JKQTPlotter::LineEvents) {
+        } else if (currentMouseDragAction.mode==JKQTPlotter::DrawLineForEvent) {
             static QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_line.png");
             static QBitmap mask(":/JKQTPlotter/jkqtp_cursor_line_mask.png");
             setCursor(QCursor(cursor, mask, 9, 14));
-        } else if (currentMouseDragAction.mode==JKQTPlotter::ScribbleEvents) {
+        } else if (currentMouseDragAction.mode==JKQTPlotter::ScribbleForEvents) {
             static QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_scribble.png");
             static QBitmap mask(":/JKQTPlotter/jkqtp_cursor_scribble_mask.png");
             setCursor(QCursor(cursor, mask, 9, 14));
@@ -878,15 +878,10 @@ void JKQTPlotter::setRightMouseButtonAction(const JKQTPlotter::RightMouseButtonA
     this->rightMouseButtonAction = __value;
 }
 
-void JKQTPlotter::enableRightClickShowsContextMenu(bool enabled)
-{
-    this->rightClickShowsContextMenu=enabled;
+void JKQTPlotter::setContextMenuMode(JKQTPlotter::ContextMenuModes mode) {
+    contextMenuMode=mode;
 }
 
-void JKQTPlotter::disableRightClickShowsContextMenu(bool disabled)
-{
-    enableRightClickShowsContextMenu(!disabled);
-}
 
 JKQTPlotter::RightMouseButtonAction JKQTPlotter::getActionRightMouseButton() const
 {
@@ -903,11 +898,11 @@ JKQTPlotter::LeftDoubleClickAction JKQTPlotter::getActionLeftDoubleClick() const
     return this->leftDoubleClickAction;
 }
 
-QMenu *JKQTPlotter::getMenuSpecialContextMenu() const {
+QMenu *JKQTPlotter::getSpecialContextMenu() const {
     return this->menuSpecialContextMenu;
 }
 
-void JKQTPlotter::setMenuSpecialContextMenu(QMenu *menu)
+void JKQTPlotter::setSpecialContextMenu(QMenu *menu)
 {
     menuSpecialContextMenu=menu;
     if (menuSpecialContextMenu) {
@@ -942,9 +937,8 @@ int JKQTPlotter::getMouseLastClickY() const {
     return this->mouseLastClickY;
 }
 
-bool JKQTPlotter::isRightClickShowsContextMenuEnabled() const
-{
-    return this->rightClickShowsContextMenu;
+JKQTPlotter::ContextMenuModes JKQTPlotter::getContextMenuMode() const {
+    return contextMenuMode;
 }
 
 void JKQTPlotter::setMagnification(double m)
@@ -980,13 +974,30 @@ void JKQTPlotter::populateToolbar(QToolBar *toolbar) const
 
 }
 
-
 void JKQTPlotter::openContextMenu()
 {
     openContextMenu(mouseLastClickX, mouseLastClickY);
+
 }
 
 void JKQTPlotter::openContextMenu(int x, int y)
+{
+    if (contextMenuMode==ContextMenuModes::StandardContextMenu) {
+        openStandardContextMenu(x,y);
+    } else if (contextMenuMode==ContextMenuModes::SpecialContextMenu) {
+        openSpecialContextMenu(x,y);
+    } else if (contextMenuMode==ContextMenuModes::StandardAndSpecialContextMenu) {
+        openStandardAndSpecialContextMenu(x,y);
+    }
+}
+
+
+void JKQTPlotter::openStandardContextMenu()
+{
+    openStandardContextMenu(mouseLastClickX, mouseLastClickY);
+}
+
+void JKQTPlotter::openStandardContextMenu(int x, int y)
 {
     //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<")";
     mouseContextX=plotter->p2x(x/magnification);
@@ -1022,7 +1033,34 @@ void JKQTPlotter::openSpecialContextMenu(int x, int y)
     }
 }
 
-QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, JKQTPlotter::MouseActionMode>::const_iterator JKQTPlotter::findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const
+void JKQTPlotter::openStandardAndSpecialContextMenu()
+{
+    openStandardAndSpecialContextMenu(mouseLastClickX, mouseLastClickY);
+}
+
+void JKQTPlotter::openStandardAndSpecialContextMenu(int x, int y)
+{
+    //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<")";
+    mouseContextX=plotter->p2x(x/magnification);
+    mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
+    contextMenu->close();
+    initContextMenu();
+
+    if (menuSpecialContextMenu) {
+        contextMenu->addSeparator();
+        for (QAction* act: menuSpecialContextMenu->actions()) {
+            contextMenu->addAction(act);
+        }
+    }
+
+    contextMenu->popup(mapToGlobal(QPoint(x,y)));
+    //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<contextMenu->size()<<contextMenu->pos()<<contextMenu->parent();
+    emit contextMenuOpened(mouseContextX, mouseContextY, contextMenu);
+    //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<") ... DONE";
+
+}
+
+QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, JKQTPlotter::MouseDragActions>::const_iterator JKQTPlotter::findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const
 {
     if (modifiers.testFlag(Qt::ShiftModifier)) {
         return registeredMouseActionModes.find(qMakePair<Qt::MouseButton, Qt::KeyboardModifier>(button, Qt::ShiftModifier));
@@ -1051,7 +1089,7 @@ void JKQTPlotter::setPlotUpdateEnabled(bool enable)
     //qDebug()<<objectName()<<"  doDrawing="<<doDrawing;
 }
 
-void JKQTPlotter::registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier, JKQTPlotter::MouseActionMode action)
+void JKQTPlotter::registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier, JKQTPlotter::MouseDragActions action)
 {
     registeredMouseActionModes[qMakePair<Qt::MouseButton, Qt::KeyboardModifier>(button, modifier)]=action;
 }
@@ -1078,7 +1116,7 @@ JKQTPlotter::MouseDragAction::MouseDragAction():
 
 }
 
-JKQTPlotter::MouseDragAction::MouseDragAction(Qt::MouseButton _mouseButton, Qt::KeyboardModifier _modifier, JKQTPlotter::MouseActionMode _mode):
+JKQTPlotter::MouseDragAction::MouseDragAction(Qt::MouseButton _mouseButton, Qt::KeyboardModifier _modifier, JKQTPlotter::MouseDragActions _mode):
     mode(_mode), modifier(_modifier), mouseButton(_mouseButton), valid(true)
 {
 

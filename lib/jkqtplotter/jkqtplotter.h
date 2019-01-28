@@ -171,7 +171,9 @@ LIB_EXPORT void initJKQTPlotterResources();
  * .
  *
  * The right mouse button has a special role: If it is single-clicked and no JKQTPlotter::MouseActionMode is specified
- * for the vent, it opens the context menu, unless you call \c enableRightClickShowsContextMenu(false) .
+ * for the vent, it opens the context menu, unless you call \c setContextMenuMoode(JKQTPlotter::NoContextMenu) .
+ * You can also use setContextMenuMoode() to specify which type of context menu is shown. See JKQTPlotter::ContextMenuModes
+ * for details on the available modes.
  *
  * For any mouse-click, one of the following signals is emitted:
  *   - plotMouseClicked() for any single-click (during the pressDown-Event!)
@@ -211,18 +213,46 @@ LIB_EXPORT void initJKQTPlotterResources();
 class LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
-        /** \brief availble user-action mode this JKQtPlotter use when mouse events occur.
+        /** \brief Availble action this JKQtPlotter can perform when mouse events occur.
          *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes */
-        enum MouseActionMode {
+        enum MouseDragActions {
             PanPlotOnMove=0, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed whenever the mouse moves */
             PanPlotOnRelease, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed when the left mouse button is released */
             ZoomRectangle, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
-            RectangleEvents, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
-            CircleEvents, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() */
-            EllipseEvents, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
-            LineEvents, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
-            ScribbleEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
+            DrawRectangleForEvent, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
+            DrawCircleForEvent, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() */
+            DrawEllipseForEvent, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
+            DrawLineForEvent, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
+            ScribbleForEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
         };
+
+        /** \brief actions that can be bound to a double-click of the mouse */
+        enum MouseDoubleClickActions {
+            ClickZoomsIn=0, /*!< \brief a (double-)click zooms into the plot at the current mouse location */
+            ClickZoomsOut, /*!< \brief a (double-)click zooms out of the plot at the current mouse location */
+            ClickOpensContextMenu, /*!< \brief a (double-)click opens the context menu */
+            ClickOpensSpecialContextMenu, /*!< \brief a (double-)click opens the special context menu \see setSpecialContextMenu() */
+            NoClickAction, /*!< \brief no action is performed */
+        };
+
+        /** \brief actions that can be bound to a mouse wheel event */
+        enum MouseWheelActions {
+            ZoomByWheel=0, /*!< \brief use the mouse-wheel for zooming */
+            PanByWheel, /*!< \brief use the mouse-wheel for panning the plot */
+            NoWheelAction, /*!< \brief no mouse-wheel action */
+        };
+
+        /** \brief modes for the context menu */
+        enum ContextMenuModes {
+            StandardContextMenu=0,  /*!< \brief only show the standard context menu */
+            SpecialContextMenu,  /*!< \brief only show the special context menu \see setSpecialContextMenu() */
+            StandardAndSpecialContextMenu,  /*!< \brief show the standard context menu, with the special context menu incorporated \see setSpecialContextMenu() */
+            NoContextMenu, /*!< \brief don't show a context menu at all */
+        };
+
+
+
+
 
         /** \brief options of how to react to a right mouse button click */
         enum RightMouseButtonAction {
@@ -369,7 +399,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief registeres a certain mouse action \a action to be executed when a mouse drag operation is
          *         initialized with the given \a button and \a modifier */
-        void registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier, MouseActionMode action);
+        void registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier, MouseDragActions action);
         /** \brief deregisteres the mouse action to be executed when a mouse drag operation is
          *         initialized with the given \a button and \a modifier */
         void deregisterMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier);
@@ -383,11 +413,11 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
             \see leftDoubleClickAction for more information */ 
         LeftDoubleClickAction getActionLeftDoubleClick() const;
-        /*! \brief returns the property menuSpecialContextMenu ( \copybrief menuSpecialContextMenu ). \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
-        QMenu *getMenuSpecialContextMenu() const;
+        /*! \brief returns the currently set special context menu object */
+        QMenu *getSpecialContextMenu() const;
 
-        /*! \brief set the property menuSpecialContextMenu ( \copybrief menuSpecialContextMenu ). \details Description of the parameter menuSpecialContextMenu is:  <BLOCKQUOTE>\copydoc menuSpecialContextMenu </BLOCKQUOTE>. \see menuSpecialContextMenu for more information */
-        void setMenuSpecialContextMenu(QMenu* menu);
+        /*! \brief sets a QMenu object to be used as special context menu */
+        void setSpecialContextMenu(QMenu* menu);
         /*! \brief returns the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ). 
             \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
             \see zoomByMouseWheel for more information */ 
@@ -502,11 +532,9 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             return getConstplotter()->getKeyFontSize();
         }
 
+        /** \brief returns the currently set mode for the context menu \see ContextMenuModes, JKQTPLOTTER_USERMOUSEINTERACTION */
+        ContextMenuModes getContextMenuMode() const;
 
-        /** \brief checks, whether showing the context menu on a right-button click on the mouse is enabled
-         *  \see enableRightClickShowsContextMenu(), disableRightClickShowsContextMenu(), JKQTPLOTTER_USERMOUSEINTERACTION
-         */
-        bool isRightClickShowsContextMenuEnabled() const;
 
     public slots:
         /** \brief set the current plot magnification */
@@ -626,14 +654,9 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \see rightMouseButtonAction for more information */
         void setRightMouseButtonAction(const RightMouseButtonAction & __value);
 
-        /** \brief enables showing the context menu on a right-button click on the mouse
-         *  \see disableRightClickShowsContextMenu(), JKQTPLOTTER_USERMOUSEINTERACTION
-         */
-        void enableRightClickShowsContextMenu(bool enabled=true);
-        /** \brief disables showing the context menu on a right-button click on the mouse
-         *  \see enableRightClickShowsContextMenu(), JKQTPLOTTER_USERMOUSEINTERACTION
-         */
-        void disableRightClickShowsContextMenu(bool disabled=true);
+
+        /** \brief sets the mode if the standard context menu \see ContextMenuModes, JKQTPLOTTER_USERMOUSEINTERACTION */
+        void setContextMenuMode(ContextMenuModes mode);
 
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
         void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
@@ -650,11 +673,20 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         void openContextMenu();
         /** \brief open the context menu at the mouse position \a x and \a y */
         void openContextMenu(int x, int y);
+
+        /** \brief open the standard context menu at the mouse position of the last click */
+        void openStandardContextMenu();
+        /** \brief open the standard context menu at the mouse position \a x and \a y */
+        void openStandardContextMenu(int x, int y);
         /** \brief open the special context menu at the mouse position of the last click */
         void openSpecialContextMenu();
         /** \brief open the special context menu at the mouse position \a x and \a y */
         void openSpecialContextMenu(int x, int y);
 
+        /** \brief open the standard context menu with the special context menu integrated at the mouse position of the last click */
+        void openStandardAndSpecialContextMenu();
+        /** \brief open the standard context menu with the special context menu integrated at the mouse position \a x and \a y */
+        void openStandardAndSpecialContextMenu(int x, int y);
 
         /** \brief sets absolute minimum and maximum x-value to plot */
         inline void setAbsoluteX(double xminn, double xmaxx) { plotter->setAbsoluteX(xminn, xmaxx); }
@@ -794,8 +826,8 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         struct LIB_EXPORT MouseDragAction {
                 /** \brief constructs an invalid object */
                 MouseDragAction();
-                MouseDragAction(Qt::MouseButton _mouseButton, Qt::KeyboardModifier _modifier, MouseActionMode _mode);
-                MouseActionMode mode;
+                MouseDragAction(Qt::MouseButton _mouseButton, Qt::KeyboardModifier _modifier, MouseDragActions _mode);
+                MouseDragActions mode;
                 Qt::KeyboardModifier modifier;
                 Qt::MouseButton mouseButton;
                 bool isValid() const;
@@ -808,13 +840,10 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         MouseDragAction currentMouseDragAction;
 
         /** \brief lists all availble mouse action modes */
-        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseActionMode> registeredMouseActionModes;
+        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseDragActions> registeredMouseActionModes;
 
         /** \brief searches registeredMouseActionModes for a matching action */
-        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseActionMode>::const_iterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
-
-        /** \brief specifies whether to show the context menu, when the right button of the mouse is clicked */
-        bool rightClickShowsContextMenu;
+        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseDragActions>::const_iterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
 
         /** \brief you may overwrite this method to modify the given context emnu before it is displayed.
          *
@@ -1014,12 +1043,15 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         double mousePosX;
         double mousePosY;
-
+        /** \brief magnification factor for the display of the plot */
         double magnification;
 
         QSize minSize;
 
+        /** \brief the context menu object used by this JKQTPlotter */
         QMenu* contextMenu;
+        /** \brief current mode for the default context menu (i.e. the right-click context menu) */
+        ContextMenuModes contextMenuMode;
         /** \brief x-position of the mouse (in plot coordinates) when a user mouse-action was started (e.g. drawing a rectangle) */
         double mouseContextX;
         /** \brief y-position of the mouse (in plot coordinates) when a user mouse-action was started (e.g. drawing a rectangle) */
@@ -1029,8 +1061,9 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief y-position of the last mouse-click (in screen pixels) */
         int mouseLastClickY;
         QList<QMenu*> contextSubMenus;
+        /** \brief fills the member contextMenu with all default and additionally registered actions, also calls modifyContextMenu() */
         void initContextMenu();
-
+        /** \brief set the current mouse cursor shappe according to currentMouseDragAction */
         void updateCursor();
 
 

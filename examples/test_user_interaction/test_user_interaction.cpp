@@ -102,11 +102,11 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbLeftNoModMouseAction->addItem("PanPlotOnMove");
     cmbLeftNoModMouseAction->addItem("PanPlotOnRelease");
     cmbLeftNoModMouseAction->addItem("ZoomRectangle");
-    cmbLeftNoModMouseAction->addItem("RectangleEvents");
-    cmbLeftNoModMouseAction->addItem("CircleEvents");
-    cmbLeftNoModMouseAction->addItem("EllipseEvents");
-    cmbLeftNoModMouseAction->addItem("LineEvents");
-    cmbLeftNoModMouseAction->addItem("ScribbleEvents");
+    cmbLeftNoModMouseAction->addItem("DrawRectangleForEvent");
+    cmbLeftNoModMouseAction->addItem("DrawCircleForEvent");
+    cmbLeftNoModMouseAction->addItem("DrawEllipseForEvent");
+    cmbLeftNoModMouseAction->addItem("DrawLineForEvent");
+    cmbLeftNoModMouseAction->addItem("ScribbleForEvents");
     cmbLeftNoModMouseAction->addItem("NoMouseAction");
     cmbLeftNoModMouseAction->setCurrentIndex(2);
     connect(cmbLeftNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftMouseAction(int)));
@@ -118,11 +118,11 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbLeftCtrlModMouseAction->addItem("PanPlotOnMove");
     cmbLeftCtrlModMouseAction->addItem("PanPlotOnRelease");
     cmbLeftCtrlModMouseAction->addItem("ZoomRectangle");
-    cmbLeftCtrlModMouseAction->addItem("RectangleEvents");
-    cmbLeftCtrlModMouseAction->addItem("CircleEvents");
-    cmbLeftCtrlModMouseAction->addItem("EllipseEvents");
-    cmbLeftCtrlModMouseAction->addItem("LineEvents");
-    cmbLeftCtrlModMouseAction->addItem("ScribbleEvents");
+    cmbLeftCtrlModMouseAction->addItem("DrawRectangleForEvent");
+    cmbLeftCtrlModMouseAction->addItem("DrawCircleForEvent");
+    cmbLeftCtrlModMouseAction->addItem("DrawEllipseForEvent");
+    cmbLeftCtrlModMouseAction->addItem("DrawLineForEvent");
+    cmbLeftCtrlModMouseAction->addItem("ScribbleForEvents");
     cmbLeftCtrlModMouseAction->addItem("NoMouseAction");
     cmbLeftCtrlModMouseAction->setCurrentIndex(0);
     connect(cmbLeftCtrlModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftCtrlMouseAction(int)));
@@ -134,21 +134,32 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbRightNoModMouseAction->addItem("PanPlotOnMove");
     cmbRightNoModMouseAction->addItem("PanPlotOnRelease");
     cmbRightNoModMouseAction->addItem("ZoomRectangle");
-    cmbRightNoModMouseAction->addItem("RectangleEvents");
-    cmbRightNoModMouseAction->addItem("CircleEvents");
-    cmbRightNoModMouseAction->addItem("EllipseEvents");
-    cmbRightNoModMouseAction->addItem("LineEvents");
-    cmbRightNoModMouseAction->addItem("ScribbleEvents");
+    cmbRightNoModMouseAction->addItem("DrawRectangleForEvent");
+    cmbRightNoModMouseAction->addItem("DrawCircleForEvent");
+    cmbRightNoModMouseAction->addItem("DrawEllipseForEvent");
+    cmbRightNoModMouseAction->addItem("DrawLineForEvent");
+    cmbRightNoModMouseAction->addItem("ScribbleForEvents");
     cmbRightNoModMouseAction->addItem("ContextMenu");
     cmbRightNoModMouseAction->setCurrentIndex(5);
     connect(cmbRightNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightMouseAction(int)));
     setRightMouseAction(cmbRightNoModMouseAction->currentIndex());
 
     // add a QComboBox that allows to set whether the right mouse button may show the context menu on a single click
-    chkRightClickShowsContextMenu=new QCheckBox(this);
-    chkRightClickShowsContextMenu->setChecked(plot->isRightClickShowsContextMenuEnabled());
-    layForm->addRow("mouse action: right-click shows context menu:", chkRightClickShowsContextMenu);
-    connect(chkRightClickShowsContextMenu, SIGNAL(toggled(bool)), plot, SLOT(enableRightClickShowsContextMenu(bool)));
+    cmbRightClickContextMenu=new QComboBox(this);
+    cmbRightClickContextMenu->addItem("StandardContextMenu");
+    cmbRightClickContextMenu->addItem("SpecialContextMenu");
+    cmbRightClickContextMenu->addItem("StandardAndSpecialContextMenu");
+    cmbRightClickContextMenu->addItem("NoContextMenu");
+    cmbRightClickContextMenu->setCurrentIndex(0);
+    layForm->addRow("mouse action: right-click context menu:", cmbRightClickContextMenu);
+    connect(cmbRightClickContextMenu, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightClickContextMenu(int)));
+    // ... and add a special context menu
+    QMenu* special=new QMenu(plot);
+    special->addAction("Special entry 1 (no action!)");
+    special->addAction("Special entry 2 (no action!)");
+    special->addAction("Special entry 3 (no action!)");
+    special->addMenu("Special submenu")->addAction("Special subentry 1 (no action!)");
+    plot->setSpecialContextMenu(special);
 
     // and add a QLabel to show the different events of the JKQTPlotter:
     labMouseMoved=new QLabel(this);
@@ -177,24 +188,29 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
 void TestUserInteraction::setLeftMouseAction(int index)
 {
     if (index==cmbLeftNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::NoModifier);
-    else plot->registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseActionMode>(index));
+    else plot->registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDragActions>(index));
 }
 
 void TestUserInteraction::setLeftCtrlMouseAction(int index)
 {
     if (index==cmbLeftCtrlModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::ControlModifier);
-    else plot->registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, static_cast<JKQTPlotter::MouseActionMode>(index));
+    else plot->registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, static_cast<JKQTPlotter::MouseDragActions>(index));
 }
 
 void TestUserInteraction::setRightMouseAction(int index)
 {
     if (index==cmbRightNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::RightButton, Qt::NoModifier);
-    else plot->registerMouseDragAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseActionMode>(index));
+    else plot->registerMouseDragAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDragActions>(index));
 }
 
 void TestUserInteraction::setPlotMagnification(int index)
 {
     plot->setMagnification(cmbMagnification->itemData(index).toDouble());
+}
+
+void TestUserInteraction::setRightClickContextMenu(int index)
+{
+    plot->setContextMenuMode(static_cast<JKQTPlotter::ContextMenuModes>(index));
 }
 
 void TestUserInteraction::plotMouseMove(double x, double y)
