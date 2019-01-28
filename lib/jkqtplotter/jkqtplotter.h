@@ -62,18 +62,79 @@ LIB_EXPORT void initJKQTPlotterResources();
 /** \brief plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)
  * \ingroup jkqtpplotterclasses
  *
- * This class is an implementation of JKQTBasePlotter. It uses the tools from this base class
- * to display function graphs that use the internal datastore as data source. This class mostly
- * adds the Widget for the output and adds different types of user interactions.
+ * This class is a QWidget-wrapper around JKQTBasePlotter. It uses the tools from JKQTBasePlotter
+ * to display scientific plots. This class mostly adds the Widget for the output and adds different
+ * types of user interactions.
  *
  * <b>Please have a look at the documentation of JKQTBasePlotter for details on the management of graphs
  *    and the formating/styling of the plot and graphs!</b>
  *
- * \see JKQTBasePlotter
+ * The rest of this documentation ins split into sections that each treat a special topic, as outlines below:
+ *
+ * \tableofcontents
  *
  *
+ * \section  JKQTPLOTTER_SYNCMULTIPLOT Synchronizing Several Plots
  *
- * \section JKQTPLOTTER_USERINTERACTION User-Interactions
+ * Often a single plot is not sufficient, but several plots need to be aligned with respect to each other:
+ *
+ * \image html test_multiplot.png
+ *
+ * This can be achieved by putting several JKQTPlotter instances into a
+ * <a href="http://doc.qt.io/qt-5/layout.html">Qt Layout</a>. Then you can fill each plot differently and
+ * set the x-/y-range of each plot by hand. This method works for simple cases, but has several drawbacks:
+ *   - Due to the independent and automatic layouting of each plot, the axes do not need to be aligned properly
+ *   - When you print the plot, the printing does not know about the layout and will only print one of the
+ *     several plots in your layout.
+ *   - when you zoom/pan in one of the plots (e.g. using the mouse), the other plots will not adapt their
+ *     axes to match the new area, but especially in cases as in the image above it would be beneficial,
+ *     that tha x-axis of the plot at the bottom follows the x-axis of the plot above etc.
+ * .
+ *
+ * To overcome these limitations, JKQTPlotter offers an API with which you can declare relations between
+ * different plots (one of them is made the master) and you can synchronize the axes of two plots, when
+ * zooming (also when calling e.g. zoomToFit() or setXY() ). This API is:
+ *   - <b>Declaring the Relations (forwarding to JKQTBasePlotter !):</b>
+ *       - synchronizeToMaster() / JKQTBasePlotter::synchronizeToMaster() synchronizes the parent JKQTPlotter with another JKQTPlotter. With two boolean-parameters
+ *         you can specify the axes to be synchronized. E.g. in the case above, you would call:
+ *         \code
+ *              // synchronize width/x-axis of plotResid to width/x-axis of plotMain
+ *              plotResid->synchronizeToMaster(plotMain, true, false, true, true);
+ *
+ *              // synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
+ *              plotResidHist->synchronizeToMaster(plotResid, false, true, true, true);
+ *         \endcode
+ *         This will synchronize the x-axes of the top (\c plotMain ) and bottom-left plot (\c plotResid ),
+ *         as well as the y-axes of the bottom-left (\c plotResid ) and bottom-right plot (\c plotResidHist ).
+ *         After this call they will have the same size in screen pixels and always span the same range
+ *         in plot coordinates.
+ *       - resetMasterSynchronization() / JKQTBasePlotter::resetMasterSynchronization() deletes all synchronizations
+ *         from the JKQTPlotter
+ *     .
+ *   - <b>Synchronizing Axes (forwarding to JKQTBasePlotter !):</b>
+ *       - setGridPrinting() enables grid printing for this JKQTPlotter. If set to \c true , and you print afterwards,
+ *         the printout (or export) will not only contain the plot itself, but also additional plots that were
+ *         declared using addGridPrintingPlotter() (see below).
+ *       - addGridPrintingPlotter() add a new plotter \a plotterOther for grid printing mode, at location \a x / \a y
+ *         E.g. in the example shown above, you could call:
+ *         \code
+ *              plotMain->setGridPrinting(true);
+ *              plotMain->addGridPrintingPlotter(0,1,plotResid);
+ *              plotMain->addGridPrintingPlotter(1,1,plotResidHist);
+ *         \endcode
+ *       - clearGridPrintingPlotters() clear all additional plotters for grid printing mode
+ * .
+ * These two functionalities are kept separate, so you can use them independently.
+ *
+ * \note Note that the grid printing mode only allows to put plots to the right (positive x-values in addGridPrintingPlotter() )
+ *       and to the bottom (positive y-values in addGridPrintingPlotter() ) of the current plot. Therefore the master plot
+ *       needs to be the top-left plot of your grid and all plots need to be aligned in a grid (i.e. using
+ *       <a href="http://doc.qt.io/qt-5/qgridlayout.html">QGridLayout</a>)
+ *
+ * \see See \ref JKQTPlotterMultiPlotLayout for an extensive example of the functionality.
+ *
+ *
+ * \section JKQTPLOTTER_USERINTERACTION User-Interactions/GUI Features
  *
  * JKQTPlotter offers a lot of user-interaction features out of the box. These are detailed below.
  *
@@ -156,7 +217,18 @@ LIB_EXPORT void initJKQTPlotterResources();
  *
  * \subsection JKQTPLOTTER_USERMOUSEINTERACTION Mouse-Interaction in JKQTPlotter
  *
- * \see \ref JKQTPlotterUserInteraction
+ * This section summarizes all user-interaction functions in JKQTPlotter that somehow relate to the mouse.
+ * These are:
+ *   - \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG
+ *   - \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSECLICK
+ *   - \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEWHEEL
+ *   - \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE
+ * .
+ *
+ * \note Zooming and Paning interactions apply to both axes when they are performed with the mouse
+ *       inside the plot. They are limited to one of the two axes, when the mouse hovers over that axis
+ *       (e.g. when you zoom by mouse-wheel while the mouse pointer is below the plot, over the x-axis,
+ *       only the x-axis is affected by the operation).
  *
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG Actions When Dragging the Mouse
  * JKQTPlotter offers several methods that allow to customize, how it reacts to mouse actions:
@@ -175,7 +247,13 @@ LIB_EXPORT void initJKQTPlotterResources();
  *
  * Pressing the \c ESC key will stop the current JKQTPlotter::MouseActionMode.
  *
- * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSECLICK Actions After Clicks on the Mouse Buttons
+ * If e.g. the mode JKQTPlotter::MouseActionMode::ZoomRectangle is selected, while you drag the mouse, the
+ * zoom rectangle is drawn over the plot. You can modify the style of drawing using these functions:
+ *   - setUserActionColor() sets the color of the drawn shape
+ *   - setUserActionCompositionMode() specifies how to combine the shape with the existing plot
+ * .
+ *
+ * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSECLICK Actions After (Double-)Clicks on the Mouse Buttons
  * The right mouse button has a special role: If it is single-clicked and no JKQTPlotter::MouseActionMode is specified
  * for the vent, it opens the context menu, unless you call \c setContextMenuMoode(JKQTPlotter::NoContextMenu) .
  * You can also use setContextMenuMoode() to specify which type of context menu is shown. See JKQTPlotter::ContextMenuModes
@@ -221,6 +299,9 @@ LIB_EXPORT void initJKQTPlotterResources();
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE Signaling When Mouse Moves
  * In addition the signal plotMouseMove() is called whenever the mouse moves over the plot.
  * Additional signals may be emitted, depending on the currently active JKQTPlotter::MouseActionMode.
+ *
+ * Also the current mouse position is shown above the graph by default (can be switched on or off
+ * using setMousePositionShown() ).
  *
  *
  *
@@ -334,14 +415,10 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \details Description of the parameter displayMousePosition is: <BLOCKQUOTE>\copydoc displayMousePosition </BLOCKQUOTE>
             \see displayMousePosition for more information */ 
         bool isMousePositionShown() const;
-        /*! \brief returns the property userActionColor ( \copybrief userActionColor ).
-            \details Description of the parameter userActionColor is: <BLOCKQUOTE>\copydoc userActionColor </BLOCKQUOTE>
-            \see userActionColor for more information */ 
+        /** \brief returns the fill color of the zoom rectangle \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
         QColor getUserActionColor() const;
 
-        /*! \brief returns the property userActionCompositionMode ( \copybrief userActionCompositionMode ). 
-            \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
-            \see userActionCompositionMode for more information */ 
+        /** \brief returns the QPainter::CompositionMode used to draw the zoom rectangle etc. \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
         QPainter::CompositionMode getUserActionCompositionMode() const;
 
 
@@ -373,11 +450,63 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \param master the plotter widget to synchronize to
             \param synchronizeWidth do you want the plot width to be synchronized?
             \param synchronizeHeight do you want the plot height to be synchronized?
-        */
-        void synchronizeToMaster(JKQTPlotter* master, bool synchronizeWidth, bool synchronizeHeight);
+            \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
+            \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
 
-        /** \brief switches any synchronization off, that has been created by synchronizeToMaster() */
+
+
+            \note This function internally calls JKQTBasePlotter::synchronizeToMaster()
+            \see synchronizeToMaster(), resetMasterSynchronization(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+        */
+        void synchronizeToMaster(JKQTBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave=false, bool synchronizeZoomingSlaveToMaster=false);
+
+
+        /** \brief switches any synchronization off, that has been created by synchronizeToMaster()
+         *
+         * \note This function internally calls JKQTBasePlotter::resetMasterSynchronization()
+         * \see synchronizeToMaster(), resetMasterSynchronization(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         */
         void resetMasterSynchronization();
+
+        /*! \brief enables grid-printing for this plot
+         *
+         * \note This function call forwards to JKQTBasePlotter::setGridPrinting()
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         */
+        void setGridPrinting(bool enabled);
+
+        /** \brief add a new plotter \a plotterOther for grid printing mode, at location \a x / \a y
+         *
+         * \note This function call forwards to JKQTBasePlotter::addGridPrintingPlotter()
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         */
+        void addGridPrintingPlotter(size_t x, size_t y, JKQTPlotter* plotterOther) ;
+
+        /** \brief clear all additional plotters for grid printing mode
+         *
+         * \note This function call forwards to JKQTBasePlotter::clearGridPrintingPlotters()
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         */
+        void clearGridPrintingPlotters() ;
+        /** \brief set the x-position of this JKQTPlotter in the grid-printing grid
+         *
+         * \note This function call forwards to JKQTBasePlotter::setGridPrintingCurrentX()
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), setGridPrintingCurrentY(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         */
+        void setGridPrintingCurrentX(size_t x);
+        /** \brief set the y-position of this JKQTPlotter in the grid-printing grid
+         *
+         * \note This function call forwards to JKQTBasePlotter::setGridPrintingCurrentY()
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), setGridPrintingCurrentX(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         */
+        void setGridPrintingCurrentY(size_t y);
+        /** \brief set the x- and y-positions of this JKQTPlotter in the grid-printing grid
+         *
+         * \note This function call forwards to JKQTBasePlotter::setGridPrintingCurrentPos()
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY() \ref JKQTPLOTTER_SYNCMULTIPLOT
+         */
+        void setGridPrintingCurrentPos(size_t x, size_t y);
+
 
 
         /** \brief returns a pointer to the datastore used by this object */
@@ -434,11 +563,11 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief clear all registered mouse double-click actions */
         void clearAllRegisteredMouseDoubleClickActions();
 
-        /** \brief specifies the action to perform on a mouse wheel event when a given modifier is pressed \see deregisterMouseWheelAction(), clearAllMouseWheelActions(), JKQTPLOTTER_USERMOUSEINTERACTION */
+        /** \brief specifies the action to perform on a mouse wheel event when a given modifier is pressed \see deregisterMouseWheelAction(), clearAllMouseWheelActions(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void registerMouseWheelAction(Qt::KeyboardModifier modifier, MouseWheelActions action);
-        /** \brief deletes all mouse-wheel actions registered for a given \a modifier \see registerMouseWheelAction(), clearAllMouseWheelActions(), JKQTPLOTTER_USERMOUSEINTERACTION */
+        /** \brief deletes all mouse-wheel actions registered for a given \a modifier \see registerMouseWheelAction(), clearAllMouseWheelActions(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void deregisterMouseWheelAction(Qt::KeyboardModifier modifier);
-        /** \brief deletes all mouse-wheel actions \see registerMouseWheelAction(), deregisterMouseWheelAction(), JKQTPLOTTER_USERMOUSEINTERACTION */
+        /** \brief deletes all mouse-wheel actions \see registerMouseWheelAction(), deregisterMouseWheelAction(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void clearAllMouseWheelActions();
 
         /*! \brief returns the currently set special context menu object */
@@ -557,7 +686,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             return getConstplotter()->getKeyFontSize();
         }
 
-        /** \brief returns the currently set mode for the context menu \see ContextMenuModes, JKQTPLOTTER_USERMOUSEINTERACTION */
+        /** \brief returns the currently set mode for the context menu \see ContextMenuModes, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         ContextMenuModes getContextMenuMode() const;
 
 
@@ -652,25 +781,21 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         void setToolbarAlwaysOn(bool __value);
         /*! \brief sets the property displayMousePosition ( \copybrief displayMousePosition ) to the specified \a __value.
             \details Description of the parameter displayMousePosition is: <BLOCKQUOTE>\copydoc displayMousePosition </BLOCKQUOTE>
-            \see displayMousePosition for more information */
+            \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE */
         void setMousePositionShown(bool __value);
-        /*! \brief sets the property userActionColor ( \copybrief userActionColor ) to the specified \a __value.
-            \details Description of the parameter userActionColor is: <BLOCKQUOTE>\copydoc userActionColor </BLOCKQUOTE>
-            \see userActionColor for more information */
+        /** \brief set the fill color of the zoom rectangle \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
         void setUserActionColor(const QColor & __value);
-        /*! \brief sets the property userActionCompositionMode ( \copybrief userActionCompositionMode ) to the specified \a __value.
-            \details Description of the parameter userActionCompositionMode is: <BLOCKQUOTE>\copydoc userActionCompositionMode </BLOCKQUOTE>
-            \see userActionCompositionMode for more information */
+        /** \brief set the QPainter::CompositionMode used to draw the zoom rectangle etc. \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
         void setUserActionCompositionMode(const QPainter::CompositionMode & __value);
 
-        /** \brief sets the mode if the standard context menu \see ContextMenuModes, JKQTPLOTTER_USERMOUSEINTERACTION */
+        /** \brief sets the mode if the standard context menu \see ContextMenuModes, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void setContextMenuMode(ContextMenuModes mode);
 
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis \see \ref JKQTPLOTTER_SYNCMULTIPLOT */
         void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis */
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis \see \ref JKQTPLOTTER_SYNCMULTIPLOT */
         void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis */
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis \see \ref JKQTPLOTTER_SYNCMULTIPLOT */
         void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
 
@@ -889,12 +1014,12 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         JKQTBasePlotter* plotter;
 
 
-        /** \brief fill color of the zoom rectangle */
+        /** \brief fill color of the zoom rectangle  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
         QColor userActionColor;
         /*! \brief default value for property property userActionColor. \see userActionColor for more information */ 
         QColor default_userActionColor;
 
-        /** \brief fill color of the zoom rectangle */
+        /** \brief the QPainter::CompositionMode used to draw the zoom rectangle etc. \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
         QPainter::CompositionMode userActionCompositionMode;
         /*! \brief default value for property property userActionCompositionMode. \see userActionCompositionMode for more information */ 
         QPainter::CompositionMode default_userActionCompositionMode;
@@ -1043,7 +1168,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
           *
           * \image html jkqtplotter_mousepositiondisplay.png
           *
-          * \see mousePositionTemplate, \ref JKQTPlotterUserInteraction
+          * \see mousePositionTemplate, \ref JKQTPlotterUserInteraction, \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE
           */
         bool displayMousePosition;
         /** \brief this string is used to generate the position output above the graph (\c %1 is replaced by the x-position, \c %2 by the y-position)

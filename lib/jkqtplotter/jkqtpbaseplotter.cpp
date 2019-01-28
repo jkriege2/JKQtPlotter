@@ -2462,6 +2462,42 @@ bool JKQTBasePlotter::isEmittingPlotSignalsEnabled() const
     return this->emitPlotSignals;
 }
 
+void JKQTBasePlotter::setGridPrinting(bool __value)
+{
+    this->gridPrinting = __value;
+}
+
+bool JKQTBasePlotter::getGridPrinting() const
+{
+    return this->gridPrinting;
+}
+
+void JKQTBasePlotter::setGridPrintingCurrentX(size_t __value)
+{
+    this->gridPrintingCurrentX = __value;
+}
+
+size_t JKQTBasePlotter::getGridPrintingCurrentX() const
+{
+    return this->gridPrintingCurrentX;
+}
+
+void JKQTBasePlotter::setGridPrintingCurrentY(size_t __value)
+{
+    this->gridPrintingCurrentY = __value;
+}
+
+size_t JKQTBasePlotter::getGridPrintingCurrentY() const
+{
+    return this->gridPrintingCurrentY;
+}
+
+void JKQTBasePlotter::setGridPrintingCurrentPos(size_t x, size_t y)
+{
+    gridPrintingCurrentX=x;
+    gridPrintingCurrentY=y;
+}
+
 void JKQTBasePlotter::registerAdditionalAction(const QString &key, QAction *act)
 {
     if (!lstAdditionalPlotterActions.contains(key)) {

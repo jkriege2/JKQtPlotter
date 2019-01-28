@@ -254,7 +254,14 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
     \ingroup jkqtplotter_linesymbolgraphs
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
- */
+
+    \image html jkqtplotter_simpletest_paramscatterplot.png "Different Styles of Parametrized Scatter/Line Graphs"
+
+    \image html jkqtplotter_simpletest_paramscatterplot_image_star.png "JKQTPXYParametrizedScatterGraph with symbols organized in a grid"
+
+
+    \see JKQTPXYParametrizedErrorScatterGraph, \ref JKQTPlotterParamScatter , \ref JKQTPlotterParamScatterImage
+*/
 class LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteTools {
         Q_OBJECT
     public:
@@ -516,6 +523,10 @@ class LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYG
     \ingroup jkqtplotter_linesymbolgraphs
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
+
+    \image html screen_parmetrizedplots_datatable.png
+
+    \see JKQTPXYParametrizedScatterGraph, \ref JKQTPlotterParamScatter
  */
 class LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrizedScatterGraph, public JKQTPXYGraphErrors {
         Q_OBJECT
@@ -553,21 +564,9 @@ class LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrize
 /*! \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
     \ingroup jkqtplotter_linesymbolgraphs
 
-    A step plot starts at \f$ \left(x_{i-1}, f(x_{i-1})\right) \f$ and then goes on to
-    \f$ \left(x_{i}, f(x_{i-1})\right) \f$. There it raises immediately to
-    \f$ \left(x_i, f(x_i)\right) \f$.
+    \image html jkqtplotter_simpletest_stepplots.png
 
-    If you want the \f$ x_i \f$ values in the center of the steps, use
-    \code JKQTPStepHorizontalGraph::setXCentered(true) \endcode . In that case the steps
-    go from \f$ \left(x_{i-1}, f(x_{i-1})\right) \f$ to \f$ \left(x_{i}-\delta/2, f(x_{i-1})\right) \f$ ,
-    then to \f$ \left(x_{i}-\delta/2, f(x_{i})\right) \f$ and finally
-    to \f$ \left(x_{i}, f(x_{i})\right) \f$ where \f$ \delta=(x_{i}-x_{i-1}) \f$ .
-
-    This diagram shows a plot with \code JKQTPStepHorizontalGraph::setValuesCentered(false) \endcode :
-    \image html plot_stephorplot1.png
-
-    This diagram shows a plot with \code JKQTPStepHorizontalGraph::setValuesCentered(true) \endcode :
-    \image html plot_stephorplot2.png
+    \see JKQTPStepVerticalGraph, \ref JKQTPlotterStepPlot
  */
 class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         Q_OBJECT
@@ -726,21 +725,9 @@ class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
 /*! \brief This implements a step plot with values \f$ \left(f(y), y \right) \f$
     \ingroup jkqtplotter_linesymbolgraphs
 
-    A step plot starts at \f$ \left(f(y_{i-1}), x_{i-1}\right) \f$ and then goes on to
-    \f$ \left(f(y_{i-1}), y_{i}\right) \f$. There it raises immediately to
-    \f$ \left(f(y_i), y_i\right) \f$.
-
-    If you want the \f$ y_i \f$ values in the center of the steps, use
-    \code JKQTPStepHorizontalGraph::setValuesCentered(true) \endcode . In that case the steps
-    go from \f$ \left(f(y_{i-1}), y_{i-1})\right) \f$ to \f$ \left(f(y_{i-1}), y_{i}-\delta/2\right) \f$ ,
-    then to \f$ \left(f(y_{i}, y_{i}-\delta/2\right) \f$ and finally
-    to \f$ \left(f(y_{i}), y_{i}\right) \f$ where \f$ \delta=(y_{i}-y_{i-1}) \f$ .
-
-    This diagram shows a plot with \code JKQTPStepHorizontalGraph::setXCentered(false) \endcode :
     \image html plot_stepverplot1.png
 
-    This diagram shows a plot with \code JKQTPStepHorizontalGraph::setXCentered(true) \endcode :
-    \image html plot_stepverplot2.png
+    \see JKQTPStepHorizontalGraph, \ref JKQTPlotterStepPlot
  */
 class LIB_EXPORT JKQTPStepVerticalGraph: public JKQTPStepHorizontalGraph {
         Q_OBJECT

@@ -144,7 +144,8 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
  *  may be used to set the axis properties.
  *
  *
- * \section jkqtplotter_base_key Graph Keys
+ * \section jkqtbaseplotter_appearance_and_style Appearance & Styling of the Graph
+ * \subsection jkqtplotter_base_key Graph Keys
  * This class provides means to plot a key together with the functions. The plotting is only partially implemented in this base class, and has to be
  * implemented by child classes, as no graph management, that could provide a title for a specific graph, is implemented here. Key Plotting is
  * performed in the plotKey() method. This method basically draws a frame and background and then calls plotKeyContent() to draw the actual contents.
@@ -165,43 +166,7 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
  * key content. By default this feature is switched ON.
  *
  *
- * \section jkqtplotter_base_saveprint Saving and Printing Graphs
- * This class implement a set of function to save and print the graphs:
- *   - print() prints the graph on a QPrinter object
- *   - saveAsPixelImage() saves the plot into a pixel image file (PNG, TIFF, ... formats, as supported by Qt)
- *   - saveAsPDF() saves the graph as a PDF file (using the Qt printing engine)
- *   - saveAsPS() saves the graph as a PDF file (using the Qt printing engine)
- *   - saveAsSVG() saves the graph as a SVG file (using the Qt SVG library)
- *   - saveAsCSV() saves the data of the plot as comma separated values
- *   - saveAsSYLK() saves the data of the plot as SYLK spreadsheet
- *   - saveAsDIF() saves the data of the plot as data interchange format file
- * .
- *
- * As one often want's to combine different graphs, there is a possibility to combine this graph with more other graphs.
- * To do so one can think of the graphs to be part of a grid where each graph is contained in one cell. By default this
- * mechanism is deactivated. You can activate it by calling setGridPrinting(true). Then you can set the position of the
- * current graph by calling setGridPrintingCurrentX() and setGridPrintingCurrentY(). Add additional graphs by calling
- * addGridPrintingPlotter(). The position of the current graph is 0,0 by default. Afterwards the save and print routines
- * will export/print all graphs, not just the current one. There will be no additional border between the graphs, as the
- * class expects the internal graph borders to be sufficient.
- *
- *
- * \section jkqtplotter_base_defaultvalues Default Properties
- * The plot is configured by a huge set of properties. For each property there is also a second protected variable which
- * contains its default value. This way it is possible to store only those parameters in an INI file which have changed with
- * respect to the default values. If the property is ( \copybrief is )called \c property then the according default value is stored in
- * \c default_property. To reduce the code to be entered you can use the JKQTPPROPERTY() macro.
- *
- * Default values are available only for properties that control the appearance of the graphs (line widths, border widths,
- * color, fonts ...), not the type of the graph (xmin, xmax, logXAxis, ...)
- *
- * \section jkqtplotter_base_userprops User Properties
- * There is a subset of options that describe how the user interacted with the plotter (export/print scaling factors etc, save directories,
- * other export settings, ...). These are not stored/loaded using saveSettings() and loadSettings(), but using saveUserSettings() and loadUserSettings().
- * These methods MAY (strictly optional and turned off by default) be called by saveSettings() and loadSettings(), if the property userSettigsFilename ( \copybrief userSettigsFilename )is
- * set (not-empty). In this case the suer settings are stored/loaded also everytime they are changed by the user or programmatically.
- *
- * \section jkqtplotter_base_aspectratios Aspect Ratios
+ * \subsection jkqtplotter_base_aspectratios Aspect Ratios
  * First note that this functionality is only available and activated if both axes are linear!
  *
  * You can set two different aspect ratios:
@@ -215,6 +180,66 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
  *        setAxisAspectRatio(4.0*getAspectRatio());
  *     \endcode
  * .
+ *
+ *
+ * \section jkqtbaseplotter_dataexport_print Printing, Saving & Exporting
+ *
+ * \subsection jkqtplotter_base_saveprint Saving and Printing Graphs
+ * This class implement a set of function to save and print the graphs:
+ *   - print() prints the graph on a QPrinter object
+ *   - saveAsPixelImage() saves the plot into a pixel image file (PNG, TIFF, ... formats, as supported by Qt)
+ *   - saveAsPDF() saves the graph as a PDF file (using the Qt printing engine)
+ *   - saveAsPS() saves the graph as a PDF file (using the Qt printing engine)
+ *   - saveAsSVG() saves the graph as a SVG file (using the Qt SVG library)
+ *   - saveImage() saves the graph
+ * .
+ * You can also copy the contents of the plot into the clipboard:
+ *   - copyPixelImage()
+ * .
+ *
+ * \subsection jkqtplotter_base_dataexport Exporting Graph Data
+ * This class implement a set of function to save the data of the graphs:
+ *   - saveData() saves the data of the plot
+ *   - saveAsCSV() saves the data of the plot as comma separated values
+ *   - saveAsSYLK() saves the data of the plot as SYLK spreadsheet
+ *   - saveAsDIF() saves the data of the plot as data interchange format file
+ *   - saveAsMatlab() saves the data of the plot as a CSV file suitable for Matlab
+ *   - saveAsSemicolonSV() saves the data of the plot as a Semicolon Separated Values (SSV)
+ *   - saveAsTabSV() saves the data of the plot as a Tabulator Separated Values (CSV) file
+ *   - saveAsGerExcelCSV()  saves the data of the plot as a Text file (SSV) suitable for german excel, i.e. with comma as decimal separator
+ * .
+ * You can also copy the graphs' data into the clipboard:
+ *   - copyData()
+ *   - copyDataMatlab()
+ * .
+ *
+ *
+ * \subsection JKQTBASEPLOTTER_GRIDPRINTING Grid-Printing / Layouting Several Graphs
+ * As one often want's to combine different graphs, there is a possibility to combine this graph with more other graphs.
+ * To do so one can think of the graphs to be part of a grid where each graph is contained in one cell. By default this
+ * mechanism is deactivated. You can activate it by calling setGridPrinting(true). Then you can set the position of the
+ * current graph by calling setGridPrintingCurrentX() and setGridPrintingCurrentY(). Add additional graphs by calling
+ * addGridPrintingPlotter(). The position of the current graph is 0,0 by default. Afterwards the save and print routines
+ * will export/print all graphs, not just the current one. There will be no additional border between the graphs, as the
+ * class expects the internal graph borders to be sufficient.
+ *
+ * \see \ref JKQTPLOTTER_SYNCMULTIPLOT
+ *
+ *
+ * \section jkqtplotter_base_defaultvalues Default Properties
+ * The plot is configured by a huge set of properties. For each property there is also a second protected variable which
+ * contains its default value. This way it is possible to store only those parameters in an INI file which have changed with
+ * respect to the default values. If the property is called \c property then the according default value is stored in
+ * \c default_property. To reduce the code to be entered you can use the JKQTPPROPERTY() macro.
+ *
+ * Default values are available only for properties that control the appearance of the graphs (line widths, border widths,
+ * color, fonts ...), not the type of the graph (xmin, xmax, logXAxis, ...)
+ *
+ * \section jkqtplotter_base_userprops User Properties
+ * There is a subset of options that describe how the user interacted with the plotter (export/print scaling factors etc, save directories,
+ * other export settings, ...). These are not stored/loaded using saveSettings() and loadSettings(), but using saveUserSettings() and loadUserSettings().
+ * These methods MAY (strictly optional and turned off by default) be called by saveSettings() and loadSettings(), if the property userSettigsFilename ( \copybrief userSettigsFilename )is
+ * set (not-empty). In this case the suer settings are stored/loaded also everytime they are changed by the user or programmatically.
  */
 class LIB_EXPORT JKQTBasePlotter: public QObject {
         Q_OBJECT
@@ -1740,45 +1765,36 @@ class LIB_EXPORT JKQTBasePlotter: public QObject {
         /*! \brief sets the property gridPrinting ( \copybrief gridPrinting ) to the specified \a __value. 
             \details Description of the parameter gridPrinting is: <BLOCKQUOTE>\copydoc gridPrinting </BLOCKQUOTE> 
             \see gridPrinting for more information */ 
-        inline void setGridPrinting(bool __value)
-        {
-            this->gridPrinting = __value;
-        } 
+        void setGridPrinting(bool __value);
         /*! \brief returns the property gridPrinting ( \copybrief gridPrinting ). 
             \details Description of the parameter gridPrinting is: <BLOCKQUOTE>\copydoc gridPrinting </BLOCKQUOTE> 
             \see gridPrinting for more information */ 
-        inline bool getGridPrinting() const
-        {
-            return this->gridPrinting; 
-        }
+        bool getGridPrinting() const;
         /*! \brief sets the property gridPrintingCurrentX ( \copybrief gridPrintingCurrentX ) to the specified \a __value. 
             \details Description of the parameter gridPrintingCurrentX is: <BLOCKQUOTE>\copydoc gridPrintingCurrentX </BLOCKQUOTE> 
             \see gridPrintingCurrentX for more information */ 
-        inline void setGridPrintingCurrentX(size_t __value)
-        {
-            this->gridPrintingCurrentX = __value;
-        } 
+        void setGridPrintingCurrentX(size_t __value);
         /*! \brief returns the property gridPrintingCurrentX ( \copybrief gridPrintingCurrentX ). 
             \details Description of the parameter gridPrintingCurrentX is: <BLOCKQUOTE>\copydoc gridPrintingCurrentX </BLOCKQUOTE> 
             \see gridPrintingCurrentX for more information */ 
-        inline size_t getGridPrintingCurrentX() const
-        {
-            return this->gridPrintingCurrentX; 
-        }
+        size_t getGridPrintingCurrentX() const;
         /*! \brief sets the property gridPrintingCurrentY ( \copybrief gridPrintingCurrentY ) to the specified \a __value. 
             \details Description of the parameter gridPrintingCurrentY is: <BLOCKQUOTE>\copydoc gridPrintingCurrentY </BLOCKQUOTE> 
             \see gridPrintingCurrentY for more information */ 
-        inline void setGridPrintingCurrentY(size_t __value)
-        {
-            this->gridPrintingCurrentY = __value;
-        } 
+        void setGridPrintingCurrentY(size_t __value);
         /*! \brief returns the property gridPrintingCurrentY ( \copybrief gridPrintingCurrentY ). 
             \details Description of the parameter gridPrintingCurrentY is: <BLOCKQUOTE>\copydoc gridPrintingCurrentY </BLOCKQUOTE> 
             \see gridPrintingCurrentY for more information */ 
-        inline size_t getGridPrintingCurrentY() const
-        {
-            return this->gridPrintingCurrentY; 
-        }
+        size_t getGridPrintingCurrentY() const;
+
+        /** \brief set the x- and y-positions of this JKQTPlotter in the grid-printing grid
+         *
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY() \ref JKQTPBASELOTTER_SYNCMULTIPLOT
+         */
+        void setGridPrintingCurrentPos(size_t x, size_t y);
+
+
+
         /*! \brief sets the property currentSaveDirectory ( \copybrief currentSaveDirectory ) to the specified \a __value. 
             \details Description of the parameter currentSaveDirectory is: <BLOCKQUOTE>\copydoc currentSaveDirectory </BLOCKQUOTE> 
             \see currentSaveDirectory for more information */ 

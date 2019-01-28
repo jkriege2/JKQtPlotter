@@ -347,7 +347,7 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 /*! \brief class to plot an image from a QImage object
     \ingroup jkqtplotter_imagelots_elements
 
-    \image html jkqtplotter_simpletest_rgbimageplot_qt
+    \image html jkqtplotter_simpletest_rgbimageplot_qt.png
  */
 class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         Q_OBJECT

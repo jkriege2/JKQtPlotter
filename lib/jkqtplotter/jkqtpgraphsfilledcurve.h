@@ -31,7 +31,9 @@
 /*! \brief This implements filled curve plots where the area is filled between the plot line and the x-Axis.
     \ingroup jkqtplotter_linesymbolgraphs
 
-    \image html plot_filledcurvexerrorplots.png
+    \image html jkqtplotter_simpletest_filledgraphs.png
+
+    \see \ref JKQTPlotterFilledGraphs
  */
 class LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
         Q_OBJECT
@@ -211,6 +213,9 @@ class LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
     \ingroup jkqtplotter_linesymbolgraphs
 
     \image html plot_filledcurvexerrorplots.png
+
+
+    \see \ref JKQTPlotterFilledGraphs
  */
 class LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGraph, public JKQTPYGraphErrors {
         Q_OBJECT
@@ -236,7 +241,10 @@ class LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGraph, pub
 /*! \brief This implements filled curve plots where the area is filled between the plot line and y-Axis
     \ingroup jkqtplotter_linesymbolgraphs
 
-    \image html plot_filledcurvexplots.png
+    \image html jkqtplotter_simpletest_filledgraphs_yaxis.png
+
+    \see \ref JKQTPlotterFilledGraphs
+
  */
 class LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveXGraph {
         Q_OBJECT
@@ -256,6 +264,8 @@ class LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveXGraph {
     \ingroup jkqtplotter_linesymbolgraphs
 
     \image html plot_filledcurveyerrorplots.png
+
+    \see \ref JKQTPlotterFilledGraphs
  */
 class LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGraph, public JKQTPXGraphErrors {
         Q_OBJECT
@@ -286,6 +296,10 @@ class LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGraph, pub
 
     With setDrawlines(true):
     \image html JKQTPFilledVerticalRangeGraph_WithLines.png
+
+
+
+    \see \ref JKQTPlotterDateTimeAxes
  */
 class LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph {
         Q_OBJECT

@@ -892,11 +892,11 @@ void JKQTPlotter::masterPlotScalingRecalculated() {
     }
 }
 
-void JKQTPlotter::synchronizeToMaster(JKQTPlotter* master, bool synchronizeWidth, bool synchronizeHeight) {
+void JKQTPlotter::synchronizeToMaster(JKQTPlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster) {
     if (!master) {
         resetMasterSynchronization();
     }
-    plotter->synchronizeToMaster(master->getPlotter(), synchronizeWidth, synchronizeHeight);
+    plotter->synchronizeToMaster(master->getPlotter(), synchronizeWidth, synchronizeHeight, synchronizeZoomingMasterToSlave, synchronizeZoomingSlaveToMaster);
     masterPlotter=master;
     if (masterPlotter) connect(masterPlotter->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
     redrawPlot();
@@ -906,6 +906,36 @@ void JKQTPlotter::resetMasterSynchronization() {
     if (masterPlotter) disconnect(masterPlotter->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
     plotter->resetMasterSynchronization();
     redrawPlot();
+}
+
+void JKQTPlotter::setGridPrinting(bool enabled)
+{
+    plotter->setGridPrinting(enabled);
+}
+
+void JKQTPlotter::addGridPrintingPlotter(size_t x, size_t y, JKQTPlotter *plotterOther)
+{
+    plotter->addGridPrintingPlotter(x,y,plotterOther->getPlotter());
+}
+
+void JKQTPlotter::clearGridPrintingPlotters()
+{
+    plotter->clearGridPrintingPlotters();
+}
+
+void JKQTPlotter::setGridPrintingCurrentX(size_t x)
+{
+    plotter->setGridPrintingCurrentX(x);
+}
+
+void JKQTPlotter::setGridPrintingCurrentY(size_t y)
+{
+    plotter->setGridPrintingCurrentY(y);
+}
+
+void JKQTPlotter::setGridPrintingCurrentPos(size_t x, size_t y)
+{
+    plotter->setGridPrintingCurrentPos(x,y);
 }
 
 bool JKQTPlotter::isPlotUpdateEnabled() const {
