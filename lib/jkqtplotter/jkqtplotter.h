@@ -156,6 +156,9 @@ LIB_EXPORT void initJKQTPlotterResources();
  *
  * \subsection JKQTPLOTTER_USERMOUSEINTERACTION Mouse-Interaction in JKQTPlotter
  *
+ * \see \ref JKQTPlotterUserInteraction
+ *
+ * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG Actions When Dragging the Mouse
  * JKQTPlotter offers several methods that allow to customize, how it reacts to mouse actions:
  *   - registerMouseDragAction() tells JKQTPlotter to perform a certain action (selected from JKQTPlotter::MouseActionMode)
  *     when a specified mouse button is pushed while a specified (or no) keyborad modifiers (e.g. CTRL,ALT,SHIFT...) is pressed.
@@ -166,10 +169,13 @@ LIB_EXPORT void initJKQTPlotterResources();
  *     \endcode
  *     Therefore by default you can draw a zoom rectangle with the left mouse button without modifiers
  *     and you can pan/drag the plot with the left mouse-button while keeping CTRL pressed.
- *   - deregisterMouseDragAction() deletes a previously defined unser-interaction
+ *   - deregisterMouseDragAction() deletes a previously defined user-interaction
  *   - clearAllRegisteredMouseDragActions() deletes all previously specified user-actions
  * .
  *
+ * Pressing the \c ESC key will stop the current JKQTPlotter::MouseActionMode.
+ *
+ * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSECLICK Actions After Clicks on the Mouse Buttons
  * The right mouse button has a special role: If it is single-clicked and no JKQTPlotter::MouseActionMode is specified
  * for the vent, it opens the context menu, unless you call \c setContextMenuMoode(JKQTPlotter::NoContextMenu) .
  * You can also use setContextMenuMoode() to specify which type of context menu is shown. See JKQTPlotter::ContextMenuModes
@@ -179,12 +185,42 @@ LIB_EXPORT void initJKQTPlotterResources();
  *   - plotMouseClicked() for any single-click (during the pressDown-Event!)
  *   - plotMouseDoubleClicked() for any double-click
  * .
+ *
+ * The reaction to double-clicks of the mouse buttons can be specified separately. The possible
+ * actions are listed in JKQTPlotter::MouseDoubleClickActions. You can bind one of these actions
+ * to a specific click with these functions:
+ *   - registerMouseDoubleClickAction() tells JKQTPlotter to perform a certain action (selected from JKQTPlotter::MouseDoubleClickActions)
+ *     when a specified mouse button is pushed while a specified (or no) keyborad modifiers (e.g. CTRL,ALT,SHIFT...) is pressed.
+ *     By default JKQTPlotter calls this in its constructors:
+ *     \code
+ *          registerMouseDoubleClickAction(Qt::LeftButton, Qt::NoModifier, JKQTPlotter::MouseDoubleClickActions::ClickMovesViewport);
+ *     \endcode
+ *     Therefore by default you can pan the plot/move the viewport by double clicking a location
+ *   - deregisterMouseDoubleClickAction() deletes a previously defined user-interaction
+ *   - clearAllRegisteredMouseDoubleClickAction() deletes all previously specified user-actions
+ * .
+ * The button to react to is specified as a parameter.
+ *
+ * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEWHEEL Actions When a Mouse Wheel Event Occurs
+ * The actions to be performed when the mouse hweel is operated are specified in JKQTPlotter::MouseWheelActions.
+ * You can bind one of these actions to the mouse-wheel (under the condition that a specified Qt::KeyboardModifier
+ * is pressed) by using these functions:
+ *   - registerMouseWheelAction() tells JKQTPlotter to perform a certain action (selected from JKQTPlotter::MouseWheelActions)
+ *     when a specified mouse button is pushed while a specified (or no) keyborad modifiers (e.g. CTRL,ALT,SHIFT...) is pressed.
+ *     By default JKQTPlotter calls this in its constructors:
+ *     \code
+ *          registerMouseWheelAction(Qt::NoModifier, JKQTPlotter::MouseWheelActions::ZoomByWheel);
+ *     \endcode
+ *     Therefore by default you can zoom into and out of the plot, using the mouse wheel.
+ *   - deregisterMouseWheelAction() deletes a previously defined user-interaction
+ *   - clearAllMouseWheelActions() deletes all previously specified user-actions
+ * .
+ * In addition the signal void plotMouseWheelOperated() is emitted whenever a mouse-wheel event occurs.
+ *
+ *
+ * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE Signaling When Mouse Moves
  * In addition the signal plotMouseMove() is called whenever the mouse moves over the plot.
  * Additional signals may be emitted, depending on the currently active JKQTPlotter::MouseActionMode.
- *
- * Pressing the ESC key will stop the current JKQTPlotter::MouseActionMode.
- *
- * \see \ref JKQTPlotterUserInteraction
  *
  *
  *
@@ -228,18 +264,17 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief actions that can be bound to a double-click of the mouse */
         enum MouseDoubleClickActions {
-            ClickZoomsIn=0, /*!< \brief a (double-)click zooms into the plot at the current mouse location */
-            ClickZoomsOut, /*!< \brief a (double-)click zooms out of the plot at the current mouse location */
-            ClickOpensContextMenu, /*!< \brief a (double-)click opens the context menu */
-            ClickOpensSpecialContextMenu, /*!< \brief a (double-)click opens the special context menu \see setSpecialContextMenu() */
-            NoClickAction, /*!< \brief no action is performed */
+            ClickZoomsIn=0, /*!< \brief a double-click zooms into the plot at the current mouse location */
+            ClickZoomsOut, /*!< \brief a double-click zooms out of the plot at the current mouse location */
+            ClickOpensContextMenu, /*!< \brief a double-click opens the context menu */
+            ClickOpensSpecialContextMenu, /*!< \brief a double-click opens the special context menu \see setSpecialContextMenu() */
+            ClickMovesViewport, /*!< \brief a double-click centers the x/y-range around the clicked position */
         };
 
         /** \brief actions that can be bound to a mouse wheel event */
         enum MouseWheelActions {
             ZoomByWheel=0, /*!< \brief use the mouse-wheel for zooming */
             PanByWheel, /*!< \brief use the mouse-wheel for panning the plot */
-            NoWheelAction, /*!< \brief no mouse-wheel action */
         };
 
         /** \brief modes for the context menu */
@@ -251,22 +286,6 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         };
 
 
-
-
-
-        /** \brief options of how to react to a right mouse button click */
-        enum RightMouseButtonAction {
-            RightMouseButtonNone=0, /*!< \brief do not perform any action on a right mouse button click */
-            RightMouseButtonZoom=1, /*!< \brief use right mouse button for zoomin out */
-            RightMouseButtonContextMenu=2 /*!< \brief show the context menu when clicking the right mouse button */
-        };
-
-        /** \brief options of how to react to a left mouse button double-click (single-click events are described by MouseActionMode) */
-        enum LeftDoubleClickAction {
-            LeftDoubleClickDefault, /*!< \brief */
-            LeftDoubleClickContextMenu, /*!< \brief open the context menu when the left mouse button is double-clicked */
-            LeftDoubleClickSpecialContextMenu, /*!< \brief open the special context menu when the left mouse button is double-clicked */
-        };
 
 
 
@@ -397,31 +416,37 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void setPlotUpdateEnabled(bool enable);
 
-        /** \brief registeres a certain mouse action \a action to be executed when a mouse drag operation is
+        /** \brief registeres a certain mouse drag action \a action to be executed when a mouse drag operation is
          *         initialized with the given \a button and \a modifier */
         void registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier, MouseDragActions action);
-        /** \brief deregisteres the mouse action to be executed when a mouse drag operation is
+        /** \brief deregisteres the mouse drag action to be executed when a mouse drag operation is
          *         initialized with the given \a button and \a modifier */
         void deregisterMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifier modifier);
-        /** \brief clear all registeres mouse actions */
+        /** \brief clear all registeres mouse drag actions */
         void clearAllRegisteredMouseDragActions();
-        /*! \brief returns the property rightMouseButtonAction ( \copybrief rightMouseButtonAction ). 
-            \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
-            \see rightMouseButtonAction for more information */ 
-        RightMouseButtonAction getActionRightMouseButton() const;
-        /*! \brief returns the property leftDoubleClickAction ( \copybrief leftDoubleClickAction ).
-            \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
-            \see leftDoubleClickAction for more information */ 
-        LeftDoubleClickAction getActionLeftDoubleClick() const;
+
+        /** \brief registeres a certain mouse action \a action to be executed when a mouse double-click occurs
+         *         with the given \a button and \a modifier */
+        void registerMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifier modifier, MouseDoubleClickActions action);
+        /** \brief deregisteres the mouse action \a action to be executed when a mouse double-click occurs
+         *         with the given \a button and \a modifier */
+        void deregisterMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifier modifier);
+        /** \brief clear all registered mouse double-click actions */
+        void clearAllRegisteredMouseDoubleClickActions();
+
+        /** \brief specifies the action to perform on a mouse wheel event when a given modifier is pressed \see deregisterMouseWheelAction(), clearAllMouseWheelActions(), JKQTPLOTTER_USERMOUSEINTERACTION */
+        void registerMouseWheelAction(Qt::KeyboardModifier modifier, MouseWheelActions action);
+        /** \brief deletes all mouse-wheel actions registered for a given \a modifier \see registerMouseWheelAction(), clearAllMouseWheelActions(), JKQTPLOTTER_USERMOUSEINTERACTION */
+        void deregisterMouseWheelAction(Qt::KeyboardModifier modifier);
+        /** \brief deletes all mouse-wheel actions \see registerMouseWheelAction(), deregisterMouseWheelAction(), JKQTPLOTTER_USERMOUSEINTERACTION */
+        void clearAllMouseWheelActions();
+
         /*! \brief returns the currently set special context menu object */
         QMenu *getSpecialContextMenu() const;
 
         /*! \brief sets a QMenu object to be used as special context menu */
         void setSpecialContextMenu(QMenu* menu);
-        /*! \brief returns the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ). 
-            \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
-            \see zoomByMouseWheel for more information */ 
-        bool getZoomByMouseWheel() const;
+
 
         /** \brief returns the property mouseContextX ( \copybrief mouseContextX ). 
             \details Description of the parameter mouseContextX is:  <BLOCKQUOTE>\copydoc mouseContextX </BLOCKQUOTE>.
@@ -638,23 +663,6 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
             \see userActionCompositionMode for more information */
         void setUserActionCompositionMode(const QPainter::CompositionMode & __value);
 
-
-        /*! \brief sets the property zoomByMouseWheel ( \copybrief zoomByMouseWheel ) to the specified \a __value.
-            \details Description of the parameter zoomByMouseWheel is: <BLOCKQUOTE>\copydoc zoomByMouseWheel </BLOCKQUOTE>
-            \see zoomByMouseWheel for more information */
-        void setZoomByMouseWheel(bool __value);
-
-        /*! \brief sets the property leftDoubleClickAction ( \copybrief leftDoubleClickAction ) to the specified \a __value.
-            \details Description of the parameter leftDoubleClickAction is: <BLOCKQUOTE>\copydoc leftDoubleClickAction </BLOCKQUOTE>
-            \see leftDoubleClickAction for more information */
-        void setLeftDoubleClickAction(const LeftDoubleClickAction & __value);
-
-        /*! \brief sets the property rightMouseButtonAction ( \copybrief rightMouseButtonAction ) to the specified \a __value.
-            \details Description of the parameter rightMouseButtonAction is: <BLOCKQUOTE>\copydoc rightMouseButtonAction </BLOCKQUOTE>
-            \see rightMouseButtonAction for more information */
-        void setRightMouseButtonAction(const RightMouseButtonAction & __value);
-
-
         /** \brief sets the mode if the standard context menu \see ContextMenuModes, JKQTPLOTTER_USERMOUSEINTERACTION */
         void setContextMenuMode(ContextMenuModes mode);
 
@@ -729,6 +737,15 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          * \param button mouse-button that was used for the click
          */
         void plotMouseDoubleClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
+        /** \brief emitted when a single-click event from the mouse occurs inside the plot
+         *
+         * \param x x-position of the mouse (in plot coordinates)
+         * \param y y-position of the mouse (in plot coordinates)
+         * \param modifiers key-modifiers when the click occured
+         * \param deltaAngleX amount of rotation (in eighths of a degree) of the wheel in x-direction
+         * \param deltaAngleY amount of rotation (in eighths of a degree) of the wheel in y-direction
+         */
+        void plotMouseWheelOperated(double x, double y, Qt::KeyboardModifiers modifiers, int deltaAngleX, int deltaAngleY);
         /** \brief emitted when the mouse action JKQTPlotter::ZoomRectangle and the drawing of the new zoom rectangle is finished (=mouse key released)
          *
          * \param mouseDragRectXStart start of the selected x-range (in plot coordinates)
@@ -839,11 +856,24 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief the currently executed MouseDragAction */
         MouseDragAction currentMouseDragAction;
 
-        /** \brief lists all availble mouse action modes */
-        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseDragActions> registeredMouseActionModes;
+        /** \brief lists all availble mouse drag action modes */
+        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseDragActions> registeredMouseDragActionModes;
 
         /** \brief searches registeredMouseActionModes for a matching action */
         QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseDragActions>::const_iterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
+
+        /** \brief lists all availble mouse wheel action modes */
+        QHash<Qt::KeyboardModifier, MouseWheelActions> registeredMouseWheelActions;
+
+        /** \brief searches registeredMouseWheelActions for a matching action */
+        QHash<Qt::KeyboardModifier, MouseWheelActions>::const_iterator findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers) const;
+
+
+        /** \brief action to perform on a double-click of the mouse buttons (depending on the button and the modifiers) */
+        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseDoubleClickActions> registeredMouseDoubleClickActions;
+
+        /** \brief searches registeredMouseDoubleClickActions for a matching action */
+        QHash<QPair<Qt::MouseButton,Qt::KeyboardModifier>, MouseDoubleClickActions>::const_iterator findMatchingMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
 
         /** \brief you may overwrite this method to modify the given context emnu before it is displayed.
          *
@@ -918,14 +948,6 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         QImage oldImage;
 
-        /** \brief indicates whether zooming in by double clicking and zooming out by right-clicking is activated */
-        RightMouseButtonAction rightMouseButtonAction;
-
-        /** \brief indicates whether zooming using the mouse-wheel is activated */
-        bool zoomByMouseWheel;
-
-        /** \brief indicates the action to perform on a left mouse-button double-click */
-        LeftDoubleClickAction leftDoubleClickAction;
 
         /** \brief use this QMenu instance instead of the standard context emnu of this widget */
         QMenu* menuSpecialContextMenu;
@@ -1091,6 +1113,24 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
 template<>
 inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifier> &key, uint seed ) noexcept(noexcept(qHash(key.first, seed)) && noexcept(qHash(key.second, seed))) {
     return static_cast<uint>(key.first)+static_cast<uint>(key.second);
+}
+
+/** \brief qHash-variant used by JKQTPlotter
+ *  \internal
+ *  \ingroup jkqtpplotterclasses
+*/
+template<>
+inline uint qHash(const Qt::MouseButton &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {
+    return static_cast<uint>(key);
+}
+
+/** \brief qHash-variant used by JKQTPlotter
+ *  \internal
+ *  \ingroup jkqtpplotterclasses
+*/
+template<>
+inline uint qHash(const Qt::KeyboardModifier &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {
+    return static_cast<uint>(key);
 }
 
 #endif // JKQTPLOTTER_H

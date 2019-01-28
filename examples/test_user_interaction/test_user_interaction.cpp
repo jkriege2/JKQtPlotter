@@ -91,12 +91,6 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbMagnification->setCurrentIndex(3);
 
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
-    chkZoomByMouseWheel=new QCheckBox(this);
-    chkZoomByMouseWheel->setChecked(plot->getZoomByMouseWheel());
-    layForm->addRow("zoom by mouse wheel:", chkZoomByMouseWheel);
-    connect(chkZoomByMouseWheel, SIGNAL(toggled(bool)), plot, SLOT(setZoomByMouseWheel(bool)));
-
-    // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
     cmbLeftNoModMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: left-click, no modifiers", cmbLeftNoModMouseAction);
     cmbLeftNoModMouseAction->addItem("PanPlotOnMove");
@@ -161,6 +155,46 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     special->addMenu("Special submenu")->addAction("Special subentry 1 (no action!)");
     plot->setSpecialContextMenu(special);
 
+    // add a QComboBox that allows to set the left mouse button double-click action for the JKQTPlotter
+    cmbLeftDoubleClickMouseAction=new QComboBox(this);
+    layForm->addRow("mouse action: left double-click, no modifiers", cmbLeftDoubleClickMouseAction);
+    cmbLeftDoubleClickMouseAction->addItem("ClickZoomsIn");
+    cmbLeftDoubleClickMouseAction->addItem("ClickZoomsOut");
+    cmbLeftDoubleClickMouseAction->addItem("ClickOpensContextMenu");
+    cmbLeftDoubleClickMouseAction->addItem("ClickOpensSpecialContextMenu");
+    cmbLeftDoubleClickMouseAction->addItem("ClickMovesViewport");
+    cmbLeftDoubleClickMouseAction->addItem("NoAction");
+    cmbLeftDoubleClickMouseAction->setCurrentIndex(4);
+    connect(cmbLeftDoubleClickMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftDoubleClickMouseAction(int)));
+    setLeftDoubleClickMouseAction(cmbLeftDoubleClickMouseAction->currentIndex());
+
+    // add a QComboBox that allows to set the left mouse button double-click action for the JKQTPlotter
+    cmbRightDoubleClickMouseAction=new QComboBox(this);
+    layForm->addRow("mouse action: right double-click, no modifiers", cmbRightDoubleClickMouseAction);
+    cmbRightDoubleClickMouseAction->addItem("ClickZoomsIn");
+    cmbRightDoubleClickMouseAction->addItem("ClickZoomsOut");
+    cmbRightDoubleClickMouseAction->addItem("ClickOpensContextMenu");
+    cmbRightDoubleClickMouseAction->addItem("ClickOpensSpecialContextMenu");
+    cmbRightDoubleClickMouseAction->addItem("ClickMovesViewport");
+    cmbRightDoubleClickMouseAction->addItem("NoAction");
+    cmbRightDoubleClickMouseAction->setCurrentIndex(1);
+    connect(cmbRightDoubleClickMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightDoubleClickMouseAction(int)));
+    setRightDoubleClickMouseAction(cmbRightDoubleClickMouseAction->currentIndex());
+
+
+    // add a QComboBox that allows to set the mouse wheel action without modifiers
+    cmbMouseWheelAction=new QComboBox(this);
+    layForm->addRow("mouse action: mouse wheel, no modifiers", cmbMouseWheelAction);
+    cmbMouseWheelAction->addItem("ZoomByWheel");
+    cmbMouseWheelAction->addItem("PanByWheel");
+    cmbMouseWheelAction->addItem("NoAction");
+    cmbMouseWheelAction->setCurrentIndex(0);
+    connect(cmbMouseWheelAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setMouseWheelNoModAction(int)));
+    setMouseWheelNoModAction(cmbMouseWheelAction->currentIndex());
+
+
+
+
     // and add a QLabel to show the different events of the JKQTPlotter:
     labMouseMoved=new QLabel(this);
     layForm->addRow("last mouse moved:", labMouseMoved);
@@ -171,6 +205,7 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     connect(plot, SIGNAL(plotMouseMove(double, double)), this, SLOT(plotMouseMove(double, double)));
     connect(plot, SIGNAL(plotMouseClicked(double, double, Qt::KeyboardModifiers , Qt::MouseButton)), this, SLOT(plotMouseClicked(double, double, Qt::KeyboardModifiers, Qt::MouseButton)));
     connect(plot, SIGNAL(plotMouseDoubleClicked(double, double, Qt::KeyboardModifiers, Qt::MouseButton)), this, SLOT(plotMouseDoubleClicked(double, double, Qt::KeyboardModifiers, Qt::MouseButton)));
+    connect(plot, SIGNAL(plotMouseWheelOperated(double, double, Qt::KeyboardModifiers, int, int)), this, SLOT(plotMouseWheelOperated(double, double, Qt::KeyboardModifiers, int, int)));
     connect(plot, SIGNAL(plotNewZoomRectangle(double, double, double, double, Qt::KeyboardModifiers)), this, SLOT(plotNewZoomRectangle(double, double, double, double, Qt::KeyboardModifiers)));
     connect(plot, SIGNAL(contextMenuOpened(double, double, QMenu*)), this, SLOT(contextMenuOpened(double, double, QMenu*)));
     connect(plot, SIGNAL(zoomChangedLocally(double, double, double, double, JKQTPlotter*)), this, SLOT(zoomChangedLocally(double, double, double, double, JKQTPlotter*)));
@@ -213,6 +248,24 @@ void TestUserInteraction::setRightClickContextMenu(int index)
     plot->setContextMenuMode(static_cast<JKQTPlotter::ContextMenuModes>(index));
 }
 
+void TestUserInteraction::setLeftDoubleClickMouseAction(int index)
+{
+    if (index>=cmbLeftDoubleClickMouseAction->count()-1)  plot->deregisterMouseDoubleClickAction(Qt::LeftButton, Qt::NoModifier);
+    else plot->registerMouseDoubleClickAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDoubleClickActions>(index));
+}
+
+void TestUserInteraction::setRightDoubleClickMouseAction(int index)
+{
+    if (index>=cmbLeftDoubleClickMouseAction->count()-1)  plot->deregisterMouseDoubleClickAction(Qt::RightButton, Qt::NoModifier);
+    else plot->registerMouseDoubleClickAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDoubleClickActions>(index));
+}
+
+void TestUserInteraction::setMouseWheelNoModAction(int index)
+{
+    if (index>=cmbMouseWheelAction->count()-1)  plot->deregisterMouseWheelAction(Qt::NoModifier);
+    else plot->registerMouseWheelAction(Qt::NoModifier, static_cast<JKQTPlotter::MouseWheelActions>(index));
+}
+
 void TestUserInteraction::plotMouseMove(double x, double y)
 {
     labMouseMoved->setText(QString("plotMouseMove(%1, %2)").arg(x).arg(y));
@@ -231,6 +284,11 @@ void TestUserInteraction::plotMouseDoubleClicked(double x, double y, Qt::Keyboar
 void TestUserInteraction::plotNewZoomRectangle(double mouseDragRectXStart, double mouseDragRectXEnd, double mouseDragRectYStart, double mouseDragRectYEnd, Qt::KeyboardModifiers modifiers)
 {
     labMouseAction->setText(QString("plotNewZoomRectangle(x=%1..%2, y=%3..%4, modifiers=%5)").arg(mouseDragRectXStart).arg(mouseDragRectXEnd).arg(mouseDragRectYStart).arg(mouseDragRectYEnd).arg(KeyboradMod2String(modifiers)));
+}
+
+void TestUserInteraction::plotMouseWheelOperated(double x, double y, Qt::KeyboardModifiers modifiers, int deltaAngleX, int deltaAngleY)
+{
+    labMouseAction->setText(QString("plotMouseWheelOperated(x=%1, y%2, modifiers=%3, deltaAngleX=%4, deltaAngleY=%5)").arg(x).arg(y).arg(KeyboradMod2String(modifiers)).arg(deltaAngleX).arg(deltaAngleY));
 }
 
 void TestUserInteraction::contextMenuOpened(double x, double y, QMenu *contextMenu)

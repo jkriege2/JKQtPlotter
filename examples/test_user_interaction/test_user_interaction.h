@@ -26,11 +26,15 @@ class TestUserInteraction : public QMainWindow
         void setRightMouseAction(int index);
         void setPlotMagnification(int index);
         void setRightClickContextMenu(int index);
+        void setLeftDoubleClickMouseAction(int index);
+        void setRightDoubleClickMouseAction(int index);
+        void setMouseWheelNoModAction(int index);
 
         void plotMouseMove(double x, double y);
         void plotMouseClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
         void plotMouseDoubleClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
         void plotNewZoomRectangle(double mouseDragRectXStart, double mouseDragRectXEnd, double mouseDragRectYStart, double mouseDragRectYEnd, Qt::KeyboardModifiers modifiers);
+        void plotMouseWheelOperated(double x, double y, Qt::KeyboardModifiers modifiers, int deltaAngleX, int deltaAngleY);
         void contextMenuOpened(double x, double y, QMenu* contextMenu);
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
         void userScribbleClick(double x, double y, Qt::KeyboardModifiers modifiers, bool first, bool last);
@@ -53,9 +57,11 @@ class TestUserInteraction : public QMainWindow
         QComboBox* cmbLeftCtrlModMouseAction;
         QComboBox* cmbRightNoModMouseAction;
         QComboBox* cmbRightClickContextMenu;
+        QComboBox* cmbRightDoubleClickMouseAction;
+        QComboBox* cmbLeftDoubleClickMouseAction;
+        QComboBox* cmbMouseWheelAction;
         QCheckBox* chkLogX;
         QCheckBox* chkLogY;
-        QCheckBox* chkZoomByMouseWheel;
         QLabel* labMouseAction;
         QLabel* labMouseMoved;
         QLabel* labMouseClicked;
