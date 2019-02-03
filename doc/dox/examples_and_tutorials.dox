@@ -112,7 +112,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_ui_small.png
     <td> \subpage JKQTPlotterQtCreator
     <td> using Qt Form Designer <br> parsed function plots (`JKQTPXParsedFunctionLineGraph`) 
-<tr><td> \image html jkqtplotter_test_user_interaction_small.png
+<tr><td> \image html jkqtplotter_test_user_interaction_small.gif
     <td> \subpage JKQTPlotterUserInteraction
     <td> different possibilities of user-interaction in JKQtPlotter
 </table>
@@ -125,6 +125,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html test_multiplot_small.png
     <td> \subpage JKQTPlotterMultiPlotLayout
     <td> Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview 
+<tr><td> \image html test_styling_small.png
+    <td> \subpage JKQTPlotterStyling
+    <td> Modifying different Aspects of the Styling of JKQTPlotter
 </table>
 
 

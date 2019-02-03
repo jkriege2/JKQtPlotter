@@ -71,17 +71,18 @@ h2.memtitle {
 
 h1, h2, h3, h4, h5, h6 {
 	margin-left: -5pt;
-	margin-bottom: 32px;
+	margin-bottom: 16px;
 	margin-right: 15px;
 	padding: 4px;
 	background: #eeeeee;
-	width: 75%;
+	width: 95%;
 }
 
 h1 {
 	border-bottom: 2px solid black;
 	border-left: 2px solid black;
 	font-size: 22pt;
+    margin-top: 64pt;
 }
 
 h2 {

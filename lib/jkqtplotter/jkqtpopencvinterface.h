@@ -19,10 +19,6 @@
 
 
 
-/** \file jkqtpopencvinterface.h
-  * \ingroup jkqtpopencvinterface
-  */
-
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpdatastore.h"
 #include <opencv/cv.h>

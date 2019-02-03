@@ -1,0 +1,86 @@
+/*!
+
+\page WHATSNEW What's New (Release Notes/Versions)
+This page lists release notes for the diferent version of JKQTPlotter
+
+\tableofcontents
+
+
+
+
+
+\section WHATSNEW_TRUNK trunk: Major Update/Refactoring
+
+\subsection WHATSNEW_TRUNK_OVERVIEW trunk: Overview
+Starting in summer 2018, JKQTPlotter received some major workover. During this, it lost compatibility to the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. 
+
+Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
+<ul>
+  <li> update: refactoring of the library's directory structure </li>
+  <li> new: added QMake-Projects for static and for shared library builds </li>
+  <li> update: refactoring/renaming of API, including the function anming scheme and class names </li>
+  <li> new: \ref exampleTutorialProjects "extensive set of Examples and Tutorials" </li>
+  <li> update: massively improved (doxygen-generated) <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a> (automatically generated after each commit using ravis CI) </li>
+  <li> new: checked builds with continuous integration from AppVeyor: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a> </li>
+  <li> new/update: support for building with Microsoft Visual Studio (Win), MinGW (Win), GCC (Linux/MacOS) </li>
+  <li> Updates to JKQTPlotter: 
+    <ul>
+      <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
+	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swar plots </li>
+	  <li> new: stacked barcharts with JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph </li>
+      <li> deprecated: Removed datarange-feature </li>
+	  <li> new: use/support of C++11 features (e.g. \c std::function<> in JKQTPXFunctionLineGraph / JKQTPYFunctionLineGraph </li>
+	  <li> new: \ref jkqtpopencvinterface  "optional OpenCV interface" </li>
+	</ul></li>
+  <li> update/fix: several improvements and bugfixes to JKQTMathText </li>
+</ul>
+
+\subsection WHATSNEW_TRUNK_DOWNLOAD trunk: Download
+
+This release is available from:
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2018.08">https://github.com/jkriege2/JKQtPlotter/tree/v2018.08</a>
+  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08</a> (2018-Aug-19)
+.
+
+
+
+
+
+
+
+\section WHATSNEW_V2018_08 v2018.08: Minor Modifications (Final QuickFit3-compatible Version)
+
+\subsection WHATSNEW_V2018_08_OVERVIEW v2018.08: Overview
+This is the final version of JKQTPlotter, which is still compatible with the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. It contains minor changes as compared to \ref WHATSNEW_V2015_10 "v2015.10":
+  - new: added Qt data model to switch graphs on/off
+  - update: some improvements to test programs
+.
+
+\subsection WHATSNEW_V2018_08_DOWNLOAD v2018.08: Download
+
+This release is available from:
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2018.08">https://github.com/jkriege2/JKQtPlotter/tree/v2018.08</a>
+  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08</a> (2018-Aug-19)
+.
+
+
+
+
+
+
+
+
+\section WHATSNEW_V2015_10 v2015.10: Initial Release
+
+\subsection WHATSNEW_V2015_10_OVERVIEW v2015.10: Overview
+This is the initial release of the library. It was developed initially as part of <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> and then separated out into a separate repository.
+
+\subsection WHATSNEW_V2015_10_DOWNLOAD v2015.10: Download
+
+This release is available from:
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2015.10">https://github.com/jkriege2/JKQtPlotter/tree/v2015.10</a>
+  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2015.10">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2015.10</a> (2015-Oct-20)
+.
+
+
+*/

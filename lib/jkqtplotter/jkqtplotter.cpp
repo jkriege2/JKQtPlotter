@@ -571,8 +571,17 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
             }
             plotter->setXY(xmin, xmax, ymin, ymax);
         } else if (itAction.value()==MouseWheelActions::PanByWheel) {
-            QPoint d=event->pixelDelta();
             QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
+            QPointF d=QPointF(event->angleDelta().x()/120.0*zoomRect.width()/10.0,
+                              event->angleDelta().y()/120.0*zoomRect.height()/10.0);
+            if (d.x()<-100) d.setX(-100);
+            if (d.x()>100) d.setX(100);
+            if (d.y()<-100) d.setY(-100);
+            if (d.y()>100) d.setY(100);
+            if (d.x()>=0 && d.x()<10) d.setX(10);
+            if (d.x()<0 && d.x()>-10) d.setX(-10);
+            if (d.y()>=0 && d.y()<10) d.setY(10);
+            if (d.y()<0 && d.y()>-10) d.setY(-10);
             if  ( (event->x()/magnification<plotter->getInternalPlotBorderLeft()) || (event->x()/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
                 zoomRect.translate(0, d.y());
             } else if (((event->y()-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((event->y()-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {

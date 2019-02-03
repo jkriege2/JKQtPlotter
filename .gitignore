@@ -92,3 +92,5 @@ moc_predefs.h
 /doc/*.tmp
 /staticlib/debug/*.prl
 /staticlib/release/*.prl
+/sharedlib/debug/jkqtplotterlib_debug.prl
+/sharedlib/release/jkqtplotterlib.prl
