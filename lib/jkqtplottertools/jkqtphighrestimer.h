@@ -19,10 +19,6 @@
 
 
 
-/** \file jkqtphighrestimer.h
- *  \ingroup jkqtptools_debugging
- */
-
 #include <cmath>
 #include <cstdlib>
 #include <iostream>

@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TestMultiplotUI</class>
+ <widget class="QDialog" name="TestMultiplotUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>536</width>
+    <height>299</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Set Multi-Plot Properties</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="1">
+    <widget class="QLabel" name="label_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>145</width>
+       <height>96</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="test_multiplot.qrc">:/plotsymbol.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QSpinBox" name="spinRow0Stretch">
+     <property name="value">
+      <number>3</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QLabel" name="label_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>145</width>
+       <height>96</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="test_multiplot.qrc">:/plotsymbol.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>row stretch:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSpinBox" name="spinCol0Stretch">
+     <property name="value">
+      <number>3</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>444</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="3">
+    <widget class="QSpinBox" name="spinCol1Stretch">
+     <property name="value">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QSpinBox" name="spinRow1Stretch">
+     <property name="value">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>col stretch:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLabel" name="label">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>145</width>
+       <height>96</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="test_multiplot.qrc">:/plotsymbol.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>226</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkSyncHeightLeftRight">
+       <property name="text">
+        <string>syncHeight</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkSyncZoomLeftRight">
+       <property name="text">
+        <string>syncZoom</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="chkSyncWidthTopBot">
+       <property name="text">
+        <string>syncWidth</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkSyncZoomTopBot">
+       <property name="text">
+        <string>syncZoom</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0">
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="test_multiplot.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>chkSyncWidthTopBot</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>148</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>269</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkSyncZoomTopBot</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>275</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinCol0Stretch</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>145</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinCol1Stretch</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>385</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinRow0Stretch</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>481</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinRow1Stretch</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>477</x>
+     <y>204</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>386</x>
+     <y>129</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkSyncHeightLeftRight</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>238</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>279</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkSyncZoomLeftRight</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>TestMultiplotUI</receiver>
+   <slot>updatePlot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>409</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>updatePlot()</slot>
+ </slots>
+</ui>

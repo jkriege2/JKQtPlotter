@@ -17,11 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-/** \file jkqtpgraphsbarchart.h
-  * \ingroup jkqtplotter_barssticks
-  */
-
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -60,7 +55,7 @@
 
 
  */
-class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -283,7 +278,7 @@ class LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
  *  \image html JKQTPBarVerticalGraphStacked.png
  *
  */
-class LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
+class JKQTP_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -322,7 +317,7 @@ class LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
  *  \image html plot_bargraphverploterr.png
  *
  */
-class LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, public JKQTPYGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, public JKQTPYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -353,7 +348,7 @@ class LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, publi
     \image html plot_bargraphhorplot.png
 
  */
-class LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
+class JKQTP_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -389,7 +384,7 @@ class LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
  *  \image html JKQTPBarHorizontalGraphStacked.png
  *
  */
-class LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph {
+class JKQTP_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -428,7 +423,7 @@ class LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGrap
  *  \image html plot_bargraphhorploterr.png
  *
  */
-class LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizontalGraph, public JKQTPXGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizontalGraph, public JKQTPXGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */

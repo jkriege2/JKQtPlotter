@@ -18,10 +18,6 @@
 */
 
 
-/** \file jkqtpgraphs.h
-  * \ingroup jkqtplotter_linesymbolgraphs
-  */
-
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -47,11 +43,11 @@ class JKQTPDatastore;
 
 
 /*! \brief This implements xy line plots. This also alows to draw symbols at the data points.
-    \ingroup jkqtplotter_linesymbolgraphs
+    \ingroup jkqtplotter_linesymbolgraphs_simple
 
     \image html plot_lineplots.png
  */
-class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -251,7 +247,7 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
 
 
 /*! \brief This implements xy scatter plots (like JKQTPXYLineGraph), but the color and size of the symbols may be taken from a column.
-    \ingroup jkqtplotter_linesymbolgraphs
+    \ingroup jkqtplotter_linesymbolgraphs_param
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
 
@@ -262,7 +258,7 @@ class LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
 
     \see JKQTPXYParametrizedErrorScatterGraph, \ref JKQTPlotterParamScatter , \ref JKQTPlotterParamScatterImage
 */
-class LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteTools {
+class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteTools {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -485,13 +481,13 @@ class LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, publi
 
 
 /*! \brief This implements xy line plots with x and y error indicators.
-    \ingroup jkqtplotter_linesymbolgraphs
+    \ingroup jkqtplotter_linesymbolgraphs_simple
 
     \image html plot_errorbarlineplots.png
     \image html plot_errorlinelineplots.png
     \image html plot_errorpolygonlineplots.png
  */
-class LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -520,7 +516,7 @@ class LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYG
 
 
 /*! \brief This implements xy scatter plots (like JKQTPXYLineGraph), but the color and size of the symbols may be taken from a column. with errorbars
-    \ingroup jkqtplotter_linesymbolgraphs
+    \ingroup jkqtplotter_linesymbolgraphs_param
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
 
@@ -528,7 +524,7 @@ class LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYG
 
     \see JKQTPXYParametrizedScatterGraph, \ref JKQTPlotterParamScatter
  */
-class LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrizedScatterGraph, public JKQTPXYGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrizedScatterGraph, public JKQTPXYGraphErrors {
         Q_OBJECT
     public:
         JKQTPXYParametrizedErrorScatterGraph(JKQTBasePlotter* parent=nullptr);
@@ -562,13 +558,13 @@ class LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrize
 
 
 /*! \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
-    \ingroup jkqtplotter_linesymbolgraphs
+    \ingroup jkqtplotter_linesymbolgraphs_simple
 
     \image html jkqtplotter_simpletest_stepplots.png
 
     \see JKQTPStepVerticalGraph, \ref JKQTPlotterStepPlot
  */
-class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -723,13 +719,13 @@ class LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
 
 
 /*! \brief This implements a step plot with values \f$ \left(f(y), y \right) \f$
-    \ingroup jkqtplotter_linesymbolgraphs
+    \ingroup jkqtplotter_linesymbolgraphs_simple
 
     \image html plot_stepverplot1.png
 
     \see JKQTPStepHorizontalGraph, \ref JKQTPlotterStepPlot
  */
-class LIB_EXPORT JKQTPStepVerticalGraph: public JKQTPStepHorizontalGraph {
+class JKQTP_LIB_EXPORT JKQTPStepVerticalGraph: public JKQTPStepHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -754,7 +750,7 @@ class LIB_EXPORT JKQTPStepVerticalGraph: public JKQTPStepHorizontalGraph {
     \ingroup jkqtplotter_diverse
 
  */
-class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -1119,7 +1115,7 @@ class LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
     \ingroup jkqtplotter_diverse
 
  */
-class LIB_EXPORT JKQTPVerticalRange: public JKQTPHorizontalRange {
+class JKQTP_LIB_EXPORT JKQTPVerticalRange: public JKQTPHorizontalRange {
         Q_OBJECT
     public:
         /** \brief class constructor */

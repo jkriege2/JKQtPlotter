@@ -23,10 +23,6 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-/** \file jkqtpdrawingtools.cpp
-  * \ingroup jkqtptools
-  */
-
 #include "jkqtplottertools/jkqtpdrawingtools.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
 

@@ -18,9 +18,6 @@
 */
 
 
-/** \file jkqtpgraphssinglecolumnsymbols.h
-  * \ingroup jkqtplotter_linesymbolgraphs
-  */
 
 #include <QString>
 #include <QPainter>
@@ -51,7 +48,7 @@
     \see \ref JKQTPlotterDistributionPlot
 
  */
-class LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
+class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
         Q_OBJECT
     public:
         /** \brief describes how data from dataColumn of a JKQTPSingleColumnSymbolsGraph positioned at position */

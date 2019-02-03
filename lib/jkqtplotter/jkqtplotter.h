@@ -18,12 +18,6 @@
 */
 
 
-
-/** \file jkqtplotter.h
-  * \ingroup jkqtpplotterclasses
-  *
-  * A Qt based plotter for 2D scientific graphs.
-  */
 #include <QWidget>
 #include <QVector>
 #include <QSettings>
@@ -56,7 +50,7 @@
 /** \brief initialized Qt-ressources necessary for JKQTPlotter
  *  \ingroup jkqtpplotterclasses
 */
-LIB_EXPORT void initJKQTPlotterResources();
+JKQTP_LIB_EXPORT void initJKQTPlotterResources();
 
 
 /** \brief plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)
@@ -80,58 +74,26 @@ LIB_EXPORT void initJKQTPlotterResources();
  *
  * \image html test_multiplot.png
  *
- * This can be achieved by putting several JKQTPlotter instances into a
- * <a href="http://doc.qt.io/qt-5/layout.html">Qt Layout</a>. Then you can fill each plot differently and
- * set the x-/y-range of each plot by hand. This method works for simple cases, but has several drawbacks:
- *   - Due to the independent and automatic layouting of each plot, the axes do not need to be aligned properly
- *   - When you print the plot, the printing does not know about the layout and will only print one of the
- *     several plots in your layout.
- *   - when you zoom/pan in one of the plots (e.g. using the mouse), the other plots will not adapt their
- *     axes to match the new area, but especially in cases as in the image above it would be beneficial,
- *     that tha x-axis of the plot at the bottom follows the x-axis of the plot above etc.
- * .
+ * In the Qt Window this is achieved by placing several JKQTPlotter objects into a <a href="http://doc.qt.io/qt-5/qgridlayout.html">QGridLayout</a>.
+ * In order to support this alignment, also when exporting/printing a plot, and when the user interactions with the plot (e.g. zooming),
+ * JKQTPlotter offers an API which allows to :
+ * <ul>
+ *   <li> <b>declare (grid-like) relations between plots for export/printing</b>
+ *     \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos() and \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_SYNC</li>
+ *   <li> <b>synchronize axes/plots</b>
+ *     \see synchronizeXToMaster(), synchronizeYToMaster(), resetMasterSynchronization() and \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT</li>
+ * </ul>
  *
- * To overcome these limitations, JKQTPlotter offers an API with which you can declare relations between
- * different plots (one of them is made the master) and you can synchronize the axes of two plots, when
- * zooming (also when calling e.g. zoomToFit() or setXY() ). This API is:
- *   - <b>Declaring the Relations (forwarding to JKQTBasePlotter !):</b>
- *       - synchronizeToMaster() / JKQTBasePlotter::synchronizeToMaster() synchronizes the parent JKQTPlotter with another JKQTPlotter. With two boolean-parameters
- *         you can specify the axes to be synchronized. E.g. in the case above, you would call:
- *         \code
- *              // synchronize width/x-axis of plotResid to width/x-axis of plotMain
- *              plotResid->synchronizeToMaster(plotMain, true, false, true, true);
  *
- *              // synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
- *              plotResidHist->synchronizeToMaster(plotResid, false, true, true, true);
- *         \endcode
- *         This will synchronize the x-axes of the top (\c plotMain ) and bottom-left plot (\c plotResid ),
- *         as well as the y-axes of the bottom-left (\c plotResid ) and bottom-right plot (\c plotResidHist ).
- *         After this call they will have the same size in screen pixels and always span the same range
- *         in plot coordinates.
- *       - resetMasterSynchronization() / JKQTBasePlotter::resetMasterSynchronization() deletes all synchronizations
- *         from the JKQTPlotter
- *     .
- *   - <b>Synchronizing Axes (forwarding to JKQTBasePlotter !):</b>
- *       - setGridPrinting() enables grid printing for this JKQTPlotter. If set to \c true , and you print afterwards,
- *         the printout (or export) will not only contain the plot itself, but also additional plots that were
- *         declared using addGridPrintingPlotter() (see below).
- *       - addGridPrintingPlotter() add a new plotter \a plotterOther for grid printing mode, at location \a x / \a y
- *         E.g. in the example shown above, you could call:
- *         \code
- *              plotMain->setGridPrinting(true);
- *              plotMain->addGridPrintingPlotter(0,1,plotResid);
- *              plotMain->addGridPrintingPlotter(1,1,plotResidHist);
- *         \endcode
- *       - clearGridPrintingPlotters() clear all additional plotters for grid printing mode
- * .
- * These two functionalities are kept separate, so you can use them independently.
+ * \note This API adopts and extends the possibilities of JKQTBasePlotter. Please see the documentation there for details:
+ *       <ul>
+ *         <li> \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
+ *             <ul>
+ *               <li> \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_SYNC</li>
+ *               <li> \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT</li>
+ *             </ul>
+ *       </ul>
  *
- * \note Note that the grid printing mode only allows to put plots to the right (positive x-values in addGridPrintingPlotter() )
- *       and to the bottom (positive y-values in addGridPrintingPlotter() ) of the current plot. Therefore the master plot
- *       needs to be the top-left plot of your grid and all plots need to be aligned in a grid (i.e. using
- *       <a href="http://doc.qt.io/qt-5/qgridlayout.html">QGridLayout</a>)
- *
- * \see See \ref JKQTPlotterMultiPlotLayout for an extensive example of the functionality.
  *
  *
  * \section JKQTPLOTTER_USERINTERACTION User-Interactions/GUI Features
@@ -327,7 +289,7 @@ LIB_EXPORT void initJKQTPlotterResources();
  * \see \ref JKQTPlotterQtCreator
  *
  */
-class LIB_EXPORT JKQTPlotter: public QWidget {
+class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
         /** \brief Availble action this JKQtPlotter can perform when mouse events occur.
@@ -437,73 +399,104 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief returns the size of the widget */
         QSize sizeHint() const;
 
-        /*! \brief synchronize the plot borders with a given plotter
+
+
+
+
+        /*! \brief synchronize the plot borders (and zooming) with a given plotter (master --> slave/this)
 
             This function allows two plotters to draw a graph with exactly the same height or width
             as in another graph. For example if you want to have two plotters which are positioned one
             above the other (and have the same widget widths, which could be guaranteed by a QLayout)
             you may want to make sure that their plotWidth s are always the same. In this case call
-            \code plotter2->synchronizeToMaster(plotter1, true, false) \endcode of the lower plotter \c plotter2 .
+            \code plotter2->synchronizeToMaster(plotter1, sdXAxis, true) \endcode of the lower plotter \c plotter2 .
             Now whenever the size of plotter1 changes, also plotter2 is redrawn with the changed
             borders.
 
+            \image html jkqtbaseplotter_synchronization.png "Different Synchronization Settings for synchronizeDirection=sdXAxis"
+
             \param master the plotter widget to synchronize to
-            \param synchronizeWidth do you want the plot width to be synchronized?
-            \param synchronizeHeight do you want the plot height to be synchronized?
+            \param synchronizeDirection direction in which to synchronize
+            \param synchronizeAxisLength do you want the axis length to be synchronized?
             \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
             \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
 
+            \see synchronizeXToMaster(), synchronizeYToMaster(), resetMasterSynchronization(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
+        */
+        void synchronizeToMaster(JKQTPlotter* master, JKQTBasePlotter::SynchronizationDirection synchronizeDirection, bool synchronizeAxisLength=true, bool synchronizeZoomingMasterToSlave=true, bool synchronizeZoomingSlaveToMaster=true);
 
+        /*! \brief synchronize the plot x-axis width (and x-zooming) with a given master plotter (master --> slave/this)
+
+            \param master the plotter widget to synchronize to
+            \param synchronizeAxisLength do you want the axis length to be synchronized?
+            \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
+            \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
+
+            \image html jkqtbaseplotter_synchronization.png "Different Synchronization Settings for synchronizeDirection=sdXAxis"
+
+            \note This is a short-cut to synchronizeToMaster() with \c synchronizeDirection=csXAxis
+            \see synchronizeToMaster(), synchronizeYToMaster(), resetMasterSynchronization(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
+        */
+        void synchronizeXToMaster(JKQTPlotter* master, bool synchronizeAxisLength=true, bool synchronizeZoomingMasterToSlave=true, bool synchronizeZoomingSlaveToMaster=true);
+
+        /*! \brief synchronize the plot y-axis height (and y-zooming) with a given master plotter (master --> slave/this)
+
+            \param master the plotter widget to synchronize to
+            \param synchronizeAxisLength do you want the axis length to be synchronized?
+            \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
+            \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
 
             \note This function internally calls JKQTBasePlotter::synchronizeToMaster()
-            \see synchronizeToMaster(), resetMasterSynchronization(), \ref JKQTPLOTTER_SYNCMULTIPLOT
-        */
-        void synchronizeToMaster(JKQTBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave=false, bool synchronizeZoomingSlaveToMaster=false);
+            \note This is a short-cut to synchronizeToMaster() with \c synchronizeDirection=csXAxis
+            \see synchronizeToMaster(), synchronizeXToMaster(), resetMasterSynchronization(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
 
+        */
+        void synchronizeYToMaster(JKQTPlotter* master, bool synchronizeAxisLength=true, bool synchronizeZoomingMasterToSlave=true, bool synchronizeZoomingSlaveToMaster=true);
 
         /** \brief switches any synchronization off, that has been created by synchronizeToMaster()
          *
-         * \note This function internally calls JKQTBasePlotter::resetMasterSynchronization()
-         * \see synchronizeToMaster(), resetMasterSynchronization(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         *  \note This function internally calls JKQTBasePlotter::synchronizeToMaster()
+            \see synchronizeToMaster(), synchronizeXToMaster(), resetMasterSynchronization(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
          */
-        void resetMasterSynchronization();
+        void resetMasterSynchronization(JKQTBasePlotter::SynchronizationDirection synchronizeDirection=JKQTBasePlotter::sdXYAxes);
+
 
         /*! \brief enables grid-printing for this plot
          *
          * \note This function call forwards to JKQTBasePlotter::setGridPrinting()
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
          */
         void setGridPrinting(bool enabled);
 
         /** \brief add a new plotter \a plotterOther for grid printing mode, at location \a x / \a y
          *
          * \note This function call forwards to JKQTBasePlotter::addGridPrintingPlotter()
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
          */
         void addGridPrintingPlotter(size_t x, size_t y, JKQTPlotter* plotterOther) ;
 
         /** \brief clear all additional plotters for grid printing mode
          *
          * \note This function call forwards to JKQTBasePlotter::clearGridPrintingPlotters()
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
          */
         void clearGridPrintingPlotters() ;
         /** \brief set the x-position of this JKQTPlotter in the grid-printing grid
          *
          * \note This function call forwards to JKQTBasePlotter::setGridPrintingCurrentX()
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), setGridPrintingCurrentY(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), setGridPrintingCurrentY(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
          */
         void setGridPrintingCurrentX(size_t x);
         /** \brief set the y-position of this JKQTPlotter in the grid-printing grid
          *
          * \note This function call forwards to JKQTBasePlotter::setGridPrintingCurrentY()
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), setGridPrintingCurrentX(), \ref JKQTPLOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentPos(), setGridPrintingCurrentX(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
          */
         void setGridPrintingCurrentY(size_t y);
         /** \brief set the x- and y-positions of this JKQTPlotter in the grid-printing grid
          *
          * \note This function call forwards to JKQTBasePlotter::setGridPrintingCurrentPos()
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY() \ref JKQTPLOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY() \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
          */
         void setGridPrintingCurrentPos(size_t x, size_t y);
 
@@ -603,7 +596,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief returns the coordinate axis object for the y-axis as a const pointer */
         inline const JKQTPVerticalAxis* getYAxis() const { return plotter->getYAxis(); }
 
-       /** \brief returns description of i'th graph */
+       /** \brief returns the \a i -th graph (of type JKQTPPlotElement) in this plotter instance */
         inline JKQTPPlotElement* getGraph(size_t i) { return plotter->getGraph(i); }
 
         /** \brief returns the number of graphs */
@@ -624,13 +617,26 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
          */
         inline void clearGraphs(bool deleteGraphs=true) { plotter->clearGraphs(deleteGraphs); }
 
-        /** \brief add a new graph, returns it's position in the graphs list */
+        /** \brief add a new graph, returns it's position in the graphs list
+         *
+         * \param gr graph object (of type JKQTPPlotElement) to be added. \b Note: The JKQTPlotter takes ownership of graph \a gr .
+         * \return ID of the added graph object \a gr in the internal list of graphs
+         *
+         */
         inline size_t addGraph(JKQTPPlotElement* gr) { return plotter->addGraph(gr); }
 
-        /** \brief move the given graph to the top, or add it, if it is not yet contained */
+        /** \brief move the given graph to the top, or add it, if it is not yet contained
+         *
+         * \param gr graph object (of type JKQTPPlotElement) to be moved (needs to be containing to the JKQTPlotter already!)
+         * \return ID of the added graph object \a gr in the internal list of graphs
+         */
         inline size_t moveGraphTop(JKQTPPlotElement* gr) { return plotter->moveGraphTop(gr); }
 
-        /** \brief move the given graph to the top, or add it, if it is not yet contained */
+        /** \brief move the given graph to the top, or add it, if it is not yet contained
+         *
+         * \param gr graph object (of type JKQTPPlotElement) to be moved (needs to be containing to the JKQTPlotter already!)
+         * \return ID of the added graph object \a gr in the internal list of graphs
+         */
         inline size_t moveGraphBottom(JKQTPPlotElement* gr) { return plotter->moveGraphBottom(gr); }
 
         /** \brief add a new graphs from a QVector<JKQTPPlotElement*>, QList<JKQTPPlotElement*>, std::vector<JKQTPPlotElement*> ... or any standard-iterateable container with JKQTPPlotElement*-items */
@@ -791,11 +797,11 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief sets the mode if the standard context menu \see ContextMenuModes, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void setContextMenuMode(ContextMenuModes mode);
 
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis \see \ref JKQTPLOTTER_SYNCMULTIPLOT */
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis \see \ref JKQTBASEPLOTTER_SYNCMULTIPLOT */
         void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis \see \ref JKQTPLOTTER_SYNCMULTIPLOT */
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis \see \ref JKQTBASEPLOTTER_SYNCMULTIPLOT */
         void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis \see \ref JKQTPLOTTER_SYNCMULTIPLOT */
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis \see \ref JKQTBASEPLOTTER_SYNCMULTIPLOT */
         void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
 
@@ -965,7 +971,7 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief ties a MouseActionMode to a mouse-button and a keyboard-modifier
          *  \internal
          */
-        struct LIB_EXPORT MouseDragAction {
+        struct JKQTP_LIB_EXPORT MouseDragAction {
                 /** \brief constructs an invalid object */
                 MouseDragAction();
                 MouseDragAction(Qt::MouseButton _mouseButton, Qt::KeyboardModifier _modifier, MouseDragActions _mode);
@@ -1182,8 +1188,10 @@ class LIB_EXPORT JKQTPlotter: public QWidget {
         /*! \brief default value for property property mousePositionTemplate. \see mousePositionTemplate for more information */ 
         QString default_mousePositionTemplate;
 
-        /** \brief the master plotter, this plotter is connected to. */
-        QPointer<JKQTPlotter> masterPlotter;
+        /** \brief the master plotter, this plotter is connected to in x-direction. */
+        QPointer<JKQTPlotter> masterPlotterX;
+        /** \brief the master plotter, this plotter is connected to in y-direction. */
+        QPointer<JKQTPlotter> masterPlotterY;
 
         /** \brief calculate the y-axis shift of the plot, so there is space for the potentially displayed mouse position label */
         int getPlotYOffset();

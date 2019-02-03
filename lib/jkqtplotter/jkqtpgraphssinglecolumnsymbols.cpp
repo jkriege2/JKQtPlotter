@@ -114,13 +114,6 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
 
     int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;

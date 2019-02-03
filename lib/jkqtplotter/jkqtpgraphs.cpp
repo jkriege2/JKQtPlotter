@@ -123,13 +123,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
+
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -244,13 +238,7 @@ bool JKQTPXYLineErrorGraph::getXMinMax(double &minx, double &maxx, double &small
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
+
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -292,13 +280,7 @@ bool JKQTPXYLineErrorGraph::getYMinMax(double &miny, double &maxy, double &small
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
+
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -334,8 +316,8 @@ bool JKQTPXYLineErrorGraph::usesColumn(int c) const
 void JKQTPXYLineErrorGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 {
     intSortData();
-    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, 0, 0, &sortedIndices);
 
 }
 
@@ -449,13 +431,7 @@ void JKQTPStepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
+
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -594,13 +570,7 @@ void JKQTPStepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
+
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -1158,13 +1128,6 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -1366,13 +1329,6 @@ void JKQTPXYParametrizedScatterGraph::cbGetDataMinMax(double &dmin, double &dmax
         if (colorColumn<0) return;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
         int imin=0;
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -1501,13 +1457,7 @@ bool JKQTPXYParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
+
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -1550,13 +1500,7 @@ bool JKQTPXYParametrizedErrorScatterGraph::getYMinMax(double &miny, double &maxy
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
+
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -1593,8 +1537,8 @@ bool JKQTPXYParametrizedErrorScatterGraph::usesColumn(int c) const
 void JKQTPXYParametrizedErrorScatterGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 {
     intSortData();
-    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, 0, 0, &sortedIndices);
 }
 
 bool JKQTPXYParametrizedErrorScatterGraph::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQTBasePlotter * /*parent*/, JKQTPGraph* /*parentGraph*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPErrorPlotstyle /*xErrorStyle*/, JKQTPErrorPlotstyle /*yErrorStyle*/, int index, QColor &/*errorColor*/, QColor &/*errorFillColor*/)

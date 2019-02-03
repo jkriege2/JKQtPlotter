@@ -77,11 +77,55 @@ There are these major subgroups:
 \ingroup jkqtplotter_elements
 
 This group contains some tool classes that implement basic elements of the plot (coordinate axes, key, ...).
-These classes are used by JKQTPlotterBase to output the plot
+These classes are used by JKQTPlotterBase to output the plot.
 
 
 \defgroup jkqtplotter_graphsgroup Graph Classes
 \ingroup jkqtplotter_elements
+
+This group contains all classes in the JKQTPlotter library that may be used to draw a graph (i.e. a curve) onto a plot.
+
+\tableofcontents
+
+\section jkqtplotter_graphsgroup_classstructure Graph Class Structure
+
+\subsection jkqtplotter_graphsgroup_classstructure_basics Graph Classes
+
+Each type of graph is represented by another class, which has to be derived from JKQTPPlotElement. This class provides a basic virtual interface
+that allows JKQTPlotter to draw the graphs represented by them. This interface consists of these functions:
+  - JKQTPPlotElement::draw() draws the graph onto a given JKQTPEnhancedPainter (derived from <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>)
+  - JKQTPPlotElement::drawKeyMarker() draws the small marker image in the plot legend
+  - JKQTPPlotElement::getKeyLabelColor() returns a color for the legend entry for the graph
+  - JKQTPPlotElement::getXMinMax() returns the extent of the graph in x-direction (e.g. for auto-zooming)
+  - JKQTPPlotElement::getYMinMax() returns the extent of the graph in Y-direction (e.g. for auto-zooming)
+.
+In addition to these basic functions, there are additional functions that can be used to draw something outside the actual plot rectangle.
+These are used to e.g. add color-scales to the side of the graph:
+  - JKQTPPlotElement::getOutsideSize() returns the amount of space required outside the plot rectangle
+  - JKQTPPlotElement::drawOutside() draws the elements outside the plot rectangle
+.
+
+Usually if writing a new graph, one would not directly
+derive from JKQTPPlotElement, but from a cass in it's hirarchy of children. These children already provide certain facilities for certain types of graphs.
+
+\dotfile jkqtplotter_graphhirarchy.dot
+
+\subsection jkqtplotter_graphsgroup_classstructure_mixins Mix-In Classes for Graphs
+
+
+In addition there are mix-in classes that are used via multiple inheritance
+that add additional features and properties to a graph. A prominent example are the classes for \ref jkqtplotter_basegraphserrors "error indicators".
+With these there are usually two variants of one type of graph: One without error indicators and one with error indicators, e.g.:
+  - JKQTPXYLineGraph shows lines+symbols graphs made up from x/y-value pairs for each data point.
+  - JKQTPXYLineErrorGraph extends JKQTPXYLineGraph with error indicator drawing/properties provided by JKQTPXYGraphErrors
+.
+This approach allows to keep interfaces and appearance recognizeable over different graph classes and locates the source code
+for a feature like error indicators in a single/in few class(es).
+
+Another example of such a class is JKQTPColorPaletteTools, which provides functions that allow to use color palettes. It is 
+mainly used for the \ref jkqtplotter_imagelots "Image/Matrix graphs", but also by e.g. JKQTPXYParametrizedScatterGraph.
+
+
 
 \defgroup jkqtplotter_basegraphs Baseclasses for Graphs
 \ingroup jkqtplotter_graphsgroup
@@ -91,6 +135,15 @@ These classes are used by JKQTPlotterBase to output the plot
 
 
 \defgroup jkqtplotter_linesymbolgraphs Line/Symbol Graphs
+\ingroup jkqtplotter_graphsgroup
+
+\defgroup jkqtplotter_linesymbolgraphs_simple Basic Line/Scatter Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+\defgroup jkqtplotter_linesymbolgraphs_param Parametrized Line/Scatter Graphs
+\ingroup jkqtplotter_linesymbolgraphs
+
+\defgroup jkqtplotter_filledgraphs Filled Polygon/Area Graphs
 \ingroup jkqtplotter_graphsgroup
 
 \defgroup jkqtplotter_functiongraphs Function Graphs

@@ -6,7 +6,7 @@ The source code of the main application can be found in  [`test_multiplot.cpp`](
 First three plots are generated and put into a [QGridLayout](http://doc.qt.io/qt-5/qgridlayout.html):
 
 ```.cpp
-// 1. create a widget
+    // 1. create a widget
     QWidget mainWidget;
     mainWidget.setWindowTitle("JKQTPlotter(s) in a QGridLayout");
 
@@ -37,11 +37,11 @@ First three plots are generated and put into a [QGridLayout](http://doc.qt.io/qt
 With this simple setup, all three plots would be arranged by the QLayout, but they were all independent. This example could be part of a data fitting application, where the main plot shows data and a fit curve. A plot below that will display the residulas (errors) of the fit. Now if a user zooms one of the plots, he would expect that athe x-axes of the two plots are synchronized. The same for a third plot on the rhs of the residuals, which will show a residual histogram. This linking of the axes can be achieved by the following code:
 
 ```.cpp
-    // 3.4 synchronize width/x-axis of plotResid to width/x-axis of plotMain
-    plotResid->getPlotter()->synchronizeToMaster(plotMain->getPlotter(), true, false, true, true);
+    // 3.3 synchronize width/x-axis of plotResid to width/x-axis of plotMain
+    plotResid->synchronizeToMaster(plotMain, JKQTBasePlotter::sdXAxis, true, true, true);
 
-    // 3.5 synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
-    plotResidHist->getPlotter()->synchronizeToMaster(plotResid->getPlotter(), false, true, true, true);
+    // 3.4 synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
+    plotResidHist->synchronizeToMaster(plotResid, JKQTBasePlotter::sdYAxis, true, true, true);
 ```
 
 Finally: When printing or saving an image of the plots, the plotter will no know anything about the arrangement of the plots and the plots cannot be printed/drawn in the same arrangement as in the window. If you want to arrange the plots in the same layout in a printout, as in the window, you will have to tell the main plot, in which arrangement to print the plots:
@@ -98,7 +98,9 @@ You push the print button (![test_multiplot](https://raw.githubusercontent.com/j
 
 ![test_multiplot](../../screenshots/test_multiplot_printpreview.png)
 
+In addition this example also contains a Window that allows to control the plot layout and synchronization options:
 
+![test_multiplot](../../screenshots/test_multiplot_controlwindow.png)
 
 
 

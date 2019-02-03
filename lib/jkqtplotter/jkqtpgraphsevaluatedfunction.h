@@ -19,10 +19,6 @@
 
 
 
-/** \file jkqtpgraphsevaluatedfunction.h
-  * \ingroup jkqtplotter_functiongraphs
-  */
-
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -69,7 +65,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
     the following image
     \image html plot_functionplots.png
  */
-class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         Q_OBJECT
     public:
 
@@ -624,7 +620,7 @@ class LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
     \ingroup jkqtplotter_functiongraphs
 
  */
-class LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
+class JKQTP_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */

@@ -19,9 +19,6 @@
 
 
 
-/** \file jkqtpbaseelements.h
-  * \ingroup jkqtpbaseplotter_elements
-  */
 
 #ifndef JKQTPBASEELEMENTS_H
 #define JKQTPBASEELEMENTS_H
@@ -137,7 +134,7 @@ class JKQTBasePlotter;
     nearest but \c ">=" to the given \c minTicks. The Algorithm is described in detail with the function
     calcLinearTickSpacing(). To activate this automatic tick spacing you have to set <code>autoAxisSpacing=true</code>.
  */
-class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
+class JKQTP_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         Q_OBJECT
     protected:
     public:
@@ -915,7 +912,7 @@ class LIB_EXPORT JKQTPCoordinateAxis: public QObject {
     \ingroup jkqtpbaseplotter_elements
 
  */
-class LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
+class JKQTP_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
     protected:
     public:
@@ -956,7 +953,7 @@ class LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
-class LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
+class JKQTP_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
         Q_OBJECT
     protected:
     public:
@@ -996,7 +993,7 @@ class LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
     \ingroup jkqtpbaseplotter_elements
 
  */
-class LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
+class JKQTP_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
     protected:
     public:
@@ -1038,7 +1035,7 @@ class LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
-class LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizontalAxis {
+class JKQTP_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizontalAxis {
         Q_OBJECT
     protected:
     public:

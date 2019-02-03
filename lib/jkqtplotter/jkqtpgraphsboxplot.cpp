@@ -126,13 +126,6 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=datastore->getColumn(posColumn).getRows();
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -262,13 +255,6 @@ bool JKQTPBoxplotVerticalGraph::getXMinMax(double& minx, double& maxx, double& s
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -312,13 +298,6 @@ bool JKQTPBoxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(medianColumn).getRows();
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -362,7 +341,7 @@ bool JKQTPBoxplotVerticalGraph::usesColumn(int c) const
     return (c==meanColumn)||(c==posColumn)||(c==medianColumn)||(c==minColumn)||(c==maxColumn)||(c==percentile25Column)||(c==percentile75Column);
 }
 
-void JKQTPBoxplotVerticalGraph::setSortData(int __value) {
+void JKQTPBoxplotVerticalGraph::setDataSortOrder(int __value) {
     sortData=(DataSortOrder)__value;
     if (__value>0) sortData=Sorted;
 }
@@ -467,13 +446,6 @@ bool JKQTPBoxplotHorizontalGraph::getXMinMax(double& miny, double& maxy, double&
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(medianColumn).getRows();
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -523,13 +495,6 @@ bool JKQTPBoxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double&
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -597,13 +562,6 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=datastore->getColumn(posColumn).getRows();
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -1195,13 +1153,6 @@ void JKQTPBoxplotVerticalGraph::intSortData()
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(posColumn).getRows();
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;

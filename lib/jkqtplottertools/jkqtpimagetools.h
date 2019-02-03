@@ -540,7 +540,7 @@ inline QList<T> JKQTPImagePlot_makeQList(const T& defaultVal, int N=1) {
 
     \a lut needs to have \c lut_size) entries
 */
-void LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, QList<QPair<double, QRgb> > items, int lut_size=JKQTPImagePlot_LUTSIZE);
+void JKQTP_LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, QList<QPair<double, QRgb> > items, int lut_size=JKQTPImagePlot_LUTSIZE);
 
 /*! \brief build a linearly interpolated palette in \a lut with \a N entries that are provided as (double, QRgb) value pairss in the variable arguments
     \ingroup jkqtplotter_imagelots_tools
@@ -550,7 +550,7 @@ void LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, QList
 
     \a lut needs to have \c lut_size) entries
 */
-void LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, int N, ...);
+void JKQTP_LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, int N, ...);
 
 /*! \brief build a palette in \a lut with \a N entries that are provided in \a items
     \ingroup jkqtplotter_imagelots_tools
@@ -560,16 +560,16 @@ void LIB_EXPORT JKQTPImagePlot_buildDefinedPaletteLinInterpolate(int* lut, int N
 
     \a lut needs to have \c JKQTPImagePlot_LUTSIZE) entries
 */
-void LIB_EXPORT JKQTPImagePlot_buildDefinedPalette(int* lut, QList<QPair<double, QRgb> > items);
+void JKQTP_LIB_EXPORT JKQTPImagePlot_buildDefinedPalette(int* lut, QList<QPair<double, QRgb> > items);
 
 /*! \brief build a palette in \a lut with \a N entries that are provided as as (double, QRgb) value pairss in the variable arguments
     \ingroup jkqtplotter_imagelots_tools
 */
-void LIB_EXPORT JKQTPImagePlot_buildDefinedPalette(int* lut, int N, ...);
+void JKQTP_LIB_EXPORT JKQTPImagePlot_buildDefinedPalette(int* lut, int N, ...);
 
 /*! \brief return a list of all globally available LUTs
     \ingroup jkqtplotter_imagelots_tools */
-QStringList LIB_EXPORT JKQTPImagePlot_getPredefinedPalettes();
+QStringList JKQTP_LIB_EXPORT JKQTPImagePlot_getPredefinedPalettes();
 
 
 
@@ -577,19 +577,19 @@ QStringList LIB_EXPORT JKQTPImagePlot_getPredefinedPalettes();
     \ingroup jkqtplotter_imagelots_tools
 	\internal
 	*/
-LIB_EXPORT int* JKQTPImagePlot_getCreateLUT(QList<int *> &lutstore, JKQTPMathImageColorPalette palette);
+JKQTP_LIB_EXPORT int* JKQTPImagePlot_getCreateLUT(QList<int *> &lutstore, JKQTPMathImageColorPalette palette);
 /*! \brief frees a list of LUTs
     \ingroup jkqtplotter_imagelots_tools
 	\internal
 	*/
-void LIB_EXPORT JKQTPImagePlot_freeLUTs(QList<int *> &lutstore);
+void JKQTP_LIB_EXPORT JKQTPImagePlot_freeLUTs(QList<int *> &lutstore);
 
 
 /*! \brief internal global storage object for lookup-tables
     \ingroup jkqtplotter_imagelots_tools
 	\internal
 	*/
-extern LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
+extern JKQTP_LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
 
 /*! \brief convert a 2D image (as 1D array) into a QImage with given palette (see JKQTFPColorPalette)
     \ingroup jkqtplotter_imagelots_tools
@@ -752,31 +752,31 @@ inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, Q
 
 /*! \brief generates a QImage with width \a width and height 1 for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )
     \ingroup jkqtplotter_imagelots_tools */
-QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(int i, int width);
+QImage JKQTP_LIB_EXPORT JKQTPMathImageGetPaletteImage(int i, int width);
 /*! \brief generates a QImage with width \a width and height \a height for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )
     \ingroup jkqtplotter_imagelots_tools */
-QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(int i, int width, int height);
+QImage JKQTP_LIB_EXPORT JKQTPMathImageGetPaletteImage(int i, int width, int height);
 /*! \brief generates a QImage with width \a width and height 1 for a specific JKQTPMathImageColorPalette
     \ingroup jkqtplotter_imagelots_tools */
-QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(JKQTPMathImageColorPalette palette, int width);
+QImage JKQTP_LIB_EXPORT JKQTPMathImageGetPaletteImage(JKQTPMathImageColorPalette palette, int width);
 /*! \brief generates a QImage with width \a width and height \a height for a specific JKQTPMathImageColorPalette
     \ingroup jkqtplotter_imagelots_tools */
-QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(JKQTPMathImageColorPalette palette, int width, int height);
+QImage JKQTP_LIB_EXPORT JKQTPMathImageGetPaletteImage(JKQTPMathImageColorPalette palette, int width, int height);
 /*! \brief generates a QImage with width \a width and height 1 for a lookup-table \a lut with \a lut_size entries
     \ingroup jkqtplotter_imagelots_tools */
-QImage LIB_EXPORT JKQTPMathImageGetPaletteImage(int* lut, int lut_size, int width);
+QImage JKQTP_LIB_EXPORT JKQTPMathImageGetPaletteImage(int* lut, int lut_size, int width);
 /*! \brief generates a QImage with width \a width and height \a height for a lookup-table \a lut with \a lut_size entries
     \ingroup jkqtplotter_imagelots_tools */
-QImage LIB_EXPORT JKQTPMathImageGetAlphaPaletteImage(int* lut, int lut_size, int width, int height);
+QImage JKQTP_LIB_EXPORT JKQTPMathImageGetAlphaPaletteImage(int* lut, int lut_size, int width, int height);
 
 /*! \brief generates a QIcon for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )
     \ingroup jkqtplotter_imagelots_tools */
-QIcon LIB_EXPORT JKQTPMathImageGetPaletteIcon(int i) ;
+QIcon JKQTP_LIB_EXPORT JKQTPMathImageGetPaletteIcon(int i) ;
 
 
 /*! \brief generates a QIcon for a specific JKQTPMathImageColorPalette
     \ingroup jkqtplotter_imagelots_tools */
-QIcon LIB_EXPORT JKQTPMathImageGetPaletteIcon(JKQTPMathImageColorPalette palette) ;
+QIcon JKQTP_LIB_EXPORT JKQTPMathImageGetPaletteIcon(JKQTPMathImageColorPalette palette) ;
 
 
 
@@ -785,7 +785,7 @@ QIcon LIB_EXPORT JKQTPMathImageGetPaletteIcon(JKQTPMathImageColorPalette palette
 /*! \brief if a class is derived from this class, it may use color bars
     \ingroup jkqtplotter_imagelots_tools
  */
-class LIB_EXPORT JKQTPColorPaletteTools {
+class JKQTP_LIB_EXPORT JKQTPColorPaletteTools {
     public:
 
         JKQTPColorPaletteTools(JKQTBasePlotter *parent);

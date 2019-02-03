@@ -18,11 +18,6 @@
 */
 
 
-/** \file jkqtpenhancedtableview.h
-  * \ingroup jkqtptools_qtwidgets
-  */
-
-
 #ifndef JKQTPEnhancedTableView_H_INCLUDED
 #define JKQTPEnhancedTableView_H_INCLUDED
 #include "jkqtplottertools/jkqtp_imexport.h"
@@ -43,7 +38,7 @@
 
     \image html JKQTPEnhancedTableView.png
 */
-class LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
+class JKQTP_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
         Q_OBJECT
     public:
         JKQTPEnhancedTableView(QWidget* parent=nullptr);

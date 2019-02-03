@@ -17,10 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/** \file jkqtpenhancedpainter.h
-  * \ingroup jkqtptools_drawing
-  */
-
 
 #ifndef JKQTPENHANCED_PAINTERS_H
 #define JKQTPENHANCED_PAINTERS_H
@@ -34,7 +30,7 @@
 
 
 */
-class LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
+class JKQTP_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
         Q_GADGET
     public:
         JKQTPEnhancedPainter(QPaintDevice* device);

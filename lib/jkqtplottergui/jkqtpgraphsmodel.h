@@ -19,10 +19,6 @@
 
 
 
-/** \file jkqtpgraphsmodel.h
-  * \ingroup jkqtpgraphsmodel
-  */
-
 #ifndef jkqtpgraphsmodel_H
 #define jkqtpgraphsmodel_H
 

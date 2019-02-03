@@ -32,15 +32,15 @@
     \code
     #include "jkqtplottertools/jkqtp_imexport.h"
 
-    class LIB_EXPORT exportedClassName {
+    class JKQTP_LIB_EXPORT exportedClassName {
        ...
     };
 
-    LIB_EXPORT void exportedFunctionName();
+    JKQTP_LIB_EXPORT void exportedFunctionName();
     \endcode
 
-    Then when compiling define the preprocessor symbol \c LIB_IN_DLL when exporting AND using the classes/functions.
-    When compiling the classes for export, also define the preprocessor symbol \c LIB_EXPORT_LIBRARY .
+    Then when compiling define the preprocessor symbol \c JKQTP_LIB_IN_DLL when exporting AND using the classes/functions.
+    When compiling the classes for export, also define the preprocessor symbol \c JKQTP_LIB_EXPORT_LIBRARY .
  */
 
 
@@ -52,17 +52,17 @@
 #  endif
 
 #ifdef __WINDOWS__
-#  ifdef LIB_IN_DLL
-#    if defined(LIB_EXPORT_LIBRARY)
-#      define LIB_EXPORT __declspec(dllexport)
+#  ifdef JKQTP_LIB_IN_DLL
+#    if defined(JKQTP_LIB_EXPORT_LIBRARY)
+#      define JKQTP_LIB_EXPORT __declspec(dllexport)
 #    else
-#      define LIB_EXPORT __declspec(dllimport)
+#      define JKQTP_LIB_EXPORT __declspec(dllimport)
 #    endif
 #  else
-#    define LIB_EXPORT
+#    define JKQTP_LIB_EXPORT
 #  endif
 #else
-#  define LIB_EXPORT
+#  define JKQTP_LIB_EXPORT
 #endif
 
 

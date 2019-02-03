@@ -18,10 +18,6 @@
 */
 
 
-/** \file jkqtpgraphsbase.h
-  * \ingroup jkqtplotter_basegraphs
-  */
-
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -47,18 +43,22 @@ class JKQTPDatastore;
  *   - void draw(JKQTPEnhancedPainter& painter);
  *   - void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
  *   - bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
- *   - void getGraphsYMinMax(double& miny, double& maxy);
+ *   - bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
  *   - QColor getKeyLabelColor()=0;
- *   - bool usesColumn(int column) const;
- * .
+  * .
  *
  * Optionally you may also overwrite these functions to draw elements outside the actual plot area (like e.g. colorbars):
  *   - void getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace);
  *   - void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
  * .
  *
+ * In addition this class provudes protected
+ * functions that do coordinate transforms based on the current coordinate system, of the paren
+ * JKQTPlotter (i.e. using the axes JKQTPLott:xAxis and JKQTPlotter::yAxis as basis for the plotting).
+ *
+ * \see \ref jkqtplotter_graphsgroup_classstructure
  */
-class LIB_EXPORT JKQTPPlotElement: public QObject {
+class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -67,7 +67,7 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
         explicit JKQTPPlotElement(JKQTPlotter* parent);
 
         /** \brief default wirtual destructor */
-        virtual ~JKQTPPlotElement() ;
+        virtual ~JKQTPPlotElement() = default;
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter)=0;
@@ -91,34 +91,16 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor()=0;
 
-        /*! \brief sets the property title ( \copybrief title ) to the specified \a __value.
-            \details Description of the parameter title is: <BLOCKQUOTE>\copydoc title </BLOCKQUOTE>
-            \see title for more information */
-        inline virtual void setTitle(const QString & __value)
-        {
-            this->title = __value;
-        }
-        /*! \brief returns the property title ( \copybrief title ).
-            \details Description of the parameter title is: <BLOCKQUOTE>\copydoc title </BLOCKQUOTE>
-            \see title for more information */
-        inline virtual QString getTitle() const
-        {
-            return this->title;
-        }
-        /*! \brief sets the property visible ( \copybrief visible ) to the specified \a __value.
-            \details Description of the parameter visible is: <BLOCKQUOTE>\copydoc visible </BLOCKQUOTE>
-            \see visible for more information */
-        inline virtual void setVisible(bool __value)
-        {
-            this->visible = __value;
-        }
-        /*! \brief returns the property visible ( \copybrief visible ).
-            \details Description of the parameter visible is: <BLOCKQUOTE>\copydoc visible </BLOCKQUOTE> 
-            \see visible for more information */ 
-        inline virtual bool getVisible() const  
-        {
-            return this->visible; 
-        }
+        /** \brief sets the title of the plot (for display in key!).
+         *
+         * \note If no title is supplied, no key entry is drawn. */
+        virtual void setTitle(const QString & __value);
+        /*! \brief returns the the title of the plot */
+        virtual QString getTitle() const;
+        /*! \brief sets whether the graph is visible in the plot */
+        void virtual setVisible(bool __value);
+        /*! \brief returns whether the graph is visible in the plot */
+        bool virtual isVisible() const;
 
         /** \brief returns the parent painter class */
         inline JKQTBasePlotter* getParent() { return parent; }
@@ -142,6 +124,53 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
         virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
 
     protected:
+
+
+
+        /** \brief tool routine that transforms an x-coordinate (plot coordinate --> pixels) for this plot element */
+        virtual double transformX(double x) const;
+
+        /** \brief tool routine that transforms a y-coordinate (plot coordinate --> pixels) for this plot element */
+        virtual double transformY(double y) const;
+
+        /** \brief tool routine that backtransforms an x-coordinate (pixels --> plot coordinate) for this plot element */
+        virtual double backtransformX(double x) const;
+
+        /** \brief tool routine that backtransforms a y-coordinate (pixels --> plot coordinate) for this plot element */
+        virtual double backtransformY(double y) const;
+
+
+        /** \brief tool routine that transforms a QPointF according to the parent's transformation rules (plot coordinate --> pixels) */
+        inline QPointF transform(const QPointF& x) {
+            return QPointF(transformX(x.x()), transformY(x.y()));
+        }
+
+        /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules (pixels --> plot coordinate) */
+        inline QPointF backTransform(const QPointF& x) {
+            return QPointF(backtransformX(x.x()), backtransformY(x.y()));
+        }
+
+        /** \brief tool routine that transforms a QPointF according to the parent's transformation rules (plot coordinate --> pixels) */
+        inline QPointF transform(double x, double y) {
+            return transform(QPointF(x,y));
+        }
+        /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules (pixels --> plot coordinate) */
+        inline QPointF backTransform(double x, double y) {
+            return backTransform(QPointF(x,y));
+        }
+        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules (plot coordinate --> pixels) */
+        QVector<QPointF> transform(const QVector<QPointF>& x);
+
+        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
+         *         and returns a (non-closed) path consisting of lines (plot coordinate --> pixels) */
+        QPainterPath transformToLinePath(const QVector<QPointF>& x);
+
+        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
+         *         and returns a polygon (plot coordinate --> pixels) */
+        inline QPolygonF transformToPolygon(const QVector<QPointF>& x) {
+            return QPolygonF(transform(x));
+        }
+
         /** \brief the plotter object this object belongs to */
         JKQTBasePlotter* parent;
 
@@ -150,52 +179,6 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
 
         /** \brief indicates whether the graph is visible in the plot */
         bool visible;
-
-
-
-        /** \brief tool routine that transforms an x-coordinate for this plot element */
-        virtual double transformX(double x) const;
-
-        /** \brief tool routine that transforms a y-coordinate for this plot element */
-        virtual double transformY(double y) const;
-
-        /** \brief tool routine that backtransforms an x-coordinate for this plot element */
-        virtual double backtransformX(double x) const;
-
-        /** \brief tool routine that backtransforms a y-coordinate for this plot element */
-        virtual double backtransformY(double y) const;
-
-
-        /** \brief tool routine that transforms a QPointF according to the parent's transformation rules */
-        inline QPointF transform(const QPointF& x) {
-            return QPointF(transformX(x.x()), transformY(x.y()));
-        }
-
-        /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules */
-        inline QPointF backTransform(const QPointF& x) {
-            return QPointF(backtransformX(x.x()), backtransformY(x.y()));
-        }
-
-        /** \brief tool routine that transforms a QPointF according to the parent's transformation rules */
-        inline QPointF transform(double x, double y) {
-            return transform(QPointF(x,y));
-        }
-        /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules */
-        inline QPointF backTransform(double x, double y) {
-            return backTransform(QPointF(x,y));
-        }
-        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules */
-        QVector<QPointF> transform(const QVector<QPointF>& x);
-
-        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
-         *         and returns a (non-closed) path consisting of lines */
-        QPainterPath transformToLinePath(const QVector<QPointF>& x);
-
-        /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
-         *         and returns a polygon */
-        inline QPolygonF transformToPolygon(const QVector<QPointF>& x) {
-            return QPolygonF(transform(x));
-        }
 };
 
 /** \brief this virtual base class of the (data-column based) graphs,
@@ -204,16 +187,19 @@ class LIB_EXPORT JKQTPPlotElement: public QObject {
  *         as basis for the graphs
  * \ingroup jkqtplotter_basegraphs
  *
- * This class adds several features to work with data columns. In addition this class adds protected
- * functions that do coordinate transforms based on the current coordinate system, of the paren
- * JKQTPlotter (i.e. using the axes JKQTPLott:xAxis and JKQTPlotter::yAxis as basis for the plotting).
+ * This class adds features to work with data columns.
+ *   - There are two properties datarange_start and datarange_end. By default they are -1 and therefore ignored.
+ *     if they are != -1 the plotter only displays the datapoints with the indexes [datarange_start .. datarange_end]
+ *     although there might be more data points available (range [0 .. maxDataPoints]). The datarange is cut at the
+ *     full range, i.e. if datarange_end>maxDataPoints the plotter displays [datarange_start .. maxDataPoints].
+ *   - Also there is a virtual function  usesColumn() which checks whether a given column is used by this graph.
+ *     Override this function in your derived graphs to indicate to JKQTPlotter / JKQTBasePlotter , which columns
+ *     from the internal JKQTPDatastore are actually used. This information can be used e.g. for graph-specific data-export.
+ * .
  *
- * There are two properties datarange_start and datarange_end. By default they are -1 and therefore ignored.
- * if they are != -1 the plotter only displays the datapoints with the indexes [datarange_start .. datarange_end]
- * although there might be more data points available (range [0 .. maxDataPoints]). The datarange is cut at the
- * full range, i.e. if datarange_end>maxDataPoints the plotter displays [datarange_start .. maxDataPoints].
+ * \see \ref jkqtplotter_graphsgroup_classstructure
  */
-class LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
+class JKQTP_LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -222,39 +208,15 @@ class LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
         explicit JKQTPGraph(JKQTPlotter* parent);
 
         /** \brief default wirtual destructor */
-        virtual ~JKQTPGraph() ;
+        virtual ~JKQTPGraph() = default ;
 
 
-        /*! \brief sets the property datarange_start ( \copybrief datarange_start ) to the specified \a __value. 
-            \details Description of the parameter datarange_start is: <BLOCKQUOTE>\copydoc datarange_start </BLOCKQUOTE> 
-            \see datarange_start for more information */ 
-        inline virtual void setDatarangeStart(int __value)
-        {
-            this->datarange_start = __value;
-        } 
-        /*! \brief returns the property datarange_start ( \copybrief datarange_start ). 
-            \details Description of the parameter datarange_start is: <BLOCKQUOTE>\copydoc datarange_start </BLOCKQUOTE> 
-            \see datarange_start for more information */ 
-        inline virtual int getDatarangeStart() const  
-        {
-            return this->datarange_start; 
-        }
-        /*! \brief sets the property datarange_end ( \copybrief datarange_end ) to the specified \a __value. 
-            \details Description of the parameter datarange_end is: <BLOCKQUOTE>\copydoc datarange_end </BLOCKQUOTE> 
-            \see datarange_end for more information */ 
-        inline virtual void setDatarange_end(int __value)
-        {
-            this->datarange_end = __value;
-        } 
-        /*! \brief returns the property datarange_end ( \copybrief datarange_end ). 
-            \details Description of the parameter datarange_end is: <BLOCKQUOTE>\copydoc datarange_end </BLOCKQUOTE> 
-            \see datarange_end for more information */ 
-        inline virtual int getDatarange_end() const  
-        {
-            return this->datarange_end; 
-        }
-
-        /** \brief returns \c true if the given column is used by the graph */
+        /** \brief returns \c true if the given column is used by the graph
+         *
+         * This virtual function indicates whether a given column is used by this graph.
+         * Override this function in your derived graphs to indicate to JKQTPlotter / JKQTBasePlotter , which columns
+         * from the internal JKQTPDatastore are actually used. This information can be used e.g. for graph-specific data-export.
+         */
         virtual bool usesColumn(int column) const;
 
     protected:
@@ -271,20 +233,16 @@ class LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
          */
         virtual void drawErrorsAfter(JKQTPEnhancedPainter& /*painter*/);
 
-
-
-
-
-        /** \brief start of the range of plot data. -1 switches the lower data range border off. */
-        int datarange_start;
-        /** \brief end of the range of plot data. -1 switches the upper data range border off. */
-        int datarange_end;
-
         /** \brief get the maximum and minimum value of the given column
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
         bool getDataMinMax(int column, double& minx, double& maxx, double& smallestGreaterZero);
+
+
+
+    protected:
+
 
         friend class JKQTPGraphErrors;
 
@@ -297,8 +255,10 @@ class LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
  *         coordinate systems
  * \ingroup jkqtplotter_basegraphs
  *
+ * \see \ref jkqtplotter_graphsgroup_classstructure
+ *
  */
-class LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
+class JKQTP_LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -321,19 +281,32 @@ class LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
            that specify x and y coordinates for the single plot points.
     \ingroup jkqtplotter_basegraphs
 
-    This class implements basic management facilities for the data columns and implements the function
-      - bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
-      - bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+    This class implements basic management facilities for the data columns:
+      - setXColumn(), setYColumn() to set the columns to be used for the graph data
+      - setDataSortOrder() to specify whether and how the data should be sorted before drawing
+        \image html jkqtplotter_unsorted.png "Unsorted Data"
+        \image html jkqtplotter_sortedx.png "Data sorted along x-axis (DataSortOrder::SortedX)"
+    .
+    ... and overrides/implements the functions:
+      - getXMinMax()
+      - getYMinMax()
+      - usesColumn()
     .
 
  */
-class LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
         Q_OBJECT
     public:
+        /** \brief specifies how to sort the data in a JKQTPXYGraph before drawing
+         *
+         * \image html jkqtplotter_unsorted.png "Unsorted Data"
+         *
+         * \image html jkqtplotter_sortedx.png "Data sorted along x-axis (DataSortOrder::SortedX)"
+         */
         enum DataSortOrder {
-            Unsorted=0,
-            SortedX=1,
-            SortedY=2
+            Unsorted=0, /*!< \brief the data for a JKQTPXYGraph is not sorted before drawing */
+            SortedX=1, /*!< \brief the data for a JKQTPXYGraph is sorted so the x-values appear in ascending before drawing */
+            SortedY=2 /*!< \brief the data for a JKQTPXYGraph is sorted so the y-values appear in ascending before drawing */
         };
 
 
@@ -395,19 +368,19 @@ class LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. 
             \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
             \see sortData for more information */ 
-        inline virtual void setSortData(const DataSortOrder & __value)  
+        inline virtual void setDataSortOrder(const DataSortOrder & __value)  
         {
             this->sortData = __value;
         } 
         /*! \brief returns the property sortData ( \copybrief sortData ). 
             \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
             \see sortData for more information */ 
-        inline virtual DataSortOrder getSortData() const  
+        inline virtual DataSortOrder getDataSortOrder() const  
         {
             return this->sortData; 
         }
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
-        void setSortData(int __value);
+        void setDataSortOrder(int __value);
 
     protected:
 
@@ -425,8 +398,10 @@ class LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
          *
          * This function can beu used to get the correct datapoint after sorting the datapoints,
          * As sorting is done by sorting an index and not reordering the data in the columns themselves.
+         *
+         * \see setDataSortOrder(), getDataSortOrder()
          * */
-        inline  int getDataIndex(int i) {
+        inline int getDataIndex(int i) {
             if (sortData==Unsorted) return i;
             return sortedIndices.value(i,i);
         }
@@ -438,18 +413,27 @@ class LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
     \ingroup jkqtplotter_basegraphs
 
 
+    \see \ref jkqtplotter_graphsgroup_classstructure
+
  */
-class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         Q_OBJECT
     public:
+        /** \brief specifies how to sort the data for a JKQTPSingleColumnGraph before drawing
+         *
+         * \image html jkqtplotter_unsorted.png "Unsorted Data"
+         *
+         * \image html jkqtplotter_sortedx.png "Data sorted along x-axis (DataSortOrder::SortedX)"
+         */
         enum DataSortOrder {
-            Unsorted=0,
-            Sorted=1
+            Unsorted=0, /*!< \brief the data for a JKQTPSingleColumnGraph is not sorted before drawing */
+            Sorted=1 /*!< \brief the data for a JKQTPSingleColumnGraph is sorted (in ascending order) before drawing */
         };
 
+        /** \brief specifies whether the data for a JKQTPSingleColumnGraph represent x-axis or y-axis values */
         enum class DataDirection {
-            X,
-            Y
+            X, /*!< \brief the data for a JKQTPSingleColumnGraph is data belonging to the x-axis of the plot */
+            Y /*!< \brief the data for a JKQTPSingleColumnGraph is data belonging to the y-axis of the plot */
         };
 
         /** \brief class constructor */
@@ -462,7 +446,7 @@ class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPlotter* parent);
         JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPlotter* parent);
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override ;
 
         /*! \brief sets the property dataColumn ( \copybrief dataColumn ) to the specified \a __value. 
             \details Description of the parameter dataColumn is: <BLOCKQUOTE>\copydoc dataColumn </BLOCKQUOTE> 
@@ -527,19 +511,19 @@ class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. 
             \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
             \see sortData for more information */ 
-        inline virtual void setSortData(const DataSortOrder & __value)  
+        inline virtual void setDataSortOrder(const DataSortOrder & __value)  
         {
             this->sortData = __value;
         } 
         /*! \brief returns the property sortData ( \copybrief sortData ). 
             \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
             \see sortData for more information */ 
-        inline virtual DataSortOrder getSortData() const  
+        inline virtual DataSortOrder getDataSortOrder() const  
         {
             return this->sortData; 
         }
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
-        void setSortData(int __value);
+        void setDataSortOrder(int __value);
 
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
@@ -592,8 +576,13 @@ class LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
     will add some public datamemebers and methods to your class that allow to specify the properties of the
     error indicators (plot properties: color, width, ... and columns for the data).
 
+    \image html jkqtplotter_simpletest_errorbarstyles.png "line-graphs with different types of error indicators"
+
+
+    \see \ref jkqtplotter_graphsgroup_classstructure_mixins
+
  */
-class LIB_EXPORT JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPGraphErrors {
     public:
         /** \brief class contructor */
         JKQTPGraphErrors(QColor graphColor=QColor("black"));
@@ -705,11 +694,11 @@ class LIB_EXPORT JKQTPGraphErrors {
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. This method is called by
          *         the JKQTPGraph descendents */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph,  int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph,  int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int datarange_start=-1, int datarange_end=-1, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
+        void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
 
         /** \brief this function can be used to set the color of the error indicators automatically
          *
@@ -729,9 +718,9 @@ class LIB_EXPORT JKQTPGraphErrors {
 
 /*! \brief This class adds data fields for error indicators in x direction to a JKQTPGraph descendent.
     \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPGraphErrors
+    \see JKQTPGraphErrors,  \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class LIB_EXPORT JKQTPXGraphErrors: public JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPXGraphErrors: public JKQTPGraphErrors {
     public:
         /** \brief class contructor */
         JKQTPXGraphErrors(QColor graphColor=QColor("black"));
@@ -788,7 +777,7 @@ class LIB_EXPORT JKQTPXGraphErrors: public JKQTPGraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
 
         virtual double getXErrorU(int i, JKQTPDatastore* ds) const override;
         virtual double getXErrorL(int i, JKQTPDatastore* ds) const override;
@@ -798,10 +787,10 @@ class LIB_EXPORT JKQTPXGraphErrors: public JKQTPGraphErrors {
 
 /*! \brief This class adds data fields for error indicators in y direction to a class.
     \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPGraphErrors
+    \see JKQTPGraphErrors,  \ref jkqtplotter_graphsgroup_classstructure_mixins
 
  */
-class LIB_EXPORT JKQTPYGraphErrors: public JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPYGraphErrors: public JKQTPGraphErrors {
     public:
         /** \brief class contructor */
         JKQTPYGraphErrors(QColor graphColor=QColor("black"));
@@ -857,7 +846,7 @@ class LIB_EXPORT JKQTPYGraphErrors: public JKQTPGraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
 
         virtual double getYErrorU(int i, JKQTPDatastore* ds) const override;
         virtual double getYErrorL(int i, JKQTPDatastore* ds) const override;
@@ -866,10 +855,10 @@ class LIB_EXPORT JKQTPYGraphErrors: public JKQTPGraphErrors {
 
 /*! \brief This class adds data fields for error indicators in x and y direction to a class.
     \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPGraphErrors
+    \see JKQTPGraphErrors,  \ref jkqtplotter_graphsgroup_classstructure_mixins
 
  */
-class LIB_EXPORT JKQTPXYGraphErrors: public JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPXYGraphErrors: public JKQTPGraphErrors {
     public:
         /** \brief class contructor */
         JKQTPXYGraphErrors(QColor graphColor=QColor("black"));
@@ -977,7 +966,7 @@ class LIB_EXPORT JKQTPXYGraphErrors: public JKQTPGraphErrors {
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start=-1, int datarange_end=-1, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
 
         virtual double getXErrorU(int i, JKQTPDatastore* ds) const override;
         virtual double getXErrorL(int i, JKQTPDatastore* ds) const override;

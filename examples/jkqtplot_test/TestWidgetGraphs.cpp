@@ -47,8 +47,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     setLayout(layout);
     resize(1000, 800);
 
-    plotBot->synchronizeToMaster(plot, true, false);
-    connect(plot, SIGNAL(zoomChangedLocally(double,double,double,double,JKQTPlotter*)), plotBot, SLOT(synchronizeXAxis(double,double,double,double,JKQTPlotter*)));
+    plotBot->synchronizeToMaster(plot, JKQTBasePlotter::sdXAxis, true, true, true);
     plot->getPlotter()->setGridPrinting(true);
     plot->getPlotter()->addGridPrintingPlotter(0,1,plotBot->getPlotter());
     plot->getPlotter()->addGridPrintingPlotter(0,2,plotBot2->getPlotter());
@@ -332,9 +331,9 @@ void TestWidgetGraphs::setESSymbol(int /*index*/)
 
 void TestWidgetGraphs::setSortOrder2(int index)
 {
-    if (index==0) pltePlot2->setSortData(JKQTPXYGraph::Unsorted);
-    if (index==1) pltePlot2->setSortData(JKQTPXYLineGraph::SortedX);
-    if (index==2) pltePlot2->setSortData(JKQTPXYLineGraph::SortedY);
+    if (index==0) pltePlot2->setDataSortOrder(JKQTPXYGraph::Unsorted);
+    if (index==1) pltePlot2->setDataSortOrder(JKQTPXYLineGraph::SortedX);
+    if (index==2) pltePlot2->setDataSortOrder(JKQTPXYLineGraph::SortedY);
     plotBot->redrawPlot();
 }
 

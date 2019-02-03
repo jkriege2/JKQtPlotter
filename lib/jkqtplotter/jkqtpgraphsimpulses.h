@@ -31,7 +31,7 @@
 
     \image html plot_impulsesxplots.png
  */
-class LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -111,7 +111,7 @@ class LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
 
     \image html plot_impulsesxerrorsplots.png
  */
-class LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHorizontalGraph, public JKQTPXGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHorizontalGraph, public JKQTPXGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -134,7 +134,7 @@ class LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHorizont
 
     \image html plot_impulsesyplots.png
  */
-class LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizontalGraph {
+class JKQTP_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -153,7 +153,7 @@ class LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizontalGraph
 
     \image html plot_impulsesyerrorsplots.png
  */
-class LIB_EXPORT JKQTPImpulsesVerticalErrorGraph: public JKQTPImpulsesVerticalGraph, public JKQTPYGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPImpulsesVerticalErrorGraph: public JKQTPImpulsesVerticalGraph, public JKQTPYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */

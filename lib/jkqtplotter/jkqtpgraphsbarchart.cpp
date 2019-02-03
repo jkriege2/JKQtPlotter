@@ -118,13 +118,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end+1, static_cast<int>(imax));
-    }
+
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -146,8 +140,8 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     for (int iii=imin; iii<imax; iii++) {
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        int sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
-        int lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(xColumn, i);
+        int lr=datastore->getNextHigherIndex(xColumn, i);
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double yv0=y0;
         if (!qFuzzyIsNull(baseline)) yv0=transformY(baseline);
@@ -204,13 +198,6 @@ bool JKQTPBarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -221,8 +208,8 @@ bool JKQTPBarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
 
     for (int i=imin; i<imax; i++) {
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        int sr=datastore->getNextLowerIndex(xColumn, i, datarange_start, datarange_end);
-        int lr=datastore->getNextHigherIndex(xColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(xColumn, i);
+        int lr=datastore->getNextHigherIndex(xColumn, i);
         double delta, deltap, deltam;
 
         if (sr<0 && lr<0) { // only one x-value
@@ -266,13 +253,6 @@ bool JKQTPBarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -386,13 +366,6 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end+1, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -415,8 +388,8 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         int i=qBound(imin, getDataIndex(iii), imax);
         double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        int sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
-        int lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(yColumn, i);
+        int lr=datastore->getNextHigherIndex(yColumn, i);
         double xv0=x0;
         if (!qFuzzyIsNull(baseline)) xv0=transformX(baseline);
         if (hasStackPar) {
@@ -477,13 +450,6 @@ bool JKQTPBarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(xColumn)).getRows());
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -527,13 +493,6 @@ bool JKQTPBarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -545,8 +504,8 @@ bool JKQTPBarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
     for (int i=imin; i<imax; i++) {
         double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
         double delta, deltap, deltam;
-        int sr=datastore->getNextLowerIndex(yColumn, i, datarange_start, datarange_end);
-        int lr=datastore->getNextHigherIndex(yColumn, i, datarange_start, datarange_end);
+        int sr=datastore->getNextLowerIndex(yColumn, i);
+        int lr=datastore->getNextHigherIndex(yColumn, i);
 
         if (sr<0 && lr<0) { // only one y-value
             deltam=0.5;
@@ -662,13 +621,6 @@ bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -698,8 +650,8 @@ bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
 
 void JKQTPBarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift);
-    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0.0, shift, &sortedIndices);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, 0.0, shift);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, 0.0, shift, &sortedIndices);
 }
 
 JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
@@ -736,13 +688,6 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -784,13 +729,6 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
         int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-        // interpret data ranges
-        if (datarange_start>-1) {
-            imin=qMin(datarange_start, static_cast<int>(imax));
-        }
-        if (datarange_end>-1) {
-            imax=qMin(datarange_end, static_cast<int>(imax));
-        }
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -820,9 +758,9 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
 
 void JKQTPBarVerticalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    //plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
-    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0.0);
-    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, shift, 0, &sortedIndices);
+    //plotErrorIndicators(painter, parent, this, xColumn, yColumn, shift, 0.0);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, shift, 0.0);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, shift, 0, &sortedIndices);
 }
 
 JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTBasePlotter *parent):

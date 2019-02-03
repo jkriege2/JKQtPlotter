@@ -19,10 +19,6 @@
 
 
 
-/** \file jkvanishqtoolbar.cpp
-  * \ingroup jkqtptools_qtwidgets
-  */
-
 #include "jkqtplottergui/jkvanishqtoolbar.h"
 
 JKVanishQToolBar::JKVanishQToolBar(const QString &title, QWidget *parent): QToolBar(title, parent) {

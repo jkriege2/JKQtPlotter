@@ -22,11 +22,6 @@
 #define jkqtpgraphsimage_H
 
 
-
-/** \file jkqtpgraphsimage.h
-  * \ingroup  jkqtplotter_imagelots_elements
-  */
-
 #include <QString>
 #include <QPainter>
 #include <QImage>
@@ -42,7 +37,7 @@
 /*! \brief base class for plotting an image
     \ingroup jkqtplotter_imagelots_elements
  */
-class LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -153,7 +148,7 @@ class LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
     \image html jkqtplotter_simpletest_imageplot.png
 
  */
-class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
+class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         Q_OBJECT
     public:
         /** \brief possible datatypes of the data array, plotted by this class. */
@@ -349,7 +344,7 @@ class LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 
     \image html jkqtplotter_simpletest_rgbimageplot_qt.png
  */
-class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
+class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         Q_OBJECT
     public:
 
@@ -415,7 +410,7 @@ class LIB_EXPORT JKQTPImage: public JKQTPImageBase {
     \image html jkqtplotter_simpletest_imageplot_modifier.png
     \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
  */
-class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
+class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
 
@@ -903,7 +898,7 @@ class LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 
     \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
  */
-class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
+class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
         using JKQTPMathImageBase::setData;
@@ -1421,7 +1416,7 @@ class LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
     \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
 
  */
-class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
+class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         Q_OBJECT
     public:
 
@@ -1485,7 +1480,7 @@ class LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
 
     \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
  */
-class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
+class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         Q_OBJECT
     public:
 
@@ -1579,7 +1574,7 @@ class LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
     \ingroup jkqtplotter_imagelots_elements
 
  */
-class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
+class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         Q_OBJECT
     public:
 
@@ -1711,7 +1706,7 @@ class LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
     Also it is possible to draw other types of markers (cross, circles, ...)
 
  */
-class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
+class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -1824,7 +1819,7 @@ class LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
     Also it is possible to draw other types of markers (cross, circles, ...)
 
  */
-class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanced {
+class JKQTP_LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanced {
         Q_OBJECT
     public:
         JKQTPColumnOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);
@@ -1876,7 +1871,7 @@ class LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanc
  *
  * \image html JKQTPContour.png
  */
-class LIB_EXPORT JKQTPContour: public JKQTPMathImage {
+class JKQTP_LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         Q_OBJECT
     public:
         /** \brief class constructor */

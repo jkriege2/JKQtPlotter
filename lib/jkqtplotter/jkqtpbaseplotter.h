@@ -17,12 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-
-/** \file jkqtpbaseplotter.h
-  * \ingroup jkqtpplotterclasses
-  */
-
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtmathtext/jkqtmathtext.h"
@@ -63,11 +57,11 @@ class JKQTPPlotElement; // forward
 
 /** \brief initialized Qt-ressources necessary for JKQTBasePlotter
  * \ingroup jkqtpplotterclasses */
-LIB_EXPORT void initJKQTBasePlotterResources();
+JKQTP_LIB_EXPORT void initJKQTBasePlotterResources();
 
 /** \brief virtual base-class for exporter classes that can be used to save data inot a file
  * \ingroup jkqtpplotterclasses */
-class LIB_EXPORT JKQTPSaveDataAdapter {
+class JKQTP_LIB_EXPORT JKQTPSaveDataAdapter {
     public:
         virtual ~JKQTPSaveDataAdapter() ;
         virtual QString getFilter() const=0;
@@ -77,7 +71,7 @@ class LIB_EXPORT JKQTPSaveDataAdapter {
 /** \brief Service from this class to implement a special QPaintDevice as a plugin, that can be registered to JKQTBasePlotter/JKQTPlotter
  *         and then be used to export graphics, use registerPaintDeviceAdapter() to register such a plass
  * \ingroup jkqtpplotterclasses*/
-class LIB_EXPORT JKQTPPaintDeviceAdapter {
+class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
     public:
         virtual ~JKQTPPaintDeviceAdapter()  {}
         virtual QString getFilter() const=0;
@@ -111,7 +105,11 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
  * This class is NOT a widget, if you need a plotting widget, use JKQTPlotter. This class may be used to
  * plot using a JKQTPEnhancedPainter.
  *
- * \see JKQTPlotter
+ * \see JKQTPlotter a QWidget class that displays a JKQTBasePlotter plot on a Qt Window.
+ *
+ *
+ * \tableofcontents
+ *
  *
  * \section jkqtplotter_base_datastore Data Storage
  * As already mentioned this class does not provide means to draw graphs, but it contains a basic mechanism to associate
@@ -214,16 +212,91 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
  * .
  *
  *
- * \subsection JKQTBASEPLOTTER_GRIDPRINTING Grid-Printing / Layouting Several Graphs
- * As one often want's to combine different graphs, there is a possibility to combine this graph with more other graphs.
- * To do so one can think of the graphs to be part of a grid where each graph is contained in one cell. By default this
- * mechanism is deactivated. You can activate it by calling setGridPrinting(true). Then you can set the position of the
- * current graph by calling setGridPrintingCurrentX() and setGridPrintingCurrentY(). Add additional graphs by calling
- * addGridPrintingPlotter(). The position of the current graph is 0,0 by default. Afterwards the save and print routines
- * will export/print all graphs, not just the current one. There will be no additional border between the graphs, as the
- * class expects the internal graph borders to be sufficient.
+ * \section  JKQTBASEPLOTTER_SYNCMULTIPLOT Synchronizing Several Plots
  *
- * \see \ref JKQTPLOTTER_SYNCMULTIPLOT
+ * Often a single plot is not sufficient, but several plots need to be aligned with respect to each other:
+ *
+ * \image html test_multiplot.png
+ *
+ * This can be achieved by putting several JKQTPlotter instances into a
+ * <a href="http://doc.qt.io/qt-5/layout.html">Qt Layout</a>. Then you can fill each plot differently and
+ * set the x-/y-range of each plot by hand. This method works for simple cases, but has several drawbacks:
+ *   - Due to the independent and automatic layouting of each plot, the axes do not need to be aligned properly<br>
+ *     \image html jkqtbaseplotter_synchronization_unequalaxes.png
+ *   - When you print the plot, the printing does not know about the layout and the other plots in it. Therefor
+ *     it will only print the plot itself.<br>
+ *     \image html jkqtbaseplotter_synchronization_nogridprint.png "Printing with grid-printing-mode deactivated"<br>
+ *     \image html jkqtbaseplotter_synchronization_withgridprint.png "Printing with grid-printing-mode activated"
+ *   - when you zoom/pan in one of the plots (e.g. using the mouse), the other plots will not adapt their
+ *     axes to match the new area, but especially in cases as in the image above it would be beneficial,
+ *     that tha x-axis of the plot at the bottom follows the x-axis of the plot above etc.<br>
+ *     \image html jkqtbaseplotter_synchronization_nonsyncedxrange.png
+ * .
+ *
+ *
+ * To overcome these limitations, JKQTPlotter (and JKQTBasePlotter) offer an API with which you can declare relations between
+ * different plots (one of them is made the master) and you can synchronize the axes of two plots, when
+ * zooming (also when calling e.g. zoomToFit() or setXY() ). This API is:
+ *   - \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_SYNC
+ *   - \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT
+ * .
+ *
+ * \subsection JKQTBASEPLOTTER_SYNCMULTIPLOT_SYNC Synchronizing Axis Range & Plot Width
+ *
+ * You can synchronize the plot width and axis range between two JKQTPlotter instaces using:
+ *   - synchronizeToMaster() / JKQTBasePlotter::synchronizeToMaster() synchronizes the parent JKQTPlotter with another JKQTPlotter. With two boolean-parameters
+ *         you can specify the axes to be synchronized. E.g. in the case above, you would call:
+ *         \code
+ *              // synchronize width/x-axis of plotResid to width/x-axis of plotMain
+ *              plotResid->synchronizeToMaster(plotMain, JKQTBasePlotter::sdXAxis, true, true, true);
+ *
+ *              // synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
+ *              plotResidHist->synchronizeToMaster(plotResid, JKQTBasePlotter::sdYAxis, true, true, true);
+ *         \endcode
+ *         This will synchronize the x-axes of the top (\c plotMain ) and bottom-left plot (\c plotResid ),
+ *         as well as the y-axes of the bottom-left (\c plotResid ) and bottom-right plot (\c plotResidHist ).
+ *         After this call they will have the same size in screen pixels and always span the same range
+ *         in plot coordinates.
+ *   - synchronizeXToMaster() / JKQTBasePlotter::synchronizeXToMaster() like synchronizeToMaster() / JKQTBasePlotter::synchronizeToMaster(),
+ *     but synchronizes only the x-axes
+ *   - synchronizeYToMaster() / JKQTBasePlotter::synchronizeYToMaster() like synchronizeToMaster() / JKQTBasePlotter::synchronizeToMaster(),
+ *     but synchronizes only the y-axes
+ *   - resetMasterSynchronization() / JKQTBasePlotter::resetMasterSynchronization() deletes all synchronizations
+ *       from the JKQTPlotter
+ * .
+ *
+ * \see See \ref JKQTPlotterMultiPlotLayout for an extensive example of the functionality.
+ *
+ *
+ * \subsection JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT Grid Printing/Desclaring Relations between Plots
+ *
+ * Usually each JKQTPlotter/JKQTBasePlotter prints or exports only itself. But in many cases you might want to
+ * add several plots that form a grid layout and also want to export them as one image/print them on one page.
+ * To do this, JKQTPlotter/JKQTBasePlotter offers the <b>"grid printing" mode</b>. In this mode, you can declare
+ * relations between different JKQTPlotters/JKQTBasePlotters by putting them in a rectangular grid (like in a
+ * <a reh="http://doc.qt.io/qt-5/qgridlayout.html">QGridLayout</a>). then any export/print action will draw all (explicitly)
+ * decalred graphs.
+ *
+ * \image html jkqtplotter_gridprint.png
+ *
+ * The grid printing API is composed of these functions:
+ *   - setGridPrinting() enables grid printing for this JKQTPlotter. If set to \c true , and you print afterwards,
+ *     the printout (or export) will not only contain the plot itself, but also additional plots that were
+ *     declared using addGridPrintingPlotter() (see below).
+ *   - addGridPrintingPlotter() add a new plotter \a plotterOther for grid printing mode, at location \a x / \a y
+ *     E.g. in the example shown above, you could call:
+ *     \code
+ *          plotMain->setGridPrinting(true);
+ *          plotMain->addGridPrintingPlotter(0,1,plotResid);
+ *          plotMain->addGridPrintingPlotter(1,1,plotResidHist);
+ *     \endcode
+ *   - setGridPrintingCurrentX() / setGridPrintingCurrentY() / setGridPrintingCurrentPos()
+ *     sets the location of the calling plot inside the grid. <i>By default each plot assumes to be at (0,0).</i>
+ *   - clearGridPrintingPlotters() clear all additional plotters for grid printing mode
+ * .
+ *
+ * \see See \ref JKQTPlotterMultiPlotLayout for an extensive example of the functionality.
+ *
  *
  *
  * \section jkqtplotter_base_defaultvalues Default Properties
@@ -241,7 +314,7 @@ class LIB_EXPORT JKQTPPaintDeviceAdapter {
  * These methods MAY (strictly optional and turned off by default) be called by saveSettings() and loadSettings(), if the property userSettigsFilename ( \copybrief userSettigsFilename )is
  * set (not-empty). In this case the suer settings are stored/loaded also everytime they are changed by the user or programmatically.
  */
-class LIB_EXPORT JKQTBasePlotter: public QObject {
+class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         Q_OBJECT
     public:
         typedef QMap<QString, QList<QPointer<QAction> > > AdditionalActionsMap;
@@ -677,11 +750,13 @@ class LIB_EXPORT JKQTBasePlotter: public QObject {
         QString currentDataFileFormat;
         QString currentPrinter;
 
-        /** \brief the master plotter, this plotter is connected to. */
-        JKQTBasePlotter* masterPlotter;
-        /** \brief synchronize plot width with masterPlotter */
+        /** \brief the master plotter for x-dimension, this plotter is connected to. */
+        JKQTBasePlotter *masterPlotterX;
+        /** \brief the master plotter for y-dimension, this plotter is connected to. */
+        JKQTBasePlotter *masterPlotterY;
+        /** \brief synchronize plot width with masterPlotterX */
         bool masterSynchronizeWidth;
-        /** \brief synchronize plot height with masterPlotter */
+        /** \brief synchronize plot height with masterPlotterY */
         bool masterSynchronizeHeight;
 
 
@@ -890,9 +965,6 @@ class LIB_EXPORT JKQTBasePlotter: public QObject {
         void zoomOut(double factor=2.0) {
             zoomIn(1.0/factor);
         }
-
-        /** \brief set the datarange of all current graphs to the given values */
-        void setGraphsDataRange(int datarange_start, int datarange_end);
 
         /** \brief en-/disables the maintaining of the data aspect ratio */
         void setMaintainAspectRatio(bool value) {
@@ -2158,27 +2230,58 @@ class LIB_EXPORT JKQTBasePlotter: public QObject {
         void getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
 
 
+        enum SynchronizationDirection {
+            sdXAxis,
+            sdYAxis,
+            sdXYAxes
+        };
 
-        /*! \brief synchronize the plot borders with a given plotter
+        /*! \brief synchronize the plot borders (and zooming) with a given plotter (master --> slave/this)
 
             This function allows two plotters to draw a graph with exactly the same height or width
             as in another graph. For example if you want to have two plotters which are positioned one
             above the other (and have the same widget widths, which could be guaranteed by a QLayout)
             you may want to make sure that their plotWidth s are always the same. In this case call
-            \code plotter2->synchronizeToMaster(plotter1, true, false) \endcode of the lower plotter \c plotter2 .
+            \code plotter2->synchronizeToMaster(plotter1, sdXAxis, true) \endcode of the lower plotter \c plotter2 .
             Now whenever the size of plotter1 changes, also plotter2 is redrawn with the changed
             borders.
 
             \param master the plotter widget to synchronize to
-            \param synchronizeWidth do you want the plot width to be synchronized?
-            \param synchronizeHeight do you want the plot height to be synchronized?
+            \param synchronizeDirection direction in which to synchronize
+            \param synchronizeAxisLength do you want the axis length to be synchronized?
             \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
             \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
+
+            \see synchronizeXToMaster(), synchronizeYToMaster(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
         */
-        void synchronizeToMaster(JKQTBasePlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave=false, bool synchronizeZoomingSlaveToMaster=false);
+        void synchronizeToMaster(JKQTBasePlotter* master, SynchronizationDirection synchronizeDirection, bool synchronizeAxisLength=true, bool synchronizeZoomingMasterToSlave=true, bool synchronizeZoomingSlaveToMaster=true);
+
+        /*! \brief synchronize the plot x-axis width (and x-zooming) with a given master plotter (master --> slave/this)
+
+            \param master the plotter widget to synchronize to
+            \param synchronizeAxisLength do you want the axis length to be synchronized?
+            \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
+            \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
+
+            \note This is a short-cut to synchronizeToMaster() with \c synchronizeDirection=csXAxis
+            \see synchronizeToMaster(), synchronizeYToMaster(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
+        */
+        void synchronizeXToMaster(JKQTBasePlotter* master, bool synchronizeAxisLength=true, bool synchronizeZoomingMasterToSlave=true, bool synchronizeZoomingSlaveToMaster=true);
+
+        /*! \brief synchronize the plot y-axis height (and y-zooming) with a given master plotter (master --> slave/this)
+
+            \param master the plotter widget to synchronize to
+            \param synchronizeAxisLength do you want the axis length to be synchronized?
+            \param synchronizeZoomingMasterToSlave if set, also zooming in the master leads to a modification of the linked axes in the slave
+            \param synchronizeZoomingSlaveToMaster if set, also zooming in the slave leads to a modification of the linked axes in the master
+
+            \note This is a short-cut to synchronizeToMaster() with \c synchronizeDirection=csXAxis
+            \see synchronizeToMaster(), synchronizeXToMaster(), \ref JKQTBASEPLOTTER_SYNCMULTIPLOT
+        */
+        void synchronizeYToMaster(JKQTBasePlotter* master, bool synchronizeAxisLength=true, bool synchronizeZoomingMasterToSlave=true, bool synchronizeZoomingSlaveToMaster=true);
 
         /** \brief switches any synchronization off, that has been created by synchronizeToMaster() */
-        void resetMasterSynchronization();
+        void resetMasterSynchronization(SynchronizationDirection synchronizeDirection=sdXYAxes);
 
 
 
@@ -2261,14 +2364,14 @@ class LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief internal tool class for text sizes
          *  \internal */
-        struct LIB_EXPORT textSizeData {
+        struct JKQTP_LIB_EXPORT textSizeData {
             explicit textSizeData();
             double ascent, descent, width, strikeoutPos;
         };
 
         /** \brief internal tool class for text-sizess in a plot key
          *  \internal */
-        struct LIB_EXPORT textSizeKey {
+        struct JKQTP_LIB_EXPORT textSizeKey {
             explicit textSizeKey(const QFont& f, const QString& text, QPaintDevice *pd);
             explicit textSizeKey(const QString& fontName, double fontSize, const QString& text, QPaintDevice *pd);
             QString text;

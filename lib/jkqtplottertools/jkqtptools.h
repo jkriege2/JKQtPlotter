@@ -18,10 +18,6 @@
 */
 
 
-/** \file jkqtptools.h
-  * \ingroup jkqtptools
-  */
-
 
 #ifndef JKQTPTOOLS_H_INCLUDED
 #define JKQTPTOOLS_H_INCLUDED
@@ -96,21 +92,21 @@ inline bool JKQTPIsOKFloat(T v) {
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString jkqtp_QPenStyle2String(Qt::PenStyle style);
+JKQTP_LIB_EXPORT QString jkqtp_QPenStyle2String(Qt::PenStyle style);
 
 /** \brief converts a QString into a Qt::PenStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::PenStyle jkqtp_String2QPenStyle(const QString& style);
+JKQTP_LIB_EXPORT Qt::PenStyle jkqtp_String2QPenStyle(const QString& style);
 /** \brief converts a QT::BrushStyle into a string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
+JKQTP_LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
 
 /** \brief converts a QString into a Qt::BrushStyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style);
+JKQTP_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style);
 
 
 
@@ -128,12 +124,12 @@ enum JKQTPCADrawMode {
 /** \brief converts a JKQTPCADrawMode variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
+JKQTP_LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
 
 /** \brief converts a string into a JKQTPCADrawMode
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
 
 
 /** \brief display mode for the axis labels
@@ -160,23 +156,23 @@ enum JKQTPLabelTickMode {
 /** \brief converts a JKQTPLabelTickMode variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
+JKQTP_LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
 
 /** \brief converts a string into a JKQTPLabelTickMode
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(const QString& pos);
 
 
 /** \brief converts a JKQTPCALabelType variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPCALabelType2String(JKQTPCALabelType pos);
+JKQTP_LIB_EXPORT QString JKQTPCALabelType2String(JKQTPCALabelType pos);
 
 /** \brief converts a string into a JKQTPCALabelType
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& pos);
 
 /** \brief position of the axis labels
  * \ingroup jkqtptools
@@ -191,12 +187,12 @@ enum JKQTPLabelPosition {
 /** \brief converts a JKQTPLabelPosition variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPLabelPosition2String(JKQTPLabelPosition pos);
+JKQTP_LIB_EXPORT QString JKQTPLabelPosition2String(JKQTPLabelPosition pos);
 
 /** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos);
 
 /** \brief position of the key
  * \ingroup jkqtptools
@@ -220,12 +216,12 @@ enum JKQTPKeyPosition {
 /** \brief converts a JKQTPLabelPosition variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPKeyPosition2String(JKQTPKeyPosition pos);
+JKQTP_LIB_EXPORT QString JKQTPKeyPosition2String(JKQTPKeyPosition pos);
 
 /** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos);
 
 /** \brief layout of the key
  * \ingroup jkqtptools
@@ -240,12 +236,12 @@ enum JKQTPKeyLayout {
 /** \brief converts a JKQTPKeyLayout variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPKeyLayout2String(JKQTPKeyLayout pos);
+JKQTP_LIB_EXPORT QString JKQTPKeyLayout2String(JKQTPKeyLayout pos);
 
 /** \brief converts a String into a JKQTPKeyLayout
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
 
 
 
@@ -300,12 +296,12 @@ enum JKQTPErrorPlotstyle {
 /** \brief converts a JKQTPErrorPlotstyle variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
+JKQTP_LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
 
 /** \brief converts a String into a JKQTPErrorPlotstyle
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos);
 
 /** \brief plot styles for a graph
  * \ingroup jkqtptools
@@ -356,16 +352,16 @@ enum JKQTPGraphSymbols {
 /** \brief converts a JKQTPGraphSymbols variable into a identifier string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos);
+JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos);
 /** \brief converts a JKQTPGraphSymbols variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
+JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
 
 /** \brief converts a String into a JKQTPGraphSymbols
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
 
 
 /** \brief convert a double to a string, using the loacle "C"
@@ -395,7 +391,7 @@ inline QString JKQTPDoubleToQString(double value, int prec = 10, char f = 'g', Q
 /** \brief rotate a rectangle by  given angle (rotates all points around the center of the rectangle and returns it as a QPolygonF)
  * \ingroup jkqtptools
  */
-LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
+JKQTP_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
 
 
 
@@ -500,7 +496,7 @@ inline void jkqtpSort(T* input, T2* input2, int N, T* output=nullptr, T2* output
 /** \brief RAII construct that times its lifetime, outputting properly indented qDebug()-message
  * \ingroup jkqtptools_debugging
  */
-class LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
+class JKQTP_LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 {
     public:
         explicit JKQTPAutoOutputTimer(const QString& message);
@@ -516,61 +512,61 @@ class LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 /** \brief convert a string to lower-case characters
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_tolower(const std::string& s);
+JKQTP_LIB_EXPORT std::string jkqtp_tolower(const std::string& s);
 
 /** \brief convert a string to a boolean
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT bool jkqtp_strtobool(const std::string& data);
+JKQTP_LIB_EXPORT bool jkqtp_strtobool(const std::string& data);
 /** \brief convert a string to upper-case
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
+JKQTP_LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
 
 /** \brief std::string wrapper around sprintf()
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
+JKQTP_LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
 
 /** \brief convert a number of bytes to a string, formatting e.g. 1024 as 1kB, ...
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_bytestostr(double bytes);
+JKQTP_LIB_EXPORT std::string jkqtp_bytestostr(double bytes);
 
 /** \brief convert an integer to a string
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_inttostr(long data);
+JKQTP_LIB_EXPORT std::string jkqtp_inttostr(long data);
 
 /** \brief convert an integer to a hex string
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_inttohex(long data);
+JKQTP_LIB_EXPORT std::string jkqtp_inttohex(long data);
 
 /** \brief convert an unsigned int to a string
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
+JKQTP_LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
 
 /** \brief convert a double to a string
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
+JKQTP_LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
 
 /** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000,"g") will result in "1kg"
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, const std::string& unitname);
+JKQTP_LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, const std::string& unitname);
 /** \brief convert a boolean to a string
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_booltostr(bool data);
+JKQTP_LIB_EXPORT std::string jkqtp_booltostr(bool data);
 /** \brief converts a RGBA color into a string
  * \ingroup jkqtptools_string
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
  */
-LIB_EXPORT std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
+JKQTP_LIB_EXPORT std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
 
 /** \brief converts a QColor into a string using the jkqtp_rgbtostring() method.
  * \ingroup jkqtptools_string
@@ -584,24 +580,24 @@ inline QString jkqtp_QColor2String(QColor color) {
 /** \brief clean a string to be usable as a variable name, e.g. in an expression parser, or a C++-expression
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_to_valid_variable_name(const std::string& input);
+JKQTP_LIB_EXPORT std::string jkqtp_to_valid_variable_name(const std::string& input);
 
 /** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000) will result in "1k"
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false);
+JKQTP_LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false);
 /** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. <code>-1.23\cdot 10^{-5}</code>)
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
+JKQTP_LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
 /** \brief convert a double to a string, encoding powers of ten as exponent with HTML tags
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_floattohtmlstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
+JKQTP_LIB_EXPORT std::string jkqtp_floattohtmlstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
 /** \brief convert a character to a string
  * \ingroup jkqtptools_string
  */
-LIB_EXPORT std::string jkqtp_chartostr(char data);
+JKQTP_LIB_EXPORT std::string jkqtp_chartostr(char data);
 
 /** \brief wandelt einen Datentyp in einen double um, wird von JKQTPDatastore zur Wandlung benutzt
  *  \ingroup jkqtptools
@@ -640,11 +636,11 @@ enum JKQTPStepType {
 /** \brief converts a JKQTPStepType variable into a human-readable string
  * \ingroup jkqtptools
  */
-LIB_EXPORT QString JKQTPStepType2String(JKQTPStepType pos);
+JKQTP_LIB_EXPORT QString JKQTPStepType2String(JKQTPStepType pos);
 
 /** \brief converts a String into a JKQTPStepType
  * \ingroup jkqtptools
  */
-LIB_EXPORT JKQTPStepType String2JKQTPStepType(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPStepType String2JKQTPStepType(const QString& pos);
 
 #endif // JKQTPTOOLS_H_INCLUDED

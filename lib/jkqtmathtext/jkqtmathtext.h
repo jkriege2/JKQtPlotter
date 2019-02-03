@@ -26,10 +26,6 @@
 */
 
 
-/** \file jkqtmathtext.h
-  * \ingroup jkqtmathtext
-  */
-
 
 #ifndef JKQTMATHTEXT_H
 #define JKQTMATHTEXT_H
@@ -53,7 +49,7 @@
 /** \brief initialized Qt-ressources necessary for JKQTMathText
  *  \ingroup jkqtmathtext
  */
-LIB_EXPORT void initJKQTMathTextResources();
+JKQTP_LIB_EXPORT void initJKQTMathTextResources();
 
 /*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
     \ingroup jkqtmathtext
@@ -222,7 +218,7 @@ LIB_EXPORT void initJKQTMathTextResources();
 
 
  */
-class LIB_EXPORT JKQTMathText : public QObject {
+class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -1498,7 +1494,7 @@ inline uint qHash(const JKQTMathText::tbrDataH& data) {
 
     \see JKQTMathText
 */
-class LIB_EXPORT JKQTMathTextLabel: public QLabel {
+class JKQTP_LIB_EXPORT JKQTMathTextLabel: public QLabel {
         Q_OBJECT
     public:
         explicit JKQTMathTextLabel(QWidget* parent=nullptr);

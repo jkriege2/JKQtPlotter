@@ -19,11 +19,6 @@
 
 
 
-
-/** \file jkqtpdatastorage.cpp
-  * \ingroup jkqtpdatastorage
-  */
-
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include <QDebug>
 #include <QtGlobal>

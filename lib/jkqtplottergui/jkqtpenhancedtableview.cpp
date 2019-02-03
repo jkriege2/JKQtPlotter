@@ -22,11 +22,6 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-
-/** \file JKQTPEnhancedTableView.cpp
-  * \ingroup jkqtptools
-  */
-
 #include "jkqtplottergui/jkqtpenhancedtableview.h"
 #include <QAction>
 #include <QApplication>

@@ -39,12 +39,12 @@
 
 #ifdef EMFENGINE_DLL
 #  ifdef EMFENGINE_DLL_BUILD
-#    define EMFENGINELIB_EXPORT Q_DECL_EXPORT
+#    define EMFENGINEJKQTP_LIB_EXPORT Q_DECL_EXPORT
 #  else
-#    define EMFENGINELIB_EXPORT Q_DECL_IMPORT
+#    define EMFENGINEJKQTP_LIB_EXPORT Q_DECL_IMPORT
 #  endif
 #else
-#  define EMFENGINELIB_EXPORT
+#  define EMFENGINEJKQTP_LIB_EXPORT
 #endif
 
 #ifdef HAVE_GDIPLUS
@@ -120,7 +120,7 @@ private:
 	void resetClipping();
 };
 
-class EMFENGINELIB_EXPORT EmfPaintDevice : public QPaintDevice
+class EMFENGINEJKQTP_LIB_EXPORT EmfPaintDevice : public QPaintDevice
 {
 public:
 	EmfPaintDevice(const QSize& s, const QString& fileName);

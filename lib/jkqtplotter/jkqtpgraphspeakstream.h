@@ -18,9 +18,6 @@
 */
 
 
-/** \file jkqtpgraphspeakstream.h
-  * \ingroup jkqtplotter_diverse
-  */
 
 #include <QString>
 #include <QPainter>
@@ -45,7 +42,7 @@ class JKQTPDatastore;
     \image html JKQTPPeakStreamGraphY.png "yPeaks=true"
     \image html JKQTPPeakStreamGraphX.png "yPeaks=false"
  */
-class LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
+class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */

@@ -108,13 +108,6 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -284,13 +277,6 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 
     int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -429,8 +415,8 @@ bool JKQTPFilledCurveXErrorGraph::usesColumn(int c) const
 
 void JKQTPFilledCurveXErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, 0, 0, &sortedIndices);
 
 }
 
@@ -453,8 +439,8 @@ bool JKQTPFilledCurveYErrorGraph::usesColumn(int c) const
 
 void JKQTPFilledCurveYErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 {
-    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end);
-    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, datarange_start, datarange_end, 0, 0, &sortedIndices);
+    if (sortData==JKQTPXYGraph::Unsorted) plotErrorIndicators(painter, parent, this, xColumn, yColumn);
+    else plotErrorIndicators(painter, parent, this, xColumn, yColumn, 0, 0, &sortedIndices);
 
 }
 
@@ -516,13 +502,6 @@ bool JKQTPFilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, doubl
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -584,13 +563,6 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
 
     int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;

@@ -695,7 +695,7 @@ SHOW_USED_FILES        = YES
 # (if specified).
 # The default value is: YES.
 
-SHOW_FILES             = YES
+SHOW_FILES             = NO
 
 # Set the SHOW_NAMESPACES tag to NO to disable the generation of the Namespaces
 # page. This will remove the Namespaces entry from the Quick Index and from the
@@ -813,8 +813,9 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ../lib/ \
+INPUT                  = . \
                          ./dox/ \
+                         ../lib \
                          ../examples
 
 # This tag can be used to specify the character encoding of the source files
@@ -866,10 +867,6 @@ FILE_PATTERNS          = *.d \
                          *.f \
                          *.vhd \
                          *.vhdl \
-                         *.qrc \
-                         *.pro \
-                         *.ui \
-                         *.pri \
                          *.md
 
 # The RECURSIVE tag can be used to specify whether or not subdirectories should
@@ -1028,7 +1025,7 @@ USE_MDFILE_AS_MAINPAGE =
 # also VERBATIM_HEADERS is set to NO.
 # The default value is: NO.
 
-SOURCE_BROWSER         = YES
+SOURCE_BROWSER         = NO
 
 # Setting the INLINE_SOURCES tag to YES will include the body of functions,
 # classes and enums directly into the documentation.
@@ -1235,7 +1232,7 @@ HTML_STYLESHEET        =
 # list). For an example see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  =
+HTML_EXTRA_STYLESHEET  = jkqtplotter_stylesheet.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
@@ -1245,7 +1242,9 @@ HTML_EXTRA_STYLESHEET  =
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       =
+HTML_EXTRA_FILES       = images/icon_code.png \
+                         images/icon_note.png \
+                         images/icon_see.png
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
@@ -1295,7 +1294,7 @@ HTML_TIMESTAMP         = YES
 # The default value is: YES.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_DYNAMIC_MENUS     = YES
+HTML_DYNAMIC_MENUS     = NO
 
 # If the HTML_DYNAMIC_SECTIONS tag is set to YES then the generated HTML
 # documentation will contain sections that can be hidden and shown after the
@@ -1565,7 +1564,7 @@ EXT_LINKS_IN_WINDOW    = NO
 # Minimum value: 8, maximum value: 50, default value: 10.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-FORMULA_FONTSIZE       = 12
+FORMULA_FONTSIZE       = 13
 
 # Use the FORMULA_TRANSPARENT tag to determine whether or not the images
 # generated for formulas are transparent PNGs. Transparent PNGs are not

@@ -38,13 +38,9 @@
  * \ingroup jkmp
  */
  
-         /**
+/**
  * \defgroup jkmpErrorhandling error handling
  * \ingroup jkmp
- */
-
-/** \file jkqtpmathparser.h
- *  \ingroup jkmp
  */
 
 #include <iostream>

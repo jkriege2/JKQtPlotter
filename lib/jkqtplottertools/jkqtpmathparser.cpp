@@ -19,10 +19,6 @@
 
 
 
-/** \file jkqtpmathparser.cpp
- *  \ingroup jkmp
- */
-
 #define COMPILING_THIS_JKMATHPARSER
 #include "jkqtplottertools/jkqtpmathparser.h" // class's header file
 #include <iostream>

@@ -47,23 +47,16 @@ JKQTPPlotElement::JKQTPPlotElement(JKQTPlotter *parent):
     setParent(parent);
 }
 
-JKQTPPlotElement::~JKQTPPlotElement()
-= default;
-
 JKQTPGraph::JKQTPGraph(JKQTBasePlotter* parent):
     JKQTPPlotElement(parent)
 {
-    datarange_start=datarange_end=-1;
 }
 
 JKQTPGraph::JKQTPGraph(JKQTPlotter *parent):
     JKQTPPlotElement(parent)
 {
-    datarange_start=datarange_end=-1;
-}
 
-JKQTPGraph::~JKQTPGraph()
-= default;
+}
 
 QImage JKQTPPlotElement::generateKeyMarker(QSize size)
 {
@@ -79,6 +72,26 @@ QImage JKQTPPlotElement::generateKeyMarker(QSize size)
         drawKeyMarker(painter, rect);
     }
     return img;
+}
+
+void JKQTPPlotElement::setTitle(const QString &__value)
+{
+    this->title = __value;
+}
+
+QString JKQTPPlotElement::getTitle() const
+{
+    return this->title;
+}
+
+void JKQTPPlotElement::setVisible(bool __value)
+{
+    this->visible = __value;
+}
+
+bool JKQTPPlotElement::isVisible() const
+{
+    return this->visible;
 }
 
 
@@ -108,12 +121,7 @@ bool JKQTPGraph::getDataMinMax(int column, double &minx, double &maxx, double &s
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(column).getRows();
-    // interpret data ranges
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
+
     if (imin<0) imin=0;
     if (imax<0) imax=0;
 
@@ -223,13 +231,6 @@ bool JKQTPXYGraph::getXMinMax(double& minx, double& maxx, double& smallestGreate
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -262,13 +263,6 @@ bool JKQTPXYGraph::getYMinMax(double& miny, double& maxy, double& smallestGreate
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -295,7 +289,7 @@ bool JKQTPXYGraph::usesColumn(int column) const
     return (column==xColumn)||(column==yColumn);
 }
 
-void JKQTPXYGraph::setSortData(int __value) {
+void JKQTPXYGraph::setDataSortOrder(int __value) {
     sortData=(DataSortOrder)__value;
 }
 
@@ -427,7 +421,7 @@ QColor JKQTPSingleColumnGraph::getKeyLabelColor()
     return color;
 }
 
-void JKQTPSingleColumnGraph::setSortData(int __value) {
+void JKQTPSingleColumnGraph::setDataSortOrder(int __value) {
     sortData=(DataSortOrder)__value;
     if (__value>0) sortData=Sorted;
 }
@@ -459,13 +453,6 @@ void JKQTPSingleColumnGraph::intSortData()
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=datastore->getColumn(dataColumn).getRows();
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -517,7 +504,7 @@ JKQTPGraphErrors::~JKQTPGraphErrors()
 
 
 
-void JKQTPGraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int datarange_start, int datarange_end, int xErrorColumnLower, int yErrorColumnLower, bool xErrorSymmetric, bool yErrorSymmetric, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+void JKQTPGraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int xErrorColumnLower, int yErrorColumnLower, bool xErrorSymmetric, bool yErrorSymmetric, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
     //std::cout<<"JKQTPGraphErrors::intPlotXYErrorIndicators(p, "<<parent<<", "<<xColumn<<", "<<yColumn<<", "<<xErrorColumn<<", "<<yErrorColumn<<", "<<xErrorStyle<<", "<<yErrorStyle<<", ...)\n";
     if (parent==nullptr) return;
     JKQTPDatastore* datastore=parent->getDatastore();
@@ -545,13 +532,6 @@ void JKQTPGraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, J
     if (yColumn>=0) imaxy=datastore->getColumn(static_cast<size_t>(yColumn)).getRows();
     int imax=qMin(imaxx, imaxy);
     int imin=0;
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -926,8 +906,8 @@ void JKQTPXGraphErrors::setXErrorColumnLower(int __value) {
     }
 }
 
-void JKQTPXGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph *parentGraph, int xColumn, int yColumn, int datarange_start, int datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
-    intPlotXYErrorIndicators(painter, parent, parentGraph, xColumn, yColumn, xErrorColumn, -1, xErrorStyle, JKQTPNoError, datarange_start, datarange_end, xErrorColumnLower, -1, xErrorSymmetric, true, xrelshift, yrelshift, dataorder);
+void JKQTPXGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph *parentGraph, int xColumn, int yColumn, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+    intPlotXYErrorIndicators(painter, parent, parentGraph, xColumn, yColumn, xErrorColumn, -1, xErrorStyle, JKQTPNoError, xErrorColumnLower, -1, xErrorSymmetric, true, xrelshift, yrelshift, dataorder);
 }
 
 double JKQTPXGraphErrors::getXErrorU(int i, JKQTPDatastore *ds) const
@@ -962,8 +942,8 @@ JKQTPYGraphErrors::JKQTPYGraphErrors(QColor graphColor):
     yErrorColumnLower=-1;
 }
 
-void JKQTPYGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start, int datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
-    intPlotXYErrorIndicators(painter, parent, parentGraph, xColumn, yColumn, -1, yErrorColumn, JKQTPNoError, yErrorStyle, datarange_start, datarange_end, -1, yErrorColumnLower, true, yErrorSymmetric, xrelshift, yrelshift, dataorder);
+void JKQTPYGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+    intPlotXYErrorIndicators(painter, parent, parentGraph, xColumn, yColumn, -1, yErrorColumn, JKQTPNoError, yErrorStyle, -1, yErrorColumnLower, true, yErrorSymmetric, xrelshift, yrelshift, dataorder);
 }
 
 double JKQTPYGraphErrors::getYErrorU(int i, JKQTPDatastore *ds) const
@@ -1003,8 +983,8 @@ JKQTPXYGraphErrors::JKQTPXYGraphErrors(QColor graphColor):
 
 }
 
-void JKQTPXYGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int datarange_start, int datarange_end, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
-    this->intPlotXYErrorIndicators(painter, parent, parentGraph, xColumn, yColumn, xErrorColumn, yErrorColumn, xErrorStyle, yErrorStyle, datarange_start, datarange_end, xErrorColumnLower, yErrorColumnLower, xErrorSymmetric, yErrorSymmetric, xrelshift, yrelshift, dataorder);
+void JKQTPXYGraphErrors::plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {
+    this->intPlotXYErrorIndicators(painter, parent, parentGraph, xColumn, yColumn, xErrorColumn, yErrorColumn, xErrorStyle, yErrorStyle, xErrorColumnLower, yErrorColumnLower, xErrorSymmetric, yErrorSymmetric, xrelshift, yrelshift, dataorder);
 }
 
 double JKQTPXYGraphErrors::getXErrorU(int i, JKQTPDatastore *ds) const
@@ -1060,13 +1040,6 @@ void JKQTPXYGraph::intSortData()
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-    // interpret data ranges
-    if (datarange_start>-1) {
-        imin=qMin(datarange_start, static_cast<int>(imax));
-    }
-    if (datarange_end>-1) {
-        imax=qMin(datarange_end, static_cast<int>(imax));
-    }
     if (imax<imin) {
         int h=imin;
         imin=imax;

@@ -43,7 +43,7 @@ class JKQTPlotter;
 
     Use the variable \c x in an equation to refer to the free parameter of the curve.
  */
-class LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
+class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
     Q_OBJECT
     public:
 
@@ -129,7 +129,7 @@ class LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
 
     Use the variable \c y in an equation to refer to the free parameter of the curve (\c is also understood for convenience).
  */
-class LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
+class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         Q_OBJECT
     public:
 

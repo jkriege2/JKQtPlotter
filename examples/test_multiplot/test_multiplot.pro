@@ -1,5 +1,6 @@
 # source code for this simple demo
-SOURCES = test_multiplot.cpp
+SOURCES = test_multiplot.cpp \
+    test_multiplot_ui.cpp
 
 # configure Qt
 CONFIG += link_prl qt
@@ -34,3 +35,12 @@ win32-msvc* {
 # here you can activate some debug options
 #DEFINES += SHOW_JKQTPLOTTER_DEBUG
 #DEFINES += JKQTBP_AUTOTIMER
+
+FORMS += \
+    test_multiplot_ui.ui
+
+HEADERS += \
+    test_multiplot_ui.h
+
+RESOURCES += \
+    test_multiplot.qrc

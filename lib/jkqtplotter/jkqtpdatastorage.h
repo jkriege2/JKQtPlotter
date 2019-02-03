@@ -19,10 +19,6 @@
 
 
 
-/** \file jkqtpdatastorage.h
-  * \ingroup jkqtpdatastorage
-  */
-
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include <vector>
@@ -128,7 +124,7 @@ enum JKQTPDatastoreItemFormat {
  * notion of data columns. This class provides a set of interface methods for this list:
  *
  */
-class LIB_EXPORT JKQTPDatastore{
+class JKQTP_LIB_EXPORT JKQTPDatastore{
     private:
         /** \brief a std::vector that contains all items managed by this datastore */
         QMap<size_t, JKQTPDatastoreItem*> items;
@@ -596,7 +592,7 @@ class LIB_EXPORT JKQTPDatastore{
  *
  * \see JKQTPDatastore
  */
-class LIB_EXPORT JKQTPColumn {
+class JKQTP_LIB_EXPORT JKQTPColumn {
   private:
     /** \brief index of the item in the datastore that contains the data for this column */
     size_t datastoreItem;
@@ -743,7 +739,7 @@ class LIB_EXPORT JKQTPColumn {
  *
  * \see JKQTPDatastore
  */
-class LIB_EXPORT JKQTPDatastoreItem {
+class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
   private:
     /** \brief a pointer to the actual data */
     double* data;
@@ -842,7 +838,7 @@ class LIB_EXPORT JKQTPDatastoreItem {
  *
  * \see JKQTPDatastore
  */
-class LIB_EXPORT JKQTPDatastoreModel: public QAbstractTableModel {
+class JKQTP_LIB_EXPORT JKQTPDatastoreModel: public QAbstractTableModel {
         Q_OBJECT
     public:
         JKQTPDatastoreModel(JKQTPDatastore* datastore, QObject* parent=nullptr);

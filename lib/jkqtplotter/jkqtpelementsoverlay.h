@@ -18,10 +18,6 @@
 */
 
 
-/** \file jkqtpelementsoverlay.h
-  * \ingroup jkqtplotter_overlays
-  */
-
 #include <QObject>
 #include <QString>
 #include <QPainter>
@@ -41,7 +37,7 @@ class JKQTBasePlotter;
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class LIB_EXPORT JKQTPOverlayElement : public QObject {
+class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
         Q_OBJECT
     public:
         explicit JKQTPOverlayElement(JKQTBasePlotter *parent = 0);
@@ -177,7 +173,7 @@ class LIB_EXPORT JKQTPOverlayElement : public QObject {
         /*! \brief returns the property visible ( \copybrief visible ). 
             \details Description of the parameter visible is: <BLOCKQUOTE>\copydoc visible </BLOCKQUOTE> 
             \see visible for more information */ 
-        inline virtual bool getVisible() const  
+        inline virtual bool isVisible() const  
         {
             return this->visible; 
         }
@@ -238,7 +234,7 @@ class LIB_EXPORT JKQTPOverlayElement : public QObject {
 /*! \brief baseclass for a two-position overlay
    \ingroup jkqtplotter_overlays
  */
-class LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
+class JKQTP_LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
         explicit JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
@@ -311,7 +307,7 @@ class LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
 /*! \brief baseclass for one-coordinate indicator overlays (horizontal/vertical lines
    \ingroup jkqtplotter_overlays
  */
-class LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
+class JKQTP_LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
         explicit JKQTPOverlayOneCoordOverlay(double pos, JKQTBasePlotter *parent = 0);
@@ -339,7 +335,7 @@ class LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
 /*! \brief baseclass for two-coordinate indicator overlays (horizontal/vertical lines
    \ingroup jkqtplotter_overlays
  */
-class LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverlay {
         Q_OBJECT
     public:
         explicit JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent = 0);
@@ -370,7 +366,7 @@ class LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverla
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay {
         Q_OBJECT
     public:
         explicit JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *parent = 0);
@@ -387,7 +383,7 @@ class LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay {
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay {
         Q_OBJECT
     public:
         explicit JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent = 0);
@@ -419,7 +415,7 @@ class LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay 
    \ingroup jkqtplotter_overlays
 
  */
-class LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay {
         Q_OBJECT
     public:
         explicit JKQTPOverlayLine(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
@@ -450,7 +446,7 @@ class LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay {
    \ingroup jkqtplotter_overlays
 
  */
-class LIB_EXPORT JKQTPOverlayRectangle : public JKQTPOverlayTwoPositionOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayRectangle : public JKQTPOverlayTwoPositionOverlay {
         Q_OBJECT
     public:
         explicit JKQTPOverlayRectangle(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);

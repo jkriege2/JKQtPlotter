@@ -18,10 +18,6 @@
 */
 
 
-/** \file jkqtpgraphsboxplot.h
-  * \ingroup jkqtplotter_statgraphs
-  */
-
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -89,7 +85,7 @@
     \see \ref JKQTPlotterBoxplotsGraphs
 
  */
-class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         Q_OBJECT
     public:
 
@@ -110,7 +106,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor();
+        virtual QColor getKeyLabelColor() override;
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -130,19 +126,19 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. 
             \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
             \see sortData for more information */ 
-        inline virtual void setSortData(const DataSortOrder & __value)  
+        inline virtual void setDataSortOrder(const DataSortOrder & __value)  
         {
             this->sortData = __value;
         } 
         /*! \brief returns the property sortData ( \copybrief sortData ). 
             \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
             \see sortData for more information */ 
-        inline virtual DataSortOrder getSortData() const  
+        inline virtual DataSortOrder getDataSortOrder() const  
         {
             return this->sortData; 
         }
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
-        void setSortData(int __value);
+        void setDataSortOrder(int __value);
         /*! \brief sets the property posColumn ( \copybrief posColumn ) to the specified \a __value. 
             \details Description of the parameter posColumn is: <BLOCKQUOTE>\copydoc posColumn </BLOCKQUOTE> 
             \see posColumn for more information */ 
@@ -463,7 +459,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
     \see JKQTPBoxplotVerticalGraph \ref JKQTPlotterBoxplotsGraphs
 
  */
-class LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
+class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -510,7 +506,7 @@ class LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
 
     \image html boxplots.png
  */
-class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
+class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -866,7 +862,7 @@ class LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
 
     \see JKQTPBoxplotVerticalElement
  */
-class LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
+class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
         Q_OBJECT
     public:
         /** \brief class constructor */

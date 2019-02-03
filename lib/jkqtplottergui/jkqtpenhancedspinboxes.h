@@ -18,11 +18,6 @@
 */
 
 
-/** \file jkqtpenhancedspinboxes.h
-  * \ingroup jkqtptools_qtwidgets
-  */
-
-
 #ifndef jkqtpenhancedspinboxes_H_INCLUDED
 #define jkqtpenhancedspinboxes_H_INCLUDED
 #include "jkqtplottertools/jkqtp_imexport.h"
@@ -35,7 +30,7 @@
 
     This class adds an event editingFinished() to QDoubleSpinBox.
 */
-class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
+class JKQTP_LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
         Q_OBJECT
     public:
         JKQTPEnhancedDoubleSpinBox(QWidget* parent=nullptr);
@@ -53,7 +48,7 @@ class LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
 
     This class adds an event editingFinished() to QDoubleSpinBox.
 */
-class LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
+class JKQTP_LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
         Q_OBJECT
     public:
         JKQTPEnhancedSpinBox(QWidget* parent=nullptr);

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>plotsymbol.png</file>
+    </qresource>
+</RCC>

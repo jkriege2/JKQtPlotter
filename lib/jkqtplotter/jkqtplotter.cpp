@@ -20,11 +20,6 @@
 
 
 
-/** \file jkqtplotter.cpp
-  * \ingroup jkqtpplotterclasses
-  */
-
-
 #include <QFileInfo>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QtGlobal>
@@ -635,7 +630,7 @@ void JKQTPlotter::initContextMenu()
         if (tit.isEmpty()) tit=tr("Graph %1").arg(static_cast<int>(i));
         QAction* act=new QAction(tit, menVisibleGroup);
         act->setCheckable(true);
-        act->setChecked(getPlotter()->getGraph(i)->getVisible());
+        act->setChecked(getPlotter()->getGraph(i)->isVisible());
         act->setIcon(QIcon(QPixmap::fromImage(getPlotter()->getGraph(i)->generateKeyMarker(QSize(16,16)))));
         act->setData(static_cast<int>(i));
         connect(act, SIGNAL(toggled(bool)), this, SLOT(reactGraphVisible(bool)));
@@ -882,29 +877,42 @@ QSize JKQTPlotter::sizeHint() const {
     return QWidget::sizeHint();
 }
 
+void JKQTPlotter::synchronizeToMaster(JKQTPlotter *master, JKQTBasePlotter::SynchronizationDirection synchronizeDirection, bool synchronizeAxisLength, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster)
+{
+    if (masterPlotterX) disconnect(masterPlotterX->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
+    if (masterPlotterY) disconnect(masterPlotterY->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
 
+    plotter->synchronizeToMaster(master->getPlotter(), synchronizeDirection, synchronizeAxisLength, synchronizeZoomingMasterToSlave, synchronizeZoomingSlaveToMaster);
 
-void JKQTPlotter::masterPlotScalingRecalculated() {
-    if (masterPlotter) {
-        if (plotter->getMasterSynchronizeHeight()||plotter->getMasterSynchronizeWidth()) {
-            redrawPlot();
-        }
+    if (synchronizeDirection==JKQTBasePlotter::sdXAxis || synchronizeDirection==JKQTBasePlotter::sdXYAxes) {
+        masterPlotterX=master;
+        if (masterPlotterX) connect(masterPlotterX->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
     }
-}
-
-void JKQTPlotter::synchronizeToMaster(JKQTPlotter* master, bool synchronizeWidth, bool synchronizeHeight, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster) {
-    if (!master) {
-        resetMasterSynchronization();
+    if (synchronizeDirection==JKQTBasePlotter::sdYAxis || synchronizeDirection==JKQTBasePlotter::sdXYAxes) {
+        masterPlotterY=master;
+        if (masterPlotterY) connect(masterPlotterY->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
     }
-    plotter->synchronizeToMaster(master->getPlotter(), synchronizeWidth, synchronizeHeight, synchronizeZoomingMasterToSlave, synchronizeZoomingSlaveToMaster);
-    masterPlotter=master;
-    if (masterPlotter) connect(masterPlotter->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
+
     redrawPlot();
 }
 
-void JKQTPlotter::resetMasterSynchronization() {
-    if (masterPlotter) disconnect(masterPlotter->getPlotter(), SIGNAL(plotScalingRecalculated()), this, SLOT(masterPlotScalingRecalculated()));
-    plotter->resetMasterSynchronization();
+void JKQTPlotter::synchronizeXToMaster(JKQTPlotter *master, bool synchronizeAxisLength, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster)
+{
+    synchronizeToMaster(master, JKQTBasePlotter::sdXAxis, synchronizeAxisLength, synchronizeZoomingMasterToSlave, synchronizeZoomingSlaveToMaster);
+}
+
+void JKQTPlotter::synchronizeYToMaster(JKQTPlotter *master, bool synchronizeAxisLength, bool synchronizeZoomingMasterToSlave, bool synchronizeZoomingSlaveToMaster)
+{
+    synchronizeToMaster(master, JKQTBasePlotter::sdYAxis, synchronizeAxisLength, synchronizeZoomingMasterToSlave, synchronizeZoomingSlaveToMaster);
+}
+
+void JKQTPlotter::resetMasterSynchronization(JKQTBasePlotter::SynchronizationDirection synchronizeDirection)
+{
+    synchronizeToMaster(nullptr, synchronizeDirection, false, false, false);
+}
+
+void JKQTPlotter::masterPlotScalingRecalculated() {
+    //qDebug()<<"this="<<this<<", sender="<<sender()<<" --> masterPlotScalingRecalculated()";
     redrawPlot();
 }
 

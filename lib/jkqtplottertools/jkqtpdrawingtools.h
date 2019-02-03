@@ -18,11 +18,6 @@
 */
 
 
-/** \file jkqtpdrawingtools.h
-  * \ingroup jkqtptools_drawing
-  */
-
-
 #ifndef JKQTPDRAWINGTOOLS_H_INCLUDED
 #define JKQTPDRAWINGTOOLS_H_INCLUDED
 #include "jkqtplottertools/jkqtp_imexport.h"
@@ -43,7 +38,7 @@ class JKQTPEnhancedPainter; // forward
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-LIB_EXPORT void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+JKQTP_LIB_EXPORT void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools_drawing
@@ -57,7 +52,7 @@ LIB_EXPORT void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double 
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+JKQTP_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
 /*! \brief plot an arrow between positions (x1,y1) and (x2,y2)
@@ -74,7 +69,7 @@ LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, J
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-//LIB_EXPORT void JKQTPPlotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+//JKQTP_LIB_EXPORT void JKQTPPlotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
 /*! \brief draw an ellipse without setting pen or brush, or saving the painter!
@@ -94,7 +89,7 @@ LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, J
 
     \note all angles are given in degrees [0..360]
 */
-LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
+JKQTP_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
 
 
 #endif // JKQTPDRAWINGTOOLS_H_INCLUDED

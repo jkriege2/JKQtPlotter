@@ -11,6 +11,7 @@
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include <random>
 #include <cmath>
+#include "test_multiplot_ui.h"
 
 int main(int argc, char* argv[])
 {
@@ -38,10 +39,10 @@ int main(int argc, char* argv[])
     layout->addWidget(plotResidHist, 1,1);
 
     // 3.3 synchronize width/x-axis of plotResid to width/x-axis of plotMain
-    plotResid->getPlotter()->synchronizeToMaster(plotMain->getPlotter(), true, false, true, true);
+    plotResid->synchronizeToMaster(plotMain, JKQTBasePlotter::sdXAxis, true, true, true);
 
     // 3.4 synchronize y-axis of width/plotResidHist to y-axis of width/plotResid
-    plotResidHist->getPlotter()->synchronizeToMaster(plotResid->getPlotter(), false, true, true, true);
+    plotResidHist->synchronizeToMaster(plotResid, JKQTBasePlotter::sdYAxis, true, true, true);
 
     // 3.5 ensure that the plot are printed/exported in whole, when printing in plotMain
     plotMain->getPlotter()->setGridPrinting(true);
@@ -146,6 +147,7 @@ int main(int argc, char* argv[])
 
 
     // 7. scale plots automatically to data
+    plotResidHist->setAbsoluteX(0, 20);
     plotResid->zoomToFit();
     plotResidHist->zoomToFit();
     plotMain->zoomToFit();
@@ -154,6 +156,11 @@ int main(int argc, char* argv[])
     mainWidget.show();
     mainWidget.move(32,32);
     mainWidget.resize(800,600);
+
+    // 9. create a second window, which controls the synchronization and layout between the plots
+    TestMultiplotUI controlWindow(plotMain, plotResid, plotResidHist, layout);
+    controlWindow.move(850,32);
+    controlWindow.show();
 
     return app.exec();
 }
