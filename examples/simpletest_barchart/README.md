@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Simple barchart {#JKQTPlotterBarcharts}
-This project (see [`simpletest_barchart`](../simpletest_barchart) simply creates a JKQTPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
+This project (see [`simpletest_barchart`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_barchart) simply creates a JKQTPlotter widget (as a new window) and adds several barcharts. They are ordered in groups.
 
-The source code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp`](../simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_barchart.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_barchart/jkqtplotter_simpletest_barchart.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -91,6 +91,6 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![jkqtplotter_simpletest_barchart](../../screenshots/jkqtplotter_simpletest_barchart.png)
+![jkqtplotter_simpletest_barchart](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_barchart.png)
 
 

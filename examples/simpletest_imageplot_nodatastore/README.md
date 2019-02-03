@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Simple math image plot without use of central JKQTdatastore {#JKQTPlotterImagePlotNoDatastore}
 This project (see `./examples/simpletest_imageplot_nodatastore/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is stored as a simple C-array in row-major ordering and then given to a JKQTPMathImage to visualize it. The data is stored as a pointer directly in the JKQTPMathImage object. There is also a variant JKQTPColumnMathImage of JKQTPMathImage, which references a column in the internal JKQTdatastore and uses the data there for plotting. In both cases data has to be organized as a row-major matrix of values. JKQTPMathImage supports different dataytpes ([u]nit8/16/32/64,float,double see `JKQTPMathImageBase::DataType`) that can be configured e.g. by `setData()`.
 
-The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_nodatastore.cpp`](../simpletest_imageplot_nodatastore/jkqtplotter_simpletest_imageplot_nodatastore.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_nodatastore.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot_nodatastore/jkqtplotter_simpletest_imageplot_nodatastore.cpp):
 ```.cpp
 #include <QApplication>
 #include <cmath>
@@ -103,8 +103,8 @@ int main(int argc, char* argv[])
 
 The result looks like this:
 
-![jkqtplotter_simpletest_imageplot_nodatastore](../../screenshots/jkqtplotter_simpletest_imageplot_nodatastore.png)
+![jkqtplotter_simpletest_imageplot_nodatastore](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_nodatastore.png)
 
-See [`test/simpletest_imageplot`](../simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plottet.
+See [`test/simpletest_imageplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot) for a detailed description of the other possibilities that the class JKQTPColumnMathImage (and also JKQTPMathImage) offer with respect to determining how an image is plottet.
 
 

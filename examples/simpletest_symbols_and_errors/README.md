@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Simple line-graph with error bars {#JKQTPlotterSymbolsErrors}
 This project (see `./examples/simpletest_symbols_and_errors/`) simply creates a JKQTPlotter widget (as a new window) and adds a single line-graph (a sine-wave) that has y-errorbars. In addition, this example shows how to change some of the axis properties and how to use LaTeX markup to format axis labels (can actually be used for all labels in JKQTPlotter). Also, in comparison to the last example, here we initialize the data from C-type arrays (double*), instead of QVector<double> objects.
 
-The source code of the main application is (see [`jkqtplotter_simpletest_symbols_and_errors.cpp`](../simpletest_symbols_and_errors/jkqtplotter_simpletest_symbols_and_errors.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_symbols_and_errors.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_symbols_and_errors/jkqtplotter_simpletest_symbols_and_errors.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -72,6 +72,6 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![jkqtplotter_simpletest_symbols_and_errors](../../screenshots/jkqtplotter_simpletest_symbols_and_errors.png)
+![jkqtplotter_simpletest_symbols_and_errors](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_symbols_and_errors.png)
 
 

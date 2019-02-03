@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Simple stacked barchart {#JKQTPlotterStackedBarChart}
 This project (see `./examples/simpletest_stackedbars/`) simply creates a JKQTPlotter widget (as a new window) and adds several stacked barcharts.
 
-The source code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp`](../simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_stackedbars.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_stackedbars/jkqtplotter_simpletest_stackedbars.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -104,8 +104,8 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![JKQTPBarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPBarVerticalGraphStacked.png)
+![JKQTPBarVerticalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPbarVerticalGraphStacked.png)
 
 If you use `JKQTPBarHorizontalGraphStacked` instead of `JKQTPBarVerticalStackableGraph`, you'll get a result like this: 
-![JKQTPBarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPBarHorizontalGraphStacked.png)
+![JKQTPBarHorizontalGraphStacked](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/doc/images/JKQTPbarHorizontalGraphStacked.png)
 

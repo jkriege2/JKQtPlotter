@@ -29,7 +29,11 @@
  * \ingroup jkqtptools_qtwidgets
  *
  * \image html jkqtplotter_toolbar_hidden.png "Hidden Toolbar"
+ *
  * \image html jkqtplotter_toolbar_shown.png "Shown Toolbar"
+ *
+ * \image html jkqtvanishtoolbar.gif
+ *
  */
 class JKQTP_LIB_EXPORT JKVanishQToolBar: public QToolBar {
         Q_OBJECT

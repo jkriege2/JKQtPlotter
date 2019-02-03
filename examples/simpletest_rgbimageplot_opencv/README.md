@@ -4,7 +4,7 @@ To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` 
 
 The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQTPlotter with OPenCV.
 
-The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](../simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
 ```.cpp
 #include <QApplication>
 #include <cmath>
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![jkqtplotter_simpletest_imageplot](../../screenshots/jkqtplotter_simpletest_rgbimageplot_opencv.png)
+![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv.png)
 
 The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQTPlotter has its 0 at the bottom-left (right-handed coordinate system).
 

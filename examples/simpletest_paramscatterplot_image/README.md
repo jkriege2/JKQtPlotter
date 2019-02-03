@@ -1,5 +1,5 @@
 # Example (JKQTPlotter): Draw an Artistic Image with a Parametrized Scatter Graph {#JKQTPlotterParamScatterImage}
-This project (see `./examples/simpletest_paramscatterplot_image/`) demonstrates the capabilities of `JKQTPXYParametrizedScatterGraph` to display parametrized scatters in a rectangular arrangement. See the test program in [`test/simpletest_paramscatterplot`](../simpletest_paramscatterplot) for a basic example of the capabilities of `JKQTPXYParametrizedScatterGraph`.
+This project (see `./examples/simpletest_paramscatterplot_image/`) demonstrates the capabilities of `JKQTPXYParametrizedScatterGraph` to display parametrized scatters in a rectangular arrangement. See the test program in [`test/simpletest_paramscatterplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_paramscatterplot) for a basic example of the capabilities of `JKQTPXYParametrizedScatterGraph`.
 
 In this example, we load an image, convert it to greyscale and store it, together with x/y-coordinate-vectors in the datastore. Then a `JKQTPXYParametrizedScatterGraph` is used to draw the image as a pointilistic artwork, where each pixel is represented by a disk. The color of the disk is chosen from a color-palette, based on the grey-value. The size of each disk is chosen from the inverse grey value.
 
@@ -75,20 +75,20 @@ Finally the plot is styled and the axis aspect ratios are fixed:
 
 The full test appication combines all these variants and the result looks like this:
 
-![jkqtplotter_simpletest_paramscatterplot_image](../../screenshots/jkqtplotter_simpletest_paramscatterplot_image.png)
+![jkqtplotter_simpletest_paramscatterplot_image](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot_image.png)
 
 You can modify the example above in several ways, e.g. by choosing another symbol (e.g. a star):
 
-![jkqtplotter_simpletest_paramscatterplot_image_star](../../screenshots/jkqtplotter_simpletest_paramscatterplot_image_star.png)
+![jkqtplotter_simpletest_paramscatterplot_image_star](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot_image_star.png)
 
 ... or by changing the color palette and the symbol:
 
-![jkqtplotter_simpletest_paramscatterplot_image_palette](../../screenshots/jkqtplotter_simpletest_paramscatterplot_image_palette.png)
+![jkqtplotter_simpletest_paramscatterplot_image_palette](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot_image_palette.png)
 
-![jkqtplotter_simpletest_paramscatterplot_image_palette_triangle](../../screenshots/jkqtplotter_simpletest_paramscatterplot_image_palette_triangle.png)
+![jkqtplotter_simpletest_paramscatterplot_image_palette_triangle](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot_image_palette_triangle.png)
 
 ... or even  to set a different symbol for each pixel, based on the values in `columnS` (simply add `graph1->setSymbolColumn(columnS)`):
 
 
-![jkqtplotter_simpletest_paramscatterplot_image_varsymbol](../../screenshots/jkqtplotter_simpletest_paramscatterplot_image_varsymbol.png)
+![jkqtplotter_simpletest_paramscatterplot_image_varsymbol](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot_image_varsymbol.png)
 

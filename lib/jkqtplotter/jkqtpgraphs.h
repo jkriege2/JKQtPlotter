@@ -749,6 +749,7 @@ class JKQTP_LIB_EXPORT JKQTPStepVerticalGraph: public JKQTPStepHorizontalGraph {
            or a range of interest, or the range of good values, ...
     \ingroup jkqtplotter_diverse
 
+    \image html JKQTPHorizontalRange.png
  */
 class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
         Q_OBJECT
@@ -1114,6 +1115,7 @@ class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
            or a range of interest, or the range of good values, ...
     \ingroup jkqtplotter_diverse
 
+    \image html JKQTPVerticalRange.png
  */
 class JKQTP_LIB_EXPORT JKQTPVerticalRange: public JKQTPHorizontalRange {
         Q_OBJECT

@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Filled Curve Plots {#JKQTPlotterFilledGraphs}
 This project (see `./examples/simpletest_filledgraphs/`) simply creates a JKQTPlotter widget (as a new window) and adds several filled curve graphs (Histograms). Data is initialized from QVector<int> objects.
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_filledgraphs.cpp`](../simpletest_filledgraphs/jkqtplotter_simpletest_filledgraphs.cpp). 
+The source code of the main application can be found in  [`jkqtplotter_simpletest_filledgraphs.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_filledgraphs/jkqtplotter_simpletest_filledgraphs.cpp). 
 
 First the data columns for three x-y-curves are generated. One column of x-values with entries 0,1,2,...,254,255 (256 entries). 
 ```.cpp
@@ -73,11 +73,11 @@ The curves are fille with a semi-transparent color, which is achieved by setting
 
 The result looks like this:
 
-![jkqtplotter_simpletest_filledgraphs](../../screenshots/jkqtplotter_simpletest_filledgraphs.png)
+![jkqtplotter_simpletest_filledgraphs](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_filledgraphs.png)
 
 If you use `JKQTPFilledCurveYGraph` instead of `JKQTPFilledCurveXGraph`, the curve will not be filled until the y=0-axis, but until the x=0-axis. Of course you will also have to swap the x- and y-data columns. The result will look like this:
 
-![jkqtplotter_simpletest_filledgraphs_yaxis](../../screenshots/jkqtplotter_simpletest_filledgraphs_yaxis.png)
+![jkqtplotter_simpletest_filledgraphs_yaxis](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_filledgraphs_yaxis.png)
 
 
 

@@ -8,17 +8,17 @@ digraph
 
   {
     rank=same;
-    JKQTPPlotElement [URL="JKQTPPlotElement"];
+    JKQTPPlotElement [URL="\link JKQTPPlotElement"];
     noteJKQTPPlotElement [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nelements drawn\nonto a plot"];
     JKQTPPlotElement -> noteJKQTPPlotElement [style=dashed,arrowhead=none];
   }
 
   {
     rank=same;
-    JKQTPGraph [URL="JKQTPPlotElement"];
+    JKQTPGraph [URL="\link JKQTPPlotElement"];
     noteJKQTPGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nactual graphs"];
     JKQTPGraph -> noteJKQTPGraph [style=dashed,arrowhead=none];
-    JKQTPPlotObject [URL="JKQTPPlotObject"];
+    JKQTPPlotObject [URL="\link JKQTPPlotObject"];
     noteJKQTPPlotObject [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\nnon-graph elements,\ne.g. geometric elements"];
     JKQTPPlotObject -> noteJKQTPPlotObject [style=dashed,arrowhead=none];
   }
@@ -27,16 +27,16 @@ digraph
   {
     rank=same;
 
-    JKQTPXYGraph [URL="JKQTPXYGraph"]
+    JKQTPXYGraph [URL="\link JKQTPXYGraph"]
     noteJKQTPXYGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on\n (x,y) data pairs"];
     JKQTPXYGraph -> noteJKQTPXYGraph [style=dashed,arrowhead=none];
-    JKQTPSingleColumnGraph [URL="JKQTPSingleColumnGraph"]
+    JKQTPSingleColumnGraph [URL="\link JKQTPSingleColumnGraph"]
     noteJKQTPSingleColumnGraph [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs based on only\n a single column of data"];
     JKQTPSingleColumnGraph -> noteJKQTPSingleColumnGraph [style=dashed,arrowhead=none];
-    JKQTPImageBase [URL="JKQTPImageBase"]
+    JKQTPImageBase [URL="\link JKQTPImageBase"]
     noteJKQTPImageBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphsthat represent \n2D images/matrices"];
     JKQTPImageBase -> noteJKQTPImageBase [style=dashed,arrowhead=none];
-    JKQTPGeoBaseLine [URL="JKQTPGeoBaseLine"];
+    JKQTPGeoBaseLine [URL="\link JKQTPGeoBaseLine"];
     noteJKQTPGeoBaseLine [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngeometric elements\nthat need line properties\n (color, width, ...)"];
     JKQTPGeoBaseLine -> noteJKQTPGeoBaseLine [style=dashed,arrowhead=none];
   }
@@ -44,11 +44,11 @@ digraph
   {
     rank=same;
 
-    JKQTPMathImageBase [URL="JKQTPMathImageBase"]
+    JKQTPMathImageBase [URL="\link JKQTPMathImageBase"]
     noteJKQTPMathImageBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngeometric elements\nthat need area fill properties\n (fillcolor, pattern, ...)"];
     JKQTPMathImageBase -> noteJKQTPMathImageBase [style=dashed,arrowhead=none];
 
-    JKQTPGeoBaseFilled [URL="JKQTPGeoBaseFilled"];
+    JKQTPGeoBaseFilled [URL="\link JKQTPGeoBaseFilled"];
     noteJKQTPGeoBaseFilled [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngeometric elements\nthat need area fill properties\n (fillcolor, pattern, ...)"];
     JKQTPGeoBaseFilled -> noteJKQTPGeoBaseFilled [style=dashed,arrowhead=none];
 }  

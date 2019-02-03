@@ -1,6 +1,6 @@
 # Example (JKQTPlotter): Simple impulse plots {#JKQTPlotterImpulsePlots}
 This project (see `./examples/simpletest_impulsesplot/`) simply creates a JKQTPlotter widget (as a new window) and adds a single impulse graph. 
-The source code of the main application is (see [`jkqtplotter_simpletest_impulsesplot.cpp`](../simpletest_impulsesplot/jkqtplotter_simpletest_impulsesplot.cpp).
+The source code of the main application is (see [`jkqtplotter_simpletest_impulsesplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_impulsesplot/jkqtplotter_simpletest_impulsesplot.cpp).
 
 
 
@@ -34,7 +34,7 @@ Now an impulse graph object is generated and added to the plot:
 
 The result looks like this:
 
-![jkqtplotter_simpletest_impulsesplot](../../screenshots/jkqtplotter_simpletest_impulsesplot.png)
+![jkqtplotter_simpletest_impulsesplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_impulsesplot.png)
 
 There is an alternative class `JKQTPImpulsesHorizontalGraph` which draws horizontal impulse plots:
 ```.cpp
@@ -48,6 +48,6 @@ There is an alternative class `JKQTPImpulsesHorizontalGraph` which draws horizon
 
 This code snippet results in a plot like this:
 
-![jkqtplotter_simpletest_impulsesplot](../../screenshots/jkqtplotter_simpletest_impulsesplot_horizontal.png)
+![jkqtplotter_simpletest_impulsesplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_impulsesplot_horizontal.png)
 
 

@@ -896,8 +896,9 @@ class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 /*! \brief class to plot an image from an 2-dimensional array of values
     \ingroup jkqtplotter_imagelots_elements
 
+    \image html rgbimageplots.png
     \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
- */
+*/
 class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
@@ -1478,6 +1479,7 @@ class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
     \ingroup jkqtplotter_imagelots_elements
 
 
+    \image html rgbimageplots.png
     \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
  */
 class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
@@ -1571,7 +1573,9 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of boolean values: alle \c true values are plotted in a given color, while the \c false pixels are drawn in another (default: transparent)
-    \ingroup jkqtplotter_imagelots_elements
+    \ingroup jkqtplotter_imagelots_overlays
+	
+	\image html overlayimage.png
 
  */
 class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
@@ -1700,11 +1704,12 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of boolean values: alle \c true values are plotted in a given color, while the \c false pixels are drawn in another (default: transparent)
-    \ingroup jkqtplotter_imagelots_elements
+    \ingroup jkqtplotter_imagelots_overlays
 
     In contrast to JKQTPOverlayImage this class draws ist contents as rectangles, not as semi-transparent image. This may lead to nicer results,but could be slower.
     Also it is possible to draw other types of markers (cross, circles, ...)
 
+	\image html overlayimageenhanced.png
  */
 class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         Q_OBJECT
@@ -1813,10 +1818,12 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
 
 
 /*! \brief class to plot an image from an 2-dimensional array of boolean values: alle \c true values are plotted in a given color, while the \c false pixels are drawn in another (default: transparent)
-    \ingroup jkqtplotter_imagelots_elements
+    \ingroup jkqtplotter_imagelots_overlays
 
     In contrast to JKQTPOverlayImage this class draws ist contents as rectangles, not as semi-transparent image. This may lead to nicer results,but could be slower.
     Also it is possible to draw other types of markers (cross, circles, ...)
+	
+	\image html overlayimageenhanced.png
 
  */
 class JKQTP_LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanced {

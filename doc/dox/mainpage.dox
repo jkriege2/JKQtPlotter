@@ -49,8 +49,8 @@ This software is licensed under the term of the GNU Lesser General Public Licens
   - may be used independently of JKQTPlotter
   - for more details, see: \ref jkqtfastplotter
 - \ref exampleTutorialProjects "extensive set of Examples and Tutorials"
-- extensive doxygen-generated <a href="http://jkriege2.github.io/JKQTPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQTPlotter/index.html)</a>
-- source code hosted&developed on GitHub <a href="https://github.com/jkriege2/JKQTPlotter">https://github.com/jkriege2/JKQTPlotter</a> (including continuous integration builds: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a>)
+- extensive doxygen-generated <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a>
+- source code hosted&developed on GitHub <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a> (including continuous integration builds: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a>)
 
 \image html screenshotsbanner.png
 

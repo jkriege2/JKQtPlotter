@@ -6,5 +6,5 @@ You can also set several properties of the rendering (fonts, font sizes, anti-al
 
 The application looks like this:
 
-![jkqtmathtext_simpletest](../../screenshots/jkqtmathtext_testapp.png)
+![jkqtmathtext_simpletest](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtmathtext_testapp.png)
 

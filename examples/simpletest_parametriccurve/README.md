@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Plotting Parametric Curves {#JKQTPlotterParametricCurves}
-This project (see `./examples/simpletest_parametriccurve/`) demonstrates how to draw parametric curves, using [`JKQTPXYLineGraph`}(../simpletest) and [`JKQTPXYParametrizedScatterGraph`](../simpletest_paramscatterplot). 
+This project (see `./examples/simpletest_parametriccurve/`) demonstrates how to draw parametric curves, using [`JKQTPXYLineGraph`}(../simpletest) and [`JKQTPXYParametrizedScatterGraph`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_paramscatterplot). 
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_parametriccurve.cpp`](../simpletest_parametriccurve/jkqtplotter_simpletest_parametriccurve.cpp). First, the parametric curve (here a [logarithic spiral](https://en.wikipedia.org/wiki/Logarithmic_spiral)) is sampled into two columns containing the x- and y-values along the curve. In addition the radial distance from x=y=0 is added into a third column:
+The source code of the main application can be found in  [`jkqtplotter_simpletest_parametriccurve.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_parametriccurve/jkqtplotter_simpletest_parametriccurve.cpp). First, the parametric curve (here a [logarithic spiral](https://en.wikipedia.org/wiki/Logarithmic_spiral)) is sampled into two columns containing the x- and y-values along the curve. In addition the radial distance from x=y=0 is added into a third column:
 ```.cpp
     QVector<double> X, Y, R;
     const int Ndata=500; // number of plot points in each curve
@@ -49,11 +49,11 @@ If you use `JKQTPXYParametrizedScatterGraph` instead of `JKQTPXYLineGraph`, you 
 
 The result looks like this:
 
-![jkqtplotter_simpletest_parametriccurve](../../screenshots/jkqtplotter_simpletest_parametriccurve1.png)
+![jkqtplotter_simpletest_parametriccurve](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parametriccurve1.png)
 
 ... and with the line-color set by the radius:
 
-![jkqtplotter_simpletest_parametriccurve](../../screenshots/jkqtplotter_simpletest_parametriccurve2.png)
+![jkqtplotter_simpletest_parametriccurve](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parametriccurve2.png)
 
 
 

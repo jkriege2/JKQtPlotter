@@ -1,5 +1,5 @@
 # Example (JKQTPlotter): Boxplots {#JKQTPlotterBoxplotsGraphs}
-This project (see [`simpletest_boxplot`](../simpletest_boxplot) demonstrates how to use JKQTPlotter to draw <a href="https://en.wikipedia.org/wiki/Box_plot">box plots</a> using the classes `JKQTPBoxplotVerticalGraph` and `JKQTPBoxplotHorizontalGraph`.
+This project (see [`simpletest_boxplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_boxplot) demonstrates how to use JKQTPlotter to draw <a href="https://en.wikipedia.org/wiki/Box_plot">box plots</a> using the classes `JKQTPBoxplotVerticalGraph` and `JKQTPBoxplotHorizontalGraph`.
 
 The source code of the main application is (see [`jkqtplotter_simpletest_boxplot.cpp`](jkqtplotter_simpletest_boxplot.cpp).
 
@@ -55,7 +55,7 @@ You can further style the plot by e.g. setting:
 
 The result looks like this:
 
-![jkqtplotter_simpletest_boxplot](../../screenshots/jkqtplotter_simpletest_boxplot.png)
+![jkqtplotter_simpletest_boxplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_boxplot.png)
 
 In addition to the simple box plots, the image above also shows outliers as small circles. these need to be drawn with a separate `JKQTPXYLineGraph`:
 

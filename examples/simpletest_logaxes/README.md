@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Line Graph with Logarithmic y-axis {#JKQTPlotterLogAxes}
 This project (see `./examples/simpletest_logaxes/`) simply creates a JKQTPlotter widget (as a new window) and several line-graphs of different resonance curves. 
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp`](../simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->setStyle()`). The colors are set automtically from an internal default palette. The main loop looks like this:
+The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->setStyle()`). The colors are set automtically from an internal default palette. The main loop looks like this:
 
 ```.cpp
 	QVector<Qt::PenStyle> pens {Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
@@ -47,8 +47,8 @@ Then a `JKQTPGeoText` is added to the graph, which shows the function plotted in
     plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
 ```
 The difference between not using and using `$...$` for the equation can be seen here:
-- no $-math-mode: ![](../../screenshots/jkqtplotter_simpletest_logaxes_lowqmathrendering.png)   
-- using $-math-mode: ![](../../screenshots/jkqtplotter_simpletest_logaxes_highqmathrendering.png)
+- no $-math-mode: ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_lowqmathrendering.png)   
+- using $-math-mode: ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_highqmathrendering.png)
 
 Finally the y-axis is switched to logarithmic scaling and the axis labels are set:
 ```.cpp
@@ -84,23 +84,23 @@ As an alternative `JKQTPCALTexponentCharacter` does not use the power-of-10 nota
 
 The result looks like this:
 
-![jkqtplotter_simpletest_logaxes](../../screenshots/jkqtplotter_simpletest_logaxes.png)
+![jkqtplotter_simpletest_logaxes](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes.png)
 
 Without the logarithmic scaling we would have:
 
-![jkqtplotter_simpletest_logaxes_nolog](../../screenshots/jkqtplotter_simpletest_logaxes_nolog.png)
+![jkqtplotter_simpletest_logaxes_nolog](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_nolog.png)
 
 Switching the minor grid off results in a plot like this:
 
-![jkqtplotter_simpletest_logaxes_nominorgrid](../../screenshots/jkqtplotter_simpletest_logaxes_nominorgrid.png)
+![jkqtplotter_simpletest_logaxes_nominorgrid](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_nominorgrid.png)
 
 These examples show the results for different typical values for `setMinorTicks()`:
 
-![logaxis_setMinorticks](../../screenshots/logaxis_setMinorticks.png)
+![logaxis_setMinorticks](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_setMinorticks.png)
 
 These examples show the results for different typical values for `setLabelType()`:
 
-![logaxis_setLabelType](../../screenshots/logaxis_setLabelType.png)
+![logaxis_setLabelType](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_setLabelType.png)
 
 
 

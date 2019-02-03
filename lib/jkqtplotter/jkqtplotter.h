@@ -48,7 +48,7 @@
 #define JKQTPLOTTER_H
 
 /** \brief initialized Qt-ressources necessary for JKQTPlotter
- *  \ingroup jkqtpplotterclasses
+ *  \ingroup jkqtpplotterclasses_tools
 */
 JKQTP_LIB_EXPORT void initJKQTPlotterResources();
 
@@ -106,6 +106,8 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  *
  * \image html jkqtplotter_defaultcontextmenu.png
  *
+ * \image html contextmenu_graphvisibility.gif
+ *
  * It allows to:
  * <ul>
  *   <li> copy or save the data from the internal JKQTPDatastore</li>
@@ -136,11 +138,13 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  * \image html jkqtplotter_toolbar_hidden.png "Hidden Toolbar"
  * \image html jkqtplotter_toolbar_shown.png "Shown Toolbar"
  *
+ * \image html jkqtvanishtoolbar.gif
+ *
  * If toolbarAlwaysOn is set to \c true (setToolbarAlwaysOn() ), the toolbar is always displayed:
  *
  * \image html jkqtplotter_toolbar_alwayson.png
  *
- * \see displayToolbar, toolbarAlwaysOn, \ref JKQTPlotterUserInteractio
+ * \see displayToolbar, toolbarAlwaysOn, \ref JKQTPlotterUserInteraction
  *
  *
  *
@@ -215,6 +219,13 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  *   - setUserActionCompositionMode() specifies how to combine the shape with the existing plot
  * .
  *
+ * \image html zoomin_mouse_contextmenu.gif "Zooming with the mouse"
+ *
+ * \image html draw_rectangle.gif "Draw Rectangle User-Action"
+ *
+ * \image html drag_viewport.gif "Drag the Plot Viewport"
+ *
+ *
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSECLICK Actions After (Double-)Clicks on the Mouse Buttons
  * The right mouse button has a special role: If it is single-clicked and no JKQTPlotter::MouseActionMode is specified
  * for the vent, it opens the context menu, unless you call \c setContextMenuMoode(JKQTPlotter::NoContextMenu) .
@@ -241,6 +252,8 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  * .
  * The button to react to is specified as a parameter.
  *
+ * \image html contextmenu_graphvisibility.gif
+ *
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEWHEEL Actions When a Mouse Wheel Event Occurs
  * The actions to be performed when the mouse hweel is operated are specified in JKQTPlotter::MouseWheelActions.
  * You can bind one of these actions to the mouse-wheel (under the condition that a specified Qt::KeyboardModifier
@@ -265,7 +278,7 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  * Also the current mouse position is shown above the graph by default (can be switched on or off
  * using setMousePositionShown() ).
  *
- *
+ * \image html mousepositiondisplay.gif
  *
  * \section JKQTPLOTTER_USEQTCREATOR  How to use JKQTPlotter in the Qt Form Designer
  *
@@ -293,15 +306,16 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
         /** \brief Availble action this JKQtPlotter can perform when mouse events occur.
-         *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes */
+         *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes
+         */
         enum MouseDragActions {
-            PanPlotOnMove=0, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed whenever the mouse moves */
+            PanPlotOnMove=0, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed whenever the mouse moves \image html drag_viewport.gif "Drag the Plot Viewport" */
             PanPlotOnRelease, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed when the left mouse button is released */
             ZoomRectangle, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
-            DrawRectangleForEvent, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() */
-            DrawCircleForEvent, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() */
-            DrawEllipseForEvent, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished()  */
-            DrawLineForEvent, /*!< \brief draw a line and when finished execute the signal userLineFinished() */
+            DrawRectangleForEvent, /*!< \brief draw a rectangle and when finished execute the signal userRectangleFinished() \image html draw_rectangle.gif "Draw Rectangle User-Action" */
+            DrawCircleForEvent, /*!< \brief draw a circle and when finished execute the signal userCircleFinished() \image html draw_circle.gif "Draw Circle User-Action" */
+            DrawEllipseForEvent, /*!< \brief draw an ellipse and when finished execute the signal userEllipseFinished() \image html draw_ellipse.gif "Draw Ellipse User-Action"  */
+            DrawLineForEvent, /*!< \brief draw a line and when finished execute the signal userLineFinished() \image html draw_line.gif "Draw Lines User-Action" */
             ScribbleForEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call userScribbleClick() for each new position  */
         };
 
@@ -322,7 +336,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief modes for the context menu */
         enum ContextMenuModes {
-            StandardContextMenu=0,  /*!< \brief only show the standard context menu */
+            StandardContextMenu=0,  /*!< \brief only show the standard context menu \image html zoomin_mouse_contextmenu.gif "Zooming with the mouse" */
             SpecialContextMenu,  /*!< \brief only show the special context menu \see setSpecialContextMenu() */
             StandardAndSpecialContextMenu,  /*!< \brief show the standard context menu, with the special context menu incorporated \see setSpecialContextMenu() */
             NoContextMenu, /*!< \brief don't show a context menu at all */
@@ -970,6 +984,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief ties a MouseActionMode to a mouse-button and a keyboard-modifier
          *  \internal
+         *  \ingroup jkqtpplotterclasses_tools
          */
         struct JKQTP_LIB_EXPORT MouseDragAction {
                 /** \brief constructs an invalid object */
@@ -1241,7 +1256,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses
+ *  \ingroup jkqtpplotterclasses_tools
 */
 template<>
 inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifier> &key, uint seed ) noexcept(noexcept(qHash(key.first, seed)) && noexcept(qHash(key.second, seed))) {
@@ -1250,7 +1265,7 @@ inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifier> &key, uint s
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses
+ *  \ingroup jkqtpplotterclasses_tools
 */
 template<>
 inline uint qHash(const Qt::MouseButton &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {
@@ -1259,7 +1274,7 @@ inline uint qHash(const Qt::MouseButton &key, uint /*seed*/ ) noexcept(noexcept(
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses
+ *  \ingroup jkqtpplotterclasses_tools
 */
 template<>
 inline uint qHash(const Qt::KeyboardModifier &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {

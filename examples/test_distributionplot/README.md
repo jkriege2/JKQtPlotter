@@ -1,5 +1,5 @@
 # Example (JKQTPlotter): Plotting a Statistical Distribution of Data {#JKQTPlotterDistributionPlot}
-This project (see [`test_distributionplot`](../test_distributionplot) demonstrates how to combine several different graphs and geometric elements to show a set of random values and their statistics.
+This project (see [`test_distributionplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) demonstrates how to combine several different graphs and geometric elements to show a set of random values and their statistics.
 
 The source code of the main application is (see [`test_distributionplot.cpp`](test_distributionplot.cpp).
 
@@ -132,4 +132,4 @@ After adding all necessary data to the JKQTDatastore:
 
 The result looks like this:
 
-![test_distributionplot](../../screenshots/test_distributionplot.png)
+![test_distributionplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_distributionplot.png)

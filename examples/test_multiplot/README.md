@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Laying out Several Plots {#JKQTPlotterMultiPlotLayout}
 This project (see `./examples/test_multiplot/`) shows how several JKQTPlotter widgets can be combined to in a layout (based on the [Qt layouting system](http://doc.qt.io/qt-5/layout.html)). It also shows how axes in such a layout can be linked to improve user experience.
 
-The source code of the main application can be found in  [`test_multiplot.cpp`](../test_multiplot/test_multiplot.cpp). 
+The source code of the main application can be found in  [`test_multiplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot/test_multiplot.cpp). 
 
 First three plots are generated and put into a [QGridLayout](http://doc.qt.io/qt-5/qgridlayout.html):
 
@@ -55,7 +55,7 @@ Finally: When printing or saving an image of the plots, the plotter will no know
 
 In the first line, grid-printing (i.e. the layouted printing of several graphs) is activated. Then the arrangement of the two slave plots `plotResid` and `plotResidHist` is defined as (`x,y`)-shifts with respect to the master plot `plotMain`.
 
-Now some data is generated and several curves are added to the graphs. See [`test_multiplot.cpp`](../test_multiplot/test_multiplot.cpp) for the full source code.
+Now some data is generated and several curves are added to the graphs. See [`test_multiplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot/test_multiplot.cpp) for the full source code.
 
 Finally the axes and plots need a bit of formatting to make them look nicer:
 
@@ -92,15 +92,15 @@ As a last step, the axes are scaled automatically, so the data fills the plots:
 
 The result looks like this:
 
-![test_multiplot](../../screenshots/test_multiplot.png)
+![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot.png)
 
 You push the print button (![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/lib/jkqtplotterressources/images/jkqtp_24_print.png)) to open a print preview dialog, which will give an impression of how the three plots will be arranged in a printout:
 
-![test_multiplot](../../screenshots/test_multiplot_printpreview.png)
+![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_printpreview.png)
 
 In addition this example also contains a Window that allows to control the plot layout and synchronization options:
 
-![test_multiplot](../../screenshots/test_multiplot_controlwindow.png)
+![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_controlwindow.png)
 
 
 

@@ -1,6 +1,6 @@
 # Example (JKQTPlotter): Very simple line-graph             {#JKQTPlotterSimpleTest}
 This project (see `./examples/simpletest/`) simply creates a JKQTPlotter widget (as a new window) and adds a single line-graph (a sine-wave). Data is initialized from two QVector<double> objects.
-The QMake project looks like this (see [`jkqtplotter_simpletest.pro`](../simpletest/jkqtplotter_simpletest.pro):
+The QMake project looks like this (see [`jkqtplotter_simpletest.pro`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest/jkqtplotter_simpletest.pro):
 ```.qmake
 # source code for this simple demo
 SOURCES = jkqtplotter_simpletest.cpp 
@@ -39,7 +39,7 @@ TARGET = jkqtplotter_simpletest
 # include JKQTPlotter source code
 include(../../lib/jkqtplotter.pri)
 ```
-The source code of the main application is (see [`jkqtplotter_simpletest.cpp`](../simpletest/jkqtplotter_simpletest.cpp):
+The source code of the main application is (see [`jkqtplotter_simpletest.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest/jkqtplotter_simpletest.cpp):
 ```.cpp
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 ```
 The result looks like this:
 
-![jkqtplotter_simpletest1](../../screenshots/jkqtplotter_simpletest1.png)
+![jkqtplotter_simpletest1](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1.png)
 
 
 
