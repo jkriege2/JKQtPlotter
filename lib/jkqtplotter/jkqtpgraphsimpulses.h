@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -19,7 +19,7 @@
 
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
-
+#include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 
 #ifndef jkqtpgraphsimpulses_H
 #define jkqtpgraphsimpulses_H
@@ -46,44 +46,38 @@ class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color ( \copybrief color ). 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual void setLineWidth(double __value)  
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property baseline ( \copybrief baseline ) to the specified \a __value. 
-            \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
-            \see baseline for more information */ 
+        /*! \copydoc baseline
+            \see see baseline for details */ 
         inline virtual void setBaseline(double __value)  
         {
             this->baseline = __value;
         } 
-        /*! \brief returns the property baseline ( \copybrief baseline ). 
-            \details Description of the parameter baseline is: <BLOCKQUOTE>\copydoc baseline </BLOCKQUOTE> 
-            \see baseline for more information */ 
+        /*! \copydoc baseline
+            \see see baseline for details */ 
         inline virtual double getBaseline() const  
         {
             return this->baseline; 

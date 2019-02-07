@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -51,32 +51,22 @@ JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTBasePlotter* parent):
 
     if (parent) { // get style settings from parent object
         parentPlotStyle=parent->getNextStyle();
-        fillColor=parent->getPlotStyle(parentPlotStyle).color();
+        color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
+        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
+        //style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
     }
 }
 
 
 JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTPlotter* parent):
-    JKQTPXYGraph(parent)
+    JKQTPBarVerticalGraph(parent->getPlotter())
 {
-    baseline=0.0;
-    color=QColor("black");
-    fillColor=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=1;
-    fillStyle=Qt::SolidPattern;
-    width=0.9;
-    shift=0;
-
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        fillColor=parent->getPlotStyle(parentPlotStyle).color();
-    }
 }
 
 void JKQTPBarVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     QPen np(Qt::NoPen);
     p.setColor(color);
@@ -88,7 +78,7 @@ void JKQTPBarVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF&
     painter.setPen(p);
     painter.setBrush(b);
     painter.drawRect(rect);
-    painter.restore();
+
 }
 
 QColor JKQTPBarVerticalGraph::getKeyLabelColor() {
@@ -108,7 +98,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
 
@@ -126,64 +116,66 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     }
     if (imin<0) imin=0;
     if (imax<0) imax=0;
-    painter.save();
 
-//    double x0=transformX(0);
-//    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
-    double y0=transformY(0);
-    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
-    double delta=1;
-    double deltap=0;
-    double deltam=0;
-    intSortData();
-    const bool hasStackPar=hasStackParent();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        int sr=datastore->getNextLowerIndex(xColumn, i);
-        int lr=datastore->getNextHigherIndex(xColumn, i);
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        double yv0=y0;
-        if (!qFuzzyIsNull(baseline)) yv0=transformY(baseline);
-        if (hasStackPar) {
-            double stackLastY=getParentStackedMax(i);
-            const double yvold=yv;
-            yv0=transformY(stackLastY)-(getLineWidth());
-            yv=stackLastY+yvold;
-        }
-        if (sr<0 && lr<0) { // only one x-value
-            deltam=0.5;
-            deltap=0.5;
-        } else if (lr<0) { // the right-most x-value
-            deltap=deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
-        } else if (sr<0) { // the left-most x-value
-            deltam=deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
-        } else {
-            deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
-            deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
-        }
-        //std::cout<<iii<<", \t"<<i<<", \t"<<sr<<", \t"<<lr<<", \t"<<deltam<<", \t"<<deltap<<"\n\n";
-        delta=deltap+deltam;
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv+shift*delta-width*deltam);
-            double y=transformY(yv);
-            double xx=transformX(xv+shift*delta+width*deltap);
-            double yy=yv0;
+    //    double x0=transformX(0);
+    //    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+        double y0=transformY(0);
+        if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
+        double delta=1;
+        double deltap=0;
+        double deltam=0;
+        intSortData();
+        const bool hasStackPar=hasStackParent();
+        for (int iii=imin; iii<imax; iii++) {
+            int i=qBound(imin, getDataIndex(iii), imax);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            int sr=datastore->getNextLowerIndex(xColumn, i);
+            int lr=datastore->getNextHigherIndex(xColumn, i);
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            double yv0=y0;
+            if (!qFuzzyIsNull(baseline)) yv0=transformY(baseline);
+            if (hasStackPar) {
+                double stackLastY=getParentStackedMax(i);
+                const double yvold=yv;
+                yv0=transformY(stackLastY)-(getLineWidth());
+                yv=stackLastY+yvold;
+            }
+            if (sr<0 && lr<0) { // only one x-value
+                deltam=0.5;
+                deltap=0.5;
+            } else if (lr<0) { // the right-most x-value
+                deltap=deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
+            } else if (sr<0) { // the left-most x-value
+                deltam=deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
+            } else {
+                deltam=fabs(xv-datastore->get(xColumn,sr))/2.0;
+                deltap=fabs(datastore->get(xColumn,lr)-xv)/2.0;
+            }
+            //std::cout<<iii<<", \t"<<i<<", \t"<<sr<<", \t"<<lr<<", \t"<<deltam<<", \t"<<deltap<<"\n\n";
+            delta=deltap+deltam;
 
-            //std::cout<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy<<std::endl;
-            if (yy<y) { qSwap(y,yy); }
-            if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
-                painter.setBrush(b);
-                painter.setPen(p);
-                QRectF r(QPointF(x, y), QPointF(xx, yy));
-                painter.drawRect(r);
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                double x=transformX(xv+shift*delta-width*deltam);
+                double y=transformY(yv);
+                double xx=transformX(xv+shift*delta+width*deltap);
+                double yy=yv0;
 
+                //std::cout<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy<<std::endl;
+                if (yy<y) { qSwap(y,yy); }
+                if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
+                    painter.setBrush(b);
+                    painter.setPen(p);
+                    QRectF r(QPointF(x, y), QPointF(xx, yy));
+                    painter.drawRect(r);
+
+                }
             }
         }
-    }
 
-    painter.restore();
+    }
     drawErrorsAfter(painter);
 }
 
@@ -339,7 +331,7 @@ JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTBasePlotter *parent):
 }
 
 JKQTPBarHorizontalGraph::JKQTPBarHorizontalGraph(JKQTPlotter *parent):
-    JKQTPBarVerticalGraph(parent)
+    JKQTPBarHorizontalGraph(parent->getPlotter())
 {
 
 }
@@ -356,7 +348,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
 
@@ -381,57 +373,58 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     double delta=1;
     double deltap=0;
     double deltam=0;
-    painter.save();
-    intSortData();
-    const bool hasStackPar=hasStackParent();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        int sr=datastore->getNextLowerIndex(yColumn, i);
-        int lr=datastore->getNextHigherIndex(yColumn, i);
-        double xv0=x0;
-        if (!qFuzzyIsNull(baseline)) xv0=transformX(baseline);
-        if (hasStackPar) {
-            double stackLastX=getParentStackedMax(i);
-            const double xvold=xv;
-            xv0=transformX(stackLastX)+(getLineWidth());
-            xv=stackLastX+xvold;
-        }
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        intSortData();
+        const bool hasStackPar=hasStackParent();
+        for (int iii=imin; iii<imax; iii++) {
+            int i=qBound(imin, getDataIndex(iii), imax);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            int sr=datastore->getNextLowerIndex(yColumn, i);
+            int lr=datastore->getNextHigherIndex(yColumn, i);
+            double xv0=x0;
+            if (!qFuzzyIsNull(baseline)) xv0=transformX(baseline);
+            if (hasStackPar) {
+                double stackLastX=getParentStackedMax(i);
+                const double xvold=xv;
+                xv0=transformX(stackLastX)+(getLineWidth());
+                xv=stackLastX+xvold;
+            }
 
 
-        if (sr<0 && lr<0) { // only one y-value
-            deltam=0.5;
-            deltap=0.5;
-        } else if (lr<0) { // the right-most y-value
-            deltap=deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
-        } else if (sr<0) { // the left-most y-value
-            deltam=deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
-        } else {
-            deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
-            deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
-        }
-        delta=deltap+deltam;
+            if (sr<0 && lr<0) { // only one y-value
+                deltam=0.5;
+                deltap=0.5;
+            } else if (lr<0) { // the right-most y-value
+                deltap=deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+            } else if (sr<0) { // the left-most y-value
+                deltam=deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
+            } else {
+                deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+                deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
+            }
+            delta=deltap+deltam;
 
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=xv0;
-            if (!qFuzzyIsNull(baseline)) x=transformX(baseline);
-            double y=transformY(yv+shift*delta+width*deltap);
-            double xx=transformX(xv);
-            double yy=transformY(yv+shift*delta-width*deltam);
-            if (x>xx) { qSwap(x,xx); }
-            //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
-            //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
-            if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
-                painter.setBrush(b);
-                painter.setPen(p);
-                QRectF r(QPointF(x, y), QPointF(xx, yy));
-                painter.drawRect(r);
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                double x=xv0;
+                if (!qFuzzyIsNull(baseline)) x=transformX(baseline);
+                double y=transformY(yv+shift*delta+width*deltap);
+                double xx=transformX(xv);
+                double yy=transformY(yv+shift*delta-width*deltam);
+                if (x>xx) { qSwap(x,xx); }
+                //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
+                //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
+                if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
+                    painter.setBrush(b);
+                    painter.setPen(p);
+                    QRectF r(QPointF(x, y), QPointF(xx, yy));
+                    painter.drawRect(r);
+                }
             }
         }
-    }
 
-    painter.restore();
+    }
     drawErrorsAfter(painter);
 }
 
@@ -553,7 +546,7 @@ QBrush JKQTPBarVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const 
 QPen JKQTPBarVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -590,15 +583,16 @@ void JKQTPBarVerticalGraph::setFillColor_and_darkenedColor(QColor fill, int colo
 }
 
 JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors()
+    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors(color, parent)
 {
     setErrorColorFromGraphColor(color);
+    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
 }
 
 JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTPlotter *parent):
-    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors()
+    JKQTPBarHorizontalErrorGraph(parent->getPlotter())
 {
-    setErrorColorFromGraphColor(color);
+
 }
 
 bool JKQTPBarHorizontalErrorGraph::usesColumn(int c) const
@@ -655,15 +649,17 @@ void JKQTPBarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter
 }
 
 JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors()
+    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors(color, parent)
 {
     setErrorColorFromGraphColor(color);
+    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+
 }
 
 JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTPlotter *parent):
-    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors()
+    JKQTPBarVerticalErrorGraph(parent->getPlotter())
 {
-    setErrorColorFromGraphColor(color);
+
 }
 
 bool JKQTPBarVerticalErrorGraph::usesColumn(int c) const
@@ -770,7 +766,7 @@ JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTBasePlotter *
 }
 
 JKQTPBarVerticalStackableGraph::JKQTPBarVerticalStackableGraph(JKQTPlotter *parent):
-    JKQTPBarVerticalGraph(parent), stackParent(nullptr)
+    JKQTPBarVerticalStackableGraph(parent->getPlotter())
 {
 
 }
@@ -827,7 +823,7 @@ JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTBasePlott
 }
 
 JKQTPBarHorizontalStackableGraph::JKQTPBarHorizontalStackableGraph(JKQTPlotter *parent):
-    JKQTPBarHorizontalGraph(parent), stackParent(nullptr)
+    JKQTPBarHorizontalStackableGraph(parent->getPlotter())
 {
 
 }

@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -27,6 +27,7 @@
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplottertools/jkqtpdrawingtools.h"
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
 
@@ -61,12 +62,8 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, doub
 
 
 JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTPlotter *parent):
-    JKQTPSingleColumnGraph(parent)
+    JKQTPPeakStreamGraph(parent->getPlotter())
 {
-    baseline=0;
-    yPeaks=true;
-    peakHeight=1;
-    drawBaseline=true;
 }
 
 JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPlotter *parent):
@@ -122,66 +119,66 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
     if (dataColumn<0) return;
 
     drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    painter.save();
+        QPen p=getLinePen(painter);
+        p.setCapStyle(Qt::FlatCap);
 
-    QPen p=getLinePen(painter);
-    p.setCapStyle(Qt::FlatCap);
-
-    int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
-    int imin=0;
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    QVector<QLineF> lines;
-
-    if (yPeaks) {
-        if (drawBaseline) {
-            lines<<QLineF(transform(parent->getXMin(), baseline), transform(parent->getXMax(), baseline));
+        int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
+        int imin=0;
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
         }
-        intSortData();
-        for (int iii=imin; iii<imax; iii++) {
-            int i=qBound<int>(imin, getDataIndex(static_cast<int>(iii)), imax);
-            const double xv=datastore->get(dataColumn,i);
-            if (JKQTPIsOKFloat(xv)) {
-                lines<<QLineF(transform(xv, baseline), transform(xv, baseline+peakHeight));
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
+
+        QVector<QLineF> lines;
+
+        if (yPeaks) {
+            if (drawBaseline) {
+                lines<<QLineF(transform(parent->getXMin(), baseline), transform(parent->getXMax(), baseline));
+            }
+            intSortData();
+            for (int iii=imin; iii<imax; iii++) {
+                int i=qBound<int>(imin, getDataIndex(static_cast<int>(iii)), imax);
+                const double xv=datastore->get(dataColumn,i);
+                if (JKQTPIsOKFloat(xv)) {
+                    lines<<QLineF(transform(xv, baseline), transform(xv, baseline+peakHeight));
+                }
+            }
+        } else {
+            if (drawBaseline) {
+                lines<<QLineF(transform(baseline, parent->getYMin()), transform(baseline, parent->getYMax()));
+            }
+            intSortData();
+            for (int iii=imin; iii<imax; iii++) {
+                int i=qBound<int>(imin, getDataIndex(iii), imax);
+                const double yv=datastore->get(dataColumn,i);
+                if (JKQTPIsOKFloat(yv)) {
+                    lines<<QLineF(transform(baseline, yv), transform(baseline+peakHeight, yv));
+                }
             }
         }
-    } else {
-        if (drawBaseline) {
-            lines<<QLineF(transform(baseline, parent->getYMin()), transform(baseline, parent->getYMax()));
-        }
-        intSortData();
-        for (int iii=imin; iii<imax; iii++) {
-            int i=qBound<int>(imin, getDataIndex(iii), imax);
-            const double yv=datastore->get(dataColumn,i);
-            if (JKQTPIsOKFloat(yv)) {
-                lines<<QLineF(transform(baseline, yv), transform(baseline+peakHeight, yv));
-            }
-        }
+
+        painter.setPen(p);
+        if (lines.size()>0) painter.drawLines(lines);
+
+
     }
-
-    painter.setPen(p);
-    if (lines.size()>0) painter.drawLines(lines);
-
-
-    painter.restore();
 
     drawErrorsAfter(painter);
 }
 
 void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter);
     painter.setPen(p);
     if (yPeaks) {
-        p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.width()/10.0)));
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.width()/10.0)));
         if (drawBaseline) {
             if (peakHeight>=0) painter.drawLine(rect.bottomLeft(), rect.bottomRight());
             else painter.drawLine(rect.topLeft(), rect.topRight());
@@ -191,7 +188,7 @@ void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &
         painter.drawLine(QPointF(rect.left()+rect.width()*0.75, rect.top()), QPointF(rect.left()+rect.width()*0.75, rect.bottom()));
         painter.drawLine(QPointF(rect.left()+rect.width()*0.9, rect.top()), QPointF(rect.left()+rect.width()*0.9, rect.bottom()));
     } else {
-        p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.height()/15.0)));
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.height()/15.0)));
         if (drawBaseline) {
             if (peakHeight>=0) painter.drawLine(rect.bottomLeft(), rect.topLeft());
             else painter.drawLine(rect.bottomRight(), rect.topRight());
@@ -202,7 +199,7 @@ void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &
         painter.drawLine(QPointF(rect.left(), rect.top()+rect.height()*0.9), QPointF(rect.right(), rect.top()+rect.height()*0.9));
     }
 
-    painter.restore();
+    
 }
 
 

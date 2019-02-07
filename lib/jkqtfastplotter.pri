@@ -1,3 +1,5 @@
+# uncomment this line to prevent linking in of the XITS fonts
+#DEFINES += NO_XITS_FONTS
 
 include($$PWD/common.pri)
 

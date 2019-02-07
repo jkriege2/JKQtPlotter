@@ -13,9 +13,9 @@ TARGET = jkqtplotter_simpletest_rgbimageplot_opencv
 DEFINES += JKQTPLOTTER_OPENCV_INTERFACE
 
 
-# here you can activate some debug options
-#DEFINES += SHOW_JKQTPLOTTER_DEBUG
-#DEFINES += JKQTBP_AUTOTIMER
+
+
+
 
 
 # link agains OpenCV-3.4.1

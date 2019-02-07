@@ -4,6 +4,9 @@
 #include <QDateTime>
 #include <QApplication>
 #include "jkqtplottergui/jkqtpcomboboxes.h"
+#include "jkqtplotter/jkqtpgraphsimageoverlays.h"
+#include "jkqtplotter/jkqtpgraphsimagergb.h"
+
 
 
 

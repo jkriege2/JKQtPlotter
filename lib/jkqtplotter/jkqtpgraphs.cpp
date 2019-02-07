@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -60,9 +60,13 @@ JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTPlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        symbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
+        symbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
+        symbol=parent->getPlotStyle(parentPlotStyle).symbol();
     }
-    fillColor=color;
 }
 
 JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTBasePlotter* parent):
@@ -84,9 +88,13 @@ JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTBasePlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        symbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
+        symbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
+        symbol=parent->getPlotStyle(parentPlotStyle).symbol();
     }
-    fillColor=color;
 }
 
 void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
@@ -100,90 +108,90 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"JKQTPXYLineGraph::draw();";
 
     drawErrorsBefore(painter);
+    {
+        //qDebug()<<"JKQTPXYLineGraph::draw(): "<<1;
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        //qDebug()<<"JKQTPXYLineGraph::draw(): "<<2;
 
-    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<1;
-    painter.save();
-    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<2;
-
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-
-
-    QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
-    QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
-    if (selectionLineColor!=Qt::transparent) {
-        penSelection.setColor(selectionLineColor);
-    }
-    penSelection.setWidthF(penSelection.widthF()*3.0);
+        QPen p=painter.pen();
+        p.setColor(color);
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setStyle(style);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setCapStyle(Qt::RoundCap);
 
 
-    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
-    int imin=0;
-
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<3<<" imin="<<imin<<" imax="<<imax;
-    //double xold=-1;
-    //double yold=-1;
-    //bool first=false;
-    //QVector<QLineF> lines;
-    QPolygonF linesP;
-    intSortData();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        double x=transformX(xv);
-        double y=transformY(yv);
-        //qDebug()<<"JKQTPXYLineGraph::draw(): (xv, yv) =    ( "<<xv<<", "<<yv<<" )";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
-            QColor symbColor=color;
-            QColor symbFillColor=fillColor;// symbColor.lighter();
-
-            if (drawSelectionLine && symbol!=JKQTPNoSymbol) {
-                JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
-            }
-            JKQTPPlotSymbol(painter, x, y, symbol, parent->pt2px(painter, symbolSize), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), symbColor, symbFillColor);
-            /*if (drawLine && first) {
-                double xl1=xold;
-                double yl1=yold;
-                double xl2=x;
-                double yl2=y;
-                lines.append(QLineF(xl1, yl1, xl2, yl2));
-            }*/
-            if (drawLine) {
-                linesP<<QPointF(x,y);
-
-            }
-//            xold=x;
-//            yold=y;
-//            first=true;
+        QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
+        QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
+        if (selectionLineColor!=Qt::transparent) {
+            penSelection.setColor(selectionLineColor);
         }
-    }
-    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<4<<" lines="<<lines.size();
-    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<5<<"  p="<<painter.pen();
-    if (linesP.size()>0) {
-        if (drawSelectionLine) {
-            painter.setPen(penSelection);
+        penSelection.setWidthF(penSelection.widthF()*3.0);
+
+
+        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
+        int imin=0;
+
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
+        }
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
+
+        //qDebug()<<"JKQTPXYLineGraph::draw(): "<<3<<" imin="<<imin<<" imax="<<imax;
+        //double xold=-1;
+        //double yold=-1;
+        //bool first=false;
+        //QVector<QLineF> lines;
+        QPolygonF linesP;
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            int i=qBound(imin, getDataIndex(iii), imax);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            double x=transformX(xv);
+            double y=transformY(yv);
+            //qDebug()<<"JKQTPXYLineGraph::draw(): (xv, yv) =    ( "<<xv<<", "<<yv<<" )";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                QColor symbColor=color;
+                QColor symbFillColor=fillColor;// symbColor.lighter();
+
+                if (drawSelectionLine && symbol!=JKQTPNoSymbol) {
+                    JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
+                }
+                JKQTPPlotSymbol(painter, x, y, symbol, parent->pt2px(painter, symbolSize), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), symbColor, symbFillColor);
+                /*if (drawLine && first) {
+                    double xl1=xold;
+                    double yl1=yold;
+                    double xl2=x;
+                    double yl2=y;
+                    lines.append(QLineF(xl1, yl1, xl2, yl2));
+                }*/
+                if (drawLine) {
+                    linesP<<QPointF(x,y);
+
+                }
+    //            xold=x;
+    //            yold=y;
+    //            first=true;
+            }
+        }
+        //qDebug()<<"JKQTPXYLineGraph::draw(): "<<4<<" lines="<<lines.size();
+        //qDebug()<<"JKQTPXYLineGraph::draw(): "<<5<<"  p="<<painter.pen();
+        if (linesP.size()>0) {
+            if (drawSelectionLine) {
+                painter.setPen(penSelection);
+                //painter.drawLines(lines);
+                painter.drawPolyline(linesP);
+            }
+            painter.setPen(p);
             //painter.drawLines(lines);
             painter.drawPolyline(linesP);
         }
-        painter.setPen(p);
-        //painter.drawLines(lines);
-        painter.drawPolyline(linesP);
+        //qDebug()<<"JKQTPXYLineGraph::draw(): "<<6;
     }
-    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<6;
-    painter.restore();
     //qDebug()<<"JKQTPXYLineGraph::draw(): "<<7;
     drawErrorsAfter(painter);
     //qDebug()<<"JKQTPXYLineGraph::draw() ... done";
@@ -199,7 +207,7 @@ void JKQTPXYLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect
     double lineWidth=parent->pt2px(painter, this->lineWidth*parent->getLineWidthMultiplier());
     if (lineWidth>0.5*maxSize) lineWidth=0.5*maxSize;
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(getKeyLabelColor());
     p.setStyle(style);
@@ -208,7 +216,7 @@ void JKQTPXYLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect
     double y=rect.top()+rect.height()/2.0;
     if (drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, getKeyLabelColor(), fillColor);
-    painter.restore();
+
 }
 
 QColor JKQTPXYLineGraph::getKeyLabelColor() {
@@ -217,12 +225,17 @@ QColor JKQTPXYLineGraph::getKeyLabelColor() {
 
 
 JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTBasePlotter *parent):
-    JKQTPXYLineGraph(parent), JKQTPXYGraphErrors()
-{ setErrorColorFromGraphColor(color); }
+    JKQTPXYLineGraph(parent), JKQTPXYGraphErrors(color, parent)
+{
+    setErrorColorFromGraphColor(color);
+    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+}
 
 JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTPlotter *parent):
-    JKQTPXYLineGraph(parent), JKQTPXYGraphErrors()
-{ setErrorColorFromGraphColor(color);  }
+    JKQTPXYLineErrorGraph(parent->getPlotter())
+{
+
+}
 
 bool JKQTPXYLineErrorGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero) {
     if (xErrorColumn<0 || xErrorStyle==JKQTPNoError) {
@@ -351,8 +364,9 @@ JKQTPStepHorizontalGraph::JKQTPStepHorizontalGraph(JKQTBasePlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=color.lighter();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
     }
 }
 
@@ -374,14 +388,15 @@ JKQTPStepHorizontalGraph::JKQTPStepHorizontalGraph(JKQTPlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=color.lighter();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
     }
 }
 
 
 void JKQTPStepHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     QPen np(Qt::NoPen);
     p.setColor(color);
@@ -397,7 +412,7 @@ void JKQTPStepHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRec
     painter.setBrush(b);
     if (fillCurve) painter.drawRect(rect);
     if (!fillCurve & drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
-    painter.restore();
+
 }
 
 QColor JKQTPStepHorizontalGraph::getKeyLabelColor() {
@@ -417,7 +432,7 @@ void JKQTPStepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
@@ -509,7 +524,7 @@ void JKQTPStepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         pf.lineTo(xold, y0);
         pf.closeSubpath();
     }
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
     if (fillCurve) {
         painter.fillPath(pf, b);
@@ -520,7 +535,7 @@ void JKQTPStepHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         painter.setPen(p);
         painter.drawPath(pl);
     }
-    painter.restore();
+
 
     drawErrorsAfter(painter);
 }
@@ -558,7 +573,7 @@ void JKQTPStepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -642,7 +657,7 @@ void JKQTPStepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     }
     pf.lineTo(x0, yold);
     pf.closeSubpath();
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     if (drawLine) {
         painter.setPen(p);
         painter.drawPath(pl);
@@ -651,7 +666,7 @@ void JKQTPStepVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     painter.setPen(np);
     painter.drawPath(pf);
 
-    painter.restore();
+
 
     drawErrorsAfter(painter);
 }
@@ -691,8 +706,10 @@ JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTBasePlotter* parent):
     if (parent) { // get style settings from parent object
         parentPlotStyle=parent->getNextStyle();
         centerColor=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
         color=centerColor.darker();
-        fillColor=centerColor.lighter();
     }
     fillColor.setAlphaF(0.5);
 
@@ -725,10 +742,11 @@ JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTPlotter* parent):
 
 
     if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
         centerColor=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
+        style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
         color=centerColor.darker();
-        fillColor=centerColor.lighter();
     }
     fillColor.setAlphaF(0.5);
 
@@ -754,13 +772,13 @@ void JKQTPHorizontalRange::draw(JKQTPEnhancedPainter& painter) {
     if (!unlimitedSizeMax) ma=transformX(sizeMax);
     //std::cout<<"hor: rangeMin="<<rangeMin<<" -> "<<cmi<<std::endl;
     //std::cout<<"hor: rangeMax="<<rangeMax<<" -> "<<cma<<std::endl;
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     if (plotRange && (cmi!=cma) && JKQTPIsOKFloat(mi) && JKQTPIsOKFloat(ma)) {
         QPen p=painter.pen();
         QPen np(Qt::NoPen);
         p.setColor(color);
         p.setStyle(style);
-        p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
         QBrush nb(Qt::NoBrush);
         QBrush b=painter.brush();
         b.setColor(fillColor);
@@ -798,15 +816,15 @@ void JKQTPHorizontalRange::draw(JKQTPEnhancedPainter& painter) {
         QPen p=painter.pen();
         p.setColor(centerColor);
         p.setStyle(centerStyle);
-        p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
         painter.setPen(p);
         painter.drawLine(QLineF(mi, c, ma, c));
     }
-    painter.restore();
+
 }
 
 void JKQTPHorizontalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     QPen np(Qt::NoPen);
     p.setColor(color);
@@ -836,7 +854,7 @@ void JKQTPHorizontalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& 
         int y=rect.top()+rect.height()/2.0;
         painter.drawLine(rect.left(), y, rect.right(), y);
     }
-    painter.restore();
+
 }
 
 bool JKQTPHorizontalRange::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
@@ -897,13 +915,13 @@ void JKQTPVerticalRange::draw(JKQTPEnhancedPainter& painter) {
     double sma=transformX(parent->getXAxis()->getMax());
     if (!unlimitedSizeMin) mi=transformY(sizeMin);
     if (!unlimitedSizeMax) ma=transformY(sizeMax);
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     if (plotRange && (cmi!=cma) && JKQTPIsOKFloat(mi) && JKQTPIsOKFloat(ma)) {
         QPen p=painter.pen();
         QPen np(Qt::NoPen);
         p.setColor(color);
         p.setStyle(style);
-        p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
         QBrush nb(Qt::NoBrush);
         QBrush b=painter.brush();
         b.setColor(fillColor);
@@ -937,15 +955,15 @@ void JKQTPVerticalRange::draw(JKQTPEnhancedPainter& painter) {
         QPen p=painter.pen();
         p.setColor(centerColor);
         p.setStyle(centerStyle);
-        p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
         painter.setPen(p);
         painter.drawLine(QLineF(c, mi, c, ma));
     }
-    painter.restore();
+
 }
 
 void JKQTPVerticalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     QPen np(Qt::NoPen);
     p.setColor(color);
@@ -974,7 +992,7 @@ void JKQTPVerticalRange::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& re
         int y=rect.left()+rect.width()/2.0;
         painter.drawLine(y, rect.top(), y, rect.bottom());
     }
-    painter.restore();
+
 }
 
 bool JKQTPVerticalRange::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
@@ -996,7 +1014,7 @@ bool JKQTPVerticalRange::getYMinMax(double &miny, double &maxy, double &smallest
 QPen JKQTPXYLineGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -1006,7 +1024,7 @@ QPen JKQTPXYLineGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
 QPen JKQTPXYLineGraph::getSymbolPen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*symbolWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*symbolWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -1030,7 +1048,7 @@ QBrush JKQTPStepHorizontalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) con
 QPen JKQTPStepHorizontalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -1048,7 +1066,7 @@ QBrush JKQTPHorizontalRange::getBrush(JKQTPEnhancedPainter& /*painter*/ ) const 
 QPen JKQTPHorizontalRange::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -1073,25 +1091,16 @@ JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter
     gridDeltaX=1;
     gridDeltaY=1;
     gridSymbolFractionSize=0.9;
+    symbolFillDerivationMode=JKQTPFFCMLighterColor;
+    if (parent) {
+        symbolFillDerivationMode=parent->getCurrentPlotterStyle().graphFillColorDerivationMode;
+    }
 }
 
 JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTPlotter *parent):
-    JKQTPXYLineGraph(parent),
-    JKQTPColorPaletteTools(parent->getPlotter())
+    JKQTPXYParametrizedScatterGraph(parent->getPlotter())
 {
-    sizeColumn=-1;
-    colorColumn=-1;
-    symbolColumn=-1;
-    linewidthColumn=-1;
-    palette=JKQTPMathImageMATLAB;
-    colorColumnContainsRGB=false;
-    symbol=JKQTPFilledCircle;
-    drawLine=false;
 
-    gridModeForSymbolSize=false;
-    gridDeltaX=1;
-    gridDeltaY=1;
-    gridSymbolFractionSize=0.9;
 }
 
 void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
@@ -1107,11 +1116,11 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 
     drawErrorsBefore(painter);
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setJoinStyle(Qt::RoundJoin);
@@ -1148,61 +1157,64 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
     intSortData();
     double specSymbSize=0;
     bool hasSpecSymbSize=false;
-    painter.save();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        double x=transformX(xv);
-        double y=transformY(yv);
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
-            double symbSize= parent->pt2px(painter, getLocalSymbolSize(i));
-            double lineW= parent->pt2px(painter, getLocalLineWidth(i));
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        for (int iii=imin; iii<imax; iii++) {
+            int i=qBound(imin, getDataIndex(iii), imax);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            double x=transformX(xv);
+            double y=transformY(yv);
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)  &&  JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                double symbSize= parent->pt2px(painter, getLocalSymbolSize(i));
+                double lineW= parent->pt2px(painter, getLocalLineWidth(i));
 
-            if (gridModeForSymbolSize) {
-                if (!hasSpecSymbSize) {
-                    double sSX= fabs(transformX( xv+gridDeltaX*gridSymbolFractionSize/2.0)-transformX( xv-gridDeltaX*gridSymbolFractionSize/2.0));
-                    double sSY= fabs(transformY( yv+gridDeltaY*gridSymbolFractionSize/2.0)-transformY( yv-gridDeltaY*gridSymbolFractionSize/2.0));
-                    hasSpecSymbSize=true;
-                    specSymbSize=qMin(sSX,sSY);
+                if (gridModeForSymbolSize) {
+                    if (!hasSpecSymbSize) {
+                        double sSX= fabs(transformX( xv+gridDeltaX*gridSymbolFractionSize/2.0)-transformX( xv-gridDeltaX*gridSymbolFractionSize/2.0));
+                        double sSY= fabs(transformY( yv+gridDeltaY*gridSymbolFractionSize/2.0)-transformY( yv-gridDeltaY*gridSymbolFractionSize/2.0));
+                        hasSpecSymbSize=true;
+                        specSymbSize=qMin(sSX,sSY);
+                    }
+                    symbSize=specSymbSize;
                 }
-                symbSize=specSymbSize;
-            }
-            QColor symbColor=getLocalColor(i);
-            QColor symbFillColor=symbColor.lighter();
-            //qDebug()<<i<<symbolSize<<symbColor;
-            if (first && drawLine) {
-                double xl1=xold;
-                double yl1=yold;
-                double xl2=x;
-                double yl2=y;
+                QColor symbColor=getLocalColor(i);
+                QColor symbFillColor=JKQTPGetDerivedColor(symbolFillDerivationMode, symbColor);
+                //qDebug()<<i<<symbolSize<<symbColor;
+                if (first && drawLine) {
+                    double xl1=xold;
+                    double yl1=yold;
+                    double xl2=x;
+                    double yl2=y;
 
-                if (drawSelectionLine) {
-                    if (colorColumn>=0) linecolss<<symbColor.lighter();
-                    else linecolss<<selectionLineColor;
+                    if (drawSelectionLine) {
+                        if (colorColumn>=0) linecolss<<symbColor.lighter();
+                        else linecolss<<selectionLineColor;
+                    }
+                    linecols<<symbColor;
+                    lines<<QLineF(xl1, yl1, xl2, yl2);
+                    linesP<<QPointF(x,y);
+                    linewidths<<lineW;
                 }
-                linecols<<symbColor;
-                lines<<QLineF(xl1, yl1, xl2, yl2);
-                linesP<<QPointF(x,y);
-                linewidths<<lineW;
+
+                if (drawSelectionLine && symbol!=JKQTPNoSymbol && symbolColumn<0) {
+                    JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle,symbSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
+                } else {
+                    JKQTPPlotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), symbColor, symbFillColor);
+                }
+
+
+                xold=x;
+                yold=y;
+                first=true;
             }
-
-            if (drawSelectionLine && symbol!=JKQTPNoSymbol && symbolColumn<0) {
-                JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle,symbSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
-            } else {
-                JKQTPPlotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), symbColor, symbFillColor);
-            }
-
-
-            xold=x;
-            yold=y;
-            first=true;
         }
     }
-    painter.restore();
+
+
 
     if (lines.size()>0) {
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         if (drawSelectionLine) {
             QPen pp=penSelection;
             if (colorColumn>=0) {
@@ -1230,9 +1242,9 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
             painter.setPen(pp);
             painter.drawPolyline(linesP);
         }
-        painter.restore();
+
     }
-    painter.restore();
+
     drawErrorsAfter(painter);
 }
 
@@ -1280,7 +1292,7 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     double lineWidth=parent->pt2px(painter, this->lineWidth*0.7*parent->getLineWidthMultiplier());
     if (lineWidth>0.1*maxSize) lineWidth=0.1*maxSize;
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(color1);
     p.setStyle(style);
@@ -1290,10 +1302,10 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
     double y1=rect.top()+symbolSize1/2.0;
     double x2=rect.right()-symbolSize2/2.0;
     double y2=rect.bottom()-symbolSize2/2.0;
-    JKQTPPlotSymbol(painter, x1, y1, symbol1, symbolSize1, symbolWidth, color1, color1.lighter());
-    JKQTPPlotSymbol(painter, x2, y2, symbol2, symbolSize2, symbolWidth, color2, color2.lighter());
+    JKQTPPlotSymbol(painter, x1, y1, symbol1, symbolSize1, symbolWidth, color1, JKQTPGetDerivedColor(symbolFillDerivationMode, color1));
+    JKQTPPlotSymbol(painter, x2, y2, symbol2, symbolSize2, symbolWidth, color2, JKQTPGetDerivedColor(symbolFillDerivationMode, color2));
     if (drawLine) painter.drawLine(x1,y1, x2,y2);
-    painter.restore();
+
 }
 
 QColor JKQTPXYParametrizedScatterGraph::getKeyLabelColor()
@@ -1435,12 +1447,17 @@ JKQTPGraphSymbols JKQTPXYParametrizedScatterGraph::getLocalSymbolType(int i)
 
 
 JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTBasePlotter *parent):
-    JKQTPXYParametrizedScatterGraph(parent), JKQTPXYGraphErrors()
-{  setErrorColorFromGraphColor(color); }
+    JKQTPXYParametrizedScatterGraph(parent), JKQTPXYGraphErrors(color, parent)
+{
+    setErrorColorFromGraphColor(color);
+    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+}
 
 JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTPlotter *parent):
-    JKQTPXYParametrizedScatterGraph(parent), JKQTPXYGraphErrors()
-{ setErrorColorFromGraphColor(color);  }
+    JKQTPXYParametrizedErrorScatterGraph(parent->getPlotter())
+{
+
+}
 
 bool JKQTPXYParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {

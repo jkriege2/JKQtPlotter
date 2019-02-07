@@ -51,8 +51,8 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
 
     // add a checkbox to en-/disable the toolbar of the JKQTPlotter
     chkShowToolbar=new QCheckBox(tr("enable toolbar"), this);
-    chkShowToolbar->setChecked(plot->isToolbarVisible());
-    connect(chkShowToolbar, SIGNAL(toggled(bool)), plot, SLOT(setToolbarVisible(bool)));
+    chkShowToolbar->setChecked(plot->isToolbarEnabled());
+    connect(chkShowToolbar, SIGNAL(toggled(bool)), plot, SLOT(setToolbarEnabled(bool)));
     layChk->addWidget(chkShowToolbar);
 
     // add a checkbox to switch the toolbar between always visible and the hiding mode,
@@ -68,7 +68,7 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     connect(chkGrid, SIGNAL(toggled(bool)), plot, SLOT(setGrid(bool)));
     layChk->addWidget(chkGrid);
 
-    // add a checkbox to switch the grid on and off
+    // add a checkbox to switch log-scale on each axis on or off
     chkLogX=new QCheckBox(tr("X log-scale"), this);
     chkLogX->setChecked(false);
     connect(chkLogX, SIGNAL(toggled(bool)), plot->getXAxis(), SLOT(setLogAxis(bool)));
@@ -93,14 +93,14 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
     cmbLeftNoModMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: left-click, no modifiers", cmbLeftNoModMouseAction);
-    cmbLeftNoModMouseAction->addItem("PanPlotOnMove");
-    cmbLeftNoModMouseAction->addItem("PanPlotOnRelease");
-    cmbLeftNoModMouseAction->addItem("ZoomRectangle");
-    cmbLeftNoModMouseAction->addItem("DrawRectangleForEvent");
-    cmbLeftNoModMouseAction->addItem("DrawCircleForEvent");
-    cmbLeftNoModMouseAction->addItem("DrawEllipseForEvent");
-    cmbLeftNoModMouseAction->addItem("DrawLineForEvent");
-    cmbLeftNoModMouseAction->addItem("ScribbleForEvents");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaPanPlotOnMove");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaPanPlotOnRelease");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaZoomByRectangle");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawRectangleForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawCircleForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawEllipseForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawLineForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaScribbleForEvents");
     cmbLeftNoModMouseAction->addItem("NoMouseAction");
     cmbLeftNoModMouseAction->setCurrentIndex(2);
     connect(cmbLeftNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftMouseAction(int)));
@@ -109,14 +109,14 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
     cmbLeftCtrlModMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: left-click, Ctrl modifier", cmbLeftCtrlModMouseAction);
-    cmbLeftCtrlModMouseAction->addItem("PanPlotOnMove");
-    cmbLeftCtrlModMouseAction->addItem("PanPlotOnRelease");
-    cmbLeftCtrlModMouseAction->addItem("ZoomRectangle");
-    cmbLeftCtrlModMouseAction->addItem("DrawRectangleForEvent");
-    cmbLeftCtrlModMouseAction->addItem("DrawCircleForEvent");
-    cmbLeftCtrlModMouseAction->addItem("DrawEllipseForEvent");
-    cmbLeftCtrlModMouseAction->addItem("DrawLineForEvent");
-    cmbLeftCtrlModMouseAction->addItem("ScribbleForEvents");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaPanPlotOnMove");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaPanPlotOnRelease");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaZoomByRectangle");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaDrawRectangleForEvent");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaDrawCircleForEvent");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaDrawEllipseForEvent");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaDrawLineForEvent");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaScribbleForEvents");
     cmbLeftCtrlModMouseAction->addItem("NoMouseAction");
     cmbLeftCtrlModMouseAction->setCurrentIndex(0);
     connect(cmbLeftCtrlModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftCtrlMouseAction(int)));
@@ -125,14 +125,14 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
     cmbRightNoModMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: right-click, no modifiers", cmbRightNoModMouseAction);
-    cmbRightNoModMouseAction->addItem("PanPlotOnMove");
-    cmbRightNoModMouseAction->addItem("PanPlotOnRelease");
-    cmbRightNoModMouseAction->addItem("ZoomRectangle");
-    cmbRightNoModMouseAction->addItem("DrawRectangleForEvent");
-    cmbRightNoModMouseAction->addItem("DrawCircleForEvent");
-    cmbRightNoModMouseAction->addItem("DrawEllipseForEvent");
-    cmbRightNoModMouseAction->addItem("DrawLineForEvent");
-    cmbRightNoModMouseAction->addItem("ScribbleForEvents");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaPanPlotOnMove");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaPanPlotOnRelease");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaZoomByRectangle");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaDrawRectangleForEvent");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaDrawCircleForEvent");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaDrawEllipseForEvent");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaDrawLineForEvent");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaScribbleForEvents");
     cmbRightNoModMouseAction->addItem("ContextMenu");
     cmbRightNoModMouseAction->setCurrentIndex(5);
     connect(cmbRightNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightMouseAction(int)));
@@ -140,10 +140,10 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
 
     // add a QComboBox that allows to set whether the right mouse button may show the context menu on a single click
     cmbRightClickContextMenu=new QComboBox(this);
-    cmbRightClickContextMenu->addItem("StandardContextMenu");
-    cmbRightClickContextMenu->addItem("SpecialContextMenu");
-    cmbRightClickContextMenu->addItem("StandardAndSpecialContextMenu");
-    cmbRightClickContextMenu->addItem("NoContextMenu");
+    cmbRightClickContextMenu->addItem("jkqtpcmmStandardContextMenu");
+    cmbRightClickContextMenu->addItem("jkqtpcmmSpecialContextMenu");
+    cmbRightClickContextMenu->addItem("jkqtpcmmStandardAndSpecialContextMenu");
+    cmbRightClickContextMenu->addItem("jkqtpcmmNoContextMenu");
     cmbRightClickContextMenu->setCurrentIndex(0);
     layForm->addRow("mouse action: right-click context menu:", cmbRightClickContextMenu);
     connect(cmbRightClickContextMenu, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightClickContextMenu(int)));
@@ -158,11 +158,11 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // add a QComboBox that allows to set the left mouse button double-click action for the JKQTPlotter
     cmbLeftDoubleClickMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: left double-click, no modifiers", cmbLeftDoubleClickMouseAction);
-    cmbLeftDoubleClickMouseAction->addItem("ClickZoomsIn");
-    cmbLeftDoubleClickMouseAction->addItem("ClickZoomsOut");
-    cmbLeftDoubleClickMouseAction->addItem("ClickOpensContextMenu");
-    cmbLeftDoubleClickMouseAction->addItem("ClickOpensSpecialContextMenu");
-    cmbLeftDoubleClickMouseAction->addItem("ClickMovesViewport");
+    cmbLeftDoubleClickMouseAction->addItem("jkqtpdcaClickZoomsIn");
+    cmbLeftDoubleClickMouseAction->addItem("jkqtpdcaClickZoomsOut");
+    cmbLeftDoubleClickMouseAction->addItem("jkqtpdcaClickOpensContextMenu");
+    cmbLeftDoubleClickMouseAction->addItem("jkqtpdcaClickOpensSpecialContextMenu");
+    cmbLeftDoubleClickMouseAction->addItem("jkqtpdcaClickMovesViewport");
     cmbLeftDoubleClickMouseAction->addItem("NoAction");
     cmbLeftDoubleClickMouseAction->setCurrentIndex(4);
     connect(cmbLeftDoubleClickMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftDoubleClickMouseAction(int)));
@@ -171,11 +171,11 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // add a QComboBox that allows to set the left mouse button double-click action for the JKQTPlotter
     cmbRightDoubleClickMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: right double-click, no modifiers", cmbRightDoubleClickMouseAction);
-    cmbRightDoubleClickMouseAction->addItem("ClickZoomsIn");
-    cmbRightDoubleClickMouseAction->addItem("ClickZoomsOut");
-    cmbRightDoubleClickMouseAction->addItem("ClickOpensContextMenu");
-    cmbRightDoubleClickMouseAction->addItem("ClickOpensSpecialContextMenu");
-    cmbRightDoubleClickMouseAction->addItem("ClickMovesViewport");
+    cmbRightDoubleClickMouseAction->addItem("jkqtpdcaClickZoomsIn");
+    cmbRightDoubleClickMouseAction->addItem("jkqtpdcaClickZoomsOut");
+    cmbRightDoubleClickMouseAction->addItem("jkqtpdcaClickOpensContextMenu");
+    cmbRightDoubleClickMouseAction->addItem("jkqtpdcaClickOpensSpecialContextMenu");
+    cmbRightDoubleClickMouseAction->addItem("jkqtpdcaClickMovesViewport");
     cmbRightDoubleClickMouseAction->addItem("NoAction");
     cmbRightDoubleClickMouseAction->setCurrentIndex(1);
     connect(cmbRightDoubleClickMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightDoubleClickMouseAction(int)));
@@ -185,8 +185,8 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // add a QComboBox that allows to set the mouse wheel action without modifiers
     cmbMouseWheelAction=new QComboBox(this);
     layForm->addRow("mouse action: mouse wheel, no modifiers", cmbMouseWheelAction);
-    cmbMouseWheelAction->addItem("ZoomByWheel");
-    cmbMouseWheelAction->addItem("PanByWheel");
+    cmbMouseWheelAction->addItem("jkqtpmwaZoomByWheel");
+    cmbMouseWheelAction->addItem("jkqtpmwaPanByWheel");
     cmbMouseWheelAction->addItem("NoAction");
     cmbMouseWheelAction->setCurrentIndex(0);
     connect(cmbMouseWheelAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setMouseWheelNoModAction(int)));
@@ -223,19 +223,19 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
 void TestUserInteraction::setLeftMouseAction(int index)
 {
     if (index==cmbLeftNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::NoModifier);
-    else plot->registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDragActions>(index));
+    else plot->registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPMouseDragActions>(index));
 }
 
 void TestUserInteraction::setLeftCtrlMouseAction(int index)
 {
     if (index==cmbLeftCtrlModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::ControlModifier);
-    else plot->registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, static_cast<JKQTPlotter::MouseDragActions>(index));
+    else plot->registerMouseDragAction(Qt::LeftButton, Qt::ControlModifier, static_cast<JKQTPMouseDragActions>(index));
 }
 
 void TestUserInteraction::setRightMouseAction(int index)
 {
     if (index==cmbRightNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::RightButton, Qt::NoModifier);
-    else plot->registerMouseDragAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDragActions>(index));
+    else plot->registerMouseDragAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPMouseDragActions>(index));
 }
 
 void TestUserInteraction::setPlotMagnification(int index)
@@ -245,25 +245,25 @@ void TestUserInteraction::setPlotMagnification(int index)
 
 void TestUserInteraction::setRightClickContextMenu(int index)
 {
-    plot->setContextMenuMode(static_cast<JKQTPlotter::ContextMenuModes>(index));
+    plot->setContextMenuMode(static_cast<JKQTPContextMenuModes>(index));
 }
 
 void TestUserInteraction::setLeftDoubleClickMouseAction(int index)
 {
     if (index>=cmbLeftDoubleClickMouseAction->count()-1)  plot->deregisterMouseDoubleClickAction(Qt::LeftButton, Qt::NoModifier);
-    else plot->registerMouseDoubleClickAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDoubleClickActions>(index));
+    else plot->registerMouseDoubleClickAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPMouseDoubleClickActions>(index));
 }
 
 void TestUserInteraction::setRightDoubleClickMouseAction(int index)
 {
     if (index>=cmbLeftDoubleClickMouseAction->count()-1)  plot->deregisterMouseDoubleClickAction(Qt::RightButton, Qt::NoModifier);
-    else plot->registerMouseDoubleClickAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDoubleClickActions>(index));
+    else plot->registerMouseDoubleClickAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPMouseDoubleClickActions>(index));
 }
 
 void TestUserInteraction::setMouseWheelNoModAction(int index)
 {
     if (index>=cmbMouseWheelAction->count()-1)  plot->deregisterMouseWheelAction(Qt::NoModifier);
-    else plot->registerMouseWheelAction(Qt::NoModifier, static_cast<JKQTPlotter::MouseWheelActions>(index));
+    else plot->registerMouseWheelAction(Qt::NoModifier, static_cast<JKQTPMouseWheelActions>(index));
 }
 
 void TestUserInteraction::plotMouseMove(double x, double y)

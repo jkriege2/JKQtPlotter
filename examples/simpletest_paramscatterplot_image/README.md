@@ -66,7 +66,7 @@ Finally the plot is styled and the axis aspect ratios are fixed:
     // max. size is the size of the image
     plot.setXY(0,image.width()-1,0,image.height()-1);
     plot.setAbsoluteXY(0,image.width()-1,0,image.height()-1);
-    // ensure that axis aspect ration and coordinate system aspect ratio are maintained
+    // ensure that axis aspect ratio and coordinate system aspect ratio are maintained
     plot.getPlotter()->setMaintainAspectRatio(true);
     plot.getPlotter()->setAspectRatio(1);
     plot.getPlotter()->setMaintainAxisAspectRatio(true);

@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -20,6 +20,7 @@
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 #include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
+#include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include <stdlib.h>
 #include <QDebug>
@@ -48,23 +49,8 @@ JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *pa
 }
 
 JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent):
-    JKQTPXFunctionLineGraph(parent)
+    JKQTPXParsedFunctionLineGraph(parent->getPlotter())
 {
-    fdata.parser=new JKQTPMathParser();
-    fdata.node=nullptr;
-    fdata.varcount=0;
-    function="";
-    parameterColumn=-1;
-    setParams(&fdata);
-    setPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
-
-    efdata.parser=new JKQTPMathParser();
-    efdata.node=nullptr;
-    efdata.varcount=0;
-    errorFunction="";
-    errorParameterColumn=-1;
-    setErrorParams(&efdata);
-    setErrorPlotFunction(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction);
 }
 
 JKQTPXParsedFunctionLineGraph::~JKQTPXParsedFunctionLineGraph()

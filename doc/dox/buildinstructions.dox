@@ -29,7 +29,9 @@ They will produce a static link library that you can include into your projects,
 
 \code{.qmake}
 # include JKQTPlotter library
-DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib
+DEPENDPATH += \
+              <PATHTOJKQTPLOTTERDIR>/lib \
+              <PATHTOJKQTPLOTTERDIR>/staticlib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {
     LIBS += -L<PATHTOJKQTPLOTTERDIR>/staticlib/debug -ljkqtplotterlib_debug
@@ -66,11 +68,13 @@ They will produce a dynamic link library that you can include into your projects
 
 \code{.qmake}
 # include JKQTPlotter library
-DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib
+DEPENDPATH += \
+              <PATHTOJKQTPLOTTERDIR>/lib \
+              <PATHTOJKQTPLOTTERDIR>/sharedlib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {
     # ensure that DLLs are copied to the output directory
-    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/debu/jkqtplotterlib_debug.*
+    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/debug/jkqtplotterlib_debug.*
     install_jkqtplotter_dll.path = $$OUT_PWD
     INSTALLS += install_jkqtplotter_dll
     # link agains DLLs

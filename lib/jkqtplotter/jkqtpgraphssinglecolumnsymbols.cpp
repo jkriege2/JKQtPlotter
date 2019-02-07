@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -51,8 +51,14 @@ JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *pa
     if (parent) { // get style settings from parent object
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
+        int parentPlotStyle=parent->getNextStyle();
         color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        symbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
+        symbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
+        symbol=parent->getPlotStyle(parentPlotStyle).symbol();
     }
     fillColor=color;
 }
@@ -109,94 +115,94 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
     if (dataColumn<0) return;
 
     drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    painter.save();
-
-    int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
-    int imin=0;
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    std::random_device rd; // random number generators:
-    std::minstd_rand gen{rd()};
-    gen.seed(seedValue);
-    std::uniform_real_distribution<> dRandomScatter{position-width/2.0, position+width/2.0};
-
-    const double symSize=parent->pt2px(painter, symbolSize);
-
-
-    QVector<QPointF> plotSymbols; // collects symbol locations e.g. for BeeSwarmScatter-plots
-    plotSymbols.reserve(qMax(100,imax-imin));
-    auto doesCollide=[&plotSymbols,&symSize](double x, double y)->bool {
-        for (auto& p: plotSymbols) {
-            if (fabs(p.x()-x)<symSize && fabs(p.y()-y)<symSize) {
-                return true;
-            }
+        int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
+        int imin=0;
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
         }
-        return false;
-    };
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
 
-    if (dataDirection==DataDirection::X) {
-        intSortData();
-        for (int iii=imin; iii<imax; iii++) {
-            int i=qBound<int>(imin, getDataIndex(static_cast<int>(iii)), imax);
-            const double xv=datastore->get(dataColumn,i);
-            double yv=position;
-            if (positionScatterStyle==RandomScatter) {
-                yv=dRandomScatter(gen);
-            }
-            const double x=transformX(xv);
-            double y=transformY(yv);
-            if (positionScatterStyle==BeeSwarmScatter) {
-                while (doesCollide(x,y)) {
-                    if (i%2==0) {
-                        y=y-symSize;
-                    } else {
-                        y=y+symSize;
-                    }
+        std::random_device rd; // random number generators:
+        std::minstd_rand gen{rd()};
+        gen.seed(seedValue);
+        std::uniform_real_distribution<> dRandomScatter{position-width/2.0, position+width/2.0};
+
+        const double symSize=parent->pt2px(painter, symbolSize);
+
+
+        QVector<QPointF> plotSymbols; // collects symbol locations e.g. for BeeSwarmScatter-plots
+        plotSymbols.reserve(qMax(100,imax-imin));
+        auto doesCollide=[&plotSymbols,&symSize](double x, double y)->bool {
+            for (auto& p: plotSymbols) {
+                if (fabs(p.x()-x)<symSize && fabs(p.y()-y)<symSize) {
+                    return true;
                 }
             }
-            plotSymbols.append(QPointF(x,y));
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
-            }
-        }
-    } else {
-        intSortData();
-        for (int iii=imin; iii<imax; iii++) {
-            int i=qBound<int>(imin, getDataIndex(static_cast<int>(iii)), imax);
-            double xv=position;
-            if (positionScatterStyle==RandomScatter) {
-                xv=dRandomScatter(gen);
-            }
-            const double yv=datastore->get(dataColumn,i);
-            double x=transformX(xv);
-            const double y=transformY(yv);
-            if (positionScatterStyle==BeeSwarmScatter) {
-                while (doesCollide(x,y)) {
-                    if (i%2==0) {
-                        x=x-symSize;
-                    } else {
-                        x=x+symSize;
+            return false;
+        };
+
+        if (dataDirection==DataDirection::X) {
+            intSortData();
+            for (int iii=imin; iii<imax; iii++) {
+                int i=qBound<int>(imin, getDataIndex(static_cast<int>(iii)), imax);
+                const double xv=datastore->get(dataColumn,i);
+                double yv=position;
+                if (positionScatterStyle==RandomScatter) {
+                    yv=dRandomScatter(gen);
+                }
+                const double x=transformX(xv);
+                double y=transformY(yv);
+                if (positionScatterStyle==BeeSwarmScatter) {
+                    while (doesCollide(x,y)) {
+                        if (i%2==0) {
+                            y=y-symSize;
+                        } else {
+                            y=y+symSize;
+                        }
                     }
                 }
-            }
-            plotSymbols.append(QPointF(x,y));
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                 plotSymbols.append(QPointF(x,y));
-                JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                    JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                }
+            }
+        } else {
+            intSortData();
+            for (int iii=imin; iii<imax; iii++) {
+                int i=qBound<int>(imin, getDataIndex(static_cast<int>(iii)), imax);
+                double xv=position;
+                if (positionScatterStyle==RandomScatter) {
+                    xv=dRandomScatter(gen);
+                }
+                const double yv=datastore->get(dataColumn,i);
+                double x=transformX(xv);
+                const double y=transformY(yv);
+                if (positionScatterStyle==BeeSwarmScatter) {
+                    while (doesCollide(x,y)) {
+                        if (i%2==0) {
+                            x=x-symSize;
+                        } else {
+                            x=x+symSize;
+                        }
+                    }
+                }
+                plotSymbols.append(QPointF(x,y));
+                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                    plotSymbols.append(QPointF(x,y));
+                    JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                }
             }
         }
+
+
+
     }
-
-
-
-    painter.restore();
 
     drawErrorsAfter(painter);
 }
@@ -212,14 +218,14 @@ void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
     double lineWidth=parent->pt2px(painter, this->lineWidth*parent->getLineWidthMultiplier());
     if (lineWidth>0.5*maxSize) lineWidth=0.5*maxSize;
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(getKeyLabelColor());
     p.setStyle(style);
     p.setWidthF(lineWidth);
     painter.setPen(p);
     JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, getKeyLabelColor(), fillColor);
-    painter.restore();
+
 }
 
 
@@ -227,7 +233,7 @@ void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
 QPen JKQTPSingleColumnSymbolsGraph::getSymbolPen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*symbolWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*symbolWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

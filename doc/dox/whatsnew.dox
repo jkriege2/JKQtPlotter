@@ -6,7 +6,7 @@ This page lists release notes for the diferent version of JKQTPlotter
 \tableofcontents
 
 
-
+ 
 
 
 \section WHATSNEW_TRUNK trunk: Major Update/Refactoring
@@ -23,23 +23,36 @@ Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
   <li> update: massively improved (doxygen-generated) <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a> (automatically generated after each commit using ravis CI) </li>
   <li> new: checked builds with continuous integration from AppVeyor: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a> </li>
   <li> new/update: support for building with Microsoft Visual Studio (Win), MinGW (Win), GCC (Linux/MacOS) </li>
+  <li> changed: using static const variables instead of \c #define for fixed default values (e.g. JKQTPImageTools::LUTSIZE, JKQTPImageTools::PALETTE_ICON_WIDTH, JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, JKQTMathText::ABS_MIN_LINEWIDTH ...)</li>
   <li> Updates to JKQTPlotter: 
     <ul>
       <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
 	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swar plots </li>
 	  <li> new: stacked barcharts with JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph </li>
       <li> deprecated: Removed datarange-feature </li>
-	  <li> new: use/support of C++11 features (e.g. \c std::function<> in JKQTPXFunctionLineGraph / JKQTPYFunctionLineGraph </li>
+	  <li> new: use/support of C++11 features (e.g. \c std::function<> and lambda functions in JKQTPXFunctionLineGraph / JKQTPYFunctionLineGraph )</li>
 	  <li> new: \ref jkqtpopencvinterface  "optional OpenCV interface" </li>
+	  <li> new: \ref jkqtpplotter_styling  "Styling System for JKQTPlotter" </li>
+	  <li> new: added debugging option, which surrounds different regions with visible rectangles (JKQTBasePlotter::enableDebugShowRegionBoxes() ) </li>
+	  <li> fixed: colorbars at top were positioned over the plot label </li>
+	  <li> new: frames (plot viewport, key/legend ...) may be rounded off at the corners</li>
+	  <li> new: diverse new styling options (default font name/size ...)</li>
+	  <li> new: additionl options for styling coordinate axes</li>
 	</ul></li>
-  <li> update/fix: several improvements and bugfixes to JKQTMathText </li>
-</ul>
+ <li> Updates to JKQTMathText: 
+    <ul>
+      <li> update/fix: several general improvements and bugfixes </li>
+	  <li> update/fix: improved error handling </li>
+	  <li> update: updated contained version of STIX fonts, better handling of different STIX versions </li>
+	</ul></li>
+ </ul>
 
 \subsection WHATSNEW_TRUNK_DOWNLOAD trunk: Download
 
 This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2018.08">https://github.com/jkriege2/JKQtPlotter/tree/v2018.08</a>
-  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2018.08</a> (2018-Aug-19)
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
+  - Source Code download (ZIP): <a href="https://github.com/jkriege2/JKQtPlotter/archive/master.zip">https://github.com/jkriege2/JKQtPlotter/archive/master.zip</a>
+  - Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
 .
 
 

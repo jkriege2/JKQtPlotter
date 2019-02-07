@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -20,6 +20,7 @@
 
 
 #include "jkqtfastplotter.h"
+#include "jkqtplottertools/jkqtptools.h"
 #include <QLocale>
 #include <QPainter>
 #include <QPaintEvent>
@@ -45,6 +46,8 @@
 #define JKQTFPPROPERTYload(settings, group, var, varname, varconvert) \
     var=(settings).value((group)+(varname), var).varconvert;
 
+const double JKQTFastPlotter::ABS_MIN_LINEWIDTH=0.05;
+const int JKQTFastPlotter::LUTSIZE=256;
 
 JKQTFPPlot::JKQTFPPlot(JKQTFastPlotter* parent):
     QObject(parent)
@@ -286,7 +289,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
     std::cout<<"timing plotSystem():\n";
     timer.start();
     #endif
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     ///////////////////////////////////////////////////////////////////
     // FILL WIDGET BACKGROUND
     ///////////////////////////////////////////////////////////////////
@@ -309,11 +312,11 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
     ///////////////////////////////////////////////////////////////////
     QPen p=painter.pen();
     QPen pSystem(systemColor);
-    pSystem.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, systemWidth));
+    pSystem.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, systemWidth));
     pSystem.setJoinStyle(Qt::MiterJoin);
     pSystem.setCapStyle(Qt::SquareCap);
     QPen pGrid(gridColor);
-    pGrid.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, gridWidth));
+    pGrid.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, gridWidth));
     pGrid.setStyle(gridStyle);
     pGrid.setJoinStyle(Qt::MiterJoin);
     pGrid.setCapStyle(Qt::SquareCap);
@@ -453,11 +456,11 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
         painter.drawText(QPointF(internalPlotBorderLeft+plotWidth-fmLabels.width(xAxisLabel), internalPlotBorderTop+plotHeight+fmTicks.height()+fmTicks.width("x")/2.0+fmLabels.ascent()+tickLength), xAxisLabel);
     }
     if (yAxisLabelVisible) {
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(fmLabels.ascent(), internalPlotBorderTop+fmLabels.width(yAxisLabel));
         painter.rotate(-90);
         painter.drawText(QPointF(0, 0), yAxisLabel);
-        painter.restore();
+
     }
     #ifdef DEBUG_TIMING
     time_gt=timer.getTime();
@@ -489,7 +492,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
     timer.start();
     #endif
 
-    painter.restore();
+
     #ifdef DEBUG_TIMING
     time_gt=timer.getTime();
     time_sum+=time_gt;
@@ -506,7 +509,7 @@ void JKQTFastPlotter::plotGraphs(QPainter& painter) {
     std::cout<<"timing plotGraphs():\n";
     timer.start();
     #endif
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     for (int i=0; i<plots.size(); i++) {
         #ifdef DEBUG_TIMING
         timer.start();
@@ -519,7 +522,7 @@ void JKQTFastPlotter::plotGraphs(QPainter& painter) {
         timer.start();
         #endif
     }
-    painter.restore();
+
     #ifdef DEBUG_TIMING
     time_gt=timer.getTime();
     time_sum+=time_gt;
@@ -874,12 +877,12 @@ void JKQTFPLinePlot::drawGraph(QPainter& painter) {
     //std::cout<<"JKQTFPLinePlot::drawGraph()\n";
     QPen p(color);
     p.setStyle(style);
-    p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, width));
+    p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, width));
     p.setCapStyle(Qt::RoundCap);
     p.setJoinStyle(Qt::RoundJoin);
     QPen pe(errorColor);
     pe.setStyle(errorStyle);
-    pe.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, errorWidth));
+    pe.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, errorWidth));
     pe.setCapStyle(Qt::RoundCap);
     pe.setJoinStyle(Qt::RoundJoin);
     QPainterPath path, epath;
@@ -960,12 +963,12 @@ void JKQTFPVCrossPlot::drawGraph(QPainter& painter) {
     //std::cout<<"JKQTFPVCrossPlot::drawGraph()\n";
     QPen p(color);
     p.setStyle(style);
-    p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, width));
+    p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, width));
     p.setCapStyle(Qt::RoundCap);
     p.setJoinStyle(Qt::RoundJoin);
     QPen pe(errorColor);
     pe.setStyle(errorStyle);
-    pe.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, errorWidth));
+    pe.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, errorWidth));
     pe.setCapStyle(Qt::RoundCap);
     pe.setJoinStyle(Qt::RoundJoin);
     QPainterPath path, epath;
@@ -1047,7 +1050,7 @@ void JKQTFPVBarPlot::drawGraph(QPainter& painter) {
 
     QPen p(color);
     p.setStyle(style);
-    p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, width));
+    p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, width));
     p.setCapStyle(Qt::RoundCap);
     p.setJoinStyle(Qt::RoundJoin);
 
@@ -1112,7 +1115,7 @@ void JKQTFPXRangePlot::drawGraph(QPainter& painter) {
     b.setColor(fillColor);
     QPen p(color);
     p.setStyle(style);
-    p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, width));
+    p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, width));
     painter.setPen(p);
     painter.fillRect(r, b);
     if (showCenterline) {
@@ -1357,11 +1360,11 @@ void JKQTFPimageOverlayPlot::drawGraph(QPainter& painter) {
                 }
             }
         }
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setTransform(trans, true);
         QPen p=painter.pen();
         p.setColor(color);
-        p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH,linewidth));
+        p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH,linewidth));
         painter.setPen(p);
         for (int i=0; i<qMin(x.size(), y.size()); i++) {
             double px=parent->x2p(x[i]);
@@ -1370,7 +1373,7 @@ void JKQTFPimageOverlayPlot::drawGraph(QPainter& painter) {
             if (this->symboltype==stCircle) painter.drawEllipse(r);
             else painter.drawRect(r);
         }
-        painter.restore();
+
     } else {
         QImage img(width, height, QImage::Format_ARGB32);
         QColor tc(Qt::transparent);
@@ -1419,7 +1422,7 @@ JKQTFPQScaleBarXPlot::JKQTFPQScaleBarXPlot(JKQTFastPlotter* parent, double width
 }
 
 void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
 
     QRectF r(QPointF(parent->getInternalPlotBorderLeft(), parent->getInternalPlotBorderTop()), QPointF(parent->getInternalPlotBorderLeft()+parent->getPlotWidth(), parent->getInternalPlotBorderTop()+parent->getPlotHeight()));
@@ -1428,7 +1431,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
     int yDistance=static_cast<double>(parent->getPlotHeight())*borderfraction;
 
     QPen p(color);
-    p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, lineWidth));
+    p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, lineWidth));
     p.setColor(color);
     QString s=label.arg(width);
 
@@ -1481,7 +1484,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
     }
 
 
-    painter.restore();
+
 }
 
 
@@ -1500,10 +1503,10 @@ JKQTFPQOverlayLinearGridPlot::JKQTFPQOverlayLinearGridPlot(JKQTFastPlotter* pare
 }
 
 void JKQTFPQOverlayLinearGridPlot::drawGraph(QPainter& painter) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
     QPen p(color);
-    p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, lineWidth));
+    p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, lineWidth));
     p.setColor(color);
     p.setStyle(style);
 
@@ -1539,7 +1542,7 @@ void JKQTFPQOverlayLinearGridPlot::drawGraph(QPainter& painter) {
 
     painter.setPen(p);
     painter.drawPath(gridPath);
-    painter.restore();
+
 }
 
 
@@ -1779,7 +1782,7 @@ void JKQTFPYRangePlot::drawGraph(QPainter& painter) {
     b.setColor(fillColor);
     QPen p(color);
     p.setStyle(style);
-    p.setWidthF(qMax(JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH, width));
+    p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, width));
     painter.setPen(p);
     painter.fillRect(r, b);
     if (showCenterline) {
@@ -1787,5 +1790,4 @@ void JKQTFPYRangePlot::drawGraph(QPainter& painter) {
     }
     painter.drawRect(r);
 }
-
 

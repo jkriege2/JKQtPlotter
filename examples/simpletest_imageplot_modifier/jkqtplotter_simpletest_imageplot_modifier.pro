@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET = jkqtplotter_simpletest_imageplot_modifier
 
 # include JKQTPlotter source code
-DEPENDPATH += . ../../lib
+DEPENDPATH += ../../lib  ../../staticlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
     LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug
@@ -20,6 +20,6 @@ CONFIG (debug, debug|release) {
 message("LIBS = $$LIBS")
 
 
-# here you can activate some debug options
-#DEFINES += SHOW_JKQTPLOTTER_DEBUG
-#DEFINES += JKQTBP_AUTOTIMER
+
+
+

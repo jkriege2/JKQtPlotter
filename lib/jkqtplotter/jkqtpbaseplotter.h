@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -19,6 +19,7 @@
 
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
+#include "jkqtplotter/jkqtpbaseplotterstyle.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpelementsoverlay.h"
@@ -143,7 +144,43 @@ class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *
  *
  * \section jkqtbaseplotter_appearance_and_style Appearance & Styling of the Graph
- * \subsection jkqtplotter_base_key Graph Keys
+ *
+ *
+ * \subsection jkqtplotter_base_plotsize Plot Sizes & Borders
+ *
+ * JKQTBasePlotter itself is no QWidget. It is merely tool to represent, manage and draw a graph onto any durface.
+ * JKQTPlotter then uses an internal JKQTBasePlotter instance to provide a QWidget.
+ *
+ * Still the JKQTBasePlotter needs a way to represent the location of the graph, the graph axes etc. inside
+ * a drawing rectangle (of size widgetWidth * widgetHeight ). The plot borders are then offsets to the plot
+ * indise that rectangele. This image illustrated the principle:
+ *
+ * \image html plot_widget_orientation.png
+ *
+ * When the plot is actually drawn, it may happen, that additional elements need to be positioned between the
+ * actual coordinate rectangle and the widget worder (e.g. axis labels, ticks, color bars etc.). Therefore
+ * this objects manages a set of internally calculated variables that also incorporate those dynamic elements.
+ * These are e.g. internalPlotBorderLeft, internalPlotBorderTop, internalPlotBorderRight, ... Their names all
+ * start with \c internal... .
+ *
+ *
+ * \subsection jkqtplotter_base_aspectratios Aspect Ratios
+ * First note that this functionality is only available and activated if both axes are linear!
+ *
+ * You can set two different aspect ratios:
+ *   - The ratio of plotWidth/plotHeight (setAspectRatio(), setMaintainAspectRatio()) will keep the plots pixel-width and height at a certain value.
+ *   - The ratio of (xmax-xmin)/(ymax-ymin) (setAxisAspectRatio(), setMaintainAxisAspectRatio()) will keep the displayed axis ranges in a certain ratio.
+ * .
+ * So to achieve different effects, use these combinations:
+ *   - you have a 200x100 range where each 1x1-pixel should have an aspect ratio of 4:
+ *     \code
+ *        setAspectRatio(200.0/100.0);
+ *        setAxisAspectRatio(4.0*getAspectRatio());
+ *     \endcode
+ * .
+ *
+ *
+ * \subsection jkqtplotter_base_key Graph Keys (Legends)
  * This class provides means to plot a key together with the functions. The plotting is only partially implemented in this base class, and has to be
  * implemented by child classes, as no graph management, that could provide a title for a specific graph, is implemented here. Key Plotting is
  * performed in the plotKey() method. This method basically draws a frame and background and then calls plotKeyContent() to draw the actual contents.
@@ -162,22 +199,6 @@ class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * There is also a possibility to determine the size of the key automatically, so all text fits in. This is activted by the property keyAutosize ( \copybrief keyAutosize ). If this
  * is \c true the function getKeyExtent() has to check the width of every key item and take it into account when calculating the width and height of the
  * key content. By default this feature is switched ON.
- *
- *
- * \subsection jkqtplotter_base_aspectratios Aspect Ratios
- * First note that this functionality is only available and activated if both axes are linear!
- *
- * You can set two different aspect ratios:
- *   - The ratio of plotWidth/plotHeight (setAspectRatio(), setMaintainAspectRatio()) will keep the plots pixel-width and height at a certain value.
- *   - The ratio of (xmax-xmin)/(ymax-ymin) (setAxisAspectRatio(), setMaintainAxisAspectRatio()) will keep the displayed axis ranges in a certain ratio.
- * .
- * So to achieve different effects, use these combinations:
- *   - you have a 200x100 range where each 1x1-pixel should have an aspect ratio of 4:
- *     \code
- *        setAspectRatio(200.0/100.0);
- *        setAxisAspectRatio(4.0*getAspectRatio());
- *     \endcode
- * .
  *
  *
  * \section jkqtbaseplotter_dataexport_print Printing, Saving & Exporting
@@ -297,16 +318,7 @@ class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *
  * \see See \ref JKQTPlotterMultiPlotLayout for an extensive example of the functionality.
  *
- *
- *
- * \section jkqtplotter_base_defaultvalues Default Properties
- * The plot is configured by a huge set of properties. For each property there is also a second protected variable which
- * contains its default value. This way it is possible to store only those parameters in an INI file which have changed with
- * respect to the default values. If the property is called \c property then the according default value is stored in
- * \c default_property. To reduce the code to be entered you can use the JKQTPPROPERTY() macro.
- *
- * Default values are available only for properties that control the appearance of the graphs (line widths, border widths,
- * color, fonts ...), not the type of the graph (xmin, xmax, logXAxis, ...)
+
  *
  * \section jkqtplotter_base_userprops User Properties
  * There is a subset of options that describe how the user interacted with the plotter (export/print scaling factors etc, save directories,
@@ -319,689 +331,40 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
     public:
         typedef QMap<QString, QList<QPointer<QAction> > > AdditionalActionsMap;
         typedef QMapIterator<QString, QList<QPointer<QAction> > > AdditionalActionsMapIterator;
-    protected:
 
-        /** \brief used to plot LaTeX markup */
-        JKQTMathText mathText;
-
-        /** \brief model representing all Plots in this plotter and showing their visible/invisible state */
-        JKQTPGraphsModel* m_plotsModel;
-
-        /** \brief object used for the x-axis */
-        JKQTPHorizontalAxis* xAxis;
-        /** \brief object used for the y-axis */
-        JKQTPVerticalAxis* yAxis;
-
-        /** \brief filename for the ini file in which to save the user settings
-         *  \see jkqtplotter_base_userprops
+        /** \brief set a global preset/default value for the userSettigsFilename and userSettigsPrefix properties of JKQTBasePlotter
+         *
+         *  These presets are application global and will be used ONLY on initialization of a JKQTBasePlotter. You can overwrite them
+         *  on a local-basis for each JKQTBasePrinter separately. The changed values from this function call will only take effect for
+         *  newly created plotters AFTER the function call!
          */
-        QString userSettigsFilename;
-        /** \brief prefix for the ini file in which to save the user settings
-         *  \see jkqtplotter_base_userprops
-         */
-        QString userSettigsPrefix;
+        static void setDefaultJKQTBasePrinterUserSettings(QString userSettigsFilename, const QString& userSettigsPrefix);
 
+        /** \brief register a user-defined QPaintDevice (with factory JKQTPPaintDeviceAdapter) as a plugin to JKQTBasePlotter/JKQTPlotter,
+         *         which will use it to export graphics */
+        static void registerPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
+        /** \brief de-register a  JKQTPPaintDeviceAdapter from JKQTBasePlotter/JKQTPlotter */
+        static void deregisterPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
 
-        /** \brief indicates whether the \ref jkqtplotter_base_saveprint  is activated .*/
-        bool gridPrinting;
-        /** \brief x position of the current graph in \ref jkqtplotter_base_saveprint  */
-        size_t gridPrintingCurrentX;
-        /** \brief y position of the current graph in \ref jkqtplotter_base_saveprint  */
-        size_t gridPrintingCurrentY;
-        /** \brief list that manages all the additional graphs for grid printing mode */
-        QList<JKQTPGridPrintingItem> gridPrintingList;
-        /** \brief this list contains all the rows of the current printing grid and stores its heights */
-        QList<int> gridPrintingRows;
-        /** \brief this list contains all the columns of the current printing grid and stores its widths */
-        QList<int> gridPrintingColumns;
-        /** \brief size of all plots in grid printing mode, filled by gridPrintingCalc() */
-        QSizeF gridPrintingSize;
 
-        /** \brief this is an internal property that is used by the export/print system to control the "magnification". Usually this is 1.0
-         *         but if set !=1.0, it is used to scale the widgetWidth and widgetHeight before painting! */
-        double paintMagnification;
 
-        /** \brief the decimal separator used when exporting data to text files */
-        QString CSVdecimalSeparator;
-        /*! \brief default value for property property CSVdecimalSeparator. \see CSVdecimalSeparator for more information */
-        QString default_CSVdecimalSeparator;
-        /** \brief this string is used to introduce comments in text output when exporting data */
-        QString CSVcommentInitializer;
-        /*! \brief default value for property property CSVcommentInitializer. \see CSVcommentInitializer for more information */
-        QString default_CSVcommentInitializer;
 
-        /** \brief an object which manages all data columns for this plotter class */
-        JKQTPDatastore* datastore;
-        /** \brief indicates whether the datastore is managed (allocated/freed) internally or externally */
-        bool datastoreInternal;
+        /** \brief register a JKQTPSaveDataAdapter with JKQTPlotter/JKQTBasePlotter that can be used to export data from the internal datastore into a file */
+        static bool registerSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
+        /** \brief de-register a JKQTPSaveDataAdapter from JKQTPlotter/JKQTBasePlotter */
+        static bool deregisterSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
 
 
-        /** \brief width of the plot widget */
-        int widgetWidth;
 
-        /** \brief height of the plot widget */
-        int widgetHeight;
-
-
-        /** \brief free space between widget top border and plot top border, this property may be set by the user and is possibly altered
-         *         by the key positioning algorithm. The altered value is written to iplotBorderTop */
-        int plotBorderTop;
-        /*! \brief default value for property property plotBorderTop. \see plotBorderTop for more information */
-        int default_plotBorderTop;
-        /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
-        double iplotBorderTop;
-        double iplotKeyBorderTop;
-        /** \brief height of the plot title (or 0 if no title) */
-        double iTitleHeight;
-        /** \brief free space between widget left border and plot left border, this property may be set by the user and is possibly altered
-         *         by the key positioning algorithm. The altered value is written to iplotBorderLeft  */
-        int plotBorderLeft;
-        /*! \brief default value for property property plotBorderLeft. \see plotBorderLeft for more information */
-        int default_plotBorderLeft;
-        /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
-        double iplotBorderLeft;
-        double iplotKeyBorderLeft;
-        /** \brief free space between widget bottom border and plot bottom border, this property may be set by the user and is possibly altered
-         *         by the key positioning algorithm. The altered value is written to iplotBorderBottom  */
-        int plotBorderBottom;
-        /*! \brief default value for property property plotBorderBottom. \see plotBorderBottom for more information */
-        int default_plotBorderBottom;
-        /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
-        double iplotBorderBottom;
-        double iplotKeyBorderBottom;
-        /** \brief free space between widget right border and plot right border, this property may be set by the user and is possibly altered
-         *         by the key positioning algorithm. The altered value is written to iplotBorderRight  */
-        int plotBorderRight;
-        /*! \brief default value for property property plotBorderRight. \see plotBorderRight for more information */
-        int default_plotBorderRight;
-        /** \brief free space between widget top border and plot top border, as used to plot the graph (mnay be altered from user input ) */
-        double iplotBorderRight;
-        double iplotKeyBorderRight;
-
-
-
-        /** \brief free space between widget top border and plot top border (including coordinate axes) */
-        double iplotBorderTop_nographs;
-        /** \brief free space between widget left border and plot left border (including coordinate axes) */
-        double iplotBorderLeft_nographs;
-        /** \brief free space between widget right border and plot right border (including coordinate axes) */
-        double iplotBorderBottom_nographs;
-        /** \brief free space between widget bottom border and plot bottom border (including coordinate axes) */
-        double iplotBorderRight_nographs;
-
-        /** \brief indicates whether the widget should maintain an aspect ratio of plotwidth and plotheight */
-        bool maintainAspectRatio;
-        /*! \brief default value for property property maintainAspectRatio. \see maintainAspectRatio for more information */
-        bool default_maintainAspectRatio;
-        /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true */
-        double aspectRatio;
-        /*! \brief default value for property property aspectRatio. \see aspectRatio for more information */
-        double default_aspectRatio;
-
-        /** \brief indicates whether the axes should maintain an aspect ratio */
-        bool maintainAxisAspectRatio;
-        /*! \brief default value for property property maintainAxisAspectRatio. \see maintainAxisAspectRatio for more information */
-        bool default_maintainAxisAspectRatio;
-        /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true */
-        double axisAspectRatio;
-        /*! \brief default value for property property axisAspectRatio. \see axisAspectRatio for more information */
-        double default_axisAspectRatio;
-
-        /** \brief plot width in pt inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth) */
-        int plotWidth;
-        /** \brief plot height in pt inside the widget (calculated by calcPlotScaling() from plotBorderTop, plotBorderBottom and widgetHeight) */
-        int plotHeight;
-
-
-
-        /** \brief color of the plotted graph */
-        QColor graphColor;
-        /*! \brief default value for property property graphColor. \see graphColor for more information */
-        QColor default_graphColor;
-        /** \brief colors used in modes where more than one graph is beeing plottet */
-        QColor manyGraphsColor[50];
-        QColor default_manyGraphsColor[50];
-        /** \brief number of actually defined items in manyGraphsColor */
-        int manyGraphsColorCount;
-        /** \brief pen styles used in modes where more than one graph is beeing plottet */
-        Qt::PenStyle manyGraphsStyle[5];
-        /*! \brief default value for property property manyGraphsStyle. \see manyGraphsStyle[5] for more information */
-        Qt::PenStyle default_manyGraphsStyle[5];
-        /** \brief width of the plotted graph (in pixel) */
-        double graphWidth;
-        /*! \brief default value for property property graphWidth. \see graphWidth for more information */
-        double default_graphWidth;
-
-
-
-        /** \brief indicates whether to use clipping (hack for printing, see print() ) */
-        bool useClipping;
-
-
-
-        /** \brief color of the coordinate system */
-        QColor systemColor;
-        /*! \brief default value for property property systemColor. \see systemColor for more information */
-        QColor default_systemColor;
-        /** \brief width of the coordinate (in pixel) */
-        double systemWidth;
-        /*! \brief default value for property property systemWidth. \see systemWidth for more information */
-        double default_systemWidth;
-        /** \brief color of the background*/
-        QColor backgroundColor;
-        /*! \brief default value for property property backgroundColor. \see backgroundColor for more information */
-        QColor default_backgroundColor;
-        /** \brief color of the background when exporting*/
-        QColor exportBackgroundColor;
-        /*! \brief default value for property property exportBackgroundColor. \see exportBackgroundColor for more information */
-        QColor default_exportBackgroundColor;
-        /** \brief color of the plot's background*/
-        QColor plotBackgroundColor;
-        /*! \brief default value for property property plotBackgroundColor. \see plotBackgroundColor for more information */
-        QColor default_plotBackgroundColor;
-
-
-        /** \brief indicates whether to plot a frame around the key */
-        bool showKeyFrame;
-        /*! \brief default value for property property showKeyFrame. \see showKeyFrame for more information */
-        bool default_showKeyFrame;
-        /** \brief color of the key frame line */
-        QColor keyFrameColor;
-        /*! \brief default value for property property keyFrameColor. \see keyFrameColor for more information */
-        QColor default_keyFrameColor;
-        /** \brief width of the key frame line */
-        double keyFrameWidth;
-        /*! \brief default value for property property keyFrameWidth. \see keyFrameWidth for more information */
-        double default_keyFrameWidth;
-        /** \brief color of the key background */
-        QColor keyBackgroundColor;
-        /*! \brief default value for property property keyBackgroundColor. \see keyBackgroundColor for more information */
-        QColor default_keyBackgroundColor;
-        /** \brief indicates whether to plot a key */
-        bool showKey;
-        /*! \brief default value for property property showKey. \see showKey for more information */
-        bool default_showKey;
-        /** \brief font face for key labels */
-        QString keyFont;
-        /*! \brief default value for property property keyFont. \see keyFont for more information */
-        QString default_keyFont;
-        /** \brief font size for key labels [in points] */
-        double keyFontSize;
-        /*! \brief default value for property property keyFontSize. \see keyFontSize for more information */
-        double default_keyFontSize;
-        /** \brief width of a key item in pt [in units of width of 'X' set in keyFont, keyFontSize] */
-        double key_item_width;
-        /*! \brief default value for property property key_item_width. \see key_item_width for more information */
-        double default_key_item_width;
-        /** \brief height of a key item in pt [in units of height  keyFont, keyFontSize] */
-        double key_item_height;
-        /*! \brief default value for property property key_item_height. \see key_item_height for more information */
-        double default_key_item_height;
-        /** \brief length of the line samples in the key in pt [in units of width of 'X' set in keyFont, keyFontSize] */
-        double key_line_length;
-        /*! \brief default value for property property key_line_length. \see key_line_length for more information */
-        double default_key_line_length;
-        /** \brief x-distance between key frame and key content [in units of width of 'X' set in keyFont, keyFontSize] */
-        double keyXMargin;
-        /*! \brief default value for property property keyXMargin. \see keyXMargin for more information */
-        double default_keyXMargin;
-        /** \brief y-distance between key frame and key content [in units of width of 'x' set in keyFont, keyFontSize] */
-        double keyYMargin;
-        /*! \brief default value for property property keyYMargin. \see keyYMargin for more information */
-        double default_keyYMargin;
-        /** \brief x-offset of the key from the border of the plot [in units of width of 'X' set in keyFont, keyFontSize] */
-        double keyXOffset;
-        /*! \brief default value for property property keyXOffset. \see keyXOffset for more information */
-        double default_keyXOffset;
-        /** \brief y-offset of the key from the border of the plot [in units of width of 'x' set in keyFont, keyFontSize] */
-        double keyYOffset;
-        /*! \brief default value for property property keyYOffset. \see keyYOffset for more information */
-        double default_keyYOffset;
-        /** \brief distance between key line example and key text [in units of width of 'X' set in keyFont, keyFontSize] */
-        double keyXSeparation;
-        /*! \brief default value for property property keyXSeparation. \see keyXSeparation for more information */
-        double default_keyXSeparation;
-        /** \brief distance between two key entries [in units of height of keyFont, keyFontSize] */
-        double keyYSeparation;
-        /*! \brief default value for property property keyYSeparation. \see keyYSeparation for more information */
-        double default_keyYSeparation;
-        /** \brief key position */
-        JKQTPKeyPosition keyPosition;
-        /*! \brief default value for property property keyPosition. \see keyPosition for more information */
-        JKQTPKeyPosition default_keyPosition;
-        /** \brief the key layout */
-        JKQTPKeyLayout keyLayout;
-        /*! \brief default value for property property keyLayout. \see keyLayout for more information */
-        JKQTPKeyLayout default_keyLayout;
-        /** \brief determine width of the key automatically */
-        bool keyAutosize;
-        /*! \brief default value for property property keyAutosize. \see keyAutosize for more information */
-        bool default_keyAutosize;
-
-        /** \brief the plot label text */
-        QString plotLabel;
-
-        /** \brief the plot label font name */
-        QString plotLabelFontname;
-        /*! \brief default value for property property plotLabelFontname. \see plotLabelFontname for more information */
-        QString default_plotLabelFontname;
-
-        /** \brief the plot label font size */
-        double plotLabelFontSize;
-        /*! \brief default value for property property plotLabelFontSize. \see plotLabelFontSize for more information */
-        double default_plotLabelFontSize;
-
-        /** \brief calculate the scaling and offset values from axis min/max values */
-        void calcPlotScaling(JKQTPEnhancedPainter& painter);
-
-        /** \brief set the standard settings (colors, line widths ...) */
-        void initSettings();
-
-
-        /** \brief specifies whether this class emits signals, like zoomChangedLocally() or beforePlotScalingRecaluclate() */
-        bool emitSignals;
-
-        /** \brief specifies whether to use antialiasing for plotting the coordinate system */
-        bool useAntiAliasingForSystem;
-        /*! \brief default value for property property useAntiAliasingForSystem. \see useAntiAliasingForSystem for more information */
-        bool default_useAntiAliasingForSystem;
-
-        /** \brief specifies whether to use antialiasing for plotting the graphs
-         *
-         * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
-         *       roughly three-fold speed improvement!
-*/
-        bool useAntiAliasingForGraphs;
-        /*! \brief default value for property property useAntiAliasingForGraphs. \see useAntiAliasingForGraphs for more information */
-        bool default_useAntiAliasingForGraphs;
-
-        /** \brief specifies whether to use antialiasing when drawing any text
-        * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
-        *       roughly three-fold speed improvement!
-*/
-        bool useAntiAliasingForText;
-        /*! \brief default value for property property useAntiAliasingForText. \see useAntiAliasingForText for more information */
-        bool default_useAntiAliasingForText;
-
-        /** \brief multiplier which is used for font sizes when the plot is exported/printed */
-        double fontSizePrintMultiplier;
-
-        /** \brief multiplier which is used for linewidths when the plot is exported/printed */
-        double lineWidthPrintMultiplier;
-
-        /** \brief multiplier for the font size */
-        double fontSizeMultiplier;
-        /** \brief multiplier or the line widths */
-        double lineWidthMultiplier;
-
-        /** \brief internal: used to store a list of all currently used plot styles */
-        QList<int> usedStyles;
-
-
-        /** \brief a vector that contains all graphs to be plottet in the system */
-        QList<JKQTPPlotElement*> graphs;
-
-
-        QList<JKQTPOverlayElement*> overlays;
-
-
-        /** \brief used as maximum/minimum pixel value for plotting */
-        double plot_minmaxcoorinate;
-
-
-
-
-        /** \brief hidden default constructor */
-        JKQTBasePlotter();
-
-
-
-        /** \brief paints the plot onto the given JKQTPEnhancedPainter object */
-        void paintPlot(JKQTPEnhancedPainter& painter, bool drawOverlays=true);
-        void paintOverlays(JKQTPEnhancedPainter& painter);
-        /** \brief simply calls paintPlot() if grid printing mode is deactivated and prints the graph grid otherwise
-         *         \a pageRect is used to determine the size of the page to draw on. If this does not coincide with
-         *         the widget extents this function calculates a scaling factor so the graphs fit onto the page. This
-         *         is especially usefull when printing!
-         */
-        void gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, bool drawOverlays=true, bool scaleIfTooLarge=true, bool scaleIfTooSmall=true);
-        void gridPaintOverlays(JKQTPEnhancedPainter& painter, QSizeF pageRect);
-
-        /** \brief This method goes through all registered plotters and calculates the width of every column and
-         *      height of every row as the max over the row/column. The reults are stored in the private datamembers
-         *      gridPrintingRows and gridPrintingColumns. gridPrintingSize will contain the size of all graphs together
-         *      afterwards. */
-        void gridPrintingCalc();
-
-        /** \brief plot the grid */
-        void plotSystemGrid(JKQTPEnhancedPainter& painter);
-        /** \brief plot the x coordinate axis (incl. labels) */
-        void plotSystemXAxis(JKQTPEnhancedPainter& painter);
-        /** \brief plot the x coordinate axis (incl. labels) */
-        void plotSystemYAxis(JKQTPEnhancedPainter& painter);
-        /** \brief plot the graphs */
-        void plotGraphs(JKQTPEnhancedPainter& painter);
-        /** \brief plot a key */
-        void plotKey(JKQTPEnhancedPainter& painter);
-        /** \brief plot all overlay elements */
-        void plotOverlays(JKQTPEnhancedPainter& painter);
-
-        /** \brief plot the key contents
-         *
-         * This function does not do anything and has to be overwritten in child classes if they want to plot a key.
-         * The implementation should draw the contents of the key, not its frame as this is done in plotKey().
-         *
-         * \param painter draw the key on this painter
-         * \param x left-most coordinate of the key [pixels]
-         * \param y top-most coordinate of the key [pixels]
-         * \param width width of the key [pixels]
-         * \param height height of the key [pixels]
-         *
-         * So any implementation should only draw inside the rectangle <code>[x..x+width, y..y+hieght]</code>
-         */
-        void plotKeyContents(JKQTPEnhancedPainter& painter, double x, double y, double width, double height);
-
-        /** \brief returns the size of the key (as call-by-reference parameters
-         *
-         * Any implementation of key plotting has to overwrite this function and use it to return the size of the key that would be
-         * plotted by plotKeyContents(). This class will use the return values to plot the frame of the key and also supply them to
-         * plotKeyContents(). If height or width are returned 0, no key is plotted
-         *
-         * The implementation in here returns zero size!
-         */
-        void getKeyExtent(JKQTPEnhancedPainter& painter, double *width, double *height, double *text_width=nullptr, double *text_height=nullptr, int *columns_count=nullptr, int* lines_count=nullptr);
-        /** \brief QAction which triggers saving of the plot as an image */
-        QAction* actSavePlot;
-        /** \brief QAction which triggers saving of the data used for the plot */
-        QAction* actSaveData;
-        /** \brief QAction which triggers copying of the data to the clipboard */
-        QAction* actCopyData;
-        /** \brief QAction which triggers copying of the image to the clipboard */
-        QAction* actCopyPixelImage;
-        /** \brief QAction which triggers copying of the data to the clipboard in Matlab format */
-        QAction* actCopyMatlab;
-        /** \brief QAction which triggers the saving as PDF */
-        QAction* actSavePDF;
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        /** \brief QAction which triggers the saving as PostScript */
-        QAction* actSavePS;
-#endif
-        /** \brief QAction which triggers the saving as pixel image */
-        QAction* actSavePix;
-        /** \brief QAction which triggers the saving as Scalable Vector Graphics (SVG) */
-        QAction* actSaveSVG;
-        /** \brief QAction which triggers the printing */
-        QAction* actPrint;
-        /** \brief QAction which triggers the saving as CSV (data only) */
-        QAction* actSaveCSV;
-        /** \brief QAction which triggers zoom all */
-        QAction* actZoomAll;
-        /** \brief QAction which triggers zoom in */
-        QAction* actZoomIn;
-        /** \brief QAction which triggers zoom out */
-        QAction* actZoomOut;
-        /** \brief QAction to show a table with all the plot data in the datastore */
-        QAction* actShowPlotData;
-        /** \brief this list contains additional actions, that can be registered by registerAdditionalAction(). They are shown in the context menu only and are e.g. used to display "save image data" actions. Each action may be in a category (key of map), which is displayed as a submenu of the context-menu! */
-        AdditionalActionsMap lstAdditionalPlotterActions;
-        /** \brief the directory in which to open SaveAs ... dialogs */
-        QString currentSaveDirectory;
-        QString currentFileFormat;
-        QString currentDataFileFormat;
-        QString currentPrinter;
-
-        /** \brief the master plotter for x-dimension, this plotter is connected to. */
-        JKQTBasePlotter *masterPlotterX;
-        /** \brief the master plotter for y-dimension, this plotter is connected to. */
-        JKQTBasePlotter *masterPlotterY;
-        /** \brief synchronize plot width with masterPlotterX */
-        bool masterSynchronizeWidth;
-        /** \brief synchronize plot height with masterPlotterY */
-        bool masterSynchronizeHeight;
-
-
-        /** \brief controls, whether the signals plotUpdated() and overlaysUpdated() are emitted */
-        bool emitPlotSignals;
-
-
-        void printpreview(QPrinter* p, bool setabsolutesize=false);
-        bool printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize=false, double printsizeX_inMM=-1.0, double printsizeY_inMM=-1.0, bool displayPreview=true);
-        bool exportpreview(QSizeF pageSize, bool unitIsMM=false);
-
-        /*! \brief sets the property fontSizeMultiplier ( \copybrief fontSizeMultiplier ) to the specified \a __value. 
-            \details Description of the parameter fontSizeMultiplier is:  <BLOCKQUOTE>\copydoc fontSizeMultiplier </BLOCKQUOTE> 
-        	\see fontSizeMultiplier for more information */ 
-        inline void setFontSizeMultiplier(double __value)
-        { 
-        	this->fontSizeMultiplier = __value; 
-        }
-        /*! \brief sets the property lineWidthMultiplier ( \copybrief lineWidthMultiplier ) to the specified \a __value. 
-            \details Description of the parameter lineWidthMultiplier is:  <BLOCKQUOTE>\copydoc lineWidthMultiplier </BLOCKQUOTE> 
-        	\see lineWidthMultiplier for more information */ 
-        inline void setLineWidthMultiplier(double __value)
-        { 
-        	this->lineWidthMultiplier = __value; 
-        }
-        /*! \brief sets the property printMagnification ( \copybrief printMagnification ) to the specified \a __value. 
-            \details Description of the parameter printMagnification is: <BLOCKQUOTE>\copydoc printMagnification </BLOCKQUOTE> 
-            \see printMagnification for more information */ 
-        inline void setPrintMagnification(double __value)
-        {
-            this->printMagnification = __value;
-        } 
-        /*! \brief returns the property printMagnification ( \copybrief printMagnification ). 
-            \details Description of the parameter printMagnification is: <BLOCKQUOTE>\copydoc printMagnification </BLOCKQUOTE> 
-            \see printMagnification for more information */ 
-        inline double getPrintMagnification() const
-        {
-            return this->printMagnification; 
-        }
-        /*! \brief sets the property paintMagnification ( \copybrief paintMagnification ) to the specified \a __value. 
-            \details Description of the parameter paintMagnification is: <BLOCKQUOTE>\copydoc paintMagnification </BLOCKQUOTE> 
-            \see paintMagnification for more information */ 
-        inline void setPaintMagnification(double __value)
-        {
-            this->paintMagnification = __value;
-        } 
-        /*! \brief returns the property paintMagnification ( \copybrief paintMagnification ). 
-            \details Description of the parameter paintMagnification is: <BLOCKQUOTE>\copydoc paintMagnification </BLOCKQUOTE> 
-            \see paintMagnification for more information */ 
-        inline double getPaintMagnification() const
-        {
-            return this->paintMagnification; 
-        }
-
-        QListWidget* dataColumnsListWidget;
-        QComboBox* dataColumnsCombobox;
-        QSet<int> getDataColumnsByUser();
-        QMap<QString, QStringList> getDataColumnsByUserSaved;
-
-
-    private:
-        double printZoomFactor;
-        double printSizeX_Millimeter;
-        double printSizeY_Millimeter;
-        double printMagnification;
-        QPointer<QPrintPreviewWidget> printPreview;
-        QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeX;
-        QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeY;
-        QPointer<QLabel> exportPreviewLabel;
-        QPointer<JKQTPEnhancedDoubleSpinBox> spinMagnification;
-        bool printSetAbsolutePageSize;
-        bool printSetAbsolutePlotSize;
-        bool printKeepAbsoluteFontSizes;
-        bool printScaleToPagesize;
-        double printAspect;
-        bool printKeepAspect;
-        bool exportUnitInMM;
-        QSizeF printPageSizeMM;
-        bool printDoUpdate;
-
-
-
-
-
-
-    protected slots:
-        void updatePreviewLabel();
-        void printpreviewPaintRequested(QPrinter *printer);
-        void printpreviewPaintRequestedNew(QPrinter *printer);
-        void printpreviewPaintRequestedNew(QPaintDevice *paintDevice);
-        void exportpreviewPaintRequested(JKQTPEnhancedPainter& painter, QSize size);
-        void printpreviewSetZoom(double value);
-        void printpreviewSetSizeX(double value);
-        void printpreviewSetSizeY(double value);
-        void printpreviewSetSizeXNew(double value);
-        void printpreviewSetSizeYNew(double value);
-        void printpreviewSetMagnification(double value);
-        void printpreviewSetMagnificationNew(double value);
-        void printpreviewSetAspectRatio(bool checked);
-        void printpreviewSetKeepAbsFontsize(bool checked);
-        void printpreviewToggleMagnification(bool checked);
-        void printpreviewSetLineWidthMultiplier(double value);
-        void printpreviewSetFontSizeMultiplier(double value);
-        void printpreviewUpdate();
-        void getDataColumnsByUserCheckAll();
-        void getDataColumnsByUserCheckNone();
-        void getDataColumnsByUserSave();
-        void getDataColumnsByUserComboBoxSelected(const QString& name);
-        void getDataColumnsByUserItemChanged(QListWidgetItem* widgetitem);
-        void showPlotData();
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
-        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis */
-        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
-        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis */
-        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
-
-    public slots:
-
-
-
-
-        /** \brief sets x/ymin and x/ymax to the supplied values and replots the graph (zoom operation!) */
-        void zoom(double nxmin, double nxmax, double nymin, double nymax);
-
-        /** \brief sets whether to plot grid lines or not */
-        void setGrid(bool val);
-
-        /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed */
-        void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray());
-
-        /** \brief copy the current plot as a pixel image to the clipboard */
-        void copyPixelImage();
-
-        /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
-        void saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
-
-        /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
-        void saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
-
-        /** \brief save the current plot as a PS file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed */
-        void saveAsPS(const QString& filename=QString(""), bool displayPreview=true);
-
-        /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
-        *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
-        void saveImage(const QString& filename=QString(""), bool displayPreview=true);
-
-        /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
-         *
-         * The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or
-         * if \a filename is also empty the format will be choosen according to what is selected in the file selection dialog.
-         *
-         * If \a format is \c "slk" the output will be in SYLK format, if \a format is \c "csv" or \a "dat" the output will be comma separated values
-         * and if \a format is \c "txt" the output will be tab separated values.
-         */
-        void saveData(const QString& filename=QString(""), const QString& jkqtp_format=QString(""));
-        /** \brief copy the data used for the current plot to the clipboard
-         *
-         *  copies data as tab separated data with the system-decimal point.
-         */
-        void copyData();
-        /** \brief copy the data used for the current plot to the clipboard in Matlab format
-         */
-        void copyDataMatlab();
-        /** \brief save the current plot data as a Comma Separated Values (CSV) file*/
-        void saveAsCSV(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a DIF file*/
-        void saveAsDIF(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a SYLK spreadsheet file*/
-        void saveAsSYLK(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Matlab Script*/
-        void saveAsMatlab(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file*/
-        void saveAsSemicolonSV(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file*/
-        void saveAsTabSV(const QString& filename=QString(""));
-
-        /** \brief save the current plot data as a Semicolon Separated Values (CSV) file for german Excel, i.e. with comma as decimal separator*/
-        void saveAsGerExcelCSV(const QString& filename=QString(""));
-
-        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
-        void print(QPrinter* printer=nullptr, bool displayPreview=true);
-
-        /** \brief this method zooms the graph so that all plotted datapoints are visible.
-         *
-         * \param zoomX if set \c true (default) zooms the x axis
-         * \param zoomY if set \c true (default) zooms the y axis
-         * \param includeX0 if this is \c true zoomToFit() will ensure that \f$ x=0 \f$ is visible in the plot (only for non-logx plots, default: false)
-         * \param includeY0 if this is \c true zoomToFit() will ensure that \f$ y=0 \f$ is visible in the plot (only for non-logy plots, default: false)
-         * \param scaleX the plot will have a width of \f$ \mbox{Xscale}\cdot\Delta x \f$ where \f$ \Delta x \f$ is the actual x-axis data range
-         *               For logx plots we actually use this on the logarithmized data! (default: 1.05)
-         * \param scaleY the plot will have a height of \f$ \mbox{Yscale}\cdot\Delta < \f$ where \f$ \Delta < \f$ is the actual <-axis data range
-         *               For log< plots we actually use this on the logarithmized data! (default: 1.05)
-         *
-         */
-        void zoomToFit(bool zoomX=true, bool zoomY=true, bool includeX0=false, bool includeY0=false, double scaleX=1.05, double scaleY=1.05);
-
-        /** \brief zooms into the graph (the same as turning the mouse wheel) by the given factor */
-        void zoomIn(double factor=2.0);
-        /** \brief zooms out of the graph (the same as turning the mouse wheel) by the given factor */
-        void zoomOut(double factor=2.0) {
-            zoomIn(1.0/factor);
-        }
-
-        /** \brief en-/disables the maintaining of the data aspect ratio */
-        void setMaintainAspectRatio(bool value) {
-            maintainAspectRatio=value;
-            redrawPlot();
-        }
-
-        /** \brief en-/disables the maintaining of the axis aspect ratio */
-        void setMaintainAxisAspectRatio(bool value) {
-            maintainAxisAspectRatio=value;
-            redrawPlot();
-        }
-
-        void setUserSettigsFilename(const QString& filename, const QString& prefix);
-        void setUserSettigsFilename(const QString& filename);
-        void setUserSettigsPrefix(const QString& prefix);
-        QString getUserSettigsFilename() const;
-        QString getUserSettigsPrefix() const;
-
-        /** \brief set all graphs invisible, except i */
-        void setOnlyGraphVisible(int i);
-        /** \brief set all graphs invisible, except graph start, start+n, start+2*n, ... */
-        void setOnlyNthGraphsVisible(int start, int n);
-
-        /** \brief saves the plot user properties if userSettingsFilename is set, does nothing otherwise */
-        void loadUserSettings();
-
-        /** \brief saves the plot user properties if userSettingsFilename is set, does nothing otherwise */
-        void saveUserSettings() const;
-    public:
         /** \brief class constructor
          *
          * if \a datastore_internal is \c true then the constructor will create an internal datastore object. The datastore
          * will be managed (freed) by this class. If \a datastore_internal is \c false the class will use tha datastore provided
          * in \a datast as an external datastore. You can modify this later by using useInternalDatastore() and useExternalDatastore().
          */
-        JKQTBasePlotter(bool datastore_internal, QObject* parent=nullptr, JKQTPDatastore* datast=nullptr);
+        explicit JKQTBasePlotter(bool datastore_internal, QObject* parent=nullptr, JKQTPDatastore* datast=nullptr);
+
+        JKQTBasePlotter()=delete;
 
         /** \brief class destructor */
         virtual ~JKQTBasePlotter();
@@ -1048,61 +411,70 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setEmittingSignalsEnabled(bool enabled);
 
 
-        /** \brief loads the plot properties from a QSettings object */
-        void loadSettings(const QSettings& settings, const QString& group=QString("plots"));
+        /** \brief loads all the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object */
+        void loadSettings(const QSettings& settings, const QString& group=QString("plots/"));
 
-        /** \brief saves the plot properties into a QSettings object.
+        /** \brief saves the plot properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object.
          *
          * This method only saves those properties that differ from their default value.
          */
-        void saveSettings(QSettings& settings, const QString& group=QString("plots")) const;
+        void saveSettings(QSettings& settings, const QString& group=QString("plots/")) const;
+
+
+        /** \brief current style properties for this JKQTBasePlotter
+         *
+         * \see JKQTPSetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
+         */
+        const JKQTBasePlotterStyle& getCurrentPlotterStyle() const;
+
+        /** \brief replace the current style properties for this JKQTBasePlotter
+         *
+         * \see JKQTPSetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
+         */
+        void setCurrentPlotterStyle(const JKQTBasePlotterStyle& style);
+        /** \brief replace the current style properties for this JKQTBasePlotter with properties loaded from \a settings
+         *
+         * \param settings the QSettings object to read from
+         * \param group group in \a settings to read from
+         *
+         * \see JKQTPSetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
+         */
+        void loadCurrentPlotterStyle(const QSettings& settings, const QString& group="plot/");
+        /** \brief store the current style properties for this JKQTBasePlotter with properties loaded from \a settings
+         *
+         * \param settings the QSettings object to write to
+         * \param group group in \a settings to write to
+         *
+         * \see JKQTPSetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
+         */
+        void saveCurrentPlotterStyle(QSettings& settings, const QString& group="plot/") const;
 
 
 
-        /** \brief loads the plot user properties from a QSettings object */
-        void loadUserSettings(const QSettings& settings, const QString& group=QString("plots_user"));
+        /** \brief loads the plot user properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object */
+        void loadUserSettings(const QSettings& settings, const QString& group=QString("plots_user/"));
 
-        /** \brief saves the plot user properties into a QSettings object. */
-        void saveUserSettings(QSettings& settings, const QString& group=QString("plots_user")) const;
-
-        /** \brief sets the width of the plot widget */
-        void setWidth(int wid);
-
-        /** \brief resize the plot */
-        void resize(int width, int height);
+        /** \brief saves the plot user properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object. */
+        void saveUserSettings(QSettings& settings, const QString& group=QString("plots_user/")) const;
 
         /** \brief gets the width of the plot widget */
-        inline int getWidth() {return widgetWidth; }
+        int getWidth();
 
         /** \brief gets the width of the plot widget */
-        inline int getHeight() {return widgetHeight; }
+        int getHeight();
 
-        /** \brief sets the width of the plot widget */
-        void setHeight(int heigh);
-
-        /** \brief sets the borders of the plot, see also getPlotBorderTop(), plotBorderBottom(), plotBorderLeft(), plotBorderRight() */
-        void setBorder(int left, int right, int top, int bottom);
-
-        /** \brief sets minimum and maximum x-value to plot */
-        void setX(double xminn, double xmaxx);
-
-        /** \brief sets minimum and maximum y-value to plot */
-        void setY(double yminn, double ymaxx);
-
-        /** \brief sets minimum and maximum x- and y-values to plot */
-        void setXY(double xminn, double xmaxx, double yminn, double ymaxx);
 
         /** \brief returns the current x-axis min */
-        inline double getXMin() const {return xAxis->getMin(); }
+        double getXMin() const;
 
         /** \brief returns the current x-axis max */
-        inline double getXMax() const {return xAxis->getMax(); }
+        double getXMax() const;
 
         /** \brief returns the current y-axis min */
-        inline double getYMin() const {return yAxis->getMin(); }
+        double getYMin() const;
 
         /** \brief returns the current y-axis max */
-        inline double getYMax() const {return yAxis->getMax(); }
+        double getYMax() const;
 
 
 
@@ -1145,47 +517,24 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
             return mm2px(mm, painter.device()->logicalDpiX());
         }
 
-        /** \brief sets absolute minimum and maximum x-value to plot
-         *  \note if the aspect ration of this does not fit into the widget, it is possible that you don't see the complete contents!
-         */
-        void setAbsoluteX(double xminn, double xmaxx);
-
-        /** \brief sets absolute minimum and maximum y-value to plot
-         *  \note if the aspect ration of this does not fit into the widget, it is possible that you don't see the complete contents!
-         */
-        void setAbsoluteY(double yminn, double ymaxx);
-
-        /** \brief sets absolute minimum and maximum x- and y-values to plot
-         *  \note if the aspect ration of this does not fit into the widget, it is possible that you don't see the complete contents!
-         */
-        void setAbsoluteXY(double xminn, double xmaxx, double yminn, double ymaxx);
-
         /** \brief returns the absolute x-axis min */
-        inline double getAbsoluteXMin() const {return xAxis->getAbsoluteMin(); }
+        double getAbsoluteXMin() const;
 
         /** \brief returns the absolute x-axis max */
-        inline double getAbsoluteXMax() const {return xAxis->getAbsoluteMax(); }
+        double getAbsoluteXMax() const;
 
         /** \brief returns the absolute y-axis min */
-        inline double getAbsoluteYMin() const {return yAxis->getAbsoluteMin(); }
+        double getAbsoluteYMin() const;
 
         /** \brief returns the absolute y-axis max */
-        inline double getAbsoluteYMax() const {return yAxis->getAbsoluteMax(); }
+        double getAbsoluteYMax() const;
 
 
         /** \brief add a new plotter for grid printing mode */
-        inline void addGridPrintingPlotter(size_t x, size_t y, JKQTBasePlotter* plotter) {
-            JKQTPGridPrintingItem i;
-            i.x=x;
-            i.y=y;
-            i.plotter=plotter;
-            gridPrintingList.push_back(i);
-        }
+        void addGridPrintingPlotter(size_t x, size_t y, JKQTBasePlotter* plotter);
 
         /** \brief clear all additional plotters for grid printing mode */
-        inline void clearGridPrintingPlotters() {
-            gridPrintingList.clear();
-        }
+        void clearGridPrintingPlotters();
 
         /** \brief return x-pixel coordinate from time coordinate */
         inline double x2p(double x) const {
@@ -1211,21 +560,55 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         int getNextStyle();
 
 
-        /** \brief represents a pen, when plotting in JKQTPlotter/JKQTBasePlotter 
-		 *   \ingroup jkqtpplotterclasses_tools
-		 */
-        struct JKQTPPen {
-            QColor m_color;
-            double m_width;
-            Qt::PenStyle m_style;
-            void setWidthF(double w) { m_width=w; }
-            void setWidth(double w) { m_width=w; }
-            double width() const { return m_width; }
-            double widthF() const { return m_width; }
-            QColor color() const { return m_color; }
-            void setColor(const QColor& col) {m_color=col; }
-            Qt::PenStyle style() const { return m_style; }
-            void setStyle(Qt::PenStyle s) { m_style=s; }
+        /** \brief represents a pen, when plotting in JKQTPlotter/JKQTBasePlotter
+         *   \ingroup jkqtpplotterclasses_tools
+         *
+         * \see getPlotStyle()
+         */
+        class JKQTP_LIB_EXPORT JKQTPPen {
+            protected:
+                QColor m_color;
+                QColor m_fillColor;
+                QColor m_errorColor;
+                QColor m_errorFillColor;
+                double m_width;
+                double m_errorWidth;
+                double m_symbolLineWidth;
+                Qt::PenStyle m_style;
+                double m_symbolSize;
+                Qt::BrushStyle m_fillStyle;
+                Qt::BrushStyle m_errorFillStyle;
+                JKQTPGraphSymbols m_symbol;
+
+            public:
+                JKQTPPen();
+                void setSymbolSize(double w);
+                void setSymbolLineWidthF(double w);
+                void setWidthF(double w);
+                void setWidth(double w);
+                void setErrorWidth(double w);
+                double width() const;
+                double widthF() const;
+                double errorWidthF() const;
+                double symbolLineWidthF() const;
+                double symbolSize() const;
+                QColor color() const;
+                QColor errorColor() const;
+                QColor errorFillColor() const;
+                void setColor(const QColor& col);
+                Qt::PenStyle style() const;
+                Qt::PenStyle errorStyle() const;
+                void setStyle(Qt::PenStyle s);
+                QColor fillColor() const;
+                void setFillColor(const QColor& col);
+                void setErrorFillColor(const QColor& col);
+                void setErrorColor(const QColor& col);
+                void setFillStyle(Qt::BrushStyle s);
+                void setErrorFillStyle(Qt::BrushStyle s);
+                Qt::BrushStyle fillStyle() const;
+                Qt::BrushStyle errorFillStyle() const;
+                JKQTPGraphSymbols symbol() const;
+                void setSymbol(JKQTPGraphSymbols symbol);
         };
 
 
@@ -1236,7 +619,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param rect rectangle to plot into
          */
-        void draw(JKQTPEnhancedPainter& painter, const QRect& rect, bool drawOverlays=true);
+        void draw(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays=true);
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
@@ -1248,19 +631,19 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param pos where to plot the painter (left-top corner)
          */
-        void draw(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool drawOverlays=true);
+        void draw(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool showOverlays=true);
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param rect rectangle to plot into
          */
-        void drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect, bool drawOverlays=true);
+        void drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays=true);
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param pos where to plot the painter (left-top corner)
          */
-        void drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool drawOverlays=true);
+        void drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool showOverlays=true);
         void drawNonGridOverlays(JKQTPEnhancedPainter &painter, const QPoint& pos=QPoint(0,0));
 
         /** \brief emit plotUpdated() */
@@ -1271,570 +654,111 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief returns, whether the signals plotUpdated() and overlaysUpdated() are emitted */
         bool isEmittingPlotSignalsEnabled() const;
 
-        /*! \brief returns the property plotBorderTop ( \copybrief plotBorderTop ). \details Description of the parameter plotBorderTop is:  <BLOCKQUOTE>\copydoc plotBorderTop </BLOCKQUOTE>. \see plotBorderTop for more information */ 
-        inline int getPlotBorderTop() const { return this->plotBorderTop; }
-        /*! \brief returns the property plotBorderLeft ( \copybrief plotBorderLeft ). \details Description of the parameter plotBorderLeft is:  <BLOCKQUOTE>\copydoc plotBorderLeft </BLOCKQUOTE>. \see plotBorderLeft for more information */ 
-        inline int getPlotBorderLeft() const { return this->plotBorderLeft; }
-        /*! \brief returns the property plotBorderBottom ( \copybrief plotBorderBottom ). \details Description of the parameter plotBorderBottom is:  <BLOCKQUOTE>\copydoc plotBorderBottom </BLOCKQUOTE>. \see plotBorderBottom for more information */ 
-        inline int getPlotBorderBottom() const { return this->plotBorderBottom; }
-        /*! \brief returns the property plotBorderRight ( \copybrief plotBorderRight ). \details Description of the parameter plotBorderRight is:  <BLOCKQUOTE>\copydoc plotBorderRight </BLOCKQUOTE>. \see plotBorderRight for more information */ 
-        inline int getPlotBorderRight() const { return this->plotBorderRight; }
+        /** \copydoc JKQTBasePlotterStyle::plotBorderTop  */
+        int getPlotBorderTop() const;
+        /** \copydoc JKQTBasePlotterStyle::plotBorderLeft  */
+        int getPlotBorderLeft() const;
+        /** \copydoc JKQTBasePlotterStyle::plotBorderBottom  */
+        int getPlotBorderBottom() const;
+        /** \copydoc JKQTBasePlotterStyle::plotBorderRight  */
+        int getPlotBorderRight() const;
 
-        /*! \brief returns the property maintainAspectRatio ( \copybrief maintainAspectRatio ). \details Description of the parameter maintainAspectRatio is:  <BLOCKQUOTE>\copydoc maintainAspectRatio </BLOCKQUOTE>. \see maintainAspectRatio for more information */ 
-        inline bool doesMaintainAspectRatio() const { return this->maintainAspectRatio; }
-        /*! \brief sets the property aspectRatio ( \copybrief aspectRatio ) to the specified \a __value. 
-            \details Description of the parameter aspectRatio is: <BLOCKQUOTE>\copydoc aspectRatio </BLOCKQUOTE> 
-            \see aspectRatio for more information */ 
-        inline void setAspectRatio(double __value)
-        {
-            if (this->aspectRatio != __value) {
-                this->aspectRatio = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property aspectRatio ( \copybrief aspectRatio ). 
-            \details Description of the parameter aspectRatio is: <BLOCKQUOTE>\copydoc aspectRatio </BLOCKQUOTE> 
-            \see aspectRatio for more information */ 
-        inline double getAspectRatio() const
-        {
-            return this->aspectRatio; 
-        }
+        /** \brief returns whether the maintaining of the data aspect ratio is enabled or disabled */
+        bool doesMaintainAspectRatio() const;
+        /** \brief returns the data aspect ratio, enforced with setMaintainApsectRatio(true) */
+        double getAspectRatio() const;
 
-        /*! \brief returns the property maintainAxisAspectRatio ( \copybrief maintainAxisAspectRatio ). \details Description of the parameter maintainAxisAspectRatio is:  <BLOCKQUOTE>\copydoc maintainAxisAspectRatio </BLOCKQUOTE>. \see maintainAxisAspectRatio for more information */ 
-        inline bool doesMaintainAxisAspectRatio() const { return this->maintainAxisAspectRatio; }
-        /*! \brief sets the property axisAspectRatio ( \copybrief axisAspectRatio ) to the specified \a __value. 
-            \details Description of the parameter axisAspectRatio is: <BLOCKQUOTE>\copydoc axisAspectRatio </BLOCKQUOTE> 
-            \see axisAspectRatio for more information */ 
-        inline void setAxisAspectRatio(double __value)
-        {
-            if (this->axisAspectRatio != __value) {
-                this->axisAspectRatio = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property axisAspectRatio ( \copybrief axisAspectRatio ). 
-            \details Description of the parameter axisAspectRatio is: <BLOCKQUOTE>\copydoc axisAspectRatio </BLOCKQUOTE> 
-            \see axisAspectRatio for more information */ 
-        inline double getAxisAspectRatio() const
-        {
-            return this->axisAspectRatio; 
-        }
+        /** \brief returns whether the maintaining of the axis aspect ratio is enabled or disabled */
+        bool doesMaintainAxisAspectRatio() const;
+        /** \brief returns the axis aspect ratio, enforced with setMaintainAxisApsectRatio(true) */
+        double getAxisAspectRatio() const;
+        /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForSystem  */
+        bool isUsingAntiAliasingForSystem() const;
+        /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForGraphs  */
+        bool isUsingAntiAliasingForGraphs() const;
+        /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForText  */
+        bool isUsingAntiAliasingForText() const;
+        /** \copydoc JKQTBasePlotterStyle:defaultGraphWidth:  */
+        double getGraphWidth() const;
+        /** \copydoc JKQTBasePlotterStyle::widgetBackgroundColor  */
+        QColor getBackgroundColor() const;
+        /** \copydoc JKQTBasePlotterStyle::exportBackgroundColor  */
+        QColor getExportBackgroundColor() const;
+        /** \copydoc JKQTBasePlotterStyle::plotBackgroundColor  */
+        QColor getPlotBackgroundColor() const;
+        /*! \copydoc JKQTPKeyStyle::fontSize */
+        double getKeyFontSize() const;
+        /*! \copydoc JKQTPKeyStyle::itemWidth */
+        double getKeyItemWidth() const;
+        /*! \copydoc JKQTPKeyStyle::itemHeight */
+        double getKeyItemHeight() const;
+        /*! \copydoc JKQTPKeyStyle::ySeparation */
+        double getKeyYSeparation() const;
+        /*! \copydoc JKQTPKeyStyle::sampleLineLength */
+        double getKeyLineLength() const;
+        /*! \copydoc JKQTPKeyStyle::xMargin */
+        double getKeyXMargin() const;
+        /*! \copydoc JKQTPKeyStyle::yMargin */
+        double getKeyYMargin() const;
+        /*! \copydoc JKQTPKeyStyle::xSeparation */
+        double getKeyXSeparation() const;
+        /*! \copydoc JKQTPKeyStyle::xOffset */
+        double getKeyXOffset() const;
+        /*! \copydoc JKQTPKeyStyle::yOffset */
+        double getKeyYOffset() const;
+        /*! \copydoc JKQTPKeyStyle::visible */
+        bool getShowKey() const;
+        /*! \copydoc JKQTPKeyStyle::frameVisible */
+        bool getShowKeyFrame() const;
+        /*! \copydoc JKQTPKeyStyle::frameColor */
+        QColor getKeyFrameColor() const;
+        /*! \copydoc JKQTPKeyStyle::backgroundColor */
+        QColor getKeyBackgroundColor() const;
+        /*! \copydoc JKQTPKeyStyle::textColor */
+        QColor getKeyTextColor() const;
+        /*! \copydoc JKQTPKeyStyle::frameWidth */
+        double getKeyFrameWidth() const;
+        /*! \copydoc JKQTPKeyStyle::frameRounding */
+        double getKeyFrameRounding() const;
+        /*! \copydoc JKQTPKeyStyle::autosize */
+        bool getKeyAutosize() const;
+        /*! \copydoc JKQTPKeyStyle::position */
+        JKQTPKeyPosition getKeyPosition() const;
+        /*! \copydoc JKQTPKeyStyle::layout */
+        JKQTPKeyLayout getKeyLayout() const;
+        /*! \copydoc JKQTBasePlotterStyle::defaultTextColor */
+        QColor getDefaultTextColor() const;
+        /*! \copydoc JKQTBasePlotterStyle::defaultFontSize */
+        double getDefaultTextSize() const;
+        /*! \copydoc JKQTBasePlotterStyle::defaultFontName */
+        QString getDefaultTextFontName() const;
+        /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...)
+         *
+         * \see JKQTBasePlotterStyle::debugShowRegionBoxes, enableDebugShowRegionBoxes()
+         */
+        bool isDebugShowRegionBoxesEnabled() const;
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameVisible */
+        bool isPlotFrameVisible() const;
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameColor */
+        QColor getPlotFrameColor() const;
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameWidth */
+        double getPlotFrameWidth() const;
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameRounding */
+        double getPlotFrameRounding() const;
 
-        /*! \brief sets the property useAntiAliasingForSystem ( \copybrief useAntiAliasingForSystem ) to the specified \a __value. 
-            \details Description of the parameter useAntiAliasingForSystem is: <BLOCKQUOTE>\copydoc useAntiAliasingForSystem </BLOCKQUOTE> 
-            \see useAntiAliasingForSystem for more information */ 
-        inline void setUseAntiAliasingForSystem(bool __value)
-        {
-            if (this->useAntiAliasingForSystem != __value) {
-                this->useAntiAliasingForSystem = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property useAntiAliasingForSystem ( \copybrief useAntiAliasingForSystem ). 
-            \details Description of the parameter useAntiAliasingForSystem is: <BLOCKQUOTE>\copydoc useAntiAliasingForSystem </BLOCKQUOTE> 
-            \see useAntiAliasingForSystem for more information */ 
-        inline bool isUsingAntiAliasingForSystem() const
-        {
-            return this->useAntiAliasingForSystem; 
-        }
-        /*! \brief sets the property useAntiAliasingForGraphs ( \copybrief useAntiAliasingForGraphs ) to the specified \a __value. 
-            \details Description of the parameter useAntiAliasingForGraphs is: <BLOCKQUOTE>\copydoc useAntiAliasingForGraphs </BLOCKQUOTE> 
-            \see useAntiAliasingForGraphs for more information */ 
-        inline void setUseAntiAliasingForGraphs(bool __value)
-        {
-            if (this->useAntiAliasingForGraphs != __value) {
-                this->useAntiAliasingForGraphs = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property useAntiAliasingForGraphs ( \copybrief useAntiAliasingForGraphs ). 
-            \details Description of the parameter useAntiAliasingForGraphs is: <BLOCKQUOTE>\copydoc useAntiAliasingForGraphs </BLOCKQUOTE> 
-            \see useAntiAliasingForGraphs for more information */ 
-        inline bool isUsingAntiAliasingForGraphs() const
-        {
-            return this->useAntiAliasingForGraphs; 
-        }
-        /*! \brief sets the property useAntiAliasingForText ( \copybrief useAntiAliasingForText ) to the specified \a __value. 
-            \details Description of the parameter useAntiAliasingForText is: <BLOCKQUOTE>\copydoc useAntiAliasingForText </BLOCKQUOTE> 
-            \see useAntiAliasingForText for more information */ 
-        inline void setUseAntiAliasingForText(bool __value)
-        {
-            if (this->useAntiAliasingForText != __value) {
-                this->useAntiAliasingForText = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property useAntiAliasingForText ( \copybrief useAntiAliasingForText ). 
-            \details Description of the parameter useAntiAliasingForText is: <BLOCKQUOTE>\copydoc useAntiAliasingForText </BLOCKQUOTE> 
-            \see useAntiAliasingForText for more information */ 
-        inline bool isUsingAntiAliasingForText() const
-        {
-            return this->useAntiAliasingForText; 
-        }
-
-        /*! \brief sets the property graphColor ( \copybrief graphColor ) to the specified \a __value. 
-            \details Description of the parameter graphColor is: <BLOCKQUOTE>\copydoc graphColor </BLOCKQUOTE> 
-            \see graphColor for more information */ 
-        inline void setGraphColor(const QColor & __value)
-        {
-            if (this->graphColor != __value) {
-                this->graphColor = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property graphColor ( \copybrief graphColor ). 
-            \details Description of the parameter graphColor is: <BLOCKQUOTE>\copydoc graphColor </BLOCKQUOTE> 
-            \see graphColor for more information */ 
-        inline QColor getGraphColor() const
-        {
-            return this->graphColor; 
-        }
-        /*! \brief sets the property graphWidth ( \copybrief graphWidth ) to the specified \a __value. 
-            \details Description of the parameter graphWidth is: <BLOCKQUOTE>\copydoc graphWidth </BLOCKQUOTE> 
-            \see graphWidth for more information */ 
-        inline void setGraphWidth(double __value)
-        {
-            if (this->graphWidth != __value) {
-                this->graphWidth = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property graphWidth ( \copybrief graphWidth ). 
-            \details Description of the parameter graphWidth is: <BLOCKQUOTE>\copydoc graphWidth </BLOCKQUOTE> 
-            \see graphWidth for more information */ 
-        inline double getGraphWidth() const
-        {
-            return this->graphWidth; 
-        }
-
-        /*! \brief sets the property backgroundColor ( \copybrief backgroundColor ) to the specified \a __value. 
-            \details Description of the parameter backgroundColor is: <BLOCKQUOTE>\copydoc backgroundColor </BLOCKQUOTE> 
-            \see backgroundColor for more information */ 
-        inline void setBackgroundColor(const QColor & __value)
-        {
-            if (this->backgroundColor != __value) {
-                this->backgroundColor = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property backgroundColor ( \copybrief backgroundColor ). 
-            \details Description of the parameter backgroundColor is: <BLOCKQUOTE>\copydoc backgroundColor </BLOCKQUOTE> 
-            \see backgroundColor for more information */ 
-        inline QColor getBackgroundColor() const
-        {
-            return this->backgroundColor; 
-        }
-        /*! \brief sets the property exportBackgroundColor ( \copybrief exportBackgroundColor ) to the specified \a __value. 
-            \details Description of the parameter exportBackgroundColor is: <BLOCKQUOTE>\copydoc exportBackgroundColor </BLOCKQUOTE> 
-            \see exportBackgroundColor for more information */ 
-        inline void setExportBackgroundColor(const QColor & __value)
-        {
-            if (this->exportBackgroundColor != __value) {
-                this->exportBackgroundColor = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property exportBackgroundColor ( \copybrief exportBackgroundColor ). 
-            \details Description of the parameter exportBackgroundColor is: <BLOCKQUOTE>\copydoc exportBackgroundColor </BLOCKQUOTE> 
-            \see exportBackgroundColor for more information */ 
-        inline QColor getExportBackgroundColor() const
-        {
-            return this->exportBackgroundColor; 
-        }
-        /*! \brief sets the property plotBackgroundColor ( \copybrief plotBackgroundColor ) to the specified \a __value. 
-            \details Description of the parameter plotBackgroundColor is: <BLOCKQUOTE>\copydoc plotBackgroundColor </BLOCKQUOTE> 
-            \see plotBackgroundColor for more information */ 
-        inline void setPlotBackgroundColor(const QColor & __value)
-        {
-            if (this->plotBackgroundColor != __value) {
-                this->plotBackgroundColor = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property plotBackgroundColor ( \copybrief plotBackgroundColor ). 
-            \details Description of the parameter plotBackgroundColor is: <BLOCKQUOTE>\copydoc plotBackgroundColor </BLOCKQUOTE> 
-            \see plotBackgroundColor for more information */ 
-        inline QColor getPlotBackgroundColor() const
-        {
-            return this->plotBackgroundColor; 
-        }
-
-        /*! \brief sets the property keyFont ( \copybrief keyFont ) to the specified \a __value. 
-            \details Description of the parameter keyFont is: <BLOCKQUOTE>\copydoc keyFont </BLOCKQUOTE> 
-            \see keyFont for more information */ 
-        inline void setKeyFont(const QString & __value)
-        {
-            if (this->keyFont != __value) {
-                this->keyFont = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyFont ( \copybrief keyFont ). 
-            \details Description of the parameter keyFont is: <BLOCKQUOTE>\copydoc keyFont </BLOCKQUOTE> 
-            \see keyFont for more information */ 
-        inline QString getKeyFont() const
-        {
-            return this->keyFont; 
-        }
-        /*! \brief sets the property keyFontSize ( \copybrief keyFontSize ) to the specified \a __value. 
-            \details Description of the parameter keyFontSize is: <BLOCKQUOTE>\copydoc keyFontSize </BLOCKQUOTE> 
-            \see keyFontSize for more information */ 
-        inline void setKeyFontSize(double __value)
-        {
-            if (this->keyFontSize != __value) {
-                this->keyFontSize = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyFontSize ( \copybrief keyFontSize ). 
-            \details Description of the parameter keyFontSize is: <BLOCKQUOTE>\copydoc keyFontSize </BLOCKQUOTE> 
-            \see keyFontSize for more information */ 
-        inline double getKeyFontSize() const
-        {
-            return this->keyFontSize; 
-        }
-        /*! \brief sets the property key_item_width ( \copybrief key_item_width ) to the specified \a __value. 
-            \details Description of the parameter key_item_width is: <BLOCKQUOTE>\copydoc key_item_width </BLOCKQUOTE> 
-            \see key_item_width for more information */ 
-        inline void setKeyItemWidth(double __value)
-        {
-            if (this->key_item_width != __value) {
-                this->key_item_width = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property key_item_width ( \copybrief key_item_width ). 
-            \details Description of the parameter key_item_width is: <BLOCKQUOTE>\copydoc key_item_width </BLOCKQUOTE> 
-            \see key_item_width for more information */ 
-        inline double getKeyItemWidth() const
-        {
-            return this->key_item_width; 
-        }
-        /*! \brief sets the property key_item_height ( \copybrief key_item_height ) to the specified \a __value. 
-            \details Description of the parameter key_item_height is: <BLOCKQUOTE>\copydoc key_item_height </BLOCKQUOTE> 
-            \see key_item_height for more information */ 
-        inline void setKeyItemHeight(double __value)
-        {
-            if (this->key_item_height != __value) {
-                this->key_item_height = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property key_item_height ( \copybrief key_item_height ). 
-            \details Description of the parameter key_item_height is: <BLOCKQUOTE>\copydoc key_item_height </BLOCKQUOTE> 
-            \see key_item_height for more information */ 
-        inline double getKeyItemHeight() const
-        {
-            return this->key_item_height; 
-        }
-        /*! \brief sets the property keyYSeparation ( \copybrief keyYSeparation ) to the specified \a __value. 
-            \details Description of the parameter keyYSeparation is: <BLOCKQUOTE>\copydoc keyYSeparation </BLOCKQUOTE> 
-            \see keyYSeparation for more information */ 
-        inline void setKeyYSeparation(double __value)
-        {
-            if (this->keyYSeparation != __value) {
-                this->keyYSeparation = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyYSeparation ( \copybrief keyYSeparation ). 
-            \details Description of the parameter keyYSeparation is: <BLOCKQUOTE>\copydoc keyYSeparation </BLOCKQUOTE> 
-            \see keyYSeparation for more information */ 
-        inline double getKeyYSeparation() const
-        {
-            return this->keyYSeparation; 
-        }
-        /*! \brief sets the property key_line_length ( \copybrief key_line_length ) to the specified \a __value. 
-            \details Description of the parameter key_line_length is: <BLOCKQUOTE>\copydoc key_line_length </BLOCKQUOTE> 
-            \see key_line_length for more information */ 
-        inline void setKeyLineLength(double __value)
-        {
-            if (this->key_line_length != __value) {
-                this->key_line_length = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property key_line_length ( \copybrief key_line_length ). 
-            \details Description of the parameter key_line_length is: <BLOCKQUOTE>\copydoc key_line_length </BLOCKQUOTE> 
-            \see key_line_length for more information */ 
-        inline double getKeyLineLength() const
-        {
-            return this->key_line_length; 
-        }
-        /*! \brief sets the property keyXMargin ( \copybrief keyXMargin ) to the specified \a __value. 
-            \details Description of the parameter keyXMargin is: <BLOCKQUOTE>\copydoc keyXMargin </BLOCKQUOTE> 
-            \see keyXMargin for more information */ 
-        inline void setKeyXMargin(double __value)
-        {
-            if (this->keyXMargin != __value) {
-                this->keyXMargin = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyXMargin ( \copybrief keyXMargin ). 
-            \details Description of the parameter keyXMargin is: <BLOCKQUOTE>\copydoc keyXMargin </BLOCKQUOTE> 
-            \see keyXMargin for more information */ 
-        inline double getKeyXMargin() const
-        {
-            return this->keyXMargin; 
-        }
-        /*! \brief sets the property keyYMargin ( \copybrief keyYMargin ) to the specified \a __value. 
-            \details Description of the parameter keyYMargin is: <BLOCKQUOTE>\copydoc keyYMargin </BLOCKQUOTE> 
-            \see keyYMargin for more information */ 
-        inline void setKeyYMargin(double __value)
-        {
-            if (this->keyYMargin != __value) {
-                this->keyYMargin = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyYMargin ( \copybrief keyYMargin ). 
-            \details Description of the parameter keyYMargin is: <BLOCKQUOTE>\copydoc keyYMargin </BLOCKQUOTE> 
-            \see keyYMargin for more information */ 
-        inline double getKeyYMargin() const
-        {
-            return this->keyYMargin; 
-        }
-        /*! \brief sets the property keyXSeparation ( \copybrief keyXSeparation ) to the specified \a __value. 
-            \details Description of the parameter keyXSeparation is: <BLOCKQUOTE>\copydoc keyXSeparation </BLOCKQUOTE> 
-            \see keyXSeparation for more information */ 
-        inline void setKeyXSeparation(double __value)
-        {
-            if (this->keyXSeparation != __value) {
-                this->keyXSeparation = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyXSeparation ( \copybrief keyXSeparation ). 
-            \details Description of the parameter keyXSeparation is: <BLOCKQUOTE>\copydoc keyXSeparation </BLOCKQUOTE> 
-            \see keyXSeparation for more information */ 
-        inline double getKeyXSeparation() const
-        {
-            return this->keyXSeparation; 
-        }
-
-        /*! \brief sets the property keyXOffset ( \copybrief keyXOffset ) to the specified \a __value. 
-            \details Description of the parameter keyXOffset is: <BLOCKQUOTE>\copydoc keyXOffset </BLOCKQUOTE> 
-            \see keyXOffset for more information */ 
-        inline void setKeyXOffset(double __value)
-        {
-            if (this->keyXOffset != __value) {
-                this->keyXOffset = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyXOffset ( \copybrief keyXOffset ). 
-            \details Description of the parameter keyXOffset is: <BLOCKQUOTE>\copydoc keyXOffset </BLOCKQUOTE> 
-            \see keyXOffset for more information */ 
-        inline double getKeyXOffset() const
-        {
-            return this->keyXOffset; 
-        }
-        /*! \brief sets the property keyYOffset ( \copybrief keyYOffset ) to the specified \a __value. 
-            \details Description of the parameter keyYOffset is: <BLOCKQUOTE>\copydoc keyYOffset </BLOCKQUOTE> 
-            \see keyYOffset for more information */ 
-        inline void setKeyYOffset(double __value)
-        {
-            if (this->keyYOffset != __value) {
-                this->keyYOffset = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyYOffset ( \copybrief keyYOffset ). 
-            \details Description of the parameter keyYOffset is: <BLOCKQUOTE>\copydoc keyYOffset </BLOCKQUOTE> 
-            \see keyYOffset for more information */ 
-        inline double getKeyYOffset() const
-        {
-            return this->keyYOffset; 
-        }
-        /*! \brief sets the property showKey ( \copybrief showKey ) to the specified \a __value. 
-            \details Description of the parameter showKey is: <BLOCKQUOTE>\copydoc showKey </BLOCKQUOTE> 
-            \see showKey for more information */ 
-        inline void setShowKey(bool __value)
-        {
-            if (this->showKey != __value) {
-                this->showKey = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property showKey ( \copybrief showKey ). 
-            \details Description of the parameter showKey is: <BLOCKQUOTE>\copydoc showKey </BLOCKQUOTE> 
-            \see showKey for more information */ 
-        inline bool getShowKey() const
-        {
-            return this->showKey; 
-        }
-        /*! \brief sets the property showKeyFrame ( \copybrief showKeyFrame ) to the specified \a __value. 
-            \details Description of the parameter showKeyFrame is: <BLOCKQUOTE>\copydoc showKeyFrame </BLOCKQUOTE> 
-            \see showKeyFrame for more information */ 
-        inline void setShowKeyFrame(bool __value)
-        {
-            if (this->showKeyFrame != __value) {
-                this->showKeyFrame = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property showKeyFrame ( \copybrief showKeyFrame ). 
-            \details Description of the parameter showKeyFrame is: <BLOCKQUOTE>\copydoc showKeyFrame </BLOCKQUOTE> 
-            \see showKeyFrame for more information */ 
-        inline bool getShowKeyFrame() const
-        {
-            return this->showKeyFrame; 
-        }
-        /*! \brief sets the property keyFrameColor ( \copybrief keyFrameColor ) to the specified \a __value. 
-            \details Description of the parameter keyFrameColor is: <BLOCKQUOTE>\copydoc keyFrameColor </BLOCKQUOTE> 
-            \see keyFrameColor for more information */ 
-        inline void setKeyFrameColor(const QColor & __value)
-        {
-            if (this->keyFrameColor != __value) {
-                this->keyFrameColor = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyFrameColor ( \copybrief keyFrameColor ). 
-            \details Description of the parameter keyFrameColor is: <BLOCKQUOTE>\copydoc keyFrameColor </BLOCKQUOTE> 
-            \see keyFrameColor for more information */ 
-        inline QColor getKeyFrameColor() const
-        {
-            return this->keyFrameColor; 
-        }
-        /*! \brief sets the property keyBackgroundColor ( \copybrief keyBackgroundColor ) to the specified \a __value. 
-            \details Description of the parameter keyBackgroundColor is: <BLOCKQUOTE>\copydoc keyBackgroundColor </BLOCKQUOTE> 
-            \see keyBackgroundColor for more information */ 
-        inline void setKeyBackgroundColor(const QColor & __value)
-        {
-            if (this->keyBackgroundColor != __value) {
-                this->keyBackgroundColor = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyBackgroundColor ( \copybrief keyBackgroundColor ). 
-            \details Description of the parameter keyBackgroundColor is: <BLOCKQUOTE>\copydoc keyBackgroundColor </BLOCKQUOTE> 
-            \see keyBackgroundColor for more information */ 
-        inline QColor getKeyBackgroundColor() const
-        {
-            return this->keyBackgroundColor; 
-        }
-        /*! \brief sets the property keyFrameWidth ( \copybrief keyFrameWidth ) to the specified \a __value. 
-            \details Description of the parameter keyFrameWidth is: <BLOCKQUOTE>\copydoc keyFrameWidth </BLOCKQUOTE> 
-            \see keyFrameWidth for more information */ 
-        inline void setKeyFrameWidth(double __value)
-        {
-            if (this->keyFrameWidth != __value) {
-                this->keyFrameWidth = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyFrameWidth ( \copybrief keyFrameWidth ). 
-            \details Description of the parameter keyFrameWidth is: <BLOCKQUOTE>\copydoc keyFrameWidth </BLOCKQUOTE> 
-            \see keyFrameWidth for more information */ 
-        inline double getKeyFrameWidth() const
-        {
-            return this->keyFrameWidth; 
-        }
-        /*! \brief sets the property keyAutosize ( \copybrief keyAutosize ) to the specified \a __value. 
-            \details Description of the parameter keyAutosize is: <BLOCKQUOTE>\copydoc keyAutosize </BLOCKQUOTE> 
-            \see keyAutosize for more information */ 
-        inline void setKeyAutosize(bool __value)
-        {
-            if (this->keyAutosize != __value) {
-                this->keyAutosize = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyAutosize ( \copybrief keyAutosize ). 
-            \details Description of the parameter keyAutosize is: <BLOCKQUOTE>\copydoc keyAutosize </BLOCKQUOTE> 
-            \see keyAutosize for more information */ 
-        inline bool getKeyAutosize() const
-        {
-            return this->keyAutosize; 
-        }
-        /*! \brief sets the property keyPosition ( \copybrief keyPosition ) to the specified \a __value. 
-            \details Description of the parameter keyPosition is: <BLOCKQUOTE>\copydoc keyPosition </BLOCKQUOTE> 
-            \see keyPosition for more information */ 
-        inline void setKeyPosition(const JKQTPKeyPosition & __value)
-        {
-            if (this->keyPosition != __value) {
-                this->keyPosition = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyPosition ( \copybrief keyPosition ). 
-            \details Description of the parameter keyPosition is: <BLOCKQUOTE>\copydoc keyPosition </BLOCKQUOTE> 
-            \see keyPosition for more information */ 
-        inline JKQTPKeyPosition getKeyPosition() const
-        {
-            return this->keyPosition; 
-        }
-        /*! \brief sets the property keyLayout ( \copybrief keyLayout ) to the specified \a __value. 
-            \details Description of the parameter keyLayout is: <BLOCKQUOTE>\copydoc keyLayout </BLOCKQUOTE> 
-            \see keyLayout for more information */ 
-        inline void setKeyLayout(const JKQTPKeyLayout & __value)
-        {
-            if (this->keyLayout != __value) {
-                this->keyLayout = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property keyLayout ( \copybrief keyLayout ). 
-            \details Description of the parameter keyLayout is: <BLOCKQUOTE>\copydoc keyLayout </BLOCKQUOTE> 
-            \see keyLayout for more information */ 
-        inline JKQTPKeyLayout getKeyLayout() const
-        {
-            return this->keyLayout; 
-        }
-
-        /*! \brief sets the property plotLabelFontSize ( \copybrief plotLabelFontSize ) to the specified \a __value. 
-            \details Description of the parameter plotLabelFontSize is: <BLOCKQUOTE>\copydoc plotLabelFontSize </BLOCKQUOTE> 
-            \see plotLabelFontSize for more information */ 
-        inline void setPlotLabelFontSize(double __value)
-        {
-            if (this->plotLabelFontSize != __value) {
-                this->plotLabelFontSize = __value; 
-                redrawPlot(); 
-            } 
-        } 
         /*! \brief returns the property plotLabelFontSize ( \copybrief plotLabelFontSize ). 
             \details Description of the parameter plotLabelFontSize is: <BLOCKQUOTE>\copydoc plotLabelFontSize </BLOCKQUOTE> 
             \see plotLabelFontSize for more information */ 
-        inline double getPlotLabelFontSize() const
-        {
-            return this->plotLabelFontSize; 
-        }
-        /*! \brief sets the property plotLabelFontname ( \copybrief plotLabelFontname ) to the specified \a __value. 
-            \details Description of the parameter plotLabelFontname is: <BLOCKQUOTE>\copydoc plotLabelFontname </BLOCKQUOTE> 
-            \see plotLabelFontname for more information */ 
-        inline void setPlotLabelFontname(const QString & __value)
-        {
-            if (this->plotLabelFontname != __value) {
-                this->plotLabelFontname = __value; 
-                redrawPlot(); 
-            } 
-        } 
-        /*! \brief returns the property plotLabelFontname ( \copybrief plotLabelFontname ). 
-            \details Description of the parameter plotLabelFontname is: <BLOCKQUOTE>\copydoc plotLabelFontname </BLOCKQUOTE> 
-            \see plotLabelFontname for more information */ 
-        inline QString getPlotLabelFontname() const
-        {
-            return this->plotLabelFontname; 
-        }
-        /*! \brief sets the property plotLabel ( \copybrief plotLabel ) to the specified \a __value. 
-            \details Description of the parameter plotLabel is: <BLOCKQUOTE>\copydoc plotLabel </BLOCKQUOTE> 
-            \see plotLabel for more information */ 
-        inline void setPlotLabel(const QString & __value)
-        {
-            if (this->plotLabel != __value) {
-                this->plotLabel = __value; 
-                redrawPlot(); 
-            } 
-        } 
+        double getPlotLabelFontSize() const;
+        /*! \brief returns the property plotLabelFontName ( \copybrief plotLabelFontName ).
+            \details Description of the parameter plotLabelFontName is: <BLOCKQUOTE>\copydoc plotLabelFontName </BLOCKQUOTE>
+            \see plotLabelFontName for more information */
+        QString getplotLabelFontName() const;
+
         /*! \brief returns the property plotLabel ( \copybrief plotLabel ). 
             \details Description of the parameter plotLabel is: <BLOCKQUOTE>\copydoc plotLabel </BLOCKQUOTE> 
             \see plotLabel for more information */ 
-        inline QString getPlotLabel() const
-        {
-            return this->plotLabel; 
-        }
+        QString getPlotLabel() const;
 
         /*! \brief sets the property gridPrinting ( \copybrief gridPrinting ) to the specified \a __value. 
             \details Description of the parameter gridPrinting is: <BLOCKQUOTE>\copydoc gridPrinting </BLOCKQUOTE> 
@@ -1868,180 +792,108 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setGridPrintingCurrentPos(size_t x, size_t y);
 
 
+        /** \brief returns the current directory in which to open SaveAs ... dialogs */
+        QString getCurrentSaveDirectory() const;
+        /** \brief return the last file format to use in SaveAs ... dialogs */
+        QString getCurrentFileFormat() const;
+        /** \brief returns the decimal separator used when exporting data to text files */
+        QString getCSVdecimalSeparator() const;
+        /** \brief set the string used to introduce comments in text output when exporting data */
+        QString getCSVcommentInitializer() const;
 
-        /*! \brief sets the property currentSaveDirectory ( \copybrief currentSaveDirectory ) to the specified \a __value. 
-            \details Description of the parameter currentSaveDirectory is: <BLOCKQUOTE>\copydoc currentSaveDirectory </BLOCKQUOTE> 
-            \see currentSaveDirectory for more information */ 
-        inline void setCurrentSaveDirectory(const QString & __value)
-        {
-            this->currentSaveDirectory = __value;
-        } 
-        /*! \brief returns the property currentSaveDirectory ( \copybrief currentSaveDirectory ). 
-            \details Description of the parameter currentSaveDirectory is: <BLOCKQUOTE>\copydoc currentSaveDirectory </BLOCKQUOTE> 
-            \see currentSaveDirectory for more information */ 
-        inline QString getCurrentSaveDirectory() const
-        {
-            return this->currentSaveDirectory; 
-        }
-        /*! \brief sets the property currentFileFormat ( \copybrief currentFileFormat ) to the specified \a __value. 
-            \details Description of the parameter currentFileFormat is: <BLOCKQUOTE>\copydoc currentFileFormat </BLOCKQUOTE> 
-            \see currentFileFormat for more information */ 
-        inline void setCurrentFileFormat(const QString & __value)
-        {
-            this->currentFileFormat = __value;
-        } 
-        /*! \brief returns the property currentFileFormat ( \copybrief currentFileFormat ). 
-            \details Description of the parameter currentFileFormat is: <BLOCKQUOTE>\copydoc currentFileFormat </BLOCKQUOTE> 
-            \see currentFileFormat for more information */ 
-        inline QString getCurrentFileFormat() const
-        {
-            return this->currentFileFormat; 
-        }
-        /*! \brief sets the property CSVdecimalSeparator ( \copybrief CSVdecimalSeparator ) to the specified \a __value. 
-            \details Description of the parameter CSVdecimalSeparator is: <BLOCKQUOTE>\copydoc CSVdecimalSeparator </BLOCKQUOTE> 
-            \see CSVdecimalSeparator for more information */ 
-        inline void setCSVdecimalSeparator(const QString & __value)
-        {
-            this->CSVdecimalSeparator = __value;
-        } 
-        /*! \brief returns the property CSVdecimalSeparator ( \copybrief CSVdecimalSeparator ). 
-            \details Description of the parameter CSVdecimalSeparator is: <BLOCKQUOTE>\copydoc CSVdecimalSeparator </BLOCKQUOTE> 
-            \see CSVdecimalSeparator for more information */ 
-        inline QString getCSVdecimalSeparator() const
-        {
-            return this->CSVdecimalSeparator; 
-        }
-        /*! \brief sets the property CSVcommentInitializer ( \copybrief CSVcommentInitializer ) to the specified \a __value. 
-            \details Description of the parameter CSVcommentInitializer is: <BLOCKQUOTE>\copydoc CSVcommentInitializer </BLOCKQUOTE> 
-            \see CSVcommentInitializer for more information */ 
-        inline void setCSVcommentInitializer(const QString & __value)
-        {
-            this->CSVcommentInitializer = __value;
-        } 
-        /*! \brief returns the property CSVcommentInitializer ( \copybrief CSVcommentInitializer ). 
-            \details Description of the parameter CSVcommentInitializer is: <BLOCKQUOTE>\copydoc CSVcommentInitializer </BLOCKQUOTE> 
-            \see CSVcommentInitializer for more information */ 
-        inline QString getCSVcommentInitializer() const
-        {
-            return this->CSVcommentInitializer; 
-        }
-
-        /*! \brief returns the property iplotBorderTop ( \copybrief iplotBorderTop ). \details Description of the parameter iplotBorderTop is:  <BLOCKQUOTE>\copydoc iplotBorderTop </BLOCKQUOTE>. \see iplotBorderTop for more information */ 
-        inline double getInternalPlotBorderTop() const { return this->iplotBorderTop; }
-        /*! \brief returns the property iplotBorderLeft ( \copybrief iplotBorderLeft ). \details Description of the parameter iplotBorderLeft is:  <BLOCKQUOTE>\copydoc iplotBorderLeft </BLOCKQUOTE>. \see iplotBorderLeft for more information */ 
-        inline double getInternalPlotBorderLeft() const { return this->iplotBorderLeft; }
-        /*! \brief returns the property iplotBorderBottom ( \copybrief iplotBorderBottom ). \details Description of the parameter iplotBorderBottom is:  <BLOCKQUOTE>\copydoc iplotBorderBottom </BLOCKQUOTE>. \see iplotBorderBottom for more information */ 
-        inline double getInternalPlotBorderBottom() const { return this->iplotBorderBottom; }
-        /*! \brief returns the property iplotBorderRight ( \copybrief iplotBorderRight ). \details Description of the parameter iplotBorderRight is:  <BLOCKQUOTE>\copydoc iplotBorderRight </BLOCKQUOTE>. \see iplotBorderRight for more information */ 
-        inline double getInternalPlotBorderRight() const { return this->iplotBorderRight; }
+        /*! \brief returns the property internalPlotBorderTop ( \copybrief internalPlotBorderTop ). \details Description of the parameter internalPlotBorderTop is:  <BLOCKQUOTE>\copydoc internalPlotBorderTop </BLOCKQUOTE>. \see internalPlotBorderTop for more information */
+        inline double getInternalPlotBorderTop() const { return this->internalPlotBorderTop; }
+        /*! \brief returns the property internalPlotBorderLeft ( \copybrief internalPlotBorderLeft ). \details Description of the parameter internalPlotBorderLeft is:  <BLOCKQUOTE>\copydoc internalPlotBorderLeft </BLOCKQUOTE>. \see internalPlotBorderLeft for more information */
+        inline double getInternalPlotBorderLeft() const { return this->internalPlotBorderLeft; }
+        /*! \brief returns the property internalPlotBorderBottom ( \copybrief internalPlotBorderBottom ). \details Description of the parameter internalPlotBorderBottom is:  <BLOCKQUOTE>\copydoc internalPlotBorderBottom </BLOCKQUOTE>. \see internalPlotBorderBottom for more information */
+        inline double getInternalPlotBorderBottom() const { return this->internalPlotBorderBottom; }
+        /*! \brief returns the property internalPlotBorderRight ( \copybrief internalPlotBorderRight ). \details Description of the parameter internalPlotBorderRight is:  <BLOCKQUOTE>\copydoc internalPlotBorderRight </BLOCKQUOTE>. \see internalPlotBorderRight for more information */
+        inline double getInternalPlotBorderRight() const { return this->internalPlotBorderRight; }
         /*! \brief returns the property plotWidth ( \copybrief plotWidth ). \details Description of the parameter plotWidth is:  <BLOCKQUOTE>\copydoc plotWidth </BLOCKQUOTE>. \see plotWidth for more information */ 
-        inline int getPlotWidth() const { return this->plotWidth; }
+        inline int getPlotWidth() const { return this->internalPlotWidth; }
         /*! \brief returns the property plotHeight ( \copybrief plotHeight ). \details Description of the parameter plotHeight is:  <BLOCKQUOTE>\copydoc plotHeight </BLOCKQUOTE>. \see plotHeight for more information */ 
-        inline int getPlotHeight() const { return this->plotHeight; }
+        inline int getPlotHeight() const { return this->internalPlotHeight; }
         /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
-        inline JKQTMathText* getMathText() { return &mathText; }
+        JKQTMathText* getMathText();
         /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
-        inline const JKQTMathText* getMathText() const { return &mathText; }
+        const JKQTMathText *getMathText() const;
         /** \brief returns the x-axis objet of the plot */
-        inline JKQTPHorizontalAxis* getXAxis() { return xAxis; }
+        JKQTPHorizontalAxis *getXAxis();
         /** \brief returns the y-axis objet of the plot */
-        inline JKQTPVerticalAxis* getYAxis() { return yAxis; }
+        JKQTPVerticalAxis* getYAxis();
         /** \brief returns the x-axis objet of the plot */
-        inline const JKQTPHorizontalAxis* getXAxis() const { return xAxis; }
+        const JKQTPHorizontalAxis* getXAxis() const;
         /** \brief returns the y-axis objet of the plot */
-        inline const JKQTPVerticalAxis* getYAxis() const { return yAxis; }
+        const JKQTPVerticalAxis *getYAxis() const;
 
 
         /*! \brief returns the property actSavePlot ( \copybrief actSavePlot ). \details Description of the parameter actSavePlot is:  <BLOCKQUOTE>\copydoc actSavePlot </BLOCKQUOTE>. \see actSavePlot for more information */ 
-        inline QAction* getActionSavePlot() const { return this->actSavePlot; }
+        QAction* getActionSavePlot() const;
         /*! \brief returns the property actSaveData ( \copybrief actSaveData ). \details Description of the parameter actSaveData is:  <BLOCKQUOTE>\copydoc actSaveData </BLOCKQUOTE>. \see actSaveData for more information */ 
-        inline QAction* getActionSaveData() const { return this->actSaveData; }
+        QAction* getActionSaveData() const;
         /*! \brief returns the property actCopyData ( \copybrief actCopyData ). \details Description of the parameter actCopyData is:  <BLOCKQUOTE>\copydoc actCopyData </BLOCKQUOTE>. \see actCopyData for more information */ 
-        inline QAction* getActionCopyData() const { return this->actCopyData; }
+        QAction* getActionCopyData() const;
         /*! \brief returns the property actCopyPixelImage ( \copybrief actCopyPixelImage ). \details Description of the parameter actCopyPixelImage is:  <BLOCKQUOTE>\copydoc actCopyPixelImage </BLOCKQUOTE>. \see actCopyPixelImage for more information */ 
-        inline QAction* getActionCopyPixelImage() const { return this->actCopyPixelImage; }
+        QAction* getActionCopyPixelImage() const;
         /*! \brief returns the property actCopyMatlab ( \copybrief actCopyMatlab ). \details Description of the parameter actCopyMatlab is:  <BLOCKQUOTE>\copydoc actCopyMatlab </BLOCKQUOTE>. \see actCopyMatlab for more information */ 
-        inline QAction* getActionCopyMatlab() const { return this->actCopyMatlab; }
+        QAction* getActionCopyMatlab() const;
         /*! \brief returns the property actSavePDF ( \copybrief actSavePDF ). \details Description of the parameter actSavePDF is:  <BLOCKQUOTE>\copydoc actSavePDF </BLOCKQUOTE>. \see actSavePDF for more information */ 
-        inline QAction* getActionSavePDF() const { return this->actSavePDF; }
+        QAction* getActionSavePDF() const;
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        /*! \brief returns the property actSavePS ( \copybrief actSavePS ). \details Description of the parameter actSavePS is:  <BLOCKQUOTE>\copydoc actSavePS </BLOCKQUOTE>. \see actSavePS for more information */ 
-        inline QAction* getActionSavePS() const { return this->actSavePS; }
+        /*! \brief returns the property actSavePS ( \copybrief actSavePS ). \details Description of the parameter actSavePS is:  <BLOCKQUOTE>\copydoc actSavePS </BLOCKQUOTE>. \see actSavePS for more information */
+        QAction* getActionSavePS() const;
 #endif
         /*! \brief returns the property actSavePix ( \copybrief actSavePix ). \details Description of the parameter actSavePix is:  <BLOCKQUOTE>\copydoc actSavePix </BLOCKQUOTE>. \see actSavePix for more information */ 
-        inline QAction* getActionSavePix() const { return this->actSavePix; }
+        QAction* getActionSavePix() const;
         /*! \brief returns the property actSaveSVG ( \copybrief actSaveSVG ). \details Description of the parameter actSaveSVG is:  <BLOCKQUOTE>\copydoc actSaveSVG </BLOCKQUOTE>. \see actSaveSVG for more information */ 
-        inline QAction* getActionSaveSVG() const { return this->actSaveSVG; }
+        QAction* getActionSaveSVG() const;
         /*! \brief returns the property actPrint ( \copybrief actPrint ). \details Description of the parameter actPrint is:  <BLOCKQUOTE>\copydoc actPrint </BLOCKQUOTE>. \see actPrint for more information */ 
-        inline QAction* getActionPrint() const { return this->actPrint; }
+        QAction* getActionPrint() const;
         /*! \brief returns the property actSaveCSV ( \copybrief actSaveCSV ). \details Description of the parameter actSaveCSV is:  <BLOCKQUOTE>\copydoc actSaveCSV </BLOCKQUOTE>. \see actSaveCSV for more information */ 
-        inline QAction* getActionSaveCSV() const { return this->actSaveCSV; }
+        QAction* getActionSaveCSV() const;
         /*! \brief returns the property actZoomAll ( \copybrief actZoomAll ). \details Description of the parameter actZoomAll is:  <BLOCKQUOTE>\copydoc actZoomAll </BLOCKQUOTE>. \see actZoomAll for more information */ 
-        inline QAction* getActionZoomAll() const { return this->actZoomAll; }
+        QAction* getActionZoomAll() const;
         /*! \brief returns the property actZoomIn ( \copybrief actZoomIn ). \details Description of the parameter actZoomIn is:  <BLOCKQUOTE>\copydoc actZoomIn </BLOCKQUOTE>. \see actZoomIn for more information */ 
-        inline QAction* getActionZoomIn() const { return this->actZoomIn; }
+        QAction* getActionZoomIn() const;
         /*! \brief returns the property actZoomOut ( \copybrief actZoomOut ). \details Description of the parameter actZoomOut is:  <BLOCKQUOTE>\copydoc actZoomOut </BLOCKQUOTE>. \see actZoomOut for more information */ 
-        inline QAction* getActionZoomOut() const { return this->actZoomOut; }
+        QAction *getActionZoomOut() const;
         /*! \brief returns the property actShowPlotData ( \copybrief actShowPlotData ). \details Description of the parameter actShowPlotData is:  <BLOCKQUOTE>\copydoc actShowPlotData </BLOCKQUOTE>. \see actShowPlotData for more information */ 
-        inline QAction* getActionShowPlotData() const { return this->actShowPlotData; }
+        QAction *getActionShowPlotData() const;
         /*! \brief returns the property lstAdditionalPlotterActions ( \copybrief lstAdditionalPlotterActions ). \details Description of the parameter lstAdditionalPlotterActions is:  <BLOCKQUOTE>\copydoc lstAdditionalPlotterActions </BLOCKQUOTE>. \see lstAdditionalPlotterActions for more information */ 
-        inline AdditionalActionsMap getLstAdditionalPlotterActions() const { return this->lstAdditionalPlotterActions; }
+        AdditionalActionsMap getLstAdditionalPlotterActions() const;
 
         /** \brief this function registers additional actions to lstAdditionalPlotterActions, which are displayed in the context-menu */
         void registerAdditionalAction(const QString& key, QAction* act);
+        /** \brief this function deregisters an additional action, previously added with registerAdditionalAction()
+         *
+         * \see registerAdditionalAction()
+         */
         void deregisterAdditionalAction(QAction* act);
 
         /*! \brief returns the property masterSynchronizeWidth ( \copybrief masterSynchronizeWidth ). \details Description of the parameter masterSynchronizeWidth is:  <BLOCKQUOTE>\copydoc masterSynchronizeWidth </BLOCKQUOTE>. \see masterSynchronizeWidth for more information */ 
-        inline bool getMasterSynchronizeWidth() const { return this->masterSynchronizeWidth; }
+        bool getMasterSynchronizeWidth() const;
         /*! \brief returns the property masterSynchronizeHeight ( \copybrief masterSynchronizeHeight ). \details Description of the parameter masterSynchronizeHeight is:  <BLOCKQUOTE>\copydoc masterSynchronizeHeight </BLOCKQUOTE>. \see masterSynchronizeHeight for more information */ 
-        inline bool getMasterSynchronizeHeight() const { return this->masterSynchronizeHeight; }
-        /*! \brief sets the property default_backgroundColor ( \copybrief default_backgroundColor ) to the specified \a __value. 
-            \details Description of the parameter default_backgroundColor is:  <BLOCKQUOTE>\copydoc default_backgroundColor </BLOCKQUOTE> 
-        	\see default_backgroundColor for more information */ 
-        inline void setDefaultBackgroundColor(const QColor & __value)
-        { 
-        	this->default_backgroundColor = __value; 
-        }
-        /*! \brief sets the property default_plotBackgroundColor ( \copybrief default_plotBackgroundColor ) to the specified \a __value. 
-            \details Description of the parameter default_plotBackgroundColor is:  <BLOCKQUOTE>\copydoc default_plotBackgroundColor </BLOCKQUOTE> 
-        	\see default_plotBackgroundColor for more information */ 
-        inline void setDefaultPlotBackgroundColor(const QColor & __value)
-        { 
-        	this->default_plotBackgroundColor = __value; 
-        }
-
+        bool getMasterSynchronizeHeight() const;
         /*! \brief sets the property fontSizePrintMultiplier ( \copybrief fontSizePrintMultiplier ) to the specified \a __value. 
             \details Description of the parameter fontSizePrintMultiplier is: <BLOCKQUOTE>\copydoc fontSizePrintMultiplier </BLOCKQUOTE> 
             \see fontSizePrintMultiplier for more information */ 
-        inline void setFontSizePrintMultiplier(double __value)
-        {
-            this->fontSizePrintMultiplier = __value;
-        } 
+        void setFontSizePrintMultiplier(double __value);
         /*! \brief returns the property fontSizePrintMultiplier ( \copybrief fontSizePrintMultiplier ). 
             \details Description of the parameter fontSizePrintMultiplier is: <BLOCKQUOTE>\copydoc fontSizePrintMultiplier </BLOCKQUOTE> 
             \see fontSizePrintMultiplier for more information */ 
-        inline double getFontSizePrintMultiplier() const
-        {
-            return this->fontSizePrintMultiplier; 
-        }
+        double getFontSizePrintMultiplier() const;
         /*! \brief sets the property lineWidthPrintMultiplier ( \copybrief lineWidthPrintMultiplier ) to the specified \a __value. 
             \details Description of the parameter lineWidthPrintMultiplier is: <BLOCKQUOTE>\copydoc lineWidthPrintMultiplier </BLOCKQUOTE> 
             \see lineWidthPrintMultiplier for more information */ 
-        inline void setLineWidthPrintMultiplier(double __value)
-        {
-            this->lineWidthPrintMultiplier = __value;
-        } 
+        void setLineWidthPrintMultiplier(double __value);
         /*! \brief returns the property lineWidthPrintMultiplier ( \copybrief lineWidthPrintMultiplier ). 
             \details Description of the parameter lineWidthPrintMultiplier is: <BLOCKQUOTE>\copydoc lineWidthPrintMultiplier </BLOCKQUOTE> 
             \see lineWidthPrintMultiplier for more information */ 
-        inline double getLineWidthPrintMultiplier() const
-        {
-            return this->lineWidthPrintMultiplier; 
-        }
+        double getLineWidthPrintMultiplier() const;
         /*! \brief returns the property fontSizeMultiplier ( \copybrief fontSizeMultiplier ). \details Description of the parameter fontSizeMultiplier is:  <BLOCKQUOTE>\copydoc fontSizeMultiplier </BLOCKQUOTE>. \see fontSizeMultiplier for more information */ 
-        inline double getFontSizeMultiplier() const { return this->fontSizeMultiplier; }
+        double getFontSizeMultiplier() const;
         /*! \brief returns the property lineWidthMultiplier ( \copybrief lineWidthMultiplier ). \details Description of the parameter lineWidthMultiplier is:  <BLOCKQUOTE>\copydoc lineWidthMultiplier </BLOCKQUOTE>. \see lineWidthMultiplier for more information */ 
-        inline double getLineWidthMultiplier() const { return this->lineWidthMultiplier; }
+        double getLineWidthMultiplier() const;
 
 
         /** \brief returns description of i'th graph */
@@ -2062,8 +914,17 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void clearGraphs(bool deleteGraphs=true);
 
+        /** \brief set all graphs in the plotter invisible
+         *
+         * \see setAllGraphsVisible(), setGraphVisible(), JKQTPPlotElement::setVisible()  */
         void setAllGraphsInvisible();
+        /** \brief set all graphs in the plotter visible
+         *
+         * \see setAllGraphsInvisible(), setGraphVisible(), JKQTPPlotElement::setVisible() */
         void setAllGraphsVisible();
+        /** \brief switch visibility of the \a i -th graph to \a visible
+         *
+         * \see setAllGraphsInvisible(), setAllGraphsVisible(), JKQTPPlotElement::setVisible() */
         void setGraphVisible(int i, bool visible=true);
 
         /** \brief add a new graph, returns it's position in the graphs list, if the graph is already in the plot, this returns the index in the list */
@@ -2077,11 +938,19 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief move the given graph to the top, or add it, if it is not yet contained */
         size_t moveGraphBottom(JKQTPPlotElement* gr);
 
-        /** \brief add a new graphs from a QVector */
+        /** \brief  add a new graphs from a QVector<JKQTPPlotElement*>, QList<JKQTPPlotElement*>, std::vector<JKQTPPlotElement*> ... or any standard-iterateable container with JKQTPPlotElement*-items
+         *
+         *  \tparam TJKQTPGraphContainer a container type with default C++-sytle iterator interface
+         *                               (i.e. methods \c begin() and \c end() and an iterator, which may be
+         *                               moved to the next element with the operator \c ++ .
+         *  \param gr Container of type TJKQTPGraphContainer, which contains the graphs \b Note: The JKQTPlotter takes ownership of graphs in \a gr .
+         *  \param[out] graphIDsOut optional output parameter, the vector will contain the IDs of each graph added to theis plot
+         */
         template <class TJKQTPGraphContainer>
-        inline void addGraphs(const TJKQTPGraphContainer& gr) {
+        inline void addGraphs(const TJKQTPGraphContainer& gr, QVector<size_t>* graphIDsOut=nullptr) {
             for (auto it=gr.begin(); it!=gr.end(); ++it) {
-                addGraph(*it);
+                const size_t g=addGraph(*it);
+                if (graphIDsOut) graphIDsOut->push_back(g);
             }
         }
 
@@ -2232,10 +1101,11 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         void getGraphsYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
 
 
+        /** \brief denotes, which axes to synchronize in synchronizeToMaster() */
         enum SynchronizationDirection {
-            sdXAxis,
-            sdYAxis,
-            sdXYAxes
+            sdXAxis, /**< \brief x-axis only */
+            sdYAxis, /**< \brief y-axis only */
+            sdXYAxes /**< \brief x- and y-axis */
         };
 
         /*! \brief synchronize the plot borders (and zooming) with a given plotter (master --> slave/this)
@@ -2321,51 +1191,32 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief add a new overlay elements from a QList */
         void addOverlayElements(const QList<JKQTPOverlayElement*>& gr);
 
-        QVector<QLineF> getBoundingLinesX1Y1(QRectF *rect=nullptr) const;
-
-    signals:
-        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
-        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
-
-        /** \brief emitted when the plot has to be updated */
-        void plotUpdated();
-
-        /** \brief emitted when the overlay elements have to be updated */
-        void overlaysUpdated();
-
-        /** \brief emitted when the plot scaling had to be recalculated */
-        void plotScalingRecalculated();
-
-        /** \brief emitted before the plot scaling has been recalculated */
-        void beforePlotScalingRecalculate();
-
-    public:
-
-        /** \brief set a global preset/default value for the userSettigsFilename and userSettigsPrefix properties of JKQTBasePlotter
+        /** \brief save the current plot data as a Comma Separated Values (CSV) file
          *
-         *  These presets are application global and will be used ONLY on initialization of a JKQTBasePlotter. You can overwrite them
-         *  on a local-basis for each JKQTBasePrinter separately. The changed values from this function call will only take effect for
-         *  newly created plotters AFTER the function call!
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
          */
-        static void setDefaultJKQTBasePrinterUserSettings(QString userSettigsFilename, const QString& userSettigsPrefix);
+        void saveAsCSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
+
+        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         */
+        void saveAsSemicolonSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         * \param decimalSeparator decimal separator for outpu
+         * \param commentInitializer line-start for comment lines
+         */
+        void saveAsTabSV(const QString& filename, const QString& decimalSeparator, const QString& commentInitializer);
 
 
-        /** \brief register a user-defined QPaintDevice (with factory JKQTPPaintDeviceAdapter) as a plugin to JKQTBasePlotter/JKQTPlotter,
-         *         which will use it to export graphics */
-        static void registerPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
-        /** \brief de-register a  JKQTPPaintDeviceAdapter from JKQTBasePlotter/JKQTPlotter */
-        static void deregisterPaintDeviceAdapter(JKQTPPaintDeviceAdapter* adapter);
-
-
-
-
-        /** \brief register a JKQTPSaveDataAdapter with JKQTPlotter/JKQTBasePlotter that can be used to export data from the internal datastore into a file */
-        static bool registerSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
-        /** \brief de-register a JKQTPSaveDataAdapter from JKQTPlotter/JKQTBasePlotter */
-        static bool deregisterSaveDataAdapter(JKQTPSaveDataAdapter* adapter);
 
         /** \brief internal tool class for text sizes
-		 *   \ingroup jkqtpplotterclasses_tools
+         *   \ingroup jkqtpplotterclasses_tools
          *  \internal */
         struct JKQTP_LIB_EXPORT textSizeData {
             explicit textSizeData();
@@ -2384,15 +1235,998 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
             bool operator==(const textSizeKey& other) const;
         };
+        /** \brief calculates a textSizeData for the given string \a text if it would be drawn on \a painter with font \a fm
+         * \internal
+         */
         textSizeData getTextSizeDetail(const QFont &fm, const QString& text,  QPainter& painter);
+        /** \brief calculates a textSizeData for the given string \a text if it would be drawn on \a painter with font \a fontName
+         * \internal
+         */
         textSizeData getTextSizeDetail(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
+        /** \brief calculates a text-size details for the given string \a text if it would be drawn on \a painter with font \a fontName and font size \a fontSize
+         * \internal
+         */
         void getTextSizeDetail(const QString& fontName, double fontSize, const QString& text,  QPainter &painter, double& width, double& ascent, double& descent, double& strikeoutPos);
+        /** \brief calculates a text-size details for the given string \a text if it would be drawn on \a painter with font \a fm
+         * \internal
+         */
         void getTextSizeDetail(const QFont& fm, const QString& text,  QPainter &painter, double& width, double& ascent, double& descent, double& strikeoutPos);
+        /** \brief calculates a size of the given string \a text if it would be drawn on \a painter with font \a fm
+         * \internal
+         */
         QSizeF getTextSizeSize(const QFont &fm, const QString& text,   QPainter& painter);
+        /** \brief calculates a size of the given string \a text if it would be drawn on \a painter with font \a fontName and font size \a fontSize
+         * \internal
+         */
         QSizeF getTextSizeSize(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
 
+
+
+    signals:
+        /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
+        void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
+
+        /** \brief emitted when the plot has to be updated */
+        void plotUpdated();
+
+        /** \brief emitted when the overlay elements have to be updated */
+        void overlaysUpdated();
+
+        /** \brief emitted when the plot scaling had to be recalculated */
+        void plotScalingRecalculated();
+
+        /** \brief emitted before the plot scaling has been recalculated */
+        void beforePlotScalingRecalculate();
+
+
+    public slots:
+
+
+        /** \brief sets the width of the plot widget
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see setWidgetSize(), \ref jkqtplotter_base_plotsize
+         */
+        void setWidgetWidth(int wid);
+
+        /** \brief resize the plot
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        void setWidgetSize(int width, int height);
+
+        /** \brief sets the width of the plot widget
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see setWidgetSize(), \ref jkqtplotter_base_plotsize
+         */
+        void setWidgetHeight(int heigh);
+
+        /** \brief sets the borders of the plot
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        void setPlotBorder(int left, int right, int top, int bottom);
+
+        /** \brief sets the left border of the plot
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        void setPlotBorderLeft(int left);
+
+        /** \brief sets the right border of the plot
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        void setPlotBorderRight(int right);
+
+        /** \brief sets the top border of the plot
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        void setPlotBorderTop(int top);
+
+        /** \brief sets the bottom border of the plot
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        void setPlotBorderBottom(int bottom);
+
+        /** \brief sets the x-range of the plot (minimum and maximum x-value on the x-axis)
+         *
+         *  \param xminn absolute minimum of x-axis
+         *  \param xmaxx absolute maximum of x-axis
+         *
+         * \note You cannot expand the x-range outside the absolute x-range set e.g. by setAbsoluteX()!
+         *       Also the range will be limited to possible values (e.g. to positive values if you use
+         *       logarithmic axes).
+         *
+         * Uppon setting, this function emits the signal zoomChangedLocally(), if emitting signals
+         * is activated at the moment (e.g. using setEmittingSignalsEnabled() ).
+         *
+         * \see setY(), setXY(), zoomToFit(), setAbsoluteXY(), JKQTPlotter::setY()
+         */
+        void setX(double xminn, double xmaxx);
+
+        /** \brief sets the y-range of the plot (minimum and maximum y-value on the y-axis)
+         *
+         *  \param yminn absolute minimum of y-axis
+         *  \param ymaxx absolute maximum of y-axis
+         *
+         * \note You cannot expand the y-range outside the absolute y-range set e.g. by setAbsoluteY()!
+         *       Also the range will be limited to possible values (e.g. to positive values if you use
+         *       logarithmic axes).
+         *
+         * Uppon setting, this function emits the signal zoomChangedLocally(), if emitting signals
+         * is activated at the moment (e.g. using setEmittingSignalsEnabled() ).
+         *
+         * \see setX(), setXY(), zoomToFit(), setAbsoluteXY(), JKQTPlotter::setX()
+         */
+        void setY(double yminn, double ymaxx);
+
+        /** \brief sets the x- and y-range of the plot (minimum and maximum values on the x-/y-axis)
+         *
+         *  \param xminn absolute minimum of x-axis
+         *  \param xmaxx absolute maximum of x-axis
+         *  \param yminn absolute minimum of y-axis
+         *  \param ymaxx absolute maximum of y-axis
+         *
+         * \note You cannot expand the ranges outside the absolute ranges set e.g. by setAbsoluteXY()!
+         *       Also the range will be limited to possible values (e.g. to positive values if you use
+         *       logarithmic axes).
+         *
+         * Uppon setting, this function emits the signal zoomChangedLocally(), if emitting signals
+         * is activated at the moment (e.g. using setEmittingSignalsEnabled() ).
+         *
+         * \see setX(), setX(), zoomToFit(), setAbsoluteXY(), JKQTPlotter::setXY()
+         */
+        void setXY(double xminn, double xmaxx, double yminn, double ymaxx);
+
+        /** \brief sets absolutely limiting x-range of the plot
+         *
+         *  \param xminn absolute minimum of x-axis
+         *  \param xmaxx absolute maximum of x-axis
+         *
+         * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
+         *
+         * \see setAbsoluteXY(), setAbsoluteY(), JKQTPlotter::setAbsoluteX()
+         */
+        void setAbsoluteX(double xminn, double xmaxx);
+
+        /** \brief sets absolute minimum and maximum y-value to plot
+         *
+         *  \param yminn absolute minimum of y-axis
+         *  \param ymaxx absolute maximum of y-axis
+         *
+         * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
+         *
+         * \see setAbsoluteXY(), setAbsoluteX(), JKQTPlotter::setAbsoluteY()
+         */
+        void setAbsoluteY(double yminn, double ymaxx);
+
+        /** \brief sets absolutely limiting x- and y-range of the plot
+         *
+         * The user (or programmer) cannot zoom to a viewport that is larger than the range given to this function.
+         *
+         *  \param xminn absolute minimum of x-axis
+         *  \param xmaxx absolute maximum of x-axis
+         *  \param yminn absolute minimum of y-axis
+         *  \param ymaxx absolute maximum of y-axis
+         *
+         * \note if the aspect ratio of this does not fit into the widget, it is possible that you don't see the complete contents!
+         *
+         * \see setAbsoluteX(), setAbsoluteY(), zoomToFit(), JKQTPlotter::setAbsoluteXY()
+         */
+        void setAbsoluteXY(double xminn, double xmaxx, double yminn, double ymaxx);
+
+
+        /** \brief sets x/ymin and x/ymax to the supplied values and replots the graph (zoom operation!) */
+        void zoom(double nxmin, double nxmax, double nymin, double nymax);
+
+        /** \brief sets whether to plot grid lines or not */
+        void setGrid(bool val);
+
+        /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed */
+        void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray());
+
+        /** \brief copy the current plot as a pixel image to the clipboard */
+        void copyPixelImage();
+
+        /** \brief save the current plot as a SVG file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
+        void saveAsSVG(const QString& filename=QString(""), bool displayPreview=true);
+
+        /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
+        void saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
+
+        /** \brief save the current plot as a PS file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed */
+        void saveAsPS(const QString& filename=QString(""), bool displayPreview=true);
+
+        /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
+        *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
+        void saveImage(const QString& filename=QString(""), bool displayPreview=true);
+
+        /** \brief save the data used for the current plot. The file format is extracted from the file extension (csv, ...)
+         *
+         * The parameter \a format specifies the export format. if it is empty the format will be choosen according to the file extension, or
+         * if \a filename is also empty the format will be choosen according to what is selected in the file selection dialog.
+         *
+         * If \a format is \c "slk" the output will be in SYLK format, if \a format is \c "csv" or \a "dat" the output will be comma separated values
+         * and if \a format is \c "txt" the output will be tab separated values.
+         */
+        void saveData(const QString& filename=QString(""), const QString& jkqtp_format=QString(""));
+        /** \brief copy the data used for the current plot to the clipboard
+         *
+         *  copies data as tab separated data with the system-decimal point.
+         */
+        void copyData();
+        /** \brief copy the data used for the current plot to the clipboard in Matlab format
+         */
+        void copyDataMatlab();
+        /** \brief save the current plot data as a Comma Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \note this function uses  CSVdecimalSeparator as decimal separator and CSVcommentInitializer to initialize content lines
+         */
+        void saveAsCSV(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Semicolon Separated Values (SSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \note this function uses  CSVdecimalSeparator as decimal separator and CSVcommentInitializer to initialize content lines
+         */
+        void saveAsSemicolonSV(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Tabulator Separated Values (CSV) file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         *
+         * \note this function uses  CSVdecimalSeparator as decimal separator and CSVcommentInitializer to initialize content lines
+         */
+        void saveAsTabSV(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a DIF file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         */
+        void saveAsDIF(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a SYLK spreadsheet file
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         */
+        void saveAsSYLK(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Matlab Script
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         */
+        void saveAsMatlab(const QString& filename=QString(""));
+
+        /** \brief save the current plot data as a Semicolon Separated Values (CSV) file for german Excel, i.e. with comma as decimal separator
+         *
+         * \param filename the file to save to, if \a filename is empty, a file open dialog will be shown
+         */
+        void saveAsGerExcelCSV(const QString& filename=QString(""));
+
+        /** \brief print the current plot, if printer is \c nullptr a printer selection dialog is displayed */
+        void print(QPrinter* printer=nullptr, bool displayPreview=true);
+
+        /** \brief this method zooms the graph so that all plotted datapoints are visible.
+         *
+         * \param zoomX if set \c true (default) zooms the x axis
+         * \param zoomY if set \c true (default) zooms the y axis
+         * \param includeX0 if this is \c true zoomToFit() will ensure that \f$ x=0 \f$ is visible in the plot (only for non-logx plots, default: false)
+         * \param includeY0 if this is \c true zoomToFit() will ensure that \f$ y=0 \f$ is visible in the plot (only for non-logy plots, default: false)
+         * \param scaleX the plot will have a width of \f$ \mbox{Xscale}\cdot\Delta x \f$ where \f$ \Delta x \f$ is the actual x-axis data range
+         *               For logx plots we actually use this on the logarithmized data! (default: 1.05)
+         * \param scaleY the plot will have a height of \f$ \mbox{Yscale}\cdot\Delta < \f$ where \f$ \Delta < \f$ is the actual <-axis data range
+         *               For log< plots we actually use this on the logarithmized data! (default: 1.05)
+         *
+         */
+        void zoomToFit(bool zoomX=true, bool zoomY=true, bool includeX0=false, bool includeY0=false, double scaleX=1.05, double scaleY=1.05);
+
+        /** \brief zooms into the graph (the same as turning the mouse wheel) by the given factor */
+        void zoomIn(double factor=2.0);
+        /** \brief zooms out of the graph (the same as turning the mouse wheel) by the given factor */
+        void zoomOut(double factor=2.0);
+
+        /** \brief en-/disables the maintaining of the data aspect ratio */
+        void setMaintainAspectRatio(bool value);
+
+        /** \brief en-/disables the maintaining of the axis aspect ratio */
+        void setMaintainAxisAspectRatio(bool value);
+
+        /** \brief set filename and prefix, used by loadUserSettings() and saveUserSettings()
+         *
+         * \see loadUserSettings(), saveUserSettings(), setUserSettigsPrefix(), getUserSettigsFilename(), getUserSettigsPrefix()
+         */
+        void setUserSettigsFilename(const QString& filename, const QString& prefix);
+        /** \brief set filename, used by loadUserSettings() and saveUserSettings()
+         *
+         * \see loadUserSettings(), saveUserSettings(), setUserSettigsPrefix(), getUserSettigsFilename(), getUserSettigsPrefix()
+         */
+        void setUserSettigsFilename(const QString& filename);
+        /** \brief set prefix, used by loadUserSettings() and saveUserSettings()
+         *
+         * \see loadUserSettings(), saveUserSettings(), setUserSettigsPrefix(), getUserSettigsFilename(), getUserSettigsPrefix()
+         */
+        void setUserSettigsPrefix(const QString& prefix);
+        /** \brief return the filename, used by loadUserSettings() and saveUserSettings()
+         *
+         * \see loadUserSettings(), saveUserSettings(), setUserSettigsPrefix(), getUserSettigsFilename(), getUserSettigsPrefix()
+         */
+        QString getUserSettigsFilename() const;
+        /** \brief return the prefix, used by loadUserSettings() and saveUserSettings()
+         *
+         * \see loadUserSettings(), saveUserSettings(), setUserSettigsPrefix(), getUserSettigsFilename(), getUserSettigsPrefix()
+         */
+        QString getUserSettigsPrefix() const;
+
+        /** \brief loads the plot user properties from the file sepcified by setUserSettigsFilename() and the prefix specified by setUserSettigsPrefix()
+         *
+         * \see  saveUserSettings(), setUserSettigsPrefix(), getUserSettigsFilename(), getUserSettigsPrefix()
+         */
+        void loadUserSettings();
+
+        /** \brief saves the plot user properties to the file sepcified by setUserSettigsFilename() and the prefix specified by setUserSettigsPrefix()
+         *
+         * \see  loadUserSettings(), setUserSettigsPrefix(), getUserSettigsFilename(), getUserSettigsPrefix()
+         */
+        void saveUserSettings() const;
+
+        /** \brief set all graphs invisible, except i */
+        void setOnlyGraphVisible(int i);
+
+        /** \brief set all graphs invisible, except graph start, start+n, start+2*n, ... */
+        void setOnlyNthGraphsVisible(int start, int n);
+
+        /** \brief sets the data aspect ratio, enforced with setMaintainApsectRatio(true) */
+        void setAspectRatio(double __value);
+        /** \brief sets the axis aspect ratio, enforced with setMaintainAxisApsectRatio(true) */
+        void setAxisAspectRatio(double __value);
+        /*! \copydoc JKQTBasePlotterStyle::useAntiAliasingForSystem */
+        void setUseAntiAliasingForSystem(bool __value);
+        /*! \copydoc JKQTBasePlotterStyle::useAntiAliasingForGraphs */
+        void setUseAntiAliasingForGraphs(bool __value);
+        /*! \copydoc JKQTBasePlotterStyle::useAntiAliasingForText */
+        void setUseAntiAliasingForText(bool __value);
+        /*! \copydoc JKQTBasePlotterStyle::defaultGraphWidth */
+        void setGraphWidth(double __value);
+        /*! \copydoc JKQTBasePlotterStyle::widgetBackgroundColor */
+        void setBackgroundColor(const QColor & __value);
+        /*! \copydoc JKQTBasePlotterStyle::exportBackgroundColor */
+        void setExportBackgroundColor(const QColor & __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotBackgroundColor */
+        void setPlotBackgroundColor(const QColor & __value);
+        /*! \copydoc JKQTPKeyStyle::textColor */
+        void setKeyTextColor(const QColor & __value);
+
+
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameWidth */
+        void setPlotFrameWidth(double __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameRounding */
+        void setPlotFrameRounding(double __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameColor */
+        void setPlotFrameColor(QColor col);
+        /*! \copydoc JKQTBasePlotterStyle::plotFrameVisible */
+        void setPlotFrameVisible(bool enabled);
+
+
+        /*! \copydoc JKQTPKeyStyle::fontSize */
+        void setKeyFontSize(double __value);
+        /*! \copydoc JKQTPKeyStyle::itemWidth */
+        void setKeyItemWidth(double __value);
+        /*! \copydoc JKQTPKeyStyle::itemHeight */
+        void setKeyItemHeight(double __value);
+        /*! \copydoc JKQTPKeyStyle::ySeparation */
+        void setKeyYSeparation(double __value);
+        /*! \copydoc JKQTPKeyStyle::sampleLineLength */
+        void setKeyLineLength(double __value);
+        /*! \copydoc JKQTPKeyStyle::xMargin */
+        void setKeyXMargin(double __value);
+        /*! \copydoc JKQTPKeyStyle::yMargin */
+        void setKeyYMargin(double __value);
+        /*! \copydoc JKQTPKeyStyle::xSeparation */
+        void setKeyXSeparation(double __value);
+        /*! \copydoc JKQTPKeyStyle::yOffset */
+        void setKeyXOffset(double __value);
+        /*! \copydoc JKQTPKeyStyle::xOffset */
+        void setKeyYOffset(double __value);
+        /*! \copydoc JKQTPKeyStyle::visible */
+        void setShowKey(bool __value);
+        /*! \copydoc JKQTPKeyStyle::frameVisible */
+        void setShowKeyFrame(bool __value);
+        /*! \copydoc JKQTPKeyStyle::frameColor */
+        void setKeyFrameColor(const QColor & __value);
+        /*! \copydoc JKQTPKeyStyle::backgroundColor */
+        void setKeyBackgroundColor(const QColor & __value);
+        /*! \copydoc JKQTPKeyStyle::frameWidth */
+        void setKeyFrameWidth(double __value);
+        /*! \copydoc JKQTPKeyStyle::frameRounding */
+        void setKeyFrameRounding(double __value);
+        /*! \copydoc JKQTPKeyStyle::autosize */
+        void setKeyAutosize(bool __value);
+        /*! \copydoc JKQTPKeyStyle::position */
+        void setKeyPosition(const JKQTPKeyPosition & __value);
+        /*! \copydoc JKQTPKeyStyle::layout */
+        void setKeyLayout(const JKQTPKeyLayout & __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotLabelFontSize */
+        void setPlotLabelFontSize(double __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotLabelFontName */
+        void setplotLabelFontName(const QString & __value);
+        /** \brief set the plot label text */
+        void setPlotLabel(const QString & __value);
+        /*! \copydoc JKQTBasePlotterStyle::defaultTextColor */
+        void setDefaultTextColor(QColor __value) ;
+        /*! \copydoc JKQTBasePlotterStyle::defaultFontSize */
+        void setDefaultTextSize(float __value) ;
+        /*! \copydoc JKQTBasePlotterStyle::defaultFontName */
+        void setDefaultTextFontName(const QString& __value) ;
+        /** \brief sets the current directory in which to open SaveAs ... dialogs */
+        void setCurrentSaveDirectory(const QString & __value);
+        /** \brief set the file format to use in SaveAs ... dialogs */
+        void setCurrentFileFormat(const QString & __value);
+        /** \brief set the decimal separator used when exporting data to text files */
+        void setCSVdecimalSeparator(const QString & __value);
+        /** \brief set the string used to introduce comments in text output when exporting data */
+        void setCSVcommentInitializer(const QString & __value);
+
+        /** \brief if set \c true (default: \c false ) the JKQTBasePlotter draws colored rectangles to indicate the different regions in the plot (border, axes, ...)
+         *
+         * \see JKQTBasePlotterStyle::debugShowRegionBoxes, isDebugShowRegionBoxesEnabled()
+         */
+        void enableDebugShowRegionBoxes(bool enabled=true);
     protected:
-        static QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> tbrh;
+        /** \brief this is a cache for JKQTBasePlotter::textSizeData calculated with JKQTBasePlotter::getTextSizeDetail() */
+        static QHash<JKQTBasePlotter::textSizeKey, JKQTBasePlotter::textSizeData> s_TextSizeDataCache;
+
+
+
+
+
+
+
+        /** \brief paints the plot onto the given JKQTPEnhancedPainter object */
+        void drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays=true);
+        /** \brief simply calls paintPlot() if grid printing mode is deactivated and prints the graph grid otherwise
+         *         \a pageRect is used to determine the size of the page to draw on. If this does not coincide with
+         *         the widget extents this function calculates a scaling factor so the graphs fit onto the page. This
+         *         is especially usefull when printing!
+         */
+        void gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, bool showOverlays=true, bool scaleIfTooLarge=true, bool scaleIfTooSmall=true);
+        void gridPaintOverlays(JKQTPEnhancedPainter& painter, QSizeF pageRect);
+
+        /** \brief This method goes through all registered plotters and calculates the width of every column and
+         *      height of every row as the max over the row/column. The reults are stored in the private datamembers
+         *      gridPrintingRows and gridPrintingColumns. gridPrintingSize will contain the size of all graphs together
+         *      afterwards. */
+        void gridPrintingCalc();
+
+        /** \brief plot the grid */
+        void drawSystemGrid(JKQTPEnhancedPainter& painter);
+        /** \brief plot the x coordinate axis (incl. labels) */
+        void drawSystemXAxis(JKQTPEnhancedPainter& painter);
+        /** \brief plot the x coordinate axis (incl. labels) */
+        void drawSystemYAxis(JKQTPEnhancedPainter& painter);
+        /** \brief plot the graphs */
+        void drawGraphs(JKQTPEnhancedPainter& painter);
+        /** \brief plot a key */
+        void drawKey(JKQTPEnhancedPainter& painter);
+        /** \brief plot all overlay elements, also sets the render hints in \a painter */
+        void drawOverlaysWithHints(JKQTPEnhancedPainter& painter);
+
+        /** \brief plot the key contents
+         *
+         * This function does not do anything and has to be overwritten in child classes if they want to plot a key.
+         * The implementation should draw the contents of the key, not its frame as this is done in plotKey().
+         *
+         * \param painter draw the key on this painter
+         * \param x left-most coordinate of the key [pixels]
+         * \param y top-most coordinate of the key [pixels]
+         * \param width width of the key [pixels]
+         * \param height height of the key [pixels]
+         *
+         * So any implementation should only draw inside the rectangle <code>[x..x+width, y..y+hieght]</code>
+         */
+        void drawKeyContents(JKQTPEnhancedPainter& painter, double x, double y, double width, double height);
+
+        /** \brief returns the size of the key (as call-by-reference parameters
+         *
+         * Any implementation of key plotting has to overwrite this function and use it to return the size of the key that would be
+         * plotted by plotKeyContents(). This class will use the return values to plot the frame of the key and also supply them to
+         * plotKeyContents(). If height or width are returned 0, no key is plotted
+         *
+         * The implementation in here returns zero size!
+         */
+        void getKeyExtent(JKQTPEnhancedPainter& painter, double *width, double *height, double *text_width=nullptr, double *text_height=nullptr, int *columns_count=nullptr, int* lines_count=nullptr);
+        /** \brief show the print preview window for a given print \a p */
+        bool printpreviewNew(QPaintDevice* paintDevice, bool setAbsolutePaperSize=false, double printsizeX_inMM=-1.0, double printsizeY_inMM=-1.0, bool displayPreview=true);
+
+        /** \brief show the export preview window for a given page size \a pageSize, either in pixels (\a unitIsMM \c ==false ) or in millimeters (\a unitIsMM \c ==true ) */
+        bool exportpreview(QSizeF pageSize, bool unitIsMM=false);
+
+        /*! \brief sets the property fontSizeMultiplier ( \copybrief fontSizeMultiplier ) to the specified \a __value.
+            \details Description of the parameter fontSizeMultiplier is:  <BLOCKQUOTE>\copydoc fontSizeMultiplier </BLOCKQUOTE>
+            \see fontSizeMultiplier for more information */
+        void setFontSizeMultiplier(double __value);
+        /*! \brief sets the property lineWidthMultiplier ( \copybrief lineWidthMultiplier ) to the specified \a __value.
+            \details Description of the parameter lineWidthMultiplier is:  <BLOCKQUOTE>\copydoc lineWidthMultiplier </BLOCKQUOTE>
+            \see lineWidthMultiplier for more information */
+        void setLineWidthMultiplier(double __value);
+        /*! \brief sets the property printMagnification ( \copybrief printMagnification ) to the specified \a __value.
+            \details Description of the parameter printMagnification is: <BLOCKQUOTE>\copydoc printMagnification </BLOCKQUOTE>
+            \see printMagnification for more information */
+        void setPrintMagnification(double __value);
+        /*! \brief returns the property printMagnification ( \copybrief printMagnification ).
+            \details Description of the parameter printMagnification is: <BLOCKQUOTE>\copydoc printMagnification </BLOCKQUOTE>
+            \see printMagnification for more information */
+        double getPrintMagnification() const;
+        /*! \brief sets the property paintMagnification ( \copybrief paintMagnification ) to the specified \a __value.
+            \details Description of the parameter paintMagnification is: <BLOCKQUOTE>\copydoc paintMagnification </BLOCKQUOTE>
+            \see paintMagnification for more information */
+        void setPaintMagnification(double __value);
+        /*! \brief returns the property paintMagnification ( \copybrief paintMagnification ).
+            \details Description of the parameter paintMagnification is: <BLOCKQUOTE>\copydoc paintMagnification </BLOCKQUOTE>
+            \see paintMagnification for more information */
+        double getPaintMagnification() const;
+
+
+    protected slots:
+        /** \brief internal function for print/export preview
+         * \internal
+         */
+        void updatePreviewLabel();
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewPaintRequested(QPrinter *printer);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewPaintRequestedNew(QPrinter *printer);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewPaintRequestedNew(QPaintDevice *paintDevice);
+        /** \brief internal function for export preview
+         * \internal
+         */
+        void exportpreviewPaintRequested(JKQTPEnhancedPainter& painter, QSize size);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetZoom(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetSizeX(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetSizeY(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetSizeXNew(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetSizeYNew(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetMagnification(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetMagnificationNew(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetAspectRatio(bool checked);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetKeepAbsFontsize(bool checked);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewToggleMagnification(bool checked);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetLineWidthMultiplier(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewSetFontSizeMultiplier(double value);
+        /** \brief internal function for print preview
+         * \internal
+         */
+        void printpreviewUpdate();
+        /** \brief internal function for getDataColumnsByUser()
+         * \internal
+         */
+        void getDataColumnsByUserCheckAll();
+        /** \brief internal function for getDataColumnsByUser()
+         * \internal
+         */
+        void getDataColumnsByUserCheckNone();
+        /** \brief internal function for getDataColumnsByUser()
+         * \internal
+         */
+        void getDataColumnsByUserSave();
+        /** \brief internal function for getDataColumnsByUser()
+         * \internal
+         */
+        void getDataColumnsByUserComboBoxSelected(const QString& name);
+        /** \brief internal function for getDataColumnsByUser()
+         * \internal
+         */
+        void getDataColumnsByUserItemChanged(QListWidgetItem* widgetitem);
+        /** \brief internal function for getDataColumnsByUser()
+         * \internal
+         */
+        void showPlotData();
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis */
+        void synchronizeXAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local y-axis to the other y-axis */
+        void synchronizeYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
+        /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x- and y-axis to the other x- and y-axis */
+        void synchronizeXYAxis(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
+
+    protected:
+        /** \brief current style properties for this JKQTBasePlotter instance
+         *
+         * \see JKQTPSetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
+         */
+        JKQTBasePlotterStyle plotterStyle;
+
+        /** \brief copy sub-properties of plotterStyle to sub-objects that require it (axes, axes in graphs ...) and emit a plot update */
+        void propagateStyle();
+
+        /** \brief used to plot LaTeX markup */
+        JKQTMathText mathText;
+
+        /** \brief model representing all Plots in this plotter and showing their visible/invisible state */
+        JKQTPGraphsModel* m_plotsModel;
+
+        /** \brief object used for the x-axis */
+        JKQTPHorizontalAxis* xAxis;
+        /** \brief object used for the y-axis */
+        JKQTPVerticalAxis* yAxis;
+
+        /** \brief filename for the ini file in which to save the user settings
+         *  \see jkqtplotter_base_userprops
+         */
+        QString userSettigsFilename;
+        /** \brief prefix for the ini file in which to save the user settings
+         *  \see jkqtplotter_base_userprops
+         */
+        QString userSettigsPrefix;
+
+
+        /** \brief indicates whether the \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" is activated
+         *
+         * \see \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT
+         */
+        bool gridPrinting;
+        /** \brief x position of the current graph in \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing"
+         *
+         * \see \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT
+         */
+        size_t gridPrintingCurrentX;
+        /** \brief y position of the current graph in \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing"
+         *
+         * \see \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT
+         */
+        size_t gridPrintingCurrentY;
+        /** \brief list that manages all the additional graphs for \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" mode */
+        QList<JKQTPGridPrintingItem> gridPrintingList;
+        /** \brief this list contains all the rows of the current \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" and stores its heights */
+        QList<int> gridPrintingRows;
+        /** \brief this list contains all the columns of the current \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" and stores its widths */
+        QList<int> gridPrintingColumns;
+        /** \brief size of all plots in \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" mode, filled by gridPrintingCalc() */
+        QSizeF gridPrintingSize;
+
+        /** \brief this is an internal property that is used by the export/print system to control the "magnification". Usually this is 1.0
+         *         but if set !=1.0, it is used to scale the widgetWidth and widgetHeight before painting! */
+        double paintMagnification;
+
+        /** \brief an object which manages all data columns for this plotter class */
+        JKQTPDatastore* datastore;
+        /** \brief indicates whether the datastore is managed (allocated/freed) internally or externally */
+        bool datastoreInternal;
+
+
+        /** \brief width of the plot widget
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see setWidgetSize(), \ref jkqtplotter_base_plotsize
+         */
+        int widgetWidth;
+
+        /** \brief height of the plot widget
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see setWidgetSize(), \ref jkqtplotter_base_plotsize
+         */
+        int widgetHeight;
+
+
+
+        /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalPlotBorderTop;
+        /** \brief <b>calculated value:</b> free space between widget top border and top border of the key/legend
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalPlotKeyBorderTop;
+        /** \brief <b>calculated value:</b> height of the plot title (or 0 if no title)
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalTitleHeight;
+
+        /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderLeft;
+        /** \brief <b>calculated value:</b> free space between widget left border and left border of the key/legend
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalPlotKeyBorderLeft;
+
+        /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderBottom;
+        /** \brief <b>calculated value:</b> free space between widget bottom border and bottom border of the key/legend
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalPlotKeyBorderBottom;
+
+        /** \brief <b>calculated value:</b> free space between widget top border and plot top border, as used to plot the graph
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderRight;
+        /** \brief <b>calculated value:</b> free space between widget right border and right border of the key/legend
+         * \internal
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalPlotKeyBorderRight;
+
+
+
+        /** \brief <b>calculated value:</b> free space between widget top border and (plot+drawOutside) top border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+         */
+        double internalPlotBorderTop_notIncludingOutsidePlotSections;
+        /** \brief <b>calculated value:</b> free space between widget left border and (plot+drawOutside) left border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderLeft_notIncludingOutsidePlotSections;
+        /** \brief <b>calculated value:</b> free space between widget right border and (plot+drawOutside) right border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderBottom_notIncludingOutsidePlotSections;
+        /** \brief <b>calculated value:</b> free space between widget bottom border and (plot+drawOutside) bottom border (including coordinate axes)
+         * \internal
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \note This property is an intermediate storage for calculated values. Do not change directly!
+          */
+        double internalPlotBorderRight_notIncludingOutsidePlotSections;
+
+        /** \brief <b>calculated value:</b> plot width in pixel inside the widget (calculated by calcPlotScaling() from plotBorderLeft, plotBorderRight and widgetWidth)
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        int internalPlotWidth;
+        /** \brief <b>calculated value:</b> plot height in pixel inside the widget (calculated by calcPlotScaling() from plotBorderTop, plotBorderBottom and widgetHeight)
+         *
+         * \image html plot_widget_orientation.png
+         *
+         * \see \ref jkqtplotter_base_plotsize
+         */
+        int internalPlotHeight;
+
+        /** \brief indicates whether the widget should maintain an aspect ratio of plotwidth and plotheight */
+        bool maintainAspectRatio;
+        /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true */
+        double aspectRatio;
+
+        /** \brief indicates whether the axes should maintain an aspect ratio */
+        bool maintainAxisAspectRatio;
+        /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true */
+        double axisAspectRatio;
+
+
+        /** \brief the plot label text */
+        QString plotLabel;
+
+
+        /** \brief calculate the scaling and offset values from axis min/max values */
+        void calcPlotScaling(JKQTPEnhancedPainter& painter);
+
+        /** \brief set the standard settings (colors, line widths ...) */
+        void initSettings();
+
+
+        /** \brief specifies whether this class emits signals, like zoomChangedLocally() or beforePlotScalingRecaluclate() */
+        bool emitSignals;
+
+        /** \brief multiplier which is used for font sizes when the plot is exported/printed */
+        double fontSizePrintMultiplier;
+
+        /** \brief multiplier which is used for linewidths when the plot is exported/printed */
+        double lineWidthPrintMultiplier;
+
+        /** \brief multiplier for the font size */
+        double fontSizeMultiplier;
+        /** \brief multiplier or the line widths */
+        double lineWidthMultiplier;
+
+        /** \brief internal: used to store a list of all currently used plot styles */
+        QList<int> usedStyles;
+
+
+        /** \brief a vector that contains all graphs to be plottet in the system */
+        QList<JKQTPPlotElement*> graphs;
+
+
+        QList<JKQTPOverlayElement*> overlays;
+
+
+
+
+
+        /** \brief indicates whether to use clipping (hack for printing, see print() ) */
+        bool useClipping;
+
+
+
+
+        /** \brief QAction which triggers saving of the plot as an image */
+        QAction* actSavePlot;
+        /** \brief QAction which triggers saving of the data used for the plot */
+        QAction* actSaveData;
+        /** \brief QAction which triggers copying of the data to the clipboard */
+        QAction* actCopyData;
+        /** \brief QAction which triggers copying of the image to the clipboard */
+        QAction* actCopyPixelImage;
+        /** \brief QAction which triggers copying of the data to the clipboard in Matlab format */
+        QAction* actCopyMatlab;
+        /** \brief QAction which triggers the saving as PDF */
+        QAction* actSavePDF;
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+        /** \brief QAction which triggers the saving as PostScript */
+        QAction* actSavePS;
+#endif
+        /** \brief QAction which triggers the saving as pixel image */
+        QAction* actSavePix;
+        /** \brief QAction which triggers the saving as Scalable Vector Graphics (SVG) */
+        QAction* actSaveSVG;
+        /** \brief QAction which triggers the printing */
+        QAction* actPrint;
+        /** \brief QAction which triggers the saving as CSV (data only) */
+        QAction* actSaveCSV;
+        /** \brief QAction which triggers zoom all */
+        QAction* actZoomAll;
+        /** \brief QAction which triggers zoom in */
+        QAction* actZoomIn;
+        /** \brief QAction which triggers zoom out */
+        QAction* actZoomOut;
+        /** \brief QAction to show a table with all the plot data in the datastore */
+        QAction* actShowPlotData;
+        /** \brief this list contains additional actions, that can be registered by registerAdditionalAction(). They are shown in the context menu only and are e.g. used to display "save image data" actions. Each action may be in a category (key of map), which is displayed as a submenu of the context-menu! */
+        AdditionalActionsMap lstAdditionalPlotterActions;
+        /** \brief the current directory in which to open SaveAs ... dialogs */
+        QString currentSaveDirectory;
+        /** \brief the current file format to use in SaveAs ... dialogs */
+        QString currentFileFormat;
+        /** \brief the current file format to use in SaveDataAs ... dialogs */
+        QString currentDataFileFormat;
+        /** \brief the currently selected printer */
+        QString currentPrinter;
+
+        /** \brief the master plotter for x-dimension, this plotter is connected to. */
+        JKQTBasePlotter *masterPlotterX;
+        /** \brief the master plotter for y-dimension, this plotter is connected to. */
+        JKQTBasePlotter *masterPlotterY;
+        /** \brief synchronize plot width with masterPlotterX */
+        bool masterSynchronizeWidth;
+        /** \brief synchronize plot height with masterPlotterY */
+        bool masterSynchronizeHeight;
+
+
+        /** \brief controls, whether the signals plotUpdated() and overlaysUpdated() are emitted */
+        bool emitPlotSignals;
+
+
+
+
+
+        QListWidget* dataColumnsListWidget;
+        QComboBox* dataColumnsCombobox;
+        QSet<int> getDataColumnsByUser();
+        QMap<QString, QStringList> getDataColumnsByUserSaved;
+
+
+    private:
+        double printZoomFactor;
+        double printSizeX_Millimeter;
+        double printSizeY_Millimeter;
+        double printMagnification;
+        QPointer<QPrintPreviewWidget> printPreview;
+        QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeX;
+        QPointer<JKQTPEnhancedDoubleSpinBox> spinSizeY;
+        QPointer<QLabel> exportPreviewLabel;
+        QPointer<JKQTPEnhancedDoubleSpinBox> spinMagnification;
+        bool printSetAbsolutePageSize;
+        bool printSetAbsolutePlotSize;
+        bool printKeepAbsoluteFontSizes;
+        bool printScaleToPagesize;
+        double printAspect;
+        bool printKeepAspect;
+        bool exportUnitInMM;
+        QSizeF printPageSizeMM;
+        bool printDoUpdate;
+
+
+
+
 
 };
 

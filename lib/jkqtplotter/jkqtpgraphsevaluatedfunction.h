@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -107,86 +107,74 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief clear the data sampled from the function. */
         void clearData();
 
-        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color ( \copybrief color ). 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual void setFillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
-        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual QColor getFillColor() const  
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
-        /*! \brief returns the property fillStyle ( \copybrief fillStyle ). 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual Qt::BrushStyle getFillStyle() const  
         {
             return this->fillStyle; 
         }
-        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE> 
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual void setStyle(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
-        /*! \brief returns the property style ( \copybrief style ). 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE> 
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual Qt::PenStyle getStyle() const  
         {
             return this->style; 
         }
-        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property drawLine ( \copybrief drawLine ) to the specified \a __value. 
-            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copydoc drawLine </BLOCKQUOTE> 
-            \see drawLine for more information */ 
+        /*! \copydoc drawLine
+            \see see drawLine for details */ 
         inline virtual void setDrawLine(bool __value)
         {
             this->drawLine = __value;
         } 
-        /*! \brief returns the property drawLine ( \copybrief drawLine ). 
-            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copydoc drawLine </BLOCKQUOTE> 
-            \see drawLine for more information */ 
+        /*! \copydoc drawLine
+            \see see drawLine for details */ 
         inline virtual bool getDrawLine() const  
         {
             return this->drawLine; 
@@ -217,9 +205,8 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /*! \brief returns the property simplePlotFunction ( \copybrief simplePlotFunction ). \see simplePlotFunction for more information */ \
         virtual jkqtpSimplePlotFunctionType getSimplePlotFunction () const;
 
-        /*! \brief sets the property params ( \copybrief params ) to the specified \a __value. 
-            \details Description of the parameter params is: <BLOCKQUOTE>\copydoc params </BLOCKQUOTE> 
-            \see params for more information */ 
+        /*! \copydoc params
+            \see see params for details */ 
         inline virtual void setParams(void* __value)
         {
             if (this->params != __value) { 
@@ -227,9 +214,8 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
                 clearData(); 
             } 
         } 
-        /*! \brief returns the property params ( \copybrief params ). 
-            \details Description of the parameter params is: <BLOCKQUOTE>\copydoc params </BLOCKQUOTE> 
-            \see params for more information */ 
+        /*! \copydoc params
+            \see see params for details */ 
         inline virtual void* getParams() const  
         {
             return this->params; 
@@ -253,114 +239,98 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         QVector<double> getInternalParams() const;
         /** \brief returns the currently set internal parameter vector */
         QVector<double> getInternalErrorParams() const;
-        /*! \brief sets the property minSamples ( \copybrief minSamples ) to the specified \a __value. 
-            \details Description of the parameter minSamples is: <BLOCKQUOTE>\copydoc minSamples </BLOCKQUOTE> 
-            \see minSamples for more information */ 
+        /*! \copydoc minSamples
+            \see see minSamples for details */ 
         inline virtual void setMinSamples(const unsigned int & __value)  
         {
             this->minSamples = __value;
         } 
-        /*! \brief returns the property minSamples ( \copybrief minSamples ). 
-            \details Description of the parameter minSamples is: <BLOCKQUOTE>\copydoc minSamples </BLOCKQUOTE> 
-            \see minSamples for more information */ 
+        /*! \copydoc minSamples
+            \see see minSamples for details */ 
         inline virtual unsigned int getMinSamples() const  
         {
             return this->minSamples; 
         }
-        /*! \brief sets the property maxRefinementDegree ( \copybrief maxRefinementDegree ) to the specified \a __value. 
-            \details Description of the parameter maxRefinementDegree is: <BLOCKQUOTE>\copydoc maxRefinementDegree </BLOCKQUOTE> 
-            \see maxRefinementDegree for more information */ 
+        /*! \copydoc maxRefinementDegree
+            \see see maxRefinementDegree for details */ 
         inline virtual void setMaxRefinementDegree(const unsigned int & __value)  
         {
             this->maxRefinementDegree = __value;
         } 
-        /*! \brief returns the property maxRefinementDegree ( \copybrief maxRefinementDegree ). 
-            \details Description of the parameter maxRefinementDegree is: <BLOCKQUOTE>\copydoc maxRefinementDegree </BLOCKQUOTE> 
-            \see maxRefinementDegree for more information */ 
+        /*! \copydoc maxRefinementDegree
+            \see see maxRefinementDegree for details */ 
         inline virtual unsigned int getMaxRefinementDegree() const  
         {
             return this->maxRefinementDegree; 
         }
-        /*! \brief sets the property slopeTolerance ( \copybrief slopeTolerance ) to the specified \a __value. 
-            \details Description of the parameter slopeTolerance is: <BLOCKQUOTE>\copydoc slopeTolerance </BLOCKQUOTE> 
-            \see slopeTolerance for more information */ 
+        /*! \copydoc slopeTolerance
+            \see see slopeTolerance for details */ 
         inline virtual void setSlopeTolerance(double __value)
         {
             this->slopeTolerance = __value;
         } 
-        /*! \brief returns the property slopeTolerance ( \copybrief slopeTolerance ). 
-            \details Description of the parameter slopeTolerance is: <BLOCKQUOTE>\copydoc slopeTolerance </BLOCKQUOTE> 
-            \see slopeTolerance for more information */ 
+        /*! \copydoc slopeTolerance
+            \see see slopeTolerance for details */ 
         inline virtual double getSlopeTolerance() const  
         {
             return this->slopeTolerance; 
         }
-        /*! \brief sets the property minPixelPerSample ( \copybrief minPixelPerSample ) to the specified \a __value. 
-            \details Description of the parameter minPixelPerSample is: <BLOCKQUOTE>\copydoc minPixelPerSample </BLOCKQUOTE> 
-            \see minPixelPerSample for more information */ 
+        /*! \copydoc minPixelPerSample
+            \see see minPixelPerSample for details */ 
         inline virtual void setMinPixelPerSample(double __value)
         {
             this->minPixelPerSample = __value;
         } 
-        /*! \brief returns the property minPixelPerSample ( \copybrief minPixelPerSample ). 
-            \details Description of the parameter minPixelPerSample is: <BLOCKQUOTE>\copydoc minPixelPerSample </BLOCKQUOTE> 
-            \see minPixelPerSample for more information */ 
+        /*! \copydoc minPixelPerSample
+            \see see minPixelPerSample for details */ 
         inline virtual double getMinPixelPerSample() const  
         {
             return this->minPixelPerSample; 
         }
-        /*! \brief sets the property plotRefinement ( \copybrief plotRefinement ) to the specified \a __value. 
-            \details Description of the parameter plotRefinement is: <BLOCKQUOTE>\copydoc plotRefinement </BLOCKQUOTE> 
-            \see plotRefinement for more information */ 
+        /*! \copydoc plotRefinement
+            \see see plotRefinement for details */ 
         inline virtual void setPlotRefinement(bool __value)
         {
             this->plotRefinement = __value;
         } 
-        /*! \brief returns the property plotRefinement ( \copybrief plotRefinement ). 
-            \details Description of the parameter plotRefinement is: <BLOCKQUOTE>\copydoc plotRefinement </BLOCKQUOTE> 
-            \see plotRefinement for more information */ 
+        /*! \copydoc plotRefinement
+            \see see plotRefinement for details */ 
         inline virtual bool getPlotRefinement() const  
         {
             return this->plotRefinement; 
         }
-        /*! \brief sets the property displaySamplePoints ( \copybrief displaySamplePoints ) to the specified \a __value. 
-            \details Description of the parameter displaySamplePoints is: <BLOCKQUOTE>\copydoc displaySamplePoints </BLOCKQUOTE> 
-            \see displaySamplePoints for more information */ 
+        /*! \copydoc displaySamplePoints
+            \see see displaySamplePoints for details */ 
         inline virtual void setDisplaySamplePoints(bool __value)
         {
             this->displaySamplePoints = __value;
         } 
-        /*! \brief returns the property displaySamplePoints ( \copybrief displaySamplePoints ). 
-            \details Description of the parameter displaySamplePoints is: <BLOCKQUOTE>\copydoc displaySamplePoints </BLOCKQUOTE> 
-            \see displaySamplePoints for more information */ 
+        /*! \copydoc displaySamplePoints
+            \see see displaySamplePoints for details */ 
         inline virtual bool getDisplaySamplePoints() const  
         {
             return this->displaySamplePoints; 
         }
-        /*! \brief sets the property drawErrorPolygons ( \copybrief drawErrorPolygons ) to the specified \a __value. 
-            \details Description of the parameter drawErrorPolygons is: <BLOCKQUOTE>\copydoc drawErrorPolygons </BLOCKQUOTE> 
-            \see drawErrorPolygons for more information */ 
+        /*! \copydoc drawErrorPolygons
+            \see see drawErrorPolygons for details */ 
         inline virtual void setDrawErrorPolygons(bool __value)
         {
             this->drawErrorPolygons = __value;
         } 
-        /*! \brief returns the property drawErrorPolygons ( \copybrief drawErrorPolygons ). 
-            \details Description of the parameter drawErrorPolygons is: <BLOCKQUOTE>\copydoc drawErrorPolygons </BLOCKQUOTE> 
-            \see drawErrorPolygons for more information */ 
+        /*! \copydoc drawErrorPolygons
+            \see see drawErrorPolygons for details */ 
         inline virtual bool getDrawErrorPolygons() const  
         {
             return this->drawErrorPolygons; 
         }
-        /*! \brief sets the property drawErrorLines ( \copybrief drawErrorLines ) to the specified \a __value. 
-            \details Description of the parameter drawErrorLines is: <BLOCKQUOTE>\copydoc drawErrorLines </BLOCKQUOTE> 
-            \see drawErrorLines for more information */ 
+        /*! \copydoc drawErrorLines
+            \see see drawErrorLines for details */ 
         inline virtual void setDrawErrorLines(bool __value)
         {
             this->drawErrorLines = __value;
         } 
-        /*! \brief returns the property drawErrorLines ( \copybrief drawErrorLines ). 
-            \details Description of the parameter drawErrorLines is: <BLOCKQUOTE>\copydoc drawErrorLines </BLOCKQUOTE> 
-            \see drawErrorLines for more information */ 
+        /*! \copydoc drawErrorLines
+            \see see drawErrorLines for details */ 
         inline virtual bool getDrawErrorLines() const  
         {
             return this->drawErrorLines; 
@@ -389,16 +359,14 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         virtual void setErrorPlotFunction (const jkqtpSimplePlotFunctionType & __value);
         /*! \brief returns the property errorSimplePlotFunction ( \copybrief errorSimplePlotFunction ). \see errorSimplePlotFunction for more information */ \
         virtual jkqtpSimplePlotFunctionType getErrorSimplePlotFunction () const;
-        /*! \brief sets the property errorParams ( \copybrief errorParams ) to the specified \a __value. 
-            \details Description of the parameter errorParams is: <BLOCKQUOTE>\copydoc errorParams </BLOCKQUOTE> 
-            \see errorParams for more information */ 
+        /*! \copydoc errorParams
+            \see see errorParams for details */ 
         inline virtual void setErrorParams(void* __value)
         {
             this->errorParams = __value;
         } 
-        /*! \brief returns the property errorParams ( \copybrief errorParams ). 
-            \details Description of the parameter errorParams is: <BLOCKQUOTE>\copydoc errorParams </BLOCKQUOTE> 
-            \see errorParams for more information */ 
+        /*! \copydoc errorParams
+            \see see errorParams for details */ 
         inline virtual void* getErrorParams() const  
         {
             return this->errorParams; 
@@ -406,109 +374,95 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void setErrorParams(const QVector<double>& errorParams);
 
-        /*! \brief sets the property parameterColumn ( \copybrief parameterColumn ) to the specified \a __value. 
-            \details Description of the parameter parameterColumn is: <BLOCKQUOTE>\copydoc parameterColumn </BLOCKQUOTE> 
-            \see parameterColumn for more information */ 
+        /*! \copydoc parameterColumn
+            \see see parameterColumn for details */ 
         inline virtual void setParameterColumn(int __value)
         {
             this->parameterColumn = __value;
         } 
-        /*! \brief returns the property parameterColumn ( \copybrief parameterColumn ). 
-            \details Description of the parameter parameterColumn is: <BLOCKQUOTE>\copydoc parameterColumn </BLOCKQUOTE> 
-            \see parameterColumn for more information */ 
+        /*! \copydoc parameterColumn
+            \see see parameterColumn for details */ 
         inline virtual int getParameterColumn() const  
         {
             return this->parameterColumn; 
         }
         /*! \brief sets the property parameterColumn ( \copybrief parameterColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter parameterColumn is:  <BLOCKQUOTE>\copydoc parameterColumn </BLOCKQUOTE> 
-        	\see parameterColumn for more information */ 
+            \see parameterColumn for more information */ 
         inline virtual void setParameterColumn (size_t __value) { this->parameterColumn = static_cast<int>(__value); }
-        /*! \brief sets the property errorParameterColumn ( \copybrief errorParameterColumn ) to the specified \a __value. 
-            \details Description of the parameter errorParameterColumn is: <BLOCKQUOTE>\copydoc errorParameterColumn </BLOCKQUOTE> 
-            \see errorParameterColumn for more information */ 
+        /*! \copydoc errorParameterColumn
+            \see see errorParameterColumn for details */ 
         inline virtual void setErrorParameterColumn(int __value)
         {
             this->errorParameterColumn = __value;
         } 
-        /*! \brief returns the property errorParameterColumn ( \copybrief errorParameterColumn ). 
-            \details Description of the parameter errorParameterColumn is: <BLOCKQUOTE>\copydoc errorParameterColumn </BLOCKQUOTE> 
-            \see errorParameterColumn for more information */ 
+        /*! \copydoc errorParameterColumn
+            \see see errorParameterColumn for details */ 
         inline virtual int getErrorParameterColumn() const  
         {
             return this->errorParameterColumn; 
         }
         /*! \brief sets the property errorParameterColumn ( \copybrief errorParameterColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter errorParameterColumn is:  <BLOCKQUOTE>\copydoc errorParameterColumn </BLOCKQUOTE> 
-        	\see errorParameterColumn for more information */ 
+            \see errorParameterColumn for more information */ 
         inline virtual void setErrorParameterColumn (size_t __value) { this->errorParameterColumn = static_cast<int>(__value); }
 
-        /*! \brief sets the property errorColor ( \copybrief errorColor ) to the specified \a __value. 
-            \details Description of the parameter errorColor is: <BLOCKQUOTE>\copydoc errorColor </BLOCKQUOTE> 
-            \see errorColor for more information */ 
+        /*! \copydoc errorColor
+            \see see errorColor for details */ 
         inline virtual void setErrorColor(const QColor & __value)  
         {
             this->errorColor = __value;
         } 
-        /*! \brief returns the property errorColor ( \copybrief errorColor ). 
-            \details Description of the parameter errorColor is: <BLOCKQUOTE>\copydoc errorColor </BLOCKQUOTE> 
-            \see errorColor for more information */ 
+        /*! \copydoc errorColor
+            \see see errorColor for details */ 
         inline virtual QColor getErrorColor() const  
         {
             return this->errorColor; 
         }
-        /*! \brief sets the property errorFillColor ( \copybrief errorFillColor ) to the specified \a __value. 
-            \details Description of the parameter errorFillColor is: <BLOCKQUOTE>\copydoc errorFillColor </BLOCKQUOTE> 
-            \see errorFillColor for more information */ 
+        /*! \copydoc errorFillColor
+            \see see errorFillColor for details */ 
         inline virtual void setErrorFillColor(const QColor & __value)  
         {
             this->errorFillColor = __value;
         } 
-        /*! \brief returns the property errorFillColor ( \copybrief errorFillColor ). 
-            \details Description of the parameter errorFillColor is: <BLOCKQUOTE>\copydoc errorFillColor </BLOCKQUOTE> 
-            \see errorFillColor for more information */ 
+        /*! \copydoc errorFillColor
+            \see see errorFillColor for details */ 
         inline virtual QColor getErrorFillColor() const  
         {
             return this->errorFillColor; 
         }
-        /*! \brief sets the property errorFillStyle ( \copybrief errorFillStyle ) to the specified \a __value. 
-            \details Description of the parameter errorFillStyle is: <BLOCKQUOTE>\copydoc errorFillStyle </BLOCKQUOTE> 
-            \see errorFillStyle for more information */ 
+        /*! \copydoc errorFillStyle
+            \see see errorFillStyle for details */ 
         inline virtual void setErrorFillStyle(const Qt::BrushStyle & __value)  
         {
             this->errorFillStyle = __value;
         } 
-        /*! \brief returns the property errorFillStyle ( \copybrief errorFillStyle ). 
-            \details Description of the parameter errorFillStyle is: <BLOCKQUOTE>\copydoc errorFillStyle </BLOCKQUOTE> 
-            \see errorFillStyle for more information */ 
+        /*! \copydoc errorFillStyle
+            \see see errorFillStyle for details */ 
         inline virtual Qt::BrushStyle getErrorFillStyle() const  
         {
             return this->errorFillStyle; 
         }
-        /*! \brief sets the property errorStyle ( \copybrief errorStyle ) to the specified \a __value. 
-            \details Description of the parameter errorStyle is: <BLOCKQUOTE>\copydoc errorStyle </BLOCKQUOTE> 
-            \see errorStyle for more information */ 
+        /*! \copydoc errorStyle
+            \see see errorStyle for details */ 
         inline virtual void setErrorStyle(const Qt::PenStyle & __value)  
         {
             this->errorStyle = __value;
         } 
-        /*! \brief returns the property errorStyle ( \copybrief errorStyle ). 
-            \details Description of the parameter errorStyle is: <BLOCKQUOTE>\copydoc errorStyle </BLOCKQUOTE> 
-            \see errorStyle for more information */ 
+        /*! \copydoc errorStyle
+            \see see errorStyle for details */ 
         inline virtual Qt::PenStyle getErrorStyle() const  
         {
             return this->errorStyle; 
         }
-        /*! \brief sets the property errorLineWidth ( \copybrief errorLineWidth ) to the specified \a __value. 
-            \details Description of the parameter errorLineWidth is: <BLOCKQUOTE>\copydoc errorLineWidth </BLOCKQUOTE> 
-            \see errorLineWidth for more information */ 
+        /*! \copydoc errorLineWidth
+            \see see errorLineWidth for details */ 
         inline virtual void setErrorLineWidth(double __value)
         {
             this->errorLineWidth = __value;
         } 
-        /*! \brief returns the property errorLineWidth ( \copybrief errorLineWidth ). 
-            \details Description of the parameter errorLineWidth is: <BLOCKQUOTE>\copydoc errorLineWidth </BLOCKQUOTE> 
-            \see errorLineWidth for more information */ 
+        /*! \copydoc errorLineWidth
+            \see see errorLineWidth for details */ 
         inline virtual double getErrorLineWidth() const  
         {
             return this->errorLineWidth; 

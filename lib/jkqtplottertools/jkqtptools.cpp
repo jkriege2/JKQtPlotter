@@ -7,7 +7,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -44,6 +44,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 #include <cstdio>
 #include <ctype.h>
 #include <locale>
+
 
 std::string jkqtp_tolower(const std::string& s){
   std::string d;
@@ -330,20 +331,33 @@ Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style) {
 QString JKQTPCADrawMode2String(JKQTPCADrawMode pos) {
     switch(pos) {
         case JKQTPCADMcomplete: return "all";
-        case JKQTPCADMticksAndLabels: return "ticks+labels";
-        case JKQTPCADMticks: return "ticks";
-        case JKQTPCADMline: return "line";
+        case JKQTPCADMTicksTickLabelsAxisLabel: return "ticks+labels+axislabel";
+        case JKQTPCADMTicksTickLabels: return "ticks+labels";
+        case JKQTPCADMTicks: return "ticks";
+        case JKQTPCADMLineTicksTickLabels: return "line+ticks+labels";
+        case JKQTPCADMTickLabelsAxisLabel: return "ticks+labels";
+        case JKQTPCADMTickLabels: return "labels";
+        case JKQTPCADMLineTicks: return "line+ticks";
+        case JKQTPCADMLine: return "line";
         case JKQTPCADMnone: return "none";
     }
     return "";
 }
 
+
+
 JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos) {
     QString s=pos.trimmed().toLower();
-    if (s=="all") return JKQTPCADMcomplete;
-    if (s=="ticks+labels") return JKQTPCADMticksAndLabels;
-    if (s=="ticks") return JKQTPCADMticks;
-    if (s=="line") return JKQTPCADMline;
+    if (s=="all" || s=="complete" || s=="line+ticks+labels+axislabel") return JKQTPCADMcomplete;
+    if (s=="ticks+labels") return JKQTPCADMLineTicksTickLabels;
+    if (s=="ticks+labels+axislabel") return JKQTPCADMTicksTickLabelsAxisLabel;
+    if (s=="labels+axislabel") return JKQTPCADMTickLabelsAxisLabel;
+    if (s=="ticks+labels") return JKQTPCADMTicksTickLabels;
+    if (s=="line+ticks+labels") return JKQTPCADMLineTicksTickLabels;
+    if (s=="labels") return JKQTPCADMTickLabels;
+    if (s=="line+ticks") return JKQTPCADMLineTicks;
+    if (s=="ticks") return JKQTPCADMTicks;
+    if (s=="line") return JKQTPCADMLine;
     if (s=="none") return JKQTPCADMnone;
     return JKQTPCADMnone;
 }
@@ -768,17 +782,51 @@ static const struct RGBData {
 
 static const int rgbTblSize = sizeof(rgbTbl) / sizeof(RGBData);
 
-std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
+QString jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a, bool useSpecialTransparencySyntax) {
     if (a==255) {// only for non-transparent colors
         for (int i=0; i<rgbTblSize; i++) {
             if (rgb(r,g,b)==rgbTbl[i].value) {
                 return rgbTbl[i].name;
             }
         }
-        return jkqtp_format("#%02X%02X%02X", static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
+        return QString("#%1%2%3").arg(static_cast<int>(r), 2,16,QLatin1Char('0')).arg(static_cast<int>(g), 2,16,QLatin1Char('0')).arg(static_cast<int>(b), 2,16,QLatin1Char('0'));
     }
     // if we reach this, we have an unnamed transparent color
-    return jkqtp_format("#%02X%02X%02X%02X", static_cast<int>(r), static_cast<int>(g), static_cast<int>(b), static_cast<int>(a));
+    if (useSpecialTransparencySyntax) {
+        QString col=jkqtp_rgbtostring(r,g,b,255,false);
+        return QString("%1,%2").arg(col).arg(static_cast<int>(a), 0, 10);
+        //return QString("%1,%2%%").arg(col).arg(static_cast<int>(a)*100/255, 0, 10);
+    } else {
+        return QString("#%1%2%3%4").arg(static_cast<int>(r), 2,16,QLatin1Char('0')).arg(static_cast<int>(g), 2,16,QLatin1Char('0')).arg(static_cast<int>(b), 2,16,QLatin1Char('0')).arg(static_cast<int>(a), 2,16,QLatin1Char('0'));
+    }
+}
+
+
+QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax) {
+    return jkqtp_rgbtostring(static_cast<unsigned char>((color).red()),
+                                     static_cast<unsigned char>((color).green()),
+                                     static_cast<unsigned char>((color).blue()),
+                                     static_cast<unsigned char>((color).alpha()),
+                                     useSpecialTransparencySyntax);
+}
+
+QColor jkqtp_String2QColor(const QString &color)
+{
+    QRegExp rxP("(.+)\\s*,\\s*(\\d+\\.?\\d+)\\%");
+    QRegExp rxNP("(.+)\\s*,\\s*([\\d]+)");
+    if (rxP.exactMatch(color)) {
+        QColor col(rxP.cap(1));
+        double a=QLocale::c().toDouble(rxP.cap(2));
+        col.setAlphaF(a/100.0);
+        return col;
+    }
+    if (rxNP.exactMatch(color)) {
+        QColor col(rxNP.cap(1));
+        double a=QLocale::c().toInt(rxNP.cap(2));
+        col.setAlphaF(a/255.0);
+        return col;
+    }
+    return QColor(color);
 }
 
 std::string jkqtp_to_valid_variable_name(const std::string& input) {
@@ -857,3 +905,161 @@ JKQTPStepType String2JKQTPStepType(const QString& pos)
     return JKQTPStepLeft;
 }
 
+
+QString JKQTPContextMenuModes2String(JKQTPContextMenuModes act)
+{
+    if (act==jkqtpcmmStandardContextMenu) return "standard";
+    if (act==jkqtpcmmSpecialContextMenu) return "special";
+    if (act==jkqtpcmmStandardAndSpecialContextMenu) return "both";
+    if (act==jkqtpcmmNoContextMenu) return "none";
+    return "none";
+}
+
+JKQTPContextMenuModes String2JKQTPContextMenuModes(const QString &act)
+{
+    QString s=act.trimmed().toLower();
+    if (s=="jkqtpcmmstandardcontextmenu"||s=="standardcontextmenu" ||s=="standard") return jkqtpcmmStandardContextMenu;
+    if (s=="jkqtpcmmspecialcontextmenu"||s=="specialcontextmenu"||s=="special") return jkqtpcmmSpecialContextMenu;
+    if (s=="jkqtpcmmstandardandspecialcontextmenu"||s=="standardandspecialcontextmenu"||s=="standardandspecial"||s=="standard+special"||s=="both") return jkqtpcmmStandardAndSpecialContextMenu;
+
+    return jkqtpcmmNoContextMenu;
+}
+
+JKQTPMouseWheelActions String2JKQTPMouseWheelActions(const QString &act)
+{
+    QString s=act.trimmed().toLower();
+    if (s=="jkqtpmwazoombywheel"||s=="zoombywheel" ||s=="zoom") return jkqtpmwaZoomByWheel;
+    if (s=="jkqtpmwapanbywheel"||s=="panbywheel"||s=="pan") return jkqtpmwaPanByWheel;
+    return jkqtpmwaZoomByWheel;
+
+}
+
+QString JKQTPMouseWheelActions2String(JKQTPMouseWheelActions act)
+{
+    if (act==jkqtpmwaZoomByWheel) return "zoom";
+    if (act==jkqtpmwaPanByWheel) return "pan";
+    return "unknown";
+}
+
+JKQTPMouseDoubleClickActions String2JKQTPMouseDoubleClickActions(const QString &act)
+{
+    QString s=act.trimmed().toLower();
+    if (s=="jkqtpdcaclickzoomsin"||s=="clickzoomsin" ||s=="zoomsin" ||s=="zoomin") return jkqtpdcaClickZoomsIn;
+    if (s=="jkqtpdcaclickzoomsout"||s=="clickzoomsout" ||s=="zoomsout" ||s=="zoomout") return jkqtpdcaClickZoomsOut;
+    if (s=="jkqtpdcaclickopenscontextmenu"||s=="openscontextmenu"||s=="opencontextmenu"||s=="contextmenu") return jkqtpdcaClickOpensContextMenu;
+    if (s=="jkqtpdcaclickopensspecialcontextmenu"||s=="opensspecialcontextmenu"||s=="openspecialcontextmenu"||s=="specialcontextmenu") return jkqtpdcaClickOpensSpecialContextMenu;
+    if (s=="jkqtpdcaclickmovesviewport"||s=="clickmovesviewport"||s=="movesviewport"||s=="moveviewport"||s=="moveview") return jkqtpdcaClickMovesViewport;
+
+    return jkqtpdcaClickZoomsIn;
+}
+
+QString JKQTPMouseDoubleClickActions2String(JKQTPMouseDoubleClickActions act)
+{
+    if (act==jkqtpdcaClickZoomsIn) return "zoomin";
+    if (act==jkqtpdcaClickZoomsOut) return "zoomout";
+    if (act==jkqtpdcaClickOpensContextMenu) return "contextmenu";
+    if (act==jkqtpdcaClickOpensSpecialContextMenu) return "specialcontextmenu";
+    if (act==jkqtpdcaClickMovesViewport) return "moveviewport";
+    return "unknown";
+
+}
+
+JKQTPMouseDragActions String2JKQTPMouseDragActions(const QString &act)
+{
+    QString s=act.trimmed().toLower();
+    if (s=="jkqtpmdapanonmove"||s=="panonmove" ||s=="panmove") return jkqtpmdaPanPlotOnMove;
+    if (s=="jkqtpmdapanonrelease"||s=="panonrelease" ||s=="panrelease") return jkqtpmdaPanPlotOnRelease;
+    if (s=="jkqtpmdazoombyrectangle"||s=="zoomrectangle"||s=="zoomrect"||s=="zoombyrectangle"||s=="zoombyrect") return jkqtpmdaZoomByRectangle;
+    if (s=="jkqtpmdadrawrectforevent"||s=="drawrectangle"||s=="drawrect"||s=="rectangle"||s=="rect") return jkqtpmdaDrawRectangleForEvent;
+    if (s=="jkqtpmdadrawrectforevent"||s=="drawcircle"||s=="circle") return jkqtpmdaDrawCircleForEvent;
+    if (s=="jkqtpmdadrawrectforevent"||s=="drawellipse"||s=="ellipse") return jkqtpmdaDrawEllipseForEvent;
+    if (s=="jkqtpmdadrawrectforevent"||s=="drawline"||s=="line") return jkqtpmdaDrawLineForEvent;
+    if (s=="jkqtpmdascribbleforevents"||s=="scribble") return jkqtpmdaScribbleForEvents;
+
+    return jkqtpmdaZoomByRectangle;
+
+}
+
+QString JKQTPMouseDragActions2String(JKQTPMouseDragActions act)
+{
+    if (act==jkqtpmdaPanPlotOnMove) return "PanOnMove";
+    if (act==jkqtpmdaPanPlotOnRelease) return "PanOnRelease";
+    if (act==jkqtpmdaZoomByRectangle) return "ZoomRectangle";
+    if (act==jkqtpmdaDrawRectangleForEvent) return "DrawRectangle";
+    if (act==jkqtpmdaDrawCircleForEvent) return "DrawCircle";
+    if (act==jkqtpmdaDrawEllipseForEvent) return "DrawEllipse";
+    if (act==jkqtpmdaDrawLineForEvent) return "DrawLine";
+    if (act==jkqtpmdaScribbleForEvents) return "Scribble";
+    return "unknown";
+}
+
+
+bool JKQTPCADrawModeHasLine(JKQTPCADrawMode pos)
+{
+    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMLineTicksTickLabels) || (pos==JKQTPCADMLineTicks) || (pos==JKQTPCADMLine);
+}
+
+bool JKQTPCADrawModeHasTicks(JKQTPCADrawMode pos)
+{
+    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMTicksTickLabelsAxisLabel) || (pos==JKQTPCADMLineTicks) || (pos==JKQTPCADMLineTicksTickLabels) || (pos==JKQTPCADMTicksTickLabels)|| (pos==JKQTPCADMTicks);
+}
+
+bool JKQTPCADrawModeHasTickLabels(JKQTPCADrawMode pos)
+{
+    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMTicksTickLabelsAxisLabel) || (pos==JKQTPCADMLineTicksTickLabels) || (pos==JKQTPCADMTicksTickLabels) || (pos==JKQTPCADMTickLabels) || (pos==JKQTPCADMTickLabelsAxisLabel);
+}
+
+bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos)
+{
+    return (pos==JKQTPCADMcomplete) || (pos==JKQTPCADMTicksTickLabelsAxisLabel) || (pos==JKQTPCADMTickLabelsAxisLabel);
+}
+
+QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode)
+{
+    switch(mode) {
+        case JKQTPFFCMSameColor: return "same";
+        case JKQTPFFCMInvertedColor: return "inverted";
+        case JKQTPFFCMLighterColor: return "lighter";
+        case JKQTPFFCMEvenLighterColor: return "even_lighter";
+        case JKQTPFFCMDarkerColor: return "darker";
+        case JKQTPFFCMEvenDarkerColor: return "even_darker";
+        case JKQTPFFCMMoreTransparentColor: return "more_transparent";
+        case JKQTPFFCMEvenMoreTransparentColor: return "even_more_transparent";
+        case JKQTPFFCMLessTransparentColor: return "less_transparent";
+        case JKQTPFFCMEvenLessTransparentColor: return "even_less_transparent";
+    }
+    return "same";
+}
+
+JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode)
+{
+    QString m=mode.trimmed().toLower();
+    if (m=="same") return JKQTPFFCMSameColor;
+    if (m=="inverted") return JKQTPFFCMInvertedColor;
+    if (m=="lighter") return JKQTPFFCMLighterColor;
+    if (m=="even_lighter") return JKQTPFFCMEvenLighterColor;
+    if (m=="darker") return JKQTPFFCMDarkerColor;
+    if (m=="even_darker") return JKQTPFFCMEvenDarkerColor;
+    if (m=="more_transparent") return JKQTPFFCMMoreTransparentColor;
+    if (m=="even_more_transparent") return JKQTPFFCMEvenMoreTransparentColor;
+    if (m=="less_transparent") return JKQTPFFCMLessTransparentColor;
+    if (m=="even_less_transparent") return JKQTPFFCMEvenLessTransparentColor;
+    return JKQTPFFCMSameColor;
+}
+
+QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor &col)
+{
+    switch(mode) {
+        case JKQTPFFCMSameColor: return col;
+        case JKQTPFFCMInvertedColor: return QColor(255-col.red(), 255-col.green(), 255-col.blue(), col.alpha());
+        case JKQTPFFCMLighterColor: return col.lighter();
+        case JKQTPFFCMEvenLighterColor: return col.lighter().lighter();
+        case JKQTPFFCMDarkerColor: return col.darker();
+        case JKQTPFFCMEvenDarkerColor: return col.darker().darker();
+        case JKQTPFFCMMoreTransparentColor: { QColor c=col; c.setAlphaF(0.66*c.alphaF()); return c; }
+        case JKQTPFFCMEvenMoreTransparentColor: { QColor c=col; c.setAlphaF(0.33*c.alphaF()); return c; }
+        case JKQTPFFCMLessTransparentColor: { QColor c=col; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.33); return c; }
+        case JKQTPFFCMEvenLessTransparentColor: { QColor c=col; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.66); return c; }
+    }
+    return col;
+}

@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -57,31 +57,27 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
         /** \brief class destructor */
         virtual ~JKQTPXParsedFunctionLineGraph() override;
 
-        /*! \brief sets the property function ( \copybrief function ) to the specified \a __value. 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
-            \see function for more information */ 
+        /*! \copydoc function
+            \see see function for details */ 
         inline virtual void setFunction(const QString & __value)  
         {
             this->function = __value;
         } 
-        /*! \brief returns the property function ( \copybrief function ). 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
-            \see function for more information */ 
+        /*! \copydoc function
+            \see see function for details */ 
         inline virtual QString getFunction() const  
         {
             return this->function; 
         }
 
-        /*! \brief sets the property errorFunction ( \copybrief errorFunction ) to the specified \a __value. 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
-            \see errorFunction for more information */ 
+        /*! \copydoc errorFunction
+            \see see errorFunction for details */ 
         inline virtual void setErrorFunction(const QString & __value)  
         {
             this->errorFunction = __value;
         } 
-        /*! \brief returns the property errorFunction ( \copybrief errorFunction ). 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
-            \see errorFunction for more information */ 
+        /*! \copydoc errorFunction
+            \see see errorFunction for details */ 
         inline virtual QString getErrorFunction() const  
         {
             return this->errorFunction; 
@@ -143,31 +139,27 @@ class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineG
         /** \brief class destructor */
         virtual ~JKQTPYParsedFunctionLineGraph() override;
 
-        /*! \brief sets the property function ( \copybrief function ) to the specified \a __value. 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
-            \see function for more information */ 
+        /*! \copydoc function
+            \see see function for details */ 
         inline virtual void setFunction(const QString & __value)  
         {
             this->function = __value;
         } 
-        /*! \brief returns the property function ( \copybrief function ). 
-            \details Description of the parameter function is: <BLOCKQUOTE>\copydoc function </BLOCKQUOTE> 
-            \see function for more information */ 
+        /*! \copydoc function
+            \see see function for details */ 
         inline virtual QString getFunction() const  
         {
             return this->function; 
         }
 
-        /*! \brief sets the property errorFunction ( \copybrief errorFunction ) to the specified \a __value. 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
-            \see errorFunction for more information */ 
+        /*! \copydoc errorFunction
+            \see see errorFunction for details */ 
         inline virtual void setErrorFunction(const QString & __value)  
         {
             this->errorFunction = __value;
         } 
-        /*! \brief returns the property errorFunction ( \copybrief errorFunction ). 
-            \details Description of the parameter errorFunction is: <BLOCKQUOTE>\copydoc errorFunction </BLOCKQUOTE> 
-            \see errorFunction for more information */ 
+        /*! \copydoc errorFunction
+            \see see errorFunction for details */ 
         inline virtual QString getErrorFunction() const  
         {
             return this->errorFunction; 

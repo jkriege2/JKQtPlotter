@@ -13,6 +13,7 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpgraphscontour.h"
 #include "jkqtplotter/jkqtpelementsoverlay.h"
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 #include "jkqtplotter/jkqtpbaseelements.h"

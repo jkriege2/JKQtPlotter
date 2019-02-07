@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -22,6 +22,7 @@
 #include "jkqtplotter/jkqtpelementsoverlay.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplottertools/jkqtptools.h"
+#include "jkqtplottertools/jkqtpdrawingtools.h"
 #include <stdlib.h>
 #include <QDebug>
 
@@ -35,7 +36,7 @@ JKQTPOverlayElement::JKQTPOverlayElement(JKQTBasePlotter *parent) :
     fillStyle=Qt::SolidPattern;
     lineWidth=1.0;
     text="";
-    fontName=QFont().family();
+    fontName=QFont().family()+"+XITS";
     fontSize=QFont().pointSizeF();
     visible=true;
 }
@@ -92,7 +93,7 @@ QBrush JKQTPOverlayElement::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
 QPen JKQTPOverlayElement::getPen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth)));
     p.setStyle(lineStyle);
     return p;
 }
@@ -136,7 +137,7 @@ void JKQTPOverlayVerticalLine::draw(JKQTPEnhancedPainter &painter) {
     QPointF p1=transform(position, ymin);
     QPointF p2=transform(position, ymax);
     QPointF p3=p2-QPointF(0, (p2.y()-p1.y())*0.1);
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.drawLine(p1, p2);
 
@@ -146,14 +147,12 @@ void JKQTPOverlayVerticalLine::draw(JKQTPEnhancedPainter &painter) {
         JKQTMathText* mt=parent->getMathText();
         mt->setFontSize(fontSize);
         mt->setFontColor(color);
-#ifdef USE_XITS_FONTS
-        mt->useXITS();
-#endif
+        mt->setFontRomanOrSpecial(fontName);
         mt->parse(text);
         mt->draw(painter, p3.x(), p3.y());
     }
 
-    painter.restore();
+    
 }
 
 JKQTPOverlayTwoCoordOverlay::JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent):
@@ -190,7 +189,7 @@ void JKQTPOverlayVerticalRange::draw(JKQTPEnhancedPainter &painter) {
     QPointF p21=transform(position2, ymin);
     QPointF p22=transform(position2, ymax);
     //QPointF p23=p2-QPointF(0, (p2.y()-p1.y())*0.1);
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     if (fillColor!=QColor(Qt::transparent)) {
         if (inverted) {
             painter.fillRect(QRectF(transform(xmin, ymin), p2), getBrush(painter));
@@ -208,14 +207,12 @@ void JKQTPOverlayVerticalRange::draw(JKQTPEnhancedPainter &painter) {
         JKQTMathText* mt=parent->getMathText();
         mt->setFontSize(fontSize);
         mt->setFontColor(color);
-#ifdef USE_XITS_FONTS
-        mt->useXITS();
-#endif
+        mt->setFontRomanOrSpecial(fontName);
         mt->parse(text);
         mt->draw(painter, p3.x(), p3.y());
     }
 
-    painter.restore();
+    
 }
 
 JKQTPOverlayTwoPositionOverlay::JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent):
@@ -252,7 +249,7 @@ void JKQTPOverlayLine::draw(JKQTPEnhancedPainter &painter) {
 
 
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     if (infinite) {
         double alpha=(p2.y()-p1.y())/(p2.x()-p1.x());
@@ -270,7 +267,7 @@ void JKQTPOverlayLine::draw(JKQTPEnhancedPainter &painter) {
 
 
 
-    painter.restore();
+    
 }
 
 
@@ -287,10 +284,10 @@ void JKQTPOverlayRectangle::draw(JKQTPEnhancedPainter &painter)
     QPointF p2=transform(x2, y2);
     QRectF rect(qMin(p1.x(), p2.x()), qMin(p1.y(), p2.y()), fabs(p1.x()-p2.x()), fabs(p1.y()-p2.y()));
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.setBrush(getBrush(painter));
     //painter.fillRect(rect);
     painter.drawRect(rect);
-    painter.restore();
+    
 }

@@ -7,7 +7,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -26,7 +26,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 #include "jkqtplottertools/jkqtpdrawingtools.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
 
-
+const double JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH= 0.02;
 
 void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
     JKQTPEnhancedPainter p(&paintDevice);
@@ -34,10 +34,10 @@ void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSy
 }
 
 void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, double symbolLineWidth, QColor color, QColor fillColor) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,  symbolLineWidth));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,  symbolLineWidth));
     p.setStyle(Qt::SolidLine);
     painter.setPen(p);
     QBrush b=painter.brush();
@@ -224,7 +224,7 @@ void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGra
             } break;
         default: break;
     }
-    painter.restore();
+    
 };
 
 

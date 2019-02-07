@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/JKQTPlotter">
+        <file>styles/blackandwhite.ini</file>
+        <file>styles/blueprint.ini</file>
+        <file>styles/dark.ini</file>
+        <file>styles/default.ini</file>
+        <file>styles/simple_axesoffset.ini</file>
+        <file>styles/simple_axesoffset_plotbox.ini</file>
+        <file>styles/simple_gridandticks.ini</file>
+    </qresource>
+</RCC>

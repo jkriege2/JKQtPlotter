@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -26,6 +26,7 @@
 #include "jkqtplottertools/jkqtpdrawingtools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 
 #ifndef jkqtpgraphs_H
 #define jkqtpgraphs_H
@@ -62,142 +63,122 @@ class JKQTP_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE>
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color ( \copybrief color ). 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE>
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual void setFillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
-        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual QColor getFillColor() const  
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE>
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual void setStyle(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
-        /*! \brief returns the property style ( \copybrief style ). 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE>
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual Qt::PenStyle getStyle() const  
         {
             return this->style; 
         }
-        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property symbol ( \copybrief symbol ) to the specified \a __value. 
-            \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE>
-            \see symbol for more information */ 
+        /*! \copydoc symbol
+            \see see symbol for details */ 
         inline virtual void setSymbol(const JKQTPGraphSymbols & __value)  
         {
             this->symbol = __value;
         } 
-        /*! \brief returns the property symbol ( \copybrief symbol ). 
-            \details Description of the parameter symbol is: <BLOCKQUOTE>\copydoc symbol </BLOCKQUOTE>
-            \see symbol for more information */ 
+        /*! \copydoc symbol
+            \see see symbol for details */ 
         inline virtual JKQTPGraphSymbols getSymbol() const  
         {
             return this->symbol; 
         }
-        /*! \brief sets the property symbolWidth ( \copybrief symbolWidth ) to the specified \a __value. 
-            \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE>
-            \see symbolWidth for more information */ 
+        /*! \copydoc symbolWidth
+            \see see symbolWidth for details */ 
         inline virtual void setSymbolWidth(double __value)
         {
             this->symbolWidth = __value;
         } 
-        /*! \brief returns the property symbolWidth ( \copybrief symbolWidth ). 
-            \details Description of the parameter symbolWidth is: <BLOCKQUOTE>\copydoc symbolWidth </BLOCKQUOTE>
-            \see symbolWidth for more information */ 
+        /*! \copydoc symbolWidth
+            \see see symbolWidth for details */ 
         inline virtual double getSymbolWidth() const  
         {
             return this->symbolWidth; 
         }
-        /*! \brief sets the property symbolSize ( \copybrief symbolSize ) to the specified \a __value. 
-            \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copydoc symbolSize </BLOCKQUOTE>
-            \see symbolSize for more information */ 
+        /*! \copydoc symbolSize
+            \see see symbolSize for details */ 
         inline virtual void setSymbolSize(double __value)
         {
             this->symbolSize = __value;
         } 
-        /*! \brief returns the property symbolSize ( \copybrief symbolSize ). 
-            \details Description of the parameter symbolSize is: <BLOCKQUOTE>\copydoc symbolSize </BLOCKQUOTE>
-            \see symbolSize for more information */ 
+        /*! \copydoc symbolSize
+            \see see symbolSize for details */ 
         inline virtual double getSymbolSize() const  
         {
             return this->symbolSize; 
         }
-        /*! \brief sets the property drawLine ( \copybrief drawLine ) to the specified \a __value. 
-            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copydoc drawLine </BLOCKQUOTE>
-            \see drawLine for more information */ 
+        /*! \copydoc drawLine
+            \see see drawLine for details */ 
         inline virtual void setDrawLine(bool __value)  
         {
             this->drawLine = __value;
         } 
-        /*! \brief returns the property drawLine ( \copybrief drawLine ). 
-            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copydoc drawLine </BLOCKQUOTE>
-            \see drawLine for more information */ 
+        /*! \copydoc drawLine
+            \see see drawLine for details */ 
         inline virtual bool getDrawLine() const  
         {
             return this->drawLine; 
         }
-        /*! \brief sets the property drawSelectionLine ( \copybrief drawSelectionLine ) to the specified \a __value. 
-            \details Description of the parameter drawSelectionLine is: <BLOCKQUOTE>\copydoc drawSelectionLine </BLOCKQUOTE>
-            \see drawSelectionLine for more information */ 
+        /*! \copydoc drawSelectionLine
+            \see see drawSelectionLine for details */ 
         inline virtual void setDrawSelectionLine(bool __value)  
         {
             this->drawSelectionLine = __value;
         } 
-        /*! \brief returns the property drawSelectionLine ( \copybrief drawSelectionLine ). 
-            \details Description of the parameter drawSelectionLine is: <BLOCKQUOTE>\copydoc drawSelectionLine </BLOCKQUOTE>
-            \see drawSelectionLine for more information */ 
+        /*! \copydoc drawSelectionLine
+            \see see drawSelectionLine for details */ 
         inline virtual bool getDrawSelectionLine() const  
         {
             return this->drawSelectionLine; 
         }
-        /*! \brief sets the property selectionLineColor ( \copybrief selectionLineColor ) to the specified \a __value. 
-            \details Description of the parameter selectionLineColor is: <BLOCKQUOTE>\copydoc selectionLineColor </BLOCKQUOTE>
-            \see selectionLineColor for more information */ 
+        /*! \copydoc selectionLineColor
+            \see see selectionLineColor for details */ 
         inline virtual void setSelectionLineColor(const QColor & __value)  
         {
             this->selectionLineColor = __value;
         } 
-        /*! \brief returns the property selectionLineColor ( \copybrief selectionLineColor ). 
-            \details Description of the parameter selectionLineColor is: <BLOCKQUOTE>\copydoc selectionLineColor </BLOCKQUOTE>
-            \see selectionLineColor for more information */ 
+        /*! \copydoc selectionLineColor
+            \see see selectionLineColor for details */ 
         inline virtual QColor getSelectionLineColor() const  
         {
             return this->selectionLineColor; 
@@ -273,147 +254,141 @@ class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph,
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        /*! \brief sets the property sizeColumn ( \copybrief sizeColumn ) to the specified \a __value. 
-            \details Description of the parameter sizeColumn is: <BLOCKQUOTE>\copydoc sizeColumn </BLOCKQUOTE>
-            \see sizeColumn for more information */ 
+        /*! \copydoc sizeColumn
+            \see see sizeColumn for details */ 
         inline virtual void setSizeColumn(int __value)  
         {
             this->sizeColumn = __value;
         } 
-        /*! \brief returns the property sizeColumn ( \copybrief sizeColumn ). 
-            \details Description of the parameter sizeColumn is: <BLOCKQUOTE>\copydoc sizeColumn </BLOCKQUOTE>
-            \see sizeColumn for more information */ 
+        /*! \copydoc sizeColumn
+            \see see sizeColumn for details */ 
         inline virtual int getSizeColumn() const  
         {
             return this->sizeColumn; 
         }
         /*! \brief sets the property sizeColumn ( \copybrief sizeColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter sizeColumn is:  <BLOCKQUOTE>\copydoc sizeColumn </BLOCKQUOTE>
-        	\see sizeColumn for more information */ 
+            \see sizeColumn for more information */ 
         inline virtual void setSizeColumn (size_t __value) { this->sizeColumn = static_cast<int>(__value); }
-        /*! \brief sets the property colorColumn ( \copybrief colorColumn ) to the specified \a __value. 
-            \details Description of the parameter colorColumn is: <BLOCKQUOTE>\copydoc colorColumn </BLOCKQUOTE>
-            \see colorColumn for more information */ 
+        /*! \copydoc colorColumn
+            \see see colorColumn for details */ 
         inline virtual void setColorColumn(int __value)  
         {
             this->colorColumn = __value;
         } 
-        /*! \brief returns the property colorColumn ( \copybrief colorColumn ). 
-            \details Description of the parameter colorColumn is: <BLOCKQUOTE>\copydoc colorColumn </BLOCKQUOTE>
-            \see colorColumn for more information */ 
+        /*! \copydoc colorColumn
+            \see see colorColumn for details */ 
         inline virtual int getColorColumn() const  
         {
             return this->colorColumn; 
         }
         /*! \brief sets the property colorColumn ( \copybrief colorColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter colorColumn is:  <BLOCKQUOTE>\copydoc colorColumn </BLOCKQUOTE>
-        	\see colorColumn for more information */ 
+            \see colorColumn for more information */ 
         inline virtual void setColorColumn (size_t __value) { this->colorColumn = static_cast<int>(__value); }
-        /*! \brief sets the property symbolColumn ( \copybrief symbolColumn ) to the specified \a __value. 
-            \details Description of the parameter symbolColumn is: <BLOCKQUOTE>\copydoc symbolColumn </BLOCKQUOTE>
-            \see symbolColumn for more information */ 
+        /*! \copydoc symbolColumn
+            \see see symbolColumn for details */ 
         inline virtual void setSymbolColumn(int __value)  
         {
             this->symbolColumn = __value;
         } 
-        /*! \brief returns the property symbolColumn ( \copybrief symbolColumn ). 
-            \details Description of the parameter symbolColumn is: <BLOCKQUOTE>\copydoc symbolColumn </BLOCKQUOTE>
-            \see symbolColumn for more information */ 
+        /*! \copydoc symbolColumn
+            \see see symbolColumn for details */ 
         inline virtual int getSymbolColumn() const  
         {
             return this->symbolColumn; 
         }
         /*! \brief sets the property symbolColumn ( \copybrief symbolColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter symbolColumn is:  <BLOCKQUOTE>\copydoc symbolColumn </BLOCKQUOTE>
-        	\see symbolColumn for more information */ 
+            \see symbolColumn for more information */ 
         inline virtual void setSymbolColumn (size_t __value) { this->symbolColumn = static_cast<int>(__value); }
-        /*! \brief sets the property linewidthColumn ( \copybrief linewidthColumn ) to the specified \a __value. 
-            \details Description of the parameter linewidthColumn is: <BLOCKQUOTE>\copydoc linewidthColumn </BLOCKQUOTE>
-            \see linewidthColumn for more information */ 
+        /*! \copydoc linewidthColumn
+            \see see linewidthColumn for details */ 
         inline virtual void setLinewidthColumn(int __value)  
         {
             this->linewidthColumn = __value;
         } 
-        /*! \brief returns the property linewidthColumn ( \copybrief linewidthColumn ). 
-            \details Description of the parameter linewidthColumn is: <BLOCKQUOTE>\copydoc linewidthColumn </BLOCKQUOTE>
-            \see linewidthColumn for more information */ 
+        /*! \copydoc linewidthColumn
+            \see see linewidthColumn for details */ 
         inline virtual int getLinewidthColumn() const  
         {
             return this->linewidthColumn; 
         }
         /*! \brief sets the property linewidthColumn ( \copybrief linewidthColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter linewidthColumn is:  <BLOCKQUOTE>\copydoc linewidthColumn </BLOCKQUOTE>
-        	\see linewidthColumn for more information */ 
+            \see linewidthColumn for more information */ 
         inline virtual void setLinewidthColumn( size_t __value) { this->linewidthColumn = static_cast<int>(__value); }
-        /*! \brief sets the property colorColumnContainsRGB ( \copybrief colorColumnContainsRGB ) to the specified \a __value. 
-            \details Description of the parameter colorColumnContainsRGB is: <BLOCKQUOTE>\copydoc colorColumnContainsRGB </BLOCKQUOTE>
-            \see colorColumnContainsRGB for more information */ 
+        /*! \copydoc colorColumnContainsRGB
+            \see see colorColumnContainsRGB for details */ 
         inline virtual void setColorColumnContainsRGB(bool __value)  
         {
             this->colorColumnContainsRGB = __value;
         } 
-        /*! \brief returns the property colorColumnContainsRGB ( \copybrief colorColumnContainsRGB ). 
-            \details Description of the parameter colorColumnContainsRGB is: <BLOCKQUOTE>\copydoc colorColumnContainsRGB </BLOCKQUOTE>
-            \see colorColumnContainsRGB for more information */ 
+        /*! \copydoc colorColumnContainsRGB
+            \see see colorColumnContainsRGB for details */ 
         inline virtual bool getColorColumnContainsRGB() const  
         {
             return this->colorColumnContainsRGB; 
         }
-        /*! \brief sets the property gridModeForSymbolSize ( \copybrief gridModeForSymbolSize ) to the specified \a __value. 
-            \details Description of the parameter gridModeForSymbolSize is: <BLOCKQUOTE>\copydoc gridModeForSymbolSize </BLOCKQUOTE>
-            \see gridModeForSymbolSize for more information */ 
+        /*! \copydoc gridModeForSymbolSize
+            \see see gridModeForSymbolSize for details */ 
         inline virtual void setGridModeForSymbolSize(bool __value)  
         {
             this->gridModeForSymbolSize = __value;
         } 
-        /*! \brief returns the property gridModeForSymbolSize ( \copybrief gridModeForSymbolSize ). 
-            \details Description of the parameter gridModeForSymbolSize is: <BLOCKQUOTE>\copydoc gridModeForSymbolSize </BLOCKQUOTE>
-            \see gridModeForSymbolSize for more information */ 
+        /*! \copydoc gridModeForSymbolSize
+            \see see gridModeForSymbolSize for details */ 
         inline virtual bool getGridModeForSymbolSize() const  
         {
             return this->gridModeForSymbolSize; 
         }
-        /*! \brief sets the property gridDeltaX ( \copybrief gridDeltaX ) to the specified \a __value. 
-            \details Description of the parameter gridDeltaX is: <BLOCKQUOTE>\copydoc gridDeltaX </BLOCKQUOTE>
-            \see gridDeltaX for more information */ 
+        /*! \copydoc gridDeltaX
+            \see see gridDeltaX for details */ 
         inline virtual void setGridDeltaX(double __value)
         {
             this->gridDeltaX = __value;
         } 
-        /*! \brief returns the property gridDeltaX ( \copybrief gridDeltaX ). 
-            \details Description of the parameter gridDeltaX is: <BLOCKQUOTE>\copydoc gridDeltaX </BLOCKQUOTE>
-            \see gridDeltaX for more information */ 
+        /*! \copydoc gridDeltaX
+            \see see gridDeltaX for details */ 
         inline virtual double getGridDeltaX() const  
         {
             return this->gridDeltaX; 
         }
-        /*! \brief sets the property gridDeltaY ( \copybrief gridDeltaY ) to the specified \a __value. 
-            \details Description of the parameter gridDeltaY is: <BLOCKQUOTE>\copydoc gridDeltaY </BLOCKQUOTE>
-            \see gridDeltaY for more information */ 
+        /*! \copydoc gridDeltaY
+            \see see gridDeltaY for details */ 
         inline virtual void setGridDeltaY(double __value)
         {
             this->gridDeltaY = __value;
         } 
-        /*! \brief returns the property gridDeltaY ( \copybrief gridDeltaY ). 
-            \details Description of the parameter gridDeltaY is: <BLOCKQUOTE>\copydoc gridDeltaY </BLOCKQUOTE>
-            \see gridDeltaY for more information */ 
+        /*! \copydoc gridDeltaY
+            \see see gridDeltaY for details */ 
         inline virtual double getGridDeltaY() const  
         {
             return this->gridDeltaY; 
         }
-        /*! \brief sets the property gridSymbolFractionSize ( \copybrief gridSymbolFractionSize ) to the specified \a __value. 
-            \details Description of the parameter gridSymbolFractionSize is: <BLOCKQUOTE>\copydoc gridSymbolFractionSize </BLOCKQUOTE>
-            \see gridSymbolFractionSize for more information */ 
+        /*! \copydoc gridSymbolFractionSize
+            \see see gridSymbolFractionSize for details */ 
         inline virtual void setGridSymbolFractionSize(double __value)
         {
             this->gridSymbolFractionSize = __value;
         } 
-        /*! \brief returns the property gridSymbolFractionSize ( \copybrief gridSymbolFractionSize ). 
-            \details Description of the parameter gridSymbolFractionSize is: <BLOCKQUOTE>\copydoc gridSymbolFractionSize </BLOCKQUOTE>
-            \see gridSymbolFractionSize for more information */ 
+        /*! \copydoc gridSymbolFractionSize
+            \see see gridSymbolFractionSize for details */ 
         inline virtual double getGridSymbolFractionSize() const  
         {
             return this->gridSymbolFractionSize; 
+        }
+        /*! \copydoc symbolFillDerivationMode
+            \see see symbolFillDerivationMode for details */
+        inline virtual JKQTPColorDerivationMode getSymbolFillDerivationMode()  const
+        {
+            return this->symbolFillDerivationMode;
+        }
+        /*! \copydoc symbolFillDerivationMode
+            \see see symbolFillDerivationMode for details */
+        inline virtual void setSymbolFillDerivationMode(JKQTPColorDerivationMode m)
+        {
+            this->symbolFillDerivationMode=m;
         }
 
         virtual void setParent(JKQTBasePlotter* parent) override;
@@ -474,6 +449,9 @@ class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph,
         double intColMin;
         /** \brief internally used to store the range of the color column */
         double intColMax;
+
+        /** \brief specifies how to derive the symbol fill color from the symbol/line color */
+        JKQTPColorDerivationMode symbolFillDerivationMode;
 
 };
 
@@ -579,114 +557,98 @@ class JKQTP_LIB_EXPORT JKQTPStepHorizontalGraph: public JKQTPXYGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() override;
 
-        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE>
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color ( \copybrief color ). 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE>
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual void setFillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
-        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual QColor getFillColor() const  
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE>
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
-        /*! \brief returns the property fillStyle ( \copybrief fillStyle ). 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE>
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual Qt::BrushStyle getFillStyle() const  
         {
             return this->fillStyle; 
         }
-        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE>
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual void setStyle(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
-        /*! \brief returns the property style ( \copybrief style ). 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE>
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual Qt::PenStyle getStyle() const  
         {
             return this->style; 
         }
-        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property drawLine ( \copybrief drawLine ) to the specified \a __value. 
-            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copydoc drawLine </BLOCKQUOTE>
-            \see drawLine for more information */ 
+        /*! \copydoc drawLine
+            \see see drawLine for details */ 
         inline virtual void setDrawLine(bool __value)  
         {
             this->drawLine = __value;
         } 
-        /*! \brief returns the property drawLine ( \copybrief drawLine ). 
-            \details Description of the parameter drawLine is: <BLOCKQUOTE>\copydoc drawLine </BLOCKQUOTE>
-            \see drawLine for more information */ 
+        /*! \copydoc drawLine
+            \see see drawLine for details */ 
         inline virtual bool getDrawLine() const  
         {
             return this->drawLine; 
         }
-        /*! \brief sets the property fillCurve ( \copybrief fillCurve ) to the specified \a __value. 
-            \details Description of the parameter fillCurve is: <BLOCKQUOTE>\copydoc fillCurve </BLOCKQUOTE>
-            \see fillCurve for more information */ 
+        /*! \copydoc fillCurve
+            \see see fillCurve for details */ 
         inline virtual void setFillCurve(bool __value)  
         {
             this->fillCurve = __value;
         } 
-        /*! \brief returns the property fillCurve ( \copybrief fillCurve ). 
-            \details Description of the parameter fillCurve is: <BLOCKQUOTE>\copydoc fillCurve </BLOCKQUOTE>
-            \see fillCurve for more information */ 
+        /*! \copydoc fillCurve
+            \see see fillCurve for details */ 
         inline virtual bool getFillCurve() const  
         {
             return this->fillCurve; 
         }
-        /*! \brief sets the property stepType ( \copybrief stepType ) to the specified \a __value. 
-            \details Description of the parameter stepType is: <BLOCKQUOTE>\copydoc stepType </BLOCKQUOTE>
-            \see stepType for more information */ 
+        /*! \copydoc stepType
+            \see see stepType for details */ 
         inline virtual void setStepType(const JKQTPStepType & __value)  
         {
             this->stepType = __value;
         } 
-        /*! \brief returns the property stepType ( \copybrief stepType ). 
-            \details Description of the parameter stepType is: <BLOCKQUOTE>\copydoc stepType </BLOCKQUOTE>
-            \see stepType for more information */ 
+        /*! \copydoc stepType
+            \see see stepType for details */ 
         inline virtual JKQTPStepType getStepType() const  
         {
             return this->stepType; 
@@ -779,283 +741,243 @@ class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph {
 
         void setDrawCenterLineOnly();
 
-        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE>
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color ( \copybrief color ). 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE>
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual void setFillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
-        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE>
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual QColor getFillColor() const  
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE>
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
-        /*! \brief returns the property fillStyle ( \copybrief fillStyle ). 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE>
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual Qt::BrushStyle getFillStyle() const  
         {
             return this->fillStyle; 
         }
-        /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE>
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual void setStyle(const Qt::PenStyle & __value)  
         {
             this->style = __value;
         } 
-        /*! \brief returns the property style ( \copybrief style ). 
-            \details Description of the parameter style is: <BLOCKQUOTE>\copydoc style </BLOCKQUOTE>
-            \see style for more information */ 
+        /*! \copydoc style
+            \see see style for details */ 
         inline virtual Qt::PenStyle getStyle() const  
         {
             return this->style; 
         }
-        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE>
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property centerColor ( \copybrief centerColor ) to the specified \a __value. 
-            \details Description of the parameter centerColor is: <BLOCKQUOTE>\copydoc centerColor </BLOCKQUOTE>
-            \see centerColor for more information */ 
+        /*! \copydoc centerColor
+            \see see centerColor for details */ 
         inline virtual void setCenterColor(const QColor & __value)  
         {
             this->centerColor = __value;
         } 
-        /*! \brief returns the property centerColor ( \copybrief centerColor ). 
-            \details Description of the parameter centerColor is: <BLOCKQUOTE>\copydoc centerColor </BLOCKQUOTE>
-            \see centerColor for more information */ 
+        /*! \copydoc centerColor
+            \see see centerColor for details */ 
         inline virtual QColor getCenterColor() const  
         {
             return this->centerColor; 
         }
-        /*! \brief sets the property centerStyle ( \copybrief centerStyle ) to the specified \a __value. 
-            \details Description of the parameter centerStyle is: <BLOCKQUOTE>\copydoc centerStyle </BLOCKQUOTE>
-            \see centerStyle for more information */ 
+        /*! \copydoc centerStyle
+            \see see centerStyle for details */ 
         inline virtual void setCenterStyle(const Qt::PenStyle & __value)  
         {
             this->centerStyle = __value;
         } 
-        /*! \brief returns the property centerStyle ( \copybrief centerStyle ). 
-            \details Description of the parameter centerStyle is: <BLOCKQUOTE>\copydoc centerStyle </BLOCKQUOTE>
-            \see centerStyle for more information */ 
+        /*! \copydoc centerStyle
+            \see see centerStyle for details */ 
         inline virtual Qt::PenStyle getCenterStyle() const  
         {
             return this->centerStyle; 
         }
-        /*! \brief sets the property centerLineWidth ( \copybrief centerLineWidth ) to the specified \a __value. 
-            \details Description of the parameter centerLineWidth is: <BLOCKQUOTE>\copydoc centerLineWidth </BLOCKQUOTE>
-            \see centerLineWidth for more information */ 
+        /*! \copydoc centerLineWidth
+            \see see centerLineWidth for details */ 
         inline virtual void setCenterLineWidth(double __value)
         {
             this->centerLineWidth = __value;
         } 
-        /*! \brief returns the property centerLineWidth ( \copybrief centerLineWidth ). 
-            \details Description of the parameter centerLineWidth is: <BLOCKQUOTE>\copydoc centerLineWidth </BLOCKQUOTE>
-            \see centerLineWidth for more information */ 
+        /*! \copydoc centerLineWidth
+            \see see centerLineWidth for details */ 
         inline virtual double getCenterLineWidth() const  
         {
             return this->centerLineWidth; 
         }
-        /*! \brief sets the property rangeMin ( \copybrief rangeMin ) to the specified \a __value. 
-            \details Description of the parameter rangeMin is: <BLOCKQUOTE>\copydoc rangeMin </BLOCKQUOTE>
-            \see rangeMin for more information */ 
+        /*! \copydoc rangeMin
+            \see see rangeMin for details */ 
         inline virtual void setRangeMin(double __value)
         {
             this->rangeMin = __value;
         } 
-        /*! \brief returns the property rangeMin ( \copybrief rangeMin ). 
-            \details Description of the parameter rangeMin is: <BLOCKQUOTE>\copydoc rangeMin </BLOCKQUOTE>
-            \see rangeMin for more information */ 
+        /*! \copydoc rangeMin
+            \see see rangeMin for details */ 
         inline virtual double getRangeMin() const  
         {
             return this->rangeMin; 
         }
-        /*! \brief sets the property rangeMax ( \copybrief rangeMax ) to the specified \a __value. 
-            \details Description of the parameter rangeMax is: <BLOCKQUOTE>\copydoc rangeMax </BLOCKQUOTE>
-            \see rangeMax for more information */ 
+        /*! \copydoc rangeMax
+            \see see rangeMax for details */ 
         inline virtual void setRangeMax(double __value)
         {
             this->rangeMax = __value;
         } 
-        /*! \brief returns the property rangeMax ( \copybrief rangeMax ). 
-            \details Description of the parameter rangeMax is: <BLOCKQUOTE>\copydoc rangeMax </BLOCKQUOTE>
-            \see rangeMax for more information */ 
+        /*! \copydoc rangeMax
+            \see see rangeMax for details */ 
         inline virtual double getRangeMax() const  
         {
             return this->rangeMax; 
         }
-        /*! \brief sets the property sizeMin ( \copybrief sizeMin ) to the specified \a __value. 
-            \details Description of the parameter sizeMin is: <BLOCKQUOTE>\copydoc sizeMin </BLOCKQUOTE>
-            \see sizeMin for more information */ 
+        /*! \copydoc sizeMin
+            \see see sizeMin for details */ 
         inline virtual void setSizeMin(double __value)
         {
             this->sizeMin = __value;
         } 
-        /*! \brief returns the property sizeMin ( \copybrief sizeMin ). 
-            \details Description of the parameter sizeMin is: <BLOCKQUOTE>\copydoc sizeMin </BLOCKQUOTE>
-            \see sizeMin for more information */ 
+        /*! \copydoc sizeMin
+            \see see sizeMin for details */ 
         inline virtual double getSizeMin() const  
         {
             return this->sizeMin; 
         }
-        /*! \brief sets the property sizeMax ( \copybrief sizeMax ) to the specified \a __value. 
-            \details Description of the parameter sizeMax is: <BLOCKQUOTE>\copydoc sizeMax </BLOCKQUOTE>
-            \see sizeMax for more information */ 
+        /*! \copydoc sizeMax
+            \see see sizeMax for details */ 
         inline virtual void setSizeMax(double __value)
         {
             this->sizeMax = __value;
         } 
-        /*! \brief returns the property sizeMax ( \copybrief sizeMax ). 
-            \details Description of the parameter sizeMax is: <BLOCKQUOTE>\copydoc sizeMax </BLOCKQUOTE>
-            \see sizeMax for more information */ 
+        /*! \copydoc sizeMax
+            \see see sizeMax for details */ 
         inline virtual double getSizeMax() const  
         {
             return this->sizeMax; 
         }
-        /*! \brief sets the property unlimitedSizeMin ( \copybrief unlimitedSizeMin ) to the specified \a __value. 
-            \details Description of the parameter unlimitedSizeMin is: <BLOCKQUOTE>\copydoc unlimitedSizeMin </BLOCKQUOTE>
-            \see unlimitedSizeMin for more information */ 
+        /*! \copydoc unlimitedSizeMin
+            \see see unlimitedSizeMin for details */ 
         inline virtual void setUnlimitedSizeMin(bool __value)  
         {
             this->unlimitedSizeMin = __value;
         } 
-        /*! \brief returns the property unlimitedSizeMin ( \copybrief unlimitedSizeMin ). 
-            \details Description of the parameter unlimitedSizeMin is: <BLOCKQUOTE>\copydoc unlimitedSizeMin </BLOCKQUOTE>
-            \see unlimitedSizeMin for more information */ 
+        /*! \copydoc unlimitedSizeMin
+            \see see unlimitedSizeMin for details */ 
         inline virtual bool getUnlimitedSizeMin() const  
         {
             return this->unlimitedSizeMin; 
         }
-        /*! \brief sets the property unlimitedSizeMax ( \copybrief unlimitedSizeMax ) to the specified \a __value. 
-            \details Description of the parameter unlimitedSizeMax is: <BLOCKQUOTE>\copydoc unlimitedSizeMax </BLOCKQUOTE>
-            \see unlimitedSizeMax for more information */ 
+        /*! \copydoc unlimitedSizeMax
+            \see see unlimitedSizeMax for details */ 
         inline virtual void setUnlimitedSizeMax(bool __value)  
         {
             this->unlimitedSizeMax = __value;
         } 
-        /*! \brief returns the property unlimitedSizeMax ( \copybrief unlimitedSizeMax ). 
-            \details Description of the parameter unlimitedSizeMax is: <BLOCKQUOTE>\copydoc unlimitedSizeMax </BLOCKQUOTE>
-            \see unlimitedSizeMax for more information */ 
+        /*! \copydoc unlimitedSizeMax
+            \see see unlimitedSizeMax for details */ 
         inline virtual bool getUnlimitedSizeMax() const  
         {
             return this->unlimitedSizeMax; 
         }
 
-        /*! \brief sets the property rangeCenter ( \copybrief rangeCenter ) to the specified \a __value. 
-            \details Description of the parameter rangeCenter is: <BLOCKQUOTE>\copydoc rangeCenter </BLOCKQUOTE>
-            \see rangeCenter for more information */ 
+        /*! \copydoc rangeCenter
+            \see see rangeCenter for details */ 
         inline virtual void setRangeCenter(double __value)
         {
             this->rangeCenter = __value;
         } 
-        /*! \brief returns the property rangeCenter ( \copybrief rangeCenter ). 
-            \details Description of the parameter rangeCenter is: <BLOCKQUOTE>\copydoc rangeCenter </BLOCKQUOTE>
-            \see rangeCenter for more information */ 
+        /*! \copydoc rangeCenter
+            \see see rangeCenter for details */ 
         inline virtual double getRangeCenter() const  
         {
             return this->rangeCenter; 
         }
-        /*! \brief sets the property plotCenterLine ( \copybrief plotCenterLine ) to the specified \a __value. 
-            \details Description of the parameter plotCenterLine is: <BLOCKQUOTE>\copydoc plotCenterLine </BLOCKQUOTE>
-            \see plotCenterLine for more information */ 
+        /*! \copydoc plotCenterLine
+            \see see plotCenterLine for details */ 
         inline virtual void setPlotCenterLine(bool __value)  
         {
             this->plotCenterLine = __value;
         } 
-        /*! \brief returns the property plotCenterLine ( \copybrief plotCenterLine ). 
-            \details Description of the parameter plotCenterLine is: <BLOCKQUOTE>\copydoc plotCenterLine </BLOCKQUOTE>
-            \see plotCenterLine for more information */ 
+        /*! \copydoc plotCenterLine
+            \see see plotCenterLine for details */ 
         inline virtual bool getPlotCenterLine() const  
         {
             return this->plotCenterLine; 
         }
-        /*! \brief sets the property invertedRange ( \copybrief invertedRange ) to the specified \a __value. 
-            \details Description of the parameter invertedRange is: <BLOCKQUOTE>\copydoc invertedRange </BLOCKQUOTE>
-            \see invertedRange for more information */ 
+        /*! \copydoc invertedRange
+            \see see invertedRange for details */ 
         inline virtual void setInvertedRange(bool __value)  
         {
             this->invertedRange = __value;
         } 
-        /*! \brief returns the property invertedRange ( \copybrief invertedRange ). 
-            \details Description of the parameter invertedRange is: <BLOCKQUOTE>\copydoc invertedRange </BLOCKQUOTE>
-            \see invertedRange for more information */ 
+        /*! \copydoc invertedRange
+            \see see invertedRange for details */ 
         inline virtual bool getInvertedRange() const  
         {
             return this->invertedRange; 
         }
-        /*! \brief sets the property plotRange ( \copybrief plotRange ) to the specified \a __value. 
-            \details Description of the parameter plotRange is: <BLOCKQUOTE>\copydoc plotRange </BLOCKQUOTE>
-            \see plotRange for more information */ 
+        /*! \copydoc plotRange
+            \see see plotRange for details */ 
         inline virtual void setPlotRange(bool __value)  
         {
             this->plotRange = __value;
         } 
-        /*! \brief returns the property plotRange ( \copybrief plotRange ). 
-            \details Description of the parameter plotRange is: <BLOCKQUOTE>\copydoc plotRange </BLOCKQUOTE>
-            \see plotRange for more information */ 
+        /*! \copydoc plotRange
+            \see see plotRange for details */ 
         inline virtual bool getPlotRange() const  
         {
             return this->plotRange; 
         }
-        /*! \brief sets the property fillRange ( \copybrief fillRange ) to the specified \a __value. 
-            \details Description of the parameter fillRange is: <BLOCKQUOTE>\copydoc fillRange </BLOCKQUOTE>
-            \see fillRange for more information */ 
+        /*! \copydoc fillRange
+            \see see fillRange for details */ 
         inline virtual void setFillRange(bool __value)  
         {
             this->fillRange = __value;
         } 
-        /*! \brief returns the property fillRange ( \copybrief fillRange ). 
-            \details Description of the parameter fillRange is: <BLOCKQUOTE>\copydoc fillRange </BLOCKQUOTE>
-            \see fillRange for more information */ 
+        /*! \copydoc fillRange
+            \see see fillRange for details */ 
         inline virtual bool getFillRange() const  
         {
             return this->fillRange; 
         }
-        /*! \brief sets the property plotRangeLines ( \copybrief plotRangeLines ) to the specified \a __value. 
-            \details Description of the parameter plotRangeLines is: <BLOCKQUOTE>\copydoc plotRangeLines </BLOCKQUOTE>
-            \see plotRangeLines for more information */ 
+        /*! \copydoc plotRangeLines
+            \see see plotRangeLines for details */ 
         inline virtual void setPlotRangeLines(bool __value)  
         {
             this->plotRangeLines = __value;
         } 
-        /*! \brief returns the property plotRangeLines ( \copybrief plotRangeLines ). 
-            \details Description of the parameter plotRangeLines is: <BLOCKQUOTE>\copydoc plotRangeLines </BLOCKQUOTE>
-            \see plotRangeLines for more information */ 
+        /*! \copydoc plotRangeLines
+            \see see plotRangeLines for details */ 
         inline virtual bool getPlotRangeLines() const  
         {
             return this->plotRangeLines; 

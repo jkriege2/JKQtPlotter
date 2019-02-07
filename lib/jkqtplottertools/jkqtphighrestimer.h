@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -136,16 +136,16 @@ class JKQTPHighResTimer {
     #else
       struct timeval last;
     #endif
-	public:
-		/** \brief class constructor. */
+    public:
+        /** \brief class constructor. */
         JKQTPHighResTimer();
-		/** \brief class destructor */
+        /** \brief class destructor */
         ~JKQTPHighResTimer();
-		/** \brief start the timer */
-		void start();
-		/** \brief get the time since the last call of start() in microseconds */
-		double getTime();
-		/** \brief test the resolution
+        /** \brief start the timer */
+        void start();
+        /** \brief get the time since the last call of start() in microseconds */
+        double getTime();
+        /** \brief test the resolution
      *
      * mean value and standard deviation of 1000000 timer polls will be evaluated and returned in \c mean
      * and \c stddev. If you supply \c histogram with a pointer to a memory array with \c histogram_size
@@ -163,7 +163,7 @@ for (unsigned long i=0; i<runs; i++) {
 \endcode
      *
      */
-		void test(double* mean, double* stddev, unsigned long* histogram=nullptr, double* histogram_x=nullptr, unsigned long histogram_size=0);
+        void test(double* mean, double* stddev, unsigned long* histogram=nullptr, double* histogram_x=nullptr, unsigned long histogram_size=0);
 
 };
 

@@ -103,7 +103,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore 
 </table>
 
-
+ 
 
 \subsection jkqtp_extut_guitools  GUI Tools
 

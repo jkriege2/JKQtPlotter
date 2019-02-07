@@ -1,8 +1,13 @@
 /*!
-\page licensesec License Terms (LGPL >= 2.1)
+\page licensepage Licensing Terms for JKQTPlotter
 
-This software is licensed under the term of the <a href="https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html">GNU Lesser General Public License 2.1 
-(LGPL 2.1)</a> or above. 
+\tableofcontents
+
+\section licensesec JKQTPlotter/JKQTFastPlotter/JKQTMathText: LGPL >= 2.1
+
+This software is licensed under the term of the 
+<a href="https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html">GNU Lesser 
+General Public License 2.1 (LGPL 2.1)</a> or above. 
 
 \verbatim
                   GNU LESSER GENERAL PUBLIC LICENSE
@@ -71,7 +76,7 @@ any patent license obtained for a version of the library must be
 consistent with the full freedom of use specified in this license.
 
   Most GNU software, including some libraries, is covered by the
-ordinary GNU General Public License.  This license, the GNU Lesser
+ordinary GNU Lesser General Public License.  This license, the GNU Lesser
 General Public License, applies to certain designated libraries, and
 is quite different from the ordinary General Public License.  We use
 this license for certain libraries in order to permit linking those
@@ -218,14 +223,14 @@ the scope of this License.
   3. You may opt to apply the terms of the ordinary GNU General Public
 License instead of this License to a given copy of the Library.  To do
 this, you must alter all the notices that refer to this License, so
-that they refer to the ordinary GNU General Public License, version 2,
+that they refer to the ordinary GNU Lesser General Public License, version 2,
 instead of to this License.  (If a newer version than version 2 of the
-ordinary GNU General Public License has appeared, then you can specify
+ordinary GNU Lesser General Public License has appeared, then you can specify
 that version instead if you wish.)  Do not make any other change in
 these notices.
 
   Once this change is made in a given copy, it is irreversible for
-that copy, so the ordinary GNU General Public License applies to all
+that copy, so the ordinary GNU Lesser General Public License applies to all
 subsequent copies and derivative works made from that copy.
 
   This option is useful when you wish to copy part of the code of
@@ -512,5 +517,43 @@ That's all there is to it!
 
 
 \endverbatim
+
+
+
+\section extlicense_sec Licenses of 3rd Party Products Contained in JKQTPlotter
+
+JKQTPlotter is mostly self-conatined. The only exceptions are listed below
+
+\subsection extlicense_xits XITS Fonts for JKQTMathText
+JKQTMathText comes prepackaged with the XITS fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a>. With these it can produceh
+high-quality math rendering. It is possible to use the class with other fonts, but XITS is highly recommended. XITS fonts are licensed as follows:
+
+\verbatim
+    XITS is a Times-like typeface for mathematical and scientific publishing, 
+    based on STIX fonts (https://www.stixfonts.org/). The main mission of XITS 
+    is to provide a version of STIX fonts enriched with the OpenType MATH extension, 
+    making it suitable for high quality mathematic typesetting with OpenType MATH 
+    capable layout systems, like MS Office 2007 and the new TeX engines XeTeX and 
+    LuaTeX.
+
+    XITS font is free, open source font, under Open Font License 
+    (https://scripts.sil.org/OFL), version 1.1.
+
+    The current version of XITS is based on version 1.1.0-beta1 of STIX fonts.
+
+    This is work in progress, feedback, bug reports and even patches are welcomed.
+\endverbatim
+
+The source for this library can be found here: https://github.com/alif-type/xits
+
+\note The XITS fonts are distributed in 
+      <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/math_fonts/xits">lib/jkqtplotterressources/math_fonts/xits</a> 
+      and are automatically added to the binary libraries as Qt Resources. You can prevent this by adding the line 
+      \code
+        DEFINES += NO_XITS_FONTS
+      \endcode
+      To the QMake project that you use to build the JKQTPlotter/JKQTMathText libraries (see the ready-made \c .pro -files for static and dynamic libs, which
+      already contain this line, but commented out. QMake will tell you with a message whether XITS is linked in or not.
+
 
 */

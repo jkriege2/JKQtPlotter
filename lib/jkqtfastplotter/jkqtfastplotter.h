@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -47,7 +47,7 @@
 #  include "jkqtplottertools/jkqtphighrestimer.h"
 #endif
 
-#define JKQTFASTPLOTTER_ABS_MIN_LINEWIDTH 0.05
+
 // forward declaration
 class JKQTFPPlot;
 
@@ -84,7 +84,7 @@ class JKQTFPPlot;
       - plot may contain a grid (x and y grid may be switched on/off separately).
       - plots are represented by descendents of JKQTFPPlot and the plotting code is completely
         contained therein (and should be speed optimized).
-      - it is possible to keep a specified aspect ration
+      - it is possible to keep a specified aspect ratio
       - it is possible to couple different plots in a way, that they are plottetd with the same width/height
         both in pixel and world coordinates by using plotterSizesChanged() and synchronizeX() / synchronizeY().
     .
@@ -92,6 +92,16 @@ class JKQTFPPlot;
 */
 class JKQTP_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         Q_OBJECT
+    public:
+
+        /*! \brief smallest allowed line width for JKQTFastPlotter
+        */
+        static const double ABS_MIN_LINEWIDTH;
+
+        /*! \brief size of the lookup tables used by JKQTFPimagePlot_array2image()
+        */
+        static const int LUTSIZE;
+
     protected:
         /** \brief indicates whether to do full repaint (system and data) at the next repaint (any of the repaint meothods) */
         bool doFullRepaint;
@@ -294,7 +304,7 @@ class JKQTP_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief synchronize y-axis settings to this plotter */
         JKQTFastPlotter* synchronizeY;
 
-        /** \brief aspect ration of the plot, only used when maintainAspectRation is \c true
+        /** \brief aspect ratio of the plot, only used when maintainAspectRation is \c true
          *
          * The aspect ratio is defined as \c width/height of the plot in pt.
          * So if you want to have a plot spanning \c x=0..20 and \c y=0..10 where each 1x1 square should be
@@ -2098,25 +2108,20 @@ enum JKQTFPImageFormat {
 };
 
 
-/*! \brief size of the lookup tables used by JKQTFPimagePlot_array2image()
-    \ingroup jkqtfastplotter
-*/
-#define JKQTFPimagePlot_LUTSIZE 256
-
 
 /*! \brief convert a 2D image (as 1D array) into a QImage with given palette (see JKQTFPColorPalette)
     \ingroup jkqtfastplotter
 
     This method uses lookup tables which are saved as static variables to convert the 2D array into
     an image. The luts are only created once, and stored then, so mor CPU time is saved. The precompiler define
-    JKQTFPimagePlot_LUTSIZE sets the size of the LUTs. Note that if you don't use a specific color palette,
+    JKQTFastPlotter::LUTSIZE sets the size of the LUTs. Note that if you don't use a specific color palette,
     the according LUT won't be calculated and stored!
 */
 template <class T>
 inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &img, JKQTFPColorPalette palette, double minColor, double maxColor)
 {
-	if (!dbl)
-		return;
+    if (!dbl)
+        return;
 
     #ifdef DEBUG_TIMING
     JKQTPHighResTimer timer;
@@ -2126,21 +2131,21 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
     timer.start();
     #endif
     //std::cout<<"color range: "<<minColor<<"..."<<maxColor<<std::endl;
-	double min = *dbl;
-	double max = *dbl;
+    double min = *dbl;
+    double max = *dbl;
     if (minColor == maxColor) {
-		for (int i=1; i<width*height; ++i)
-		{
+        for (int i=1; i<width*height; ++i)
+        {
             T v=dbl[i];
-			if (v < min)
-				min = v;
-			else if (v > max)
-				max = v;
-		}
-	} else {
-		min = minColor;
-		max = maxColor;
-	}
+            if (v < min)
+                min = v;
+            else if (v > max)
+                max = v;
+        }
+    } else {
+        min = minColor;
+        max = maxColor;
+    }
     #ifdef DEBUG_TIMING
     time_gt=timer.getTime();
     time_sum+=time_gt;
@@ -2149,7 +2154,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
     #endif
     //std::cout<<"minColor="<<minColor<<"   maxColor="<<maxColor<<"       min="<<min<<"  max="<<max<<"\n";
 
-	double delta=max-min;
+    double delta=max-min;
 
     QRgb* lut_used=nullptr;
     static QRgb* lut_red=nullptr;
@@ -2174,18 +2179,18 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
 
     img = QImage(width, height, QImage::Format_ARGB32_Premultiplied);
-	if (min == max)
-		img.fill(0);
-	else
-	{
+    if (min == max)
+        img.fill(0);
+    else
+    {
         if (palette == JKQTFP_RED)
         {
             QRgb** plut=&lut_red;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         (*plut)[l]=qRgb(static_cast<int>(255.0*v), 0, 0);
                     }
                 }
@@ -2194,122 +2199,122 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
 
         }
         else if (palette == JKQTFP_GREEN)
-		{
+        {
             QRgb** plut=&lut_green;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         (*plut)[l]=qRgb(0, static_cast<int>(255.0*v), 0);
                     }
                 }
             }
             lut_used=(*plut);
 
-		}
-		else if (palette == JKQTFP_BLUE)
-		{
+        }
+        else if (palette == JKQTFP_BLUE)
+        {
             QRgb** plut=&lut_blue;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         (*plut)[l]=qRgb(0, 0, static_cast<int>(255.0*v));
                     }
                 }
             }
             lut_used=(*plut);
 
-		}
+        }
 
 
         else if (palette == JKQTFP_GRAY)
-		{
+        {
             QRgb** plut=&lut_gray;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         (*plut)[l]=qRgb(static_cast<int>(255.0*v),
-											static_cast<int>(255.0*v),
-											static_cast<int>(255.0*v));
+                                            static_cast<int>(255.0*v),
+                                            static_cast<int>(255.0*v));
                     }
                 }
             }
             lut_used=(*plut);
-		}
+        }
 
-		else if (palette == JKQTFP_INVERTEDRED)
-		{
+        else if (palette == JKQTFP_INVERTEDRED)
+        {
             QRgb** plut=&lut_invred;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         (*plut)[l]=qRgb(static_cast<int>(255.0*(1.0-v)), 0, 0);
                     }
                 }
             }
             lut_used=(*plut);
 
-		}
-		else if (palette == JKQTFP_INVERTEDGREEN)
-		{
+        }
+        else if (palette == JKQTFP_INVERTEDGREEN)
+        {
             QRgb** plut=&lut_invgreen;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         (*plut)[l]=qRgb(0, static_cast<int>(255.0*(1.0-v)), 0);
                     }
                 }
             }
             lut_used=(*plut);
-		}
-		else if (palette == JKQTFP_INVERTEDBLUE)
-		{
+        }
+        else if (palette == JKQTFP_INVERTEDBLUE)
+        {
             QRgb** plut=&lut_invblue;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         (*plut)[l]=qRgb(0, 0, static_cast<int>(255.0*(1.0-v)));
                     }
                 }
             }
             lut_used=(*plut);
-		}
-		else if (palette == JKQTFP_INVERTEDGRAY)
-		{
+        }
+        else if (palette == JKQTFP_INVERTEDGRAY)
+        {
             QRgb** plut=&lut_invgray;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=1.0-(l/static_cast<double>(JKQTFPimagePlot_LUTSIZE));
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=1.0-(l/static_cast<double>(JKQTFastPlotter::LUTSIZE));
                         (*plut)[l]=qRgb(static_cast<int>(255.0*v),
-											static_cast<int>(255.0*v),
-											static_cast<int>(255.0*v));
+                                            static_cast<int>(255.0*v),
+                                            static_cast<int>(255.0*v));
                     }
                 }
             }
             lut_used=(*plut);
-		}
+        }
 
-		else if (palette == JKQTFP_MATLAB)
-		{
+        else if (palette == JKQTFP_MATLAB)
+        {
             QRgb** plut=&lut_matlab;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = 382.5 - 1020.0 * std::abs(v - 0.75);
                         if (r > 255.0)
                             r = 255.0;
@@ -2334,15 +2339,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
             }
             lut_used=(*plut);
 
-		}
-		else if (palette == JKQTFP_RYGB) //gnuplot: 30,-13,-23
-		{
+        }
+        else if (palette == JKQTFP_RYGB) //gnuplot: 30,-13,-23
+        {
             QRgb** plut=&lut_rygb;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = 796.875*v - 199.21875;
                         if (r > 255.0)
                             r = 255.0;
@@ -2360,15 +2365,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
             }
             lut_used=(*plut);
 
-		}
-		else if (palette == JKQTFP_HSV)
-		{
+        }
+        else if (palette == JKQTFP_HSV)
+        {
             QRgb** plut=&lut_hsv;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         int h = static_cast<int>(floor(6*v));
                         double f = 6*v-double(h);
 
@@ -2386,15 +2391,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                 }
             }
             lut_used=(*plut);
-		}
-		else if (palette == JKQTFP_INVERTED_HSV)
-		{
+        }
+        else if (palette == JKQTFP_INVERTED_HSV)
+        {
             QRgb** plut=&lut_invhsv;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         int h = static_cast<int>(floor(6.0-6.0*v));
                         double f = 6.0-6.0*v-double(h);
 
@@ -2413,15 +2418,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
             }
             lut_used=(*plut);
 
-		}
-		else if (palette == JKQTFP_RAINBOW) //gnuplot: 33,13,10
-		{
+        }
+        else if (palette == JKQTFP_RAINBOW) //gnuplot: 33,13,10
+        {
             if (lut_rainbow==nullptr) {
-                lut_rainbow=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                lut_rainbow=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 //std::cout<<"!!! creating rainbow lut\n";
                 if (lut_rainbow!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = 255.0*std::abs(2.0*v-0.5);
                         if (r > 255.0)
                             r = 255.0;
@@ -2434,43 +2439,43 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                     }
                 }
             }
-			lut_used=lut_rainbow;
-		}
-		else if (palette == JKQTFP_HOT) //gnuplot: 21,22,23
-		{
+            lut_used=lut_rainbow;
+        }
+        else if (palette == JKQTFP_HOT) //gnuplot: 21,22,23
+        {
             QRgb** plut=&lut_hot;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
-					double r = 765.0*v;
-					if (r > 255.0)
-						r = 255.0;
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
+                    double r = 765.0*v;
+                    if (r > 255.0)
+                        r = 255.0;
 
-					double g = 765.0*v-255.0;
-					if (g > 255.0)
-						g = 255.0;
-					else if (g < 0.0)
-						g = 0.0;
+                    double g = 765.0*v-255.0;
+                    if (g > 255.0)
+                        g = 255.0;
+                    else if (g < 0.0)
+                        g = 0.0;
 
-					double b = 765.0*v-510.0;
-					if (b < 0.0)
-						b = 0.0;
+                    double b = 765.0*v-510.0;
+                    if (b < 0.0)
+                        b = 0.0;
                     (*plut)[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
                     }
                 }
             }
             lut_used=(*plut);
-		}
-		else if (palette == JKQTFP_OCEAN) //gnuplot: 23,28,3
-		{
+        }
+        else if (palette == JKQTFP_OCEAN) //gnuplot: 23,28,3
+        {
             QRgb** plut=&lut_ocean;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = 765.0*v-510.0;
                         if (r < 0.0)
                             r = 0.0;
@@ -2483,15 +2488,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                 }
             }
             lut_used=(*plut);
-		}
-		else if (palette == JKQTFP_BLUEMAGENTAYELLOW) //gnuplot: 30,31,32
-		{
+        }
+        else if (palette == JKQTFP_BLUEMAGENTAYELLOW) //gnuplot: 30,31,32
+        {
             QRgb** plut=&lut_bluemagentayellow;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = (v/0.32-0.78125);
                         if (r < 0.0) r = 0.0;
                         if (r > 1.0) r = 1.0;
@@ -2512,15 +2517,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                 }
             }
             lut_used=(*plut);
-		}
-		else if (palette == JKQTFP_BLUEYELLOW) //gnuplot: 8,9,10
-		{
+        }
+        else if (palette == JKQTFP_BLUEYELLOW) //gnuplot: 8,9,10
+        {
             QRgb** plut=&lut_blueyellow;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = sqrt(sqrt(v));
                         if (r < 0.0) r = 0.0;
                         if (r > 1.0) r = 1.0;
@@ -2539,15 +2544,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
             }
             lut_used=(*plut);
 
-		}
-		else if (palette == JKQTFP_CYAN)
-		{
+        }
+        else if (palette == JKQTFP_CYAN)
+        {
             QRgb** plut=&lut_cyan;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = v*0.5;
                         if (r < 0.0) r = 0.0;
                         if (r > 1.0) r = 1.0;
@@ -2565,15 +2570,15 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
             }
             lut_used=(*plut);
 
-		}
-		else if (palette == JKQTFP_TRAFFICLIGHT)
-		{
+        }
+        else if (palette == JKQTFP_TRAFFICLIGHT)
+        {
             QRgb** plut=&lut_trafficlight;
             if ((*plut)==nullptr) {
-                (*plut)=static_cast<QRgb*>(malloc((JKQTFPimagePlot_LUTSIZE+2)*sizeof(QRgb)));
+                (*plut)=static_cast<QRgb*>(malloc((JKQTFastPlotter::LUTSIZE+2)*sizeof(QRgb)));
                 if ((*plut)!=nullptr) {
-                    for (int l=0; l<=JKQTFPimagePlot_LUTSIZE; l++) {
-                        double v=l/static_cast<double>(JKQTFPimagePlot_LUTSIZE);
+                    for (int l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
+                        double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
                         double r = (v < 0.5) ? 128.0*sin(M_PI*(2.0*v-0.5))+128.0 : 255.0;
                         if (r > 255.0)
                             r = 255.0;
@@ -2587,7 +2592,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
             }
             lut_used=(*plut);
 
-		}
+        }
 
         #ifdef DEBUG_TIMING
         time_gt=timer.getTime();
@@ -2596,20 +2601,20 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
         timer.start();
         #endif
         if (lut_used!=nullptr) {
-		    // LUT found: collor the image accordingly
+            // LUT found: collor the image accordingly
             for (int j=0; j<height; ++j) {
                 QRgb* line=reinterpret_cast<QRgb *>(img.scanLine(height-1-j));
                 for (int i=0; i<width; ++i) {
-					int v = (dbl[j*width+i]-min)/delta*JKQTFPimagePlot_LUTSIZE;
-					v = (v < 0) ? 0 : ( (v > JKQTFPimagePlot_LUTSIZE) ? JKQTFPimagePlot_LUTSIZE : v);
-					line[i]=lut_used[v];
-				}
-			}
+                    int v = (dbl[j*width+i]-min)/delta*JKQTFastPlotter::LUTSIZE;
+                    v = (v < 0) ? 0 : ( (v > JKQTFastPlotter::LUTSIZE) ? JKQTFastPlotter::LUTSIZE : v);
+                    line[i]=lut_used[v];
+                }
+            }
         } else {
             // no LUT found: paint a black image!
-			img.fill(0);
-		}
-	}
+            img.fill(0);
+        }
+    }
     #ifdef DEBUG_TIMING
     time_gt=timer.getTime();
     time_sum+=time_gt;
@@ -2681,6 +2686,8 @@ class JKQTP_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         /** \brief rotation of the image when plotting in units of 90 degrees (counter clock wise) */
         int rotation;
     public:
+
+
         /*! \brief class constructor
 
          */
@@ -3120,21 +3127,21 @@ class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
 
         /*! \brief sets the properties imageRed and imageFormatRed to the specified \a __value and \a __value2. 
             \details Description of the parameter imageRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageRed </BLOCKQUOTE> \details Description of the parameter imageFormatRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatRed </BLOCKQUOTE>
-        	\see imageRed and imageFormatRed for more information */ 
+            \see imageRed and imageFormatRed for more information */ 
         inline void setImageRed (void* __value, JKQTFPImageFormat __value2)
         {
-        	bool set=false; 
-        	if (this->imageRed != __value) { 
-        		this->imageRed = __value; 
-        		set=true; 
-        	} 
-        	if (this->imageFormatRed != __value2) { 
-        		this->imageFormatRed = __value2; 
-        		set=true; 
-        	} 
-        	if (set) { 
-        		replot(); 
-        	} 
+            bool set=false; 
+            if (this->imageRed != __value) { 
+                this->imageRed = __value; 
+                set=true; 
+            } 
+            if (this->imageFormatRed != __value2) { 
+                this->imageFormatRed = __value2; 
+                set=true; 
+            } 
+            if (set) { 
+                replot(); 
+            } 
         } 
         /*! \brief returns the property imageRed ( \copybrief imageRed ). 
             \details Description of the parameter imageRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageRed </BLOCKQUOTE> \details Description of the parameter imageFormatRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatRed </BLOCKQUOTE>
@@ -3146,21 +3153,21 @@ class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         inline JKQTFPImageFormat getImageFormatRed () const { return this->imageFormatRed; }
         /*! \brief sets the properties imageGreen and imageFormatGreen to the specified \a __value and \a __value2. 
             \details Description of the parameter imageGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageGreen </BLOCKQUOTE> \details Description of the parameter imageFormatGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatGreen </BLOCKQUOTE>
-        	\see imageGreen and imageFormatGreen for more information */ 
+            \see imageGreen and imageFormatGreen for more information */ 
         inline void setImageGreen (void* __value, JKQTFPImageFormat __value2)
         {
-        	bool set=false; 
-        	if (this->imageGreen != __value) { 
-        		this->imageGreen = __value; 
-        		set=true; 
-        	} 
-        	if (this->imageFormatGreen != __value2) { 
-        		this->imageFormatGreen = __value2; 
-        		set=true; 
-        	} 
-        	if (set) { 
-        		replot(); 
-        	} 
+            bool set=false; 
+            if (this->imageGreen != __value) { 
+                this->imageGreen = __value; 
+                set=true; 
+            } 
+            if (this->imageFormatGreen != __value2) { 
+                this->imageFormatGreen = __value2; 
+                set=true; 
+            } 
+            if (set) { 
+                replot(); 
+            } 
         } 
         /*! \brief returns the property imageGreen ( \copybrief imageGreen ). 
             \details Description of the parameter imageGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageGreen </BLOCKQUOTE> \details Description of the parameter imageFormatGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatGreen </BLOCKQUOTE>
@@ -3172,21 +3179,21 @@ class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         inline JKQTFPImageFormat getImageFormatGreen () const { return this->imageFormatGreen; }
         /*! \brief sets the properties imageBlue and imageFormatBlue to the specified \a __value and \a __value2. 
             \details Description of the parameter imageBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageBlue </BLOCKQUOTE> \details Description of the parameter imageFormatBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatBlue </BLOCKQUOTE>
-        	\see imageBlue and imageFormatBlue for more information */ 
+            \see imageBlue and imageFormatBlue for more information */ 
         inline void setImageBlue (void* __value, JKQTFPImageFormat __value2)
         {
-        	bool set=false; 
-        	if (this->imageBlue != __value) { 
-        		this->imageBlue = __value; 
-        		set=true; 
-        	} 
-        	if (this->imageFormatBlue != __value2) { 
-        		this->imageFormatBlue = __value2; 
-        		set=true; 
-        	} 
-        	if (set) { 
-        		replot(); 
-        	} 
+            bool set=false; 
+            if (this->imageBlue != __value) { 
+                this->imageBlue = __value; 
+                set=true; 
+            } 
+            if (this->imageFormatBlue != __value2) { 
+                this->imageFormatBlue = __value2; 
+                set=true; 
+            } 
+            if (set) { 
+                replot(); 
+            } 
         } 
         /*! \brief returns the property imageBlue ( \copybrief imageBlue ). 
             \details Description of the parameter imageBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageBlue </BLOCKQUOTE> \details Description of the parameter imageFormatBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatBlue </BLOCKQUOTE>

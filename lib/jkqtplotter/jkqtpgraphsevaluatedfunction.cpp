@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -71,11 +71,15 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=color.lighter();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
-        errorColor=color.lighter();
-        errorFillColor=color.lighter();
-        errorStyle=style;
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
+        errorColor=parent->getPlotStyle(parentPlotStyle).errorColor();
+        errorStyle=parent->getPlotStyle(parentPlotStyle).errorStyle();
+        errorLineWidth=parent->getPlotStyle(parentPlotStyle).errorWidthF();
+        errorFillStyle=parent->getPlotStyle(parentPlotStyle).errorFillStyle();
+        errorFillColor=parent->getPlotStyle(parentPlotStyle).errorFillColor();
     }
     fillColor.setAlphaF(0.5);
     errorFillColor.setAlphaF(0.5);
@@ -118,11 +122,15 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=color.lighter();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
-        errorColor=color.lighter();
-        errorFillColor=color.lighter();
-        errorStyle=style;
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
+        errorColor=parent->getPlotStyle(parentPlotStyle).errorColor();
+        errorStyle=parent->getPlotStyle(parentPlotStyle).errorStyle();
+        errorLineWidth=parent->getPlotStyle(parentPlotStyle).errorWidthF();
+        errorFillStyle=parent->getPlotStyle(parentPlotStyle).errorFillStyle();
+        errorFillColor=parent->getPlotStyle(parentPlotStyle).errorFillColor();
     }
     fillColor.setAlphaF(0.5);
     errorFillColor.setAlphaF(0.5);
@@ -189,7 +197,7 @@ jkqtpSimplePlotFunctionType JKQTPXFunctionLineGraph::getSimplePlotFunction() con
 
 
 void JKQTPXFunctionLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -205,7 +213,7 @@ void JKQTPXFunctionLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRect
     painter.setBrush(b);
     if (fillCurve) painter.drawRect(rect);
     if (!fillCurve & drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
-    painter.restore();
+
 }
 
 QColor JKQTPXFunctionLineGraph::getKeyLabelColor() {
@@ -380,158 +388,158 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"plot data created\n";
 
     drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    painter.save();
+        QPen p=painter.pen();
+        p.setColor(color);
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setStyle(style);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setCapStyle(Qt::RoundCap);
+        QPen np(Qt::NoPen);
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen np(Qt::NoPen);
+        QPen ep=painter.pen();
+        ep.setColor(errorColor);
+        ep.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
+        ep.setStyle(errorStyle);
+        ep.setJoinStyle(Qt::RoundJoin);
 
-    QPen ep=painter.pen();
-    ep.setColor(errorColor);
-    ep.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
-    ep.setStyle(errorStyle);
-    ep.setJoinStyle(Qt::RoundJoin);
+        QBrush b=painter.brush();
+        b.setColor(fillColor);
+        b.setStyle(fillStyle);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-
-    QBrush eb=painter.brush();
-    eb.setColor(errorFillColor);
-    eb.setStyle(errorFillStyle);
-
-
-//    double xold=-1;
-//    double yold=-1;
-//    double ypeold=-1;
-//    double ymeold=-1;
-
-//    double x0=transformX(0);
-//    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
-    double y0=transformY(0);
-    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
-    bool first=false;
-    doublePair* d=data;
-    //QPainterPath pa, pfill;
-    //QPainterPath pel, pef;
-    QPolygonF filledPolygon, linePolygon, errorLineTop, errorLineBottom;
-    QList<QPointF> epTop, epBottom;
-    double yami=qMin(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
-    double yama=qMax(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
-    double dypix=fabs(yama-yami);
-    yami=yami-2*dypix;
-    yama=yama+2*dypix;
-    while (d!=nullptr) {
-
-        double xv=d->x;
-        double yv=d->f;
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv);
-            double y=transformY(yv);
-            double ype=0, yme=0;
-            if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
-                double e=errorPlotFunction(xv, errorParams);
-                ype=transformY(yv+e);
-                yme=transformY(yv-e);
-                ype=qBound(yami, ype, yama);
-                yme=qBound(yami, yme, yama);
-            }
-
-            y=qBound(yami, y, yama);
-
-            if (fillCurve) {
-                if (!first) filledPolygon<<QPointF(x, y0);
-                filledPolygon<<QPointF(x, y);
-                if (!d->next) filledPolygon<<QPointF(x, y0);
-            }
-
-            if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
-                epTop<<QPointF(x, ype);
-                epBottom<<QPointF(x, yme);
-            }
-
-            if (drawLine) {
-                linePolygon<<QPointF(x, y);
-            }
-
-            if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
-                errorLineTop<<QPointF(x, ype);
-                errorLineBottom<<QPointF(x, yme);
-            }
-
-//            xold=x;
-//            yold=y;
-//            ypeold=ype;
-//            ymeold=yme;
-            first=true;
-        }
-        d=d->next;
-    }
-    if (drawErrorPolygons) {
-        painter.save();
-        painter.setBrush(eb);
-        painter.setPen(np);
-        QPolygonF poly;
-        //poly << QPointF(xold, ypeold) << QPointF(x, ype)<< QPointF(x, yme) << QPointF(xold, ymeold) ;
-        for (int i=0; i<epTop.size(); i++) {
-            poly<<epTop[i];
-        }
-        for (int i=epBottom.size()-1; i>=0; i--) {
-            poly<<epBottom[i];
-        }
-        painter.drawPolygon(poly, Qt::OddEvenFill);
-        painter.restore();
-    }
-    if (fillCurve) {
-        painter.save();
-        painter.setBrush(b);
-        painter.setPen(np);
-        painter.drawPolygon(filledPolygon, Qt::OddEvenFill);
-        painter.restore();
-    }
-    if (drawLine) {
-        painter.save();
-        painter.setPen(p);
-        painter.drawPolyline(linePolygon);
-        painter.restore();
-    }
-
-    if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
-        painter.save();
-        painter.setPen(ep);
-        painter.drawPolyline(errorLineTop);
-        painter.drawPolyline(errorLineBottom);
-        painter.restore();
-
-    }
+        QBrush eb=painter.brush();
+        eb.setColor(errorFillColor);
+        eb.setStyle(errorFillStyle);
 
 
-    QColor c=color;
-    c.setHsv(fmod(color.hue()+90, 360), color.saturation(), color.value());
-    d=data;
-    if (displaySamplePoints) {
-        painter.save();
+    //    double xold=-1;
+    //    double yold=-1;
+    //    double ypeold=-1;
+    //    double ymeold=-1;
+
+    //    double x0=transformX(0);
+    //    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+        double y0=transformY(0);
+        if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
+        bool first=false;
+        doublePair* d=data;
+        //QPainterPath pa, pfill;
+        //QPainterPath pel, pef;
+        QPolygonF filledPolygon, linePolygon, errorLineTop, errorLineBottom;
+        QList<QPointF> epTop, epBottom;
+        double yami=qMin(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
+        double yama=qMax(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
+        double dypix=fabs(yama-yami);
+        yami=yami-2*dypix;
+        yama=yama+2*dypix;
         while (d!=nullptr) {
+
             double xv=d->x;
             double yv=d->f;
             //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                 double x=transformX(xv);
                 double y=transformY(yv);
-                JKQTPPlotSymbol(painter, x, y, JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
+                double ype=0, yme=0;
+                if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
+                    double e=errorPlotFunction(xv, errorParams);
+                    ype=transformY(yv+e);
+                    yme=transformY(yv-e);
+                    ype=qBound(yami, ype, yama);
+                    yme=qBound(yami, yme, yama);
+                }
+
+                y=qBound(yami, y, yama);
+
+                if (fillCurve) {
+                    if (!first) filledPolygon<<QPointF(x, y0);
+                    filledPolygon<<QPointF(x, y);
+                    if (!d->next) filledPolygon<<QPointF(x, y0);
+                }
+
+                if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
+                    epTop<<QPointF(x, ype);
+                    epBottom<<QPointF(x, yme);
+                }
+
+                if (drawLine) {
+                    linePolygon<<QPointF(x, y);
+                }
+
+                if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
+                    errorLineTop<<QPointF(x, ype);
+                    errorLineBottom<<QPointF(x, yme);
+                }
+
+    //            xold=x;
+    //            yold=y;
+    //            ypeold=ype;
+    //            ymeold=yme;
+                first=true;
             }
             d=d->next;
         }
-        painter.restore();
+        if (drawErrorPolygons) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setBrush(eb);
+            painter.setPen(np);
+            QPolygonF poly;
+            //poly << QPointF(xold, ypeold) << QPointF(x, ype)<< QPointF(x, yme) << QPointF(xold, ymeold) ;
+            for (int i=0; i<epTop.size(); i++) {
+                poly<<epTop[i];
+            }
+            for (int i=epBottom.size()-1; i>=0; i--) {
+                poly<<epBottom[i];
+            }
+            painter.drawPolygon(poly, Qt::OddEvenFill);
+
+        }
+        if (fillCurve) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setBrush(b);
+            painter.setPen(np);
+            painter.drawPolygon(filledPolygon, Qt::OddEvenFill);
+
+        }
+        if (drawLine) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setPen(p);
+            painter.drawPolyline(linePolygon);
+
+        }
+
+        if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setPen(ep);
+            painter.drawPolyline(errorLineTop);
+            painter.drawPolyline(errorLineBottom);
+
+
+        }
+
+
+        QColor c=color;
+        c.setHsv(fmod(color.hue()+90, 360), color.saturation(), color.value());
+        d=data;
+        if (displaySamplePoints) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            while (d!=nullptr) {
+                double xv=d->x;
+                double yv=d->f;
+                //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                    double x=transformX(xv);
+                    double y=transformY(yv);
+                    JKQTPPlotSymbol(painter, x, y, JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
+                }
+                d=d->next;
+            }
+
+        }
     }
-    painter.restore();
     drawErrorsAfter(painter);
     //std::cout<<"plot done\n";
 }
@@ -552,7 +560,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
 JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(parent) {}
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPlotter *parent):JKQTPXFunctionLineGraph(parent) {}
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPlotter *parent):JKQTPYFunctionLineGraph(parent->getPlotter()) {}
 
 void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
@@ -567,149 +575,149 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     //std::cout<<"plot data created\n";
 
     drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    painter.save();
+        QPen p=painter.pen();
+        p.setColor(color);
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setStyle(style);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setCapStyle(Qt::RoundCap);
+        QPen np(Qt::NoPen);
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen np(Qt::NoPen);
+        QPen ep=painter.pen();
+        ep.setColor(errorColor);
+        ep.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
+        ep.setStyle(errorStyle);
+        ep.setJoinStyle(Qt::RoundJoin);
 
-    QPen ep=painter.pen();
-    ep.setColor(errorColor);
-    ep.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
-    ep.setStyle(errorStyle);
-    ep.setJoinStyle(Qt::RoundJoin);
+        QBrush b=painter.brush();
+        b.setColor(fillColor);
+        b.setStyle(fillStyle);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-
-    QBrush eb=painter.brush();
-    eb.setColor(errorFillColor);
-    eb.setStyle(errorFillStyle);
+        QBrush eb=painter.brush();
+        eb.setColor(errorFillColor);
+        eb.setStyle(errorFillStyle);
 
 
-    double xold=-1;
-    double yold=-1;
-    double xpeold=-1;
-    double xmeold=-1;
+        double xold=-1;
+        double yold=-1;
+        double xpeold=-1;
+        double xmeold=-1;
 
-    double x0=transformX(0);
-    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
-//    double y0=transformY(0);
-//    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
-    bool first=false;
-    doublePair* d=data;
+        double x0=transformX(0);
+        if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+    //    double y0=transformY(0);
+    //    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
+        bool first=false;
+        doublePair* d=data;
 
-    while (d!=nullptr) {
-        double yv=d->x;
-        double xv=d->f;
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv);
-            double y=transformY(yv);
-            double xpe=0, xme=0;
-            if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
-                double e=errorPlotFunction(xv, errorParams);
-                xpe=transformX(xv+e);
-                xme=transformX(xv-e);
+        while (d!=nullptr) {
+            double yv=d->x;
+            double xv=d->f;
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                double x=transformX(xv);
+                double y=transformY(yv);
+                double xpe=0, xme=0;
+                if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
+                    double e=errorPlotFunction(xv, errorParams);
+                    xpe=transformX(xv+e);
+                    xme=transformX(xv-e);
+                }
+
+                if (first) {
+                    double xl1=xold;
+                    double yl1=yold;
+                    double xl2=x;
+                    double yl2=y;
+
+                    if (fillCurve) {
+                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.setBrush(b);
+                        painter.setPen(np);
+                        QPolygonF poly;
+                        poly << QPointF(xl1, yl1) << QPointF(xl2, yl2) << QPointF(x0, yl2) << QPointF(x0, yl1);
+                        painter.drawConvexPolygon(poly);
+
+                        /*pfill.lineTo(x, y);
+                        if (d->next==nullptr) { // last datapoint
+                            pfill.lineTo(x, y0);
+                        }*/
+                    }
+
+                    if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
+                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.setBrush(eb);
+                        painter.setPen(np);
+                        QPolygonF poly;
+                        poly << QPointF(xpeold, yold) << QPointF(xpe, y)<< QPointF(xme, y) << QPointF(xmeold, yold) ;
+                        painter.drawConvexPolygon(poly);
+
+                    }
+
+                    if (drawLine) {
+                        painter.setPen(p);
+                        //pa.lineTo(x, y);
+                        painter.drawLine(QLineF(xl1, yl1, xl2, yl2));
+                    }
+
+                    if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
+                        painter.setPen(ep);
+                        painter.drawLine(QLineF(xpeold, yold, xpe, y));
+                        painter.drawLine(QLineF(xmeold, yold, xme, y));
+                    }
+
+                    //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
+                } /*else {
+                    if (drawLine) {
+                        pa.moveTo(x, y);
+                    }
+                    if (fillCurve) {
+                        pfill.moveTo(x, y0);
+                        pfill.lineTo(x, y);
+                    }
+                }*/
+                xold=x;
+                yold=y;
+                xpeold=xpe;
+                xmeold=xme;
+                first=true;
             }
-
-            if (first) {
-                double xl1=xold;
-                double yl1=yold;
-                double xl2=x;
-                double yl2=y;
-
-                if (fillCurve) {
-                    painter.save();
-                    painter.setBrush(b);
-                    painter.setPen(np);
-                    QPolygonF poly;
-                    poly << QPointF(xl1, yl1) << QPointF(xl2, yl2) << QPointF(x0, yl2) << QPointF(x0, yl1);
-                    painter.drawConvexPolygon(poly);
-                    painter.restore();
-                    /*pfill.lineTo(x, y);
-                    if (d->next==nullptr) { // last datapoint
-                        pfill.lineTo(x, y0);
-                    }*/
-                }
-
-                if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
-                    painter.save();
-                    painter.setBrush(eb);
-                    painter.setPen(np);
-                    QPolygonF poly;
-                    poly << QPointF(xpeold, yold) << QPointF(xpe, y)<< QPointF(xme, y) << QPointF(xmeold, yold) ;
-                    painter.drawConvexPolygon(poly);
-                    painter.restore();
-                }
-
-                if (drawLine) {
-                    painter.setPen(p);
-                    //pa.lineTo(x, y);
-                    painter.drawLine(QLineF(xl1, yl1, xl2, yl2));
-                }
-
-                if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
-                    painter.setPen(ep);
-                    painter.drawLine(QLineF(xpeold, yold, xpe, y));
-                    painter.drawLine(QLineF(xmeold, yold, xme, y));
-                }
-
-                //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
-            } /*else {
-                if (drawLine) {
-                    pa.moveTo(x, y);
-                }
-                if (fillCurve) {
-                    pfill.moveTo(x, y0);
-                    pfill.lineTo(x, y);
-                }
-            }*/
-            xold=x;
-            yold=y;
-            xpeold=xpe;
-            xmeold=xme;
-            first=true;
+            d=d->next;
         }
-        d=d->next;
-    }
-    /*if (fillCurve) {
-        pfill.closeSubpath();
-        painter.save();
-        painter.setBrush(b);
-        painter.setPen(np);
-        painter.drawPath(pfill);
-        painter.restore();
-    }
+        /*if (fillCurve) {
+            pfill.closeSubpath();
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setBrush(b);
+            painter.setPen(np);
+            painter.drawPath(pfill);
 
-    if (drawLine) {
-        painter.setPen(p);
-        painter.drawPath(pa);
-        painter.restore();
-    }*/
-
-    QColor c=color;
-    c.setHsv(fmod(color.hue()+90, 360), color.saturation(), color.value());
-    d=data;
-    if (displaySamplePoints) while (d!=nullptr) {
-        double yv=d->x;
-        double xv=d->f;
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv);
-            double y=transformY(yv);
-            JKQTPPlotSymbol(painter, x, y, JKQTPCross, 6, 1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
         }
-        d=d->next;
+
+        if (drawLine) {
+            painter.setPen(p);
+            painter.drawPath(pa);
+
+        }*/
+
+        QColor c=color;
+        c.setHsv(fmod(color.hue()+90, 360), color.saturation(), color.value());
+        d=data;
+        if (displaySamplePoints) while (d!=nullptr) {
+            double yv=d->x;
+            double xv=d->f;
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                double x=transformX(xv);
+                double y=transformY(yv);
+                JKQTPPlotSymbol(painter, x, y, JKQTPCross, 6, 1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
+            }
+            d=d->next;
+        }
     }
-    painter.restore();
     drawErrorsAfter(painter);
     //std::cout<<"plot done\n";
 }
@@ -765,7 +773,7 @@ QBrush JKQTPXFunctionLineGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) cons
 QPen JKQTPXFunctionLineGraph::getLinePen(JKQTPEnhancedPainter &painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -783,7 +791,7 @@ QBrush JKQTPXFunctionLineGraph::getErrorBrush(JKQTPEnhancedPainter& /*painter*/)
 QPen JKQTPXFunctionLineGraph::getErrorLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(errorColor);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*errorLineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*errorLineWidth)));
     p.setStyle(errorStyle);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

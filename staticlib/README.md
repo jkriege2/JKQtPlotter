@@ -9,7 +9,7 @@ There are several `.PRO`-files, that can be used to build the full library, or a
 
 ```.qmake
 # include JKQTPlotter library
-DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib
+DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/staticlib <PATHTOJKQTPLOTTERDIR>/lib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {
     LIBS += -L<PATHTOJKQTPLOTTERDIR>/staticlib/debug -ljkqtplotterlib_debug

@@ -8,7 +8,7 @@ QT += core gui xml  svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 
-DEPENDPATH += . ../../lib
+DEPENDPATH += ../../lib  ../../staticlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
     LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug

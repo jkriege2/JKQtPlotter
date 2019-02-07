@@ -34,26 +34,26 @@ The rest of the form contains several Qt widgets which switch diverse aspects of
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
     cmbLeftNoModMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: left-click, no modifiers", cmbLeftNoModMouseAction);
-    cmbLeftNoModMouseAction->addItem("PanPlotOnMove");
-    cmbLeftNoModMouseAction->addItem("PanPlotOnRelease");
-    cmbLeftNoModMouseAction->addItem("ZoomRectangle");
-    cmbLeftNoModMouseAction->addItem("DrawRectangleForEvent");
-    cmbLeftNoModMouseAction->addItem("DrawCircleForEvent");
-    cmbLeftNoModMouseAction->addItem("DrawEllipseForEvent");
-    cmbLeftNoModMouseAction->addItem("DrawLineForEvent");
-    cmbLeftNoModMouseAction->addItem("ScribbleForEvents");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaPanPlotOnMove");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaPanPlotOnRelease");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaZoomByRectangle");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawRectangleForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawCircleForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawEllipseForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawLineForEvent");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaScribbleForEvents");
     cmbLeftNoModMouseAction->addItem("NoMouseAction");
     cmbLeftNoModMouseAction->setCurrentIndex(2);
     connect(cmbLeftNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftMouseAction(int)));
     setLeftMouseAction(cmbLeftNoModMouseAction->currentIndex());
 
-	// ......
-	
-	void TestUserInteraction::setLeftMouseAction(int index)
-	{
-		if (index==cmbLeftNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::NoModifier);
-		else plot->registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPlotter::MouseDragActions>(index));
-	}
+    // ......
+    
+    void TestUserInteraction::setLeftMouseAction(int index)
+    {
+        if (index==cmbLeftNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::LeftButton, Qt::NoModifier);
+        else plot->registerMouseDragAction(Qt::LeftButton, Qt::NoModifier, static_cast<JKQTPMouseDragActions>(index));
+    }
 ```
 
 As you can see, this QComboBox registers one of the available actions to the event of a left-button single mouse click without having modifiers pressed at the same time. The slot that actually reconfigures the JKQTPlotter uses the methods JKQTPlotter::deregisterMouseDragAction() and JKQTPlotter::registerMouseDragAction() to achieve this effect.
@@ -85,7 +85,7 @@ The JKQTPlotter contains a small text display for the current mouse position (in
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/mousepositiondisplay.gif)
 
 ### Drag the Plot Viewport
-You can move the viewport of the graph using the mouse ("PanPlotOnMove"-action). If you drag inside the plot window, you can move in both directions, if you drag over one of the coordinate axes, you can change the range of this axis only:
+You can move the viewport of the graph using the mouse ("jkqtpmdaPanPlotOnMove"-action). If you drag inside the plot window, you can move in both directions, if you drag over one of the coordinate axes, you can change the range of this axis only:
 
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/drag_viewport.gif)
 
@@ -93,7 +93,7 @@ You can move the viewport of the graph using the mouse ("PanPlotOnMove"-action).
 
 There are several options to zoom, using the mouse:
 * using the mouse wheel
-* with double-click actions ClickZoomsOut, ClickZoomsIn
+* with double-click actions jkqtpdcaClickZoomsOut, jkqtpdcaClickZoomsIn
 * using the context menu (or the toolbar)<br>
   ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/zoomin_mouse_contextmenu.gif)
 

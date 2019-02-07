@@ -16,7 +16,7 @@ HEADERS += \
     test_user_interaction.h
 
 # include JKQTPlotter source code
-DEPENDPATH += . ../../lib
+DEPENDPATH += ../../lib  ../../staticlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
     LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug
@@ -35,7 +35,7 @@ win32-msvc* {
 }
 
 
-# here you can activate some debug options
-#DEFINES += SHOW_JKQTPLOTTER_DEBUG
-#DEFINES += JKQTBP_AUTOTIMER
+
+
+
 

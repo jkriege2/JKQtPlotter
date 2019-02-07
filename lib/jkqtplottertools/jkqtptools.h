@@ -4,16 +4,16 @@
     
 
     This software is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
+    You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -74,10 +74,59 @@
 class JKQTPEnhancedPainter; // forward
 class JKQTBasePlotter; // forward declaration
 
-/** \brief smallest linewidth any line in JKQTPlotter may have
+
+
+/** \brief C++11 finally construct
  * \ingroup jkqtptools
+ *
+ * \see JKQTPFinally()
  */
-#define JKQTPLOTTER_ABS_MIN_LINEWIDTH 0.02
+template <class F>
+class JKQTPFinalAct
+{
+public:
+    explicit JKQTPFinalAct(F f) noexcept
+      : f_(std::move(f)), invoke_(true) {}
+
+    JKQTPFinalAct(JKQTPFinalAct&& other) noexcept
+     : f_(std::move(other.f_)),
+       invoke_(other.invoke_)
+    {
+        other.invoke_ = false;
+    }
+
+    JKQTPFinalAct(const JKQTPFinalAct&) = delete;
+    JKQTPFinalAct& operator=(const JKQTPFinalAct&) = delete;
+
+    ~JKQTPFinalAct() noexcept
+    {
+        if (invoke_) f_();
+    }
+
+private:
+    F f_;
+    bool invoke_;
+};
+
+/** \brief C++11 finally construct
+ * \ingroup jkqtptools
+ * \see JKQTPFinalAct
+ */
+template <class F>
+inline JKQTPFinalAct<F> JKQTPFinally(const F& f) noexcept
+{
+    return JKQTPFinalAct<F>(f);
+}
+
+/** \brief C++11 finally construct
+ * \ingroup jkqtptools
+ * \see JKQTPFinalAct
+ */
+template <class F>
+inline JKQTPFinalAct<F> JKQTPFinally(F&& f) noexcept
+{
+    return JKQTPFinalAct<F>(std::forward<F>(f));
+}
 
 /** \brief check whether the dlotaing point number is OK (i.e. non-inf, non-NAN)
  * \ingroup jkqtptools
@@ -87,7 +136,111 @@ inline bool JKQTPIsOKFloat(T v) {
     return std::isfinite(v)&&(!std::isinf(v))&&(!std::isnan(v));
 }
 
+/** \brief Availble action this JKQtPlotter can perform when mouse events occur.
+ *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes
+ * \ingroup jkqtptools
 
+ */
+enum JKQTPMouseDragActions {
+    jkqtpmdaPanPlotOnMove=0, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed whenever the mouse moves \image html drag_viewport.gif "Drag the Plot Viewport" */
+    jkqtpmdaPanPlotOnRelease, /*!< \brief the user can drag the current plot window while keeping the left mouse-button pushed down (=panning), the new widow is applied/displayed when the left mouse button is released */
+    jkqtpmdaZoomByRectangle, /*!< \brief draw a rectangle and when finish zoom to that rectangle */
+    jkqtpmdaDrawRectangleForEvent, /*!< \brief draw a rectangle and when finished execute the signal JKQTPlotter::userRectangleFinished() \image html draw_rectangle.gif "Draw Rectangle User-Action" */
+    jkqtpmdaDrawCircleForEvent, /*!< \brief draw a circle and when finished execute the signal JKQTPlotter::userCircleFinished() \image html draw_circle.gif "Draw Circle User-Action" */
+    jkqtpmdaDrawEllipseForEvent, /*!< \brief draw an ellipse and when finished execute the signal JKQTPlotter::userEllipseFinished() \image html draw_ellipse.gif "Draw Ellipse User-Action"  */
+    jkqtpmdaDrawLineForEvent, /*!< \brief draw a line and when finished execute the signal JKQTPlotter::userLineFinished() \image html draw_line.gif "Draw Lines User-Action" */
+    jkqtpmdaScribbleForEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call JKQTPlotter::userScribbleClick() for each new position  */
+};
+
+/** \brief convert a JKQTPMouseDragActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
+ *  \ingroup jkqtptools
+ *
+ *  \see String2JKQTPMouseDragActions(), JKQTPMouseDragActions
+ */
+JKQTP_LIB_EXPORT QString JKQTPMouseDragActions2String(JKQTPMouseDragActions act);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseDragActions2String() ) to JKQTPMouseDragActions
+ *  \ingroup jkqtptools
+ *
+ *  \see JKQTPMouseDragActions2String(), JKQTPMouseDragActions
+ */
+JKQTP_LIB_EXPORT JKQTPMouseDragActions String2JKQTPMouseDragActions(const QString &button);
+
+/** \brief actions that can be bound to a double-click of the mouse
+ * \ingroup jkqtptools
+ */
+enum JKQTPMouseDoubleClickActions {
+    jkqtpdcaClickZoomsIn=0, /*!< \brief a double-click zooms into the plot at the current mouse location */
+    jkqtpdcaClickZoomsOut, /*!< \brief a double-click zooms out of the plot at the current mouse location */
+    jkqtpdcaClickOpensContextMenu, /*!< \brief a double-click opens the context menu */
+    jkqtpdcaClickOpensSpecialContextMenu, /*!< \brief a double-click opens the special context menu \see setSpecialContextMenu() */
+    jkqtpdcaClickMovesViewport, /*!< \brief a double-click centers the x/y-range around the clicked position */
+};
+
+/** \brief convert a JKQTPMouseDoubleClickActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
+ *  \ingroup jkqtptools
+ *
+ *  \see String2JKQTPMouseDoubleClickActions(), JKQTPMouseDoubleClickActions
+ */
+JKQTP_LIB_EXPORT QString JKQTPMouseDoubleClickActions2String(JKQTPMouseDoubleClickActions act);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseDoubleClickActions2String() ) to JKQTPMouseDoubleClickActions
+ *  \ingroup jkqtptools
+ *
+ *  \see JKQTPMouseDoubleClickActions2String(), JKQTPMouseDoubleClickActions
+ */
+JKQTP_LIB_EXPORT JKQTPMouseDoubleClickActions String2JKQTPMouseDoubleClickActions(const QString &act);
+
+/** \brief actions that can be bound to a mouse wheel event
+ * \ingroup jkqtptools
+ */
+enum JKQTPMouseWheelActions {
+    jkqtpmwaZoomByWheel=0, /*!< \brief use the mouse-wheel for zooming */
+    jkqtpmwaPanByWheel, /*!< \brief use the mouse-wheel for panning the plot */
+};
+
+/** \brief convert a JKQTPMouseWheelActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
+ *  \ingroup jkqtptools
+ *
+ *  \see String2JKQTPMouseWheelActions(), JKQTPMouseWheelActions
+ */
+JKQTP_LIB_EXPORT QString JKQTPMouseWheelActions2String(JKQTPMouseWheelActions act);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseWheelActions2String() ) to JKQTPMouseWheelActions
+ *  \ingroup jkqtptools
+ *
+ *  \see JKQTPMouseWheelActions2String(), JKQTPMouseWheelActions
+ */
+JKQTP_LIB_EXPORT JKQTPMouseWheelActions String2JKQTPMouseWheelActions(const QString &act);
+
+/** \brief modes for the context menu
+ * \ingroup jkqtptools
+ */
+enum JKQTPContextMenuModes {
+    jkqtpcmmStandardContextMenu=0,  /*!< \brief only show the standard context menu \image html zoomin_mouse_contextmenu.gif "Zooming with the mouse" */
+    jkqtpcmmSpecialContextMenu,  /*!< \brief only show the special context menu \see setSpecialContextMenu() */
+    jkqtpcmmStandardAndSpecialContextMenu,  /*!< \brief show the standard context menu, with the special context menu incorporated \see setSpecialContextMenu() */
+    jkqtpcmmNoContextMenu, /*!< \brief don't show a context menu at all */
+};
+
+/** \brief convert a JKQTPContextMenuModes to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
+ *  \ingroup jkqtptools
+ *
+ *  \see String2JKQTPContextMenuModes(), JKQTPContextMenuModes
+ */
+JKQTP_LIB_EXPORT QString JKQTPContextMenuModes2String(JKQTPContextMenuModes act);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPContextMenuModes2String() ) to JKQTPContextMenuModes
+ *  \ingroup jkqtptools
+ *
+ *  \see JKQTPContextMenuModes2String(), JKQTPContextMenuModes
+ */
+JKQTP_LIB_EXPORT JKQTPContextMenuModes String2JKQTPContextMenuModes(const QString &act);
+
+typedef QHash<QPair<Qt::MouseButton,Qt::KeyboardModifiers>, JKQTPMouseDragActions> JKQTPMouseDragActionsHashMap;
+typedef JKQTPMouseDragActionsHashMap::const_iterator JKQTPMouseDragActionsHashMapIterator;
+
+typedef QHash<Qt::KeyboardModifiers, JKQTPMouseWheelActions> JKQTPMouseWheelActionsHashMap;
+typedef JKQTPMouseWheelActionsHashMap::const_iterator JKQTPMouseWheelActionsHashMapIterator;
+
+typedef QHash<QPair<Qt::MouseButton,Qt::KeyboardModifiers>, JKQTPMouseDoubleClickActions> JKQTPMouseDoubleClickActionsHashMap;
+typedef JKQTPMouseDoubleClickActionsHashMap::const_iterator JKQTPMouseDoubleClickActionsHashMapIterator;
 
 /** \brief converts a QT::PenStyle into a string
  * \ingroup jkqtptools
@@ -110,16 +263,80 @@ JKQTP_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style);
 
 
 
+/** \brief Specifies how a fill-color is derived from a given color
+ * \ingroup jkqtptools
+
+ */
+enum JKQTPColorDerivationMode {
+    JKQTPFFCMSameColor, /*!< \brief fill with the same color */
+    JKQTPFFCMInvertedColor, /*!< \brief fill with the inverted color */
+    JKQTPFFCMLighterColor, /*!< \brief fill with the a lighter color */
+    JKQTPFFCMEvenLighterColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor */
+    JKQTPFFCMDarkerColor, /*!< \brief fill with the a darker color */
+    JKQTPFFCMEvenDarkerColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor */
+    JKQTPFFCMMoreTransparentColor, /*!< \brief fill with the a partly transparent color */
+    JKQTPFFCMEvenMoreTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMMoreTransparentColor */
+    JKQTPFFCMLessTransparentColor, /*!< \brief fill with the a partly transparent color */
+    JKQTPFFCMEvenLessTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMLessTransparentColor*/
+};
+
+/** \brief use a JKQTPColorDerivationMode to derive a color from \a col as specified
+ *  \ingroup jkqtptools
+ *
+ *  \see JKQTPColorDerivationMode
+ */
+JKQTP_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& col);
+
+/** \brief convert a JKQTPColorDerivationMode to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
+ *  \ingroup jkqtptools
+ *
+ *  \see String2JKQTPColorDerivationMode(), JKQTPColorDerivationMode
+ */
+JKQTP_LIB_EXPORT QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPColorDerivationMode2String() ) to JKQTPColorDerivationMode
+ *  \ingroup jkqtptools
+ *
+ *  \see JKQTPColorDerivationMode2String(), JKQTPColorDerivationMode
+ */
+JKQTP_LIB_EXPORT JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode);
+
 
 /** \brief display mode for an axis
  * \ingroup jkqtptools */
 enum JKQTPCADrawMode {
     JKQTPCADMcomplete=0, /*!< \brief draw axis with ticks, ticklabels and axis label */
-    JKQTPCADMticksAndLabels, /*!< \brief draw axis with ticks and tick labels */
-    JKQTPCADMticks, /*!< \brief draw axis with ticks */
-    JKQTPCADMline, /*!< \brief draw axis as thick line */
+    JKQTPCADMLineTicksTickLabels, /*!< \brief draw axis with ticks, line and tick labels */
+    JKQTPCADMLineTicks, /*!< \brief draw axis with ticks and line */
+    JKQTPCADMLine, /*!< \brief draw axis as thick line */
+    JKQTPCADMTicksTickLabelsAxisLabel, /*!< \brief draw axis with ticks, tick labels and axisLabel */
+    JKQTPCADMTicksTickLabels, /*!< \brief draw axis with ticks and tick labels */
+    JKQTPCADMTickLabelsAxisLabel, /*!< \brief draw axis tick labels and axisLabel */
+    JKQTPCADMTickLabels, /*!< \brief draw axis tick labels */
+    JKQTPCADMTicks, /*!< \brief draw axis with ticks */
     JKQTPCADMnone /*!< \brief draw no axis */
 };
+
+/** \brief determines whether JKQTPCADrawMode has the line
+ * \ingroup jkqtptools
+ */
+JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasLine(JKQTPCADrawMode pos);
+
+/** \brief determines whether JKQTPCADrawMode has ticks
+ * \ingroup jkqtptools
+ */
+JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasTicks(JKQTPCADrawMode pos);
+
+/** \brief determines whether JKQTPCADrawMode has tick labels
+ * \ingroup jkqtptools
+ */
+JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasTickLabels(JKQTPCADrawMode pos);
+
+/** \brief determines whether JKQTPCADrawMode has the axis label
+ * \ingroup jkqtptools
+ */
+JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos);
+
+
 
 /** \brief converts a JKQTPCADrawMode variable into a human-readable string
  * \ingroup jkqtptools
@@ -179,8 +396,8 @@ JKQTP_LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& pos);
  */
 enum JKQTPLabelPosition {
     JKQTPLabelMin=0,            /*!< \brief the axis label is near the min value of the axis (left/bottom) */
-	JKQTPLabelMax,            /*!< \brief the axis label is near the max value of the axis (right/top) */
-	JKQTPLabelCenter          /*!< \brief the label is at the center of the axis */
+    JKQTPLabelMax,            /*!< \brief the axis label is near the max value of the axis (right/top) */
+    JKQTPLabelCenter          /*!< \brief the label is at the center of the axis */
 };
 
 
@@ -259,19 +476,6 @@ struct JKQTPGridPrintingItem {
 };
 
 
-/**
- * \brief saves the given property (for which also a default_property exists) into the given settings object
- * \ingroup jkqtptools
- */
-#define JKQTPPROPERTYsave(settings, group, var, varname) \
-    if (var!=default_##var) settings.setValue(group+varname, var);
-/**
- * \brief loads the given property from the given settings object
- * \ingroup jkqtptools
- */
-#define JKQTPPROPERTYload(settings, group, var, varname, varconvert) \
-    var=settings.value(group+varname, var).varconvert;
-
 
 /** \brief plot styles for the error information
  * \ingroup jkqtptools
@@ -307,15 +511,15 @@ JKQTP_LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& p
  * \ingroup jkqtptools
  */
 enum JKQTPGraphPlotstyle {
-	JKQTPLines,                /*!< \brief plot y=f(x), connect the datapoints by straight lines */
-	JKQTPFilledCurveX,         /*!< \brief plot y=f(x), as filled curve (filled until the y=0/x-axis) */
-	JKQTPFilledCurveY,         /*!< \brief plot x=f(y), as filled curve (filled until the x=0/y-axis) */
-	JKQTPPoints,               /*!< \brief plot y=f(x), plot each datapoint with a symbol */
-	JKQTPLinesPoints,          /*!< \brief plot y=f(x), plot each datapoint with a symbol and connect them by straight lines */
-	JKQTPImpulsesHorizontal,   /*!< \brief plot y=f(x), plot each datapoint as a line from (x,0) to (x,f(x))  */
-	JKQTPImpulsesVertical,     /*!< \brief plot x=f(y), plot each datapoint as a line from (0,f(x)) to (x,f(x))  */
-	JKQTPStepsX,               /*!< \brief plot y=f(x), as a step curve */
-	JKQTPStepsY                /*!< \brief plot x=f(y), as a step curve */
+    JKQTPLines,                /*!< \brief plot y=f(x), connect the datapoints by straight lines */
+    JKQTPFilledCurveX,         /*!< \brief plot y=f(x), as filled curve (filled until the y=0/x-axis) */
+    JKQTPFilledCurveY,         /*!< \brief plot x=f(y), as filled curve (filled until the x=0/y-axis) */
+    JKQTPPoints,               /*!< \brief plot y=f(x), plot each datapoint with a symbol */
+    JKQTPLinesPoints,          /*!< \brief plot y=f(x), plot each datapoint with a symbol and connect them by straight lines */
+    JKQTPImpulsesHorizontal,   /*!< \brief plot y=f(x), plot each datapoint as a line from (x,0) to (x,f(x))  */
+    JKQTPImpulsesVertical,     /*!< \brief plot x=f(y), plot each datapoint as a line from (0,f(x)) to (x,f(x))  */
+    JKQTPStepsX,               /*!< \brief plot y=f(x), as a step curve */
+    JKQTPStepsY                /*!< \brief plot x=f(y), as a step curve */
 };
 
 /** \brief symbols that can be used to plot a datapoint for a graph
@@ -565,17 +769,28 @@ JKQTP_LIB_EXPORT std::string jkqtp_booltostr(bool data);
  * \ingroup jkqtptools_string
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
+ *
+ * \param r red value of the color to convert
+ * \param g green value of the color to convert
+ * \param b blue value of the color to convert
+ * \param a alpha value of the color to convert
+ * \param useSpecialTransparencySyntax is set (\c true ), the function uses a special syntax to denote color and transparency: \c color,trans
  */
-JKQTP_LIB_EXPORT std::string jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255);
+JKQTP_LIB_EXPORT QString jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255, bool useSpecialTransparencySyntax=true);
 
 /** \brief converts a QColor into a string using the jkqtp_rgbtostring() method.
  * \ingroup jkqtptools_string
  *
  * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
  */
-inline QString jkqtp_QColor2String(QColor color) {
-    return QString(jkqtp_rgbtostring(static_cast<unsigned char>((color).red()), static_cast<unsigned char>((color).green()), static_cast<unsigned char>((color).blue()), static_cast<unsigned char>((color).alpha())).c_str());
-}
+JKQTP_LIB_EXPORT QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax=true);
+
+/** \brief converts a QString into a QColor, compatible with jkqtp_QColor2String(QColor color);
+ * \ingroup jkqtptools_string
+ *
+ * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
+ */
+JKQTP_LIB_EXPORT QColor jkqtp_String2QColor(const QString& color);
 
 /** \brief clean a string to be usable as a variable name, e.g. in an expression parser, or a C++-expression
  * \ingroup jkqtptools_string

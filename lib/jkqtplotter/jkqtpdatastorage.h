@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -77,9 +77,9 @@ class JKQTPDatastoreModel; // forward declaration
 \endverbatim
  */
 enum JKQTPDatastoreItemFormat {
-	JKQTPSingleColumn,                /*!< \brief a 1D vector of doubles. (default option) */
-	JKQTPMatrixColumn,                /*!< \brief a 1D vector of double that represents a number of columns. The data is store column after column. */
-	JKQTPMatrixRow                    /*!< \brief a 1D vector of double that represents a number of rows (C standard representation of matrices). The data is stored row after row.*/
+    JKQTPSingleColumn,                /*!< \brief a 1D vector of doubles. (default option) */
+    JKQTPMatrixColumn,                /*!< \brief a 1D vector of double that represents a number of columns. The data is store column after column. */
+    JKQTPMatrixRow                    /*!< \brief a 1D vector of double that represents a number of rows (C standard representation of matrices). The data is stored row after row.*/
 };
 
 /** \brief This class manages chunks of memory that are used for column data in JKQTBasePlotter descendents
@@ -833,7 +833,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
 };
 
 
-/** \brief 	QAbstractTableModel descendent that allows to view data in a JKQTPDatastore
+/** \brief     QAbstractTableModel descendent that allows to view data in a JKQTPDatastore
  * \ingroup jkqtpdatastorage
  *
  * \see JKQTPDatastore

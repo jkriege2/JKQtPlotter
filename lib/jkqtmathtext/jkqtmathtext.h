@@ -6,7 +6,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -41,8 +41,6 @@
 #include <QWidget>
 #include <QLabel>
 #include <QHash>
-
-#define JKQTMATHTEXT_ABS_MIN_LINEWIDTH 0.02
 
 
 
@@ -221,14 +219,17 @@ JKQTP_LIB_EXPORT void initJKQTMathTextResources();
 class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         Q_OBJECT
     public:
+        /** \brief minimum linewidth allowed in a JKQTMathText (given in pt) */
+        static const double ABS_MIN_LINEWIDTH;
+
         /** \brief class constructor */
         JKQTMathText(QObject * parent = nullptr);
         /** \brief class destructor */
         ~JKQTMathText();
         /** \brief load the object settings from the given QSettings object with the given name prefix */
-        void loadSettings(const QSettings& settings, const QString& group=QString("mathtext"));
+        void loadSettings(const QSettings& settings, const QString& group=QString("mathtext/"));
         /** \brief store the object settings to the given QSettings object with the given name prefix */
-        void saveSettings(QSettings& settings, const QString& group=QString("mathtext")) const;
+        void saveSettings(QSettings& settings, const QString& group=QString("mathtext/")) const;
         /** \brief parse the given enhanced string. Returns \c true on success. */
         bool parse(QString text);
         /** \brief get the size of the drawn representation. returns an invalid size if no text has been parsed. */
@@ -303,241 +304,183 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             MTFElatex
         };
 
-        /*! \brief sets the property fontColor ( \copybrief fontColor ) to the specified \a __value.
-            \details Description of the parameter fontColor is: <BLOCKQUOTE>\copydoc fontColor </BLOCKQUOTE> 
-            \see fontColor for more information */ 
-        inline virtual void setFontColor(const QColor & __value)  
+        /*! \copydoc fontColor \see fontColor */ 
+        inline void setFontColor(const QColor & __value)
         {
             this->fontColor = __value;
         } 
-        /*! \brief returns the property fontColor ( \copybrief fontColor ).
-            \details Description of the parameter fontColor is: <BLOCKQUOTE>\copydoc fontColor </BLOCKQUOTE> 
-            \see fontColor for more information */ 
-        inline virtual QColor getFontColor() const  
+        /*! \copydoc fontColor \see fontColor */ 
+        inline QColor getFontColor() const
         {
             return this->fontColor; 
         }
-        /*! \brief sets the property fontSize ( \copybrief fontSize ) to the specified \a __value.
-            \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
-            \see fontSize for more information */ 
-        inline virtual void setFontSize(double __value)
+        /*! \copydoc fontSize \see fontSize */ 
+        inline void setFontSize(double __value)
         {
             this->fontSize = __value;
         } 
-        /*! \brief returns the property fontSize ( \copybrief fontSize ).
-            \details Description of the parameter fontSize is: <BLOCKQUOTE>\copydoc fontSize </BLOCKQUOTE> 
-            \see fontSize for more information */ 
-        inline virtual double getFontSize() const  
+        /*! \copydoc fontSize \see fontSize */ 
+        inline double getFontSize() const
         {
             return this->fontSize; 
         }
         /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to the specified \a __value.
-            \details Description of the parameter fontRoman is: <BLOCKQUOTE>\copydoc fontRoman </BLOCKQUOTE> 
-            \see fontRoman for more information */ 
-        inline virtual void setFontRoman(const QString & __value)  
+            \details Description of the parameter fontRoman is: <BLOCKQUOTE>\copydoc fontRoman </BLOCKQUOTE>
+            \see fontRoman for more information */
+        inline void setFontRoman(const QString & __value)
         {
             this->fontRoman = __value;
-        } 
-        /*! \brief returns the property fontRoman ( \copybrief fontRoman ).
-            \details Description of the parameter fontRoman is: <BLOCKQUOTE>\copydoc fontRoman </BLOCKQUOTE> 
-            \see fontRoman for more information */ 
-        inline virtual QString getFontRoman() const  
+        }
+        /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to \a __value, or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
+
+            \see fontRoman for more information */
+        void setFontRomanOrSpecial(const QString & __value);
+        /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to \a __value, or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
+
+            \see fontRoman for more information */
+        void setFontRomanOrSpecial(const QString & roman, const QString & math);
+        /*! \copydoc fontRoman \see fontRoman */
+        inline QString getFontRoman() const
         {
             return this->fontRoman; 
         }
-        /*! \brief sets the property fontSans ( \copybrief fontSans ) to the specified \a __value.
-            \details Description of the parameter fontSans is: <BLOCKQUOTE>\copydoc fontSans </BLOCKQUOTE> 
-            \see fontSans for more information */ 
-        inline virtual void setFontSans(const QString & __value)  
+        /*! \copydoc fontSans \see fontSans */ 
+        inline void setFontSans(const QString & __value)
         {
             this->fontSans = __value;
         } 
-        /*! \brief returns the property fontSans ( \copybrief fontSans ).
-            \details Description of the parameter fontSans is: <BLOCKQUOTE>\copydoc fontSans </BLOCKQUOTE> 
-            \see fontSans for more information */ 
-        inline virtual QString getFontSans() const  
+        /*! \copydoc fontSans \see fontSans */ 
+        inline QString getFontSans() const
         {
             return this->fontSans; 
         }
-        /*! \brief sets the property fontTypewriter ( \copybrief fontTypewriter ) to the specified \a __value.
-            \details Description of the parameter fontTypewriter is: <BLOCKQUOTE>\copydoc fontTypewriter </BLOCKQUOTE> 
-            \see fontTypewriter for more information */ 
-        inline virtual void setFontTypewriter(const QString & __value)  
+        /*! \copydoc fontTypewriter \see fontTypewriter */ 
+        inline void setFontTypewriter(const QString & __value)
         {
             this->fontTypewriter = __value;
         } 
-        /*! \brief returns the property fontTypewriter ( \copybrief fontTypewriter ).
-            \details Description of the parameter fontTypewriter is: <BLOCKQUOTE>\copydoc fontTypewriter </BLOCKQUOTE> 
-            \see fontTypewriter for more information */ 
-        inline virtual QString getFontTypewriter() const  
+        /*! \copydoc fontTypewriter \see fontTypewriter */ 
+        inline QString getFontTypewriter() const
         {
             return this->fontTypewriter; 
         }
-        /*! \brief sets the property fontScript ( \copybrief fontScript ) to the specified \a __value.
-            \details Description of the parameter fontScript is: <BLOCKQUOTE>\copydoc fontScript </BLOCKQUOTE> 
-            \see fontScript for more information */ 
-        inline virtual void setFontScript(const QString & __value)  
+        /*! \copydoc fontScript \see fontScript */ 
+        inline void setFontScript(const QString & __value)
         {
             this->fontScript = __value;
         } 
-        /*! \brief returns the property fontScript ( \copybrief fontScript ).
-            \details Description of the parameter fontScript is: <BLOCKQUOTE>\copydoc fontScript </BLOCKQUOTE> 
-            \see fontScript for more information */ 
-        inline virtual QString getFontScript() const  
+        /*! \copydoc fontScript \see fontScript */ 
+        inline QString getFontScript() const
         {
             return this->fontScript; 
         }
-        /*! \brief sets the property fontGreek ( \copybrief fontGreek ) to the specified \a __value.
-            \details Description of the parameter fontGreek is: <BLOCKQUOTE>\copydoc fontGreek </BLOCKQUOTE> 
-            \see fontGreek for more information */ 
-        inline virtual void setFontGreek(const QString & __value)  
+        /*! \copydoc fontGreek \see fontGreek */ 
+        inline void setFontGreek(const QString & __value)
         {
             this->fontGreek = __value;
         } 
-        /*! \brief returns the property fontGreek ( \copybrief fontGreek ).
-            \details Description of the parameter fontGreek is: <BLOCKQUOTE>\copydoc fontGreek </BLOCKQUOTE> 
-            \see fontGreek for more information */ 
-        inline virtual QString getFontGreek() const  
+        /*! \copydoc fontGreek \see fontGreek */ 
+        inline QString getFontGreek() const
         {
             return this->fontGreek; 
         }
-        /*! \brief sets the property fontSymbol ( \copybrief fontSymbol ) to the specified \a __value.
-            \details Description of the parameter fontSymbol is: <BLOCKQUOTE>\copydoc fontSymbol </BLOCKQUOTE> 
-            \see fontSymbol for more information */ 
-        inline virtual void setFontSymbol(const QString & __value)  
+        /*! \copydoc fontSymbol \see fontSymbol */ 
+        inline void setFontSymbol(const QString & __value)
         {
             this->fontSymbol = __value;
         } 
-        /*! \brief returns the property fontSymbol ( \copybrief fontSymbol ).
-            \details Description of the parameter fontSymbol is: <BLOCKQUOTE>\copydoc fontSymbol </BLOCKQUOTE> 
-            \see fontSymbol for more information */ 
-        inline virtual QString getFontSymbol() const  
+        /*! \copydoc fontSymbol \see fontSymbol */ 
+        inline QString getFontSymbol() const
         {
             return this->fontSymbol; 
         }
-        /*! \brief sets the property fontBraces ( \copybrief fontBraces ) to the specified \a __value.
-            \details Description of the parameter fontBraces is: <BLOCKQUOTE>\copydoc fontBraces </BLOCKQUOTE> 
-            \see fontBraces for more information */ 
-        inline virtual void setFontBraces(const QString & __value)  
+        /*! \copydoc fontBraces \see fontBraces */ 
+        inline void setFontBraces(const QString & __value)
         {
             this->fontBraces = __value;
         } 
-        /*! \brief returns the property fontBraces ( \copybrief fontBraces ).
-            \details Description of the parameter fontBraces is: <BLOCKQUOTE>\copydoc fontBraces </BLOCKQUOTE> 
-            \see fontBraces for more information */ 
-        inline virtual QString getFontBraces() const  
+        /*! \copydoc fontBraces \see fontBraces */ 
+        inline QString getFontBraces() const
         {
             return this->fontBraces; 
         }
-        /*! \brief sets the property fontIntegrals ( \copybrief fontIntegrals ) to the specified \a __value.
-            \details Description of the parameter fontIntegrals is: <BLOCKQUOTE>\copydoc fontIntegrals </BLOCKQUOTE> 
-            \see fontIntegrals for more information */ 
-        inline virtual void setFontIntegrals(const QString & __value)  
+        /*! \copydoc fontIntegrals \see fontIntegrals */ 
+        inline void setFontIntegrals(const QString & __value)
         {
             this->fontIntegrals = __value;
         } 
-        /*! \brief returns the property fontIntegrals ( \copybrief fontIntegrals ).
-            \details Description of the parameter fontIntegrals is: <BLOCKQUOTE>\copydoc fontIntegrals </BLOCKQUOTE> 
-            \see fontIntegrals for more information */ 
-        inline virtual QString getFontIntegrals() const  
+        /*! \copydoc fontIntegrals \see fontIntegrals */ 
+        inline QString getFontIntegrals() const
         {
             return this->fontIntegrals; 
         }
-        /*! \brief sets the property fontCaligraphic ( \copybrief fontCaligraphic ) to the specified \a __value.
-            \details Description of the parameter fontCaligraphic is: <BLOCKQUOTE>\copydoc fontCaligraphic </BLOCKQUOTE> 
-            \see fontCaligraphic for more information */ 
-        inline virtual void setFontCaligraphic(const QString & __value)  
+        /*! \copydoc fontCaligraphic \see fontCaligraphic */ 
+        inline void setFontCaligraphic(const QString & __value)
         {
             this->fontCaligraphic = __value;
         } 
-        /*! \brief returns the property fontCaligraphic ( \copybrief fontCaligraphic ).
-            \details Description of the parameter fontCaligraphic is: <BLOCKQUOTE>\copydoc fontCaligraphic </BLOCKQUOTE> 
-            \see fontCaligraphic for more information */ 
-        inline virtual QString getFontCaligraphic() const  
+        /*! \copydoc fontCaligraphic \see fontCaligraphic */ 
+        inline QString getFontCaligraphic() const
         {
             return this->fontCaligraphic; 
         }
-        /*! \brief sets the property fontBlackboard ( \copybrief fontBlackboard ) to the specified \a __value.
-            \details Description of the parameter fontBlackboard is: <BLOCKQUOTE>\copydoc fontBlackboard </BLOCKQUOTE> 
-            \see fontBlackboard for more information */ 
-        inline virtual void setFontBlackboard(const QString & __value)  
+        /*! \copydoc fontBlackboard \see fontBlackboard */ 
+        inline void setFontBlackboard(const QString & __value)
         {
             this->fontBlackboard = __value;
         } 
-        /*! \brief returns the property fontBlackboard ( \copybrief fontBlackboard ).
-            \details Description of the parameter fontBlackboard is: <BLOCKQUOTE>\copydoc fontBlackboard </BLOCKQUOTE> 
-            \see fontBlackboard for more information */ 
-        inline virtual QString getFontBlackboard() const  
+        /*! \copydoc fontBlackboard \see fontBlackboard */ 
+        inline QString getFontBlackboard() const
         {
             return this->fontBlackboard; 
         }
-        /*! \brief sets the property fontMathRoman ( \copybrief fontMathRoman ) to the specified \a __value.
-            \details Description of the parameter fontMathRoman is: <BLOCKQUOTE>\copydoc fontMathRoman </BLOCKQUOTE> 
-            \see fontMathRoman for more information */ 
-        inline virtual void setFontMathRoman(const QString & __value)  
+        /*! \copydoc fontMathRoman \see fontMathRoman */ 
+        inline void setFontMathRoman(const QString & __value)
         {
             this->fontMathRoman = __value;
         } 
-        /*! \brief returns the property fontMathRoman ( \copybrief fontMathRoman ).
-            \details Description of the parameter fontMathRoman is: <BLOCKQUOTE>\copydoc fontMathRoman </BLOCKQUOTE> 
-            \see fontMathRoman for more information */ 
-        inline virtual QString getFontMathRoman() const  
+        /*! \copydoc fontMathRoman \see fontMathRoman */ 
+        inline QString getFontMathRoman() const
         {
             return this->fontMathRoman; 
         }
-        /*! \brief sets the property fontMathSans ( \copybrief fontMathSans ) to the specified \a __value.
-            \details Description of the parameter fontMathSans is: <BLOCKQUOTE>\copydoc fontMathSans </BLOCKQUOTE> 
-            \see fontMathSans for more information */ 
-        inline virtual void setFontMathSans(const QString & __value)  
+        /*! \copydoc fontMathSans \see fontMathSans */ 
+        inline void setFontMathSans(const QString & __value)
         {
             this->fontMathSans = __value;
         } 
-        /*! \brief returns the property fontMathSans ( \copybrief fontMathSans ).
-            \details Description of the parameter fontMathSans is: <BLOCKQUOTE>\copydoc fontMathSans </BLOCKQUOTE> 
-            \see fontMathSans for more information */ 
-        inline virtual QString getFontMathSans() const  
+        /*! \copydoc fontMathSans \see fontMathSans */ 
+        inline QString getFontMathSans() const
         {
             return this->fontMathSans; 
         }
-        /*! \brief sets the property fontLatexPrefix ( \copybrief fontLatexPrefix ) to the specified \a __value.
-            \details Description of the parameter fontLatexPrefix is: <BLOCKQUOTE>\copydoc fontLatexPrefix </BLOCKQUOTE> 
-            \see fontLatexPrefix for more information */ 
-        inline virtual void setFontLatexPrefix(const QString & __value)  
+        /*! \copydoc fontLatexPrefix \see fontLatexPrefix */ 
+        inline void setFontLatexPrefix(const QString & __value)
         {
             this->fontLatexPrefix = __value;
         } 
-        /*! \brief returns the property fontLatexPrefix ( \copybrief fontLatexPrefix ).
-            \details Description of the parameter fontLatexPrefix is: <BLOCKQUOTE>\copydoc fontLatexPrefix </BLOCKQUOTE> 
-            \see fontLatexPrefix for more information */ 
-        inline virtual QString getFontLatexPrefix() const  
+        /*! \copydoc fontLatexPrefix \see fontLatexPrefix */ 
+        inline QString getFontLatexPrefix() const
         {
             return this->fontLatexPrefix; 
         }
-        /*! \brief sets the property fontLatexPostfix ( \copybrief fontLatexPostfix ) to the specified \a __value.
-            \details Description of the parameter fontLatexPostfix is: <BLOCKQUOTE>\copydoc fontLatexPostfix </BLOCKQUOTE> 
-            \see fontLatexPostfix for more information */ 
-        inline virtual void setFontLatexPostfix(const QString & __value)  
+        /*! \copydoc fontLatexPostfix \see fontLatexPostfix */ 
+        inline void setFontLatexPostfix(const QString & __value)
         {
             this->fontLatexPostfix = __value;
         } 
-        /*! \brief returns the property fontLatexPostfix ( \copybrief fontLatexPostfix ).
-            \details Description of the parameter fontLatexPostfix is: <BLOCKQUOTE>\copydoc fontLatexPostfix </BLOCKQUOTE> 
-            \see fontLatexPostfix for more information */ 
-        inline virtual QString getFontLatexPostfix() const  
+        /*! \copydoc fontLatexPostfix \see fontLatexPostfix */ 
+        inline QString getFontLatexPostfix() const
         {
             return this->fontLatexPostfix; 
         }
-        /*! \brief sets the property fontEncoding ( \copybrief fontEncoding ) to the specified \a __value.
-            \details Description of the parameter fontEncoding is: <BLOCKQUOTE>\copydoc fontEncoding </BLOCKQUOTE> 
-            \see fontEncoding for more information */ 
-        inline virtual void setFontEncoding(const MTfontEncoding & __value)  
+        /*! \copydoc fontEncoding \see fontEncoding */ 
+        inline void setFontEncoding(const MTfontEncoding & __value)
         {
             this->fontEncoding = __value;
         } 
-        /*! \brief returns the property fontEncoding ( \copybrief fontEncoding ).
-            \details Description of the parameter fontEncoding is: <BLOCKQUOTE>\copydoc fontEncoding </BLOCKQUOTE> 
-            \see fontEncoding for more information */ 
-        inline virtual MTfontEncoding getFontEncoding() const  
+        /*! \copydoc fontEncoding \see fontEncoding */ 
+        inline MTfontEncoding getFontEncoding() const
         {
             return this->fontEncoding; 
         }
@@ -553,227 +496,163 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         inline bool isUsingXITSfonts() const { 
             return this->useXITSfonts; 
         }
-        /*! \brief sets the property brace_factor ( \copybrief brace_factor ) to the specified \a __value.
-            \details Description of the parameter brace_factor is: <BLOCKQUOTE>\copydoc brace_factor </BLOCKQUOTE> 
-            \see brace_factor for more information */ 
-        inline virtual void setBraceFactor(double __value)
+        /*! \copydoc brace_factor \see brace_factor */ 
+        inline void setBraceFactor(double __value)
         {
             this->brace_factor = __value;
         } 
-        /*! \brief returns the property brace_factor ( \copybrief brace_factor ).
-            \details Description of the parameter brace_factor is: <BLOCKQUOTE>\copydoc brace_factor </BLOCKQUOTE> 
-            \see brace_factor for more information */ 
-        inline virtual double getBraceFactor() const
+        /*! \copydoc brace_factor \see brace_factor */ 
+        inline double getBraceFactor() const
         {
             return this->brace_factor; 
         }
-        /*! \brief sets the property subsuper_size_factor ( \copybrief subsuper_size_factor ) to the specified \a __value.
-            \details Description of the parameter subsuper_size_factor is: <BLOCKQUOTE>\copydoc subsuper_size_factor </BLOCKQUOTE> 
-            \see subsuper_size_factor for more information */ 
-        inline virtual void setSubsuperSizeFactor(double __value)
+        /*! \copydoc subsuper_size_factor \see subsuper_size_factor */ 
+        inline void setSubsuperSizeFactor(double __value)
         {
             this->subsuper_size_factor = __value;
         } 
-        /*! \brief returns the property subsuper_size_factor ( \copybrief subsuper_size_factor ).
-            \details Description of the parameter subsuper_size_factor is: <BLOCKQUOTE>\copydoc subsuper_size_factor </BLOCKQUOTE> 
-            \see subsuper_size_factor for more information */ 
-        inline virtual double getSubsuperSizeFactor() const
+        /*! \copydoc subsuper_size_factor \see subsuper_size_factor */ 
+        inline double getSubsuperSizeFactor() const
         {
             return this->subsuper_size_factor; 
         }
-        /*! \brief sets the property italic_correction_factor ( \copybrief italic_correction_factor ) to the specified \a __value.
-            \details Description of the parameter italic_correction_factor is: <BLOCKQUOTE>\copydoc italic_correction_factor </BLOCKQUOTE> 
-            \see italic_correction_factor for more information */ 
-        inline virtual void setItalicCorrectionFactor(double __value)
+        /*! \copydoc italic_correction_factor \see italic_correction_factor */ 
+        inline void setItalicCorrectionFactor(double __value)
         {
             this->italic_correction_factor = __value;
         } 
-        /*! \brief returns the property italic_correction_factor ( \copybrief italic_correction_factor ).
-            \details Description of the parameter italic_correction_factor is: <BLOCKQUOTE>\copydoc italic_correction_factor </BLOCKQUOTE> 
-            \see italic_correction_factor for more information */ 
-        inline virtual double getItalicCorrectionFactor() const
+        /*! \copydoc italic_correction_factor \see italic_correction_factor */ 
+        inline double getItalicCorrectionFactor() const
         {
             return this->italic_correction_factor; 
         }
-        /*! \brief sets the property operatorsubsuper_size_factor ( \copybrief operatorsubsuper_size_factor ) to the specified \a __value.
-            \details Description of the parameter operatorsubsuper_size_factor is: <BLOCKQUOTE>\copydoc operatorsubsuper_size_factor </BLOCKQUOTE> 
-            \see operatorsubsuper_size_factor for more information */ 
-        inline virtual void setOperatorsubsuperSizeFactor(double __value)
+        /*! \copydoc operatorsubsuper_size_factor \see operatorsubsuper_size_factor */ 
+        inline void setOperatorsubsuperSizeFactor(double __value)
         {
             this->operatorsubsuper_size_factor = __value;
         } 
-        /*! \brief returns the property operatorsubsuper_size_factor ( \copybrief operatorsubsuper_size_factor ).
-            \details Description of the parameter operatorsubsuper_size_factor is: <BLOCKQUOTE>\copydoc operatorsubsuper_size_factor </BLOCKQUOTE> 
-            \see operatorsubsuper_size_factor for more information */ 
-        inline virtual double getOperatorsubsuperSizeFactor() const
+        /*! \copydoc operatorsubsuper_size_factor \see operatorsubsuper_size_factor */ 
+        inline double getOperatorsubsuperSizeFactor() const
         {
             return this->operatorsubsuper_size_factor; 
         }
-        /*! \brief sets the property mathoperator_width_factor ( \copybrief mathoperator_width_factor ) to the specified \a __value.
-            \details Description of the parameter mathoperator_width_factor is: <BLOCKQUOTE>\copydoc mathoperator_width_factor </BLOCKQUOTE> 
-            \see mathoperator_width_factor for more information */ 
-        inline virtual void setMathoperatorWidthFactor(double __value)
+        /*! \copydoc mathoperator_width_factor \see mathoperator_width_factor */ 
+        inline void setMathoperatorWidthFactor(double __value)
         {
             this->mathoperator_width_factor = __value;
         } 
-        /*! \brief returns the property mathoperator_width_factor ( \copybrief mathoperator_width_factor ).
-            \details Description of the parameter mathoperator_width_factor is: <BLOCKQUOTE>\copydoc mathoperator_width_factor </BLOCKQUOTE> 
-            \see mathoperator_width_factor for more information */ 
-        inline virtual double getMathoperatorWidthFactor() const  
+        /*! \copydoc mathoperator_width_factor \see mathoperator_width_factor */ 
+        inline double getMathoperatorWidthFactor() const
         {
             return this->mathoperator_width_factor; 
         }
-        /*! \brief sets the property super_shift_factor ( \copybrief super_shift_factor ) to the specified \a __value.
-            \details Description of the parameter super_shift_factor is: <BLOCKQUOTE>\copydoc super_shift_factor </BLOCKQUOTE> 
-            \see super_shift_factor for more information */ 
-        inline virtual void setSuperShiftFactor(double __value)
+        /*! \copydoc super_shift_factor \see super_shift_factor */ 
+        inline void setSuperShiftFactor(double __value)
         {
             this->super_shift_factor = __value;
         } 
-        /*! \brief returns the property super_shift_factor ( \copybrief super_shift_factor ).
-            \details Description of the parameter super_shift_factor is: <BLOCKQUOTE>\copydoc super_shift_factor </BLOCKQUOTE> 
-            \see super_shift_factor for more information */ 
-        inline virtual double getSuperShiftFactor() const  
+        /*! \copydoc super_shift_factor \see super_shift_factor */ 
+        inline double getSuperShiftFactor() const
         {
             return this->super_shift_factor; 
         }
-        /*! \brief sets the property sub_shift_factor ( \copybrief sub_shift_factor ) to the specified \a __value.
-            \details Description of the parameter sub_shift_factor is: <BLOCKQUOTE>\copydoc sub_shift_factor </BLOCKQUOTE> 
-            \see sub_shift_factor for more information */ 
-        inline virtual void setSubShiftFactor(double __value)
+        /*! \copydoc sub_shift_factor \see sub_shift_factor */ 
+        inline void setSubShiftFactor(double __value)
         {
             this->sub_shift_factor = __value;
         } 
-        /*! \brief returns the property sub_shift_factor ( \copybrief sub_shift_factor ).
-            \details Description of the parameter sub_shift_factor is: <BLOCKQUOTE>\copydoc sub_shift_factor </BLOCKQUOTE> 
-            \see sub_shift_factor for more information */ 
-        inline virtual double getSubShiftFactor() const  
+        /*! \copydoc sub_shift_factor \see sub_shift_factor */ 
+        inline double getSubShiftFactor() const
         {
             return this->sub_shift_factor; 
         }
-        /*! \brief sets the property brace_shrink_factor ( \copybrief brace_shrink_factor ) to the specified \a __value.
-            \details Description of the parameter brace_shrink_factor is: <BLOCKQUOTE>\copydoc brace_shrink_factor </BLOCKQUOTE> 
-            \see brace_shrink_factor for more information */ 
-        inline virtual void setBraceShrinkFactor(double __value)
+        /*! \copydoc brace_shrink_factor \see brace_shrink_factor */ 
+        inline void setBraceShrinkFactor(double __value)
         {
             this->brace_shrink_factor = __value;
         } 
-        /*! \brief returns the property brace_shrink_factor ( \copybrief brace_shrink_factor ).
-            \details Description of the parameter brace_shrink_factor is: <BLOCKQUOTE>\copydoc brace_shrink_factor </BLOCKQUOTE> 
-            \see brace_shrink_factor for more information */ 
-        inline virtual double getBraceShrinkFactor() const  
+        /*! \copydoc brace_shrink_factor \see brace_shrink_factor */ 
+        inline double getBraceShrinkFactor() const
         {
             return this->brace_shrink_factor; 
         }
-        /*! \brief sets the property underbrace_factor ( \copybrief underbrace_factor ) to the specified \a __value.
-            \details Description of the parameter underbrace_factor is: <BLOCKQUOTE>\copydoc underbrace_factor </BLOCKQUOTE> 
-            \see underbrace_factor for more information */ 
-        inline virtual void setUnderbraceFactor(double __value)
+        /*! \copydoc underbrace_factor \see underbrace_factor */ 
+        inline void setUnderbraceFactor(double __value)
         {
             this->underbrace_factor = __value;
         } 
-        /*! \brief returns the property underbrace_factor ( \copybrief underbrace_factor ).
-            \details Description of the parameter underbrace_factor is: <BLOCKQUOTE>\copydoc underbrace_factor </BLOCKQUOTE> 
-            \see underbrace_factor for more information */ 
-        inline virtual double getUnderbraceFactor() const  
+        /*! \copydoc underbrace_factor \see underbrace_factor */ 
+        inline double getUnderbraceFactor() const
         {
             return this->underbrace_factor; 
         }
-        /*! \brief sets the property undersetFactor ( \copybrief undersetFactor ) to the specified \a __value.
-            \details Description of the parameter undersetFactor is: <BLOCKQUOTE>\copydoc undersetFactor </BLOCKQUOTE> 
-            \see undersetFactor for more information */ 
-        inline virtual void setUndersetFactor(double __value)
+        /*! \copydoc undersetFactor \see undersetFactor */ 
+        inline void setUndersetFactor(double __value)
         {
             this->undersetFactor = __value;
         } 
-        /*! \brief returns the property undersetFactor ( \copybrief undersetFactor ).
-            \details Description of the parameter undersetFactor is: <BLOCKQUOTE>\copydoc undersetFactor </BLOCKQUOTE> 
-            \see undersetFactor for more information */ 
-        inline virtual double getUndersetFactor() const  
+        /*! \copydoc undersetFactor \see undersetFactor */ 
+        inline double getUndersetFactor() const
         {
             return this->undersetFactor; 
         }
-        /*! \brief sets the property frac_factor ( \copybrief frac_factor ) to the specified \a __value.
-            \details Description of the parameter frac_factor is: <BLOCKQUOTE>\copydoc frac_factor </BLOCKQUOTE> 
-            \see frac_factor for more information */ 
-        inline virtual void setFracFactor(double __value)
+        /*! \copydoc frac_factor \see frac_factor */ 
+        inline void setFracFactor(double __value)
         {
             this->frac_factor = __value;
         } 
-        /*! \brief returns the property frac_factor ( \copybrief frac_factor ).
-            \details Description of the parameter frac_factor is: <BLOCKQUOTE>\copydoc frac_factor </BLOCKQUOTE> 
-            \see frac_factor for more information */ 
-        inline virtual double getFracFactor() const  
+        /*! \copydoc frac_factor \see frac_factor */ 
+        inline double getFracFactor() const
         {
             return this->frac_factor; 
         }
-        /*! \brief sets the property frac_shift_factor ( \copybrief frac_shift_factor ) to the specified \a __value.
-            \details Description of the parameter frac_shift_factor is: <BLOCKQUOTE>\copydoc frac_shift_factor </BLOCKQUOTE> 
-            \see frac_shift_factor for more information */ 
-        inline virtual void setFracShiftFactor(double __value)
+        /*! \copydoc frac_shift_factor \see frac_shift_factor */ 
+        inline void setFracShiftFactor(double __value)
         {
             this->frac_shift_factor = __value;
         } 
-        /*! \brief returns the property frac_shift_factor ( \copybrief frac_shift_factor ).
-            \details Description of the parameter frac_shift_factor is: <BLOCKQUOTE>\copydoc frac_shift_factor </BLOCKQUOTE> 
-            \see frac_shift_factor for more information */ 
-        inline virtual double getFracShiftFactor() const  
+        /*! \copydoc frac_shift_factor \see frac_shift_factor */ 
+        inline double getFracShiftFactor() const
         {
             return this->frac_shift_factor; 
         }
-        /*! \brief sets the property brace_y_shift_factor ( \copybrief brace_y_shift_factor ) to the specified \a __value.
-            \details Description of the parameter brace_y_shift_factor is: <BLOCKQUOTE>\copydoc brace_y_shift_factor </BLOCKQUOTE> 
-            \see brace_y_shift_factor for more information */ 
-        inline virtual void setBraceYShiftFactor(double __value)
+        /*! \copydoc brace_y_shift_factor \see brace_y_shift_factor */ 
+        inline void setBraceYShiftFactor(double __value)
         {
             this->brace_y_shift_factor = __value;
         } 
-        /*! \brief returns the property brace_y_shift_factor ( \copybrief brace_y_shift_factor ).
-            \details Description of the parameter brace_y_shift_factor is: <BLOCKQUOTE>\copydoc brace_y_shift_factor </BLOCKQUOTE> 
-            \see brace_y_shift_factor for more information */ 
-        inline virtual double getBraceYShiftFactor() const  
+        /*! \copydoc brace_y_shift_factor \see brace_y_shift_factor */ 
+        inline double getBraceYShiftFactor() const
         {
             return this->brace_y_shift_factor; 
         }
-        /*! \brief sets the property decoration_height_factor ( \copybrief decoration_height_factor ) to the specified \a __value.
-            \details Description of the parameter decoration_height_factor is: <BLOCKQUOTE>\copydoc decoration_height_factor </BLOCKQUOTE> 
-            \see decoration_height_factor for more information */ 
-        inline virtual void setDecorationHeightFactor(double __value)
+        /*! \copydoc decoration_height_factor \see decoration_height_factor */ 
+        inline void setDecorationHeightFactor(double __value)
         {
             this->decoration_height_factor = __value;
         } 
-        /*! \brief returns the property decoration_height_factor ( \copybrief decoration_height_factor ).
-            \details Description of the parameter decoration_height_factor is: <BLOCKQUOTE>\copydoc decoration_height_factor </BLOCKQUOTE> 
-            \see decoration_height_factor for more information */ 
-        inline virtual double getDecorationHeightFactor() const  
+        /*! \copydoc decoration_height_factor \see decoration_height_factor */ 
+        inline double getDecorationHeightFactor() const
         {
             return this->decoration_height_factor; 
         }
-        /*! \brief sets the property expensiveRendering ( \copybrief expensiveRendering ) to the specified \a __value.
-            \details Description of the parameter expensiveRendering is: <BLOCKQUOTE>\copydoc expensiveRendering </BLOCKQUOTE> 
-            \see expensiveRendering for more information */ 
-        inline virtual void setExpensiveRendering(bool __value)
+        /*! \copydoc expensiveRendering \see expensiveRendering */ 
+        inline void setExpensiveRendering(bool __value)
         {
             this->expensiveRendering = __value;
         } 
-        /*! \brief returns the property expensiveRendering ( \copybrief expensiveRendering ).
-            \details Description of the parameter expensiveRendering is: <BLOCKQUOTE>\copydoc expensiveRendering </BLOCKQUOTE> 
-            \see expensiveRendering for more information */ 
-        inline virtual bool getExpensiveRendering() const  
+        /*! \copydoc expensiveRendering \see expensiveRendering */ 
+        inline bool getExpensiveRendering() const
         {
             return this->expensiveRendering; 
         }
-        /*! \brief sets the property useUnparsed ( \copybrief useUnparsed ) to the specified \a __value.
-            \details Description of the parameter useUnparsed is: <BLOCKQUOTE>\copydoc useUnparsed </BLOCKQUOTE> 
-            \see useUnparsed for more information */ 
-        inline virtual void setUseUnparsed(bool __value)
+        /*! \copydoc useUnparsed \see useUnparsed */ 
+        inline void setUseUnparsed(bool __value)
         {
             this->useUnparsed = __value;
         } 
-        /*! \brief returns the property useUnparsed ( \copybrief useUnparsed ).
-            \details Description of the parameter useUnparsed is: <BLOCKQUOTE>\copydoc useUnparsed </BLOCKQUOTE> 
-            \see useUnparsed for more information */ 
-        inline virtual bool isUsingUnparsed() const  
+        /*! \copydoc useUnparsed \see useUnparsed */ 
+        inline bool isUsingUnparsed() const
         {
             return this->useUnparsed; 
         }
@@ -1355,6 +1234,10 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         bool default_useSTIXfonts;
         /** \brief indicates whether to use XITS fonts or not */
         bool useXITSfonts;
+        /** \brief the first call to useXITS() determines this name for the default XITS fonts */
+        QString defaultXITSFontName;
+        /** \brief the call to useXITS() determines this name for the default XITS Math fonts */
+        QString defaultXITSMathFontName;
         /*! \brief default value for property useXITSfonts.
             \see useXITSfonts for more information */
         bool default_useXITSfonts;

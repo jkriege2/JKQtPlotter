@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -54,32 +54,17 @@ JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTBasePlotter* parent):
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
-        fillColor=color.lighter();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
     }
 }
 
 JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTPlotter *parent):
-    JKQTPXYGraph(parent)
+    JKQTPFilledCurveXGraph(parent->getPlotter())
 {
-    baseline=0.0;
-    drawSelectionLine=false;
-    selectionLineColor=Qt::transparent;
-    color=QColor("red");
-    fillColor=color.lighter();
-    style=Qt::SolidLine;
-    lineWidth=2;
-    parentPlotStyle=-1;
-    drawLine=true;
-    fillStyle=Qt::SolidPattern;
 
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        fillColor=color.lighter();
-    }
 }
 
 void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
@@ -91,120 +76,120 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    painter.save();
+        QPen p=painter.pen();
+        p.setColor(color);
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setStyle(style);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setCapStyle(Qt::RoundCap);
+        QPen np(Qt::NoPen);
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen np(Qt::NoPen);
+        QBrush b=painter.brush();
+        b.setColor(fillColor);
+        b.setStyle(fillStyle);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-
-    int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
-    int imin=0;
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    QPainterPath pl, pf;
-
-    double xold=-1;
-    //double yold=-1;
-//    double x0=transformX(baseline);
-//    if (parent->getXAxis()->isLogAxis()) {
-//        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
-//        else x0=transformX(parent->getXAxis()->getMin());
-//    }
-    double y0=transformY(baseline);
-    if (parent->getYAxis()->isLogAxis()) {
-        y0=transformY(parent->getYAxis()->getMin());
-        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
-        else y0=transformY(parent->getYAxis()->getMin());
-    }
-    bool first=true;
-    intSortData();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
-            double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
-
-            if (!first) {
-                if (xok&&yok) {
-                    pf.lineTo(x, y);
-                    if (drawLine) pl.lineTo(x, y);
-                    xold=x;
-                    //yold=y;
-                } else if (xok&&!yok){
-                    pf.lineTo(x, y0);
-                    if (drawLine) pl.lineTo(x, y0);
-                    xold=x;
-                    //yold=y0;
-                }
-            } else {
-                if (xok&&yok) {
-                    if (drawLine) pl.moveTo(x,y);
-                    pf.moveTo(x, y0);
-                    pf.lineTo(x, y);
-                    xold=x;
-                    //yold=y;
-                    first=false;
-                } else if (xok&&!yok) {
-                    if (drawLine) pl.moveTo(x,y0);
-                    pf.moveTo(x, y0);
-                    xold=x;
-                    //yold=y0;
-                    first=false;
-                }
-            }
-
+        int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
+        int imin=0;
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
         }
-    }
-    pf.lineTo(xold, y0);
-    pf.closeSubpath();
-    if (drawLine) {
-        painter.save();
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
 
-        if (drawSelectionLine) {
-            QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
-            QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
-            if (selectionLineColor!=Qt::transparent) {
-                penSelection.setColor(selectionLineColor);
+        QPainterPath pl, pf;
+
+        double xold=-1;
+        //double yold=-1;
+    //    double x0=transformX(baseline);
+    //    if (parent->getXAxis()->isLogAxis()) {
+    //        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
+    //        else x0=transformX(parent->getXAxis()->getMin());
+    //    }
+        double y0=transformY(baseline);
+        if (parent->getYAxis()->isLogAxis()) {
+            y0=transformY(parent->getYAxis()->getMin());
+            if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
+            else y0=transformY(parent->getYAxis()->getMin());
+        }
+        bool first=true;
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            int i=qBound(imin, getDataIndex(iii), imax);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
+                double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
+
+                if (!first) {
+                    if (xok&&yok) {
+                        pf.lineTo(x, y);
+                        if (drawLine) pl.lineTo(x, y);
+                        xold=x;
+                        //yold=y;
+                    } else if (xok&&!yok){
+                        pf.lineTo(x, y0);
+                        if (drawLine) pl.lineTo(x, y0);
+                        xold=x;
+                        //yold=y0;
+                    }
+                } else {
+                    if (xok&&yok) {
+                        if (drawLine) pl.moveTo(x,y);
+                        pf.moveTo(x, y0);
+                        pf.lineTo(x, y);
+                        xold=x;
+                        //yold=y;
+                        first=false;
+                    } else if (xok&&!yok) {
+                        if (drawLine) pl.moveTo(x,y0);
+                        pf.moveTo(x, y0);
+                        xold=x;
+                        //yold=y0;
+                        first=false;
+                    }
+                }
+
             }
-            penSelection.setWidthF(penSelection.widthF()*3.0);
-            painter.setPen(penSelection);
+        }
+        pf.lineTo(xold, y0);
+        pf.closeSubpath();
+        if (drawLine) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+
+            if (drawSelectionLine) {
+                QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
+                QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
+                if (selectionLineColor!=Qt::transparent) {
+                    penSelection.setColor(selectionLineColor);
+                }
+                penSelection.setWidthF(penSelection.widthF()*3.0);
+                painter.setPen(penSelection);
+                painter.drawPath(pl);
+            }
+
+
+            painter.setPen(p);
             painter.drawPath(pl);
+
         }
+        painter.setBrush(b);
+        painter.setPen(np);
+        painter.drawPath(pf);
 
-
-        painter.setPen(p);
-        painter.drawPath(pl);
-        painter.restore();
     }
-    painter.setBrush(b);
-    painter.setPen(np);
-    painter.drawPath(pf);
-
-    painter.restore();
 
     drawErrorsAfter(painter);
 }
 
 void JKQTPFilledCurveXGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     QPen np(Qt::NoPen);
     p.setColor(color);
@@ -219,7 +204,7 @@ void JKQTPFilledCurveXGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF
     if (drawLine) painter.setPen(p);
     painter.setBrush(b);
     painter.drawRect(rect);
-    painter.restore();
+
 }
 
 QColor JKQTPFilledCurveXGraph::getKeyLabelColor() {
@@ -245,7 +230,7 @@ JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTBasePlotter* parent):
 }
 
 JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTPlotter *parent):
-    JKQTPFilledCurveXGraph(parent)
+    JKQTPFilledCurveYGraph(parent->getPlotter())
 {
 
 }
@@ -259,112 +244,112 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    painter.save();
+        QPen p=painter.pen();
+        p.setColor(color);
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setStyle(style);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setCapStyle(Qt::RoundCap);
+        p.setJoinStyle(Qt::RoundJoin);
+        QPen np(Qt::NoPen);
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    p.setJoinStyle(Qt::RoundJoin);
-    QPen np(Qt::NoPen);
+        QBrush b=painter.brush();
+        b.setColor(fillColor);
+        b.setStyle(fillStyle);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+        int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
+        int imin=0;
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
+        }
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
 
-    int imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
-    int imin=0;
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
+        QPainterPath pl, pf;
 
-    QPainterPath pl, pf;
+        //double xold=-1;
+        double yold=-1;
+        double x0=transformX(baseline);
+        if (parent->getXAxis()->isLogAxis()) {
+            if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
+            else x0=transformX(parent->getXAxis()->getMin());
+        }
+        /*double y0=transformY(baseline);
+        if (parent->getYAxis()->isLogAxis()) {
+            y0=transformY(parent->getYAxis()->getMin());
+            if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
+            else y0=transformY(parent->getYAxis()->getMin());
+        }*/
+        bool first=true;
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            int i=qBound(imin, getDataIndex(iii), imax);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
+                double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
 
-    //double xold=-1;
-    double yold=-1;
-    double x0=transformX(baseline);
-    if (parent->getXAxis()->isLogAxis()) {
-        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
-        else x0=transformX(parent->getXAxis()->getMin());
-    }
-    /*double y0=transformY(baseline);
-    if (parent->getYAxis()->isLogAxis()) {
-        y0=transformY(parent->getYAxis()->getMin());
-        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
-        else y0=transformY(parent->getYAxis()->getMin());
-    }*/
-    bool first=true;
-    intSortData();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
-            double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
-
-            if (!first) {
-                if (xok&&yok) {
-                    pf.lineTo(x, y);
-                    if (drawLine) pl.lineTo(x, y);
-                    //xold=x;
-                    yold=y;
-                } else if (!xok&&yok){
-                    pf.lineTo(x0, y);
-                    if (drawLine) pl.lineTo(x0, y);
-                    //xold=x0;
-                    yold=y;
-                }
-            } else {
-                if (xok&&yok) {
-                    if (drawLine) pl.moveTo(x,y);
-                    pf.moveTo(x0, y);
-                    pf.lineTo(x, y);
-                    //xold=x;
-                    yold=y;
-                    first=false;
-                } else if (!xok&&yok) {
-                    if (drawLine) pl.moveTo(x0,y);
-                    pf.moveTo(x0, y);
-                    //xold=x0;
-                    yold=y;
-                    first=false;
+                if (!first) {
+                    if (xok&&yok) {
+                        pf.lineTo(x, y);
+                        if (drawLine) pl.lineTo(x, y);
+                        //xold=x;
+                        yold=y;
+                    } else if (!xok&&yok){
+                        pf.lineTo(x0, y);
+                        if (drawLine) pl.lineTo(x0, y);
+                        //xold=x0;
+                        yold=y;
+                    }
+                } else {
+                    if (xok&&yok) {
+                        if (drawLine) pl.moveTo(x,y);
+                        pf.moveTo(x0, y);
+                        pf.lineTo(x, y);
+                        //xold=x;
+                        yold=y;
+                        first=false;
+                    } else if (!xok&&yok) {
+                        if (drawLine) pl.moveTo(x0,y);
+                        pf.moveTo(x0, y);
+                        //xold=x0;
+                        yold=y;
+                        first=false;
+                    }
                 }
             }
         }
-    }
-    pf.lineTo(x0, yold);
-    pf.closeSubpath();
-    if (drawLine) {
-        painter.save();
-        if (drawSelectionLine) {
-            QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
-            QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
-            if (selectionLineColor!=Qt::transparent) {
-                penSelection.setColor(selectionLineColor);
+        pf.lineTo(x0, yold);
+        pf.closeSubpath();
+        if (drawLine) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            if (drawSelectionLine) {
+                QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
+                QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
+                if (selectionLineColor!=Qt::transparent) {
+                    penSelection.setColor(selectionLineColor);
+                }
+                penSelection.setWidthF(penSelection.widthF()*3.0);
+                painter.setPen(penSelection);
+                painter.drawPath(pl);
             }
-            penSelection.setWidthF(penSelection.widthF()*3.0);
-            painter.setPen(penSelection);
+
+            painter.setPen(p);
             painter.drawPath(pl);
+
         }
+        painter.setBrush(b);
+        painter.setPen(np);
+        painter.drawPath(pf);
 
-        painter.setPen(p);
-        painter.drawPath(pl);
-        painter.restore();
     }
-    painter.setBrush(b);
-    painter.setPen(np);
-    painter.drawPath(pf);
-
-    painter.restore();
 
     drawErrorsAfter(painter);
 }
@@ -380,7 +365,7 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter& painter) {
 QPen JKQTPFilledCurveXGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -397,15 +382,17 @@ QBrush JKQTPFilledCurveXGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const
 
 
 JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTBasePlotter *parent):
-    JKQTPFilledCurveXGraph(parent), JKQTPYGraphErrors()
+    JKQTPFilledCurveXGraph(parent), JKQTPYGraphErrors(color, parent)
 {
     setErrorColorFromGraphColor(color);
+    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+
 }
 
 JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTPlotter *parent):
-    JKQTPFilledCurveXGraph(parent), JKQTPYGraphErrors()
+    JKQTPFilledCurveXErrorGraph(parent->getPlotter())
 {
-    setErrorColorFromGraphColor(color);
+
 }
 
 bool JKQTPFilledCurveXErrorGraph::usesColumn(int c) const
@@ -421,15 +408,17 @@ void JKQTPFilledCurveXErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 }
 
 JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTBasePlotter *parent):
-    JKQTPFilledCurveYGraph(parent), JKQTPXGraphErrors()
+    JKQTPFilledCurveYGraph(parent), JKQTPXGraphErrors(color, parent)
 {
     setErrorColorFromGraphColor(color);
+    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+
 }
 
 JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTPlotter *parent):
-    JKQTPFilledCurveYGraph(parent), JKQTPXGraphErrors()
+    JKQTPFilledCurveYErrorGraph(parent->getPlotter())
 {
-    setErrorColorFromGraphColor(color);
+
 }
 
 bool JKQTPFilledCurveYErrorGraph::usesColumn(int c) const
@@ -463,31 +452,18 @@ JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTBasePlotter *pa
         parentPlotStyle=parent->getNextStyle();
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
         color=parent->getPlotStyle(parentPlotStyle).color();
+        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
         style=parent->getPlotStyle(parentPlotStyle).style();
-        fillColor=color.lighter();
+        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
+
     }
 }
 
 JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTPlotter *parent):
-    JKQTPXYGraph(parent)
+    JKQTPFilledVerticalRangeGraph(parent->getPlotter())
 {
-    drawSelectionLine=false;
-    selectionLineColor=Qt::transparent;
-    color=QColor("red");
-    fillColor=color.lighter();
-    style=Qt::SolidLine;
-    lineWidth=2;
-    parentPlotStyle=-1;
-    drawLine=true;
-    fillStyle=Qt::SolidPattern;
 
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        fillColor=color.lighter();
-    }
 }
 
 bool JKQTPFilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
@@ -546,92 +522,92 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    painter.save();
+        QPen p=painter.pen();
+        p.setColor(color);
+        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+        p.setStyle(style);
+        p.setJoinStyle(Qt::RoundJoin);
+        p.setCapStyle(Qt::RoundCap);
+        QPen np(Qt::NoPen);
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen np(Qt::NoPen);
+        QBrush b=painter.brush();
+        b.setColor(fillColor);
+        b.setStyle(fillStyle);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-
-    int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
-    int imin=0;
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    // upper points are added to poly_all, lower points to plow
-    // then plow points are added to poly_all in vewerse order
-    // then the whole thing is drawn
-    QPolygonF poly_all, phigh, plow;
-
-    intSortData();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        double yv2=datastore->get(static_cast<size_t>(yColumn2),static_cast<size_t>(i));
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv)) {
-            double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
-            double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
-            double y2=transformY(yv2); bool y2ok=JKQTPIsOKFloat(y2);
-
-            if (xok&&yok) phigh.append(QPointF(x,y));
-            if (xok&&yok) poly_all.append(QPointF(x,y));
-            if (xok&&y2ok) plow.append(QPointF(x,y2));
+        int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
+        int imin=0;
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
         }
-    }
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
 
-    if (plow.size()>0) {
-        for (int i=plow.size()-1; i>=0; i--) {
-            poly_all.append(plow[i]);
-        }
-    }
-    painter.setBrush(b);
-    painter.setPen(np);
-    painter.drawPolygon(poly_all);
+        // upper points are added to poly_all, lower points to plow
+        // then plow points are added to poly_all in vewerse order
+        // then the whole thing is drawn
+        QPolygonF poly_all, phigh, plow;
 
-    painter.restore();
-    if (drawLine) {
-        painter.save();
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            int i=qBound(imin, getDataIndex(iii), imax);
+            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            double yv2=datastore->get(static_cast<size_t>(yColumn2),static_cast<size_t>(i));
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv)) {
+                double x=transformX(xv); bool xok=JKQTPIsOKFloat(x);
+                double y=transformY(yv); bool yok=JKQTPIsOKFloat(y);
+                double y2=transformY(yv2); bool y2ok=JKQTPIsOKFloat(y2);
 
-        if (drawSelectionLine) {
-            QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
-            QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
-            if (selectionLineColor!=Qt::transparent) {
-                penSelection.setColor(selectionLineColor);
+                if (xok&&yok) phigh.append(QPointF(x,y));
+                if (xok&&yok) poly_all.append(QPointF(x,y));
+                if (xok&&y2ok) plow.append(QPointF(x,y2));
             }
-            penSelection.setWidthF(penSelection.widthF()*3.0);
-            painter.setPen(penSelection);
+        }
+
+        if (plow.size()>0) {
+            for (int i=plow.size()-1; i>=0; i--) {
+                poly_all.append(plow[i]);
+            }
+        }
+        painter.setBrush(b);
+        painter.setPen(np);
+        painter.drawPolygon(poly_all);
+
+
+        if (drawLine) {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+
+            if (drawSelectionLine) {
+                QPen penSelection=p; penSelection.setStyle(Qt::SolidLine);
+                QColor selcol=penSelection.color(); selcol.setAlphaF(0.5); penSelection.setColor(selcol);
+                if (selectionLineColor!=Qt::transparent) {
+                    penSelection.setColor(selectionLineColor);
+                }
+                penSelection.setWidthF(penSelection.widthF()*3.0);
+                painter.setPen(penSelection);
+                painter.drawPolyline(phigh);
+                painter.drawPolyline(plow);
+            }
+
+
+            painter.setPen(p);
             painter.drawPolyline(phigh);
             painter.drawPolyline(plow);
+
         }
-
-
-        painter.setPen(p);
-        painter.drawPolyline(phigh);
-        painter.drawPolyline(plow);
-        painter.restore();
     }
-
     drawErrorsAfter(painter);
 }
 
 void JKQTPFilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QRectF r=rect;
     r.setHeight(r.height()/2.0);
     r.moveTo(r.x(), r.y()+r.height()-1);
@@ -640,7 +616,7 @@ void JKQTPFilledVerticalRangeGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
         painter.setPen(getLinePen(painter));
         painter.drawLine(QLineF(r.topLeft(), r.topRight()));
     }
-    painter.restore();
+
 }
 
 QColor JKQTPFilledVerticalRangeGraph::getKeyLabelColor()
@@ -660,7 +636,7 @@ QPen JKQTPFilledVerticalRangeGraph::getLinePen(JKQTPEnhancedPainter &painter) co
 {
     QPen p;
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     p.setStyle(style);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

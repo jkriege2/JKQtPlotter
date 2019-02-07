@@ -90,7 +90,5 @@ moc_predefs.h
 /lib/jkqtplotter/*.TMP
 /doc/doxygen_log.txt
 /doc/*.tmp
-/staticlib/debug/*.prl
-/staticlib/release/*.prl
-/sharedlib/debug/jkqtplotterlib_debug.prl
-/sharedlib/release/jkqtplotterlib.prl
+*.prl
+Sicherungskopie_*

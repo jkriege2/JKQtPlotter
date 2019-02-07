@@ -8,7 +8,7 @@
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphs.h"
-#include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpgraphsimagergb.h"
 #include "jkqtplotter/jkqtpopencvinterface.h"
 #include <opencv2/imgcodecs.hpp>
 

@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -30,7 +30,7 @@
 JKQTPMathImageColorPaletteComboBox::JKQTPMathImageColorPaletteComboBox(QWidget *parent):
     QComboBox(parent)
 {
-    setIconSize(QSize(jkqtp_PALETTE_ICON_WIDTH,16));
+    setIconSize(QSize(JKQTPImageTools::PALETTE_ICON_WIDTH,16));
     QStringList pal=JKQTPImagePlot_getPredefinedPalettes();
     clear();
     for (int i=0; i<pal.size(); i++) {
@@ -369,12 +369,20 @@ JKQTPCADrawModeComboBox::JKQTPCADrawModeComboBox(QWidget *parent):
 {
     setEditable(false);
     addDrawMode(JKQTPCADMcomplete, tr("complete"), QIcon(":/JKQTPlotter/jkqtp_axis_complete.png"));
-    addDrawMode(JKQTPCADMticksAndLabels, tr("tick+lab."), QIcon(":/JKQTPlotter/jkqtp_axis_ticksandlabels.png"));
-    addDrawMode(JKQTPCADMticks, tr("tick"), QIcon(":/JKQTPlotter/jkqtp_axis_ticks.png"));
-    addDrawMode(JKQTPCADMline, tr("line"), QIcon(":/JKQTPlotter/jkqtp_axis_line.png"));
+    addDrawMode(JKQTPCADMLineTicksTickLabels, tr("line+tick+labels"), QIcon(":/JKQTPlotter/jkqtp_axis_ticksandlabels.png"));
+    addDrawMode(JKQTPCADMLineTicks, tr("line+tick"), QIcon(":/JKQTPlotter/jkqtp_axis_ticks.png"));
+    addDrawMode(JKQTPCADMLine, tr("line"), QIcon(":/JKQTPlotter/jkqtp_axis_line.png"));
+    addDrawMode(JKQTPCADMLineTicksTickLabels, tr("line+tick+labels"), QIcon(":/JKQTPlotter/jkqtp_axis_ticksandlabels.png"));
+    addDrawMode(JKQTPCADMLineTicks, tr("line+tick"), QIcon(":/JKQTPlotter/jkqtp_axis_ticks.png"));
+    addDrawMode(JKQTPCADMTicksTickLabelsAxisLabel, tr("ticks+labels+axis label"));
+    addDrawMode(JKQTPCADMTicksTickLabels, tr("ticks+labels"));
+    addDrawMode(JKQTPCADMTicks, tr("ticks"));
+    addDrawMode(JKQTPCADMTickLabelsAxisLabel, tr("labels+axis label"));
+    addDrawMode(JKQTPCADMTickLabels, tr("labels"));
     addDrawMode(JKQTPCADMnone, tr("none"), QIcon(":/JKQTPlotter/jkqtp_axis_none.png"));
     setCurrentIndex(0);
 }
+
 
 JKQTPCADrawMode JKQTPCADrawModeComboBox::getDrawMode() const
 {

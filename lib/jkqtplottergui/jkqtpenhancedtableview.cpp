@@ -7,7 +7,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -511,7 +511,7 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, QRect pageRect)
 {
     QRect pageRec=pageRect;
     if (pageRec.width()==0 || pageRec.height()==0) pageRec=QRect(QPoint(0,0), getTotalSize().toSize());
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.translate(pageRec.topLeft());
     QSizeF size=getTotalSize();
     double vhw=verticalHeader()->width()+8;
@@ -523,7 +523,7 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, QRect pageRect)
     pageCols<<0<<model()->columnCount();
     pageRows<<0<<model()->rowCount();
     paint(painter, scale, -1, hhh, vhw, pageCols, pageRows);
-    painter.restore();
+    
 }
 
 QSizeF JKQTPEnhancedTableView::getTotalSize() const
@@ -550,7 +550,7 @@ QSizeF JKQTPEnhancedTableView::getTotalSize() const
 
 void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p)
 {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QStyleOptionViewItem option = viewOptions();
     painter.scale(scale, scale);
     QPen headerPen("black");
@@ -636,7 +636,7 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
         }
         if (p && ph<pagesHigh-1) p->newPage();
     }
-    painter.restore();
+    
 }
 
 

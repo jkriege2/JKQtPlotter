@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -21,9 +21,10 @@
 
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
+#include "jkqtplotter/jkqtplotter.h"
 #include <stdlib.h>
 #include <QDebug>
-
+#include <QApplication>
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
 JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent):
@@ -53,16 +54,16 @@ QPen JKQTPGeoBaseLine::getPen(JKQTPEnhancedPainter& painter) {
     QPen p;
     p.setColor(color);
     p.setStyle(style);
-    p.setWidthF(qMax(JKQTPLOTTER_ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
     return p;
 }
 
 void JKQTPGeoBaseLine::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     double y=rect.top()+rect.height()/2.0;
     if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
-    painter.restore();
+
 }
 
 QColor JKQTPGeoBaseLine::getKeyLabelColor() {
@@ -123,11 +124,11 @@ QBrush JKQTPGeoBaseFilled::getBrush(JKQTPEnhancedPainter &/*painter*/) {
 }
 
 void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.setBrush(getBrush(painter));
     painter.drawRect(rect);
-    painter.restore();
+
 }
 
 
@@ -141,18 +142,19 @@ JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QS
     this->y=y;
     this->text=text;
     this->fontSize=fontSize;
+    this->fontName=QApplication::font().family()+"+XITS";
     this->color=color;
+    if (parent) {
+        this->fontSize=parent->getCurrentPlotterStyle().defaultFontSize;
+        this->fontName=parent->getCurrentPlotterStyle().defaultFontName;
+    }
 }
 
 JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize, QColor color):
-    JKQTPPlotObject(parent)
+    JKQTPGeoText(parent->getPlotter(),x,y,text,fontSize,color)
 {
-    this->x=x;
-    this->y=y;
-    this->text=text;
-    this->fontSize=fontSize;
-    this->color=color;
 }
+
 bool JKQTPGeoText::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     minx=maxx=x;
     smallestGreaterZero=0;
@@ -168,23 +170,21 @@ bool JKQTPGeoText::getYMinMax(double& miny, double& maxy, double& smallestGreate
 }
 
 void JKQTPGeoText::draw(JKQTPEnhancedPainter& painter) {
-    painter.save();
-#ifdef USE_XITS_FONTS
-    parent->getMathText()->useXITS();
-#endif
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    parent->getMathText()->setFontRomanOrSpecial(fontName);
     parent->getMathText()->setFontSize(fontSize*parent->getFontSizeMultiplier());
     parent->getMathText()->setFontColor(color);
     parent->getMathText()->parse(text);
     parent->getMathText()->draw(painter, transformX(x), transformY(y));
-    painter.restore();
+
 }
 
 void JKQTPGeoText::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     double y=rect.top()+rect.height()/2.0;
     if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
-    painter.restore();
+
 }
 
 QColor JKQTPGeoText::getKeyLabelColor() {
@@ -240,11 +240,11 @@ bool JKQTPGeoLine::getYMinMax(double& miny, double& maxy, double& smallestGreate
 }
 
 void JKQTPGeoLine::draw(JKQTPEnhancedPainter& painter) {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
     if (l.length()>0) painter.drawLine(l);
-    painter.restore();
+
 }
 
 
@@ -405,11 +405,11 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
     }
 
     if (doDraw) {
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setPen(getPen(painter));
         QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
         if (l.length()>0) painter.drawLine(l);
-        painter.restore();
+
     }
 
 }
@@ -481,10 +481,10 @@ bool JKQTPGeoPolyLines::getYMinMax(double& miny, double& maxy, double& smallestG
 
 void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath path=transformToLinePath(points);
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.drawPath(path);
-    painter.restore();
+
 }
 
 
@@ -597,11 +597,11 @@ void JKQTPGeoRectangle::draw(JKQTPEnhancedPainter& painter) {
         rect.append(QPointF(transformX(poly[i].x()), transformY(poly[i].y())));
     }
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.setBrush(getBrush(painter));
     painter.drawPolygon(rect);
-    painter.restore();
+
 }
 
 
@@ -674,11 +674,11 @@ bool JKQTPGeoPolygon::getYMinMax(double& miny, double& maxy, double& smallestGre
 
 void JKQTPGeoPolygon::draw(JKQTPEnhancedPainter& painter) {
     QPolygonF path=transformToPolygon(points);
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.setBrush(getBrush(painter));
     painter.drawPolygon(path);
-    painter.restore();
+
 }
 
 
@@ -726,11 +726,11 @@ void JKQTPGeoEllipse::draw(JKQTPEnhancedPainter& painter) {
     rect.closeSubpath();
 
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.setBrush(getBrush(painter));
     painter.drawPath(rect);
-    painter.restore();
+
 }
 
 
@@ -766,10 +766,10 @@ void JKQTPGeoArc::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
     rect=transformToLinePath(JKQTPDrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.drawPath(rect);
-    painter.restore();
+
 }
 
 
@@ -826,11 +826,11 @@ void JKQTPGeoPie::draw(JKQTPEnhancedPainter& painter) {
     rect.closeSubpath();
 
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.setBrush(getBrush(painter));
     painter.drawPath(rect);
-    painter.restore();
+
 }
 
 bool JKQTPGeoPie::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
@@ -883,11 +883,11 @@ void JKQTPGeoChord::draw(JKQTPEnhancedPainter& painter) {
     rect.closeSubpath();
 
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getPen(painter));
     painter.setBrush(getBrush(painter));
     painter.drawPath(rect);
-    painter.restore();
+
 }
 
 bool JKQTPGeoChord::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
@@ -961,9 +961,9 @@ bool JKQTPGeoSymbol::getYMinMax(double &miny, double &maxy, double &smallestGrea
 
 void JKQTPGeoSymbol::draw(JKQTPEnhancedPainter &painter)
 {
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     JKQTPPlotSymbol(painter, transformX(x), transformY(y), symbol, symbolSize, symbolWidth, color, fillColor);
-    painter.restore();
+
 }
 
 void JKQTPGeoSymbol::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
@@ -974,9 +974,9 @@ void JKQTPGeoSymbol::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
     double symbolWidth=parent->pt2px(painter, this->symbolWidth*parent->getLineWidthMultiplier());
     if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
 
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, color, fillColor);
-    painter.restore();
+
 }
 
 QColor JKQTPGeoSymbol::getKeyLabelColor()

@@ -54,8 +54,6 @@ int main(int argc, char* argv[])
     // 7. set some axis properties (we use LaTeX for nice equation rendering)
     plot.getXAxis()->setAxisLabel(QObject::tr("x-axis $x$ [mm]"));
     plot.getYAxis()->setAxisLabel(QObject::tr("\\textbf{\\color{red}{y-axis} $\\left(y=\\sin(x)\\pm(0.2+0.25\\cdot x)\\right)$ [A.U.]}"));
-    plot.getXAxis()->setLabelFont("Arial");
-    plot.getYAxis()->setLabelFont("Times New Roman");
     plot.getYAxis()->setLabelFontSize(12); // large x-axis label
     plot.getYAxis()->setTickLabelFontSize(10); // and larger y-axis tick labels
 

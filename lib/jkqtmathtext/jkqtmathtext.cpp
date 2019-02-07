@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -20,12 +20,12 @@
 
 
 #include "jkqtmathtext/jkqtmathtext.h"
+#include "jkqtplottertools/jkqtptools.h"
 #include <QFontMetricsF>
 #include <QDebug>
 #include <QFontDatabase>
 #include <typeinfo>
 #include <QApplication>
-//#define jkqtp_QColor2String(color) QString(jkqtp_rgbtostring((color).red(), (color).green(), (color).blue(), (color).alpha()).c_str())
 
 /**
  * \brief saves the given property (for which also a default_property exists) into the given settings object
@@ -42,6 +42,7 @@
 #define JKQTMTPROPERTYload(settings, group, var, varname, varconvert) \
     var=settings.value(group+varname, var).varconvert;
 
+const double JKQTMathText::ABS_MIN_LINEWIDTH=0.02;
 
 QPainterPath makeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink=0.5, double cubiccontrolfac=0.3) {
     double xl1=x-(width)*cubicshrink+bw*cubicshrink;
@@ -215,7 +216,7 @@ bool JKQTMathText::MTnode::toHtml(QString &/*html*/, JKQTMathText::MTenvironment
 
 void JKQTMathText::MTnode::doDrawBoxes(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
     if (drawBoxes) {
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         double w, oh, bh, sp;
         getSize(painter, currentEv, w, bh, oh, sp);
         QPen p=painter.pen();
@@ -234,7 +235,7 @@ void JKQTMathText::MTnode::doDrawBoxes(QPainter& painter, double x, double y, JK
         painter.setPen(p);
         painter.drawLine(x-2.0, y, x+2.0, y);
         painter.drawLine(x, y-2, x, y+2.0);
-        painter.restore();
+
     }
 }
 
@@ -667,10 +668,10 @@ double JKQTMathText::MTsqrtNode::draw(QPainter& painter, double x, double y, JKQ
     double w=fm.boundingRect("A").width();
     double a=baselineHeight*1.15;
     double d=overallHeight-baselineHeight;
-    //painter.save();
+    //painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(currentEv.color);
-    p.setWidthF(qMax(JKQTMATHTEXT_ABS_MIN_LINEWIDTH,ceil(currentEv.fontSize/16.0)));
+    p.setWidthF(qMax(JKQTMathText::ABS_MIN_LINEWIDTH,ceil(currentEv.fontSize/16.0)));
     //painter.setPen(p);
     QPainterPath path;
     if (w>0) {
@@ -687,14 +688,14 @@ double JKQTMathText::MTsqrtNode::draw(QPainter& painter, double x, double y, JKQ
     }
     //painter.restore();
     double xnew=child->draw(painter, x+1.2*w, y, currentEv);
-    painter.save();
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(p);
     if (w>0) {
         path.lineTo( xnew+0.2*w, y-a);
         path.lineTo(xnew+0.2*w, y-0.8*a);
         painter.drawPath(path);
     }
-    painter.restore();
+
     return xnew+0.33*w;
 }
 
@@ -857,8 +858,8 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
     QPen p=painter.pen();
     p.setColor(ev1.color);
     p.setStyle(Qt::SolidLine);
-    p.setWidthF(qMax(JKQTMATHTEXT_ABS_MIN_LINEWIDTH, lw));
-    painter.save();
+    p.setWidthF(qMax(JKQTMathText::ABS_MIN_LINEWIDTH, lw));
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(p);
     if (mode==MTFMfrac || mode==MTFMdfrac || mode==MTFMtfrac) {
         QLineF l(x+xw/4.0, yline, x+width+xw/2.0, yline);
@@ -884,17 +885,17 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
     } else if (mode==MTFMoverbrace) {
         double ybrace=y-ascent1-bw/2.0;
 
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(x+xw/2.0+(width1)/2.0, ybrace);
         painter.rotate(180);
         QPainterPath path=makeHBracePath(0,0, width, bw);
         painter.drawPath(path);
-        painter.restore();
+
 
         child1->draw(painter, x+xw/2.0+(width-width1)/2.0, y, ev1);
         child2->draw(painter, x+xw/2.0+(width-width2)/2.0, y-ascent1-bw-descent2, ev2);
     }
-    painter.restore();
+
 
     if (mode==MTFMstackrel) return x+width+ xw;
     return x+width+xw;
@@ -1121,7 +1122,7 @@ double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y
     QPen pold=painter.pen();
     QPen p=pold;
     p.setColor(ev.color);
-    p.setWidthF(qMax(JKQTMATHTEXT_ABS_MIN_LINEWIDTH, fm.lineWidth()));//ceil(currentEv.fontSize/16.0));
+    p.setWidthF(qMax(JKQTMathText::ABS_MIN_LINEWIDTH, fm.lineWidth()));//ceil(currentEv.fontSize/16.0));
     if (decoration==MTDbar) ev.overline=true;
     double xnew=child->draw(painter, x, y, ev);
     if (decoration==MTDvec) {
@@ -1386,11 +1387,11 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
         painter.drawPath(path);
     } else if (openbrace=="{") {
         QPainterPath path=makeHBracePath(0,0,coverallHeight, bracewidth*brace_fraction);
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(xnew+bracewidth*(1.0-brace_fraction), y-cbaselineHeight+coverallHeight/2.0);
         painter.rotate(90);
         painter.drawPath(path);
-        painter.restore();
+
     } else if (openbrace=="_") {
         QPainterPath path;
         double y1=y+(coverallHeight-cbaselineHeight);
@@ -1456,11 +1457,11 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
             painter.drawPath(path);
         } else if (closebrace=="}") {
             QPainterPath path=makeHBracePath(0,0,coverallHeight, bracewidth*brace_fraction);
-            painter.save();
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(xnew+bracewidth*brace_fraction, y-cbaselineHeight+coverallHeight/2.0);
             painter.rotate(270);
             painter.drawPath(path);
-            painter.restore();
+
         } else if (closebrace=="_") {
             QPainterPath path;
             double y1=y+(coverallHeight-cbaselineHeight);
@@ -2828,7 +2829,7 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
 
     QPen p=painter.pen();
     p.setColor(currentEv.color);
-    p.setWidthF(qMax(JKQTMATHTEXT_ABS_MIN_LINEWIDTH, fm.lineWidth()));
+    p.setWidthF(qMax(JKQTMathText::ABS_MIN_LINEWIDTH, fm.lineWidth()));
     p.setStyle(Qt::SolidLine);
     painter.setPen(p);
     double xwi=fm.width("x");
@@ -2846,22 +2847,22 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
         //std::cout<<"draw infty\n";
         f1.setItalic(false);
         painter.setFont(f1);
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(x+shift+fm1.width("8")/3.0, y-fm1.xHeight());
         painter.rotate(90);
         painter.drawText(QPointF(0,0), "8");
-        painter.restore();
+
     } else if (symbolName=="|") {
         //std::cout<<"draw infty\n";
         f1.setItalic(false);
         painter.setFont(f1);
 
-        painter.save();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(x+shift, y);
         painter.drawText(QPointF(0,0), "|");
         painter.translate(fm1.width("8")/3.0, 0);
         painter.drawText(QPointF(0,0), "|");
-        painter.restore();
+
 
     // here are some spaces
     } else if (symbolName==" ") { // full space
@@ -3236,7 +3237,7 @@ JKQTMathText::~JKQTMathText() {
 
 void JKQTMathText::loadSettings(const QSettings& settings, const QString& group){
     fontSize=settings.value(group+"font_size", fontSize).toDouble();
-    fontColor=QColor(settings.value(group+"font_color", jkqtp_QColor2String(fontColor)).toString());
+    fontColor=jkqtp_String2QColor(settings.value(group+"font_color", jkqtp_QColor2String(fontColor)).toString());
     fontRoman=settings.value(group+"font_roman", fontRoman).toString();
     fontSans=settings.value(group+"font_sans", fontSans).toString();
     fontTypewriter=settings.value(group+"font_typewriter", fontTypewriter).toString();
@@ -3346,10 +3347,11 @@ void JKQTMathText::useSTIX() {
 
 void JKQTMathText::useXITS()
 {
+    //JKQTPAutoOutputTimer jkaaot(QString("JKQTMathText::useXITS():ALL"));
     QFontDatabase fdb;
-#ifdef AUTOLOAD_XITS_FONTS
     //qDebug()<<"has XITS: "<<fdb.families().contains("XITS");
     if (!fdb.families().contains("XITS")) {
+        //JKQTPAutoOutputTimer jkaaot(QString("JKQTMathText::useXITS():addAutoXITS"));
         int i=0;
         if (QFile::exists(":/JKQTMathText/fonts/xits-bold.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-bold.otf"); }
         //qDebug()<<QFontDatabase::applicationFontFamilies(i);
@@ -3365,26 +3367,29 @@ void JKQTMathText::useXITS()
         //qDebug()<<QFontDatabase::applicationFontFamilies(i);
         (void)i;
     }
-#endif
     //qDebug()<<"has XITS: "<<fdb.families().contains("XITS")<<"\n"<<fdb.families();
     bool hasXITS=false;
-    QString XITSfam;
-    //bool hasXITSMath=false;
-    QString XITSMathfam;
-    for (int i=0; i<fdb.families().size(); i++) {
-        //::cout<<fdb.families().at(i).simplified().toStdString()<<"\n";
-        //qDebug()<<fdb.families().at(i).simplified();
-        if (fdb.families().at(i).contains("XITS Math")) {
-            //hasXITSMath=true;
-            XITSMathfam=fdb.families().at(i);
-        } else if (fdb.families().at(i).contains("XITS")) {
-            hasXITS=true;
-            XITSfam=fdb.families().at(i);
+    if (defaultXITSMathFontName.size()==0/* || defaultXITSFontName.size()==0*/) {
+        {
+            //JKQTPAutoOutputTimer jkaaot(QString("JKQTMathText::useXITS():scanFamilies"));
+            for (int i=0; i<fdb.families().size(); i++) {
+                //::cout<<fdb.families().at(i).simplified().toStdString()<<"\n";
+                //qDebug()<<fdb.families().at(i).simplified();
+                if (fdb.families().at(i).contains("XITS Math")) {
+                    //hasXITSMath=true;
+                    defaultXITSMathFontName=fdb.families().at(i);
+                } else if (fdb.families().at(i).contains("XITS")) {
+                    hasXITS=true;
+                    defaultXITSFontName=fdb.families().at(i);
+                }
+            }
         }
+    } else {
+        hasXITS=true;
     }
     QString fam="XITS";
-    if (hasXITS) fam=XITSfam;
-    //if (hasXITSMath) fam=XITSMathfam;
+    if (hasXITS) fam=defaultXITSFontName;
+    //if (hasXITSMath) fam=defaultXITSMathFontName;
     useXITSfonts=true;
     //fontRoman=fam;
     //fontSans=fam;
@@ -3477,6 +3482,46 @@ QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
     }
     if (ok) *ok=okk;
     return s;
+}
+
+void JKQTMathText::setFontRomanOrSpecial(const QString &__value)
+{
+    if (__value.toUpper()=="XITS") {
+        useXITS();
+    } else if (__value.toUpper()=="STIX") {
+        useSTIX();
+    } else if (__value.toUpper()=="ASANA") {
+        useASANA();
+    } else {
+        if (__value.toUpper().endsWith("+XITS")) {
+            useXITS();
+            setFontRoman(__value.left(__value.size()-5));
+        } else if (__value.toUpper().endsWith("+STIX")) {
+            useSTIX();
+            setFontRoman(__value.left(__value.size()-5));
+        } else if (__value.toUpper().endsWith("+ASANA")) {
+            useASANA();
+            setFontRoman(__value.left(__value.size()-6));
+        } else {
+            setFontRoman(__value);
+        }
+    }
+}
+
+void JKQTMathText::setFontRomanOrSpecial(const QString &roman, const QString &math)
+{
+    if (math.toUpper()=="XITS") {
+        useXITS();
+    } else if (math.toUpper()=="STIX") {
+        useSTIX();
+    } else if (math.toUpper()=="ASANA") {
+        useASANA();
+    } else {
+        setFontMathRoman(math);
+    }
+
+    setFontRoman(roman);
+
 }
 
 void JKQTMathText::useAnyUnicode(QString timesFont, const QString& sansFont) {

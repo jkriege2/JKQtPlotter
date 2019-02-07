@@ -83,5 +83,6 @@ defineTest(addTest) {
 
 addTest(multiplot)
 addTest(user_interaction)
+addTest(styling)
 #addTest(distributionplot)
 

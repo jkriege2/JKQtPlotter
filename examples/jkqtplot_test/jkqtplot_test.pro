@@ -70,6 +70,6 @@ CONFIG (debug, debug|release) {
 message("LIBS = $$LIBS")
 
 
-# here you can activate some debug options
-#DEFINES += SHOW_JKQTPLOTTER_DEBUG
-#DEFINES += JKQTBP_AUTOTIMER
+
+
+

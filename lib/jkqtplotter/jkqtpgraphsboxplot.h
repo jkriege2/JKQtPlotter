@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -123,271 +123,237 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
-        /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. 
-            \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
-            \see sortData for more information */ 
+        /*! \copydoc sortData
+            \see see sortData for details */ 
         inline virtual void setDataSortOrder(const DataSortOrder & __value)  
         {
             this->sortData = __value;
         } 
-        /*! \brief returns the property sortData ( \copybrief sortData ). 
-            \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> 
-            \see sortData for more information */ 
+        /*! \copydoc sortData
+            \see see sortData for details */ 
         inline virtual DataSortOrder getDataSortOrder() const  
         {
             return this->sortData; 
         }
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
         void setDataSortOrder(int __value);
-        /*! \brief sets the property posColumn ( \copybrief posColumn ) to the specified \a __value. 
-            \details Description of the parameter posColumn is: <BLOCKQUOTE>\copydoc posColumn </BLOCKQUOTE> 
-            \see posColumn for more information */ 
+        /*! \copydoc posColumn
+            \see see posColumn for details */ 
         inline virtual void setPosColumn(int __value)
         {
             this->posColumn = __value;
         } 
-        /*! \brief returns the property posColumn ( \copybrief posColumn ). 
-            \details Description of the parameter posColumn is: <BLOCKQUOTE>\copydoc posColumn </BLOCKQUOTE> 
-            \see posColumn for more information */ 
+        /*! \copydoc posColumn
+            \see see posColumn for details */ 
         inline virtual int getPosColumn() const  
         {
             return this->posColumn; 
         }
         /*! \brief sets the property posColumn ( \copybrief posColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter posColumn is:  <BLOCKQUOTE>\copydoc posColumn </BLOCKQUOTE> 
-        	\see posColumn for more information */ 
+            \see posColumn for more information */ 
         inline virtual void setPosColumn (size_t __value) { this->posColumn = static_cast<int>(__value); }
-        /*! \brief sets the property medianColumn ( \copybrief medianColumn ) to the specified \a __value. 
-            \details Description of the parameter medianColumn is: <BLOCKQUOTE>\copydoc medianColumn </BLOCKQUOTE> 
-            \see medianColumn for more information */ 
+        /*! \copydoc medianColumn
+            \see see medianColumn for details */ 
         inline virtual void setMedianColumn(int __value)
         {
             this->medianColumn = __value;
         } 
-        /*! \brief returns the property medianColumn ( \copybrief medianColumn ). 
-            \details Description of the parameter medianColumn is: <BLOCKQUOTE>\copydoc medianColumn </BLOCKQUOTE> 
-            \see medianColumn for more information */ 
+        /*! \copydoc medianColumn
+            \see see medianColumn for details */ 
         inline virtual int getMedianColumn() const  
         {
             return this->medianColumn; 
         }
         /*! \brief sets the property medianColumn ( \copybrief medianColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter medianColumn is:  <BLOCKQUOTE>\copydoc medianColumn </BLOCKQUOTE> 
-        	\see medianColumn for more information */ 
+            \see medianColumn for more information */ 
         inline virtual void setMedianColumn (size_t __value) { this->medianColumn = static_cast<int>(__value); }
-        /*! \brief sets the property meanColumn ( \copybrief meanColumn ) to the specified \a __value. 
-            \details Description of the parameter meanColumn is: <BLOCKQUOTE>\copydoc meanColumn </BLOCKQUOTE> 
-            \see meanColumn for more information */ 
+        /*! \copydoc meanColumn
+            \see see meanColumn for details */ 
         inline virtual void setMeanColumn(int __value)
         {
             this->meanColumn = __value;
         } 
-        /*! \brief returns the property meanColumn ( \copybrief meanColumn ). 
-            \details Description of the parameter meanColumn is: <BLOCKQUOTE>\copydoc meanColumn </BLOCKQUOTE> 
-            \see meanColumn for more information */ 
+        /*! \copydoc meanColumn
+            \see see meanColumn for details */ 
         inline virtual int getMeanColumn() const  
         {
             return this->meanColumn; 
         }
         /*! \brief sets the property meanColumn ( \copybrief meanColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter meanColumn is:  <BLOCKQUOTE>\copydoc meanColumn </BLOCKQUOTE> 
-        	\see meanColumn for more information */ 
+            \see meanColumn for more information */ 
         inline virtual void setMeanColumn (size_t __value) { this->meanColumn = static_cast<int>(__value); }
-        /*! \brief sets the property minColumn ( \copybrief minColumn ) to the specified \a __value. 
-            \details Description of the parameter minColumn is: <BLOCKQUOTE>\copydoc minColumn </BLOCKQUOTE> 
-            \see minColumn for more information */ 
+        /*! \copydoc minColumn
+            \see see minColumn for details */ 
         inline virtual void setMinColumn(int __value)
         {
             this->minColumn = __value;
         } 
-        /*! \brief returns the property minColumn ( \copybrief minColumn ). 
-            \details Description of the parameter minColumn is: <BLOCKQUOTE>\copydoc minColumn </BLOCKQUOTE> 
-            \see minColumn for more information */ 
+        /*! \copydoc minColumn
+            \see see minColumn for details */ 
         inline virtual int getMinColumn() const  
         {
             return this->minColumn; 
         }
         /*! \brief sets the property minColumn ( \copybrief minColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter minColumn is:  <BLOCKQUOTE>\copydoc minColumn </BLOCKQUOTE> 
-        	\see minColumn for more information */ 
+            \see minColumn for more information */ 
         inline virtual void setMinColumn( size_t __value) { this->minColumn = static_cast<int>(__value); }
-        /*! \brief sets the property maxColumn ( \copybrief maxColumn ) to the specified \a __value. 
-            \details Description of the parameter maxColumn is: <BLOCKQUOTE>\copydoc maxColumn </BLOCKQUOTE> 
-            \see maxColumn for more information */ 
+        /*! \copydoc maxColumn
+            \see see maxColumn for details */ 
         inline virtual void setMaxColumn(int __value)
         {
             this->maxColumn = __value;
         } 
-        /*! \brief returns the property maxColumn ( \copybrief maxColumn ). 
-            \details Description of the parameter maxColumn is: <BLOCKQUOTE>\copydoc maxColumn </BLOCKQUOTE> 
-            \see maxColumn for more information */ 
+        /*! \copydoc maxColumn
+            \see see maxColumn for details */ 
         inline virtual int getMaxColumn() const  
         {
             return this->maxColumn; 
         }
         /*! \brief sets the property maxColumn ( \copybrief maxColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter maxColumn is:  <BLOCKQUOTE>\copydoc maxColumn </BLOCKQUOTE> 
-        	\see maxColumn for more information */ 
+            \see maxColumn for more information */ 
         inline virtual void setMaxColumn (size_t __value) { this->maxColumn = static_cast<int>(__value); }
-        /*! \brief sets the property percentile25Column ( \copybrief percentile25Column ) to the specified \a __value. 
-            \details Description of the parameter percentile25Column is: <BLOCKQUOTE>\copydoc percentile25Column </BLOCKQUOTE> 
-            \see percentile25Column for more information */ 
+        /*! \copydoc percentile25Column
+            \see see percentile25Column for details */ 
         inline virtual void setPercentile25Column(int __value)
         {
             this->percentile25Column = __value;
         } 
-        /*! \brief returns the property percentile25Column ( \copybrief percentile25Column ). 
-            \details Description of the parameter percentile25Column is: <BLOCKQUOTE>\copydoc percentile25Column </BLOCKQUOTE> 
-            \see percentile25Column for more information */ 
+        /*! \copydoc percentile25Column
+            \see see percentile25Column for details */ 
         inline virtual int getPercentile25Column() const  
         {
             return this->percentile25Column; 
         }
         /*! \brief sets the property percentile25Column ( \copybrief percentile25Column ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter percentile25Column is:  <BLOCKQUOTE>\copydoc percentile25Column </BLOCKQUOTE> 
-        	\see percentile25Column for more information */ 
+            \see percentile25Column for more information */ 
         inline virtual void setPercentile25Column (size_t __value) { this->percentile25Column = static_cast<int>(__value); }
-        /*! \brief sets the property percentile75Column ( \copybrief percentile75Column ) to the specified \a __value. 
-            \details Description of the parameter percentile75Column is: <BLOCKQUOTE>\copydoc percentile75Column </BLOCKQUOTE> 
-            \see percentile75Column for more information */ 
+        /*! \copydoc percentile75Column
+            \see see percentile75Column for details */ 
         inline virtual void setPercentile75Column(int __value)
         {
             this->percentile75Column = __value;
         } 
-        /*! \brief returns the property percentile75Column ( \copybrief percentile75Column ). 
-            \details Description of the parameter percentile75Column is: <BLOCKQUOTE>\copydoc percentile75Column </BLOCKQUOTE> 
-            \see percentile75Column for more information */ 
+        /*! \copydoc percentile75Column
+            \see see percentile75Column for details */ 
         inline virtual int getPercentile75Column() const  
         {
             return this->percentile75Column; 
         }
         /*! \brief sets the property percentile75Column ( \copybrief percentile75Column ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter percentile75Column is:  <BLOCKQUOTE>\copydoc percentile75Column </BLOCKQUOTE> 
-        	\see percentile75Column for more information */ 
+            \see percentile75Column for more information */ 
         inline virtual void setPercentile75Column (size_t __value) { this->percentile75Column = static_cast<int>(__value); }
-        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color ( \copybrief color ). 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual void setFillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
-        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual QColor getFillColor() const  
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property whiskerStyle ( \copybrief whiskerStyle ) to the specified \a __value. 
-            \details Description of the parameter whiskerStyle is: <BLOCKQUOTE>\copydoc whiskerStyle </BLOCKQUOTE> 
-            \see whiskerStyle for more information */ 
+        /*! \copydoc whiskerStyle
+            \see see whiskerStyle for details */ 
         inline virtual void setWhiskerStyle(const Qt::PenStyle & __value)  
         {
             this->whiskerStyle = __value;
         } 
-        /*! \brief returns the property whiskerStyle ( \copybrief whiskerStyle ). 
-            \details Description of the parameter whiskerStyle is: <BLOCKQUOTE>\copydoc whiskerStyle </BLOCKQUOTE> 
-            \see whiskerStyle for more information */ 
+        /*! \copydoc whiskerStyle
+            \see see whiskerStyle for details */ 
         inline virtual Qt::PenStyle getWhiskerStyle() const  
         {
             return this->whiskerStyle; 
         }
-        /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
         {
             this->fillStyle = __value;
         } 
-        /*! \brief returns the property fillStyle ( \copybrief fillStyle ). 
-            \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc fillStyle </BLOCKQUOTE> 
-            \see fillStyle for more information */ 
+        /*! \copydoc fillStyle
+            \see see fillStyle for details */ 
         inline virtual Qt::BrushStyle getFillStyle() const  
         {
             return this->fillStyle; 
         }
-        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property boxWidth ( \copybrief boxWidth ) to the specified \a __value. 
-            \details Description of the parameter boxWidth is: <BLOCKQUOTE>\copydoc boxWidth </BLOCKQUOTE> 
-            \see boxWidth for more information */ 
+        /*! \copydoc boxWidth
+            \see see boxWidth for details */ 
         inline virtual void setBoxWidth(double __value)
         {
             this->boxWidth = __value;
         } 
-        /*! \brief returns the property boxWidth ( \copybrief boxWidth ). 
-            \details Description of the parameter boxWidth is: <BLOCKQUOTE>\copydoc boxWidth </BLOCKQUOTE> 
-            \see boxWidth for more information */ 
+        /*! \copydoc boxWidth
+            \see see boxWidth for details */ 
         inline virtual double getBoxWidth() const  
         {
             return this->boxWidth; 
         }
 
-        /*! \brief sets the property meanSymbol ( \copybrief meanSymbol ) to the specified \a __value. 
-            \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copydoc meanSymbol </BLOCKQUOTE> 
-            \see meanSymbol for more information */ 
+        /*! \copydoc meanSymbol
+            \see see meanSymbol for details */ 
         inline virtual void setMeanSymbol(const JKQTPGraphSymbols & __value)  
         {
             this->meanSymbol = __value;
         } 
-        /*! \brief returns the property meanSymbol ( \copybrief meanSymbol ). 
-            \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copydoc meanSymbol </BLOCKQUOTE> 
-            \see meanSymbol for more information */ 
+        /*! \copydoc meanSymbol
+            \see see meanSymbol for details */ 
         inline virtual JKQTPGraphSymbols getMeanSymbol() const  
         {
             return this->meanSymbol; 
         }
-        /*! \brief sets the property meanSymbolWidth ( \copybrief meanSymbolWidth ) to the specified \a __value. 
-            \details Description of the parameter meanSymbolWidth is: <BLOCKQUOTE>\copydoc meanSymbolWidth </BLOCKQUOTE> 
-            \see meanSymbolWidth for more information */ 
+        /*! \copydoc meanSymbolWidth
+            \see see meanSymbolWidth for details */ 
         inline virtual void setMeanSymbolWidth(double __value)
         {
             this->meanSymbolWidth = __value;
         } 
-        /*! \brief returns the property meanSymbolWidth ( \copybrief meanSymbolWidth ). 
-            \details Description of the parameter meanSymbolWidth is: <BLOCKQUOTE>\copydoc meanSymbolWidth </BLOCKQUOTE> 
-            \see meanSymbolWidth for more information */ 
+        /*! \copydoc meanSymbolWidth
+            \see see meanSymbolWidth for details */ 
         inline virtual double getMeanSymbolWidth() const  
         {
             return this->meanSymbolWidth; 
         }
-        /*! \brief sets the property meanSymbolSize ( \copybrief meanSymbolSize ) to the specified \a __value. 
-            \details Description of the parameter meanSymbolSize is: <BLOCKQUOTE>\copydoc meanSymbolSize </BLOCKQUOTE> 
-            \see meanSymbolSize for more information */ 
+        /*! \copydoc meanSymbolSize
+            \see see meanSymbolSize for details */ 
         inline virtual void setMeanSymbolSize(double __value)
         {
             this->meanSymbolSize = __value;
         } 
-        /*! \brief returns the property meanSymbolSize ( \copybrief meanSymbolSize ). 
-            \details Description of the parameter meanSymbolSize is: <BLOCKQUOTE>\copydoc meanSymbolSize </BLOCKQUOTE> 
-            \see meanSymbolSize for more information */ 
+        /*! \copydoc meanSymbolSize
+            \see see meanSymbolSize for details */ 
         inline virtual double getMeanSymbolSize() const  
         {
             return this->meanSymbolSize; 
@@ -534,23 +500,20 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
-        /*! \brief sets the property pos ( \copybrief pos ) to the specified \a __value. 
-            \details Description of the parameter pos is: <BLOCKQUOTE>\copydoc pos </BLOCKQUOTE> 
-            \see pos for more information */ 
+        /*! \copydoc pos
+            \see see pos for details */ 
         inline virtual void setPos(double __value)
         {
             this->pos = __value;
         } 
-        /*! \brief returns the property pos ( \copybrief pos ). 
-            \details Description of the parameter pos is: <BLOCKQUOTE>\copydoc pos </BLOCKQUOTE> 
-            \see pos for more information */ 
+        /*! \copydoc pos
+            \see see pos for details */ 
         inline virtual double getPos() const  
         {
             return this->pos; 
         }
-        /*! \brief sets the property median ( \copybrief median ) to the specified \a __value. 
-            \details Description of the parameter median is: <BLOCKQUOTE>\copydoc median </BLOCKQUOTE> 
-            \see median for more information */ 
+        /*! \copydoc median
+            \see see median for details */ 
         inline virtual void setMedian(double __value)
         {
             if (this->median != __value) { 
@@ -558,16 +521,14 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
                 drawMedian=true; 
             } 
         } 
-        /*! \brief returns the property median ( \copybrief median ). 
-            \details Description of the parameter median is: <BLOCKQUOTE>\copydoc median </BLOCKQUOTE> 
-            \see median for more information */ 
+        /*! \copydoc median
+            \see see median for details */ 
         inline virtual double getMedian() const  
         {
             return this->median; 
         }
-        /*! \brief sets the property mean ( \copybrief mean ) to the specified \a __value. 
-            \details Description of the parameter mean is: <BLOCKQUOTE>\copydoc mean </BLOCKQUOTE> 
-            \see mean for more information */ 
+        /*! \copydoc mean
+            \see see mean for details */ 
         inline virtual void setMean(double __value)
         {
             if (this->mean != __value) { 
@@ -575,16 +536,14 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
                 drawMean=true; 
             } 
         } 
-        /*! \brief returns the property mean ( \copybrief mean ). 
-            \details Description of the parameter mean is: <BLOCKQUOTE>\copydoc mean </BLOCKQUOTE> 
-            \see mean for more information */ 
+        /*! \copydoc mean
+            \see see mean for details */ 
         inline virtual double getMean() const  
         {
             return this->mean; 
         }
-        /*! \brief sets the property min ( \copybrief min ) to the specified \a __value. 
-            \details Description of the parameter min is: <BLOCKQUOTE>\copydoc min </BLOCKQUOTE> 
-            \see min for more information */ 
+        /*! \copydoc min
+            \see see min for details */ 
         inline virtual void setMin(double __value)
         {
             if (this->min != __value) { 
@@ -592,16 +551,14 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
                 drawMinMax=true; 
             } 
         } 
-        /*! \brief returns the property min ( \copybrief min ). 
-            \details Description of the parameter min is: <BLOCKQUOTE>\copydoc min </BLOCKQUOTE> 
-            \see min for more information */ 
+        /*! \copydoc min
+            \see see min for details */ 
         inline virtual double getMin() const  
         {
             return this->min; 
         }
-        /*! \brief sets the property max ( \copybrief max ) to the specified \a __value. 
-            \details Description of the parameter max is: <BLOCKQUOTE>\copydoc max </BLOCKQUOTE> 
-            \see max for more information */ 
+        /*! \copydoc max
+            \see see max for details */ 
         inline virtual void setMax(double __value)
         {
             if (this->max != __value) { 
@@ -609,192 +566,165 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
                 drawMinMax=true; 
             } 
         } 
-        /*! \brief returns the property max ( \copybrief max ). 
-            \details Description of the parameter max is: <BLOCKQUOTE>\copydoc max </BLOCKQUOTE> 
-            \see max for more information */ 
+        /*! \copydoc max
+            \see see max for details */ 
         inline virtual double getMax() const  
         {
             return this->max; 
         }
-        /*! \brief sets the property percentile25 ( \copybrief percentile25 ) to the specified \a __value. 
-            \details Description of the parameter percentile25 is: <BLOCKQUOTE>\copydoc percentile25 </BLOCKQUOTE> 
-            \see percentile25 for more information */ 
+        /*! \copydoc percentile25
+            \see see percentile25 for details */ 
         inline virtual void setPercentile25(double __value)
         {
             this->percentile25 = __value;
         } 
-        /*! \brief returns the property percentile25 ( \copybrief percentile25 ). 
-            \details Description of the parameter percentile25 is: <BLOCKQUOTE>\copydoc percentile25 </BLOCKQUOTE> 
-            \see percentile25 for more information */ 
+        /*! \copydoc percentile25
+            \see see percentile25 for details */ 
         inline virtual double getPercentile25() const  
         {
             return this->percentile25; 
         }
-        /*! \brief sets the property percentile75 ( \copybrief percentile75 ) to the specified \a __value. 
-            \details Description of the parameter percentile75 is: <BLOCKQUOTE>\copydoc percentile75 </BLOCKQUOTE> 
-            \see percentile75 for more information */ 
+        /*! \copydoc percentile75
+            \see see percentile75 for details */ 
         inline virtual void setPercentile75(double __value)
         {
             this->percentile75 = __value;
         } 
-        /*! \brief returns the property percentile75 ( \copybrief percentile75 ). 
-            \details Description of the parameter percentile75 is: <BLOCKQUOTE>\copydoc percentile75 </BLOCKQUOTE> 
-            \see percentile75 for more information */ 
+        /*! \copydoc percentile75
+            \see see percentile75 for details */ 
         inline virtual double getPercentile75() const  
         {
             return this->percentile75; 
         }
-        /*! \brief sets the property color ( \copybrief color ) to the specified \a __value. 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual void setColor(const QColor & __value)  
         {
             this->color = __value;
         } 
-        /*! \brief returns the property color ( \copybrief color ). 
-            \details Description of the parameter color is: <BLOCKQUOTE>\copydoc color </BLOCKQUOTE> 
-            \see color for more information */ 
+        /*! \copydoc color
+            \see see color for details */ 
         inline virtual QColor getColor() const  
         {
             return this->color; 
         }
-        /*! \brief sets the property fillColor ( \copybrief fillColor ) to the specified \a __value. 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual void setFillColor(const QColor & __value)  
         {
             this->fillColor = __value;
         } 
-        /*! \brief returns the property fillColor ( \copybrief fillColor ). 
-            \details Description of the parameter fillColor is: <BLOCKQUOTE>\copydoc fillColor </BLOCKQUOTE> 
-            \see fillColor for more information */ 
+        /*! \copydoc fillColor
+            \see see fillColor for details */ 
         inline virtual QColor getFillColor() const  
         {
             return this->fillColor; 
         }
-        /*! \brief sets the property whiskerStyle ( \copybrief whiskerStyle ) to the specified \a __value. 
-            \details Description of the parameter whiskerStyle is: <BLOCKQUOTE>\copydoc whiskerStyle </BLOCKQUOTE> 
-            \see whiskerStyle for more information */ 
+        /*! \copydoc whiskerStyle
+            \see see whiskerStyle for details */ 
         inline virtual void setWhiskerStyle(const Qt::PenStyle & __value)  
         {
             this->whiskerStyle = __value;
         } 
-        /*! \brief returns the property whiskerStyle ( \copybrief whiskerStyle ). 
-            \details Description of the parameter whiskerStyle is: <BLOCKQUOTE>\copydoc whiskerStyle </BLOCKQUOTE> 
-            \see whiskerStyle for more information */ 
+        /*! \copydoc whiskerStyle
+            \see see whiskerStyle for details */ 
         inline virtual Qt::PenStyle getWhiskerStyle() const  
         {
             return this->whiskerStyle; 
         }
-        /*! \brief sets the property lineWidth ( \copybrief lineWidth ) to the specified \a __value. 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual void setLineWidth(double __value)
         {
             this->lineWidth = __value;
         } 
-        /*! \brief returns the property lineWidth ( \copybrief lineWidth ). 
-            \details Description of the parameter lineWidth is: <BLOCKQUOTE>\copydoc lineWidth </BLOCKQUOTE> 
-            \see lineWidth for more information */ 
+        /*! \copydoc lineWidth
+            \see see lineWidth for details */ 
         inline virtual double getLineWidth() const  
         {
             return this->lineWidth; 
         }
-        /*! \brief sets the property boxWidth ( \copybrief boxWidth ) to the specified \a __value. 
-            \details Description of the parameter boxWidth is: <BLOCKQUOTE>\copydoc boxWidth </BLOCKQUOTE> 
-            \see boxWidth for more information */ 
+        /*! \copydoc boxWidth
+            \see see boxWidth for details */ 
         inline virtual void setBoxWidth(double __value)
         {
             this->boxWidth = __value;
         } 
-        /*! \brief returns the property boxWidth ( \copybrief boxWidth ). 
-            \details Description of the parameter boxWidth is: <BLOCKQUOTE>\copydoc boxWidth </BLOCKQUOTE> 
-            \see boxWidth for more information */ 
+        /*! \copydoc boxWidth
+            \see see boxWidth for details */ 
         inline virtual double getBoxWidth() const  
         {
             return this->boxWidth; 
         }
 
-        /*! \brief sets the property meanSymbol ( \copybrief meanSymbol ) to the specified \a __value. 
-            \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copydoc meanSymbol </BLOCKQUOTE> 
-            \see meanSymbol for more information */ 
+        /*! \copydoc meanSymbol
+            \see see meanSymbol for details */ 
         inline virtual void setMeanSymbol(const JKQTPGraphSymbols & __value)  
         {
             this->meanSymbol = __value;
         } 
-        /*! \brief returns the property meanSymbol ( \copybrief meanSymbol ). 
-            \details Description of the parameter meanSymbol is: <BLOCKQUOTE>\copydoc meanSymbol </BLOCKQUOTE> 
-            \see meanSymbol for more information */ 
+        /*! \copydoc meanSymbol
+            \see see meanSymbol for details */ 
         inline virtual JKQTPGraphSymbols getMeanSymbol() const  
         {
             return this->meanSymbol; 
         }
-        /*! \brief sets the property meanSymbolWidth ( \copybrief meanSymbolWidth ) to the specified \a __value. 
-            \details Description of the parameter meanSymbolWidth is: <BLOCKQUOTE>\copydoc meanSymbolWidth </BLOCKQUOTE> 
-            \see meanSymbolWidth for more information */ 
+        /*! \copydoc meanSymbolWidth
+            \see see meanSymbolWidth for details */ 
         inline virtual void setMeanSymbolWidth(double __value)
         {
             this->meanSymbolWidth = __value;
         } 
-        /*! \brief returns the property meanSymbolWidth ( \copybrief meanSymbolWidth ). 
-            \details Description of the parameter meanSymbolWidth is: <BLOCKQUOTE>\copydoc meanSymbolWidth </BLOCKQUOTE> 
-            \see meanSymbolWidth for more information */ 
+        /*! \copydoc meanSymbolWidth
+            \see see meanSymbolWidth for details */ 
         inline virtual double getMeanSymbolWidth() const  
         {
             return this->meanSymbolWidth; 
         }
-        /*! \brief sets the property meanSymbolSize ( \copybrief meanSymbolSize ) to the specified \a __value. 
-            \details Description of the parameter meanSymbolSize is: <BLOCKQUOTE>\copydoc meanSymbolSize </BLOCKQUOTE> 
-            \see meanSymbolSize for more information */ 
+        /*! \copydoc meanSymbolSize
+            \see see meanSymbolSize for details */ 
         inline virtual void setMeanSymbolSize(double __value)
         {
             this->meanSymbolSize = __value;
         } 
-        /*! \brief returns the property meanSymbolSize ( \copybrief meanSymbolSize ). 
-            \details Description of the parameter meanSymbolSize is: <BLOCKQUOTE>\copydoc meanSymbolSize </BLOCKQUOTE> 
-            \see meanSymbolSize for more information */ 
+        /*! \copydoc meanSymbolSize
+            \see see meanSymbolSize for details */ 
         inline virtual double getMeanSymbolSize() const  
         {
             return this->meanSymbolSize; 
         }
-        /*! \brief sets the property drawMean ( \copybrief drawMean ) to the specified \a __value. 
-            \details Description of the parameter drawMean is: <BLOCKQUOTE>\copydoc drawMean </BLOCKQUOTE> 
-            \see drawMean for more information */ 
+        /*! \copydoc drawMean
+            \see see drawMean for details */ 
         inline virtual void setDrawMean(bool __value)
         {
             this->drawMean = __value;
         } 
-        /*! \brief returns the property drawMean ( \copybrief drawMean ). 
-            \details Description of the parameter drawMean is: <BLOCKQUOTE>\copydoc drawMean </BLOCKQUOTE> 
-            \see drawMean for more information */ 
+        /*! \copydoc drawMean
+            \see see drawMean for details */ 
         inline virtual bool getDrawMean() const  
         {
             return this->drawMean; 
         }
-        /*! \brief sets the property drawMedian ( \copybrief drawMedian ) to the specified \a __value. 
-            \details Description of the parameter drawMedian is: <BLOCKQUOTE>\copydoc drawMedian </BLOCKQUOTE> 
-            \see drawMedian for more information */ 
+        /*! \copydoc drawMedian
+            \see see drawMedian for details */ 
         inline virtual void setDrawMedian(bool __value)
         {
             this->drawMedian = __value;
         } 
-        /*! \brief returns the property drawMedian ( \copybrief drawMedian ). 
-            \details Description of the parameter drawMedian is: <BLOCKQUOTE>\copydoc drawMedian </BLOCKQUOTE> 
-            \see drawMedian for more information */ 
+        /*! \copydoc drawMedian
+            \see see drawMedian for details */ 
         inline virtual bool getDrawMedian() const  
         {
             return this->drawMedian; 
         }
-        /*! \brief sets the property drawMinMax ( \copybrief drawMinMax ) to the specified \a __value. 
-            \details Description of the parameter drawMinMax is: <BLOCKQUOTE>\copydoc drawMinMax </BLOCKQUOTE> 
-            \see drawMinMax for more information */ 
+        /*! \copydoc drawMinMax
+            \see see drawMinMax for details */ 
         inline virtual void setDrawMinMax(bool __value)
         {
             this->drawMinMax = __value;
         } 
-        /*! \brief returns the property drawMinMax ( \copybrief drawMinMax ). 
-            \details Description of the parameter drawMinMax is: <BLOCKQUOTE>\copydoc drawMinMax </BLOCKQUOTE> 
-            \see drawMinMax for more information */ 
+        /*! \copydoc drawMinMax
+            \see see drawMinMax for details */ 
         inline virtual bool getDrawMinMax() const  
         {
             return this->drawMinMax; 

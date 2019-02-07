@@ -38,7 +38,7 @@ script:
   - cd ${TRAVIS_BUILD_DIR}
   - cd doc
   - doxygen --version
-  - doxygen -d Markdown Doxyfile
+  - doxygen Doxyfile
 
 deploy:
   provider: pages

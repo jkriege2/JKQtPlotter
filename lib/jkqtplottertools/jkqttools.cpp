@@ -5,7 +5,7 @@
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
-    the Free Software Foundation, either version 2 of the License, or
+    the Free Software Foundation, either version 2.1 of the License, or
     (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
@@ -119,4 +119,111 @@ QString jkqtp_toValidVariableName(const QString& input) {
         if ((input[i]=='_')&&(out.size()>0)) out=out+input[i];
     }
     return out;
+}
+
+QString jkqtp_KeyboardModifiers2String(Qt::KeyboardModifiers modifiers, bool useNONE)
+{
+    if (modifiers==Qt::NoModifier) {
+        if (useNONE) return "NONE";
+        else return "";
+    }
+    QString ret="";
+    auto append=[](QString& ret, const QString & appending, const QString& separator="+") {
+        if (appending.size()<=0) return;
+        if (ret.size()>0) ret+=separator;
+        ret+=appending;
+    };
+    if ((modifiers&Qt::ShiftModifier)==Qt::ShiftModifier) append(ret, "SHIFT", "+");
+    if ((modifiers&Qt::ControlModifier)==Qt::ControlModifier) append(ret, "CTRL", "+");
+    if ((modifiers&Qt::AltModifier)==Qt::AltModifier) append(ret, "ALT", "+");
+    if ((modifiers&Qt::MetaModifier)==Qt::MetaModifier) append(ret, "META", "+");
+    if ((modifiers&Qt::KeypadModifier)==Qt::KeypadModifier) append(ret, "KEYPAD", "+");
+    if ((modifiers&Qt::GroupSwitchModifier)==Qt::GroupSwitchModifier) append(ret, "GROUP", "+");
+    return ret;
+}
+
+Qt::KeyboardModifiers jkqtp_String2KeyboardModifiers(const QString &modifiers)
+{
+    auto mods=modifiers.toUpper().split("+");
+    Qt::KeyboardModifiers ret=Qt::NoModifier;
+
+    for (const auto& m: mods) {
+        if (m.trimmed()=="SHIFT") ret |= Qt::ShiftModifier;
+        else if (m.trimmed()=="CTRL") ret |= Qt::ControlModifier;
+        else if (m.trimmed()=="ALT") ret |= Qt::AltModifier;
+        else if (m.trimmed()=="META") ret |= Qt::MetaModifier;
+        else if (m.trimmed()=="KEYPAD") ret |= Qt::KeypadModifier;
+        else if (m.trimmed()=="GROUP") ret |= Qt::GroupSwitchModifier;
+    }
+
+    return ret;
+}
+
+QString jkqtp_MouseButton2String(Qt::MouseButton button, bool useNONE)
+{
+    if (button==Qt::NoButton) {
+        if (useNONE) return "NONE";
+        else return "";
+    }
+    if (button==Qt::LeftButton) return "LEFT";
+    if (button==Qt::RightButton) return "RIGHT";
+    if (button==Qt::MidButton) return "MIDDLE";
+    if (button==Qt::BackButton) return "BACK";
+    if (button==Qt::ForwardButton) return "FORWARD";
+    if (button==Qt::TaskButton) return "TASK";
+    if (button==Qt::ExtraButton4) return "EXTRA4";
+    if (button==Qt::ExtraButton5) return "EXTRA5";
+    if (button==Qt::ExtraButton6) return "EXTRA6";
+    if (button==Qt::ExtraButton7) return "EXTRA7";
+    if (button==Qt::ExtraButton8) return "EXTRA8";
+    if (button==Qt::ExtraButton9) return "EXTRA9";
+    if (button==Qt::ExtraButton10) return "EXTRA10";
+    if (button==Qt::ExtraButton11) return "EXTRA11";
+    if (button==Qt::ExtraButton12) return "EXTRA12";
+    if (button==Qt::ExtraButton13) return "EXTRA13";
+    if (button==Qt::ExtraButton14) return "EXTRA14";
+    if (button==Qt::ExtraButton15) return "EXTRA15";
+    if (button==Qt::ExtraButton16) return "EXTRA16";
+    if (button==Qt::ExtraButton17) return "EXTRA17";
+    if (button==Qt::ExtraButton18) return "EXTRA18";
+    if (button==Qt::ExtraButton19) return "EXTRA19";
+    if (button==Qt::ExtraButton20) return "EXTRA20";
+    if (button==Qt::ExtraButton21) return "EXTRA21";
+    if (button==Qt::ExtraButton22) return "EXTRA22";
+    if (button==Qt::ExtraButton23) return "EXTRA23";
+    if (button==Qt::ExtraButton24) return "EXTRA24";
+    return "UNKNOWN";
+}
+
+Qt::MouseButton jkqtp_String2MouseButton(const QString &button)
+{
+    auto but=button.toUpper().trimmed();
+    if (but=="LEFT") return Qt::LeftButton;
+    if (but=="RIGHT") return Qt::RightButton;
+    if (but=="MIDDLE") return Qt::MidButton;
+    if (but=="BACK") return Qt::BackButton;
+    if (but=="FORWARD") return Qt::ForwardButton;
+    if (but=="TASK") return Qt::TaskButton;
+    if (but=="EXTRA4") return Qt::ExtraButton4;
+    if (but=="EXTRA5") return Qt::ExtraButton5;
+    if (but=="EXTRA6") return Qt::ExtraButton6;
+    if (but=="EXTRA7") return Qt::ExtraButton7;
+    if (but=="EXTRA8") return Qt::ExtraButton8;
+    if (but=="EXTRA9") return Qt::ExtraButton9;
+    if (but=="EXTRA10") return Qt::ExtraButton10;
+    if (but=="EXTRA11") return Qt::ExtraButton11;
+    if (but=="EXTRA12") return Qt::ExtraButton12;
+    if (but=="EXTRA13") return Qt::ExtraButton13;
+    if (but=="EXTRA14") return Qt::ExtraButton14;
+    if (but=="EXTRA15") return Qt::ExtraButton15;
+    if (but=="EXTRA16") return Qt::ExtraButton16;
+    if (but=="EXTRA17") return Qt::ExtraButton17;
+    if (but=="EXTRA18") return Qt::ExtraButton18;
+    if (but=="EXTRA19") return Qt::ExtraButton19;
+    if (but=="EXTRA20") return Qt::ExtraButton20;
+    if (but=="EXTRA21") return Qt::ExtraButton21;
+    if (but=="EXTRA22") return Qt::ExtraButton22;
+    if (but=="EXTRA23") return Qt::ExtraButton23;
+    if (but=="EXTRA24") return Qt::ExtraButton24;
+    return Qt::NoButton;
 }
