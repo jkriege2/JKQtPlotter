@@ -20,8 +20,8 @@
 
 
 #include "jkqtplottertools/jkqtp_imexport.h"
-#include "jkqtplotter/jkqtpdatastore.h"
-#include <opencv/cv.h>
+#include "jkqtplotter/jkqtpdatastorage.h"
+#include <opencv2/core.hpp>
 
 #ifndef JKQTPOPENCVINTERFACE_H
 #define JKQTPOPENCVINTERFACE_H

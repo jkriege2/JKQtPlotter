@@ -85,7 +85,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html jkqtplotter_simpletest_rgbimageplot_qt_small.png
     <td> \subpage JKQTPlotterImagePlotQImageRGB
-    <td> `JKQTPImage` <br> `QImage` drawn onto a plot with arbitrary scaling) 
+    <td> `JKQTPImage` <br> `QImage` drawn onto a plot with arbitrary scaling  <br> inverted coordinate axes
 <tr><td> \image html jkqtplotter_simpletest_imageplot_small.png
     <td> \subpage JKQTPlotterImagePlot
     <td> `JKQTPColumnMathImage` <br> image data copied from C-style row-major array into a single column of the internal datastore <br> Describes several options of the image plotting classes (different ways of color coding, what to do with data above/below the limits etc.) 
@@ -95,12 +95,15 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_imageplot_nodatastore_small.png
     <td> \subpage JKQTPlotterImagePlotNoDatastore
     <td> `JKQTPMathImage` <br> image data in a C-style row-major array, not using internal datastore 
+<tr><td> \image html jkqtplotter_simpletest_rgbimageplot_small.png
+    <td> \subpage JKQTPlotterRGBImagePlot
+    <td> `JKQTPColumnRGBMathImage` <br> image data in a C-style row-major array, not using internal datastore <br> RGB/CMY color compositing
 <tr><td> \image html jkqtplotter_simpletest_imageplot_opencv_small.png
     <td> \subpage JKQTPlotterImagePlotOpenCV
     <td> `JKQTPColumnMathImage` <br> image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore 
 <tr><td> \image html jkqtplotter_simpletest_rgbimageplot_opencv_small.png
     <td> \subpage JKQTPlotterImagePlotRGBOpenCV
-    <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore 
+    <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore <br> inverted coordinate axes
 </table>
 
  

@@ -28,4 +28,16 @@ The result looks like this:
 ![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_qt.png)
 
 
+The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQTPlotter has its 0 at the bottom-left (right-handed coordinate system).
+
+You can modify the program above to display the image in the correct orientation, by adding the line
+```.cpp
+    // 6.1 invert y-axis, so image is oriented correctly
+    plot.getYAxis()->setInverted(true);
+```
+This will reorient the y-axis to point from top to bottom (for increasing positive coordinates):
+
+![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_qt_updisdedown.png)
+
+
 

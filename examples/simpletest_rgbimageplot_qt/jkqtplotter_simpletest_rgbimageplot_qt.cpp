@@ -51,6 +51,8 @@ int main(int argc, char* argv[])
     // 5. set axis labels
     plot.getXAxis()->setAxisLabel("x [pixels]");
     plot.getYAxis()->setAxisLabel("y [pixels]");
+    // 5.1 invert y-axis, so image is oriented correctly
+    plot.getYAxis()->setInverted(true);
 
     // 6. fix axis aspect ratio to width/height, so pixels are square
     plot.getPlotter()->setMaintainAspectRatio(true);

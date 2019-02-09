@@ -92,3 +92,4 @@ moc_predefs.h
 /doc/*.tmp
 *.prl
 Sicherungskopie_*
+/examples/simpletest_rgbimageplot_opencv/opencv

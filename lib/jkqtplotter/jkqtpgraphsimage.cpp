@@ -97,7 +97,7 @@ QColor JKQTPImageBase::getKeyLabelColor() {
 }
 
 void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, double x, double y, double width, double height) {
-    if ((!JKQTPIsOKFloat(x))||(!JKQTPIsOKFloat(y))||(!JKQTPIsOKFloat(width))||(!JKQTPIsOKFloat(height))||(width<=0) || (height<=0) || image.isNull() || (image.width()<=0) || (image.height()<=0)) {
+    if ((!JKQTPIsOKFloat(x))||(!JKQTPIsOKFloat(y))||(!JKQTPIsOKFloat(width))||(!JKQTPIsOKFloat(height))||(width==0) || (height==0) || image.isNull() || (image.width()<=0) || (image.height()<=0)) {
         return;
     }
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -110,13 +110,37 @@ void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, dou
     QPointF pp2=transform(xmax,ymin);
     QRectF pr(pp1, pp2);
 
+    bool mirrx=false;
+    bool mirry=false;
+
     QPointF p1=transform(x,y+height);
     QPointF p2=transform(x+width,y);
+    if (p1.x()>p2.x()) {
+        double tmp=p1.x();
+        p1.setX(p2.x());
+        p2.setX(tmp);
+        tmp=pp1.x();
+        pp1.setX(pp2.x());
+        pp2.setX(tmp);
+        mirrx=true;
+    }
+    if (p1.y()>p2.y()) {
+        double tmp=p1.y();
+        p1.setY(p2.y());
+        p2.setY(tmp);
+        tmp=pp1.y();
+        pp1.setY(pp2.y());
+        pp2.setY(tmp);
+        mirry=true;
+    }
     QRectF r(p1, p2);
+
+
+
     if (image.width()>0 && image.height()>0 && !image.isNull()) {
         if (r.width()<2*pr.width() && r.height()<2*pr.height()) {
             //painter.drawImage(QRectF(p1.x(), p2.y(), fabs(p2.x()-p1.x()), fabs(p2.y()-p1.y())), image);
-            painter.drawImage(QPoint(p1.x(), p1.y()), image.scaled(QSize(fabs(p2.x()-p1.x()), fabs(p2.y()-p1.y())), Qt::IgnoreAspectRatio, Qt::FastTransformation));
+            painter.drawImage(QPoint(p1.x(), p1.y()), image.mirrored(mirrx, mirry).scaled(QSize(fabs(p2.x()-p1.x()), fabs(p2.y()-p1.y())), Qt::IgnoreAspectRatio, Qt::FastTransformation));
             //qDebug()<<"\nimage.size  = "<<image.size() <<" SIMPLE!";
         } else {
             double pixwidth=fabs(p2.x()-p1.x())/static_cast<double>(image.width());
@@ -136,7 +160,7 @@ void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, dou
             QRectF target(p1.x()+ps1.x()*pixwidth, p1.y()+ps1.y()*pixheight, source.width()*pixwidth, source.height()*pixheight);
             //qDebug()<<"source = "<<source;
             //qDebug()<<"target = "<<target;
-            painter.drawImage(target, image, source);
+            painter.drawImage(target, image.mirrored(mirrx, mirry), source);
         }
     }
 
@@ -212,7 +236,7 @@ void JKQTPImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 void JKQTPImage::setImage(const QImage &image)
 {
     clear_image();
-    this->image=new QImage(image);
+    this->image=new QImage(image.mirrored(false, true));
     image_owned=true;
     createImageActions();
 }

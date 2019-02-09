@@ -911,7 +911,14 @@ void JKQTPColumnRGBMathImage::ensureImageData()
     this->data=parent->getDatastore()->getColumn(imageRColumn).getPointer(0);
     this->dataG=parent->getDatastore()->getColumn(imageGColumn).getPointer(0);
     this->dataB=parent->getDatastore()->getColumn(imageBColumn).getPointer(0);
-    this->Ny=parent->getDatastore()->getColumn(imageRColumn).getRows()/this->Nx;
+    /*if (Nx*Ny==0 || Nx*Ny>parent->getDatastore()->getColumn(imageRColumn).getRows()) {
+        if (Nx>0) {
+            Ny=parent->getDatastore()->getColumn(imageRColumn).getRows()/this->Nx;
+        } else {
+            Nx=parent->getDatastore()->getColumn(imageRColumn).getRows();
+            Ny=1;
+        }
+    }*/
     this->datatypeModifier=JKQTPMathImageBase::DoubleArray;
     this->dataModifier=parent->getDatastore()->getColumn(modifierColumn).getPointer(0);
 }

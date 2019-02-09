@@ -105,6 +105,16 @@ class JKQTBasePlotter;
     are implemented in p2x(). They can be used to show the system coordinates of the current mouse position.
 
 
+    \section jkqtplotter_coordinateaxes_inverted Inverted Coordinate Axes
+
+    In some cases it may be necessary to invert the direction of increasing coordinates on an axis. One such case is image analysis, as computer images usually
+    have coordinates starting with (0,0) at the top left and increasing to the right (x) and down (y). You can invert any axis by setting \c setInverted(true).
+
+    \image html jkqtplotter_inverted_yaxis.png
+
+    \see You can find example here: \ref JKQTPlotterImagePlotQImageRGB and \ref JKQTPlotterImagePlotRGBOpenCV
+
+
     \section jkqtplotter_base_grids_baseelemenets Axis JKQTPCoordinateAxisStyle::Ticks and Grids
 
     This section explains how this component draws the JKQTPCoordinateAxisStyle::ticks on coordinate axes and the grids that may be drawn below
@@ -708,7 +718,10 @@ class JKQTP_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
          * \see calcPlotScaling(), calcTickSpacing()
          */
         double offset;
-        /** \brief indicates whether the axis is to be inverted or not */
+        /** \brief indicates whether the axis is to be inverted or not
+         *
+         * \image html jkqtplotter_inverted_yaxis.png
+         */
         bool inverted;
 
         /** \brief <b>calculated property:</b> x position of the first tick (calculated by calcPlotScaling() ). Given in system coordinates, not pixel coordinates.

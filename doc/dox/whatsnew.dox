@@ -38,6 +38,7 @@ Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
 	  <li> new: frames (plot viewport, key/legend ...) may be rounded off at the corners</li>
 	  <li> new: diverse new styling options (default font name/size ...)</li>
 	  <li> new: additionl options for styling coordinate axes</li>
+	  <li> fixed: RGB-image plots now work properly with inverted axes (image is inverted, befor image was not shown at all) </li>
 	</ul></li>
  <li> Updates to JKQTMathText: 
     <ul>

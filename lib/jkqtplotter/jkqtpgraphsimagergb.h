@@ -518,7 +518,12 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
     \image html rgbimageplots.png
+
     \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
+
+    \image html jkqtplotter_simpletest_rgbimageplot.png
+
+    \see Examples: \ref JKQTPlotterRGBImagePlot and  \ref JKQTPlotterImagePlotRGBOpenCV
  */
 class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         Q_OBJECT

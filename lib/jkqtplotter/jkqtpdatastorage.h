@@ -34,9 +34,6 @@
 #include <QStringList>
 #include <QAbstractTableModel>
 #include <QObject>
-#ifdef JKQTPLOTTER_OPENCV_INTERFACE
-#  include <opencv/cv.h>
-#endif
 #ifndef JKQTPDATASTORAGE_H
 #define JKQTPDATASTORAGE_H
 

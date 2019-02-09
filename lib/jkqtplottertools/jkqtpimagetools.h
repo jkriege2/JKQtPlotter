@@ -164,12 +164,16 @@ enum JKQTPMathImageColorRangeFailAction {
 
 /*! \brief modes available for RGB images
     \ingroup jkqtplotter_imagelots_tools
+
+
+    \see Examples: \ref JKQTPlotterRGBImagePlot
+
  */
 enum JKQTPRGBMathImageRGBMode {
-    JKQTPRGBMathImageModeRGBMode=0,
-    JKQTPRGBMathImageModeHSVMode=1,
-    JKQTPRGBMathImageModeHSLMode=2,
-    JKQTPRGBMathImageModeCMYMode=3
+    JKQTPRGBMathImageModeRGBMode=0, /*!< image channels are mapped to the R, G and B channel (red-green-blue) */
+    JKQTPRGBMathImageModeHSVMode=1, /*!< image channels are mapped to the H, S and V channel (hue-saturation-value) */
+    JKQTPRGBMathImageModeHSLMode=2, /*!< image channels are mapped to the H, S and L channel (bue-saturation-luminance) */
+    JKQTPRGBMathImageModeCMYMode=3 /*!< image channels are mapped to the C, M and Y channel (subtractive color model!!!) */
 };
 
 

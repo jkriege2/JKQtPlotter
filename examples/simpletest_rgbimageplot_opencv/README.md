@@ -1,8 +1,8 @@
 # Example (JKQTPlotter): Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQTPlotterImagePlotRGBOpenCV}
-This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV cv::Mat image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
-To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
+This project (see `./examples/simpletest_imageplot_opencv/`) simply creates a JKQTPlotter widget (as a new window) and shows an RGB image read from a BMP-file. The image is generated as an [OpenCV](https://opencv.org/) [`cv::Mat`](https://docs.opencv.org/4.0.0/d3/d63/classcv_1_1Mat.html) image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
+To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` is used, that copies the data from a (https://opencv.org/) [`cv::Mat`](https://docs.opencv.org/4.0.0/d3/d63/classcv_1_1Mat.html) directly into a column. 
 
-The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQTPlotter with OPenCV.
+The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQTPlotter with OpenCV.
 
 The source code of the main application is (see [`jkqtplotter_simpletest_imageplot_opencv.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot_opencv/jkqtplotter_simpletest_imageplot_opencv.cpp):
 ```.cpp
@@ -98,5 +98,16 @@ The result looks like this:
 ![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv.png)
 
 The image is upside-down, because computer images use a coordinate system with 0 at the top-left (left-handed coordinate system) and the JKQTPlotter has its 0 at the bottom-left (right-handed coordinate system).
+
+You can modify the program above to display the image in the correct orientation, by adding the line
+```.cpp
+    // 5.1 invert y-axis, so image is oriented correctly
+    plot.getYAxis()->setInverted(true);
+```
+This will reorient the y-axis to point from top to bottom (for increasing positive coordinates):
+
+![jkqtplotter_simpletest_imageplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv_updisdedown.png)
+
+
 
 

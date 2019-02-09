@@ -10,6 +10,7 @@
 #include "jkqtplotter/jkqtpgraphs.h"
 #include "jkqtplotter/jkqtpgraphsimagergb.h"
 #include "jkqtplotter/jkqtpopencvinterface.h"
+#include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs.hpp>
 
 
@@ -30,6 +31,7 @@ int main(int argc, char* argv[])
 
     // 2. now we open a BMP-file and load it into an OpenCV cv::Mat
     cv::Mat picture = cv::imread("example.bmp");
+    qDebug()<<picture.rows<<"x"<<picture.cols<<"x"<<picture.channels();
 
 
 
@@ -73,6 +75,8 @@ int main(int argc, char* argv[])
     // 6. set axis labels
     plot.getXAxis()->setAxisLabel("x [pixels]");
     plot.getYAxis()->setAxisLabel("y [pixels]");
+    // 6.1 invert y-axis, so image is oriented correctly
+    plot.getYAxis()->setInverted(true);
 
     // 7. fix axis aspect ratio to width/height, so pixels are square
     plot.getPlotter()->setMaintainAspectRatio(true);
