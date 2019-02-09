@@ -695,7 +695,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTnode(JKQTMathText* parent);
                 virtual ~MTnode();
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos)=0;
+                /** \brief determine the size of the node, calls getSizeInternal() implementation of the actual type \see getSizeInternal() */
                 void getSize(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 /** \brief draw the contents at the designated position. returns the x position which to use for the next part of the text */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv)=0;
@@ -713,6 +713,18 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual void setDrawBoxes(bool draw);
                 virtual QString getTypeName() const;
             protected:
+                /** \brief determine the size of the node, overwrite this function in derived classes
+                 *
+                 * \param painter painter to use for determining the size
+                 * \param currentEv current environment object
+                 * \param[out] width width of the block/node
+                 * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
+                 * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
+                 * \param[out] strikeoutPos position of the strikeout-line
+                 *
+                 */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos)=0;
+
                 JKQTMathText* parent;
                 bool drawBoxes;
                 void doDrawBoxes(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv);
@@ -723,7 +735,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTtextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
                 virtual ~MTtextNode();
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 /*! \brief returns the property text ( \copybrief text ).
@@ -734,6 +745,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
                 virtual QString getTypeName() const override ;
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 QString text;
                 virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
         };
@@ -762,7 +775,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
                 virtual ~MTsymbolNode();
                 virtual QString getTypeName() const;
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 /*! \brief returns the property symbolName ( \copybrief symbolName ).
@@ -772,6 +784,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->symbolName; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 /** \brief this string will be sent to the drawText method with properly set fonts */
                 QString symbol;
                 /** \brief the symbol name supplied to the constructor */
@@ -797,13 +811,15 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 bool extendWidthInMathmode;
         };
 
-        /** \brief subclass representing a list of nodes in the syntax tree */
+        /** \brief subclass representing a list of nodes in the syntax tree
+         *
+         * \image html jkqtmathtext_MTlistNode_getSizeInternal_frac.png
+         */
         class MTlistNode: public MTnode {
             public:
                 MTlistNode(JKQTMathText* parent);
                 virtual ~MTlistNode();
                 virtual QString getTypeName() const;
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 void addNode(MTnode* n) { nodes.append(n); }
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
@@ -815,6 +831,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->nodes; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 QList<MTnode*> nodes;
                 QSet<QString> subsupOperations;
         };
@@ -825,7 +843,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters=QStringList());
                 virtual ~MTinstruction1Node();
                 virtual QString getTypeName() const;
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief convert node to HTML and returns \c true on success */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
@@ -849,6 +866,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->parameters; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 bool setupMTenvironment(JKQTMathText::MTenvironment &ev);
 
                 MTnode* child;
@@ -863,7 +882,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTsubscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsubscriptNode();
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief returns true if node is subscript or superscript node */
                 virtual bool isSubOrSuper() ;
@@ -877,6 +895,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void setDrawBoxes(bool draw);
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 MTnode* child;
         };
 
@@ -885,7 +905,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTsuperscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsuperscriptNode();
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 /** \brief returns true if node is subscript or superscript node */
                 virtual bool isSubOrSuper();
@@ -899,6 +918,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void setDrawBoxes(bool draw);
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 MTnode* child;
         };
 
@@ -907,7 +928,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTbraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace=true);
                 virtual ~MTbraceNode();
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void setDrawBoxes(bool draw);
@@ -937,6 +957,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->showRightBrace; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 MTnode* child;
                 QString openbrace;
                 QString closebrace;
@@ -951,7 +973,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTsqrtNode(JKQTMathText* parent, MTnode* child, int degree=2);
                 virtual ~MTsqrtNode();
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void setDrawBoxes(bool draw);
@@ -969,6 +990,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->degree; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 MTnode* child;
                 int degree;
         };
@@ -992,7 +1015,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
                 virtual ~MTfracNode();
                 virtual QString getTypeName() const ;
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void setDrawBoxes(bool draw);
@@ -1015,6 +1037,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->mode; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 MTnode* child1;
                 MTnode* child2;
                 MTfracMode mode;
@@ -1024,11 +1048,10 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTmatrixNode: public MTnode {
             public:
                 MTmatrixNode(JKQTMathText* parent, QVector<QVector<MTnode*> > children);
-                virtual ~MTmatrixNode();
-                virtual QString getTypeName() const;
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
+                virtual ~MTmatrixNode() override;
+                virtual QString getTypeName() const override;
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv) override;
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /*! \brief returns the property children ( \copybrief children ).
                     \details Description of the parameter children is:  <BLOCKQUOTE>\copydoc children </BLOCKQUOTE>. 
                     \see children for more information */ 
@@ -1048,6 +1071,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->lines; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 virtual void setDrawBoxes(bool draw);
                 QVector<QVector<MTnode*> > children;
                 int columns;
@@ -1075,7 +1100,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTdecoratedNode(JKQTMathText* parent, MTdecoration decoration, MTnode* child);
                 virtual ~MTdecoratedNode();
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
                 virtual void setDrawBoxes(bool draw);
@@ -1093,6 +1117,8 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                     return this->decoration; 
                 }
             protected:
+                /** \copydoc MTnode::getSizeInternal() */
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
                 MTnode* child;
                 MTdecoration decoration;
         };

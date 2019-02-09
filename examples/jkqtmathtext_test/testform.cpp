@@ -41,6 +41,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: bf", "$\\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: rm", "$\\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: cal", "$\\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("subsuperscript test", "$r_{123}^2$\\ \\ $r^2_{123}$\\ \\ $\\left(a\\right)_{123}^2$\\ \\ $\\left(a\\right)^2_{123}$\\ \\ $r_{\\frac{1}{2}}^2$\\ \\ $r^2_{\\frac{1}{2}}$\\ \\ $r^{\\frac{1}{2}}_2$\\ \\ $r_2^{\\frac{1}{2}}$\\ \\ $\\left(a\\right)_2^{\\frac{1}{2}}$\\ \\ $\\left(a\\right)^{\\frac{1}{2}}_2$");
     ui->cmbTestset->addItem("subscript test", "$r_{123}\\ \\ r_{\\frac{1}{2}}$");
     ui->cmbTestset->addItem("subscript0 test", "$r_{123}$");
     ui->cmbTestset->addItem("subscript1 test", "$r_{123}\\ $");
