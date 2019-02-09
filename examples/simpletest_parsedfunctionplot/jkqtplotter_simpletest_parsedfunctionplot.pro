@@ -11,12 +11,12 @@ TARGET = jkqtplotter_simpletest_parsedfunctionplot
 
 
 # include JKQTPlotter source code
-DEPENDPATH += ../../lib  ../../staticlib
+DEPENDPATH += ../../lib  ../../staticlib/jkqtplotterlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
-    LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug
+    LIBS += -L../../staticlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
 } else {
-    LIBS += -L../../staticlib/release -ljkqtplotterlib
+    LIBS += -L../../staticlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 message("LIBS = $$LIBS")
 

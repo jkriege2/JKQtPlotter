@@ -8,7 +8,7 @@ SOURCES += jkqtmathtext_test.cpp \
 
 RCC_DIR = rccs
 
-CONFIG += link_prl link_prl qt windows
+CONFIG += link_prl qt windows
 
 
 TARGET = jkqtmathtext_test
@@ -35,11 +35,17 @@ DEFINES += AUTOLOAD_XITS_FONTS AUTOLOAD_Asana_FONTS
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 
-DEPENDPATH += ../../lib  ../../staticlib
+DEPENDPATH += ../../lib  ../../staticlib/jkqtmathtextlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
-    LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug
+    DEPENDPATH += ../../staticlib/jkqtmathtextlib/debug
+    DEPENDPATH += ../../staticlib/jkqtphighrestimerlib/debug
+    LIBS += -L../../staticlib/jkqtmathtextlib/debug -ljkqtmathtextlib_debug
+    LIBS += -L../../staticlib/jkqtphighrestimerlib/debug -ljkqtphighrestimerlib_debug
 } else {
-    LIBS += -L../../staticlib/release -ljkqtplotterlib
+    DEPENDPATH += ../../staticlib/jkqtmathtextlib/release
+    DEPENDPATH += ../../staticlib/jkqtphighrestimerlib/release
+    LIBS += -L../../staticlib/jkqtmathtextlib/release -ljkqtmathtextlib
+    LIBS += -L../../staticlib/jkqtphighrestimerlib/release -ljkqtphighrestimerlib
 }
 message("LIBS = $$LIBS")

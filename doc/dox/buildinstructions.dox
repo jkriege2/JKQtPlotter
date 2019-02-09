@@ -21,9 +21,9 @@ include(<PATHTOJKQTPLOTTERDIR>/lib/jkqtplotter.pri)
 \subsection BUILDINSTRUCTIONS_QMAKESTATIC QMake Static Library
 
 There are several `.PRO`-files, that can be used to build the full library, or a limited subsets of it as static link library:
-  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/staticlib/jkqtplotterlib.pro">staticlib/jkqtplotterlib.pro</a> builds the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText) as static link library
-  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/staticlib/jkqtmathtextlib.pro">staticlib/jkqtmathtextlib.pro</a> builds only JKQTMathText as static link library
-  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/staticlib/jkqtfastplotterlib.pro">staticlib/jkqtfastplotterlib.pro</a> builds only JKQTFastPlotter as static link library
+  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/staticlib/jkqtplotterlib/jkqtplotterlib.pro">staticlib/jkqtplotterlib/jkqtplotterlib.pro</a> builds the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText) as static link library
+  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/staticlib/jkqtmathtextlib/jkqtmathtextlib.pro">staticlib/jkqtmathtextlib/jkqtmathtextlib.pro</a> builds only JKQTMathText as static link library
+  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/staticlib/jkqtfastplotterlib/jkqtfastplotterlib.pro">staticlib/jkqtfastplotterlib/jkqtfastplotterlib.pro</a> builds only JKQTFastPlotter as static link library
 .
 They will produce a static link library that you can include into your projects, e.g. with the following QMake-snippet:
 
@@ -31,12 +31,14 @@ They will produce a static link library that you can include into your projects,
 # include JKQTPlotter library
 DEPENDPATH += \
               <PATHTOJKQTPLOTTERDIR>/lib \
-              <PATHTOJKQTPLOTTERDIR>/staticlib
+              <PATHTOJKQTPLOTTERDIR>/staticlib/jkqtplotterlib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {
-    LIBS += -L<PATHTOJKQTPLOTTERDIR>/staticlib/debug -ljkqtplotterlib_debug
+    DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/staticlib/jkqtplotterlib/debug
+    LIBS += -L<PATHTOJKQTPLOTTERDIR>/staticlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
 } else {
-    LIBS += -L<PATHTOJKQTPLOTTERDIR>/staticlib/release -ljkqtplotterlib
+    DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/staticlib/jkqtplotterlib/release
+    LIBS += -L<PATHTOJKQTPLOTTERDIR>/staticlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 \endcode
 
@@ -45,7 +47,7 @@ This snippet assumes that you built the libraries with the provided `.PRO`-files
 TEMPLATE = subdirs
 
 # the (static library version) of JKQTPlotter
-jkqtplotterlib_static.file = ../../staticlib/jkqtplotterlib.pro
+jkqtplotterlib_static.file = ../../staticlib/jkqtplotterlib/jkqtplotterlib.pro
 
 # your project file, with declared dependencies on jkqtplotterlib_static
 test_styling.file=$$PWD/test_styling.pro
@@ -60,9 +62,9 @@ SUBDIRS +=  jkqtplotterlib_static test_styling
 \subsection BUILDINSTRUCTIONS_QMAKEDYNAMIC QMake Dynamic Library
 
 There are several `.PRO`-files, that can be used to build the full library, or a limited subsets of it as shred library:
-  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/sharedlib/jkqtplotterlib_sharedlib.pro">sharedlib/jkqtplotterlib_sharedlib.pro</a> builds the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText) as shared library
-  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/sharedlib/jkqtmathtextlib_sharedlib.pro">sharedlib/jkqtmathtextlib_sharedlib.pro</a> builds only JKQTMathText as shared library
-  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/sharedlib/jkqtfastplotterlib_sharedlib.pro">sharedlib/jkqtfastplotterlib_sharedlib.pro</a> builds only JKQTFastPlotter as shared library
+  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/sharedlib/jkqtplotterlib/jkqtplotterlib.pro">sharedlib/jkqtplotterlib/jkqtplotterlib.pro</a> builds the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText) as shared library
+  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/sharedlib/jkqtmathtextlib/jkqtmathtextlib.pro">sharedlib/jkqtmathtextlib/jkqtmathtextlib.pro</a> builds only JKQTMathText as shared library
+  - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro">sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro</a> builds only JKQTFastPlotter as shared library
 .
 They will produce a dynamic link library that you can include into your projects, e.g. with the following QMake-snippet:
 
@@ -70,22 +72,24 @@ They will produce a dynamic link library that you can include into your projects
 # include JKQTPlotter library
 DEPENDPATH += \
               <PATHTOJKQTPLOTTERDIR>/lib \
-              <PATHTOJKQTPLOTTERDIR>/sharedlib
+              <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {
     # ensure that DLLs are copied to the output directory
-    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/debug/jkqtplotterlib_debug.*
+    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/debug/jkqtplotterlib_debug.*
     install_jkqtplotter_dll.path = $$OUT_PWD
     INSTALLS += install_jkqtplotter_dll
     # link agains DLLs
-    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/debug -ljkqtplotterlib_debug
+    DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/debug
+    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
 } else {
     # ensure that DLLs are copied to the output directory
-    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/release/jkqtplotterlib.*
+    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/release/jkqtplotterlib.*
     install_jkqtplotter_dll.path = $$OUT_PWD
     INSTALLS += install_jkqtplotter_dll
     # link agains DLLs
-    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/release -ljkqtplotterlib
+    DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/release
+    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 \endcode
 
@@ -94,7 +98,7 @@ This snippet assumes that you built the libraries with the provided `.PRO`-files
 TEMPLATE = subdirs
 
 # the (shared library version) of JKQTPlotter
-jkqtplotterlib_shared.file = ../../sharedlib/jkqtplotterlib_sharedlib.pro
+jkqtplotterlib_shared.file = ../../sharedlib/jkqtplotterlib.pro
 
 # your project file, with declared dependencies on jkqtplotterlib_shared
 test_styling.file=$$PWD/test_styling.pro

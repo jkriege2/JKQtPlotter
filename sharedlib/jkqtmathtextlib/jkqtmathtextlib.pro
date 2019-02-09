@@ -4,7 +4,12 @@ TARGET = jkqtmathtextlib
 CONFIG (debug, debug|release): TARGET = jkqtmathtextlib_debug
 
 TEMPLATE = lib
-CONFIG+=staticlib
+CONFIG+=dll
 CONFIG += create_prl
 
-include(../lib/jkqtmathtext.pri)
+win32 {
+    DEFINES += JKQTP_LIB_IN_DLL
+    DEFINES += JKQTP_LIB_EXPORT_LIBRARY
+}
+
+include(../../lib/jkqtmathtext.pri)

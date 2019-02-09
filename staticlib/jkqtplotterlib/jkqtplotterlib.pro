@@ -4,12 +4,9 @@ TARGET = jkqtplotterlib
 CONFIG (debug, debug|release): TARGET = jkqtplotterlib_debug
 
 TEMPLATE = lib
-CONFIG += dll
+CONFIG += staticlib
 CONFIG += create_prl
 
-win32 {
-    DEFINES += JKQTP_LIB_IN_DLL
-    DEFINES += JKQTP_LIB_EXPORT_LIBRARY
-}
+#DEFINES += JKQTBP_AUTOTIMER
 
-include(../lib/jkqtplotter.pri)
+include(../../lib/jkqtplotter.pri)

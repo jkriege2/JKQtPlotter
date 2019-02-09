@@ -156,6 +156,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtmathtext_testapp_small.png
     <td> \subpage JKQTMathTextTestApp 
 	<td> JKQTMathText<br>render LaTeX markup
+<tr><td> \image html jkqtfastplotter_test_small.png
+    <td> \subpage JKQTFastPlotterTest 
+	<td> JKQTFastPlotter
 </table>
 
 

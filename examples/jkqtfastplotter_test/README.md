@@ -1,11 +1,9 @@
-/** \example jkqtfastplotter_test_testmain.cpp
- * Example of how to use JKQTFastPlotter
- * \see \ref JKQTFastPlotterTest
- */
+# Example (JKQTFastPlotter)             {#JKQTFastPlotterTest}
+The project (see `./examples/jkqtfastplotter_test/`) demonstrates how to use the JKQTFastPlotter, a speed-optimized plotter alternative to JKQTPlotter, but with less features.
 
-#include "jkqtfastplotter_test_testmain.h"
-#include <QCheckBox>
-#include <QtGui>
+
+The source code of the main application is (see [`jkqtfastplotter_test.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtfastplotter_test/jkqtfastplotter_test_testmain.cpp):
+```.cpp
 
 TestMain::TestMain(QWidget *parent) :
     QWidget(parent)
@@ -152,40 +150,10 @@ TestMain::TestMain(QWidget *parent) :
     resize(500,400);
 
 }
+```
+The result looks like this:
 
-TestMain::~TestMain() {
-    free(imageRed);
-    free(imageGreen);
-    free(imageBlue);
-    free(image);
-    free(ovrl);
-    free(x);
-    free(y1);
-    free(y2);
-    free(y3);
+![jkqtfastplotter_test](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtfastplotter_test.png)
 
-}
 
-void TestMain::enableRed(bool enabled) {
-    if (enabled) {
-        prgb->setImageRed(imageRed, JKQTFP_double);
-    } else {
-        prgb->setImageRed(NULL, JKQTFP_double);
-    }
-}
 
-void TestMain::enableGreen(bool enabled) {
-    if (enabled) {
-        prgb->setImageGreen(imageGreen, JKQTFP_double);
-    } else {
-        prgb->setImageGreen(NULL, JKQTFP_double);
-    }
-}
-
-void TestMain::enableBlue(bool enabled) {
-    if (enabled) {
-        prgb->setImageBlue(imageBlue, JKQTFP_double);
-    } else {
-        prgb->setImageBlue(NULL, JKQTFP_double);
-    }
-}

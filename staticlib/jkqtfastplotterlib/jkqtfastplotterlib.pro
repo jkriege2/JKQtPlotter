@@ -7,4 +7,4 @@ TEMPLATE = lib
 CONFIG+=staticlib
 CONFIG += create_prl
 
-include(../lib/jkqtfastplotter.pri)
+include(../../lib/jkqtfastplotter.pri)

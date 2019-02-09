@@ -1,8 +1,9 @@
 TEMPLATE = subdirs
 
-SUBDIRS +=  jkqtplotterlib jkqtmathtext_test
+SUBDIRS +=  jkqtmathtextlib jkqtphighrestimerlib jkqtmathtext_test
 
-jkqtplotterlib.file = ../../staticlib/jkqtplotterlib.pro
+jkqtmathtextlib.file = ../../staticlib/jkqtmathtextlib/jkqtmathtextlib.pro
+jkqtphighrestimerlib.file = ../../staticlib/jkqtphighrestimerlib/jkqtphighrestimerlib.pro
 
 jkqtmathtext_test.file=$$PWD/jkqtmathtext_test.pro
-jkqtmathtext_test.depends = jkqtplotterlib
+jkqtmathtext_test.depends = jkqtmathtextlib jkqtphighrestimerlib

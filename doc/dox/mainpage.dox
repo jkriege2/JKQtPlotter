@@ -52,6 +52,18 @@ This software is licensed under the term of the GNU Lesser General Public Licens
 - extensive doxygen-generated <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a>
 - source code hosted&developed on GitHub <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a> (including continuous integration builds: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a>)
 
+\section jkqtplottertic Table Of Contents
+- Documentation of Major Classes:
+  - JKQTPlotter / JKQTBasePlotter - Extensive Scientific 2D Plotting framework
+  - JKQTMathText - LaTeX parser and math renderer
+  - JKQTFastPlotter - additional, simplified but speed-optimized plotter widget with limited capabilities
+- \ref licensepage
+- \ref BUILDINSTRUCTIONS
+- \ref WHATSNEW
+- \ref exampleTutorialProjects 
+
+
+
 \image html screenshotsbanner.png
 
 */

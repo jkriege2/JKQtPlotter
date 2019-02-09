@@ -9,22 +9,24 @@ There are several `.PRO`-files, that can be used to build the full library, or a
 
 ```.qmake
 # include JKQTPlotter library
-DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib <PATHTOJKQTPLOTTERDIR>/sharedlib
+DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/lib <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
 CONFIG (debug, debug|release) {
     # ensure that DLLs are copied to the output directory
-    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/debu/jkqtplotterlib_debug.*
+    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/debug/jkqtplotterlib_debug.*
     install_jkqtplotter_dll.path = $$OUT_PWD
     INSTALLS += install_jkqtplotter_dll
     # link agains DLLs
-    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/debug -ljkqtplotterlib_debug
+    DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/debug
+    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
 } else {
     # ensure that DLLs are copied to the output directory
-    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/release/jkqtplotterlib.*
+    install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/release/jkqtplotterlib.*
     install_jkqtplotter_dll.path = $$OUT_PWD
     INSTALLS += install_jkqtplotter_dll
+    DEPENDPATH += <PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/release
     # link agains DLLs
-    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/release -ljkqtplotterlib
+    LIBS += -L<PATHTOJKQTPLOTTERDIR>/sharedlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 ```
 

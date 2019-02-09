@@ -1,7 +1,7 @@
 # uncomment this line to prevent linking in of the XITS fonts
 #DEFINES += NO_XITS_FONTS
-TARGET = jkqtmathtextlib
-CONFIG (debug, debug|release): TARGET = jkqtmathtextlib_debug
+TARGET = jkqtfastplotterlib
+CONFIG (debug, debug|release): TARGET = jkqtfastplotterlib_debug
 
 TEMPLATE = lib
 CONFIG+=dll
@@ -12,4 +12,4 @@ win32 {
     DEFINES += JKQTP_LIB_EXPORT_LIBRARY
 }
 
-include(../lib/jkqtmathtext.pri)
+include(../../lib/jkqtfastplotter.pri)

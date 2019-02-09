@@ -2,6 +2,11 @@ TEMPLATE = subdirs
 
 SUBDIRS +=  jkqtplotterlib \
 			jkqtplotterlib_sharedlib \
+            jkqtmathtextlib \
+            jkqtmathtextlib_sharedlib \
+            jkqtfastplotterlib \
+            jkqtfastplotterlib_sharedlib \
+            jkqtphighrestimerlib \
             jkqtmathtext_simpletest \
             jkqtplot_test \
             jkqtplotter_simpletest \
@@ -9,12 +14,19 @@ SUBDIRS +=  jkqtplotterlib \
 			jkqtfastplotter_test
 
 
-jkqtplotterlib.file = staticlib/jkqtplotterlib.pro
+jkqtplotterlib.file = staticlib/jkqtplotterlib/jkqtplotterlib.pro
+jkqtplotterlib_sharedlib.file = sharedlib/jkqtplotterlib/jkqtplotterlib.pro
 
-jkqtplotterlib_sharedlib.file = sharedlib/jkqtplotterlib_sharedlib.pro
+jkqtmathtextlib.file = staticlib/jkqtmathtextlib/jkqtmathtextlib.pro
+jkqtmathtextlib_sharedlib.file = sharedlib/jkqtmathtextlib/jkqtmathtextlib.pro
+
+jkqtfastplotterlib.file = staticlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
+jkqtfastplotterlib_sharedlib.file = sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
+
+jkqtphighrestimerlib.file = staticlib/jkqtphighrestimerlib/jkqtphighrestimerlib.pro
 
 jkqtmathtext_simpletest.subdir = examples/jkqtmathtext_simpletest
-jkqtmathtext_simpletest.depends = jkqtplotterlib
+jkqtmathtext_simpletest.depends = jkqtmathtextlib jkqtphighrestimerlib
 
 jkqtmathtext_test.subdir = examples/jkqtmathtext_test
 jkqtmathtext_test.depends = jkqtplotterlib
@@ -26,7 +38,7 @@ jkqtplotter_simpletest.file = examples/simpletest/jkqtplotter_simpletest.pro
 jkqtplotter_simpletest.depends = jkqtplotterlib
 
 jkqtfastplotter_test.file = $$PWD/examples/jkqtfastplotter_test/jkqtfastplotter_test.pro
-jkqtfastplotter_test.depends = jkqtplotterlib
+jkqtfastplotter_test.depends = jkqtfastplotterlib
 
 defineTest(addSimpleTest) {
     test_name = $$1

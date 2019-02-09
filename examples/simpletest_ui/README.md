@@ -37,12 +37,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET = jkqtplotter_simpletest_ui
 
 # include JKQTPlotter source headers and link against library
-DEPENDPATH += ../../lib  ../../staticlib
+DEPENDPATH += ../../lib  ../../staticlib/jkqtplotterlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
-    LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug
+    LIBS += -L../../staticlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
 } else {
-    LIBS += -L../../staticlib/release -ljkqtplotterlib
+    LIBS += -L../../staticlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 message("LIBS = $$LIBS")
 

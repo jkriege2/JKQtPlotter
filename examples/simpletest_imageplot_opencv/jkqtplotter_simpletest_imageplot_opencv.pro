@@ -24,8 +24,8 @@ INCLUDEPATH += $$PWD/OpenCV-3.4.1/include/
 LIBS += -L$$PWD/OpenCV-3.4.1/bin/ -llibopencv_core341
 
 CONFIG (debug, debug|release) {
-    LIBS += -L../../staticlib/debug -ljkqtplotterlib_debug
+    LIBS += -L../../staticlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
 } else {
-    LIBS += -L../../staticlib/release -ljkqtplotterlib
+    LIBS += -L../../staticlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 message("LIBS = $$LIBS")
