@@ -198,10 +198,10 @@ JKQTMathText::MTnode::MTnode(JKQTMathText* parent) {
 JKQTMathText::MTnode::~MTnode()
 = default;
 
-void JKQTMathText::MTnode::getSize(QPainter &painter, JKQTMathText::MTenvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos)
+void JKQTMathText::MTnode::getSize(QPainter &painter, JKQTMathText::MTenvironment currentEv, double &width, double &baselineHeight, double &overallHeight, double &strikeoutPos, const MTnodeSize* prevNodeSize)
 {
     double w=width, b=baselineHeight, o=overallHeight, s=strikeoutPos;
-    getSizeInternal(painter, currentEv, w, b, o, s);
+    getSizeInternal(painter, currentEv, w, b, o, s, prevNodeSize);
 
     if (w<1e5) width=w;
     if (b<1e5) baselineHeight=b;
@@ -211,6 +211,10 @@ void JKQTMathText::MTnode::getSize(QPainter &painter, JKQTMathText::MTenvironmen
 
 bool JKQTMathText::MTnode::toHtml(QString &/*html*/, JKQTMathText::MTenvironment /*currentEv*/, JKQTMathText::MTenvironment /*defaultEv*/) {
     return false;
+}
+
+bool JKQTMathText::MTnode::getDrawBoxes() const {
+    return this->drawBoxes;
 }
 
 
@@ -263,7 +267,7 @@ JKQTMathText::MTtextNode::MTtextNode(JKQTMathText* parent, const QString& textIn
 
 JKQTMathText::MTtextNode::~MTtextNode() = default;
 
-void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     QFont f=currentEv.getFont(parent);
     if (currentEv.insideMath && (text=="(" || text=="[" || text=="|" || text=="]" || text==")" || text=="<" || text==">" ||
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
@@ -274,7 +278,7 @@ void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::
     QString txt=textTransform(text, currentEv, true);
     QFontMetricsF fm(f, painter.device());
     QRectF br=fm.boundingRect(txt);
-    QRectF tbr=parent->getTBR(f, txt, painter.device()); //fm.tightBoundingRect(txt);
+    QRectF tbr=parent->getTightBoundingRect(f, txt, painter.device()); //fm.tightBoundingRect(txt);
     if (txt=="|") {
         br=fm.boundingRect("X");
         tbr=QRect(0,0,fm.width("X"), fm.ascent());//fm.boundingRect("X");
@@ -293,7 +297,7 @@ void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::
     strikeoutPos=fm.strikeOutPos()*1.1;
 }
 
-double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0;
     double baselineHeight=0;
@@ -479,7 +483,7 @@ QString JKQTMathText::MTinstruction1Node::getTypeName() const
     return QLatin1String("MTinstruction1Node(")+name+")";
 }
 
-void JKQTMathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     JKQTMathText::MTenvironment ev=currentEv;
 
     setupMTenvironment(ev);
@@ -494,7 +498,7 @@ void JKQTMathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTMa
     }
 }
 
-double JKQTMathText::MTinstruction1Node::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTinstruction1Node::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
 
@@ -578,39 +582,49 @@ JKQTMathText::MTsubscriptNode::~MTsubscriptNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTsubscriptNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTsubscriptNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     JKQTMathText::MTenvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
-
-    QFontMetricsF fm(ev.getFont(parent), painter.device());
-    double shift=parent->getSubShiftFactor()*parent->getTBR(ev.getFont(parent), "M", painter.device()).height();
 
     child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
 
-    QFontMetricsF fmouter(currentEv.getFont(parent), painter.device());
-    QRectF tbr=parent->getTBR(currentEv.getFont(parent), "M", painter.device());
-    overallHeight=tbr.height()+shift+(overallHeight-baselineHeight);
-    baselineHeight=tbr.height();
-    strikeoutPos=fmouter.strikeOutPos();
-    if (currentEv.italic) width=width-double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    QFontMetricsF fm(ev.getFont(parent), painter.device());
+    QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
+    double shift=parent->getSubShiftFactor()*tbr.height();
+
+    if (prevNodeSize!=nullptr && prevNodeSize->overallHeight-prevNodeSize->baselineHeight>shift) {
+        shift=-1.0*(prevNodeSize->overallHeight-prevNodeSize->baselineHeight-shift);
+    }
+
+    double yshift=baselineHeight-shift;
+    baselineHeight=shift;
+    strikeoutPos=fm.strikeOutPos()+yshift;
+    if (currentEv.italic && prevNodeSize==nullptr) width=width-double(fm.width(' '))*parent->getItalicCorrectionFactor();
 }
 
-double JKQTMathText::MTsubscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTsubscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
-
     QFontMetricsF fm(ev.getFont(parent), painter.device());
+    QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
 
-    double shift=parent->getSubShiftFactor()*parent->getTBR(ev.getFont(parent), "M", painter.device()).height();
+    double width=0, baselineHeight=0, overallHeight=0, strikeoutPos=0;
+    child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
+    double shift=parent->getSubShiftFactor()*tbr.height();
+
+    if (prevNodeSize!=nullptr && prevNodeSize->overallHeight-prevNodeSize->baselineHeight>shift) {
+        qDebug()<<"oldshift="<<shift<<", prevNodeSize->overallHeight="<<prevNodeSize->overallHeight<<", prevNodeSize->baselineHeight="<<prevNodeSize->baselineHeight;
+        shift=-1.0*(prevNodeSize->overallHeight-prevNodeSize->baselineHeight-shift);
+        qDebug()<<"newshift="<<shift;
+    }
+
+    double yshift=baselineHeight-shift;
+    qDebug()<<"baselineHeight="<<baselineHeight<<", overallHeight="<<overallHeight<<", strikeoutPos="<<strikeoutPos;
+    qDebug()<<"shift="<<shift<<", yshift="<<yshift;
     double xx=x;
-    if (currentEv.italic) xx=xx-double(fm.width(' '))*parent->getItalicCorrectionFactor();
-    return child->draw(painter, xx, y+shift, ev);//+0.5*fm.boundingRect("A").width();
-}
-
-bool JKQTMathText::MTsubscriptNode::isSubOrSuper()
-{
-    return true;
+    if (currentEv.italic && prevNodeSize==nullptr) xx=xx-double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    return child->draw(painter, xx, y+yshift, ev);//+0.5*fm.boundingRect("A").width();
 }
 
 QString JKQTMathText::MTsubscriptNode::getTypeName() const
@@ -648,7 +662,7 @@ JKQTMathText::MTsqrtNode::~MTsqrtNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTsqrtNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTsqrtNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
 
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
@@ -658,7 +672,7 @@ void JKQTMathText::MTsqrtNode::getSizeInternal(QPainter& painter, JKQTMathText::
     width=width+fm.boundingRect("A").width()*2; // 1.53
 }
 
-double JKQTMathText::MTsqrtNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTsqrtNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0, baselineHeight=0, overallHeight=0, sp=0;
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, sp);
@@ -741,14 +755,14 @@ QString JKQTMathText::MTfracNode::getTypeName() const
     return "MTfracNode";
 }
 
-void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     JKQTMathText::MTenvironment ev1=currentEv;
     JKQTMathText::MTenvironment ev2=currentEv;
 
     double xh=fm.xHeight(); //tightBoundingRect("x").height();
     double sp=xh;
-    double Ah=parent->getTBR(currentEv.getFont(parent), "M", painter.device()).height();//fm.ascent();
+    double Ah=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device()).height();//fm.ascent();
     double xw=fm.boundingRect("x").width();
 
     if (mode==MTFMunderbrace || mode==MTFMoverbrace) {
@@ -813,7 +827,7 @@ void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::
     }
 }
 
-double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     QFont f=currentEv.getFont(parent);
     QFontMetricsF fm(f, painter.device());
@@ -821,10 +835,10 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
     JKQTMathText::MTenvironment ev2=currentEv;
 
 
-    double xh=parent->getTBR(f, "x", painter.device()).height(); //fm.xHeight();
+    double xh=parent->getTightBoundingRect(f, "x", painter.device()).height(); //fm.xHeight();
     double xw=fm.boundingRect("x").width();
     double lw=qMax(0.0,ceil(currentEv.fontSize/16.0));//fm.lineWidth();
-    double Ah=parent->getTBR(f, "M", painter.device()).height();//fm.ascent();
+    double Ah=parent->getTightBoundingRect(f, "M", painter.device()).height();//fm.ascent();
     double bw=Ah/2.0;
 
     if (mode==MTFMunderbrace || mode==MTFMoverbrace) {
@@ -885,12 +899,13 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
     } else if (mode==MTFMoverbrace) {
         double ybrace=y-ascent1-bw/2.0;
 
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(x+xw/2.0+(width1)/2.0, ybrace);
-        painter.rotate(180);
-        QPainterPath path=makeHBracePath(0,0, width, bw);
-        painter.drawPath(path);
-
+        {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.translate(x+xw/2.0+(width1)/2.0, ybrace);
+            painter.rotate(180);
+            QPainterPath path=makeHBracePath(0,0, width, bw);
+            painter.drawPath(path);
+        }
 
         child1->draw(painter, x+xw/2.0+(width-width1)/2.0, y, ev1);
         child2->draw(painter, x+xw/2.0+(width-width2)/2.0, y-ascent1-bw-descent2, ev2);
@@ -951,7 +966,7 @@ QString JKQTMathText::MTmatrixNode::getTypeName() const
     return "MTmatrixNode";
 }
 
-void JKQTMathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     JKQTMathText::MTenvironment ev1=currentEv;
 
@@ -993,7 +1008,7 @@ void JKQTMathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTMathText
     strikeoutPos=xh;
 }
 
-double JKQTMathText::MTmatrixNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTmatrixNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
 
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
@@ -1088,7 +1103,7 @@ JKQTMathText::MTdecoratedNode::~MTdecoratedNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     double wc=fm.boundingRect("A").width();
     double dheightfactor=1.0+parent->getDecorationHeightFactor()*2.0;
@@ -1100,7 +1115,7 @@ void JKQTMathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTMathT
     width=width+0.3*wc;
 }
 
-double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     MTenvironment ev=currentEv;
     double width=0, baselineHeight=0, overallHeight=0, strikeoutPos=0;
@@ -1248,39 +1263,47 @@ JKQTMathText::MTsuperscriptNode::~MTsuperscriptNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTsuperscriptNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTsuperscriptNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     JKQTMathText::MTenvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
+    QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
     child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
-    double shift=0;//parent->getSuperShiftFactor()*fm.ascent();
-    overallHeight=overallHeight+shift;
-    strikeoutPos=fm.strikeOutPos();
-    if (currentEv.italic) width=width+double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    double shift=parent->getSuperShiftFactor()*tbr.height();
+
+    if (prevNodeSize!=nullptr && prevNodeSize->baselineHeight>tbr.height()) {
+        shift=prevNodeSize->baselineHeight-(overallHeight-baselineHeight)-shift;
+    }
+
+    double yshift=shift+overallHeight-baselineHeight;
+    baselineHeight=overallHeight=overallHeight+shift;
+    strikeoutPos=strikeoutPos-yshift;
+    if (currentEv.italic && prevNodeSize==nullptr) width=width+double(fm.width(' '))*parent->getItalicCorrectionFactor();
 }
 
-double JKQTMathText::MTsuperscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTsuperscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
     ev.fontSize=ev.fontSize*parent->getSubsuperSizeFactor();
 
-    double cwidth, cbaselineHeight, coverallheight, cStrikeoutPos;
-    child->getSize(painter, ev, cwidth, cbaselineHeight, coverallheight, cStrikeoutPos);
+    double cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos;
+    child->getSize(painter, ev, cWidth, cBaselineHeight, cOverallHeight, cStrikeoutPos);
 
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
+    QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
+    double shift=parent->getSuperShiftFactor()*tbr.height();
 
-    double shift=0;//parent->getSuperShiftFactor()*fm.ascent();
-    //double shift=ev.;
+    if (prevNodeSize!=nullptr && prevNodeSize->baselineHeight>tbr.height()) {
+        shift=prevNodeSize->baselineHeight-(cOverallHeight-cBaselineHeight)-shift;
+    }
+
+    double yshift=shift+cOverallHeight-cBaselineHeight;
     double xx=x;
-    if (currentEv.italic) xx=xx+double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    if (currentEv.italic && prevNodeSize==nullptr) xx=xx+double(fm.width(' '))*parent->getItalicCorrectionFactor();
 
-    return child->draw(painter, xx, y-shift, ev);//+0.5*fm.boundingRect("A").width();
+    return child->draw(painter, xx, y-yshift, ev);//+0.5*fm.boundingRect("A").width();
 }
 
-bool JKQTMathText::MTsuperscriptNode::isSubOrSuper()
-{
-    return true;
-}
 
 QString JKQTMathText::MTsuperscriptNode::getTypeName() const
 {
@@ -1321,7 +1344,7 @@ JKQTMathText::MTbraceNode::~MTbraceNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
 
     JKQTMathText::MTenvironment ev=currentEv;
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
@@ -1339,7 +1362,7 @@ void JKQTMathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTMathText:
 
 }
 
-double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     //std::cout<<"drawing brace-node: '"<<openbrace.toStdString()<<"' ... '"<<closebrace.toStdString()<<"'\n";
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
@@ -1353,11 +1376,11 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
     double bracewidth=0, braceheight=0;
     getBraceWidth(painter, ev, baselineHeight, overallHeight, bracewidth, braceheight);
 
-    double cwidth=0;
-    double cbaselineHeight=0;
-    double coverallHeight=0, cstrikeoutPos=0;
+    double cWidth=0;
+    double cBaselineHeight=0;
+    double cOverallHeight=0, cstrikeoutPos=0;
 
-    getSize(painter, currentEv, cwidth, cbaselineHeight, coverallHeight, cstrikeoutPos);
+    getSize(painter, currentEv, cWidth, cBaselineHeight, cOverallHeight, cstrikeoutPos);
 
     double lw=qMax(0.25,ceil(currentEv.fontSize/12.0));//fm.lineWidth();
 
@@ -1371,62 +1394,62 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
     double brace_fraction=0.85;
     if (openbrace=="(") {
         QPainterPath path;
-        double y1=y+(coverallHeight-cbaselineHeight);
-        double y2=y-cbaselineHeight;
+        double y1=y+(cOverallHeight-cBaselineHeight);
+        double y2=y-cBaselineHeight;
         path.moveTo(xnew+brace_fraction*bracewidth, y1);
         path.cubicTo(xnew, (y1+y2)/2.0+fabs(y1-y2)/6.0, xnew, (y1+y2)/2.0-fabs(y1-y2)/6.0   , xnew+brace_fraction*bracewidth, y2);
         painter.drawPath(path);
     } else if (openbrace=="[") {
         QPainterPath path;
-        double y1=y+(coverallHeight-cbaselineHeight);
-        double y2=y-cbaselineHeight;
+        double y1=y+(cOverallHeight-cBaselineHeight);
+        double y2=y-cBaselineHeight;
         path.moveTo(xnew+brace_fraction*bracewidth, y1);
         path.lineTo(xnew+lw/2.0, y1);
         path.lineTo(xnew+lw/2.0, y2);
         path.lineTo(xnew+brace_fraction*bracewidth, y2);
         painter.drawPath(path);
     } else if (openbrace=="{") {
-        QPainterPath path=makeHBracePath(0,0,coverallHeight, bracewidth*brace_fraction);
+        QPainterPath path=makeHBracePath(0,0,cOverallHeight, bracewidth*brace_fraction);
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(xnew+bracewidth*(1.0-brace_fraction), y-cbaselineHeight+coverallHeight/2.0);
+        painter.translate(xnew+bracewidth*(1.0-brace_fraction), y-cBaselineHeight+cOverallHeight/2.0);
         painter.rotate(90);
         painter.drawPath(path);
 
     } else if (openbrace=="_") {
         QPainterPath path;
-        double y1=y+(coverallHeight-cbaselineHeight);
-        double y2=y-cbaselineHeight;
+        double y1=y+(cOverallHeight-cBaselineHeight);
+        double y2=y-cBaselineHeight;
         path.moveTo(xnew+brace_fraction*bracewidth, y1);
         path.lineTo(xnew, y1);
         path.lineTo(xnew, y2);
         painter.drawPath(path);
     } else if (openbrace=="~") {
         QPainterPath path;
-        double y1=y+(coverallHeight-cbaselineHeight);
-        double y2=y-cbaselineHeight;
+        double y1=y+(cOverallHeight-cBaselineHeight);
+        double y2=y-cBaselineHeight;
         path.moveTo(xnew, y1);
         path.lineTo(xnew, y2);
         path.lineTo(xnew+brace_fraction*bracewidth, y2);
         painter.drawPath(path);
     } else if (openbrace=="|") {
         QPainterPath path;
-        double y1=y+(coverallHeight-cbaselineHeight);
-        double y2=y-cbaselineHeight;
+        double y1=y+(cOverallHeight-cBaselineHeight);
+        double y2=y-cBaselineHeight;
         QLineF l(xnew+brace_fraction*bracewidth, y1, xnew+brace_fraction*bracewidth, y2);
         if (l.length()>0) painter.drawLine(l);
         painter.drawPath(path);
     } else if (openbrace=="#" || openbrace=="||") {
         QPainterPath path;
-        double y1=y+(coverallHeight-cbaselineHeight);
-        double y2=y-cbaselineHeight;
+        double y1=y+(cOverallHeight-cBaselineHeight);
+        double y2=y-cBaselineHeight;
         QLineF l(xnew+brace_fraction*bracewidth, y1, xnew+brace_fraction*bracewidth, y2);
         if (l.length()>0) painter.drawLine(l);
         l=QLineF(xnew+brace_fraction*bracewidth-1.5*lw, y1, xnew+brace_fraction*bracewidth-1.5*lw, y2);
         if (l.length()>0) painter.drawLine(l);
     } else if (openbrace=="<") {
         QPainterPath path;
-        double y1=y+(coverallHeight-cbaselineHeight);
-        double y2=y-cbaselineHeight;
+        double y1=y+(cOverallHeight-cBaselineHeight);
+        double y2=y-cBaselineHeight;
         path.moveTo(xnew+brace_fraction*bracewidth, y1);
         path.lineTo(xnew, (y2+y1)/2.0);
         path.lineTo(xnew+brace_fraction*bracewidth, y2);
@@ -1441,62 +1464,62 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
         painter.setPen(p);
         if (closebrace==")") {
             QPainterPath path;
-            double y1=y+(coverallHeight-cbaselineHeight);
-            double y2=y-cbaselineHeight;
+            double y1=y+(cOverallHeight-cBaselineHeight);
+            double y2=y-cBaselineHeight;
             path.moveTo(xnew+(1.0-brace_fraction)*bracewidth, y1);
             path.cubicTo(xnew+bracewidth, (y1+y2)/2.0+fabs(y1-y2)/6.0, xnew+bracewidth, (y1+y2)/2.0-fabs(y1-y2)/6.0   , xnew+(1.0-brace_fraction)*bracewidth, y2);
             painter.drawPath(path);
         } else if (closebrace=="]") {
             QPainterPath path;
-            double y1=y+(coverallHeight-cbaselineHeight);
-            double y2=y-cbaselineHeight;
+            double y1=y+(cOverallHeight-cBaselineHeight);
+            double y2=y-cBaselineHeight;
             path.moveTo(xnew+(1.0-brace_fraction)*bracewidth, y1);
             path.lineTo(xnew+bracewidth-lw/2.0, y1);
             path.lineTo(xnew+bracewidth-lw/2.0, y2);
             path.lineTo(xnew+(1.0-brace_fraction)*bracewidth, y2);
             painter.drawPath(path);
         } else if (closebrace=="}") {
-            QPainterPath path=makeHBracePath(0,0,coverallHeight, bracewidth*brace_fraction);
+            QPainterPath path=makeHBracePath(0,0,cOverallHeight, bracewidth*brace_fraction);
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-            painter.translate(xnew+bracewidth*brace_fraction, y-cbaselineHeight+coverallHeight/2.0);
+            painter.translate(xnew+bracewidth*brace_fraction, y-cBaselineHeight+cOverallHeight/2.0);
             painter.rotate(270);
             painter.drawPath(path);
 
         } else if (closebrace=="_") {
             QPainterPath path;
-            double y1=y+(coverallHeight-cbaselineHeight);
-            double y2=y-cbaselineHeight;
+            double y1=y+(cOverallHeight-cBaselineHeight);
+            double y2=y-cBaselineHeight;
             path.moveTo(xnew+(1.0-brace_fraction)*bracewidth, y1);
             path.lineTo(xnew+bracewidth, y1);
             path.lineTo(xnew+bracewidth, y2);
             painter.drawPath(path);
         } else if (closebrace=="~") {
             QPainterPath path;
-            double y1=y+(coverallHeight-cbaselineHeight);
-            double y2=y-cbaselineHeight;
+            double y1=y+(cOverallHeight-cBaselineHeight);
+            double y2=y-cBaselineHeight;
             path.moveTo(xnew+bracewidth, y1);
             path.lineTo(xnew+bracewidth, y2);
             path.lineTo(xnew+(1.0-brace_fraction)*bracewidth, y2);
             painter.drawPath(path);
         } else if (closebrace=="|") {
             QPainterPath path;
-            double y1=y+(coverallHeight-cbaselineHeight);
-            double y2=y-cbaselineHeight;
+            double y1=y+(cOverallHeight-cBaselineHeight);
+            double y2=y-cBaselineHeight;
             QLineF l(xnew+(1.0-brace_fraction)*bracewidth, y1, xnew+(1.0-brace_fraction)*bracewidth, y2);
             if (l.length()>0) painter.drawLine(l);
             painter.drawPath(path);
         } else if (closebrace=="#" || closebrace=="||") {
             QPainterPath path;
-            double y1=y+(coverallHeight-cbaselineHeight);
-            double y2=y-cbaselineHeight;
+            double y1=y+(cOverallHeight-cBaselineHeight);
+            double y2=y-cBaselineHeight;
             QLineF l(xnew+(1.0-brace_fraction)*bracewidth, y1, xnew+(1.0-brace_fraction)*bracewidth, y2);
             if (l.length()>0) painter.drawLine(l);
             l=QLineF(xnew+(1.0-brace_fraction)*bracewidth+1.5*lw, y1, xnew+(1.0-brace_fraction)*bracewidth+1.5*lw, y2);
             if (l.length()>0) painter.drawLine(l);
         } else if (closebrace==">") {
             QPainterPath path;
-            double y1=y+(coverallHeight-cbaselineHeight);
-            double y2=y-cbaselineHeight;
+            double y1=y+(cOverallHeight-cBaselineHeight);
+            double y2=y-cBaselineHeight;
             path.moveTo(xnew+(1.0-brace_fraction)*bracewidth, y1);
             path.lineTo(xnew+bracewidth, (y2+y1)/2.0);
             path.lineTo(xnew+(1.0-brace_fraction)*bracewidth, y2);
@@ -1595,23 +1618,27 @@ QString JKQTMathText::MTlistNode::getTypeName() const
     return "MTlistNode";
 }
 
-void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     width=0;
     overallHeight=0;
     baselineHeight=0;
     strikeoutPos=0;
     QFontMetricsF fm(currentEv.getFont(parent));
-    QRectF tbr=parent->getTBR(currentEv.getFont(parent), "M", painter.device());
+    QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
 
 
     double xnew=0;
     bool wasBrace=false;
     for (int i=0; i<nodes.size(); i++) {
-        {
-            double w1, oh, bh, sp;
-            nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);
-            //qDebug()<<"i="<<i<<" width="<<width<<" baselineHeight="<<baselineHeight<<" overallHeight="<<overallHeight<<" strikeoutPos="<<strikeoutPos<<"\n"<<"### nodes["<<i<<"] = "<<nodes[i]->getTypeName()<< "   w="<<w1<<" bh="<<bh<<" oh="<<oh<<" sp="<<sp;
+        MTnodeSize prevNodeSize;
+        MTnodeSize* prevNodeSizePtr=nullptr;
+
+        if (i>0 && wasBrace) {
+            nodes[i-1]->getSize(painter, currentEv, prevNodeSize.width, prevNodeSize.baselineHeight, prevNodeSize.overallHeight, prevNodeSize.strikeoutPos);
+            prevNodeSizePtr=&prevNodeSize;
         }
+
+
         bool doDraw=true;
         MTsymbolNode* smb=dynamic_cast<MTsymbolNode*>(nodes[i]);
         // if we find a subscript/superscript node we check whether the next node is super/subscript
@@ -1620,28 +1647,33 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<MTsubscriptNode*>(nodes[i+1])) { // is this subscript?
                     double w1, w2, oh, bh, sp;
-                    nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);                    
-                    double shift=parent->getSuperShiftFactor()*fm.xHeight()+(oh-bh);//(overallHeight-baselineHeight)+(oh-bh);
-                    if (wasBrace) {
-                        shift=baselineHeight-parent->getSuperShiftFactor()*tbr.height()+(oh-bh);
+                    nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp, prevNodeSizePtr);
+
+                    if (bh>baselineHeight) {
+                        overallHeight=overallHeight+bh-baselineHeight;
+                        baselineHeight=bh;
+                        strikeoutPos=sp;
+                    }
+                    if (baselineHeight+oh-bh>overallHeight) {
+                        overallHeight=baselineHeight+oh-bh;
+                        strikeoutPos=sp;
                     }
 
-
-                    //qDebug()<<"super_sub: super: "<<nodes[i]->getTypeName()<<"  w1="<<w1<<" bh"<<bh<<" oh="<<oh<<" sp="<<sp;
-                    if (shift+bh>baselineHeight) {
-                        double lheight=overallHeight-baselineHeight;
-                        baselineHeight=shift+bh;
-                        overallHeight=baselineHeight+lheight;
-                    }
                     i++;
-                    nodes[i]->getSize(painter, currentEv, w2, bh, oh, sp);
+                    nodes[i]->getSize(painter, currentEv, w2, bh, oh, sp, prevNodeSizePtr);
                     //qDebug()<<"super_sub:   sub: "<<nodes[i]->getTypeName()<<"  w2="<<w2<<" bh"<<bh<<" oh="<<oh<<" sp="<<sp;
-                    if (shift+oh-bh>overallHeight-baselineHeight) {
-                        overallHeight=baselineHeight+shift+(oh-bh);
+                    if (bh>baselineHeight) {
+                        overallHeight=overallHeight+bh-baselineHeight;
+                        baselineHeight=bh;
+                        strikeoutPos=sp;
                     }
-                    doDraw=false;
+                    if (baselineHeight+oh-bh>overallHeight) {
+                        overallHeight=baselineHeight+oh-bh;
+                        strikeoutPos=sp;
+                    }
                     xnew+=qMax(w1+fm.width(" "), w2);
 
+                    doDraw=false;
                     //qDebug()<<"### super+sub";
                     //qDebug()<<"### subsupop: super+sub   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
                 }
@@ -1650,26 +1682,32 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<MTsuperscriptNode*>(nodes[i+1])) { // is this subscript?
                     double w1, w2, oh, bh, sp;
-                    nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp);
-                    double shift=parent->getSuperShiftFactor()*fm.xHeight()+(oh-bh);//(overallHeight-baselineHeight)+(oh-bh);
-                    if (wasBrace) {
-                        shift=baselineHeight-parent->getSuperShiftFactor()*parent->getTBR(currentEv.getFont(parent), "M", painter.device()).height()+(oh-bh);
+                    nodes[i]->getSize(painter, currentEv, w1, bh, oh, sp, prevNodeSizePtr);
+                    if (bh>baselineHeight) {
+                        overallHeight=overallHeight+bh-baselineHeight;
+                        baselineHeight=bh;
+                        strikeoutPos=sp;
+                    }
+                    if (baselineHeight+oh-bh>overallHeight) {
+                        overallHeight=baselineHeight+oh-bh;
+                        strikeoutPos=sp;
                     }
 
-                    //qDebug()<<"sub_super:   sub: "<<nodes[i]->getTypeName()<<"  w1="<<w1<<" bh"<<bh<<" oh="<<oh<<" sp="<<sp;
-                    if (shift+oh-bh>overallHeight-baselineHeight) {
-                        overallHeight=baselineHeight+shift+(oh-bh);
-                    }
                     i++;
-                    nodes[i]->getSize(painter, currentEv, w2, bh, oh, sp);
-                    //qDebug()<<"sub_super: super: "<<nodes[i]->getTypeName()<<"  w2="<<w2<<" bh"<<bh<<" oh="<<oh<<" sp="<<sp;
-                    if (shift+bh>baselineHeight) {
-                        double lheight=overallHeight-baselineHeight;
-                        baselineHeight=shift+bh;
-                        overallHeight=baselineHeight+lheight;
+                    nodes[i]->getSize(painter, currentEv, w2, bh, oh, sp, prevNodeSizePtr);
+                    if (bh>baselineHeight) {
+                        overallHeight=overallHeight+bh-baselineHeight;
+                        baselineHeight=bh;
+                        strikeoutPos=sp;
                     }
-                    doDraw=false;
+                    if (baselineHeight+oh-bh>overallHeight) {
+                        overallHeight=baselineHeight+oh-bh;
+                        strikeoutPos=sp;
+                    }
                     xnew+=qMax(w1, w2+fm.width(" "));
+
+
+                    doDraw=false;
                     //qDebug()<<"### sub+super";
                     //qDebug()<<"### subsupop: sub+super1   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
                 }
@@ -1770,92 +1808,63 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
 
         if (i<nodes.size() && doDraw) {
             double w, oh, bh, sp;
-            nodes[i]->getSize(painter, currentEv, w, bh, oh, sp);
-            double shift=0;
+            nodes[i]->getSize(painter, currentEv, w, bh, oh, sp, prevNodeSizePtr);
 
-            if (dynamic_cast<MTsuperscriptNode*>(nodes[i])) {
-                //QFontMetricsF fm(currentEv.getFont(parent));
-                //QRectF tbr=fm.tightBoundingRect("M");
-                shift=parent->getSuperShiftFactor()*tbr.height()+(oh-bh);//((overallHeight-baselineHeight)+(oh-bh));
-                if (wasBrace) {
-                    shift=baselineHeight-parent->getSuperShiftFactor()*tbr.height()+(oh-bh);
-                }
-                //qDebug()<<"+++ super: bh="<<bh<<" oh="<<oh<<" shift="<<shift<<" wasBrace="<<wasBrace<<" baselineHeight="<<baselineHeight<<" overallHeight="<<overallHeight<<" fm.ascent="<<fm.ascent();
 
-                w+=fm.width(" ");
-                if (shift+bh>baselineHeight) {
-                    double lheight=overallHeight-baselineHeight;
-                    baselineHeight=shift+bh;
-                    overallHeight=baselineHeight+lheight;
-                }
-                //qDebug()<<"### super";
-                //qDebug()<<"### subsupop: super   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
-            } else if (dynamic_cast<MTsubscriptNode*>(nodes[i])) {
-                //QFontMetricsF fm(currentEv.getFont(parent));
-                shift=0;//parent->getSuperShiftFactor()*fm.ascent();//((overallHeight-baselineHeight)+(oh-bh));
-                w+=fm.width(" ");
-                if (shift+oh-bh>overallHeight-baselineHeight) {
-                    overallHeight=baselineHeight+shift+(oh-bh);
-                }
-                //qDebug()<<"### sub";
-                //qDebug()<<"### subsupop: sub   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
-            } else {
-                //qDebug()<<"### else:  bh="<<bh<<" baselineHeight="<<baselineHeight<<"   oh="<<oh<<" overallHeight="<<overallHeight;
-                if (bh>baselineHeight) {
-                    overallHeight=overallHeight+bh-baselineHeight;
-                    baselineHeight=bh;
-                    strikeoutPos=sp;
-                }
-                if (baselineHeight+oh-bh>overallHeight) {
-                    overallHeight=baselineHeight+oh-bh;
-                    strikeoutPos=sp;
-                }
-                //qDebug()<<"### subsupop: else   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
+            //qDebug()<<"### else:  bh="<<bh<<" baselineHeight="<<baselineHeight<<"   oh="<<oh<<" overallHeight="<<overallHeight;
+            if (bh>baselineHeight) {
+                overallHeight=overallHeight+bh-baselineHeight;
+                baselineHeight=bh;
+                strikeoutPos=sp;
             }
+            if (baselineHeight+oh-bh>overallHeight) {
+                overallHeight=baselineHeight+oh-bh;
+                strikeoutPos=sp;
+            }
+            //qDebug()<<"### subsupop: else   overallHeight="<<overallHeight<<" baselineHeight="<<baselineHeight;
+
             xnew+=w;
             //qDebug()<<i<<xnew;
-            //if (baselineHeight+oh+shift>overallHeight) overallHeight=baselineHeight+oh+shift;
-            /*if (oh+shift-bh>overallHeight-baselineHeight) {
-                overallHeight=baselineHeight+oh+shift-bh;
-            }*/
         }
          wasBrace=dynamic_cast<MTbraceNode*>(nodes[i]);
     }
     width=xnew;
 }
 
-double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     double ynew=y;
     double xnew=x;
-    double cwidth=0, cbaselineHeight=0, coverallHeight=0, cstrieoutPos=0;
     //qDebug()<<"listNode: "<<currentEv.fontSize;
     QFontMetricsF fm(currentEv.getFont(parent));
-    QRectF tbr=parent->getTBR(currentEv.getFont(parent), "M", painter.device());
     bool wasBrace=false;
     for (int i=0; i<nodes.size(); i++) {
         bool doDraw=true;
+
+        MTnodeSize prevNodeSize;
+        MTnodeSize* prevNodeSizePtr=nullptr;
+
+        if (i>0 && wasBrace) {
+            nodes[i-1]->getSize(painter, currentEv, prevNodeSize.width, prevNodeSize.baselineHeight, prevNodeSize.overallHeight, prevNodeSize.strikeoutPos);
+            prevNodeSizePtr=&prevNodeSize;
+        }
+
+
         MTsymbolNode* smb=dynamic_cast<MTsymbolNode*>(nodes[i]);
         // if we find a subscript/superscript node we check whether the next node is super/subscript
         // if so, we typeset them at the same x-psotion, so sub/superscripts appear correctly
         if (dynamic_cast<MTsuperscriptNode*>(nodes[i])) {
-            double ccwidth=0, ccbaselineHeight=0, ccoverallHeight=0, ccstrieoutPos=0;
-            nodes[i]->getSize(painter, currentEv, ccwidth, ccbaselineHeight, ccoverallHeight, ccstrieoutPos);
 
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<MTsubscriptNode*>(nodes[i+1])) { // is this subscript?
 
-                    double shift=-parent->getSuperShiftFactor()*tbr.height();
-                    if (wasBrace) {
-                        shift=-cbaselineHeight+parent->getSuperShiftFactor()*tbr.height();
-                    }
                     //painter.setPen(QPen("red"));
-                    //painter.drawEllipse(xnew-4,ynew+shift-(ccoverallHeight-ccbaselineHeight)-4,8,8);
-                    double xnew1=nodes[i]->draw(painter, xnew, ynew+shift-(ccoverallHeight-ccbaselineHeight), currentEv);
+                    //painter.drawEllipse(xnew-4,ynew+shift-(ccOverallHeight-ccBaselineHeight)-4,8,8);
+                    double xnew1=nodes[i]->draw(painter, xnew, ynew, currentEv, prevNodeSizePtr);
                     i++;
                     //painter.setPen(QPen("magenta"));
                     //painter.drawEllipse(xnew-4,ynew-4,8,8);
-                    double xnew2=nodes[i]->draw(painter, xnew, ynew, currentEv);
+                    double xnew2=nodes[i]->draw(painter, xnew, ynew, currentEv, prevNodeSizePtr);
                     //i++;
                     xnew=qMax(xnew1, xnew2);
                     doDraw=false;
@@ -1864,20 +1873,13 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
         } else if (dynamic_cast<MTsubscriptNode*>(nodes[i])) {
             if (i+1<nodes.size()) { // is there one mor node behind?
                 if (dynamic_cast<MTsuperscriptNode*>(nodes[i+1])) { // is this subscript?
+                    //painter.setPen(QPen("red"));
+                    //painter.drawEllipse(xnew-4,ynew+shift-(ccOverallHeight-ccBaselineHeight)-4,8,8);
+                    double xnew1=nodes[i]->draw(painter, xnew, ynew, currentEv, prevNodeSizePtr);
+                    i++;
                     //painter.setPen(QPen("magenta"));
                     //painter.drawEllipse(xnew-4,ynew-4,8,8);
-                    double xnew1=nodes[i]->draw(painter, xnew, ynew, currentEv);
-                    i++;
-                    double ccwidth=0, ccbaselineHeight=0, ccoverallHeight=0, ccstrieoutPos=0;
-                    nodes[i]->getSize(painter, currentEv, ccwidth, ccbaselineHeight, ccoverallHeight, ccstrieoutPos);
-                    //QRectF tbr=fm.tightBoundingRect("M");
-                    double shift=-parent->getSuperShiftFactor()*tbr.height();
-                    if (wasBrace) {
-                        shift=-cbaselineHeight+parent->getSuperShiftFactor()*tbr.height();
-                    }
-                    //painter.setPen(QPen("red"));
-                    //painter.drawEllipse(xnew-4,ynew+shift-(ccoverallHeight-ccbaselineHeight)-4,8,8);
-                    double xnew2=nodes[i]->draw(painter, xnew, ynew+shift-(ccoverallHeight-ccbaselineHeight), currentEv);
+                    double xnew2=nodes[i]->draw(painter, xnew, ynew, currentEv, prevNodeSizePtr);
                     //i++;
                     xnew=qMax(xnew1, xnew2);
                     doDraw=false;
@@ -1959,25 +1961,10 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                     }
                 }
             }
-
-            nodes[i]->getSize(painter, currentEv, cwidth, cbaselineHeight, coverallHeight, cstrieoutPos);
         }
 
         if (i<nodes.size() && doDraw) {
-            if (dynamic_cast<MTsuperscriptNode*>(nodes[i])) { // is this superscript?
-                double ccwidth=0, ccbaselineHeight=0, ccoverallHeight=0, ccstrieoutPos=0;
-                nodes[i]->getSize(painter, currentEv, ccwidth, ccbaselineHeight, ccoverallHeight, ccstrieoutPos);
-                //QRectF tbr=fm.tightBoundingRect("M");
-                double shift=-parent->getSuperShiftFactor()*tbr.height();
-                if (wasBrace) {
-                    shift=-cbaselineHeight+parent->getSuperShiftFactor()*tbr.height();
-                }
-                //painter.setPen(QPen("red"));
-                //painter.drawEllipse(xnew-4,ynew+shift-(ccoverallHeight-ccbaselineHeight)-4,8,8);
-                xnew=nodes[i]->draw(painter, xnew, ynew+shift-(ccoverallHeight-ccbaselineHeight), currentEv);
-            } else {
-                xnew=nodes[i]->draw(painter, xnew, ynew, currentEv);
-            }
+            xnew=nodes[i]->draw(painter, xnew, ynew, currentEv, prevNodeSizePtr);
         }
         wasBrace=dynamic_cast<MTbraceNode*>(nodes[i]);
     }
@@ -2746,7 +2733,7 @@ QFont JKQTMathText::MTsymbolNode::getFontName(symbolFont f, QFont& fi) {
     return fr;
 }
 
-void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) {
+void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
     QFont f=currentEv.getFont(parent);
     f=getFontName(font, f);
     f.setPointSizeF(f.pointSizeF()*fontFactor);
@@ -2757,7 +2744,7 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
     QFontMetricsF fm(f, painter.device());
     QString symb=symbol;
     width=0;
-    if (currentEv.insideMath) width=qMax(parent->getTBR(f, symb, painter.device()).width(),parent->getTBR(f, "i", painter.device()).width());//fm.width(symbol);
+    if (currentEv.insideMath) width=qMax(parent->getTightBoundingRect(f, symb, painter.device()).width(),parent->getTightBoundingRect(f, "i", painter.device()).width());//fm.width(symbol);
     else width=fm.boundingRect(symb).width();//fm.width(symbol);
 
     width=qMax(fm.width("j"), width);
@@ -2765,20 +2752,20 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
         width=fm.width("a");
         if (symbolName=="|") width=fm.width("1")*0.8;
         else if (symbolName=="infty") width=fm.width("M");
-        else if (symbolName=="quad") width=parent->getTBR(f, "M", painter.device()).width();
-        else if (symbolName==" ") width=parent->getTBR(f, "x", painter.device()).width();
-        else if (symbolName==";") width=parent->getTBR(f, "x", painter.device()).width()*0.75;
-        else if (symbolName==":") width=parent->getTBR(f, "x", painter.device()).width()*0.5;
-        else if (symbolName==",") width=parent->getTBR(f, "x", painter.device()).width()*0.25;
-        else if (symbolName=="!") width=-parent->getTBR(f, "x", painter.device()).width()*0.25;
-        else if (symbolName=="longleftarrow") { width=parent->getTBR(f, "X", painter.device()).width()*3.5; symb="x"; }
-        else if (symbolName=="longrightarrow") {  width=parent->getTBR(f, "X", painter.device()).width()*3.5; symb="x"; }
-        else if (symbolName=="Longleftarrow") { width=parent->getTBR(f, "X", painter.device()).width()*3.5; symb="x"; }
-        else if (symbolName=="Longrightarrow") { width=parent->getTBR(f, "X", painter.device()).width()*3.5; symb="x"; }
-        else if (symbolName=="longleftrightarrow") { width=parent->getTBR(f, "X", painter.device()).width()*3.5; symb="x"; }
-        else if (symbolName=="Longleftrightarrow") { width=parent->getTBR(f, "X", painter.device()).width()*3.5; symb="x"; }
+        else if (symbolName=="quad") width=parent->getTightBoundingRect(f, "M", painter.device()).width();
+        else if (symbolName==" ") width=parent->getTightBoundingRect(f, "x", painter.device()).width();
+        else if (symbolName==";") width=parent->getTightBoundingRect(f, "x", painter.device()).width()*0.75;
+        else if (symbolName==":") width=parent->getTightBoundingRect(f, "x", painter.device()).width()*0.5;
+        else if (symbolName==",") width=parent->getTightBoundingRect(f, "x", painter.device()).width()*0.25;
+        else if (symbolName=="!") width=-parent->getTightBoundingRect(f, "x", painter.device()).width()*0.25;
+        else if (symbolName=="longleftarrow") { width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
+        else if (symbolName=="longrightarrow") {  width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
+        else if (symbolName=="Longleftarrow") { width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
+        else if (symbolName=="Longrightarrow") { width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
+        else if (symbolName=="longleftrightarrow") { width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
+        else if (symbolName=="Longleftrightarrow") { width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.5; symb="x"; }
     }
-    QRectF tbr=parent->getTBR(f, symb, painter.device());
+    QRectF tbr=parent->getTightBoundingRect(f, symb, painter.device());
     overallHeight=tbr.height();// fm.height();
     baselineHeight=tbr.height()-tbr.bottom();
     if (exactAscent) {
@@ -2798,7 +2785,7 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
 
 }
 
-double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv) {
+double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0;
     double baselineHeight=0;
@@ -2837,7 +2824,7 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
         // if the symbol has been recognized in the constructor: draw the symbol
         painter.drawText(QPointF(x+shift, y+yfactor*overallHeight), symbol);
         double xx=x+shift;
-        double yy=y-fm.xHeight()-(parent->getTBR(f, "M", painter.device()).height()-fm.xHeight())/3.0;
+        double yy=y-fm.xHeight()-(parent->getTightBoundingRect(f, "M", painter.device()).height()-fm.xHeight())/3.0;
         QLineF l(xx, yy, xx+xwi/3.0+((currentEv.italic)?(xwi/3.0):0), yy);
         if (drawBar&&l.length()>0) painter.drawLine(l);
 
@@ -2872,43 +2859,43 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     } else if (symbolName==",") { // 25% space
     } else if (symbolName=="!") { // -25% space
     } else if (symbolName=="longleftarrow") {
-        double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
-        double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
-        double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, false);
+        double width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        double dx=parent->getTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        double ypos=y-parent->getTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTightBoundingRect(f, "M", painter.device()).height()*0.5, true, false);
         painter.drawPath(path);
     } else if (symbolName=="longrightarrow"){
-        double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
-        double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
-        double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, false, true);
+        double width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        double dx=parent->getTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        double ypos=y-parent->getTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTightBoundingRect(f, "M", painter.device()).height()*0.5, false, true);
         painter.drawPath(path);
     } else if (symbolName=="Longleftarrow") {
-        double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
-        double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
-        double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, false);
+        double width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        double dx=parent->getTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        double ypos=y-parent->getTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTightBoundingRect(f, "M", painter.device()).height()*0.5, true, false);
         painter.drawPath(path);
     } else if (symbolName=="Longrightarrow") {
-        double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
-        double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
-        double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, false, true);
+        double width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        double dx=parent->getTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        double ypos=y-parent->getTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTightBoundingRect(f, "M", painter.device()).height()*0.5, false, true);
         painter.drawPath(path);
     } else if (symbolName=="longleftrightarrow") {
-        double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
-        double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
-        double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, true);
+        double width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        double dx=parent->getTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        double ypos=y-parent->getTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        QPainterPath path=makeArrow(x+shift+dx, ypos, width, parent->getTightBoundingRect(f, "M", painter.device()).height()*0.5, true, true);
         painter.drawPath(path);
     } else if (symbolName=="Longleftrightarrow") {
-        double width=parent->getTBR(f, "X", painter.device()).width()*3.0;
-        double dx=parent->getTBR(f, "X", painter.device()).width()*0.25;
-        double ypos=y-parent->getTBR(f, "x", painter.device()).height()/2.0;
-        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTBR(f, "M", painter.device()).height()*0.5, true, true);
+        double width=parent->getTightBoundingRect(f, "X", painter.device()).width()*3.0;
+        double dx=parent->getTightBoundingRect(f, "X", painter.device()).width()*0.25;
+        double ypos=y-parent->getTightBoundingRect(f, "x", painter.device()).height()/2.0;
+        QPainterPath path=makeDArrow(x+shift+dx, ypos, width, parent->getTightBoundingRect(f, "M", painter.device()).height()*0.5, true, true);
         painter.drawPath(path);
     } else { // draw a box to indicate an unavailable symbol
-        QRectF tbr=parent->getTBR(f, "M", painter.device());
+        QRectF tbr=parent->getTightBoundingRect(f, "M", painter.device());
         painter.drawRect(QRectF(x+shift,y-tbr.height(), xwi, tbr.height()*0.8));
     }
     painter.setPen(pold);
@@ -3199,15 +3186,15 @@ JKQTMathText::JKQTMathText(QObject* parent):
     default_brace_factor=brace_factor=1.04;
     default_subsuper_size_factor=subsuper_size_factor=0.7;
     default_italic_correction_factor=italic_correction_factor=0.4;
-    default_sub_shift_factor=sub_shift_factor=0.6;
-    default_super_shift_factor=super_shift_factor=0.5;
+    default_sub_shift_factor=sub_shift_factor=0.4;
+    default_super_shift_factor=super_shift_factor=0.6;
     default_brace_shrink_factor=brace_shrink_factor=0.6;
     default_fontColor=fontColor=QColor("black");
     default_useSTIXfonts=useSTIXfonts=false;
     default_useXITSfonts=useXITSfonts=false;
     default_useASANAfonts=useASANAfonts=false;
     default_frac_factor=frac_factor=0.9;
-    default_frac_shift_factor=frac_shift_factor=0.5;
+    default_frac_shift_factor=frac_shift_factor=0.4;
     default_underbrace_factor=underbrace_factor=0.75;
     default_undersetFactor=undersetFactor=0.7;
     default_decoration_height_factor=decoration_height_factor=0.2;
@@ -4039,7 +4026,7 @@ JKQTMathText::MTnode* JKQTMathText::parseLatexString(bool get, const QString& qu
 QList<JKQTMathText::tbrData> JKQTMathText::tbrs=QList<JKQTMathText::tbrData>();
 QHash<JKQTMathText::tbrDataH, QRectF> JKQTMathText::tbrh=QHash<JKQTMathText::tbrDataH, QRectF>();
 
-QRectF JKQTMathText::getTBR(const QFont &fm, const QString &text, QPaintDevice *pd)
+QRectF JKQTMathText::getTightBoundingRect(const QFont &fm, const QString &text, QPaintDevice *pd)
 {
     JKQTMathText::tbrDataH  dh(fm, text, pd);
     if (pd) {        
@@ -4406,3 +4393,5 @@ void initJKQTMathTextResources()
 {
     Q_INIT_RESOURCE(xits);
 }
+
+JKQTMathText::MTnodeSize::MTnodeSize(): width(0), baselineHeight(0),overallHeight(0),strikeoutPos() {}

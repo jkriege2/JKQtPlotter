@@ -666,51 +666,110 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
     protected:
 
         /** \brief the available fonts */
-        enum MTenvironmentFont { MTEroman, MTEsans, MTEtypewriter, MTEscript, MTEblackboard, MTEcaligraphic };
+        enum MTenvironmentFont {
+            MTEroman,
+            MTEsans,
+            MTEtypewriter,
+            MTEscript,
+            MTEblackboard,
+            MTEcaligraphic
+        };
 
         /** \brief describes the current drawing environment (base fontname ...) */
         struct MTenvironment {
             MTenvironment();
+            /** \brief current font color */
             QColor color;
+            /** \brief current font */
             MTenvironmentFont font;
+            /** \brief current font size [pt] */
             double fontSize;
+            /** \brief is the text currently bold? */
             bool bold;
+            /** \brief is the text currently italic? */
             bool italic;
+            /** \brief is the text currently in small caps? */
             bool smallCaps;
+            /** \brief is the text currently underlined? */
             bool underlined;
+            /** \brief is the text currently overlined? */
             bool overline;
+            /** \brief is the text currently stroke through? */
             bool strike;
+            /** \brief is the text currently are we inside a math environment? */
             bool insideMath;
 
 
+            /** \brief build a QFont object from the settings in this object */
             QFont getFont(JKQTMathText* parent) const;
+            /** \brief generate a HTML prefix that formats the text after it according to the settings in this object
+             *
+             * \param defaultEv environment before applying the current object (to detect changes)
+             * \see toHtmlAfter()
+             */
             QString toHtmlStart(MTenvironment defaultEv) const;
+            /** \brief generate a HTML postfix that formats the text in front of it according to the settings in this object
+             *
+             * \param defaultEv environment before applying the current object (to detect changes)
+             * \see toHtmlAfter()
+             */
             QString toHtmlAfter(MTenvironment defaultEv) const;
+        };
+
+        /** \brief beschreibt die Größe eines Knotens */
+        struct MTnodeSize {
+            MTnodeSize();
+            double width;
+            double baselineHeight;
+            double overallHeight;
+            double strikeoutPos;
         };
 
 
     public:
-        /** \brief subclass representing one node in the syntax tree */
+        /** \brief subclass representing one node in the syntax tree
+         *
+         * \image html jkqtmathtext_node_geo.png
+         */
         class MTnode {
             public:
                 MTnode(JKQTMathText* parent);
                 virtual ~MTnode();
-                /** \brief determine the size of the node, calls getSizeInternal() implementation of the actual type \see getSizeInternal() */
-                void getSize(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos);
-                /** \brief draw the contents at the designated position. returns the x position which to use for the next part of the text */
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv)=0;
-                /** \brief returns true if node is subscript or superscript node */
-                virtual bool isSubOrSuper() { return false; }
-                /** \brief convert node to HTML and returns \c true on success */
+                /** \brief determine the size of the node, calls getSizeInternal() implementation of the actual type \see getSizeInternal()
+                 *
+                 * \param painter painter to use for determining the size
+                 * \param currentEv current environment object
+                 * \param[out] width width of the block/node
+                 * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
+                 * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
+                 * \param[out] strikeoutPos position of the strikeout-line
+                 * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+                 *
+                 */
+                void getSize(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr);
+                /** \brief draw the contents at the designated position
+                 *
+                 * \param painter QPainter to use
+                 * \param x x-position, where the drawing starts [Pixel]
+                 * \param y Y-position of the baseline, where the drawing starts [Pixel]
+                 * \param currentEv JKQTMathText::MTenvironment object describing the current drawing environment/settings
+                 * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
+                 * \return the x position which to use for the next part of the text
+                 */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr)=0;
+                /** \brief convert node to HTML and returns \c true on success
+                 * \param[out] html new HTML code is APPENDED to this string
+                 * \param currentEv JKQTMathText::MTenvironment object describing the current drawing environment/settings
+                 * \param defaultEv JKQTMathText::MTenvironment object describing the default drawing environment/settings when starting to interpret a node tree
+                 * \return \c true on success
+                 */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
 
-                /*! \brief returns the property drawBoxes ( \copybrief drawBoxes ).
-                    \details Description of the parameter drawBoxes is:  <BLOCKQUOTE>\copydoc drawBoxes </BLOCKQUOTE>. 
-                    \see drawBoxes for more information */ 
-                inline bool getDrawBoxes() const { 
-                    return this->drawBoxes; 
-                }
+                /** \brief returns the drawing of colored boxes (for DEBUGGING) around the actual output of the node is enabled */
+                bool getDrawBoxes() const;
+                /** \brief enables the drawing of colored boxes (for DEBUGGING) around the actual output of the node */
                 virtual void setDrawBoxes(bool draw);
+                /** \brief return the name of this class as a string */
                 virtual QString getTypeName() const;
             protected:
                 /** \brief determine the size of the node, overwrite this function in derived classes
@@ -721,12 +780,22 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                  * \param[out] baselineHeight distance from the bottom of the block/node-box to the baseline
                  * \param[out] overallHeight overall height (bottom to top) of the node, the ascent is \c overallHeight-baselineHeight
                  * \param[out] strikeoutPos position of the strikeout-line
+                 * \param[in] prevNodeSize optional parameter, describing the size of the previous node (on the left). This may be used for layout of some nodes (e.g. sub/super to move correctly next to large parantheses ...)
                  *
                  */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos)=0;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr)=0;
 
+                /** \brief parent JKQTMathText object (required for several drawing operations */
                 JKQTMathText* parent;
+                /** \brief enables the drawing of colored boxes (for DEBUGGING) around the actual output of the node */
                 bool drawBoxes;
+                /** \brief draws colored boxes (for DEBUGGING) around the actual output of the node
+                 *
+                 * \param painter QPainter to use
+                 * \param x x-position, where the drawing starts [Pixel]
+                 * \param y Y-position of the baseline, where the drawing starts [Pixel]
+                 * \param currentEv JKQTMathText::MTenvironment object describing the current drawing environment/settings
+                 */
                 void doDrawBoxes(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv);
         };
 
@@ -734,9 +803,11 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTtextNode: public MTnode {
             public:
                 MTtextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
-                virtual ~MTtextNode();
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
+                virtual ~MTtextNode() override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /*! \brief returns the property text ( \copybrief text ).
                     \details Description of the parameter text is:  <BLOCKQUOTE>\copydoc text </BLOCKQUOTE>. 
                     \see text for more information */ 
@@ -746,8 +817,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual QString getTypeName() const override ;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 QString text;
+                /** \brief transforms the text before sizing/drawing (may e.g. exchange special letters for other unicode symbols etc.) */
                 virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
         };
 
@@ -755,28 +827,35 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTplainTextNode: public MTtextNode {
             public:
                 MTplainTextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
-                virtual QString getTypeName() const;
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;
             protected:
-                virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
+                /** \copydoc MTtextNode::textTransform() */
+                virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false) override;
         };
         /** \brief subclass representing one whitepsace node in the syntax tree */
         class MTwhitespaceNode: public MTtextNode {
             public:
                 MTwhitespaceNode(JKQTMathText* parent);
-                virtual ~MTwhitespaceNode();
-                virtual QString getTypeName() const;
+                virtual ~MTwhitespaceNode() override;
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;
                 /** \brief convert node to HTML and returns \c true on success */
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
         };
 
         /** \brief subclass representing one symbol (e.g. \c \\alpha , \c \\cdot ...) node in the syntax tree */
         class MTsymbolNode: public MTnode {
             public:
                 MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
-                virtual ~MTsymbolNode();
-                virtual QString getTypeName() const;
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
+                virtual ~MTsymbolNode() override;
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /*! \brief returns the property symbolName ( \copybrief symbolName ).
                     \details Description of the parameter symbolName is:  <BLOCKQUOTE>\copydoc symbolName </BLOCKQUOTE>. 
                     \see symbolName for more information */ 
@@ -785,7 +864,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \brief this string will be sent to the drawText method with properly set fonts */
                 QString symbol;
                 /** \brief the symbol name supplied to the constructor */
@@ -812,18 +891,20 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
 
         /** \brief subclass representing a list of nodes in the syntax tree
-         *
-         * \image html jkqtmathtext_MTlistNode_getSizeInternal_frac.png
          */
         class MTlistNode: public MTnode {
             public:
                 MTlistNode(JKQTMathText* parent);
-                virtual ~MTlistNode();
-                virtual QString getTypeName() const;
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
+                virtual ~MTlistNode() override;
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 void addNode(MTnode* n) { nodes.append(n); }
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
                 /*! \brief returns the property nodes ( \copybrief nodes ).
                     \details Description of the parameter nodes is:  <BLOCKQUOTE>\copydoc nodes </BLOCKQUOTE>. 
                     \see nodes for more information */ 
@@ -832,7 +913,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 QList<MTnode*> nodes;
                 QSet<QString> subsupOperations;
         };
@@ -841,16 +922,18 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTinstruction1Node: public MTnode {
             public:
                 MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters=QStringList());
-                virtual ~MTinstruction1Node();
-                virtual QString getTypeName() const;
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
+                virtual ~MTinstruction1Node() override;
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \brief convert node to HTML and returns \c true on success */
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
-                /*! \brief returns the property child ( \copybrief child ).
-                    \details Description of the parameter child is:  <BLOCKQUOTE>\copydoc child </BLOCKQUOTE>. 
-                    \see child for more information */ 
-                inline MTnode* getChild() const { 
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
+                /*! \brief returns the child node */
+                inline MTnode* getChild() const {
                     return this->child; 
                 }
                 /*! \brief returns the property name ( \copybrief name ).
@@ -867,7 +950,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 bool setupMTenvironment(JKQTMathText::MTenvironment &ev);
 
                 MTnode* child;
@@ -877,49 +960,56 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
 
 
-        /** \brief subclass representing an subscript node with exactly one argument in the syntax tree */
+        /** \brief subclass representing an subscript node with exactly one argument in the syntax tree
+         *
+         * \image html jkqtmathtext_subscriptnode_getSizeInternal.png
+         */
         class MTsubscriptNode: public MTnode {
             public:
                 MTsubscriptNode(JKQTMathText* parent, MTnode* child);
-                virtual ~MTsubscriptNode();
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                /** \brief returns true if node is subscript or superscript node */
-                virtual bool isSubOrSuper() ;
-                virtual QString getTypeName() const;
-                /*! \brief returns the property child ( \copybrief child ).
-                    \details Description of the parameter child is:  <BLOCKQUOTE>\copydoc child </BLOCKQUOTE>. 
-                    \see child for more information */ 
-                inline MTnode* getChild() const { 
+                virtual ~MTsubscriptNode() override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;                /*! \brief returns the child node */
+                 inline MTnode* getChild() const {
                     return this->child; 
                 }
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 MTnode* child;
         };
 
-        /** \brief subclass representing an superscript node with exactly one argument in the syntax tree */
+        /** \brief subclass representing an superscript node with exactly one argument in the syntax tree
+         *
+         * \image html jkqtmathtext_subscriptnode_getSizeInternal.png
+         *
+         * \note a MTlistNode might modify the positioning slightly for special cases (e.g. \c \\int , \c \\sum ... or after braces)
+         */
         class MTsuperscriptNode: public MTnode {
             public:
                 MTsuperscriptNode(JKQTMathText* parent, MTnode* child);
-                virtual ~MTsuperscriptNode();
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                /** \brief returns true if node is subscript or superscript node */
-                virtual bool isSubOrSuper();
-                /*! \brief returns the property child ( \copybrief child ).
-                    \details Description of the parameter child is:  <BLOCKQUOTE>\copydoc child </BLOCKQUOTE>. 
-                    \see child for more information */ 
+                virtual ~MTsuperscriptNode() override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /*! \brief returns the child node */
                 inline MTnode* getChild() const { 
                     return this->child; 
                 }
-                virtual QString getTypeName() const;
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 MTnode* child;
         };
 
@@ -927,15 +1017,17 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTbraceNode: public MTnode {
             public:
                 MTbraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace=true);
-                virtual ~MTbraceNode();
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
-                virtual QString getTypeName() const;
-                /*! \brief returns the property child ( \copybrief child ).
-                    \details Description of the parameter child is:  <BLOCKQUOTE>\copydoc child </BLOCKQUOTE>. 
-                    \see child for more information */ 
-                inline MTnode* getChild() const { 
+                virtual ~MTbraceNode() override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
+                /** \copydoc MTnode::getTypeName() */
+                virtual QString getTypeName() const override;
+                /*! \brief returns the child node */
+                inline MTnode* getChild() const {
                     return this->child; 
                 }
                 /*! \brief returns the property openbrace ( \copybrief openbrace ).
@@ -958,7 +1050,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 MTnode* child;
                 QString openbrace;
                 QString closebrace;
@@ -972,15 +1064,16 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTsqrtNode: public MTnode {
             public:
                 MTsqrtNode(JKQTMathText* parent, MTnode* child, int degree=2);
-                virtual ~MTsqrtNode();
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
+                virtual ~MTsqrtNode() override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
                 virtual QString getTypeName() const ;
-                /*! \brief returns the property child ( \copybrief child ).
-                    \details Description of the parameter child is:  <BLOCKQUOTE>\copydoc child </BLOCKQUOTE>. 
-                    \see child for more information */ 
-                inline MTnode* getChild() const { 
+                /*! \brief returns the child node */
+                inline MTnode* getChild() const {
                     return this->child; 
                 }
                 /*! \brief returns the property degree ( \copybrief degree ).
@@ -991,7 +1084,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 MTnode* child;
                 int degree;
         };
@@ -1013,21 +1106,20 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTfracNode: public MTnode {
             public:
                 MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
-                virtual ~MTfracNode();
+                virtual ~MTfracNode() override;
                 virtual QString getTypeName() const ;
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
-                /*! \brief returns the property child1 ( \copybrief child1 ).
-                    \details Description of the parameter child1 is:  <BLOCKQUOTE>\copydoc child1 </BLOCKQUOTE>. 
-                    \see child1 for more information */ 
-                inline MTnode* getChild1() const { 
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
+                /*! \brief returns the 1st child node */
+                inline MTnode* getChild1() const {
                     return this->child1; 
                 }
-                /*! \brief returns the property child2 ( \copybrief child2 ).
-                    \details Description of the parameter child2 is:  <BLOCKQUOTE>\copydoc child2 </BLOCKQUOTE>. 
-                    \see child2 for more information */ 
-                inline MTnode* getChild2() const { 
+                /*! \brief returns the 2nd child node */
+                 inline MTnode* getChild2() const {
                     return this->child2; 
                 }
                 /*! \brief returns the property mode ( \copybrief mode ).
@@ -1038,7 +1130,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 MTnode* child1;
                 MTnode* child2;
                 MTfracMode mode;
@@ -1049,13 +1141,12 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTmatrixNode(JKQTMathText* parent, QVector<QVector<MTnode*> > children);
                 virtual ~MTmatrixNode() override;
+                /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv) override;
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
-                /*! \brief returns the property children ( \copybrief children ).
-                    \details Description of the parameter children is:  <BLOCKQUOTE>\copydoc children </BLOCKQUOTE>. 
-                    \see children for more information */ 
-                inline QVector<QVector<MTnode*> > getChildren() const { 
+                /*! \brief returns the child nodes */
+                inline QVector<QVector<MTnode*> > getChildren() const {
                     return this->children; 
                 }
                 /*! \brief returns the property columns ( \copybrief columns ).
@@ -1072,8 +1163,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
-                virtual void setDrawBoxes(bool draw);
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
                 QVector<QVector<MTnode*> > children;
                 int columns;
                 int lines;
@@ -1099,15 +1191,16 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         class MTdecoratedNode: public MTnode {
             public:
                 MTdecoratedNode(JKQTMathText* parent, MTdecoration decoration, MTnode* child);
-                virtual ~MTdecoratedNode();
-                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv);
-                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv);
-                virtual void setDrawBoxes(bool draw);
+                virtual ~MTdecoratedNode() override;
+                /** \copydoc MTnode::draw() */
+                virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
+                /** \copydoc MTnode::toHtml() */
+                virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
+                /** \copydoc MTnode::setDrawBoxes() */
+                virtual void setDrawBoxes(bool draw) override;
                 virtual QString getTypeName() const ;
-                /*! \brief returns the property child ( \copybrief child ).
-                    \details Description of the parameter child is:  <BLOCKQUOTE>\copydoc child </BLOCKQUOTE>. 
-                    \see child for more information */ 
-                inline MTnode* getChild() const { 
+                /*! \brief returns the child node */
+                 inline MTnode* getChild() const {
                     return this->child; 
                 }
                 /*! \brief returns the property decoration ( \copybrief decoration ).
@@ -1118,7 +1211,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 }
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
-                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos) override;
+                virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
                 MTnode* child;
                 MTdecoration decoration;
         };
@@ -1386,7 +1479,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
         static QList<JKQTMathText::tbrData> tbrs;
         static QHash<JKQTMathText::tbrDataH, QRectF> tbrh;
-        static QRectF getTBR(const QFont &fm, const QString& text,  QPaintDevice *pd);
+        static QRectF getTightBoundingRect(const QFont &fm, const QString& text,  QPaintDevice *pd);
 };
 
 
