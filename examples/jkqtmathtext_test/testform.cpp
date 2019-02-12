@@ -8,7 +8,6 @@ TestForm::TestForm(QWidget *parent) :
     ui(new Ui::TestForm)
 {
     ui->setupUi(this);
-    ui->cmbTestset->addItem("subsuperscript test", "$r_{123}^2$\\ \\ $r^2_{123}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_{123}^2$\\ \\ $\\left(\\stackrel{a}{b}\\right)^2_{123}$\\ \\ $r_{\\frac{1}{2}}^2$\\ \\ $r^2_{\\frac{1}{2}}$\\ \\ $r^{\\frac{1}{2}}_2$\\ \\ $r_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)^{\\frac{1}{2}}_2$");
     ui->cmbTestset->addItem("simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
     ui->cmbTestset->addItem("simple relations in different modes", "math: $a{\\leq}b$, math/no braces: $a\\leq b$, no math: a{\\leq}b, no math/no braces: a\\leq b");
     ui->cmbTestset->addItem("named symbols 1", "ll: $\\ll$\\ gg: $\\gg$\\ leq: $\\leq$\\ geq: $\\geq$\\ pm: $\\pm$\\ mp: $\\mp$\\ ");
@@ -57,6 +56,7 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("gsuperscript1 test", "$g^{123}\\ $");
     ui->cmbTestset->addItem("gsuperscript2 test", "$g^{123}\\ \\ $");
     ui->cmbTestset->addItem("gsuperscript3 test", "$g^{123}g^{\\frac{1}{2}}$");
+    ui->cmbTestset->addItem("subsuperscript test", "$r_{123}^2$\\ \\ $r^2_{123}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_{123}^2$\\ \\ $\\left(\\stackrel{a}{b}\\right)^2_{123}$\\ \\ $r_{\\frac{1}{2}}^2$\\ \\ $r^2_{\\frac{1}{2}}$\\ \\ $r^{\\frac{1}{2}}_2$\\ \\ $r_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)_2^{\\frac{1}{2}}$\\ \\ $\\left(\\stackrel{a}{b}\\right)^{\\frac{1}{2}}_2$");
     ui->cmbTestset->addItem("frac test", "$\\frac{a}{b}+\\frac{g}{a}-\\frac{a^2}{b^2}\\cdot\\frac{a^2}{b^{\\frac{1}{2}}}$");
     ui->cmbTestset->addItem("tfrac test", "$\\tfrac{a}{b}+\\tfrac{g}{a}-\\tfrac{a^2}{b^2}\\cdot\\tfrac{a^2}{b^{\\tfrac{1}{2}}}$");
     ui->cmbTestset->addItem("dfrac test", "$\\dfrac{a}{b}+\\dfrac{g}{a}-\\dfrac{a^2}{b^2}\\cdot\\dfrac{a^2}{b^{\\dfrac{1}{2}}}$");
