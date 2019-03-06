@@ -180,8 +180,8 @@ JKQTP_LIB_EXPORT void initJKQTMathTextResources();
     \section JKQTMathTextSuppoertedFonts Font Handling
     
     Several fonts are defined as properties to the class:
-      - A "roman" font used as the standard font ( setFontRoman() in math-mode setFontMathRoman() )
-      - A "sans-serif" font which may be activated with \c \\sf ... ( setFontSans() in math-mode setFontMathSans() )
+      - A "roman" font used as the standard font ( setFontRoman()  )
+      - A "sans-serif" font which may be activated with \c \\sf ... ( setFontSans()  )
       - A "typewriter" font which may be activated with \c \\tt ... ( setFontTypewriter() )
       - A "script" font which may be activated with \c \\script ... ( setFontScript() )
       - A greek font which is used to display greek letters \c \\alpha ... ( setFontGreek() )
@@ -282,8 +282,11 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
          * <code>setAnyUnicode("Arial", "Arial")</code>:<br>\image html jkqtmathparser_arial.png
          * <code>setAnyUnicode("Courier New", "Courier New")</code>:<br>\image html jkqtmathparser_couriernew.png
          * <code>setAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathparser_comicsans.png
+         *
+         * The parameter \a fullMathUnicodeFont specifies, whether the unicode fonts encode also math symbols, or are
+         * limited to latin+greek+basic symbols.
          */
-        void useAnyUnicode(QString timesFont=QString(""), const QString& sansFont=QString(""));
+        void useAnyUnicode(QString timesFont=QString(""), const QString& sansFont=QString(""), bool fullMathUnicodeFont=false);
 
         void useLatexFonts(QString prefix=QString(""), const QString& postfix=QString(""));
 
@@ -296,11 +299,14 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                - \c MTFElatex:     This assumes that symbols shal be taken from the CM (computer modern) fonts, used by LaTeX
                - \c MTFEunicode:   This assumes that symbols shall be taken from a Unicode font
                                    (e.g. the STIX fonts from <a href="http://www.stixfonts.org/">http://www.stixfonts.org/</a>)
+               - \c MTFEunicodeLimited: This assumes that the fonts used are Unicode, but only offer a limited set of symbols.
+                                        Especially math symbols are missing from this encoding
             .
         */
         enum MTfontEncoding {
             MTFEwinSymbol,
             MTFEunicode,
+            MTFEunicodeLimited,
             MTFElatex
         };
 
@@ -335,10 +341,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
             \see fontRoman for more information */
         void setFontRomanOrSpecial(const QString & __value);
-        /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to \a __value, or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
-
-            \see fontRoman for more information */
-        void setFontRomanOrSpecial(const QString & roman, const QString & math);
         /*! \copydoc fontRoman \see fontRoman */
         inline QString getFontRoman() const
         {
@@ -434,26 +436,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         {
             return this->fontBlackboard; 
         }
-        /*! \copydoc fontMathRoman \see fontMathRoman */ 
-        inline void setFontMathRoman(const QString & __value)
-        {
-            this->fontMathRoman = __value;
-        } 
-        /*! \copydoc fontMathRoman \see fontMathRoman */ 
-        inline QString getFontMathRoman() const
-        {
-            return this->fontMathRoman; 
-        }
-        /*! \copydoc fontMathSans \see fontMathSans */ 
-        inline void setFontMathSans(const QString & __value)
-        {
-            this->fontMathSans = __value;
-        } 
-        /*! \copydoc fontMathSans \see fontMathSans */ 
-        inline QString getFontMathSans() const
-        {
-            return this->fontMathSans; 
-        }
         /*! \copydoc fontLatexPrefix \see fontLatexPrefix */ 
         inline void setFontLatexPrefix(const QString & __value)
         {
@@ -479,10 +461,10 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         {
             this->fontEncoding = __value;
         } 
-        /*! \copydoc fontEncoding \see fontEncoding */ 
+        /*! \copydoc fontEncoding \see fontEncoding */
         inline MTfontEncoding getFontEncoding() const
         {
-            return this->fontEncoding; 
+            return this->fontEncoding;
         }
         /*! \brief returns the property useSTIXfonts ( \copybrief useSTIXfonts ).
             \details Description of the parameter useSTIXfonts is:  <BLOCKQUOTE>\copydoc useSTIXfonts </BLOCKQUOTE>. 
@@ -859,9 +841,10 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 /*! \brief returns the property symbolName ( \copybrief symbolName ).
                     \details Description of the parameter symbolName is:  <BLOCKQUOTE>\copydoc symbolName </BLOCKQUOTE>. 
                     \see symbolName for more information */ 
-                inline QString getSymbolName() const { 
-                    return this->symbolName; 
+                inline QString getSymbolName() const {
+                    return this->symbolName;
                 }
+                QString getSymbolFontName() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
@@ -872,7 +855,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 /** \brief these fonts may be used for symbols */
                 enum symbolFont { MTSFdefault, MTSFsymbol, MTSFgreek, MTSFbraces, MTSFintegrals, MTSFcaligraphic, MTSFblackboard };
                 /** \brief changes the font name according to a given symbolFont value */
-                QFont getFontName(symbolFont f, QFont& fi);
+                QFont getFontName(symbolFont f, QFont& fi) const;
                 /** \brief magnification factor for the font size */
                 symbolFont font;
                 /** \brief magnification factor for the font size */
@@ -1279,16 +1262,6 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /*! \brief default value for property fontBlackboard.
             \see fontBlackboard for more information */
         QString default_fontBlackboard;
-        /** \brief roman font for math environment */
-        QString fontMathRoman;
-        /*! \brief default value for property fontMathRoman.
-            \see fontMathRoman for more information */
-        QString default_fontMathRoman;
-        /** \brief sans font for math environment */
-        QString fontMathSans;
-        /*! \brief default value for property fontMathSans.
-            \see fontMathSans for more information */
-        QString default_fontMathSans;
         /** \brief prefix for LaTeX fonts */
         QString fontLatexPrefix;
         /*! \brief default value for property fontLatexPrefix.

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1238</width>
+    <width>1518</width>
     <height>742</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>605</width>
+        <width>745</width>
         <height>616</height>
        </rect>
       </property>
@@ -104,7 +104,12 @@
        </item>
        <item>
         <property name="text">
-         <string>Unicode</string>
+         <string>Unicode, limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode, full</string>
         </property>
        </item>
        <item>
@@ -290,7 +295,7 @@
      <item>
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Symbol/Unicode fonts:</string>
+        <string>Symbol/Unicode fonts: rm:</string>
        </property>
       </widget>
      </item>
@@ -304,6 +309,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_14">
+       <property name="text">
+        <string>sf:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QFontComboBox" name="cmbUnicodeSans">
        <property name="currentFont">
         <font>
@@ -313,10 +325,33 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>tt:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QFontComboBox" name="cmbUnicodeFixed">
        <property name="currentFont">
         <font>
          <family>Courier New</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_16">
+       <property name="text">
+        <string>cal:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QFontComboBox" name="cmbCaligraphic">
+       <property name="currentFont">
+        <font>
+         <family>Script</family>
         </font>
        </property>
       </widget>

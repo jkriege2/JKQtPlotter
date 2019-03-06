@@ -39,8 +39,17 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("arrowtest 2", "$\\nwarrow \\nearrow \\searrow \\swarrow \\mapsto \\leftharpoonup \\rightharpoonup \\upharpoonleft \\downharpoonleft \\leftrightharpoon \\rightleftharpoon \\leftharpoondown \\rightharpoondown \\upharpoonright \\downharpoonright $");
     ui->cmbTestset->addItem("math: blackboard", "$\\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: bf", "$\\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math: it", "$\\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math: sf", "$\\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: rm", "$\\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: cal", "$\\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math: tt", "$\\mathtt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("bf", "\\textbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("it", "\\textit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("sf", "\\textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("rm", "\\textrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("cal", "\\textcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("tt", "\\texttt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
     ui->cmbTestset->addItem("subscript test", "$r_{123}\\ \\ r_{\\frac{1}{2}}$");
     ui->cmbTestset->addItem("subscript0 test", "$r_{123}$");
     ui->cmbTestset->addItem("subscript1 test", "$r_{123}\\ $");
@@ -254,7 +263,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("MTsymbolNode: \'%1\'").arg(symN->getSymbolName());
+        name=QString("MTsymbolNode: \'%1\' (%2)").arg(symN->getSymbolName()).arg(symN->getSymbolFontName());
     } else if (spN)  {
         name=QString("MTwhitespaceNode :\'%1\'").arg(txtN->getText());
     } else if (txtN)  {
@@ -322,19 +331,20 @@ void TestForm::updateMath()
     ht.start();
 
 
+
     mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family());
-    mt.setFontMathRoman(ui->cmbUnicodeSerif->currentFont().family());
     mt.setFontSans(ui->cmbUnicodeSans->currentFont().family());
-    mt.setFontMathSans(ui->cmbUnicodeSans->currentFont().family());
     mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family());
     mt.setFontSymbol(ui->cmbUnicodeSymbol->currentFont().family());
+    mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family());
 
     switch (ui->cmbFont->currentIndex()) {
         case 1: mt.useXITS(); break;
         case 2: mt.useSTIX(); break;
-        case 3: mt.useAnyUnicode(ui->cmbUnicodeSans->currentFont().family(),ui->cmbUnicodeSerif->currentFont().family()); break;
-        case 4: mt.useLatexFonts(ui->edtLatexPrefix->text(), ui->edtLatexPostfix->text()); break;
-        case 5: mt.useASANA(); break;
+        case 3: mt.useAnyUnicode(ui->cmbUnicodeSerif->currentFont().family(),ui->cmbUnicodeSans->currentFont().family(), false); break;
+        case 4: mt.useAnyUnicode(ui->cmbUnicodeSerif->currentFont().family(),ui->cmbUnicodeSans->currentFont().family(), true); break;
+        case 5: mt.useLatexFonts(ui->edtLatexPrefix->text(), ui->edtLatexPostfix->text()); break;
+        case 6: mt.useASANA(); break;
 
     }
 
