@@ -96,11 +96,11 @@ Switching the minor grid off results in a plot like this:
 
 These examples show the results for different typical values for `setMinorTicks()`:
 
-![logaxis_setMinorticks](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_setMinorticks.png)
+![logaxis_set_minorticks](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_set_minorticks.png)
 
 These examples show the results for different typical values for `setLabelType()`:
 
-![logaxis_setLabelType](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_setLabelType.png)
+![logaxis_set_labelType](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/logaxis_set_labelType.png)
 
 
 
