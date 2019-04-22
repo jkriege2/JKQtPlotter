@@ -21,8 +21,8 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> \subpage JKQTPlotterSymbolsAndStyles
     <td> `JKQTPXYLineGraph` <br> C++ vector of data <br> setting line styles and symbol styles <br> automatic graph coloring 
 <tr><td> \image html jkqtplotter_simpletest_stepplots_small.png
-    <td> \subpage JKQTPlotterStepPlot
-    <td> `JKQTPStepHorizontalGraph` (and `JKQTPXYLineGraph`) <br> C++ vector of data <br> different step modes, filled and line-only 
+    <td> \subpage JKQTPlotterSpecialStepLinePlot
+    <td> `JKQTPSpecialLineHorizontalGraph` <br> C++ vector of data <br> different step/special line modes, filled and line-only 
 <tr><td> \image html jkqtplotter_simpletest_symbols_and_errors_small.png
     <td> \subpage JKQTPlotterSymbolsErrors
     <td> `JKQTPXYLineErrorGraph` <br> C-style arrays of data 

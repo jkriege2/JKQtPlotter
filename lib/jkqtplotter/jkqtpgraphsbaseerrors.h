@@ -58,76 +58,40 @@ class JKQTP_LIB_EXPORT JKQTPGraphErrors {
 
         /*! \copydoc errorColor
             \see see errorColor for details */ 
-        inline virtual void setErrorColor(const QColor & __value)  
-        {
-            this->errorColor = __value;
-        } 
+        void setErrorColor(const QColor & __value);
         /*! \copydoc errorColor
             \see see errorColor for details */ 
-        inline virtual QColor getErrorColor() const  
-        {
-            return this->errorColor; 
-        }
+        QColor getErrorColor() const;
         /*! \copydoc errorStyle
             \see see errorStyle for details */ 
-        inline virtual void setErrorStyle(const Qt::PenStyle & __value)  
-        {
-            this->errorStyle = __value;
-        } 
+        void setErrorStyle(const Qt::PenStyle & __value);
         /*! \copydoc errorStyle
             \see see errorStyle for details */ 
-        inline virtual Qt::PenStyle getErrorStyle() const  
-        {
-            return this->errorStyle; 
-        }
+        Qt::PenStyle getErrorStyle() const;
         /*! \copydoc errorWidth
             \see see errorWidth for details */ 
-        inline virtual void setErrorWidth(double __value)
-        {
-            this->errorWidth = __value;
-        } 
+        void setErrorWidth(double __value);
         /*! \copydoc errorWidth
             \see see errorWidth for details */ 
-        inline virtual double getErrorWidth() const  
-        {
-            return this->errorWidth; 
-        }
+        double getErrorWidth() const;
         /*! \copydoc errorFillColor
             \see see errorFillColor for details */ 
-        inline virtual void setErrorFillColor(const QColor & __value)  
-        {
-            this->errorFillColor = __value;
-        } 
+        void setErrorFillColor(const QColor & __value);
         /*! \copydoc errorFillColor
             \see see errorFillColor for details */ 
-        inline virtual QColor getErrorFillColor() const  
-        {
-            return this->errorFillColor; 
-        }
+        QColor getErrorFillColor() const;
         /*! \copydoc errorFillStyle
             \see see errorFillStyle for details */ 
-        inline virtual void setErrorFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->errorFillStyle = __value;
-        } 
+        void setErrorFillStyle(const Qt::BrushStyle & __value);
         /*! \copydoc errorFillStyle
             \see see errorFillStyle for details */ 
-        inline virtual Qt::BrushStyle getErrorFillStyle() const  
-        {
-            return this->errorFillStyle; 
-        }
+        Qt::BrushStyle getErrorFillStyle() const;
         /*! \copydoc errorbarSize
             \see see errorbarSize for details */ 
-        inline virtual void setErrorbarSize(double __value)
-        {
-            this->errorbarSize = __value;
-        } 
+        void setErrorbarSize(double __value);
         /*! \copydoc errorbarSize
             \see see errorbarSize for details */ 
-        inline virtual double getErrorbarSize() const  
-        {
-            return this->errorbarSize; 
-        }
+        double getErrorbarSize() const;
         /** \brief returns true, if the error plots use the given column */
         virtual bool errorUsesColumn(int c) const;
 

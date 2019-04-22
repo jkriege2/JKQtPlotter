@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsbase.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpgraphssinglecolumnsymbols_H_INCLUDED
 #define jkqtpgraphssinglecolumnsymbols_H_INCLUDED
@@ -48,7 +49,7 @@
     \see \ref JKQTPlotterDistributionPlot
 
  */
-class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph {
+class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /** \brief describes how data from dataColumn of a JKQTPSingleColumnSymbolsGraph positioned at position */
@@ -78,141 +79,52 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGr
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        /** \brief returns the color to be used for the key label */
+        virtual QColor getKeyLabelColor() const override;
+        /** \brief set symbol color and fill color at the same time */
+        void setColor(QColor col);
 
         /*! \copydoc position
             \see see position for details */
-        inline virtual void setPosition(double __value)
-        {
-            this->position = __value;
-        }
+        void setPosition(double __value);
         /*! \copydoc position
             \see see position for details */
-        inline virtual double getPosition() const
-        {
-            return this->position;
-        }
-        /*! \copydoc width
-            \see see width for details */
-        inline virtual void setWidth(double __value)
-        {
-            this->width = __value;
-        }
-        /*! \copydoc width
-            \see see width for details */
-        inline virtual double getWidth() const
-        {
-            return this->width;
-        }
+        double getPosition() const;
 
-        /*! \copydoc dataDirection
-            \see see dataDirection for details */
-        inline virtual void setDataDirection(DataDirection __value)
-        {
-            this->dataDirection = __value;
-        }
-        /*! \copydoc dataDirection
-            \see see dataDirection for details */
-        inline virtual DataDirection getDataDirection() const
-        {
-            return this->dataDirection;
-        }
+        /*! \copydoc width
+            \see see width for details */
+        void setWidth(double __value);
+        /*! \copydoc width
+            \see see width for details */
+        double getWidth() const;
+
+
 
         /*! \copydoc positionScatterStyle
             \see see positionScatterStyle for details */
-        inline virtual void setPositionScatterStyle(ScatterStyle __value)
-        {
-            this->positionScatterStyle = __value;
-        }
+        void setPositionScatterStyle(ScatterStyle __value);
         /*! \copydoc positionScatterStyle
             \see see positionScatterStyle for details */
-        inline virtual ScatterStyle getPositionScatterStyle() const
-        {
-            return this->positionScatterStyle;
-        }
+        ScatterStyle getPositionScatterStyle() const;
 
 
 
-        /*! \copydoc fillColor
-            \see see fillColor for details */
-        inline virtual void setFillColor(const QColor & __value)
-        {
-            this->fillColor = __value;
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */
-        inline virtual QColor getFillColor() const
-        {
-            return this->fillColor;
-        }
-        /*! \copydoc symbol
-            \see see symbol for details */
-        inline virtual void setSymbol(const JKQTPGraphSymbols & __value)
-        {
-            this->symbol = __value;
-        }
-        /*! \copydoc symbol
-            \see see symbol for details */
-        inline virtual JKQTPGraphSymbols getSymbol() const
-        {
-            return this->symbol;
-        }
-        /*! \copydoc symbolWidth
-            \see see symbolWidth for details */
-        inline virtual void setSymbolWidth(double __value)
-        {
-            this->symbolWidth = __value;
-        }
-        /*! \copydoc symbolWidth
-            \see see symbolWidth for details */
-        inline virtual double getSymbolWidth() const
-        {
-            return this->symbolWidth;
-        }
-        /*! \copydoc symbolSize
-            \see see symbolSize for details */
-        inline virtual void setSymbolSize(double __value)
-        {
-            this->symbolSize = __value;
-        }
-        /*! \copydoc symbolSize
-            \see see symbolSize for details */
-        inline virtual double getSymbolSize() const
-        {
-            return this->symbolSize;
-        }
         /** \copydoc seedValue */
-        inline void setSeedValue(unsigned int val) {
-            seedValue=val;
-        }
+        void setSeedValue(unsigned int val);
         /** \copydoc seedValue */
-        inline unsigned int getSeedValue() const {
-            return seedValue;
-        }
+        unsigned int getSeedValue() const;
     protected:
-        /** \brief interpret the data from dataColumn either as X- or Y-data */
-        DataDirection dataDirection;
         /** \brief missing coordinate, i.e. if the data from \a dataColumn is interpreted as x-values, this is the y-position and vice versa (see DataDirection ) */
         double position;
         /** \brief width of data distribution around position for the missing coordinate (see positionScatterStyle and position) */
         double width;
         /** \brief how to distribute the datapoints from dataColumn at the location position */
         ScatterStyle positionScatterStyle;
-        /** \brief color of the graph fill */
-        QColor fillColor;
-        /** \brief which symbol to use for the datapoints */
-        JKQTPGraphSymbols symbol;
-        /** \brief size (diameter in pt) of the symbol for the data points */
-        double symbolSize;
-        /** \brief width (in pt) of the lines used to plot the symbol for the data points */
-        double symbolWidth;
         /** \brief seed value for the pseudo-random number generator used for drawing.
          *
          * This seed is used instead of e.g. the system time to ensure that replotting results in the
          * same plot every time. ou can set the seed using setSeedvalue() ) */
         unsigned int seedValue;
-
-        QPen getSymbolPen(JKQTPEnhancedPainter& painter) const;
-        QBrush getBrush(JKQTPEnhancedPainter &painter) const;
 
 };
 

@@ -26,7 +26,7 @@
 #include <QPainter>
 #include <QImage>
 #include <QIcon>
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
@@ -62,71 +62,43 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
         /*! \copydoc trueColor
             \see see trueColor for details */ 
-        inline virtual void setTrueColor(const QColor & __value)  
-        {
-            this->trueColor = __value;
-        } 
+        void setTrueColor(const QColor & __value);
         /*! \copydoc trueColor
             \see see trueColor for details */ 
-        inline virtual QColor getTrueColor() const  
-        {
-            return this->trueColor; 
-        }
+        QColor getTrueColor() const;
         /*! \copydoc falseColor
             \see see falseColor for details */ 
-        inline virtual void setFalseColor(const QColor & __value)  
-        {
-            this->falseColor = __value;
-        } 
+        void setFalseColor(const QColor & __value);
         /*! \copydoc falseColor
             \see see falseColor for details */ 
-        inline virtual QColor getFalseColor() const  
-        {
-            return this->falseColor; 
-        }
+        QColor getFalseColor() const;
         /*! \copydoc Nx
             \see see Nx for details */ 
-        inline virtual void setNx(int __value)
-        {
-            this->Nx = __value;
-        } 
+        void setNx(int __value);
         /*! \copydoc Nx
             \see see Nx for details */ 
-        inline virtual int getNx() const
-        {
-            return this->Nx; 
-        }
+        int getNx() const;
         /*! \copydoc Ny
             \see see Ny for details */ 
-        inline virtual void setNy(int __value)
-        {
-            this->Ny = __value;
-        } 
+        void setNy(int __value);
         /*! \copydoc Ny
             \see see Ny for details */ 
-        inline virtual int getNy() const
-        {
-            return this->Ny; 
-        }
+        int getNy() const;
         /*! \copydoc data
             \see see data for details */ 
-        inline virtual void setData(bool*  __value)
-        {
-            this->data = __value;
-        } 
+        virtual void setData(bool*  __value);
         /*! \copydoc data
             \see see data for details */ 
-        inline virtual bool* getData() const  
-        {
-            return this->data; 
-        }
+        bool *getData() const;
 
-        void setData(bool* data, int Nx, int Ny);
+        /** \brief set the plot-data to a given array \a data with size \a Nx * \a Ny in row-major ordering */
+        virtual void setData(bool* data, int Nx, int Ny);
 
+        /** \brief return the data used for plotting as a QVector<double> in row-major data-ordering */
         QVector<double> getDataAsDoubleVector() const;
 
     protected:
@@ -143,13 +115,19 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         QColor falseColor;
 
     protected:
+        /** \brief action that calls saveImagePlotAsImage() */
         QAction* actSaveImage;
+        /** \brief action that calls copyImagePlotAsImage() */
         QAction* actCopyImage;
     public:
+        /** \copydoc JKQTPImageBase::setTitle() */
         virtual void setTitle(const QString& title) override;
+        /** \copydoc JKQTPImageBase::setParent() */
         virtual void setParent(JKQTBasePlotter* parent) override;
     public slots:
+        /** \brief save the plotted image as a file with \a filename and format \a outputFormat */
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
+        /** \brief copy the plotted image as an image into the clipboard */
         void copyImagePlotAsImage();
 
 };
@@ -167,6 +145,12 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
 class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         Q_OBJECT
     public:
+        enum OverlayImageEnhancedDrawMode {
+            DrawAsRectangles,
+            DrawAsImage,
+            DrawAsSymbols
+        };
+
         /** \brief class constructor */
         JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
         JKQTPOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);
@@ -181,79 +165,41 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
 
         /*! \copydoc symbol
             \see see symbol for details */ 
-        inline virtual void setSymbol(const JKQTPGraphSymbols & __value)  
-        {
-            this->symbol = __value;
-        } 
+        void setSymbolType(JKQTPGraphSymbols __value);
         /*! \copydoc symbol
             \see see symbol for details */ 
-        inline virtual JKQTPGraphSymbols getSymbol() const  
-        {
-            return this->symbol; 
-        }
-        /*! \copydoc symbolWidth
-            \see see symbolWidth for details */ 
-        inline virtual void setSymbolWidth(double __value)
-        {
-            this->symbolWidth = __value;
-        } 
-        /*! \copydoc symbolWidth
-            \see see symbolWidth for details */ 
-        inline virtual double getSymbolWidth() const  
-        {
-            return this->symbolWidth; 
-        }
+        JKQTPGraphSymbols getSymbol() const;
+        /*! \copydoc symbolLineWidth
+            \see see symbolLineWidth for details */
+        void setSymbolLineWidth(double __value);
+        /*! \copydoc symbolLineWidth
+            \see see symbolLineWidth for details */
+        double getSymbolLineWidth() const;
         /*! \copydoc drawAsRectangles
             \see see drawAsRectangles for details */ 
-        inline virtual void setDrawAsRectangles(bool __value)
-        {
-            this->drawAsRectangles = __value;
-        } 
+        void setDrawMode(OverlayImageEnhancedDrawMode __value);
         /*! \copydoc drawAsRectangles
             \see see drawAsRectangles for details */ 
-        inline virtual bool getDrawAsRectangles() const  
-        {
-            return this->drawAsRectangles; 
-        }
-        /*! \copydoc rectanglesAsImageOverlay
-            \see see rectanglesAsImageOverlay for details */ 
-        inline virtual void setRectanglesAsImageOverlay(bool __value)
-        {
-            this->rectanglesAsImageOverlay = __value;
-        } 
-        /*! \copydoc rectanglesAsImageOverlay
-            \see see rectanglesAsImageOverlay for details */ 
-        inline virtual bool getRectanglesAsImageOverlay() const  
-        {
-            return this->rectanglesAsImageOverlay; 
-        }
+        OverlayImageEnhancedDrawMode getDrawMode() const;
         /*! \copydoc symbolSizeFactor
             \see see symbolSizeFactor for details */ 
-        inline virtual void setSymbolSizeFactor(double __value)
-        {
-            this->symbolSizeFactor = __value;
-        } 
+        void setSymbolSizeFactor(double __value);
         /*! \copydoc symbolSizeFactor
             \see see symbolSizeFactor for details */ 
-        inline virtual double getSymbolSizeFactor() const  
-        {
-            return this->symbolSizeFactor; 
-        }
+        double getSymbolSizeFactor() const;
 
     protected:
         /** \brief which symbol to use for the datapoints */
         JKQTPGraphSymbols symbol;
         /** \brief width (in pt) of the lines used to plot the symbol for the data points */
-        double symbolWidth;
+        double symbolLineWidth;
 
-        /** \brief indicates whether to draw filled rectangles (\c false, default) or symbols */
-        bool drawAsRectangles;
+        /** \brief indicates whether to draw filled rectangles, or symbols */
+        OverlayImageEnhancedDrawMode drawMode;
 
         /** \brief a rescaling factor  for the symbols */
         double symbolSizeFactor;
 
-        /** \brief when \c drawAsRectangles==true this reactivates the drawing from JKQTPOverlayImage, i.e. the overlay is not drawn as separated rectangles, but as an overlay image */
-        bool rectanglesAsImageOverlay;
 
 };
 
@@ -277,16 +223,10 @@ class JKQTP_LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImage
 
         /*! \copydoc imageColumn
             \see see imageColumn for details */ 
-        inline virtual void setImageColumn(int __value)
-        {
-            this->imageColumn = __value;
-        } 
+        virtual void setImageColumn(int __value);
         /*! \copydoc imageColumn
             \see see imageColumn for details */ 
-        inline virtual int getImageColumn() const  
-        {
-            return this->imageColumn; 
-        }
+        int getImageColumn() const;
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
@@ -295,7 +235,7 @@ class JKQTP_LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImage
 
 
     protected:
-        /** \brief top color bar visible */
+        /** \brief column to read overlay image from  */
         int imageColumn;
 };
 

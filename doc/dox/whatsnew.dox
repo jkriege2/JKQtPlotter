@@ -16,28 +16,35 @@ Starting in summer 2018, JKQTPlotter received some major workover. During this, 
 
 Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
 <ul>
-  <li> update: refactoring of the library's directory structure </li>
   <li> new: added QMake-Projects for static and for shared library builds </li>
-  <li> update: refactoring/renaming of API, including the function anming scheme and class names </li>
   <li> new: \ref exampleTutorialProjects "extensive set of Examples and Tutorials" </li>
-  <li> update: massively improved (doxygen-generated) <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a> (automatically generated after each commit using ravis CI) </li>
   <li> new: checked builds with continuous integration from AppVeyor: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a> </li>
   <li> new/update: support for building with Microsoft Visual Studio (Win), MinGW (Win), GCC (Linux/MacOS) </li>
+  <li> update: massively improved (doxygen-generated) <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a> (automatically generated after each commit using ravis CI) </li>
+  <li> update: refactoring of the library's directory structure </li>
+  <li> update: refactoring/renaming of API, including the function anming scheme and class names </li>
   <li> changed: using static const variables instead of \c #define for fixed default values (e.g. JKQTPImageTools::LUTSIZE, JKQTPImageTools::PALETTE_ICON_WIDTH, JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, JKQTMathText::ABS_MIN_LINEWIDTH ...)</li>
   <li> Updates to JKQTPlotter: 
     <ul>
-      <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
 	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swar plots </li>
 	  <li> new: stacked barcharts with JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph </li>
-      <li> deprecated: Removed datarange-feature </li>
 	  <li> new: use/support of C++11 features (e.g. \c std::function<> and lambda functions in JKQTPXFunctionLineGraph / JKQTPYFunctionLineGraph )</li>
 	  <li> new: \ref jkqtpopencvinterface  "optional OpenCV interface" </li>
 	  <li> new: \ref jkqtpplotter_styling  "Styling System for JKQTPlotter" </li>
 	  <li> new: added debugging option, which surrounds different regions with visible rectangles (JKQTBasePlotter::enableDebugShowRegionBoxes() ) </li>
-	  <li> fixed: colorbars at top were positioned over the plot label </li>
 	  <li> new: frames (plot viewport, key/legend ...) may be rounded off at the corners</li>
 	  <li> new: diverse new styling options (default font name/size ...)</li>
 	  <li> new: additionl options for styling coordinate axes</li>
+      <li> new: Mix-In classes to unify plot styleing functions (setters/getters) in all graphs </li>
+      <li> new: additional options for graph filling (color gradients, textures, ...) as provided by QBrush </li>
+      <li> new: added a general feature to JKQTPPlotElement which allows to show a graph in a highlighted state (if supported by the derived graph class!) </li>
+      <li> new: JKQTPXYParametrizedScatterGraph: added functors to transform column values into symbol type+size and line-width to give even more control </li>
+      <li> changed: removed old selection-code and replaced by general highlighting feature </li>
+      <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
+      <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>
+      <li> deprecated: Removed datarange-feature </li>
+      <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
+	  <li> fixed: colorbars at top were positioned over the plot label </li>
 	  <li> fixed: RGB-image plots now work properly with inverted axes (image is inverted, befor image was not shown at all) </li>
 	</ul></li>
  <li> Updates to JKQTMathText: 

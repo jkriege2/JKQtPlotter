@@ -397,7 +397,7 @@ void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRe
     
 }
 
-QColor JKQTPBoxplotVerticalGraph::getKeyLabelColor() {
+QColor JKQTPBoxplotVerticalGraph::getKeyLabelColor() const {
     return color;
 }
 
@@ -961,7 +961,7 @@ void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, Q
     
 }
 
-QColor JKQTPBoxplotVerticalElement::getKeyLabelColor() {
+QColor JKQTPBoxplotVerticalElement::getKeyLabelColor() const {
     return color;
 }
 

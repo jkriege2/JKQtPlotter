@@ -22,7 +22,7 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
     pfunc->setFunction("x^2/10+sin(x*pi*10)");
     pfunc->setErrorFunction("x^2/20");
     pfunc->setDrawErrorPolygons(true);
-    pfunc->setStyle(Qt::DashLine);
+    pfunc->setLineStyle(Qt::DashLine);
     plotFuncPlt->addGraph(pfunc);
     plotFuncPlt->redrawPlot();
 

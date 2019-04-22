@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     graph1->setXColumn(columnX);
     graph1->setYColumn(columnY);
     graph1->setYErrorColumn(columnYE);
-    graph1->setSymbol(JKQTPFilledStar); // set symbol style
+    graph1->setSymbolType(JKQTPFilledStar); // set symbol style
     graph1->setYErrorStyle(JKQTPErrorBars); // set error indicator type
     graph1->setDrawLine(false); // don't draw a line
     graph1->setTitle(QObject::tr("sine graph"));

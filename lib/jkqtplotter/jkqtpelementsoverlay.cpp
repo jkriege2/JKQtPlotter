@@ -30,20 +30,22 @@
 JKQTPOverlayElement::JKQTPOverlayElement(JKQTBasePlotter *parent) :
     QObject(parent)
 {
-    color=QColor("red");
-    fillColor=color.lighter();
-    lineStyle=Qt::SolidLine;
-    fillStyle=Qt::SolidPattern;
-    lineWidth=1.0;
-    text="";
-    fontName=QFont().family()+"+XITS";
-    fontSize=QFont().pointSizeF();
     visible=true;
 }
 
 void JKQTPOverlayElement::setParent(JKQTBasePlotter *parent) {
     this->parent=parent;
     QObject::setParent(parent);
+}
+
+void JKQTPOverlayElement::setVisible(bool __value)
+{
+    this->visible = __value;
+}
+
+bool JKQTPOverlayElement::isVisible() const
+{
+    return this->visible;
 }
 
 QPointF JKQTPOverlayElement::transform(const QPointF &x) {
@@ -83,27 +85,6 @@ QPainterPath JKQTPOverlayElement::transformToLinePath(const QVector<QPointF> &x)
     return res;
 }
 
-QBrush JKQTPOverlayElement::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
-    QBrush b;
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-    return b;
-}
-
-QPen JKQTPOverlayElement::getPen(JKQTPEnhancedPainter& painter) const {
-    QPen p;
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth)));
-    p.setStyle(lineStyle);
-    return p;
-}
-
-QFont JKQTPOverlayElement::getFont() const {
-    QFont f;
-    f.setFamily(fontName);
-    f.setPointSizeF(fontSize);
-    return f;
-}
 
 
 
@@ -113,18 +94,28 @@ JKQTPOverlayOneCoordOverlay::JKQTPOverlayOneCoordOverlay(double pos, JKQTBasePlo
     this->position=pos;
 }
 
+void JKQTPOverlayOneCoordOverlay::setPosition(double __value)
+{
+    this->position = __value;
+}
+
+double JKQTPOverlayOneCoordOverlay::getPosition() const
+{
+    return this->position;
+}
+
 
 
 
 
 JKQTPOverlayVerticalLine::JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *parent):
-    JKQTPOverlayOneCoordOverlay(pos, parent)
+    JKQTPOverlayOneCoordOverlay(pos, parent), JKQTPGraphTextStyleMixin(parent)
 {
 
 }
 
 JKQTPOverlayVerticalLine::JKQTPOverlayVerticalLine(double pos, const QString& text, JKQTBasePlotter *parent):
-    JKQTPOverlayOneCoordOverlay(pos, parent)
+    JKQTPOverlayOneCoordOverlay(pos, parent), JKQTPGraphTextStyleMixin(parent)
 {
     setText(text);
 }
@@ -138,21 +129,37 @@ void JKQTPOverlayVerticalLine::draw(JKQTPEnhancedPainter &painter) {
     QPointF p2=transform(position, ymax);
     QPointF p3=p2-QPointF(0, (p2.y()-p1.y())*0.1);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getPen(painter));
+    painter.setPen(getLinePen(painter, parent));
     painter.drawLine(p1, p2);
 
     if (!text.isEmpty()) {
 
         //JKQTMathText mt(this);
         JKQTMathText* mt=parent->getMathText();
-        mt->setFontSize(fontSize);
-        mt->setFontColor(color);
-        mt->setFontRomanOrSpecial(fontName);
+        mt->setFontSize(getTextFontSize());
+        mt->setFontColor(getTextColor());
+        mt->setFontRomanOrSpecial(getTextFontName());
         mt->parse(text);
         mt->draw(painter, p3.x(), p3.y());
     }
 
     
+}
+
+void JKQTPOverlayVerticalLine::setColor(QColor c)
+{
+    setLineColor(c);
+    setTextColor(c);
+}
+
+void JKQTPOverlayVerticalLine::setText(const QString &__value)
+{
+    this->text = __value;
+}
+
+QString JKQTPOverlayVerticalLine::getText() const
+{
+    return this->text;
 }
 
 JKQTPOverlayTwoCoordOverlay::JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent):
@@ -161,18 +168,26 @@ JKQTPOverlayTwoCoordOverlay::JKQTPOverlayTwoCoordOverlay(double pos, double pos2
     position2=pos2;
 }
 
-JKQTPOverlayVerticalRange::JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent):
-    JKQTPOverlayTwoCoordOverlay(pos, pos2, parent)
+void JKQTPOverlayTwoCoordOverlay::setPosition2(double __value)
 {
-    fillColor=QColor(Qt::transparent);
+    this->position2 = __value;
+}
+
+double JKQTPOverlayTwoCoordOverlay::getPosition2() const
+{
+    return this->position2;
+}
+
+JKQTPOverlayVerticalRange::JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent):
+    JKQTPOverlayTwoCoordOverlay(pos, pos2, parent), JKQTPGraphTextStyleMixin(parent)
+{
     inverted=false;
 }
 
 JKQTPOverlayVerticalRange::JKQTPOverlayVerticalRange(double pos, double pos2, const QString& text, JKQTBasePlotter *parent):
-    JKQTPOverlayTwoCoordOverlay(pos, pos2, parent)
+    JKQTPOverlayTwoCoordOverlay(pos, pos2, parent), JKQTPGraphTextStyleMixin(parent)
 {
     setText(text);
-    fillColor=QColor(Qt::transparent);
     inverted=false;
 }
 
@@ -190,29 +205,56 @@ void JKQTPOverlayVerticalRange::draw(JKQTPEnhancedPainter &painter) {
     QPointF p22=transform(position2, ymax);
     //QPointF p23=p2-QPointF(0, (p2.y()-p1.y())*0.1);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    if (fillColor!=QColor(Qt::transparent)) {
+    if (getFillColor()!=QColor(Qt::transparent)) {
         if (inverted) {
-            painter.fillRect(QRectF(transform(xmin, ymin), p2), getBrush(painter));
-            painter.fillRect(QRectF(p21, transform(xmax, ymax)), getBrush(painter));
+            painter.fillRect(QRectF(transform(xmin, ymin), p2), getFillBrush(painter, parent));
+            painter.fillRect(QRectF(p21, transform(xmax, ymax)), getFillBrush(painter, parent));
         } else {
-            painter.fillRect(QRectF(p2, p21), getBrush(painter));
+            painter.fillRect(QRectF(p2, p21), getFillBrush(painter, parent));
         }
     }
-    painter.setPen(getPen(painter));
+    painter.setPen(getLinePen(painter, parent));
     painter.drawLine(p1, p2);
     painter.drawLine(p21, p22);
 
     if (!text.isEmpty()) {
         //JKQTMathText mt(this);
         JKQTMathText* mt=parent->getMathText();
-        mt->setFontSize(fontSize);
-        mt->setFontColor(color);
-        mt->setFontRomanOrSpecial(fontName);
+        mt->setFontSize(getTextFontSize());
+        mt->setFontColor(getTextColor());
+        mt->setFontRomanOrSpecial(getTextFontName());
         mt->parse(text);
         mt->draw(painter, p3.x(), p3.y());
     }
 
     
+}
+
+void JKQTPOverlayVerticalRange::setColor(QColor c)
+{
+    setLineColor(c);
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setTextColor(c);
+}
+
+void JKQTPOverlayVerticalRange::setInverted(bool __value)
+{
+    this->inverted = __value;
+}
+
+bool JKQTPOverlayVerticalRange::getInverted() const
+{
+    return this->inverted;
+}
+
+void JKQTPOverlayVerticalRange::setText(const QString &__value)
+{
+    text=__value;
+}
+
+QString JKQTPOverlayVerticalRange::getText() const
+{
+    return text;
 }
 
 JKQTPOverlayTwoPositionOverlay::JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent):
@@ -222,6 +264,46 @@ JKQTPOverlayTwoPositionOverlay::JKQTPOverlayTwoPositionOverlay(double x1, double
     this->y1=y1;
     this->x2=x2;
     this->y2=y2;
+}
+
+void JKQTPOverlayTwoPositionOverlay::setX1(double __value)
+{
+    this->x1 = __value;
+}
+
+double JKQTPOverlayTwoPositionOverlay::getX1() const
+{
+    return this->x1;
+}
+
+void JKQTPOverlayTwoPositionOverlay::setX2(double __value)
+{
+    this->x2 = __value;
+}
+
+double JKQTPOverlayTwoPositionOverlay::getX2() const
+{
+    return this->x2;
+}
+
+void JKQTPOverlayTwoPositionOverlay::setY1(double __value)
+{
+    this->y1 = __value;
+}
+
+double JKQTPOverlayTwoPositionOverlay::getY1() const
+{
+    return this->y1;
+}
+
+void JKQTPOverlayTwoPositionOverlay::setY2(double __value)
+{
+    this->y2 = __value;
+}
+
+double JKQTPOverlayTwoPositionOverlay::getY2() const
+{
+    return this->y2;
 }
 
 
@@ -250,7 +332,7 @@ void JKQTPOverlayLine::draw(JKQTPEnhancedPainter &painter) {
 
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getPen(painter));
+    painter.setPen(getLinePen(painter, parent));
     if (infinite) {
         double alpha=(p2.y()-p1.y())/(p2.x()-p1.x());
         double offset=p1.y()-alpha*p1.x();
@@ -270,6 +352,21 @@ void JKQTPOverlayLine::draw(JKQTPEnhancedPainter &painter) {
     
 }
 
+void JKQTPOverlayLine::setInfinite(bool __value)
+{
+    this->infinite = __value;
+}
+
+bool JKQTPOverlayLine::getInfinite() const
+{
+    return this->infinite;
+}
+
+void JKQTPOverlayLine::setColor(QColor c)
+{
+    setLineColor(c);
+}
+
 
 JKQTPOverlayRectangle::JKQTPOverlayRectangle(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent):
     JKQTPOverlayTwoPositionOverlay(x1,y1,x2,y2,parent)
@@ -285,9 +382,15 @@ void JKQTPOverlayRectangle::draw(JKQTPEnhancedPainter &painter)
     QRectF rect(qMin(p1.x(), p2.x()), qMin(p1.y(), p2.y()), fabs(p1.x()-p2.x()), fabs(p1.y()-p2.y()));
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getPen(painter));
-    painter.setBrush(getBrush(painter));
+    painter.setPen(getLinePen(painter, parent));
+    painter.setBrush(getFillBrush(painter, parent));
     //painter.fillRect(rect);
     painter.drawRect(rect);
     
+}
+
+void JKQTPOverlayRectangle::setColor(QColor c)
+{
+    setLineColor(c);
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
 }

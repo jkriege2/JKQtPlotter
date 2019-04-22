@@ -22,7 +22,7 @@
 #include "jkqtplottergui/jkqtpgraphsmodel.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplottertools/jkqtptools.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include <QImage>
 
 

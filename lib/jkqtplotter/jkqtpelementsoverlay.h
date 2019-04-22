@@ -24,6 +24,7 @@
 #include <QPair>
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpelementsoverlay_H
 #define jkqtpelementsoverlay_H
@@ -40,7 +41,7 @@ class JKQTBasePlotter;
 class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayElement(JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayElement(JKQTBasePlotter *parent = nullptr);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter)=0;
@@ -51,129 +52,21 @@ class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
         /** \brief sets the parent painter class */
         virtual void setParent(JKQTBasePlotter* parent);
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc lineStyle
-            \see see lineStyle for details */ 
-        inline virtual void setLineStyle(const Qt::PenStyle & __value)  
-        {
-            this->lineStyle = __value;
-        } 
-        /*! \copydoc lineStyle
-            \see see lineStyle for details */ 
-        inline virtual Qt::PenStyle getLineStyle() const  
-        {
-            return this->lineStyle; 
-        }
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->fillStyle = __value;
-        } 
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual Qt::BrushStyle getFillStyle() const  
-        {
-            return this->fillStyle; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)  
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
-        /*! \copydoc text
-            \see see text for details */ 
-        inline virtual void setText(const QString & __value)  
-        {
-            this->text = __value;
-        } 
-        /*! \copydoc text
-            \see see text for details */ 
-        inline virtual QString getText() const  
-        {
-            return this->text; 
-        }
-        /*! \copydoc fontName
-            \see see fontName for details */ 
-        inline virtual void setFontName(const QString & __value)  
-        {
-            this->fontName = __value;
-        } 
-        /*! \copydoc fontName
-            \see see fontName for details */ 
-        inline virtual QString getFontName() const  
-        {
-            return this->fontName; 
-        }
-        /*! \copydoc fontSize
-            \see see fontSize for details */ 
-        inline virtual void setFontSize(double __value)  
-        {
-            this->fontSize = __value;
-        } 
-        /*! \copydoc fontSize
-            \see see fontSize for details */ 
-        inline virtual double getFontSize() const  
-        {
-            return this->fontSize; 
-        }
+
+
         /*! \copydoc visible
             \see see visible for details */ 
-        inline virtual void setVisible(bool __value)  
-        {
-            this->visible = __value;
-        } 
+        void setVisible(bool __value);
         /*! \copydoc visible
             \see see visible for details */ 
-        inline virtual bool isVisible() const  
-        {
-            return this->visible; 
-        }
+        bool isVisible() const;
 
     protected:
         /** \brief the plotter object this object belongs to */
         JKQTBasePlotter* parent;
 
-        QColor color;
-        QColor fillColor;
-        Qt::PenStyle lineStyle;
-        Qt::BrushStyle fillStyle;
-        double lineWidth;
-        QString text;
-        QString fontName;
-        double fontSize;
+        /** \brief indictaes whether the overlay is visible (at all) */
         bool visible;
-        QFont getFont() const;
 
 
         /** \brief tool routine that transforms a QPointF according to the parent's transformation rules */
@@ -188,11 +81,11 @@ class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
         /** \brief tool routine that transforms a QPointF according to the parent's transformation rules */
         inline QPointF transform(double x, double y) {
             return transform(QPointF(x,y));
-        };
+        }
         /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules */
         inline QPointF backTransform(double x, double y) {
             return backTransform(QPointF(x,y));
-        };
+        }
         /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules */
         QVector<QPointF> transform(const QVector<QPointF>& x);
 
@@ -206,8 +99,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
             return QPolygonF(transform(x));
         }
 
-        virtual QBrush getBrush(JKQTPEnhancedPainter &painter) const;
-        virtual QPen getPen(JKQTPEnhancedPainter& painter) const;
+
 
 };
 
@@ -219,60 +111,40 @@ class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
 class JKQTP_LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = nullptr);
 
         /*! \copydoc x1
             \see see x1 for details */ 
-        inline virtual void setX1(double __value)  
-        {
-            this->x1 = __value;
-        } 
+        void setX1(double __value);
         /*! \copydoc x1
             \see see x1 for details */ 
-        inline virtual double getX1() const  
-        {
-            return this->x1; 
-        }
+        double getX1() const;
         /*! \copydoc x2
             \see see x2 for details */ 
-        inline virtual void setX2(double __value)  
-        {
-            this->x2 = __value;
-        } 
+        void setX2(double __value);
         /*! \copydoc x2
             \see see x2 for details */ 
-        inline virtual double getX2() const  
-        {
-            return this->x2; 
-        }
+        double getX2() const;
         /*! \copydoc y1
             \see see y1 for details */ 
-        inline virtual void setY1(double __value)  
-        {
-            this->y1 = __value;
-        } 
+        void setY1(double __value);
         /*! \copydoc y1
             \see see y1 for details */ 
-        inline virtual double getY1() const  
-        {
-            return this->y1; 
-        }
+        double getY1() const;
         /*! \copydoc y2
             \see see y2 for details */ 
-        inline virtual void setY2(double __value)  
-        {
-            this->y2 = __value;
-        } 
+        void setY2(double __value);
         /*! \copydoc y2
             \see see y2 for details */ 
-        inline virtual double getY2() const  
-        {
-            return this->y2; 
-        }
+        double getY2() const;
     protected:
+        /** \brief x-coordinate of first point of overlay */
         double x1;
+        /** \brief y-coordinate of first point of overlay */
         double y1;
+        /** \brief x-coordinate of first second of overlay */
         double x2;
+        /** \brief y-coordinate of first second of overlay */
         double y2;
 };
 
@@ -284,21 +156,16 @@ class JKQTP_LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayEleme
 class JKQTP_LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayOneCoordOverlay(double pos, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayOneCoordOverlay(double pos, JKQTBasePlotter *parent = nullptr);
 
         /*! \copydoc position
             \see see position for details */ 
-        inline virtual void setPosition(double __value)  
-        {
-            this->position = __value;
-        } 
+        void setPosition(double __value);
         /*! \copydoc position
             \see see position for details */ 
-        inline virtual double getPosition() const  
-        {
-            return this->position; 
-        }
+        double getPosition() const;
     protected:
+        /** \brief second position for the element */
         double position;
 };
 
@@ -310,21 +177,16 @@ class JKQTP_LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement 
 class JKQTP_LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverlay {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent = nullptr);
 
         /*! \copydoc position2
             \see see position2 for details */ 
-        inline virtual void setPosition2(double __value)  
-        {
-            this->position2 = __value;
-        } 
+        void setPosition2(double __value);
         /*! \copydoc position2
             \see see position2 for details */ 
-        inline virtual double getPosition2() const  
-        {
-            return this->position2; 
-        }
+        double getPosition2() const;
     protected:
+        /** \brief second position for the element */
         double position2;
 };
 
@@ -336,14 +198,26 @@ class JKQTP_LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoord
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *parent = 0);
-        explicit JKQTPOverlayVerticalLine(double pos, const QString& text, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *parent = nullptr);
+        explicit JKQTPOverlayVerticalLine(double pos, const QString& text, JKQTBasePlotter *parent = nullptr);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
+        /** \brief set element color */
+        virtual void setColor(QColor c);
+
+        /*! \copydoc text
+            \see see text for details */
+        void setText(const QString & __value);
+        /*! \copydoc text
+            \see see text for details */
+        QString getText() const;
+    protected:
+        /** \brief a text to display next to the vertical line */
+        QString text;
 };
 
 
@@ -353,28 +227,33 @@ class JKQTP_LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOve
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent = 0);
-        explicit JKQTPOverlayVerticalRange(double pos, double pos2, const QString& text, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent = nullptr);
+        explicit JKQTPOverlayVerticalRange(double pos, double pos2, const QString& text, JKQTBasePlotter *parent = nullptr);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
+        /** \brief set element color */
+        virtual void setColor(QColor c);
 
         /*! \copydoc inverted
             \see see inverted for details */ 
-        inline virtual void setInverted(bool __value)  
-        {
-            this->inverted = __value;
-        } 
+        void setInverted(bool __value);
         /*! \copydoc inverted
             \see see inverted for details */ 
-        inline virtual bool getInverted() const  
-        {
-            return this->inverted; 
-        }
+        bool getInverted() const;
+
+        /*! \copydoc text
+            \see see text for details */
+        void setText(const QString & __value);
+        /*! \copydoc text
+            \see see text for details */
+        QString getText() const;
     protected:
+        /** \brief a text to display next to the range */
+        QString text;
         /** \brief if set \c false, the range is filled, otherwise everything outside the range is filled */
         bool inverted;
 };
@@ -383,26 +262,22 @@ class JKQTP_LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOv
    \ingroup jkqtplotter_overlays
 
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayLine(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayLine(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = nullptr);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
 
         /*! \copydoc infinite
             \see see infinite for details */ 
-        inline virtual void setInfinite(bool __value)  
-        {
-            this->infinite = __value;
-        } 
+        void setInfinite(bool __value);
         /*! \copydoc infinite
             \see see infinite for details */ 
-        inline virtual bool getInfinite() const  
-        {
-            return this->infinite; 
-        }
+        bool getInfinite() const;
+        /** \brief set element color */
+        virtual void setColor(QColor c);
     protected:
         /** \brief the line goes on infinitely */
         bool infinite;
@@ -412,13 +287,15 @@ class JKQTP_LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay 
    \ingroup jkqtplotter_overlays
 
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayRectangle : public JKQTPOverlayTwoPositionOverlay {
+class JKQTP_LIB_EXPORT JKQTPOverlayRectangle : public JKQTPOverlayTwoPositionOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
-        explicit JKQTPOverlayRectangle(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = 0);
+        explicit JKQTPOverlayRectangle(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = nullptr);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter);
+        /** \brief set element color */
+        virtual void setColor(QColor c);
 
     protected:
 };

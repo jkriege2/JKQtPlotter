@@ -38,11 +38,6 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
     JKQTPGraph(parent)
 {
     functionType=SpecialFunction::UserFunction;
-    color=QColor("red");
-    fillColor=color.lighter();
-    style=Qt::SolidLine;
-    lineWidth=2;
-    fillStyle=Qt::SolidPattern;
     drawLine=true;
     fillCurve=false;
     params=nullptr;
@@ -54,11 +49,14 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
     displaySamplePoints=false;
     data=nullptr;
 
+    initLineStyle(parent, parentPlotStyle);
+    initFillStyle(parent, parentPlotStyle);
+
     drawErrorPolygons=false;
     drawErrorLines=false;
     errorParams=nullptr;
-    errorColor=color.lighter();
-    errorFillColor=color.lighter();
+    errorColor=getLineColor().lighter();
+    errorFillColor=getLineColor().lighter();
     errorStyle=Qt::SolidLine;
     errorLineWidth=1;
     errorFillStyle=Qt::SolidPattern;
@@ -67,73 +65,21 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
     errorParameterColumn=-1;
 
 
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
+    if (parent && parentPlotStyle>=0) { // get style settings from parent object
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
         errorColor=parent->getPlotStyle(parentPlotStyle).errorColor();
         errorStyle=parent->getPlotStyle(parentPlotStyle).errorStyle();
         errorLineWidth=parent->getPlotStyle(parentPlotStyle).errorWidthF();
         errorFillStyle=parent->getPlotStyle(parentPlotStyle).errorFillStyle();
         errorFillColor=parent->getPlotStyle(parentPlotStyle).errorFillColor();
     }
-    fillColor.setAlphaF(0.5);
     errorFillColor.setAlphaF(0.5);
 }
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPXFunctionLineGraph(parent->getPlotter())
 {
-    functionType=SpecialFunction::UserFunction;
-    color=QColor("red");
-    fillColor=color.lighter();
-    style=Qt::SolidLine;
-    lineWidth=2;
-    fillStyle=Qt::SolidPattern;
-    drawLine=true;
-    fillCurve=false;
-    params=nullptr;
-    minSamples=10;
-    maxRefinementDegree=7;
-    slopeTolerance=0.005;
-    minPixelPerSample=32;
-    plotRefinement=true;
-    displaySamplePoints=false;
-    data=nullptr;
 
-    drawErrorPolygons=false;
-    drawErrorLines=false;
-    errorParams=nullptr;
-    errorColor=color.lighter();
-    errorFillColor=color.lighter();
-    errorStyle=Qt::SolidLine;
-    errorLineWidth=1;
-    errorFillStyle=Qt::SolidPattern;
-
-    parameterColumn=-1;
-    errorParameterColumn=-1;
-
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
-        errorColor=parent->getPlotStyle(parentPlotStyle).errorColor();
-        errorStyle=parent->getPlotStyle(parentPlotStyle).errorStyle();
-        errorLineWidth=parent->getPlotStyle(parentPlotStyle).errorWidthF();
-        errorFillStyle=parent->getPlotStyle(parentPlotStyle).errorFillStyle();
-        errorFillColor=parent->getPlotStyle(parentPlotStyle).errorFillColor();
-    }
-    fillColor.setAlphaF(0.5);
-    errorFillColor.setAlphaF(0.5);
 }
 
 
@@ -150,7 +96,17 @@ void JKQTPXFunctionLineGraph::clearData() {
     data=nullptr;
 }
 
-void JKQTPXFunctionLineGraph::setPlotFunction(const jkqtpPlotFunctionType &__value)
+void JKQTPXFunctionLineGraph::setDrawLine(bool __value)
+{
+    this->drawLine = __value;
+}
+
+bool JKQTPXFunctionLineGraph::getDrawLine() const
+{
+    return this->drawLine;
+}
+
+void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(const jkqtpPlotFunctionType &__value)
 {
     simplePlotFunction=jkqtpSimplePlotFunctionType();
     plotFunction = __value;
@@ -159,7 +115,7 @@ void JKQTPXFunctionLineGraph::setPlotFunction(const jkqtpPlotFunctionType &__val
     clearData();
 }
 
-void JKQTPXFunctionLineGraph::setPlotFunction(const jkqtpSimplePlotFunctionType &__value)
+void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(const jkqtpSimplePlotFunctionType &__value)
 {
     plotFunction=jkqtpPlotFunctionType();
     simplePlotFunction=__value;
@@ -168,7 +124,7 @@ void JKQTPXFunctionLineGraph::setPlotFunction(const jkqtpSimplePlotFunctionType 
     clearData();
 }
 
-void JKQTPXFunctionLineGraph::setPlotFunction(jkqtpPlotFunctionType &&__value)
+void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(jkqtpPlotFunctionType &&__value)
 {
     simplePlotFunction=jkqtpSimplePlotFunctionType();
     plotFunction = std::move(__value);
@@ -176,7 +132,7 @@ void JKQTPXFunctionLineGraph::setPlotFunction(jkqtpPlotFunctionType &&__value)
     clearData();
 }
 
-void JKQTPXFunctionLineGraph::setPlotFunction(jkqtpSimplePlotFunctionType &&__value)
+void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(jkqtpSimplePlotFunctionType &&__value)
 {
     plotFunction=jkqtpPlotFunctionType();
     simplePlotFunction=std::move(__value);
@@ -185,7 +141,7 @@ void JKQTPXFunctionLineGraph::setPlotFunction(jkqtpSimplePlotFunctionType &&__va
     clearData();
 }
 
-jkqtpPlotFunctionType JKQTPXFunctionLineGraph::getPlotFunction() const
+jkqtpPlotFunctionType JKQTPXFunctionLineGraph::getPlotFunctionFunctor() const
 {
     return plotFunction;
 }
@@ -195,18 +151,27 @@ jkqtpSimplePlotFunctionType JKQTPXFunctionLineGraph::getSimplePlotFunction() con
     return simplePlotFunction;
 }
 
+void JKQTPXFunctionLineGraph::setParams(void *__value)
+{
+    if (this->params != __value) {
+        this->params = __value;
+        clearData();
+    }
+}
+
+void *JKQTPXFunctionLineGraph::getParams() const
+{
+    return this->params;
+}
+
 
 void JKQTPXFunctionLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=painter.pen();
+    QPen p=getLinePen(painter, parent);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
     QPen np(Qt::NoPen);
-    p.setColor(color);
-    p.setStyle(style);
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+    QBrush b=getFillBrush(painter, parent);
     const double y=rect.top()+rect.height()/2.0;
     painter.setPen(np);
     if (drawLine) painter.setPen(p);
@@ -216,8 +181,8 @@ void JKQTPXFunctionLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRect
 
 }
 
-QColor JKQTPXFunctionLineGraph::getKeyLabelColor() {
-    return color;
+QColor JKQTPXFunctionLineGraph::getKeyLabelColor() const {
+    return getLineColor();
 }
 
 bool JKQTPXFunctionLineGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
@@ -355,7 +320,7 @@ void JKQTPXFunctionLineGraph::refine(doublePair* a, doublePair* b, unsigned int 
         xmid=xmid+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta/5.0; // shake by 10%
     //}
     double realxmid=parent->p2x(xmid);
-    double realfmid;
+    double realfmid = 0.0;
     if (plotFunction) realfmid=plotFunction(realxmid, params);
     else if (simplePlotFunction) realfmid=simplePlotFunction(realxmid);
     double fmid=transformY(realfmid);
@@ -391,13 +356,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-        QPen p=painter.pen();
-        p.setColor(color);
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-        p.setStyle(style);
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setCapStyle(Qt::RoundCap);
+        QPen p=getLinePen(painter, parent);
         QPen np(Qt::NoPen);
 
         QPen ep=painter.pen();
@@ -406,9 +365,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         ep.setStyle(errorStyle);
         ep.setJoinStyle(Qt::RoundJoin);
 
-        QBrush b=painter.brush();
-        b.setColor(fillColor);
-        b.setStyle(fillStyle);
+        QBrush b=getFillBrush(painter, parent);
 
         QBrush eb=painter.brush();
         eb.setColor(errorFillColor);
@@ -521,8 +478,8 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         }
 
 
-        QColor c=color;
-        c.setHsv(fmod(color.hue()+90, 360), color.saturation(), color.value());
+        QColor c=getLineColor();
+        c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
         d=data;
         if (displaySamplePoints) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -578,13 +535,7 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-        QPen p=painter.pen();
-        p.setColor(color);
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-        p.setStyle(style);
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setCapStyle(Qt::RoundCap);
+        QPen p=getLinePen(painter, parent);
         QPen np(Qt::NoPen);
 
         QPen ep=painter.pen();
@@ -593,9 +544,7 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         ep.setStyle(errorStyle);
         ep.setJoinStyle(Qt::RoundJoin);
 
-        QBrush b=painter.brush();
-        b.setColor(fillColor);
-        b.setStyle(fillStyle);
+        QBrush b=getFillBrush(painter, parent);
 
         QBrush eb=painter.brush();
         eb.setColor(errorFillColor);
@@ -703,8 +652,8 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
         }*/
 
-        QColor c=color;
-        c.setHsv(fmod(color.hue()+90, 360), color.saturation(), color.value());
+        QColor c=getLineColor();
+        c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
         d=data;
         if (displaySamplePoints) while (d!=nullptr) {
             double yv=d->x;
@@ -763,23 +712,6 @@ void JKQTPYFunctionLineGraph::createPlotData(bool collectParams) {
 
 
 
-QBrush JKQTPXFunctionLineGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
-    QBrush b;
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-    return b;
-}
-
-QPen JKQTPXFunctionLineGraph::getLinePen(JKQTPEnhancedPainter &painter) const {
-    QPen p;
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-
-    return p;
-}
 
 QBrush JKQTPXFunctionLineGraph::getErrorBrush(JKQTPEnhancedPainter& /*painter*/) const {
     QBrush b;
@@ -849,10 +781,34 @@ void JKQTPXFunctionLineGraph::setErrorParams(const QVector<double> &errorParams)
     setErrorParams(&ierrorparams);
 }
 
+void JKQTPXFunctionLineGraph::setParameterColumn(int __value)
+{
+    this->parameterColumn = __value;
+}
+
+int JKQTPXFunctionLineGraph::getParameterColumn() const
+{
+    return this->parameterColumn;
+}
+
+void JKQTPXFunctionLineGraph::setParameterColumn(size_t __value) { this->parameterColumn = static_cast<int>(__value); }
+
+void JKQTPXFunctionLineGraph::setErrorParameterColumn(int __value)
+{
+    this->errorParameterColumn = __value;
+}
+
+int JKQTPXFunctionLineGraph::getErrorParameterColumn() const
+{
+    return this->errorParameterColumn;
+}
+
+void JKQTPXFunctionLineGraph::setErrorParameterColumn(size_t __value) { this->errorParameterColumn = static_cast<int>(__value); }
+
 void JKQTPXFunctionLineGraph::setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction function)
 {
     if (function==JKQTPXFunctionLineGraph::Polynomial) {
-        setPlotFunction([](double x, void* param) {
+        setPlotFunctionFunctor([](double x, void* param) {
             double res=0;
             QVector<double>* d=static_cast<QVector<double>*>(param);
             if (d && d->size()>0) {
@@ -867,7 +823,7 @@ void JKQTPXFunctionLineGraph::setSpecialFunction(JKQTPXFunctionLineGraph::Specia
             return res;
         });
     }
-    else if (function==JKQTPXFunctionLineGraph::Exponential) setPlotFunction([](double x, void* param) {
+    else if (function==JKQTPXFunctionLineGraph::Exponential) setPlotFunctionFunctor([](double x, void* param) {
         double res=0;
         QVector<double>* d=static_cast<QVector<double>*>(param);
         if (d) {
@@ -879,7 +835,7 @@ void JKQTPXFunctionLineGraph::setSpecialFunction(JKQTPXFunctionLineGraph::Specia
         }
         return res;
     });
-    else if (function==JKQTPXFunctionLineGraph::PowerLaw) setPlotFunction([](double x, void* param) {
+    else if (function==JKQTPXFunctionLineGraph::PowerLaw) setPlotFunctionFunctor([](double x, void* param) {
         double res=0;
         QVector<double>* d=static_cast<QVector<double>*>(param);
         if (d) {
@@ -907,6 +863,86 @@ QVector<double> JKQTPXFunctionLineGraph::getInternalParams() const {
 }
 QVector<double> JKQTPXFunctionLineGraph::getInternalErrorParams() const {
     return ierrorparams;
+}
+
+void JKQTPXFunctionLineGraph::setMinSamples(const unsigned int &__value)
+{
+    this->minSamples = __value;
+}
+
+unsigned int JKQTPXFunctionLineGraph::getMinSamples() const
+{
+    return this->minSamples;
+}
+
+void JKQTPXFunctionLineGraph::setMaxRefinementDegree(const unsigned int &__value)
+{
+    this->maxRefinementDegree = __value;
+}
+
+unsigned int JKQTPXFunctionLineGraph::getMaxRefinementDegree() const
+{
+    return this->maxRefinementDegree;
+}
+
+void JKQTPXFunctionLineGraph::setSlopeTolerance(double __value)
+{
+    this->slopeTolerance = __value;
+}
+
+double JKQTPXFunctionLineGraph::getSlopeTolerance() const
+{
+    return this->slopeTolerance;
+}
+
+void JKQTPXFunctionLineGraph::setMinPixelPerSample(double __value)
+{
+    this->minPixelPerSample = __value;
+}
+
+double JKQTPXFunctionLineGraph::getMinPixelPerSample() const
+{
+    return this->minPixelPerSample;
+}
+
+void JKQTPXFunctionLineGraph::setPlotRefinement(bool __value)
+{
+    this->plotRefinement = __value;
+}
+
+bool JKQTPXFunctionLineGraph::getPlotRefinement() const
+{
+    return this->plotRefinement;
+}
+
+void JKQTPXFunctionLineGraph::setDisplaySamplePoints(bool __value)
+{
+    this->displaySamplePoints = __value;
+}
+
+bool JKQTPXFunctionLineGraph::getDisplaySamplePoints() const
+{
+    return this->displaySamplePoints;
+}
+
+void JKQTPXFunctionLineGraph::setDrawErrorPolygons(bool __value)
+{
+    this->drawErrorPolygons = __value;
+}
+
+bool JKQTPXFunctionLineGraph::getDrawErrorPolygons() const
+{
+    return this->drawErrorPolygons;
+}
+
+void JKQTPXFunctionLineGraph::setDrawErrorLines(bool __value)
+{
+    this->drawErrorLines = __value;
+}
+
+bool JKQTPXFunctionLineGraph::getDrawErrorLines() const
+{
+    return this->drawErrorLines;
 }
 
 void JKQTPXFunctionLineGraph::setErrorPlotFunction(const jkqtpPlotFunctionType &__value)
@@ -943,6 +979,16 @@ void JKQTPXFunctionLineGraph::setErrorPlotFunction(jkqtpSimplePlotFunctionType &
 jkqtpSimplePlotFunctionType JKQTPXFunctionLineGraph::getErrorSimplePlotFunction() const
 {
     return errorSimplePlotFunction;
+}
+
+void JKQTPXFunctionLineGraph::setErrorParams(void *__value)
+{
+    this->errorParams = __value;
+}
+
+void *JKQTPXFunctionLineGraph::getErrorParams() const
+{
+    return this->errorParams;
 }
 
 

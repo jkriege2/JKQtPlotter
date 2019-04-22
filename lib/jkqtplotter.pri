@@ -12,10 +12,13 @@ HEADERS += \
            $$PWD/jkqtplotter/jkqtpbaseplotter.h \
            $$PWD/jkqtplotter/jkqtpdatastorage.h \
            $$PWD/jkqtplotter/jkqtpelementsoverlay.h \
-           $$PWD/jkqtplotter/jkqtpgraphs.h \
+           $$PWD/jkqtplotter/jkqtpgraphsscatter.h \
+           $$PWD/jkqtplotter/jkqtpgraphsrange.h \
+           $$PWD/jkqtplotter/jkqtpgraphsspecialline.h \
            $$PWD/jkqtplotter/jkqtpgraphsbarchart.h \
            $$PWD/jkqtplotter/jkqtpgraphsbase.h \
            $$PWD/jkqtplotter/jkqtpgraphsbaseerrors.h \
+           $$PWD/jkqtplotter/jkqtpgraphsbasestylingmixins.h \
            $$PWD/jkqtplotter/jkqtpgraphsboxplot.h \
            $$PWD/jkqtplotter/jkqtpgraphsevaluatedfunction.h \
            $$PWD/jkqtplotter/jkqtpgraphsfilledcurve.h \
@@ -54,10 +57,13 @@ SOURCES += \
            $$PWD/jkqtplotter/jkqtpbaseplotter.cpp \
            $$PWD/jkqtplotter/jkqtpdatastorage.cpp \
            $$PWD/jkqtplotter/jkqtpelementsoverlay.cpp  \
-           $$PWD/jkqtplotter/jkqtpgraphs.cpp \
+           $$PWD/jkqtplotter/jkqtpgraphsscatter.cpp \
+           $$PWD/jkqtplotter/jkqtpgraphsrange.cpp \
+           $$PWD/jkqtplotter/jkqtpgraphsspecialline.cpp \
            $$PWD/jkqtplotter/jkqtpgraphsbarchart.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsbase.cpp \
            $$PWD/jkqtplotter/jkqtpgraphsbaseerrors.cpp \
+           $$PWD/jkqtplotter/jkqtpgraphsbasestylingmixins.cpp \
            $$PWD/jkqtplotter/jkqtpgraphsboxplot.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsevaluatedfunction.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsfilledcurve.cpp  \

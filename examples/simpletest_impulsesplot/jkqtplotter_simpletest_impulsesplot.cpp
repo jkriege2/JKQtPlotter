@@ -38,6 +38,9 @@ int main(int argc, char* argv[])
     graph->setLineWidth(2);
     graph->setColor(QColor("red"));
     graph->setTitle(QObject::tr("$\\cos(x)\\cdot\\exp(-x/10)$"));
+    //graph->setDrawSymbols(true);
+    //graph->setSymbolType(JKQTPGraphSymbols::JKQTPFilledStar);
+    //graph->setBaseline(0.25);
 
     // 5. add the graph to the plot, so it is actually displayed
     plot.addGraph(graph);

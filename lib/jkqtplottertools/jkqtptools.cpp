@@ -885,22 +885,26 @@ std::string jkqtp_chartostr(char data){
 }
 
 
-QString JKQTPStepType2String(JKQTPStepType pos)
+QString JKQTPSpecialLineType2String(JKQTPSpecialLineType pos)
 {
     switch(pos) {
         case JKQTPStepLeft: return "step_left";
         case JKQTPStepCenter: return "step_center";
         case JKQTPStepRight: return "step_right";
+        case JKQTPStepAverage: return "step_average";
+        case JKQTPDirectLine: return "direct_line";
     }
     return "";
 }
 
-JKQTPStepType String2JKQTPStepType(const QString& pos)
+JKQTPSpecialLineType String2JKQTPSpecialLineType(const QString& pos)
 {
     QString s=pos.trimmed().toLower();
     if (s=="step_left"||s=="left"||s=="l") return JKQTPStepLeft;
     if (s=="step_center"||s=="center"||s=="c") return JKQTPStepCenter;
     if (s=="step_right"||s=="right"||s=="r") return JKQTPStepRight;
+    if (s=="step_average"||s=="step_avg"||s=="average"||s=="avg"||s=="a") return JKQTPStepAverage;
+    if (s=="direct_line"||s=="line"||s=="d") return JKQTPDirectLine;
 
     return JKQTPStepLeft;
 }

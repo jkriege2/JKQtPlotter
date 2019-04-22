@@ -26,7 +26,7 @@
 #include <QPainter>
 #include <QImage>
 #include <QIcon>
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplottertools/jkqtp_imexport.h"
@@ -62,56 +62,32 @@ class JKQTP_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual void setX(double __value)
-        {
-            this->x = __value;
-        } 
+        void setX(double __value);
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual double getX() const  
-        {
-            return this->x; 
-        }
+        double getX() const;
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual void setY(double __value)
-        {
-            this->y = __value;
-        } 
+        void setY(double __value);
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual double getY() const  
-        {
-            return this->y; 
-        }
+        double getY() const;
         /*! \copydoc width
             \see see width for details */ 
-        inline virtual void setWidth(double __value)
-        {
-            this->width = __value;
-        } 
+        void setWidth(double __value);
         /*! \copydoc width
             \see see width for details */ 
-        inline virtual double getWidth() const  
-        {
-            return this->width; 
-        }
+        double getWidth() const;
         /*! \copydoc height
             \see see height for details */ 
-        inline virtual void setHeight(double __value)
-        {
-            this->height = __value;
-        } 
+        void setHeight(double __value);
         /*! \copydoc height
             \see see height for details */ 
-        inline virtual double getHeight() const  
-        {
-            return this->height; 
-        }
+        double getHeight() const;
 
     protected:
 
@@ -192,88 +168,46 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 
         /*! \copydoc Nx
             \see see Nx for details */ 
-        inline virtual void setNx(int __value)
-        {
-            this->Nx = __value;
-        } 
+        void setNx(int __value);
         /*! \copydoc Nx
             \see see Nx for details */ 
-        inline virtual int getNx() const
-        {
-            return this->Nx; 
-        }
+        int getNx() const;
         /*! \copydoc Ny
             \see see Ny for details */ 
-        inline virtual void setNy(int __value)
-        {
-            this->Ny = __value;
-        } 
+        void setNy(int __value);
         /*! \copydoc Ny
             \see see Ny for details */ 
-        inline virtual int getNy() const
-        {
-            return this->Ny; 
-        }
+        int getNy() const;
         /*! \copydoc data
             \see see data for details */ 
-        inline virtual void setData(void* __value)  
-        {
-            this->data = __value;
-        } 
+        virtual void setData(void* __value);
         /*! \copydoc data
             \see see data for details */ 
-        inline virtual void* getData() const  
-        {
-            return this->data; 
-        }
+        virtual void *getData() const;
         /*! \copydoc datatype
             \see see datatype for details */ 
-        inline virtual void setDatatype(const DataType & __value)  
-        {
-            this->datatype = __value;
-        } 
+        virtual void setDatatype(DataType __value);
         /*! \copydoc datatype
             \see see datatype for details */ 
-        inline virtual DataType getDatatype() const  
-        {
-            return this->datatype; 
-        }
+        virtual DataType getDatatype() const;
         /*! \copydoc dataModifier
             \see see dataModifier for details */ 
-        inline virtual void setDataModifier(void* __value)  
-        {
-            this->dataModifier = __value;
-        } 
+        virtual void setDataModifier(void* __value);
         /*! \copydoc dataModifier
             \see see dataModifier for details */ 
-        inline virtual void* getDataModifier() const  
-        {
-            return this->dataModifier; 
-        }
+        virtual void *getDataModifier() const;
         /*! \copydoc datatypeModifier
             \see see datatypeModifier for details */ 
-        inline virtual void setDatatypeModifier(const DataType & __value)  
-        {
-            this->datatypeModifier = __value;
-        } 
+        virtual void setDatatypeModifier(DataType __value);
         /*! \copydoc datatypeModifier
             \see see datatypeModifier for details */ 
-        inline virtual DataType getDatatypeModifier() const  
-        {
-            return this->datatypeModifier; 
-        }
+        virtual DataType getDatatypeModifier() const;
         /*! \copydoc modifierMode
             \see see modifierMode for details */ 
-        inline virtual void setModifierMode(const ModifierMode & __value)  
-        {
-            this->modifierMode = __value;
-        } 
+        void setModifierMode(const ModifierMode & __value);
         /*! \copydoc modifierMode
             \see see modifierMode for details */ 
-        inline virtual ModifierMode getModifierMode() const  
-        {
-            return this->modifierMode; 
-        }
+        ModifierMode getModifierMode() const;
 
         virtual void setDataModifier(void* data, DataType datatype);
         virtual void setData(void* data, int Nx, int Ny, DataType datatype);
@@ -428,284 +362,152 @@ class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 
         /*! \copydoc palette
             \see see palette for details */ 
-        inline virtual void setPalette(const JKQTPMathImageColorPalette & __value)  
-        {
-            this->palette = __value;
-        } 
+        void setPalette(const JKQTPMathImageColorPalette & __value);
         /*! \copydoc palette
             \see see palette for details */ 
-        inline virtual JKQTPMathImageColorPalette getPalette() const  
-        {
-            return this->palette; 
-        }
+        JKQTPMathImageColorPalette getPalette() const;
         /*! \copydoc rangeMinFailAction
             \see see rangeMinFailAction for details */ 
-        inline virtual void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
-        {
-            this->rangeMinFailAction = __value;
-        } 
+        void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value);
         /*! \copydoc rangeMinFailAction
             \see see rangeMinFailAction for details */ 
-        inline virtual JKQTPMathImageColorRangeFailAction getActionRangeMinFail() const  
-        {
-            return this->rangeMinFailAction; 
-        }
+        JKQTPMathImageColorRangeFailAction getActionRangeMinFail() const;
         /*! \copydoc rangeMaxFailAction
             \see see rangeMaxFailAction for details */ 
-        inline virtual void setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value)  
-        {
-            this->rangeMaxFailAction = __value;
-        } 
+        void setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value);
         /*! \copydoc rangeMaxFailAction
             \see see rangeMaxFailAction for details */ 
-        inline virtual JKQTPMathImageColorRangeFailAction getActionRangeMaxFail() const  
-        {
-            return this->rangeMaxFailAction; 
-        }
+        JKQTPMathImageColorRangeFailAction getActionRangeMaxFail() const;
         /*! \copydoc rangeMinFailColor
             \see see rangeMinFailColor for details */ 
-        inline virtual void setRangeMinFailColor(const QColor & __value)  
-        {
-            this->rangeMinFailColor = __value;
-        } 
+        void setRangeMinFailColor(const QColor & __value);
         /*! \copydoc rangeMinFailColor
             \see see rangeMinFailColor for details */ 
-        inline virtual QColor getRangeMinFailColor() const  
-        {
-            return this->rangeMinFailColor; 
-        }
+        QColor getRangeMinFailColor() const;
         /*! \copydoc rangeMaxFailColor
             \see see rangeMaxFailColor for details */ 
-        inline virtual void setRangeMaxFailColor(const QColor & __value)  
-        {
-            this->rangeMaxFailColor = __value;
-        } 
+        void setRangeMaxFailColor(const QColor & __value);
         /*! \copydoc rangeMaxFailColor
             \see see rangeMaxFailColor for details */ 
-        inline virtual QColor getRangeMaxFailColor() const  
-        {
-            return this->rangeMaxFailColor; 
-        }
+        QColor getRangeMaxFailColor() const;
         /*! \copydoc nanColor
             \see see nanColor for details */ 
-        inline virtual void setNanColor(const QColor & __value)  
-        {
-            this->nanColor = __value;
-        } 
+        void setNanColor(const QColor & __value);
         /*! \copydoc nanColor
             \see see nanColor for details */ 
-        inline virtual QColor getNanColor() const  
-        {
-            return this->nanColor; 
-        }
+        QColor getNanColor() const;
         /*! \copydoc infColor
             \see see infColor for details */ 
-        inline virtual void setInfColor(const QColor & __value)  
-        {
-            this->infColor = __value;
-        } 
+        void setInfColor(const QColor & __value);
         /*! \copydoc infColor
             \see see infColor for details */ 
-        inline virtual QColor getInfColor() const  
-        {
-            return this->infColor; 
-        }
+        QColor getInfColor() const;
         /*! \copydoc showColorBar
             \see see showColorBar for details */ 
-        inline virtual void setShowColorBar(bool __value)
-        {
-            this->showColorBar = __value;
-        } 
+        void setShowColorBar(bool __value);
         /*! \copydoc showColorBar
             \see see showColorBar for details */ 
-        inline virtual bool getShowColorBar() const  
-        {
-            return this->showColorBar; 
-        }
+        bool getShowColorBar() const;
         /*! \copydoc colorBarWidth
             \see see colorBarWidth for details */ 
-        inline virtual void setColorBarWidth(double __value)
-        {
-            this->colorBarWidth = __value;
-        } 
+        void setColorBarWidth(double __value);
         /*! \copydoc colorBarWidth
             \see see colorBarWidth for details */ 
-        inline virtual double getColorBarWidth() const
-        {
-            return this->colorBarWidth; 
-        }
+        double getColorBarWidth() const;
         /*! \copydoc colorBarModifiedWidth
             \see see colorBarModifiedWidth for details */ 
-        inline virtual void setColorBarModifiedWidth(double __value)
-        {
-            this->colorBarModifiedWidth = __value;
-        } 
+        void setColorBarModifiedWidth(double __value);
         /*! \copydoc colorBarModifiedWidth
             \see see colorBarModifiedWidth for details */ 
-        inline virtual double getColorBarModifiedWidth() const
-        {
-            return this->colorBarModifiedWidth; 
-        }
+        double getColorBarModifiedWidth() const;
         /*! \copydoc colorBarOffset
             \see see colorBarOffset for details */ 
-        inline virtual void setColorBarOffset(double __value)
-        {
-            this->colorBarOffset = __value;
-        } 
+        void setColorBarOffset(double __value);
         /*! \copydoc colorBarOffset
             \see see colorBarOffset for details */ 
-        inline virtual double getColorBarOffset() const
-        {
-            return this->colorBarOffset; 
-        }
+        double getColorBarOffset() const;
         /*! \copydoc colorBarRelativeHeight
             \see see colorBarRelativeHeight for details */ 
-        inline virtual void setColorBarRelativeHeight(double __value)
-        {
-            this->colorBarRelativeHeight = __value;
-        } 
+        void setColorBarRelativeHeight(double __value);
         /*! \copydoc colorBarRelativeHeight
             \see see colorBarRelativeHeight for details */ 
-        inline virtual double getColorBarRelativeHeight() const  
-        {
-            return this->colorBarRelativeHeight; 
-        }
+        double getColorBarRelativeHeight() const;
         /*! \copydoc imageMin
             \see see imageMin for details */ 
-        inline virtual void setImageMin(double __value)
-        {
-            this->imageMin = __value;
-        } 
+        void setImageMin(double __value);
         /*! \copydoc imageMin
             \see see imageMin for details */ 
-        inline virtual double getImageMin() const  
-        {
-            return this->imageMin; 
-        }
+        double getImageMin() const;
         /*! \copydoc imageMax
             \see see imageMax for details */ 
-        inline virtual void setImageMax(double __value)
-        {
-            this->imageMax = __value;
-        } 
+        void setImageMax(double __value);
         /*! \copydoc imageMax
             \see see imageMax for details */ 
-        inline virtual double getImageMax() const  
-        {
-            return this->imageMax; 
-        }
+        double getImageMax() const;
         /*! \copydoc autoImageRange
             \see see autoImageRange for details */ 
-        inline virtual void setAutoImageRange(bool __value)
-        {
-            this->autoImageRange = __value;
-        } 
+        void setAutoImageRange(bool __value);
         /*! \copydoc autoImageRange
             \see see autoImageRange for details */ 
-        inline virtual bool getAutoImageRange() const  
-        {
-            return this->autoImageRange; 
-        }
+        bool getAutoImageRange() const;
         /*! \copydoc imageName
             \see see imageName for details */ 
-        inline virtual void setImageName(const QString & __value)  
-        {
-            this->imageName = __value;
-        } 
+        void setImageName(const QString & __value);
         /*! \copydoc imageName
             \see see imageName for details */ 
-        inline virtual QString getImageName() const  
-        {
-            return this->imageName; 
-        }
+        QString getImageName() const;
         /*! \copydoc imageNameFontSize
             \see see imageNameFontSize for details */ 
-        inline virtual void setImageNameFontSize(double __value)
-        {
-            this->imageNameFontSize = __value;
-        } 
+        void setImageNameFontSize(double __value);
         /*! \copydoc imageNameFontSize
             \see see imageNameFontSize for details */ 
-        inline virtual double getImageNameFontSize() const  
-        {
-            return this->imageNameFontSize; 
-        }
+        double getImageNameFontSize() const;
         /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
-        inline JKQTPVerticalIndependentAxis* getColorBarRightAxis()  { return this->colorBarRightAxis; }
+        JKQTPVerticalIndependentAxis* getColorBarRightAxis();
         /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
-        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxis()  { return this->colorBarTopAxis; }
+        JKQTPHorizontalIndependentAxis* getColorBarTopAxis();
         /*! \brief returns the property modifierColorBarTopAxis ( \copybrief modifierColorBarTopAxis ). \details Description of the parameter modifierColorBarTopAxis is:  <BLOCKQUOTE>\copydoc modifierColorBarTopAxis </BLOCKQUOTE>. \see modifierColorBarTopAxis for more information */ 
-        inline JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis()  { return this->modifierColorBarTopAxis; }
+        JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis();
         /*! \brief returns the property modifierColorBarRightAxis ( \copybrief modifierColorBarRightAxis ). \details Description of the parameter modifierColorBarRightAxis  is:  <BLOCKQUOTE>\copydoc modifierColorBarRightAxis  </BLOCKQUOTE>. \see modifierColorBarRightAxis  for more information */ 
-        inline JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis()   { return this->modifierColorBarRightAxis ; }
+        JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis();
         /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
-        inline const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const { return this->colorBarRightAxis; }
+        const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const;
         /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
-        inline const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const { return this->colorBarTopAxis; }
+        const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const;
         /*! \brief returns the property modifierColorBarTopAxis ( \copybrief modifierColorBarTopAxis ). \details Description of the parameter modifierColorBarTopAxis is:  <BLOCKQUOTE>\copydoc modifierColorBarTopAxis </BLOCKQUOTE>. \see modifierColorBarTopAxis for more information */
-        inline const JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const { return this->modifierColorBarTopAxis; }
+        const JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const;
         /*! \brief returns the property modifierColorBarRightAxis ( \copybrief modifierColorBarRightAxis ). \details Description of the parameter modifierColorBarRightAxis  is:  <BLOCKQUOTE>\copydoc modifierColorBarRightAxis  </BLOCKQUOTE>. \see modifierColorBarRightAxis  for more information */
-        inline const JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis()  const { return this->modifierColorBarRightAxis ; }
+        const JKQTPHorizontalIndependentAxis *getModifierColorBarRightAxis()  const;
         /*! \copydoc colorBarTopVisible
             \see see colorBarTopVisible for details */ 
-        inline virtual void setColorBarTopVisible(bool __value)
-        {
-            this->colorBarTopVisible = __value;
-        } 
+        void setColorBarTopVisible(bool __value);
         /*! \copydoc colorBarTopVisible
             \see see colorBarTopVisible for details */ 
-        inline virtual bool getColorBarTopVisible() const  
-        {
-            return this->colorBarTopVisible; 
-        }
+        bool getColorBarTopVisible() const;
         /*! \copydoc colorBarRightVisible
             \see see colorBarRightVisible for details */ 
-        inline virtual void setColorBarRightVisible(bool __value)
-        {
-            this->colorBarRightVisible = __value;
-        } 
+        void setColorBarRightVisible(bool __value);
         /*! \copydoc colorBarRightVisible
             \see see colorBarRightVisible for details */ 
-        inline virtual bool getColorBarRightVisible() const  
-        {
-            return this->colorBarRightVisible; 
-        }
+        bool getColorBarRightVisible() const;
         /*! \copydoc autoModifierRange
             \see see autoModifierRange for details */ 
-        inline virtual void setAutoModifierRange(bool __value)
-        {
-            this->autoModifierRange = __value;
-        } 
+        void setAutoModifierRange(bool __value);
         /*! \copydoc autoModifierRange
             \see see autoModifierRange for details */ 
-        inline virtual bool getAutoModifierRange() const  
-        {
-            return this->autoModifierRange; 
-        }
+        bool getAutoModifierRange() const;
         /*! \copydoc modifierMin
             \see see modifierMin for details */ 
-        inline virtual void setModifierMin(double __value)
-        {
-            this->modifierMin = __value;
-        } 
+        void setModifierMin(double __value);
         /*! \copydoc modifierMin
             \see see modifierMin for details */ 
-        inline virtual double getModifierMin() const  
-        {
-            return this->modifierMin; 
-        }
+        double getModifierMin() const;
         /*! \copydoc modifierMax
             \see see modifierMax for details */ 
-        inline virtual void setModifierMax(double __value)
-        {
-            this->modifierMax = __value;
-        } 
+        void setModifierMax(double __value);
         /*! \copydoc modifierMax
             \see see modifierMax for details */ 
-        inline virtual double getModifierMax() const  
-        {
-            return this->modifierMax; 
-        }
+        double getModifierMax() const;
 
         void setPalette(int pal);
 
@@ -844,28 +646,16 @@ class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
 
         /*! \copydoc imageColumn
             \see see imageColumn for details */ 
-        inline virtual void setImageColumn(int __value)
-        {
-            this->imageColumn = __value;
-        } 
+        virtual void setImageColumn(int __value);
         /*! \copydoc imageColumn
             \see see imageColumn for details */ 
-        inline virtual int getImageColumn() const  
-        {
-            return this->imageColumn; 
-        }
+        int getImageColumn() const;
         /*! \copydoc modifierColumn
             \see see modifierColumn for details */ 
-        inline virtual void setModifierColumn(int __value)
-        {
-            this->modifierColumn = __value;
-        } 
+        virtual void setModifierColumn(int __value);
         /*! \copydoc modifierColumn
             \see see modifierColumn for details */ 
-        inline virtual int getModifierColumn() const  
-        {
-            return this->modifierColumn; 
-        }
+        int getModifierColumn() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;

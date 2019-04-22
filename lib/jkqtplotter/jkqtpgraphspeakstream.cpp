@@ -40,25 +40,9 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTBasePlotter *parent):
     yPeaks=true;
     peakHeight=1;
     drawBaseline=true;
+    initLineStyle(parent, parentPlotStyle);
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTBasePlotter *parent):
-    JKQTPSingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
-{
-    yPeaks=true;
-    this->baseline=baseline;
-    this->peakHeight=peakHeight;
-    drawBaseline=true;
-}
-
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTBasePlotter *parent):
-    JKQTPSingleColumnGraph(dataColumn, parent)
-{
-    yPeaks=true;
-    this->baseline=baseline;
-    this->peakHeight=peakHeight;
-    drawBaseline=true;
-}
 
 
 JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTPlotter *parent):
@@ -66,23 +50,6 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTPlotter *parent):
 {
 }
 
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPlotter *parent):
-    JKQTPSingleColumnGraph(dataColumn, color, Qt::SolidLine, 2.0, parent)
-{
-    yPeaks=true;
-    this->baseline=baseline;
-    this->peakHeight=peakHeight;
-    drawBaseline=true;
-}
-
-JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPlotter *parent):
-    JKQTPSingleColumnGraph(dataColumn, parent)
-{
-    yPeaks=true;
-    this->baseline=baseline;
-    this->peakHeight=peakHeight;
-    drawBaseline=true;
-}
 
 bool JKQTPPeakStreamGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {
@@ -122,7 +89,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-        QPen p=getLinePen(painter);
+        QPen p=getLinePen(painter, parent);
         p.setCapStyle(Qt::FlatCap);
 
         int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
@@ -144,7 +111,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
             intSortData();
             for (int iii=imin; iii<imax; iii++) {
                 int i=qBound<int>(imin, getDataIndex(static_cast<int>(iii)), imax);
-                const double xv=datastore->get(dataColumn,i);
+                const double xv=datastore->get(dataColumn,static_cast<size_t>(i));
                 if (JKQTPIsOKFloat(xv)) {
                     lines<<QLineF(transform(xv, baseline), transform(xv, baseline+peakHeight));
                 }
@@ -156,7 +123,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
             intSortData();
             for (int iii=imin; iii<imax; iii++) {
                 int i=qBound<int>(imin, getDataIndex(iii), imax);
-                const double yv=datastore->get(dataColumn,i);
+                const double yv=datastore->get(dataColumn,static_cast<size_t>(i));
                 if (JKQTPIsOKFloat(yv)) {
                     lines<<QLineF(transform(baseline, yv), transform(baseline+peakHeight, yv));
                 }
@@ -175,7 +142,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
 void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=getLinePen(painter);
+    QPen p=getLinePen(painter, parent);
     painter.setPen(p);
     if (yPeaks) {
         p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.width()/10.0)));
@@ -200,6 +167,56 @@ void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &
     }
 
     
+}
+
+QColor JKQTPPeakStreamGraph::getKeyLabelColor() const
+{
+    return getLineColor();
+}
+
+void JKQTPPeakStreamGraph::setColor(QColor col)
+{
+    setLineColor(col);
+}
+
+void JKQTPPeakStreamGraph::setBaseline(double __value)
+{
+    this->baseline = __value;
+}
+
+double JKQTPPeakStreamGraph::getBaseline() const
+{
+    return this->baseline;
+}
+
+void JKQTPPeakStreamGraph::setPeakHeight(double __value)
+{
+    this->peakHeight = __value;
+}
+
+double JKQTPPeakStreamGraph::getPeakHeight() const
+{
+    return this->peakHeight;
+}
+
+void JKQTPPeakStreamGraph::setYPeaks(bool __value)
+{
+    this->yPeaks = __value;
+}
+
+bool JKQTPPeakStreamGraph::getYPeaks() const
+{
+    return this->yPeaks;
+}
+
+void JKQTPPeakStreamGraph::setDrawBaseline(bool __value)
+{
+    this->drawBaseline = __value;
+}
+
+bool JKQTPPeakStreamGraph::getDrawBaseline() const
+{
+    return this->drawBaseline;
 }
 
 

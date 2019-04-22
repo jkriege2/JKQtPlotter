@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplottertools/jkqtptools.h"
 
 
@@ -79,12 +79,12 @@ int main(int argc, char* argv[])
 
 
         // set symbol (cross/X) + pen style (and color)dashed)
-        graph->setSymbol(JKQTPCross);
-        graph->setStyle(Qt::DashLine);
+        graph->setSymbolType(JKQTPCross);
+        graph->setLineStyle(Qt::DashLine);
         // set symbol size
         graph->setSymbolSize(5);
         // set width of symbol lines
-        graph->setSymbolWidth(1);
+        graph->setSymbolLineWidth(1);
         // set width of graph line
         graph->setLineWidth(1);
 

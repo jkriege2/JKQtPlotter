@@ -6,7 +6,7 @@
  
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsboxplot.h"
 
 int main(int argc, char* argv[])
@@ -64,9 +64,9 @@ int main(int argc, char* argv[])
     graphOutliers->setTitle("outliers");
     // make the color a darker shade of the color of graph
     graphOutliers->setColor(graph->getColor().darker());
-    graphOutliers->setFillColor(QColor("white"));
+    graphOutliers->setSymbolFillColor(QColor("white"));
     // draw outliers as small circles, without lines
-    graphOutliers->setSymbol(JKQTPCircle);
+    graphOutliers->setSymbolType(JKQTPCircle);
     graphOutliers->setDrawLine(false);
     graphOutliers->setSymbolSize(7);
 

@@ -1,7 +1,7 @@
 #include "test_styling.h"
 #include "ui_test_styling.h"
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
@@ -192,7 +192,7 @@ void TestStyling::initPlot()
     JKQTPXYLineGraph* graph2=new JKQTPXYLineGraph(ui->plot);
     graph2->setXColumn(columnX);
     graph2->setYColumn(columnY2);
-    graph2->setSymbol(JKQTPNoSymbol);
+    graph2->setSymbolType(JKQTPNoSymbol);
     //graph2->setTitle(QObject::tr("sine{\\cdot}exp graph $f(x)=\\sin(x)\\cdot\\exp\\left(-\\frac{x}{5}\\right)$"));
     graph2->setTitle(QObject::tr("sine*exp graph"));
     ui->plot->addGraph(graph2);

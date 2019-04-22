@@ -20,6 +20,7 @@
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpgraphsimpulses_H
 #define jkqtpgraphsimpulses_H
@@ -31,7 +32,7 @@
 
     \image html plot_impulsesxplots.png
  */
-class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin{
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -44,58 +45,37 @@ class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)  
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
-        /*! \copydoc baseline
-            \see see baseline for details */ 
-        inline virtual void setBaseline(double __value)  
-        {
-            this->baseline = __value;
-        } 
-        /*! \copydoc baseline
-            \see see baseline for details */ 
-        inline virtual double getBaseline() const  
-        {
-            return this->baseline; 
-        }
+        /*! \brief color of symbols and impulses in one call */
+        virtual void setColor(QColor c);
 
-        /** \brief color of the graph */
-        QColor color;
-        /** \brief width (pixels) of the lines */
-        double lineWidth;
+        /*! \copydoc baseline
+            \see see baseline for details */
+        void setBaseline(double __value);
+        /*! \copydoc baseline
+            \see see baseline for details */
+        double getBaseline() const;
+
+        /*! \copydoc drawSymbols
+            \see see drawSymbols for details */
+        void setDrawSymbols(bool __value);
+        /*! \copydoc drawSymbols
+            \see see drawSymbols for details */
+        bool getDrawSymbols() const;
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
 
         /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
+         *
+         * \image html jkqtplotter_simpletest_impulsesplot_baseline.png
          */
         double baseline;
-        QPen getPen(JKQTPEnhancedPainter &painter) const;
+        /** \brief indicates whether to draw symbols at the top of the impulse
+         *
+         * \image html jkqtplotter_simpletest_impulsesplot_symbols.png
+         */
+        bool drawSymbols;
 };
 
 

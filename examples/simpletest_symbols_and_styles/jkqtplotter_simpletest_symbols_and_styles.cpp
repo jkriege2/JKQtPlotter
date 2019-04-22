@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplottertools/jkqtptools.h"
 
 
@@ -48,20 +48,20 @@ int main(int argc, char* argv[])
         graph->setYColumn(ds->addCopiedColumn(Y, "y"+QString::number(symbolID)));
 
         // set symbol + pen style and color
-        graph->setSymbol(static_cast<JKQTPGraphSymbols>(symbolID));
-        graph->setStyle(pens[ipen]);
-        QString lname=jkqtp_QPenStyle2String(graph->getStyle());
+        graph->setSymbolType(static_cast<JKQTPGraphSymbols>(symbolID));
+        graph->setLineStyle(pens[ipen]);
+        QString lname=jkqtp_QPenStyle2String(graph->getLineStyle());
         graph->setDrawLine(static_cast<JKQTPGraphSymbols>(symbolID)!=JKQTPDot);
         if (!graph->getDrawLine()) lname="";
         // set symbol size
         graph->setSymbolSize(14);
         // set width of symbol lines
-        graph->setSymbolWidth(1.5);
+        graph->setSymbolLineWidth(1.5);
         // set width of graph line
         graph->setLineWidth(1);
 
         // graph title is made from symbol+penstyle
-        graph->setTitle(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->getSymbol()))+QString(", ")+lname);
+        graph->setTitle(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->getSymbolType()))+QString(", ")+lname);
 
         // add the graph to the plot, so it is actually displayed
         plot.addGraph(graph);

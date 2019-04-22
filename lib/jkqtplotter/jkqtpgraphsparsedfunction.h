@@ -59,29 +59,17 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
 
         /*! \copydoc function
             \see see function for details */ 
-        inline virtual void setFunction(const QString & __value)  
-        {
-            this->function = __value;
-        } 
+        void setFunction(const QString & __value);
         /*! \copydoc function
             \see see function for details */ 
-        inline virtual QString getFunction() const  
-        {
-            return this->function; 
-        }
+        QString getFunction() const;
 
         /*! \copydoc errorFunction
             \see see errorFunction for details */ 
-        inline virtual void setErrorFunction(const QString & __value)  
-        {
-            this->errorFunction = __value;
-        } 
+        void setErrorFunction(const QString & __value);
         /*! \copydoc errorFunction
             \see see errorFunction for details */ 
-        inline virtual QString getErrorFunction() const  
-        {
-            return this->errorFunction; 
-        }
+        QString getErrorFunction() const;
 
         /** \brief INTERNAL data structure
          *  \internal
@@ -102,7 +90,7 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
         JKQTPXParsedFunctionLineGraphFunctionData efdata;
 
         // hide functions that should not be used in this class!
-        using JKQTPXFunctionLineGraph::setPlotFunction;
+        using JKQTPXFunctionLineGraph::setPlotFunctionFunctor;
         using JKQTPXFunctionLineGraph::setParams;
         using JKQTPXFunctionLineGraph::setErrorPlotFunction;
         using JKQTPXFunctionLineGraph::setErrorParams;
@@ -111,7 +99,7 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
         virtual void createPlotData(bool collectParams=true) override;
 
         /** \brief implements the actual plot function */
-        static double JKQTPXParsedFunctionLineGraphFunction(double x, void *data) ;
+        static double JKQTPXParsedFunctionLineGraphFunction(double x, void *data, JKQTPXParsedFunctionLineGraphFunctionData* fdata) ;
 };
 
 
@@ -141,29 +129,17 @@ class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineG
 
         /*! \copydoc function
             \see see function for details */ 
-        inline virtual void setFunction(const QString & __value)  
-        {
-            this->function = __value;
-        } 
+        void setFunction(const QString & __value);
         /*! \copydoc function
             \see see function for details */ 
-        inline virtual QString getFunction() const  
-        {
-            return this->function; 
-        }
+        QString getFunction() const;
 
         /*! \copydoc errorFunction
             \see see errorFunction for details */ 
-        inline virtual void setErrorFunction(const QString & __value)  
-        {
-            this->errorFunction = __value;
-        } 
+        void setErrorFunction(const QString & __value);
         /*! \copydoc errorFunction
             \see see errorFunction for details */ 
-        inline virtual QString getErrorFunction() const  
-        {
-            return this->errorFunction; 
-        }
+        QString getErrorFunction() const;
 
         /** \brief INTERNAL data structure
          *  \internal
@@ -184,7 +160,7 @@ class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineG
         JKQTPYParsedFunctionLineGraphFunctionData efdata;
 
         // hide functions that should not be used in this class!
-        using JKQTPXFunctionLineGraph::setPlotFunction;
+        using JKQTPXFunctionLineGraph::setPlotFunctionFunctor;
         using JKQTPXFunctionLineGraph::setParams;
         using JKQTPXFunctionLineGraph::setErrorPlotFunction;
         using JKQTPXFunctionLineGraph::setErrorParams;
@@ -192,6 +168,6 @@ class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineG
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData(bool collectParams=true) override;
         /** \brief implements the actual plot function */
-        static double JKQTPYParsedFunctionLineGraphFunction(double x, void *data);
+        static double JKQTPYParsedFunctionLineGraphFunction(double x, void *data, JKQTPYParsedFunctionLineGraphFunctionData* fdata);
 };
 #endif // jkqtpgraphsparsedfunction_H

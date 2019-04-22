@@ -40,23 +40,11 @@ JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTBasePlotter* parent):
     JKQTPXYGraph(parent)
 {
     baseline=0.0;
-    color=QColor("black");
-    fillColor=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=1;
-    fillStyle=Qt::SolidPattern;
     width=0.9;
     shift=0;
 
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        fillStyle=parent->getPlotStyle(parentPlotStyle).fillStyle();
-        //style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-    }
+    initFillStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle);
 }
 
 
@@ -67,13 +55,9 @@ JKQTPBarVerticalGraph::JKQTPBarVerticalGraph(JKQTPlotter* parent):
 
 void JKQTPBarVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=painter.pen();
+    QPen p=getLinePenForRects(painter, parent);
     QPen np(Qt::NoPen);
-    p.setColor(color);
-    p.setStyle(style);
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+    QBrush b=getFillBrush(painter, parent);
     //int y=rect.top()+rect.height()/2.0;
     painter.setPen(p);
     painter.setBrush(b);
@@ -81,8 +65,8 @@ void JKQTPBarVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF&
 
 }
 
-QColor JKQTPBarVerticalGraph::getKeyLabelColor() {
-    return fillColor;
+QColor JKQTPBarVerticalGraph::getKeyLabelColor() const {
+    return getFillColor();
 }
 
 
@@ -96,15 +80,9 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     drawErrorsBefore(painter);
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
+    QPen p=getLinePenForRects(painter, parent);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+    QBrush b=getFillBrush(painter, parent);
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
@@ -346,15 +324,9 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     drawErrorsBefore(painter);
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
+    QPen p=getLinePenForRects(painter, parent);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+    QBrush b=getFillBrush(painter, parent);
 
     int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
     int imin=0;
@@ -536,23 +508,6 @@ bool JKQTPBarHorizontalGraph::isHorizontal() const
 
 
 
-QBrush JKQTPBarVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
-    QBrush b;
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-    return b;
-}
-
-QPen JKQTPBarVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
-    QPen p;
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-
-    return p;
-}
 
 double JKQTPBarVerticalGraph::getParentStackedMax(int /*index*/) const
 {
@@ -576,16 +531,54 @@ bool JKQTPBarVerticalGraph::isHorizontal() const
     return false;
 }
 
+void JKQTPBarVerticalGraph::setColor(QColor c)
+{
+    setLineColor(c);
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    c.setAlphaF(0.5);
+    setHighlightingLineColor(c);
+}
+
+void JKQTPBarVerticalGraph::setShift(double __value)
+{
+    this->shift = __value;
+}
+
+double JKQTPBarVerticalGraph::getShift() const
+{
+    return this->shift;
+}
+
+void JKQTPBarVerticalGraph::setWidth(double __value)
+{
+    this->width = __value;
+}
+
+double JKQTPBarVerticalGraph::getWidth() const
+{
+    return this->width;
+}
+
+void JKQTPBarVerticalGraph::setBaseline(double __value)
+{
+    this->baseline = __value;
+}
+
+double JKQTPBarVerticalGraph::getBaseline() const
+{
+    return this->baseline;
+}
+
 void JKQTPBarVerticalGraph::setFillColor_and_darkenedColor(QColor fill, int colorDarker)
 {
     setFillColor(fill);
-    setColor(fill.darker(colorDarker));
+    setLineColor(fill.darker(colorDarker));
 }
 
 JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors(color, parent)
+    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors(getKeyLabelColor(), parent)
 {
-    setErrorColorFromGraphColor(color);
+    setErrorColorFromGraphColor(getKeyLabelColor());
     if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
 }
 
@@ -649,9 +642,9 @@ void JKQTPBarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter
 }
 
 JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors(color, parent)
+    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors(getKeyLabelColor(), parent)
 {
-    setErrorColorFromGraphColor(color);
+    setErrorColorFromGraphColor(getKeyLabelColor());
     if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
 
 }

@@ -38,29 +38,11 @@
 JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *parent):
     JKQTPSingleColumnGraph(parent), seedValue(123456)
 {
-    color=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=2;
     parentPlotStyle=-1;
-    symbolSize=12;
-    symbolWidth=1;
-    symbol=JKQTPNoSymbol;
     dataDirection=DataDirection::Y;
     position=0;
 
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        int parentPlotStyle=parent->getNextStyle();
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        symbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
-        symbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
-        symbol=parent->getPlotStyle(parentPlotStyle).symbol();
-    }
-    fillColor=color;
+    initSymbolStyle(parent, parentPlotStyle);
 }
 
 
@@ -133,7 +115,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
         gen.seed(seedValue);
         std::uniform_real_distribution<> dRandomScatter{position-width/2.0, position+width/2.0};
 
-        const double symSize=parent->pt2px(painter, symbolSize);
+        const double symSize=parent->pt2px(painter, getSymbolSize());
 
 
         QVector<QPointF> plotSymbols; // collects symbol locations e.g. for BeeSwarmScatter-plots
@@ -169,7 +151,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                 }
                 plotSymbols.append(QPointF(x,y));
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                    JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                    plotStyledSymbol(parent, painter, x, y);
                 }
             }
         } else {
@@ -195,7 +177,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                 plotSymbols.append(QPointF(x,y));
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                     plotSymbols.append(QPointF(x,y));
-                    JKQTPPlotSymbol(painter, x, y, symbol, symSize, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                    plotStyledSymbol(parent, painter, x, y);
                 }
             }
         }
@@ -211,39 +193,65 @@ void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
 {
     const double minSize=qMin(rect.width(), rect.height());
     const double maxSize=qMax(rect.width(), rect.height());
-    double symbolSize=parent->pt2px(painter, this->symbolSize);
+    double symbolSize=parent->pt2px(painter, this->getSymbolSize());
     if (symbolSize>minSize*0.9) symbolSize=minSize*0.9;
-    double symbolWidth=parent->pt2px(painter, this->symbolWidth*parent->getLineWidthMultiplier());
+    double symbolWidth=parent->pt2px(painter, this->getSymbolLineWidth()*parent->getLineWidthMultiplier());
     if (symbolWidth>0.3*symbolSize) symbolWidth=0.3*symbolSize;
-    double lineWidth=parent->pt2px(painter, this->lineWidth*parent->getLineWidthMultiplier());
-    if (lineWidth>0.5*maxSize) lineWidth=0.5*maxSize;
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=painter.pen();
-    p.setColor(getKeyLabelColor());
-    p.setStyle(style);
-    p.setWidthF(lineWidth);
+    QPen p=getSymbolPen(painter, parent);
     painter.setPen(p);
-    JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, symbol, symbolSize, symbolWidth, getKeyLabelColor(), fillColor);
+    JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), symbolSize, symbolWidth, getKeyLabelColor(), getSymbolFillColor());
 
 }
 
-
-
-QPen JKQTPSingleColumnSymbolsGraph::getSymbolPen(JKQTPEnhancedPainter& painter) const {
-    QPen p;
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*symbolWidth)));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    return p;
+QColor JKQTPSingleColumnSymbolsGraph::getKeyLabelColor() const
+{
+    return getSymbolColor();
 }
 
-QBrush JKQTPSingleColumnSymbolsGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
-    QBrush b;
-    b.setColor(fillColor);
-    return b;
+void JKQTPSingleColumnSymbolsGraph::setColor(QColor col)
+{
+    setSymbolColor(col);
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, col));
+}
+
+void JKQTPSingleColumnSymbolsGraph::setPosition(double __value)
+{
+    this->position = __value;
+}
+
+double JKQTPSingleColumnSymbolsGraph::getPosition() const
+{
+    return this->position;
+}
+
+void JKQTPSingleColumnSymbolsGraph::setWidth(double __value)
+{
+    width=__value;
+}
+
+double JKQTPSingleColumnSymbolsGraph::getWidth() const
+{
+    return width;
+}
+
+void JKQTPSingleColumnSymbolsGraph::setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::ScatterStyle __value)
+{
+    this->positionScatterStyle = __value;
+}
+
+JKQTPSingleColumnSymbolsGraph::ScatterStyle JKQTPSingleColumnSymbolsGraph::getPositionScatterStyle() const
+{
+    return this->positionScatterStyle;
+}
+
+void JKQTPSingleColumnSymbolsGraph::setSeedValue(unsigned int val) {
+    seedValue=val;
+}
+
+unsigned int JKQTPSingleColumnSymbolsGraph::getSeedValue() const {
+    return seedValue;
 }
 
 

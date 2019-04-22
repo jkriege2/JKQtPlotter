@@ -155,7 +155,7 @@ class JKQTP_LIB_EXPORT JKQTPErrorPlotstyleComboBox: public QComboBox {
         JKQTPErrorPlotstyleComboBox(QWidget* parent=nullptr);
 
         JKQTPErrorPlotstyle getErrorStyle() const;
-        void setSymbol(JKQTPErrorPlotstyle symbol);
+        void setSymbolType(JKQTPErrorPlotstyle symbol);
         void setCurrentErrorStyle(JKQTPErrorPlotstyle symbol);
     protected:
         void addSymbol(JKQTPErrorPlotstyle symbol, const QString& name, const QIcon &icon=QIcon());
@@ -174,7 +174,7 @@ class JKQTP_LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
         JKQTPSymbolComboBox(QWidget* parent=nullptr);
 
         JKQTPGraphSymbols getSymbol() const;
-        void setSymbol(JKQTPGraphSymbols symbol);
+        void setSymbolType(JKQTPGraphSymbols symbol);
         void setCurrentSymbol(JKQTPGraphSymbols symbol);
     protected:
         void addSymbol(JKQTPGraphSymbols symbol, const QString& name);
@@ -232,21 +232,21 @@ class JKQTP_LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBo
 };
 
 
-/*! \brief a QComboBox which shows JKQTPStepType
+/*! \brief a QComboBox which shows JKQTPSpecialLineType
     \ingroup jkqtpcomboboxes
 
-    \see JKQTPStepType
+    \see JKQTPSpecialLineType
  */
-class JKQTP_LIB_EXPORT JKQTPStepTypeComboBox: public QComboBox {
+class JKQTP_LIB_EXPORT JKQTPSpecialLineTypeComboBox: public QComboBox {
         Q_OBJECT
     public:
-        JKQTPStepTypeComboBox(QWidget* parent=nullptr);
+        JKQTPSpecialLineTypeComboBox(QWidget* parent=nullptr);
 
-        JKQTPStepType getStepType() const;
-        void setStepType(JKQTPStepType step);
-        void setCurrentStepType(JKQTPStepType step);
+        JKQTPSpecialLineType getSpecialLineType() const;
+        void setSpecialLineType(JKQTPSpecialLineType step);
+        void setCurrentStepType(JKQTPSpecialLineType step);
     protected:
-        void addStep(JKQTPStepType step, const QString& name, const QIcon &icon=QIcon());
+        void addStep(JKQTPSpecialLineType step, const QString& name, const QIcon &icon=QIcon());
 };
 
 

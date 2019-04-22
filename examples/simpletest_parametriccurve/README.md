@@ -28,7 +28,7 @@ Then simples graph just uses the columns X and Y to plot the curve:
     graph1->setXColumn(columnX);
     graph1->setYColumn(columnY);
     graph1->setDrawLine(true);
-    graph1->setSymbol(JKQTPNoSymbol);
+    graph1->setSymbolType(JKQTPNoSymbol);
     graph1->setTitle("one-colored spiral");
     plot.addGraph(graph1);
 ```
@@ -40,7 +40,7 @@ If you use `JKQTPXYParametrizedScatterGraph` instead of `JKQTPXYLineGraph`, you 
     graph2->setYColumn(columnY);
     graph2->setColorColumn(columnR);
     graph2->setPalette(JKQTPMathImageMATLAB);
-    graph2->setSymbol(JKQTPNoSymbol);
+    graph2->setSymbolType(JKQTPNoSymbol);
     graph2->setDrawLine(true);
     graph2->setTitle("colored spiral");
     graph2->getColorBarRightAxis()->setAxisLabel("color scale radius $r(\\phi)$");

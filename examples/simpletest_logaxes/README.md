@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Line Graph with Logarithmic y-axis {#JKQTPlotterLogAxes}
 This project (see `./examples/simpletest_logaxes/`) simply creates a JKQTPlotter widget (as a new window) and several line-graphs of different resonance curves. 
 
-The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->setStyle()`). The colors are set automtically from an internal default palette. The main loop looks like this:
+The source code of the main application can be found in  [`jkqtplotter_simpletest_logaxes.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_logaxes/jkqtplotter_simpletest_logaxes.cpp). Mainly several graphs are generated in a loop and then different line styles are applied to the graphs (set by ``graph->setLineStyle()`). The colors are set automtically from an internal default palette. The main loop looks like this:
 
 ```.cpp
 	QVector<Qt::PenStyle> pens {Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
@@ -19,9 +19,9 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
         graph->setYColumn(ds->addCopiedColumn(Y, "y"+QString::number(id)));
 
         // don't use symbols
-        graph->setSymbol(JKQTPNoSymbol);
+        graph->setSymbolType(JKQTPNoSymbol);
         // use one of different pens
-        graph->setStyle(pens[id%pens.size()]);
+        graph->setLineStyle(pens[id%pens.size()]);
         // set width of graph line
         graph->setLineWidth(1.5);
 
@@ -44,7 +44,7 @@ Then a `JKQTPGeoText` is added to the graph, which shows the function plotted in
     //    and loaded in the library). If you don't use the math-mode modifiers, the default 
     //    font of the other rendering text is used, which might not be suitable for
     //    high-quality math rendering.
-    plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
+    plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15, QColor("black")));
 ```
 The difference between not using and using `$...$` for the equation can be seen here:
 - no $-math-mode: ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_logaxes_lowqmathrendering.png)   

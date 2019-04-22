@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 
 
 int main(int argc, char* argv[])
@@ -66,6 +66,20 @@ int main(int argc, char* argv[])
     graph1->setDrawLine(true);
     graph1->setColor(QColor("blueviolet"));
     graph1->setTitle("1: symbol type");
+    /*graph1->setSymbolColumnFunctor([](double x, double y, double sym) -> JKQTPGraphSymbols {
+        if (sym<Ndata/2) {
+            return JKQTPGraphSymbols::JKQTPCircle;
+        } else if (sym>Ndata/2) {
+            return JKQTPGraphSymbols::JKQTPFilledCircle;
+        } else {
+            return JKQTPGraphSymbols::JKQTPPlus;
+        }
+    });*/
+    /*QMap<double, JKQTPGraphSymbols> mapped;
+    mapped[0]=JKQTPGraphSymbols::JKQTPCircle;
+    mapped[5]=JKQTPGraphSymbols::JKQTPFilledCircle;
+    mapped[10]=JKQTPGraphSymbols::JKQTPPlus;
+    graph1->setMappedSymbolColumnFunctor(mapped);*/
     plot.addGraph(graph1);
 
     // 3.2 for graph2, we use dataset X/Y2
@@ -76,7 +90,7 @@ int main(int argc, char* argv[])
     graph2->setYColumn(columnY2);
     graph2->setColorColumn(columnC);
     graph2->setPalette(JKQTPMathImageRYGB);
-    graph2->setSymbol(JKQTPFilledRect);
+    graph2->setSymbolType(JKQTPFilledRect);
     graph2->setDrawLine(true);
     graph2->setTitle("2: color");
     graph2->getColorBarRightAxis()->setAxisLabel("color scale for graph2");
@@ -88,7 +102,7 @@ int main(int argc, char* argv[])
     graph3->setXColumn(columnX);
     graph3->setYColumn(columnY3);
     graph3->setSizeColumn(columnS);
-    graph3->setSymbol(JKQTPFilledCircle);
+    graph3->setSymbolType(JKQTPFilledCircle);
     graph3->setDrawLine(true);
     graph3->setTitle("3: symbol size");
     plot.addGraph(graph3);
@@ -102,7 +116,7 @@ int main(int argc, char* argv[])
     graph4->setColorColumn(columnRGB);
     graph4->setColorColumnContainsRGB(true);
     graph4->setDrawLine(true);
-    graph4->setSymbol(JKQTPFilledDownTriangle);
+    graph4->setSymbolType(JKQTPFilledDownTriangle);
     graph4->setTitle("4: RGB-color");
     plot.addGraph(graph4);
 
@@ -128,8 +142,11 @@ int main(int argc, char* argv[])
     graph6->setYColumn(columnY6);
     graph6->setLinewidthColumn(columnLW);
     graph6->setDrawLine(true);
-    graph6->setSymbol(JKQTPNoSymbol);
+    graph6->setSymbolType(JKQTPNoSymbol);
     graph6->setTitle("6: line width");
+    /*graph6->setLinewidthColumnFunctor([](double x, double y, double w) {
+        return fabs(sin(w/3.0)*25.0);
+    });*/
     plot.addGraph(graph6);
 
     // 3.7 for graph2, we use dataset X/Y7
@@ -141,7 +158,7 @@ int main(int argc, char* argv[])
     graph7->setDrawLine(true);
     graph7->setColorColumn(columnC);
     graph7->setPalette(JKQTPMathImageBLUEYELLOW);
-    graph7->setSymbol(JKQTPNoSymbol);
+    graph7->setSymbolType(JKQTPNoSymbol);
     graph7->setColorBarRightVisible(false);
     graph7->setColorBarTopVisible(false);
     graph7->setTitle("7: color+line width");

@@ -49,8 +49,9 @@
 #include "jkqtplotter/jkqtpgraphsboxplot.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
+#include "jkqtplotter/jkqtpgraphsspecialline.h"
 #include "jkqtplotter/jkqtpgraphsimpulses.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpgraphsimagergb.h"
@@ -951,9 +952,10 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i) const{
     p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
     p.setErrorWidth(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
     p.setSymbolSize(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolSize));
+    p.setSymbolFillColor(JKQTPGetDerivedColor(plotterStyle.graphFillColorDerivationMode, p.color()));
     p.setSymbolLineWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolLineWidth));
     p.setStyle(plotterStyle.defaultGraphPenStyles[styleI]);
-    p.setSymbol(plotterStyle.defaultGraphSymbols[symbolI]);
+    p.setSymbolType(plotterStyle.defaultGraphSymbols[symbolI]);
     p.setFillStyle(plotterStyle.defaultGraphFillStyles[brushI]);
     p.setErrorFillStyle(plotterStyle.defaultGraphFillStyles[brushI]);
     return p;
@@ -3974,13 +3976,13 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
         gr->setYColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsX) {
-        JKQTPStepHorizontalGraph* gr=new JKQTPStepHorizontalGraph(this);
+        JKQTPSpecialLineHorizontalGraph* gr=new JKQTPSpecialLineHorizontalGraph(this);
         gr->setTitle(title);
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsY) {
-        JKQTPStepVerticalGraph* gr=new JKQTPStepVerticalGraph(this);
+        JKQTPSpecialLineVerticalGraph* gr=new JKQTPSpecialLineVerticalGraph(this);
         gr->setTitle(title);
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
@@ -3990,8 +3992,8 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
         gr->setTitle(title);
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
-        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
+        if (graphStyle==JKQTPPoints) { gr->setSymbolType(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbolType(JKQTPPlus);
         return addGraph(gr);
     }
     return -1;
@@ -4020,7 +4022,7 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
         gr->setLineWidth(width);
-        gr->setStyle(penstyle);
+        gr->setLineStyle(penstyle);
         gr->setFillColor(color);
         return addGraph(gr);
     } else if (graphStyle==JKQTPFilledCurveY) {
@@ -4029,25 +4031,25 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
         gr->setLineWidth(width);
-        gr->setStyle(penstyle);
+        gr->setLineStyle(penstyle);
         gr->setFillColor(color);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsX) {
-        JKQTPStepHorizontalGraph* gr=new JKQTPStepHorizontalGraph(this);
+        JKQTPSpecialLineHorizontalGraph* gr=new JKQTPSpecialLineHorizontalGraph(this);
         gr->setTitle(title);
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
         gr->setLineWidth(width);
-        gr->setStyle(penstyle);
+        gr->setLineStyle(penstyle);
         gr->setFillColor(color);
         return addGraph(gr);
     } else if (graphStyle==JKQTPStepsY) {
-        JKQTPStepVerticalGraph* gr=new JKQTPStepVerticalGraph(this);
+        JKQTPSpecialLineVerticalGraph* gr=new JKQTPSpecialLineVerticalGraph(this);
         gr->setTitle(title);
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
         gr->setLineWidth(width);
-        gr->setStyle(penstyle);
+        gr->setYColumn(penstyle);
         gr->setFillColor(color);
         return addGraph(gr);
     } else {
@@ -4056,11 +4058,12 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
         gr->setXColumn(xColumn);
         gr->setYColumn(yColumn);
         gr->setLineWidth(width);
-        gr->setStyle(penstyle);
-        gr->setColor(color);
-        gr->setSymbol(symbol);
-        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
+        gr->setLineStyle(penstyle);
+        gr->setLineColor(color);
+        gr->setSymbolColor(color);
+        gr->setSymbolType(symbol);
+        if (graphStyle==JKQTPPoints) { gr->setSymbolType(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbolType(JKQTPPlus);
         return addGraph(gr);
     }
     return -1;
@@ -4134,8 +4137,8 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setXErrorStyle(errorStyle);
         gr->setXErrorColumn(xErrorColumn);
-        gr->setErrorColor(gr->getColor().darker());
-        QColor fc=gr->getColor();
+        gr->setErrorColor(gr->getLineColor().darker());
+        QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
         return addGraph(gr);
@@ -4146,8 +4149,8 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setXErrorStyle(errorStyle);
         gr->setXErrorColumn(xErrorColumn);
-        gr->setErrorColor(gr->getColor());
-        QColor fc=gr->getColor();
+        gr->setErrorColor(gr->getLineColor());
+        QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
         return addGraph(gr);
@@ -4159,12 +4162,12 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
         gr->setYErrorColumn(xErrorColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setXErrorStyle(JKQTPNoError);
-        gr->setErrorColor(gr->getColor());
-        QColor fc=gr->getColor();
+        gr->setErrorColor(gr->getSymbolColor());
+        QColor fc=gr->getSymbolColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
-        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
+        if (graphStyle==JKQTPPoints) { gr->setSymbolType(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbolType(JKQTPPlus);
         return addGraph(gr);
     }
 
@@ -4178,9 +4181,9 @@ size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setYErrorColumn(yErrorColumn);
-        gr->setErrorColor(gr->getColor().darker());
+        gr->setErrorColor(gr->getLineColor().darker());
         gr->setErrorWidth(gr->getLineWidth()/3.0);
-        QColor fc=gr->getColor();
+        QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
         return addGraph(gr);
@@ -4191,8 +4194,8 @@ size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setYErrorColumn(yErrorColumn);
-        gr->setErrorColor(gr->getColor());
-        QColor fc=gr->getColor();
+        gr->setErrorColor(gr->getLineColor());
+        QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
         return addGraph(gr);
@@ -4204,12 +4207,12 @@ size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_
         gr->setYErrorColumn(yErrorColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setXErrorStyle(JKQTPNoError);
-        gr->setErrorColor(gr->getColor());
-        QColor fc=gr->getColor();
+        gr->setErrorColor(gr->getSymbolColor());
+        QColor fc=gr->getSymbolColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
-        if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
-        else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
+        if (graphStyle==JKQTPPoints) { gr->setSymbolType(JKQTPPlus); gr->setDrawLine(false); }
+        else if (graphStyle==JKQTPLinesPoints) gr->setSymbolType(JKQTPPlus);
         return addGraph(gr);
     }
 }
@@ -4223,12 +4226,12 @@ size_t JKQTBasePlotter::addGraphWithXYError(size_t xColumn, size_t yColumn, size
     gr->setYErrorStyle(JKQTPErrorBars);
     gr->setXErrorColumn(xErrorColumn);
     gr->setXErrorStyle(JKQTPErrorBars);
-    gr->setErrorColor(gr->getColor());
-    QColor fc=gr->getColor();
+    gr->setErrorColor(gr->getSymbolColor());
+    QColor fc=gr->getSymbolColor();
     fc.setAlphaF(0.5);
     gr->setErrorFillColor(fc);
-    if (graphStyle==JKQTPPoints) { gr->setSymbol(JKQTPPlus); gr->setDrawLine(false); }
-    else if (graphStyle==JKQTPLinesPoints) gr->setSymbol(JKQTPPlus);
+    if (graphStyle==JKQTPPoints) { gr->setSymbolType(JKQTPPlus); gr->setDrawLine(false); }
+    else if (graphStyle==JKQTPLinesPoints) gr->setSymbolType(JKQTPPlus);
     return addGraph(gr);
 
 }
@@ -4300,7 +4303,7 @@ void JKQTBasePlotter::drawGraphs(JKQTPEnhancedPainter& painter){
 }
 
 
-void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, double y, double width, double height){
+void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, double y, double /*width*/, double /*height*/){
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::plotKeyContents(%1, %2, %3, %4)").arg(x).arg(y).arg(width).arg(height));
 #endif
@@ -5290,6 +5293,7 @@ JKQTPSaveDataAdapter::~JKQTPSaveDataAdapter() = default;
 JKQTBasePlotter::JKQTPPen::JKQTPPen():
     m_color(QColor("red")),
     m_fillColor(QColor("red").lighter()),
+    m_symbolFillColor(QColor("red").lighter()),
     m_errorColor(m_color.darker()),
     m_errorFillColor(m_color.lighter()),
     m_width(2),
@@ -5353,6 +5357,10 @@ QColor JKQTBasePlotter::JKQTPPen::color() const {
     return m_color;
 }
 
+QColor JKQTBasePlotter::JKQTPPen::symbolFillColor() const {
+    return m_symbolFillColor;
+}
+
 QColor JKQTBasePlotter::JKQTPPen::errorColor() const {
     return m_errorColor;
 }
@@ -5402,6 +5410,11 @@ void JKQTBasePlotter::JKQTPPen::setFillStyle(Qt::BrushStyle s) {
 void JKQTBasePlotter::JKQTPPen::setErrorFillStyle(Qt::BrushStyle s) {
     m_errorFillStyle=s;
 }
+
+void JKQTBasePlotter::JKQTPPen::setSymbolFillColor(QColor c) {
+    m_symbolFillColor=c;
+}
+
 Qt::BrushStyle JKQTBasePlotter::JKQTPPen::fillStyle() const {
     return m_fillStyle;
 }
@@ -5416,7 +5429,7 @@ JKQTPGraphSymbols JKQTBasePlotter::JKQTPPen::symbol() const
     return m_symbol;
 }
 
-void JKQTBasePlotter::JKQTPPen::setSymbol(JKQTPGraphSymbols symbol)
+void JKQTBasePlotter::JKQTPPen::setSymbolType(JKQTPGraphSymbols symbol)
 {
     m_symbol=symbol;
 }

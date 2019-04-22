@@ -22,7 +22,8 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include <functional>
 
@@ -65,7 +66,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
     the following image
     \image html plot_functionplots.png
  */
-class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
 
@@ -85,14 +86,14 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         JKQTPXFunctionLineGraph(JKQTPlotter* parent);
 
         /** \brief class destructor */
-        virtual ~JKQTPXFunctionLineGraph();
+        virtual ~JKQTPXFunctionLineGraph() override;
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -107,121 +108,49 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief clear the data sampled from the function. */
         void clearData();
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->fillStyle = __value;
-        } 
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual Qt::BrushStyle getFillStyle() const  
-        {
-            return this->fillStyle; 
-        }
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual void setStyle(const Qt::PenStyle & __value)  
-        {
-            this->style = __value;
-        } 
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual Qt::PenStyle getStyle() const  
-        {
-            return this->style; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
+        /*! \brief set color, fill color and error color at the same time */
+        void setColor(QColor c);
+
         /*! \copydoc drawLine
             \see see drawLine for details */ 
-        inline virtual void setDrawLine(bool __value)
-        {
-            this->drawLine = __value;
-        } 
+        void setDrawLine(bool __value);
         /*! \copydoc drawLine
             \see see drawLine for details */ 
-        inline virtual bool getDrawLine() const  
-        {
-            return this->drawLine; 
-        }
+        bool getDrawLine() const;
 
         /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
          *
          *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void setPlotFunction (jkqtpPlotFunctionType && __value);
+        virtual void setPlotFunctionFunctor (jkqtpPlotFunctionType && __value);
         /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
          *
          *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void setPlotFunction (const jkqtpPlotFunctionType & __value);
+        virtual void setPlotFunctionFunctor (const jkqtpPlotFunctionType & __value);
         /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
          *
          *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void setPlotFunction (jkqtpSimplePlotFunctionType && __value);
+        virtual void setPlotFunctionFunctor (jkqtpSimplePlotFunctionType && __value);
         /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
          *
          *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
          * \see plotFunction for more information */
-        virtual void setPlotFunction (const jkqtpSimplePlotFunctionType & __value);
+        virtual void setPlotFunctionFunctor (const jkqtpSimplePlotFunctionType & __value);
         /*! \brief returns the property plotFunction ( \copybrief plotFunction ). \see plotFunction for more information */ \
-        virtual jkqtpPlotFunctionType getPlotFunction () const;
+        virtual jkqtpPlotFunctionType getPlotFunctionFunctor () const;
         /*! \brief returns the property simplePlotFunction ( \copybrief simplePlotFunction ). \see simplePlotFunction for more information */ \
         virtual jkqtpSimplePlotFunctionType getSimplePlotFunction () const;
 
         /*! \copydoc params
             \see see params for details */ 
-        inline virtual void setParams(void* __value)
-        {
-            if (this->params != __value) { 
-                this->params = __value; 
-                clearData(); 
-            } 
-        } 
+        virtual void setParams(void* __value);
         /*! \copydoc params
             \see see params for details */ 
-        inline virtual void* getParams() const  
-        {
-            return this->params; 
-        }
+        void* getParams() const;
         /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
-        void setParams(const QVector<double>& params);
+        virtual void setParams(const QVector<double>& params);
         /** \brief sets the params from a copy of the given array of length \a N */
         void setCopiedParams(const double* params, int N);
         /** \brief set an internal parameter vector as function parameters, initialized with {p1} */
@@ -241,100 +170,52 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         QVector<double> getInternalErrorParams() const;
         /*! \copydoc minSamples
             \see see minSamples for details */ 
-        inline virtual void setMinSamples(const unsigned int & __value)  
-        {
-            this->minSamples = __value;
-        } 
+        void setMinSamples(const unsigned int & __value);
         /*! \copydoc minSamples
             \see see minSamples for details */ 
-        inline virtual unsigned int getMinSamples() const  
-        {
-            return this->minSamples; 
-        }
+        unsigned int getMinSamples() const;
         /*! \copydoc maxRefinementDegree
             \see see maxRefinementDegree for details */ 
-        inline virtual void setMaxRefinementDegree(const unsigned int & __value)  
-        {
-            this->maxRefinementDegree = __value;
-        } 
+        void setMaxRefinementDegree(const unsigned int & __value);
         /*! \copydoc maxRefinementDegree
             \see see maxRefinementDegree for details */ 
-        inline virtual unsigned int getMaxRefinementDegree() const  
-        {
-            return this->maxRefinementDegree; 
-        }
+        unsigned int getMaxRefinementDegree() const;
         /*! \copydoc slopeTolerance
             \see see slopeTolerance for details */ 
-        inline virtual void setSlopeTolerance(double __value)
-        {
-            this->slopeTolerance = __value;
-        } 
+        void setSlopeTolerance(double __value);
         /*! \copydoc slopeTolerance
             \see see slopeTolerance for details */ 
-        inline virtual double getSlopeTolerance() const  
-        {
-            return this->slopeTolerance; 
-        }
+        double getSlopeTolerance() const;
         /*! \copydoc minPixelPerSample
             \see see minPixelPerSample for details */ 
-        inline virtual void setMinPixelPerSample(double __value)
-        {
-            this->minPixelPerSample = __value;
-        } 
+        void setMinPixelPerSample(double __value);
         /*! \copydoc minPixelPerSample
             \see see minPixelPerSample for details */ 
-        inline virtual double getMinPixelPerSample() const  
-        {
-            return this->minPixelPerSample; 
-        }
+        double getMinPixelPerSample() const;
         /*! \copydoc plotRefinement
             \see see plotRefinement for details */ 
-        inline virtual void setPlotRefinement(bool __value)
-        {
-            this->plotRefinement = __value;
-        } 
+        void setPlotRefinement(bool __value);
         /*! \copydoc plotRefinement
             \see see plotRefinement for details */ 
-        inline virtual bool getPlotRefinement() const  
-        {
-            return this->plotRefinement; 
-        }
+        bool getPlotRefinement() const;
         /*! \copydoc displaySamplePoints
             \see see displaySamplePoints for details */ 
-        inline virtual void setDisplaySamplePoints(bool __value)
-        {
-            this->displaySamplePoints = __value;
-        } 
+        void setDisplaySamplePoints(bool __value);
         /*! \copydoc displaySamplePoints
             \see see displaySamplePoints for details */ 
-        inline virtual bool getDisplaySamplePoints() const  
-        {
-            return this->displaySamplePoints; 
-        }
+        bool getDisplaySamplePoints() const;
         /*! \copydoc drawErrorPolygons
             \see see drawErrorPolygons for details */ 
-        inline virtual void setDrawErrorPolygons(bool __value)
-        {
-            this->drawErrorPolygons = __value;
-        } 
+        void setDrawErrorPolygons(bool __value);
         /*! \copydoc drawErrorPolygons
             \see see drawErrorPolygons for details */ 
-        inline virtual bool getDrawErrorPolygons() const  
-        {
-            return this->drawErrorPolygons; 
-        }
+        bool getDrawErrorPolygons() const;
         /*! \copydoc drawErrorLines
             \see see drawErrorLines for details */ 
-        inline virtual void setDrawErrorLines(bool __value)
-        {
-            this->drawErrorLines = __value;
-        } 
+        void setDrawErrorLines(bool __value);
         /*! \copydoc drawErrorLines
             \see see drawErrorLines for details */ 
-        inline virtual bool getDrawErrorLines() const  
-        {
-            return this->drawErrorLines; 
-        }
+        bool getDrawErrorLines() const;
         /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
          *
          *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
@@ -361,51 +242,33 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         virtual jkqtpSimplePlotFunctionType getErrorSimplePlotFunction () const;
         /*! \copydoc errorParams
             \see see errorParams for details */ 
-        inline virtual void setErrorParams(void* __value)
-        {
-            this->errorParams = __value;
-        } 
+        virtual void setErrorParams(void* __value);
         /*! \copydoc errorParams
             \see see errorParams for details */ 
-        inline virtual void* getErrorParams() const  
-        {
-            return this->errorParams; 
-        }
+        void *getErrorParams() const;
         /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void setErrorParams(const QVector<double>& errorParams);
 
         /*! \copydoc parameterColumn
             \see see parameterColumn for details */ 
-        inline virtual void setParameterColumn(int __value)
-        {
-            this->parameterColumn = __value;
-        } 
+        void setParameterColumn(int __value);
         /*! \copydoc parameterColumn
             \see see parameterColumn for details */ 
-        inline virtual int getParameterColumn() const  
-        {
-            return this->parameterColumn; 
-        }
+        int getParameterColumn() const;
         /*! \brief sets the property parameterColumn ( \copybrief parameterColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter parameterColumn is:  <BLOCKQUOTE>\copydoc parameterColumn </BLOCKQUOTE> 
             \see parameterColumn for more information */ 
-        inline virtual void setParameterColumn (size_t __value) { this->parameterColumn = static_cast<int>(__value); }
+        void setParameterColumn (size_t __value);
         /*! \copydoc errorParameterColumn
             \see see errorParameterColumn for details */ 
-        inline virtual void setErrorParameterColumn(int __value)
-        {
-            this->errorParameterColumn = __value;
-        } 
+        void setErrorParameterColumn(int __value);
         /*! \copydoc errorParameterColumn
             \see see errorParameterColumn for details */ 
-        inline virtual int getErrorParameterColumn() const  
-        {
-            return this->errorParameterColumn; 
-        }
+        int getErrorParameterColumn() const;
         /*! \brief sets the property errorParameterColumn ( \copybrief errorParameterColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter errorParameterColumn is:  <BLOCKQUOTE>\copydoc errorParameterColumn </BLOCKQUOTE> 
             \see errorParameterColumn for more information */ 
-        inline virtual void setErrorParameterColumn (size_t __value) { this->errorParameterColumn = static_cast<int>(__value); }
+        void setErrorParameterColumn (size_t __value);
 
         /*! \copydoc errorColor
             \see see errorColor for details */ 
@@ -477,8 +340,7 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief returns, which special function is set (or if any is set) */
         SpecialFunction getFunctionType() const;
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
+
 
         struct doublePair {
             double x;
@@ -500,16 +362,6 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief if set, the values from this datatsore column are used for the parameters \c p1 , \c p2 , \c p3 , ...  of the error plot function */
         int errorParameterColumn;
 
-        /** \brief color of the graph */
-        QColor color;
-        /** \brief color of the graph fill */
-        QColor fillColor;
-        /** \brief linestyle of the graph lines */
-        Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
-        double lineWidth;
-        /** \brief fill style, if the curve should be filled */
-        Qt::BrushStyle fillStyle;
         /** \brief indicates whether to draw a line or not */
         bool drawLine;
         /** \brief indicates whether to fill the space between the curve and the x-axis */
@@ -549,6 +401,8 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         jkqtpSimplePlotFunctionType errorSimplePlotFunction;
         /** \brief parameters for errorFunction */
         void* errorParams;
+
+
         /** \brief color of the error graph */
         QColor errorColor;
         /** \brief color of the error graph fill */
@@ -560,9 +414,6 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph {
         /** \brief fill style, if the error curve should be filled */
         Qt::BrushStyle errorFillStyle;
 
-
-        QBrush getBrush(JKQTPEnhancedPainter& painter) const;
-        QPen getLinePen(JKQTPEnhancedPainter& painter) const;
 
         QBrush getErrorBrush(JKQTPEnhancedPainter& painter) const;
         QPen getErrorLinePen(JKQTPEnhancedPainter &painter) const;

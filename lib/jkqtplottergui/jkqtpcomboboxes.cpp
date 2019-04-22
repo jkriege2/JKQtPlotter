@@ -89,7 +89,7 @@ JKQTPGraphSymbols JKQTPSymbolComboBox::getSymbol() const
     return String2JKQTPGraphSymbols(itemData(currentIndex()).toString());
 }
 
-void JKQTPSymbolComboBox::setSymbol(JKQTPGraphSymbols symbol)
+void JKQTPSymbolComboBox::setSymbolType(JKQTPGraphSymbols symbol)
 {
     int i=findData(JKQTPGraphSymbols2String(symbol));
     if (i>=0) setCurrentIndex(i);
@@ -97,7 +97,7 @@ void JKQTPSymbolComboBox::setSymbol(JKQTPGraphSymbols symbol)
 
 void JKQTPSymbolComboBox::setCurrentSymbol(JKQTPGraphSymbols symbol)
 {
-    setSymbol(symbol);
+    setSymbolType(symbol);
 }
 
 void JKQTPSymbolComboBox::addSymbol(JKQTPGraphSymbols symbol, const QString &name)
@@ -214,7 +214,7 @@ JKQTPErrorPlotstyle JKQTPErrorPlotstyleComboBox::getErrorStyle() const
     return String2JKQTPErrorPlotstyle(itemData(currentIndex()).toString());
 }
 
-void JKQTPErrorPlotstyleComboBox::setSymbol(JKQTPErrorPlotstyle symbol)
+void JKQTPErrorPlotstyleComboBox::setSymbolType(JKQTPErrorPlotstyle symbol)
 {
     int i=findData(JKQTPErrorPlotstyle2String(symbol));
     if (i>=0) setCurrentIndex(i);
@@ -513,36 +513,38 @@ bool JKQTPLinePlotStyleWithSymbolSizeComboBox::styleData::operator==(const JKQTP
 }
 
 
-JKQTPStepTypeComboBox::JKQTPStepTypeComboBox(QWidget *parent):
+JKQTPSpecialLineTypeComboBox::JKQTPSpecialLineTypeComboBox(QWidget *parent):
     QComboBox(parent)
 {
     clear();
     setEditable(false);
-    addStep(JKQTPStepType::JKQTPStepLeft, JKQTPStepType2String(JKQTPStepType::JKQTPStepLeft));
-    addStep(JKQTPStepType::JKQTPStepCenter, JKQTPStepType2String(JKQTPStepType::JKQTPStepCenter));
-    addStep(JKQTPStepType::JKQTPStepRight, JKQTPStepType2String(JKQTPStepType::JKQTPStepRight));
+    addStep(JKQTPSpecialLineType::JKQTPStepLeft, JKQTPSpecialLineType2String(JKQTPSpecialLineType::JKQTPStepLeft));
+    addStep(JKQTPSpecialLineType::JKQTPStepCenter, JKQTPSpecialLineType2String(JKQTPSpecialLineType::JKQTPStepCenter));
+    addStep(JKQTPSpecialLineType::JKQTPStepRight, JKQTPSpecialLineType2String(JKQTPSpecialLineType::JKQTPStepRight));
+    addStep(JKQTPSpecialLineType::JKQTPStepAverage, JKQTPSpecialLineType2String(JKQTPSpecialLineType::JKQTPStepAverage));
+    addStep(JKQTPSpecialLineType::JKQTPDirectLine, JKQTPSpecialLineType2String(JKQTPSpecialLineType::JKQTPDirectLine));
     setCurrentIndex(0);
 }
 
-JKQTPStepType JKQTPStepTypeComboBox::getStepType() const
+JKQTPSpecialLineType JKQTPSpecialLineTypeComboBox::getSpecialLineType() const
 {
-    return String2JKQTPStepType(itemData(currentIndex()).toString());
+    return String2JKQTPSpecialLineType(itemData(currentIndex()).toString());
 }
 
-void JKQTPStepTypeComboBox::setStepType(JKQTPStepType step)
+void JKQTPSpecialLineTypeComboBox::setSpecialLineType(JKQTPSpecialLineType step)
 {
-    int i=findData(JKQTPStepType2String(step));
+    int i=findData(JKQTPSpecialLineType2String(step));
     if (i>=0) setCurrentIndex(i);
 }
 
-void JKQTPStepTypeComboBox::setCurrentStepType(JKQTPStepType step)
+void JKQTPSpecialLineTypeComboBox::setCurrentStepType(JKQTPSpecialLineType step)
 {
-    setStepType(step);
+    setSpecialLineType(step);
 }
 
-void JKQTPStepTypeComboBox::addStep(JKQTPStepType step, const QString &name, const QIcon &icon)
+void JKQTPSpecialLineTypeComboBox::addStep(JKQTPSpecialLineType step, const QString &name, const QIcon &icon)
 {
-    addItem(icon, name, JKQTPStepType2String(step));
+    addItem(icon, name, JKQTPSpecialLineType2String(step));
 }
 
 

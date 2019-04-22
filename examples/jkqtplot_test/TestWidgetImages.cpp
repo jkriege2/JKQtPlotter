@@ -87,7 +87,7 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
 
     JKQTPOverlayImageEnhanced* oimg2=new JKQTPOverlayImageEnhanced(10,0,10,10, bimg2, 100, 100, QColor("red"), plotImg->getPlotter());
     oimg2->setTitle("enhanced overlay");
-    oimg2->setDrawAsRectangles(false);
+    oimg2->setDrawMode(JKQTPOverlayImageEnhanced::DrawAsSymbols);
     plotImg->getPlotter()->addGraph(oimg2);
 
     plotImg->setPlotUpdateEnabled(true);

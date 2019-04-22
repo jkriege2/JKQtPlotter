@@ -38,15 +38,14 @@ JKQTPPlotElement::JKQTPPlotElement(JKQTBasePlotter* parent):
 {
     title="";
     visible=true;
+    highlighted=false;
+    parentPlotStyle=-1;
     setParent(parent);
 }
 
 JKQTPPlotElement::JKQTPPlotElement(JKQTPlotter *parent):
-    QObject(parent->getPlotter())
+    JKQTPPlotElement(parent->getPlotter())
 {
-    title="";
-    visible=true;
-    setParent(parent);
 }
 
 JKQTPGraph::JKQTPGraph(JKQTBasePlotter* parent):
@@ -94,6 +93,16 @@ void JKQTPPlotElement::setVisible(bool __value)
 bool JKQTPPlotElement::isVisible() const
 {
     return this->visible;
+}
+
+void JKQTPPlotElement::setHighlighted(bool __value)
+{
+    highlighted=__value;
+}
+
+bool JKQTPPlotElement::isHighlighted() const
+{
+    return highlighted;
 }
 
 
@@ -303,131 +312,35 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTBasePlotter *parent):
 {
     sortData=Unsorted;
     dataColumn=-1;
-    color=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=2;
-    parentPlotStyle=-1;
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-    }
-
-}
-
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, JKQTBasePlotter *parent):
-    JKQTPGraph(parent)
-{
-    sortData=Unsorted;
-    this->dataColumn=dataColumn;
-    parentPlotStyle=-1;
-    color=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=2;
-    parentPlotStyle=-1;
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-
-    }
-}
-
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTBasePlotter *parent):
-    JKQTPGraph(parent)
-{
-    sortData=Unsorted;
-    this->dataColumn=dataColumn;
-    this->color=color;
-    this->style=style;
-    this->lineWidth=lineWidth;
-    parentPlotStyle=-1;
 }
 
 
 JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTPlotter *parent):
-    JKQTPGraph(parent)
+    JKQTPSingleColumnGraph(parent->getPlotter())
 {
-    sortData=Unsorted;
-    dataColumn=-1;
-    color=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=2;
-    parentPlotStyle=-1;
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-
-    }
-
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, JKQTPlotter *parent):
-    JKQTPGraph(parent)
+
+void JKQTPSingleColumnGraph::setDataColumn(int __value)
 {
-    sortData=Unsorted;
-    this->dataColumn=dataColumn;
-    parentPlotStyle=-1;
-    color=QColor("red");
-    style=Qt::SolidLine;
-    lineWidth=2;
-    parentPlotStyle=-1;
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-
-    }
+    this->dataColumn = __value;
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTPlotter *parent):
-    JKQTPGraph(parent)
+int JKQTPSingleColumnGraph::getDataColumn() const
 {
-    sortData=Unsorted;
-    this->dataColumn=dataColumn;
-    this->color=color;
-    this->style=style;
-    this->lineWidth=lineWidth;
-    parentPlotStyle=-1;
+    return this->dataColumn;
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPlotter *parent):
-    JKQTPGraph(parent)
+void JKQTPSingleColumnGraph::setDataColumn(size_t __value) { this->dataColumn = static_cast<int>(__value); }
+
+void JKQTPSingleColumnGraph::setDataSortOrder(const JKQTPSingleColumnGraph::DataSortOrder &__value)
 {
-    sortData=Unsorted;
-    this->dataColumn=dataColumn;
-    this->color=color;
-    this->style=style;
-    this->lineWidth=2.0;
-    parentPlotStyle=-1;
+    this->sortData = __value;
 }
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPlotter *parent):
-    JKQTPGraph(parent)
+JKQTPSingleColumnGraph::DataSortOrder JKQTPSingleColumnGraph::getDataSortOrder() const
 {
-    sortData=Unsorted;
-    this->dataColumn=dataColumn;
-    this->color=color;
-    this->style=Qt::SolidLine;
-    this->lineWidth=2.0;
-    parentPlotStyle=-1;
-}
-QColor JKQTPSingleColumnGraph::getKeyLabelColor()
-{
-    return color;
+    return this->sortData;
 }
 
 void JKQTPSingleColumnGraph::setDataSortOrder(int __value) {
@@ -435,21 +348,21 @@ void JKQTPSingleColumnGraph::setDataSortOrder(int __value) {
     if (__value>0) sortData=Sorted;
 }
 
+void JKQTPSingleColumnGraph::setDataDirection(JKQTPSingleColumnGraph::DataDirection __value)
+{
+    this->dataDirection = __value;
+}
+
+JKQTPSingleColumnGraph::DataDirection JKQTPSingleColumnGraph::getDataDirection() const
+{
+    return this->dataDirection;
+}
+
 bool JKQTPSingleColumnGraph::usesColumn(int c) const
 {
     return c==dataColumn;
 }
 
-QPen JKQTPSingleColumnGraph::getLinePen(JKQTPEnhancedPainter& painter) const
-{
-    QPen p;
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
-    p.setStyle(style);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    return p;
-}
 
 void JKQTPSingleColumnGraph::intSortData()
 {

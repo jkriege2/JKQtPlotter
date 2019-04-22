@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplottertools/jkqtptools.h"
 
@@ -49,9 +49,9 @@ int main(int argc, char* argv[])
         graph->setYColumn(ds->addCopiedColumn(Y, "y"+QString::number(id)));
 
         // don't use symbols
-        graph->setSymbol(JKQTPNoSymbol);
+        graph->setSymbolType(JKQTPNoSymbol);
         // use one of different pens
-        graph->setStyle(pens[id%pens.size()]);
+        graph->setLineStyle(pens[id%pens.size()]);
         // set width of graph line
         graph->setLineWidth(1.5);
 
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
     //    and loaded in the library). If you don't use the math-mode modifiers, the default
     //    font of the other rendering text is used, which might not be suitable for
     //    high-quality math rendering.
-    plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15));
+    plot.addGraph(new JKQTPGeoText(&plot, 1.25, 10, "$\\frac{A}{A_{stat}}=\\frac{1}{\\sqrt{\\left(1-\\eta^2\\right)^2+\\left(2{\\eta}D\\right)^2}}$", 15, QColor("black")));
 
     // 5. set y-axis to logarithmic (x-axis would be analogous, but using `plot.getXAxis()`)
     plot.getYAxis()->setLogAxis(true);

@@ -550,7 +550,8 @@ enum JKQTPGraphSymbols {
     JKQTPRectCross=20,              /*!< \brief a square symbol with a cross inside \image html symbols/symbol_symbol_rect_cross.png */
     JKQTPRectPlus=21,              /*!< \brief a square symbol with a plus inside \image html symbols/symbol_symbol_rect_plus.png */
 
-    JKQTPMaxSymbolID=JKQTPRectPlus
+    JKQTPMaxSymbolID=JKQTPRectPlus,
+    JKQTPDefaultSymbol=JKQTPCross,
 };
 
 /** \brief converts a JKQTPGraphSymbols variable into a identifier string
@@ -839,23 +840,31 @@ inline constexpr double jkqtp_todouble(const bool& d) {
 /** \brief plot styles for the error information
  * \ingroup jkqtptools
  *
- * \see JKQTPStepTypeComboBox
+ * \see JKQTPSpecialLineTypeComboBox
  */
-enum JKQTPStepType {
+enum JKQTPSpecialLineType {
     JKQTPStepLeft=0,           /*!< \brief datapoint is on the left edge of the hor. step line \image html JKQTPStepLeft.png */
     JKQTPStepCenter=1,           /*!< \brief datapoint is centered on the hor. step line \image html JKQTPStepCenter.png */
     JKQTPStepRight=2,         /*!< \brief datapoint is on the right edge of the hor. step line \image html JKQTPStepRight.png */
+    JKQTPStepAverage=3,         /*!< \brief horizontal line on the level of the average between two points + vertical lines to the points \image html JKQTPStepAverage.png */
+    JKQTPDirectLine=4,         /*!< \brief no step, but connects the two datapoints with a straight line \image html JKQTPDirectLine.png */
 };
 
 
-/** \brief converts a JKQTPStepType variable into a human-readable string
+/** \brief converts a JKQTPSpecialLineType variable into a human-readable string
  * \ingroup jkqtptools
  */
-JKQTP_LIB_EXPORT QString JKQTPStepType2String(JKQTPStepType pos);
+JKQTP_LIB_EXPORT QString JKQTPSpecialLineType2String(JKQTPSpecialLineType pos);
 
-/** \brief converts a String into a JKQTPStepType
+/** \brief converts a String into a JKQTPSpecialLineType
  * \ingroup jkqtptools
  */
-JKQTP_LIB_EXPORT JKQTPStepType String2JKQTPStepType(const QString& pos);
+JKQTP_LIB_EXPORT JKQTPSpecialLineType String2JKQTPSpecialLineType(const QString& pos);
+
+/** \brief round a double using round() and convert it to a specified type T (static_cast!) */
+template<typename T>
+inline T jkqtp_roundTo(const double& v) {
+    return static_cast<T>(round(v));
+}
 
 #endif // JKQTPTOOLS_H_INCLUDED

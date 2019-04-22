@@ -569,6 +569,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
             protected:
                 QColor m_color;
                 QColor m_fillColor;
+                QColor m_symbolFillColor;
                 QColor m_errorColor;
                 QColor m_errorFillColor;
                 double m_width;
@@ -608,7 +609,9 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
                 Qt::BrushStyle fillStyle() const;
                 Qt::BrushStyle errorFillStyle() const;
                 JKQTPGraphSymbols symbol() const;
-                void setSymbol(JKQTPGraphSymbols symbol);
+                void setSymbolType(JKQTPGraphSymbols symbol);
+                void setSymbolFillColor(QColor c);
+                QColor symbolFillColor() const;
         };
 
 

@@ -6,7 +6,7 @@
  
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsboxplot.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include "jkqtplotter/jkqtpgraphssinglecolumnsymbols.h"
@@ -79,10 +79,9 @@ int main(int argc, char* argv[])
     // data should scatter around position=-0.07 in a BeeSwarmScatter-Plot
     graphRANDVALS->setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::BeeSwarmScatter);
     // choose small filled circles as symbols, JKQTPGraphSymbols::set their color:
-    graphRANDVALS->setSymbol(JKQTPFilledCircle);
+    graphRANDVALS->setSymbolType(JKQTPFilledCircle);
     graphRANDVALS->setSymbolSize(5);
     graphRANDVALS->setColor(QColor("red"));
-    graphRANDVALS->setFillColor(graphRANDVALS->getColor().lighter(180));
     // set title:
     graphRANDVALS->setTitle("Random Data");
 
@@ -98,7 +97,7 @@ int main(int argc, char* argv[])
     // 6. draw the theoretical distribution as function graph:
     JKQTPXFunctionLineGraph* graphTheoDist=new JKQTPXFunctionLineGraph(&plot);
     // define the gaussian function used for the random number generator
-    graphTheoDist->setPlotFunction([&th_mean,&th_std](double x) -> double {
+    graphTheoDist->setPlotFunctionFunctor([&th_mean,&th_std](double x) -> double {
         return 1.0/(th_std*sqrt(2.0*M_PI))*exp(-0.5*(x-th_mean)*(x-th_mean)/th_std/th_std);
     });
     // set title:

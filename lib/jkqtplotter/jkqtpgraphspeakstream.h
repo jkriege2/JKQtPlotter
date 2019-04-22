@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsbase.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpgraphspeakstream_H_INCLUDED
 #define jkqtpgraphspeakstream_H_INCLUDED
@@ -42,16 +43,12 @@ class JKQTPDatastore;
     \image html JKQTPPeakStreamGraphY.png "yPeaks=true"
     \image html JKQTPPeakStreamGraphX.png "yPeaks=false"
  */
-class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
+class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
         JKQTPPeakStreamGraph(JKQTBasePlotter* parent=nullptr);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTBasePlotter* parent=nullptr);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTBasePlotter* parent=nullptr);
         JKQTPPeakStreamGraph(JKQTPlotter* parent);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, QColor color, JKQTPlotter* parent);
-        JKQTPPeakStreamGraph(int dataColumn, double baseline, double peakHeight, JKQTPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -69,55 +66,34 @@ class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph {
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-
+        /** \brief returns the color to be used for the key label */
+        virtual QColor getKeyLabelColor() const override;
+        /** \brief set symbol color and fill color at the same time */
+        void setColor(QColor col);
         /*! \copydoc baseline
             \see see baseline for details */ 
-        inline virtual void setBaseline(double __value)  
-        {
-            this->baseline = __value;
-        } 
+        void setBaseline(double __value);
         /*! \copydoc baseline
             \see see baseline for details */ 
-        inline virtual double getBaseline() const  
-        {
-            return this->baseline; 
-        }
+        double getBaseline() const;
         /*! \copydoc peakHeight
             \see see peakHeight for details */ 
-        inline virtual void setPeakHeight(double __value)  
-        {
-            this->peakHeight = __value;
-        } 
+        void setPeakHeight(double __value);
         /*! \copydoc peakHeight
             \see see peakHeight for details */ 
-        inline virtual double getPeakHeight() const  
-        {
-            return this->peakHeight; 
-        }
+        double getPeakHeight() const;
         /*! \copydoc yPeaks
             \see see yPeaks for details */ 
-        inline virtual void setYPeaks(bool __value)  
-        {
-            this->yPeaks = __value;
-        } 
+        void setYPeaks(bool __value);
         /*! \copydoc yPeaks
             \see see yPeaks for details */ 
-        inline virtual bool getYPeaks() const  
-        {
-            return this->yPeaks; 
-        }
+        bool getYPeaks() const;
         /*! \copydoc drawBaseline
             \see see drawBaseline for details */ 
-        inline virtual void setDrawBaseline(bool __value)  
-        {
-            this->drawBaseline = __value;
-        } 
+        void setDrawBaseline(bool __value);
         /*! \copydoc drawBaseline
             \see see drawBaseline for details */ 
-        inline virtual bool getDrawBaseline() const  
-        {
-            return this->drawBaseline; 
-        }
+        bool getDrawBaseline() const;
 
     protected:
 

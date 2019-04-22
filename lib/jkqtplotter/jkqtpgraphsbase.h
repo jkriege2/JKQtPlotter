@@ -44,7 +44,7 @@ class JKQTPDatastore;
  *   - void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
  *   - bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
  *   - bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
- *   - QColor getKeyLabelColor()=0;
+ *   - QColor getKeyLabelColor() const=0;
   * .
  *
  * Optionally you may also overwrite these functions to draw elements outside the actual plot area (like e.g. colorbars):
@@ -89,7 +89,7 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero)=0;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor()=0;
+        virtual QColor getKeyLabelColor() const=0;
 
         /** \brief sets the title of the plot (for display in key!).
          *
@@ -101,6 +101,10 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
         void virtual setVisible(bool __value);
         /*! \brief returns whether the graph is visible in the plot */
         bool virtual isVisible() const;
+        /*! \brief sets whether the graph is drawn in a highlighted style in the plot */
+        void virtual setHighlighted(bool __value);
+        /*! \brief returns whether the graph is shown in a highlighted style in the plot */
+        bool virtual isHighlighted() const;
 
         /** \brief returns the parent painter class */
         inline JKQTBasePlotter* getParent() { return parent; }
@@ -179,6 +183,10 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
 
         /** \brief indicates whether the graph is visible in the plot */
         bool visible;
+        /** \brief indicates whether the graph is shown in a "highlghted" in the plot */
+        bool highlighted;
+        /** \brief internal storage for the used parent plot style */
+        int parentPlotStyle;
 };
 
 /** \brief this virtual base class of the (data-column based) graphs,
@@ -432,82 +440,35 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
 
         /** \brief class constructor */
         JKQTPSingleColumnGraph(JKQTBasePlotter* parent=nullptr);
-        JKQTPSingleColumnGraph(int dataColumn, JKQTBasePlotter* parent=nullptr);
-        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style=Qt::SolidLine, double lineWidth=2.0, JKQTBasePlotter* parent=nullptr);
         JKQTPSingleColumnGraph(JKQTPlotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, JKQTPlotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, double lineWidth, JKQTPlotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, QColor color, Qt::PenStyle style, JKQTPlotter* parent);
-        JKQTPSingleColumnGraph(int dataColumn, QColor color, JKQTPlotter* parent);
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override ;
 
         /*! \copydoc dataColumn
             \see see dataColumn for details */ 
-        inline virtual void setDataColumn(int __value)
-        {
-            this->dataColumn = __value;
-        } 
+        void setDataColumn(int __value);
         /*! \copydoc dataColumn
             \see see dataColumn for details */ 
-        inline virtual int getDataColumn() const  
-        {
-            return this->dataColumn; 
-        }
+        int getDataColumn() const;
         /*! \brief sets the property dataColumn ( \copybrief dataColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter dataColumn is:  <BLOCKQUOTE>\copydoc dataColumn </BLOCKQUOTE> 
             \see dataColumn for more information */ 
-        inline virtual void setDataColumn (size_t __value) { this->dataColumn = static_cast<int>(__value); }
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual void setStyle(const Qt::PenStyle & __value)  
-        {
-            this->style = __value;
-        } 
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual Qt::PenStyle getStyle() const  
-        {
-            return this->style; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
+        void setDataColumn (size_t __value);
+
         /*! \copydoc sortData
             \see see sortData for details */ 
-        inline virtual void setDataSortOrder(const DataSortOrder & __value)  
-        {
-            this->sortData = __value;
-        } 
+        void setDataSortOrder(const DataSortOrder & __value);
         /*! \copydoc sortData
             \see see sortData for details */ 
-        inline virtual DataSortOrder getDataSortOrder() const  
-        {
-            return this->sortData; 
-        }
+        DataSortOrder getDataSortOrder() const;
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
         void setDataSortOrder(int __value);
+
+
+        /*! \copydoc dataDirection
+            \see see dataDirection for details */
+        void setDataDirection(DataDirection __value);
+        /*! \copydoc dataDirection
+            \see see dataDirection for details */
+        DataDirection getDataDirection() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
@@ -515,18 +476,9 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
     protected:
         /** \brief the column that contains the datapoints */
         int dataColumn;
+        /** \brief interpret the data from dataColumn either as X- or Y-data */
+        DataDirection dataDirection;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
-
-        /** \brief color of the graph */
-        QColor color;
-        /** \brief linestyle of the graph lines */
-        Qt::PenStyle style;
-        /** \brief width (pt) of the graph, given in pt */
-        double lineWidth;
-
-        QPen getLinePen(JKQTPEnhancedPainter &painter) const;
 
         /** \brief if \c !=Unsorted, the data is sorted before plotting */
         DataSortOrder sortData;
@@ -538,7 +490,7 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
          * This function can beu used to get the correct datapoint after sorting the datapoints,
          * As sorting is done by sorting an index and not reordering the data in the columns themselves.
          * */
-        inline  int getDataIndex(int i) {
+        inline int getDataIndex(int i) {
             if (sortData==Unsorted) return i;
             return sortedIndices.value(i,i);
         }

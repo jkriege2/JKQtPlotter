@@ -102,13 +102,13 @@ void JKQTPRGBMathImage::initObject()
     this->colorBarTopVisible=true;
     this->colorBarRightVisible=true;
     this->imageNameFontSize=parent->getKeyFontSize();
-    this->imageName="";
+    this->imageNameR="";
     this->showColorBar=true;
     this->colorBarWidth=14;
     this->colorBarRelativeHeight=0.75;
     this->autoImageRange=true;
-    this->imageMin=0;
-    this->imageMax=1;
+    this->imageMinR=0;
+    this->imageMaxR=1;
     this->imageMinG=0;
     this->imageMaxG=1;
     this->imageMinB=0;
@@ -195,7 +195,7 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarRightAxis->setRange(internalDataMin, internalDataMax);
                 colorBarRightAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
-                colorBarRightAxisB->setAxisLabel(imageName);
+                colorBarRightAxisB->setAxisLabel(imageNameR);
                 QSizeF s2=colorBarRightAxis->getSize2(painter);
                 QSizeF s1=colorBarRightAxis->getSize1(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
@@ -204,7 +204,7 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
                 //if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxis->setRange(internalDataMin, internalDataMax);
                 colorBarTopAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
-                colorBarTopAxisB->setAxisLabel(imageName);
+                colorBarTopAxisB->setAxisLabel(imageNameR);
                 QSizeF s2=colorBarTopAxisB->getSize2(painter);
                 QSizeF s1=colorBarTopAxisB->getSize2(painter);
                 if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
@@ -278,7 +278,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
         int visibleColorBars=0;
         const int pd_size=200;
         uint8_t pd[pd_size];
-        for (int i=0; i<pd_size; i++) pd[i]=i;
+        for (int i=0; i<pd_size; i++) pd[i]=static_cast<uint8_t>(i);
 
         if (data) {
             RGBOutsizeData d;
@@ -288,7 +288,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
             d.internalDataMax=internalDataMax;
             d.colorBarRightAxis=colorBarRightAxis;
             d.colorBarTopAxis=colorBarTopAxis;
-            d.name=imageName;
+            d.name=imageNameR;
             if (rgbMode==JKQTPRGBMathImageModeRGBMode) {
                 d.palette=JKQTPMathImageRED;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
@@ -331,7 +331,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");
-                    c.setHsv(c.hue(), double(i)/double(pd_size-1)*255.0, c.value(), c.alpha());
+                    c.setHsv(c.hue(), jkqtp_roundTo<int>(double(i)/double(pd_size-1)*255.0), c.value(), c.alpha());
                     line[i]=c.rgba();
                 }
             } else if (rgbMode==JKQTPRGBMathImageModeHSLMode) {
@@ -341,7 +341,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");
-                    c.setHsl(c.hue(), double(i)/double(pd_size-1)*255.0, c.lightness(), c.alpha());
+                    c.setHsl(c.hue(), jkqtp_roundTo<int>(double(i)/double(pd_size-1)*255.0), c.lightness(), c.alpha());
                     line[i]=c.rgba();
                 }
             }
@@ -374,7 +374,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");
-                    c.setHsv(c.hue(), c.saturation(), double(i)/double(pd_size-1)*255.0, c.alpha());
+                    c.setHsv(c.hue(), c.saturation(), jkqtp_roundTo<int>(double(i)/double(pd_size-1)*255.0), c.alpha());
                     line[i]=c.rgba();
                 }
             } else if (rgbMode==JKQTPRGBMathImageModeHSLMode) {
@@ -384,7 +384,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");
-                    c.setHsl(c.hue(), c.saturation(), double(i)/double(pd_size-1)*255.0, c.alpha());
+                    c.setHsl(c.hue(), c.saturation(), jkqtp_roundTo<int>(double(i)/double(pd_size-1)*255.0), c.alpha());
                     line[i]=c.rgba();
                 }
             }
@@ -421,7 +421,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
 
-                QRect cb(rX, rY, parent->pt2px(painter, colorBarWidth), gbarHeight);
+                QRectF cb(rX, rY, parent->pt2px(painter, colorBarWidth), gbarHeight);
                 painter.drawImage(cb, l[li].paletteImage.mirrored(true, false));
                 QPen p=painter.pen();
                 p.setColor(l[li].colorBarRightAxis->getAxisColor());
@@ -450,7 +450,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
 
-                QRect cb(tX, tY, gbarWidth, parent->pt2px(painter, colorBarWidth));
+                QRectF cb(tX, tY, gbarWidth, parent->pt2px(painter, colorBarWidth));
                 QMatrix mt;
                 mt.rotate(90);
                 painter.drawImage(cb, l[li].paletteImage.transformed(mt));
@@ -487,9 +487,351 @@ void JKQTPRGBMathImage::getDataMinMax(double& imin, double& imax) {
     if (autoImageRange) {
         JKQTPMathImageBase::getDataMinMax(imin, imax);
     } else {
-        imin=imageMin;
-        imax=imageMax;
+        imin=imageMinR;
+        imax=imageMaxR;
     }
+}
+
+void JKQTPRGBMathImage::setDataR(void *__value)
+{
+    setData(__value);
+}
+
+void *JKQTPRGBMathImage::getDataR() const
+{
+    return getData();
+}
+
+void JKQTPRGBMathImage::setDatatypeR(JKQTPMathImageBase::DataType __value)
+{
+    setDatatype(__value);
+}
+
+JKQTPMathImageBase::DataType JKQTPRGBMathImage::getDatatypeR() const
+{
+    return getDatatype();
+}
+
+void JKQTPRGBMathImage::setDataG(void *__value)
+{
+    this->dataG = __value;
+}
+
+void *JKQTPRGBMathImage::getDataG() const
+{
+    return this->dataG;
+}
+
+void JKQTPRGBMathImage::setDatatypeG(JKQTPMathImageBase::DataType __value)
+{
+    this->datatypeG = __value;
+}
+
+JKQTPMathImageBase::DataType JKQTPRGBMathImage::getDatatypeG() const
+{
+    return this->datatypeG;
+}
+
+void JKQTPRGBMathImage::setDataB(void *__value)
+{
+    this->dataB = __value;
+}
+
+void *JKQTPRGBMathImage::getDataB() const
+{
+    return this->dataB;
+}
+
+void JKQTPRGBMathImage::setDatatypeB(JKQTPMathImageBase::DataType __value)
+{
+    this->datatypeB = __value;
+}
+
+JKQTPMathImageBase::DataType JKQTPRGBMathImage::getDatatypeB() const
+{
+    return this->datatypeB;
+}
+
+void JKQTPRGBMathImage::setShowColorBar(bool __value)
+{
+    this->showColorBar = __value;
+}
+
+bool JKQTPRGBMathImage::getShowColorBar() const
+{
+    return this->showColorBar;
+}
+
+void JKQTPRGBMathImage::setColorBarWidth(int __value)
+{
+    this->colorBarWidth = __value;
+}
+
+int JKQTPRGBMathImage::getColorBarWidth() const
+{
+    return this->colorBarWidth;
+}
+
+void JKQTPRGBMathImage::setColorBarOffset(int __value)
+{
+    this->colorBarOffset = __value;
+}
+
+int JKQTPRGBMathImage::getColorBarOffset() const
+{
+    return this->colorBarOffset;
+}
+
+void JKQTPRGBMathImage::setColorBarRelativeHeight(double __value)
+{
+    this->colorBarRelativeHeight = __value;
+}
+
+double JKQTPRGBMathImage::getColorBarRelativeHeight() const
+{
+    return this->colorBarRelativeHeight;
+}
+
+void JKQTPRGBMathImage::setImageMin(double __value)
+{
+    this->imageMinR = __value;
+}
+
+double JKQTPRGBMathImage::getImageMin() const
+{
+    return this->imageMinR;
+}
+
+void JKQTPRGBMathImage::setImageMinR(double m) {
+    setImageMin(m);
+}
+
+void JKQTPRGBMathImage::setImageMax(double __value)
+{
+    this->imageMaxR = __value;
+}
+
+double JKQTPRGBMathImage::getImageMax() const
+{
+    return this->imageMaxR;
+}
+
+void JKQTPRGBMathImage::setImageMaxR(double m) {
+    setImageMax(m);
+}
+
+void JKQTPRGBMathImage::setImageMinG(double __value)
+{
+    this->imageMinG = __value;
+}
+
+double JKQTPRGBMathImage::getImageMinG() const
+{
+    return this->imageMinG;
+}
+
+void JKQTPRGBMathImage::setImageMaxG(double __value)
+{
+    this->imageMaxG = __value;
+}
+
+double JKQTPRGBMathImage::getImageMaxG() const
+{
+    return this->imageMaxG;
+}
+
+void JKQTPRGBMathImage::setImageMinB(double __value)
+{
+    this->imageMinB = __value;
+}
+
+double JKQTPRGBMathImage::getImageMinB() const
+{
+    return this->imageMinB;
+}
+
+void JKQTPRGBMathImage::setImageMaxB(double __value)
+{
+    this->imageMaxB = __value;
+}
+
+double JKQTPRGBMathImage::getImageMaxB() const {
+    return imageMaxB;
+}
+
+void JKQTPRGBMathImage::setAutoImageRange(bool __value)
+{
+    this->autoImageRange = __value;
+}
+
+bool JKQTPRGBMathImage::getAutoImageRange() const
+{
+return this->autoImageRange;
+}
+
+void JKQTPRGBMathImage::setImageName(const QString &__value)
+{
+    this->imageNameR = __value;
+}
+
+QString JKQTPRGBMathImage::getImageName() const
+{
+    return this->imageNameR;
+}
+
+QString JKQTPRGBMathImage::getImageNameR() const
+{
+    return this->imageNameR;
+}
+
+void JKQTPRGBMathImage::setImageNameR(const QString &m) {
+    setImageName(m);
+}
+
+void JKQTPRGBMathImage::setImageNameG(const QString &__value)
+{
+    this->imageNameG = __value;
+}
+
+QString JKQTPRGBMathImage::getImageNameG() const
+{
+    return this->imageNameG;
+}
+
+void JKQTPRGBMathImage::setImageNameB(const QString &__value)
+{
+    this->imageNameB = __value;
+}
+
+QString JKQTPRGBMathImage::getImageNameB() const
+{
+    return this->imageNameB;
+}
+
+void JKQTPRGBMathImage::setImageNameFontName(const QString &__value)
+{
+    this->imageNameFontName = __value;
+}
+
+QString JKQTPRGBMathImage::getImageNameFontName() const
+{
+    return this->imageNameFontName;
+}
+
+void JKQTPRGBMathImage::setImageNameFontSize(double __value)
+{
+    this->imageNameFontSize = __value;
+}
+
+double JKQTPRGBMathImage::getImageNameFontSize() const
+{
+    return this->imageNameFontSize;
+}
+
+JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxis() {
+    return this->colorBarRightAxis;
+}
+
+JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxis()  {
+    return this->colorBarTopAxis;
+}
+
+JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxisR()
+{
+    return this->colorBarRightAxis;
+}
+
+JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxisR()
+{
+    return this->colorBarTopAxis;
+}
+
+JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxisG()  {
+    return this->colorBarRightAxisG;
+}
+
+JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxisG()  {
+    return this->colorBarTopAxisG;
+}
+
+JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxisB()  {
+    return this->colorBarRightAxisB;
+}
+
+JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxisB()  {
+    return this->colorBarTopAxisB;
+}
+
+const JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxis() const {
+    return this->colorBarRightAxis;
+}
+
+const JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxis() const {
+    return this->colorBarTopAxis;
+}
+
+const JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxisR() const {
+    return this->colorBarRightAxis;
+}
+
+const JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxisR() const {
+    return this->colorBarTopAxis;
+}
+
+const JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxisG() const {
+    return this->colorBarRightAxisG;
+}
+
+const JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxisG() const {
+    return this->colorBarTopAxisG;
+}
+
+const JKQTPVerticalIndependentAxis *JKQTPRGBMathImage::getColorBarRightAxisB() const {
+    return this->colorBarRightAxisB;
+}
+
+const JKQTPHorizontalIndependentAxis *JKQTPRGBMathImage::getColorBarTopAxisB() const {
+    return this->colorBarTopAxisB;
+}
+
+void JKQTPRGBMathImage::setColorBarTopVisible(bool __value)
+{
+    this->colorBarTopVisible = __value;
+}
+
+bool JKQTPRGBMathImage::getColorBarTopVisible() const
+{
+    return this->colorBarTopVisible;
+}
+
+void JKQTPRGBMathImage::setColorBarRightVisible(bool __value)
+{
+    this->colorBarRightVisible = __value;
+}
+
+bool JKQTPRGBMathImage::getColorBarRightVisible() const
+{
+    return this->colorBarRightVisible;
+}
+
+void JKQTPRGBMathImage::setColorbarsSideBySide(bool __value)
+{
+    this->colorbarsSideBySide = __value;
+}
+
+bool JKQTPRGBMathImage::getColorbarsSideBySide() const
+{
+    return this->colorbarsSideBySide;
+}
+
+void JKQTPRGBMathImage::setRgbMode(JKQTPRGBMathImageRGBMode __value)
+{
+    this->rgbMode = __value;
+}
+
+JKQTPRGBMathImageRGBMode JKQTPRGBMathImage::getRgbMode() const
+{
+    return this->rgbMode;
 }
 
 void JKQTPRGBMathImage::getDataMinMaxG(double& imin, double& imax) {
@@ -1002,3 +1344,43 @@ QVector<double> JKQTPRGBMathImage::getDataBAsDoubleVector() const
 
 
 
+
+int JKQTPColumnRGBMathImage::getModifierColumn() const
+{
+    return this->modifierColumn;
+}
+
+void JKQTPColumnRGBMathImage::setModifierColumn(int __value)
+{
+    this->modifierColumn = __value;
+}
+
+int JKQTPColumnRGBMathImage::getImageBColumn() const
+{
+    return this->imageBColumn;
+}
+
+void JKQTPColumnRGBMathImage::setImageBColumn(int __value)
+{
+    this->imageBColumn = __value;
+}
+
+int JKQTPColumnRGBMathImage::getImageGColumn() const
+{
+    return this->imageGColumn;
+}
+
+void JKQTPColumnRGBMathImage::setImageGColumn(int __value)
+{
+    this->imageGColumn = __value;
+}
+
+int JKQTPColumnRGBMathImage::getImageRColumn() const
+{
+    return this->imageRColumn;
+}
+
+void JKQTPColumnRGBMathImage::setImageRColumn(int __value)
+{
+    this->imageRColumn = __value;
+}

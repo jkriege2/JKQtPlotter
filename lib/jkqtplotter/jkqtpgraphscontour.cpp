@@ -32,6 +32,44 @@
 #include <QClipboard>
 # include <QVector3D>
 
+JKQTPContour::JKQTPContour(JKQTBasePlotter *parent) :
+    JKQTPMathImage(parent)
+{
+    colorBarRightVisible=false;
+    ignoreOnPlane=false;
+    numberOfLevels=1;
+    colorFromPalette=true;
+    datatype=JKQTPMathImageBase::DoubleArray;
+    relativeLevels=false;
+
+    initLineStyle(parent, parentPlotStyle);
+
+}
+
+JKQTPContour::JKQTPContour(double x, double y, double width, double height, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, DataType datatype, JKQTBasePlotter* parent) :
+    JKQTPMathImage( x, y, width, height, datatype, data, Nx, Ny, palette, parent)
+{
+    colorBarRightVisible=false;
+    ignoreOnPlane=false;
+    numberOfLevels=1;
+    colorFromPalette=true;
+    relativeLevels=false;
+
+    initLineStyle(parent, parentPlotStyle);
+}
+
+
+JKQTPContour::JKQTPContour(JKQTPlotter *parent) :
+    JKQTPContour(parent->getPlotter())
+{
+
+}
+
+JKQTPContour::JKQTPContour(double x, double y, double width, double height, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, DataType datatype, JKQTPlotter* parent) :
+    JKQTPContour( x, y, width, height, data, Nx, Ny, palette, datatype, parent->getPlotter())
+{
+}
+
 
 void JKQTPContour::draw(JKQTPEnhancedPainter &painter)
 {
@@ -54,10 +92,7 @@ void JKQTPContour::draw(JKQTPEnhancedPainter &painter)
 
     // draw lines
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p;
-    p.setStyle(style);
-    p.setColor(lineColor);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
+    QPen p=getLinePen(painter, parent);
 
     painter.setPen(p);
     QImage colorLevels = getPaletteImage(palette,numberOfLevels);
@@ -126,6 +161,56 @@ void JKQTPContour::createContourLevelsLog(int nLevels, int m)
     }
 
     relativeLevels=false;
+}
+
+void JKQTPContour::setIgnoreOnPlane(bool __value)
+{
+    this->ignoreOnPlane = __value;
+}
+
+bool JKQTPContour::getIgnoreOnPlane() const
+{
+    return this->ignoreOnPlane;
+}
+
+void JKQTPContour::setNumberOfLevels(int __value)
+{
+    this->numberOfLevels = __value;
+}
+
+int JKQTPContour::getNumberOfLevels() const
+{
+    return this->numberOfLevels;
+}
+
+void JKQTPContour::setColorFromPalette(bool __value)
+{
+    this->colorFromPalette = __value;
+}
+
+bool JKQTPContour::getColorFromPalette() const
+{
+    return this->colorFromPalette;
+}
+
+void JKQTPContour::setContourLevels(const QList<double> &__value)
+{
+    this->contourLevels = __value;
+}
+
+QList<double> JKQTPContour::getContourLevels() const
+{
+    return this->contourLevels;
+}
+
+void JKQTPContour::setRelativeLevels(bool __value)
+{
+    this->relativeLevels = __value;
+}
+
+bool JKQTPContour::getRelativeLevels() const
+{
+    return this->relativeLevels;
 }
 
 void JKQTPContour::setImageColumn(size_t columnID)
@@ -270,64 +355,6 @@ bool JKQTPContour::intersect(QLineF &line, const QVector3D &vertex1,const QVecto
 }
 
 
-JKQTPContour::JKQTPContour(JKQTBasePlotter *parent) :
-    JKQTPMathImage(parent)
-{
-    lineColor=QColor("red");
-    colorBarRightVisible=false;
-    lineWidth=1;
-    style=Qt::SolidLine;
-    ignoreOnPlane=false;
-    numberOfLevels=1;
-    colorFromPalette=true;
-    datatype=JKQTPMathImageBase::DoubleArray;
-    relativeLevels=false;
-
-    if (parent) { // get style settings from parent object
-        int parentPlotStyle=parent->getNextStyle();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-    }
-}
-
-JKQTPContour::JKQTPContour(double x, double y, double width, double height, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, DataType datatype, JKQTBasePlotter* parent) :
-    JKQTPMathImage( x, y, width, height, datatype, data, Nx, Ny, palette, parent)
-{
-    lineColor=QColor("red");
-    colorBarRightVisible=false;
-    lineWidth=1;
-    style=Qt::SolidLine;
-    ignoreOnPlane=false;
-    numberOfLevels=1;
-    colorFromPalette=true;
-    relativeLevels=false;
-
-    if (parent) { // get style settings from parent object
-        int parentPlotStyle=parent->getNextStyle();
-        style=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-    }
-}
-
-
-JKQTPContour::JKQTPContour(JKQTPlotter *parent) :
-    JKQTPContour(parent->getPlotter())
-{
-
-}
-
-JKQTPContour::JKQTPContour(double x, double y, double width, double height, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, DataType datatype, JKQTPlotter* parent) :
-    JKQTPMathImage( x, y, width, height, datatype, data, Nx, Ny, palette, parent)
-{
-    lineColor=QColor("red");
-    colorBarRightVisible=false;
-    lineWidth=1;
-    style=Qt::SolidLine;
-    ignoreOnPlane=false;
-    numberOfLevels=1;
-    colorFromPalette=true;
-    relativeLevels=false;
-}
 int JKQTPContour::compare2level(const QVector3D &vertex, double level)
 {
     if (vertex.z() > level)

@@ -3,7 +3,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsboxplot.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
 #include "jkqtplottergui/jkqtpcomboboxes.h"
@@ -122,7 +122,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     pltePlot2->setDrawLine(true);
     pltePlot2->setYErrorColumn(cy21re);
     pltePlot2->setYErrorStyle(JKQTPErrorBarsPolygons);
-    pltePlot2->setSymbol(JKQTPFilledStar);
+    pltePlot2->setSymbolType(JKQTPFilledStar);
     plotBot->getPlotter()->addGraph(pltePlot2);
     plotBot->zoomToFit();
 
@@ -191,7 +191,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     /*JKQTPYFunctionLineGraph* g=new JKQTPYFunctionLineGraph(&plot);
     g->setTitle("function 1");
-    g->setPlotFunction(f1);
+    g->setPlotFunctionFunctor(f1);
     g->setErrorFunction(f1e);
     g->setDrawErrorLines(true);
     g->setDrawErrorPolygons(false);
@@ -200,10 +200,10 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     /*JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(&plot);
     g->setTitle("function 2");
-    g->setPlotFunction(f2);
+    g->setPlotFunctionFunctor(f2);
     plot->addGraph(g);*/
 
-    /*JKQTPStepVerticalGraph* g=new JKQTPStepVerticalGraph(&plot);
+    /*JKQTPSpecialLineVerticalGraph* g=new JKQTPSpecialLineVerticalGraph(&plot);
     g->setXColumn(cy11);
     g->setYColumn(cx1);
     g->setFillCurve(true);
@@ -232,7 +232,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     layout->addWidget(chkInvertX);
     layout->addWidget(chkInvertY);
     JKQTPSymbolComboBox* cmbJKQTPPlotSymbol=new JKQTPSymbolComboBox(this);
-    cmbJKQTPPlotSymbol->setSymbol(JKQTPPlus);
+    cmbJKQTPPlotSymbol->setSymbolType(JKQTPPlus);
     connect(cmbJKQTPPlotSymbol, SIGNAL(currentIndexChanged(int)), this, SLOT(setESSymbol(int)));
     layout->addWidget(cmbJKQTPPlotSymbol);
     JKQTPErrorPlotstyleComboBox* cmbErrors=new JKQTPErrorPlotstyleComboBox(this);
@@ -321,7 +321,7 @@ void TestWidgetGraphs::setESSymbol(int /*index*/)
     if (cmb) {
         JKQTPXYLineGraph* exy=dynamic_cast<JKQTPXYLineGraph*>(plteSymbols);
         if (exy) {
-            exy->setSymbol(String2JKQTPGraphSymbols(cmb->itemData(cmb->currentIndex()).toString()));
+            exy->setSymbolType(String2JKQTPGraphSymbols(cmb->itemData(cmb->currentIndex()).toString()));
         }
 
         plot->redrawPlot();

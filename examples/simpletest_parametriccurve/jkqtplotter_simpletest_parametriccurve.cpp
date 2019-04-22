@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 
 
 int main(int argc, char* argv[])
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
     graph1->setXColumn(columnX);
     graph1->setYColumn(columnY);
     graph1->setDrawLine(true);
-    graph1->setSymbol(JKQTPNoSymbol);
+    graph1->setSymbolType(JKQTPNoSymbol);
     graph1->setTitle("one-colored spiral");
     plot.addGraph(graph1);
 
@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
     graph2->setYColumn(columnY);
     graph2->setColorColumn(columnR);
     graph2->setPalette(JKQTPMathImageMATLAB);
-    graph2->setSymbol(JKQTPNoSymbol);
+    graph2->setSymbolType(JKQTPNoSymbol);
     graph2->setDrawLine(true);
     graph2->setTitle("colored spiral");
     graph2->getColorBarRightAxis()->setAxisLabel("color scale radius $r(\\phi)$");

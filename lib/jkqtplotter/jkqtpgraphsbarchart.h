@@ -25,7 +25,7 @@
 #include "jkqtplottertools/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
-
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #ifndef jkqtpgraphsbarchart_H
 #define jkqtpgraphsbarchart_H
 
@@ -40,7 +40,7 @@
 
     By default the sift parameter is, so the bar is centered at the x-value. The width is 0.9,
     so adjacent bars are plotted with a small distance between them. It is possible to use these two parameters
-    to plot multiple bars for every x-value, by having on JKQTPStepHorizontalGraph object per
+    to plot multiple bars for every x-value, by having on JKQTPSpecialLineHorizontalGraph object per
     set of bars that belong together. For example for three bars per x-value one would set:
     \verbatim
           width=0.3
@@ -56,7 +56,7 @@
 
 
  */
-class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -69,7 +69,7 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -90,119 +90,42 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
          *  \note This function will scale ALL graphs of the parent plot, which were derived from JKQTPBarHorizontalGraph, that match in orientation (as returned by isHorizontal() ).
          */
         virtual void autoscaleBarWidthAndShift(double maxWidth=0.9, double shrinkFactor=0.8);
+
+        /** \brief equivalent to \c autoscaleBarWidthAndShift(groupWidth,1);
+         */
         void autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth=0.75);
 
+        /** \brief retruns \c true, if the bars are horizontal (JKQTPBarHorizontalGraph) and \c false if they are vertical (JKQTPBarVerticalGraph) */
         virtual bool isHorizontal() const;
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->fillStyle = __value;
-        } 
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual Qt::BrushStyle getFillStyle() const  
-        {
-            return this->fillStyle; 
-        }
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual void setStyle(const Qt::PenStyle & __value)  
-        {
-            this->style = __value;
-        } 
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual Qt::PenStyle getStyle() const  
-        {
-            return this->style; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)  
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
+        /** \brief set outline and fill color at the same time
+         *  \see setFillColor_and_darkenedColor()
+         */
+        virtual void setColor(QColor c);
+
         /*! \copydoc shift
             \see see shift for details */ 
-        inline virtual void setShift(double __value)  
-        {
-            this->shift = __value;
-        } 
+        void setShift(double __value);
         /*! \copydoc shift
             \see see shift for details */ 
-        inline virtual double getShift() const  
-        {
-            return this->shift; 
-        }
+        double getShift() const;
         /*! \copydoc width
             \see see width for details */ 
-        inline virtual void setWidth(double __value)  
-        {
-            this->width = __value;
-        } 
+        void setWidth(double __value);
         /*! \copydoc width
             \see see width for details */ 
-        inline virtual double getWidth() const  
-        {
-            return this->width; 
-        }
+        double getWidth() const;
         /*! \copydoc baseline
             \see see baseline for details */ 
-        inline virtual void setBaseline(double __value)  
-        {
-            this->baseline = __value;
-        } 
+        void setBaseline(double __value);
         /*! \copydoc baseline
             \see see baseline for details */ 
-        inline virtual double getBaseline() const  
-        {
-            return this->baseline; 
-        }
-        /** \brief sets the fill color and the color together, where fillColor is set to \a fill and the line-color is set to \c fill.darker(colorDarker) */
+        double getBaseline() const;
+        /** \brief sets the fill color and the color together, where fillColor is set to \a fill and the line-color is set to \c fill.darker(colorDarker)
+         *  \see setColor()
+         */
         void setFillColor_and_darkenedColor(QColor fill, int colorDarker=200);
     protected:
-        /** \brief color of the graph */
-        QColor color;
-        /** \brief color of the graph fill */
-        QColor fillColor;
-        /** \brief linestyle of the graph lines */
-        Qt::PenStyle style;
-        /** \brief width (pt) of the graph, given in pt */
-        double lineWidth;
-        /** \brief fill style, if the curve should be filled */
-        Qt::BrushStyle fillStyle;
         /** \brief the width of the bargraphs, relative to the distance between the current and the next x-value
          *
          * See the following graphic to understand this concept:
@@ -220,12 +143,6 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph {
          */
         double baseline;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
-
-
-        QBrush getBrush(JKQTPEnhancedPainter& painter) const;
-        QPen getLinePen(JKQTPEnhancedPainter &painter) const;
 
         /** \brief used to generate stacked plots: returns the upper boundary of this plot in a stack, for the index-th datapoint
          *

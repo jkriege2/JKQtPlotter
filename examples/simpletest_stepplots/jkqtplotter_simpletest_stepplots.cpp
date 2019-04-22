@@ -1,12 +1,13 @@
 /** \example jkqtplotter_simpletest_stepplots.cpp
- * JKQTPlotter: Examples: Step Line Plots in Different Styles
+ * JKQTPlotter: Examples: Special/Step Line Plots in Different Styles
  *
- * \ref JKQTPlotterStepPlot
+ * \ref JKQTPlotterSpecialStepLinePlot
  */
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
+#include "jkqtplotter/jkqtpgraphsspecialline.h"
 #include "jkqtplottertools/jkqtptools.h"
 
 int main(int argc, char* argv[])
@@ -19,113 +20,159 @@ int main(int argc, char* argv[])
 
     // 2. now we create data a vector of x-values for a simple plot and several sets of y-values for
     //    cosine curves stacked above each other
-    QVector<double> X, Y1, Y2, Y3;
-    const int Ndata=10; // number of plot points in each curve
-    for (int i=0; i<Ndata; i++) {
-        const double x=double(i)/double(Ndata)*2.0*M_PI;
+    QVector<double> X, Y1, Y2, Y3, Y4, Y5;
+    const int Ndata=7; // number of plot points in each curve
+    for (int i=0; i<=Ndata; i++) {
+        const double x=0.0+double(i)*0.6*M_PI;
         X<<x;
-        Y1<<cos(x)+1.0*1.5;
-        Y2<<cos(x)+2.0*1.5;
-        Y3<<cos(x)+3.0*1.5;
+        Y1<<sin(x)+1.0*1.5;
+        Y2<<sin(x)+3.0*1.5;
+        Y3<<sin(x)+5.0*1.5;
+        Y4<<sin(x)+7.0*1.5;
+        Y5<<sin(x)+9.0*1.5;
     }
+
     // and copy it to the datastore
     size_t columnX=ds->addCopiedColumn(X, "x");
     size_t columnY1=ds->addCopiedColumn(Y1, "y1");
     size_t columnY2=ds->addCopiedColumn(Y2, "y2");
     size_t columnY3=ds->addCopiedColumn(Y3, "y3");
+    size_t columnY4=ds->addCopiedColumn(Y4, "y5");
+    size_t columnY5=ds->addCopiedColumn(Y5, "y4");
 
     // 3 now we make several plots with different step styles, each one also contains a
     //     symbol plot indicating the location of the datapoints themselves
-    JKQTPStepHorizontalGraph* graph;
-    JKQTPXYLineGraph* graphL;
+    JKQTPSpecialLineHorizontalGraph* graph;
 
     //-- JKQTPStepLeft ----------------------------------------------------------------------------------------
-    graph=new JKQTPStepHorizontalGraph(&plot);
-    graphL=new JKQTPXYLineGraph(&plot);
+    graph=new JKQTPSpecialLineHorizontalGraph(&plot);
 
-    // set data for both graphs
-    graph->setXColumn(columnX); graphL->setXColumn(graph->getXColumn());
-    graph->setYColumn(columnY1); graphL->setYColumn(graph->getYColumn());
+    // set data for the graph
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY1);
 
     // set step style
-    graph->setStepType(JKQTPStepLeft);
+    graph->setSpecialLineType(JKQTPStepLeft);
     graph->setLineWidth(1);
     graph->setFillCurve(true);
+    /*QRadialGradient radialGrad(QPointF(0.5, 0.5), 0.5);
+    radialGrad.setColorAt(0, Qt::red);
+    radialGrad.setColorAt(0.5, Qt::blue);
+    radialGrad.setColorAt(1, Qt::green);
+    radialGrad.setCoordinateMode(QGradient::ObjectBoundingMode);
+    graph->setFillGradient(radialGrad);*/
     graph->setDrawLine(true);
     graph->setTitle("JKQTPStepLeft, filled");
+    graph->setBaseline(0.0);
 
-    // set symbol + pen style and color for the added circles, copy color
-    graphL->setSymbol(JKQTPGraphSymbols::JKQTPCircle);
-    graphL->setDrawLine(false);
-    graphL->setSymbolSize(9);
-    graphL->setSymbolWidth(1);
-    graphL->setColor(graph->getColor());
+    // enable symbols
+    graph->setDrawSymbols(true);
+    graph->setSymbolType(JKQTPGraphSymbols::JKQTPCircle);
 
     // add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
-    plot.addGraph(graphL);
 
 
     //-- JKQTPStepCenter ----------------------------------------------------------------------------------------
-    graph=new JKQTPStepHorizontalGraph(&plot);
-    graphL=new JKQTPXYLineGraph(&plot);
+    graph=new JKQTPSpecialLineHorizontalGraph(&plot);
 
-    // set data for both graphs
-    graph->setXColumn(columnX); graphL->setXColumn(graph->getXColumn());
-    graph->setYColumn(columnY2); graphL->setYColumn(graph->getYColumn());
+    // set data for the graph
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY2);
 
     // set step style
-    graph->setStepType(JKQTPStepCenter);
+    graph->setSpecialLineType(JKQTPStepCenter);
     graph->setLineWidth(1);
     graph->setFillCurve(false);
     graph->setDrawLine(true);
     graph->setTitle("JKQTPStepCenter");
 
-    // set symbol + pen style and color for the added circles, copy color
-    graphL->setSymbol(JKQTPGraphSymbols::JKQTPCircle);
-    graphL->setDrawLine(false);
-    graphL->setSymbolSize(9);
-    graphL->setSymbolWidth(1);
-    graphL->setColor(graph->getColor());
+    // enable symbols
+    graph->setDrawSymbols(true);
+    graph->setSymbolType(JKQTPGraphSymbols::JKQTPCircle);
+
 
     // add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
-    plot.addGraph(graphL);
 
 
     //-- JKQTPStepRight ----------------------------------------------------------------------------------------
-    graph=new JKQTPStepHorizontalGraph(&plot);
-    graphL=new JKQTPXYLineGraph(&plot);
+    graph=new JKQTPSpecialLineHorizontalGraph(&plot);
 
-    // set data for both graphs
-    graph->setXColumn(columnX); graphL->setXColumn(graph->getXColumn());
-    graph->setYColumn(columnY3); graphL->setYColumn(graph->getYColumn());
+    // set data for the graph
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY3);
 
     // set step style
-    graph->setStepType(JKQTPStepRight);
+    graph->setSpecialLineType(JKQTPStepRight);
     graph->setLineWidth(1);
     graph->setFillCurve(false);
     graph->setDrawLine(true);
     graph->setTitle("JKQTPStepRight");
 
-    // set symbol + pen style and color for the added circles, copy color
-    graphL->setSymbol(JKQTPGraphSymbols::JKQTPCircle);
-    graphL->setDrawLine(false);
-    graphL->setSymbolSize(9);
-    graphL->setSymbolWidth(1);
-    graphL->setColor(graph->getColor());
+    // enable symbols
+    graph->setDrawSymbols(true);
+    graph->setSymbolType(JKQTPGraphSymbols::JKQTPCircle);
 
     // add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
-    plot.addGraph(graphL);
 
 
+
+    //-- JKQTPStepAverage ----------------------------------------------------------------------------------------
+    graph=new JKQTPSpecialLineHorizontalGraph(&plot);
+
+    // set data for the graph
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY4);
+
+    // set step style
+    graph->setSpecialLineType(JKQTPStepAverage);
+    graph->setLineWidth(1);
+    graph->setFillCurve(false);
+    graph->setDrawLine(true);
+    graph->setTitle("JKQTPStepAverage");
+
+    // enable symbols
+    graph->setDrawSymbols(true);
+    graph->setSymbolType(JKQTPGraphSymbols::JKQTPCircle);
+
+    // add the graphs to the plot, so it is actually displayed
+    plot.addGraph(graph);
+
+
+    //-- JKQTPDirectLine ----------------------------------------------------------------------------------------
+    graph=new JKQTPSpecialLineHorizontalGraph(&plot);
+
+    // set data for the graph
+    graph->setXColumn(columnX);
+    graph->setYColumn(columnY5);
+
+    // set step style
+    graph->setSpecialLineType(JKQTPDirectLine);
+    graph->setLineWidth(1);
+    graph->setFillCurve(false);
+    graph->setDrawLine(true);
+    graph->setTitle("JKQTPDirectLine");
+
+    // enable symbols
+    graph->setDrawSymbols(true);
+    graph->setSymbolType(JKQTPGraphSymbols::JKQTPCircle);
+
+
+
+    // add the graphs to the plot, so it is actually displayed
+    plot.addGraph(graph);
 
 
     // 4. scale plot manually
-    plot.setXY(-0.5, X.last()+0.5, -0.5, 7);
+    plot.setXY(-0.5, X.last()+0.5, -0.5, 18);
 
-    // 5. show plotter and make it a decent size
+    // 5. style  the plot
+    plot.setGrid(false);
+    plot.getXAxis()->setShowZeroAxis(false);
+
+    // 6. show plotter and make it a decent size
     plot.show();
     plot.resize(800,600);
 

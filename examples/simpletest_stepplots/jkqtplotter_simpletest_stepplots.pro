@@ -1,5 +1,6 @@
 # source code for this simple demo
-SOURCES = jkqtplotter_simpletest_stepplots.cpp 
+SOURCES = jkqtplotter_simpletest_stepplots.cpp
+#SOURCES = jkqtplotter_simpletest_stepplots_vertical.cpp
 
 # configure Qt
 CONFIG += link_prl qt

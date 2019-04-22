@@ -92,8 +92,48 @@ bool JKQTPImageBase::getYMinMax(double& miny, double& maxy, double& smallestGrea
     return true;
 }
 
-QColor JKQTPImageBase::getKeyLabelColor() {
+QColor JKQTPImageBase::getKeyLabelColor() const {
     return QColor("black");
+}
+
+void JKQTPImageBase::setX(double __value)
+{
+    this->x = __value;
+}
+
+double JKQTPImageBase::getX() const
+{
+    return this->x;
+}
+
+void JKQTPImageBase::setY(double __value)
+{
+    this->y = __value;
+}
+
+double JKQTPImageBase::getY() const
+{
+    return this->y;
+}
+
+void JKQTPImageBase::setWidth(double __value)
+{
+    this->width = __value;
+}
+
+double JKQTPImageBase::getWidth() const
+{
+    return this->width;
+}
+
+void JKQTPImageBase::setHeight(double __value)
+{
+    this->height = __value;
+}
+
+double JKQTPImageBase::getHeight() const
+{
+    return this->height;
 }
 
 void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, double x, double y, double width, double height) {
@@ -373,6 +413,76 @@ JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double 
 void JKQTPMathImageBase::drawKeyMarker(JKQTPEnhancedPainter &/*painter*/, QRectF &/*rect*/)
 {
 
+}
+
+void JKQTPMathImageBase::setNx(int __value)
+{
+    this->Nx = __value;
+}
+
+int JKQTPMathImageBase::getNx() const
+{
+    return this->Nx;
+}
+
+void JKQTPMathImageBase::setNy(int __value)
+{
+    this->Ny = __value;
+}
+
+int JKQTPMathImageBase::getNy() const
+{
+    return this->Ny;
+}
+
+void JKQTPMathImageBase::setData(void *__value)
+{
+    this->data = __value;
+}
+
+void *JKQTPMathImageBase::getData() const
+{
+    return this->data;
+}
+
+void JKQTPMathImageBase::setDatatype(JKQTPMathImageBase::DataType __value)
+{
+    this->datatype = __value;
+}
+
+JKQTPMathImageBase::DataType JKQTPMathImageBase::getDatatype() const
+{
+    return this->datatype;
+}
+
+void JKQTPMathImageBase::setDataModifier(void *__value)
+{
+    this->dataModifier = __value;
+}
+
+void *JKQTPMathImageBase::getDataModifier() const
+{
+    return this->dataModifier;
+}
+
+void JKQTPMathImageBase::setDatatypeModifier(JKQTPMathImageBase::DataType __value)
+{
+    this->datatypeModifier = __value;
+}
+
+JKQTPMathImageBase::DataType JKQTPMathImageBase::getDatatypeModifier() const
+{
+    return this->datatypeModifier;
+}
+
+void JKQTPMathImageBase::setModifierMode(const JKQTPMathImageBase::ModifierMode &__value)
+{
+    this->modifierMode = __value;
+}
+
+JKQTPMathImageBase::ModifierMode JKQTPMathImageBase::getModifierMode() const
+{
+    return this->modifierMode;
 }
 
 JKQTPMathImageBase::ModifierMode JKQTPMathImageBase::StringToModifierMode(const QString &mode) {
@@ -1260,6 +1370,259 @@ QImage JKQTPMathImage::getPaletteKeyImage(JKQTPMathImageColorPalette palette, in
     return getPaletteKeyImage(static_cast<int>(palette), width, height);
 }
 
+void JKQTPMathImage::setPalette(const JKQTPMathImageColorPalette &__value)
+{
+    this->palette = __value;
+}
+
+JKQTPMathImageColorPalette JKQTPMathImage::getPalette() const
+{
+    return this->palette;
+}
+
+void JKQTPMathImage::setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction &__value)
+{
+    this->rangeMinFailAction = __value;
+}
+
+JKQTPMathImageColorRangeFailAction JKQTPMathImage::getActionRangeMinFail() const
+{
+    return this->rangeMinFailAction;
+}
+
+void JKQTPMathImage::setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction &__value)
+{
+    this->rangeMaxFailAction = __value;
+}
+
+JKQTPMathImageColorRangeFailAction JKQTPMathImage::getActionRangeMaxFail() const
+{
+    return this->rangeMaxFailAction;
+}
+
+void JKQTPMathImage::setRangeMinFailColor(const QColor &__value)
+{
+    this->rangeMinFailColor = __value;
+}
+
+QColor JKQTPMathImage::getRangeMinFailColor() const
+{
+    return this->rangeMinFailColor;
+}
+
+void JKQTPMathImage::setRangeMaxFailColor(const QColor &__value)
+{
+    this->rangeMaxFailColor = __value;
+}
+
+QColor JKQTPMathImage::getRangeMaxFailColor() const
+{
+    return this->rangeMaxFailColor;
+}
+
+void JKQTPMathImage::setNanColor(const QColor &__value)
+{
+    this->nanColor = __value;
+}
+
+QColor JKQTPMathImage::getNanColor() const
+{
+    return this->nanColor;
+}
+
+void JKQTPMathImage::setInfColor(const QColor &__value)
+{
+    this->infColor = __value;
+}
+
+QColor JKQTPMathImage::getInfColor() const
+{
+    return this->infColor;
+}
+
+void JKQTPMathImage::setShowColorBar(bool __value)
+{
+    this->showColorBar = __value;
+}
+
+bool JKQTPMathImage::getShowColorBar() const
+{
+    return this->showColorBar;
+}
+
+void JKQTPMathImage::setColorBarWidth(double __value)
+{
+    this->colorBarWidth = __value;
+}
+
+double JKQTPMathImage::getColorBarWidth() const
+{
+    return this->colorBarWidth;
+}
+
+void JKQTPMathImage::setColorBarModifiedWidth(double __value)
+{
+    this->colorBarModifiedWidth = __value;
+}
+
+double JKQTPMathImage::getColorBarModifiedWidth() const
+{
+    return this->colorBarModifiedWidth;
+}
+
+void JKQTPMathImage::setColorBarOffset(double __value)
+{
+    this->colorBarOffset = __value;
+}
+
+double JKQTPMathImage::getColorBarOffset() const
+{
+    return this->colorBarOffset;
+}
+
+void JKQTPMathImage::setColorBarRelativeHeight(double __value)
+{
+    this->colorBarRelativeHeight = __value;
+}
+
+double JKQTPMathImage::getColorBarRelativeHeight() const
+{
+    return this->colorBarRelativeHeight;
+}
+
+void JKQTPMathImage::setImageMin(double __value)
+{
+    this->imageMin = __value;
+}
+
+double JKQTPMathImage::getImageMin() const
+{
+    return this->imageMin;
+}
+
+void JKQTPMathImage::setImageMax(double __value)
+{
+    this->imageMax = __value;
+}
+
+double JKQTPMathImage::getImageMax() const
+{
+    return this->imageMax;
+}
+
+void JKQTPMathImage::setAutoImageRange(bool __value)
+{
+    this->autoImageRange = __value;
+}
+
+bool JKQTPMathImage::getAutoImageRange() const
+{
+    return this->autoImageRange;
+}
+
+void JKQTPMathImage::setImageName(const QString &__value)
+{
+    this->imageName = __value;
+}
+
+QString JKQTPMathImage::getImageName() const
+{
+    return this->imageName;
+}
+
+void JKQTPMathImage::setImageNameFontSize(double __value)
+{
+    this->imageNameFontSize = __value;
+}
+
+double JKQTPMathImage::getImageNameFontSize() const
+{
+    return this->imageNameFontSize;
+}
+
+JKQTPVerticalIndependentAxis *JKQTPMathImage::getColorBarRightAxis()  {
+    return this->colorBarRightAxis;
+}
+
+JKQTPHorizontalIndependentAxis *JKQTPMathImage::getColorBarTopAxis()  {
+    return this->colorBarTopAxis;
+}
+
+JKQTPVerticalIndependentAxis *JKQTPMathImage::getModifierColorBarTopAxis()  {
+    return this->modifierColorBarTopAxis;
+}
+
+JKQTPHorizontalIndependentAxis *JKQTPMathImage::getModifierColorBarRightAxis()   {
+    return this->modifierColorBarRightAxis ;
+}
+
+const JKQTPVerticalIndependentAxis *JKQTPMathImage::getColorBarRightAxis() const {
+    return this->colorBarRightAxis;
+
+}
+
+const JKQTPHorizontalIndependentAxis *JKQTPMathImage::getColorBarTopAxis() const {
+    return this->colorBarTopAxis;
+}
+
+const JKQTPVerticalIndependentAxis *JKQTPMathImage::getModifierColorBarTopAxis() const {
+    return this->modifierColorBarTopAxis;
+}
+
+const JKQTPHorizontalIndependentAxis *JKQTPMathImage::getModifierColorBarRightAxis() const {
+    return this->modifierColorBarRightAxis ;
+}
+
+void JKQTPMathImage::setColorBarTopVisible(bool __value)
+{
+    this->colorBarTopVisible = __value;
+}
+
+bool JKQTPMathImage::getColorBarTopVisible() const
+{
+    return this->colorBarTopVisible;
+}
+
+void JKQTPMathImage::setColorBarRightVisible(bool __value)
+{
+    this->colorBarRightVisible = __value;
+}
+
+bool JKQTPMathImage::getColorBarRightVisible() const
+{
+    return this->colorBarRightVisible;
+}
+
+void JKQTPMathImage::setAutoModifierRange(bool __value)
+{
+    this->autoModifierRange = __value;
+}
+
+bool JKQTPMathImage::getAutoModifierRange() const
+{
+    return this->autoModifierRange;
+}
+
+void JKQTPMathImage::setModifierMin(double __value)
+{
+    this->modifierMin = __value;
+}
+
+double JKQTPMathImage::getModifierMin() const
+{
+    return this->modifierMin;
+}
+
+void JKQTPMathImage::setModifierMax(double __value)
+{
+    this->modifierMax = __value;
+}
+
+double JKQTPMathImage::getModifierMax() const
+{
+    return this->modifierMax;
+}
+
 
 
 QImage JKQTPMathImage::drawImage() {
@@ -1359,6 +1722,26 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, dou
     this->modifierColumn=-1;
     this->imageColumn=imageColumn;
     this->datatype=JKQTPMathImageBase::DoubleArray;
+}
+
+void JKQTPColumnMathImage::setImageColumn(int __value)
+{
+    this->imageColumn = __value;
+}
+
+int JKQTPColumnMathImage::getImageColumn() const
+{
+    return this->imageColumn;
+}
+
+void JKQTPColumnMathImage::setModifierColumn(int __value)
+{
+    this->modifierColumn = __value;
+}
+
+int JKQTPColumnMathImage::getModifierColumn() const
+{
+    return this->modifierColumn;
 }
 bool JKQTPColumnMathImage::usesColumn(int c) const
 {

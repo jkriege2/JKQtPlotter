@@ -79,7 +79,7 @@ On top of that plot, a second plot is added, which draws the average temperature
 
     // 6. average data
     // don't use symbols
-    graphTemperature->setSymbol(JKQTPNoSymbol);
+    graphTemperature->setSymbolType(JKQTPNoSymbol);
     // set the line width
     graphTemperature->setLineWidth(1);
     // draw small symbols

@@ -61,344 +61,231 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
+        /** \copydoc JKQTPImageBase::setParent() */
         virtual void setParent(JKQTBasePlotter* parent) override;
 
 
 
-        virtual void setData(void* data, void* dataG, void* dataB, int Nx, int Ny, DataType datatype);
-        virtual void setData(void* data, void* dataG, void* dataB,  int Nx, int Ny);
+        /** \brief set the plot-data to a given array \a data (red), \a dataG (green), \a dataB (blue) with size \a Nx * \a Ny in row-major ordering and with the given \a datatype */
+        virtual void setData(void* dataR, void* dataG, void* dataB, int Nx, int Ny, DataType datatype);
+        /** \brief set the plot-data to a given array \a data (red), \a dataG (green), \a dataB (blue) with size \a Nx * \a Ny in row-major ordering  */
+        virtual void setData(void* dataR, void* dataG, void* dataB,  int Nx, int Ny);
 
-        virtual void setData(void* data, int Nx, int Ny, DataType datatype) override;
-        virtual void setData(void* data,  int Nx, int Ny) override ;
+        /** \brief set the plot-data to a given array \a data (red) with size \a Nx * \a Ny in row-major ordering and with the given \a datatype  */
+        virtual void setData(void* dataR, int Nx, int Ny, DataType datatype) override;
+        /** \brief set the plot-data to a given array \a data (red) with size \a Nx * \a Ny in row-major ordering  */
+        virtual void setData(void* dataR,  int Nx, int Ny) override ;
 
 
         /** \brief determine min/max data value of the image */
         virtual void getDataMinMax(double& imin, double& imax) override;
 
 
-        /*! \copydoc dataG
-            \see see dataG for details */ 
-        inline virtual void setDataG(void* __value)  
-        {
-            this->dataG = __value;
-        } 
-        /*! \copydoc dataG
-            \see see dataG for details */ 
-        inline virtual void* getDataG() const  
-        {
-            return this->dataG; 
-        }
-        /*! \copydoc datatypeG
-            \see see datatypeG for details */ 
-        inline virtual void setDatatypeG(const DataType & __value)  
-        {
-            this->datatypeG = __value;
-        } 
-        /*! \copydoc datatypeG
-            \see see datatypeG for details */ 
-        inline virtual DataType getDatatypeG() const  
-        {
-            return this->datatypeG; 
-        }
-        /*! \copydoc dataB
-            \see see dataB for details */ 
-        inline virtual void setDataB(void* __value)  
-        {
-            this->dataB = __value;
-        } 
-        /*! \copydoc dataB
-            \see see dataB for details */ 
-        inline virtual void* getDataB() const  
-        {
-            return this->dataB; 
-        }
-        /*! \copydoc datatypeB
-            \see see datatypeB for details */ 
-        inline virtual void setDatatypeB(const DataType & __value)  
-        {
-            this->datatypeB = __value;
-        } 
-        /*! \copydoc datatypeB
-            \see see datatypeB for details */ 
-        inline virtual DataType getDatatypeB() const  
-        {
-            return this->datatypeB; 
-        }
-        /*! \copydoc showColorBar
-            \see see showColorBar for details */ 
-        inline virtual void setShowColorBar(bool __value)
-        {
-            this->showColorBar = __value;
-        } 
-        /*! \copydoc showColorBar
-            \see see showColorBar for details */ 
-        inline virtual bool getShowColorBar() const  
-        {
-            return this->showColorBar; 
-        }
-        /*! \copydoc colorBarWidth
-            \see see colorBarWidth for details */ 
-        inline virtual void setColorBarWidth(int __value)
-        {
-            this->colorBarWidth = __value;
-        } 
-        /*! \copydoc colorBarWidth
-            \see see colorBarWidth for details */ 
-        inline virtual int getColorBarWidth() const  
-        {
-            return this->colorBarWidth; 
-        }
-        /*! \copydoc colorBarOffset
-            \see see colorBarOffset for details */ 
-        inline virtual void setColorBarOffset(int __value)
-        {
-            this->colorBarOffset = __value;
-        } 
-        /*! \copydoc colorBarOffset
-            \see see colorBarOffset for details */ 
-        inline virtual int getColorBarOffset() const  
-        {
-            return this->colorBarOffset; 
-        }
-        /*! \copydoc colorBarRelativeHeight
-            \see see colorBarRelativeHeight for details */ 
-        inline virtual void setColorBarRelativeHeight(double __value)
-        {
-            this->colorBarRelativeHeight = __value;
-        } 
-        /*! \copydoc colorBarRelativeHeight
-            \see see colorBarRelativeHeight for details */ 
-        inline virtual double getColorBarRelativeHeight() const  
-        {
-            return this->colorBarRelativeHeight; 
-        }
-        /*! \copydoc imageMin
-            \see see imageMin for details */ 
-        inline virtual void setImageMin(double __value)
-        {
-            this->imageMin = __value;
-        } 
-        /*! \copydoc imageMin
-            \see see imageMin for details */ 
-        inline virtual double getImageMin() const  
-        {
-            return this->imageMin; 
-        }
-        inline void setImageMinR(double m) {
-            setImageMin(m);
-        }
-        /*! \copydoc imageMax
-            \see see imageMax for details */ 
-        inline virtual void setImageMax(double __value)
-        {
-            this->imageMax = __value;
-        } 
-        /*! \copydoc imageMax
-            \see see imageMax for details */ 
-        inline virtual double getImageMax() const  
-        {
-            return this->imageMax; 
-        }
-        inline void setImageMaxR(double m) {
-            setImageMax(m);
-        }
-        /*! \copydoc imageMinG
-            \see see imageMinG for details */ 
-        inline virtual void setImageMinG(double __value)
-        {
-            this->imageMinG = __value;
-        } 
-        /*! \copydoc imageMinG
-            \see see imageMinG for details */ 
-        inline virtual double getImageMinG() const  
-        {
-            return this->imageMinG; 
-        }
-        /*! \copydoc imageMaxG
-            \see see imageMaxG for details */ 
-        inline virtual void setImageMaxG(double __value)
-        {
-            this->imageMaxG = __value;
-        } 
-        /*! \copydoc imageMaxG
-            \see see imageMaxG for details */ 
-        inline virtual double getImageMaxG() const  
-        {
-            return this->imageMaxG; 
-        }
-        /*! \copydoc imageMinB
-            \see see imageMinB for details */ 
-        inline virtual void setImageMinB(double __value)
-        {
-            this->imageMinB = __value;
-        } 
-        /*! \copydoc imageMinB
-            \see see imageMinB for details */ 
-        inline virtual double getImageMinB() const  
-        {
-            return this->imageMinB; 
-        }
-        /*! \copydoc imageMaxB
-            \see see imageMaxB for details */ 
-        inline virtual void setImageMaxB(double __value)
-        {
-            this->imageMaxB = __value;
-        } 
-        /*! \copydoc imageMaxB
-            \see see imageMaxB for details */ 
-        inline virtual double getImageMaxB() const  
-        {
-            return this->imageMaxB; 
-        }
-        /*! \copydoc autoImageRange
-            \see see autoImageRange for details */ 
-        inline virtual void setAutoImageRange(bool __value)
-        {
-            this->autoImageRange = __value;
-        } 
-        /*! \copydoc autoImageRange
-            \see see autoImageRange for details */ 
-        inline virtual bool getAutoImageRange() const  
-        {
-            return this->autoImageRange; 
-        }
-        /*! \copydoc imageName
-            \see see imageName for details */ 
-        inline virtual void setImageName(const QString & __value)  
-        {
-            this->imageName = __value;
-        } 
-        /*! \copydoc imageName
-            \see see imageName for details */ 
-        inline virtual QString getImageName() const  
-        {
-            return this->imageName; 
-        }
-        inline void setImageNameR(const QString& m) {
-            setImageName(m);
-        }
-        /*! \copydoc imageNameG
-            \see see imageNameG for details */ 
-        inline virtual void setImageNameG(const QString & __value)  
-        {
-            this->imageNameG = __value;
-        } 
-        /*! \copydoc imageNameG
-            \see see imageNameG for details */ 
-        inline virtual QString getImageNameG() const  
-        {
-            return this->imageNameG; 
-        }
-        /*! \copydoc imageNameB
-            \see see imageNameB for details */ 
-        inline virtual void setImageNameB(const QString & __value)  
-        {
-            this->imageNameB = __value;
-        } 
-        /*! \copydoc imageNameB
-            \see see imageNameB for details */ 
-        inline virtual QString getImageNameB() const  
-        {
-            return this->imageNameB; 
-        }
-        /*! \copydoc imageNameFontName
-            \see see imageNameFontName for details */ 
-        inline virtual void setImageNameFontName(const QString & __value)  
-        {
-            this->imageNameFontName = __value;
-        } 
-        /*! \copydoc imageNameFontName
-            \see see imageNameFontName for details */ 
-        inline virtual QString getImageNameFontName() const  
-        {
-            return this->imageNameFontName; 
-        }
-        /*! \copydoc imageNameFontSize
-            \see see imageNameFontSize for details */ 
-        inline virtual void setImageNameFontSize(double __value)
-        {
-            this->imageNameFontSize = __value;
-        } 
-        /*! \copydoc imageNameFontSize
-            \see see imageNameFontSize for details */ 
-        inline virtual double getImageNameFontSize() const  
-        {
-            return this->imageNameFontSize; 
-        }
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
-        inline JKQTPVerticalIndependentAxis* getColorBarRightAxis() { return this->colorBarRightAxis; }
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
-        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxis()  { return this->colorBarTopAxis; }
-        /*! \brief returns the property colorBarRightAxisG ( \copybrief colorBarRightAxisG ). \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */
-        inline JKQTPVerticalIndependentAxis* getColorBarRightAxisG()  { return this->colorBarRightAxisG; }
-        /*! \brief returns the property colorBarTopAxisG ( \copybrief colorBarTopAxisG ). \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */
-        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxisG()  { return this->colorBarTopAxisG; }
-        /*! \brief returns the property colorBarRightAxisB ( \copybrief colorBarRightAxisB ). \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */
-        inline JKQTPVerticalIndependentAxis* getColorBarRightAxisB()  { return this->colorBarRightAxisB; }
-        /*! \brief returns the property colorBarTopAxisB ( \copybrief colorBarTopAxisB ). \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */
-        inline JKQTPHorizontalIndependentAxis* getColorBarTopAxisB()  { return this->colorBarTopAxisB; }
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
-        inline const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const { return this->colorBarRightAxis; }
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
-        inline const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const { return this->colorBarTopAxis; }
-        /*! \brief returns the property colorBarRightAxisG ( \copybrief colorBarRightAxisG ). \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */
-        inline const JKQTPVerticalIndependentAxis* getColorBarRightAxisG() const { return this->colorBarRightAxisG; }
-        /*! \brief returns the property colorBarTopAxisG ( \copybrief colorBarTopAxisG ). \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */
-        inline const JKQTPHorizontalIndependentAxis* getColorBarTopAxisG() const { return this->colorBarTopAxisG; }
-        /*! \brief returns the property colorBarRightAxisB ( \copybrief colorBarRightAxisB ). \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */
-        inline const JKQTPVerticalIndependentAxis* getColorBarRightAxisB() const { return this->colorBarRightAxisB; }
-        /*! \brief returns the property colorBarTopAxisB ( \copybrief colorBarTopAxisB ). \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */
-        inline const JKQTPHorizontalIndependentAxis* getColorBarTopAxisB() const { return this->colorBarTopAxisB; }
-        /*! \copydoc colorBarTopVisible
-            \see see colorBarTopVisible for details */ 
-        inline virtual void setColorBarTopVisible(bool __value)
-        {
-            this->colorBarTopVisible = __value;
-        } 
-        /*! \copydoc colorBarTopVisible
-            \see see colorBarTopVisible for details */ 
-        inline virtual bool getColorBarTopVisible() const  
-        {
-            return this->colorBarTopVisible; 
-        }
-        /*! \copydoc colorBarRightVisible
-            \see see colorBarRightVisible for details */ 
-        inline virtual void setColorBarRightVisible(bool __value)
-        {
-            this->colorBarRightVisible = __value;
-        } 
-        /*! \copydoc colorBarRightVisible
-            \see see colorBarRightVisible for details */ 
-        inline virtual bool getColorBarRightVisible() const  
-        {
-            return this->colorBarRightVisible; 
-        }
-        /*! \copydoc colorbarsSideBySide
-            \see see colorbarsSideBySide for details */ 
-        inline virtual void setColorbarsSideBySide(bool __value)
-        {
-            this->colorbarsSideBySide = __value;
-        } 
-        /*! \copydoc colorbarsSideBySide
-            \see see colorbarsSideBySide for details */ 
-        inline virtual bool getColorbarsSideBySide() const  
-        {
-            return this->colorbarsSideBySide; 
-        }
-        /*! \copydoc rgbMode
-            \see see rgbMode for details */ 
-        inline virtual void setRgbMode(const JKQTPRGBMathImageRGBMode & __value)  
-        {
-            this->rgbMode = __value;
-        } 
-        /*! \copydoc rgbMode
-            \see see rgbMode for details */ 
-        inline virtual JKQTPRGBMathImageRGBMode getRgbMode() const  
-        {
-            return this->rgbMode; 
-        }
+        /*! \copydoc data
+            \see see data for details */
+        virtual void setDataR(void* __value);
+        /*! \copydoc data
+            \see see data for details */
+        void* getDataR() const;
+        /*! \copydoc datatype
+            \see see datatype for details */
+        void setDatatypeR(DataType __value);
+        /*! \copydoc datatype
+            \see see datatype for details */
+        DataType getDatatypeR() const;
 
+        /*! \copydoc dataG
+            \see see dataG for details */
+        virtual void setDataG(void* __value);
+        /*! \copydoc dataG
+            \see see dataG for details */
+        void* getDataG() const;
+        /*! \copydoc datatypeG
+            \see see datatypeG for details */
+        void setDatatypeG(DataType __value);
+        /*! \copydoc datatypeG
+            \see see datatypeG for details */
+        DataType getDatatypeG() const;
+        /*! \copydoc dataB
+            \see see dataB for details */ 
+        virtual void setDataB(void* __value);
+        /*! \copydoc dataB
+            \see see dataB for details */ 
+        void* getDataB() const;
+        /*! \copydoc datatypeB
+            \see see datatypeB for details */ 
+        void setDatatypeB(DataType __value);
+        /*! \copydoc datatypeB
+            \see see datatypeB for details */ 
+        DataType getDatatypeB() const;
+        /*! \copydoc showColorBar
+            \see see showColorBar for details */ 
+        void setShowColorBar(bool __value);
+        /*! \copydoc showColorBar
+            \see see showColorBar for details */ 
+        bool getShowColorBar() const;
+        /*! \copydoc colorBarWidth
+            \see see colorBarWidth for details */ 
+        void setColorBarWidth(int __value);
+        /*! \copydoc colorBarWidth
+            \see see colorBarWidth for details */ 
+        int getColorBarWidth() const;
+        /*! \copydoc colorBarOffset
+            \see see colorBarOffset for details */ 
+        void setColorBarOffset(int __value);
+        /*! \copydoc colorBarOffset
+            \see see colorBarOffset for details */ 
+        int getColorBarOffset() const;
+        /*! \copydoc colorBarRelativeHeight
+            \see see colorBarRelativeHeight for details */ 
+        void setColorBarRelativeHeight(double __value);
+        /*! \copydoc colorBarRelativeHeight
+            \see see colorBarRelativeHeight for details */ 
+        double getColorBarRelativeHeight() const;
+        /*! \copydoc imageMinR
+            \see see imageMinR for details */
+        void setImageMin(double __value);
+        /*! \copydoc imageMinR
+            \see see imageMinR for details */
+        double getImageMin() const;
+        /*! \copydoc imageMinR
+            \see see imageMinR for details */
+        void setImageMinR(double m);
+        /*! \copydoc imageMaxR
+            \see see imageMaxR for details */
+        void setImageMax(double __value);
+        /*! \copydoc imageMaxR
+            \see see imageMaxR for details */
+        double getImageMax() const;
+        /*! \copydoc imageMaxR
+            \see see imageMaxR for details */
+        void setImageMaxR(double m);
+        /*! \copydoc imageMinG
+            \see see imageMinG for details */ 
+        void setImageMinG(double __value);
+        /*! \copydoc imageMinG
+            \see see imageMinG for details */ 
+        double getImageMinG() const;
+        /*! \copydoc imageMaxG
+            \see see imageMaxG for details */ 
+        void setImageMaxG(double __value);
+        /*! \copydoc imageMaxG
+            \see see imageMaxG for details */ 
+        double getImageMaxG() const;
+        /*! \copydoc imageMinB
+            \see see imageMinB for details */ 
+        void setImageMinB(double __value);
+        /*! \copydoc imageMinB
+            \see see imageMinB for details */ 
+        double getImageMinB() const;
+        /*! \copydoc imageMaxB
+            \see see imageMaxB for details */ 
+        void setImageMaxB(double __value);
+        /*! \copydoc imageMaxB
+            \see see imageMaxB for details */
+        double getImageMaxB() const;
+        /*! \copydoc autoImageRange
+            \see see autoImageRange for details */ 
+        void setAutoImageRange(bool __value);
+        /*! \copydoc autoImageRange
+            \see see autoImageRange for details */ 
+        bool getAutoImageRange() const;
+        /*! \copydoc imageName
+            \see see imageName for details */ 
+        void setImageName(const QString & __value);
+        /*! \copydoc imageName
+            \see see imageName for details */ 
+        QString getImageName() const;
+        /*! \copydoc imageName
+            \see see imageName for details */
+        QString getImageNameR() const;
+        /*! \copydoc imageName
+            \see see imageName for details */
+        void setImageNameR(const QString& m);
+        /*! \copydoc imageNameG
+            \see see imageNameG for details */ 
+        void setImageNameG(const QString & __value);
+        /*! \copydoc imageNameG
+            \see see imageNameG for details */ 
+        QString getImageNameG() const;
+        /*! \copydoc imageNameB
+            \see see imageNameB for details */ 
+        void setImageNameB(const QString & __value);
+        /*! \copydoc imageNameB
+            \see see imageNameB for details */ 
+        QString getImageNameB() const;
+        /*! \copydoc imageNameFontName
+            \see see imageNameFontName for details */ 
+        void setImageNameFontName(const QString & __value);
+        /*! \copydoc imageNameFontName
+            \see see imageNameFontName for details */ 
+        QString getImageNameFontName() const;
+        /*! \copydoc imageNameFontSize
+            \see see imageNameFontSize for details */ 
+        void setImageNameFontSize(double __value);
+        /*! \copydoc imageNameFontSize
+            \see see imageNameFontSize for details */ 
+        double getImageNameFontSize() const;
+        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        JKQTPVerticalIndependentAxis* getColorBarRightAxis();
+        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        JKQTPHorizontalIndependentAxis* getColorBarTopAxis();
+        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        JKQTPVerticalIndependentAxis* getColorBarRightAxisR();
+        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        JKQTPHorizontalIndependentAxis *getColorBarTopAxisR();
+        /*! \brief returns the property colorBarRightAxisG ( \copybrief colorBarRightAxisG ). \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */
+        JKQTPVerticalIndependentAxis* getColorBarRightAxisG();
+        /*! \brief returns the property colorBarTopAxisG ( \copybrief colorBarTopAxisG ). \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */
+        JKQTPHorizontalIndependentAxis* getColorBarTopAxisG();
+        /*! \brief returns the property colorBarRightAxisB ( \copybrief colorBarRightAxisB ). \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */
+        JKQTPVerticalIndependentAxis* getColorBarRightAxisB();
+        /*! \brief returns the property colorBarTopAxisB ( \copybrief colorBarTopAxisB ). \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */
+        JKQTPHorizontalIndependentAxis* getColorBarTopAxisB();
+        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const;
+        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const;
+        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        const JKQTPVerticalIndependentAxis* getColorBarRightAxisR() const;
+        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        const JKQTPHorizontalIndependentAxis* getColorBarTopAxisR() const;
+        /*! \brief returns the property colorBarRightAxisG ( \copybrief colorBarRightAxisG ). \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */
+        const JKQTPVerticalIndependentAxis* getColorBarRightAxisG() const;
+        /*! \brief returns the property colorBarTopAxisG ( \copybrief colorBarTopAxisG ). \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */
+        const JKQTPHorizontalIndependentAxis *getColorBarTopAxisG() const;
+        /*! \brief returns the property colorBarRightAxisB ( \copybrief colorBarRightAxisB ). \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */
+        const JKQTPVerticalIndependentAxis* getColorBarRightAxisB() const;
+        /*! \brief returns the property colorBarTopAxisB ( \copybrief colorBarTopAxisB ). \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */
+        const JKQTPHorizontalIndependentAxis *getColorBarTopAxisB() const;
+        /*! \copydoc colorBarTopVisible
+            \see see colorBarTopVisible for details */ 
+        void setColorBarTopVisible(bool __value);
+        /*! \copydoc colorBarTopVisible
+            \see see colorBarTopVisible for details */ 
+        bool getColorBarTopVisible() const;
+        /*! \copydoc colorBarRightVisible
+            \see see colorBarRightVisible for details */ 
+        void setColorBarRightVisible(bool __value);
+        /*! \copydoc colorBarRightVisible
+            \see see colorBarRightVisible for details */ 
+        bool getColorBarRightVisible() const;
+        /*! \copydoc colorbarsSideBySide
+            \see see colorbarsSideBySide for details */ 
+        void setColorbarsSideBySide(bool __value);
+        /*! \copydoc colorbarsSideBySide
+            \see see colorbarsSideBySide for details */ 
+        bool getColorbarsSideBySide() const;
+        /*! \copydoc rgbMode
+            \see see rgbMode for details */ 
+        void setRgbMode(JKQTPRGBMathImageRGBMode __value);
+        /*! \copydoc rgbMode
+            \see see rgbMode for details */ 
+        JKQTPRGBMathImageRGBMode getRgbMode() const;
+
+        /** \brief return the data of the green channel used for plotting as a QVector<double> in row-major data-ordering */
         QVector<double> getDataGAsDoubleVector() const;
+        /** \brief return the data of the blue channel used for plotting as a QVector<double> in row-major data-ordering */
         QVector<double> getDataBAsDoubleVector() const;
 
 
@@ -441,17 +328,18 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         /** \brief datatype of the data array data */
         DataType datatypeB;
 
+        /** \brief how to interpret the three data channels red, green and blue */
         JKQTPRGBMathImageRGBMode rgbMode;
 
         /** \brief top color bar visible */
         bool colorBarTopVisible;
         /** \brief right color bar visible */
         bool colorBarRightVisible;
-        /** \brief name of the image displayed above color bar (may contain LaTeX markup!) */
-        QString imageName;
-        /** \brief name of the image displayed above color bar (may contain LaTeX markup!) */
+        /** \brief name of the red image channel displayed above color bar (may contain LaTeX markup!) */
+        QString imageNameR;
+        /** \brief name of the green image channel displayed above color bar (may contain LaTeX markup!) */
         QString imageNameG;
-        /** \brief name of the image displayed above color bar (may contain LaTeX markup!) */
+        /** \brief name of the blue image channel displayed above color bar (may contain LaTeX markup!) */
         QString imageNameB;
         /** \brief font name when displaying imageName */
         QString imageNameFontName;
@@ -466,17 +354,17 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         double colorBarRelativeHeight;
         /** \brief indicates whether to estimate min/max of the image automatically */
         bool autoImageRange;
-        /** \brief image value range minimum */
-        double imageMin;
-        /** \brief image value range maximum */
-        double imageMax;
-        /** \brief image value range minimum */
+        /** \brief red image value range minimum */
+        double imageMinR;
+        /** \brief red image value range maximum */
+        double imageMaxR;
+        /** \brief green image value range minimum */
         double imageMinG;
-        /** \brief image value range maximum */
+        /** \brief green image value range maximum */
         double imageMaxG;
-        /** \brief image value range minimum */
+        /** \brief blue image value range minimum */
         double imageMinB;
-        /** \brief image value range maximum */
+        /** \brief blue image value range maximum */
         double imageMaxB;
         /** \brief offset between outside space border and color bar */
         int colorBarOffset;
@@ -502,12 +390,17 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         double internalDataMaxB;
 
     protected:
+        /** \brief action that calls saveImagePlotAsImage() */
         QAction* actSaveImage;
+        /** \brief action that calls copyImagePlotAsImage() */
         QAction* actCopyImage;
     public:
+        /** \copydoc JKQTPImageBase::setTitle() */
         virtual void setTitle(const QString& title) override;
     public slots:
+        /** \brief save the plotted image as a file with \a filename and format \a outputFormat */
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
+        /** \brief copy the plotted image as an image into the clipboard */
         void copyImagePlotAsImage();
 };
 
@@ -544,52 +437,28 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
 
         /*! \copydoc imageRColumn
             \see see imageRColumn for details */ 
-        inline virtual void setImageRColumn(int __value)
-        {
-            this->imageRColumn = __value;
-        } 
+        virtual void setImageRColumn(int __value);
         /*! \copydoc imageRColumn
             \see see imageRColumn for details */ 
-        inline virtual int getImageRColumn() const  
-        {
-            return this->imageRColumn; 
-        }
+        int getImageRColumn() const;
         /*! \copydoc imageGColumn
             \see see imageGColumn for details */ 
-        inline virtual void setImageGColumn(int __value)
-        {
-            this->imageGColumn = __value;
-        } 
+        virtual void setImageGColumn(int __value);
         /*! \copydoc imageGColumn
             \see see imageGColumn for details */ 
-        inline virtual int getImageGColumn() const  
-        {
-            return this->imageGColumn; 
-        }
+        int getImageGColumn() const;
         /*! \copydoc imageBColumn
             \see see imageBColumn for details */ 
-        inline virtual void setImageBColumn(int __value)
-        {
-            this->imageBColumn = __value;
-        } 
+        virtual void setImageBColumn(int __value);
         /*! \copydoc imageBColumn
             \see see imageBColumn for details */ 
-        inline virtual int getImageBColumn() const  
-        {
-            return this->imageBColumn; 
-        }
+        int getImageBColumn() const;
         /*! \copydoc modifierColumn
             \see see modifierColumn for details */ 
-        inline virtual void setModifierColumn(int __value)
-        {
-            this->modifierColumn = __value;
-        } 
+        virtual void setModifierColumn(int __value);
         /*! \copydoc modifierColumn
             \see see modifierColumn for details */ 
-        inline virtual int getModifierColumn() const  
-        {
-            return this->modifierColumn; 
-        }
+        int getModifierColumn() const;
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 

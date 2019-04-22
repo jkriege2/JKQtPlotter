@@ -21,7 +21,8 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtmathtext/jkqtmathtext.h"
@@ -35,7 +36,7 @@
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject {
+class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -52,63 +53,29 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject {
             \param lineWidth lineWidth of drawing
          */
         explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
+        /*! \brief class contructor
+
+         */
+        explicit JKQTPGeoBaseLine(JKQTBasePlotter* parent);
+        /*! \brief class contructor
+
+         */
+        explicit JKQTPGeoBaseLine(JKQTPlotter* parent);
 
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual void setStyle(const Qt::PenStyle & __value)  
-        {
-            this->style = __value;
-        } 
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual Qt::PenStyle getStyle() const  
-        {
-            return this->style; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)  
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
 
         /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
         virtual void setAlpha(float alpha);
+        /** \brief set line color */
+        virtual void setColor(QColor c);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
     protected:
-        /** \brief color of the graph */
-        QColor color;
 
-        /** \brief linestyle of the graph lines */
-        Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
-        double lineWidth;
-        /** \brief return a pen, that may be used for drawing */
-        QPen getPen(JKQTPEnhancedPainter &painter);
 };
 
 
@@ -117,7 +84,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject {
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine {
+class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -160,46 +127,17 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine {
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPlotter* parent);
 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->fillStyle = __value;
-        } 
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual Qt::BrushStyle getFillStyle() const  
-        {
-            return this->fillStyle; 
-        }
-
         /** \brief sets the alpha-channel of the \a color and \a fillColor (i.e. its transparency) to the same value */
         virtual void setAlpha(float alpha) override;
         /** \brief sets the alpha-channel of the \a color and \a fillColor (i.e. its transparency) */
         virtual void setAlpha(float alphaLine, float alphaFill);
+        /** \brief set line and fill color */
+        virtual void setColor(QColor c) override;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
     protected:
 
-        /** \brief filling color of the graph */
-        QColor fillColor;
-        /** \brief fill style for the curve */
-        Qt::BrushStyle fillStyle;
-        /** \brief return a brush that may be used for drawing */
-        QBrush getBrush(JKQTPEnhancedPainter& painter);
 
 };
 
@@ -209,7 +147,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine {
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject {
+class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -235,118 +173,41 @@ class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject {
          */
         JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol=JKQTPCross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc symbol
-            \see see symbol for details */ 
-        inline virtual void setSymbol(const JKQTPGraphSymbols & __value)  
-        {
-            this->symbol = __value;
-        } 
-        /*! \copydoc symbol
-            \see see symbol for details */ 
-        inline virtual JKQTPGraphSymbols getSymbol() const  
-        {
-            return this->symbol; 
-        }
-        /*! \copydoc symbolSize
-            \see see symbolSize for details */ 
-        inline virtual void setSymbolSize(double __value)  
-        {
-            this->symbolSize = __value;
-        } 
-        /*! \copydoc symbolSize
-            \see see symbolSize for details */ 
-        inline virtual double getSymbolSize() const  
-        {
-            return this->symbolSize; 
-        }
-        /*! \copydoc symbolWidth
-            \see see symbolWidth for details */ 
-        inline virtual void setSymbolWidth(double __value)  
-        {
-            this->symbolWidth = __value;
-        } 
-        /*! \copydoc symbolWidth
-            \see see symbolWidth for details */ 
-        inline virtual double getSymbolWidth() const  
-        {
-            return this->symbolWidth; 
-        }
+        /*! set the symbol color and symbol fill color */
+        virtual void setColor(QColor c);
+
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual void setX(double __value)  
-        {
-            this->x = __value;
-        } 
+        void setX(double __value);
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual double getX() const  
-        {
-            return this->x; 
-        }
+        double getX() const;
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual void setY(double __value)  
-        {
-            this->y = __value;
-        } 
+        void setY(double __value);
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual double getY() const  
-        {
-            return this->y; 
-        }
+        double getY() const;
 
         /** \copydoc JKQTPGraph::getXMinMax()        */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero);
+        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \copydoc JKQTPGraph::getYMinMax()        */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero);
+        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
     protected:
-        double x,y;
+        /** \brief x-position (in plot coordinates) of the symbol (symbol center) */
+        double x;
+        /** \brief y-position (in plot coordinates) of the symbol (symbol center) */
+        double y;
 
-        /** \brief color of the graph */
-        QColor color;
-        /** \brief fill-color of the graph */
-        QColor fillColor;
-
-        /** \brief size of the symbol in pt */
-        double symbolSize;
-        /** \brief width of the symbol lines in pt */
-        double symbolWidth;
-        /** \brief type of the symbol */
-        JKQTPGraphSymbols symbol;
 };
 
 
@@ -355,7 +216,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject {
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
+class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -367,7 +228,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
             \param color color of drawing
             \param fontSize base font size of text
          */
-        JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QString& text, double fontSize=10, QColor color=QColor("black"));
+        JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QString& text, double fontSize, QColor color);
         /*! \brief class contructor
 
             \param parent parent plotter widget
@@ -377,80 +238,45 @@ class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
             \param color color of drawing
             \param fontSize base font size of text
          */
-        JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize=10, QColor color=QColor("black"));
+        JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize, QColor color);
+        /*! \brief class contructor
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
+            \param parent parent plotter widget
+            \param x x-coordinate of text
+            \param y y-coordinate of text
+            \param text the text to display
+         */
+        JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QString& text);
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of text
+            \param y y-coordinate of text
+            \param text the text to display
+         */
+        JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text);
+
         /*! \copydoc text
             \see see text for details */ 
-        inline virtual void setText(const QString & __value)  
-        {
-            this->text = __value;
-        } 
-        /*! \copydoc fontName
-            \see see fontName for details */
-        inline virtual void setFontName(const QString & __value)
-        {
-            this->fontName = __value;
-        }
+        void setText(const QString & __value);
         /*! \copydoc text
             \see see text for details */ 
-        inline virtual QString getText() const  
-        {
-            return this->text; 
-        }
-        /*! \copydoc fontName
-            \see see fontName for details */
-        inline virtual QString getFontName() const
-        {
-            return this->fontName;
-        }
-        /*! \copydoc fontSize
-            \see see fontSize for details */ 
-        inline virtual void setFontSize(double __value)  
-        {
-            this->fontSize = __value;
-        } 
-        /*! \copydoc fontSize
-            \see see fontSize for details */ 
-        inline virtual double getFontSize() const  
-        {
-            return this->fontSize; 
-        }
+        QString getText() const;
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual void setX(double __value)  
-        {
-            this->x = __value;
-        } 
+        void setX(double __value);
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual double getX() const  
-        {
-            return this->x; 
-        }
+        double getX() const;
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual void setY(double __value)  
-        {
-            this->y = __value;
-        } 
+        void setY(double __value);
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual double getY() const  
-        {
-            return this->y; 
-        }
+        double getY() const;
+
+        /** \brief set line and fill color */
+        virtual void setColor(QColor c) ;
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
@@ -463,18 +289,14 @@ class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
     protected:
-        double x,y;
+        /** \brief x-position (in plot coordinates) of the text (left/baseline) */
+        double x;
+        /** \brief y-position (in plot coordinates) of the text (left/baseline) */
+        double y;
 
-        /** \brief color of the graph */
-        QColor color;
-
-        /** \brief base font size of text */
-        double fontSize;
-        /** \brief the text to display */
-        QString fontName;
         /** \brief the text to display */
         QString text;
         /** \brief return a pen, that may be used for drawing */
@@ -501,7 +323,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
             \param parent the parent plotter class
@@ -513,7 +335,27 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
             \param lineWidth width of line
             \param style line style
          */
-        JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param x1 x-coordinate of first point of line
+            \param y1 y-coordinate of first point of line
+            \param x2 x-coordinate of second point of line
+            \param y2 y-coordinate of second point of line
+
+         */
+        JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2);
+        /*! \brief class constructor
+
+            \param parent the parent plotter class
+            \param x1 x-coordinate of first point of line
+            \param y1 y-coordinate of first point of line
+            \param x2 x-coordinate of second point of line
+            \param y2 y-coordinate of second point of line
+
+         */
+        JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -526,54 +368,38 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
 
         /*! \copydoc x1
             \see see x1 for details */ 
-        inline virtual void setX1(double __value)  
-        {
-            this->x1 = __value;
-        } 
+        void setX1(double __value);
         /*! \copydoc x1
             \see see x1 for details */ 
-        inline virtual double getX1() const  
-        {
-            return this->x1; 
-        }
+        double getX1() const;
         /*! \copydoc y1
             \see see y1 for details */ 
-        inline virtual void setY1(double __value)  
-        {
-            this->y1 = __value;
-        } 
+        void setY1(double __value);
         /*! \copydoc y1
             \see see y1 for details */ 
-        inline virtual double getY1() const  
-        {
-            return this->y1; 
-        }
+        double getY1() const;
         /*! \copydoc x2
             \see see x2 for details */ 
-        inline virtual void setX2(double __value)  
-        {
-            this->x2 = __value;
-        } 
+        void setX2(double __value);
         /*! \copydoc x2
             \see see x2 for details */ 
-        inline virtual double getX2() const  
-        {
-            return this->x2; 
-        }
+        double getX2() const;
         /*! \copydoc y2
             \see see y2 for details */ 
-        inline virtual void setY2(double __value)  
-        {
-            this->y2 = __value;
-        } 
+        void setY2(double __value);
         /*! \copydoc y2
             \see see y2 for details */ 
-        inline virtual double getY2() const  
-        {
-            return this->y2; 
-        }
+        double getY2() const;
     protected:
-        double x1, y1, x2, y2;
+        /** \brief x-coordinate of first point of line */
+        double x1;
+        /** \brief y-coordinate of first point of line */
+        double y1;
+        /** \brief x-coordinate of second point of line */
+        double x2;
+        /** \brief y-coordinate of second point of line */
+        double y2;
+
 };
 
 
@@ -626,66 +452,43 @@ class JKQTP_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
 
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual void setX(double __value)  
-        {
-            this->x = __value;
-        } 
+        void setX(double __value);
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual double getX() const  
-        {
-            return this->x; 
-        }
+        double getX() const;
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual void setY(double __value)  
-        {
-            this->y = __value;
-        } 
+        void setY(double __value);
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual double getY() const  
-        {
-            return this->y; 
-        }
+        double getY() const;
         /*! \copydoc dx
             \see see dx for details */ 
-        inline virtual void setDx(double __value)  
-        {
-            this->dx = __value;
-        } 
+        void setDx(double __value);
         /*! \copydoc dx
             \see see dx for details */ 
-        inline virtual double getDx() const  
-        {
-            return this->dx; 
-        }
+        double getDx() const;
         /*! \copydoc dy
             \see see dy for details */ 
-        inline virtual void setDy(double __value)  
-        {
-            this->dy = __value;
-        } 
+        void setDy(double __value);
         /*! \copydoc dy
             \see see dy for details */ 
-        inline virtual double getDy() const  
-        {
-            return this->dy; 
-        }
+        double getDy() const;
         /*! \copydoc two_sided
             \see see two_sided for details */ 
-        inline virtual void setTwoSided(bool __value)  
-        {
-            this->two_sided = __value;
-        } 
+        void setTwoSided(bool __value);
         /*! \copydoc two_sided
             \see see two_sided for details */ 
-        inline virtual bool getTwoSided() const  
-        {
-            return this->two_sided; 
-        }
+        bool getTwoSided() const;
     protected:
-        double x, y, dx, dy;
+        /** \brief x-coordinate of a point on the line */
+        double x;
+        /** \brief y-coordinate of a point on the line */
+        double y;
+        /** \brief x-component of the slope of the line */
+        double dx;
+        /** \brief y-component of the slope of the line */
+        double dy;
         /** \brief indicates whether the line ends at the given point \f$ (x,y) \f$ (false, default),
          *         or is infinite in both directions (true) */
         bool two_sided;
@@ -749,27 +552,18 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
 
         /*! \copydoc points
             \see see points for details */ 
-        inline virtual void setPoints(const QVector<QPointF> & __value)  
-        {
-            this->points = __value;
-        } 
+        void setPoints(const QVector<QPointF> & __value);
         /*! \copydoc points
             \see see points for details */ 
-        inline virtual QVector<QPointF> getPoints() const  
-        {
-            return this->points; 
-        }
+        QVector<QPointF> getPoints() const;
 
         /** \brief append a point to the polygon */
-        inline void appendPoint(const QPointF& p) {
-            points.append(p);
-        }
+        void appendPoint(const QPointF& p);
 
         /** \brief append a point to the polygon */
-        inline void appendPoint(const double x, const double y) {
-            points.append(QPointF(x, y));
-        }
+        void appendPoint(const double x, const double y);
     protected:
+        /** \brief list with all points on the poly-line */
         QVector<QPointF> points;
 };
 
@@ -876,69 +670,46 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
 
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual void setX(double __value)  
-        {
-            this->x = __value;
-        } 
+        void setX(double __value);
         /*! \copydoc x
             \see see x for details */ 
-        inline virtual double getX() const  
-        {
-            return this->x; 
-        }
+        double getX() const;
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual void setY(double __value)  
-        {
-            this->y = __value;
-        } 
+        void setY(double __value);
         /*! \copydoc y
             \see see y for details */ 
-        inline virtual double getY() const  
-        {
-            return this->y; 
-        }
+        double getY() const;
         /*! \copydoc width
             \see see width for details */ 
-        inline virtual void setWidth(double __value)  
-        {
-            this->width = __value;
-        } 
+        void setWidth(double __value);
         /*! \copydoc width
             \see see width for details */ 
-        inline virtual double getWidth() const  
-        {
-            return this->width; 
-        }
+        double getWidth() const;
         /*! \copydoc height
             \see see height for details */ 
-        inline virtual void setHeight(double __value)  
-        {
-            this->height = __value;
-        } 
+        void setHeight(double __value);
         /*! \copydoc height
             \see see height for details */ 
-        inline virtual double getHeight() const  
-        {
-            return this->height; 
-        }
+        double getHeight() const;
         /*! \copydoc angle
             \see see angle for details */ 
-        inline virtual void setAngle(double __value)  
-        {
-            this->angle = __value;
-        } 
+        void setAngle(double __value);
         /*! \copydoc angle
             \see see angle for details */ 
-        inline virtual double getAngle() const  
-        {
-            return this->angle; 
-        }
-
+        double getAngle() const;
+        /** \brief set the rectangle using the bottom-left corner, as well as its width and height */
         void setBottomleftrectangle(double x, double y, double width, double height);
 protected:
-        double x,y,width,height;
-        /** \brief rotation angle of rectangle */
+        /** \brief x-coordinate of a center of the rectangle */
+        double x;
+        /** \brief y-coordinate of a center of the rectangle */
+        double y;
+        /** \brief width of a center of the rectangle */
+        double width;
+        /** \brief height of a center of the rectangle */
+        double height;
+        /** \brief rotation angle of rectangle [degrees] around (x,y) */
         double angle;
         /** \brief returns the transformation matrix used for this rectangle */
         QMatrix getMatrix();
@@ -1013,28 +784,19 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
 
         /*! \copydoc points
             \see see points for details */ 
-        inline virtual void setPoints(const QVector<QPointF> & __value)  
-        {
-            this->points = __value;
-        } 
+        void setPoints(const QVector<QPointF> & __value);
         /*! \copydoc points
             \see see points for details */ 
-        inline virtual QVector<QPointF> getPoints() const  
-        {
-            return this->points; 
-        }
+        QVector<QPointF> getPoints() const;
 
         /** \brief append a point to the polygon */
-        inline void appendPoint(const QPointF& p) {
-            points.append(p);
-        }
+        void appendPoint(const QPointF& p);
 
         /** \brief append a point to the polygon */
-        inline void appendPoint(const double x, const double y) {
-            points.append(QPointF(x, y));
-        }
+        void appendPoint(const double x, const double y);
 
     protected:
+        /** \brief list with all points on the polygon */
         QVector<QPointF> points;
 };
 
@@ -1139,16 +901,10 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
 
         /*! \copydoc controlPoints
             \see see controlPoints for details */ 
-        inline virtual void setControlPoints(const unsigned int & __value)  
-        {
-            this->controlPoints = __value;
-        } 
+        void setControlPoints(const unsigned int & __value);
         /*! \copydoc controlPoints
             \see see controlPoints for details */ 
-        inline virtual unsigned int getControlPoints() const  
-        {
-            return this->controlPoints; 
-        }
+        unsigned int getControlPoints() const;
     protected:
         /** \brief number of steps/control points to draw the ellipse */
         unsigned int controlPoints;
@@ -1200,120 +956,77 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /*! \copydoc controlPoints
-            \see see controlPoints for details */ 
-        inline virtual void setControlPoints(const unsigned int & __value)  
-        {
-            this->controlPoints = __value;
-        } 
+            \see see controlPoints for details */
+        void setControlPoints(const unsigned int & __value);
         /*! \copydoc controlPoints
-            \see see controlPoints for details */ 
-        inline virtual unsigned int getControlPoints() const  
-        {
-            return this->controlPoints; 
-        }
+            \see see controlPoints for details */
+        unsigned int getControlPoints() const;
         /*! \copydoc angleStart
             \see see angleStart for details */ 
-        inline virtual void setAngleStart(double __value)  
-        {
-            this->angleStart = __value;
-        } 
+        void setAngleStart(double __value);
         /*! \copydoc angleStart
             \see see angleStart for details */ 
-        inline virtual double getAngleStart() const  
-        {
-            return this->angleStart; 
-        }
+        double getAngleStart() const;
         /*! \copydoc angleStop
             \see see angleStop for details */ 
-        inline virtual void setAngleStop(double __value)  
-        {
-            this->angleStop = __value;
-        } 
+        void setAngleStop(double __value);
         /*! \copydoc angleStop
             \see see angleStop for details */ 
-        inline virtual double getAngleStop() const  
-        {
-            return this->angleStop; 
-        }
+        double getAngleStop() const;
         /*! \copydoc x
-            \see see x for details */ 
-        inline virtual void setX(double __value)  
-        {
-            this->x = __value;
-        } 
+            \see see x for details */
+        void setX(double __value);
         /*! \copydoc x
-            \see see x for details */ 
-        inline virtual double getX() const  
-        {
-            return this->x; 
-        }
+            \see see x for details */
+        double getX() const;
         /*! \copydoc y
-            \see see y for details */ 
-        inline virtual void setY(double __value)  
-        {
-            this->y = __value;
-        } 
+            \see see y for details */
+        void setY(double __value);
         /*! \copydoc y
-            \see see y for details */ 
-        inline virtual double getY() const  
-        {
-            return this->y; 
-        }
+            \see see y for details */
+        double getY() const;
         /*! \copydoc width
-            \see see width for details */ 
-        inline virtual void setWidth(double __value)  
-        {
-            this->width = __value;
-        } 
+            \see see width for details */
+        void setWidth(double __value);
         /*! \copydoc width
-            \see see width for details */ 
-        inline virtual double getWidth() const  
-        {
-            return this->width; 
-        }
+            \see see width for details */
+        double getWidth() const;
         /*! \copydoc height
-            \see see height for details */ 
-        inline virtual void setHeight(double __value)  
-        {
-            this->height = __value;
-        } 
+            \see see height for details */
+        void setHeight(double __value);
         /*! \copydoc height
-            \see see height for details */ 
-        inline virtual double getHeight() const  
-        {
-            return this->height; 
-        }
+            \see see height for details */
+        double getHeight() const;
         /*! \copydoc angle
-            \see see angle for details */ 
-        inline virtual void setAngle(double __value)  
-        {
-            this->angle = __value;
-        } 
+            \see see angle for details */
+        void setAngle(double __value);
         /*! \copydoc angle
-            \see see angle for details */ 
-        inline virtual double getAngle() const  
-        {
-            return this->angle; 
-        }
+            \see see angle for details */
+        double getAngle() const;
     protected:
-        double x,y,width,height;
-        /** \brief rotation angle of rectangle */
+        /** \brief x-coordinate of a center of the rectangle */
+        double x;
+        /** \brief y-coordinate of a center of the rectangle */
+        double y;
+        /** \brief width of a center of the rectangle */
+        double width;
+        /** \brief height of a center of the rectangle */
+        double height;
+        /** \brief rotation angle of rectangle [degrees] around (x,y) */
         double angle;
         /** \brief if we only draw an arc, this is the starting angle in degrees */
         double angleStart;
         /** \brief if we only draw an arc, this is the ending angle in degrees */
         double angleStop;
-        /** \brief closing mode for arcs: secand or pie */
-        double angle_start;
-        /** \brief if we only draw an arc, this is the ending angle */
-        double angle_end;
+        /** \brief number of steps/control points to draw the ellipse */
+        unsigned int controlPoints;
+
         /** \brief closing mode for arcs: secand or pie */
         /** \brief returns the transformation matrix used for this rectangle */
         QMatrix getMatrix();
         /** \brief returns a QPolygonF which represents the rectangle after rotation, but still in the world coordinate system, not in the screen/widget system */
         QPolygonF getPolygon();
-        /** \brief number of steps/control points to draw the ellipse */
-        unsigned int controlPoints;
+
 };
 
 
@@ -1368,28 +1081,16 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
 
         /*! \copydoc angleStart
             \see see angleStart for details */ 
-        inline virtual void setAngleStart(double __value)  
-        {
-            this->angleStart = __value;
-        } 
+        void setAngleStart(double __value);
         /*! \copydoc angleStart
             \see see angleStart for details */ 
-        inline virtual double getAngleStart() const  
-        {
-            return this->angleStart; 
-        }
+        double getAngleStart() const;
         /*! \copydoc angleStop
             \see see angleStop for details */ 
-        inline virtual void setAngleStop(double __value)  
-        {
-            this->angleStop = __value;
-        } 
+        void setAngleStop(double __value);
         /*! \copydoc angleStop
             \see see angleStop for details */ 
-        inline virtual double getAngleStop() const  
-        {
-            return this->angleStop; 
-        }
+        double getAngleStop() const;
     protected:
          /** \brief if we only draw an arc, this is the starting angle */
         double angleStart;

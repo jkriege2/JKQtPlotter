@@ -44,10 +44,18 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
     int phot1=plotPeaks->getDatastore()->addCopiedColumn(photons1, "photons 1");
     int phot2=plotPeaks->getDatastore()->addCopiedColumn(photons2, "photons 2");
 
-    graphPeakStream1=new JKQTPPeakStreamGraph(phot1, 0.05, 1, QColor("darkgreen"), plotPeaks->getPlotter());
+    graphPeakStream1=new JKQTPPeakStreamGraph(plotPeaks->getPlotter());
+    graphPeakStream1->setDataColumn(phot1);
+    graphPeakStream1->setColor(QColor("darkgreen"));
+    graphPeakStream1->setPeakHeight(1);
+    graphPeakStream1->setBaseline(0.05);
     graphPeakStream1->setTitle("channel 1");
     plotPeaks->getPlotter()->addGraph(graphPeakStream1);
-    graphPeakStream2=new JKQTPPeakStreamGraph(phot2, -0.05, -1, QColor("darkred"), plotPeaks->getPlotter());
+    graphPeakStream2=new JKQTPPeakStreamGraph(plotPeaks->getPlotter());
+    graphPeakStream2->setDataColumn(phot2);
+    graphPeakStream2->setColor(QColor("darkred"));
+    graphPeakStream2->setPeakHeight(-1);
+    graphPeakStream2->setBaseline(-0.05);
     graphPeakStream2->setTitle("channel 2");
     plotPeaks->getPlotter()->addGraph(graphPeakStream2);
 

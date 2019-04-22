@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 
 
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     graph1->setYColumn(columnY);
     graph1->setSizeColumn(columnS);
     graph1->setSymbolColumn(columnS);
-    graph1->setSymbol(JKQTPFilledTriangle);
+    graph1->setSymbolType(JKQTPFilledTriangle);
     graph1->setColorColumn(columnG);
     graph1->setPalette(JKQTPMathImageOCEAN);
     graph1->setDrawLine(false);

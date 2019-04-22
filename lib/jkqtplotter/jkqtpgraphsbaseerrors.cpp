@@ -63,6 +63,66 @@ void JKQTPGraphErrors::setErrorStyleFromPen(const JKQTBasePlotter::JKQTPPen &pen
     errorbarSize=pen.symbolSize()*0.75;
 }
 
+void JKQTPGraphErrors::setErrorColor(const QColor &__value)
+{
+    this->errorColor = __value;
+}
+
+QColor JKQTPGraphErrors::getErrorColor() const
+{
+    return this->errorColor;
+}
+
+void JKQTPGraphErrors::setErrorStyle(const Qt::PenStyle &__value)
+{
+    this->errorStyle = __value;
+}
+
+Qt::PenStyle JKQTPGraphErrors::getErrorStyle() const
+{
+    return this->errorStyle;
+}
+
+void JKQTPGraphErrors::setErrorWidth(double __value)
+{
+    this->errorWidth = __value;
+}
+
+double JKQTPGraphErrors::getErrorWidth() const
+{
+    return this->errorWidth;
+}
+
+void JKQTPGraphErrors::setErrorFillColor(const QColor &__value)
+{
+    this->errorFillColor = __value;
+}
+
+QColor JKQTPGraphErrors::getErrorFillColor() const
+{
+    return this->errorFillColor;
+}
+
+void JKQTPGraphErrors::setErrorFillStyle(const Qt::BrushStyle &__value)
+{
+    this->errorFillStyle = __value;
+}
+
+Qt::BrushStyle JKQTPGraphErrors::getErrorFillStyle() const
+{
+    return this->errorFillStyle;
+}
+
+void JKQTPGraphErrors::setErrorbarSize(double __value)
+{
+    this->errorbarSize = __value;
+}
+
+double JKQTPGraphErrors::getErrorbarSize() const
+{
+    return this->errorbarSize;
+}
+
 
 
 void JKQTPGraphErrors::intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int xErrorColumnLower, int yErrorColumnLower, bool xErrorSymmetric, bool yErrorSymmetric, double xrelshift, double yrelshift, const  QVector<int>* dataorder) {

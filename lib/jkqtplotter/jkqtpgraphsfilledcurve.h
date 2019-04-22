@@ -21,6 +21,7 @@
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
+#include "jkqtplotter/jkqtpgraphsspecialline.h"
 
 #ifndef jkqtpgraphsfilledcurve_H
 #define jkqtpgraphsfilledcurve_H
@@ -36,158 +37,13 @@
 
     \see \ref JKQTPlotterFilledGraphs
  */
-class JKQTP_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPSpecialLineHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
         JKQTPFilledCurveXGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPFilledCurveXGraph(JKQTPlotter* parent);
-
-        /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter) override;
-        /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
-
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual void setStyle(const Qt::PenStyle & __value)  
-        {
-            this->style = __value;
-        } 
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual Qt::PenStyle getStyle() const  
-        {
-            return this->style; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
-        /*! \copydoc baseline
-            \see see baseline for details */ 
-        inline virtual void setBaseline(double __value)
-        {
-            this->baseline = __value;
-        } 
-        /*! \copydoc baseline
-            \see see baseline for details */ 
-        inline virtual double getBaseline() const  
-        {
-            return this->baseline; 
-        }
-        /*! \copydoc drawLine
-            \see see drawLine for details */ 
-        inline virtual void setDrawLine(bool __value)  
-        {
-            this->drawLine = __value;
-        } 
-        /*! \copydoc drawLine
-            \see see drawLine for details */ 
-        inline virtual bool getDrawLine() const  
-        {
-            return this->drawLine; 
-        }
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->fillStyle = __value;
-        } 
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual Qt::BrushStyle getFillStyle() const  
-        {
-            return this->fillStyle; 
-        }
-
-        /*! \copydoc drawSelectionLine
-            \see see drawSelectionLine for details */ 
-        inline virtual void setDrawSelectionLine(bool __value)  
-        {
-            this->drawSelectionLine = __value;
-        } 
-        /*! \copydoc drawSelectionLine
-            \see see drawSelectionLine for details */ 
-        inline virtual bool getDrawSelectionLine() const  
-        {
-            return this->drawSelectionLine; 
-        }
-        /*! \copydoc selectionLineColor
-            \see see selectionLineColor for details */ 
-        inline virtual void setSelectionLineColor(const QColor & __value)  
-        {
-            this->selectionLineColor = __value;
-        } 
-        /*! \copydoc selectionLineColor
-            \see see selectionLineColor for details */ 
-        inline virtual QColor getSelectionLineColor() const  
-        {
-            return this->selectionLineColor; 
-        }
-
-    protected:
-
-        /** \brief if \c true, draws a thick shadow around the line*/
-        bool drawSelectionLine;
-        /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
-        QColor selectionLineColor;
-
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
-
-        /** \brief color of the graph */
-        QColor color;
-        /** \brief color of the graph fill */
-        QColor fillColor;
-        /** \brief fill styl for the curve */
-        Qt::BrushStyle fillStyle;
-        /** \brief linestyle of the graph lines */
-        Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
-        double lineWidth;
-        /** \brief indicates whether to draw a line or not */
-        bool drawLine;
-        /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
-         */
-        double baseline;
-        QBrush getBrush(JKQTPEnhancedPainter& painter) const;
-        QPen getLinePen(JKQTPEnhancedPainter& painter) const;
 };
 
 
@@ -229,7 +85,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGrap
     \see \ref JKQTPlotterFilledGraphs
 
  */
-class JKQTP_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveXGraph {
+class JKQTP_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPSpecialLineVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -237,8 +93,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveXGraph {
         /** \brief class constructor */
         JKQTPFilledCurveYGraph(JKQTPlotter* parent);
 
-        /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter) override;
+
 };
 
 
@@ -284,7 +139,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGrap
 
     \see \ref JKQTPlotterDateTimeAxes
  */
-class JKQTP_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph {
+class JKQTP_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -305,138 +160,35 @@ class JKQTP_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
         /*! \copydoc yColumn2
             \see see yColumn2 for details */ 
-        inline virtual void setYColumn2(int __value)  
-        {
-            this->yColumn2 = __value;
-        } 
+        void setYColumn2(int __value);
         /*! \copydoc yColumn2
             \see see yColumn2 for details */ 
-        inline virtual int getYColumn2() const  
-        {
-            return this->yColumn2; 
-        }
+        int getYColumn2() const;
         /*! \brief sets the property yColumn2 ( \copybrief yColumn2 ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter yColumn2 is:  <BLOCKQUOTE>\copydoc yColumn2 </BLOCKQUOTE> 
             \see yColumn2 for more information */ 
-        inline virtual void setYColumn2 (size_t __value) { this->yColumn2 = static_cast<int>(__value); }
+        void setYColumn2 (size_t __value);
 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual void setStyle(const Qt::PenStyle & __value)  
-        {
-            this->style = __value;
-        } 
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual Qt::PenStyle getStyle() const  
-        {
-            return this->style; 
-        }
         /*! \copydoc drawLine
-            \see see drawLine for details */ 
-        inline virtual void setDrawLine(bool __value)  
-        {
-            this->drawLine = __value;
-        } 
+            \see see drawLine for details */
+        void setDrawLine(bool __value);
         /*! \copydoc drawLine
-            \see see drawLine for details */ 
-        inline virtual bool getDrawLine() const  
-        {
-            return this->drawLine; 
-        }
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->fillStyle = __value;
-        } 
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual Qt::BrushStyle getFillStyle() const  
-        {
-            return this->fillStyle; 
-        }
+            \see see drawLine for details */
+        bool getDrawLine() const;
 
-        /*! \copydoc drawSelectionLine
-            \see see drawSelectionLine for details */ 
-        inline virtual void setDrawSelectionLine(bool __value)  
-        {
-            this->drawSelectionLine = __value;
-        } 
-        /*! \copydoc drawSelectionLine
-            \see see drawSelectionLine for details */ 
-        inline virtual bool getDrawSelectionLine() const  
-        {
-            return this->drawSelectionLine; 
-        }
-        /*! \copydoc selectionLineColor
-            \see see selectionLineColor for details */ 
-        inline virtual void setSelectionLineColor(const QColor & __value)  
-        {
-            this->selectionLineColor = __value;
-        } 
-        /*! \copydoc selectionLineColor
-            \see see selectionLineColor for details */ 
-        inline virtual QColor getSelectionLineColor() const  
-        {
-            return this->selectionLineColor; 
-        }
 
     protected:
 
         /** \brief the column that contains the second y-component of the range */
         int yColumn2;
-        /** \brief if \c true, draws a thick shadow around the line*/
-        bool drawSelectionLine;
-        /** \brief color for the shadow, or a lighter version of the line color, if transparent (default) */
-        QColor selectionLineColor;
 
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
-
-        /** \brief color of the graph */
-        QColor color;
-        /** \brief color of the graph fill */
-        QColor fillColor;
-        /** \brief fill styl for the curve */
-        Qt::BrushStyle fillStyle;
-        /** \brief linestyle of the graph lines */
-        Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
-        double lineWidth;
         /** \brief indicates whether to draw a line or not */
         bool drawLine;
 
-        QBrush getBrush(JKQTPEnhancedPainter& painter) const;
-        QPen getLinePen(JKQTPEnhancedPainter& painter) const;
 };
 
 

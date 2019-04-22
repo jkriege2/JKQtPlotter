@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include <random>
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
     graphD->setXColumn(cX);
     graphD->setYColumn(cY);
     graphD->setDrawLine(false);
-    graphD->setSymbol(JKQTPCross);
+    graphD->setSymbolType(JKQTPCross);
     graphD->setSymbolSize(10);
     graphD->setTitle("measurement data");
     plotMain->addGraph(graphD);
@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
     graphResid->setXColumn(cX);
     graphResid->setYColumn(cRY);
     graphResid->setDrawLine(false);
-    graphResid->setSymbol(JKQTPPlus);
+    graphResid->setSymbolType(JKQTPPlus);
     graphResid->setSymbolSize(10);
     graphResid->setDrawLine(true);
     graphResid->setLineWidth(0.5);

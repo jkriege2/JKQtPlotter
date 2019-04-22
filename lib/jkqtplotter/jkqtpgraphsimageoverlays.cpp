@@ -98,8 +98,8 @@ QImage JKQTPOverlayImage::drawImage() {
 
     //QRgb tc=trueColor.rgba();
     //QRgb fc=falseColor.rgba();
-    QRgb tc=qRgba(round(trueColor.red()*trueColor.alphaF()), round(trueColor.green()*trueColor.alphaF()), round(trueColor.blue()*trueColor.alphaF()), trueColor.alpha());
-    QRgb fc=qRgba(round(falseColor.red()*falseColor.alphaF()), round(falseColor.green()*falseColor.alphaF()), round(falseColor.blue()*falseColor.alphaF()), falseColor.alpha());
+    QRgb tc=qRgba(jkqtp_roundTo<int>(trueColor.red()*trueColor.alphaF()), jkqtp_roundTo<int>(trueColor.green()*trueColor.alphaF()), jkqtp_roundTo<int>(trueColor.blue()*trueColor.alphaF()), trueColor.alpha());
+    QRgb fc=qRgba(jkqtp_roundTo<int>(falseColor.red()*falseColor.alphaF()), jkqtp_roundTo<int>(falseColor.green()*falseColor.alphaF()), jkqtp_roundTo<int>(falseColor.blue()*falseColor.alphaF()), falseColor.alpha());
 
     for (int32_t y=0; y<Ny; y++) {
         QRgb* line=(QRgb*)img.scanLine(Ny-1-y);
@@ -117,9 +117,9 @@ QImage JKQTPOverlayImage::drawImage() {
 }
 
 void JKQTPOverlayImage::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    int w=rect.width()/2;
+    double w=rect.width()/2;
     QRectF r1=QRectF(rect.topLeft(), QSizeF(w, rect.height()));
-    QRectF r2=QRectF(QPoint(rect.left()+w, rect.top()), QSizeF(w, rect.height()));
+    QRectF r2=QRectF(QPointF(rect.left()+w, rect.top()), QSizeF(w, rect.height()));
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(Qt::transparent);
     painter.setBrush(QBrush(trueColor));
@@ -130,10 +130,60 @@ void JKQTPOverlayImage::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rec
 
 }
 
-QColor JKQTPOverlayImage::getKeyLabelColor() {
+QColor JKQTPOverlayImage::getKeyLabelColor() const {
     QColor c=trueColor;
     c.setAlpha(255);
     return c;
+}
+
+void JKQTPOverlayImage::setTrueColor(const QColor &__value)
+{
+    this->trueColor = __value;
+}
+
+QColor JKQTPOverlayImage::getTrueColor() const
+{
+    return this->trueColor;
+}
+
+void JKQTPOverlayImage::setFalseColor(const QColor &__value)
+{
+    this->falseColor = __value;
+}
+
+QColor JKQTPOverlayImage::getFalseColor() const
+{
+    return this->falseColor;
+}
+
+void JKQTPOverlayImage::setNx(int __value)
+{
+    this->Nx = __value;
+}
+
+int JKQTPOverlayImage::getNx() const
+{
+    return this->Nx;
+}
+
+void JKQTPOverlayImage::setNy(int __value)
+{
+    this->Ny = __value;
+}
+
+int JKQTPOverlayImage::getNy() const
+{
+    return this->Ny;
+}
+
+void JKQTPOverlayImage::setData(bool *__value)
+{
+    this->data = __value;
+}
+
+bool *JKQTPOverlayImage::getData() const
+{
+    return this->data;
 }
 
 void JKQTPOverlayImage::setData(bool* data, int Nx, int Ny) {
@@ -147,50 +197,88 @@ JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double 
     JKQTPOverlayImage(x, y, width, height, data, Nx, Ny, colTrue, parent)
 {
     symbol=JKQTPTarget;
-    symbolWidth=1;
-    drawAsRectangles=true;
+    symbolLineWidth=1;
+    drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles;
     symbolSizeFactor=0.9;
-    rectanglesAsImageOverlay=false;
 }
 
 JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTBasePlotter *parent):
     JKQTPOverlayImage(0,0,1,1,nullptr,0,0, QColor("red"), parent)
 {
     symbol=JKQTPTarget;
-    symbolWidth=1;
-    drawAsRectangles=true;
+    symbolLineWidth=1;
+    drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles;
     symbolSizeFactor=0.9;
-    rectanglesAsImageOverlay=false;
 }
 
 JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent):
     JKQTPOverlayImage(x, y, width, height, data, Nx, Ny, colTrue, parent)
 {
     symbol=JKQTPTarget;
-    symbolWidth=1;
-    drawAsRectangles=true;
+    symbolLineWidth=1;
+    drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles;
     symbolSizeFactor=0.9;
-    rectanglesAsImageOverlay=false;
 }
 
 JKQTPOverlayImageEnhanced::JKQTPOverlayImageEnhanced(JKQTPlotter *parent):
     JKQTPOverlayImage(0,0,1,1,nullptr,0,0, QColor("red"), parent)
 {
     symbol=JKQTPTarget;
-    symbolWidth=1;
-    drawAsRectangles=true;
+    symbolLineWidth=1;
+    drawMode=OverlayImageEnhancedDrawMode::DrawAsRectangles  ;
     symbolSizeFactor=0.9;
-    rectanglesAsImageOverlay=false;
 }
+
 void JKQTPOverlayImageEnhanced::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    if (drawAsRectangles) JKQTPOverlayImage::drawKeyMarker(painter, rect);
-    else JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
+    if (drawMode!=OverlayImageEnhancedDrawMode::DrawAsSymbols) JKQTPOverlayImage::drawKeyMarker(painter, rect);
+    else JKQTPPlotSymbol(painter, rect.center().x(), rect.center().y(), symbol, qMin(rect.width(), rect.height()), parent->pt2px(painter, symbolLineWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
+}
+
+void JKQTPOverlayImageEnhanced::setSymbolType(JKQTPGraphSymbols __value)
+{
+    this->symbol = __value;
+}
+
+JKQTPGraphSymbols JKQTPOverlayImageEnhanced::getSymbol() const
+{
+    return this->symbol;
+}
+
+void JKQTPOverlayImageEnhanced::setSymbolLineWidth(double __value)
+{
+    this->symbolLineWidth = __value;
+}
+
+double JKQTPOverlayImageEnhanced::getSymbolLineWidth() const
+{
+    return this->symbolLineWidth;
+}
+
+JKQTPOverlayImageEnhanced::OverlayImageEnhancedDrawMode JKQTPOverlayImageEnhanced::getDrawMode() const
+{
+    return drawMode;
+}
+
+void JKQTPOverlayImageEnhanced::setDrawMode(OverlayImageEnhancedDrawMode __value)
+{
+    this->drawMode = __value;
+}
+
+
+void JKQTPOverlayImageEnhanced::setSymbolSizeFactor(double __value)
+{
+    this->symbolSizeFactor = __value;
+}
+
+double JKQTPOverlayImageEnhanced::getSymbolSizeFactor() const
+{
+    return this->symbolSizeFactor;
 }
 
 void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
     if (!data) return;
 
-    if (drawAsRectangles && rectanglesAsImageOverlay) {
+    if (drawMode==DrawAsImage) {
         JKQTPOverlayImage::draw(painter);
     } else {
 
@@ -202,7 +290,7 @@ void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
             for (int iy=0; iy<static_cast<int64_t>(Ny); iy++) {
                 QPointF p1=transform(x+static_cast<double>(ix)*dx, y+static_cast<double>(iy)*dy);
                 QPointF p2=transform(x+static_cast<double>(ix+1)*dx, y+static_cast<double>(iy+1)*dx);
-                if (drawAsRectangles) {
+                if (drawMode==DrawAsRectangles) {
                     if (data[ix+iy*Nx]) {
                         if (trueColor.alpha()>0) {
                             painter.fillRect(QRectF(qMin(p1.x(), p2.x())-1.0, qMin(p2.y(), p1.y())-1.0, fabs(p2.x()-p1.x())+1.0, fabs(p2.y()-p1.y())+1.0), QBrush(trueColor));
@@ -216,10 +304,10 @@ void JKQTPOverlayImageEnhanced::draw(JKQTPEnhancedPainter& painter) {
                             //painter.drawRect(QRectF(qMin(p1.x(), p2.x()), qMin(p2.y(), p1.y()), fabs(p2.x()-p1.x()), fabs(p2.y()-p1.y())));
                         }
                     }
-                } else {
+                } else if (drawMode==DrawAsSymbols){
                     QPointF p=(p1+p2)/2.0;
                     if (data[ix+iy*Nx]) {
-                        JKQTPPlotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
+                        JKQTPPlotSymbol(painter, p.x(), p.y(), symbol, fabs(p2.x()-p1.x())*symbolSizeFactor, parent->pt2px(painter, symbolLineWidth*parent->getLineWidthMultiplier()), trueColor, trueColor.lighter());
                     }
                 }
             }
@@ -253,13 +341,23 @@ JKQTPColumnOverlayImageEnhanced::JKQTPColumnOverlayImageEnhanced(JKQTPlotter *pa
 {
     imageColumn=-1;
 }
+
+void JKQTPColumnOverlayImageEnhanced::setImageColumn(int __value)
+{
+    this->imageColumn = __value;
+}
+
+int JKQTPColumnOverlayImageEnhanced::getImageColumn() const
+{
+    return this->imageColumn;
+}
 void JKQTPColumnOverlayImageEnhanced::draw(JKQTPEnhancedPainter &painter) {
     double* d=parent->getDatastore()->getColumn(imageColumn).getPointer(0);
-    int imgSize=parent->getDatastore()->getColumn(imageColumn).getRows();
+    size_t imgSize=parent->getDatastore()->getColumn(imageColumn).getRows();
     this->data=(bool*)malloc(imgSize*sizeof(bool));
     this->Ny=imgSize/this->Nx;
     for (int i=0; i<imgSize; i++) {
-        data[i]=d[i];
+        data[i]=(d[i]!=0.0);
     }
     JKQTPOverlayImageEnhanced::draw(painter);
     free(data);

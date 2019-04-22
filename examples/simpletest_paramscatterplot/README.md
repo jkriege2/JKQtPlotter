@@ -31,7 +31,7 @@ The next two code snippets show how to modify the size of the symbols and the li
     graph3->setXColumn(columnX);
     graph3->setYColumn(columnY3);
     graph3->setSizeColumn(columnS);
-    graph3->setSymbol(JKQTPFilledCircle);
+    graph3->setSymbolType(JKQTPFilledCircle);
     graph3->setDrawLine(true);
     graph3->setTitle("3: symbol size");
     plot.addGraph(graph3);
@@ -42,7 +42,7 @@ The next two code snippets show how to modify the size of the symbols and the li
     graph6->setYColumn(columnY6);
     graph6->setLinewidthColumn(columnLW);
     graph6->setDrawLine(true);
-    graph6->setSymbol(JKQTPNoSymbol);
+    graph6->setSymbolType(JKQTPNoSymbol);
     graph6->setTitle("6: line width");
     plot.addGraph(graph6);
 ```
@@ -68,7 +68,7 @@ Now you can add the graph. In order to interpret the color column as RGB(A)-valu
     graph4->setColorColumn(columnRGB);
     graph4->setColorColumnContainsRGB(true);
     graph4->setDrawLine(true);
-    graph4->setSymbol(JKQTPFilledDownTriangle);
+    graph4->setSymbolType(JKQTPFilledDownTriangle);
     graph4->setTitle("4: RGB-color");
     plot.addGraph(graph4);
 ```
@@ -80,7 +80,7 @@ The second variant for setting the color of each datapoint is by mapping the val
     graph2->setYColumn(columnY2);
     graph2->setColorColumn(columnC);
     graph2->setPalette(JKQTPMathImageRYGB);
-    graph2->setSymbol(JKQTPFilledRect);
+    graph2->setSymbolType(JKQTPFilledRect);
     graph2->setDrawLine(true);
     graph2->setTitle("2: color");
     graph2->getColorBarRightAxis()->setAxisLabel("color scale for graph2");
@@ -109,4 +109,53 @@ The full test appication combines all these variants and the result looks like t
 ![jkqtplotter_simpletest_paramscatterplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_paramscatterplot.png)
 
 
+In `` you can also set special functors that transform the values from the data columns (symbol type+size, datapoint), before using them for the plot, which gives you even more control. As an example you can set a special functor to `graph6`:
+
+```.cpp
+    graph6->setLinewidthColumnFunctor([](double x, double y, double w) {
+        return fabs(sin(w/3.0)*25.0);
+    });
+```
+
+This will result in modulated linewidths as shown below:
+
+![JKQTPXYParametrizedScatterGraph_LinewidthFunctor.png](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPXYParametrizedScatterGraph_LinewidthFunctor.png)
+
+
+The same can be done for symbol type, e.g. with code like this:
+
+```.cpp
+    graph1->setSymbolColumnFunctor([](double x, double y, double sym) -> JKQTPGraphSymbols {
+        if (sym<Ndata/2) {
+            return JKQTPGraphSymbols::JKQTPCircle;
+        } else if (sym>Ndata/2) {
+            return JKQTPGraphSymbols::JKQTPFilledCircle;
+        } else {
+            return JKQTPGraphSymbols::JKQTPPlus;
+        }
+    });
+```
+
+
+This will result in symbols as shown below:
+
+![JKQTPXYParametrizedScatterGraph_SymbolFunctor.png](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPXYParametrizedScatterGraph_SymbolFunctor.png)
+
+As an alternaitve for symbols, you can define the functor also in terms of a QMap:
+
+```.cpp
+    graph1->setSymbolColumnFunctor([](double x, double y, double sym) -> JKQTPGraphSymbols {
+        if (sym<Ndata/2) {
+            return JKQTPGraphSymbols::JKQTPCircle;
+        } else if (sym>Ndata/2) {
+            return JKQTPGraphSymbols::JKQTPFilledCircle;
+        } else {
+            return JKQTPGraphSymbols::JKQTPPlus;
+        }
+    });
+```
+
+This will result in symbols as shown below:
+
+![JKQTPXYParametrizedScatterGraph_MappedSymbolFunctor.png](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPXYParametrizedScatterGraph_MappedSymbolFunctor.png)
 

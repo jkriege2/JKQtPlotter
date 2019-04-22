@@ -50,4 +50,24 @@ This code snippet results in a plot like this:
 
 ![jkqtplotter_simpletest_impulsesplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_impulsesplot_horizontal.png)
 
+The classes `JKQTPImpulsesVerticalGraph` and `JKQTPImpulsesHorizontalGraph` also provide the ability to draw a symbol at the end of the impulse, e.g. using this code:
+
+```.cpp
+    graph->setDrawSymbols(true);
+    graph->setSymbolType(JKQTPGraphSymbols::JKQTPFilledStar);
+```
+
+This code snippet results in a plot like this:
+
+![jkqtplotter_simpletest_impulsesplot_symbols](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_impulsesplot_symbols.png)
+
+Finally you can move the baseline (i.e. the level, where the impulses start, which is typically x=0 or y=0) in the classes `JKQTPImpulsesVerticalGraph` and `JKQTPImpulsesHorizontalGraph`:
+
+```.cpp
+    graph->setBaseline(0.25);
+```
+
+This code snippet results in a plot like this:
+
+![jkqtplotter_simpletest_impulsesplot_baseline](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_impulsesplot_baseline.png)
 

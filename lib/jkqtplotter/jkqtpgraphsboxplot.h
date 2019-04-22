@@ -77,7 +77,7 @@
         graphOutliers->setColor(graph->getColor().darker());
         graphOutliers->setFillColor(QColor("white"));
         // draw outliers as small circles, without lines
-        graphOutliers->setSymbol(JKQTPCircle);
+        graphOutliers->setSymbolType(JKQTPCircle);
         graphOutliers->setDrawLine(false);
         graphOutliers->setSymbolSize(7);
     \endcode
@@ -106,7 +106,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -324,7 +324,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
 
         /*! \copydoc meanSymbol
             \see see meanSymbol for details */ 
-        inline virtual void setMeanSymbol(const JKQTPGraphSymbols & __value)  
+        inline virtual void setMeanSymbol(JKQTPGraphSymbols __value)  
         {
             this->meanSymbol = __value;
         } 
@@ -485,7 +485,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() override;
+        virtual QColor getKeyLabelColor() const override;
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -659,7 +659,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
 
         /*! \copydoc meanSymbol
             \see see meanSymbol for details */ 
-        inline virtual void setMeanSymbol(const JKQTPGraphSymbols & __value)  
+        inline virtual void setMeanSymbol(JKQTPGraphSymbols __value)  
         {
             this->meanSymbol = __value;
         } 

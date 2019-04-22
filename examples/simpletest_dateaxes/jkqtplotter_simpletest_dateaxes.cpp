@@ -10,7 +10,7 @@
 #include <QFile>
 #include <QTextStream>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
@@ -57,7 +57,7 @@ void drawWithDateAxis(JKQTPlotter& plot) {
 
     // 5. min/max range data
     // graph fill color is a lighter shade of the average graph
-    graphTemperatureRange->setFillColor(graphTemperature->getColor().lighter());
+    graphTemperatureRange->setFillColor(graphTemperature->getLineColor().lighter());
     // don't draw lines of the data
     graphTemperatureRange->setDrawLine(false);
     // plot label in key
@@ -67,7 +67,7 @@ void drawWithDateAxis(JKQTPlotter& plot) {
 
     // 6. average data
     // don't use symbols
-    graphTemperature->setSymbol(JKQTPNoSymbol);
+    graphTemperature->setSymbolType(JKQTPNoSymbol);
     // set the line width
     graphTemperature->setLineWidth(1);
     // draw small symbols
@@ -134,7 +134,7 @@ void drawWithTimeAxis(JKQTPlotter& plot) {
 
     // 6. average data
     // don't use symbols
-    graphTemperature->setSymbol(JKQTPCross);
+    graphTemperature->setSymbolType(JKQTPCross);
     // set the line width
     graphTemperature->setLineWidth(1);
     // draw small symbols

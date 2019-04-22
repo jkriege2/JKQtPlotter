@@ -82,7 +82,7 @@ In addition to the simple box plots, the image above also shows outliers as smal
     graphOutliers->setColor(graph->getColor().darker());
     graphOutliers->setFillColor(QColor("white"));
     // draw outliers as small circles, without lines
-    graphOutliers->setSymbol(JKQTPCircle);
+    graphOutliers->setSymbolType(JKQTPCircle);
     graphOutliers->setDrawLine(false);
     graphOutliers->setSymbolSize(7);
 ```

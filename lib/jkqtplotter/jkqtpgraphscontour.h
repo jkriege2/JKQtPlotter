@@ -26,10 +26,11 @@
 #include <QPainter>
 #include <QImage>
 #include <QIcon>
-#include "jkqtplotter/jkqtpgraphs.h"
+#include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplottertools/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplottertools/jkqtpimagetools.h"
 
@@ -53,7 +54,7 @@
  *
  * \image html JKQTPContour.png
  */
-class JKQTP_LIB_EXPORT JKQTPContour: public JKQTPMathImage {
+class JKQTP_LIB_EXPORT JKQTPContour: public JKQTPMathImage, public JKQTPGraphLineStyleMixin  {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -72,116 +73,44 @@ class JKQTP_LIB_EXPORT JKQTPContour: public JKQTPMathImage {
         /** \brief creates at least nLevels contour levels with logarithmic spacing. FIXME: Has not been tested yet */
         void createContourLevelsLog(int nLevels=3,int m=2);
 
-        /*! \copydoc lineColor
-            \see see lineColor for details */ 
-        inline virtual void setLineColor(const QColor & __value)  
-        {
-            this->lineColor = __value;
-        } 
-        /*! \copydoc lineColor
-            \see see lineColor for details */ 
-        inline virtual QColor getLineColor() const  
-        {
-            return this->lineColor; 
-        }
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual void setStyle(const Qt::PenStyle & __value)  
-        {
-            this->style = __value;
-        } 
-        /*! \copydoc style
-            \see see style for details */ 
-        inline virtual Qt::PenStyle getStyle() const  
-        {
-            return this->style; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
         /*! \copydoc ignoreOnPlane
             \see see ignoreOnPlane for details */ 
-        inline virtual void setIgnoreOnPlane(bool __value)
-        {
-            this->ignoreOnPlane = __value;
-        } 
+        void setIgnoreOnPlane(bool __value);
         /*! \copydoc ignoreOnPlane
             \see see ignoreOnPlane for details */ 
-        inline virtual bool getIgnoreOnPlane() const  
-        {
-            return this->ignoreOnPlane; 
-        }
+        bool getIgnoreOnPlane() const;
         /*! \copydoc numberOfLevels
             \see see numberOfLevels for details */ 
-        inline virtual void setNumberOfLevels(int __value)
-        {
-            this->numberOfLevels = __value;
-        } 
+        void setNumberOfLevels(int __value);
         /*! \copydoc numberOfLevels
             \see see numberOfLevels for details */ 
-        inline virtual int getNumberOfLevels() const  
-        {
-            return this->numberOfLevels; 
-        }
+        int getNumberOfLevels() const;
         /*! \copydoc colorFromPalette
             \see see colorFromPalette for details */ 
-        inline virtual void setColorFromPalette(bool __value)
-        {
-            this->colorFromPalette = __value;
-        } 
+        void setColorFromPalette(bool __value);
         /*! \copydoc colorFromPalette
             \see see colorFromPalette for details */ 
-        inline virtual bool getColorFromPalette() const  
-        {
-            return this->colorFromPalette; 
-        }
+        bool getColorFromPalette() const;
         /*! \copydoc contourLevels
             \see see contourLevels for details */ 
-        inline virtual void setContourLevels(const QList<double> & __value)  
-        {
-            this->contourLevels = __value;
-        } 
+        void setContourLevels(const QList<double> & __value);
         /*! \copydoc contourLevels
             \see see contourLevels for details */ 
-        inline virtual QList<double> getContourLevels() const  
-        {
-            return this->contourLevels; 
-        }
+        QList<double> getContourLevels() const;
         /*! \copydoc relativeLevels
             \see see relativeLevels for details */ 
-        inline virtual void setRelativeLevels(bool __value)
-        {
-            this->relativeLevels = __value;
-        } 
+        void setRelativeLevels(bool __value);
         /*! \copydoc relativeLevels
             \see see relativeLevels for details */ 
-        inline virtual bool getRelativeLevels() const  
-        {
-            return this->relativeLevels; 
-        }
-        /** convenience function to work with JKQTPDatastore */
+        bool getRelativeLevels() const;
+        /** \brief convenience function to work with JKQTPDatastore */
         void setImageColumn(size_t columnID);
-
+        /** \brief add another level for which to draw a contour */
         void addContourLevel(double &level);
 
 
 
     protected:
-        /** \brief color of the contour lines */
-        QColor lineColor;
-        /** \brief linestyle of the contour lines */
-        Qt::PenStyle style;
-        /** \brief width (pixels) of the graph */
-        double lineWidth;
         /** \brief if true, vertices that all lie on the contour plane will be ignored*/
         bool ignoreOnPlane;
         /** \brief if true, the colors of the \a palette are used for the contour lines */
@@ -191,11 +120,11 @@ class JKQTP_LIB_EXPORT JKQTPContour: public JKQTPMathImage {
 
         /** \brief the list of contour levels */
         QList<double> contourLevels;
-//        /** \brief indicates wether the contour levels are absolute values or relative to the maximum (max-min) */
+        /** \brief indicates wether the contour levels are absolute values or relative to the maximum (max-min) */
         bool relativeLevels;
         virtual void ensureImageData() override;
 
-private:
+    private:
         double value(int xIdx, int yIdx);
         /// gives the intersection line of a plane defined by three vertices with a contour level in the x-y plane of heigth level
         bool intersect(QLineF &line, const QVector3D &vertex1,const QVector3D &vertex2,const QVector3D &vertex3,double level);

@@ -115,7 +115,6 @@ derive from JKQTPPlotElement, but from a cass in it's hirarchy of children. Thes
 
 \subsection jkqtplotter_graphsgroup_classstructure_mixins Mix-In Classes for Graphs
 
-
 In addition there are mix-in classes that are used via multiple inheritance
 that add additional features and properties to a graph. A prominent example are the classes for \ref jkqtplotter_basegraphserrors "error indicators".
 With these there are usually two variants of one type of graph: One without error indicators and one with error indicators, e.g.:
@@ -134,6 +133,9 @@ mainly used for the \ref jkqtplotter_imagelots "Image/Matrix graphs", but also b
 \ingroup jkqtplotter_graphsgroup
 
 \defgroup jkqtplotter_basegraphserrors Mix-In Classes for Error Indicators
+\ingroup jkqtplotter_basegraphs
+
+\defgroup jkqtplotter_basegraphs_stylemixins Mix-In Classes for Plot Styling
 \ingroup jkqtplotter_basegraphs
 
 \defgroup jkqtplotter_linesymbolgraphs Line/Symbol Graphs
@@ -155,7 +157,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td> JKQTPXYParametrizedScatterGraph, JKQTPXYParametrizedErrorScatterGraph
     <tr>
       <td>\image html jkqtplotter_simpletest_stepplots_small.png
-      <td> JKQTPStepHorizontalGraph, JKQTPStepVerticalGraph
+      <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
 </table>
 
 \defgroup jkqtplotter_linesymbolgraphs_simple Basic Line/Scatter Graphs
@@ -173,7 +175,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
     <tr>
       <td>\image html jkqtplotter_simpletest_stepplots_small.png
-      <td> JKQTPStepHorizontalGraph, JKQTPStepVerticalGraph
+      <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
 </table>
 
 
