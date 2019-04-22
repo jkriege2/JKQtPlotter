@@ -192,7 +192,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
 void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
     const double minSize=qMin(rect.width(), rect.height());
-    const double maxSize=qMax(rect.width(), rect.height());
+    //const double maxSize=qMax(rect.width(), rect.height());
     double symbolSize=parent->pt2px(painter, this->getSymbolSize());
     if (symbolSize>minSize*0.9) symbolSize=minSize*0.9;
     double symbolWidth=parent->pt2px(painter, this->getSymbolLineWidth()*parent->getLineWidthMultiplier());

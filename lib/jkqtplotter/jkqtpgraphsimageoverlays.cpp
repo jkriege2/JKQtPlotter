@@ -356,7 +356,7 @@ void JKQTPColumnOverlayImageEnhanced::draw(JKQTPEnhancedPainter &painter) {
     size_t imgSize=parent->getDatastore()->getColumn(imageColumn).getRows();
     this->data=(bool*)malloc(imgSize*sizeof(bool));
     this->Ny=imgSize/this->Nx;
-    for (int i=0; i<imgSize; i++) {
+    for (size_t i=0; i<imgSize; i++) {
         data[i]=(d[i]!=0.0);
     }
     JKQTPOverlayImageEnhanced::draw(painter);

@@ -4071,7 +4071,7 @@ size_t JKQTBasePlotter::addGraph(size_t xColumn, size_t yColumn, const QString& 
 
 size_t JKQTBasePlotter::addHorizontalBoxplot(QString title, int posColumn, int medianColumn, int minColumn, int maxColumn, int percentile25Column, int percentile75Column, int meanColumn) {
     JKQTPBoxplotHorizontalGraph* box=new JKQTPBoxplotHorizontalGraph(this);
-    box->setPosColumn(posColumn);
+    box->setPositionColumn(posColumn);
     box->setMedianColumn(medianColumn);
     box->setMeanColumn(meanColumn);
     box->setMinColumn(minColumn);
@@ -4084,7 +4084,7 @@ size_t JKQTBasePlotter::addHorizontalBoxplot(QString title, int posColumn, int m
 
 size_t JKQTBasePlotter::addVerticalBoxplot(QString title, int posColumn, int medianColumn, int minColumn, int maxColumn, int percentile25Column, int percentile75Column, int meanColumn) {
     JKQTPBoxplotVerticalGraph* box=new JKQTPBoxplotVerticalGraph(this);
-    box->setPosColumn(posColumn);
+    box->setPositionColumn(posColumn);
     box->setMedianColumn(medianColumn);
     box->setMeanColumn(meanColumn);
     box->setMinColumn(minColumn);

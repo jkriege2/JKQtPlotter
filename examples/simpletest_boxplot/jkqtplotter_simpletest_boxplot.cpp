@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 
     // 4. create a graph of vertical boxplots:
     JKQTPBoxplotVerticalGraph* graph=new JKQTPBoxplotVerticalGraph(&plot);
-    graph->setPosColumn(columnPOS);
+    graph->setPositionColumn(columnPOS);
     graph->setMinColumn(columnMIN);
     graph->setPercentile25Column(columnQ25);
     graph->setMedianColumn(columnMEDIAN);
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
     graphOutliers->setYColumn(columnOUTLIERSY);
     graphOutliers->setTitle("outliers");
     // make the color a darker shade of the color of graph
-    graphOutliers->setColor(graph->getColor().darker());
+    graphOutliers->setColor(graph->getLineColor().darker());
     graphOutliers->setSymbolFillColor(QColor("white"));
     // draw outliers as small circles, without lines
     graphOutliers->setSymbolType(JKQTPCircle);
@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 
     // 6. create a graph of horizontal boxplots:
     JKQTPBoxplotHorizontalGraph* graphh=new JKQTPBoxplotHorizontalGraph(&plot);
-    graphh->setPosColumn(columnPOSY);
+    graphh->setPositionColumn(columnPOSY);
     graphh->setMinColumn(columnMIN);
     graphh->setPercentile25Column(columnQ25);
     graphh->setMedianColumn(columnMEDIAN);
@@ -81,11 +81,11 @@ int main(int argc, char* argv[])
     graphh->setMaxColumn(columnMAX);
     graphh->setTitle("horizontal Boxplots");
     // 6.1 make fill collor a lighter shade of the outline color
-    graphh->setFillColor(graphh->getColor().lighter());
+    graphh->setFillColor(graphh->getLineColor().lighter());
     // 6.2 make whiskers dashed
-    graphh->setWhiskerStyle(Qt::DashLine);
+    graphh->setWhiskerLineStyle(Qt::DashLine);
     // 6.3 change mean symbol
-    graphh->setMeanSymbol(JKQTPstar);
+    graphh->setSymbolType(JKQTPstar);
 
 
     // 7. add the graphs to the plot, so it is actually displayed

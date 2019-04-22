@@ -102,14 +102,14 @@ After adding all necessary data to the JKQTDatastore:
     graphBoxPlot->setPercentile75(rndQ75);
     graphBoxPlot->setMax(rndMax);
     graphBoxPlot->setBoxWidth(24);
-    graphBoxPlot->setMeanSymbolSize(16);
-    graphBoxPlot->setMeanSymbolWidth(2);
+    graphBoxPlot->setSymbolTypeSize(16);
+    graphBoxPlot->setSymbolTypeWidth(2);
     graphBoxPlot->setTitle("Statistical Properties");
     graphBoxPlot->setColor(QColor("blue"));
     // make fill collor a lighter shade of the outline color
     graphBoxPlot->setFillColor(graphBoxPlot->getColor().lighter(180));
     // make whiskers dashed
-    graphBoxPlot->setWhiskerStyle(Qt::DashLine);
+    graphBoxPlot->setWhiskerLineStyle(Qt::DashLine);
 
 
     // 8. add the graphs to the plot, so it is actually displayed

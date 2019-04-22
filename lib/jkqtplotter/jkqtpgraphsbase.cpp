@@ -331,9 +331,11 @@ int JKQTPSingleColumnGraph::getDataColumn() const
     return this->dataColumn;
 }
 
-void JKQTPSingleColumnGraph::setDataColumn(size_t __value) { this->dataColumn = static_cast<int>(__value); }
+void JKQTPSingleColumnGraph::setDataColumn(size_t __value) {
+    this->dataColumn = static_cast<int>(__value);
+}
 
-void JKQTPSingleColumnGraph::setDataSortOrder(const JKQTPSingleColumnGraph::DataSortOrder &__value)
+void JKQTPSingleColumnGraph::setDataSortOrder(JKQTPSingleColumnGraph::DataSortOrder __value)
 {
     this->sortData = __value;
 }

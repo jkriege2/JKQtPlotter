@@ -25,9 +25,78 @@
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplottertools/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
+#include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpgraphsboxplot_H
 #define jkqtpgraphsboxplot_H
+
+
+
+
+
+/*! \brief Styling Mix-In for Boxplots
+    \ingroup jkqtplotter_basegraphs_stylemixins
+
+
+ */
+class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
+        Q_GADGET
+    public:
+        /** \brief class constructor */
+        JKQTPGraphBoxplotStyleMixin();
+
+        void initBoxplotStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
+
+
+
+        /*! \copydoc whiskerStyle
+            \see see whiskerStyle for details */
+        void setWhiskerLineStyle(const Qt::PenStyle & __value);
+        /*! \copydoc whiskerStyle
+            \see see whiskerStyle for details */
+        Qt::PenStyle getWhiskerLineStyle() const;
+
+        /*! \copydoc boxWidth
+            \see see boxWidth for details */
+        void setBoxWidth(double __value);
+        /*! \copydoc boxWidth
+            \see see boxWidth for details */
+        double getBoxWidth() const;
+
+        /*! \copydoc whiskerLineWidth
+            \see see whiskerLineWidth for details */
+        void setWhiskerLineWidth(double __value);
+        /*! \copydoc whiskerLineWidth
+            \see see whiskerLineWidth for details */
+        double getWhiskerLineWidth() const;
+
+        /*! \copydoc whiskerLineColor
+            \see see whiskerLineColor for details */
+        void setWhiskerLineColor(QColor __value);
+        /*! \copydoc whiskerLineColor
+            \see see whiskerLineColor for details */
+        QColor getWhiskerLineColor() const;
+
+        /** \brief build a pen to be used for drawing whiskers */
+        QPen getWhiskerPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const;
+
+    protected:
+        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
+        void setBoxplotColor(QColor c, JKQTBasePlotter *parent);
+    private:
+        /** \brief line style of the whisker lines */
+        Qt::PenStyle whiskerLineStyle;
+        /** \brief line width (in pt) of the whisker lines */
+        double whiskerLineWidth;
+        /** \brief color of the whisker lines */
+        QColor whiskerLineColor;
+        /** \brief width of box in percent of distance between the current two posColumn values
+         *         if we only plot one box&whiskers then this is the width in plot coordinates */
+        double boxWidth;
+
+};
+
+
 
 
 
@@ -59,7 +128,7 @@
     \code
         // 4. create a graph of vertical boxplots:
         JKQTPBoxplotVerticalGraph* graph=new JKQTPBoxplotVerticalGraph(&plot);
-        graph->setPosColumn(columnPOS);
+        graph->setPositionColumn(columnPOS);
         graph->setMinColumn(columnMIN);
         graph->setPercentile25Column(columnQ25);
         graph->setMedianColumn(columnMEDIAN);
@@ -85,10 +154,11 @@
     \see \ref JKQTPlotterBoxplotsGraphs
 
  */
-class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
+class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQTPGraphBoxplotStyleMixin {
         Q_OBJECT
     public:
 
+        /** \brief Sortierordnung für Daten in einem JKQTPBoxplotVerticalGraph (oder seinen Kindern) */
         enum DataSortOrder {
             Unsorted=0,
             Sorted=1
@@ -102,11 +172,13 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         JKQTPBoxplotVerticalGraph(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter);
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect);
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
+        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
+        virtual void setColor(QColor c);
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -125,243 +197,85 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
 
         /*! \copydoc sortData
             \see see sortData for details */ 
-        inline virtual void setDataSortOrder(const DataSortOrder & __value)  
-        {
-            this->sortData = __value;
-        } 
+        void setDataSortOrder(DataSortOrder  __value);
         /*! \copydoc sortData
             \see see sortData for details */ 
-        inline virtual DataSortOrder getDataSortOrder() const  
-        {
-            return this->sortData; 
-        }
+        DataSortOrder getDataSortOrder() const;
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
         void setDataSortOrder(int __value);
         /*! \copydoc posColumn
             \see see posColumn for details */ 
-        inline virtual void setPosColumn(int __value)
-        {
-            this->posColumn = __value;
-        } 
+        void setPositionColumn(int __value);
         /*! \copydoc posColumn
             \see see posColumn for details */ 
-        inline virtual int getPosColumn() const  
-        {
-            return this->posColumn; 
-        }
+        int getPositionColumn() const;
         /*! \brief sets the property posColumn ( \copybrief posColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter posColumn is:  <BLOCKQUOTE>\copydoc posColumn </BLOCKQUOTE> 
             \see posColumn for more information */ 
-        inline virtual void setPosColumn (size_t __value) { this->posColumn = static_cast<int>(__value); }
+        void setPositionColumn (size_t __value);
         /*! \copydoc medianColumn
             \see see medianColumn for details */ 
-        inline virtual void setMedianColumn(int __value)
-        {
-            this->medianColumn = __value;
-        } 
+        void setMedianColumn(int __value);
         /*! \copydoc medianColumn
             \see see medianColumn for details */ 
-        inline virtual int getMedianColumn() const  
-        {
-            return this->medianColumn; 
-        }
+        int getMedianColumn() const;
         /*! \brief sets the property medianColumn ( \copybrief medianColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter medianColumn is:  <BLOCKQUOTE>\copydoc medianColumn </BLOCKQUOTE> 
             \see medianColumn for more information */ 
-        inline virtual void setMedianColumn (size_t __value) { this->medianColumn = static_cast<int>(__value); }
+        void setMedianColumn (size_t __value);
         /*! \copydoc meanColumn
             \see see meanColumn for details */ 
-        inline virtual void setMeanColumn(int __value)
-        {
-            this->meanColumn = __value;
-        } 
+        void setMeanColumn(int __value);
         /*! \copydoc meanColumn
             \see see meanColumn for details */ 
-        inline virtual int getMeanColumn() const  
-        {
-            return this->meanColumn; 
-        }
+        int getMeanColumn() const;
         /*! \brief sets the property meanColumn ( \copybrief meanColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter meanColumn is:  <BLOCKQUOTE>\copydoc meanColumn </BLOCKQUOTE> 
             \see meanColumn for more information */ 
-        inline virtual void setMeanColumn (size_t __value) { this->meanColumn = static_cast<int>(__value); }
+        void setMeanColumn (size_t __value);
         /*! \copydoc minColumn
             \see see minColumn for details */ 
-        inline virtual void setMinColumn(int __value)
-        {
-            this->minColumn = __value;
-        } 
+        void setMinColumn(int __value);
         /*! \copydoc minColumn
             \see see minColumn for details */ 
-        inline virtual int getMinColumn() const  
-        {
-            return this->minColumn; 
-        }
+        int getMinColumn() const;
         /*! \brief sets the property minColumn ( \copybrief minColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter minColumn is:  <BLOCKQUOTE>\copydoc minColumn </BLOCKQUOTE> 
             \see minColumn for more information */ 
-        inline virtual void setMinColumn( size_t __value) { this->minColumn = static_cast<int>(__value); }
+        void setMinColumn( size_t __value);
         /*! \copydoc maxColumn
             \see see maxColumn for details */ 
-        inline virtual void setMaxColumn(int __value)
-        {
-            this->maxColumn = __value;
-        } 
+        void setMaxColumn(int __value);
         /*! \copydoc maxColumn
             \see see maxColumn for details */ 
-        inline virtual int getMaxColumn() const  
-        {
-            return this->maxColumn; 
-        }
+        int getMaxColumn() const;
         /*! \brief sets the property maxColumn ( \copybrief maxColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter maxColumn is:  <BLOCKQUOTE>\copydoc maxColumn </BLOCKQUOTE> 
             \see maxColumn for more information */ 
-        inline virtual void setMaxColumn (size_t __value) { this->maxColumn = static_cast<int>(__value); }
+        void setMaxColumn (size_t __value);
         /*! \copydoc percentile25Column
             \see see percentile25Column for details */ 
-        inline virtual void setPercentile25Column(int __value)
-        {
-            this->percentile25Column = __value;
-        } 
+        void setPercentile25Column(int __value);
         /*! \copydoc percentile25Column
             \see see percentile25Column for details */ 
-        inline virtual int getPercentile25Column() const  
-        {
-            return this->percentile25Column; 
-        }
+        int getPercentile25Column() const;
         /*! \brief sets the property percentile25Column ( \copybrief percentile25Column ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter percentile25Column is:  <BLOCKQUOTE>\copydoc percentile25Column </BLOCKQUOTE> 
             \see percentile25Column for more information */ 
-        inline virtual void setPercentile25Column (size_t __value) { this->percentile25Column = static_cast<int>(__value); }
+        void setPercentile25Column (size_t __value);
         /*! \copydoc percentile75Column
             \see see percentile75Column for details */ 
-        inline virtual void setPercentile75Column(int __value)
-        {
-            this->percentile75Column = __value;
-        } 
+        void setPercentile75Column(int __value);
         /*! \copydoc percentile75Column
             \see see percentile75Column for details */ 
-        inline virtual int getPercentile75Column() const  
-        {
-            return this->percentile75Column; 
-        }
+        int getPercentile75Column() const;
         /*! \brief sets the property percentile75Column ( \copybrief percentile75Column ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter percentile75Column is:  <BLOCKQUOTE>\copydoc percentile75Column </BLOCKQUOTE> 
             \see percentile75Column for more information */ 
-        inline virtual void setPercentile75Column (size_t __value) { this->percentile75Column = static_cast<int>(__value); }
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc whiskerStyle
-            \see see whiskerStyle for details */ 
-        inline virtual void setWhiskerStyle(const Qt::PenStyle & __value)  
-        {
-            this->whiskerStyle = __value;
-        } 
-        /*! \copydoc whiskerStyle
-            \see see whiskerStyle for details */ 
-        inline virtual Qt::PenStyle getWhiskerStyle() const  
-        {
-            return this->whiskerStyle; 
-        }
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual void setFillStyle(const Qt::BrushStyle & __value)  
-        {
-            this->fillStyle = __value;
-        } 
-        /*! \copydoc fillStyle
-            \see see fillStyle for details */ 
-        inline virtual Qt::BrushStyle getFillStyle() const  
-        {
-            return this->fillStyle; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
-        /*! \copydoc boxWidth
-            \see see boxWidth for details */ 
-        inline virtual void setBoxWidth(double __value)
-        {
-            this->boxWidth = __value;
-        } 
-        /*! \copydoc boxWidth
-            \see see boxWidth for details */ 
-        inline virtual double getBoxWidth() const  
-        {
-            return this->boxWidth; 
-        }
+        void setPercentile75Column (size_t __value);
 
-        /*! \copydoc meanSymbol
-            \see see meanSymbol for details */ 
-        inline virtual void setMeanSymbol(JKQTPGraphSymbols __value)  
-        {
-            this->meanSymbol = __value;
-        } 
-        /*! \copydoc meanSymbol
-            \see see meanSymbol for details */ 
-        inline virtual JKQTPGraphSymbols getMeanSymbol() const  
-        {
-            return this->meanSymbol; 
-        }
-        /*! \copydoc meanSymbolWidth
-            \see see meanSymbolWidth for details */ 
-        inline virtual void setMeanSymbolWidth(double __value)
-        {
-            this->meanSymbolWidth = __value;
-        } 
-        /*! \copydoc meanSymbolWidth
-            \see see meanSymbolWidth for details */ 
-        inline virtual double getMeanSymbolWidth() const  
-        {
-            return this->meanSymbolWidth; 
-        }
-        /*! \copydoc meanSymbolSize
-            \see see meanSymbolSize for details */ 
-        inline virtual void setMeanSymbolSize(double __value)
-        {
-            this->meanSymbolSize = __value;
-        } 
-        /*! \copydoc meanSymbolSize
-            \see see meanSymbolSize for details */ 
-        inline virtual double getMeanSymbolSize() const  
-        {
-            return this->meanSymbolSize; 
-        }
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */
         int posColumn;
@@ -377,33 +291,13 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph {
         int percentile25Column;
         /** \brief the column that contains the 75% percentile-component of the datapoints */
         int percentile75Column;
-        /** \brief color of the lines */
-        QColor color;
-        /** \brief color of the box fill */
-        QColor fillColor;
-        /** \brief fill style for the box */
-        Qt::BrushStyle fillStyle;
-        /** \brief linestyle of the whisker lines */
-        Qt::PenStyle whiskerStyle;
-        /** \brief width (pt) of the graph, given in pt */
-        double lineWidth;
-        /** \brief width of box in percent of distance between the current two posColumn values
-         *         if we only plot one box&whiskers then this is the width in plot coordinates */
-        double boxWidth;
-        /** \brief which symbol to use for the mean  */
-        JKQTPGraphSymbols meanSymbol;
-        /** \brief size (diameter in pt) of the symbol for the mean */
-        double meanSymbolSize;
-        /** \brief width (in pt) of the lines used to plot the symbol for the mean */
-        double meanSymbolWidth;
-
-        QBrush getBrush(JKQTPEnhancedPainter& painter) const;
-        QPen getLinePen(JKQTPEnhancedPainter &painter) const;
         /** \brief if \c !=Unsorted, the data is sorted before plotting */
         DataSortOrder sortData;
         /** \brief this array contains the order of indices, in which to access the data in the data columns */
         QVector<int> sortedIndices;
+
         virtual void intSortData() ;
+
         inline  int getDataIndex(int i) {
             if (sortData==Unsorted) return i;
             return sortedIndices.value(i,i);
@@ -472,7 +366,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalG
 
     \image html boxplots.png
  */
-class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
+class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphBoxplotStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -502,237 +396,67 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
 
         /*! \copydoc pos
             \see see pos for details */ 
-        inline virtual void setPos(double __value)
-        {
-            this->pos = __value;
-        } 
+        void setPos(double __value);
         /*! \copydoc pos
             \see see pos for details */ 
-        inline virtual double getPos() const  
-        {
-            return this->pos; 
-        }
+        double getPos() const;
         /*! \copydoc median
             \see see median for details */ 
-        inline virtual void setMedian(double __value)
-        {
-            if (this->median != __value) { 
-                this->median = __value; 
-                drawMedian=true; 
-            } 
-        } 
+        void setMedian(double __value);
         /*! \copydoc median
             \see see median for details */ 
-        inline virtual double getMedian() const  
-        {
-            return this->median; 
-        }
+        double getMedian() const;
         /*! \copydoc mean
             \see see mean for details */ 
-        inline virtual void setMean(double __value)
-        {
-            if (this->mean != __value) { 
-                this->mean = __value; 
-                drawMean=true; 
-            } 
-        } 
+        void setMean(double __value);
         /*! \copydoc mean
             \see see mean for details */ 
-        inline virtual double getMean() const  
-        {
-            return this->mean; 
-        }
+        double getMean() const;
         /*! \copydoc min
             \see see min for details */ 
-        inline virtual void setMin(double __value)
-        {
-            if (this->min != __value) { 
-                this->min = __value; 
-                drawMinMax=true; 
-            } 
-        } 
+        void setMin(double __value);
         /*! \copydoc min
             \see see min for details */ 
-        inline virtual double getMin() const  
-        {
-            return this->min; 
-        }
+        double getMin() const;
         /*! \copydoc max
             \see see max for details */ 
-        inline virtual void setMax(double __value)
-        {
-            if (this->max != __value) { 
-                this->max = __value; 
-                drawMinMax=true; 
-            } 
-        } 
+        void setMax(double __value);
         /*! \copydoc max
             \see see max for details */ 
-        inline virtual double getMax() const  
-        {
-            return this->max; 
-        }
+        double getMax() const;
         /*! \copydoc percentile25
             \see see percentile25 for details */ 
-        inline virtual void setPercentile25(double __value)
-        {
-            this->percentile25 = __value;
-        } 
+        void setPercentile25(double __value);
         /*! \copydoc percentile25
             \see see percentile25 for details */ 
-        inline virtual double getPercentile25() const  
-        {
-            return this->percentile25; 
-        }
+        double getPercentile25() const;
         /*! \copydoc percentile75
             \see see percentile75 for details */ 
-        inline virtual void setPercentile75(double __value)
-        {
-            this->percentile75 = __value;
-        } 
+        void setPercentile75(double __value);
         /*! \copydoc percentile75
             \see see percentile75 for details */ 
-        inline virtual double getPercentile75() const  
-        {
-            return this->percentile75; 
-        }
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual void setColor(const QColor & __value)  
-        {
-            this->color = __value;
-        } 
-        /*! \copydoc color
-            \see see color for details */ 
-        inline virtual QColor getColor() const  
-        {
-            return this->color; 
-        }
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual void setFillColor(const QColor & __value)  
-        {
-            this->fillColor = __value;
-        } 
-        /*! \copydoc fillColor
-            \see see fillColor for details */ 
-        inline virtual QColor getFillColor() const  
-        {
-            return this->fillColor; 
-        }
-        /*! \copydoc whiskerStyle
-            \see see whiskerStyle for details */ 
-        inline virtual void setWhiskerStyle(const Qt::PenStyle & __value)  
-        {
-            this->whiskerStyle = __value;
-        } 
-        /*! \copydoc whiskerStyle
-            \see see whiskerStyle for details */ 
-        inline virtual Qt::PenStyle getWhiskerStyle() const  
-        {
-            return this->whiskerStyle; 
-        }
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual void setLineWidth(double __value)
-        {
-            this->lineWidth = __value;
-        } 
-        /*! \copydoc lineWidth
-            \see see lineWidth for details */ 
-        inline virtual double getLineWidth() const  
-        {
-            return this->lineWidth; 
-        }
-        /*! \copydoc boxWidth
-            \see see boxWidth for details */ 
-        inline virtual void setBoxWidth(double __value)
-        {
-            this->boxWidth = __value;
-        } 
-        /*! \copydoc boxWidth
-            \see see boxWidth for details */ 
-        inline virtual double getBoxWidth() const  
-        {
-            return this->boxWidth; 
-        }
+        double getPercentile75() const;
 
-        /*! \copydoc meanSymbol
-            \see see meanSymbol for details */ 
-        inline virtual void setMeanSymbol(JKQTPGraphSymbols __value)  
-        {
-            this->meanSymbol = __value;
-        } 
-        /*! \copydoc meanSymbol
-            \see see meanSymbol for details */ 
-        inline virtual JKQTPGraphSymbols getMeanSymbol() const  
-        {
-            return this->meanSymbol; 
-        }
-        /*! \copydoc meanSymbolWidth
-            \see see meanSymbolWidth for details */ 
-        inline virtual void setMeanSymbolWidth(double __value)
-        {
-            this->meanSymbolWidth = __value;
-        } 
-        /*! \copydoc meanSymbolWidth
-            \see see meanSymbolWidth for details */ 
-        inline virtual double getMeanSymbolWidth() const  
-        {
-            return this->meanSymbolWidth; 
-        }
-        /*! \copydoc meanSymbolSize
-            \see see meanSymbolSize for details */ 
-        inline virtual void setMeanSymbolSize(double __value)
-        {
-            this->meanSymbolSize = __value;
-        } 
-        /*! \copydoc meanSymbolSize
-            \see see meanSymbolSize for details */ 
-        inline virtual double getMeanSymbolSize() const  
-        {
-            return this->meanSymbolSize; 
-        }
         /*! \copydoc drawMean
             \see see drawMean for details */ 
-        inline virtual void setDrawMean(bool __value)
-        {
-            this->drawMean = __value;
-        } 
+        void setDrawMean(bool __value);
         /*! \copydoc drawMean
             \see see drawMean for details */ 
-        inline virtual bool getDrawMean() const  
-        {
-            return this->drawMean; 
-        }
+        bool getDrawMean() const;
         /*! \copydoc drawMedian
             \see see drawMedian for details */ 
-        inline virtual void setDrawMedian(bool __value)
-        {
-            this->drawMedian = __value;
-        } 
+        void setDrawMedian(bool __value);
         /*! \copydoc drawMedian
             \see see drawMedian for details */ 
-        inline virtual bool getDrawMedian() const  
-        {
-            return this->drawMedian; 
-        }
+        bool getDrawMedian() const;
         /*! \copydoc drawMinMax
             \see see drawMinMax for details */ 
-        inline virtual void setDrawMinMax(bool __value)
-        {
-            this->drawMinMax = __value;
-        } 
+        void setDrawMinMax(bool __value);
         /*! \copydoc drawMinMax
             \see see drawMinMax for details */ 
-        inline virtual bool getDrawMinMax() const  
-        {
-            return this->drawMinMax; 
-        }
+        bool getDrawMinMax() const;
 
     protected:
-        /** \brief which plot style to use from the parent plotter (via JKQTBasePlotter::getPlotStyle() and JKQTBasePlotter::getNextStyle() ) */
-        int parentPlotStyle;
 
         /** \brief the column that contains the x-component of the datapoints */
         double pos;
@@ -754,27 +478,6 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject {
         double percentile25;
         /** \brief the column that contains the 75% percentile-component of the datapoints */
         double percentile75;
-        /** \brief color of the lines */
-        QColor color;
-        /** \brief color of the box fill */
-        QColor fillColor;
-        /** \brief fill style for the box */
-        Qt::BrushStyle fillStyle;
-        /** \brief linestyle of the whisker lines */
-        Qt::PenStyle whiskerStyle;
-        /** \brief width (pixels) of the graph */
-        double lineWidth;
-        /** \brief width of box, given in pt */
-        double boxWidth;
-        /** \brief which symbol to use for the mean  */
-        JKQTPGraphSymbols meanSymbol;
-        /** \brief size (diameter in pt) of the symbol for the mean */
-        double meanSymbolSize;
-        /** \brief width (in pt) of the lines used to plot the symbol for the mean */
-        double meanSymbolWidth;
-
-        QBrush getBrush(JKQTPEnhancedPainter& painter) const;
-        QPen getLinePen(JKQTPEnhancedPainter& painter) const;
 };
 
 

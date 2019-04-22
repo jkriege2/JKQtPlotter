@@ -32,7 +32,7 @@ After adding all necessary data to the JKQTDatastore:
 ```.cpp
     // 4. create a graph of vertical boxplots:
     JKQTPBoxplotVerticalGraph* graph=new JKQTPBoxplotVerticalGraph(&plot);
-    graph->setPosColumn(columnPOS);
+    graph->setPositionColumn(columnPOS);
     graph->setMinColumn(columnMIN);
     graph->setPercentile25Column(columnQ25);
     graph->setMedianColumn(columnMEDIAN);
@@ -48,9 +48,9 @@ You can further style the plot by e.g. setting:
     // 4.1 make fill collor a lighter shade of the outline color
     graph->setFillColor(graphh->getColor().lighter());
     // 4.2 make whiskers dashed
-    graph->setWhiskerStyle(Qt::DashLine);
+    graph->setWhiskerLineStyle(Qt::DashLine);
     // 4.3 change mean symbol
-    graph->setMeanSymbol(JKQTPstar);
+    graph->setSymbolType(JKQTPstar);
 ```
 
 The result looks like this:

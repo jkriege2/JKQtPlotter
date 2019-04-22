@@ -32,6 +32,102 @@
 
 
 
+JKQTPGraphBoxplotStyleMixin::JKQTPGraphBoxplotStyleMixin()
+{
+
+    boxWidth=0.4;
+
+    whiskerLineColor=getLineColor();
+    whiskerLineStyle=getLineStyle();
+    whiskerLineWidth=getLineWidth();
+
+}
+
+
+void JKQTPGraphBoxplotStyleMixin::initBoxplotStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+{
+    initFillStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle);
+    initSymbolStyle(parent, parentPlotStyle);
+    if (parent && parentPlotStyle>=0) { // get style settings from parent object
+        parentPlotStyle=parent->getNextStyle();
+        whiskerLineStyle=parent->getPlotStyle(parentPlotStyle).style();
+        whiskerLineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+    }
+
+    whiskerLineColor=getLineColor();
+
+}
+
+void JKQTPGraphBoxplotStyleMixin::setBoxplotColor(QColor c, JKQTBasePlotter *parent)
+{
+    setLineColor(c);
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    c.setAlphaF(0.5);
+    setHighlightingLineColor(c);
+    setSymbolColor(c);
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    whiskerLineColor=getLineColor();
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineStyle(const Qt::PenStyle &__value)
+{
+    this->whiskerLineStyle = __value;
+}
+
+Qt::PenStyle JKQTPGraphBoxplotStyleMixin::getWhiskerLineStyle() const
+{
+    return this->whiskerLineStyle;
+}
+
+void JKQTPGraphBoxplotStyleMixin::setBoxWidth(double __value)
+{
+    this->boxWidth = __value;
+}
+
+double JKQTPGraphBoxplotStyleMixin::getBoxWidth() const
+{
+    return this->boxWidth;
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineWidth(double __value)
+{
+    whiskerLineWidth=__value;
+}
+
+double JKQTPGraphBoxplotStyleMixin::getWhiskerLineWidth() const
+{
+    return whiskerLineWidth;
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineColor(QColor __value)
+{
+    whiskerLineColor=__value;
+}
+
+QColor JKQTPGraphBoxplotStyleMixin::getWhiskerLineColor() const
+{
+    return whiskerLineColor;
+}
+
+QPen JKQTPGraphBoxplotStyleMixin::getWhiskerPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
+{
+    QPen pw=getLinePenForRects(painter, parent);
+    pw.setStyle(whiskerLineStyle);
+    pw.setWidthF(whiskerLineWidth);
+    pw.setColor(whiskerLineColor);
+    return pw;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -47,62 +143,16 @@ JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTBasePlotter* parent):
     maxColumn=-1;
     percentile25Column=-1;
     percentile75Column=-1;
-    color=QColor("red");
-    fillColor=QColor("white");
-    fillStyle=Qt::SolidPattern;
-    whiskerStyle=Qt::SolidLine;
-    lineWidth=1;
-    boxWidth=0.4;
-    meanSymbol=JKQTPPlus;
-    meanSymbolWidth=1;
-    meanSymbolSize=12;
+
     sortData=Unsorted;
 
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        whiskerStyle=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        meanSymbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
-        meanSymbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
-    }
-
+    initBoxplotStyle(parent, parentPlotStyle);
 }
 
 
 JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTPlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPBoxplotVerticalGraph(parent->getPlotter())
 {
-    posColumn=-1;
-    medianColumn=-1;
-    meanColumn=-1;
-    minColumn=-1;
-    maxColumn=-1;
-    percentile25Column=-1;
-    percentile75Column=-1;
-    color=QColor("red");
-    fillColor=QColor("white");
-    fillStyle=Qt::SolidPattern;
-    whiskerStyle=Qt::SolidLine;
-    lineWidth=1;
-    boxWidth=0.4;
-    meanSymbol=JKQTPPlus;
-    meanSymbolWidth=1;
-    meanSymbolSize=12;
-    sortData=Unsorted;
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        whiskerStyle=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        meanSymbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
-        meanSymbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
-    }
 
 }
 
@@ -118,19 +168,10 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     drawErrorsBefore(painter);
 
 
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen pw=p;
-    pw.setStyle(whiskerStyle);
+    QPen p=getLinePenForRects(painter, parent);
+    QPen pw=getWhiskerPen(painter, parent);
     QPen np(Qt::NoPen);
-
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+    QBrush b=getFillBrush(painter, parent);
 
     int imax=datastore->getColumn(posColumn).getRows();
     int imin=0;
@@ -199,7 +240,7 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 else xn=x+1;
 
 
-                double w=((boxwidth_real>0)?boxwidth_real:(fabs(xn-x)))*boxWidth;
+                double w=((boxwidth_real>0)?boxwidth_real:(fabs(xn-x)))*getBoxWidth();
                 double minstop=p25;
                 double maxstop=p75;
                 if (percentile25Column<0 && medianColumn>=0) minstop=median;
@@ -214,10 +255,10 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 double xmi4=x-w/4.0;
 
                 if (imax<=0) {
-                    xma=transformX(xv+boxWidth/2.0);
-                    xmi=transformX(xv-boxWidth/2.0);
-                    xma4=transformX(xv+boxWidth/4.0);
-                    xmi4=transformX(xv-boxWidth/4.0);
+                    xma=transformX(xv+getBoxWidth()/2.0);
+                    xmi=transformX(xv-getBoxWidth()/2.0);
+                    xma4=transformX(xv+getBoxWidth()/4.0);
+                    xmi4=transformX(xv-getBoxWidth()/4.0);
                 }
 
                 if (minColumn>=0) {
@@ -232,7 +273,7 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (percentile25Column>=0 && percentile75Column>=0) painter.drawRect(QRectF(xmi, p75, fabs(xma-xmi), fabs(p75-p25)));
                 if (medianColumn>=0) lines_p.append(QLineF(xmi+p.widthF()/2.0, median, xma-p.widthF()/2.0, median));
                 if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                    JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                    plotStyledSymbol(parent, painter,x,mean);
                 }
 
 
@@ -280,7 +321,7 @@ bool JKQTPBoxplotVerticalGraph::getXMinMax(double& minx, double& maxx, double& s
             else if (i-1>=0) xn=datastore->get(posColumn,i-1);
             else xn=xv+1;
             double delta=fabs(xn-xv);
-            double w=delta*boxWidth;
+            double w=delta*getBoxWidth();
             double xma=xv+w;
             double xmi=xv-w;
             if (start || xma>maxx) maxx=xma;
@@ -350,26 +391,129 @@ bool JKQTPBoxplotVerticalGraph::usesColumn(int c) const
     return (c==meanColumn)||(c==posColumn)||(c==medianColumn)||(c==minColumn)||(c==maxColumn)||(c==percentile25Column)||(c==percentile75Column);
 }
 
+void JKQTPBoxplotVerticalGraph::setDataSortOrder(JKQTPBoxplotVerticalGraph::DataSortOrder __value)
+{
+    this->sortData = __value;
+}
+
+JKQTPBoxplotVerticalGraph::DataSortOrder JKQTPBoxplotVerticalGraph::getDataSortOrder() const
+{
+    return this->sortData;
+}
+
 void JKQTPBoxplotVerticalGraph::setDataSortOrder(int __value) {
     sortData=(DataSortOrder)__value;
     if (__value>0) sortData=Sorted;
 }
 
+void JKQTPBoxplotVerticalGraph::setPositionColumn(int __value)
+{
+    this->posColumn = __value;
+}
+
+int JKQTPBoxplotVerticalGraph::getPositionColumn() const
+{
+    return this->posColumn;
+}
+
+void JKQTPBoxplotVerticalGraph::setPositionColumn(size_t __value) {
+    this->posColumn = static_cast<int>(__value);
+}
+
+void JKQTPBoxplotVerticalGraph::setMedianColumn(int __value)
+{
+    this->medianColumn = __value;
+}
+
+int JKQTPBoxplotVerticalGraph::getMedianColumn() const
+{
+    return this->medianColumn;
+}
+
+void JKQTPBoxplotVerticalGraph::setMedianColumn(size_t __value) {
+    this->medianColumn = static_cast<int>(__value);
+}
+
+void JKQTPBoxplotVerticalGraph::setMeanColumn(int __value)
+{
+    this->meanColumn = __value;
+}
+
+int JKQTPBoxplotVerticalGraph::getMeanColumn() const
+{
+    return this->meanColumn;
+}
+
+void JKQTPBoxplotVerticalGraph::setMeanColumn(size_t __value) {
+    this->meanColumn = static_cast<int>(__value);
+}
+
+void JKQTPBoxplotVerticalGraph::setMinColumn(int __value)
+{
+    this->minColumn = __value;
+}
+
+int JKQTPBoxplotVerticalGraph::getMinColumn() const
+{
+    return this->minColumn;
+}
+
+void JKQTPBoxplotVerticalGraph::setMinColumn(size_t __value) {
+    this->minColumn = static_cast<int>(__value);
+}
+
+void JKQTPBoxplotVerticalGraph::setMaxColumn(int __value)
+{
+    this->maxColumn = __value;
+}
+
+int JKQTPBoxplotVerticalGraph::getMaxColumn() const
+{
+    return this->maxColumn;
+}
+
+void JKQTPBoxplotVerticalGraph::setMaxColumn(size_t __value) {
+    this->maxColumn = static_cast<int>(__value);
+}
+
+void JKQTPBoxplotVerticalGraph::setPercentile25Column(int __value)
+{
+    this->percentile25Column = __value;
+}
+
+int JKQTPBoxplotVerticalGraph::getPercentile25Column() const
+{
+    return this->percentile25Column;
+}
+
+void JKQTPBoxplotVerticalGraph::setPercentile25Column(size_t __value) {
+    this->percentile25Column = static_cast<int>(__value);
+}
+
+void JKQTPBoxplotVerticalGraph::setPercentile75Column(int __value)
+{
+    this->percentile75Column = __value;
+}
+
+int JKQTPBoxplotVerticalGraph::getPercentile75Column() const
+{
+    return this->percentile75Column;
+}
+
+void JKQTPBoxplotVerticalGraph::setPercentile75Column(size_t __value) {
+    this->percentile75Column = static_cast<int>(__value);
+}
+
 
 void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=painter.pen();
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setJoinStyle(Qt::RoundJoin);
-    QPen pw=p;
-    pw.setStyle(whiskerStyle);
+    QPen p=getLinePenForRects(painter, parent);
+    QPen pw=getWhiskerPen(painter, parent);
     QPen np(Qt::NoPen);
+    QBrush b=getFillBrush(painter, parent);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+    p.setWidthF(qMin(1.0, p.widthF()));
+    pw.setWidthF(qMin(1.0, pw.widthF()));
 
     double x=rect.left()+rect.width()/2.0;
     double xma=x+rect.width()/2.5;
@@ -398,7 +542,12 @@ void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRe
 }
 
 QColor JKQTPBoxplotVerticalGraph::getKeyLabelColor() const {
-    return color;
+    return getLineColor();
+}
+
+void JKQTPBoxplotVerticalGraph::setColor(QColor c)
+{
+    setBoxplotColor(c, getParent());
 }
 
 
@@ -406,19 +555,13 @@ QColor JKQTPBoxplotVerticalGraph::getKeyLabelColor() const {
 
 void JKQTPBoxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen pw=p;
-    pw.setStyle(whiskerStyle);
+    QPen p=getLinePenForRects(painter, parent);
+    QPen pw=getWhiskerPen(painter, parent);
     QPen np(Qt::NoPen);
+    QBrush b=getFillBrush(painter, parent);
+    p.setWidthF(qMin(1.0, p.widthF()));
+    pw.setWidthF(qMin(1.0, pw.widthF()));
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
 
     double y=rect.top()+rect.height()/2.0;
     double yma=y+rect.height()/2.5;
@@ -523,7 +666,7 @@ bool JKQTPBoxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double&
         else if (i-1>=0) xn=datastore->get(posColumn,i-1);
         else xn=xv+1;
         double delta=fabs(xn-xv);
-        double w=delta*boxWidth;
+        double w=delta*getBoxWidth();
         double xma=xv+w;
         double xmi=xv-w;
         if (JKQTPIsOKFloat(xma) && JKQTPIsOKFloat(xmi) ) {
@@ -544,7 +687,7 @@ JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTBasePlotter *parent
 }
 
 JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTPlotter *parent):
-    JKQTPBoxplotVerticalGraph(parent)
+    JKQTPBoxplotHorizontalGraph(parent->getPlotter())
 {
 }
 
@@ -558,20 +701,11 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     drawErrorsBefore(painter);
 
-
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen pw=p;
-    pw.setStyle(whiskerStyle);
+    QPen p=getLinePenForRects(painter, parent);
+    QPen pw=getWhiskerPen(painter, parent);
     QPen np(Qt::NoPen);
+    QBrush b=getFillBrush(painter, parent);
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
 
     int imax=datastore->getColumn(posColumn).getRows();
     int imin=0;
@@ -651,17 +785,17 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 else if (i-1>=0) yn=transformY(datastore->get(posColumn,i-1));
                 else yn=y+1;
                 double delta=fabs(yn-y);
-                double w=((boxwidth_real>0)?boxwidth_real:(delta))*boxWidth;
+                double w=((boxwidth_real>0)?boxwidth_real:(delta))*getBoxWidth();
                 double yma=y-w/2.0;
                 double ymi=y+w/2.0;
                 double yma4=y+w/4.0;
                 double ymi4=y-w/4.0;
 
                 if (imax<=1) {
-                    ymi=transformY(yv+boxWidth/2.0);
-                    yma=transformY(yv-boxWidth/2.0);
-                    yma4=transformY(yv+boxWidth/4.0);
-                    ymi4=transformY(yv-boxWidth/4.0);
+                    ymi=transformY(yv+getBoxWidth()/2.0);
+                    yma=transformY(yv-getBoxWidth()/2.0);
+                    yma4=transformY(yv+getBoxWidth()/4.0);
+                    ymi4=transformY(yv-getBoxWidth()/4.0);
                 }
                 if (minColumn>=0) {
                     lines_p.append(QLineF(min, ymi4, min, yma4));
@@ -675,7 +809,7 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (medianColumn>=0) lines_p.append(QLineF(median, ymi-p.widthF()/2.0, median, yma+p.widthF()/2.0));
 
                 if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
-                    JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                    plotStyledSymbol(parent, painter, mean, y);
                 }
 
                 //first=true;
@@ -725,63 +859,16 @@ JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent
     drawMinMax=true;
     percentile25=-0.75;
     percentile75=0.75;
-    color=QColor("red");
-    fillColor=QColor("white");
-    fillStyle=Qt::SolidPattern;
-    whiskerStyle=Qt::SolidLine;
-    lineWidth=1;
-    boxWidth=16;
-    meanSymbol=JKQTPPlus;
-    meanSymbolWidth=1;
-    meanSymbolSize=12;
 
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        whiskerStyle=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        meanSymbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
-        meanSymbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
-    }
+    initBoxplotStyle(parent, parentPlotStyle);
 
 }
 
 JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTPlotter* parent):
-    JKQTPPlotObject(parent)
+    JKQTPBoxplotVerticalElement(parent->getPlotter())
 {
-    pos=0;
-    median=0;
-    mean=0;
-    min=-1;
-    max=1;
-    drawMean=true;
-    drawMinMax=true;
-    percentile25=-0.75;
-    percentile75=0.75;
-    color=QColor("red");
-    fillColor=QColor("white");
-    fillStyle=Qt::SolidPattern;
-    whiskerStyle=Qt::SolidLine;
-    lineWidth=1;
-    boxWidth=16;
-    meanSymbol=JKQTPPlus;
-    meanSymbolWidth=1;
-    meanSymbolSize=12;
-
-    if (parent) { // get style settings from parent object
-        parentPlotStyle=parent->getNextStyle();
-        //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        color=parent->getPlotStyle(parentPlotStyle).color();
-        fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
-        whiskerStyle=parent->getPlotStyle(parentPlotStyle).style();
-        lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        meanSymbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
-        meanSymbolWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
-    }
-
 }
+
 void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPBoxplotVerticalElement::draw");
@@ -792,19 +879,11 @@ void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-        QPen p=painter.pen();
-        p.setColor(color);
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setCapStyle(Qt::RoundCap);
-        QPen pw=p;
-        pw.setStyle(whiskerStyle);
+        QPen p=getLinePenForRects(painter, parent);
+        QPen pw=getWhiskerPen(painter, parent);
         QPen np(Qt::NoPen);
+        QBrush b=getFillBrush(painter, parent);
 
-        QBrush b=painter.brush();
-        b.setColor(fillColor);
-        b.setStyle(fillStyle);
 
 
         double xv=pos;
@@ -827,7 +906,7 @@ void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
             double max=transformY(maxv);
             double median=transformY(medianv);
 
-            double w=boxWidth;
+            double w=getBoxWidth();
             double xma=x+w/2.0;
             double xmi=x-w/2.0;
 
@@ -853,7 +932,7 @@ void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 
             if (drawMean) {
                 double mean=transformY(this->mean);
-                JKQTPPlotSymbol(painter, x, mean, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                plotStyledSymbol(parent, painter, x, mean);
             }
 
 
@@ -918,22 +997,128 @@ bool JKQTPBoxplotVerticalElement::getYMinMax(double& miny, double& maxy, double&
         return true;
 }
 
+void JKQTPBoxplotVerticalElement::setPos(double __value)
+{
+    this->pos = __value;
+}
+
+double JKQTPBoxplotVerticalElement::getPos() const
+{
+    return this->pos;
+}
+
+void JKQTPBoxplotVerticalElement::setMedian(double __value)
+{
+    if (this->median != __value) {
+        this->median = __value;
+        drawMedian=true;
+    }
+}
+
+double JKQTPBoxplotVerticalElement::getMedian() const
+{
+    return this->median;
+}
+
+void JKQTPBoxplotVerticalElement::setMean(double __value)
+{
+    if (this->mean != __value) {
+        this->mean = __value;
+        drawMean=true;
+    }
+}
+
+double JKQTPBoxplotVerticalElement::getMean() const
+{
+    return this->mean;
+}
+
+void JKQTPBoxplotVerticalElement::setMin(double __value)
+{
+    if (this->min != __value) {
+        this->min = __value;
+        drawMinMax=true;
+    }
+}
+
+double JKQTPBoxplotVerticalElement::getMin() const
+{
+    return this->min;
+}
+
+void JKQTPBoxplotVerticalElement::setMax(double __value)
+{
+    if (this->max != __value) {
+        this->max = __value;
+        drawMinMax=true;
+    }
+}
+
+double JKQTPBoxplotVerticalElement::getMax() const
+{
+    return this->max;
+}
+
+void JKQTPBoxplotVerticalElement::setPercentile25(double __value)
+{
+    this->percentile25 = __value;
+}
+
+double JKQTPBoxplotVerticalElement::getPercentile25() const
+{
+    return this->percentile25;
+}
+
+void JKQTPBoxplotVerticalElement::setPercentile75(double __value)
+{
+    this->percentile75 = __value;
+}
+
+double JKQTPBoxplotVerticalElement::getPercentile75() const
+{
+    return this->percentile75;
+}
+
+void JKQTPBoxplotVerticalElement::setDrawMean(bool __value)
+{
+    this->drawMean = __value;
+}
+
+bool JKQTPBoxplotVerticalElement::getDrawMean() const
+{
+    return this->drawMean;
+}
+
+void JKQTPBoxplotVerticalElement::setDrawMedian(bool __value)
+{
+    this->drawMedian = __value;
+}
+
+bool JKQTPBoxplotVerticalElement::getDrawMedian() const
+{
+    return this->drawMedian;
+}
+
+void JKQTPBoxplotVerticalElement::setDrawMinMax(bool __value)
+{
+    this->drawMinMax = __value;
+}
+
+bool JKQTPBoxplotVerticalElement::getDrawMinMax() const
+{
+    return this->drawMinMax;
+}
+
 
 void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen pw=p;
-    pw.setStyle(whiskerStyle);
+    QPen p=getLinePenForRects(painter, parent);
+    QPen pw=getWhiskerPen(painter, parent);
     QPen np(Qt::NoPen);
+    QBrush b=getFillBrush(painter, parent);
+    p.setWidthF(qMin(1.0, p.widthF()));
+    pw.setWidthF(qMin(1.0, pw.widthF()));
 
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
 
     double x=rect.left()+rect.width()/2.0;
     double xma=x+rect.width()/2.5;
@@ -962,7 +1147,7 @@ void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, Q
 }
 
 QColor JKQTPBoxplotVerticalElement::getKeyLabelColor() const {
-    return color;
+    return getLineColor();
 }
 
 
@@ -970,20 +1155,12 @@ QColor JKQTPBoxplotVerticalElement::getKeyLabelColor() const {
 
 void JKQTPBoxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=painter.pen();
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-
-    QPen pw=p;
-    pw.setStyle(whiskerStyle);
+    QPen p=getLinePenForRects(painter, parent);
+    QPen pw=getWhiskerPen(painter, parent);
     QPen np(Qt::NoPen);
-
-    QBrush b=painter.brush();
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
+    QBrush b=getFillBrush(painter, parent);
+    p.setWidthF(qMin(1.0, p.widthF()));
+    pw.setWidthF(qMin(1.0, pw.widthF()));
 
     double y=rect.top()+rect.height()/2.0;
     double yma=y+rect.height()/2.5;
@@ -1072,7 +1249,7 @@ JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTBasePlotter *pa
 }
 
 JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTPlotter *parent):
-    JKQTPBoxplotVerticalElement(parent)
+    JKQTPBoxplotHorizontalElement(parent->getPlotter())
 {
 }
 
@@ -1086,19 +1263,10 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-        QPen p=painter.pen();
-        p.setColor(color);
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, lineWidth*parent->getLineWidthMultiplier())));
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setJoinStyle(Qt::RoundJoin);
-        p.setCapStyle(Qt::RoundCap);
-        QPen pw=p;
-        pw.setStyle(whiskerStyle);
+        QPen p=getLinePenForRects(painter, parent);
+        QPen pw=getWhiskerPen(painter, parent);
         QPen np(Qt::NoPen);
-
-        QBrush b=painter.brush();
-        b.setColor(fillColor);
-        b.setStyle(fillStyle);
+        QBrush b=getFillBrush(painter, parent);
         double yv=pos;
         double p25v=percentile25;
         double p75v=percentile75;
@@ -1122,7 +1290,7 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
             double max=transformX(maxv);
             double median=transformX(medianv);
 
-            double w= parent->pt2px(painter, boxWidth);
+            double w= parent->pt2px(painter, getBoxWidth());
             double yma=y+w/2.0;
             double ymi=y-w/2.0;
 
@@ -1148,7 +1316,7 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
             if (drawMean) {
                 double mean=transformY(this->mean);
-                JKQTPPlotSymbol(painter, mean, y, meanSymbol, parent->pt2px(painter, meanSymbolSize), parent->pt2px(painter, meanSymbolWidth*parent->getLineWidthMultiplier()), color, fillColor);
+                plotStyledSymbol(parent, painter, mean, y);
             }
 
         }
@@ -1160,17 +1328,6 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-
-
-QPen JKQTPBoxplotVerticalGraph::getLinePen(JKQTPEnhancedPainter& painter) const {
-    QPen p;
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-
-    return p;
-}
 
 void JKQTPBoxplotVerticalGraph::intSortData()
 {
@@ -1206,28 +1363,3 @@ void JKQTPBoxplotVerticalGraph::intSortData()
 
     }
 }
-
-QBrush JKQTPBoxplotVerticalGraph::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
-    QBrush b;
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-    return b;
-}
-
-QBrush JKQTPBoxplotVerticalElement::getBrush(JKQTPEnhancedPainter& /*painter*/) const {
-    QBrush b;
-    b.setColor(fillColor);
-    b.setStyle(fillStyle);
-    return b;
-}
-
-QPen JKQTPBoxplotVerticalElement::getLinePen(JKQTPEnhancedPainter& painter) const {
-    QPen p;
-    p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*lineWidth)));
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-
-    return p;
-}
-

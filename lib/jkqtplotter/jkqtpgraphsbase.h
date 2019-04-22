@@ -371,7 +371,7 @@ class JKQTP_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
         inline virtual void setYColumn (size_t __value) { this->yColumn = static_cast<int>(__value); }
         /*! \copydoc sortData
             \see see sortData for details */ 
-        inline virtual void setDataSortOrder(const DataSortOrder & __value)  
+        inline virtual void setDataSortOrder(DataSortOrder  __value)  
         {
             this->sortData = __value;
         } 
@@ -455,7 +455,7 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
 
         /*! \copydoc sortData
             \see see sortData for details */ 
-        void setDataSortOrder(const DataSortOrder & __value);
+        void setDataSortOrder(DataSortOrder  __value);
         /*! \copydoc sortData
             \see see sortData for details */ 
         DataSortOrder getDataSortOrder() const;

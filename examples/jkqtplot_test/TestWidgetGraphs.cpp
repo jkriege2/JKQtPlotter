@@ -178,7 +178,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     plot->getPlotter()->addGraph(r2);
 
     JKQTPBoxplotVerticalGraph* box=new JKQTPBoxplotVerticalGraph(plotBot2->getPlotter());
-    box->setPosColumn(cbxbox);
+    box->setPositionColumn(cbxbox);
     box->setMedianColumn(cbmed);
     box->setMeanColumn(cbmean);
     box->setMinColumn(cbmin);
