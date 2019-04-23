@@ -40,7 +40,9 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
     }
 ```
 
-In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->setSymbolSize(14)`), the line-width used to draw them (`graph->setSymbolLineWidth(1.5)`) and the line width of the graph line (`graph->setLineWidth(1)`). If you want to switch off the line altogether, use `graph->setDrawLine(false`.
+In addition to the symbol type and line style, you can also alter the size of the symbols (`graph->setSymbolSize(14)`), the line-width used to draw them (`graph->setSymbolLineWidth(1.5)`) and the line width of the graph line (`graph->setLineWidth(1)`). If you want to switch off the line altogether, use `graph->setDrawLine(false)`.
+
+Note: There are additional, more advanced options for styling the graphs. See the example [Advanced Line and Fill Styling](@ref JKQTPlotterAdvancedLineAndFillStyling) for details.
 
 The result looks like this:
 

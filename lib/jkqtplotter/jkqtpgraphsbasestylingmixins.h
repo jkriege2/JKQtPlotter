@@ -102,6 +102,14 @@ class JKQTP_LIB_EXPORT JKQTPGraphLineStyleMixin {
          *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
          */
         Qt::PenCapStyle getLineCapStyle() const;
+        /** \brief sets the brush used to fill the line area
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        void setLineBrush(const QBrush& style);
+        /** \brief gets the brush used to fill the line area
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        QBrush getLineBrush() const;
 
 
         /** \brief set the color of the graph line when highlighted */

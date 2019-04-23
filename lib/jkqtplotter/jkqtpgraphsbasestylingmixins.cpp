@@ -122,6 +122,16 @@ Qt::PenCapStyle JKQTPGraphLineStyleMixin::getLineCapStyle() const
     return m_linePen.capStyle();
 }
 
+void JKQTPGraphLineStyleMixin::setLineBrush(const QBrush &style)
+{
+    m_linePen.setBrush(style);
+}
+
+QBrush JKQTPGraphLineStyleMixin::getLineBrush() const
+{
+    return m_linePen.brush();
+}
+
 
 QPen JKQTPGraphLineStyleMixin::getLinePen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const {
     QPen p=m_linePen;
