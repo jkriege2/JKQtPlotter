@@ -683,12 +683,18 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         bool isUsingAntiAliasingForText() const;
         /** \copydoc JKQTBasePlotterStyle:defaultGraphWidth:  */
         double getGraphWidth() const;
-        /** \copydoc JKQTBasePlotterStyle::widgetBackgroundColor  */
+        /** \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush  */
         QColor getBackgroundColor() const;
-        /** \copydoc JKQTBasePlotterStyle::exportBackgroundColor  */
+        /** \copydoc JKQTBasePlotterStyle::exportBackgroundBrush  */
         QColor getExportBackgroundColor() const;
-        /** \copydoc JKQTBasePlotterStyle::plotBackgroundColor  */
+        /** \copydoc JKQTBasePlotterStyle::plotBackgroundBrush  */
         QColor getPlotBackgroundColor() const;
+        /** \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush  */
+        QBrush getBackgroundBrush() const;
+        /** \copydoc JKQTBasePlotterStyle::exportBackgroundBrush  */
+        QBrush getExportBackgroundBrush() const;
+        /** \copydoc JKQTBasePlotterStyle::plotBackgroundBrush  */
+        QBrush getPlotBackgroundBrush() const;
         /*! \copydoc JKQTPKeyStyle::fontSize */
         double getKeyFontSize() const;
         /*! \copydoc JKQTPKeyStyle::itemWidth */
@@ -715,8 +721,11 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         bool getShowKeyFrame() const;
         /*! \copydoc JKQTPKeyStyle::frameColor */
         QColor getKeyFrameColor() const;
-        /*! \copydoc JKQTPKeyStyle::backgroundColor */
+        /*! \copydoc JKQTPKeyStyle::backgroundBrush */
         QColor getKeyBackgroundColor() const;
+        /*! \copydoc JKQTPKeyStyle::backgroundBrush */
+        QBrush getKeyBackgroundBrush() const;
+
         /*! \copydoc JKQTPKeyStyle::textColor */
         QColor getKeyTextColor() const;
         /*! \copydoc JKQTPKeyStyle::frameWidth */
@@ -1611,12 +1620,36 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setUseAntiAliasingForText(bool __value);
         /*! \copydoc JKQTBasePlotterStyle::defaultGraphWidth */
         void setGraphWidth(double __value);
-        /*! \copydoc JKQTBasePlotterStyle::widgetBackgroundColor */
+        /*! \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush */
         void setBackgroundColor(const QColor & __value);
-        /*! \copydoc JKQTBasePlotterStyle::exportBackgroundColor */
+        /*! \copydoc JKQTBasePlotterStyle::exportBackgroundBrush */
         void setExportBackgroundColor(const QColor & __value);
-        /*! \copydoc JKQTBasePlotterStyle::plotBackgroundColor */
+        /*! \copydoc JKQTBasePlotterStyle::plotBackgroundBrush */
         void setPlotBackgroundColor(const QColor & __value);
+        /*! \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush */
+        void setBackgroundBrush(const QBrush & __value);
+        /*! \copydoc JKQTBasePlotterStyle::exportBackgroundBrush */
+        void setExportBackgroundBrush(const QBrush & __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotBackgroundBrush */
+        void setPlotBackgroundBrush(const QBrush & __value);
+        /*! \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush */
+        void setBackgroundGradient(const QGradient & __value);
+        /*! \copydoc JKQTBasePlotterStyle::exportBackgroundBrush */
+        void setExportBackgroundGradient(const QGradient & __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotBackgroundBrush */
+        void setPlotBackgroundGradient(const QGradient & __value);
+        /*! \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush */
+        void setBackgroundTexture(const QPixmap & __value);
+        /*! \copydoc JKQTBasePlotterStyle::exportBackgroundBrush */
+        void setExportBackgroundTexture(const QPixmap & __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotBackgroundBrush */
+        void setPlotBackgroundTexture(const QPixmap & __value);
+        /*! \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush */
+        void setBackgroundTexture(const QImage & __value);
+        /*! \copydoc JKQTBasePlotterStyle::exportBackgroundBrush */
+        void setExportBackgroundTexture(const QImage & __value);
+        /*! \copydoc JKQTBasePlotterStyle::plotBackgroundBrush */
+        void setPlotBackgroundTexture(const QImage & __value);
         /*! \copydoc JKQTPKeyStyle::textColor */
         void setKeyTextColor(const QColor & __value);
 
@@ -1657,8 +1690,16 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setShowKeyFrame(bool __value);
         /*! \copydoc JKQTPKeyStyle::frameColor */
         void setKeyFrameColor(const QColor & __value);
-        /*! \copydoc JKQTPKeyStyle::backgroundColor */
-        void setKeyBackgroundColor(const QColor & __value);
+        /*! \copydoc JKQTPKeyStyle::backgroundBrush */
+        void setKeyBackgroundColor(const QColor & __value, Qt::BrushStyle __style);
+        /*! \copydoc JKQTPKeyStyle::backgroundBrush */
+        void setKeyBackgroundBrush(const QBrush & __value);
+        /*! \copydoc JKQTPKeyStyle::backgroundBrush */
+        void setKeyBackgroundGradient(const QGradient & __value);
+        /*! \copydoc JKQTPKeyStyle::backgroundBrush */
+        void setKeyBackgroundTexture(const QImage & __value);
+        /*! \copydoc JKQTPKeyStyle::backgroundBrush */
+        void setKeyBackgroundTexture(const QPixmap & __value);
         /*! \copydoc JKQTPKeyStyle::frameWidth */
         void setKeyFrameWidth(double __value);
         /*! \copydoc JKQTPKeyStyle::frameRounding */

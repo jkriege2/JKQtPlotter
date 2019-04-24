@@ -87,8 +87,19 @@ Finally two vertical barcharts with different filling options are added:
     linearG.setColorAt(1, cl12);
     linearG.setCoordinateMode(QGradient::ObjectMode);
     graphBF->setFillGradient(linearG);
-    graphBF->setLineColor(Qt::transparent);```
+    graphBF->setLineColor(Qt::transparent);
+```
 
+In addition to the graph background properties, also the plot/widget/key backgrounds can be defined using a QBrush:
+
+```.cpp
+    // 7. set plot background with a gradient
+    QLinearGradient backGrad(QPointF(0, 0), QPointF(1, 1));
+    backGrad.setColorAt(0, QColor("salmon"));
+    backGrad.setColorAt(1, QColor("white"));
+    backGrad.setCoordinateMode(QGradient::ObjectMode);
+    plot.getPlotter()->setPlotBackgroundGradient(backGrad);
+```
 
 
 The result looks like this:

@@ -138,17 +138,24 @@ int main(int argc, char* argv[])
     plot.addGraph(graphBE);
     plot.addGraph(graphBF);
 
-    // 7. set axis labels
+    // 7. set plot background with a gradient
+    QLinearGradient backGrad(QPointF(0, 0), QPointF(1, 1));
+    backGrad.setColorAt(0, QColor("salmon"));
+    backGrad.setColorAt(1, QColor("white"));
+    backGrad.setCoordinateMode(QGradient::ObjectMode);
+    plot.getPlotter()->setPlotBackgroundGradient(backGrad);
+
+    // 8. set axis labels
     plot.getXAxis()->setAxisLabel("x axis");
     plot.getYAxis()->setAxisLabel("y axis");
     plot.setGrid(true);
     plot.getPlotter()->setShowKey(false);
 
 
-    // 8. scale plot automatically
+    // 9. scale plot
     plot.setXY(0,11.9,-2.5,5.5);
 
-    // 9. show plotter and make it a decent size
+    // 10. show plotter and make it a decent size
     plot.show();
     plot.resize(600,600);
 

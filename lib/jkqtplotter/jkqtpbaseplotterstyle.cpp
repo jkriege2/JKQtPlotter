@@ -15,9 +15,9 @@ JKQTBasePlotterStyle::JKQTBasePlotterStyle():
     defaultGraphWidth(2),
     defaultGraphSymbolSize(10),
     defaultGraphSymbolLineWidth(1),
-    widgetBackgroundColor(QApplication::palette().color(QPalette::Window)),
-    exportBackgroundColor(QColor("white")),
-    plotBackgroundColor(QColor("white")),
+    widgetBackgroundBrush(QApplication::palette().color(QPalette::Window)),
+    exportBackgroundBrush(QColor("white")),
+    plotBackgroundBrush(QColor("white")),
     plotFrameColor(QColor("black")),
     plotFrameWidth(2),
     plotFrameRounding(0),
@@ -69,9 +69,9 @@ void JKQTBasePlotterStyle::loadSettings(const QSettings &settings, const QString
     debugRegionLineWidth=settings.value(group+"debug_region_linewidth", defaultStyle.debugRegionLineWidth).toDouble();
     plotLabelFontName=settings.value(group+"plot_label_font_name", defaultStyle.plotLabelFontName).toString();
     plotLabelFontSize=settings.value(group+"plot_label_font_size", defaultStyle.debugRegionLineWidth).toDouble();
-    widgetBackgroundColor=jkqtp_String2QColor(settings.value(group+"widget_background_color", jkqtp_QColor2String(defaultStyle.widgetBackgroundColor)).toString());
-    exportBackgroundColor=jkqtp_String2QColor(settings.value(group+"widget_background_color_for_export", jkqtp_QColor2String(defaultStyle.exportBackgroundColor)).toString());
-    plotBackgroundColor=jkqtp_String2QColor(settings.value(group+"plot_background_color", jkqtp_QColor2String(defaultStyle.plotBackgroundColor)).toString());
+    widgetBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color", jkqtp_QColor2String(defaultStyle.widgetBackgroundBrush.color())).toString()));
+    exportBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color_for_export", jkqtp_QColor2String(defaultStyle.exportBackgroundBrush.color())).toString()));
+    plotBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"plot_background_color", jkqtp_QColor2String(defaultStyle.plotBackgroundBrush.color())).toString()));
     plotFrameColor=jkqtp_String2QColor(settings.value(group+"plot_frame_color", jkqtp_QColor2String(defaultStyle.plotFrameColor)).toString());
     plotFrameWidth=settings.value(group+"plot_frame_width", defaultStyle.plotFrameWidth).toDouble();
     plotFrameVisible=settings.value(group+"plot_frame_visible", defaultStyle.plotFrameVisible).toBool();
@@ -171,9 +171,9 @@ void JKQTBasePlotterStyle::saveSettings(QSettings &settings, const QString &grou
     settings.setValue(group+"antialiase_system", useAntiAliasingForSystem);
     settings.setValue(group+"antialiase_graphs", useAntiAliasingForGraphs);
     settings.setValue(group+"antialiase_text", useAntiAliasingForText);
-    settings.setValue(group+"widget_background_color", jkqtp_QColor2String(widgetBackgroundColor));
-    settings.setValue(group+"widget_background_color_for_export", jkqtp_QColor2String(exportBackgroundColor));
-    settings.setValue(group+"plot_background_color", jkqtp_QColor2String(plotBackgroundColor));
+    settings.setValue(group+"widget_background_color", jkqtp_QColor2String(widgetBackgroundBrush.color()));
+    settings.setValue(group+"widget_background_color_for_export", jkqtp_QColor2String(exportBackgroundBrush.color()));
+    settings.setValue(group+"plot_background_color", jkqtp_QColor2String(plotBackgroundBrush.color()));
     settings.setValue(group+"plot_border_left", plotBorderLeft);
     settings.setValue(group+"plot_border_right", plotBorderRight);
     settings.setValue(group+"plot_border_top", plotBorderTop);

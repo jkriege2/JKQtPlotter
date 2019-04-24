@@ -62,7 +62,7 @@ JKQTPGraph::JKQTPGraph(JKQTPlotter *parent):
 QImage JKQTPPlotElement::generateKeyMarker(QSize size)
 {
     QImage img(size.width(),size.height(),QImage::Format_ARGB32);
-    if (parent) img.fill(parent->getKeyBackgroundColor());
+    if (parent) img.fill(Qt::transparent);//->getKeyBackgroundColor());
     {
         JKQTPEnhancedPainter painter(&img);
         painter.setRenderHint(QPainter::Antialiasing, true);

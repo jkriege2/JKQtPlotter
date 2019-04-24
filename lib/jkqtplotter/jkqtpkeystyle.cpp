@@ -27,7 +27,7 @@ JKQTPKeyStyle::JKQTPKeyStyle():
     frameColor(QColor("black")),
     frameWidth(1),
     frameRounding(0),
-    backgroundColor(QColor("white")),
+    backgroundBrush(QColor("white")),
     visible(true),
     fontSize(9),
     textColor(QColor("black")),
@@ -69,7 +69,7 @@ void JKQTPKeyStyle::loadSettings(const QSettings &settings, const QString &group
     frameWidth = settings.value(group+"frame_width", defaultStyle.frameWidth).toDouble();
     frameRounding = settings.value(group+"frame_rounding", defaultStyle.frameRounding).toDouble();
     frameVisible = settings.value(group+"frame_visible", defaultStyle.frameVisible).toBool();
-    backgroundColor = jkqtp_String2QColor(settings.value(group+"background_color", jkqtp_QColor2String(defaultStyle.backgroundColor)).toString());
+    backgroundBrush = QBrush(jkqtp_String2QColor(settings.value(group+"background_color", jkqtp_QColor2String(defaultStyle.backgroundBrush.color())).toString()));
     visible = settings.value(group+"visible", defaultStyle.visible).toBool();
     position = String2JKQTPKeyPosition(settings.value(group+"position", JKQTPKeyPosition2String(defaultStyle.position)).toString());
     layout =  String2JKQTPKeyLayout(settings.value(group+"layout", JKQTPKeyLayout2String(defaultStyle.layout)).toString());
@@ -92,7 +92,7 @@ void JKQTPKeyStyle::saveSettings(QSettings &settings, const QString &group) cons
     settings.setValue(group+"frame_color", jkqtp_QColor2String(frameColor));
     settings.setValue(group+"frame_width", frameWidth);
     settings.setValue(group+"frame_rounding", frameRounding);
-    settings.setValue(group+"background_color", jkqtp_QColor2String(backgroundColor));
+    settings.setValue(group+"background_color", jkqtp_QColor2String(backgroundBrush.color()));
     settings.setValue(group+"visible", visible);
     settings.setValue(group+"position", JKQTPKeyPosition2String(position));
     settings.setValue(group+"layout", JKQTPKeyLayout2String(layout));

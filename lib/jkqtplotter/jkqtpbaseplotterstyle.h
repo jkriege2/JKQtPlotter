@@ -111,11 +111,11 @@ class JKQTP_LIB_EXPORT JKQTBasePlotterStyle {
         /** \brief with (in pt) of symbol lines used for newly added graphs */
         double defaultGraphSymbolLineWidth;
         /** \brief color of the background of the plot (widget area) when drawing (to the screen) */
-        QColor widgetBackgroundColor;
+        QBrush widgetBackgroundBrush;
         /** \brief color of the background of the plot (widget area) when exporting*/
-        QColor exportBackgroundColor;
+        QBrush exportBackgroundBrush;
         /** \brief color of the plot's background (i.e. of the area within the coordinate axes rectangle) */
-        QColor plotBackgroundColor;
+        QBrush plotBackgroundBrush;
         /** \brief if \c plotFrameVisible==true, JKQTBasePlotter will draw a rectangle/frame around the plot in this color */
         QColor plotFrameColor;
         /** \brief if \c plotFrameVisible==true, JKQTBasePlotter will draw a rectangle/frame around the plot in this width [pt] */

@@ -66,7 +66,7 @@ class JKQTP_LIB_EXPORT JKQTPKeyStyle  {
         /** \brief rounding radius of the key frame rectangle (<=0 -> no rounded rectangle) [pt] */
         double frameRounding;
         /** \brief color of the key background */
-        QColor backgroundColor;
+        QBrush backgroundBrush;
         /** \brief indicates whether to plot a key */
         bool visible;
         /** \brief font size for key labels [in points] */

@@ -1079,18 +1079,13 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
             // save old brushes and pens
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             QPen pf=painter.pen();
-            QBrush bf=painter.brush();
             pf.setColor(plotterStyle.keyStyle.frameColor);
             pf.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, pt2px(painter, plotterStyle.keyStyle.frameWidth*lineWidthMultiplier)));
             pf.setStyle(Qt::SolidLine);
-            bf.setColor(plotterStyle.keyStyle.backgroundColor);
-            bf.setStyle(Qt::SolidPattern);
-            painter.setBrush(bf);
+
+            painter.setBrush(plotterStyle.keyStyle.backgroundBrush);
             if (!plotterStyle.keyStyle.frameVisible) {
-                QPen pff=pf;
-                pff.setColor(plotterStyle.keyStyle.backgroundColor);
-                pff.setWidthF(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH);
-                painter.setPen(pff);
+                painter.setPen(Qt::NoPen);
             } else {
                 painter.setPen(pf);
             }
@@ -1149,8 +1144,8 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays)
     // draw background
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        painter.setPen(plotterStyle.widgetBackgroundColor);
-        if (plotterStyle.widgetBackgroundColor!=Qt::transparent) painter.fillRect(QRectF(0,0,widgetWidth/paintMagnification, widgetHeight/paintMagnification), QBrush(plotterStyle.widgetBackgroundColor));
+        painter.setPen(Qt::NoPen);
+        if (plotterStyle.widgetBackgroundBrush!=QBrush(Qt::transparent)) painter.fillRect(QRectF(0,0,widgetWidth/paintMagnification, widgetHeight/paintMagnification), plotterStyle.widgetBackgroundBrush);
     }
     QRectF rPlotBack(internalPlotBorderLeft, internalPlotBorderTop, internalPlotWidth, internalPlotHeight);
     painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
@@ -1161,7 +1156,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays)
         QPen p(plotterStyle.plotFrameColor);
         p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, pt2px(painter, plotterStyle.plotFrameWidth*lineWidthMultiplier)));
         painter.setPen(p);
-        painter.setBrush(QBrush(plotterStyle.plotBackgroundColor));
+        painter.setBrush(plotterStyle.plotBackgroundBrush);
         if (plotterStyle.plotFrameRounding<=0) {
             painter.drawRect(rPlotBack);
         } else {
@@ -1170,10 +1165,8 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays)
 
     } else {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        painter.setBrush(QBrush(plotterStyle.plotBackgroundColor));
-        QPen p(plotterStyle.plotBackgroundColor);
-        p.setWidthF(0);
-        painter.setPen(p);
+        painter.setBrush(plotterStyle.plotBackgroundBrush);
+        painter.setPen(Qt::NoPen);
         if (plotterStyle.plotFrameRounding<=0) {
             painter.drawRect(rPlotBack);
         } else {
@@ -1342,16 +1335,16 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
     } else {
 
         QList<double> fsm, lwm, pm;
-        QList<QColor> backg;
+        QList<QBrush> backg;
         for (int i=0; i< gridPrintingList.size(); i++) {
             fsm.append(gridPrintingList[i].plotter->getFontSizeMultiplier());
             lwm.append(gridPrintingList[i].plotter->getLineWidthMultiplier());
             pm.append(gridPrintingList[i].plotter->getPaintMagnification());
-            backg.append(gridPrintingList[i].plotter->getExportBackgroundColor());
+            backg.append(gridPrintingList[i].plotter->getExportBackgroundBrush());
             gridPrintingList[i].plotter->setFontSizeMultiplier(fontSizeMultiplier);
             gridPrintingList[i].plotter->setLineWidthMultiplier(lineWidthMultiplier);
             gridPrintingList[i].plotter->setPaintMagnification(paintMagnification);
-            gridPrintingList[i].plotter->setBackgroundColor(gridPrintingList[i].plotter->getExportBackgroundColor());
+            gridPrintingList[i].plotter->setBackgroundBrush(gridPrintingList[i].plotter->getExportBackgroundBrush());
             gridPrintingList[i].plotter->calcPlotScaling(painter);
         }
         gridPrintingCalc(); // ensure the grid plot has been calculated
@@ -1404,7 +1397,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
                 gridPrintingList[i].plotter->setFontSizeMultiplier(fsm[i]);
                 gridPrintingList[i].plotter->setLineWidthMultiplier(lwm[i]);
                 gridPrintingList[i].plotter->setPaintMagnification(pm[i]);
-                gridPrintingList[i].plotter->setBackgroundColor(backg[i]);
+                gridPrintingList[i].plotter->setBackgroundBrush(backg[i]);
                 gridPrintingList[i].plotter->redrawPlot();
             }
         }
@@ -1517,8 +1510,8 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
     double oldP=paintMagnification;
-    QColor bc=plotterStyle.widgetBackgroundColor;
-    plotterStyle.widgetBackgroundColor=plotterStyle.exportBackgroundColor;
+    QBrush bc=plotterStyle.widgetBackgroundBrush;
+    plotterStyle.widgetBackgroundBrush=plotterStyle.exportBackgroundBrush;
     lineWidthMultiplier=lineWidthPrintMultiplier;
     fontSizeMultiplier=fontSizePrintMultiplier;
     exportPreviewLabel=nullptr;
@@ -1722,7 +1715,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     printPreview=nullptr;
     lineWidthMultiplier=lw;
     fontSizeMultiplier=fs;
-    plotterStyle.widgetBackgroundColor=bc;
+    plotterStyle.widgetBackgroundBrush=bc;
     paintMagnification=oldP;
 
     mathText.setUseUnparsed(false);
@@ -1925,8 +1918,8 @@ void JKQTBasePlotter::updatePreviewLabel() {
 void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
-    QColor bc=plotterStyle.widgetBackgroundColor;
-    plotterStyle.widgetBackgroundColor=plotterStyle.exportBackgroundColor;
+    QBrush bc=plotterStyle.widgetBackgroundBrush;
+    plotterStyle.widgetBackgroundBrush=plotterStyle.exportBackgroundBrush;
     lineWidthMultiplier=lineWidthPrintMultiplier;
     fontSizeMultiplier=fontSizePrintMultiplier;
 
@@ -1993,7 +1986,7 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     lineWidthMultiplier=lw;
     fontSizeMultiplier=fs;
     paintMagnification=oldpm;
-    plotterStyle.widgetBackgroundColor=bc;
+    plotterStyle.widgetBackgroundBrush=bc;
 
 }
 
@@ -2012,8 +2005,8 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
 
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
-    QColor bc=plotterStyle.widgetBackgroundColor;
-    plotterStyle.widgetBackgroundColor=plotterStyle.exportBackgroundColor;
+    QBrush bc=plotterStyle.widgetBackgroundBrush;
+    plotterStyle.widgetBackgroundBrush=plotterStyle.exportBackgroundBrush;
     lineWidthMultiplier=lineWidthPrintMultiplier;
     fontSizeMultiplier=fontSizePrintMultiplier;
 
@@ -2095,14 +2088,14 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
     lineWidthMultiplier=lw;
     fontSizeMultiplier=fs;
     paintMagnification=oldpm;
-    plotterStyle.widgetBackgroundColor=bc;
+    plotterStyle.widgetBackgroundBrush=bc;
 }
 
 void JKQTBasePlotter::exportpreviewPaintRequested(JKQTPEnhancedPainter &painter, QSize size) {
     double lw=lineWidthMultiplier;
     double fs=fontSizeMultiplier;
-    QColor bc=plotterStyle.widgetBackgroundColor;
-    plotterStyle.widgetBackgroundColor=plotterStyle.exportBackgroundColor;
+    QBrush bc=plotterStyle.widgetBackgroundBrush;
+    plotterStyle.widgetBackgroundBrush=plotterStyle.exportBackgroundBrush;
     lineWidthMultiplier=lineWidthPrintMultiplier;
     fontSizeMultiplier=fontSizePrintMultiplier;
     bool oldEmitPlotSignals=emitPlotSignals;
@@ -2122,7 +2115,7 @@ void JKQTBasePlotter::exportpreviewPaintRequested(JKQTPEnhancedPainter &painter,
     emitPlotSignals=oldEmitPlotSignals;
     lineWidthMultiplier=lw;
     fontSizeMultiplier=fs;
-    plotterStyle.widgetBackgroundColor=bc;
+    plotterStyle.widgetBackgroundBrush=bc;
 }
 
 void JKQTBasePlotter::printpreviewSetZoom(double value) {
@@ -2489,33 +2482,48 @@ double JKQTBasePlotter::getGraphWidth() const
 
 void JKQTBasePlotter::setBackgroundColor(const QColor &__value)
 {
-    if (this->plotterStyle.widgetBackgroundColor != __value) {
-        this->plotterStyle.widgetBackgroundColor = __value;
+    if (this->plotterStyle.widgetBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.widgetBackgroundBrush=QBrush(__value);
         redrawPlot();
     }
 }
 
 QColor JKQTBasePlotter::getBackgroundColor() const
 {
-    return this->plotterStyle.widgetBackgroundColor;
+    return this->plotterStyle.widgetBackgroundBrush.color();
 }
 
 void JKQTBasePlotter::setExportBackgroundColor(const QColor &__value)
 {
-    if (this->plotterStyle.exportBackgroundColor != __value) {
-        this->plotterStyle.exportBackgroundColor = __value;
+    if (this->plotterStyle.exportBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.exportBackgroundBrush=QBrush(__value);
         redrawPlot();
     }
 }
 
 QColor JKQTBasePlotter::getExportBackgroundColor() const
 {
-    return this->plotterStyle.exportBackgroundColor;
+    return this->plotterStyle.exportBackgroundBrush.color();
 }
 
 QColor JKQTBasePlotter::getPlotBackgroundColor() const
 {
-    return this->plotterStyle.plotBackgroundColor;
+    return this->plotterStyle.plotBackgroundBrush.color();
+}
+
+QBrush JKQTBasePlotter::getBackgroundBrush() const
+{
+    return this->plotterStyle.widgetBackgroundBrush;
+}
+
+QBrush JKQTBasePlotter::getExportBackgroundBrush() const
+{
+    return this->plotterStyle.exportBackgroundBrush;
+}
+
+QBrush JKQTBasePlotter::getPlotBackgroundBrush() const
+{
+    return this->plotterStyle.plotBackgroundBrush;
 }
 
 
@@ -2703,13 +2711,46 @@ QColor JKQTBasePlotter::getKeyFrameColor() const
     return this->plotterStyle.keyStyle.frameColor;
 }
 
-void JKQTBasePlotter::setKeyBackgroundColor(const QColor &__value)
+void JKQTBasePlotter::setKeyBackgroundColor(const QColor &__value, Qt::BrushStyle __style)
 {
-    if (this->plotterStyle.keyStyle.backgroundColor != __value) {
-        this->plotterStyle.keyStyle.backgroundColor = __value;
+    if (this->plotterStyle.keyStyle.backgroundBrush != QBrush(__value, __style)) {
+        this->plotterStyle.keyStyle.backgroundBrush = QBrush(__value, __style);
         redrawPlot();
     }
 }
+
+void JKQTBasePlotter::setKeyBackgroundBrush(const QBrush &__value)
+{
+    if (this->plotterStyle.keyStyle.backgroundBrush != __value) {
+        this->plotterStyle.keyStyle.backgroundBrush = __value;
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setKeyBackgroundGradient(const QGradient &__value)
+{
+    if (this->plotterStyle.keyStyle.backgroundBrush != QBrush(__value)) {
+        this->plotterStyle.keyStyle.backgroundBrush = QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setKeyBackgroundTexture(const QImage &__value)
+{
+    if (this->plotterStyle.keyStyle.backgroundBrush != QBrush(__value)) {
+        this->plotterStyle.keyStyle.backgroundBrush = QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setKeyBackgroundTexture(const QPixmap &__value)
+{
+    if (this->plotterStyle.keyStyle.backgroundBrush != QBrush(__value)) {
+        this->plotterStyle.keyStyle.backgroundBrush = QBrush(__value);
+        redrawPlot();
+    }
+}
+
 
 void JKQTBasePlotter::setKeyFrameWidth(double __value)
 {
@@ -2856,13 +2897,115 @@ QString JKQTBasePlotter::getPlotLabel() const
 
 QColor JKQTBasePlotter::getKeyBackgroundColor() const
 {
-    return this->plotterStyle.keyStyle.backgroundColor;
+    return this->plotterStyle.keyStyle.backgroundBrush.color();
+}
+
+QBrush JKQTBasePlotter::getKeyBackgroundBrush() const
+{
+    return this->plotterStyle.keyStyle.backgroundBrush;
 }
 
 void JKQTBasePlotter::setPlotBackgroundColor(const QColor &__value)
 {
-    if (this->plotterStyle.plotBackgroundColor != __value) {
-        this->plotterStyle.plotBackgroundColor = __value;
+    if (this->plotterStyle.plotBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.plotBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setBackgroundBrush(const QBrush &__value)
+{
+    if (this->plotterStyle.widgetBackgroundBrush != (__value)) {
+        this->plotterStyle.widgetBackgroundBrush=(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setExportBackgroundBrush(const QBrush &__value)
+{
+    if (this->plotterStyle.exportBackgroundBrush != (__value)) {
+        this->plotterStyle.exportBackgroundBrush=(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setPlotBackgroundBrush(const QBrush &__value)
+{
+    if (this->plotterStyle.plotBackgroundBrush != (__value)) {
+        this->plotterStyle.plotBackgroundBrush=(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setBackgroundGradient(const QGradient &__value)
+{
+    if (this->plotterStyle.widgetBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.widgetBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setExportBackgroundGradient(const QGradient &__value)
+{
+    if (this->plotterStyle.exportBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.exportBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setPlotBackgroundGradient(const QGradient &__value)
+{
+    if (this->plotterStyle.plotBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.plotBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+
+}
+
+void JKQTBasePlotter::setBackgroundTexture(const QPixmap &__value)
+{
+    if (this->plotterStyle.widgetBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.widgetBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setExportBackgroundTexture(const QPixmap &__value)
+{
+    if (this->plotterStyle.exportBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.exportBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setPlotBackgroundTexture(const QPixmap &__value)
+{
+    if (this->plotterStyle.plotBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.plotBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setBackgroundTexture(const QImage &__value)
+{
+    if (this->plotterStyle.widgetBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.widgetBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setExportBackgroundTexture(const QImage &__value)
+{
+    if (this->plotterStyle.exportBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.exportBackgroundBrush=QBrush(__value);
+        redrawPlot();
+    }
+}
+
+void JKQTBasePlotter::setPlotBackgroundTexture(const QImage &__value)
+{
+    if (this->plotterStyle.plotBackgroundBrush != QBrush(__value)) {
+        this->plotterStyle.plotBackgroundBrush=QBrush(__value);
         redrawPlot();
     }
 }
