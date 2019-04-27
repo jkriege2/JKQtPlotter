@@ -109,7 +109,7 @@ int main(int argc, char* argv[])
     linearGrad.setColorAt(0.3, c2);
     linearGrad.setColorAt(0.7, c3);
     linearGrad.setColorAt(1, c4);
-    linearGrad.setCoordinateMode(QGradient::ObjectMode);
+    linearGrad.setCoordinateMode(QGradient::ObjectBoundingMode);
     // use this CoordinateMode, so the gradient fills the whole graph area
     graphF2->setFillGradient(linearGrad);
 
@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
     cl12.setAlphaF(0.5);
     linearG.setColorAt(0, cl11);
     linearG.setColorAt(1, cl12);
-    linearG.setCoordinateMode(QGradient::ObjectMode);
+    linearG.setCoordinateMode(QGradient::ObjectBoundingMode);
     graphBF->setFillGradient(linearG);
     graphBF->setLineColor(Qt::transparent);
 
@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
     QLinearGradient backGrad(QPointF(0, 0), QPointF(1, 1));
     backGrad.setColorAt(0, QColor("salmon"));
     backGrad.setColorAt(1, QColor("white"));
-    backGrad.setCoordinateMode(QGradient::ObjectMode);
+    backGrad.setCoordinateMode(QGradient::ObjectBoundingMode);
     plot.getPlotter()->setPlotBackgroundGradient(backGrad);
 
     // 8. set axis labels
