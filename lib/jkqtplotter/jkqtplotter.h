@@ -167,9 +167,9 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  *
  * JKQTPlotter offers a lot of user-interaction features out of the box. These are detailed below.
  *
- * \subsection JKQTPLOTTER_CONTEXTMENU Conext Menu of JKQTPlotter
+ * \subsection JKQTPLOTTER_CONTEXTMENU Context Menu of JKQTPlotter
  *
- * The class JKQTPlotter has a context emnu that already offers a lot of functionality.
+ * The class JKQTPlotter has a context menu that already offers a lot of functionality.
  *
  * \image html jkqtplotter_defaultcontextmenu.png
  *
@@ -195,6 +195,43 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  *   <li> zoom into/out of the plot and determine an auto-zoom, which shows all of the plot data</li>
  *   <li> switch the visibility of the different graphs in the plot</li>
  * </ul>
+ *
+ * You can activate this menu, by setting \c setContextMenuMode(jkqtpcmmStandardContextMenu); and binding a mouse-action (typically the right-click)
+ * to the context menu by calling \c deregisterMouseDragAction(Qt::RightButton,Qt::NoModifier) which deregisters any user actions from the rhs single
+ * mouse click. In that case, the context menu is opened by default (see setContextMenuMode() to choose the mode of the context menu).
+ *
+ *
+ * In addition JKQTPlotter provides several ways to customize this menu:
+ *   - You can add additional actions to the JKQTPlotter, by calling `JKQTPlotter::addAction()` (i.e. using the default Qt mechanism)
+ *     and/or by adding actions to the internal JKQTBasePlotter, using `JKQTBasePlotter::registerAdditionalAction()`
+ *   - You can modify the menu, when it is displayed, by connecting a slot to the signal `JKQTPlotter::contextMenuOPened(x,y,menu)`:
+ *     \code
+ *       connect(plot, SIGNAL(contextMenuOpened(double, double, QMenu*)), this, SLOT(contextMenuOpened(double, double, QMenu*)));
+ *
+ *       // ...
+ *
+ *       void TestUserInteraction::contextMenuOpened(double x, double y, QMenu *contextMenu)
+ *       {
+ *           contextMenu->addSeparator();
+ *           QAction* act=contextMenu->addMenu(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y))->addAction("user-added action");
+ *           connect(act, &QAction::triggered, [x,y]() { QMessageBox::warning(nullptr, tr("Plot Context Menu"),
+ *                                                                            tr("Context Menu was opened at x/y=%1/%2!").arg(x).arg(y),
+ *                                                                            QMessageBox::Ok,
+ *                                                                            QMessageBox::Ok); });
+ *           labMouseAction->setText(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y));
+ *       }
+ *     \endcode
+ * .
+ *
+ * \subsection JKQTPLOTTER_SPECIALCONTEXTMENU Special (User-Defined) Context Menu of JKQTPlotter
+ *
+ * In addition to the standard context menu, JKQTPlotter can also be configures to display a special, user-defined context menu.
+ * To do so, call `\c setContextMenuMode(jkqtpcmmSpecialContextMenu) and set your menu, by calling \c setSpecialContextMenu()
+ * You can also combine the special menu and the standard menu, by calling \c setContextMenuMode(jkqtpcmmStandardAndSpecialContextMenu) .
+ *
+ * You can also use the signal contextMenuOpened() to modify the special context menu, but note that alterations to this menu are permanently
+ * stored in the special menu object. See contextMenuOpened() for a detailed discussion and ways to circumvent this!
+ *
  *
  * \subsection JKQTPLOTTER_TOOLBAR Toolbar of JKQTPlotter
  *
@@ -295,8 +332,8 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  *
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSECLICK Actions After (Double-)Clicks on the Mouse Buttons
  * The right mouse button has a special role: If it is single-clicked and no JKQTPlotter::MouseActionMode is specified
- * for the vent, it opens the context menu, unless you call \c setContextMenuMoode(jkqtpcmmNoContextMenu) .
- * You can also use setContextMenuMoode() to specify which type of context menu is shown. See JKQTPContextMenuModes
+ * for the vent, it opens the context menu, unless you call \c setContextMenuMode(jkqtpcmmNoContextMenu) .
+ * You can also use setContextMenuMode() to specify which type of context menu is shown. See JKQTPContextMenuModes
  * for details on the available modes.
  *
  * For any mouse-click, one of the following signals is emitted:
@@ -624,21 +661,27 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief deletes all mouse-wheel actions \see registerMouseWheelAction(), deregisterMouseWheelAction(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void clearAllMouseWheelActions();
 
-        /*! \brief returns the currently set special context menu object */
+        /*! \brief returns the currently set special context menu object
+         *
+         *  \see \ref JKQTPLOTTER_SPECIALCONTEXTMENU, setSpecialContextMenu(), menuSpecialContextMenu, contextMenuOpened(), \ref JKQTPlotterUserInteraction
+         */
         QMenu *getSpecialContextMenu() const;
 
-        /*! \brief sets a QMenu object to be used as special context menu */
+        /*! \brief sets a QMenu object to be used as special context menu
+         *
+         *  \see \ref JKQTPLOTTER_SPECIALCONTEXTMENU, getSpecialContextMenu(), menuSpecialContextMenu, contextMenuOpened()
+         */
         void setSpecialContextMenu(QMenu* menu);
 
 
         /** \brief x-position of the mouse (in plot coordinates) when a user mouse-action was started (e.g. drawing a rectangle)
          *
-         * \see getMouseContextY(), getMouseLastClickX(), getMouseLastClickY()
+         * \see \ref JKQTPLOTTER_CONTEXTMENU , getMouseContextY(), getMouseLastClickX(), getMouseLastClickY()
          */
         double getMouseContextX() const;
         /** \brief y-position of the mouse (in plot coordinates) when a user mouse-action was started (e.g. drawing a rectangle)
          *
-         * \see getMouseContextX(), getMouseLastClickX(), getMouseLastClickY()
+         * \see \ref JKQTPLOTTER_CONTEXTMENU , getMouseContextX(), getMouseLastClickX(), getMouseLastClickY()
          */
         double getMouseContextY() const;
         /** \brief x-position of the last mouse-click (in screen pixels)
@@ -769,7 +812,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
             return getConstplotter()->getKeyFontSize();
         }
 
-        /** \brief returns the currently set mode for the context menu \see JKQTPContextMenuModes, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
+        /** \brief returns the currently set mode for the context menu \see JKQTPContextMenuModes, \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_SPECIALCONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         JKQTPContextMenuModes getContextMenuMode() const;
 
         /** \brief current style properties for this JKQTPlotter
@@ -918,7 +961,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          * \see getUserActionCompositionMode(), JKQTPlotterStyle::userActionColor \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG  */
         void setUserActionCompositionMode(const QPainter::CompositionMode & __value);
 
-        /** \brief sets the mode if the standard context menu \see JKQTPContextMenuModes, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
+        /** \brief sets the mode if the standard context menu \see JKQTPContextMenuModes, \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_SPECIALCONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void setContextMenuMode(JKQTPContextMenuModes mode);
 
         /** \brief may be connected to zoomChangedLocally() of a different plot and synchronizes the local x-axis to the other x-axis \see \ref JKQTBASEPLOTTER_SYNCMULTIPLOT */
@@ -935,23 +978,23 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void populateToolbar(QToolBar* toolbar) const;
 
-        /** \brief open the context menu at the mouse position of the last click */
+        /** \brief open the context menu at the mouse position of the last click \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openContextMenu();
-        /** \brief open the context menu at the mouse position \a x and \a y */
+        /** \brief open the context menu at the mouse position \a x and \a y \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openContextMenu(int x, int y);
 
-        /** \brief open the standard context menu at the mouse position of the last click */
+        /** \brief open the standard context menu at the mouse position of the last click \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openStandardContextMenu();
-        /** \brief open the standard context menu at the mouse position \a x and \a y */
+        /** \brief open the standard context menu at the mouse position \a x and \a y \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openStandardContextMenu(int x, int y);
-        /** \brief open the special context menu at the mouse position of the last click */
+        /** \brief open the special context menu at the mouse position of the last click \see \ref JKQTPLOTTER_SPECIALCONTEXTMENU, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openSpecialContextMenu();
-        /** \brief open the special context menu at the mouse position \a x and \a y */
+        /** \brief open the special context menu at the mouse position \a x and \a y \see \ref JKQTPLOTTER_SPECIALCONTEXTMENU, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openSpecialContextMenu(int x, int y);
 
-        /** \brief open the standard context menu with the special context menu integrated at the mouse position of the last click */
+        /** \brief open the standard context menu with the special context menu integrated at the mouse position of the last click \see \ref JKQTPLOTTER_SPECIALCONTEXTMENU, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openStandardAndSpecialContextMenu();
-        /** \brief open the standard context menu with the special context menu integrated at the mouse position \a x and \a y */
+        /** \brief open the standard context menu with the special context menu integrated at the mouse position \a x and \a y \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_SPECIALCONTEXTMENU, \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void openStandardAndSpecialContextMenu(int x, int y);
 
         /** \brief sets absolutely limiting x-range of the plot
@@ -1099,6 +1142,27 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          *                                                                                       QMessageBox::Ok,
          *                                                                                       QMessageBox::Ok); });
          *                    \endcode
+         *                    <b>Please read the warning below!!!</b>
+         *
+         * \warning A note of care: This signal can be used to alter the context menu. It behaves differently, depending on
+         *          whether you use the standard context menu, or the special context menu (setSpecialContextMenu()). If the
+         *          standard menu is opened, your alterations are valid until it is shown the next time (i.e. the internal
+         *          context menu object is deleted in between). If you show the special context menu only, your alterations
+         *          are <b>permanently stored</b> in the menu object. I.e. if you use the code example above and open the menu
+         *          several times, it will accumulate additional menu entries!
+         *          If you must modify the special menu, just access actions and do not add or delete any in a slot bound to
+         *          this signal! You can recognize the special menu with code like this:
+         *          \code
+         *                if (contextMenu == plot->getSpecialContextMenu()) {
+         *                    //...
+         *                    // do something with the special menu, do not add/remove entries
+         *                } else {
+         *                    //...
+         *                    // do something with the standard menu, you are free to do anything!
+         *                }
+         *          \endcode
+         *
+         *  \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_SPECIALCONTEXTMENU, \ref JKQTPLOTTER_USERMOUSEINTERACTION
          */
         void contextMenuOpened(double x, double y, QMenu* contextMenu);
 
@@ -1193,9 +1257,11 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief searches JKQTPlotterStyle::registeredMouseDoubleClickActions for a matching action */
         JKQTPMouseDoubleClickActionsHashMapIterator findMatchingMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
 
-        /** \brief you may overwrite this method to modify the given context emnu before it is displayed.
+        /** \brief you may overwrite this method to modify the given context menu before it is displayed.
          *
          *  The plotter will fill the menu with the default items and then call this method. The default implementation does NOTHING.
+         *
+         *  \see \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION
          */
         void modifyContextMenu(QMenu* menu);
 
@@ -1257,8 +1323,10 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         QImage oldImage;
 
 
-        /** \brief use this QMenu instance instead of the standard context emnu of this widget */
-        QMenu* menujkqtpcmmSpecialContextMenu;
+        /** \brief use this QMenu instance instead of the standard context menu of this widget
+         *  \see \ref JKQTPLOTTER_SPECIALCONTEXTMENU
+         */
+        QMenu* menuSpecialContextMenu;
 
 
 
@@ -1350,9 +1418,14 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief current minimal size of the JKQTPlotter widget to properly display the plot */
         QSize minSize;
 
-        /** \brief the context menu object used by this JKQTPlotter */
+        /** \brief the context menu object used by this JKQTPlotter
+         *
+         *  \note this might be \c ==nullptr occasionally, therefore you need to check it, before accessing it!
+         *
+         *  \see \ref JKQTPLOTTER_CONTEXTMENU , resetContextMenu(), initContextMenu(), contextMenuMode
+         */
         QMenu* contextMenu;
-        /** \brief current mode for the default context menu (i.e. the right-click context menu) */
+        /** \brief current mode for the default context menu (i.e. the right-click context menu) \see \ref JKQTPLOTTER_CONTEXTMENU  */
         JKQTPContextMenuModes contextMenuMode;
         /** \brief x-position of the mouse (in plot coordinates) when a user mouse-action was started (e.g. drawing a rectangle) */
         double mouseContextX;
@@ -1363,7 +1436,12 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief y-position of the last mouse-click (in screen pixels) */
         int mouseLastClickY;
         QList<QMenu*> contextSubMenus;
-        /** \brief fills the member contextMenu with all default and additionally registered actions, also calls modifyContextMenu() */
+        /** \brief fills the member contextMenu with all default and additionally registered actions, also calls modifyContextMenu()
+         *
+         *  \note This function calls resetContextMenu() internally!
+         *
+         *  \see resetContextMenu(), contextMenuMode
+         */
         void initContextMenu();
         /** \brief set the current mouse cursor shappe according to currentMouseDragAction */
         void updateCursor();
@@ -1383,6 +1461,14 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         QTimer resizeTimer;
 
+        /** \brief destroys the internal contextMenu and optionally creates a new one
+         *
+         *  \param createnew if \c ==true, contextMenu is reinitialized with a (shiny) new QMenu,
+         *                   otherwise it is set to \c nullptr after destroying the old menu.
+         *
+         *  \see initContextMenu(), contextMenuMode
+         */
+        void resetContextMenu(bool createnew=true);
     protected slots:
         /** \brief while the window is resized, the plot is only redrawn after a restartable delay, implemented by this function and resizeTimer
         * \internal

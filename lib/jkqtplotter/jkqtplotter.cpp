@@ -47,7 +47,7 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
 {    
     initJKQTPlotterResources();
 
-    menujkqtpcmmSpecialContextMenu=nullptr;
+    menuSpecialContextMenu=nullptr;
     mouseContextX=0;
     mouseContextY=0;
     setParent(parent);
@@ -89,7 +89,7 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     toolbar->addSeparator();
     populateToolbar(toolbar);
 
-    contextMenu=new QMenu(this);
+    contextMenu=nullptr;//new QMenu(this);
 
     QSize s=QSize(plotterStyle.toolbarIconSize, plotterStyle.toolbarIconSize);
     toolbar->setIconSize(s);
@@ -114,6 +114,7 @@ JKQTPlotter::JKQTPlotter(QWidget *parent):
 }
 
 JKQTPlotter::~JKQTPlotter() {
+    resetContextMenu(false);
     disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
     disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     disconnect(plotter, SIGNAL(beforePlotScalingRecalculate()), this, SLOT(intBeforePlotScalingRecalculate()));
@@ -591,9 +592,7 @@ int JKQTPlotter::getPlotYOffset() {
 
 void JKQTPlotter::initContextMenu()
 {
-    contextMenu->clear();
-    qDeleteAll(contextSubMenus);
-    contextSubMenus.clear();
+    resetContextMenu(true);
 
     contextMenu->addAction(plotter->getActionSaveData());
     contextMenu->addAction(plotter->getActionSavePlot());
@@ -958,15 +957,15 @@ void JKQTPlotter::setContextMenuMode(JKQTPContextMenuModes mode) {
 }
 
 QMenu *JKQTPlotter::getSpecialContextMenu() const {
-    return this->menujkqtpcmmSpecialContextMenu;
+    return this->menuSpecialContextMenu;
 }
 
 void JKQTPlotter::setSpecialContextMenu(QMenu *menu)
 {
-    menujkqtpcmmSpecialContextMenu=menu;
-    if (menujkqtpcmmSpecialContextMenu) {
-        menujkqtpcmmSpecialContextMenu->setParent(this);
-        menujkqtpcmmSpecialContextMenu->close();
+    menuSpecialContextMenu=menu;
+    if (menuSpecialContextMenu) {
+        menuSpecialContextMenu->setParent(this);
+        menuSpecialContextMenu->close();
     }
 }
 
@@ -1081,12 +1080,28 @@ void JKQTPlotter::openStandardContextMenu()
     openStandardContextMenu(mouseLastClickX, mouseLastClickY);
 }
 
+
+void JKQTPlotter::resetContextMenu(bool createnew)
+{
+    if (contextMenu) {
+        contextMenu->close();
+        contextMenu->clear();
+        qDeleteAll(contextSubMenus);
+        contextSubMenus.clear();
+        delete contextMenu;
+        if (createnew) {
+            contextMenu=new QMenu(this);
+        } else {
+            contextMenu=nullptr;
+        }
+    }
+}
+
 void JKQTPlotter::openStandardContextMenu(int x, int y)
 {
     //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<")";
     mouseContextX=plotter->p2x(x/magnification);
     mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
-    contextMenu->close();
     initContextMenu();
     contextMenu->popup(mapToGlobal(QPoint(x,y)));
     //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<contextMenu->size()<<contextMenu->pos()<<contextMenu->parent();
@@ -1101,19 +1116,44 @@ void JKQTPlotter::openSpecialContextMenu()
 
 void JKQTPlotter::openSpecialContextMenu(int x, int y)
 {
-    //qDebug()<<"openSpecialContextMenu("<<x<<y<<menujkqtpcmmSpecialContextMenu<<")";
-    if (menujkqtpcmmSpecialContextMenu) {
-        for (int i=0; i<menujkqtpcmmSpecialContextMenu->actions().size(); i++) {
-            //qDebug()<<"  - "<<menujkqtpcmmSpecialContextMenu->actions().at(i)->text();
+    //qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<")";
+    if (menuSpecialContextMenu) {
+        /*
+        // reset the internal context menu ...
+        resetContextMenu(true);
+        // ... and add all actions from the special menu into the new menu: ...
+        for (int i=0; i<menuSpecialContextMenu->actions().size(); i++) {
+            //qDebug()<<"  - "<<menuSpecialContextMenu->actions().at(i)->text();
+            contextMenu->addAction(menuSpecialContextMenu->actions().at(i));
         }
+        // ... and copy the basic properties from the other menu
+        contextMenu->setIcon(menuSpecialContextMenu->icon());
+        contextMenu->setTitle(menuSpecialContextMenu->title());
+        contextMenu->setSeparatorsCollapsible(menuSpecialContextMenu->separatorsCollapsible());
+        contextMenu->setTearOffEnabled(menuSpecialContextMenu->isTearOffEnabled());
+        contextMenu->setToolTipsVisible(menuSpecialContextMenu->toolTipsVisible());
+        contextMenu->setFont(menuSpecialContextMenu->font());
+        contextMenu->setToolTip(menuSpecialContextMenu->toolTip());
+        contextMenu->setWhatsThis(menuSpecialContextMenu->whatsThis());
+        contextMenu->setWindowOpacity(menuSpecialContextMenu->windowOpacity());
         mouseContextX=plotter->p2x(x/magnification);
         mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
-        menujkqtpcmmSpecialContextMenu->close();
-        menujkqtpcmmSpecialContextMenu->popup(mapToGlobal(QPoint(x,y)));
-        menujkqtpcmmSpecialContextMenu->resize(menujkqtpcmmSpecialContextMenu->sizeHint());
-        //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<menujkqtpcmmSpecialContextMenu->size()<<menujkqtpcmmSpecialContextMenu->pos()<<menujkqtpcmmSpecialContextMenu->parent();
-        emit contextMenuOpened(mouseContextX, mouseContextY, menujkqtpcmmSpecialContextMenu);
-        //qDebug()<<"openSpecialContextMenu("<<x<<y<<menujkqtpcmmSpecialContextMenu<<") ... DONE";
+        contextMenu->popup(mapToGlobal(QPoint(x,y)));
+        contextMenu->resize(contextMenu->sizeHint());
+        //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<contextMenu->size()<<contextMenu->pos()<<contextMenu->parent();
+        emit contextMenuOpened(mouseContextX, mouseContextY, contextMenu);
+        //qDebug()<<"openSpecialContextMenu("<<x<<y<<contextMenu<<") ... DONE";
+        */
+
+
+        mouseContextX=plotter->p2x(x/magnification);
+        mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
+        menuSpecialContextMenu->close();
+        menuSpecialContextMenu->popup(mapToGlobal(QPoint(x,y)));
+        menuSpecialContextMenu->resize(menuSpecialContextMenu->sizeHint());
+        //qDebug()<<" -> "<<mapToGlobal(QPoint(x,y))<<menuSpecialContextMenu->size()<<menuSpecialContextMenu->pos()<<menuSpecialContextMenu->parent();
+        emit contextMenuOpened(mouseContextX, mouseContextY, menuSpecialContextMenu);
+        //qDebug()<<"openSpecialContextMenu("<<x<<y<<menuSpecialContextMenu<<") ... DONE";
     }
 }
 
@@ -1127,12 +1167,11 @@ void JKQTPlotter::openStandardAndSpecialContextMenu(int x, int y)
     //qDebug()<<"openContextMenu("<<x<<y<<contextMenu<<")";
     mouseContextX=plotter->p2x(x/magnification);
     mouseContextY=plotter->p2y((y-getPlotYOffset())/magnification);
-    contextMenu->close();
     initContextMenu();
 
-    if (menujkqtpcmmSpecialContextMenu) {
+    if (menuSpecialContextMenu) {
         contextMenu->addSeparator();
-        for (QAction* act: menujkqtpcmmSpecialContextMenu->actions()) {
+        for (QAction* act: menuSpecialContextMenu->actions()) {
             contextMenu->addAction(act);
         }
     }

@@ -8,6 +8,7 @@
 #include "test_user_interaction.h"
 #include <QMenuBar>
 #include <QMessageBox>
+#include <functional>
 
 TestUserInteraction::TestUserInteraction(QWidget *parent) :
     QMainWindow(parent)
@@ -145,8 +146,8 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbRightClickContextMenu->addItem("jkqtpcmmStandardAndSpecialContextMenu");
     cmbRightClickContextMenu->addItem("jkqtpcmmNoContextMenu");
     cmbRightClickContextMenu->setCurrentIndex(0);
-    layForm->addRow("mouse action: right-click context menu:", cmbRightClickContextMenu);
-    connect(cmbRightClickContextMenu, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightClickContextMenu(int)));
+    layForm->addRow("context menu mode:", cmbRightClickContextMenu);
+    connect(cmbRightClickContextMenu, SIGNAL(currentIndexChanged(int)), this, SLOT(setContextMenuMode(int)));
     // ... and add a special context menu
     QMenu* special=new QMenu(plot);
     special->addAction("Special entry 1 (no action!)");
@@ -243,7 +244,7 @@ void TestUserInteraction::setPlotMagnification(int index)
     plot->setMagnification(cmbMagnification->itemData(index).toDouble());
 }
 
-void TestUserInteraction::setRightClickContextMenu(int index)
+void TestUserInteraction::setContextMenuMode(int index)
 {
     plot->setContextMenuMode(static_cast<JKQTPContextMenuModes>(index));
 }
@@ -293,12 +294,19 @@ void TestUserInteraction::plotMouseWheelOperated(double x, double y, Qt::Keyboar
 
 void TestUserInteraction::contextMenuOpened(double x, double y, QMenu *contextMenu)
 {
-    contextMenu->addSeparator();
-    QAction* act=contextMenu->addMenu(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y))->addAction("user-added action");
-    connect(act, &QAction::triggered, [x,y]() { QMessageBox::warning(nullptr, tr("Plot Context Menu"),
-                                                                     tr("Context Menu was opened at x/y=%1/%2!").arg(x).arg(y),
-                                                                     QMessageBox::Ok,
-                                                                     QMessageBox::Ok); });
+    if (contextMenu!=plot->getSpecialContextMenu()) {
+        // We only want to alter the standard context menu, not the special one, as modifications there
+        // would be permanent! I.e. if this is called repeatedly, entries will accumulate!
+        //
+        // If you want to modify the special menu, do not add actions, but use pre-added actions, or reuse
+        // actions, once they have been added once!
+        contextMenu->addSeparator();
+        QAction* act=contextMenu->addMenu(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y))->addAction("user-added action");
+        connect(act, &QAction::triggered, [x,y]() { QMessageBox::warning(nullptr, tr("Plot Context Menu"),
+                                                                         tr("Context Menu was opened at x/y=%1/%2!").arg(x).arg(y),
+                                                                         QMessageBox::Ok,
+                                                                         QMessageBox::Ok); });
+    }
     labMouseAction->setText(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y));
 }
 

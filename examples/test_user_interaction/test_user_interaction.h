@@ -25,7 +25,7 @@ class TestUserInteraction : public QMainWindow
         void setLeftCtrlMouseAction(int index);
         void setRightMouseAction(int index);
         void setPlotMagnification(int index);
-        void setRightClickContextMenu(int index);
+        void setContextMenuMode(int index);
         void setLeftDoubleClickMouseAction(int index);
         void setRightDoubleClickMouseAction(int index);
         void setMouseWheelNoModAction(int index);

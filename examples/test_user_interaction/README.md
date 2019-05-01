@@ -115,4 +115,38 @@ You can also use the mouse to draw various geometricals forms. When you finish d
 #### Ellipses
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/draw_ellipse.gif)
 
+### Context Menus
+
+#### Standard Context Menu
+JKQTPlotter contains a standard context menu, which is shown if `plot->setContextMenuMode(jkqtpcmmStandardContextMenu);` was set. 
+It contains several standard ways of interacting with the plot, e.g. save to file, copy to clipboard, print, switch graph visibilities, ...
+
+![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/contextmenu_graph_visibility.png)
+
+In addition JKQTPlotter provides several ways to customize this menu:
+* You can add additional actions to the JKQTPlotter, by calling `JKQTPlotter::addAction()` (i.e. using the default Qt mechanism)
+  and/or by adding actions to the internal JKQTBasePlotter, using `JKQTBasePlotter::registerAdditionalAction()`
+* You can modify the menu, when it is displayed, by connecting a slot to the signal `JKQTPlotter::contextMenuOPened(x,y,menu)`:
+  ```.cpp
+    connect(plot, SIGNAL(contextMenuOpened(double, double, QMenu*)), this, SLOT(contextMenuOpened(double, double, QMenu*)));
+    
+    // ...
+    
+    void TestUserInteraction::contextMenuOpened(double x, double y, QMenu *contextMenu)
+    {
+        contextMenu->addSeparator();
+        QAction* act=contextMenu->addMenu(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y))->addAction("user-added action");
+        connect(act, &QAction::triggered, [x,y]() { QMessageBox::warning(nullptr, tr("Plot Context Menu"),
+                                                                         tr("Context Menu was opened at x/y=%1/%2!").arg(x).arg(y),
+                                                                         QMessageBox::Ok,
+                                                                         QMessageBox::Ok); });
+        labMouseAction->setText(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y));
+    }
+  ```
+
+#### Special Context Menu
+In addition to the standard context menu, JKQTPlotter can also be configures to display a special, user-defined context menu. 
+To do so, call `plot->setContextMenuMode(jkqtpcmmSpecialContextMenu);` and set your menu, by calling `plot->setSpecialContextMenu(menu)`.
+You can also combine the special menu and the standard menu, by calling `plot->setContextMenuMode(jkqtpcmmStandardAndSpecialContextMenu);`.
+
 
