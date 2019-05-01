@@ -232,11 +232,11 @@ void JKQTMathText::MTnode::doDrawBoxes(QPainter& painter, double x, double y, JK
         if (w>0) painter.drawLine(QLineF(x, y, x+w, y));
         p.setColor("green");
         painter.setPen(p);
-        painter.drawEllipse(x-3.0,y-3.0,6.0,6.0);
+        painter.drawEllipse(QRectF(x-3.0,y-3.0,6.0,6.0));
         p.setColor("lightgreen");
         painter.setPen(p);
-        painter.drawLine(x-2.0, y, x+2.0, y);
-        painter.drawLine(x, y-2, x, y+2.0);
+        painter.drawLine(QLineF(x-2.0, y, x+2.0, y));
+        painter.drawLine(QLineF(x, y-2, x, y+2.0));
 
     }
 }
@@ -265,7 +265,7 @@ JKQTMathText::MTtextNode::MTtextNode(JKQTMathText* parent, const QString& textIn
 
 JKQTMathText::MTtextNode::~MTtextNode() = default;
 
-void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     QFont f=currentEv.getFont(parent);
     if (currentEv.insideMath && (text=="(" || text=="[" || text=="|" || text=="]" || text==")" || text=="<" || text==">" ||
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
@@ -279,7 +279,7 @@ void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::
     QRectF tbr=parent->getTightBoundingRect(f, txt, painter.device()); //fm.tightBoundingRect(txt);
     if (txt=="|") {
         br=fm.boundingRect("X");
-        tbr=QRect(0,0,fm.width("X"), fm.ascent());//fm.boundingRect("X");
+        tbr=QRectF(0,0,fm.width("X"), fm.ascent());//fm.boundingRect("X");
         br.setWidth(0.7*br.width());
     }
     width=br.width();//width(text);
@@ -295,7 +295,7 @@ void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::
     strikeoutPos=fm.strikeOutPos()*1.1;
 }
 
-double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0;
     double baselineHeight=0;
@@ -455,7 +455,7 @@ QString JKQTMathText::MTinstruction1Node::getTypeName() const
     return QLatin1String("MTinstruction1Node(")+name+")";
 }
 
-void JKQTMathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     JKQTMathText::MTenvironment ev=currentEv;
 
     setupMTenvironment(ev);
@@ -470,7 +470,7 @@ void JKQTMathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTMa
     }
 }
 
-double JKQTMathText::MTinstruction1Node::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTinstruction1Node::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
 
@@ -489,7 +489,7 @@ double JKQTMathText::MTinstruction1Node::draw(QPainter& painter, double x, doubl
         double xw=fm.width("x");
         p.setColor(fcol);
         painter.setPen(p);
-        painter.drawRect(x,y-baselineHeight-xw/2,width+xw,overallHeight+xw);
+        painter.drawRect(QRectF(x,y-baselineHeight-xw/2,width+xw,overallHeight+xw));
         shiftX=xw/2.0;
     }
 
@@ -634,7 +634,7 @@ JKQTMathText::MTsqrtNode::~MTsqrtNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTsqrtNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTsqrtNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
 
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
@@ -644,7 +644,7 @@ void JKQTMathText::MTsqrtNode::getSizeInternal(QPainter& painter, JKQTMathText::
     width=width+fm.boundingRect("A").width()*2; // 1.53
 }
 
-double JKQTMathText::MTsqrtNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTsqrtNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0, baselineHeight=0, overallHeight=0, sp=0;
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, sp);
@@ -727,7 +727,7 @@ QString JKQTMathText::MTfracNode::getTypeName() const
     return "MTfracNode";
 }
 
-void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     JKQTMathText::MTenvironment ev1=currentEv;
     JKQTMathText::MTenvironment ev2=currentEv;
@@ -799,7 +799,7 @@ void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::
     }
 }
 
-double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     QFont f=currentEv.getFont(parent);
     QFontMetricsF fm(f, painter.device());
@@ -938,7 +938,7 @@ QString JKQTMathText::MTmatrixNode::getTypeName() const
     return "MTmatrixNode";
 }
 
-void JKQTMathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     JKQTMathText::MTenvironment ev1=currentEv;
 
@@ -980,7 +980,7 @@ void JKQTMathText::MTmatrixNode::getSizeInternal(QPainter& painter, JKQTMathText
     strikeoutPos=xh;
 }
 
-double JKQTMathText::MTmatrixNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTmatrixNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
 
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
@@ -1075,7 +1075,7 @@ JKQTMathText::MTdecoratedNode::~MTdecoratedNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     QFontMetricsF fm(currentEv.getFont(parent), painter.device());
     double wc=fm.boundingRect("A").width();
     double dheightfactor=1.0+parent->getDecorationHeightFactor()*2.0;
@@ -1087,7 +1087,7 @@ void JKQTMathText::MTdecoratedNode::getSizeInternal(QPainter& painter, JKQTMathT
     width=width+0.3*wc;
 }
 
-double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTdecoratedNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     MTenvironment ev=currentEv;
     double width=0, baselineHeight=0, overallHeight=0, strikeoutPos=0;
@@ -1316,7 +1316,7 @@ JKQTMathText::MTbraceNode::~MTbraceNode() {
     if (child!=nullptr) delete child;
 }
 
-void JKQTMathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
 
     JKQTMathText::MTenvironment ev=currentEv;
     child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
@@ -1334,7 +1334,7 @@ void JKQTMathText::MTbraceNode::getSizeInternal(QPainter& painter, JKQTMathText:
 
 }
 
-double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     //std::cout<<"drawing brace-node: '"<<openbrace.toStdString()<<"' ... '"<<closebrace.toStdString()<<"'\n";
     doDrawBoxes(painter, x, y, currentEv);
     JKQTMathText::MTenvironment ev=currentEv;
@@ -1590,13 +1590,13 @@ QString JKQTMathText::MTlistNode::getTypeName() const
     return "MTlistNode";
 }
 
-void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     width=0;
     overallHeight=0;
     baselineHeight=0;
     strikeoutPos=0;
     QFontMetricsF fm(currentEv.getFont(parent));
-    QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
+    //QRectF tbr=parent->getTightBoundingRect(currentEv.getFont(parent), "M", painter.device());
 
 
     double xnew=0;
@@ -1803,7 +1803,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
     width=xnew;
 }
 
-double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     double ynew=y;
     double xnew=x;
@@ -2785,7 +2785,7 @@ QFont JKQTMathText::MTsymbolNode::getFontName(symbolFont f, QFont& fi) const {
     return fr;
 }
 
-void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize) {
+void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     QFont f=currentEv.getFont(parent);
     f=getFontName(font, f);
     f.setPointSizeF(f.pointSizeF()*fontFactor);
@@ -2837,7 +2837,7 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
 
 }
 
-double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
+double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* /*prevNodeSize*/) {
     doDrawBoxes(painter, x, y, currentEv);
     double width=0;
     double baselineHeight=0;
@@ -4166,7 +4166,7 @@ void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
     }
 }
 
-void JKQTMathText::draw(QPainter& painter, int flags, QRectF rect, bool drawBoxes) {
+void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes) {
     if (getTree()!=nullptr) {
         MTenvironment ev;
         ev.color=fontColor;
@@ -4331,7 +4331,7 @@ void JKQTMathTextLabel::internalPaint()
             size=m_mathText->getSize(p);
             p.end();
         }
-        buffer=QPixmap(qMax(32.0,size.width()*1.2), qMax(10.0,size.height()*1.1));
+        buffer=QPixmap(static_cast<int>(qMax(32.0,size.width()*1.2)), static_cast<int>(qMax(10.0,size.height()*1.1)));
         buffer.fill(Qt::transparent);
         {
             //qDebug()<<"internalPaint(): "<<buffer.size()<<size;

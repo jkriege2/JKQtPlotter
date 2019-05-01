@@ -246,7 +246,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
          *
          *  This version draws the text inside the given rectangle according to the specified flags.
          */
-        void draw(QPainter& painter, int flags, QRectF rect, bool drawBoxes=false);
+        void draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes=false);
 
         /** \brief configures the class to use the STIX fonts in mathmode
          *
@@ -1054,7 +1054,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
-                virtual QString getTypeName() const ;
+                virtual QString getTypeName() const override ;
                 /*! \brief returns the child node */
                 inline MTnode* getChild() const {
                     return this->child; 
@@ -1090,7 +1090,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             public:
                 MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
                 virtual ~MTfracNode() override;
-                virtual QString getTypeName() const ;
+                virtual QString getTypeName() const override;
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::toHtml() */
@@ -1181,7 +1181,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
-                virtual QString getTypeName() const ;
+                virtual QString getTypeName() const override ;
                 /*! \brief returns the child node */
                  inline MTnode* getChild() const {
                     return this->child; 
