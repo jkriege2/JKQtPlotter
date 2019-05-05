@@ -49,11 +49,9 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
 
 
 
-        /*! \copydoc whiskerStyle
-            \see see whiskerStyle for details */
-        void setWhiskerLineStyle(const Qt::PenStyle & __value);
-        /*! \copydoc whiskerStyle
-            \see see whiskerStyle for details */
+        /*! \brief set the line style of whisker lines */
+        void setWhiskerLineStyle(Qt::PenStyle  __value);
+        /*! \brief get the line style of whisker lines */
         Qt::PenStyle getWhiskerLineStyle() const;
 
         /*! \copydoc boxWidth
@@ -63,19 +61,57 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
             \see see boxWidth for details */
         double getBoxWidth() const;
 
-        /*! \copydoc whiskerLineWidth
-            \see see whiskerLineWidth for details */
+        /*! \brief set the width [pt] of whisker lines */
         void setWhiskerLineWidth(double __value);
-        /*! \copydoc whiskerLineWidth
-            \see see whiskerLineWidth for details */
+        /*! \brief get the  width [pt] of whisker lines */
         double getWhiskerLineWidth() const;
 
-        /*! \copydoc whiskerLineColor
-            \see see whiskerLineColor for details */
+        /*! \brief set the color of whisker lines */
         void setWhiskerLineColor(QColor __value);
-        /*! \copydoc whiskerLineColor
-            \see see whiskerLineColor for details */
+        /*! \brief get the color of whisker lines */
         QColor getWhiskerLineColor() const;
+
+
+        /** \brief sets the dash offset for a custom dash style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
+         */
+        void setWhiskerLineDashOffset(qreal offset);
+        /** \brief returns the dash offset for a custom dash style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
+         */
+        qreal getWhiskerLineDashOffset() const;
+        /** \brief sets the dash pattern for a custom dash style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
+         */
+        void setWhiskerLineDashPattern(const QVector<qreal> &pattern);
+        /** \brief gets the dash pattern for a custom dash style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
+         */
+        QVector<qreal> getWhiskerLineDashPattern() const;
+        /** \brief sets the join style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
+         */
+        void setWhiskerLineJoinStyle(Qt::PenJoinStyle style);
+        /** \brief returns the join style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
+         */
+        Qt::PenJoinStyle getWhiskerLineJoinStyle() const;
+        /** \brief sets the cap style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
+         */
+        void setWhiskerLineCapStyle(Qt::PenCapStyle style);
+        /** \brief gets the cap style of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
+         */
+        Qt::PenCapStyle getWhiskerLineCapStyle() const;
+        /** \brief sets the brush used to fill the line area of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        void setWhiskerLineBrush(const QBrush& style);
+        /** \brief gets the brush used to fill the line area of whisker lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        QBrush getWhiskerLineBrush() const;
 
         /** \brief build a pen to be used for drawing whiskers */
         QPen getWhiskerPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const;
@@ -85,13 +121,11 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
         void setBoxplotColor(QColor c, JKQTBasePlotter *parent);
     private:
         /** \brief line style of the whisker lines */
-        Qt::PenStyle whiskerLineStyle;
+        QPen m_whiskerLinePen;
         /** \brief line width (in pt) of the whisker lines */
         double whiskerLineWidth;
-        /** \brief color of the whisker lines */
-        QColor whiskerLineColor;
         /** \brief width of box in percent of distance between the current two posColumn values
-         *         if we only plot one box&whiskers then this is the width in plot coordinates */
+         *         if we only plot one box&whiskers then this is the width in pt */
         double boxWidth;
 
 };
@@ -112,6 +146,10 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
     The different features of a boxplot are:
 
     \image html boxplots.png
+
+    This class also implements hitTest() in a way that displays all data of the boxplot in the tooltips:
+
+    \image html tooltip_boxplot.png
 
     \note There are additional classes to draw a single boxplot element: JKQTPBoxplotHorizontalElement and JKQTPBoxplotVerticalElement.
           In these you can set the data values, as they are NOT drawn from a data column. This can be useful, if you e.g. want to

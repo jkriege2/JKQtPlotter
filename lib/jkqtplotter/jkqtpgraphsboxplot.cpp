@@ -37,8 +37,7 @@ JKQTPGraphBoxplotStyleMixin::JKQTPGraphBoxplotStyleMixin()
 
     boxWidth=0.4;
 
-    whiskerLineColor=getLineColor();
-    whiskerLineStyle=getLineStyle();
+    m_whiskerLinePen=QPen(getLineColor(), getLineWidth());
     whiskerLineWidth=getLineWidth();
 
 }
@@ -51,12 +50,12 @@ void JKQTPGraphBoxplotStyleMixin::initBoxplotStyle(JKQTBasePlotter *parent, int 
     initSymbolStyle(parent, parentPlotStyle);
     if (parent && parentPlotStyle>=0) { // get style settings from parent object
         parentPlotStyle=parent->getNextStyle();
-        whiskerLineStyle=parent->getPlotStyle(parentPlotStyle).style();
+        m_whiskerLinePen.setColor(parent->getPlotStyle(parentPlotStyle).color());
+        m_whiskerLinePen.setStyle(parent->getPlotStyle(parentPlotStyle).style());
         whiskerLineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
     }
 
-    whiskerLineColor=getLineColor();
-
+    setWhiskerLineColor(getLineColor());
 }
 
 void JKQTPGraphBoxplotStyleMixin::setBoxplotColor(QColor c, JKQTBasePlotter *parent)
@@ -67,17 +66,17 @@ void JKQTPGraphBoxplotStyleMixin::setBoxplotColor(QColor c, JKQTBasePlotter *par
     setHighlightingLineColor(c);
     setSymbolColor(c);
     setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
-    whiskerLineColor=getLineColor();
+    setWhiskerLineColor(getLineColor());
 }
 
-void JKQTPGraphBoxplotStyleMixin::setWhiskerLineStyle(const Qt::PenStyle &__value)
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineStyle(Qt::PenStyle __value)
 {
-    this->whiskerLineStyle = __value;
+    this->m_whiskerLinePen.setStyle(__value);
 }
 
 Qt::PenStyle JKQTPGraphBoxplotStyleMixin::getWhiskerLineStyle() const
 {
-    return this->whiskerLineStyle;
+    return this->m_whiskerLinePen.style();
 }
 
 void JKQTPGraphBoxplotStyleMixin::setBoxWidth(double __value)
@@ -102,20 +101,70 @@ double JKQTPGraphBoxplotStyleMixin::getWhiskerLineWidth() const
 
 void JKQTPGraphBoxplotStyleMixin::setWhiskerLineColor(QColor __value)
 {
-    whiskerLineColor=__value;
+    m_whiskerLinePen.setColor(__value);
 }
 
 QColor JKQTPGraphBoxplotStyleMixin::getWhiskerLineColor() const
 {
-    return whiskerLineColor;
+    return m_whiskerLinePen.color();
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineDashOffset(qreal offset)
+{
+    m_whiskerLinePen.setDashOffset(offset);
+}
+
+qreal JKQTPGraphBoxplotStyleMixin::getWhiskerLineDashOffset() const
+{
+    return m_whiskerLinePen.dashOffset();
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineDashPattern(const QVector<qreal> &pattern)
+{
+    m_whiskerLinePen.setDashPattern(pattern);
+    m_whiskerLinePen.setStyle(Qt::CustomDashLine);
+}
+
+QVector<qreal> JKQTPGraphBoxplotStyleMixin::getWhiskerLineDashPattern() const
+{
+    return m_whiskerLinePen.dashPattern();
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineJoinStyle(Qt::PenJoinStyle style)
+{
+    m_whiskerLinePen.setJoinStyle(style);
+}
+
+Qt::PenJoinStyle JKQTPGraphBoxplotStyleMixin::getWhiskerLineJoinStyle() const
+{
+    return m_whiskerLinePen.joinStyle();
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineCapStyle(Qt::PenCapStyle style)
+{
+    m_whiskerLinePen.setCapStyle(style);
+}
+
+Qt::PenCapStyle JKQTPGraphBoxplotStyleMixin::getWhiskerLineCapStyle() const
+{
+    return m_whiskerLinePen.capStyle();
+}
+
+void JKQTPGraphBoxplotStyleMixin::setWhiskerLineBrush(const QBrush &style)
+{
+    m_whiskerLinePen.setBrush(style);
+}
+
+QBrush JKQTPGraphBoxplotStyleMixin::getWhiskerLineBrush() const
+{
+    return m_whiskerLinePen.brush();
 }
 
 QPen JKQTPGraphBoxplotStyleMixin::getWhiskerPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
 {
-    QPen pw=getLinePenForRects(painter, parent);
-    pw.setStyle(whiskerLineStyle);
-    pw.setWidthF(whiskerLineWidth);
-    pw.setColor(whiskerLineColor);
+    QPen pw=m_whiskerLinePen;
+    pw.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*whiskerLineWidth)));
+    pw.setJoinStyle(Qt::MiterJoin);
     return pw;
 }
 
@@ -161,9 +210,10 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPBoxplotVerticalGraph::draw");
 #endif
+    clearHitTestData();
     if (parent==nullptr) return;
     JKQTPDatastore* datastore=parent->getDatastore();
-    if (datastore==nullptr) return;
+    if (datastore==nullptr) return;    
 
     drawErrorsBefore(painter);
 
@@ -183,6 +233,7 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (imin<0) imin=0;
     if (imax<0) imax=0;
 
+    reserveHitTestData(imax-imin);
 
 
     //bool first=false;
@@ -208,35 +259,46 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         for (int i=imin; i<imax; i++) {
-            double xv=datastore->get(posColumn,i);
-            double p25v=datastore->get(percentile25Column,i);
-            double p75v=datastore->get(percentile75Column,i);
-            double minv=datastore->get(minColumn,i);
-            double maxv=datastore->get(maxColumn,i);
-            double medianv=datastore->get(medianColumn,i);
-            double mean=transformY(datastore->get(meanColumn,i));
+            const double xv=datastore->get(posColumn,static_cast<size_t>(i));
+            const double p25v=datastore->get(percentile25Column,static_cast<size_t>(i));
+            const double p75v=datastore->get(percentile75Column,static_cast<size_t>(i));
+            const double minv=datastore->get(minColumn,static_cast<size_t>(i));
+            const double maxv=datastore->get(maxColumn,static_cast<size_t>(i));
+            const double medianv=datastore->get(medianColumn,static_cast<size_t>(i));
+            const double meanv=datastore->get(meanColumn,static_cast<size_t>(i));
 
             QVector<QLineF> lines_p, lines_pw;
 
             //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-            if (posColumn>=0 && JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(p25v) &&
-                JKQTPIsOKFloat(p75v) && JKQTPIsOKFloat(minv) &&
-                JKQTPIsOKFloat(maxv) && JKQTPIsOKFloat(medianv) ) {
+            if (posColumn>=0 && JKQTPIsOKFloat(xv) ) {
+
+                // collect single-value labels for hitTest()-data at the bottom of this loop!
+                QStringList labelValues, labelNames;
+                int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
+                labelNames<<"pos";
+                labelValues<<QString::fromStdString(jkqtp_floattolatexstr(xv, 3));
+                if (minColumn>=0 && JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(minv, 3)); labMin=labelValues.size()-1; }
+                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p25v, 3)); labQ25=labelValues.size()-1; }
+                if (medianColumn>=0 && JKQTPIsOKFloat(medianv)) { labelNames<<"\\median"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(medianv, 3)); labMedian=labelValues.size()-1; }
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(meanv, 3)); labMean=labelValues.size()-1; }
+                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p75v, 3)); labQ75=labelValues.size()-1; }
+                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(maxv, 3)); labMax=labelValues.size()-1; }
 
                 painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(p);
                 painter.setBrush(b);
                 //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-                double x=transformX(xv);
-                double p25=transformY(p25v);
-                double p75=transformY(p75v);
-                double min=transformY(minv);
-                double max=transformY(maxv);
-                double median=transformY(medianv);
+                const double x=transformX(xv);
+                const double p25=transformY(p25v);
+                const double p75=transformY(p75v);
+                const double min=transformY(minv);
+                const double max=transformY(maxv);
+                const double median=transformY(medianv);
+                const double mean=transformY(meanv);
 
                 double xn=x+1;
-                if (i+1<imax) xn=transformX(datastore->get(posColumn,i+1));
-                else if (i-1>=0) xn=transformX(datastore->get(posColumn,i-1));
+                if (i+1<imax) xn=transformX(datastore->get(posColumn,static_cast<size_t>(i+1)));
+                else if (i-1>=0) xn=transformX(datastore->get(posColumn,static_cast<size_t>(i-1)));
                 else xn=x+1;
 
 
@@ -272,7 +334,7 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
                 if (percentile25Column>=0 && percentile75Column>=0) painter.drawRect(QRectF(xmi, p75, fabs(xma-xmi), fabs(p75-p25)));
                 if (medianColumn>=0) lines_p.append(QLineF(xmi+p.widthF()/2.0, median, xma-p.widthF()/2.0, median));
-                if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) {
                     plotStyledSymbol(parent, painter,x,mean);
                 }
 
@@ -283,6 +345,43 @@ void JKQTPBoxplotVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (lines_pw.size()>0) painter.drawLines(lines_pw);
             
 
+                // add hit-test graph points
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMean]="\\ul{"+sl[labMean]+"}";
+                    sll[labMean]="\\ul{"+sll[labMean]+"}";
+                    addHitTestData(xv, meanv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (medianColumn>=0 && JKQTPIsOKFloat(medianv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMedian]="\\ul{"+sl[labMedian]+"}";
+                    sll[labMedian]="\\ul{"+sll[labMedian]+"}";
+                    addHitTestData(xv, medianv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (minColumn>=0 && JKQTPIsOKFloat(minv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMin]="\\ul{"+sl[labMin]+"}";
+                    sll[labMin]="\\ul{"+sll[labMin]+"}";
+                    addHitTestData(xv, minv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMax]="\\ul{"+sl[labMax]+"}";
+                    sll[labMax]="\\ul{"+sll[labMax]+"}";
+                    addHitTestData(xv, maxv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ25]="\\ul{"+sl[labQ25]+"}";
+                    sll[labQ25]="\\ul{"+sll[labQ25]+"}";
+                    addHitTestData(xv, p25v, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ75]="\\ul{"+sl[labQ75]+"}";
+                    sll[labQ75]="\\ul{"+sll[labQ75]+"}";
+                    addHitTestData(xv, p75v, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
                 //first=true;
             }
         }
@@ -740,37 +839,47 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         //bool first=false;
         for (int i=imin; i<imax; i++) {
-            double yv=datastore->get(posColumn,i);
-            double p25v=datastore->get(percentile25Column,i);
-            double p75v=datastore->get(percentile75Column,i);
-            double minv=datastore->get(minColumn,i);
-            double maxv=datastore->get(maxColumn,i);
-            double medianv=datastore->get(medianColumn,i);
-            double mean=transformX(datastore->get(meanColumn,i));
+            const double yv=datastore->get(posColumn,static_cast<size_t>(i));
+            const double p25v=datastore->get(percentile25Column,static_cast<size_t>(i));
+            const double p75v=datastore->get(percentile75Column,static_cast<size_t>(i));
+            const double minv=datastore->get(minColumn,static_cast<size_t>(i));
+            const double maxv=datastore->get(maxColumn,static_cast<size_t>(i));
+            const double medianv=datastore->get(medianColumn,static_cast<size_t>(i));
+            const double meanv=datastore->get(meanColumn,static_cast<size_t>(i));
 
             QVector<QLineF> lines_p, lines_pw;
             //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-            if (posColumn>=0 && JKQTPIsOKFloat(yv) &&
-                JKQTPIsOKFloat(p25v) &&
-                JKQTPIsOKFloat(p75v) &&
-                JKQTPIsOKFloat(minv) &&
-                JKQTPIsOKFloat(maxv) &&
-                JKQTPIsOKFloat(medianv)) {
+            if (posColumn>=0 && JKQTPIsOKFloat(yv) ) {
+
+
+                // collect single-value labels for hitTest()-data at the bottom of this loop!
+                QStringList labelValues, labelNames;
+                int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
+                labelNames<<"pos";
+                labelValues<<QString::fromStdString(jkqtp_floattolatexstr(yv, 3));
+                if (minColumn>=0 && JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(minv, 3)); labMin=labelValues.size()-1; }
+                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p25v, 3)); labQ25=labelValues.size()-1; }
+                if (medianColumn>=0 && JKQTPIsOKFloat(medianv)) { labelNames<<"\\median"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(medianv, 3)); labMedian=labelValues.size()-1; }
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(meanv, 3)); labMean=labelValues.size()-1; }
+                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p75v, 3)); labQ75=labelValues.size()-1; }
+                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(maxv, 3)); labMax=labelValues.size()-1; }
+
 
                 painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(p);
                 painter.setBrush(b);
 
 
-                double p25=transformX(p25v);
-                double p75=transformX(p75v);
-                double min=transformX(minv);
-                double max=transformX(maxv);
-                double median=transformX(medianv);
+                const double y=transformY(yv);
+                const double p25=transformX(p25v);
+                const double p75=transformX(p75v);
+                const double min=transformX(minv);
+                const double max=transformX(maxv);
+                const double median=transformX(medianv);
+                const double mean=transformX(meanv);
 
 
                 //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-                double y=transformY(yv);
                 double minstop=p25;
                 double maxstop=p75;
                 if (percentile25Column<0 && medianColumn>=0) minstop=median;
@@ -781,8 +890,8 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 else if (percentile75Column<0 && meanColumn>=0) maxstop=mean;
 
                 double yn=y+1;
-                if (i+1<imax) yn=transformY(datastore->get(posColumn,i+1));
-                else if (i-1>=0) yn=transformY(datastore->get(posColumn,i-1));
+                if (i+1<imax) yn=transformY(datastore->get(posColumn,static_cast<size_t>(i+1)));
+                else if (i-1>=0) yn=transformY(datastore->get(posColumn,static_cast<size_t>(i-1)));
                 else yn=y+1;
                 double delta=fabs(yn-y);
                 double w=((boxwidth_real>0)?boxwidth_real:(delta))*getBoxWidth();
@@ -808,7 +917,7 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (percentile25Column>=0 && percentile75Column>=0) painter.drawRect(QRectF(p25, qMin(yma,ymi), fabs(p75-p25), fabs(yma-ymi)));
                 if (medianColumn>=0) lines_p.append(QLineF(median, ymi-p.widthF()/2.0, median, yma+p.widthF()/2.0));
 
-                if (meanColumn>=0 && JKQTPIsOKFloat(mean)) {
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) {
                     plotStyledSymbol(parent, painter, mean, y);
                 }
 
@@ -817,7 +926,45 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (lines_p.size()>0) painter.drawLines(lines_p);
                 painter.setPen(pw);
                 if (lines_pw.size()>0) painter.drawLines(lines_pw);
-            
+
+
+                // add hit-test graph points
+                if (meanColumn>=0 && JKQTPIsOKFloat(meanv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMean]="\\ul{"+sl[labMean]+"}";
+                    sll[labMean]="\\ul{"+sll[labMean]+"}";
+                    addHitTestData(meanv, yv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (medianColumn>=0 && JKQTPIsOKFloat(medianv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMedian]="\\ul{"+sl[labMedian]+"}";
+                    sll[labMedian]="\\ul{"+sll[labMedian]+"}";
+                    addHitTestData(medianv, yv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (minColumn>=0 && JKQTPIsOKFloat(minv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMin]="\\ul{"+sl[labMin]+"}";
+                    sll[labMin]="\\ul{"+sll[labMin]+"}";
+                    addHitTestData(minv, yv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (maxColumn>=0 && JKQTPIsOKFloat(maxv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMax]="\\ul{"+sl[labMax]+"}";
+                    sll[labMax]="\\ul{"+sll[labMax]+"}";
+                    addHitTestData(maxv, yv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (percentile25Column>=0 && JKQTPIsOKFloat(p25v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ25]="\\ul{"+sl[labQ25]+"}";
+                    sll[labQ25]="\\ul{"+sll[labQ25]+"}";
+                    addHitTestData(p25v, yv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (percentile75Column>=0 && JKQTPIsOKFloat(p75v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ75]="\\ul{"+sl[labQ75]+"}";
+                    sll[labQ75]="\\ul{"+sll[labQ75]+"}";
+                    addHitTestData(p75v, yv, i, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
 
         }
@@ -886,53 +1033,100 @@ void JKQTPBoxplotVerticalElement::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-        double xv=pos;
-        double p25v=percentile25;
-        double p75v=percentile75;
-        double minv=min;
-        double maxv=max;
-        double medianv=median;
+        const double xv=pos;
+        const double p25v=percentile25;
+        const double p75v=percentile75;
+        const double minv=min;
+        const double maxv=max;
+        const double medianv=median;
+        const double meanv=mean;
 
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(p25v) &&
-            JKQTPIsOKFloat(p75v) && JKQTPIsOKFloat(minv) &&
-            JKQTPIsOKFloat(maxv) && JKQTPIsOKFloat(medianv) ) {
+        if (JKQTPIsOKFloat(xv) ) {
 
             //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-            double x=transformX(xv);
-            double p25=transformY(p25v);
-            double p75=transformY(p75v);
-            double min=transformY(minv);
-            double max=transformY(maxv);
-            double median=transformY(medianv);
+            const double x=transformX(xv);
+            const double p25=transformY(p25v);
+            const double p75=transformY(p75v);
+            const double min=transformY(minv);
+            const double max=transformY(maxv);
+            const double median=transformY(medianv);
 
-            double w=getBoxWidth();
+            // collect single-value labels for hitTest()-data at the bottom of this loop!
+            QStringList labelValues, labelNames;
+            int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
+            labelNames<<"pos";
+            labelValues<<QString::fromStdString(jkqtp_floattolatexstr(xv, 3));
+            if (JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(minv, 3)); labMin=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p25v, 3)); labQ25=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(medianv)) { labelNames<<"\\median"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(medianv, 3)); labMedian=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(meanv, 3)); labMean=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p75v, 3)); labQ75=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(maxv, 3)); labMax=labelValues.size()-1; }
+
+            double w=parent->pt2px(painter, getBoxWidth());
             double xma=x+w/2.0;
             double xmi=x-w/2.0;
 
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
-            {
+            if (JKQTPIsOKFloat(p25v) && JKQTPIsOKFloat(p75v)) {
                 painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setBrush(b);
                 painter.drawRect(QRectF(xmi, p75, fabs(xma-xmi), fabs(p75-p25)));
+                if (JKQTPIsOKFloat(p25v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ25]="\\ul{"+sl[labQ25]+"}";
+                    sll[labQ25]="\\ul{"+sll[labQ25]+"}";
+                    addHitTestData(xv, p25v, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (JKQTPIsOKFloat(p75v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ75]="\\ul{"+sl[labQ75]+"}";
+                    sll[labQ75]="\\ul{"+sll[labQ75]+"}";
+                    addHitTestData(xv, p75v, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
         
-            if (drawMedian) {
+            if (drawMedian && JKQTPIsOKFloat(medianv)) {
                 painter.drawLine(QLineF(xmi, median, xma, median));
+                if (JKQTPIsOKFloat(medianv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMedian]="\\ul{"+sl[labMedian]+"}";
+                    sll[labMedian]="\\ul{"+sll[labMedian]+"}";
+                    addHitTestData(xv, medianv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
             if (drawMinMax) {
-                painter.drawLine(QLineF(x-w/4.0, max, x+w/4.0, max));
-                painter.drawLine(QLineF(x-w/4.0, min, x+w/4.0, min));
+                if (JKQTPIsOKFloat(maxv)) painter.drawLine(QLineF(x-w/4.0, max, x+w/4.0, max));
+                if (JKQTPIsOKFloat(minv)) painter.drawLine(QLineF(x-w/4.0, min, x+w/4.0, min));
                 painter.setPen(pw);
-                painter.drawLine(QLineF(x, max, x, p75));
-                painter.drawLine(QLineF(x, min, x, p25));
+                if (JKQTPIsOKFloat(maxv)) painter.drawLine(QLineF(x, max, x, p75));
+                if (JKQTPIsOKFloat(minv)) painter.drawLine(QLineF(x, min, x, p25));
+                if (JKQTPIsOKFloat(minv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMin]="\\ul{"+sl[labMin]+"}";
+                    sll[labMin]="\\ul{"+sll[labMin]+"}";
+                    addHitTestData(xv, minv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (JKQTPIsOKFloat(maxv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMax]="\\ul{"+sl[labMax]+"}";
+                    sll[labMax]="\\ul{"+sll[labMax]+"}";
+                    addHitTestData(xv, maxv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
         
 
-            if (drawMean) {
-                double mean=transformY(this->mean);
+            if (drawMean && JKQTPIsOKFloat(meanv)) {
+                double mean=transformY(meanv);
                 plotStyledSymbol(parent, painter, x, mean);
+                if (JKQTPIsOKFloat(meanv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMean]="\\ul{"+sl[labMean]+"}";
+                    sll[labMean]="\\ul{"+sll[labMean]+"}";
+                    addHitTestData(xv, meanv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
 
 
@@ -1267,28 +1461,36 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
         QPen pw=getWhiskerPen(painter, parent);
         QPen np(Qt::NoPen);
         QBrush b=getFillBrush(painter, parent);
-        double yv=pos;
-        double p25v=percentile25;
-        double p75v=percentile75;
-        double minv=min;
-        double maxv=max;
-        double medianv=median;
+        const double yv=pos;
+        const double p25v=percentile25;
+        const double p75v=percentile75;
+        const double minv=min;
+        const double maxv=max;
+        const double medianv=median;
+        const double meanv=mean;
 
         //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(yv) &&
-            JKQTPIsOKFloat(p25v) &&
-            JKQTPIsOKFloat(p75v) &&
-            JKQTPIsOKFloat(minv) &&
-            JKQTPIsOKFloat(maxv) &&
-            JKQTPIsOKFloat(medianv)) {
+        if (JKQTPIsOKFloat(yv) ) {
 
             //std::cout<<"boxplot(med="<<medianv<<", min="<<minv<<", max="<<maxv<<", p25="<<p25v<<", p75="<<p75v<<")\n";
-            double y=transformY(yv);
-            double p25=transformX(p25v);
-            double p75=transformX(p75v);
-            double min=transformX(minv);
-            double max=transformX(maxv);
-            double median=transformX(medianv);
+            const double y=transformY(yv);
+            const double p25=transformX(p25v);
+            const double p75=transformX(p75v);
+            const double min=transformX(minv);
+            const double max=transformX(maxv);
+            const double median=transformX(medianv);
+
+            // collect single-value labels for hitTest()-data at the bottom of this loop!
+            QStringList labelValues, labelNames;
+            int labMedian=-1, labMean=-1, labMin=-1, labMax=-1, labQ25=-1, labQ75=-1;
+            labelNames<<"pos";
+            labelValues<<QString::fromStdString(jkqtp_floattolatexstr(yv, 3));
+            if (JKQTPIsOKFloat(minv)) { labelNames<<"\\min"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(minv, 3)); labMin=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p25v)) { labelNames<<"q_{25}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p25v, 3)); labQ25=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(medianv)) { labelNames<<"\\median"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(medianv, 3)); labMedian=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(meanv)) { labelNames<<"\\mu"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(meanv, 3)); labMean=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(p75v)) { labelNames<<"q_{75}"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(p75v, 3)); labQ75=labelValues.size()-1; }
+            if (JKQTPIsOKFloat(maxv)) { labelNames<<"\\max"; labelValues<<QString::fromStdString(jkqtp_floattolatexstr(maxv, 3)); labMax=labelValues.size()-1; }
 
             double w= parent->pt2px(painter, getBoxWidth());
             double yma=y+w/2.0;
@@ -1296,27 +1498,62 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
-            {
+            if (JKQTPIsOKFloat(p25v) && JKQTPIsOKFloat(p75v)) {
                 painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setBrush(b);
                 painter.drawRect(QRectF(p25, ymi, fabs(p75-p25), fabs(yma-ymi)));
+                if (JKQTPIsOKFloat(p25v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ25]="\\ul{"+sl[labQ25]+"}";
+                    sll[labQ25]="\\ul{"+sll[labQ25]+"}";
+                    addHitTestData(p25v, yv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (JKQTPIsOKFloat(p75v)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labQ75]="\\ul{"+sl[labQ75]+"}";
+                    sll[labQ75]="\\ul{"+sll[labQ75]+"}";
+                    addHitTestData(p75v, yv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
         
-            if (drawMedian) {
+            if (drawMedian && JKQTPIsOKFloat(medianv)) {
                 painter.drawLine(QLineF(median, ymi, median, yma));
-            }
+                if (JKQTPIsOKFloat(medianv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMedian]="\\ul{"+sl[labMedian]+"}";
+                    sll[labMedian]="\\ul{"+sll[labMedian]+"}";
+                    addHitTestData(medianv, yv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }            }
             if (drawMinMax) {
-                painter.drawLine(QLineF(max, y-w/4.0, max, y+w/4.0));
-                painter.drawLine(QLineF(min, y-w/4.0, min, y+w/4.0));
+                if (JKQTPIsOKFloat(maxv)) painter.drawLine(QLineF(max, y-w/4.0, max, y+w/4.0));
+                if (JKQTPIsOKFloat(minv)) painter.drawLine(QLineF(min, y-w/4.0, min, y+w/4.0));
                 painter.setPen(pw);
-                painter.drawLine(QLineF(max, y, p75, y));
-                painter.drawLine(QLineF(min, y, p25, y));
+                if (JKQTPIsOKFloat(maxv)) painter.drawLine(QLineF(max, y, p75, y));
+                if (JKQTPIsOKFloat(minv)) painter.drawLine(QLineF(min, y, p25, y));
+                if (JKQTPIsOKFloat(minv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMin]="\\ul{"+sl[labMin]+"}";
+                    sll[labMin]="\\ul{"+sll[labMin]+"}";
+                    addHitTestData(minv, yv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
+                if (JKQTPIsOKFloat(maxv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMax]="\\ul{"+sl[labMax]+"}";
+                    sll[labMax]="\\ul{"+sll[labMax]+"}";
+                    addHitTestData(maxv, yv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
         
 
-            if (drawMean) {
-                double mean=transformY(this->mean);
+            if (drawMean && JKQTPIsOKFloat(meanv)) {
+                double mean=transformY(meanv);
                 plotStyledSymbol(parent, painter, mean, y);
+                if (JKQTPIsOKFloat(meanv)) {
+                    QStringList sl=labelValues, sll=labelNames;
+                    sl[labMean]="\\ul{"+sl[labMean]+"}";
+                    sll[labMean]="\\ul{"+sll[labMean]+"}";
+                    addHitTestData(meanv, yv, "\\ensuremath{\\begin{bmatrix}"+sll.join("\\\\")+"\\end{bmatrix}\\;=\\;\\begin{bmatrix}"+sl.join("\\\\")+"\\end{bmatrix}}");
+                }
             }
 
         }

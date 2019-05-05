@@ -32,351 +32,328 @@
 #define JKQTPGRAPHSBASEERROR_H
 
 
-/*! \brief Descendents of this class add data fields for error indicators and methods to plot them to a class.
+/*! \brief This mix-in class assembles all styling properties applicable to error indicators
     \ingroup jkqtplotter_basegraphserrors
-
-    This class is meant to be used with multiple inheritance. I.e. if you implemented some kind of plot
-    you may derive an error plot class in which you will have to overwrite the JKQTPGraph::drawErrorsBefor()
-    or drawErrorsAfter() so it calls the plotErrorIndicators() method from this class. In addition this class
-    will add some public datamemebers and methods to your class that allow to specify the properties of the
-    error indicators (plot properties: color, width, ... and columns for the data).
+    \ingroup jkqtplotter_basegraphs_stylemixins
 
     \image html jkqtplotter_simpletest_errorbarstyles.png "line-graphs with different types of error indicators"
-
 
     \see \ref jkqtplotter_graphsgroup_classstructure_mixins
 
  */
-class JKQTP_LIB_EXPORT JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPGraphErrorStyleMixin {
+        Q_GADGET
     public:
         /** \brief class contructor */
-        JKQTPGraphErrors(QColor graphColor, JKQTBasePlotter* basePlotter=nullptr);
-        virtual ~JKQTPGraphErrors()=default;
+        JKQTPGraphErrorStyleMixin();
+        virtual ~JKQTPGraphErrorStyleMixin()=default;
+
+        /** \brief initiaize the error indicator style (from the parent plotter) */
+        void initErrorStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
+
+
+
+        /*! \copydoc m_errorBarCapSize */
+        void setErrorBarCapSize(double __value);
+        /*! \copydoc m_errorBarCapSize */
+        double getErrorBarCapSize() const;
+
+
 
         /** \brief derive the properties of the error indicators from \a pen */
         void setErrorStyleFromPen(const JKQTBasePlotter::JKQTPPen& pen);
 
-        /*! \copydoc errorColor
-            \see see errorColor for details */ 
-        void setErrorColor(const QColor & __value);
-        /*! \copydoc errorColor
-            \see see errorColor for details */ 
-        QColor getErrorColor() const;
-        /*! \copydoc errorStyle
-            \see see errorStyle for details */ 
-        void setErrorStyle(const Qt::PenStyle & __value);
-        /*! \copydoc errorStyle
-            \see see errorStyle for details */ 
-        Qt::PenStyle getErrorStyle() const;
-        /*! \copydoc errorWidth
-            \see see errorWidth for details */ 
-        void setErrorWidth(double __value);
-        /*! \copydoc errorWidth
-            \see see errorWidth for details */ 
-        double getErrorWidth() const;
-        /*! \copydoc errorFillColor
-            \see see errorFillColor for details */ 
-        void setErrorFillColor(const QColor & __value);
-        /*! \copydoc errorFillColor
-            \see see errorFillColor for details */ 
-        QColor getErrorFillColor() const;
-        /*! \copydoc errorFillStyle
-            \see see errorFillStyle for details */ 
-        void setErrorFillStyle(const Qt::BrushStyle & __value);
-        /*! \copydoc errorFillStyle
-            \see see errorFillStyle for details */ 
-        Qt::BrushStyle getErrorFillStyle() const;
-        /*! \copydoc errorbarSize
-            \see see errorbarSize for details */ 
-        void setErrorbarSize(double __value);
-        /*! \copydoc errorbarSize
-            \see see errorbarSize for details */ 
-        double getErrorbarSize() const;
-        /** \brief returns true, if the error plots use the given column */
-        virtual bool errorUsesColumn(int c) const;
-
+        /** \brief derive the colors of the error indicators from a given \a color */
         void setErrorColorFromGraphColor(QColor graphColor);
 
-    protected:
-        /** \brief color of the error lines/bars */
-        QColor errorColor;
-        /** \brief linestyle of the error lines/bars */
-        Qt::PenStyle errorStyle;
-        /** \brief width (pixels) of the error lines/bars */
-        double errorWidth;
-        /** \brief fill color for error polygons */
-        QColor errorFillColor;
-        /** \brief fill style for error polygons */
-        Qt::BrushStyle errorFillStyle;
-        /** \brief size of the error bar end markers [pixels] */
-        double errorbarSize;
 
-        /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
-         *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. This method is called by
-         *         the JKQTPGraph descendents */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph,  int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const  QVector<int>* dataorder=nullptr)=0;
+
+        /** \brief set the color of the error indicator (out)lines */
+        void setErrorLineColor(const QColor & __value);
+        /** \brief get the color of the error indicator (out)lines */
+        QColor getErrorLineColor() const;
+        /** \brief set the style of the error indicator (out)lines */
+        void setErrorLineStyle(Qt::PenStyle  __value);
+        /** \brief get the style of the error indicator (out)lines */
+        Qt::PenStyle getErrorLineStyle() const;
+        /** \brief set the width [pt] of the error indicator (out)lines */
+        void setErrorLineWidth(double __value);
+        /** \brief get the width [pt] of the error indicator (out)lines */
+        double getErrorLineWidth() const;
+        /** \brief sets the dash offset for a custom dash style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
+         */
+        void setErrorLineDashOffset(qreal offset);
+        /** \brief returns the dash offset for a custom dash style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
+         */
+        qreal getErrorLineDashOffset() const;
+        /** \brief sets the dash pattern for a custom dash style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
+         */
+        void setErrorLineDashPattern(const QVector<qreal> &pattern);
+        /** \brief gets the dash pattern for a custom dash style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
+         */
+        QVector<qreal> getErrorLineDashPattern() const;
+        /** \brief sets the join style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
+         */
+        void setErrorLineJoinStyle(Qt::PenJoinStyle style);
+        /** \brief returns the join style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
+         */
+        Qt::PenJoinStyle getErrorLineJoinStyle() const;
+        /** \brief sets the cap style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
+         */
+        void setErrorLineCapStyle(Qt::PenCapStyle style);
+        /** \brief gets the cap style of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
+         */
+        Qt::PenCapStyle getErrorLineCapStyle() const;
+        /** \brief sets the brush used to fill the line area of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        void setErrorLineBrush(const QBrush& style);
+        /** \brief gets the brush used to fill the line area of the error indicator (out)lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        QBrush getErrorLineBrush() const;
+
+
+        /** \brief set the fill color of the error indicators */
+        void setErrorFillColor(const QColor & __value);
+        /** \brief get the fill color of the error indicators */
+        QColor getErrorFillColor() const;
+        /** \brief set the fill style of the error indicators */
+        void setErrorFillStyle(Qt::BrushStyle  __value);
+        /** \brief get the fill style of the error indicators */
+        Qt::BrushStyle getErrorFillStyle() const;
+        /** \brief set the color of the error indicator filling and sets fill style to Qt::TexturePattern */
+        void setErrorFillTexture(const QPixmap & __value);
+        /** \brief set the color of the error indicator filling and sets fill style to Qt::TexturePattern */
+        void setErrorFillTexture(const QImage & __value);
+        /** \brief set the color of the error indicator filling */
+        QPixmap getErrorFillTexture() const;
+        /** \brief set the color of the error indicator filling */
+        QImage getErrorFillTextureImage() const;
+
+        /** \brief set the filling of the error indicators to a gradient and sets fill style to a gradient setting */
+        void setErrorFillGradient(const QGradient & __value);
+        /** \brief get the gradient object of the error indicator filling */
+        const QGradient *getErrorFillGradient() const;
+
+        /** \brief sets an error indicator fill brush (overwrites all internal properties!) */
+        void setErrorFillBrush(const QBrush& b);
+        /** \brief sets an error indicator fill transformation matrix*/
+        void setErrorFillTransform(const QMatrix& b);
+        /** \brief sets an error indicator fill transformation */
+        void setErrorFillTransform(const QTransform& b);
+
+
+
+    protected:
+        /** \brief error indicator line pen */
+        QPen m_errorLinePen;
+        /** \brief width of the error indicators' lines, given in pt */
+        double m_errorLineWidth;
+
+
+        /** \brief fill style of the graph */
+        QBrush m_errorFillBrush;
+        /** \brief last fill color of the graph  */
+        QColor m_errorFillColor;
+
+
+        /** \brief size of the error bar end markers [pt] */
+        double m_errorBarCapSize;
+
+
+        /** \brief constructs a QPen from the error indicator line styling properties */
+        QPen getErrorLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+        /** \brief constructs a QPen from the error indicator line styling properties, suitable for drawing rectangles with sharp edges */
+        QPen getErrorLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
+
+        /** \brief constructs a QBrush from the error indicator fill styling properties */
+        QBrush getErrorFillBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
 
         /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
          *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
         void intPlotXYErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int xErrorColumnLower=-1, int yErrorColumnLower=-1, bool xErrorSymmetric=true, bool yErrorSymmetric=true, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr);
-
         /** \brief this function can be used to set the color of the error indicators automatically
          *
          * return \c true and the colors to use, if applicable, the default implementation returns false */
-        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int index, QColor& errorColor, QColor& errorFillColor);
+        virtual bool intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, int xErrorColumn, int yErrorColumn, JKQTPErrorPlotstyle xErrorStyle, JKQTPErrorPlotstyle yErrorStyle, int index, QColor& errorLineColor, QColor& errorFillColor);
+};
 
 
+
+/*! \brief This class adds data fields for error indicators in x direction
+    \ingroup jkqtplotter_basegraphserrors
+    \see JKQTPYGraphErrorData, \ref jkqtplotter_graphsgroup_classstructure_mixins
+ */
+class JKQTP_LIB_EXPORT JKQTPXGraphErrorData  {
+        Q_GADGET
+    public:
+        /** \brief class contructor */
+        JKQTPXGraphErrorData();
+        virtual ~JKQTPXGraphErrorData()=default;
+
+        /*! \copydoc xErrorSymmetric*/
+        void setXErrorSymmetric(bool __value);
+        /*! \copydoc xErrorSymmetric */
+        bool getXErrorSymmetric() const;
+        /*! \copydoc xErrorColumnLower */
+        int getXErrorColumnLower() const;
+        /*! \copydoc xErrorColumn */
+        int getXErrorColumn() const;
+        /*! \copydoc xErrorStyle */
+        void setXErrorStyle(JKQTPErrorPlotstyle  __value);
+        /*! \copydoc xErrorStyle */
+        JKQTPErrorPlotstyle getXErrorStyle() const;
+        /** \copydoc xErrorColumn */
+        void setXErrorColumn(int __value);
+        /** \copydoc xErrorColumnLower */
+        void setXErrorColumnLower(int __value);
+
+
+    protected:
+        /** \brief the column that contains the error of the x-component of the datapoints */
+        int xErrorColumn;
+        /** \brief the column that contains the error of the x-component of the datapoints. This is used as the lower error length, if xErrorSymmetric \c ==false. */
+        int xErrorColumnLower;
+        /** \brief indicates whether the x-errors are symmetric (from one column only) */
+        bool  xErrorSymmetric;
+        /** \brief how to draw the errors (if available) of the x-value */
+        JKQTPErrorPlotstyle xErrorStyle;
+
+        /** \brief returns the upper x-error for the i-th datapoint, read from datastore \a ds */
         virtual double getXErrorU(int i, JKQTPDatastore* ds) const;
+        /** \brief returns the lower x-error for the i-th datapoint, read from datastore \a ds */
         virtual double getXErrorL(int i, JKQTPDatastore* ds) const;
+
+};
+
+
+
+
+
+/*! \brief This class adds data fields for error indicators in y direction
+    \ingroup jkqtplotter_basegraphserrors
+    \see JKQTPXGraphErrorData \ref jkqtplotter_graphsgroup_classstructure_mixins
+ */
+class JKQTP_LIB_EXPORT JKQTPYGraphErrorData  {
+        Q_GADGET
+    public:
+        /** \brief class contructor */
+        JKQTPYGraphErrorData();
+        virtual ~JKQTPYGraphErrorData()=default;
+
+        /*! \copydoc yErrorSymmetric */
+        void setYErrorSymmetric(bool __value);
+        /*! \copydoc yErrorSymmetric */
+        bool getYErrorSymmetric() const;
+        /*! \copydoc yErrorColumnLower */
+        int getYErrorColumnLower() const;
+        /*! \copydoc yErrorColumn */
+        int getYErrorColumn() const;
+        /*! \copydoc yErrorStyle */
+        void setYErrorStyle(JKQTPErrorPlotstyle  __value);
+        /*! \copydoc yErrorStyle */
+        JKQTPErrorPlotstyle getYErrorStyle() const;
+        /*! \copydoc yErrorColumn */
+        void setYErrorColumn(int __value);
+        /*! \copydoc yErrorColumnLower */
+        void setYErrorColumnLower(int __value);
+
+
+    protected:
+        /** \brief the column that contains the error of the x-component of the datapoints */
+        int yErrorColumn;
+        /** \brief the column that contains the error of the x-component of the datapoints. This is used as the lower error length, if yErrorSymmetric \c ==false. */
+        int yErrorColumnLower;
+        /** \brief indicates whether the x-errors are symmetric (from one column only) */
+        bool  yErrorSymmetric;
+        /** \brief how to draw the errors (if available) of the x-value */
+        JKQTPErrorPlotstyle yErrorStyle;
+
+        /** \brief returns the upper y-error for the i-th datapoint, read from datastore \a ds */
         virtual double getYErrorU(int i, JKQTPDatastore* ds) const;
+        /** \brief returns the lower y-error for the i-th datapoint, read from datastore \a ds */
         virtual double getYErrorL(int i, JKQTPDatastore* ds) const;
 
-        //** \brief plot a single error indicator */
-        //void intPlotXYErrorIndicator(JKQTPEnhancedPainter& painter, double x, double xperror, double xmerror, double y, double yperror, double ymerror, JKQTPErrorPlotstyle xErrorStyle=JKQTPNoError, JKQTPErrorPlotstyle yErrorStyle=JKQTPNoError, double lastx=0, double lastxperror=0, double lastxmerror=0, double lasty=0, double lastyperror=0, double lastymerror=0);
 };
 
 
-/*! \brief This class adds data fields for error indicators in x direction to a JKQTPGraph descendent.
+
+/*! \brief This class is the base class for graphs that only display error indicators in x-direction
     \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPGraphErrors,  \ref jkqtplotter_graphsgroup_classstructure_mixins
+    \see JKQTPXGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPXGraphErrors: public JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPXGraphErrors: public JKQTPXGraphErrorData, public JKQTPGraphErrorStyleMixin {
+        Q_GADGET
     public:
         /** \brief class contructor */
-        JKQTPXGraphErrors(QColor graphColor, JKQTBasePlotter* basePlotter=nullptr);
-
-        /*! \copydoc xErrorSymmetric
-            \see see xErrorSymmetric for details */ 
-        inline virtual void setXErrorSymmetric(bool __value)
-        {
-            this->xErrorSymmetric = __value;
-        } 
-        /*! \copydoc xErrorSymmetric
-            \see see xErrorSymmetric for details */ 
-        inline virtual bool getXErrorSymmetric() const  
-        {
-            return this->xErrorSymmetric; 
-        }
-        /*! \brief returns the property xErrorColumnLower ( \copybrief xErrorColumnLower ). \details Description of the parameter xErrorColumnLower is:  <BLOCKQUOTE>\copydoc xErrorColumnLower </BLOCKQUOTE>. \see xErrorColumnLower for more information */ 
-        inline int getXErrorColumnLower() const { return this->xErrorColumnLower; }
-        /*! \brief returns the property xErrorColumn ( \copybrief xErrorColumn ). \details Description of the parameter xErrorColumn is:  <BLOCKQUOTE>\copydoc xErrorColumn </BLOCKQUOTE>. \see xErrorColumn for more information */ 
-        inline int getXErrorColumn() const { return this->xErrorColumn; }
-        /*! \copydoc xErrorStyle
-            \see see xErrorStyle for details */ 
-        inline virtual void setXErrorStyle(const JKQTPErrorPlotstyle & __value)  
-        {
-            this->xErrorStyle = __value;
-        } 
-        /*! \copydoc xErrorStyle
-            \see see xErrorStyle for details */ 
-        inline virtual JKQTPErrorPlotstyle getXErrorStyle() const  
-        {
-            return this->xErrorStyle; 
-        }
-        /** \brief set the column from which to read the error values for x-error indicators */
-        void setXErrorColumn(int __value);
-        /** \brief set the column from which to read the error values for lower x-error indicators (if not set [=-1], the xErrorColumn-values will be used for upper and lower error indicators) */
-        void setXErrorColumnLower(int __value);
+        JKQTPXGraphErrors();
+        virtual ~JKQTPXGraphErrors()=default;
 
         /** \brief returns true, if the error plots use the given column */
-        virtual bool errorUsesColumn(int c) const override;
+        virtual bool errorUsesColumn(int c) const ;
 
     protected:
-        /** \brief the column that contains the error of the x-component of the datapoints */
-        int xErrorColumn;
-        /** \brief the column that contains the error of the x-component of the datapoints. This is used as the lower error length, if xErrorSymmetric \c ==false. */
-        int xErrorColumnLower;
-        /** \brief indicates whether the x-errors are symmetric (from one column only) */
-        bool  xErrorSymmetric;
-        /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPErrorPlotstyle xErrorStyle;
-
-        /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
-         *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
-
-        virtual double getXErrorU(int i, JKQTPDatastore* ds) const override;
-        virtual double getXErrorL(int i, JKQTPDatastore* ds) const override;
+        /** \brief draws the error indicators */
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) ;
 
 };
 
 
-/*! \brief This class adds data fields for error indicators in y direction to a class.
-    \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPGraphErrors,  \ref jkqtplotter_graphsgroup_classstructure_mixins
 
+/*! \brief This class is the base class for graphs that only display error indicators in y-direction
+    \ingroup jkqtplotter_basegraphserrors
+    \see JKQTPYGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPYGraphErrors: public JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPYGraphErrors: public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
+        Q_GADGET
     public:
         /** \brief class contructor */
-        JKQTPYGraphErrors(QColor graphColor, JKQTBasePlotter* basePlotter=nullptr);
+        JKQTPYGraphErrors();
+        virtual ~JKQTPYGraphErrors()=default;
 
-        /*! \copydoc yErrorSymmetric
-            \see see yErrorSymmetric for details */ 
-        inline virtual void setYErrorSymmetric(bool __value)
-        {
-            this->yErrorSymmetric = __value;
-        } 
-        /*! \copydoc yErrorSymmetric
-            \see see yErrorSymmetric for details */ 
-        inline virtual bool getYErrorSymmetric() const  
-        {
-            return this->yErrorSymmetric; 
-        }
-        /*! \brief returns the property yErrorColumnLower ( \copybrief yErrorColumnLower ). \details Description of the parameter yErrorColumnLower is:  <BLOCKQUOTE>\copydoc yErrorColumnLower </BLOCKQUOTE>. \see yErrorColumnLower for more information */ 
-        inline int getYErrorColumnLower() const { return this->yErrorColumnLower; }
-        /*! \brief returns the property yErrorColumn ( \copybrief yErrorColumn ). \details Description of the parameter yErrorColumn is:  <BLOCKQUOTE>\copydoc yErrorColumn </BLOCKQUOTE>. \see yErrorColumn for more information */ 
-        inline int getYErrorColumn() const { return this->yErrorColumn; }
-        /*! \copydoc yErrorStyle
-            \see see yErrorStyle for details */ 
-        inline virtual void setYErrorStyle(const JKQTPErrorPlotstyle & __value)  
-        {
-            this->yErrorStyle = __value;
-        } 
-        /*! \copydoc yErrorStyle
-            \see see yErrorStyle for details */ 
-        inline virtual JKQTPErrorPlotstyle getYErrorStyle() const  
-        {
-            return this->yErrorStyle; 
-        }
-        /** \copydoc JKQTPGraphErrors::errorUsesColumn() */
-        virtual bool errorUsesColumn(int c) const override;
+        /** \brief returns true, if the error plots use the given column */
+        virtual bool errorUsesColumn(int c) const ;
 
-        /** \brief set the column from which to read the error values for y-error indicators */
-        void setYErrorColumn(int __value);
-        /** \brief set the column from which to read the error values for lower y-error indicators (if not set [=-1], the xErrorColumn-values will be used for upper and lower error indicators) */
-        void setYErrorColumnLower(int __value);
     protected:
-        /** \brief the column that contains the error of the x-component of the datapoints */
-        int yErrorColumn;
-        /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPErrorPlotstyle yErrorStyle;
-        /** \brief indicates whether the y-errors are symmetric (from one column only) */
-        bool  yErrorSymmetric;
-        /** \brief the column that contains the error of the y-component of the datapoints. This is used as the lower error length, if yErrorSymmetric \c ==false. */
-        int yErrorColumnLower;
+        /** \brief draws the error indicators */
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) ;
 
-        /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
-         *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
-
-        virtual double getYErrorU(int i, JKQTPDatastore* ds) const override;
-        virtual double getYErrorL(int i, JKQTPDatastore* ds) const override;
 };
 
 
-/*! \brief This class adds data fields for error indicators in x and y direction to a class.
-    \ingroup jkqtplotter_basegraphserrors
-    \see JKQTPGraphErrors,  \ref jkqtplotter_graphsgroup_classstructure_mixins
 
+
+
+/*! \brief This class is the base class for graphs that only display error indicators in x- and y-direction
+    \ingroup jkqtplotter_basegraphserrors
+    \see JKQTPXGraphErrorData, JKQTPYGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPXYGraphErrors: public JKQTPGraphErrors {
+class JKQTP_LIB_EXPORT JKQTPXYGraphErrors: public JKQTPXGraphErrorData, public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
+        Q_GADGET
     public:
         /** \brief class contructor */
-        JKQTPXYGraphErrors(QColor graphColor, JKQTBasePlotter* basePlotter=nullptr);
-        /*! \copydoc xErrorSymmetric
-            \see see xErrorSymmetric for details */ 
-        inline virtual void setXErrorSymmetric(bool __value)
-        {
-            this->xErrorSymmetric = __value;
-        } 
-        /*! \copydoc xErrorSymmetric
-            \see see xErrorSymmetric for details */ 
-        inline virtual bool getXErrorSymmetric() const  
-        {
-            return this->xErrorSymmetric; 
-        }
-        /*! \copydoc yErrorSymmetric
-            \see see yErrorSymmetric for details */ 
-        inline virtual void setYErrorSymmetric(bool __value)
-        {
-            this->yErrorSymmetric = __value;
-        } 
-        /*! \copydoc yErrorSymmetric
-            \see see yErrorSymmetric for details */ 
-        inline virtual bool getYErrorSymmetric() const  
-        {
-            return this->yErrorSymmetric; 
-        }
-        /*! \brief returns the property xErrorColumnLower ( \copybrief xErrorColumnLower ). \details Description of the parameter xErrorColumnLower is:  <BLOCKQUOTE>\copydoc xErrorColumnLower </BLOCKQUOTE>. \see xErrorColumnLower for more information */ 
-        inline int getXErrorColumnLower() const { return this->xErrorColumnLower; }
-        /*! \brief returns the property xErrorColumn ( \copybrief xErrorColumn ). \details Description of the parameter xErrorColumn is:  <BLOCKQUOTE>\copydoc xErrorColumn </BLOCKQUOTE>. \see xErrorColumn for more information */ 
-        inline int getXErrorColumn() const { return this->xErrorColumn; }
-        /*! \brief returns the property yErrorColumnLower ( \copybrief yErrorColumnLower ). \details Description of the parameter yErrorColumnLower is:  <BLOCKQUOTE>\copydoc yErrorColumnLower </BLOCKQUOTE>. \see yErrorColumnLower for more information */ 
-        inline int getYErrorColumnLower() const { return this->yErrorColumnLower; }
-        /*! \brief returns the property yErrorColumn ( \copybrief yErrorColumn ). \details Description of the parameter yErrorColumn is:  <BLOCKQUOTE>\copydoc yErrorColumn </BLOCKQUOTE>. \see yErrorColumn for more information */ 
-        inline int getYErrorColumn() const { return this->yErrorColumn; }
-        /*! \copydoc yErrorStyle
-            \see see yErrorStyle for details */ 
-        inline virtual void setYErrorStyle(const JKQTPErrorPlotstyle & __value)  
-        {
-            this->yErrorStyle = __value;
-        } 
-        /*! \copydoc yErrorStyle
-            \see see yErrorStyle for details */ 
-        inline virtual JKQTPErrorPlotstyle getYErrorStyle() const  
-        {
-            return this->yErrorStyle; 
-        }
-        /*! \copydoc xErrorStyle
-            \see see xErrorStyle for details */ 
-        inline virtual void setXErrorStyle(const JKQTPErrorPlotstyle & __value)  
-        {
-            this->xErrorStyle = __value;
-        } 
-        /*! \copydoc xErrorStyle
-            \see see xErrorStyle for details */ 
-        inline virtual JKQTPErrorPlotstyle getXErrorStyle() const  
-        {
-            return this->xErrorStyle; 
-        }
-        /** \copydoc JKQTPGraphErrors::errorUsesColumn() */
-        virtual bool errorUsesColumn(int c) const override;
+        JKQTPXYGraphErrors();
+        virtual ~JKQTPXYGraphErrors()=default;
 
-        /** \brief set the column from which to read the error values for x-error indicators */
-        void setXErrorColumn(int __value);
-        /** \brief set the column from which to read the error values for lower x-error indicators (if not set [=-1], the xErrorColumn-values will be used for upper and lower error indicators) */
-        void setXErrorColumnLower(int __value);
-        /** \brief set the column from which to read the error values for x-error indicators */
-        void setYErrorColumn(int __value);
-        /** \brief set the column from which to read the error values for lower x-error indicators (if not set [=-1], the xErrorColumn-values will be used for upper and lower error indicators) */
-        void setYErrorColumnLower(int __value);
-        /** \brief set the column from which to read the error values for y-error indicators */
-        void setXErrorColumn(size_t __value);
-        /** \brief set the column from which to read the error values for lower y-error indicators (if not set [=-1], the xErrorColumn-values will be used for upper and lower error indicators) */
-        void setXErrorColumnLower(size_t __value);
-        /** \brief set the column from which to read the error values for y-error indicators */
-        void setYErrorColumn(size_t __value);
-        /** \brief set the column from which to read the error values for lower y-error indicators (if not set [=-1], the xErrorColumn-values will be used for upper and lower error indicators) */
-        void setYErrorColumnLower(size_t __value);
+        /** \brief returns true, if the error plots use the given column */
+        virtual bool errorUsesColumn(int c) const ;
 
     protected:
-        /** \brief the column that contains the error of the x-component of the datapoints */
-        int yErrorColumn;
-        /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPErrorPlotstyle yErrorStyle;
-        /** \brief the column that contains the error of the x-component of the datapoints */
-        int xErrorColumn;
-        /** \brief how to draw the errors (if available) of the x-value */
-        JKQTPErrorPlotstyle xErrorStyle;
-        /** \brief indicates whether the x-errors are symmetric (from one column only) */
-        bool  xErrorSymmetric;
-        /** \brief indicates whether the y-errors are symmetric (from one column only) */
-        bool  yErrorSymmetric;
-        /** \brief the column that contains the error of the x-component of the datapoints. This is used as the lower error length, if xErrorSymmetric \c ==false. */
-        int xErrorColumnLower;
-        /** \brief the column that contains the error of the y-component of the datapoints. This is used as the lower error length, if yErrorSymmetric \c ==false. */
-        int yErrorColumnLower;
+        /** \brief draws the error indicators */
+        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) ;
 
-        /** \brief draw error indicators with the parameters defined in this class. The position of the datapoints is
-         *         given by the \a xColumn and \a yColumn. It is also possible to specify a datarange. */
-        virtual void plotErrorIndicators(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent, JKQTPGraph* parentGraph, int xColumn, int yColumn, double xrelshift=0, double yrelshift=0.0, const QVector<int> *dataorder=nullptr) override;
-
-        virtual double getXErrorU(int i, JKQTPDatastore* ds) const override;
-        virtual double getXErrorL(int i, JKQTPDatastore* ds) const override;
-        virtual double getYErrorU(int i, JKQTPDatastore* ds) const override;
-        virtual double getYErrorL(int i, JKQTPDatastore* ds) const override;
 };
+
+
 
 
 

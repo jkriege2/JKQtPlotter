@@ -154,7 +154,7 @@ class JKQTP_LIB_EXPORT JKQTPErrorPlotstyleComboBox: public QComboBox {
     public:
         JKQTPErrorPlotstyleComboBox(QWidget* parent=nullptr);
 
-        JKQTPErrorPlotstyle getErrorStyle() const;
+        JKQTPErrorPlotstyle getErrorLineStyle() const;
         void setSymbolType(JKQTPErrorPlotstyle symbol);
         void setCurrentErrorStyle(JKQTPErrorPlotstyle symbol);
     protected:

@@ -576,10 +576,10 @@ void JKQTPBarVerticalGraph::setFillColor_and_darkenedColor(QColor fill, int colo
 }
 
 JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPBarHorizontalGraph(parent), JKQTPXGraphErrors(getKeyLabelColor(), parent)
+    JKQTPBarHorizontalGraph(parent)
 {
     setErrorColorFromGraphColor(getKeyLabelColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+    initErrorStyle(parent, parentPlotStyle);
 }
 
 JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTPlotter *parent):
@@ -642,10 +642,10 @@ void JKQTPBarHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter
 }
 
 JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPBarVerticalGraph(parent), JKQTPYGraphErrors(getKeyLabelColor(), parent)
+    JKQTPBarVerticalGraph(parent)
 {
     setErrorColorFromGraphColor(getKeyLabelColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+    initErrorStyle(parent, parentPlotStyle);
 
 }
 

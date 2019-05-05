@@ -587,7 +587,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
                 void setSymbolLineWidthF(double w);
                 void setWidthF(double w);
                 void setWidth(double w);
-                void setErrorWidth(double w);
+                void setErrorLineWidth(double w);
                 double width() const;
                 double widthF() const;
                 double errorWidthF() const;
@@ -603,7 +603,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
                 QColor fillColor() const;
                 void setFillColor(const QColor& col);
                 void setErrorFillColor(const QColor& col);
-                void setErrorColor(const QColor& col);
+                void setErrorLineColor(const QColor& col);
                 void setFillStyle(Qt::BrushStyle s);
                 void setErrorFillStyle(Qt::BrushStyle s);
                 Qt::BrushStyle fillStyle() const;

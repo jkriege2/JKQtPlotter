@@ -700,7 +700,7 @@ class JKQTP_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /*! \brief sets the property gridStyle ( \copybrief gridStyle ) to the specified \a __value. 
             \details Description of the parameter gridStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::gridStyle </BLOCKQUOTE>
             \see gridStyle for more information */ 
-        inline void setGridStyle(const Qt::PenStyle & __value)
+        inline void setGridStyle(Qt::PenStyle  __value)
         {
             if (this->gridStyle != __value) {
                 this->gridStyle = __value; 
@@ -1381,7 +1381,7 @@ class JKQTP_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline void setStyle(const Qt::PenStyle & __value)
+        inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
                 this->style = __value; 
@@ -1415,7 +1415,7 @@ class JKQTP_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         /*! \brief sets the property errorColor ( \copybrief errorColor ) to the specified \a __value. 
             \details Description of the parameter errorColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorColor </BLOCKQUOTE>
             \see errorColor for more information */ 
-        inline void setErrorColor(const QColor & __value)
+        inline void setErrorLineColor(const QColor & __value)
         {
             if (this->errorColor != __value) {
                 this->errorColor = __value; 
@@ -1425,14 +1425,14 @@ class JKQTP_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         /*! \brief returns the property errorColor ( \copybrief errorColor ). 
             \details Description of the parameter errorColor is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorColor </BLOCKQUOTE>
             \see errorColor for more information */ 
-        inline QColor getErrorColor() const
+        inline QColor getErrorLineColor() const
         {
             return this->errorColor; 
         }
         /*! \brief sets the property errorStyle ( \copybrief errorStyle ) to the specified \a __value. 
             \details Description of the parameter errorStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorStyle </BLOCKQUOTE>
             \see errorStyle for more information */ 
-        inline void setErrorStyle(const Qt::PenStyle & __value)
+        inline void setErrorLineStyle(Qt::PenStyle  __value)
         {
             if (this->errorStyle != __value) {
                 this->errorStyle = __value; 
@@ -1442,14 +1442,14 @@ class JKQTP_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         /*! \brief returns the property errorStyle ( \copybrief errorStyle ). 
             \details Description of the parameter errorStyle is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorStyle </BLOCKQUOTE>
             \see errorStyle for more information */ 
-        inline Qt::PenStyle getErrorStyle() const
+        inline Qt::PenStyle getErrorLineStyle() const
         {
             return this->errorStyle; 
         }
         /*! \brief sets the property errorWidth ( \copybrief errorWidth ) to the specified \a __value. 
             \details Description of the parameter errorWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorWidth </BLOCKQUOTE>
             \see errorWidth for more information */ 
-        inline void setErrorWidth(double __value)
+        inline void setErrorLineWidth(double __value)
         {
             if (this->errorWidth != __value) {
                 this->errorWidth = __value; 
@@ -1459,7 +1459,7 @@ class JKQTP_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
         /*! \brief returns the property errorWidth ( \copybrief errorWidth ). 
             \details Description of the parameter errorWidth is: <BLOCKQUOTE>\copydoc JKQTFastPlotter::errorWidth </BLOCKQUOTE>
             \see errorWidth for more information */ 
-        inline double getErrorWidth() const
+        inline double getErrorLineWidth() const
         {
             return this->errorWidth; 
         }
@@ -1639,7 +1639,7 @@ class JKQTP_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::fillStyle </BLOCKQUOTE>
             \see fillStyle for more information */ 
-        inline void setFillStyle(const Qt::BrushStyle & __value)
+        inline void setFillStyle(Qt::BrushStyle  __value)
         {
             if (this->fillStyle != __value) {
                 this->fillStyle = __value; 
@@ -1656,7 +1656,7 @@ class JKQTP_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPXRangePlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline void setStyle(const Qt::PenStyle & __value)
+        inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
                 this->style = __value; 
@@ -1833,7 +1833,7 @@ class JKQTP_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         /*! \brief sets the property fillStyle ( \copybrief fillStyle ) to the specified \a __value. 
             \details Description of the parameter fillStyle is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::fillStyle </BLOCKQUOTE>
             \see fillStyle for more information */ 
-        inline void setFillStyle(const Qt::BrushStyle & __value)
+        inline void setFillStyle(Qt::BrushStyle  __value)
         {
             if (this->fillStyle != __value) {
                 this->fillStyle = __value; 
@@ -1850,7 +1850,7 @@ class JKQTP_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPYRangePlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline void setStyle(const Qt::PenStyle & __value)
+        inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
                 this->style = __value; 
@@ -3889,7 +3889,7 @@ class JKQTP_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
         /*! \brief sets the property style ( \copybrief style ) to the specified \a __value. 
             \details Description of the parameter style is: <BLOCKQUOTE>\copydoc JKQTFPQOverlayLinearGridPlot::style </BLOCKQUOTE>
             \see style for more information */ 
-        inline void setStyle(const Qt::PenStyle & __value)
+        inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
                 this->style = __value; 

@@ -209,7 +209,7 @@ JKQTPErrorPlotstyleComboBox::JKQTPErrorPlotstyleComboBox(QWidget *parent):
     setCurrentIndex(2);
 }
 
-JKQTPErrorPlotstyle JKQTPErrorPlotstyleComboBox::getErrorStyle() const
+JKQTPErrorPlotstyle JKQTPErrorPlotstyleComboBox::getErrorLineStyle() const
 {
     return String2JKQTPErrorPlotstyle(itemData(currentIndex()).toString());
 }

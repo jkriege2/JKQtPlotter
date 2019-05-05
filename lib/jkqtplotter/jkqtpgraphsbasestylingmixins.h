@@ -123,20 +123,20 @@ class JKQTP_LIB_EXPORT JKQTPGraphLineStyleMixin {
         Q_PROPERTY(Qt::PenStyle lineStyle MEMBER m_lineStyle READ getLineStyle WRITE setLineStyle)
         Q_PROPERTY(double lineWidth MEMBER m_lineWidth READ getLineWidth WRITE setLineWidth)
     private:
-        /** \brief line pen */
+        /** \brief graph line pen */
         QPen m_linePen;
-        /** \brief width of the graph, given in pt */
+        /** \brief width of the graph lines, given in pt */
         double m_lineWidth;
         /** \brief line pen for the highlighted look */
         QColor m_highlightingLineColor;
     protected:
-        /** \brief constructs a QPen from the line styleing properties */
+        /** \brief constructs a QPen from the line styling properties */
         QPen getLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styleing properties, suitable for drawing rectangles with sharp edges */
+        /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangles with sharp edges */
         QPen getLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styleing properties */
+        /** \brief constructs a QPen from the line styling properties */
         QPen getHighlightingLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styleing properties, suitable for drawing rectangle with sharp corners */
+        /** \brief constructs a QPen from the line styling properties, suitable for drawing rectangle with sharp corners */
         QPen getHighlightingLinePenForRects(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
 };
 
@@ -215,9 +215,9 @@ class JKQTP_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         /** \brief width (in pt) of the lines used to plot the symbol for the data points, given in pt */
         double m_symbolLineWidth;
     protected:
-        /** \brief constructs a QPen from the line styleing properties */
+        /** \brief constructs a QPen from the line styling properties */
         QPen getSymbolPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
-        /** \brief constructs a QPen from the line styleing properties */
+        /** \brief constructs a QPen from the line styling properties */
         QBrush getSymbolBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
@@ -323,7 +323,7 @@ class JKQTP_LIB_EXPORT JKQTPGraphFillStyleMixin {
         /** \brief last fill color of the graph  */
         QColor m_fillColor;
     protected:
-        /** \brief constructs a QPen from the line styleing properties */
+        /** \brief constructs a QBrush from the graph fill styling properties */
         QBrush getFillBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
 };
 

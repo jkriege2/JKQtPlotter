@@ -254,3 +254,23 @@ QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double
 }
 
 
+
+void JKQTPDrawTooltip(JKQTPEnhancedPainter &painter, double x, double y, const QRectF &rect)
+{
+    QPolygonF poly;
+    if (y<rect.top()) {
+        poly<<rect.topLeft()<<QPointF(rect.left()+rect.width()/3, rect.top())<<QPointF(x,y)<<QPointF(rect.right()-rect.width()/3, rect.top())<< rect.topRight()<<rect.bottomRight()<<rect.bottomLeft()<<rect.topLeft();
+        painter.drawPolygon(poly);
+    } else if (y>rect.bottom()) {
+        poly<<rect.topLeft()<<rect.topRight()<<rect.bottomRight()<<QPointF(rect.right()-rect.width()/3, rect.bottom())<<QPointF(x,y)<<QPointF(rect.left()+rect.width()/3, rect.bottom())<< rect.bottomLeft()<<rect.topLeft();
+        painter.drawPolygon(poly);
+    } else if (x<rect.left()) {
+        poly<<QPointF(x,y)<<rect.topLeft()<<rect.topRight()<<rect.bottomRight()<<rect.bottomLeft()<<QPointF(rect.left(), rect.top()+rect.height()/2)<<QPointF(x,y);
+        painter.drawPolygon(poly);
+    } else if (x>rect.left()) {
+        poly<<rect.topLeft()<<rect.topRight()<<QPointF(x,y)<<QPointF(rect.right(), rect.top()+rect.height()/2)<<rect.bottomRight()<<rect.bottomLeft()<<rect.topLeft();
+        painter.drawPolygon(poly);
+    } else {
+        painter.drawRect(rect);
+    }
+}

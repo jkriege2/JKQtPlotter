@@ -979,6 +979,9 @@ JKQTPMouseDragActions String2JKQTPMouseDragActions(const QString &act)
     if (s=="jkqtpmdadrawrectforevent"||s=="drawellipse"||s=="ellipse") return jkqtpmdaDrawEllipseForEvent;
     if (s=="jkqtpmdadrawrectforevent"||s=="drawline"||s=="line") return jkqtpmdaDrawLineForEvent;
     if (s=="jkqtpmdascribbleforevents"||s=="scribble") return jkqtpmdaScribbleForEvents;
+    if (s=="jkqtpmdatooltipforclosestdatapoint"||s=="closestdatapointtooltip"||s=="tooltipforclosestdatapoint"||s=="tooltip") return jkqtpmdaToolTipForClosestDataPoint;
+    if (s=="jkqtpmdaruler"||s=="ruler") return jkqtpmdaRuler;
+
 
     return jkqtpmdaZoomByRectangle;
 
@@ -994,6 +997,8 @@ QString JKQTPMouseDragActions2String(JKQTPMouseDragActions act)
     if (act==jkqtpmdaDrawEllipseForEvent) return "DrawEllipse";
     if (act==jkqtpmdaDrawLineForEvent) return "DrawLine";
     if (act==jkqtpmdaScribbleForEvents) return "Scribble";
+    if (act==jkqtpmdaToolTipForClosestDataPoint) return "ToolTipForClosestDataPoint";
+    if (act==jkqtpmdaRuler) return "Ruler";
     return "unknown";
 }
 
@@ -1066,4 +1071,23 @@ QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor &col)
         case JKQTPFFCMEvenLessTransparentColor: { QColor c=col; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.66); return c; }
     }
     return col;
+}
+
+QString JKQTPUserActionMarkerType2String(JKQTPUserActionMarkerType act)
+{
+    switch(act) {
+        case jkqtpuamtCircle: return "circle";
+        case jkqtpuamtCrossHair: return "crosshair";
+        case jkqtpuamtCircleAndCrossHair: return "circle+crosshair";
+    }
+    return "circle";
+}
+
+JKQTPUserActionMarkerType String2JKQTPUserActionMarkerType(const QString &act)
+{
+    QString m=act.trimmed().toLower();
+    if (m=="circle") return jkqtpuamtCircle;
+    if (m=="crosshair" || m=="cross") return jkqtpuamtCrossHair;
+    if (m=="circle+crosshair" || m=="circle+cross") return jkqtpuamtCircleAndCrossHair;
+    return jkqtpuamtCircle;
 }

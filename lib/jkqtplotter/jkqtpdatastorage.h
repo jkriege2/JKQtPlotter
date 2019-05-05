@@ -876,16 +876,16 @@ inline void JKQTPColumn::incValue(size_t n, double increment){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(size_t n) const {
-    if (!datastore) return 0;
-    if (!datastore->getItem(datastoreItem)) return 0;
+    if (!datastore) return nan("");
+    if (!datastore->getItem(datastoreItem)) return nan("");
     return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(int n) const {
-    if (!datastore) return 0;
-    if (!datastore->getItem(datastoreItem)) return 0;
-    if (n<0) return 0;
+    if (!datastore) return nan("");
+    if (!datastore->getItem(datastoreItem)) return nan("");
+    if (n<0) return nan("");
     return datastore->getItem(datastoreItem)->get(datastoreOffset, static_cast<size_t>(n));
 }
 

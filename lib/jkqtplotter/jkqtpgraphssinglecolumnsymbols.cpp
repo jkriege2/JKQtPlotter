@@ -91,6 +91,8 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTPSingleColumnSymbolsGraph::draw");
 #endif
+    clearHitTestData();
+
     if (parent==nullptr) return;
     JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
@@ -109,6 +111,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
         }
         if (imin<0) imin=0;
         if (imax<0) imax=0;
+        reserveHitTestData(imax-imin);
 
         std::random_device rd; // random number generators:
         std::minstd_rand gen{rd()};
@@ -152,6 +155,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                 plotSymbols.append(QPointF(x,y));
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                     plotStyledSymbol(parent, painter, x, y);
+                    addHitTestData(xv, yv,iii, datastore);
                 }
             }
         } else {
@@ -178,6 +182,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                     plotSymbols.append(QPointF(x,y));
                     plotStyledSymbol(parent, painter, x, y);
+                    addHitTestData(xv, yv,iii, datastore);
                 }
             }
         }

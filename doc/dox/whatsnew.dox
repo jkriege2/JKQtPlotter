@@ -39,11 +39,14 @@ Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
       <li> new: additional options for graph filling (color gradients, textures, ...) as provided by QBrush </li>
       <li> new: added a general feature to JKQTPPlotElement which allows to show a graph in a highlighted state (if supported by the derived graph class!) </li>
       <li> new: JKQTPXYParametrizedScatterGraph: added functors to transform column values into symbol type+size and line-width to give even more control </li>
+      <li> new: user-interaction tool that shows coordinates of data points near the current mouse position (when mouse is dragged, while mouse button is pressed) \see jkqtpmdaToolTipForClosestDataPoint </li>
+      <li> new: user-interaction tool that measures distances and angles when mouse is dragged, while mouse button is pressed) \see jkqtpmdaRuler </li>
       <li> changed: removed old selection-code and replaced by general highlighting feature </li>
       <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
       <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>
       <li> deprecated: Removed datarange-feature </li>
       <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
+      <li> update: \ref jkqtplotter_basegraphserrors "reworked error indicator base classes" </li>
 	  <li> fixed: colorbars at top were positioned over the plot label </li>
 	  <li> fixed: RGB-image plots now work properly with inverted axes (image is inverted, befor image was not shown at all) </li>
 	</ul></li>

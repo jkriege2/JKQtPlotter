@@ -90,7 +90,7 @@ class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph, public JKQTPGrap
         QColor getCenterColor() const;
         /*! \copydoc centerStyle
             \see see centerStyle for details */ 
-        void setCenterStyle(const Qt::PenStyle & __value);
+        void setCenterStyle(Qt::PenStyle  __value);
         /*! \copydoc centerStyle
             \see see centerStyle for details */ 
         Qt::PenStyle getCenterStyle() const;

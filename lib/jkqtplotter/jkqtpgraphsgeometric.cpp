@@ -225,6 +225,7 @@ bool JKQTPGeoText::getYMinMax(double& miny, double& maxy, double& smallestGreate
 }
 
 void JKQTPGeoText::draw(JKQTPEnhancedPainter& painter) {
+    clearHitTestData();
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     parent->getMathText()->setFontRomanOrSpecial(getTextFontName());
     parent->getMathText()->setFontSize(getTextFontSize()*parent->getFontSizeMultiplier());
@@ -300,10 +301,16 @@ bool JKQTPGeoLine::getYMinMax(double& miny, double& maxy, double& smallestGreate
 }
 
 void JKQTPGeoLine::draw(JKQTPEnhancedPainter& painter) {
+    clearHitTestData();
+    reserveHitTestData(2);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
     QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
-    if (l.length()>0) painter.drawLine(l);
+    if (l.length()>0) {
+        painter.drawLine(l);
+        addHitTestData(x1, y1);
+        addHitTestData(x2, y2);
+    }
 
 }
 
@@ -384,6 +391,8 @@ bool JKQTPGeoInfiniteLine::getYMinMax(double& miny, double& maxy, double& smalle
 }
 
 void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
+    clearHitTestData();
+    reserveHitTestData(2);
 
     double xmin=parent->getXAxis()->getMin();
     double xmax=parent->getXAxis()->getMax();
@@ -503,7 +512,14 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setPen(getLinePen(painter, parent));
         QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
-        if (l.length()>0) painter.drawLine(l);
+        if (l.length()>0) {
+            painter.drawLine(l);
+            addHitTestData(x, y, formatHitTestDefaultLabel(x,y)+
+                                 QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(QString::fromStdString(jkqtp_floattolatexstr(dy, 3))).arg(QString::fromStdString(jkqtp_floattolatexstr(dx, 3))).arg(QString::fromStdString(jkqtp_floattolatexstr(dy/dx, 3))).arg(QString::fromStdString(jkqtp_floattolatexstr(atan2(dy,dx), 1))));
+            addHitTestData(x1, y1);
+            addHitTestData(x2, y2);
+        }
+
 
     }
 
@@ -625,10 +641,16 @@ bool JKQTPGeoPolyLines::getYMinMax(double& miny, double& maxy, double& smallestG
 }
 
 void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
+    clearHitTestData();
+    reserveHitTestData(points.size());
+
     QPainterPath path=transformToLinePath(points);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
     painter.drawPath(path);
+    for (const auto& p:points) {
+        addHitTestData(p.x(), p.y());
+    }
 
 }
 
@@ -754,10 +776,15 @@ QPolygonF JKQTPGeoRectangle::getPolygon() {
 }
 
 void JKQTPGeoRectangle::draw(JKQTPEnhancedPainter& painter) {
+    clearHitTestData();
     QPolygonF poly=getPolygon();
+    reserveHitTestData(poly.size());
     QPolygonF rect;
     for (int i=0; i<poly.size(); i++) {
         rect.append(QPointF(transformX(poly[i].x()), transformY(poly[i].y())));
+    }
+    for (const auto& p:poly) {
+        addHitTestData(p.x(), p.y());
     }
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -886,11 +913,16 @@ bool JKQTPGeoPolygon::getYMinMax(double& miny, double& maxy, double& smallestGre
 }
 
 void JKQTPGeoPolygon::draw(JKQTPEnhancedPainter& painter) {
+    clearHitTestData();
+    reserveHitTestData(points.size());
     QPolygonF path=transformToPolygon(points);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
     painter.setBrush(getFillBrush(painter, parent));
     painter.drawPolygon(path);
+    for (const auto& p:points) {
+        addHitTestData(p.x(), p.y());
+    }
 
 }
 
@@ -955,7 +987,6 @@ void JKQTPGeoEllipse::draw(JKQTPEnhancedPainter& painter) {
     QPainterPath rect;
     rect=transformToLinePath(JKQTPDrawEllipse(x,y,width/2.0, height/2.0,0,360,angle, controlPoints));
     rect.closeSubpath();
-
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
@@ -1320,9 +1351,10 @@ bool JKQTPGeoSymbol::getYMinMax(double &miny, double &maxy, double &smallestGrea
 
 void JKQTPGeoSymbol::draw(JKQTPEnhancedPainter &painter)
 {
+    clearHitTestData();
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     plotStyledSymbol(parent, painter, transformX(x), transformY(y));
-
+    addHitTestData(x,y);
 }
 
 void JKQTPGeoSymbol::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)

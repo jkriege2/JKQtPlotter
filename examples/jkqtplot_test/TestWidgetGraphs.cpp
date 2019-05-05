@@ -111,7 +111,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
     size_t yeb=plot->getPlotter()->addGraphWithXYError(cx2, cy21, cy22, cy22, "sine with errors", JKQTPFilledCurveX);
     plteErrors=plot->getPlotter()->getGraph(yeb);
-    setErrorStyle(0);
+    setErrorLineStyle(0);
     yeb=plot->getPlotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPLinesPoints);
     plteSymbols=plot->getPlotter()->getGraph(yeb);
 
@@ -237,7 +237,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     layout->addWidget(cmbJKQTPPlotSymbol);
     JKQTPErrorPlotstyleComboBox* cmbErrors=new JKQTPErrorPlotstyleComboBox(this);
     cmbErrors->setCurrentErrorStyle(JKQTPErrorBars);
-    connect(cmbErrors, SIGNAL(currentIndexChanged(int)), this, SLOT(setErrorStyle(int)));
+    connect(cmbErrors, SIGNAL(currentIndexChanged(int)), this, SLOT(setErrorLineStyle(int)));
     layout->addWidget(cmbErrors);
     QDoubleSpinBox* spinScale=new QDoubleSpinBox(this);
     spinScale->setRange(0.1,5);
@@ -298,7 +298,7 @@ void TestWidgetGraphs::moveovl() {
 }
 
 
-void TestWidgetGraphs::setErrorStyle(int /*index*/)
+void TestWidgetGraphs::setErrorLineStyle(int /*index*/)
 {
     QComboBox* cmb=qobject_cast<QComboBox*>(sender());
     if (cmb) {

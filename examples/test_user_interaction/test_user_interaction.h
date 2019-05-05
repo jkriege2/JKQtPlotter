@@ -29,6 +29,12 @@ class TestUserInteraction : public QMainWindow
         void setLeftDoubleClickMouseAction(int index);
         void setRightDoubleClickMouseAction(int index);
         void setMouseWheelNoModAction(int index);
+        void setUserActionMarkerType(int index);
+        void setUserActionMarkerColor(int index);
+        void setUserActionOverlayColor(int index);
+        void setUserActionOverlayFillColor(int index);
+        void setUserActionOpaqueColor(int index);
+        void setUserActionOpaqueFillColor(int index);
 
         void plotMouseMove(double x, double y);
         void plotMouseClicked(double x, double y, Qt::KeyboardModifiers modifiers, Qt::MouseButton button);
@@ -42,6 +48,8 @@ class TestUserInteraction : public QMainWindow
         void userLineFinished(double x1, double y1, double x2, double y2, Qt::KeyboardModifiers modifiers);
         void userCircleFinished(double x, double y, double radius, Qt::KeyboardModifiers modifiers);
         void userEllipseFinished(double x, double y, double radiusX, double radiusY, Qt::KeyboardModifiers modifiers);
+        void tooltipDisplayed(double x, double y, const QStringList& entries, const QList<JKQTPPlotElement*>& graphs);
+        void rulerDisplayed(double x1, double y1, double x2, double y2, Qt::KeyboardModifiers modifiers);
     protected:
         void initPlot();
         JKQTPlotter* plot;
@@ -49,6 +57,8 @@ class TestUserInteraction : public QMainWindow
         QHBoxLayout* layChk;
         QHBoxLayout* layChk2;
         QFormLayout* layForm;
+        QFormLayout* layForm2;
+        QFormLayout* layLab;
         QCheckBox* chkPositionDisplay;
         QCheckBox* chkShowToolbar;
         QCheckBox* chkToolbarAlwaysOn;
@@ -60,6 +70,12 @@ class TestUserInteraction : public QMainWindow
         QComboBox* cmbRightDoubleClickMouseAction;
         QComboBox* cmbLeftDoubleClickMouseAction;
         QComboBox* cmbMouseWheelAction;
+        QComboBox* cmbUserActionMarkerType;
+        QComboBox* cmbUserActionMarkerColor;
+        QComboBox* cmbUserActionOverlayColor;
+        QComboBox* cmbUserActionOverlayFillColor;
+        QComboBox* cmbUserActionOpaqueColor;
+        QComboBox* cmbUserActionOpaqueFillColor;
         QCheckBox* chkLogX;
         QCheckBox* chkLogY;
         QLabel* labMouseAction;

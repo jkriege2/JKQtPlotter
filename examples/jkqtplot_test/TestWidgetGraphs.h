@@ -37,7 +37,7 @@ class TestWidgetGraphs : public QWidget
     public slots:
         void moveovl();
 
-        void setErrorStyle(int index);
+        void setErrorLineStyle(int index);
         void setESSymbol(int index);
 
 

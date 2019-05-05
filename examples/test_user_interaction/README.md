@@ -98,6 +98,20 @@ There are several options to zoom, using the mouse:
   ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/zoomin_mouse_contextmenu.gif)
 
 Again these actions are limited to a single axis, if the mouse is above that axis (and not inside the actual plot rectangle).
+
+### Ruler/Measurement Tool
+
+JKQTPlotter provides a pre-built ruler tool that measures x- and y-distance between the start and end point, as well as the length of the connecting line and the angle of that line.<br>
+
+  ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/rulertool.gif)
+
+
+### Data ToolTip Tool
+
+JKQTPlotter provides a pre-built tool that, while the mouse button is pressed and the cursor is dragged over the plot, finds data points (of most graphs) near the mouse and displays their coordinates (and errors) inside a small tooltip:<br>
+
+  ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/tooltiptool.gif)
+
   
 ### Drawing Geometrical Forms
 

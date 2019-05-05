@@ -71,11 +71,10 @@ JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTPlotter *parent):
 
 
 JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTBasePlotter *parent):
-    JKQTPFilledCurveXGraph(parent), JKQTPYGraphErrors(getLineColor(), parent)
+    JKQTPFilledCurveXGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
-
+    initErrorStyle(parent, parentPlotStyle);
 }
 
 JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTPlotter *parent):
@@ -97,10 +96,10 @@ void JKQTPFilledCurveXErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 }
 
 JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTBasePlotter *parent):
-    JKQTPFilledCurveYGraph(parent), JKQTPXGraphErrors(getLineColor(), parent)
+    JKQTPFilledCurveYGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+    initErrorStyle(parent, parentPlotStyle);
 
 }
 

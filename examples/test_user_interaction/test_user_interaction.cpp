@@ -19,15 +19,19 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     // setup layouts for form
     layout=new QGridLayout;
     layForm=new QFormLayout;
+    layForm2=new QFormLayout;
+    layLab=new QFormLayout;
     layChk=new QHBoxLayout;
     layChk2=new QHBoxLayout;
     layout->addLayout(layChk,0,0);
     layout->addLayout(layChk2,1,0);
     layout->addLayout(layForm,2,0);
+    layout->addLayout(layForm2,2,1);
+    layout->addLayout(layLab,3,0, 1,2);
 
     // generate a JKQTPlotter and initialize some plot data
     plot=new JKQTPlotter(this);
-    layout->addWidget(plot,3,0);
+    layout->addWidget(plot,4,0, 1,2);
     initPlot();
 
     // add some of the default QActions from the JKQTPlotter to the window menu
@@ -102,6 +106,8 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawEllipseForEvent");
     cmbLeftNoModMouseAction->addItem("jkqtpmdaDrawLineForEvent");
     cmbLeftNoModMouseAction->addItem("jkqtpmdaScribbleForEvents");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaToolTipForClosestDataPoint");
+    cmbLeftNoModMouseAction->addItem("jkqtpmdaRuler");
     cmbLeftNoModMouseAction->addItem("NoMouseAction");
     cmbLeftNoModMouseAction->setCurrentIndex(2);
     connect(cmbLeftNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftMouseAction(int)));
@@ -118,6 +124,8 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbLeftCtrlModMouseAction->addItem("jkqtpmdaDrawEllipseForEvent");
     cmbLeftCtrlModMouseAction->addItem("jkqtpmdaDrawLineForEvent");
     cmbLeftCtrlModMouseAction->addItem("jkqtpmdaScribbleForEvents");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaToolTipForClosestDataPoint");
+    cmbLeftCtrlModMouseAction->addItem("jkqtpmdaRuler");
     cmbLeftCtrlModMouseAction->addItem("NoMouseAction");
     cmbLeftCtrlModMouseAction->setCurrentIndex(0);
     connect(cmbLeftCtrlModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setLeftCtrlMouseAction(int)));
@@ -134,6 +142,8 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbRightNoModMouseAction->addItem("jkqtpmdaDrawEllipseForEvent");
     cmbRightNoModMouseAction->addItem("jkqtpmdaDrawLineForEvent");
     cmbRightNoModMouseAction->addItem("jkqtpmdaScribbleForEvents");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaToolTipForClosestDataPoint");
+    cmbRightNoModMouseAction->addItem("jkqtpmdaRuler");
     cmbRightNoModMouseAction->addItem("ContextMenu");
     cmbRightNoModMouseAction->setCurrentIndex(5);
     connect(cmbRightNoModMouseAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setRightMouseAction(int)));
@@ -193,16 +203,100 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     connect(cmbMouseWheelAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setMouseWheelNoModAction(int)));
     setMouseWheelNoModAction(cmbMouseWheelAction->currentIndex());
 
+    // add a QComboBox that allows to set the type of user-action markers
+    cmbUserActionMarkerType=new QComboBox(this);
+    layForm2->addRow("mouse action: marker type", cmbUserActionMarkerType);
+    cmbUserActionMarkerType->addItem("jkqtpuamtCircle");
+    cmbUserActionMarkerType->addItem("jkqtpuamtCrossHair");
+    cmbUserActionMarkerType->addItem("jkqtpuamtCircleAndCrossHair");
+    cmbUserActionMarkerType->setCurrentIndex(0);
+    connect(cmbUserActionMarkerType, SIGNAL(currentIndexChanged(int)), this, SLOT(setUserActionMarkerType(int)));
+    setUserActionMarkerType(cmbUserActionMarkerType->currentIndex());
+
+    // add a QComboBox that allows to set the fill&outline of user-action markers
+    cmbUserActionMarkerColor=new QComboBox(this);
+    layForm2->addRow("mouse action: marker color", cmbUserActionMarkerColor);
+    cmbUserActionMarkerColor->addItem(jkqtp_QColor2String(plot->getUserActionMarkerPen().color()));
+    cmbUserActionMarkerColor->addItem("red");
+    cmbUserActionMarkerColor->addItem("blue");
+    cmbUserActionMarkerColor->addItem("green");
+    cmbUserActionMarkerColor->addItem("yellow");
+    cmbUserActionMarkerColor->addItem("silver");
+    cmbUserActionMarkerColor->addItem("black");
+    cmbUserActionMarkerColor->addItem("white");
+    cmbUserActionMarkerColor->setCurrentIndex(0);
+    connect(cmbUserActionMarkerColor, SIGNAL(currentIndexChanged(int)), this, SLOT(setUserActionMarkerColor(int)));
+    setUserActionMarkerColor(cmbUserActionMarkerColor->currentIndex());
+
+    // add a QComboBox that allows to set the outline color of user-action Opaques
+    cmbUserActionOpaqueColor=new QComboBox(this);
+    layForm2->addRow("mouse action: opaque outline color", cmbUserActionOpaqueColor);
+    cmbUserActionOpaqueColor->addItem(jkqtp_QColor2String(plot->getUserActionOpaquePen().color()));
+    cmbUserActionOpaqueColor->addItem("red");
+    cmbUserActionOpaqueColor->addItem("blue");
+    cmbUserActionOpaqueColor->addItem("green");
+    cmbUserActionOpaqueColor->addItem("yellow");
+    cmbUserActionOpaqueColor->addItem("silver");
+    cmbUserActionOpaqueColor->addItem("black");
+    cmbUserActionOpaqueColor->addItem("white");
+    cmbUserActionOpaqueColor->setCurrentIndex(0);
+    connect(cmbUserActionOpaqueColor, SIGNAL(currentIndexChanged(int)), this, SLOT(setUserActionOpaqueColor(int)));
+    setUserActionOpaqueColor(cmbUserActionOpaqueColor->currentIndex());
+
+    // add a QComboBox that allows to set the fill color of user-action Opaques
+    cmbUserActionOpaqueFillColor=new QComboBox(this);
+    layForm2->addRow("mouse action: opaque fill color", cmbUserActionOpaqueFillColor);
+    cmbUserActionOpaqueFillColor->addItem(jkqtp_QColor2String(plot->getUserActionOpaqueBrush().color()));
+    cmbUserActionOpaqueFillColor->addItem("salmon");
+    cmbUserActionOpaqueFillColor->addItem("aliceblue");
+    cmbUserActionOpaqueFillColor->addItem("honeydew");
+    cmbUserActionOpaqueFillColor->addItem("lightyellow");
+    cmbUserActionOpaqueFillColor->addItem("lightgray");
+    cmbUserActionOpaqueFillColor->addItem("silver");
+    cmbUserActionOpaqueFillColor->addItem("white");
+    cmbUserActionOpaqueFillColor->setCurrentIndex(0);
+    connect(cmbUserActionOpaqueFillColor, SIGNAL(currentIndexChanged(int)), this, SLOT(setUserActionOpaqueFillColor(int)));
+    setUserActionOpaqueFillColor(cmbUserActionOpaqueFillColor->currentIndex());
+
+    // add a QComboBox that allows to set the outline color of user-action Overlays
+    cmbUserActionOverlayColor=new QComboBox(this);
+    layForm2->addRow("mouse action: overlay outline color", cmbUserActionOverlayColor);
+    cmbUserActionOverlayColor->addItem(jkqtp_QColor2String(plot->getUserActionOverlayPen().color()));
+    cmbUserActionOverlayColor->addItem("red");
+    cmbUserActionOverlayColor->addItem("blue");
+    cmbUserActionOverlayColor->addItem("green");
+    cmbUserActionOverlayColor->addItem("yellow");
+    cmbUserActionOverlayColor->addItem("silver");
+    cmbUserActionOverlayColor->addItem("black");
+    cmbUserActionOverlayColor->addItem("white");
+    cmbUserActionOverlayColor->setCurrentIndex(0);
+    connect(cmbUserActionOverlayColor, SIGNAL(currentIndexChanged(int)), this, SLOT(setUserActionOverlayColor(int)));
+    setUserActionOverlayColor(cmbUserActionOverlayColor->currentIndex());
+
+    // add a QComboBox that allows to set the fill color of user-action Overlays
+    cmbUserActionOverlayFillColor=new QComboBox(this);
+    layForm2->addRow("mouse action: overlay fill color", cmbUserActionOverlayFillColor);
+    cmbUserActionOverlayFillColor->addItem(jkqtp_QColor2String(plot->getUserActionOverlayBrush().color()));
+    cmbUserActionOverlayFillColor->addItem("red");
+    cmbUserActionOverlayFillColor->addItem("blue");
+    cmbUserActionOverlayFillColor->addItem("green");
+    cmbUserActionOverlayFillColor->addItem("yellow");
+    cmbUserActionOverlayFillColor->addItem("silver");
+    cmbUserActionOverlayFillColor->addItem("black");
+    cmbUserActionOverlayFillColor->addItem("white");
+    cmbUserActionOverlayFillColor->setCurrentIndex(0);
+    connect(cmbUserActionOverlayFillColor, SIGNAL(currentIndexChanged(int)), this, SLOT(setUserActionOverlayFillColor(int)));
+    setUserActionOverlayFillColor(cmbUserActionOverlayFillColor->currentIndex());
 
 
 
     // and add a QLabel to show the different events of the JKQTPlotter:
     labMouseMoved=new QLabel(this);
-    layForm->addRow("last mouse moved:", labMouseMoved);
+    layLab->addRow("last mouse moved:", labMouseMoved);
     labMouseClicked=new QLabel(this);
-    layForm->addRow("last mouse clicked:", labMouseClicked);
+    layLab->addRow("last mouse clicked:", labMouseClicked);
     labMouseAction=new QLabel(this);
-    layForm->addRow("last plotter signal:", labMouseAction);
+    layLab->addRow("last plotter signal:", labMouseAction);
     connect(plot, SIGNAL(plotMouseMove(double, double)), this, SLOT(plotMouseMove(double, double)));
     connect(plot, SIGNAL(plotMouseClicked(double, double, Qt::KeyboardModifiers , Qt::MouseButton)), this, SLOT(plotMouseClicked(double, double, Qt::KeyboardModifiers, Qt::MouseButton)));
     connect(plot, SIGNAL(plotMouseDoubleClicked(double, double, Qt::KeyboardModifiers, Qt::MouseButton)), this, SLOT(plotMouseDoubleClicked(double, double, Qt::KeyboardModifiers, Qt::MouseButton)));
@@ -215,6 +309,8 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     connect(plot, SIGNAL(userLineFinished(double, double, double, double, Qt::KeyboardModifiers)), this, SLOT(userLineFinished(double, double, double, double, Qt::KeyboardModifiers)));
     connect(plot, SIGNAL(userCircleFinished(double, double, double, Qt::KeyboardModifiers)), this, SLOT(userCircleFinished(double, double, double, Qt::KeyboardModifiers)));
     connect(plot, SIGNAL(userEllipseFinished(double, double, double, double, Qt::KeyboardModifiers)), this, SLOT(userEllipseFinished(double, double, double, double, Qt::KeyboardModifiers)));
+    connect(plot, SIGNAL(rulerDisplayed(double, double, double, double, Qt::KeyboardModifiers)), this, SLOT(rulerDisplayed(double, double, double, double, Qt::KeyboardModifiers)));
+    connect(plot, SIGNAL(tooltipDisplayed(double, double, const QStringList&, const QList<JKQTPPlotElement*>&  )), this, SLOT(tooltipDisplayed(double, double, const QStringList&, const QList<JKQTPPlotElement*>&)));
 
 
     w->setLayout(layout);
@@ -265,6 +361,57 @@ void TestUserInteraction::setMouseWheelNoModAction(int index)
 {
     if (index>=cmbMouseWheelAction->count()-1)  plot->deregisterMouseWheelAction(Qt::NoModifier);
     else plot->registerMouseWheelAction(Qt::NoModifier, static_cast<JKQTPMouseWheelActions>(index));
+}
+
+void TestUserInteraction::setUserActionMarkerType(int index)
+{
+    plot->setUserActionMarkerType(static_cast<JKQTPUserActionMarkerType>(index)) ;
+}
+
+void TestUserInteraction::setUserActionMarkerColor(int index)
+{
+    QColor c=jkqtp_String2QColor(cmbUserActionMarkerColor->itemText(index));
+    QPen p=plot->getUserActionMarkerPen();
+    p.setColor(c);
+    plot->setUserActionMarkerPen(p) ;
+    QBrush b=plot->getUserActionMarkerBrush();
+    c.setAlphaF(0.4);
+    b.setColor(c);
+    plot->setUserActionMarkerBrush(b) ;
+}
+
+void TestUserInteraction::setUserActionOpaqueColor(int index)
+{
+    QColor c=jkqtp_String2QColor(cmbUserActionOpaqueColor->itemText(index));
+    QPen p=plot->getUserActionOpaquePen();
+    p.setColor(c);
+    plot->setUserActionOpaquePen(p) ;
+}
+
+void TestUserInteraction::setUserActionOpaqueFillColor(int index)
+{
+    QColor c=jkqtp_String2QColor(cmbUserActionOpaqueFillColor->itemText(index));
+    QBrush b=plot->getUserActionOpaqueBrush();
+    b.setColor(c.lighter());
+    plot->setUserActionOpaqueBrush(b) ;
+
+}
+
+void TestUserInteraction::setUserActionOverlayColor(int index)
+{
+    QColor c=jkqtp_String2QColor(cmbUserActionOverlayColor->itemText(index));
+    QPen p=plot->getUserActionOverlayPen();
+    p.setColor(c);
+    plot->setUserActionOverlayPen(p) ;
+}
+
+void TestUserInteraction::setUserActionOverlayFillColor(int index)
+{
+    QColor c=jkqtp_String2QColor(cmbUserActionOverlayColor->itemText(index));
+    QBrush b=plot->getUserActionOverlayBrush();
+    c.setAlphaF(0.4);
+    b.setColor(c);
+    plot->setUserActionOverlayBrush(b) ;
 }
 
 void TestUserInteraction::plotMouseMove(double x, double y)
@@ -343,6 +490,16 @@ void TestUserInteraction::userEllipseFinished(double x, double y, double radiusX
     labMouseAction->setText(QString("userEllipseFinished(x=%1, y=%2, radiusX=%3, radiusY=%4, modifiers=%5)").arg(x).arg(y).arg(radiusX).arg(radiusY).arg(KeyboradMod2String(modifiers)));
 }
 
+void TestUserInteraction::tooltipDisplayed(double x, double y, const QStringList& entries, const QList<JKQTPPlotElement*>& graphs)
+{
+    labMouseAction->setText(QString("tooltipDisplayed(x=%1, y=%2, entries=%3)").arg(x).arg(y).arg(entries.join(";;")));
+}
+
+void TestUserInteraction::rulerDisplayed(double x1, double y1, double x2, double y2, Qt::KeyboardModifiers modifiers)
+{
+    labMouseAction->setText(QString("rulerDisplayed(x1=%1/%2, x2=%3/%4, modifiers=%5)").arg(x1).arg(y1).arg(x2).arg(y2).arg(KeyboradMod2String(modifiers)));
+}
+
 QString TestUserInteraction::KeyboradMod2String(Qt::KeyboardModifiers modifiers) {
     QString mod="";
     if ((modifiers & Qt::ShiftModifier) != 0) mod+="SHIFT ";
@@ -370,13 +527,14 @@ void TestUserInteraction::initPlot()
     JKQTPDatastore* ds=plot->getDatastore();
 
     // 2. now we create data for a simple plot (a sine curve)
-    QVector<double> X, Y1, Y2;
+    QVector<double> X, Y1, Y2, EY2;
     const int Ndata=100;
     for (int i=0; i<Ndata; i++) {
         const double x=double(i)/double(Ndata)*8.0*M_PI;
         X<<x;
         Y1<<sin(x);
         Y2<<sin(x)*exp(-0.2*x);
+        EY2<<fabs(0.2*sin(x));
     }
 
     // 3. make data available to JKQTPlotter by adding it to the internal datastore.
@@ -387,11 +545,13 @@ void TestUserInteraction::initPlot()
     size_t columnX=ds->addCopiedColumn(X, "x");
     size_t columnY1=ds->addCopiedColumn(Y1, "y1");
     size_t columnY2=ds->addCopiedColumn(Y2, "y2");
+    size_t columnEY2=ds->addCopiedColumn(EY2, "ey2");
 
     // 4. create a graph in the plot, which plots the dataset X/Y:
-    JKQTPXYLineGraph* graph1=new JKQTPXYLineGraph(plot);
+    JKQTPXYLineErrorGraph* graph1=new JKQTPXYLineErrorGraph(plot);
     graph1->setXColumn(columnX);
     graph1->setYColumn(columnY1);
+    graph1->setYErrorColumn(columnEY2);
     graph1->setTitle(QObject::tr("sine graph"));
     plot->addGraph(graph1);
 

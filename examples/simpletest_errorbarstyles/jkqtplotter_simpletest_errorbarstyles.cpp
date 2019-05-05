@@ -73,9 +73,9 @@ int main(int argc, char* argv[])
         c.setAlphaF(0.3);
         graph->setErrorFillColor(c);
         // set error indicator line width
-        graph->setErrorWidth(1);
+        graph->setErrorLineWidth(1);
         // set length of small bars at the end of error bars
-        graph->setErrorbarSize(15);
+        graph->setErrorBarCapSize(15);
 
 
         // set symbol (cross/X) + pen style (and color)dashed)

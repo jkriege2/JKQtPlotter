@@ -101,5 +101,15 @@ JKQTP_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, doubl
 */
 JKQTP_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
 
+/*! \brief draw a tooltip, using the current brush and pen of the provided painter
+    \ingroup jkqtptools_drawing
+
+    \param painter JKQTPEnhancedPainter to use for painting
+    \param x x-coordinate of position the tooltip points to
+    \param y y-coordinate of position the tooltip points to
+    \param rect rectangle of the main tooltip area
+*/
+JKQTP_LIB_EXPORT void JKQTPDrawTooltip(JKQTPEnhancedPainter& painter, double x, double y, const QRectF& rect);
+
 
 #endif // JKQTPDRAWINGTOOLS_H_INCLUDED

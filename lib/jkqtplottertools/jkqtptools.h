@@ -41,6 +41,7 @@
 #include <vector>
 #include <ctime>
 #include <cmath>
+#include <limits>
 #include <cstdint>
 #include <stdexcept>
 #include <cctype>
@@ -136,6 +137,33 @@ inline bool JKQTPIsOKFloat(T v) {
     return std::isfinite(v)&&(!std::isinf(v))&&(!std::isnan(v));
 }
 
+
+/** \brief Styles in which to mark single positions during user actions in JKQTPlotter
+ * \ingroup jkqtptools
+
+ */
+enum JKQTPUserActionMarkerType {
+    jkqtpuamtCircle=0, /*!< \brief a small circle around the position to mark */
+    jkqtpuamtCrossHair=1, /*!< \brief a cross-hair to the position to mark */
+    jkqtpuamtCircleAndCrossHair=2, /*!< \brief a cross-hair to the position to mark, with a circle-marker around the actual target (i.e. combines jkqtpuamtCircle and jkqtpuamtCrossHair) */
+};
+
+
+/** \brief convert a JKQTPUserActionMarkerType to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
+ *  \ingroup jkqtptools
+ *
+ *  \see String2JKQTPUserActionMarkerType(), JKQTPUserActionMarkerType
+ */
+JKQTP_LIB_EXPORT QString JKQTPUserActionMarkerType2String(JKQTPUserActionMarkerType act);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPUserActionMarkerType2String() ) to JKQTPUserActionMarkerType
+ *  \ingroup jkqtptools
+ *
+ *  \see JKQTPUserActionMarkerType2String(), JKQTPUserActionMarkerType
+ */
+JKQTP_LIB_EXPORT JKQTPUserActionMarkerType String2JKQTPUserActionMarkerType(const QString &act);
+
+
+
 /** \brief Availble action this JKQtPlotter can perform when mouse events occur.
  *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes
  * \ingroup jkqtptools
@@ -150,7 +178,10 @@ enum JKQTPMouseDragActions {
     jkqtpmdaDrawEllipseForEvent, /*!< \brief draw an ellipse and when finished execute the signal JKQTPlotter::userEllipseFinished() \image html draw_ellipse.gif "Draw Ellipse User-Action"  */
     jkqtpmdaDrawLineForEvent, /*!< \brief draw a line and when finished execute the signal JKQTPlotter::userLineFinished() \image html draw_line.gif "Draw Lines User-Action" */
     jkqtpmdaScribbleForEvents, /*!< \brief let the user scribble on the plot (left mouse button is kept pressed) and call JKQTPlotter::userScribbleClick() for each new position  */
+    jkqtpmdaToolTipForClosestDataPoint, /*!< \brief shows a tooltip with data of the closest data-point in the plot \image html tooltiptool.gif */
+    jkqtpmdaRuler, /*!< \brief shows a ruler over the plot, which measures delta X, delta Y and sqrt(dx^2+dy^2) \image html rulertool.gif */
 };
+
 
 /** \brief convert a JKQTPMouseDragActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
  *  \ingroup jkqtptools
@@ -286,6 +317,26 @@ enum JKQTPColorDerivationMode {
  *  \see JKQTPColorDerivationMode
  */
 JKQTP_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& col);
+
+/** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alphaF
+ *  \ingroup jkqtptools
+ *  \see QColorWithAlpha()
+ */
+inline QColor QColorWithAlphaF(const QColor& color, qreal alphaF) {
+    QColor c=color;
+    c.setAlphaF(alphaF);
+    return c;
+}
+
+/** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alpha
+ *  \ingroup jkqtptools
+ *  \see QColorWithAlphaF()
+ */
+inline QColor QColorWithAlpha(const QColor& color, int alpha) {
+    QColor c=color;
+    c.setAlpha(alpha);
+    return c;
+}
 
 /** \brief convert a JKQTPColorDerivationMode to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
  *  \ingroup jkqtptools
@@ -866,5 +917,27 @@ template<typename T>
 inline T jkqtp_roundTo(const double& v) {
     return static_cast<T>(round(v));
 }
+
+
+
+/** \brief compare two floats \a a and \a b for euqality, where any difference smaller than \a epsilon is seen as equality */
+inline bool jkqtp_approximatelyEqual(float a, float b, float epsilon=2.0*std::numeric_limits<float>::epsilon())
+{
+    return fabsf(a - b) <= epsilon;
+}
+
+/** \brief compare two doubles \a a and \a b for euqality, where any difference smaller than \a epsilon is seen as equality */
+inline bool jkqtp_approximatelyEqual(double a, double b, double epsilon=2.0*std::numeric_limits<double>::epsilon())
+{
+    return fabs(a - b) <= epsilon;
+}
+
+/** \brief returns the quare of the value \a v, i.e. \c v*v */
+template<typename T>
+inline T jkqtp_sqr(const T& v) {
+    return v*v;
+}
+
+
 
 #endif // JKQTPTOOLS_H_INCLUDED

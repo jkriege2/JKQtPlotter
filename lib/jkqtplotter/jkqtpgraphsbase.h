@@ -33,6 +33,7 @@
 // forward declarations
 class JKQTPlotter;
 class JKQTPDatastore;
+class JKQTPGraphErrorStyleMixin;
 
 /** \brief this virtual base class of every element, which is part of a JKQTPlotter plot and may appear in its key
  *         (basically any type of graph, except overlay elements!)
@@ -61,6 +62,7 @@ class JKQTPDatastore;
 class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
         Q_OBJECT
     public:
+
         /** \brief class constructor */
         explicit JKQTPPlotElement(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
@@ -127,6 +129,73 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
          */
         virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
 
+        /** \brief modes of operation for the function hitTest() */
+        enum HitTestMode {
+            HitTestXY,      /*!< \brief find closest point in x- and y-direction simulatneously (i.e. measure direct distance) */
+            HitTestXOnly,   /*!< \brief find closest point in x-direction only */
+            HitTestYOnly,   /*!< \brief find closest point in y-direction only */
+        };
+
+        /*! \brief returns the closest distance of the plot element to the (screen pixel) position \a pos, or \c NAN
+
+            This function is used to implement hit tests, i.e. to test whether a graph is close to a given position \a posSystem.
+            The function will then return the distance of the closes graph-point and a label for this point. An example of what
+            can be done with this function is the tooltip tool that JKQTPlotter provides via its context-menu/toolbar. This tool
+            uses just the information of the closest point and its label to display a tooltip for that datapoint:
+
+            \see jkqtpmdaToolTipForClosestDataPoint for details.
+
+
+            \param posSystem position to test in system coordinates
+            \param[out] closestSpotSystem optional output of the closest point found on the plot element in system coordinates
+            \param[out] label optional output of a label for the closest point (that might e.g. be used in a tooltip)
+            \param mode search mode, i.e. use sqrt(dx*dx+dy*dy) as distance, or just the absoulte values along one of the
+                        two coordinate axes. Note that the returned distance depends on this parameter!
+            \return NAN if not implemented, or if \a pos is very far from the plot element, or the closest distance (in screen pixels)
+                    of \a pos from the plot element. Note that the returned distance depends on the choosen \a mode !!!
+                    You can use JKQTPIsOKFloat() to check whether a valid distance was returned!
+
+
+            Since tha graph base class does not have any knowledge about how to perform a hit test on you specific graph, there is only a
+            very general implementation in this class, which does not actually search through the graph itself, but searches through
+            extra data that hs to be written during draw() and is stored in m_hitTestData. The implentation this base-class only searches this
+            list of points+metadata to implement a basic hit-test. If the list is empty, of no close-by points are found (default), then
+            hitTest() will simply return \a NAN.
+
+            When writing a new graph, you can therefore implement hitTest() in one of these ways:
+               # You simply fill m_hitTestData with appropriate data and rely on the implementation in JKQTPPlotElement to do the work for you:
+                 You then need to call clearHitTestData() at the start of your draw() function and whenever you draw a datapoint, you add
+                 its location and metadata to the internal storage with addHitTestData().
+               # You derive from a graph class that already has an implementation. JKQTPXYGraph is an example of this. That class searches
+                 through all x-/y-coordinates in the internally known columns and even takes into account possible graph errors in the label,
+                 when the graph is also derived from JKQTPXGraphErrorData or JKQTPYGraphErrorData. This implementation therefore covers
+                 most graph types pre-packaged with JKQTPlotter.
+               # You implement the function from scratch.
+            .
+
+            \see addHitTestData(), clearHitTestData(), m_hitTestData, HitTestLocation
+
+         */
+        virtual double hitTest(const QPointF & posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const;
+
+        /** \brief Dataset for a single point on the graph, associated with its data-column index and a label that can be used by a basic implementation of hitTest()
+         *
+         * \see hitTest()
+         */
+        struct HitTestLocation {
+            inline HitTestLocation(): pos(nan(""), nan("")), index(-1), label("") {}
+            inline HitTestLocation(double x_, double y_, const QString& label_): pos(x_,y_), index(-1), label(label_) {}
+            inline HitTestLocation(const QPointF& pos_, const QString& label_): pos(pos_), index(-1), label(label_) {}
+            inline HitTestLocation(double x_, double y_, int index_, const QString& label_): pos(x_,y_), index(index_), label(label_) {}
+            inline HitTestLocation(const QPointF& pos_, int index_, const QString& label_): pos(pos_), index(index_), label(label_) {}
+            /** \brief position of the hit-test point */
+            QPointF pos;
+            /** \brief index of the hit-test point in the linked data-columns (or -1) */
+            int index;
+            /** \brief label for that specific hit-test point */
+            QString label;
+        };
+
     protected:
 
 
@@ -145,35 +214,123 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
 
 
         /** \brief tool routine that transforms a QPointF according to the parent's transformation rules (plot coordinate --> pixels) */
-        inline QPointF transform(const QPointF& x) {
+        inline QPointF transform(const QPointF& x) const {
             return QPointF(transformX(x.x()), transformY(x.y()));
         }
 
         /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules (pixels --> plot coordinate) */
-        inline QPointF backTransform(const QPointF& x) {
+        inline QPointF backTransform(const QPointF& x) const {
             return QPointF(backtransformX(x.x()), backtransformY(x.y()));
         }
 
         /** \brief tool routine that transforms a QPointF according to the parent's transformation rules (plot coordinate --> pixels) */
-        inline QPointF transform(double x, double y) {
+        inline QPointF transform(double x, double y) const {
             return transform(QPointF(x,y));
         }
         /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules (pixels --> plot coordinate) */
-        inline QPointF backTransform(double x, double y) {
+        inline QPointF backTransform(double x, double y) const {
             return backTransform(QPointF(x,y));
         }
         /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules (plot coordinate --> pixels) */
-        QVector<QPointF> transform(const QVector<QPointF>& x);
+        QVector<QPointF> transform(const QVector<QPointF>& x) const;
 
         /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
          *         and returns a (non-closed) path consisting of lines (plot coordinate --> pixels) */
-        QPainterPath transformToLinePath(const QVector<QPointF>& x);
+        QPainterPath transformToLinePath(const QVector<QPointF>& x) const;
 
         /** \brief tool routine that transforms a QVector<QPointF> according to the parent's transformation rules
          *         and returns a polygon (plot coordinate --> pixels) */
-        inline QPolygonF transformToPolygon(const QVector<QPointF>& x) {
+        inline QPolygonF transformToPolygon(const QVector<QPointF>& x) const {
             return QPolygonF(transform(x));
         }
+
+
+        /** \brief clear the internal datastore for hitTest()
+         *
+         *  \note This function has to be called at the start of draw()
+         *  \see hitTest(), addHitTestData(), m_hitTestData, HitTestLocation
+         */
+        inline void clearHitTestData() { m_hitTestData.clear(); }
+        /** \brief reserve list entries for up to \a points graph points in the internal datastore for hitTest()
+         *
+         *  \note Call this after clearHitTestData() for improved speed of subsequent addHitTestData() calls!
+         *  \see hitTest(), addHitTestData(), m_hitTestData, HitTestLocation
+         */
+        inline void reserveHitTestData(int points) { m_hitTestData.reserve(qMax(10, abs(points))); }
+        /** \brief clear the internal datastore for hitTest()
+         *
+         *  \note This function has to be called at the start of draw()
+         *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
+         */
+        inline void addHitTestData(const HitTestLocation& loc) { m_hitTestData<<loc; }
+        /** \brief add a new point on the graph to the internal datastore for hitTest()
+         *
+         *  \param x_ x-position of the graph point in system coordinates
+         *  \param y_ y-position of the graph point in system coordinates
+         *  \param label_ a label for this datapoint, that can e.g. be displayed in a tooltip for this point
+         *
+         *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
+         */
+        inline void addHitTestData(double x_, double y_, const QString& label_) { addHitTestData(HitTestLocation(x_,y_,label_)); }
+        /** \brief clear the internal datastore for hitTest()
+         *
+         *  \param pos_ position of the graph point in system coordinates
+         *  \param label_ a label for this datapoint, that can e.g. be displayed in a tooltip for this point
+         *
+         *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
+         */
+        inline void addHitTestData(const QPointF& pos_, const QString& label_) { addHitTestData(HitTestLocation(pos_,label_)); }
+        /** \brief add a new point on the graph to the internal datastore for hitTest(),
+         *         this variant uses formatHitTestDefaultLabel() to auto-generate the label
+         *
+         *  \param x_ x-position of the graph point in system coordinates
+         *  \param y_ y-position of the graph point in system coordinates
+         *  \param index_ index of the graph point in the internal data columns, or -1
+         *  \param datastore datastore for formatHitTestDefaultLabel()
+         *
+         *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
+         */
+        inline void addHitTestData(double x_, double y_, int index_=-1, JKQTPDatastore* datastore=nullptr) { addHitTestData(HitTestLocation(x_,y_,formatHitTestDefaultLabel(x_,y_, index_, datastore))); }
+        /** \brief clear the internal datastore for hitTest(),
+         *         this variant uses formatHitTestDefaultLabel() to auto-generate the label
+         *
+         *  \param pos_ position of the graph point in system coordinates
+         *  \param index_ index of the graph point in the internal data columns, or -1
+         *  \param datastore datastore for formatHitTestDefaultLabel()
+         *
+         *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
+         */
+        inline void addHitTestData(const QPointF& pos_, int index_=-1, JKQTPDatastore* datastore=nullptr) { addHitTestData(HitTestLocation(pos_,formatHitTestDefaultLabel(pos_.x(), pos_.y(), index_, datastore))); }
+        /** \brief clear the internal datastore for hitTest()
+         *
+         *  \param x_ x-position of the graph point in system coordinates
+         *  \param y_ y-position of the graph point in system coordinates
+         *  \param index_ index of the graph point in the internal data columns
+         *  \param label_ a label for this datapoint, that can e.g. be displayed in a tooltip for this point
+         *
+         *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
+         */
+        inline void addHitTestData(double x_, double y_, int index_, const QString& label_) { addHitTestData(HitTestLocation(x_,y_,index_,label_)); }
+        /** \brief clear the internal datastore for hitTest()
+         *
+         *  \param pos_ position of the graph point in system coordinates
+         *  \param index_ index of the graph point in the internal data columns
+         *  \param label_ a label for this datapoint, that can e.g. be displayed in a tooltip for this point
+         *
+         *  \see hitTest(), clearHitTestData(), m_hitTestData, HitTestLocation, reserveHitTestData()
+         */
+        inline void addHitTestData(const QPointF& pos_, int index_, const QString& label_) { addHitTestData(HitTestLocation(pos_,index_,label_)); }
+
+        /** \brief tool-function for hitTest(), which formats a default label, taking into account the x- and y-position (both provided)
+         *         and optionally the errors of these positions.
+         *
+         * \param x x-position of the datapoint in system coordinates
+         * \param y y-position of the datapoint in system coordinates
+         * \param index the index of the data point in the associated data column(s), or -1 (optional!)
+         * \param datastore The datastore to read error data from (optional!)
+         * \returns a LaTeX formatted label
+         */
+        virtual QString formatHitTestDefaultLabel(double x, double y, int index=-1, JKQTPDatastore *datastore=nullptr) const;
 
         /** \brief the plotter object this object belongs to */
         JKQTBasePlotter* parent;
@@ -187,6 +344,14 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
         bool highlighted;
         /** \brief internal storage for the used parent plot style */
         int parentPlotStyle;
+
+
+        /** \brief dataset with graph-points and associated data fro the function hitTest()
+         * \see hitTest(), HitTestLocation
+         */
+        QVector<HitTestLocation> m_hitTestData;
+
+
 };
 
 /** \brief this virtual base class of the (data-column based) graphs,
@@ -252,7 +417,7 @@ class JKQTP_LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
     protected:
 
 
-        friend class JKQTPGraphErrors;
+        friend class JKQTPGraphErrorStyleMixin;
 
 };
 
@@ -339,50 +504,44 @@ class JKQTP_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
 
         /*! \copydoc xColumn
             \see see xColumn for details */ 
-        inline virtual void setXColumn(int __value)
-        {
-            this->xColumn = __value;
-        } 
+        void setXColumn(int __value);
         /*! \copydoc xColumn
             \see see xColumn for details */ 
-        inline virtual int getXColumn() const  
-        {
-            return this->xColumn; 
-        }
+        int getXColumn() const;
         /*! \brief sets the property xColumn ( \copybrief xColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter xColumn is:  <BLOCKQUOTE>\copydoc xColumn </BLOCKQUOTE> 
             \see xColumn for more information */ 
-        inline virtual void setXColumn (size_t __value) { this->xColumn = static_cast<int>(__value); }
+        void setXColumn (size_t __value);
         /*! \copydoc yColumn
             \see see yColumn for details */ 
-        inline virtual void setYColumn(int __value)
-        {
-            this->yColumn = __value;
-        } 
+        void setYColumn(int __value);
         /*! \copydoc yColumn
             \see see yColumn for details */ 
-        inline virtual int getYColumn() const  
-        {
-            return this->yColumn; 
-        }
+        int getYColumn() const;
         /*! \brief sets the property yColumn ( \copybrief yColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
             \details Description of the parameter yColumn is:  <BLOCKQUOTE>\copydoc yColumn </BLOCKQUOTE> 
             \see yColumn for more information */ 
-        inline virtual void setYColumn (size_t __value) { this->yColumn = static_cast<int>(__value); }
+        void setYColumn (size_t __value);
         /*! \copydoc sortData
             \see see sortData for details */ 
-        inline virtual void setDataSortOrder(DataSortOrder  __value)  
-        {
-            this->sortData = __value;
-        } 
+        void setDataSortOrder(DataSortOrder  __value);
         /*! \copydoc sortData
             \see see sortData for details */ 
-        inline virtual DataSortOrder getDataSortOrder() const  
-        {
-            return this->sortData; 
-        }
+        DataSortOrder getDataSortOrder() const;
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
         void setDataSortOrder(int __value);
+
+
+        /** \brief Implmentation of JKQTPPlotElement::hitTest(), which searches through all graph points defined by xColumn and yColumn
+         *         and returns a general x/y-label, also taking into account possibly known errors to the graphs (if it is derived
+         *         from JKQTPXGraphErrorData and/or JKQTPYGraphErrorData
+         *
+         * \note This function first checks whether JKQTPPlotElement::hitTest() returns any result, so you can use the basic implementation
+         *       in JKQTPPlotElement to override the behaviour here, by simply calling addHitTestData() during your draw() implementation
+         *
+         * \see See JKQTPPlotElement::hitTest() for details on the function definition!
+         */
+        virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
 
     protected:
 
@@ -407,6 +566,14 @@ class JKQTP_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
             if (sortData==Unsorted) return i;
             return sortedIndices.value(i,i);
         }
+
+        /** \brief determines the range of row indexes available in the data columns of this graph
+         *
+         * \param[out] imin first usable row-index
+         * \param[out] imax last usable row-index
+         *  \return \c true on success and \c false if the information is not available
+         */
+        virtual bool getIndexRange(int &imin, int &imax) const;
 };
 
 
@@ -495,6 +662,13 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
             return sortedIndices.value(i,i);
         }
 
+        /** \brief determines the range of row indexes available in the data columns of this graph
+         *
+         * \param[out] imin first usable row-index
+         * \param[out] imax last usable row-index
+         *  \return \c true on success and \c false if the information is not available
+         */
+        virtual bool getIndexRange(int &imin, int &imax) const;
 
 };
 

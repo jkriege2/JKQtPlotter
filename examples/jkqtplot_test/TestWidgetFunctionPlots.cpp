@@ -84,8 +84,8 @@ void TestWidgetFunctionPlots::setPFuncStyle()
 {
     pfunc->setDrawErrorLines(false);
     pfunc->setDrawErrorPolygons(false);
-    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorLines) pfunc->setDrawErrorLines(true);
-    if (pfuncErrorStyle->getErrorStyle()==JKQTPErrorPolygons) pfunc->setDrawErrorPolygons(true);
+    if (pfuncErrorStyle->getErrorLineStyle()==JKQTPErrorLines) pfunc->setDrawErrorLines(true);
+    if (pfuncErrorStyle->getErrorLineStyle()==JKQTPErrorPolygons) pfunc->setDrawErrorPolygons(true);
     pfunc->setDrawLine(chkPFuncDrawLine->isChecked());
     pfunc->setDisplaySamplePoints(chkPFuncDrawSamples->isChecked());
     plotFuncPlt->redrawPlot();

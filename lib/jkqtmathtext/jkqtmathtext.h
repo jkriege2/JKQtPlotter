@@ -330,12 +330,23 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         {
             return this->fontSize; 
         }
+        /** \brief add a font pair to the table with font replacements
+         *
+         * e.g. if it is known that a certain font is not good for rendering, you can add an alternative with this function.
+         * These are automatically applied, when setting a new font name!
+         *
+         * \param nonUseFont the font not to use
+         * \param useFont replacement font for nonUseFont
+         */
+        void addReplacementFont(const QString& nonUseFont, const QString& useFont);
+
+
         /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to the specified \a __value.
             \details Description of the parameter fontRoman is: <BLOCKQUOTE>\copydoc fontRoman </BLOCKQUOTE>
             \see fontRoman for more information */
         inline void setFontRoman(const QString & __value)
         {
-            this->fontRoman = __value;
+            this->fontRoman = fontReplacements.value(__value, __value);
         }
         /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to \a __value, or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
 
@@ -349,7 +360,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /*! \copydoc fontSans \see fontSans */ 
         inline void setFontSans(const QString & __value)
         {
-            this->fontSans = __value;
+            this->fontSans = fontReplacements.value(__value, __value);
         } 
         /*! \copydoc fontSans \see fontSans */ 
         inline QString getFontSans() const
@@ -1200,7 +1211,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
 
     protected:
-
+        /** \brief table with font replacements to use (e.g. if it is known that a certain font is not good for rendering, you can add
+         *         an alternative using addReplacementFont(). These are automatically applied, when setting a new font name! */
+        QMap<QString, QString> fontReplacements;
 
         /** \brief font color */
         QColor fontColor;

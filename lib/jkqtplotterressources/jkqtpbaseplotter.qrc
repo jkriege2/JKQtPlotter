@@ -73,5 +73,12 @@
         <file alias="jkqtp_plot_mimage.png">images/plot_mimage.png</file>
         <file alias="jkqtp_plot_image.png">images/plot_image.png</file>
         <file alias="jkqtp_plot_rgbimage.png">images/plot_rgbimage.png</file>
+        
+        
+        <file alias="jkqtp_mouseact_ruler.png">images/jkqtp_mouseact_ruler.png</file>
+        <file alias="jkqtp_mouseact_tooltip.png">images/jkqtp_mouseact_tooltip.png</file>
+        <file alias="jkqtp_mouseact_default.png">images/jkqtp_mouseact_default.png</file>
+        <file alias="jkqtp_mouseact_drag.png">images/jkqtp_mouseact_drag.png</file>
+        <file alias="jkqtp_mouseact_zoomrect.png">images/jkqtp_mouseact_zoomrect.png</file>
     </qresource>
 </RCC>

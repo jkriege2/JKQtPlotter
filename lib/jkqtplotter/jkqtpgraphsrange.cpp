@@ -204,7 +204,7 @@ QColor JKQTPHorizontalRange::getCenterColor() const
     return this->centerColor;
 }
 
-void JKQTPHorizontalRange::setCenterStyle(const Qt::PenStyle &__value)
+void JKQTPHorizontalRange::setCenterStyle(Qt::PenStyle __value)
 {
     this->centerStyle = __value;
 }

@@ -263,11 +263,10 @@ void JKQTPImpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 JKQTPImpulsesHorizontalErrorGraph::JKQTPImpulsesHorizontalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPImpulsesHorizontalGraph(parent), JKQTPXGraphErrors(getLineColor(), parent)
+    JKQTPImpulsesHorizontalGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
-
+    initErrorStyle(parent, parentPlotStyle);
 }
 
 JKQTPImpulsesHorizontalErrorGraph::JKQTPImpulsesHorizontalErrorGraph(JKQTPlotter *parent):
@@ -288,10 +287,10 @@ void JKQTPImpulsesHorizontalErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &pa
 }
 
 JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTBasePlotter *parent):
-    JKQTPImpulsesVerticalGraph(parent), JKQTPYGraphErrors(getLineColor(), parent)
+    JKQTPImpulsesVerticalGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+    initErrorStyle(parent, parentPlotStyle);
 }
 
 JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTPlotter *parent):

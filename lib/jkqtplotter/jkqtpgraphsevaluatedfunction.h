@@ -272,13 +272,13 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
 
         /*! \copydoc errorColor
             \see see errorColor for details */ 
-        inline virtual void setErrorColor(const QColor & __value)  
+        inline virtual void setErrorLineColor(const QColor & __value)  
         {
             this->errorColor = __value;
         } 
         /*! \copydoc errorColor
             \see see errorColor for details */ 
-        inline virtual QColor getErrorColor() const  
+        inline virtual QColor getErrorLineColor() const  
         {
             return this->errorColor; 
         }
@@ -296,7 +296,7 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
         }
         /*! \copydoc errorFillStyle
             \see see errorFillStyle for details */ 
-        inline virtual void setErrorFillStyle(const Qt::BrushStyle & __value)  
+        inline virtual void setErrorFillStyle(Qt::BrushStyle  __value)  
         {
             this->errorFillStyle = __value;
         } 
@@ -308,13 +308,13 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
         }
         /*! \copydoc errorStyle
             \see see errorStyle for details */ 
-        inline virtual void setErrorStyle(const Qt::PenStyle & __value)  
+        inline virtual void setErrorLineStyle(Qt::PenStyle  __value)  
         {
             this->errorStyle = __value;
         } 
         /*! \copydoc errorStyle
             \see see errorStyle for details */ 
-        inline virtual Qt::PenStyle getErrorStyle() const  
+        inline virtual Qt::PenStyle getErrorLineStyle() const  
         {
             return this->errorStyle; 
         }

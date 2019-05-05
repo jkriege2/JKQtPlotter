@@ -64,12 +64,38 @@ public:
 
 
 
+    /** \brief maximum distance at which a tooltip for a point is still displayed, when the user action jkqtpmdaToolTipForClosestDataPoint is executed */
+    int maxTooltipDistance;
+    /** \brief sensitivity (i.e. max. distance to see as one point) for user actions */
+    int userActionCatchSensitivity;
+
     /** \brief width/height of the icons in the plotter toolbar in pixel */
     int toolbarIconSize;
-    /** \brief fill color of the zoom rectangle  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
-    QColor userActionColor;
-    /** \brief the QPainter::CompositionMode used to draw the zoom rectangle etc. \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
-    QPainter::CompositionMode userActionCompositionMode;
+    /** \brief pen for user actions that overlay the plot (typically semi-transparent, like e.g. zoom-rectangles)  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    QPen userActionOverlayPen;
+    /** \brief brush for user actions (typically semi-transparent, like e.g. zoom-rectangles)  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    QBrush userActionOverlayBrush;
+
+    /** \brief pen for user actions that cover parts of the plot (typically opaque, like e.g. tooltips)  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    QPen userActionOpaquePen;
+    /** \brief brush for user actions that cover parts of the plot (typically opaque, like e.g. tooltips)  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    QBrush userActionOpaqueBrush;
+
+    /** \brief pen for location markers of user actions on the plot  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    QPen userActionMarkerPen;
+    /** \brief brush for location markers of user actions on the plot  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    QBrush userActionMarkerBrush;
+    /** \brief type of the location markers of user actions on the plot  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    JKQTPUserActionMarkerType userActionMarkerType;
+
+    /** \brief font name to use for text of user actions  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    QString userActionFontName;
+    /** \brief font size [pt] to use for text of user actions  \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+    double userActionFontSize;
+
+    /** \brief size (diameter) of markers drawn by user actions */
+    int userActionMarkerDiameter;
+
     /** \brief this string is used to generate the position output above the graph (\c %1 is replaced by the x-position, \c %2 by the y-position)
      *
      * By default simply <code>"(%1, %2)</code> is used to format this display (e.g. <code>(1.35, -4.56)</code>).
@@ -123,6 +149,7 @@ public:
 
     /** \brief action to perform on a double-click of the mouse buttons (depending on the button and the modifiers) */
     JKQTPMouseDoubleClickActionsHashMap registeredMouseDoubleClickActions;
+
 
 };
 

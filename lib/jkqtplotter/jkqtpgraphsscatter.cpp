@@ -108,21 +108,13 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol) {
                     //JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle, parent->pt2px(painter, symbolSize*1.5), parent->pt2px(painter, symbolWidth*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
                 }
-                plotStyledSymbol(parent, painter, x, y);
-                /*if (drawLine && first) {
-                    double xl1=xold;
-                    double yl1=yold;
-                    double xl2=x;
-                    double yl2=y;
-                    lines.append(QLineF(xl1, yl1, xl2, yl2));
-                }*/
+                if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
+                    plotStyledSymbol(parent, painter, x, y);
+                }
                 if (drawLine) {
                     linesP<<QPointF(x,y);
 
                 }
-    //            xold=x;
-    //            yold=y;
-    //            first=true;
             }
         }
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<4<<" lines="<<lines.size();
@@ -191,10 +183,10 @@ void JKQTPXYLineGraph::setColor(QColor c)
 
 
 JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTBasePlotter *parent):
-    JKQTPXYLineGraph(parent), JKQTPXYGraphErrors(getSymbolColor(), parent)
+    JKQTPXYLineGraph(parent)
 {
     setErrorColorFromGraphColor(getSymbolColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+    initErrorStyle(parent, parentPlotStyle);
 }
 
 JKQTPXYLineErrorGraph::JKQTPXYLineErrorGraph(JKQTPlotter *parent):
@@ -436,10 +428,12 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
                     linewidths<<lineW;
                 }
 
-                if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol && symbolColumn<0) {
-                    JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle,symbSize, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
-                } else {
-                    JKQTPPlotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), symbColor, symbFillColor);
+                if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
+                    if (isHighlighted() && getSymbolType()!=JKQTPNoSymbol && symbolColumn<0) {
+                        JKQTPPlotSymbol(painter, x, y, JKQTPFilledCircle,symbSize, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), penSelection.color(), penSelection.color());
+                    } else {
+                        JKQTPPlotSymbol(painter, x, y, getLocalSymbolType(i), symbSize, parent->pt2px(painter, getSymbolLineWidth()*parent->getLineWidthMultiplier()), symbColor, symbFillColor);
+                    }
                 }
 
 
@@ -886,10 +880,10 @@ JKQTPGraphSymbols JKQTPXYParametrizedScatterGraph::getLocalSymbolType(int i)
 
 
 JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTBasePlotter *parent):
-    JKQTPXYParametrizedScatterGraph(parent), JKQTPXYGraphErrors(getSymbolColor(), parent)
+    JKQTPXYParametrizedScatterGraph(parent)
 {
     setErrorColorFromGraphColor(getSymbolColor());
-    if (parentPlotStyle>=0) setErrorStyleFromPen(parent->getPlotStyle(parentPlotStyle));
+    initErrorStyle(parent, parentPlotStyle);
 }
 
 JKQTPXYParametrizedErrorScatterGraph::JKQTPXYParametrizedErrorScatterGraph(JKQTPlotter *parent):
@@ -997,10 +991,10 @@ void JKQTPXYParametrizedErrorScatterGraph::drawErrorsBefore(JKQTPEnhancedPainter
     else plotErrorIndicators(painter, parent, this, xColumn, yColumn, 0, 0, &sortedIndices);
 }
 
-bool JKQTPXYParametrizedErrorScatterGraph::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQTBasePlotter * /*parent*/, JKQTPGraph* /*parentGraph*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPErrorPlotstyle /*xErrorStyle*/, JKQTPErrorPlotstyle /*yErrorStyle*/, int index, QColor &/*errorColor*/, QColor &/*errorFillColor*/)
+bool JKQTPXYParametrizedErrorScatterGraph::intPlotXYErrorIndicatorsGetColor(JKQTPEnhancedPainter &/*painter*/, JKQTBasePlotter * /*parent*/, JKQTPGraph* /*parentGraph*/, int /*xColumn*/, int /*yColumn*/, int /*xErrorColumn*/, int /*yErrorColumn*/, JKQTPErrorPlotstyle /*xErrorStyle*/, JKQTPErrorPlotstyle /*yErrorStyle*/, int index, QColor &errorLineColor, QColor &errorFillColor)
 {
     QColor c=getLocalColor(index);
-    errorColor=c.darker();
+    errorLineColor=c.darker();
     errorFillColor=c.lighter();
     //qDebug()<<"intPlotXYErrorIndicatorsGetColor("<<index<<"): "<<errorColor;
     return true;

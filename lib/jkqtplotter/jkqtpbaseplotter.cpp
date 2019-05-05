@@ -200,6 +200,14 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
       datastoreInternal=false;
     }
 
+    // some fonts that are know to deliver bad rendering quality
+    mathText.addReplacementFont("MS Shell Dlg 2", "Arial");
+    mathText.addReplacementFont("MS Shell Dlg", "Arial");
+    mathText.addReplacementFont("MS Sans Serif", "Arial");
+    mathText.addReplacementFont("MS Serif", "Times New Roman");
+    mathText.addReplacementFont("MS Sans Serif Standard", "Arial");
+    mathText.addReplacementFont("MS Serif Standard", "Times New Roman");
+
     xAxis=new JKQTPHorizontalAxis(this);
     yAxis=new JKQTPVerticalAxis(this);
     m_plotsModel=new JKQTPGraphsModel(this);
@@ -216,49 +224,49 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
 
     emitSignals=true;
 
-    actSavePlot=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveplot.png"), "Save Plot", this);
-    actSavePlot->setToolTip("Save plot as image file (PDF, PS; PNG, ...).");
-    actSaveData=new QAction(QIcon(":/JKQTPlotter/jkqtp_savedata.png"), "Save Data", this);
-    actSaveData->setToolTip("Save Data of the plot as file (CSV, ...).");
-    actCopyData=new QAction(QIcon(":/JKQTPlotter/jkqtp_copydata.png"), "Copy Data", this);
-    actCopyData->setToolTip("Copy Data of the plot to the clipboard to be pasted into Excel etc.");
-    actCopyMatlab=new QAction(QIcon(":/JKQTPlotter/jkqtp_copymatlab.png"), "Copy Data to Matlab", this);
-    actCopyMatlab->setToolTip("Copy Data of the plot to the clipboard in Matlab script format.");
-    actCopyPixelImage=new QAction(QIcon(":/JKQTPlotter/jkqtp_copyimg.png"), "Copy Image", this);
-    actCopyPixelImage->setToolTip("Copy the plot as a pixel image to the clipboard");
+    actSavePlot=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveplot.png"), tr("Save Plot"), this);
+    actSavePlot->setToolTip(tr("Save plot as image file (PDF, PS; PNG, ...)."));
+    actSaveData=new QAction(QIcon(":/JKQTPlotter/jkqtp_savedata.png"), tr("Save Data"), this);
+    actSaveData->setToolTip(tr("Save Data of the plot as file (CSV, ...)."));
+    actCopyData=new QAction(QIcon(":/JKQTPlotter/jkqtp_copydata.png"), tr("Copy Data"), this);
+    actCopyData->setToolTip(tr("Copy Data of the plot to the clipboard to be pasted into Excel etc."));
+    actCopyMatlab=new QAction(QIcon(":/JKQTPlotter/jkqtp_copymatlab.png"), tr("Copy Data to Matlab"), this);
+    actCopyMatlab->setToolTip(tr("Copy Data of the plot to the clipboard in Matlab script format."));
+    actCopyPixelImage=new QAction(QIcon(":/JKQTPlotter/jkqtp_copyimg.png"), tr("Copy Image"), this);
+    actCopyPixelImage->setToolTip(tr("Copy the plot as a pixel image to the clipboard"));
 
 
-    actSavePDF=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepdf.png"), "Save P&DF", this);
-    actSavePDF->setToolTip("Save as PDF");
+    actSavePDF=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepdf.png"), tr("Save P&DF"), this);
+    actSavePDF->setToolTip(tr("Save as PDF"));
     //toolbar->addAction(actSavePDF);
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     actSavePS=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveps.png"), "Save P&S", this);
     actSavePS->setToolTip("Save as PostScript");
     //toolbar->addAction(actSavePS);
 #endif
-    actSaveSVG=new QAction(QIcon(":/JKQTPlotter/jkqtp_savesvg.png"), "Save S&VG", this);
-    actSaveSVG->setToolTip("Save as Scalable Vector Graphics (SVG)");
+    actSaveSVG=new QAction(QIcon(":/JKQTPlotter/jkqtp_savesvg.png"), tr("Save S&VG"), this);
+    actSaveSVG->setToolTip(tr("Save as Scalable Vector Graphics (SVG)"));
     //toolbar->addAction(actSaveSVG);
-    actSavePix=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepix.png"), "Save &Image", this);
-    actSavePix->setToolTip("Save as Pixel Image (PNG, JPEG, TIFF ...)");
+    actSavePix=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepix.png"), tr("Save &Image"), this);
+    actSavePix->setToolTip(tr("Save as Pixel Image (PNG, JPEG, TIFF ...)"));
     //toolbar->addAction(actSavePix);
 
-    actPrint=new QAction(QIcon(":/JKQTPlotter/jkqtp_print.png"), "&Print", this);
+    actPrint=new QAction(QIcon(":/JKQTPlotter/jkqtp_print.png"), tr("&Print"), this);
     actPrint->setToolTip("Print");
     //toolbar->addSeparator();
-    actSaveCSV=new QAction(QIcon(":/JKQTPlotter/jkqtp_savecsv.png"), "Save &CSV", this);
-    actSaveCSV->setToolTip("Save the data which is used for the plot as Comma Separated Values (CSV)");
+    actSaveCSV=new QAction(QIcon(":/JKQTPlotter/jkqtp_savecsv.png"), tr("Save &CSV"), this);
+    actSaveCSV->setToolTip(tr("Save the data which is used for the plot as Comma Separated Values (CSV)"));
     //toolbar->addAction(actSaveCSV);
     //toolbar->addSeparator();
-    actZoomAll=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomall.png"), "Zoom &All", this);
-    actZoomAll->setToolTip("Zoom to view all data");
-    actZoomIn=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomin.png"), "Zoom &In", this);
-    actZoomIn->setToolTip("Zoom in around the center of the plot");
-    actZoomOut=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomout.png"), "Zoom &Out", this);
-    actZoomOut->setToolTip("Zoom out");
+    actZoomAll=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomall.png"), tr("Zoom &All"), this);
+    actZoomAll->setToolTip(tr("Zoom to view all data"));
+    actZoomIn=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomin.png"), tr("Zoom &In"), this);
+    actZoomIn->setToolTip(tr("Zoom in around the center of the plot"));
+    actZoomOut=new QAction(QIcon(":/JKQTPlotter/jkqtp_zoomout.png"), tr("Zoom &Out"), this);
+    actZoomOut->setToolTip(tr("Zoom out"));
 
-    actShowPlotData=new QAction(QIcon(":/JKQTPlotter/jkqtp_showplotdata.png"), "&Show Plot Data", this);
-    actShowPlotData->setToolTip("opens a dialog that contains all data used for the plot in a table.");
+    actShowPlotData=new QAction(QIcon(":/JKQTPlotter/jkqtp_showplotdata.png"), tr("&Show Plot Data"), this);
+    actShowPlotData->setToolTip(tr("Opens a dialog that contains all data used for the plot in a table."));
 
 
 
@@ -947,10 +955,10 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i) const{
     //std::cout<<"style "<<styleI<<std::endl;
     p.setColor(plotterStyle.defaultGraphColors[colorI]);
     p.setFillColor(JKQTPGetDerivedColor(plotterStyle.graphFillColorDerivationMode, p.color()));
-    p.setErrorColor(JKQTPGetDerivedColor(plotterStyle.graphErrorColorDerivationMode, p.color()));
+    p.setErrorLineColor(JKQTPGetDerivedColor(plotterStyle.graphErrorColorDerivationMode, p.color()));
     p.setErrorFillColor(JKQTPGetDerivedColor(plotterStyle.graphErrorFillColorDerivationMode, p.errorColor()));
     p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
-    p.setErrorWidth(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
+    p.setErrorLineWidth(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
     p.setSymbolSize(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolSize));
     p.setSymbolFillColor(JKQTPGetDerivedColor(plotterStyle.graphFillColorDerivationMode, p.color()));
     p.setSymbolLineWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolLineWidth));
@@ -4280,7 +4288,7 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setXErrorStyle(errorStyle);
         gr->setXErrorColumn(xErrorColumn);
-        gr->setErrorColor(gr->getLineColor().darker());
+        gr->setErrorLineColor(gr->getLineColor().darker());
         QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
@@ -4292,7 +4300,7 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setXErrorStyle(errorStyle);
         gr->setXErrorColumn(xErrorColumn);
-        gr->setErrorColor(gr->getLineColor());
+        gr->setErrorLineColor(gr->getLineColor());
         QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
@@ -4305,7 +4313,7 @@ size_t JKQTBasePlotter::addGraphWithXError(size_t xColumn, size_t yColumn, size_
         gr->setYErrorColumn(xErrorColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setXErrorStyle(JKQTPNoError);
-        gr->setErrorColor(gr->getSymbolColor());
+        gr->setErrorLineColor(gr->getSymbolColor());
         QColor fc=gr->getSymbolColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
@@ -4324,8 +4332,8 @@ size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setYErrorColumn(yErrorColumn);
-        gr->setErrorColor(gr->getLineColor().darker());
-        gr->setErrorWidth(gr->getLineWidth()/3.0);
+        gr->setErrorLineColor(gr->getLineColor().darker());
+        gr->setErrorLineWidth(gr->getLineWidth()/3.0);
         QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
@@ -4337,7 +4345,7 @@ size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_
         gr->setYColumn(yColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setYErrorColumn(yErrorColumn);
-        gr->setErrorColor(gr->getLineColor());
+        gr->setErrorLineColor(gr->getLineColor());
         QColor fc=gr->getLineColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
@@ -4350,7 +4358,7 @@ size_t JKQTBasePlotter::addGraphWithYError(size_t xColumn, size_t yColumn, size_
         gr->setYErrorColumn(yErrorColumn);
         gr->setYErrorStyle(errorStyle);
         gr->setXErrorStyle(JKQTPNoError);
-        gr->setErrorColor(gr->getSymbolColor());
+        gr->setErrorLineColor(gr->getSymbolColor());
         QColor fc=gr->getSymbolColor();
         fc.setAlphaF(0.5);
         gr->setErrorFillColor(fc);
@@ -4369,7 +4377,7 @@ size_t JKQTBasePlotter::addGraphWithXYError(size_t xColumn, size_t yColumn, size
     gr->setYErrorStyle(JKQTPErrorBars);
     gr->setXErrorColumn(xErrorColumn);
     gr->setXErrorStyle(JKQTPErrorBars);
-    gr->setErrorColor(gr->getSymbolColor());
+    gr->setErrorLineColor(gr->getSymbolColor());
     QColor fc=gr->getSymbolColor();
     fc.setAlphaF(0.5);
     gr->setErrorFillColor(fc);
@@ -5469,7 +5477,7 @@ void JKQTBasePlotter::JKQTPPen::setWidth(double w) {
     m_width=w;
 }
 
-void JKQTBasePlotter::JKQTPPen::setErrorWidth(double w)
+void JKQTBasePlotter::JKQTPPen::setErrorLineWidth(double w)
 {
     m_errorWidth=w;
 }
@@ -5541,7 +5549,7 @@ void JKQTBasePlotter::JKQTPPen::setErrorFillColor(const QColor &col)
     m_errorFillColor=col;
 }
 
-void JKQTBasePlotter::JKQTPPen::setErrorColor(const QColor &col)
+void JKQTBasePlotter::JKQTPPen::setErrorLineColor(const QColor &col)
 {
     m_errorColor=col;
 }

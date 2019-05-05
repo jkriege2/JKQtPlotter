@@ -319,8 +319,14 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  *
  * If e.g. the mode JKQTPlotter::MouseActionMode::jkqtpmdaZoomByRectangle is selected, while you drag the mouse, the
  * zoom rectangle is drawn over the plot. You can modify the style of drawing using these functions:
- *   - setUserActionColor() sets the color of the drawn shape
- *   - setUserActionCompositionMode() specifies how to combine the shape with the existing plot
+ *   - setUserActionOverlayPen() sets the pen for (semi-transparent) overlay shapes, e.g. zoom rectangles
+ *   - setUserActionOverlayBrush() sets the brush for (semi-transparent) overlay shapes, e.g. zoom rectangles
+ *   - setUserActionOpaquePen() sets the pen for opaque overlay shapes, e.g. tool-tips
+ *   - setUserActionOpaqueBrush() sets the brush for opaque overlay shapes, e.g. tool-tips
+ *   - setUserActionMarkerPen() sets the pen for marker overlay shapes, e.g. with tool-tips
+ *   - setUserActionMarkerBrush() sets the brush for marker overlay shapes, e.g. with tool-tips
+ *   - setUserActionMarkerDiameter() sets the size of user-action markers
+ *   - setUserActionMarkerType() sets the type of user-action markers
  * .
  *
  * \image html zoomin_mouse_contextmenu.gif "Zooming with the mouse"
@@ -328,6 +334,10 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  * \image html draw_rectangle.gif "Draw Rectangle User-Action"
  *
  * \image html drag_viewport.gif "Drag the Plot Viewport"
+ *
+ * \image html rulertool.gif "Measurement Ruler Tool"
+ *
+ * \image html tooltiptool.gif "Data Point Tooltip Tool"
  *
  *
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSECLICK Actions After (Double-)Clicks on the Mouse Buttons
@@ -475,11 +485,48 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
           *
           *  \see setMousePositionShown(), JKQTPlotterStyle::displayMousePosition, \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE */
         bool isMousePositionShown() const;
-        /** \brief returns the fill color of the zoom rectangle \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
-        QColor getUserActionColor() const;
 
-        /** \brief returns the QPainter::CompositionMode used to draw the zoom rectangle etc. \see \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
-        QPainter::CompositionMode getUserActionCompositionMode() const;
+        /** \copydoc JKQTPlotterStyle::userActionOverlayPen
+         *
+         * \see setUserActionOverlayPen(), getUserActionOverlayPen(), JKQTPlotterStyle::userActionOverlayPen \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        QPen getUserActionOverlayPen() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionOverlayBrush
+         *
+         * \see setUserActionOverlayBrush(), getUserActionOverlayBrush(), JKQTPlotterStyle::userActionOverlayBrush \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        QBrush getUserActionOverlayBrush() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionOpaquePen
+         *
+         * \see setUserActionOpaquePen(), getUserActionOpaquePen(), JKQTPlotterStyle::userActionOpaquePen \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        QPen getUserActionOpaquePen() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionOpaqueBrush
+         *
+         * \see setUserActionOpaqueBrush(), getUserActionOpaqueBrush(), JKQTPlotterStyle::userActionOpaqueBrush \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        QBrush getUserActionOpaqueBrush() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionMarkerPen
+         *
+         * \see setUserActionMarkerPen(), getUserActionMarkerPen(), JKQTPlotterStyle::userActionMarkerPen \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        QPen getUserActionMarkerPen() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionMarkerBrush
+         *
+         * \see setUserActionMarkerBrush(), getUserActionMarkerBrush(), JKQTPlotterStyle::userActionMarkerBrush \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        QBrush getUserActionMarkerBrush() const;
+
+        /** \copydoc JKQTPlotterStyle::maxTooltipDistance  */
+        int getMaxTooltipDistance() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionCatchSensitivity  */
+        int getUserActionCatchSensitivity() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionMarkerDiameter  */
+        int getUserActionMarkerDiameter() const;
+
+        /** \copydoc JKQTPlotterStyle::userActionMarkerType  */
+        JKQTPUserActionMarkerType getUserActionMarkerType() const;
 
 
         /** \brief loads the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object */
@@ -850,6 +897,18 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void saveCurrentPlotterStyle(QSettings& settings, const QString& group="plot/", bool alsoSaveBaseStyle=true) const;
 
+        /** \brief \copydoc actMouseLeftAsToolTip */
+        QAction *getActMouseLeftAsToolTip() const;
+        /** \brief \copydoc actMouseLeftAsRuler */
+        QAction *getActMouseLeftAsRuler() const;
+        /** \brief \copydoc actMouseLeftAsDefault */
+        QAction *getActMouseLeftAsDefault() const;
+        /** \brief \copydoc actMouseLeftAsZoomRect */
+        QAction *getActMouseLeftAsZoomRect() const;
+        /** \brief \copydoc actMouseLeftAsPanView */
+        QAction *getActMouseLeftAsPanView() const;
+
+
     public slots:
         /** \brief set the current plot magnification */
         void setMagnification(double m);
@@ -931,6 +990,12 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void redrawOverlays();
 
+        /** \brief allows to activate/deactivate toolbar buttons that can activate certain mouse drag actions
+         *
+         *  \see getActMouseLeftAsDefault(), getActMouseLeftAsRuler(), getActMouseLeftAsToolTip()
+         */
+        void setMouseActionToolbarActionsActive(bool __value);
+
         /** \brief returns whether the toolbar is enabled
          *
          *  \copydetails JKQTPlotterStyle::toolbarEnabled
@@ -952,14 +1017,42 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
           *
           *  \see isMousePositionShown(), JKQTPlotterStyle::displayMousePosition, \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE */
         void setMousePositionShown(bool __value);
-        /** \brief set the fill color of the zoom rectangle
+        /** \copydoc JKQTPlotterStyle::userActionOverlayPen
          *
-         * \see getUserActionColor(), JKQTPlotterStyle::userActionColor \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
-        void setUserActionColor(const QColor & __value);
-        /** \brief set the QPainter::CompositionMode used to draw the zoom rectangle etc.
+         * \see setUserActionOverlayPen(), getUserActionOverlayPen(), JKQTPlotterStyle::userActionOverlayPen \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        void setUserActionOverlayPen(const QPen & __value);
+        /** \copydoc JKQTPlotterStyle::userActionOverlayPen
          *
-         * \see getUserActionCompositionMode(), JKQTPlotterStyle::userActionColor \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG  */
-        void setUserActionCompositionMode(const QPainter::CompositionMode & __value);
+         * \see setUserActionOverlayBrush(), getUserActionOverlayBrush(), JKQTPlotterStyle::userActionOverlayBrush \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        void setUserActionOverlayBrush(const QBrush & __value);
+        /** \copydoc JKQTPlotterStyle::userActionOpaquePen
+         *
+         * \see setUserActionOpaquePen(), getUserActionOpaquePen(), JKQTPlotterStyle::userActionOpaquePen \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        void setUserActionOpaquePen(const QPen & __value);
+        /** \copydoc JKQTPlotterStyle::userActionOpaquePen
+         *
+         * \see setUserActionOpaqueBrush(), getUserActionOpaqueBrush(), JKQTPlotterStyle::userActionOpaqueBrush \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        void setUserActionOpaqueBrush(const QBrush & __value);
+        /** \copydoc JKQTPlotterStyle::userActionMarkerPen
+         *
+         * \see setUserActionMarkerPen(), getUserActionMarkerPen(), JKQTPlotterStyle::userActionMarkerPen \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        void setUserActionMarkerPen(const QPen & __value);
+        /** \copydoc JKQTPlotterStyle::userActionMarkerPen
+         *
+         * \see setUserActionMarkerBrush(), getUserActionMarkerBrush(), JKQTPlotterStyle::userActionMarkerBrush \ref JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEDRAG */
+        void setUserActionMarkerBrush(const QBrush & __value);
+
+        /** \copydoc JKQTPlotterStyle::maxTooltipDistance  */
+        void setMaxTooltipDistance(int v);
+
+        /** \copydoc JKQTPlotterStyle::userActionCatchSensitivity  */
+        void setUserActionCatchSensitivity(int v);
+
+        /** \copydoc JKQTPlotterStyle::userActionMarkerDiameter  */
+        void setUserActionMarkerDiameter(int v);
+
+        /** \copydoc JKQTPlotterStyle::userActionMarkerType  */
+        void setUserActionMarkerType(JKQTPUserActionMarkerType v);
 
         /** \brief sets the mode if the standard context menu \see JKQTPContextMenuModes, \ref JKQTPLOTTER_CONTEXTMENU , \ref JKQTPLOTTER_SPECIALCONTEXTMENU , \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void setContextMenuMode(JKQTPContextMenuModes mode);
@@ -1224,6 +1317,23 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          * \param modifiers key-modifiers when the rectangle was finished
          */
         void userEllipseFinished(double x, double y, double radiusX, double radiusY, Qt::KeyboardModifiers modifiers);
+        /** \brief emitted when a tooltip for a datapoint is displayed
+         *
+         * \param x x-coordinate of the center of the marked datapoint (in plot coordinates)
+         * \param y y-coordinate of the center of the marked datapoint (in plot coordinates)
+         * \param entries contents of the tooltip
+         * \param graphs graph objects that created the entries
+         */
+        void tooltipDisplayed(double x, double y, const QStringList& entries, const QList<JKQTPPlotElement*>& graphs);
+        /** \brief emitted when a new ruler between two points is displayed
+         *
+         * \param x1 x-coordinate of the start of the line (in plot coordinates)
+         * \param y1 y-coordinate of the start of the line (in plot coordinates)
+         * \param x2 x-coordinate of the end of the line (in plot coordinates)
+         * \param y2 y-coordinate of the end of the line (in plot coordinates)
+         * \param modifiers key-modifiers when the rectangle was finished
+         */
+        void rulerDisplayed(double x1, double y1, double x2, double y2, Qt::KeyboardModifiers modifiers);
 
 
     protected:
@@ -1248,8 +1358,8 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief the currently executed MouseDragAction */
         MouseDragAction currentMouseDragAction;
 
-        /** \brief searches JKQTPlotterStyle::registeredMouseActionModes for a matching action */
-        JKQTPMouseDragActionsHashMapIterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
+        /** \brief searches JKQTPlotterStyle::registeredMouseActionModes for a matching action, returns in \a found whether an action was found */
+        JKQTPMouseDragActionsHashMapIterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
 
         /** \brief searches JKQTPlotterStyle::registeredMouseWheelActions for a matching action */
         JKQTPMouseWheelActionsHashMapIterator findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers) const;
@@ -1310,6 +1420,28 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          *         pointing to
          */
         double mouseDragRectYEnd;
+
+        /** \brief describes a marker to be drawn by paintUserAction() */
+        struct MouseDragMarker{
+            inline MouseDragMarker(const QPoint& pos_, const QString& label_, const QString& title_, const QColor& color_, const QImage& keymarker_=QImage(), JKQTPPlotElement* _graph=nullptr):
+                pos(pos_), label(label_), title(title_), color(color_), keyMarker(keymarker_), graph(_graph)
+            {}
+            /** \brief position of the marker in screen pixels */
+            QPoint pos;
+            /** \brief marker label */
+            QString label;
+            /** \brief graph label */
+            QString title;
+            /** \brief color for the marker */
+            QColor color;
+            /** \brief key marker image */
+            QImage keyMarker;
+            /** \brief graph that created that marker */
+            JKQTPPlotElement* graph;
+        };
+        /** \brief internal list of markers to be drawn by paintUserAction() */
+        QList<MouseDragMarker> mouseDragMarkers;
+
 
         /** \brief this stores the currently displayed plot */
         QImage image;
@@ -1435,6 +1567,9 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         int mouseLastClickX;
         /** \brief y-position of the last mouse-click (in screen pixels) */
         int mouseLastClickY;
+        /** \brief internal storage for sub-menu entries of the internal contextMenu object, based on the actions returned by JKQTBasePlotter::getLstAdditionalPlotterActions()
+         *  \internal
+         */
         QList<QMenu*> contextSubMenus;
         /** \brief fills the member contextMenu with all default and additionally registered actions, also calls modifyContextMenu()
          *
@@ -1469,6 +1604,36 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          *  \see initContextMenu(), contextMenuMode
          */
         void resetContextMenu(bool createnew=true);
+
+        /** \brief fills the inertnal mouseDragMarkers structure with data to display tooltips close to (x0, y0)
+         *
+         * if \a emitEvent is \c true, the signal is emitted before the function returns
+         */
+        void fillInternalStructForToolTipOfClosestDataPoint(double x0, double y0, bool emitEvent=true);
+        /** \brief resets the currently activated mouse drag action, e.g. called by mouseReleaseEvent() */
+        void resetCurrentMouseDragAction();
+
+        /** \brief list of override mouse drag action modes, that override the settings ing plotterStyle.registeredMouseDragActionModes \see setOverrideMouseDragAction(), resetOverrideMouseDragAction(), JKQTPlotterStyle::registeredMouseDragActionModes */
+        JKQTPMouseDragActionsHashMap registeredOverrideMouseDragActionModes;
+
+        /** \brief sets an override mouse drag action for the given button/modifiers combination \see setOverrideMouseDragAction(), resetOverrideMouseDragAction(), registeredOverrideMouseDragActionModes */
+        void setOverrideMouseDragAction(Qt::MouseButton button,Qt::KeyboardModifiers modifiers, JKQTPMouseDragActions action);
+        /** \brief removes a previously set override mouse drag action for the given button/modifiers combination \see setOverrideMouseDragAction(), resetOverrideMouseDragAction(), registeredOverrideMouseDragActionModes */
+        void resetOverrideMouseDragAction(Qt::MouseButton button,Qt::KeyboardModifiers modifiers);
+
+        /** \brief action group, that groups the actMouseLeft... actions */
+        QActionGroup* actgrpMouseLeft;
+        /** \brief action that activates the default action, set in plotterStyle! */
+        QAction* actMouseLeftAsDefault;
+        /** \brief action that activates the ruler tool (override!) */
+        QAction* actMouseLeftAsRuler;
+        /** \brief action that activates the tooltip tool (override!)  */
+        QAction* actMouseLeftAsToolTip;
+        /** \brief action that activates the zoom rectangle tool (override!) */
+        QAction* actMouseLeftAsZoomRect;
+        /** \brief action that activates the pan view tool (override!)  */
+        QAction* actMouseLeftAsPanView;
+
     protected slots:
         /** \brief while the window is resized, the plot is only redrawn after a restartable delay, implemented by this function and resizeTimer
         * \internal
@@ -1488,6 +1653,17 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
         void intBeforePlotScalingRecalculate();
         /** \brief called from a menu entry that encodes the graph ID */
         void reactGraphVisible(bool visible);
+
+        /** \brief action that activates the pan viewport tool \see resetMouseLeftAction(), setMouseLeftActionAsToolTip() */
+        void setMouseLeftActionAsPanView();
+        /** \brief action that activates the zoom rectangle tool \see resetMouseLeftAction(), setMouseLeftActionAsToolTip() */
+        void setMouseLeftActionAsZoomRect();
+        /** \brief action that activates the ruler tool \see resetMouseLeftAction(), setMouseLeftActionAsToolTip() */
+        void setMouseLeftActionAsRuler();
+        /** \brief action that activates the tooltip tool \see setMouseLeftActionAsRuler(), resetMouseLeftAction() */
+        void setMouseLeftActionAsToolTip();
+        /** \brief resets any previously set override action for the left mouse-button, un-modified \see setMouseLeftActionAsRuler(), setMouseLeftActionAsToolTip() */
+        void resetMouseLeftAction();
 
 };
 

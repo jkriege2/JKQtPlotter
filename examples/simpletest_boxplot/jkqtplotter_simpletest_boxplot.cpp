@@ -3,7 +3,7 @@
  *
  * \ref JKQTPlotterBoxplotsGraphs
  */
- 
+
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsscatter.h"

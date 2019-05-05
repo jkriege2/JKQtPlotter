@@ -114,6 +114,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
                 const double xv=datastore->get(dataColumn,static_cast<size_t>(i));
                 if (JKQTPIsOKFloat(xv)) {
                     lines<<QLineF(transform(xv, baseline), transform(xv, baseline+peakHeight));
+                    addHitTestData(xv, (baseline+peakHeight)/2.0,iii, datastore);
                 }
             }
         } else {
@@ -126,6 +127,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
                 const double yv=datastore->get(dataColumn,static_cast<size_t>(i));
                 if (JKQTPIsOKFloat(yv)) {
                     lines<<QLineF(transform(baseline, yv), transform(baseline+peakHeight, yv));
+                    addHitTestData((baseline+peakHeight)/2.0, yv,iii, datastore);
                 }
             }
         }

@@ -518,13 +518,14 @@ bool JKQTMathText::MTinstruction1Node::setupMTenvironment(JKQTMathText::MTenviro
     else if (name=="em") ev.italic=!ev.italic;
     else if (name=="it" || name=="textit" || name=="mathit") ev.italic=true;
     else if (name=="textcolor" || name=="mathcolor" || name=="color") ev.color=QColor(parameters.value(0, ev.color.name()));
-    else if (name=="equation") { ev.italic=true; ev.insideMath=true; }
+    else if (name=="ensuremath" || name=="equation") { ev.italic=true; ev.insideMath=true; }
     else if (name=="sc" || name=="textsc" || name=="mathsc") ev.smallCaps=true;
     else if (name=="ul" || name=="underline" || name=="underlined") ev.underlined=true;
     else if (name=="ol" || name=="overline" || name=="overlined") ev.overline=true;
     else if (name=="strike") ev.strike=true;
     else if (name=="rm" || name=="textrm") { ev.font=JKQTMathText::MTEroman; }
-    else if (name=="mathrm" || name=="text" || name=="mbox" || name=="operatorname") { ev.font=JKQTMathText::MTEroman; ev.italic=false; }
+    else if (name=="mathrm" ||  name=="operatorname") { ev.font=JKQTMathText::MTEroman; ev.italic=false; }
+    else if (name=="text" || name=="mbox" || name=="ensuretext") { ev.insideMath=false; ev.font=JKQTMathText::MTEroman; ev.italic=false; }
     else if (name=="mat") { ev.font=JKQTMathText::MTEroman; ev.italic=false; ev.bold=true; }
     else if (name=="cal" || name=="textcal" || name=="mathcal") { ev.font=JKQTMathText::MTEcaligraphic; }
     else if (name=="bb" || name=="textbb" || name=="mathbb") { ev.font=JKQTMathText::MTEblackboard; }
@@ -1574,7 +1575,7 @@ JKQTMathText::MTlistNode::MTlistNode(JKQTMathText* parent):
     subsupOperations<<"sum"<<"prod"<<"coprod"
                <<"bigcap"<<"bigcup"<<"bigvee"<<"bighat"
                <<"int"<<"iint"<<"iiint"<<"oint"<<"oiint"<<"oiiint"
-               <<"max"<<"min"<<"argmax"<<"argmin"<<"sup"<<"inf"
+               <<"mod"<<"median"<<"max"<<"min"<<"argmax"<<"argmin"<<"sup"<<"inf"
                <<"liminf"<<"limsup"<<"lim"<<"max"<<"min";
 }
 
@@ -2027,7 +2028,11 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
       simpleTranslations.insert("argmin", "argmin");
       simpleTranslations.insert("argmax", "argmax");
       simpleTranslations.insert("max", "max");
+      simpleTranslations.insert("mod", "mod");
       simpleTranslations.insert("min", "min");
+      simpleTranslations.insert("median", "median");
+      simpleTranslations.insert("sign", "sign");
+      simpleTranslations.insert("sgn", "sgn");
       simpleTranslations.insert("sec", "sec");
       simpleTranslations.insert("gcd", "gcd");
       simpleTranslations.insert("hom", "hom");
@@ -2045,6 +2050,7 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
     static QHash<QString, QString> simpleTranslations_heightIsAscent;
     if (simpleTranslations_heightIsAscent.isEmpty()) {
       simpleTranslations_heightIsAscent.insert("erf", "erf");
+      simpleTranslations_heightIsAscent.insert("median", "median");
       simpleTranslations_heightIsAscent.insert("min", "min");
       simpleTranslations_heightIsAscent.insert("max", "max");
       simpleTranslations_heightIsAscent.insert("inf", "inf");
@@ -2751,7 +2757,7 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
 
     static QSet<QString> extraSymbolName = {
         "infty",
-        "|", " ", "quad", ";", ":", ",", "!",
+        "|", " ", "quad", "qquad", "space", ";", ":", ",", "!",
         "longleftarrow",  "longrightarrow",
         "Longleftarrow", "Longrightarrow",
         "longleftrightarrow", "Longleftrightarrow"
@@ -2804,8 +2810,8 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
         width=fm.width("a");
         if (symbolName=="|") width=fm.width("1")*0.8;
         else if (symbolName=="infty") width=fm.width("M");
-        else if (symbolName=="quad") width=parent->getTightBoundingRect(f, "M", painter.device()).width();
-        else if (symbolName==" ") width=parent->getTightBoundingRect(f, "x", painter.device()).width();
+        else if (symbolName=="quad" || symbolName=="qquad") width=parent->getTightBoundingRect(f, "M", painter.device()).width();
+        else if (symbolName==" " || symbolName=="space") width=parent->getTightBoundingRect(f, "x", painter.device()).width();
         else if (symbolName==";") width=parent->getTightBoundingRect(f, "x", painter.device()).width()*0.75;
         else if (symbolName==":") width=parent->getTightBoundingRect(f, "x", painter.device()).width()*0.5;
         else if (symbolName==",") width=parent->getTightBoundingRect(f, "x", painter.device()).width()*0.25;
@@ -2904,8 +2910,10 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
 
 
     // here are some spaces
-    } else if (symbolName==" ") { // full space
-    } else if (symbolName=="quad") { // 75% space
+    } else if (symbolName==" ") { // full space (width of x)
+    } else if (symbolName=="space") { // full space (width of x)
+    } else if (symbolName=="qquad") { // full space(width of M)
+    } else if (symbolName=="quad") { // full space(width of M)
     } else if (symbolName==";") { // 75% space
     } else if (symbolName==":") { // 50% space
     } else if (symbolName==",") { // 25% space
@@ -2982,6 +2990,8 @@ bool JKQTMathText::MTsymbolNode::toHtml(QString &html, JKQTMathText::MTenvironme
       entitylut.insert("ld", "ld");
       entitylut.insert("lb", "lb");
       entitylut.insert("erf", "erf");
+      entitylut.insert("mod", "mod");
+      entitylut.insert("median", "median");
       entitylut.insert("min", "min");
       entitylut.insert("max", "max");
       entitylut.insert("argmin", "argmin");
@@ -2991,8 +3001,6 @@ bool JKQTMathText::MTsymbolNode::toHtml(QString &html, JKQTMathText::MTenvironme
       entitylut.insert("liminf", "liminf");
       entitylut.insert("limsup", "limsup");
       entitylut.insert("lim", "lim");
-      entitylut.insert("max", "max");
-      entitylut.insert("min", "min");
       entitylut.insert("sec", "sec");
       entitylut.insert("gcd", "gcd");
       entitylut.insert("hom", "hom");
@@ -3002,6 +3010,8 @@ bool JKQTMathText::MTsymbolNode::toHtml(QString &html, JKQTMathText::MTenvironme
       entitylut.insert("arg", "arg");
       entitylut.insert("det", "det");
       entitylut.insert("deg", "deg");
+      entitylut.insert("sign", "sign");
+      entitylut.insert("sgn", "sgn");
       entitylut.insert("Pr", "Pr");
       entitylut.insert("coth", "coth");
       entitylut.insert("alpha",  "&alpha;");
@@ -3235,8 +3245,8 @@ JKQTMathText::JKQTMathText(QObject* parent):
 
 
     default_fontSize=fontSize=10;
-    default_fontRoman=fontRoman=serifFont;
-    default_fontSans=fontSans=sansFont;
+    default_fontRoman=fontRoman=fontReplacements.value(serifFont, serifFont);
+    default_fontSans=fontSans=fontReplacements.value(sansFont, sansFont);
     default_fontTypewriter=fontTypewriter=typewriterFont;
     default_fontScript=fontScript=scriptFont;
     default_fontGreek=fontGreek=symbolFont;
@@ -3290,13 +3300,13 @@ JKQTMathText::~JKQTMathText() {
 void JKQTMathText::loadSettings(const QSettings& settings, const QString& group){
     fontSize=settings.value(group+"font_size", fontSize).toDouble();
     fontColor=jkqtp_String2QColor(settings.value(group+"font_color", jkqtp_QColor2String(fontColor)).toString());
-    fontRoman=settings.value(group+"font_roman", fontRoman).toString();
-    fontSans=settings.value(group+"font_sans", fontSans).toString();
+    setFontRoman(settings.value(group+"font_roman", fontRoman).toString());
+    setFontSans(settings.value(group+"font_sans", fontSans).toString());
     fontTypewriter=settings.value(group+"font_typewriter", fontTypewriter).toString();
     fontScript=settings.value(group+"font_script", fontScript).toString();
     fontGreek=settings.value(group+"font_greek", fontGreek).toString();
     fontSymbol=settings.value(group+"font_symbol", fontSymbol).toString();
-    fontBraces=settings.value(group+"font_braces", fontRoman).toString();
+    fontBraces=settings.value(group+"font_braces", fontBraces).toString();
     fontIntegrals=settings.value(group+"font_integrals", fontSans).toString();
     fontBlackboard=settings.value(group+"font_blackboard", fontSans).toString();
     fontCaligraphic=settings.value(group+"font_caligraphics", fontSans).toString();
@@ -3525,6 +3535,10 @@ QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
     return s;
 }
 
+void JKQTMathText::addReplacementFont(const QString &nonUseFont, const QString &useFont) {
+    fontReplacements.insert(nonUseFont, useFont);
+}
+
 void JKQTMathText::setFontRomanOrSpecial(const QString &__value)
 {
     if (__value.toUpper()=="XITS") {
@@ -3551,8 +3565,8 @@ void JKQTMathText::setFontRomanOrSpecial(const QString &__value)
 
 
 void JKQTMathText::useAnyUnicode(QString timesFont, const QString& sansFont, bool fullMathUnicodeFont) {
-    if (!timesFont.isEmpty()) { fontRoman=timesFont; }
-    if (!sansFont.isEmpty()) { fontSans=sansFont; }
+    if (!timesFont.isEmpty()) { setFontRoman(timesFont); }
+    if (!sansFont.isEmpty()) { setFontSans(sansFont); }
     useSTIXfonts=false;
     useXITSfonts=false;
     useASANAfonts=false;
@@ -4161,17 +4175,28 @@ void JKQTMathText::draw(QPainter& painter, double x, double y, bool drawBoxes){
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
+        QPen pp=painter.pen();
+        QPen p=pp;
+        p.setStyle(Qt::SolidLine);
+        painter.setPen(p);
         getTree()->setDrawBoxes(drawBoxes);
+        painter.setPen(p);
         getTree()->draw(painter, x, y, ev);
+        painter.setPen(pp);
     }
 }
 
 void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes) {
     if (getTree()!=nullptr) {
+        QPen pp=painter.pen();
+        QPen p=pp;
+        p.setStyle(Qt::SolidLine);
+        painter.setPen(p);
         MTenvironment ev;
         ev.color=fontColor;
         ev.fontSize=fontSize;
         getTree()->setDrawBoxes(drawBoxes);
+        painter.setPen(p);
 
         double width=0;
         double baselineHeight=0;
@@ -4192,6 +4217,7 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
 
         // finally draw
         getTree()->draw(painter, x, y, ev);
+        painter.setPen(pp);
     }
 }
 
