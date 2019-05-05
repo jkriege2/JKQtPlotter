@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     // you can set the system-wide default style properties early on
     // all JKQTPlotter instance created after this, will use these
     // settings as their initial settings
-    JKQTPGetSystemDefaultStyle().userActionColor=QColor("red");
+    JKQTPGetSystemDefaultStyle().userActionFontSize=12;
 
     TestStyling win;
     win.show();
