@@ -47,19 +47,19 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
 
         void initBoxplotStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
 
-
-
-        /*! \brief set the line style of whisker lines */
-        void setWhiskerLineStyle(Qt::PenStyle  __value);
-        /*! \brief get the line style of whisker lines */
-        Qt::PenStyle getWhiskerLineStyle() const;
-
         /*! \copydoc boxWidth
             \see see boxWidth for details */
         void setBoxWidth(double __value);
         /*! \copydoc boxWidth
             \see see boxWidth for details */
         double getBoxWidth() const;
+
+
+
+        /*! \brief set the line style of whisker lines */
+        void setWhiskerLineStyle(Qt::PenStyle  __value);
+        /*! \brief get the line style of whisker lines */
+        Qt::PenStyle getWhiskerLineStyle() const;
 
         /*! \brief set the width [pt] of whisker lines */
         void setWhiskerLineWidth(double __value);
@@ -116,6 +116,72 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
         /** \brief build a pen to be used for drawing whiskers */
         QPen getWhiskerPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const;
 
+
+
+
+
+
+
+        /*! \brief set the line style of median lines */
+        void setMedianLineStyle(Qt::PenStyle  __value);
+        /*! \brief get the line style of median lines */
+        Qt::PenStyle getMedianLineStyle() const;
+
+        /*! \brief set the width [pt] of median lines */
+        void setMedianLineWidth(double __value);
+        /*! \brief get the  width [pt] of median lines */
+        double getMedianLineWidth() const;
+
+        /*! \brief set the color of median lines */
+        void setMedianLineColor(QColor __value);
+        /*! \brief get the color of median lines */
+        QColor getMedianLineColor() const;
+
+
+        /** \brief sets the dash offset for a custom dash style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
+         */
+        void setMedianLineDashOffset(qreal offset);
+        /** \brief returns the dash offset for a custom dash style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
+         */
+        qreal getMedianLineDashOffset() const;
+        /** \brief sets the dash pattern for a custom dash style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
+         */
+        void setMedianLineDashPattern(const QVector<qreal> &pattern);
+        /** \brief gets the dash pattern for a custom dash style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
+         */
+        QVector<qreal> getMedianLineDashPattern() const;
+        /** \brief sets the join style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
+         */
+        void setMedianLineJoinStyle(Qt::PenJoinStyle style);
+        /** \brief returns the join style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
+         */
+        Qt::PenJoinStyle getMedianLineJoinStyle() const;
+        /** \brief sets the cap style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
+         */
+        void setMedianLineCapStyle(Qt::PenCapStyle style);
+        /** \brief gets the cap style of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
+         */
+        Qt::PenCapStyle getMedianLineCapStyle() const;
+        /** \brief sets the brush used to fill the line area of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        void setMedianLineBrush(const QBrush& style);
+        /** \brief gets the brush used to fill the line area of median lines
+         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
+         */
+        QBrush getMedianLineBrush() const;
+
+        /** \brief build a pen to be used for drawing medians */
+        QPen getMedianPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const;
+
     protected:
         /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
         void setBoxplotColor(QColor c, JKQTBasePlotter *parent);
@@ -124,6 +190,10 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
         QPen m_whiskerLinePen;
         /** \brief line width (in pt) of the whisker lines */
         double whiskerLineWidth;
+        /** \brief line style of the median lines */
+        QPen m_medianLinePen;
+        /** \brief line width (in pt) of the median lines */
+        double medianLineWidth;
         /** \brief width of box in percent of distance between the current two posColumn values
          *         if we only plot one box&whiskers then this is the width in pt */
         double boxWidth;

@@ -84,9 +84,14 @@ int main(int argc, char* argv[])
     graphh->setFillColor(graphh->getLineColor().lighter());
     // 6.2 make whiskers dashed
     graphh->setWhiskerLineStyle(Qt::DashLine);
+    graphh->setWhiskerLineColor(graphh->getLineColor().darker());
     // 6.3 change mean symbol
-    graphh->setSymbolType(JKQTPstar);
-
+    graphh->setSymbolType(JKQTPFilledStar);
+    graphh->setSymbolFillColor(QColor("silver"));
+    // 6.4 change median line color
+    graphh->setMedianLineColor(QColor("darkgreen"));
+    // 6.5 change box width to 75% of distance
+    graphh->setBoxWidth(0.75);
 
     // 7. add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);

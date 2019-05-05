@@ -49,8 +49,14 @@ You can further style the plot by e.g. setting:
     graph->setFillColor(graphh->getColor().lighter());
     // 4.2 make whiskers dashed
     graph->setWhiskerLineStyle(Qt::DashLine);
+    graph->setWhiskerLineColor(graph->getLineColor().darker());
     // 4.3 change mean symbol
-    graph->setSymbolType(JKQTPstar);
+    graph->setSymbolType(JKQTPFilledStar);
+    graph->setSymbolFillColor(QColor("silver"));
+    // 4.4 change median line color
+    graph->setMedianLineColor(QColor("darkgreen"));
+    // 4.5 change box width to 75% of distance
+    graph->setBoxWidth(0.75);
 ```
 
 The result looks like this:
