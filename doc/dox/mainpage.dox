@@ -1,10 +1,13 @@
 /*!
 
 \mainpage JKQTPlotter - A Qt Plotting Library
-This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.11).
 
-This software is licensed under the term of the GNU Lesser General Public License 2.1 
+- This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.11).
+- This software is licensed under the term of the GNU Lesser General Public License 2.1 
 (LGPL 2.1) or above. See \ref licensesec for details.
+- <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a>
+- <a href="https://github.com/jkriege2/JKQtPlotter">Source Code Repository</a>
+- <a href="https://github.com/jkriege2/JKQtPlotter/releases">Tagged Releases</a>
  
 \image html examplesbanner.png
 
