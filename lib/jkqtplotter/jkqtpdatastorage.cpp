@@ -336,7 +336,7 @@ int JKQTPDatastore::getColumnNum(const QString& name) {
     QMapIterator<size_t, JKQTPColumn> it(columns);
     while (it.hasNext()) {
         it.next();
-        if (it.value().getName()==name) return it.key();
+        if (it.value().getName()==name) return static_cast<int>(it.key());
     }
     return -1;
 }
@@ -347,21 +347,22 @@ int JKQTPDatastore::ensureColumnNum(const QString& name) {
     QMapIterator<size_t, JKQTPColumn> it(columns);
     while (it.hasNext()) {
         it.next();
-        if (it.value().getName()==name) return it.key();
+        if (it.value().getName()==name) return static_cast<int>(it.key());
     }
-    return addColumn(0, name);
+    return static_cast<int>(addColumn(0, name));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPColumn JKQTPDatastore::getColumn(size_t i) const
 {
-    return columns.value(i);
+    return columns.value(i, JKQTPColumn());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPColumn JKQTPDatastore::getColumn(int i) const
 {
-    return columns.value(i);
+    if (i<0) return JKQTPColumn();
+    return getColumn(static_cast<size_t>(i));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -25,6 +25,7 @@
 #include "jkqtplottertools/jkqtp_imexport.h"
 #include "jkqtplottertools/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
+#include "jkqtplotter/jkqtpgraphsboxplotstylingmixins.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpgraphsboxplot_H
@@ -34,178 +35,7 @@
 
 
 
-/*! \brief Styling Mix-In for Boxplots
-    \ingroup jkqtplotter_basegraphs_stylemixins
-
-
- */
-class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
-        Q_GADGET
-    public:
-        /** \brief class constructor */
-        JKQTPGraphBoxplotStyleMixin();
-
-        void initBoxplotStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
-
-        /*! \copydoc boxWidth
-            \see see boxWidth for details */
-        void setBoxWidth(double __value);
-        /*! \copydoc boxWidth
-            \see see boxWidth for details */
-        double getBoxWidth() const;
-
-
-
-        /*! \brief set the line style of whisker lines */
-        void setWhiskerLineStyle(Qt::PenStyle  __value);
-        /*! \brief get the line style of whisker lines */
-        Qt::PenStyle getWhiskerLineStyle() const;
-
-        /*! \brief set the width [pt] of whisker lines */
-        void setWhiskerLineWidth(double __value);
-        /*! \brief get the  width [pt] of whisker lines */
-        double getWhiskerLineWidth() const;
-
-        /*! \brief set the color of whisker lines */
-        void setWhiskerLineColor(QColor __value);
-        /*! \brief get the color of whisker lines */
-        QColor getWhiskerLineColor() const;
-
-
-        /** \brief sets the dash offset for a custom dash style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
-         */
-        void setWhiskerLineDashOffset(qreal offset);
-        /** \brief returns the dash offset for a custom dash style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
-         */
-        qreal getWhiskerLineDashOffset() const;
-        /** \brief sets the dash pattern for a custom dash style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
-         */
-        void setWhiskerLineDashPattern(const QVector<qreal> &pattern);
-        /** \brief gets the dash pattern for a custom dash style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
-         */
-        QVector<qreal> getWhiskerLineDashPattern() const;
-        /** \brief sets the join style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
-         */
-        void setWhiskerLineJoinStyle(Qt::PenJoinStyle style);
-        /** \brief returns the join style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
-         */
-        Qt::PenJoinStyle getWhiskerLineJoinStyle() const;
-        /** \brief sets the cap style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
-         */
-        void setWhiskerLineCapStyle(Qt::PenCapStyle style);
-        /** \brief gets the cap style of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
-         */
-        Qt::PenCapStyle getWhiskerLineCapStyle() const;
-        /** \brief sets the brush used to fill the line area of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
-         */
-        void setWhiskerLineBrush(const QBrush& style);
-        /** \brief gets the brush used to fill the line area of whisker lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
-         */
-        QBrush getWhiskerLineBrush() const;
-
-        /** \brief build a pen to be used for drawing whiskers */
-        QPen getWhiskerPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const;
-
-
-
-
-
-
-
-        /*! \brief set the line style of median lines */
-        void setMedianLineStyle(Qt::PenStyle  __value);
-        /*! \brief get the line style of median lines */
-        Qt::PenStyle getMedianLineStyle() const;
-
-        /*! \brief set the width [pt] of median lines */
-        void setMedianLineWidth(double __value);
-        /*! \brief get the  width [pt] of median lines */
-        double getMedianLineWidth() const;
-
-        /*! \brief set the color of median lines */
-        void setMedianLineColor(QColor __value);
-        /*! \brief get the color of median lines */
-        QColor getMedianLineColor() const;
-
-
-        /** \brief sets the dash offset for a custom dash style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
-         */
-        void setMedianLineDashOffset(qreal offset);
-        /** \brief returns the dash offset for a custom dash style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
-         */
-        qreal getMedianLineDashOffset() const;
-        /** \brief sets the dash pattern for a custom dash style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
-         */
-        void setMedianLineDashPattern(const QVector<qreal> &pattern);
-        /** \brief gets the dash pattern for a custom dash style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setDashPattern
-         */
-        QVector<qreal> getMedianLineDashPattern() const;
-        /** \brief sets the join style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
-         */
-        void setMedianLineJoinStyle(Qt::PenJoinStyle style);
-        /** \brief returns the join style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setJoinStyle
-         */
-        Qt::PenJoinStyle getMedianLineJoinStyle() const;
-        /** \brief sets the cap style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
-         */
-        void setMedianLineCapStyle(Qt::PenCapStyle style);
-        /** \brief gets the cap style of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setCapStyle
-         */
-        Qt::PenCapStyle getMedianLineCapStyle() const;
-        /** \brief sets the brush used to fill the line area of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
-         */
-        void setMedianLineBrush(const QBrush& style);
-        /** \brief gets the brush used to fill the line area of median lines
-         *  \see https://doc.qt.io/qt-5/qpen.html#setBrush
-         */
-        QBrush getMedianLineBrush() const;
-
-        /** \brief build a pen to be used for drawing medians */
-        QPen getMedianPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const;
-
-    protected:
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
-        void setBoxplotColor(QColor c, JKQTBasePlotter *parent);
-    private:
-        /** \brief line style of the whisker lines */
-        QPen m_whiskerLinePen;
-        /** \brief line width (in pt) of the whisker lines */
-        double whiskerLineWidth;
-        /** \brief line style of the median lines */
-        QPen m_medianLinePen;
-        /** \brief line width (in pt) of the median lines */
-        double medianLineWidth;
-        /** \brief width of box in percent of distance between the current two posColumn values
-         *         if we only plot one box&whiskers then this is the width in pt */
-        double boxWidth;
-
-};
-
-
-
-
-
-
-/*! \brief This implements vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplots</a>
+/*! \brief This implements vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplots</a>, optionally also a notched boxplot
     \ingroup jkqtplotter_statgraphs
 
     The x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
@@ -213,9 +43,15 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
 
     \image html plot_boxplotvertical.png
 
+
     The different features of a boxplot are:
 
-    \image html boxplots.png
+    \image html plot_boxplotverticalelement.png
+
+
+    The example \ref JKQTPlotterBoxplotStyling discusses different options to style boxplots:
+
+    \image html test_styledboxplot.png
 
     This class also implements hitTest() in a way that displays all data of the boxplot in the tooltips:
 
@@ -381,14 +217,43 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQT
             \details Description of the parameter percentile75Column is:  <BLOCKQUOTE>\copydoc percentile75Column </BLOCKQUOTE> 
             \see percentile75Column for more information */ 
         void setPercentile75Column (size_t __value);
+        /*! \copydoc medianConfidenceColumn
+            \see see medianConfidenceColumn for details */
+        int getMedianConfidenceColumn() const;
+        /*! \brief sets the property medianConfidenceColumn ( \copybrief medianConfidenceColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int.
+            \details Description of the parameter medianConfidenceColumn is:  <BLOCKQUOTE>\copydoc medianConfidenceColumn </BLOCKQUOTE>
+            \see medianConfidenceColumn for more information */
+        void setMedianConfidenceColumn (size_t __value);
 
 
+        /*! \copydoc boxWidthRelative
+            \see see boxWidthRelative for details */
+        void setBoxWidthRelative(double __value);
+        /*! \copydoc boxWidthRelative
+            \see see boxWidthRelative for details */
+        double getBoxWidthRelative() const;
+
+
+        /*! \copydoc useRelativeBoxWidth
+            \see see useRelativeBoxWidth for details */
+        void setUseRelativeBoxWidth(bool __value);
+        /*! \copydoc useRelativeBoxWidth
+            \see see useRelativeBoxWidth for details */
+        bool getUseRelativeBoxWidth() const;
     protected:
+        /** \brief width of box in percent of distance between the current two posColumn values
+         *         if we only plot one box&whiskers then JKQTPGraphBoxplotStyleMixin::boxWidthAbsolute in pt is used */
+        double boxWidthRelative;
+        /** \brief if set \c true, boxplot widths are calculated automatically, based on boxWidthRelative,
+         *         otherwise JKQTPGraphBoxplotStyleMixin::boxWidthAbsolute is used. */
+        bool useRelativeBoxWidth;
 
         /** \brief the column that contains the x-component of the datapoints */
         int posColumn;
         /** \brief the column that contains the median-component of the datapoints */
         int medianColumn;
+        /** \brief the column that contains the confidence interval width of the median (e.g. 1.57*IQR/sqrt(n) ). This is used to draw a notch in the plot (if set) */
+        int medianConfidenceColumn;
         /** \brief the column that contains the median-component of the datapoints. \note This column is strictly optional. */
         int meanColumn;
         /** \brief the column that contains the minimum-component of the datapoints */
@@ -414,7 +279,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQT
 };
 
 
-/*! \brief This implements horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">boxplots</a>
+/*! \brief This implements horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">boxplots</a>, optionally also a notched boxplot
     \ingroup jkqtplotter_statgraphs
 
     the x position is given in posColumn. All other data are given in the medianColumn, minColumn, maxColumn,
@@ -459,20 +324,25 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalG
 
 
 
-/*! \brief This implements a single vertical <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> as a "geometric element",
+/*! \brief This implements a single vertical <a href="http://en.wikipedia.org/wiki/Box_plot">(notched) boxplot</a> as a "geometric element",
            where the data is directly given to the object and not stored in a column, as in JKQTPBoxplotVerticalGraph
     \ingroup jkqtplotter_statgraphs
     \ingroup jkqtplotter_geoplots
 
 
-    \image html plot_boxplotverticalelement.png
 
     the x position is given in posColumn. All other data are given in the median, min, max,
     percentile25 and percentile75.
 
     The different features of a boxplot are:
 
-    \image html boxplots.png
+    \image html plot_boxplotverticalelement.png
+
+
+    The example \ref JKQTPlotterBoxplotStyling discusses different options to style boxplots:
+
+    \image html test_styledboxplot.png
+
  */
 class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphBoxplotStyleMixin {
         Q_OBJECT
@@ -563,14 +433,30 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, publ
         /*! \copydoc drawMinMax
             \see see drawMinMax for details */ 
         bool getDrawMinMax() const;
+        /*! \copydoc drawNotch
+            \see see drawNotch for details */
+        void setDrawNotch(bool __value);
+        /*! \copydoc drawNotch
+            \see see drawNotch for details */
+        bool getDrawNotch() const;
 
+        /*! \copydoc medianConfidenceIntervalWidth
+            \see see medianConfidenceIntervalWidth for details */
+        double getMedianConfidenceIntervalWidth() const;
+        /*! \copydoc medianConfidenceIntervalWidth
+            \see see medianConfidenceIntervalWidth for details */
+        void setMedianConfidenceIntervalWidth(double __value);
     protected:
 
-        /** \brief the column that contains the x-component of the datapoints */
+        /** \brief the position of the boxplot on the "other" axis */
         double pos;
-        /** \brief the column that contains the median-component of the datapoints */
+        /** \brief the median value to be used for the boxplot */
         double median;
-        /** \brief the column that contains the median-component of the datapoints. \note This column is strictly optional. */
+        /** \brief the width of the confidence interval around the median */
+        double medianConfidenceIntervalWidth;
+        /** \brief indicates whether to draw a notch with width medianConfidenceIntervalWidth */
+        bool drawNotch;
+        /** \brief the mean value to be used for the boxplot */
         double mean;
         /** \brief indicates whether to draw the mean */
         bool drawMean;
@@ -578,18 +464,18 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, publ
         bool drawMedian;
         /** \brief indicates whether to draw the percentiles */
         bool drawMinMax;
-        /** \brief the column that contains the minimum-component of the datapoints */
+        /** \brief the minimum value to be used for the boxplot */
         double min;
-        /** \brief the column that contains the maximum-component of the datapoints */
+        /** \brief the maximum value to be used for the boxplot */
         double max;
-        /** \brief the column that contains the 25% percentile-component of the datapoints */
+        /** \brief the 25% percentile value to be used for the boxplot */
         double percentile25;
-        /** \brief the column that contains the 75% percentile-component of the datapoints */
+        /** \brief the 75% percentile value to be used for the boxplot */
         double percentile75;
 };
 
 
-/*! \brief This implements a horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">boxplot</a> where the data is directly given to the
+/*! \brief This implements a horizontal <a href="http://en.wikipedia.org/wiki/Box_plot">(notched) boxplot</a> where the data is directly given to the
            object and not stored in a column, as in JKQTPBoxplotVerticalGraph
     \ingroup jkqtplotter_statgraphs
     \ingroup jkqtplotter_geoplots

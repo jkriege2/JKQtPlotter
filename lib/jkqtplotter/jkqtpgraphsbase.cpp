@@ -197,11 +197,11 @@ QString JKQTPPlotElement::formatHitTestDefaultLabel(double x, double y, int inde
 
 double JKQTPPlotElement::hitTest(const QPointF & posSystem, QPointF* closestSpotSystem, QString* label, HitTestMode mode) const
 {
-    if (parent==nullptr) return nan("");
+    if (parent==nullptr) return JKQTP_NAN;
 
     int closest=-1;
-    double closedist=nan("");
-    double closedistsec=nan("");
+    double closedist=JKQTP_NAN;
+    double closedistsec=JKQTP_NAN;
     QPointF closestPos;
     QPointF posF=transform(posSystem);
     for (int i=0; i<m_hitTestData.count(); i++) {
@@ -227,7 +227,7 @@ double JKQTPPlotElement::hitTest(const QPointF & posSystem, QPointF* closestSpot
         if (label) *label=m_hitTestData[closest].label;
         return closedist;
     } else {
-        return nan("");
+        return JKQTP_NAN;
     }
 }
 
@@ -405,7 +405,7 @@ void JKQTPXYGraph::setDataSortOrder(int __value) {
 
 double JKQTPXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSystem, QString *label, HitTestMode mode) const
 {
-    if (parent==nullptr) return nan("");
+    if (parent==nullptr) return JKQTP_NAN;
 
     // check base-class implementation and use it, if it returns a vaid value
     const double baseclassResult=JKQTPPlotElement::hitTest(posSystem, closestSpotSystem, label, mode);
@@ -414,12 +414,12 @@ double JKQTPXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSyste
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=0;
-    if (!getIndexRange(imin, imax)) return nan("");
+    if (!getIndexRange(imin, imax)) return JKQTP_NAN;
 
 
     int closest=-1;
-    double closedist=nan("");
-    double closedistsec=nan("");
+    double closedist=JKQTP_NAN;
+    double closedistsec=JKQTP_NAN;
     QPointF closestPos;
     QPointF posF=transform(posSystem);
     for (int i=imin; i<imax; i++) {
@@ -446,7 +446,7 @@ double JKQTPXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSyste
         if (closestSpotSystem) *closestSpotSystem=closestPos;
         return closedist;
     } else {
-        return nan("");
+        return JKQTP_NAN;
     }
 }
 

@@ -197,6 +197,10 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
 
         /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
         inline double get(int column, size_t row) const ;
+        /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
+        inline double get(int column, int row) const ;
+        /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
+        inline double get(size_t column, int row) const ;
         /** \brief gets the index of the datapoint with the nearest, but lower value in the column (in a given inclusive row range [start ... end] values of -1 for the ranges are "wildcards", i.e. start/end of column)*/
         int getNextLowerIndex(size_t column, size_t row,  int start,  int end) const;
         /** \brief gets the index of the datapoint with the nearest, but lower value in the column */
@@ -876,16 +880,16 @@ inline void JKQTPColumn::incValue(size_t n, double increment){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(size_t n) const {
-    if (!datastore) return nan("");
-    if (!datastore->getItem(datastoreItem)) return nan("");
+    if (!datastore) return JKQTP_NAN;
+    if (!datastore->getItem(datastoreItem)) return JKQTP_NAN;
     return datastore->getItem(datastoreItem)->get(datastoreOffset, n);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(int n) const {
-    if (!datastore) return nan("");
-    if (!datastore->getItem(datastoreItem)) return nan("");
-    if (n<0) return nan("");
+    if (!datastore) return JKQTP_NAN;
+    if (!datastore->getItem(datastoreItem)) return JKQTP_NAN;
+    if (n<0) return JKQTP_NAN;
     return datastore->getItem(datastoreItem)->get(datastoreOffset, static_cast<size_t>(n));
 }
 
@@ -896,6 +900,21 @@ inline double JKQTPDatastore::get(size_t column, size_t row) const {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPDatastore::get(int column, size_t row) const {
+    if (column<0) return JKQTP_NAN;
+    return get(static_cast<size_t>(column), static_cast<size_t>(row));
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline double JKQTPDatastore::get(int column, int row) const {
+    if (column<0) return JKQTP_NAN;
+    if (row<0) return JKQTP_NAN;
+    return get(static_cast<size_t>(column), static_cast<size_t>(row));
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline double JKQTPDatastore::get(size_t column, int row) const {
+    if (row<0) return JKQTP_NAN;
     return get(static_cast<size_t>(column), static_cast<size_t>(row));
 }
 

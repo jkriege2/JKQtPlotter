@@ -47,6 +47,7 @@ After adding all necessary data to the JKQTDatastore:
     const double rndMedian=RANDVAL[RANDVAL.size()/2];
     const double rndQ25=RANDVAL[RANDVAL.size()/4];
     const double rndQ75=RANDVAL[RANDVAL.size()*3/4];
+    const double rndMedianConfidence=2.0*1.57*fabs(rndQ75-rndQ25)/sqrt(static_cast<double>(NDATA));
 
     // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     size_t columnRANDVAL=ds->addCopiedColumn(RANDVAL, "RANDVAL"); // copy random values
@@ -99,15 +100,16 @@ After adding all necessary data to the JKQTDatastore:
     graphBoxPlot->setPercentile25(rndQ25);
     graphBoxPlot->setMean(rndMean);
     graphBoxPlot->setMedian(rndMedian);
+    graphBoxPlot->setMedianConfidenceIntervalWidth(rndMedianConfidence);
     graphBoxPlot->setPercentile75(rndQ75);
     graphBoxPlot->setMax(rndMax);
-    graphBoxPlot->setBoxWidth(24);
-    graphBoxPlot->setSymbolTypeSize(16);
-    graphBoxPlot->setSymbolTypeWidth(2);
+    graphBoxPlot->setBoxWidthAbsolute(24);
+    graphBoxPlot->setMeanSize(16);
+    graphBoxPlot->setLineWidth(2);
     graphBoxPlot->setTitle("Statistical Properties");
-    graphBoxPlot->setColor(QColor("blue"));
+    graphBoxPlot->setBoxplotColor(QColor("blue"), plot.getPlotter());
     // make fill collor a lighter shade of the outline color
-    graphBoxPlot->setFillColor(graphBoxPlot->getColor().lighter(180));
+    graphBoxPlot->setFillColor(graphBoxPlot->getLineColor().lighter(180));
     // make whiskers dashed
     graphBoxPlot->setWhiskerLineStyle(Qt::DashLine);
 

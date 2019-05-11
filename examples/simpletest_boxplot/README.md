@@ -45,18 +45,22 @@ After adding all necessary data to the JKQTDatastore:
 You can further style the plot by e.g. setting:
 
 ```.cpp
-    // 4.1 make fill collor a lighter shade of the outline color
-    graph->setFillColor(graphh->getColor().lighter());
-    // 4.2 make whiskers dashed
-    graph->setWhiskerLineStyle(Qt::DashLine);
-    graph->setWhiskerLineColor(graph->getLineColor().darker());
-    // 4.3 change mean symbol
-    graph->setSymbolType(JKQTPFilledStar);
-    graph->setSymbolFillColor(QColor("silver"));
-    // 4.4 change median line color
-    graph->setMedianLineColor(QColor("darkgreen"));
-    // 4.5 change box width to 75% of distance
-    graph->setBoxWidth(0.75);
+    // 6.1 make fill collor a lighter shade of the outline color
+    graphh->setFillColor(graphh->getLineColor().lighter());
+    // 6.2 make whiskers dashed
+    graphh->setWhiskerLineStyle(Qt::DashLine);
+    graphh->setWhiskerLineColor(graphh->getLineColor().darker());
+    // 6.3 make whiskers caps solid and thick
+    graphh->setWhiskerCapLineStyle(Qt::SolidLine);
+    graphh->setWhiskerCapLineColor(graphh->getLineColor().darker());
+    graphh->setWhiskerCapLineWidth(graphh->getLineWidth()*2.5);
+    // 6.4 change mean symbol
+    graphh->setMeanSymbolType(JKQTPFilledStar);
+    graphh->setMeanFillColor(QColor("silver"));
+    // 6.5 change median line color
+    graphh->setMedianLineColor(QColor("darkgreen"));
+    // 6.6 change box width to 75% of distance
+    graphh->setBoxWidthRelative(0.75);
 ```
 
 The result looks like this:

@@ -78,6 +78,12 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_advancedlineandfillstyling_small.png
     <td> \subpage JKQTPlotterAdvancedLineAndFillStyling
     <td> `JKQTPXYLineGraph`, `JKQTPSpecialLineHorizontalGraph` and `JKQTPBarVerticalGraph` <br> C++ vector of data <br> advanced line styling and filling
+<tr><td> \image html test_styledboxplot_small.png
+    <td> \subpage JKQTPlotterBoxplotStyling
+    <td> Modifying different Aspects of the Styling of boxplots
+<tr><td> \image html test_styling_small.png
+    <td> \subpage JKQTPlotterStyling
+    <td> Modifying different Aspects of the Styling of JKQTPlotter
 </table>
 
 

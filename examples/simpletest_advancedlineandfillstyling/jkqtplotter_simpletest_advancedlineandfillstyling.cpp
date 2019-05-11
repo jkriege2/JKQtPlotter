@@ -109,8 +109,8 @@ int main(int argc, char* argv[])
     linearGrad.setColorAt(0.3, c2);
     linearGrad.setColorAt(0.7, c3);
     linearGrad.setColorAt(1, c4);
-    linearGrad.setCoordinateMode(QGradient::ObjectBoundingMode);
     // use this CoordinateMode, so the gradient fills the whole graph area
+    linearGrad.setCoordinateMode(QGradient::ObjectBoundingMode);
     graphF2->setFillGradient(linearGrad);
 
     // 5.4 fill barcharts with transparencies and make the surrounding line invisible (colored transparent)

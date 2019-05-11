@@ -8,7 +8,7 @@ C++ standard library.
 \defgroup jkqtpplotterclasses_tools Support Classes/Structs/Functions for JKQTPlotter&JKQTBasePlotter
 \ingroup jkqtptools
 
-\defgroup tools_math Tools for Mathematical Computations & Equation Parsing
+\defgroup jkqtptools_math Tools for Mathematical Computations & Equation Parsing
 \ingroup jkqtptools
 
 \defgroup jkqtptools_string String Tool Functions
@@ -20,7 +20,7 @@ C++ standard library.
 \defgroup jkqtptools_qtwidgets Additional Widgets for Qt
 \ingroup jkqtptools
 
-\defgroup jkqtptools_drawing Drawing Tools
+\defgroup jkqtptools_drawing Drawing & Graphics Tools
 \ingroup jkqtptools
 
 \defgroup jkqtptools_debugging Debugging Tools

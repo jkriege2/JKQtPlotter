@@ -20,6 +20,7 @@ HEADERS += \
            $$PWD/jkqtplotter/jkqtpgraphsbaseerrors.h \
            $$PWD/jkqtplotter/jkqtpgraphsbasestylingmixins.h \
            $$PWD/jkqtplotter/jkqtpgraphsboxplot.h \
+           $$PWD/jkqtplotter/jkqtpgraphsboxplotstylingmixins.h \
            $$PWD/jkqtplotter/jkqtpgraphsevaluatedfunction.h \
            $$PWD/jkqtplotter/jkqtpgraphsfilledcurve.h \
            $$PWD/jkqtplotter/jkqtpgraphsgeometric.h \
@@ -65,6 +66,7 @@ SOURCES += \
            $$PWD/jkqtplotter/jkqtpgraphsbaseerrors.cpp \
            $$PWD/jkqtplotter/jkqtpgraphsbasestylingmixins.cpp \
            $$PWD/jkqtplotter/jkqtpgraphsboxplot.cpp  \
+           $$PWD/jkqtplotter/jkqtpgraphsboxplotstylingmixins.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsevaluatedfunction.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsfilledcurve.cpp  \
            $$PWD/jkqtplotter/jkqtpgraphsgeometric.cpp  \

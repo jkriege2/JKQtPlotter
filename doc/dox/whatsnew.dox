@@ -41,6 +41,8 @@ Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
       <li> new: JKQTPXYParametrizedScatterGraph: added functors to transform column values into symbol type+size and line-width to give even more control </li>
       <li> new: user-interaction tool that shows coordinates of data points near the current mouse position (when mouse is dragged, while mouse button is pressed) \see jkqtpmdaToolTipForClosestDataPoint </li>
       <li> new: user-interaction tool that measures distances and angles when mouse is dragged, while mouse button is pressed) \see jkqtpmdaRuler </li>
+      <li> new: advanced styling options for boxplots + example for the styling: \ref JKQTPlotterBoxplotStyling </li>
+      <li> new: notched boxplots </li>
       <li> changed: removed old selection-code and replaced by general highlighting feature </li>
       <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
       <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>

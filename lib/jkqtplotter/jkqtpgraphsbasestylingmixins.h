@@ -221,6 +221,7 @@ class JKQTP_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         QBrush getSymbolBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
+            \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
             \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
             \param x x-coordinate of the symbol center
             \param y y-coordinate of the symbol center
@@ -228,6 +229,7 @@ class JKQTP_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y) const;
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
+            \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
             \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
             \param x x-coordinate of the symbol center
             \param y y-coordinate of the symbol center
@@ -236,6 +238,7 @@ class JKQTP_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, double symbolSize) const;
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
+            \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
             \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
             \param x x-coordinate of the symbol center
             \param y y-coordinate of the symbol center
@@ -245,6 +248,7 @@ class JKQTP_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols type) const;
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style
 
+            \param parent parent JKQTBasePlotter of the graph that uses this mix-in (used e.g. for line-width transformation)
             \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
             \param x x-coordinate of the symbol center
             \param y y-coordinate of the symbol center

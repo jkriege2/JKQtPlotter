@@ -183,7 +183,7 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
          * \see hitTest()
          */
         struct HitTestLocation {
-            inline HitTestLocation(): pos(nan(""), nan("")), index(-1), label("") {}
+            inline HitTestLocation(): pos(JKQTP_NAN, JKQTP_NAN), index(-1), label("") {}
             inline HitTestLocation(double x_, double y_, const QString& label_): pos(x_,y_), index(-1), label(label_) {}
             inline HitTestLocation(const QPointF& pos_, const QString& label_): pos(pos_), index(-1), label(label_) {}
             inline HitTestLocation(double x_, double y_, int index_, const QString& label_): pos(x_,y_), index(index_), label(label_) {}
