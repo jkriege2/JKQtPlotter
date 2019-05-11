@@ -76,7 +76,7 @@ addSimpleTest(geometric)
 addSimpleTest(ui)
 addSimpleTest(boxplot)
 addSimpleTest(advancedlineandfillstyling)
-#addSimpleTest(imageplot_nodatastore)
+addSimpleTest(imageplot_nodatastore)
 #addSimpleTest(rgbimageplot_opencv)
 #addSimpleTest(imageplot_opencv)
 
