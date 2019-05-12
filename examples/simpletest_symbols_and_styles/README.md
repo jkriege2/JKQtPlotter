@@ -4,7 +4,7 @@ This project (see `./examples/simpletest_symbols_and_styles/`) simply creates a 
 The source code of the main application can be found in  [`jkqtplotter_simpletest_symbols_and_styles.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_symbols_and_styles/jkqtplotter_simpletest_symbols_and_styles.cpp). Mainly several graphs are generated in a loop and then different symbol and line styles are applied to the graph (set by `graph->setSymbolType()` for the symbol and `graph->setLineStyle()` for the line style). The colors are set automtically from an internal default palette. The main loop looks like this:
 
 ```.cpp
-	QVector<Qt::PenStyle> pens {Qt::NoPen, Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
+    QVector<Qt::PenStyle> pens {Qt::NoPen, Qt::SolidLine, Qt::DashLine, Qt::DotLine, Qt::DashDotLine, Qt::DashDotDotLine };
     int ipen=0;
     for (int symbolID=0; symbolID<=JKQTPMaxSymbolID; symbolID++) {
         // generate some plot data
@@ -28,7 +28,7 @@ The source code of the main application can be found in  [`jkqtplotter_simpletes
         graph->setSymbolLineWidth(1.5);
         // set width of graph line
         graph->setLineWidth(1);
-		
+        
         // graph title is made from symbol+penstyle
         graph->setTitle(JKQTPGraphSymbols2NameString(static_cast<JKQTPGraphSymbols>(graph->getSymbolType()))+QString(", ")+jkqtp_QPenStyle2String(graph->getLineStyle()));
 

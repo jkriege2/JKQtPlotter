@@ -592,31 +592,80 @@ enum JKQTPGraphPlotstyle {
  */
 enum JKQTPGraphSymbols {
     JKQTPNoSymbol=0,             /*!< \brief plots no symbol at all (usefull together with error bars) */
-    JKQTPDot=1,                 /*!< \brief a small dot \image html symbols/symbol_symbol_dot.png */
-    JKQTPCross=2,               /*!< \brief a X cross \image html symbols/symbol_symbol_cross.png */
-    JKQTPPlus=3,                /*!< \brief a + cross \image html symbols/symbol_symbol_plus.png */
-    JKQTPCircle=4,              /*!< \brief an unfilled circle \image html symbols/symbol_symbol_circle.png */
-    JKQTPFilledCircle=5,        /*!< \brief a filled circle \image html symbols/symbol_symbol_filled_circle.png */
-    JKQTPRect=6,                /*!< \brief an unfilled rectangle \image html symbols/symbol_symbol_rect.png */
-    JKQTPFilledRect=7,          /*!< \brief a filled rectangle \image html symbols/symbol_symbol_filled_rect.png */
-    JKQTPTriangle=8,            /*!< \brief an unfilled triangle (tip at top) \image html symbols/symbol_symbol_triangle.png */
-    JKQTPFilledTriangle=9,      /*!< \brief a filled triangle (tip at top) \image html symbols/symbol_symbol_filled_triangle.png */
-    JKQTPDownTriangle=10,        /*!< \brief an unfilled triangle (tip at bottom) \image html symbols/symbol_symbol_down_triangle.png */
-    JKQTPFilledDownTriangle=11,  /*!< \brief a filled triangle (tip at bottom) \image html symbols/symbol_symbol_filled_down_triangle.png */
-    JKQTPDiamond=12,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_diamond.png */
-    JKQTPFilledDiamond=13,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_diamond.png */
-    JKQTPstar=14,                /*!< \brief an unfilled diamond \image html symbols/symbol_symbol_star.png */
-    JKQTPFilledStar=15,          /*!< \brief a filled diamond \image html symbols/symbol_symbol_filled_star.png */
-    JKQTPPentagon=16,                /*!< \brief an unfilled pentagon \image html symbols/symbol_symbol_pentagon.png */
-    JKQTPFilledPentagon=17,          /*!< \brief a filled pentagon \image html symbols/symbol_symbol_filled_pentagon.png */
-    JKQTPAsterisc=18,          /*!< \brief an asterisc star '*' \image html symbols/symbol_symbol_asterisc.png */
+    JKQTPDot,                 /*!< \brief a small dot \image html symbols/symbol_dot.png */
+    JKQTPCross,               /*!< \brief a X cross \image html symbols/symbol_cross.png */
+    JKQTPPlus,                /*!< \brief a + cross \image html symbols/symbol_plus.png */
+    JKQTPCircle,              /*!< \brief an unfilled circle \image html symbols/symbol_circle.png */
+    JKQTPFilledCircle,        /*!< \brief a filled circle \image html symbols/symbol_filled_circle.png */
+    JKQTPRect,                /*!< \brief an unfilled rectangle \image html symbols/symbol_rect.png */
+    JKQTPFilledRect,          /*!< \brief a filled rectangle \image html symbols/symbol_filled_rect.png */
+    JKQTPTriangle,            /*!< \brief an unfilled triangle (tip at top) \image html symbols/symbol_triangle.png */
+    JKQTPFilledTriangle,      /*!< \brief a filled triangle (tip at top) \image html symbols/symbol_filled_triangle.png */
+    JKQTPDiamond,                /*!< \brief an unfilled diamond \image html symbols/symbol_diamond.png */
+    JKQTPFilledDiamond,          /*!< \brief a filled diamond \image html symbols/symbol_filled_diamond.png */
+    JKQTPstar,                /*!< \brief an unfilled diamond \image html symbols/symbol_star.png */
+    JKQTPFilledStar,          /*!< \brief a filled diamond \image html symbols/symbol_filled_star.png */
+    JKQTPPentagon,                /*!< \brief an unfilled pentagon \image html symbols/symbol_pentagon.png */
+    JKQTPFilledPentagon,          /*!< \brief a filled pentagon \image html symbols/symbol_filled_pentagon.png */
+    JKQTPAsterisc,          /*!< \brief an asterisc star with 5 arms \image html symbols/symbol_asterisc.png */
+    JKQTPHourglass,              /*!< \brief an hour glass symbol \image html symbols/symbol_hourglass.png */
+    JKQTPFilledHourglass,              /*!< \brief a filled hour glass symbol \image html symbols/symbol_filled_hourglass.png */
+    JKQTPCurvedTriangle,  /*!< \brief a  curved triangle\image html symbols/symbol_tripod.png */
+    JKQTPFilledCurvedTriangle,  /*!< \brief a filled curved triangle\image html symbols/symbol_filled_tripod.png */
+    JKQTPHexagon,                /*!< \brief an unfilled hexagon \image html symbols/symbol_hexagon.png */
+    JKQTPFilledHexagon,          /*!< \brief a filled hexagon \image html symbols/symbol_filled_hexagon.png */
 
-    JKQTPTarget=19,              /*!< \brief a target symbol (circle with cross) \image html symbols/symbol_symbol_target.png */
-    JKQTPRectCross=20,              /*!< \brief a square symbol with a cross inside \image html symbols/symbol_symbol_rect_cross.png */
-    JKQTPRectPlus=21,              /*!< \brief a square symbol with a plus inside \image html symbols/symbol_symbol_rect_plus.png */
+    JKQTPRectCross,              /*!< \brief a square symbol with a cross inside \image html symbols/symbol_rect_cross.png */
+    JKQTPRectPlus,              /*!< \brief a square symbol with a plus inside \image html symbols/symbol_rect_plus.png */
+    JKQTPRectTriangle,              /*!< \brief a square symbol with a triangle inside \image html symbols/symbol_rect_triangle.png */
+    JKQTPRectDownTriangle,              /*!< \brief a square symbol with a triangle (tip to the bottom) inside \image html symbols/symbol_rect_downtriangle.png */
+    JKQTPRectLeftTriangle,              /*!< \brief a square symbol with a triangle (tip to the left) inside \image html symbols/symbol_rect_lefttriangle.png */
+    JKQTPRectRightTriangle,              /*!< \brief a square symbol with a triangle (tip to the right) inside \image html symbols/symbol_rect_righttriangle.png */
 
-    JKQTPMaxSymbolID=JKQTPRectPlus,
-    JKQTPDefaultSymbol=JKQTPCross,
+    JKQTPCircleCross,              /*!< \brief a circle symbol with a cross inside \image html symbols/symbol_circle_cross.png */
+    JKQTPCirclePlus,              /*!< \brief a circle symbol with a plus inside \image html symbols/symbol_circle_plus.png */
+    JKQTPCirclePeace,          /*!< \brief a circled peace symbol \image html symbols/symbol_circle_peace.png */
+
+    JKQTPDiamondPlus,              /*!< \brief a diamond symbol with a plus inside \image html symbols/symbol_diamond_plus.png */
+    JKQTPDiamondCross,              /*!< \brief a diamond symbol with a cross inside \image html symbols/symbol_diamond_cross.png */
+
+    JKQTPTripod,  /*!< \brief a tripod symbol \image html symbols/symbol_tripod.png */
+    JKQTPDownTripod,  /*!< \brief a tripod symbol, pointing down \image html symbols/symbol_down_tripod.png */
+    JKQTPLeftTripod,  /*!< \brief a tripod symbol, pointing to the left \image html symbols/symbol_left_tripod.png */
+    JKQTPRightTripod,  /*!< \brief a tripod symbol, pointing to the right \image html symbols/symbol_right_tripod.png */
+    JKQTPAsterisc6,          /*!< \brief an asterisc star with 6 arms \image html symbols/symbol_asterisc6.png */
+    JKQTPAsterisc8,          /*!< \brief an asterisc star with 8 arms \image html symbols/symbol_asterisc8.png */
+    JKQTPPeace,          /*!< \brief a peace symbol \image html symbols/symbol_peace.png */
+    JKQTPTarget,              /*!< \brief a target symbol (circle with cross) \image html symbols/symbol_target.png */
+
+    JKQTPDownTriangle,        /*!< \brief an unfilled triangle (tip at bottom) \image html symbols/symbol_down_triangle.png */
+    JKQTPFilledDownTriangle,  /*!< \brief a filled triangle (tip at bottom) \image html symbols/symbol_filled_down_triangle.png */
+    JKQTPLeftTriangle,        /*!< \brief an unfilled triangle (tip to the left) \image html symbols/symbol_left_triangle.png */
+    JKQTPFilledLeftTriangle,  /*!< \brief a filled triangle (tip to the left) \image html symbols/symbol_filled_left_triangle.png */
+    JKQTPRightTriangle,        /*!< \brief an unfilled triangle (tip to the right) \image html symbols/symbol_right_triangle.png */
+    JKQTPFilledRightTriangle,  /*!< \brief a filled triangle (tip to the right) \image html symbols/symbol_filled_right_triangle.png */
+    JKQTPDownCurvedTriangle,  /*!< \brief a  curved triangle, pointing down \image html symbols/symbol_down_tripod.png */
+    JKQTPFilledDownCurvedTriangle,  /*!< \brief a filled curved triangle, pointing down \image html symbols/symbol_filled_down_tripod.png */
+    JKQTPLeftCurvedTriangle,  /*!< \brief a  curved triangle, pointing to the left \image html symbols/symbol_left_tripod.png */
+    JKQTPFilledLeftCurvedTriangle,  /*!< \brief a filled curved triangle, pointing to the left \image html symbols/symbol_filled_left_tripod.png */
+    JKQTPRightCurvedTriangle,  /*!< \brief a  curved triangle, pointing to the right \image html symbols/symbol_right_tripod.png */
+    JKQTPFilledRightCurvedTriangle,  /*!< \brief a filled curved triangle, pointing to the right \image html symbols/symbol_filled_right_tripod.png */
+    JKQTPOctagon,                /*!< \brief an unfilled octagon \image html symbols/symbol_octagon.png */
+    JKQTPFilledOctagon,          /*!< \brief a filled octagon \image html symbols/symbol_filled_octagon.png */
+    JKQTPUpDownTriangle,              /*!< \brief a overlay of an up and a down triangle symbol \image html symbols/symbol_updowntriangle.png */
+    JKQTPFilledUpDownTriangle,              /*!< \brief a filled version of the overlay of an up and a down triangle \image html symbols/symbol_filled_updowntriangle.png */
+    JKQTPHorizontalHourglass,              /*!< \brief a horizontal hour glass symbol \image html symbols/symbol_horizontal_hourglass.png */
+    JKQTPFilledHorizontalHourglass,              /*!< \brief a filled horizontal hour glass symbol \image html symbols/symbol_filled_horizontal_hourglass.png */
+
+    JKQTPSantaClauseHouse,              /*!< \brief a small house symbol ("Das is das haus vom Nicolaus") \image html symbols/symbol_santaclause.png */
+    JKQTPFilledSantaClauseHouse,              /*!< \brief a filled small house symbol ("Das is das haus vom Nicolaus") \image html symbols/symbol_filled_santaclause.png */
+
+    JKQTPMale,                /*!< \brief a male symbol \image html symbols/symbol_male.png */
+    JKQTPFemale,                /*!< \brief a female symbol \image html symbols/symbol_female.png */
+
+    JKQTPSymbolCount, /*!< \brief can be used to iterate over all symbols using: <code>for (int i=0; i<static_cast<int>(JKQTPSymbolCount); i++) { JKQTPGraphSymbols s=static_cast<JKQTPGraphSymbols>(i); ... }</code> */
+    JKQTPMaxSymbolID=JKQTPSymbolCount-1, /*!< \brief points to the last available symbol, can be used to iterate over all symbols: <code>for (int i=0; i<=static_cast<int>(JKQTPMaxSymbolID); i++) { JKQTPGraphSymbols s=static_cast<JKQTPGraphSymbols>(i); ... }</code> */
+    JKQTPDefaultSymbol=JKQTPCross, /*!< \brief a default symbol used for plotting */
 };
 
 /** \brief converts a JKQTPGraphSymbols variable into a identifier string
