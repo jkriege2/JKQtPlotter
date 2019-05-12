@@ -92,7 +92,7 @@ void JKQTPPeakStreamGraph::draw(JKQTPEnhancedPainter &painter)
         QPen p=getLinePen(painter, parent);
         p.setCapStyle(Qt::FlatCap);
 
-        int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
+        int imax=static_cast<int>(datastore->getRows(static_cast<size_t>(dataColumn)));
         int imin=0;
         if (imax<imin) {
             int h=imin;
@@ -147,7 +147,7 @@ void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &
     QPen p=getLinePen(painter, parent);
     painter.setPen(p);
     if (yPeaks) {
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.width()/10.0)));
+        p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.width()/10.0)));
         if (drawBaseline) {
             if (peakHeight>=0) painter.drawLine(rect.bottomLeft(), rect.bottomRight());
             else painter.drawLine(rect.topLeft(), rect.topRight());
@@ -157,7 +157,7 @@ void JKQTPPeakStreamGraph::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &
         painter.drawLine(QPointF(rect.left()+rect.width()*0.75, rect.top()), QPointF(rect.left()+rect.width()*0.75, rect.bottom()));
         painter.drawLine(QPointF(rect.left()+rect.width()*0.9, rect.top()), QPointF(rect.left()+rect.width()*0.9, rect.bottom()));
     } else {
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.height()/15.0)));
+        p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,qMin(parent->pt2px(painter, p.widthF()), rect.height()/15.0)));
         if (drawBaseline) {
             if (peakHeight>=0) painter.drawLine(rect.bottomLeft(), rect.topLeft());
             else painter.drawLine(rect.bottomRight(), rect.topRight());

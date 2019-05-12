@@ -531,6 +531,19 @@ class JKQTP_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
         /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
         void setDataSortOrder(int __value);
 
+        /** \brief sets xColumn and yColumn at the same time */
+        void setXYColumns(size_t xCol, size_t yCol);
+        /** \brief sets xColumn and yColumn at the same time */
+        void setXYColumns(int xCol, int yCol);
+        /** \brief sets xColumn and yColumn at the same time */
+        void setXYColumns(std::pair<int,int> xyColPair);
+        /** \brief sets xColumn and yColumn at the same time */
+        void setXYColumns(std::pair<size_t,size_t> xyColPair);
+        /** \brief sets xColumn and yColumn at the same time */
+        void setXYColumns(QPair<int,int> xyColPair);
+        /** \brief sets xColumn and yColumn at the same time */
+        void setXYColumns(QPair<size_t,size_t> xyColPair);
+
 
         /** \brief Implmentation of JKQTPPlotElement::hitTest(), which searches through all graph points defined by xColumn and yColumn
          *         and returns a general x/y-label, also taking into account possibly known errors to the graphs (if it is derived

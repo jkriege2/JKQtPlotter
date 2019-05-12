@@ -30,7 +30,7 @@ class JKQTPEnhancedPainter; // forward
 /*! \brief tool class with static values used by JKQTPlotter/JKQTBasePlotter
    \ingroup jkqtptools_drawing
    */
-JKQTP_LIB_EXPORT struct JKQTPlotterDrawinTools {
+JKQTP_LIB_EXPORT struct JKQTPlotterDrawingTools {
     /** \brief smallest linewidth any line in JKQTPlotter/JKQTBasePlotter may have
      */
     static const double ABS_MIN_LINEWIDTH;

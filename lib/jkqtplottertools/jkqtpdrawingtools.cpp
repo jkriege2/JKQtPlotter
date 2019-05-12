@@ -26,7 +26,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 #include "jkqtplottertools/jkqtpdrawingtools.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
 
-const double JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH= 0.02;
+const double JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH= 0.02;
 
 void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
     JKQTPEnhancedPainter p(&paintDevice);
@@ -37,7 +37,7 @@ void JKQTPPlotSymbol(JKQTPEnhancedPainter& painter, double x, double y, JKQTPGra
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(color);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,  symbolLineWidth));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,  symbolLineWidth));
     p.setStyle(Qt::SolidLine);
     p.setCapStyle(Qt::FlatCap);
     painter.setPen(p);

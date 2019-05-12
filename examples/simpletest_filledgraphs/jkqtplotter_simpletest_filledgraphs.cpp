@@ -25,15 +25,10 @@ int main(int argc, char* argv[])
     size_t columnR=ds->addColumn(256, "historam_R");
     size_t columnG=ds->addColumn(256, "historam_G");
     size_t columnB=ds->addColumn(256, "historam_B");
-    //      - in addition JKQTPColumn objects are generated, which can be used to access
-    //        the data in the columns
-    JKQTPColumn cG=ds->getColumn(columnG);
-    JKQTPColumn cR=ds->getColumn(columnR);
-    JKQTPColumn cB=ds->getColumn(columnB);
     //      - now all columns for RGB are initialized to 0
-    cR.setAll(0);
-    cG.setAll(0);
-    cB.setAll(0);
+    ds->setAll(columnG, 0);
+    ds->setAll(columnR, 0);
+    ds->setAll(columnB, 0);
 
     // 3. now we open a BMP-file and load it into a QImage
     QImage image(":/example.bmp");
@@ -41,15 +36,15 @@ int main(int argc, char* argv[])
     for (int y=0; y<image.height(); y++) {
         for (int x=0; x<image.width(); x++) {
             QRgb pix=image.pixel(x,y);
-            cR.incValue(qRed(pix), 1);
-            cG.incValue(qGreen(pix), 1);
-            cB.incValue(qBlue(pix), 1);
+            ds->inc(columnR, qRed(pix), 1);
+            ds->inc(columnG, qGreen(pix), 1);
+            ds->inc(columnB, qBlue(pix), 1);
         }
     }
     // ... and normalize histograms
-    cR.scale(100.0/static_cast<double>(image.width()*image.height()));
-    cG.scale(100.0/static_cast<double>(image.width()*image.height()));
-    cB.scale(100.0/static_cast<double>(image.width()*image.height()));
+    ds->scaleColumnValues(columnR, 100.0/static_cast<double>(image.width()*image.height()));
+    ds->scaleColumnValues(columnG, 100.0/static_cast<double>(image.width()*image.height()));
+    ds->scaleColumnValues(columnB, 100.0/static_cast<double>(image.width()*image.height()));
 
 
     // 4. now we add three semi-transparent, filled curve plots, one for each histogram

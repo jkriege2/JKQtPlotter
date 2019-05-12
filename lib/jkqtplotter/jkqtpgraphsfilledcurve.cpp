@@ -148,7 +148,7 @@ bool JKQTPFilledVerticalRangeGraph::getYMinMax(double &miny, double &maxy, doubl
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
+    int imax=static_cast<int>(qMin(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))), datastore->getRows(static_cast<size_t>(yColumn2))));
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -202,7 +202,7 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
 
         QBrush b=getFillBrush(painter, parent);
 
-        int imax=static_cast<int>(qMin(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()), datastore->getColumn(static_cast<size_t>(yColumn2)).getRows()));
+        int imax=static_cast<int>(qMin(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))), datastore->getRows(static_cast<size_t>(yColumn2))));
         int imin=0;
         if (imax<imin) {
             int h=imin;

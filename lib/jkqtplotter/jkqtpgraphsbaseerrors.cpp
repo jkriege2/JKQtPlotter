@@ -82,7 +82,7 @@ void JKQTPGraphErrorStyleMixin::setErrorColorFromGraphColor(QColor graphColor)
 QPen JKQTPGraphErrorStyleMixin::getErrorLinePen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
 {
     QPen p=m_errorLinePen;
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_errorLineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_errorLineWidth)));
     return p;
 }
 
@@ -282,8 +282,8 @@ void JKQTPGraphErrorStyleMixin::intPlotXYErrorIndicators(JKQTPEnhancedPainter& p
     painter.setPen(p);
 
     size_t imaxx=0, imaxy=0;
-    if (xColumn>=0) imaxx=datastore->getColumn(static_cast<size_t>(xColumn)).getRows();
-    if (yColumn>=0) imaxy=datastore->getColumn(static_cast<size_t>(yColumn)).getRows();
+    if (xColumn>=0) imaxx=datastore->getRows(static_cast<size_t>(xColumn));
+    if (yColumn>=0) imaxy=datastore->getRows(static_cast<size_t>(yColumn));
     size_t imax=qMin(imaxx, imaxy);
     size_t imin=0;
     if (imax<imin) {
@@ -630,7 +630,7 @@ void JKQTPXGraphErrorData::setXErrorColumnLower(int __value) {
 
 double JKQTPXGraphErrorData::getXErrorU(int i, JKQTPDatastore *ds) const
 {
-    if (ds && xErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getColumn(xErrorColumn).getRows())) {
+    if (ds && xErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getRows(xErrorColumn))) {
         return ds->get(xErrorColumn, static_cast<size_t>(i));
     }
     return 0.0;
@@ -640,9 +640,9 @@ double JKQTPXGraphErrorData::getXErrorL(int i, JKQTPDatastore *ds) const
 {
     if (ds) {
         if (xErrorSymmetric) {
-            if (xErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getColumn(xErrorColumn).getRows())) return ds->get(xErrorColumn, static_cast<size_t>(i));
+            if (xErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getRows(xErrorColumn))) return ds->get(xErrorColumn, static_cast<size_t>(i));
         } else {
-            if (xErrorColumnLower>=0 && i>=0 && i<static_cast<int>(ds->getColumn(xErrorColumnLower).getRows())) return ds->get(xErrorColumnLower, static_cast<size_t>(i));
+            if (xErrorColumnLower>=0 && i>=0 && i<static_cast<int>(ds->getRows(xErrorColumnLower))) return ds->get(xErrorColumnLower, static_cast<size_t>(i));
         }
     }
     return 0.0;
@@ -706,7 +706,7 @@ void JKQTPYGraphErrorData::setYErrorColumnLower(int __value) {
 
 double JKQTPYGraphErrorData::getYErrorU(int i, JKQTPDatastore *ds) const
 {
-    if (ds && yErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getColumn(yErrorColumn).getRows())) {
+    if (ds && yErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getRows(yErrorColumn))) {
         return ds->get(yErrorColumn, static_cast<size_t>(i));
     }
     return 0.0;
@@ -716,9 +716,9 @@ double JKQTPYGraphErrorData::getYErrorL(int i, JKQTPDatastore *ds) const
 {
     if (ds) {
         if (yErrorSymmetric) {
-            if (yErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getColumn(yErrorColumn).getRows())) return ds->get(yErrorColumn, static_cast<size_t>(i));
+            if (yErrorColumn>=0 && i>=0 && i<static_cast<int>(ds->getRows(yErrorColumn))) return ds->get(yErrorColumn, static_cast<size_t>(i));
         } else {
-            if (yErrorColumnLower>=0 && i>=0 && i<static_cast<int>(ds->getColumn(yErrorColumnLower).getRows())) return ds->get(yErrorColumnLower, static_cast<size_t>(i));
+            if (yErrorColumnLower>=0 && i>=0 && i<static_cast<int>(ds->getRows(yErrorColumnLower))) return ds->get(yErrorColumnLower, static_cast<size_t>(i));
         }
     }
     return 0.0;

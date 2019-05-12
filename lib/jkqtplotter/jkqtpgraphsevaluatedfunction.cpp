@@ -263,7 +263,7 @@ void JKQTPXFunctionLineGraph::collectParameters()
         iparams.clear();
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=datastore->getColumn(parameterColumn).getRows();
+        int imax=datastore->getRows(parameterColumn);
 
         for (int i=imin; i<imax; i++) {
             double xv=datastore->get(parameterColumn,i);
@@ -286,7 +286,7 @@ void JKQTPXFunctionLineGraph::collectParameters()
         ierrorparams.clear();
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=datastore->getColumn(errorParameterColumn).getRows();
+        int imax=datastore->getRows(errorParameterColumn);
 
         for (int i=imin; i<imax; i++) {
             double xv=datastore->get(errorParameterColumn,i);
@@ -361,7 +361,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
         QPen ep=painter.pen();
         ep.setColor(errorColor);
-        ep.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
+        ep.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
         ep.setStyle(errorStyle);
         ep.setJoinStyle(Qt::RoundJoin);
 
@@ -540,7 +540,7 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
         QPen ep=painter.pen();
         ep.setColor(errorColor);
-        ep.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
+        ep.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, errorLineWidth*parent->getLineWidthMultiplier())));
         ep.setStyle(errorStyle);
         ep.setJoinStyle(Qt::RoundJoin);
 
@@ -723,7 +723,7 @@ QBrush JKQTPXFunctionLineGraph::getErrorBrush(JKQTPEnhancedPainter& /*painter*/)
 QPen JKQTPXFunctionLineGraph::getErrorLinePen(JKQTPEnhancedPainter& painter) const {
     QPen p;
     p.setColor(errorColor);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*errorLineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*errorLineWidth)));
     p.setStyle(errorStyle);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

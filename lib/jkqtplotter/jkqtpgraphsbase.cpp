@@ -131,7 +131,7 @@ bool JKQTPGraph::getDataMinMax(int column, double &minx, double &maxx, double &s
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=static_cast<int>(datastore->getColumn(column).getRows());
+    int imax=static_cast<int>(datastore->getRows(column));
 
     if (imin<0) imin=0;
     if (imax<0) imax=0;
@@ -402,6 +402,42 @@ void JKQTPXYGraph::setDataSortOrder(int __value) {
     sortData=static_cast<DataSortOrder>(__value);
 }
 
+void JKQTPXYGraph::setXYColumns(size_t xCol, size_t yCol)
+{
+    setXColumn(xCol);
+    setYColumn(yCol);
+}
+
+void JKQTPXYGraph::setXYColumns(int xCol, int yCol)
+{
+    setXColumn(xCol);
+    setYColumn(yCol);
+}
+
+void JKQTPXYGraph::setXYColumns(std::pair<int, int> xyColPair)
+{
+    setXColumn(xyColPair.first);
+    setYColumn(xyColPair.second);
+}
+
+void JKQTPXYGraph::setXYColumns(std::pair<size_t, size_t> xyColPair)
+{
+    setXColumn(xyColPair.first);
+    setYColumn(xyColPair.second);
+}
+
+void JKQTPXYGraph::setXYColumns(QPair<int, int> xyColPair)
+{
+    setXColumn(xyColPair.first);
+    setYColumn(xyColPair.second);
+}
+
+void JKQTPXYGraph::setXYColumns(QPair<size_t, size_t> xyColPair)
+{
+    setXColumn(xyColPair.first);
+    setYColumn(xyColPair.second);
+}
+
 
 double JKQTPXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSystem, QString *label, HitTestMode mode) const
 {
@@ -547,7 +583,7 @@ bool JKQTPSingleColumnGraph::getIndexRange(int &imin, int &imax) const
 
     JKQTPDatastore* datastore=parent->getDatastore();
     imin=0;
-    imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
+    imax=static_cast<int>(datastore->getRows(static_cast<size_t>(dataColumn)));
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -617,7 +653,7 @@ bool JKQTPXYGraph::getIndexRange(int& imin, int& imax) const
 
     JKQTPDatastore* datastore=parent->getDatastore();
     imin=0;
-    imax=static_cast<int>(qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows()));
+    imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     if (imax<imin) {
         int h=imin;
         imin=imax;

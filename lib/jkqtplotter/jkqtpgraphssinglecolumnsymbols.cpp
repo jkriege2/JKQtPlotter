@@ -102,7 +102,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-        int imax=static_cast<int>(datastore->getColumn(static_cast<size_t>(dataColumn)).getRows());
+        int imax=static_cast<int>(datastore->getRows(static_cast<size_t>(dataColumn)));
         int imin=0;
         if (imax<imin) {
             int h=imin;

@@ -352,8 +352,8 @@ int JKQTPColumnOverlayImageEnhanced::getImageColumn() const
     return this->imageColumn;
 }
 void JKQTPColumnOverlayImageEnhanced::draw(JKQTPEnhancedPainter &painter) {
-    double* d=parent->getDatastore()->getColumn(imageColumn).getPointer(0);
-    size_t imgSize=parent->getDatastore()->getColumn(imageColumn).getRows();
+    double* d=parent->getDatastore()->getColumnPointer(imageColumn,0);
+    size_t imgSize=parent->getDatastore()->getRows(imageColumn);
     this->data=(bool*)malloc(imgSize*sizeof(bool));
     this->Ny=imgSize/this->Nx;
     for (size_t i=0; i<imgSize; i++) {
