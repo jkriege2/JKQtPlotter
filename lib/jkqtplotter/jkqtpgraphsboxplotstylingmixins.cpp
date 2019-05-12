@@ -415,7 +415,7 @@ QBrush JKQTPGraphBoxplotStyleMixin::getWhiskerLineBrush() const
 QPen JKQTPGraphBoxplotStyleMixin::getWhiskerPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
 {
     QPen pw=m_whiskerLinePen;
-    pw.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*whiskerLineWidth)));
+    pw.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*whiskerLineWidth)));
     pw.setJoinStyle(Qt::MiterJoin);
     pw.setCapStyle(Qt::FlatCap);
     return pw;
@@ -513,7 +513,7 @@ QBrush JKQTPGraphBoxplotStyleMixin::getWhiskerCapLineBrush() const
 QPen JKQTPGraphBoxplotStyleMixin::getWhiskerCapPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
 {
     QPen pw=m_whiskerCapLinePen;
-    pw.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*whiskerCapLineWidth)));
+    pw.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*whiskerCapLineWidth)));
     pw.setJoinStyle(Qt::MiterJoin);
     return pw;
 }
@@ -529,7 +529,7 @@ QPen JKQTPGraphBoxplotStyleMixin::getWhiskerCapPen(JKQTPEnhancedPainter &painter
 QPen JKQTPGraphBoxplotStyleMixin::getMedianPen(JKQTPEnhancedPainter &painter, JKQTBasePlotter *parent) const
 {
     QPen pw=m_medianLinePen;
-    pw.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*medianLineWidth)));
+    pw.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*medianLineWidth)));
     pw.setJoinStyle(Qt::MiterJoin);
     pw.setCapStyle(Qt::FlatCap);
     return pw;
@@ -537,7 +537,7 @@ QPen JKQTPGraphBoxplotStyleMixin::getMedianPen(JKQTPEnhancedPainter &painter, JK
 
 QPen JKQTPGraphBoxplotStyleMixin::getMeanSymbolPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const {
     QPen p=m_meanSymbolLinePen;
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_meanSymbolLineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_meanSymbolLineWidth)));
     p.setStyle(Qt::SolidLine);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
@@ -546,7 +546,7 @@ QPen JKQTPGraphBoxplotStyleMixin::getMeanSymbolPen(JKQTPEnhancedPainter& painter
 
 QPen JKQTPGraphBoxplotStyleMixin::getMeanLinePen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const {
     QPen p=m_meanSymbolLinePen;
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_meanSymbolLineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_meanSymbolLineWidth)));
     p.setJoinStyle(Qt::MiterJoin);
     p.setCapStyle(Qt::FlatCap);
     return p;

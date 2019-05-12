@@ -64,7 +64,7 @@ void JKQTPImpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         QPen p=getLinePen(painter, parent);
         p.setCapStyle(Qt::FlatCap);
 
-        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
+        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
         int imin=0;
         if (imax<imin) {
             int h=imin;
@@ -201,7 +201,7 @@ void JKQTPImpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         QPen p=getLinePen(painter, parent);
         p.setCapStyle(Qt::FlatCap);
 
-        int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
+        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
         int imin=0;
         if (imax<imin) {
             int h=imin;

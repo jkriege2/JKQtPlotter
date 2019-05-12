@@ -135,7 +135,7 @@ QBrush JKQTPGraphLineStyleMixin::getLineBrush() const
 
 QPen JKQTPGraphLineStyleMixin::getLinePen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const {
     QPen p=m_linePen;
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_lineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_lineWidth)));
     return p;
 }
 
@@ -239,7 +239,7 @@ double JKQTPGraphSymbolStyleMixin::getSymbolLineWidth() const
 QPen JKQTPGraphSymbolStyleMixin::getSymbolPen(JKQTPEnhancedPainter& painter, JKQTBasePlotter* parent) const {
     QPen p;
     p.setColor(m_symbolColor);
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_symbolLineWidth)));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter, parent->getLineWidthMultiplier()*m_symbolLineWidth)));
     p.setStyle(Qt::SolidLine);
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

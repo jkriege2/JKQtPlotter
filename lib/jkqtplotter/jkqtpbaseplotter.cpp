@@ -957,11 +957,11 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i) const{
     p.setFillColor(JKQTPGetDerivedColor(plotterStyle.graphFillColorDerivationMode, p.color()));
     p.setErrorLineColor(JKQTPGetDerivedColor(plotterStyle.graphErrorColorDerivationMode, p.color()));
     p.setErrorFillColor(JKQTPGetDerivedColor(plotterStyle.graphErrorFillColorDerivationMode, p.errorColor()));
-    p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
-    p.setErrorLineWidth(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
-    p.setSymbolSize(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolSize));
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
+    p.setErrorLineWidth(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
+    p.setSymbolSize(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolSize));
     p.setSymbolFillColor(JKQTPGetDerivedColor(plotterStyle.graphFillColorDerivationMode, p.color()));
-    p.setSymbolLineWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolLineWidth));
+    p.setSymbolLineWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolLineWidth));
     p.setStyle(plotterStyle.defaultGraphPenStyles[styleI]);
     p.setSymbolType(plotterStyle.defaultGraphSymbols[symbolI]);
     p.setFillStyle(plotterStyle.defaultGraphFillStyles[brushI]);
@@ -1088,7 +1088,7 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             QPen pf=painter.pen();
             pf.setColor(plotterStyle.keyStyle.frameColor);
-            pf.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, pt2px(painter, plotterStyle.keyStyle.frameWidth*lineWidthMultiplier)));
+            pf.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, pt2px(painter, plotterStyle.keyStyle.frameWidth*lineWidthMultiplier)));
             pf.setStyle(Qt::SolidLine);
 
             painter.setBrush(plotterStyle.keyStyle.backgroundBrush);
@@ -1162,7 +1162,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays)
     if (plotterStyle.plotFrameVisible) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         QPen p(plotterStyle.plotFrameColor);
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, pt2px(painter, plotterStyle.plotFrameWidth*lineWidthMultiplier)));
+        p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, pt2px(painter, plotterStyle.plotFrameWidth*lineWidthMultiplier)));
         painter.setPen(p);
         painter.setBrush(plotterStyle.plotBackgroundBrush);
         if (plotterStyle.plotFrameRounding<=0) {

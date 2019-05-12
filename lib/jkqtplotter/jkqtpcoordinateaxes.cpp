@@ -1148,11 +1148,11 @@ void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen pg=painter.pen();
     pg.setColor(axisStyle.gridColor);
-    pg.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.gridWidth*parent->getLineWidthMultiplier())));
+    pg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.gridWidth*parent->getLineWidthMultiplier())));
     pg.setStyle(axisStyle.gridStyle);
     QPen pmg=painter.pen();
     pmg.setColor(axisStyle.minorGridColor);
-    pmg.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter,  axisStyle.minorGridWidth*parent->getLineWidthMultiplier())));
+    pmg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter,  axisStyle.minorGridWidth*parent->getLineWidthMultiplier())));
     pmg.setStyle(axisStyle.minorGridStyle);
     //double top=x2p(axismax);
     //double bottom=x2p(axismin);
@@ -1343,14 +1343,14 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen pmain=painter.pen();
     pmain.setColor(axisStyle.axisColor);
-    pmain.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidth*parent->getLineWidthMultiplier())));
+    pmain.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidth*parent->getLineWidthMultiplier())));
     pmain.setStyle(Qt::SolidLine);
 
     QPen ptick=pmain;
-    ptick.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.tickWidth*parent->getLineWidthMultiplier())));
+    ptick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.tickWidth*parent->getLineWidthMultiplier())));
 
     QPen pmtick=ptick;
-    pmtick.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
+    pmtick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
 
     getParentMathText()->setFontSize(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
@@ -1364,7 +1364,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             JKQTPAutoOutputTimer jkaat(QString("JKQTPEnhancedPainter[%1]::drawAxes(): 0Axis").arg(objectName()));
         #endif
         QPen pmain1=pmain;
-        pmain1.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidthZeroAxis*parent->getLineWidthMultiplier())));
+        pmain1.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidthZeroAxis*parent->getLineWidthMultiplier())));
         pmain1.setColor(axisStyle.colorZeroAxis);
         pmain1.setStyle(axisStyle.styleZeroAxis);
         painter.setPen(pmain1);
@@ -1771,11 +1771,11 @@ void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
     }
     QPen pg=painter.pen();
     pg.setColor(axisStyle.gridColor);
-    pg.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.gridWidth*parent->getFontSizeMultiplier())));
+    pg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.gridWidth*parent->getFontSizeMultiplier())));
     pg.setStyle(axisStyle.gridStyle);
     QPen pmg=painter.pen();
     pmg.setColor(axisStyle.minorGridColor);
-    pmg.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorGridWidth*parent->getLineWidthMultiplier())));
+    pmg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorGridWidth*parent->getLineWidthMultiplier())));
     pmg.setStyle(axisStyle.minorGridStyle);
 
     double x=tickStart;
@@ -1926,14 +1926,14 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     QPen pmain=painter.pen();
     pmain.setColor(axisStyle.axisColor);
-    pmain.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidth*parent->getLineWidthMultiplier())));
+    pmain.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidth*parent->getLineWidthMultiplier())));
     pmain.setStyle(Qt::SolidLine);
 
     QPen ptick=pmain;
-    ptick.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.tickWidth*parent->getLineWidthMultiplier())));
+    ptick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.tickWidth*parent->getLineWidthMultiplier())));
 
     QPen pmtick=ptick;
-    pmtick.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
+    pmtick.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorTickWidth*parent->getLineWidthMultiplier())));
 
     getParentMathText()->setFontSize(this->axisStyle.tickLabelFontSize*parent->getFontSizeMultiplier());
     getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
@@ -1947,7 +1947,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
             JKQTPAutoOutputTimer jkaat(QString("JKQTPHorizontalAxis[%1]::drawAxes(): 0Axis").arg(objectName()));
         #endif
         QPen pmain1=pmain;
-        pmain1.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidthZeroAxis*parent->getLineWidthMultiplier())));
+        pmain1.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidthZeroAxis*parent->getLineWidthMultiplier())));
         pmain1.setColor(axisStyle.colorZeroAxis);
         pmain1.setStyle(axisStyle.styleZeroAxis);
         painter.setPen(pmain1);

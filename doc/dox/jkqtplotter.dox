@@ -44,6 +44,8 @@ data sources (internal or external memory arrays. Later on it is simply possible
 using the column number and the not a link to the actual data array, as the link is stored in these
 classes.
 
+\see \ref JKQTPlotterAdvancedJKQTPDatastore for a detailed description of how to use this class for data management!
+
 \defgroup jkqtpopencvinterface OpenCV Interfaceing Tools
 \ingroup jkqtpdatastorage
 

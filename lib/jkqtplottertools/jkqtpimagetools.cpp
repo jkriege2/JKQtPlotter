@@ -1942,7 +1942,7 @@ void JKQTPColorPaletteTools::cbDrawOutside(JKQTPEnhancedPainter& painter, QRect 
          painter.drawImage(cb, b.mirrored(true, false));
          QPen p=painter.pen();
          p.setColor(colorBarRightAxis->getAxisColor());
-         p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, cbParent->pt2px(painter, colorBarRightAxis->getLineWidth()*cbParent->getLineWidthMultiplier())));
+         p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, cbParent->pt2px(painter, colorBarRightAxis->getLineWidth()*cbParent->getLineWidthMultiplier())));
          painter.setPen(p);
          painter.drawRect(cb);
 
@@ -1995,7 +1995,7 @@ void JKQTPColorPaletteTools::cbDrawOutside(JKQTPEnhancedPainter& painter, QRect 
          painter.drawImage(cb, b.transformed(rm));
          QPen p=painter.pen();
          p.setColor(colorBarTopAxis->getAxisColor());
-         p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, cbParent->pt2px(painter, colorBarTopAxis->getLineWidth()*cbParent->getLineWidthMultiplier())));
+         p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, cbParent->pt2px(painter, colorBarTopAxis->getLineWidth()*cbParent->getLineWidthMultiplier())));
          painter.setPen(p);
          painter.drawRect(cb);
 

@@ -123,7 +123,7 @@ void JKQTPHorizontalRange::draw(JKQTPEnhancedPainter& painter) {
         QPen p=painter.pen();
         p.setColor(centerColor);
         p.setStyle(centerStyle);
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
+        p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
         painter.setPen(p);
         painter.drawLine(QLineF(mi, c, ma, c));
     }
@@ -411,7 +411,7 @@ void JKQTPVerticalRange::draw(JKQTPEnhancedPainter& painter) {
         QPen p=painter.pen();
         p.setColor(centerColor);
         p.setStyle(centerStyle);
-        p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
+        p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, centerLineWidth*parent->getLineWidthMultiplier())));
         painter.setPen(p);
         painter.drawLine(QLineF(c, mi, c, ma));
     }

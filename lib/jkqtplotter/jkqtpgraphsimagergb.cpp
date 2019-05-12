@@ -425,7 +425,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 painter.drawImage(cb, l[li].paletteImage.mirrored(true, false));
                 QPen p=painter.pen();
                 p.setColor(l[li].colorBarRightAxis->getAxisColor());
-                p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarRightAxis->getLineWidth()*parent->getLineWidthMultiplier())));
+                p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarRightAxis->getLineWidth()*parent->getLineWidthMultiplier())));
                 painter.setPen(p);
                 painter.drawRect(cb);
 
@@ -456,7 +456,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
                 painter.drawImage(cb, l[li].paletteImage.transformed(mt));
                 QPen p=painter.pen();
                 p.setColor(l[li].colorBarTopAxis->getAxisColor());
-                p.setWidthF(qMax(JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarTopAxis->getLineWidth()*parent->getLineWidthMultiplier())));
+                p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, l[li].colorBarTopAxis->getLineWidth()*parent->getLineWidthMultiplier())));
                 painter.setPen(p);
                 painter.drawRect(cb);
 
@@ -1250,19 +1250,19 @@ void JKQTPColumnRGBMathImage::ensureImageData()
     this->datatype=JKQTPMathImageBase::DoubleArray;
     this->datatypeG=JKQTPMathImageBase::DoubleArray;
     this->datatypeB=JKQTPMathImageBase::DoubleArray;
-    this->data=parent->getDatastore()->getColumn(imageRColumn).getPointer(0);
-    this->dataG=parent->getDatastore()->getColumn(imageGColumn).getPointer(0);
-    this->dataB=parent->getDatastore()->getColumn(imageBColumn).getPointer(0);
-    /*if (Nx*Ny==0 || Nx*Ny>parent->getDatastore()->getColumn(imageRColumn).getRows()) {
+    this->data=parent->getDatastore()->getColumnPointer(imageRColumn,0);
+    this->dataG=parent->getDatastore()->getColumnPointer(imageGColumn,0);
+    this->dataB=parent->getDatastore()->getColumnPointer(imageBColumn,0);
+    /*if (Nx*Ny==0 || Nx*Ny>parent->getDatastore()->getRows(imageRColumn)) {
         if (Nx>0) {
-            Ny=parent->getDatastore()->getColumn(imageRColumn).getRows()/this->Nx;
+            Ny=parent->getDatastore()->getRows(imageRColumn)/this->Nx;
         } else {
-            Nx=parent->getDatastore()->getColumn(imageRColumn).getRows();
+            Nx=parent->getDatastore()->getRows(imageRColumn);
             Ny=1;
         }
     }*/
     this->datatypeModifier=JKQTPMathImageBase::DoubleArray;
-    this->dataModifier=parent->getDatastore()->getColumn(modifierColumn).getPointer(0);
+    this->dataModifier=parent->getDatastore()->getColumnPointer(modifierColumn,0);
 }
 
 

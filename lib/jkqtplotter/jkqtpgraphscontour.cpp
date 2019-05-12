@@ -216,7 +216,7 @@ bool JKQTPContour::getRelativeLevels() const
 void JKQTPContour::setImageColumn(size_t columnID)
 {
     datatype=JKQTPMathImageBase::DoubleArray;
-    data=parent->getDatastore()->getColumn(columnID).getPointer(0);
+    data=parent->getDatastore()->getColumnPointer(columnID,0);
 }
 
 

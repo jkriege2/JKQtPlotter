@@ -155,7 +155,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
 
-    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
+    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
     int imin=0;
 
     if (imax<imin) {
@@ -353,7 +353,7 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
 
-    int imax=qMin(datastore->getColumn(static_cast<size_t>(xColumn)).getRows(), datastore->getColumn(static_cast<size_t>(yColumn)).getRows());
+    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
     int imin=0;
 
     if (imax<imin) {

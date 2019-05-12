@@ -59,12 +59,21 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 
 
-## Plot Layout & Styling
+## Data Management
+
+| Screenshot    | Description   | Notes         |
+|:-------------:| ------------- | ------------- |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | [Advanced Usage of JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | Advanced Data Management with JKQTPDatastore |
+
+
+
+
+## More Complex Examples
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | [Layouting Several Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_styling_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling) | [Styling of JKQTPlotter](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling) | Modifying different Aspects of the Styling of JKQTPlotter |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_distributionplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) | [Plotting a Statistical Distribution of Data](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) | Combines several different graphs to draw random values, their distribution and some statistical properties |
 
 
 

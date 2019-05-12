@@ -15,20 +15,12 @@ And three columns with 256 entries each, which will be filled with the R-, G- an
     size_t columnB=ds->addColumn(256, "historam_B");
 ```
 	
-In this example we will access the data in the internal datastore directly. This access is possible through objects of type JKQTPColumn, which is a proxy to the data in one of the columns in a `JKQTdatastore`:
-
-```.cpp
-    JKQTPColumn cG=ds->getColumn(columnG);
-    JKQTPColumn cR=ds->getColumn(columnR);
-    JKQTPColumn cB=ds->getColumn(columnB);
-```
-
 In order to calculate the histograms, first all enries in the columns are set to 0:
 
 ```.cpp
-    cR.setAll(0);
-    cG.setAll(0);
-    cB.setAll(0);
+    ds->setAll(columnG, 0);
+    ds->setAll(columnR, 0);
+    ds->setAll(columnB, 0);
 ```
 
 Finally the histogram is calculated:
@@ -38,14 +30,14 @@ Finally the histogram is calculated:
     for (int y=0; y<image.height(); y++) {
         for (int x=0; x<image.width(); x++) {
             QRgb pix=image.pixel(x,y);
-            cR.incValue(qRed(pix), 1);
-            cG.incValue(qGreen(pix), 1);
-            cB.incValue(qBlue(pix), 1);
+            ds->inc(columnR, qRed(pix), 1);
+            ds->inc(columnG, qGreen(pix), 1);
+            ds->inc(columnB, qBlue(pix), 1);
         }
     }
-    cR.scale(100.0/static_cast<double>(image.width()*image.height()));
-    cG.scale(100.0/static_cast<double>(image.width()*image.height()));
-    cB.scale(100.0/static_cast<double>(image.width()*image.height()));
+    ds->scaleColumnValues(columnR, 100.0/static_cast<double>(image.width()*image.height()));
+    ds->scaleColumnValues(columnG, 100.0/static_cast<double>(image.width()*image.height()));
+    ds->scaleColumnValues(columnB, 100.0/static_cast<double>(image.width()*image.height()));
 ```
 
 Finally three `JKQTPFilledCurveXGraph` objects are generated and added to the plot (here we show the code for the R-channel only):
