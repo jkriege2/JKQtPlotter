@@ -275,7 +275,7 @@ Then you can plot these as a parametrized scatter graph (`JKQTPXYParametrizedSca
     imggraph->setHeight(1.5);
     imggraph->setTitle(QObject::tr("imgColumn"));
 ```
-The result will look like this:
+The result will look like this (`JKQTPXYParametrizedScatterGraph` on the left and `JKQTPColumnMathImage` on the right):
 
 ![simpletest_datastore_image](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_image.png)
 
