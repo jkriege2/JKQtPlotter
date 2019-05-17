@@ -73,10 +73,10 @@ class JKQTPDatastoreModel; // forward declaration
  =C1== =C2== =C3==                      =CN==  =C1== =C2== =C3==                      =CN==
 \endverbatim
  */
-enum JKQTPDatastoreItemFormat {
-    JKQTPSingleColumn,                /*!< \brief a 1D vector of doubles. (default option) */
-    JKQTPMatrixColumn,                /*!< \brief a 1D vector of double that represents a number of columns. The data is store column after column. */
-    JKQTPMatrixRow                    /*!< \brief a 1D vector of double that represents a number of rows (C standard representation of matrices). The data is stored row after row.*/
+enum class JKQTPDatastoreItemFormat {
+    SingleColumn,                /*!< \brief a 1D C-array of doubles. (default option) */
+    MatrixColumn,                /*!< \brief a 1D C-array of doubles that represents a number of columns. The data is store column after column (=column-major). */
+    MatrixRow,                   /*!< \brief a 1D C-array of doubles that represents a number of rows (C standard representation of matrices). The data is stored row after row (=row-major).*/
 };
 
 /** \brief This class manages chunks of memory that are used for column data in JKQTBasePlotter descendents
@@ -236,9 +236,9 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         inline double* getColumnPointer(int column, size_t row=0);
         /** \brief returns the width of the image, represented by \a column (in row-major ordering).
          *         Internally this returns the imageColumns or image width, if set in the column */
-        inline size_t getColumnImageWidth(int column);
+        inline size_t getColumnImageWidth(int column) const;
         /** \brief returns the height of the image, represented by \a column (in row-major ordering) */
-        inline size_t getColumnImageHeight(int column);
+        inline size_t getColumnImageHeight(int column) const;
 
         /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
         inline double get(size_t column, size_t row) const ;
@@ -270,6 +270,17 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         inline void set(size_t column, size_t row, double value);
         /** \brief sets the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!) */
         inline void set(int column, size_t row, double value);
+        /** \brief adds a value \a value to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards */
+        inline void appendToColumn(size_t column, double value);
+        /** \brief adds a values in cintainer \a values to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards
+         *
+         *  \tparam TContainer a container with standard iterators
+         *  \param colum the column to extend
+         *  \param vales vector with data to append to column \a column
+         */
+        template<class TContainer>
+        inline void appendFromContainerToColumn(size_t column, const TContainer& values);
+
         /** \brief returns the value at position (\c x, \c y) in the \a column-th column, which is interpreted with the imageWidth stored in that column  */
         inline double getPixel(size_t column, size_t x, size_t y) const ;
         /** \brief returns the value at position (\c x, \c y) in the \a column-th column, which is interpreted with the imageWidth stored in that column  */
@@ -833,10 +844,12 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         size_t addColumnCalculatedFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double(double,double)>& f, const QString& name=QString(""));
 
         /** \brief returns the number of (logical) columns currently managed by the datastore */
-        inline size_t getColumnCount() { return static_cast<size_t>(columns.size()); }
+        inline size_t getColumnCount() const { return static_cast<size_t>(columns.size()); }
 
         /** \brief returns a list with all available column IDs */
-        inline QList<size_t> getColumnIDs() { return columns.keys(); }
+        inline QList<size_t> getColumnIDs() const { return columns.keys(); }
+        /** \brief returns a list with all available column IDs */
+        QVector<int> getColumnIDsIntVec() const;
 
         /** \brief return the num of the first column  with the given name, or -1 if none was found */
         int getColumnNum(const QString& name);
@@ -846,7 +859,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
 
 
         /** \brief returns the maximum number of rows in all columns */
-        size_t getMaxRows();
+        size_t getMaxRows() const;
 
         /** \brief save contents of datastore as Comma Separated Values (CSV) file
          *
@@ -865,7 +878,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *  - ...
          * .
          */
-        void saveCSV(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& separator=QString(", "), const QString& decimal_separator=QString("."), const QString& comment=QString("#"), const QString& aroundStrings=QString(""), char floatformat='g');
+        void saveCSV(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& separator=QString(", "), const QString& decimal_separator=QString("."), const QString& comment=QString("#"), const QString& aroundStrings=QString(""), char floatformat='g') const;
         /** \brief save contents of datastore as Comma Separated Values (CSV) file
          *
          * \param txt QTextStream to write to
@@ -883,7 +896,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *  - ...
          * .
          */
-        void saveCSV(QTextStream& txt, const QSet<int>& userColumns=QSet<int>(), const QString& separator=QString(", "), const QString& decimal_separator=QString("."), const QString& comment=QString("#"), const QString& aroundStrings=QString(""), char floatformat='g');
+        void saveCSV(QTextStream& txt, const QSet<int>& userColumns=QSet<int>(), const QString& separator=QString(", "), const QString& decimal_separator=QString("."), const QString& comment=QString("#"), const QString& aroundStrings=QString(""), char floatformat='g') const;
 
         /** \brief save contents of datastore as <a href="http://en.wikipedia.org/wiki/SYmbolic_LinK_(SYLK)">SYLK file (SYmbolic LinK)</a>
          *
@@ -891,14 +904,14 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          * \param floatformat a \c printf format string that is used to print floating point numbers to the file
          */
-        void saveSYLK(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& floatformat=QString("%10.10lf"));
+        void saveSYLK(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& floatformat=QString("%10.10lf")) const;
 
         /** \brief return contents of datastore as QList<QVector<double> >, i.e. a list of column-vectors
          *
          * \param columnNames if \c !=nullptr this will afterwards conatin the column titles
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
-        QList<QVector<double> > getData(QStringList* columnNames=nullptr, const QSet<int>& userColumns=QSet<int>());
+        QList<QVector<double> > getData(QStringList* columnNames=nullptr, const QSet<int>& userColumns=QSet<int>()) const;
 
         /** \brief save contents of datastore as <a href="http://www.fileformat.info/format/dif/egff.htm">DIF file (data interchange format)</a>
          *
@@ -906,20 +919,20 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          * \param floatformat a \c printf format string that is used to print floating point numbers to the file
          */
-        void saveDIF(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& floatformat=QString("%10.10lf"));
+        void saveDIF(const QString& filename, const QSet<int>& userColumns=QSet<int>(), const QString& floatformat=QString("%10.10lf")) const;
 
         /** \brief save contents of datastore as a Matlab script
          *
          * \param filename the file to create
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
-        void saveMatlab(const QString& filename, const QSet<int>& userColumns=QSet<int>());
+        void saveMatlab(const QString& filename, const QSet<int>& userColumns=QSet<int>()) const;
         /** \brief save contents of datastore as a Matlab script
          *
          * \param txt the QTextStream to write to
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
-        void saveMatlab(QTextStream& txt, const QSet<int>& userColumns=QSet<int>());
+        void saveMatlab(QTextStream& txt, const QSet<int>& userColumns=QSet<int>()) const;
 
         /** \brief return a list with all columns available in the datastore */
         QStringList getColumnNames() const;
@@ -928,6 +941,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         friend class JKQTPDatastoreItem;
         friend class JKQTPDatastoreModel;
 };
+
 
 
 
@@ -1053,7 +1067,9 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     }
 
     /** \brief returns a pointer to the datastore item representing this column */
-    inline JKQTPDatastoreItem* getDatastoreItem() const { return datastore->getItem(datastoreItem); }
+    inline JKQTPDatastoreItem* getDatastoreItem()  { return datastore->getItem(datastoreItem); }
+    /** \brief returns a pointer to the datastore item representing this column */
+    inline const JKQTPDatastoreItem* getDatastoreItem() const { return datastore->getItem(datastoreItem); }
 
     /** \brief copy data from the given array into the column
      *
@@ -1106,10 +1122,17 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
  */
 class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
   private:
+    enum class StorageType {
+        Internal,
+        External,
+        Vector
+    };
     /** \brief a pointer to the actual data */
     double* data;
+    /** \brief iif \a storageType is \c StorageType::Vector, the data is actually save here and data contains a pointer to the data in datavec */
+    QVector<double> datavec;
     /** \brief specifies whether the datastore manages the memory (\c true ) or whether the user application does this (\c false ) .*/
-    bool internal;
+    StorageType storageType;
     /** \brief Specifies whether memory for the data has been allocated. This is only used, when \c internal==true. */
     bool allocated;
     /** \brief as data may also point to a matrix, this specifies the number of columns in this element (default: 1) */
@@ -1127,12 +1150,12 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief class constructor: initializes the object for external data storage */
     JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
     /** \brief class constructor: initializes the object for external data storage */
-    JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool internal);
+    JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows, bool storageType);
     /** \brief class destructor: frees unfreed internal memory */
     ~JKQTPDatastoreItem();
 
-    /** \brief change the size of all columns to the givne number of rows. The data will be lost */
-    void resizeColumns(size_t rows);
+    /** \brief change the size of all columns to the givne number of rows. Returns \c true if the old data could be retained/saved and \c false if the old data was lost (which happens in most of the cases!) */
+    bool resizeColumns(size_t rows);
 
     /*! \brief returns the property rows ( \copybrief rows ). \details Description of the parameter rows is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::JKQTPDatastoreItemrows </BLOCKQUOTE>. \see JKQTPDatastoreItem::rows for more information */ \
     inline size_t getRows() const
@@ -1145,11 +1168,11 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline double get(size_t column, size_t row) {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPSingleColumn:
+            case JKQTPDatastoreItemFormat::SingleColumn:
               return data[row];
-            case JKQTPMatrixColumn:
+            case JKQTPDatastoreItemFormat::MatrixColumn:
               return data[column*rows+row];
-            case JKQTPMatrixRow:
+            case JKQTPDatastoreItemFormat::MatrixRow:
               return data[row*columns+column];
         }
         return 0;
@@ -1159,11 +1182,11 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline double* getPointer(size_t column, size_t row) {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPSingleColumn:
+            case JKQTPDatastoreItemFormat::SingleColumn:
               return &(data[row]);
-            case JKQTPMatrixColumn:
+            case JKQTPDatastoreItemFormat::MatrixColumn:
               return &(data[column*rows+row]);
-            case JKQTPMatrixRow:
+            case JKQTPDatastoreItemFormat::MatrixRow:
               return &(data[row*columns+column]);
         }
         return nullptr;
@@ -1172,11 +1195,11 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
     inline const double* getPointer(size_t column, size_t row) const {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPSingleColumn:
+            case JKQTPDatastoreItemFormat::SingleColumn:
               return &(data[row]);
-            case JKQTPMatrixColumn:
+            case JKQTPDatastoreItemFormat::MatrixColumn:
               return &(data[column*rows+row]);
-            case JKQTPMatrixRow:
+            case JKQTPDatastoreItemFormat::MatrixRow:
               return &(data[row*columns+column]);
         }
         return nullptr;
@@ -1184,16 +1207,62 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief set the data at the position (\a column, \a row ) to \a value. The column index specifies the column inside THIS item, not the global column number. */
     inline void set(size_t column, size_t row, double value) {
         if (data!=nullptr) switch(dataformat) {
-            case JKQTPSingleColumn:
+            case JKQTPDatastoreItemFormat::SingleColumn:
               data[row]=value;
               return;
-            case JKQTPMatrixColumn:
+            case JKQTPDatastoreItemFormat::MatrixColumn:
               data[column*rows+row]=value;
               return;
-            case JKQTPMatrixRow:
+            case JKQTPDatastoreItemFormat::MatrixRow:
               data[row*columns+column]=value;
               return;
         }
+    }
+
+    /** \brief adds a new row to the given column. Returns \c true on success and \c false else
+     *
+     * This operation is currently only possible, if \c storageType==StorageType::Vector ! */
+    inline bool push_back(size_t column, double value) {
+        if (storageType==StorageType::Vector && dataformat==JKQTPDatastoreItemFormat::SingleColumn && column==0) {
+            datavec.push_back(value);
+            rows=static_cast<size_t>(datavec.size());
+            data=datavec.data();
+            return true;
+        }
+        return false;
+    }
+
+    /** \brief adds a new row to the given column. Returns \c true on success and \c false else
+     *
+     * This operation is currently only possible, if \c storageType==StorageType::Vector ! */
+    inline bool append(size_t column, double value) {
+        return push_back(column, value);
+    }
+    /** \brief adds new rows to the given column. Returns \c true on success and \c false else
+     *
+     * This operation is currently only possible, if \c storageType==StorageType::Vector ! */
+    inline bool append(size_t column, const QVector<double>& values) {
+        if (storageType==StorageType::Vector && dataformat==JKQTPDatastoreItemFormat::SingleColumn && column==0) {
+            datavec.reserve(datavec.size()+values.size());
+            for (const double& d: values) datavec.push_back(d);
+            data=datavec.data();
+            rows=static_cast<size_t>(datavec.size());
+            return true;
+        }
+        return false;
+    }
+    /** \brief adds new rows to the given column. Returns \c true on success and \c false else
+     *
+     * This operation is currently only possible, if \c storageType==StorageType::Vector ! */
+    inline bool append(size_t column, const std::vector<double>& values) {
+        if (storageType==StorageType::Vector && dataformat==JKQTPDatastoreItemFormat::SingleColumn && column==0) {
+            datavec.reserve(static_cast<int>(datavec.size())+static_cast<int>(values.size()));
+            for (const double& d: values) datavec.push_back(d);
+            data=datavec.data();
+            rows=static_cast<size_t>(datavec.size());
+            return true;
+        }
+        return false;
     }
 };
 
@@ -1277,14 +1346,14 @@ double *JKQTPDatastore::getColumnPointer(int column, size_t row)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-size_t JKQTPDatastore::getColumnImageWidth(int column)
+size_t JKQTPDatastore::getColumnImageWidth(int column) const
 {
     if (column<0) return 0;
     return columns[static_cast<size_t>(column)].getImageColumns();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-size_t JKQTPDatastore::getColumnImageHeight(int column)
+size_t JKQTPDatastore::getColumnImageHeight(int column) const
 {
     if (column<0) return 0;
     return columns[static_cast<size_t>(column)].getRows()/columns[static_cast<size_t>(column)].getImageColumns();
@@ -1341,6 +1410,31 @@ inline void JKQTPDatastore::set(size_t column, size_t row, double value)  {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline void JKQTPDatastore::set(int column, size_t row, double value)  {
     set(static_cast<size_t>(column), static_cast<size_t>(row), value);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumn(size_t column, double value)
+{
+    bool ok=columns[column].getDatastoreItem()->append(columns[column].getDatastoreOffset(), value);
+    if (!ok) {
+        QVector<double> old_data=columns[column].copyData();
+        size_t itemID=addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size()+1)));
+        columns[column]=JKQTPColumn(this, columns[column].getName(), itemID, 0);
+        for (int i=0; i<old_data.size(); i++) {
+            columns[column].setValue(static_cast<size_t>(i), old_data[i]);
+        }
+        columns[column].setValue(static_cast<size_t>(old_data.size()), value);
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+template<class TContainer>
+void JKQTPDatastore::appendFromContainerToColumn(size_t column, const TContainer &values)
+{
+    for(auto it=values.begin(); it!=values.end(); it++) {
+        appendToColumn(column, *it);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

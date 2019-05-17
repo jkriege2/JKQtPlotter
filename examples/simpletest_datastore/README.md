@@ -159,6 +159,14 @@ This call results in a column with these 30 values spanning the range between 1 
     1, 1.26896, 1.61026, 2.04336, ..., 8.53168, 10.8264, 13.7382, ..., 72.7895, 92.3671, ..., 788.046, 1000
 ```
 
+### Appending to Columns
+You can use the methods `JKQTPDatastore::appendToColumn()` and `JKQTPDatastore::appendFromContainerToColumn()` to extend columns with additional values, e.g.:
+```.cpp
+    for (double ii=10; ii<=20; ii++) datastore->appendToColumn(columnID, ii);
+```
+Note that this operation changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards! If the first append is called on a column that cannot be extended, the contents will be copied and the column will reference the new, internally managed, memory afterwards.
+
+
 ### Using Data from one Column to Calculate Another
 
 After generating columns, as shown above, you can also use the data in these columns to calculate a second column based on the values in the first. You can do this explicitly:
