@@ -1,6 +1,6 @@
 /*!
 
-\page WHATSNEW What's New (Release Notes/Versions)
+\page page_whatsnew What's New (Release Notes/Versions)
 This page lists release notes for the diferent version of JKQTPlotter
 
 \tableofcontents
@@ -9,12 +9,12 @@ This page lists release notes for the diferent version of JKQTPlotter
  
 
 
-\section WHATSNEW_TRUNK trunk: Major Update/Refactoring
+\section page_whatsnew_TRUNK trunk: Major Update/Refactoring
 
-\subsection WHATSNEW_TRUNK_OVERVIEW trunk: Overview
+\subsection page_whatsnew_TRUNK_OVERVIEW trunk: Overview
 Starting in summer 2018, JKQTPlotter received some major workover. During this, it lost compatibility to the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. 
 
-Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
+Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 <ul>
   <li> new: added QMake-Projects for static and for shared library builds </li>
   <li> new: \ref exampleTutorialProjects "extensive set of Examples and Tutorials" </li>
@@ -23,7 +23,7 @@ Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
   <li> update: massively improved (doxygen-generated) <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a> (automatically generated after each commit using ravis CI) </li>
   <li> update: refactoring of the library's directory structure </li>
   <li> update: refactoring/renaming of API, including the function anming scheme and class names </li>
-  <li> changed: using static const variables instead of \c #define for fixed default values (e.g. JKQTPImageTools::LUTSIZE, JKQTPImageTools::PALETTE_ICON_WIDTH, JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, JKQTMathText::ABS_MIN_LINEWIDTH ...)</li>
+  <li> changed: using static const variables instead of <code>#define</code> for fixed default values (e.g. JKQTPImageTools::LUTSIZE, JKQTPImageTools::PALETTE_ICON_WIDTH, JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, JKQTMathText::ABS_MIN_LINEWIDTH ...)</li>
   <li> Updates to JKQTPlotter: 
     <ul>
 	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swar plots </li>
@@ -39,11 +39,11 @@ Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
       <li> new: additional options for graph filling (color gradients, textures, ...) as provided by QBrush </li>
       <li> new: added a general feature to JKQTPPlotElement which allows to show a graph in a highlighted state (if supported by the derived graph class!) </li>
       <li> new: JKQTPXYParametrizedScatterGraph: added functors to transform column values into symbol type+size and line-width to give even more control </li>
-      <li> new: user-interaction tool that shows coordinates of data points near the current mouse position (when mouse is dragged, while mouse button is pressed) \see jkqtpmdaToolTipForClosestDataPoint </li>
-      <li> new: user-interaction tool that measures distances and angles when mouse is dragged, while mouse button is pressed) \see jkqtpmdaRuler </li>
+      <li> new: user-interaction tool that shows coordinates of data points near the current mouse position (when mouse is dragged, while mouse button is pressed), see: jkqtpmdaToolTipForClosestDataPoint </li>
+      <li> new: user-interaction tool that measures distances and angles when mouse is dragged, while mouse button is pressed), see: jkqtpmdaRuler </li>
       <li> new: advanced styling options for boxplots + example for the styling: \ref JKQTPlotterBoxplotStyling </li>
-      <li> new: notched boxplots \see JKQTPlotterBoxplotStyling </li>
-      <li> new: several new plot symbols \see JKQTPGraphSymbols </li>
+      <li> new: notched boxplots, see: \ref JKQTPlotterBoxplotStyling </li>
+      <li> new: several new plot symbols, see: JKQTPGraphSymbols </li>
       <li> changed: removed old selection-code and replaced by general highlighting feature </li>
       <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
       <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>
@@ -61,7 +61,7 @@ Changes, compared to  \ref WHATSNEW_V2018_08 "v2018.08" include:
 	</ul></li>
  </ul>
 
-\subsection WHATSNEW_TRUNK_DOWNLOAD trunk: Download
+\subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
 
 This release is available from:
   - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
@@ -75,15 +75,15 @@ This release is available from:
 
 
 
-\section WHATSNEW_V2018_08 v2018.08: Minor Modifications (Final QuickFit3-compatible Version)
+\section page_whatsnew_V2018_08 v2018.08: Minor Modifications (Final QuickFit3-compatible Version)
 
-\subsection WHATSNEW_V2018_08_OVERVIEW v2018.08: Overview
-This is the final version of JKQTPlotter, which is still compatible with the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. It contains minor changes as compared to \ref WHATSNEW_V2015_10 "v2015.10":
+\subsection page_whatsnew_V2018_08_OVERVIEW v2018.08: Overview
+This is the final version of JKQTPlotter, which is still compatible with the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. It contains minor changes as compared to \ref page_whatsnew_V2015_10 "v2015.10":
   - new: added Qt data model to switch graphs on/off
   - update: some improvements to test programs
 .
 
-\subsection WHATSNEW_V2018_08_DOWNLOAD v2018.08: Download
+\subsection page_whatsnew_V2018_08_DOWNLOAD v2018.08: Download
 
 This release is available from:
   - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2018.08">https://github.com/jkriege2/JKQtPlotter/tree/v2018.08</a>
@@ -97,12 +97,12 @@ This release is available from:
 
 
 
-\section WHATSNEW_V2015_10 v2015.10: Initial Release
+\section page_whatsnew_V2015_10 v2015.10: Initial Release
 
-\subsection WHATSNEW_V2015_10_OVERVIEW v2015.10: Overview
+\subsection page_whatsnew_V2015_10_OVERVIEW v2015.10: Overview
 This is the initial release of the library. It was developed initially as part of <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> and then separated out into a separate repository.
 
-\subsection WHATSNEW_V2015_10_DOWNLOAD v2015.10: Download
+\subsection page_whatsnew_V2015_10_DOWNLOAD v2015.10: Download
 
 This release is available from:
   - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2015.10">https://github.com/jkriege2/JKQtPlotter/tree/v2015.10</a>

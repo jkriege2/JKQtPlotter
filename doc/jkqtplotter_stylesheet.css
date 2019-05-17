@@ -47,7 +47,10 @@ div.fragment {
     background-position: 3px 3px;
     background-repeat: no-repeat;
 	min-height: 32px;
+    min-width: 50%;
+    display: inline-block;
 }
+
 
 h2.memtitle {
     padding: 8px;
@@ -122,7 +125,7 @@ div.caption {
 	text-align: left;
 }
 
-table.params {
+table.params , table.tparams {
 	border: 1px solid black;
 	border-left-width: 8px;
     border-left-color:	#66001a;

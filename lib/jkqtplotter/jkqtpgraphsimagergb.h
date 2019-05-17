@@ -190,17 +190,17 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         /*! \copydoc autoImageRange
             \see see autoImageRange for details */ 
         bool getAutoImageRange() const;
-        /*! \copydoc imageName
-            \see see imageName for details */ 
+        /*! \copydoc imageNameR
+            \see see imageNameR for details */
         void setImageName(const QString & __value);
-        /*! \copydoc imageName
-            \see see imageName for details */ 
+        /*! \copydoc imageNameR
+            \see see imageNameR for details */
         QString getImageName() const;
-        /*! \copydoc imageName
-            \see see imageName for details */
+        /*! \copydoc imageNameR
+            \see see imageNameR for details */
         QString getImageNameR() const;
-        /*! \copydoc imageName
-            \see see imageName for details */
+        /*! \copydoc imageNameR
+            \see see imageNameR for details */
         void setImageNameR(const QString& m);
         /*! \copydoc imageNameG
             \see see imageNameG for details */ 

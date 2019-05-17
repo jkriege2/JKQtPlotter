@@ -1,6 +1,9 @@
 # Tutorial (JKQTPlotter): User-Interactions in JKQtPlotter {#JKQTPlotterUserInteraction}
 
-## Basic Description
+[TOC]
+
+# Basic Description
+
 This project (see `./examples/test_user_interaction/`) demonstrates different types of user-interactions in JKQTPlotter.
 
 It contains a simple plot with two graphs and provides several widgets that allow to bind different user interactions to different events:
@@ -8,7 +11,7 @@ It contains a simple plot with two graphs and provides several widgets that allo
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_user_interaction.png)
 
 
-## Inner Workings
+# Inner Workings
 
 The source code of the main application can be found in  [`test_user_interaction.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_user_interaction/test_user_interaction.cpp). 
 
@@ -60,36 +63,38 @@ As you can see, this QComboBox registers one of the available actions to the eve
 
 
 
-## Available User-Interactions
+# Available User-Interactions
 
 You can play around with this example to find out about different types of user interactions. SOm of them are illustrated with animations below.
 
-### Switching Graph Visibility via Context Menu
+## Switching Graph Visibility via Context Menu
 
 the default context menu contains a sub-menu that allows to switch every graph and and off:
 
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/contextmenu_graphvisibility.gif)
 
 
-### Toolbar at the top of the Plot
+## Toolbar at the top of the Plot
+
 Each JKQTPlotter contains a toolbar that is by default invisible and appears, when the mouse moves over a designated area at the top of the plot:
 
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/jkqtvanishtoolbar.gif)
 
 You can also use the checkboxes "enable toolbar" to disable this toolbar alltogether and "toolbar 'always on'" to switch the vanishing feature off and make it visible all the time.
 
-### Mouse Position Display
+## Mouse Position Display
 
 The JKQTPlotter contains a small text display for the current mouse position (in plot coordinates) at the top of the graph:
 
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/mousepositiondisplay.gif)
 
-### Drag the Plot Viewport
+## Drag the Plot Viewport
+
 You can move the viewport of the graph using the mouse ("jkqtpmdaPanPlotOnMove"-action). If you drag inside the plot window, you can move in both directions, if you drag over one of the coordinate axes, you can change the range of this axis only:
 
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/drag_viewport.gif)
 
-### Zooming with the Mouse
+## Zooming with the Mouse
 
 There are several options to zoom, using the mouse:
 * using the mouse wheel
@@ -99,39 +104,44 @@ There are several options to zoom, using the mouse:
 
 Again these actions are limited to a single axis, if the mouse is above that axis (and not inside the actual plot rectangle).
 
-### Ruler/Measurement Tool
+## Ruler/Measurement Tool
 
 JKQTPlotter provides a pre-built ruler tool that measures x- and y-distance between the start and end point, as well as the length of the connecting line and the angle of that line.<br>
 
   ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/rulertool.gif)
 
 
-### Data ToolTip Tool
+## Data ToolTip Tool
 
 JKQTPlotter provides a pre-built tool that, while the mouse button is pressed and the cursor is dragged over the plot, finds data points (of most graphs) near the mouse and displays their coordinates (and errors) inside a small tooltip:<br>
 
   ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/tooltiptool.gif)
 
   
-### Drawing Geometrical Forms
+## Drawing Geometrical Forms
 
 You can also use the mouse to draw various geometricals forms. When you finish drawing, a single event is emitted for that form, which contains its size and position:
 
-#### Lines
+### Lines
+
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/draw_line.gif)
 
-#### Rectangles
+### Rectangles
+
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/draw_rectangle.gif)
 
-#### Circles  
+### Circles  
+
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/draw_circle.gif)
 
-#### Ellipses
+### Ellipses
+
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/draw_ellipse.gif)
 
-### Context Menus
+## Context Menus
 
-#### Standard Context Menu
+### Standard Context Menu
+
 JKQTPlotter contains a standard context menu, which is shown if `plot->setContextMenuMode(jkqtpcmmStandardContextMenu);` was set. 
 It contains several standard ways of interacting with the plot, e.g. save to file, copy to clipboard, print, switch graph visibilities, ...
 
@@ -158,7 +168,8 @@ In addition JKQTPlotter provides several ways to customize this menu:
     }
   ```
 
-#### Special Context Menu
+### Special Context Menu
+
 In addition to the standard context menu, JKQTPlotter can also be configures to display a special, user-defined context menu. 
 To do so, call `plot->setContextMenuMode(jkqtpcmmSpecialContextMenu);` and set your menu, by calling `plot->setSpecialContextMenu(menu)`.
 You can also combine the special menu and the standard menu, by calling `plot->setContextMenuMode(jkqtpcmmStandardAndSpecialContextMenu);`.

@@ -63,7 +63,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | [Advanced Usage of JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | Advanced Data Management with JKQTPDatastore |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | [Tutorial: Basic Usage of JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore |
 
 
 

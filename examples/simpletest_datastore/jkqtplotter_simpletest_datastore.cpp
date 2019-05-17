@@ -1,5 +1,5 @@
 /** \example jkqtplotter_simpletest_datastore.cpp
- * A very basic example for the usage of JKQTPlotter
+ * Several basic examples of how to add data to and edit data in a JKQTPDatastore.
  *
  * \ref JKQTPlottersimpletest_datastore
  */

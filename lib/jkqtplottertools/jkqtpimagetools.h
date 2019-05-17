@@ -623,7 +623,7 @@ extern JKQTP_LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
     \param dbl_in pointer to a 1D array of template type \c T representing the image to plot. This array has to be of size \a width * \a height
     \param width width of the array in \a dbl
     \param height height of the array in \a dbl
-    \param[out] im the QImage object to draw to (should be initialized as \c QImage::Format_ARGB32 )
+    \param[out] img the QImage object to draw to (should be initialized as \c QImage::Format_ARGB32 )
     \param palette the color palette to use for the display
     \param minColor lower boundary of color range in \a dbl pixels, if \a minColor == \a maxColor then this function will extract the image min and image max.
     \param maxColor upper boundary of color range in \a dbl pixels, if \a minColor == \a maxColor then this function will extract the image min and image max.
@@ -633,6 +633,10 @@ extern JKQTP_LIB_EXPORT QList<int*> global_jkqtpimagetools_lutstore;
     \param maxFailColor color to use for pixels that are below \a maxColor for some settings of \a paletteMaxFail
     \param nanColor color to use for pixels that are not-a-number
     \param infColor color to use for pixels that are infinity
+    \param logScale create a log-scaled image
+    \param logBase base for the logarithm used when \c logScale==true
+    \param lutUser user define LUT
+    \param lutUserSize size of the LUT in lutUser
 */
 template <class T>
 inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, JKQTPMathImageColorPalette palette, double minColor, double maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0, const int* lutUser=0, int lutUserSize=0)
@@ -760,6 +764,8 @@ inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, Q
     \param maxFailColor color to use for pixels that are below \a maxColor for some settings of \a paletteMaxFail
     \param nanColor color to use for pixels that are not-a-number
     \param infColor color to use for pixels that are infinity
+    \param logScale create a log-scaled image
+    \param logBase base for the logarithm used when \c logScale==true
 */
 template <class T>
 inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, QImage &img, const int* lutUser, int lutUserSize, double minColor, double maxColor, JKQTPMathImageColorRangeFailAction paletteMinFail=JKQTPMathImageLastPaletteColor, JKQTPMathImageColorRangeFailAction paletteMaxFail=JKQTPMathImageLastPaletteColor, QColor minFailColor=QColor("black"), QColor maxFailColor=QColor("black"), QColor nanColor=QColor("black"), QColor infColor=QColor("black"), bool logScale=false, double logBase=10.0)

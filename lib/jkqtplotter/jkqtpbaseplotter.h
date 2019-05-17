@@ -621,6 +621,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param rect rectangle to plot into
+            \param showOverlays decides whether to draw overlays
          */
         void draw(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays=true);
 
@@ -633,20 +634,27 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param pos where to plot the painter (left-top corner)
+            \param showOverlays decides whether to draw overlays
          */
         void draw(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool showOverlays=true);
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param rect rectangle to plot into
+            \param showOverlays decides whether to draw overlays
          */
         void drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays=true);
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param pos where to plot the painter (left-top corner)
+            \param showOverlays decides whether to draw overlays
          */
         void drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool showOverlays=true);
+        /*! \brief draw the contained graph overlays (including grid prints) into the given JKQTPEnhancedPainter
+            \param painter JKQTPEnhancedPainter to which the plot should be drawn
+            \param pos where to plot the painter (left-top corner)
+         */
         void drawNonGridOverlays(JKQTPEnhancedPainter &painter, const QPoint& pos=QPoint(0,0));
 
         /** \brief emit plotUpdated() */
@@ -681,7 +689,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         bool isUsingAntiAliasingForGraphs() const;
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForText  */
         bool isUsingAntiAliasingForText() const;
-        /** \copydoc JKQTBasePlotterStyle:defaultGraphWidth:  */
+        /** \copydoc JKQTBasePlotterStyle::defaultGraphWidth   */
         double getGraphWidth() const;
         /** \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush  */
         QColor getBackgroundColor() const;
@@ -821,9 +829,9 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         inline double getInternalPlotBorderBottom() const { return this->internalPlotBorderBottom; }
         /*! \brief returns the property internalPlotBorderRight ( \copybrief internalPlotBorderRight ). \details Description of the parameter internalPlotBorderRight is:  <BLOCKQUOTE>\copydoc internalPlotBorderRight </BLOCKQUOTE>. \see internalPlotBorderRight for more information */
         inline double getInternalPlotBorderRight() const { return this->internalPlotBorderRight; }
-        /*! \brief returns the property plotWidth ( \copybrief plotWidth ). \details Description of the parameter plotWidth is:  <BLOCKQUOTE>\copydoc plotWidth </BLOCKQUOTE>. \see plotWidth for more information */ 
+        /*! \copydoc internalPlotWidth */
         inline int getPlotWidth() const { return this->internalPlotWidth; }
-        /*! \brief returns the property plotHeight ( \copybrief plotHeight ). \details Description of the parameter plotHeight is:  <BLOCKQUOTE>\copydoc plotHeight </BLOCKQUOTE>. \see plotHeight for more information */ 
+        /*! \copydoc internalPlotHeight */
         inline int getPlotHeight() const { return this->internalPlotHeight; }
         /** \brief returns the internal JKQTMathText, used to render text with LaTeX markup */
         JKQTMathText* getMathText();
@@ -1746,12 +1754,22 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
 
-        /** \brief paints the plot onto the given JKQTPEnhancedPainter object */
+        /** \brief paints the plot onto the given JKQTPEnhancedPainter object
+         *
+         *  \param painter JKQTPEnhancedPainter to draw on
+         *  \param showOverlays decides whether to draw overlays
+         */
         void drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays=true);
         /** \brief simply calls paintPlot() if grid printing mode is deactivated and prints the graph grid otherwise
          *         \a pageRect is used to determine the size of the page to draw on. If this does not coincide with
          *         the widget extents this function calculates a scaling factor so the graphs fit onto the page. This
          *         is especially usefull when printing!
+         *
+         *  \param painter JKQTPEnhancedPainter to draw on
+         *  \param pageRect size of the page
+         *  \param showOverlays decides whether to draw overlays
+         *  \param scaleIfTooLarge scale image if it is too large for pageRect
+         *  \param scaleIfTooSmall scale image if it is smaller than pageRect
          */
         void gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, bool showOverlays=true, bool scaleIfTooLarge=true, bool scaleIfTooSmall=true);
         void gridPaintOverlays(JKQTPEnhancedPainter& painter, QSizeF pageRect);

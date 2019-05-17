@@ -6,8 +6,8 @@
 - This software is licensed under the term of the GNU Lesser General Public License 2.1 
 (LGPL 2.1) or above. See \ref licensesec for details.
 - <a href="http://jkriege2.github.io/JKQtPlotter/index.html">Online-Documentation (http://jkriege2.github.io/JKQtPlotter/index.html)</a>
-- <a href="https://github.com/jkriege2/JKQtPlotter">Source Code Repository</a>
-- <a href="https://github.com/jkriege2/JKQtPlotter/releases">Tagged Releases</a>
+- <a href="https://github.com/jkriege2/JKQtPlotter">Source Code Repository (https://github.com/jkriege2/JKQtPlotter)</a>
+- <a href="https://github.com/jkriege2/JKQtPlotter/releases">Tagged Releases (https://github.com/jkriege2/JKQtPlotter/releases)</a>
  
 \image html examplesbanner.png
 
@@ -61,8 +61,8 @@
   - JKQTMathText - LaTeX parser and math renderer
   - JKQTFastPlotter - additional, simplified but speed-optimized plotter widget with limited capabilities
 - \ref licensepage
-- \ref BUILDINSTRUCTIONS
-- \ref WHATSNEW
+- \ref page_buildinstructions
+- \ref page_whatsnew
 - \ref exampleTutorialProjects 
 
 

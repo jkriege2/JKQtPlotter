@@ -39,9 +39,12 @@ script:
   - cd doc
   - doxygen --version
   - doxygen Doxyfile
+  - echo "" > html/.nojekyll
 
 deploy:
   provider: pages
+  verbose: true
+  deployment_file: true
   skip_cleanup: true
   local_dir: doc/html
   github_token: $GH_REPO_TOKEN

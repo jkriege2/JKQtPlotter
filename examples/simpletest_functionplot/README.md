@@ -2,7 +2,9 @@
 ## Basics
 This project (see `./examples/simpletest_functionplot/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. See [examples/simpletest_parsedfunctionplot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_parsedfunctionplot) for an example of how to use an internal equation parser provided with JKQTPlotter instead of directly defining functions.
 
-## Simple C++ inline function
+[TOC]
+
+# Simple C++ inline function
 The first example shows how to plot a C++ inline function: 
 ```.cpp
     JKQTPXFunctionLineGraph* func1=new JKQTPXFunctionLineGraph(plot);
@@ -11,7 +13,8 @@ The first example shows how to plot a C++ inline function:
     plot->addGraph(func1);
 ```
 
-## Simple C++ inline function with parameters
+# Simple C++ inline function with parameters
+
 In any such plot function, you can also use parameters, provided via the second parameter. Usually these are "internal parameters", defined by `func2->setParamsV(p0, p1, ...)`:
 ```.cpp
     JKQTPXFunctionLineGraph* func2=new JKQTPXFunctionLineGraph(plot);
@@ -41,7 +44,8 @@ In any such plot function, you can also use parameters, provided via the second 
     plot->addGraph(func3);
 ```
 
-## C++ functors as plot functions
+# C++ functors as plot functions
+
 You can also use C++ functors (or function objects):
 ```.cpp
     struct SincSqr {
@@ -62,7 +66,8 @@ You can also use C++ functors (or function objects):
     plot->addGraph(func4);
 ```
 
-## Static C functions
+# Static C functions
+
 You can also plot simple static C functions:
 ```.cpp
     double sinc(double x) {
@@ -77,7 +82,8 @@ You can also plot simple static C functions:
     plot->addGraph(func5);
 ```
 
-## Predefined "special" functions
+# Predefined "special" functions
+
 Finally `JKQTPXFunctionLineGraph` provides a small set of special functions (polynomial `p0+p1*x+p2*x^2+...`, exponential `p0+p1*exp(x/p2)`, power-law `p0+p1*x^p2`, ...), which are parametrized from the internal or external parameters:
 ```.cpp
     JKQTPXFunctionLineGraph* func6=new JKQTPXFunctionLineGraph(plot);
@@ -102,12 +108,14 @@ JKQTPXFunctionLineGraph* func7=new JKQTPXFunctionLineGraph(plot);
     plot->addGraph(func7);
 ```
 
-## Screenshot
+# Screenshot
+
 This code snippets above result in a plot like this:
 
 ![jkqtplotter_simpletest_functionplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_functionplot.png)
 
-## Notes
+# Notes
+
 Note that all the different variants to provide parameters can be used with all types of functions!
 
 Also see the example [Plotting Parsed Mathematical Functions as Line Graphs](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_parsedfunctionplot) for details on how the actual plotting algorithm works. That example also shows how to define a function as a string, which is then parsed and evaluated by an expression parser library embedded in JKQTPlotter.

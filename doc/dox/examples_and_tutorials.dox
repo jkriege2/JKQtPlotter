@@ -148,8 +148,8 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html simpletest_datastore_small.png
-    <td> \subpage JKQTPlotterAdvancedJKQTPDatastore
-    <td> Advanced Data Management with JKQTPDatastore
+    <td> \subpage JKQTPlotterBasicJKQTPDatastore
+    <td> Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore
 </table>
 
 

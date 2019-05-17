@@ -1,6 +1,8 @@
-# Example (JKQTPlotter): Advanced Usage of JKQTPDatastore             {#JKQTPlotterAdvancedJKQTPDatastore}
+# Tutorial (JKQTPlotter): Basic Usage of JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastore}
+
 This project (see `./examples/simpletest_datastore/`) explains several advanced options of JKQTPDatastore, which is the class used to centrally store the data for (most) graphs on a JKQTPlotter widget.
 
+[TOC]
 
 The source code of the main application can be found in [`jkqtplotter_simpletest_datastore.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore/jkqtplotter_simpletest_datastore.cpp). 
 This tutorial cites parts of this code to demonstrate different ways of working with data for the graphs.
@@ -12,9 +14,10 @@ In every code-segment below, we will use these two declarations from the code to
     JKQTPDatastore* datastore=plot.getDatastore();
 ```
 
-## Copy Data from different data structures into JKQTPDatastore
+# Copy Data from different data structures into JKQTPDatastore
 
-### Copy Data from a Vector into a column of the JKQTPDatastore
+## Copy Data from a Vector into a column of the JKQTPDatastore
+
 First we fill data into a QVector for a simple plot (a sine curve) and add a plot using this data:
 ```.cpp
     QVector<double> X, Y;
@@ -39,7 +42,8 @@ The plot from the code above looks like this:
 ![simpletest_datastore_sine](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_sine.png)
 
 
-### Copy Data from a C-array into a column of the JKQTPDatastore
+## Copy Data from a C-array into a Column of the JKQTPDatastore
+
 Of course if you have your data in a C-array, you can use the same syntax:
 ```.cpp
     #define NDATA 5
@@ -55,7 +59,8 @@ The plot from the code above looks like this:
 ![simpletest_datastore_linkedcarray](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_linkedcarray.png)
 
 
-### Copy Data from a Map into a JKQTPDatastore
+## Copy Data from a Map into a JKQTPDatastore
+
 Since graphs often display (x,y)-pairs, it may make sense to store them in a map (e.g. for histograms). There there are also functions that copy the contents of a map into a JKQTPDatastore, resulting in two columns beeing added:
 ```.cpp
     std::map<int, double> datamap;
@@ -73,9 +78,10 @@ This code results in a graph like this:
 ![simpletest_datastore_map](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_map.png)
 
 
-## Reference External Data in a column of the JKQTPDatastore
+# Reference External Data in a column of the JKQTPDatastore
 
-### Referencing without transfer of ownership
+## Referencing without transfer of ownership
+
 As an alternative to the method of copying data (see above), you could also just link the data. For this to work, the data has to reside in a C-array of type `double`, as this is the internal datatype of the `JKQTPDatastore`. You can simply replace the two lines with `JKQTPDatastore::addCopiedColumn()` in the example above by (we exploit the fact that `QVector<double>::data()` returns a pointer to the internal C-array of the vector):
 ```.cpp
     linegraph->setXColumn(datastore->addColumn(X.data(), X.size(), "x"));
@@ -97,7 +103,8 @@ The plot from the code above looks like this:
 
 ![simpletest_datastore_linkedcarray](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_linkedcarray.png)
 
-### Referencing with transfer of ownership
+## Referencing with Transfer of Ownership
+
 In addition to the variants of `JKQTPDatastore::addColumn()`, that do not transfer ownership of the data to the `JKQTPDatastore`, you can also use `JKQTPDatastore::addInternalColumn()`, which tells the `JKQTPDatastore` to use the external data array and also take over its owner-ship. This implies that the array is freed when the `JKQTPDatastore` is destroyed, by calling `free()` in the array. Therefor data for this method needs to be allocated by using `malloc()` or `calloc()`:
 ```.cpp
     #define NDATA 5
@@ -107,10 +114,12 @@ In addition to the variants of `JKQTPDatastore::addColumn()`, that do not transf
 ```
 
 
-## JKQTPDatastore-internal Data Management
+# JKQTPDatastore-internal Data Management
+
 It is also possible to leave the data mangement completely to the JKQTPDatastore and just edit the data with access functions from JKQTPDatastore.
 
-### Generating Columns Non-Initialized Columns and Filling Them
+## Generating Columns Non-Initialized Columns and Filling Them
+
 The most basic way to generate data for a plot is to generate two non-initialized columns for the x- and y-coordinates of the graph points
 ```.cpp
     const int Ndata=100;
@@ -133,7 +142,8 @@ Plotting these two columns versus each other results in a simple sine graph:
 
 
 
-### Generating Columns Preinitialized Columns
+## Generating Columns Preinitialized Columns
+
 For your convenience there are also function that simply create such a linear vector with one call:
 ```.cpp
     size_t colLinX=datastore->addLinearColumn(count, 0, 20, "x_lin");
@@ -159,7 +169,8 @@ This call results in a column with these 30 values spanning the range between 1 
     1, 1.26896, 1.61026, 2.04336, ..., 8.53168, 10.8264, 13.7382, ..., 72.7895, 92.3671, ..., 788.046, 1000
 ```
 
-### Appending to Columns
+## Appending to Columns
+
 You can use the methods `JKQTPDatastore::appendToColumn()` and `JKQTPDatastore::appendFromContainerToColumn()` to extend columns with additional values, e.g.:
 ```.cpp
     for (double ii=10; ii<=20; ii++) datastore->appendToColumn(columnID, ii);
@@ -167,7 +178,7 @@ You can use the methods `JKQTPDatastore::appendToColumn()` and `JKQTPDatastore::
 Note that this operation changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards! If the first append is called on a column that cannot be extended, the contents will be copied and the column will reference the new, internally managed, memory afterwards.
 
 
-### Using Data from one Column to Calculate Another
+## Using Data from one Column to Calculate Another
 
 After generating columns, as shown above, you can also use the data in these columns to calculate a second column based on the values in the first. You can do this explicitly:
 ```.cpp
@@ -199,7 +210,8 @@ results in:
 ![simpletest_datastore_calccolumns](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_calccolumns.png)
 
 
-### 2D-Datasets and Images
+## 2D-Datasets and Images
+
 There is also a function `JKQTPDatastore::addLinearGridColumns(size_t width, double startX, double endX, size_t height, double startY, double endY, const QString &nameX, const QString &nameY)` that generate two columns simultaneously that conatin the x- and y-coordinates of the points on a rectangular grid, in a column-major order:
 ```.cpp
     std::pair<size_t,size_t> colLinXY=datastore->addLinearGridColumns(10, 10, 20, 10, 1.5, 3);

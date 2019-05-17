@@ -94,6 +94,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param style line style of drawing
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
+            \param parent the parent plotter class
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style=Qt::SolidLine, Qt::BrushStyle fillStyle=Qt::SolidPattern, JKQTBasePlotter* parent=nullptr);
         /*! \brief class contructor
@@ -103,6 +104,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param style line style of drawing
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
+            \param parent the parent plotter class
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPlotter* parent);
         /*! \brief class contructor
@@ -111,6 +113,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param fillColor color of the filling in the drawing
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
+            \param parent the parent plotter class
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
         /*! \brief class contructor
@@ -118,12 +121,14 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param color color of drawing
             \param fillColor color of the filling in the drawing
             \param lineWidth lineWidth of drawing
+            \param parent the parent plotter class
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPlotter* parent);
         /*! \brief class contructor
 
             \param color color of drawing
             \param fillColor color of the filling in the drawing
+            \param parent the parent plotter class
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPlotter* parent);
 
@@ -322,6 +327,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
             \param color color of line
             \param lineWidth width of line
             \param style line style
+            \param parent the parent plotter class
          */
         JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
@@ -334,6 +340,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
             \param color color of line
             \param lineWidth width of line
             \param style line style
+            \param parent the parent plotter class
          */
         JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
@@ -525,7 +532,6 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         /*! \brief class constructor
 
             \param parent the parent plotter class
-            \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -534,7 +540,6 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         /*! \brief class constructor
 
             \param parent the parent plotter class
-            \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -926,6 +931,8 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
             \param height of ellipse (2 * half axis)
+            \param angleStart if we only draw an arc, this is the starting angle in degrees
+            \param angleStop if we only draw an arc, this is the ending angle in degrees
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -939,6 +946,8 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
             \param height of ellipse (2 * half axis)
+            \param angleStart if we only draw an arc, this is the starting angle in degrees
+            \param angleStop if we only draw an arc, this is the ending angle in degrees
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -1047,6 +1056,8 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
             \param height of ellipse (2 * half axis)
+            \param angleStart if we only draw an arc, this is the starting angle in degrees
+            \param angleStop if we only draw an arc, this is the ending angle in degrees
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -1061,6 +1072,8 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
             \param height of ellipse (2 * half axis)
+            \param angleStart if we only draw an arc, this is the starting angle in degrees
+            \param angleStop if we only draw an arc, this is the ending angle in degrees
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -1116,6 +1129,8 @@ class JKQTP_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
             \param height of ellipse (2 * half axis)
+            \param angleStart if we only draw an arc, this is the starting angle in degrees
+            \param angleStop if we only draw an arc, this is the ending angle in degrees
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -1130,6 +1145,8 @@ class JKQTP_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
             \param height of ellipse (2 * half axis)
+            \param angleStart if we only draw an arc, this is the starting angle in degrees
+            \param angleStop if we only draw an arc, this is the ending angle in degrees
             \param color color of line
             \param lineWidth width of line
             \param style line style

@@ -231,150 +231,104 @@ class JKQTP_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         virtual void drawGrids(JKQTPEnhancedPainter& painter)=0;
 
 
-        /*! \copydoc tickSpacing 
-            \see tickSpacing */
+        /*! \copydoc tickSpacing */
         inline double getTickSpacing() const { return this->tickSpacing; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelDigits 
-            \see JKQTPCoordinateAxisStyle::labelDigits */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelDigits */
         inline int getLabelDigits() const { return this->axisStyle.labelDigits; }
-        /*! \copydoc autoAxisSpacing 
-            \see autoAxisSpacing */
+        /*! \copydoc autoAxisSpacing */
         inline bool getAutoAxisSpacing() const { return this->autoAxisSpacing; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelsEnabled 
-            \see JKQTPCoordinateAxisStyle::minorTickLabelsEnabled */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelsEnabled */
         inline bool getMinorTickLabelsEnabled() const { return this->axisStyle.minorTickLabelsEnabled; }
-        /*! \copydoc logAxis 
-            \see logAxis */
+        /*! \copydoc logAxis */
         inline bool getLogAxis() const { return this->logAxis; }
-        /*! \copydoc inverted 
-            \see inverted */
+        /*! \copydoc inverted */
         inline bool getInverted() const { return this->inverted; }
-        /*! \copydoc logAxisBase 
-            \see logAxisBase */
+        /*! \copydoc logAxisBase */
         inline double getLogAxisBase() const { return this->logAxisBase; }
-        /*! \copydoc userTickSpacing 
-            \see userTickSpacing */
+        /*! \copydoc userTickSpacing */
         inline double getUserTickSpacing() const { return this->userTickSpacing; }
-        /*! \copydoc userLogTickSpacing 
-            \see userLogTickSpacing */
+        /*! \copydoc userLogTickSpacing */
         inline double getUserLogTickSpacing() const { return this->userLogTickSpacing; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelType 
-            \see JKQTPCoordinateAxisStyle::labelType */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelType */
         inline JKQTPCALabelType getLabelType() const { return this->axisStyle.labelType; }
-        /*! \copydoc axisLabel 
-            \see axisLabel */
+        /*! \copydoc axisLabel */
         inline QString getAxisLabel() const { return this->axisLabel; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelPosition 
-            \see JKQTPCoordinateAxisStyle::labelPosition */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelPosition */
         inline JKQTPLabelPosition getLabelPosition() const { return this->axisStyle.labelPosition; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelFontSize 
-            \see JKQTPCoordinateAxisStyle::labelFontSize */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelFontSize */
         inline double getLabelFontSize() const { return this->axisStyle.labelFontSize; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelFontSize 
-            \see JKQTPCoordinateAxisStyle::tickLabelFontSize */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelFontSize */
         inline double getTickLabelFontSize() const { return this->axisStyle.tickLabelFontSize; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFontSize 
-            \see JKQTPCoordinateAxisStyle::minorTickLabelFontSize */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFontSize */
         inline double getMinorTickLabelFontSize() const { return this->axisStyle.minorTickLabelFontSize; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFullNumber 
-            \see JKQTPCoordinateAxisStyle::minorTickLabelFullNumber */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFullNumber */
         inline bool getMinorTickLabelFullNumber() const { return this->axisStyle.minorTickLabelFullNumber; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelAngle 
-            \see JKQTPCoordinateAxisStyle::tickLabelAngle */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelAngle */
         inline double getTickLabelAngle() const { return this->axisStyle.tickLabelAngle; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minTicks 
-            \see JKQTPCoordinateAxisStyle::minTicks */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minTicks */
         inline unsigned int getMinTicks() const { return this->axisStyle.minTicks; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTicks 
-            \see JKQTPCoordinateAxisStyle::minorTicks */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTicks */
         inline unsigned int getMinorTicks() const { return this->axisStyle.minorTicks; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickOutsideLength 
-            \see JKQTPCoordinateAxisStyle::tickOutsideLength */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickOutsideLength */
         inline double getTickOutsideLength() const { return this->axisStyle.tickOutsideLength; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickOutsideLength 
-            \see JKQTPCoordinateAxisStyle::minorTickOutsideLength */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickOutsideLength */
         inline double getMinorTickOutsideLength() const { return this->axisStyle.minorTickOutsideLength; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::axisColor 
-            \see JKQTPCoordinateAxisStyle::axisColor */
+        /*! \copydoc JKQTPCoordinateAxisStyle::axisColor */
         inline QColor getAxisColor() const { return this->axisStyle.axisColor; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::showZeroAxis 
-            \see JKQTPCoordinateAxisStyle::showZeroAxis */
+        /*! \copydoc JKQTPCoordinateAxisStyle::showZeroAxis */
         inline bool getShowZeroAxis() const { return this->axisStyle.showZeroAxis; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::gridColor 
-            \see JKQTPCoordinateAxisStyle::gridColor */
+        /*! \copydoc JKQTPCoordinateAxisStyle::gridColor */
         inline QColor getGridColor() const { return this->axisStyle.gridColor; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridColor 
-            \see JKQTPCoordinateAxisStyle::minorGridColor */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridColor */
         inline QColor getMinorGridColor() const { return this->axisStyle.minorGridColor; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::gridWidth 
-            \see JKQTPCoordinateAxisStyle::gridWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::gridWidth */
         inline double getGridWidth() const { return this->axisStyle.gridWidth; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::gridStyle 
-            \see JKQTPCoordinateAxisStyle::gridStyle */
+        /*! \copydoc JKQTPCoordinateAxisStyle::gridStyle */
         inline Qt::PenStyle getGridStyle() const { return this->axisStyle.gridStyle; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridWidth 
-            \see JKQTPCoordinateAxisStyle::minorGridWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridWidth */
         inline double getMinorGridWidth() const { return this->axisStyle.minorGridWidth; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridStyle 
-            \see JKQTPCoordinateAxisStyle::minorGridStyle */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridStyle */
         inline Qt::PenStyle getMinorGridStyle() const { return this->axisStyle.minorGridStyle; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickTimeFormat 
-            \see JKQTPCoordinateAxisStyle::tickTimeFormat */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickTimeFormat */
         inline QString getTickTimeFormat() const { return this->axisStyle.tickTimeFormat; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateFormat 
-            \see JKQTPCoordinateAxisStyle::tickDateFormat */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateFormat */
         inline QString getTickDateFormat() const { return this->axisStyle.tickDateFormat; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateTimeFormat 
-            \see JKQTPCoordinateAxisStyle::tickDateTimeFormat */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateTimeFormat */
         inline QString getTickDateTimeFormat() const { return this->axisStyle.tickDateTimeFormat; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickMode 
-            \see JKQTPCoordinateAxisStyle::tickMode */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickMode */
         inline JKQTPLabelTickMode getTickMode() const { return this->axisStyle.tickMode; }
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode1 
-            \see JKQTPCoordinateAxisStyle::drawMode1 */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode1 */
         inline JKQTPCADrawMode getDrawMode1() const { return this->axisStyle.drawMode1; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode2 
-            \see JKQTPCoordinateAxisStyle::drawMode2 */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode2 */
         inline JKQTPCADrawMode getDrawMode2() const { return this->axisStyle.drawMode2; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickWidth 
-            \see JKQTPCoordinateAxisStyle::minorTickWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickWidth */
         inline double getMinorTickWidth() const { return this->axisStyle.minorTickWidth; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickWidth 
-            \see JKQTPCoordinateAxisStyle::tickWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickWidth */
         inline double getTickWidth() const { return this->axisStyle.tickWidth; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidth 
-            \see JKQTPCoordinateAxisStyle::lineWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidth */
         inline double getLineWidth() const { return this->axisStyle.lineWidth; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidthZeroAxis 
-            \see JKQTPCoordinateAxisStyle::lineWidthZeroAxis */
+        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidthZeroAxis */
         inline double getLineWidthZeroAxis() const { return this->axisStyle.lineWidthZeroAxis; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelDistance 
-            \see JKQTPCoordinateAxisStyle::tickLabelDistance */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelDistance */
         inline double getTickLabelDistance() const { return this->axisStyle.tickLabelDistance; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelDistance 
-            \see JKQTPCoordinateAxisStyle::labelDistance */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelDistance */
         inline double getLabelDistance() const { return this->axisStyle.labelDistance; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawGrid 
-            \see JKQTPCoordinateAxisStyle::drawGrid */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawGrid */
         inline bool getDrawGrid() const { return this->axisStyle.drawGrid; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawMinorGrid 
-            \see JKQTPCoordinateAxisStyle::drawMinorGrid */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawMinorGrid */
         inline bool getDrawMinorGrid() const { return this->axisStyle.drawMinorGrid; }
-        /*! \copydoc JKQTPCoordinateAxisStyle::autoLabelDigits 
-            \see JKQTPCoordinateAxisStyle::autoLabelDigits */
+        /*! \copydoc JKQTPCoordinateAxisStyle::autoLabelDigits */
         inline void setAutoLabelDigits(bool __value)
         {
             this->axisStyle.autoLabelDigits = __value;
         } 
-        /*! \copydoc JKQTPCoordinateAxisStyle::autoLabelDigits 
-            \see JKQTPCoordinateAxisStyle::autoLabelDigits */
+        /*! \copydoc JKQTPCoordinateAxisStyle::autoLabelDigits */
        inline bool getAutoLabelDigits() const
         {
             return this->axisStyle.autoLabelDigits;
         }
-        /*! \copydoc parent 
-            \see parent */
+        /*! \copydoc parent */
         inline const JKQTBasePlotter* getParent() const { return this->parent; }
         /*! \brief returns the property parent ( \copybrief parent ). \details Description of the parameter parent is:  <BLOCKQUOTE>\copydoc parent </BLOCKQUOTE>. \see parent for more information */
         inline JKQTBasePlotter* getParent()  { return this->parent; }
@@ -453,198 +407,150 @@ class JKQTP_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief do not use an absolute range of plot axis */
         void setNoAbsoluteRange();
 
-        /*! \copydoc tickSpacing 
-            \see tickSpacing */
+        /*! \copydoc tickSpacing */
         void setTickSpacing(double __value);
 
-        /*! \copydoc axisMinWidth 
-            \see axisMinWidth */
+        /*! \copydoc axisMinWidth */
         void setAxisMinWidth(double __value);
 
-        /*! \copydoc autoAxisSpacing 
-            \see autoAxisSpacing */
+        /*! \copydoc autoAxisSpacing */
         void setAutoAxisSpacing(bool __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelsEnabled 
-            \see JKQTPCoordinateAxisStyle::minorTickLabelsEnabled */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelsEnabled */
         void setMinorTickLabelsEnabled(bool __value);
 
-        /*! \copydoc logAxis 
-            \see logAxis */
+        /*! \copydoc logAxis */
         void setLogAxis(bool __value) ;
 
-        /*! \copydoc logAxisBase 
-            \see logAxisBase */
+        /*! \copydoc logAxisBase */
         void setLogAxisBase (double __value);
 
-        /*! \copydoc userTickSpacing 
-            \see userTickSpacing */
+        /*! \copydoc userTickSpacing */
         void setUserTickSpacing (double __value);
 
-        /*! \copydoc userLogTickSpacing 
-            \see userLogTickSpacing */
+        /*! \copydoc userLogTickSpacing */
         void setUserLogTickSpacing (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelType 
-            \see JKQTPCoordinateAxisStyle::labelType */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelType */
         void setLabelType (JKQTPCALabelType __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickMode 
-            \see JKQTPCoordinateAxisStyle::tickMode */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickMode */
         void setTickMode (JKQTPLabelTickMode __value);
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickMode 
-            \see JKQTPCoordinateAxisStyle::tickMode */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickMode */
         void setTickMode (int __value);
 
-        /*! \copydoc axisLabel 
-            \see axisLabel */
+        /*! \copydoc axisLabel */
         void setAxisLabel (const QString& __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelPosition 
-            \see JKQTPCoordinateAxisStyle::labelPosition */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelPosition */
         void setLabelPosition (JKQTPLabelPosition __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelFontSize 
-            \see JKQTPCoordinateAxisStyle::labelFontSize */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelFontSize */
         void setLabelFontSize (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickTimeFormat 
-            \see JKQTPCoordinateAxisStyle::tickTimeFormat */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickTimeFormat */
         void setTickTimeFormat (const QString& __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateFormat 
-            \see JKQTPCoordinateAxisStyle::tickDateFormat */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateFormat */
         void setTickDateFormat (const QString& __value);
 
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateTimeFormat 
-            \see JKQTPCoordinateAxisStyle::tickDateTimeFormat */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickDateTimeFormat */
         void setTickDateTimeFormat (const QString& __value);
 
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelFontSize 
-            \see JKQTPCoordinateAxisStyle::tickLabelFontSize */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelFontSize */
         void setTickLabelFontSize (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFontSize 
-            \see JKQTPCoordinateAxisStyle::minorTickLabelFontSize */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFontSize */
         void setMinorTickLabelFontSize (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFullNumber 
-            \see JKQTPCoordinateAxisStyle::minorTickLabelFullNumber */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickLabelFullNumber */
         void setMinorTickLabelFullNumber (bool __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minTicks 
-            \see JKQTPCoordinateAxisStyle::minTicks */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minTicks */
         void setMinTicks(unsigned int __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTicks 
-            \see JKQTPCoordinateAxisStyle::minorTicks */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTicks */
         void setMinorTicks (unsigned int __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTicks 
-            \see JKQTPCoordinateAxisStyle::minorTicks */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTicks */
         void setMinorTicks (int __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickOutsideLength 
-            \see JKQTPCoordinateAxisStyle::tickOutsideLength */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickOutsideLength */
         void setTickOutsideLength(double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickOutsideLength 
-            \see JKQTPCoordinateAxisStyle::minorTickOutsideLength */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickOutsideLength */
         void setMinorTickOutsideLength (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickInsideLength 
-            \see JKQTPCoordinateAxisStyle::tickInsideLength */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickInsideLength */
         void setTickInsideLength(double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickInsideLength 
-            \see JKQTPCoordinateAxisStyle::minorTickInsideLength */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickInsideLength */
         void setMinorTickInsideLength (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::axisColor 
-            \see JKQTPCoordinateAxisStyle::axisColor */
+        /*! \copydoc JKQTPCoordinateAxisStyle::axisColor */
         void setAxisColor (const QColor& __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::showZeroAxis 
-            \see JKQTPCoordinateAxisStyle::showZeroAxis */
+        /*! \copydoc JKQTPCoordinateAxisStyle::showZeroAxis */
         void setShowZeroAxis(bool __value);
 
-        /*! \copydoc inverted 
-            \see inverted */
+        /*! \copydoc inverted */
         void setInverted(bool __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::gridColor 
-            \see JKQTPCoordinateAxisStyle::gridColor */
+        /*! \copydoc JKQTPCoordinateAxisStyle::gridColor */
         void setGridColor(const QColor& __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridColor 
-            \see JKQTPCoordinateAxisStyle::minorGridColor */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridColor */
         void setMinorGridColor(const QColor& __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::gridWidth 
-            \see JKQTPCoordinateAxisStyle::gridWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::gridWidth */
         void setGridWidth (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::gridStyle 
-            \see JKQTPCoordinateAxisStyle::gridStyle */
+        /*! \copydoc JKQTPCoordinateAxisStyle::gridStyle */
         void setGridStyle(Qt::PenStyle __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridWidth 
-            \see JKQTPCoordinateAxisStyle::minorGridWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridWidth */
         void setMinorGridWidth(double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridStyle 
-            \see JKQTPCoordinateAxisStyle::minorGridStyle */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorGridStyle */
         void setMinorGridStyle (Qt::PenStyle __value);
 
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode1 
-            \see JKQTPCoordinateAxisStyle::drawMode1 */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode1 */
         void setDrawMode1 (JKQTPCADrawMode __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode2 
-            \see JKQTPCoordinateAxisStyle::drawMode2 */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawMode2 */
         void setDrawMode2(JKQTPCADrawMode __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickWidth 
-            \see JKQTPCoordinateAxisStyle::minorTickWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::minorTickWidth */
         void setMinorTickWidth(double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickWidth 
-            \see JKQTPCoordinateAxisStyle::tickWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickWidth */
         void setTickWidth (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidth 
-            \see JKQTPCoordinateAxisStyle::lineWidth */
+        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidth */
         void setLineWidth (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidthZeroAxis 
-            \see JKQTPCoordinateAxisStyle::lineWidthZeroAxis */
+        /*! \copydoc JKQTPCoordinateAxisStyle::lineWidthZeroAxis */
         void setLineWidthZeroAxis (double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelDistance 
-            \see JKQTPCoordinateAxisStyle::tickLabelDistance */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelDistance */
         void setTickLabelDistance(double __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelDistance 
-            \see JKQTPCoordinateAxisStyle::labelDistance */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelDistance */
         void setLabelDistance(double __value);
-        /*! \copydoc JKQTPCoordinateAxisStyle::labelDigits 
-            \see JKQTPCoordinateAxisStyle::labelDigits */
+        /*! \copydoc JKQTPCoordinateAxisStyle::labelDigits */
         void setLabelDigits(int __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawGrid 
-            \see JKQTPCoordinateAxisStyle::drawGrid */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawGrid */
         void setDrawGrid(bool __value);
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::drawMinorGrid 
-            \see JKQTPCoordinateAxisStyle::drawMinorGrid */
+        /*! \copydoc JKQTPCoordinateAxisStyle::drawMinorGrid */
         void setDrawMinorGrid(bool __value);
 
 
-        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelAngle 
-            \see JKQTPCoordinateAxisStyle::tickLabelAngle */
+        /*! \copydoc JKQTPCoordinateAxisStyle::tickLabelAngle */
         void setTickLabelAngle(double __value);
 
     protected:

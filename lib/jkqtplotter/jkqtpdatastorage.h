@@ -82,7 +82,7 @@ enum class JKQTPDatastoreItemFormat {
 /** \brief This class manages chunks of memory that are used for column data in JKQTBasePlotter descendents
  * \ingroup jkqtpdatastorage
  *
- * \see \ref JKQTPlotterAdvancedJKQTPDatastore for a detailed description of how to use this class for data management!
+ * \see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
  *
  * This class manages a list if JKQTPDatastoreItem onjects that may each contain a chunk of memory, containig
  * one or more columns of data. Each item can be accessed with get() by a specific ID which is returned by add().
@@ -180,7 +180,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         }
 
         /** \brief add a new columns which references a specified item and a specified column therein.
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addColumnForItem(size_t itemID, size_t columnInItem, const QString& name=QString(""));
 
@@ -275,8 +275,8 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         /** \brief adds a values in cintainer \a values to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards
          *
          *  \tparam TContainer a container with standard iterators
-         *  \param colum the column to extend
-         *  \param vales vector with data to append to column \a column
+         *  \param column the column to extend
+         *  \param values vector with data to append to column \a column
          */
         template<class TContainer>
         inline void appendFromContainerToColumn(size_t column, const TContainer& values);
@@ -312,7 +312,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   \param rows number of rows in the data array
          *   \param name name for the column
          *   \return the ID of the newly created column
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addColumn(size_t rows, const QString& name=QString(""));
 
@@ -332,7 +332,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *    linegraph->setXColumn(datastore->addColumn(XCA, NDATA, "xca (C-array)"));
          *    linegraph->setYColumn(datastore->addColumn(YCA, NDATA, "yca (C-array)"));
          * \endcode
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addColumn(double* data, size_t rows, const QString& name=QString(""));
         /** \brief add a column with \a rows entries from the array \a data,
@@ -352,7 +352,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *    linegraph->setXColumn(datastore->addInternalColumn(XCA, NDATA, "x"));
          *    linegraph->setXColumn(datastore->addInternalColumn(YCA, NDATA, "y"));
          * \endcode
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addInternalColumn(double *data, size_t rows, const QString& name);
 
@@ -364,7 +364,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   \param height height of the image represented by the data array
          *   \param name name for the column
          *   \return the ID of the newly created column
-         *  \see addImageColumn(), addInternalImageColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addImageColumn(), addInternalImageColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addImageColumn(size_t width, size_t height, const QString& name=QString(""));
 
@@ -379,7 +379,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   \param name name for the column
          *   \return the ID of the newly created column
          *
-         *  \see addColumn(), addImageColumn(), addInternalImageColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addColumn(), addImageColumn(), addInternalImageColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addImageColumn(double* data, size_t width, size_t height, const QString& name=QString(""));
         /** \brief add a column with \a width * \a height entries from the array \a data,
@@ -393,7 +393,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   \param name name for the column
          *   \return the ID of the newly created column
          *
-         *  \see addInternalColumn(), addImageColumn(), addInternalImageColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addInternalColumn(), addImageColumn(), addInternalImageColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addInternalImageColumn(double *data, size_t width, size_t height, const QString& name);
 
@@ -422,7 +422,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *  \param old_column the column to be duplicated
          *  \param name name for the new column
          *  \return ID of the newly created column
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t copyColumn(size_t old_column, const QString& name=QString(""));
 
@@ -448,7 +448,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *    linegraph->setYColumn(datastore->addCopiedColumn(Y, "y"));
          * \endcode
          *
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         template <typename TContainer>
         size_t addCopiedColumn(const TContainer& data, const QString& name=QString("")) {
@@ -486,7 +486,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *     }
          * \endcode
          *
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         template <typename TContainer>
         size_t addCopiedColumn(const TContainer& data, const QString& name, size_t stride, size_t start=0) {
@@ -512,11 +512,12 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *
          *   \tparam T datatype of the element in the vector, this has to be convertible to double!
          *   \param data pointer to the data to be copied
+         *   \param rows items in data
          *   \param name name for the column
          *   \return the ID of the newly created column
          *
          *  \note This function converts the input array \a data into an array of double!
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         template<typename T>
         size_t addCopiedColumn(const T* data, size_t rows, const QString& name=QString("")){
@@ -549,7 +550,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          * \endcode
 
          *  \note This function converts the input array \a data into an array of double!
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         template<typename T>
         size_t addCopiedColumn(const T* data, size_t rows, size_t stride, int start, const QString& name) {
@@ -568,6 +569,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *
          *   \tparam T datatype of the element in the vector, this has to be convertible to double!
          *   \param data pointer to the data to be copied
+         *   \param rows items in data
          *   \param name name for the column
          *   \param stride when copying, this function steps throught the data with the given stride, so only eleemnts <code>[0, stride, 2*stride, ... (rows-1)*stride]</code> are copied!
          *   \return the ID of the newly created column
@@ -581,7 +583,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          * \endcode
 
          *  \note This function converts the input array \a data into an array of double!
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         template<typename T>
         size_t addCopiedColumn(const T* data, size_t rows, size_t stride, const QString& name) {
@@ -644,8 +646,14 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         /** \brief add one external column to the datastore. It contains \a rows rows. The external data is copied to an internal array, so
          *         afterwards you can delete the external arrayThis returns its logical column ID.
          *
+         *   \tparam T datatype of the element in the vector, this has to be convertible to double!
+         *   \param data pointer to the data to be copied
+         *   \param mask boolean array with \a rows entries, used to mask data when copying from \a data
+         *   \param rows items in data
+         *   \param name name for the column
+         *   \param useIfMaskEquals data from \a data is copied if and only if the corresponding entry of \a mask equals this value
          *  \note This function converts the input array \a data into an array of double!
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         template <typename T>
         size_t addCopiedColumnMasked(const T* data, const bool* mask, size_t rows, const QString& name=QString(""), bool useIfMaskEquals=false) {
@@ -672,10 +680,9 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   \param data data vector to be copied
          *   \param mask data vector to be copied
          *   \param name name for the column
-         *   \param stride strides through the container \a data with the given stride
-         *   \param start starts copying from \a data with the element \a start
+         *   \param useIfMaskEquals data from \a data is copied if and only if the corresponding entry of \a mask equals this value
          *   \return the ID of the newly created column
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
          *
          * Pseudocode:
          *  \code
@@ -712,7 +719,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
 
         /** \brief copies the contents of the map-like container \a c into two columns of the datastore,
          *         returns the two IDs of the items as a std::pair
-         *  \see \ref JKQTPlotterAdvancedJKQTPDatastore, jkqtp_todouble()
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore, jkqtp_todouble()
          *
          *   \tparam TContainer datatype of the map-typed container (e.g. \c std::map or \c QMap ) The requiremen to this container is
          *                      that it supports standard iterators with \c begin() and \c end() .
@@ -755,17 +762,17 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
 
         /** \brief add a column to the datastore that contains \a rows rows with monotonely increasing value starting at \a start and ending at \a end.
          *         the values are equidistant between \a start end \a end
-         *  \see addLogColumn(), addDecadeLogColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addLogColumn(), addDecadeLogColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addLinearColumn(size_t rows, double start, double end, const QString& name=QString(""));
         /** \brief add a column to the datastore that contains \a rows rows with monotonely increasing value starting at \a start and ending at \a end.
          *         the values are logarithmically spaced between \a start end \a end
-         *  \see addLinearColumn(), addDecadeLogColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addLinearColumn(), addDecadeLogColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addLogColumn(size_t rows, double start, double end, const QString& name=QString(""));
         /** \brief add a column to the datastore that contains \a rows rows with monotonely increasing value starting at 10^start and ending at 10^end.
          *         the values are logarithmically spaced between 10^start end 10^end
-         *  \see addLinearColumn(), addLogColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addLinearColumn(), addLogColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addDecadeLogColumn(size_t rows, double startDecade, double endDecade, const QString& name=QString(""));
 
@@ -785,7 +792,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *          x-coordinates are linearly distributed between \a startX and \a endX and the x-coordinates are linearly
          *          distributed between \a startY and \a endY .
          *
-         *  \see addLogGridColumns(), addDecadeLogGridColumns(), addColumnCalculatedFromColumn(), JKQTPXYParametrizedScatterGraph, \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addLogGridColumns(), addDecadeLogGridColumns(), addColumnCalculatedFromColumn(), JKQTPXYParametrizedScatterGraph, \ref JKQTPlotterBasicJKQTPDatastore
          */
         std::pair<size_t,size_t> addLinearGridColumns(size_t width, double startX, double endX, size_t height, double startY, double endY, const QString& nameX=QString(""), const QString& nameY=QString(""));
 
@@ -800,7 +807,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   return newColumn;
          * \endcode
          *
-         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addCalculatedColumn(size_t rows, const std::function<double(size_t, JKQTPDatastore*)>& f, const QString& name=QString(""));
         /** \brief add a column with \a rows entries, that is calculated by calling \a f for each entry
@@ -813,7 +820,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   return newColumn;
          * \endcode
          *
-         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addCalculatedColumn(size_t rows, const std::function<double(size_t)>& f, const QString& name=QString(""));
         /** \brief add a column with the same number of entries, as in the other column \a otherColumn , that are calculated by calling \a f for each entry in \a otherColumn
@@ -826,7 +833,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   return newColumn;
          * \endcode
          *
-         *  \see addCalculatedColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addCalculatedColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addColumnCalculatedFromColumn(size_t otherColumn, const std::function<double(double)>& f, const QString& name=QString(""));
         /** \brief add a column with the same number of entries, as in the other column \a otherColumn , that are calculated by calling \a f for each pair of entries in \a otherColumnX and  \a otherColumnY
@@ -839,7 +846,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *   return newColumn;
          * \endcode
          *
-         *  \see addCalculatedColumn(), \ref JKQTPlotterAdvancedJKQTPDatastore
+         *  \see addCalculatedColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addColumnCalculatedFromColumn(size_t otherColumnX, size_t otherColumnY, const std::function<double(double,double)>& f, const QString& name=QString(""));
 
@@ -1157,10 +1164,10 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief change the size of all columns to the givne number of rows. Returns \c true if the old data could be retained/saved and \c false if the old data was lost (which happens in most of the cases!) */
     bool resizeColumns(size_t rows);
 
-    /*! \brief returns the property rows ( \copybrief rows ). \details Description of the parameter rows is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::JKQTPDatastoreItemrows </BLOCKQUOTE>. \see JKQTPDatastoreItem::rows for more information */ \
+    /*! \copydoc JKQTPDatastoreItem::rows */
     inline size_t getRows() const
     {   return rows;   }
-    /*! \brief returns the property columns ( \copybrief columns ). \details Description of the parameter columns is:  <BLOCKQUOTE>\copydoc JKQTPDatastoreItem::columns </BLOCKQUOTE>. \see JKQTPDatastoreItem::columns for more information */ \
+    /*! \copydoc JKQTPDatastoreItem::columns */
     inline size_t getColumns() const
     {   return columns;   }
 

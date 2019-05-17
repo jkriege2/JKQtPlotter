@@ -887,7 +887,7 @@ class JKQTPMathParser
 
         /** \brief  register a new internal variable of type boolean
          * \param name name of the new variable
-         * \param v initial value of this variable
+         * \param result initial value of this variable
          */
         void addVariable(const std::string& name, jkmpResult result);
 

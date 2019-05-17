@@ -175,11 +175,11 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         /*! \copydoc symbolLineWidth
             \see see symbolLineWidth for details */
         double getSymbolLineWidth() const;
-        /*! \copydoc drawAsRectangles
-            \see see drawAsRectangles for details */ 
+        /*! \copydoc drawMode
+            \see see drawMode for details */
         void setDrawMode(OverlayImageEnhancedDrawMode __value);
-        /*! \copydoc drawAsRectangles
-            \see see drawAsRectangles for details */ 
+        /*! \copydoc drawMode
+            \see see drawMode for details */
         OverlayImageEnhancedDrawMode getDrawMode() const;
         /*! \copydoc symbolSizeFactor
             \see see symbolSizeFactor for details */ 

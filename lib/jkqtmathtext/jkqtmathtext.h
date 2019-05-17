@@ -310,22 +310,22 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             MTFElatex
         };
 
-        /*! \copydoc fontColor \see fontColor */ 
+        /*! \copydoc fontColor */ 
         inline void setFontColor(const QColor & __value)
         {
             this->fontColor = __value;
         } 
-        /*! \copydoc fontColor \see fontColor */ 
+        /*! \copydoc fontColor */ 
         inline QColor getFontColor() const
         {
             return this->fontColor; 
         }
-        /*! \copydoc fontSize \see fontSize */ 
+        /*! \copydoc fontSize */ 
         inline void setFontSize(double __value)
         {
             this->fontSize = __value;
         } 
-        /*! \copydoc fontSize \see fontSize */ 
+        /*! \copydoc fontSize */ 
         inline double getFontSize() const
         {
             return this->fontSize; 
@@ -341,9 +341,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         void addReplacementFont(const QString& nonUseFont, const QString& useFont);
 
 
-        /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to the specified \a __value.
-            \details Description of the parameter fontRoman is: <BLOCKQUOTE>\copydoc fontRoman </BLOCKQUOTE>
-            \see fontRoman for more information */
+        /*! \copydoc fontRoman */
         inline void setFontRoman(const QString & __value)
         {
             this->fontRoman = fontReplacements.value(__value, __value);
@@ -352,127 +350,127 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
             \see fontRoman for more information */
         void setFontRomanOrSpecial(const QString & __value);
-        /*! \copydoc fontRoman \see fontRoman */
+        /*! \copydoc fontRoman */
         inline QString getFontRoman() const
         {
             return this->fontRoman; 
         }
-        /*! \copydoc fontSans \see fontSans */ 
+        /*! \copydoc fontSans */ 
         inline void setFontSans(const QString & __value)
         {
             this->fontSans = fontReplacements.value(__value, __value);
         } 
-        /*! \copydoc fontSans \see fontSans */ 
+        /*! \copydoc fontSans */ 
         inline QString getFontSans() const
         {
             return this->fontSans; 
         }
-        /*! \copydoc fontTypewriter \see fontTypewriter */ 
+        /*! \copydoc fontTypewriter */ 
         inline void setFontTypewriter(const QString & __value)
         {
             this->fontTypewriter = __value;
         } 
-        /*! \copydoc fontTypewriter \see fontTypewriter */ 
+        /*! \copydoc fontTypewriter */ 
         inline QString getFontTypewriter() const
         {
             return this->fontTypewriter; 
         }
-        /*! \copydoc fontScript \see fontScript */ 
+        /*! \copydoc fontScript */ 
         inline void setFontScript(const QString & __value)
         {
             this->fontScript = __value;
         } 
-        /*! \copydoc fontScript \see fontScript */ 
+        /*! \copydoc fontScript */ 
         inline QString getFontScript() const
         {
             return this->fontScript; 
         }
-        /*! \copydoc fontGreek \see fontGreek */ 
+        /*! \copydoc fontGreek */ 
         inline void setFontGreek(const QString & __value)
         {
             this->fontGreek = __value;
         } 
-        /*! \copydoc fontGreek \see fontGreek */ 
+        /*! \copydoc fontGreek */ 
         inline QString getFontGreek() const
         {
             return this->fontGreek; 
         }
-        /*! \copydoc fontSymbol \see fontSymbol */ 
+        /*! \copydoc fontSymbol */ 
         inline void setFontSymbol(const QString & __value)
         {
             this->fontSymbol = __value;
         } 
-        /*! \copydoc fontSymbol \see fontSymbol */ 
+        /*! \copydoc fontSymbol */ 
         inline QString getFontSymbol() const
         {
             return this->fontSymbol; 
         }
-        /*! \copydoc fontBraces \see fontBraces */ 
+        /*! \copydoc fontBraces */ 
         inline void setFontBraces(const QString & __value)
         {
             this->fontBraces = __value;
         } 
-        /*! \copydoc fontBraces \see fontBraces */ 
+        /*! \copydoc fontBraces */ 
         inline QString getFontBraces() const
         {
             return this->fontBraces; 
         }
-        /*! \copydoc fontIntegrals \see fontIntegrals */ 
+        /*! \copydoc fontIntegrals */ 
         inline void setFontIntegrals(const QString & __value)
         {
             this->fontIntegrals = __value;
         } 
-        /*! \copydoc fontIntegrals \see fontIntegrals */ 
+        /*! \copydoc fontIntegrals */ 
         inline QString getFontIntegrals() const
         {
             return this->fontIntegrals; 
         }
-        /*! \copydoc fontCaligraphic \see fontCaligraphic */ 
+        /*! \copydoc fontCaligraphic */ 
         inline void setFontCaligraphic(const QString & __value)
         {
             this->fontCaligraphic = __value;
         } 
-        /*! \copydoc fontCaligraphic \see fontCaligraphic */ 
+        /*! \copydoc fontCaligraphic */ 
         inline QString getFontCaligraphic() const
         {
             return this->fontCaligraphic; 
         }
-        /*! \copydoc fontBlackboard \see fontBlackboard */ 
+        /*! \copydoc fontBlackboard */ 
         inline void setFontBlackboard(const QString & __value)
         {
             this->fontBlackboard = __value;
         } 
-        /*! \copydoc fontBlackboard \see fontBlackboard */ 
+        /*! \copydoc fontBlackboard */ 
         inline QString getFontBlackboard() const
         {
             return this->fontBlackboard; 
         }
-        /*! \copydoc fontLatexPrefix \see fontLatexPrefix */ 
+        /*! \copydoc fontLatexPrefix */ 
         inline void setFontLatexPrefix(const QString & __value)
         {
             this->fontLatexPrefix = __value;
         } 
-        /*! \copydoc fontLatexPrefix \see fontLatexPrefix */ 
+        /*! \copydoc fontLatexPrefix */ 
         inline QString getFontLatexPrefix() const
         {
             return this->fontLatexPrefix; 
         }
-        /*! \copydoc fontLatexPostfix \see fontLatexPostfix */ 
+        /*! \copydoc fontLatexPostfix */ 
         inline void setFontLatexPostfix(const QString & __value)
         {
             this->fontLatexPostfix = __value;
         } 
-        /*! \copydoc fontLatexPostfix \see fontLatexPostfix */ 
+        /*! \copydoc fontLatexPostfix */ 
         inline QString getFontLatexPostfix() const
         {
             return this->fontLatexPostfix; 
         }
-        /*! \copydoc fontEncoding \see fontEncoding */ 
+        /*! \copydoc fontEncoding */ 
         inline void setFontEncoding(const MTfontEncoding & __value)
         {
             this->fontEncoding = __value;
         } 
-        /*! \copydoc fontEncoding \see fontEncoding */
+        /*! \copydoc fontEncoding */
         inline MTfontEncoding getFontEncoding() const
         {
             return this->fontEncoding;
@@ -489,162 +487,162 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         inline bool isUsingXITSfonts() const { 
             return this->useXITSfonts; 
         }
-        /*! \copydoc brace_factor \see brace_factor */ 
+        /*! \copydoc brace_factor */ 
         inline void setBraceFactor(double __value)
         {
             this->brace_factor = __value;
         } 
-        /*! \copydoc brace_factor \see brace_factor */ 
+        /*! \copydoc brace_factor */ 
         inline double getBraceFactor() const
         {
             return this->brace_factor; 
         }
-        /*! \copydoc subsuper_size_factor \see subsuper_size_factor */ 
+        /*! \copydoc subsuper_size_factor */ 
         inline void setSubsuperSizeFactor(double __value)
         {
             this->subsuper_size_factor = __value;
         } 
-        /*! \copydoc subsuper_size_factor \see subsuper_size_factor */ 
+        /*! \copydoc subsuper_size_factor */ 
         inline double getSubsuperSizeFactor() const
         {
             return this->subsuper_size_factor; 
         }
-        /*! \copydoc italic_correction_factor \see italic_correction_factor */ 
+        /*! \copydoc italic_correction_factor */ 
         inline void setItalicCorrectionFactor(double __value)
         {
             this->italic_correction_factor = __value;
         } 
-        /*! \copydoc italic_correction_factor \see italic_correction_factor */ 
+        /*! \copydoc italic_correction_factor */ 
         inline double getItalicCorrectionFactor() const
         {
             return this->italic_correction_factor; 
         }
-        /*! \copydoc operatorsubsuper_size_factor \see operatorsubsuper_size_factor */ 
+        /*! \copydoc operatorsubsuper_size_factor */ 
         inline void setOperatorsubsuperSizeFactor(double __value)
         {
             this->operatorsubsuper_size_factor = __value;
         } 
-        /*! \copydoc operatorsubsuper_size_factor \see operatorsubsuper_size_factor */ 
+        /*! \copydoc operatorsubsuper_size_factor */ 
         inline double getOperatorsubsuperSizeFactor() const
         {
             return this->operatorsubsuper_size_factor; 
         }
-        /*! \copydoc mathoperator_width_factor \see mathoperator_width_factor */ 
+        /*! \copydoc mathoperator_width_factor */ 
         inline void setMathoperatorWidthFactor(double __value)
         {
             this->mathoperator_width_factor = __value;
         } 
-        /*! \copydoc mathoperator_width_factor \see mathoperator_width_factor */ 
+        /*! \copydoc mathoperator_width_factor */ 
         inline double getMathoperatorWidthFactor() const
         {
             return this->mathoperator_width_factor; 
         }
-        /*! \copydoc super_shift_factor \see super_shift_factor */ 
+        /*! \copydoc super_shift_factor */ 
         inline void setSuperShiftFactor(double __value)
         {
             this->super_shift_factor = __value;
         } 
-        /*! \copydoc super_shift_factor \see super_shift_factor */ 
+        /*! \copydoc super_shift_factor */ 
         inline double getSuperShiftFactor() const
         {
             return this->super_shift_factor; 
         }
-        /*! \copydoc sub_shift_factor \see sub_shift_factor */ 
+        /*! \copydoc sub_shift_factor */ 
         inline void setSubShiftFactor(double __value)
         {
             this->sub_shift_factor = __value;
         } 
-        /*! \copydoc sub_shift_factor \see sub_shift_factor */ 
+        /*! \copydoc sub_shift_factor */ 
         inline double getSubShiftFactor() const
         {
             return this->sub_shift_factor; 
         }
-        /*! \copydoc brace_shrink_factor \see brace_shrink_factor */ 
+        /*! \copydoc brace_shrink_factor */ 
         inline void setBraceShrinkFactor(double __value)
         {
             this->brace_shrink_factor = __value;
         } 
-        /*! \copydoc brace_shrink_factor \see brace_shrink_factor */ 
+        /*! \copydoc brace_shrink_factor */ 
         inline double getBraceShrinkFactor() const
         {
             return this->brace_shrink_factor; 
         }
-        /*! \copydoc underbrace_factor \see underbrace_factor */ 
+        /*! \copydoc underbrace_factor */ 
         inline void setUnderbraceFactor(double __value)
         {
             this->underbrace_factor = __value;
         } 
-        /*! \copydoc underbrace_factor \see underbrace_factor */ 
+        /*! \copydoc underbrace_factor */ 
         inline double getUnderbraceFactor() const
         {
             return this->underbrace_factor; 
         }
-        /*! \copydoc undersetFactor \see undersetFactor */ 
+        /*! \copydoc undersetFactor */ 
         inline void setUndersetFactor(double __value)
         {
             this->undersetFactor = __value;
         } 
-        /*! \copydoc undersetFactor \see undersetFactor */ 
+        /*! \copydoc undersetFactor */ 
         inline double getUndersetFactor() const
         {
             return this->undersetFactor; 
         }
-        /*! \copydoc frac_factor \see frac_factor */ 
+        /*! \copydoc frac_factor */ 
         inline void setFracFactor(double __value)
         {
             this->frac_factor = __value;
         } 
-        /*! \copydoc frac_factor \see frac_factor */ 
+        /*! \copydoc frac_factor */ 
         inline double getFracFactor() const
         {
             return this->frac_factor; 
         }
-        /*! \copydoc frac_shift_factor \see frac_shift_factor */ 
+        /*! \copydoc frac_shift_factor */ 
         inline void setFracShiftFactor(double __value)
         {
             this->frac_shift_factor = __value;
         } 
-        /*! \copydoc frac_shift_factor \see frac_shift_factor */ 
+        /*! \copydoc frac_shift_factor */ 
         inline double getFracShiftFactor() const
         {
             return this->frac_shift_factor; 
         }
-        /*! \copydoc brace_y_shift_factor \see brace_y_shift_factor */ 
+        /*! \copydoc brace_y_shift_factor */ 
         inline void setBraceYShiftFactor(double __value)
         {
             this->brace_y_shift_factor = __value;
         } 
-        /*! \copydoc brace_y_shift_factor \see brace_y_shift_factor */ 
+        /*! \copydoc brace_y_shift_factor */ 
         inline double getBraceYShiftFactor() const
         {
             return this->brace_y_shift_factor; 
         }
-        /*! \copydoc decoration_height_factor \see decoration_height_factor */ 
+        /*! \copydoc decoration_height_factor */ 
         inline void setDecorationHeightFactor(double __value)
         {
             this->decoration_height_factor = __value;
         } 
-        /*! \copydoc decoration_height_factor \see decoration_height_factor */ 
+        /*! \copydoc decoration_height_factor */ 
         inline double getDecorationHeightFactor() const
         {
             return this->decoration_height_factor; 
         }
-        /*! \copydoc expensiveRendering \see expensiveRendering */ 
+        /*! \copydoc expensiveRendering */ 
         inline void setExpensiveRendering(bool __value)
         {
             this->expensiveRendering = __value;
         } 
-        /*! \copydoc expensiveRendering \see expensiveRendering */ 
+        /*! \copydoc expensiveRendering */ 
         inline bool getExpensiveRendering() const
         {
             return this->expensiveRendering; 
         }
-        /*! \copydoc useUnparsed \see useUnparsed */ 
+        /*! \copydoc useUnparsed */ 
         inline void setUseUnparsed(bool __value)
         {
             this->useUnparsed = __value;
         } 
-        /*! \copydoc useUnparsed \see useUnparsed */ 
+        /*! \copydoc useUnparsed */ 
         inline bool isUsingUnparsed() const
         {
             return this->useUnparsed; 
