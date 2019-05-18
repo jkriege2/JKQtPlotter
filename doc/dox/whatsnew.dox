@@ -55,9 +55,11 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 	</ul></li>
  <li> Updates to JKQTMathText: 
     <ul>
+	  <li> new: slanted fractions (<code>\sfrac{}{}</code>, <code>\stfrac{}{}</code>) </li>
       <li> update/fix: several general improvements and bugfixes </li>
 	  <li> update/fix: improved error handling </li>
 	  <li> update: updated contained version of STIX fonts, better handling of different STIX versions </li>
+	  <li> update: improved documentation</li>
 	</ul></li>
  </ul>
 

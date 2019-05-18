@@ -69,6 +69,9 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("frac test", "$\\frac{a}{b}+\\frac{g}{a}-\\frac{a^2}{b^2}\\cdot\\frac{a^2}{b^{\\frac{1}{2}}}$");
     ui->cmbTestset->addItem("tfrac test", "$\\tfrac{a}{b}+\\tfrac{g}{a}-\\tfrac{a^2}{b^2}\\cdot\\tfrac{a^2}{b^{\\tfrac{1}{2}}}$");
     ui->cmbTestset->addItem("dfrac test", "$\\dfrac{a}{b}+\\dfrac{g}{a}-\\dfrac{a^2}{b^2}\\cdot\\dfrac{a^2}{b^{\\dfrac{1}{2}}}$");
+    ui->cmbTestset->addItem("sfrac test", "$\\sfrac{a}{b}+\\sfrac{g}{a}-\\sfrac{a^2}{b^2}\\cdot\\sfrac{a^2}{b^{\\sfrac{1}{2}}}$");
+    ui->cmbTestset->addItem("stfrac test", "$\\stfrac{a}{b}+\\stfrac{g}{a}-\\stfrac{a^2}{b^2}\\cdot\\stfrac{a^2}{b^{\\stfrac{1}{2}}}$");
+    ui->cmbTestset->addItem("number fractions test", "frac: \\frac{1}{2}, \\frac{3}{4},\\ \\ \\ tfrac: \\tfrac{1}{2}, \\tfrac{3}{4},\\ \\ \\ sfrac: \\sfrac{1}{2}, \\sfrac{3}{4},\\ \\ \\ stfrac: \\stfrac{1}{2}, \\stfrac{3}{4},\\ \\ \\ ");
     ui->cmbTestset->addItem("stackrel test", "$\\stackrel{a}{b}+\\stackrel{g}{a}-\\stackrel{a^2}{b^2}\\cdot\\stackrel{a^2}{b^{\\stackrel{1}{2}}}$");
     ui->cmbTestset->addItem("brace0 test", "\\langle\\langle -- $\\langle\\langle$");
     ui->cmbTestset->addItem("brace1 test", "\\langle\\langle r^{123} -- $\\langle\\langle r^{123}$");

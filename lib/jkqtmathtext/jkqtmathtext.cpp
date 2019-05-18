@@ -742,10 +742,10 @@ void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::
         ev2.fontSize=ev2.fontSize*parent->getUnderbraceFactor();
     } else if (mode==MTFMunderset || mode==MTFMoverset) {
         ev2.fontSize=ev2.fontSize*parent->getUndersetFactor();
-    } else  if (mode==MTFMfrac) {
+    } else  if (mode==MTFMfrac || mode==MTFMsfrac) {
         ev1.fontSize=ev1.fontSize*parent->getFracFactor();
         ev2.fontSize=ev2.fontSize*parent->getFracFactor();
-    } else  if (mode==MTFMtfrac) {
+    } else  if (mode==MTFMtfrac || mode==MTFMstfrac) {
         ev1.fontSize=ev1.fontSize*parent->getFracFactor()*0.7;
         ev2.fontSize=ev2.fontSize*parent->getFracFactor()*0.7;
     }
@@ -769,6 +769,11 @@ void JKQTMathText::MTfracNode::getSizeInternal(QPainter& painter, JKQTMathText::
         baselineHeight=qMax(overallHeight1, overallHeight2)+xh*(2.0*parent->getFracShiftFactor());
         //std::cout<<"=>  baselineHeight="<<baselineHeight<<",  overallHeight="<<overallHeight<<std::endl;
         width=qMax(width1, width2)+ xw;
+        strikeoutPos=sp;
+    } else if (mode==MTFMstfrac || mode==MTFMsfrac) {
+        overallHeight=2.0*qMax(overallHeight1, overallHeight2)+sp*(2.0*parent->getFracShiftFactor());
+        baselineHeight=qMax(overallHeight1, overallHeight2)+xh*(2.0*parent->getFracShiftFactor());
+        width=width1+width2+xw;
         strikeoutPos=sp;
     } else if (mode==MTFMstackrel) {
         //overallHeight=overallHeight1+overallHeight2+sp*(2.0*parent->getFracShiftFactor());
@@ -818,13 +823,14 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
         ev2.fontSize=ev2.fontSize*parent->getUnderbraceFactor();
     } else if (mode==MTFMunderset || mode==MTFMoverset) {
         ev2.fontSize=ev2.fontSize*parent->getUndersetFactor();
-    } else  if (mode==MTFMfrac) {
+    } else  if (mode==MTFMfrac || mode==MTFMsfrac) {
         ev1.fontSize=ev1.fontSize*parent->getFracFactor();
         ev2.fontSize=ev2.fontSize*parent->getFracFactor();
-    } else  if (mode==MTFMtfrac) {
+    } else  if (mode==MTFMtfrac || mode==MTFMstfrac) {
         ev1.fontSize=ev1.fontSize*parent->getFracFactor()*0.7;
         ev2.fontSize=ev2.fontSize*parent->getFracFactor()*0.7;
     }
+
 
     double width1=0, baselineHeight1=0, overallHeight1=0;//, strikeoutPos1=0;
     double width2=0, baselineHeight2=0, overallHeight2=0, strikeoutPos=0;
@@ -853,6 +859,11 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
         if (l.length()>0) painter.drawLine(l);
         child1->draw(painter, x+xw/2.0+(width-width1)/2.0, yline-xh*(parent->getFracShiftFactor())-descent1, ev1);
         child2->draw(painter, x+xw/2.0+(width-width2)/2.0, yline+xh*(parent->getFracShiftFactor())+ascent2, ev2);
+    } else if (mode==MTFMstfrac || mode==MTFMsfrac) {
+        child1->draw(painter, x, yline-descent1, ev1);
+        child2->draw(painter, x+width+xw, yline+ascent2, ev2);
+        QLineF l(x+width+1.2*xw, yline-descent1-ascent1, x+width-0.2*xw, yline+ascent1+descent1);
+        if (l.length()>0) painter.drawLine(l);
     } else if (mode==MTFMstackrel) {
         child1->draw(painter, x+xw/2.0+(width-width1)/2.0, yline-xh*(parent->getFracShiftFactor())-descent1, ev1);
         child2->draw(painter, x+xw/2.0+(width-width2)/2.0, yline+xh*(parent->getFracShiftFactor())+ascent2, ev2);
@@ -886,7 +897,8 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
 
 
     if (mode==MTFMstackrel) return x+width+ xw;
-    return x+width+xw;
+    else if (mode==MTFMstfrac || mode==MTFMsfrac) return x+width+width2+xw;
+    else return x+width+xw;
 
 }
 
@@ -3730,6 +3742,18 @@ JKQTMathText::MTnode* JKQTMathText::parseLatexString(bool get, const QString& qu
                     if (getToken()==MTTopenbrace) n2=parseLatexString(true);
                     if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMdfrac));
                     else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
+                } else if (name=="sfrac" || name=="slantfrac" || name=="xfrac") {
+                    MTnode* n1=parseLatexString(true);
+                    MTnode* n2=nullptr;
+                    if (getToken()==MTTopenbrace) n2=parseLatexString(true);
+                    if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMsfrac));
+                    else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
+                } else if (name=="stfrac" || name=="nicefrac" || name=="slanttextfrac" || name=="xtfrac") {
+                    MTnode* n1=parseLatexString(true);
+                    MTnode* n2=nullptr;
+                    if (getToken()==MTTopenbrace) n2=parseLatexString(true);
+                    if (n1 && n2) nl->addNode(new MTfracNode(this, n1, n2, MTFMstfrac));
+                    else error_list.append(tr("error @ ch. %1: expected two arguments in '{' braces after '%2' command").arg(currentTokenID).arg(name));
                 } else if (name=="tfrac") {
                     MTnode* n1=parseLatexString(true);
                     MTnode* n2=nullptr;
@@ -4257,6 +4281,10 @@ QString JKQTMathText::fracModeToString(JKQTMathText::MTfracMode mode)
             return "frac";
         case MTFMdfrac:
             return "dfrac";
+        case MTFMsfrac:
+            return "sfrac";
+        case MTFMstfrac:
+            return "stfrac";
         case MTFMtfrac:
             return "tfrac";
         case MTFMunderbrace:

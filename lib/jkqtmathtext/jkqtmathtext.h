@@ -167,6 +167,8 @@ JKQTP_LIB_EXPORT void initJKQTMathTextResources();
     \subsection JKQTMathTextSuppoertedLaTeXMatrix Matrix/Array Type Instructions
     Several Matrix/Array-typed LaTeX instructions are supported:
       - <code>$\frac{...}{...}$</code>, <code>$\tfrac{...}{...}$</code> (70% smaller font), <code>$\dfrac{...}{...}$</code> \image html jkqtmathtext_brace_frac.png
+      - <code>$\sfrac{...}{...}$</code> \image html mathparser/MTFMsfrac.png
+      - <code>$\stfrac{...}{...}$</code> (70% smaller font) \image html mathparser/MTFMstfrac.png
       - <code>$\stackrel{...}{...}$ $\binom{...}{...}$</code> \image html jkqtmathtext_brace_stackrel.png
       - <code>$\begin{cases} ... & ... \\ ... & ... \end{cases}$</code> \image html jkqtmathtext_brace_begincases.png
       - <code>$\begin{array} a & b & ...\\ c & d & ...\end{array}$</code> <code>$\begin{matrix} a & b & ...\\ c & d & ...\end{matrix}$</code> \image html jkqtmathtext_array.png
@@ -1082,14 +1084,16 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
 
         enum MTfracMode {
-            MTFMfrac,
-            MTFMdfrac,
-            MTFMtfrac,
-            MTFMunderbrace,
-            MTFMoverbrace,
-            MTFMstackrel,
-            MTFMunderset,
-            MTFMoverset
+            MTFMfrac,  /*!< \brief normal fraction \image html mathparser/MTFMfrac.png */
+            MTFMdfrac,  /*!< \brief normal fraction, without scaling of under/over text \image html mathparser/MTFMdfrac.png */
+            MTFMtfrac,  /*!< \brief text fraction (smaller than MTFMfrac) \image html mathparser/MTFMtfrac.png */
+            MTFMsfrac,  /*!< \brief slanted fraction \image html mathparser/MTFMsfrac.png */
+            MTFMstfrac,  /*!< \brief slanted text fraction \image html mathparser/MTFMstfrac.png */
+            MTFMunderbrace,  /*!< \brief curly underbrace \image html mathparser/MTFMunderbrace.png */
+            MTFMoverbrace,  /*!< \brief curly overbrace \image html mathparser/MTFMoverbrace.png */
+            MTFMstackrel,  /*!< \brief binom/fraction without line \image html mathparser/MTFMstackrel.png */
+            MTFMunderset,  /*!< \brief underset text \image html mathparser/MTFMunderset.png */
+            MTFMoverset  /*!< \brief overset text \image html mathparser/MTFMoverset.png */
         };
 
         static QString fracModeToString(MTfracMode mode);
@@ -1165,17 +1169,17 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
 
         enum MTdecoration {
-            MTDvec,
-            MTDhat,
-            MTDdot,
-            MTDddot,
-            MTDbar,
-            MTDarrow,
-            MTDoverline,
-            MTDdoubleoverline,
-            MTDunderline,
-            MTDdoubleunderline,
-            MTDtilde
+            MTDvec,  /*!< \brief vector arrow over block \image html mathparser/MTDvec.png */
+            MTDhat,  /*!< \brief hat over block \image html mathparser/MTDhat.png */
+            MTDdot,  /*!< \brief single dot over block \image html mathparser/MTDvec.png */
+            MTDddot,  /*!< \brief double dot over block \image html mathparser/MTDddot.png */
+            MTDbar,  /*!< \brief bar over block \image html mathparser/MTDbar.png */
+            MTDarrow,  /*!< \brief arrow over block \image html mathparser/MTDarrow.png */
+            MTDoverline,  /*!< \brief overline over block \image html mathparser/MTDoverline.png */
+            MTDdoubleoverline,  /*!< \brief double overline over block \image html mathparser/MTDdoubleoverline.png */
+            MTDunderline,  /*!< \brief underline under block \image html mathparser/MTDunderline.png */
+            MTDdoubleunderline,  /*!< \brief double underline under block \image html mathparser/MTDdoubleunderline.png */
+            MTDtilde  /*!< \brief tilde over block \image html mathparser/MTDtilde.png */
         };
         static QString decorationToString(MTdecoration mode);
 
