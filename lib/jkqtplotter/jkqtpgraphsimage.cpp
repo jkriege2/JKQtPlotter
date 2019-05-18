@@ -1741,6 +1741,10 @@ int JKQTPColumnMathImage::getImageColumn() const
 void JKQTPColumnMathImage::setModifierColumn(int __value)
 {
     this->modifierColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
 
 int JKQTPColumnMathImage::getModifierColumn() const

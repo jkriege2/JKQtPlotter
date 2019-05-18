@@ -345,6 +345,10 @@ JKQTPColumnOverlayImageEnhanced::JKQTPColumnOverlayImageEnhanced(JKQTPlotter *pa
 void JKQTPColumnOverlayImageEnhanced::setImageColumn(int __value)
 {
     this->imageColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
 
 int JKQTPColumnOverlayImageEnhanced::getImageColumn() const

@@ -217,6 +217,10 @@ void JKQTPContour::setImageColumn(size_t columnID)
 {
     datatype=JKQTPMathImageBase::DoubleArray;
     data=parent->getDatastore()->getColumnPointer(columnID,0);
+    if (parent && columnID>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(columnID));
+        setNy(parent->getDatastore()->getColumnImageHeight(columnID));
+    }
 }
 
 

@@ -1353,6 +1353,10 @@ int JKQTPColumnRGBMathImage::getModifierColumn() const
 void JKQTPColumnRGBMathImage::setModifierColumn(int __value)
 {
     this->modifierColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
 
 int JKQTPColumnRGBMathImage::getImageBColumn() const
@@ -1363,6 +1367,10 @@ int JKQTPColumnRGBMathImage::getImageBColumn() const
 void JKQTPColumnRGBMathImage::setImageBColumn(int __value)
 {
     this->imageBColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
 
 int JKQTPColumnRGBMathImage::getImageGColumn() const
@@ -1373,6 +1381,10 @@ int JKQTPColumnRGBMathImage::getImageGColumn() const
 void JKQTPColumnRGBMathImage::setImageGColumn(int __value)
 {
     this->imageGColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
 
 int JKQTPColumnRGBMathImage::getImageRColumn() const
@@ -1383,4 +1395,8 @@ int JKQTPColumnRGBMathImage::getImageRColumn() const
 void JKQTPColumnRGBMathImage::setImageRColumn(int __value)
 {
     this->imageRColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
