@@ -36,8 +36,8 @@
 #include <QString>
 #include <QSet>
 #include <QFile>
-#include "jkqtplottertools/jkqtptools.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtptools.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <QWidget>
 #include <QLabel>
 #include <QHash>

@@ -20,8 +20,8 @@
 
 #ifndef JKQTPDRAWINGTOOLS_H_INCLUDED
 #define JKQTPDRAWINGTOOLS_H_INCLUDED
-#include "jkqtplottertools/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtptools.h"
 #include <QPaintDevice>
 
 class JKQTPEnhancedPainter; // forward

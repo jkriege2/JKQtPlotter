@@ -1,7 +1,7 @@
 #include "jkqtplotterstyle.h"
 #include <QApplication>
 #include "jkqtplottertools/jkqttools.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 
 JKQTPlotterStyle::JKQTPlotterStyle():
     maxTooltipDistance(16),

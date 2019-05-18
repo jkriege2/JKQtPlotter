@@ -1,7 +1,7 @@
 #include "jkqtpbaseplotterstyle.h"
 #include <QPalette>
 #include <QApplication>
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 
 JKQTBasePlotterStyle::JKQTBasePlotterStyle():
     debugShowRegionBoxes(false),

@@ -24,7 +24,7 @@
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <functional>
 
 #ifndef jkqtpgraphsevaluatedfunction_H

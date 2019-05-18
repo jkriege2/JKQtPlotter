@@ -54,7 +54,7 @@
 #include <ctype.h>
 #include <list>
 #include <utility>
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 
 
 #ifndef JKQTPMATHPARSER_H

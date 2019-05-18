@@ -18,7 +18,7 @@
 */
 
 
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsspecialline.h"

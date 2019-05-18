@@ -24,15 +24,15 @@
 #include <QDebug>
 #include <QImage>
 #include <QStringList>
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <cmath>
 #include <cfloat>
 #include <stdint.h>
 #include <QColor>
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 
 #ifndef NO_JKQTPLOTTER
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 
 class JKQTPVerticalIndependentAxis; // forward
 class JKQTPHorizontalIndependentAxis; // forward

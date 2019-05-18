@@ -20,7 +20,7 @@
 
 #ifndef JKQTPENHANCED_PAINTERS_H
 #define JKQTPENHANCED_PAINTERS_H
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <QPainter>
 
 

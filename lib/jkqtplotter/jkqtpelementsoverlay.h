@@ -22,8 +22,8 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtplottertools/jkqtptools.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtptools.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpelementsoverlay_H

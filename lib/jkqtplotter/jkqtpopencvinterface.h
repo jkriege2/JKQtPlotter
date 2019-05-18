@@ -19,7 +19,7 @@
 
 
 
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include <opencv2/core.hpp>
 

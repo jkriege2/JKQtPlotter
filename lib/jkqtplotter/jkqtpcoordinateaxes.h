@@ -28,9 +28,9 @@
 #include <QPainter>
 #include <QPair>
 #include <QSettings>
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpcoordinateaxesstyle.h"
 
 // forward declarations

@@ -28,7 +28,7 @@
 #ifndef JKQTFASTPLOTTER_H
 #define JKQTFASTPLOTTER_H
 
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <QWidget>
 #include <QVector>
 #include <QSettings>
@@ -42,7 +42,7 @@
 #include <QMutex>
 #include <QGLWidget>
 
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 #ifdef DEBUG_TIMING
 #  include "jkqtplottertools/jkqtphighrestimer.h"
 #endif

@@ -21,7 +21,7 @@
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplottertools/jkqtpimagetools.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtplotter.h"
 #include <QDebug>

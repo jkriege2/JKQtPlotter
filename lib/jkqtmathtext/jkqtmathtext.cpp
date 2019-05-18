@@ -20,7 +20,7 @@
 
 
 #include "jkqtmathtext/jkqtmathtext.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 #include <QFontMetricsF>
 #include <QDebug>
 #include <QFontDatabase>

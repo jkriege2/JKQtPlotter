@@ -20,7 +20,7 @@
 
 
 #include "jkqtfastplotter.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 #include <QLocale>
 #include <QPainter>
 #include <QPaintEvent>

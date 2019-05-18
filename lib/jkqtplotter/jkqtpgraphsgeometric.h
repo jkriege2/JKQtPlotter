@@ -23,8 +23,8 @@
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#include "jkqtplottertools/jkqtptools.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtptools.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 
 #ifndef jkqtpgraphsgeometric_H_INCLUDED

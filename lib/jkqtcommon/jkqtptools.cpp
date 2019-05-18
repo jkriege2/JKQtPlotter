@@ -21,7 +21,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
 #include <cmath>
 #include <QDebug>

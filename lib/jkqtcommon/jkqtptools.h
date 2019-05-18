@@ -21,7 +21,7 @@
 
 #ifndef JKQTPTOOLS_H_INCLUDED
 #define JKQTPTOOLS_H_INCLUDED
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <QString>
 #include <QElapsedTimer>
 #include <QLocale>

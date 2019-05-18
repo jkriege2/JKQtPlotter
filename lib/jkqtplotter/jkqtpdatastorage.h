@@ -19,8 +19,8 @@
 
 
 
-#include "jkqtplottertools/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtptools.h"
 #include <vector>
 #include <cmath>
 #include <iostream>

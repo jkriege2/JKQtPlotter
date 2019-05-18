@@ -23,8 +23,8 @@
 #include <QPair>
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplottertools/jkqtptools.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtptools.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplottertools/jkqtpimagetools.h"
 
 #ifndef JKQTPGRAPHSBASE_H

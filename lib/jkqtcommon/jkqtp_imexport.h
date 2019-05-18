@@ -30,7 +30,7 @@
     This file allows to export functions and classes from this directory in a dynamic/shared lib and to append the
     correct __declspec() declaration on windows. If you want to export one, make sure you have set
     \code
-    #include "jkqtplottertools/jkqtp_imexport.h"
+    #include "jkqtcommon/jkqtp_imexport.h"
 
     class JKQTP_LIB_EXPORT exportedClassName {
        ...

@@ -22,8 +22,8 @@
 #include <QPainter>
 #include <QPen>
 #include <QBrush>
-#include "jkqtplottertools/jkqtptools.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtptools.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplottertools/jkqtpdrawingtools.h"
 
 

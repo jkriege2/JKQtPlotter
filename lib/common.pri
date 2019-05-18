@@ -11,11 +11,11 @@
     DEFINES += _CRT_NO_VA_START_VALIDATION
 }
 
-HEADERS += $$PWD/jkqtplottertools/jkqtp_imexport.h \
-           $$PWD/jkqtplottertools/jkqtptools.h
+HEADERS += $$PWD/jkqtcommon/jkqtp_imexport.h \
+           $$PWD/jkqtcommon/jkqtptools.h
 
 
-SOURCES += $$PWD/jkqtplottertools/jkqtptools.cpp
+SOURCES += $$PWD/jkqtcommon/jkqtptools.cpp
 
 INCLUDEPATH += $$PWD 
 

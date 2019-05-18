@@ -18,7 +18,7 @@
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplottergui/jkqtpgraphsmodel.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 
 #define N1 200
 #define N2 50

@@ -20,7 +20,7 @@
 
 #ifndef JKQTPEnhancedTableView_H_INCLUDED
 #define JKQTPEnhancedTableView_H_INCLUDED
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <QTableView>
 #include <QPrinter>
 

@@ -23,11 +23,11 @@
 #define JKQTPCOMBOBOXES_H
 
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include <QComboBox>
 #include "jkqtplottertools/jkqtpimagetools.h"
-#include "jkqtplottertools/jkqtptools.h"
+#include "jkqtcommon/jkqtptools.h"
 
 
 

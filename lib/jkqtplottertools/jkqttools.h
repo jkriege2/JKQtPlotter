@@ -24,7 +24,7 @@
 #ifndef JKQTTOOLS_H
 #define JKQTTOOLS_H
 
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 #include <QSettings>
 #include <QWidget>
 #include <QSplitter>

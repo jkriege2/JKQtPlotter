@@ -20,7 +20,7 @@
 
 #ifndef jkqtpenhancedspinboxes_H_INCLUDED
 #define jkqtpenhancedspinboxes_H_INCLUDED
-#include "jkqtplottertools/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtp_imexport.h"
 
 #include <QSpinBox>
 #include <QDoubleSpinBox>
