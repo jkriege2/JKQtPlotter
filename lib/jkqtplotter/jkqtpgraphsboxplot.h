@@ -139,106 +139,69 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQT
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
-        /*! \copydoc sortData
-            \see see sortData for details */ 
+        /*! \copydoc sortData */ 
         void setDataSortOrder(DataSortOrder  __value);
-        /*! \copydoc sortData
-            \see see sortData for details */ 
+        /*! \copydoc sortData */ 
         DataSortOrder getDataSortOrder() const;
-        /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
+        /*! \copydoc sortData */
         void setDataSortOrder(int __value);
-        /*! \copydoc posColumn
-            \see see posColumn for details */ 
+        /*! \copydoc posColumn */ 
         void setPositionColumn(int __value);
-        /*! \copydoc posColumn
-            \see see posColumn for details */ 
+        /*! \copydoc posColumn */ 
         int getPositionColumn() const;
-        /*! \brief sets the property posColumn ( \copybrief posColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter posColumn is:  <BLOCKQUOTE>\copydoc posColumn </BLOCKQUOTE> 
-            \see posColumn for more information */ 
+        /*! \copydoc posColumn */ 
         void setPositionColumn (size_t __value);
-        /*! \copydoc medianColumn
-            \see see medianColumn for details */ 
+        /*! \copydoc medianColumn */ 
         void setMedianColumn(int __value);
-        /*! \copydoc medianColumn
-            \see see medianColumn for details */ 
+        /*! \copydoc medianColumn */ 
         int getMedianColumn() const;
-        /*! \brief sets the property medianColumn ( \copybrief medianColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter medianColumn is:  <BLOCKQUOTE>\copydoc medianColumn </BLOCKQUOTE> 
-            \see medianColumn for more information */ 
+        /*! \copydoc medianColumn */ 
         void setMedianColumn (size_t __value);
-        /*! \copydoc meanColumn
-            \see see meanColumn for details */ 
+        /*! \copydoc meanColumn */ 
         void setMeanColumn(int __value);
-        /*! \copydoc meanColumn
-            \see see meanColumn for details */ 
+        /*! \copydoc meanColumn */ 
         int getMeanColumn() const;
-        /*! \brief sets the property meanColumn ( \copybrief meanColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter meanColumn is:  <BLOCKQUOTE>\copydoc meanColumn </BLOCKQUOTE> 
-            \see meanColumn for more information */ 
+        /*! \copydoc meanColumn */ 
         void setMeanColumn (size_t __value);
-        /*! \copydoc minColumn
-            \see see minColumn for details */ 
+        /*! \copydoc minColumn */ 
         void setMinColumn(int __value);
-        /*! \copydoc minColumn
-            \see see minColumn for details */ 
+        /*! \copydoc minColumn */ 
         int getMinColumn() const;
-        /*! \brief sets the property minColumn ( \copybrief minColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter minColumn is:  <BLOCKQUOTE>\copydoc minColumn </BLOCKQUOTE> 
-            \see minColumn for more information */ 
+        /*! \copydoc minColumn */ 
         void setMinColumn( size_t __value);
-        /*! \copydoc maxColumn
-            \see see maxColumn for details */ 
+        /*! \copydoc maxColumn */ 
         void setMaxColumn(int __value);
-        /*! \copydoc maxColumn
-            \see see maxColumn for details */ 
+        /*! \copydoc maxColumn */ 
         int getMaxColumn() const;
-        /*! \brief sets the property maxColumn ( \copybrief maxColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter maxColumn is:  <BLOCKQUOTE>\copydoc maxColumn </BLOCKQUOTE> 
-            \see maxColumn for more information */ 
+        /*! \copydoc maxColumn */ 
         void setMaxColumn (size_t __value);
-        /*! \copydoc percentile25Column
-            \see see percentile25Column for details */ 
+        /*! \copydoc percentile25Column */ 
         void setPercentile25Column(int __value);
-        /*! \copydoc percentile25Column
-            \see see percentile25Column for details */ 
+        /*! \copydoc percentile25Column */ 
         int getPercentile25Column() const;
-        /*! \brief sets the property percentile25Column ( \copybrief percentile25Column ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter percentile25Column is:  <BLOCKQUOTE>\copydoc percentile25Column </BLOCKQUOTE> 
-            \see percentile25Column for more information */ 
+        /*! \copydoc percentile25Column */ 
         void setPercentile25Column (size_t __value);
-        /*! \copydoc percentile75Column
-            \see see percentile75Column for details */ 
+        /*! \copydoc percentile75Column */ 
         void setPercentile75Column(int __value);
-        /*! \copydoc percentile75Column
-            \see see percentile75Column for details */ 
+        /*! \copydoc percentile75Column */ 
         int getPercentile75Column() const;
-        /*! \brief sets the property percentile75Column ( \copybrief percentile75Column ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter percentile75Column is:  <BLOCKQUOTE>\copydoc percentile75Column </BLOCKQUOTE> 
-            \see percentile75Column for more information */ 
+        /*! \copydoc percentile75Column */ 
         void setPercentile75Column (size_t __value);
-        /*! \copydoc medianConfidenceColumn
-            \see see medianConfidenceColumn for details */
+        /*! \copydoc medianConfidenceColumn */
         int getMedianConfidenceColumn() const;
-        /*! \brief sets the property medianConfidenceColumn ( \copybrief medianConfidenceColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int.
-            \details Description of the parameter medianConfidenceColumn is:  <BLOCKQUOTE>\copydoc medianConfidenceColumn </BLOCKQUOTE>
-            \see medianConfidenceColumn for more information */
+        /*! \copydoc medianConfidenceColumn */
         void setMedianConfidenceColumn (size_t __value);
 
 
-        /*! \copydoc boxWidthRelative
-            \see see boxWidthRelative for details */
+        /*! \copydoc boxWidthRelative */
         void setBoxWidthRelative(double __value);
-        /*! \copydoc boxWidthRelative
-            \see see boxWidthRelative for details */
+        /*! \copydoc boxWidthRelative */
         double getBoxWidthRelative() const;
 
 
-        /*! \copydoc useRelativeBoxWidth
-            \see see useRelativeBoxWidth for details */
+        /*! \copydoc useRelativeBoxWidth */
         void setUseRelativeBoxWidth(bool __value);
-        /*! \copydoc useRelativeBoxWidth
-            \see see useRelativeBoxWidth for details */
+        /*! \copydoc useRelativeBoxWidth */
         bool getUseRelativeBoxWidth() const;
     protected:
         /** \brief width of box in percent of distance between the current two posColumn values
@@ -372,79 +335,55 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, publ
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
-        /*! \copydoc pos
-            \see see pos for details */ 
+        /*! \copydoc pos */ 
         void setPos(double __value);
-        /*! \copydoc pos
-            \see see pos for details */ 
+        /*! \copydoc pos */ 
         double getPos() const;
-        /*! \copydoc median
-            \see see median for details */ 
+        /*! \copydoc median */ 
         void setMedian(double __value);
-        /*! \copydoc median
-            \see see median for details */ 
+        /*! \copydoc median */ 
         double getMedian() const;
-        /*! \copydoc mean
-            \see see mean for details */ 
+        /*! \copydoc mean */ 
         void setMean(double __value);
-        /*! \copydoc mean
-            \see see mean for details */ 
+        /*! \copydoc mean */ 
         double getMean() const;
-        /*! \copydoc min
-            \see see min for details */ 
+        /*! \copydoc min */ 
         void setMin(double __value);
-        /*! \copydoc min
-            \see see min for details */ 
+        /*! \copydoc min */ 
         double getMin() const;
-        /*! \copydoc max
-            \see see max for details */ 
+        /*! \copydoc max */ 
         void setMax(double __value);
-        /*! \copydoc max
-            \see see max for details */ 
+        /*! \copydoc max */ 
         double getMax() const;
-        /*! \copydoc percentile25
-            \see see percentile25 for details */ 
+        /*! \copydoc percentile25 */ 
         void setPercentile25(double __value);
-        /*! \copydoc percentile25
-            \see see percentile25 for details */ 
+        /*! \copydoc percentile25 */ 
         double getPercentile25() const;
-        /*! \copydoc percentile75
-            \see see percentile75 for details */ 
+        /*! \copydoc percentile75 */ 
         void setPercentile75(double __value);
-        /*! \copydoc percentile75
-            \see see percentile75 for details */ 
+        /*! \copydoc percentile75 */ 
         double getPercentile75() const;
 
-        /*! \copydoc drawMean
-            \see see drawMean for details */ 
+        /*! \copydoc drawMean */ 
         void setDrawMean(bool __value);
-        /*! \copydoc drawMean
-            \see see drawMean for details */ 
+        /*! \copydoc drawMean */ 
         bool getDrawMean() const;
-        /*! \copydoc drawMedian
-            \see see drawMedian for details */ 
+        /*! \copydoc drawMedian */ 
         void setDrawMedian(bool __value);
-        /*! \copydoc drawMedian
-            \see see drawMedian for details */ 
+        /*! \copydoc drawMedian */ 
         bool getDrawMedian() const;
-        /*! \copydoc drawMinMax
-            \see see drawMinMax for details */ 
+        /*! \copydoc drawMinMax */ 
         void setDrawMinMax(bool __value);
-        /*! \copydoc drawMinMax
-            \see see drawMinMax for details */ 
+        /*! \copydoc drawMinMax */ 
         bool getDrawMinMax() const;
-        /*! \copydoc drawNotch
-            \see see drawNotch for details */
+        /*! \copydoc drawNotch */
         void setDrawNotch(bool __value);
-        /*! \copydoc drawNotch
-            \see see drawNotch for details */
+        /*! \copydoc drawNotch */
         bool getDrawNotch() const;
 
-        /*! \copydoc medianConfidenceIntervalWidth
-            \see see medianConfidenceIntervalWidth for details */
+        /*! \copydoc medianConfidenceIntervalWidth */
         double getMedianConfidenceIntervalWidth() const;
-        /*! \copydoc medianConfidenceIntervalWidth
-            \see see medianConfidenceIntervalWidth for details */
+        /*! \copydoc medianConfidenceIntervalWidth */
         void setMedianConfidenceIntervalWidth(double __value);
     protected:
 

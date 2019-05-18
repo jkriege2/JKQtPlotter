@@ -50,6 +50,7 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
       <li> removed: Removed datarange-feature </li>
       <li> update: \ref JKQTPLOTTER_USERINTERACTION "reworked user interactions API" </li>
       <li> update: \ref jkqtplotter_basegraphserrors "reworked error indicator base classes" </li>
+      <li> update: improvements to contour plots (e.g. highlighting single contour levels, split into a class for simple C-arrays [JKQTPContourPlot] and one for image data in a JKQTPDatastore column [JKQTPColumnContourPlot]) + added example, see JKQTPColumnContourPlot and \ref JKQTPlotterContourPlot </li>
 	  <li> fixed: colorbars at top were positioned over the plot label </li>
 	  <li> fixed: RGB-image plots now work properly with inverted axes (image is inverted, befor image was not shown at all) </li>
 	</ul></li>

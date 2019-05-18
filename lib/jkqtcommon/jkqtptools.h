@@ -715,6 +715,7 @@ JKQTP_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
 
 
 
+
 /*! \brief swap two elements \a l and \a r in an array \a a
     \ingroup jkqtptools
 
@@ -1003,6 +1004,22 @@ inline bool jkqtp_approximatelyEqual(double a, double b, double epsilon=2.0*std:
 template<typename T>
 inline T jkqtp_sqr(const T& v) {
     return v*v;
+}
+
+/** \brief calculate the distance between two QPointF points
+ *  \ingroup jkqtptools_math
+ *
+ */
+inline double jkqtp_distance(const QPointF& p1, const QPointF& p2){
+    return sqrt(jkqtp_sqr<double>(p1.x()-p2.x())+jkqtp_sqr<double>(p1.y()-p2.y()));
+}
+
+/** \brief calculate the distance between two QPoint points
+ *  \ingroup jkqtptools_math
+ *
+ */
+inline double jkqtp_distance(const QPoint& p1, const QPoint& p2){
+    return sqrt(jkqtp_sqr<double>(p1.x()-p2.x())+jkqtp_sqr<double>(p1.y()-p2.y()));
 }
 
 

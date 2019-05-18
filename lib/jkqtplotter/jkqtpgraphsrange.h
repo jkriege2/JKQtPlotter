@@ -82,96 +82,66 @@ class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph, public JKQTPGrap
         /*! \brief set the color of the graph (all lines and filling) */
         virtual void setColor(QColor c);
 
-        /*! \copydoc centerColor
-            \see see centerColor for details */ 
+        /*! \copydoc centerColor */ 
         void setCenterColor(const QColor & __value);
-        /*! \copydoc centerColor
-            \see see centerColor for details */ 
+        /*! \copydoc centerColor */ 
         QColor getCenterColor() const;
-        /*! \copydoc centerStyle
-            \see see centerStyle for details */ 
+        /*! \copydoc centerStyle */ 
         void setCenterStyle(Qt::PenStyle  __value);
-        /*! \copydoc centerStyle
-            \see see centerStyle for details */ 
+        /*! \copydoc centerStyle */ 
         Qt::PenStyle getCenterStyle() const;
-        /*! \copydoc centerLineWidth
-            \see see centerLineWidth for details */ 
+        /*! \copydoc centerLineWidth */ 
         void setCenterLineWidth(double __value);
-        /*! \copydoc centerLineWidth
-            \see see centerLineWidth for details */ 
+        /*! \copydoc centerLineWidth */ 
         double getCenterLineWidth() const;
-        /*! \copydoc rangeMin
-            \see see rangeMin for details */ 
+        /*! \copydoc rangeMin */ 
         void setRangeMin(double __value);
-        /*! \copydoc rangeMin
-            \see see rangeMin for details */ 
+        /*! \copydoc rangeMin */ 
         double getRangeMin() const;
-        /*! \copydoc rangeMax
-            \see see rangeMax for details */ 
+        /*! \copydoc rangeMax */ 
         void setRangeMax(double __value);
-        /*! \copydoc rangeMax
-            \see see rangeMax for details */ 
+        /*! \copydoc rangeMax */ 
         double getRangeMax() const;
-        /*! \copydoc sizeMin
-            \see see sizeMin for details */ 
+        /*! \copydoc sizeMin */ 
         void setSizeMin(double __value);
-        /*! \copydoc sizeMin
-            \see see sizeMin for details */ 
+        /*! \copydoc sizeMin */ 
         double getSizeMin() const;
-        /*! \copydoc sizeMax
-            \see see sizeMax for details */ 
+        /*! \copydoc sizeMax */ 
         void setSizeMax(double __value);
-        /*! \copydoc sizeMax
-            \see see sizeMax for details */ 
+        /*! \copydoc sizeMax */ 
         double getSizeMax() const;
-        /*! \copydoc unlimitedSizeMin
-            \see see unlimitedSizeMin for details */ 
+        /*! \copydoc unlimitedSizeMin */ 
         void setUnlimitedSizeMin(bool __value);
-        /*! \copydoc unlimitedSizeMin
-            \see see unlimitedSizeMin for details */ 
+        /*! \copydoc unlimitedSizeMin */ 
         bool getUnlimitedSizeMin() const;
-        /*! \copydoc unlimitedSizeMax
-            \see see unlimitedSizeMax for details */ 
+        /*! \copydoc unlimitedSizeMax */ 
         void setUnlimitedSizeMax(bool __value);
-        /*! \copydoc unlimitedSizeMax
-            \see see unlimitedSizeMax for details */ 
+        /*! \copydoc unlimitedSizeMax */ 
         bool getUnlimitedSizeMax() const;
 
-        /*! \copydoc rangeCenter
-            \see see rangeCenter for details */ 
+        /*! \copydoc rangeCenter */ 
         void setRangeCenter(double __value);
-        /*! \copydoc rangeCenter
-            \see see rangeCenter for details */ 
+        /*! \copydoc rangeCenter */ 
         double getRangeCenter() const;
-        /*! \copydoc plotCenterLine
-            \see see plotCenterLine for details */ 
+        /*! \copydoc plotCenterLine */ 
         void setPlotCenterLine(bool __value);
-        /*! \copydoc plotCenterLine
-            \see see plotCenterLine for details */ 
+        /*! \copydoc plotCenterLine */ 
         bool getPlotCenterLine() const;
-        /*! \copydoc invertedRange
-            \see see invertedRange for details */ 
+        /*! \copydoc invertedRange */ 
         void setInvertedRange(bool __value);
-        /*! \copydoc invertedRange
-            \see see invertedRange for details */ 
+        /*! \copydoc invertedRange */ 
         bool getInvertedRange() const;
-        /*! \copydoc plotRange
-            \see see plotRange for details */ 
+        /*! \copydoc plotRange */ 
         void setPlotRange(bool __value);
-        /*! \copydoc plotRange
-            \see see plotRange for details */ 
+        /*! \copydoc plotRange */ 
         bool getPlotRange() const;
-        /*! \copydoc fillRange
-            \see see fillRange for details */ 
+        /*! \copydoc fillRange */ 
         void setFillRange(bool __value);
-        /*! \copydoc fillRange
-            \see see fillRange for details */ 
+        /*! \copydoc fillRange */ 
         bool getFillRange() const;
-        /*! \copydoc plotRangeLines
-            \see see plotRangeLines for details */ 
+        /*! \copydoc plotRangeLines */ 
         void setPlotRangeLines(bool __value);
-        /*! \copydoc plotRangeLines
-            \see see plotRangeLines for details */ 
+        /*! \copydoc plotRangeLines */ 
         bool getPlotRangeLines() const;
     protected:
         /** \brief min-value of range */

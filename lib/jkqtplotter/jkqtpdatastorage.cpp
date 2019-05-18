@@ -348,6 +348,12 @@ void JKQTPDatastore::deleteAllPrefixedColumns(QString prefix, bool removeItems) 
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+quint16 JKQTPDatastore::getColumnChecksum(int column) const
+{
+    return getColumn(column).calculateChecksum();
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPDatastore::deleteColumn(size_t column, bool removeItems) {

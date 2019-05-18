@@ -35,7 +35,6 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_styledboxplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styledboxplot) | [Styling of Boxplots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styledboxplot) | Modifying different Aspects of the Styling of boxplots |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_styling_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling) | [Styling of JKQTPlotter](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling) | Modifying different Aspects of the Styling of JKQTPlotter |
 
-
 ## Image data Plots
 
 | Screenshot    | Description   | Notes         |
@@ -47,6 +46,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtplotter_simpletest_rgbimageplot) | [Simple 3-channel Math RGB/CMY Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtplotter_simpletest_rgbimageplot) | `JKQTPColumnRGBMathImage` <br> image data in a C-style row-major array, not using internal datastore <br> RGB/CMY color compositing |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot_opencv) | [1-channel OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot_opencv) | `JKQTPColumnMathImage` <br> image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_rgbimageplot_opencv) | [RGB OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_rgbimageplot_opencv) | `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns  <br> inverted coordinate axesof the internal datastore |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_contourplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_contourplot) | [Contour Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_contourplot) | `JKQTPColumnContourPlot` <br> image data edited inside JKQTPDatastore  |
 
 
 

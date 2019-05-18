@@ -113,6 +113,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_rgbimageplot_opencv_small.png
     <td> \subpage JKQTPlotterImagePlotRGBOpenCV
     <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore <br> inverted coordinate axes
+<tr><td> \image html jkqtplotter_simpletest_contourplot_small.png
+    <td> \subpage JKQTPlotterContourPlot
+    <td> `JKQTPColumnContourPlot` <br> image data edited inside JKQTPDatastore 
 </table>
 
  

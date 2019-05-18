@@ -57,18 +57,14 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
         /** \brief class destructor */
         virtual ~JKQTPXParsedFunctionLineGraph() override;
 
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         void setFunction(const QString & __value);
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         QString getFunction() const;
 
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         void setErrorFunction(const QString & __value);
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         QString getErrorFunction() const;
 
         /** \brief INTERNAL data structure
@@ -127,18 +123,14 @@ class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineG
         /** \brief class destructor */
         virtual ~JKQTPYParsedFunctionLineGraph() override;
 
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         void setFunction(const QString & __value);
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         QString getFunction() const;
 
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         void setErrorFunction(const QString & __value);
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         QString getErrorFunction() const;
 
         /** \brief INTERNAL data structure

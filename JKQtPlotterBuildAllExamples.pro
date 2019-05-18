@@ -78,6 +78,7 @@ addSimpleTest(boxplot)
 addSimpleTest(advancedlineandfillstyling)
 addSimpleTest(imageplot_nodatastore)
 addSimpleTest(datastore)
+addSimpleTest(contourplot)
 #addSimpleTest(rgbimageplot_opencv)
 #addSimpleTest(imageplot_opencv)
 

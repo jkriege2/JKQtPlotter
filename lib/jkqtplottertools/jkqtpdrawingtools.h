@@ -112,4 +112,25 @@ JKQTP_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a,
 JKQTP_LIB_EXPORT void JKQTPDrawTooltip(JKQTPEnhancedPainter& painter, double x, double y, const QRectF& rect);
 
 
+/** \brief cleans a polygon by uniting all consecutive points that were closer than distanceThreshold are united
+ *  \ingroup jkqtptools_drawing
+ *
+ *  \param poly polygon to clean
+ *  \param distanceThreshold if two end-points are closer together as this value, they are united to a single point
+ *  \return a cleaned polygon, where all consecutive points that were closer than distanceThreshold are united
+ */
+JKQTP_LIB_EXPORT QPolygonF JKQTPCleanPolygon(const QPolygonF& poly, double distanceThreshold=0.3);
+
+/** \brief takes a list of QLineF objesct \a lines and tries to combine as many of them as possible to QPolygonF objects.
+ *         <b>Note: This method implements an incomplete algorithm with \a searchMaxSurroundingElements>0, as solving
+ *         the complete problem is very time-consuming (cubic runtime)
+ *  \ingroup jkqtptools_drawing
+ *
+ *  \param lines line segments to unify
+ *  \param distanceThreshold if two end-points are closer together as this value, they are united to a single point
+ *  \param searchMaxSurroundingElements limits the search for a connected polygon to at most this number of neighbors
+ *  \return a vector of QPolygonF objects, which contain longer line-segments formed from \a lines
+ */
+JKQTP_LIB_EXPORT QVector<QPolygonF> JKQTPUnifyLinesToPolygons(const QVector<QLineF>& lines, double distanceThreshold=0.3, int searchMaxSurroundingElements=10);
+
 #endif // JKQTPDRAWINGTOOLS_H_INCLUDED

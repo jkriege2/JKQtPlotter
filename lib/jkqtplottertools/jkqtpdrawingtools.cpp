@@ -19,12 +19,9 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-
-
-
 #include "jkqtplottertools/jkqtpdrawingtools.h"
 #include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include <QDebug>
 
 const double JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH= 0.02;
 
@@ -663,4 +660,117 @@ void JKQTPDrawTooltip(JKQTPEnhancedPainter &painter, double x, double y, const Q
     } else {
         painter.drawRect(rect);
     }
+}
+
+QVector<QPolygonF> JKQTPUnifyLinesToPolygons(const QVector<QLineF> &lines, double distanceThreshold, int searchMaxSurroundingElements)
+{
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPUnifyLinesToPolygons(%1, %2, %3)").arg(lines.size()).arg(distanceThreshold).arg(searchMaxSurroundingElements));
+#endif
+    QList<QPolygonF> res;
+    res.reserve(lines.size());
+
+    // first simply convert all lines to polygons
+    for (const QLineF& l: lines) {
+        QPolygonF p;
+        p<<l.p1()<<l.p2();
+        res<<p;
+    }
+    //return res.toVector();
+    // clean the resulting polygon
+    for (QPolygonF& p: res) {
+        p=JKQTPCleanPolygon(p, distanceThreshold);
+    }
+
+    int maxIterations=100;
+    int iter=0;
+    bool found=true;
+    //qDebug()<<"   iter "<<-1<<" -> polygons start "<<res.size();
+    while (found && iter<maxIterations) {
+        found=false;
+        int i=0;
+        while (i<res.size()-1) {
+            int j=i+1;
+            while (j<res.size() && j<i+searchMaxSurroundingElements) {
+                if (jkqtp_distance(res[i].first(),res[j].first())<=distanceThreshold) {
+                    found=true;
+                    for (int k=1; k<res[j].size(); k++) {
+                        res[i].prepend(res[j].at(k));
+                    }
+                    res.removeAt(j);
+                } else if (jkqtp_distance(res[i].first(),res[j].last())<=distanceThreshold) {
+                    found=true;
+                    for (int k=res[j].size()-2; k>=0; k--) {
+                        res[i].prepend(res[j].at(k));
+                    }
+                    res.removeAt(j);
+                } else if (jkqtp_distance(res[i].last(),res[j].first())<=distanceThreshold) {
+                    found=true;
+                    for (int k=1; k<res[j].size(); k++) {
+                        res[i].append(res[j].at(k));
+                    }
+                    res.removeAt(j);
+                } else if (jkqtp_distance(res[i].last(),res[j].last())<=distanceThreshold) {
+                    found=true;
+                    for (int k=res[j].size()-2; k>=0; k--) {
+                        res[i].append(res[j].at(k));
+                    }
+                    res.removeAt(j);
+                } else {
+                    j++;
+                }
+            }
+            res[i]=JKQTPCleanPolygon(res[i], distanceThreshold);
+            i++;
+        }
+        //qDebug()<<"   iter "<<iter<<" -> polygons left "<<res.size();
+        iter++;
+    }
+
+    return res.toVector();
+}
+
+QPolygonF JKQTPCleanPolygon(const QPolygonF &poly, double distanceThreshold)
+{
+    if (poly.size()<=2) return poly;
+    QPolygonF p;
+    QPointF p0=poly[0];
+    p<<p0;
+    QVector<QPointF> inbetween;
+    int i=1;
+    while (i<poly.size()) {
+        if ((jkqtp_distance(poly[i], p0)<=distanceThreshold)) {
+            inbetween<<poly[i];
+        } else {
+            QPointF pmean(0,0);
+            if (inbetween.size()>0) {
+                for (const QPointF& pi: inbetween) {
+                    pmean=QPointF(pmean.x()+pi.x()/static_cast<double>(inbetween.size()), pmean.y()+pi.y()/static_cast<double>(inbetween.size()));
+                }
+            } else {
+                pmean=poly[i];
+            }
+            p<<pmean;
+            p0=pmean;
+            inbetween.clear();
+        }
+        i++;
+    }
+
+    // maybe we have something left to add
+    QPointF pmean(0,0);
+    if (inbetween.size()>0) {
+        for (const QPointF& pi: inbetween) {
+            pmean=QPointF(pmean.x()+pi.x()/static_cast<double>(inbetween.size()), pmean.y()+pi.y()/static_cast<double>(inbetween.size()));
+        }
+    } else {
+        pmean=p0;
+    }
+
+    if (jkqtp_distance(pmean, poly.last())>distanceThreshold) {
+        p<<pmean<<poly.last();
+    } else {
+        if (p.last()!=poly.last()) p<<poly.last();
+    }
+    return p;
 }

@@ -103,23 +103,17 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPG
          */
         virtual void setColor(QColor c);
 
-        /*! \copydoc shift
-            \see see shift for details */ 
+        /*! \copydoc shift */ 
         void setShift(double __value);
-        /*! \copydoc shift
-            \see see shift for details */ 
+        /*! \copydoc shift */ 
         double getShift() const;
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         double getWidth() const;
-        /*! \copydoc baseline
-            \see see baseline for details */ 
+        /*! \copydoc baseline */ 
         void setBaseline(double __value);
-        /*! \copydoc baseline
-            \see see baseline for details */ 
+        /*! \copydoc baseline */ 
         double getBaseline() const;
         /** \brief sets the fill color and the color together, where fillColor is set to \a fill and the line-color is set to \c fill.darker(colorDarker)
          *  \see setColor()

@@ -50,18 +50,14 @@ class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, public
         /*! \brief color of symbols and impulses in one call */
         virtual void setColor(QColor c);
 
-        /*! \copydoc baseline
-            \see see baseline for details */
+        /*! \copydoc baseline */
         void setBaseline(double __value);
-        /*! \copydoc baseline
-            \see see baseline for details */
+        /*! \copydoc baseline */
         double getBaseline() const;
 
-        /*! \copydoc drawSymbols
-            \see see drawSymbols for details */
+        /*! \copydoc drawSymbols */
         void setDrawSymbols(bool __value);
-        /*! \copydoc drawSymbols
-            \see see drawSymbols for details */
+        /*! \copydoc drawSymbols */
         bool getDrawSymbols() const;
 
     protected:

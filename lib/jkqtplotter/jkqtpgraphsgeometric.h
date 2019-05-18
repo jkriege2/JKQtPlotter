@@ -181,17 +181,13 @@ class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraph
         /*! set the symbol color and symbol fill color */
         virtual void setColor(QColor c);
 
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
 
         /** \copydoc JKQTPGraph::getXMinMax()        */
@@ -261,23 +257,17 @@ class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTe
          */
         JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text);
 
-        /*! \copydoc text
-            \see see text for details */ 
+        /*! \copydoc text */ 
         void setText(const QString & __value);
-        /*! \copydoc text
-            \see see text for details */ 
+        /*! \copydoc text */ 
         QString getText() const;
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
 
         /** \brief set line and fill color */
@@ -373,29 +363,21 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc x1
-            \see see x1 for details */ 
+        /*! \copydoc x1 */ 
         void setX1(double __value);
-        /*! \copydoc x1
-            \see see x1 for details */ 
+        /*! \copydoc x1 */ 
         double getX1() const;
-        /*! \copydoc y1
-            \see see y1 for details */ 
+        /*! \copydoc y1 */ 
         void setY1(double __value);
-        /*! \copydoc y1
-            \see see y1 for details */ 
+        /*! \copydoc y1 */ 
         double getY1() const;
-        /*! \copydoc x2
-            \see see x2 for details */ 
+        /*! \copydoc x2 */ 
         void setX2(double __value);
-        /*! \copydoc x2
-            \see see x2 for details */ 
+        /*! \copydoc x2 */ 
         double getX2() const;
-        /*! \copydoc y2
-            \see see y2 for details */ 
+        /*! \copydoc y2 */ 
         void setY2(double __value);
-        /*! \copydoc y2
-            \see see y2 for details */ 
+        /*! \copydoc y2 */ 
         double getY2() const;
     protected:
         /** \brief x-coordinate of first point of line */
@@ -457,35 +439,25 @@ class JKQTP_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
-        /*! \copydoc dx
-            \see see dx for details */ 
+        /*! \copydoc dx */ 
         void setDx(double __value);
-        /*! \copydoc dx
-            \see see dx for details */ 
+        /*! \copydoc dx */ 
         double getDx() const;
-        /*! \copydoc dy
-            \see see dy for details */ 
+        /*! \copydoc dy */ 
         void setDy(double __value);
-        /*! \copydoc dy
-            \see see dy for details */ 
+        /*! \copydoc dy */ 
         double getDy() const;
-        /*! \copydoc two_sided
-            \see see two_sided for details */ 
+        /*! \copydoc two_sided */ 
         void setTwoSided(bool __value);
-        /*! \copydoc two_sided
-            \see see two_sided for details */ 
+        /*! \copydoc two_sided */ 
         bool getTwoSided() const;
     protected:
         /** \brief x-coordinate of a point on the line */
@@ -555,11 +527,9 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         void setPoints(const QVector<QPointF> & __value);
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         QVector<QPointF> getPoints() const;
 
         /** \brief append a point to the polygon */
@@ -673,35 +643,25 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         double getWidth() const;
-        /*! \copydoc height
-            \see see height for details */ 
+        /*! \copydoc height */ 
         void setHeight(double __value);
-        /*! \copydoc height
-            \see see height for details */ 
+        /*! \copydoc height */ 
         double getHeight() const;
-        /*! \copydoc angle
-            \see see angle for details */ 
+        /*! \copydoc angle */ 
         void setAngle(double __value);
-        /*! \copydoc angle
-            \see see angle for details */ 
+        /*! \copydoc angle */ 
         double getAngle() const;
         /** \brief set the rectangle using the bottom-left corner, as well as its width and height */
         void setBottomleftrectangle(double x, double y, double width, double height);
@@ -787,11 +747,9 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         void setPoints(const QVector<QPointF> & __value);
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         QVector<QPointF> getPoints() const;
 
         /** \brief append a point to the polygon */
@@ -904,11 +862,9 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */ 
+        /*! \copydoc controlPoints */ 
         void setControlPoints(const unsigned int & __value);
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */ 
+        /*! \copydoc controlPoints */ 
         unsigned int getControlPoints() const;
     protected:
         /** \brief number of steps/control points to draw the ellipse */
@@ -964,53 +920,37 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */
+        /*! \copydoc controlPoints */
         void setControlPoints(const unsigned int & __value);
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */
+        /*! \copydoc controlPoints */
         unsigned int getControlPoints() const;
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         void setAngleStart(double __value);
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         double getAngleStart() const;
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         void setAngleStop(double __value);
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         double getAngleStop() const;
-        /*! \copydoc x
-            \see see x for details */
+        /*! \copydoc x */
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */
+        /*! \copydoc x */
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */
+        /*! \copydoc y */
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */
+        /*! \copydoc y */
         double getY() const;
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         double getWidth() const;
-        /*! \copydoc height
-            \see see height for details */
+        /*! \copydoc height */
         void setHeight(double __value);
-        /*! \copydoc height
-            \see see height for details */
+        /*! \copydoc height */
         double getHeight() const;
-        /*! \copydoc angle
-            \see see angle for details */
+        /*! \copydoc angle */
         void setAngle(double __value);
-        /*! \copydoc angle
-            \see see angle for details */
+        /*! \copydoc angle */
         double getAngle() const;
     protected:
         /** \brief x-coordinate of a center of the rectangle */
@@ -1092,17 +1032,13 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         void setAngleStart(double __value);
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         double getAngleStart() const;
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         void setAngleStop(double __value);
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         double getAngleStop() const;
     protected:
          /** \brief if we only draw an arc, this is the starting angle */

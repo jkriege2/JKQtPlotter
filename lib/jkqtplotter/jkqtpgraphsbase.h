@@ -502,33 +502,23 @@ class JKQTP_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int column) const override;
 
-        /*! \copydoc xColumn
-            \see see xColumn for details */ 
+        /*! \copydoc xColumn */ 
         void setXColumn(int __value);
-        /*! \copydoc xColumn
-            \see see xColumn for details */ 
+        /*! \copydoc xColumn */ 
         int getXColumn() const;
-        /*! \brief sets the property xColumn ( \copybrief xColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter xColumn is:  <BLOCKQUOTE>\copydoc xColumn </BLOCKQUOTE> 
-            \see xColumn for more information */ 
+        /*! \copydoc xColumn */ 
         void setXColumn (size_t __value);
-        /*! \copydoc yColumn
-            \see see yColumn for details */ 
+        /*! \copydoc yColumn */ 
         void setYColumn(int __value);
-        /*! \copydoc yColumn
-            \see see yColumn for details */ 
+        /*! \copydoc yColumn */ 
         int getYColumn() const;
-        /*! \brief sets the property yColumn ( \copybrief yColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter yColumn is:  <BLOCKQUOTE>\copydoc yColumn </BLOCKQUOTE> 
-            \see yColumn for more information */ 
+        /*! \copydoc yColumn */ 
         void setYColumn (size_t __value);
-        /*! \copydoc sortData
-            \see see sortData for details */ 
+        /*! \copydoc sortData */ 
         void setDataSortOrder(DataSortOrder  __value);
-        /*! \copydoc sortData
-            \see see sortData for details */ 
+        /*! \copydoc sortData */ 
         DataSortOrder getDataSortOrder() const;
-        /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
+        /*! \copydoc sortData */
         void setDataSortOrder(int __value);
 
         /** \brief sets xColumn and yColumn at the same time */
@@ -622,32 +612,24 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         JKQTPSingleColumnGraph(JKQTBasePlotter* parent=nullptr);
         JKQTPSingleColumnGraph(JKQTPlotter* parent);
 
-        /*! \copydoc dataColumn
-            \see see dataColumn for details */ 
+        /*! \copydoc dataColumn */ 
         void setDataColumn(int __value);
-        /*! \copydoc dataColumn
-            \see see dataColumn for details */ 
+        /*! \copydoc dataColumn */ 
         int getDataColumn() const;
-        /*! \brief sets the property dataColumn ( \copybrief dataColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter dataColumn is:  <BLOCKQUOTE>\copydoc dataColumn </BLOCKQUOTE> 
-            \see dataColumn for more information */ 
+        /*! \copydoc dataColumn */ 
         void setDataColumn (size_t __value);
 
-        /*! \copydoc sortData
-            \see see sortData for details */ 
+        /*! \copydoc sortData */ 
         void setDataSortOrder(DataSortOrder  __value);
-        /*! \copydoc sortData
-            \see see sortData for details */ 
+        /*! \copydoc sortData */ 
         DataSortOrder getDataSortOrder() const;
-        /*! \brief sets the property sortData ( \copybrief sortData ) to the specified \a __value. \details Description of the parameter sortData is: <BLOCKQUOTE>\copydoc sortData </BLOCKQUOTE> \see sortData for more information */
+        /*! \copydoc sortData */
         void setDataSortOrder(int __value);
 
 
-        /*! \copydoc dataDirection
-            \see see dataDirection for details */
+        /*! \copydoc dataDirection */
         void setDataDirection(DataDirection __value);
-        /*! \copydoc dataDirection
-            \see see dataDirection for details */
+        /*! \copydoc dataDirection */
         DataDirection getDataDirection() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */

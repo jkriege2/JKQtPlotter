@@ -1,7 +1,7 @@
 /*
-    Copyright (c) 2008-2019 Jan W. Krieger 
+    Copyright (c) 2008-2019 Jan W. Krieger
 
-    
+
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -64,29 +64,21 @@ class JKQTP_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */
         double getY() const;
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */
         double getWidth() const;
-        /*! \copydoc height
-            \see see height for details */ 
+        /*! \copydoc height */
         void setHeight(double __value);
-        /*! \copydoc height
-            \see see height for details */ 
+        /*! \copydoc height */
         double getHeight() const;
 
     protected:
@@ -166,47 +158,33 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-        /*! \copydoc Nx
-            \see see Nx for details */ 
+        /*! \copydoc Nx */
         void setNx(int __value);
-        /*! \copydoc Nx
-            \see see Nx for details */ 
+        /*! \copydoc Nx */
         int getNx() const;
-        /*! \copydoc Ny
-            \see see Ny for details */ 
+        /*! \copydoc Ny */
         void setNy(int __value);
-        /*! \copydoc Ny
-            \see see Ny for details */ 
+        /*! \copydoc Ny */
         int getNy() const;
-        /*! \copydoc data
-            \see see data for details */ 
+        /*! \copydoc data */
         virtual void setData(void* __value);
-        /*! \copydoc data
-            \see see data for details */ 
+        /*! \copydoc data */
         virtual void *getData() const;
-        /*! \copydoc datatype
-            \see see datatype for details */ 
+        /*! \copydoc datatype */
         virtual void setDatatype(DataType __value);
-        /*! \copydoc datatype
-            \see see datatype for details */ 
+        /*! \copydoc datatype */
         virtual DataType getDatatype() const;
-        /*! \copydoc dataModifier
-            \see see dataModifier for details */ 
+        /*! \copydoc dataModifier */
         virtual void setDataModifier(void* __value);
-        /*! \copydoc dataModifier
-            \see see dataModifier for details */ 
+        /*! \copydoc dataModifier */
         virtual void *getDataModifier() const;
-        /*! \copydoc datatypeModifier
-            \see see datatypeModifier for details */ 
+        /*! \copydoc datatypeModifier */
         virtual void setDatatypeModifier(DataType __value);
-        /*! \copydoc datatypeModifier
-            \see see datatypeModifier for details */ 
+        /*! \copydoc datatypeModifier */
         virtual DataType getDatatypeModifier() const;
-        /*! \copydoc modifierMode
-            \see see modifierMode for details */ 
+        /*! \copydoc modifierMode */
         void setModifierMode(const ModifierMode & __value);
-        /*! \copydoc modifierMode
-            \see see modifierMode for details */ 
+        /*! \copydoc modifierMode */
         ModifierMode getModifierMode() const;
 
         virtual void setDataModifier(void* data, DataType datatype);
@@ -290,7 +268,7 @@ class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         /** \brief deletes the internal image */
         void clear_image();
 
-        /*! \brief returns the property image ( \copybrief image ). \details Description of the parameter image is:  <BLOCKQUOTE>\copydoc image </BLOCKQUOTE>. \see image for more information */ 
+        /*! \copydoc image */
         inline QImage* getImage() const { return this->image; }
     protected:
         /** \brief the image to be plotted. This is freed by the destructor, iff \a image_owned is set to \c true (.e.g by QImage-copy-constructors) */
@@ -360,153 +338,109 @@ class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         static QImage getPaletteKeyImage(JKQTPMathImageColorPalette palette, int width, int height) ;
 
 
-        /*! \copydoc palette
-            \see see palette for details */ 
+        /*! \copydoc palette */
         void setPalette(const JKQTPMathImageColorPalette & __value);
-        /*! \copydoc palette
-            \see see palette for details */ 
+        /*! \copydoc palette */
         JKQTPMathImageColorPalette getPalette() const;
-        /*! \copydoc rangeMinFailAction
-            \see see rangeMinFailAction for details */ 
+        /*! \copydoc rangeMinFailAction */
         void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value);
-        /*! \copydoc rangeMinFailAction
-            \see see rangeMinFailAction for details */ 
+        /*! \copydoc rangeMinFailAction */
         JKQTPMathImageColorRangeFailAction getActionRangeMinFail() const;
-        /*! \copydoc rangeMaxFailAction
-            \see see rangeMaxFailAction for details */ 
+        /*! \copydoc rangeMaxFailAction */
         void setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value);
-        /*! \copydoc rangeMaxFailAction
-            \see see rangeMaxFailAction for details */ 
+        /*! \copydoc rangeMaxFailAction */
         JKQTPMathImageColorRangeFailAction getActionRangeMaxFail() const;
-        /*! \copydoc rangeMinFailColor
-            \see see rangeMinFailColor for details */ 
+        /*! \copydoc rangeMinFailColor */
         void setRangeMinFailColor(const QColor & __value);
-        /*! \copydoc rangeMinFailColor
-            \see see rangeMinFailColor for details */ 
+        /*! \copydoc rangeMinFailColor */
         QColor getRangeMinFailColor() const;
-        /*! \copydoc rangeMaxFailColor
-            \see see rangeMaxFailColor for details */ 
+        /*! \copydoc rangeMaxFailColor */
         void setRangeMaxFailColor(const QColor & __value);
-        /*! \copydoc rangeMaxFailColor
-            \see see rangeMaxFailColor for details */ 
+        /*! \copydoc rangeMaxFailColor */
         QColor getRangeMaxFailColor() const;
-        /*! \copydoc nanColor
-            \see see nanColor for details */ 
+        /*! \copydoc nanColor */
         void setNanColor(const QColor & __value);
-        /*! \copydoc nanColor
-            \see see nanColor for details */ 
+        /*! \copydoc nanColor */
         QColor getNanColor() const;
-        /*! \copydoc infColor
-            \see see infColor for details */ 
+        /*! \copydoc infColor */
         void setInfColor(const QColor & __value);
-        /*! \copydoc infColor
-            \see see infColor for details */ 
+        /*! \copydoc infColor */
         QColor getInfColor() const;
-        /*! \copydoc showColorBar
-            \see see showColorBar for details */ 
+        /*! \copydoc showColorBar */
         void setShowColorBar(bool __value);
-        /*! \copydoc showColorBar
-            \see see showColorBar for details */ 
+        /*! \copydoc showColorBar */
         bool getShowColorBar() const;
-        /*! \copydoc colorBarWidth
-            \see see colorBarWidth for details */ 
+        /*! \copydoc colorBarWidth */
         void setColorBarWidth(double __value);
-        /*! \copydoc colorBarWidth
-            \see see colorBarWidth for details */ 
+        /*! \copydoc colorBarWidth */
         double getColorBarWidth() const;
-        /*! \copydoc colorBarModifiedWidth
-            \see see colorBarModifiedWidth for details */ 
+        /*! \copydoc colorBarModifiedWidth */
         void setColorBarModifiedWidth(double __value);
-        /*! \copydoc colorBarModifiedWidth
-            \see see colorBarModifiedWidth for details */ 
+        /*! \copydoc colorBarModifiedWidth */
         double getColorBarModifiedWidth() const;
-        /*! \copydoc colorBarOffset
-            \see see colorBarOffset for details */ 
+        /*! \copydoc colorBarOffset */
         void setColorBarOffset(double __value);
-        /*! \copydoc colorBarOffset
-            \see see colorBarOffset for details */ 
+        /*! \copydoc colorBarOffset */
         double getColorBarOffset() const;
-        /*! \copydoc colorBarRelativeHeight
-            \see see colorBarRelativeHeight for details */ 
+        /*! \copydoc colorBarRelativeHeight */
         void setColorBarRelativeHeight(double __value);
-        /*! \copydoc colorBarRelativeHeight
-            \see see colorBarRelativeHeight for details */ 
+        /*! \copydoc colorBarRelativeHeight */
         double getColorBarRelativeHeight() const;
-        /*! \copydoc imageMin
-            \see see imageMin for details */ 
+        /*! \copydoc imageMin */
         void setImageMin(double __value);
-        /*! \copydoc imageMin
-            \see see imageMin for details */ 
+        /*! \copydoc imageMin */
         double getImageMin() const;
-        /*! \copydoc imageMax
-            \see see imageMax for details */ 
+        /*! \copydoc imageMax */
         void setImageMax(double __value);
-        /*! \copydoc imageMax
-            \see see imageMax for details */ 
+        /*! \copydoc imageMax */
         double getImageMax() const;
-        /*! \copydoc autoImageRange
-            \see see autoImageRange for details */ 
+        /*! \copydoc autoImageRange */
         void setAutoImageRange(bool __value);
-        /*! \copydoc autoImageRange
-            \see see autoImageRange for details */ 
+        /*! \copydoc autoImageRange */
         bool getAutoImageRange() const;
-        /*! \copydoc imageName
-            \see see imageName for details */ 
+        /*! \copydoc imageName */
         void setImageName(const QString & __value);
-        /*! \copydoc imageName
-            \see see imageName for details */ 
+        /*! \copydoc imageName */
         QString getImageName() const;
-        /*! \copydoc imageNameFontSize
-            \see see imageNameFontSize for details */ 
+        /*! \copydoc imageNameFontSize */
         void setImageNameFontSize(double __value);
-        /*! \copydoc imageNameFontSize
-            \see see imageNameFontSize for details */ 
+        /*! \copydoc imageNameFontSize */
         double getImageNameFontSize() const;
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */ 
+        /*! \copydoc colorBarRightAxis */
         JKQTPVerticalIndependentAxis* getColorBarRightAxis();
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */ 
+        /*! \copydoc colorBarTopAxis */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxis();
-        /*! \brief returns the property modifierColorBarTopAxis ( \copybrief modifierColorBarTopAxis ). \details Description of the parameter modifierColorBarTopAxis is:  <BLOCKQUOTE>\copydoc modifierColorBarTopAxis </BLOCKQUOTE>. \see modifierColorBarTopAxis for more information */ 
+        /*! \copydoc modifierColorBarTopAxis */
         JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis();
-        /*! \brief returns the property modifierColorBarRightAxis ( \copybrief modifierColorBarRightAxis ). \details Description of the parameter modifierColorBarRightAxis  is:  <BLOCKQUOTE>\copydoc modifierColorBarRightAxis  </BLOCKQUOTE>. \see modifierColorBarRightAxis  for more information */ 
+        /*! \copydoc modifierColorBarRightAxis */
         JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis();
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        /*! \copydoc colorBarRightAxis */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const;
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        /*! \copydoc colorBarTopAxis */
         const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const;
-        /*! \brief returns the property modifierColorBarTopAxis ( \copybrief modifierColorBarTopAxis ). \details Description of the parameter modifierColorBarTopAxis is:  <BLOCKQUOTE>\copydoc modifierColorBarTopAxis </BLOCKQUOTE>. \see modifierColorBarTopAxis for more information */
+        /*! \copydoc modifierColorBarTopAxis */
         const JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const;
-        /*! \brief returns the property modifierColorBarRightAxis ( \copybrief modifierColorBarRightAxis ). \details Description of the parameter modifierColorBarRightAxis  is:  <BLOCKQUOTE>\copydoc modifierColorBarRightAxis  </BLOCKQUOTE>. \see modifierColorBarRightAxis  for more information */
+        /*! \copydoc modifierColorBarRightAxis */
         const JKQTPHorizontalIndependentAxis *getModifierColorBarRightAxis()  const;
-        /*! \copydoc colorBarTopVisible
-            \see see colorBarTopVisible for details */ 
+        /*! \copydoc colorBarTopVisible */
         void setColorBarTopVisible(bool __value);
-        /*! \copydoc colorBarTopVisible
-            \see see colorBarTopVisible for details */ 
+        /*! \copydoc colorBarTopVisible */
         bool getColorBarTopVisible() const;
-        /*! \copydoc colorBarRightVisible
-            \see see colorBarRightVisible for details */ 
+        /*! \copydoc colorBarRightVisible */
         void setColorBarRightVisible(bool __value);
-        /*! \copydoc colorBarRightVisible
-            \see see colorBarRightVisible for details */ 
+        /*! \copydoc colorBarRightVisible */
         bool getColorBarRightVisible() const;
-        /*! \copydoc autoModifierRange
-            \see see autoModifierRange for details */ 
+        /*! \copydoc autoModifierRange */
         void setAutoModifierRange(bool __value);
-        /*! \copydoc autoModifierRange
-            \see see autoModifierRange for details */ 
+        /*! \copydoc autoModifierRange */
         bool getAutoModifierRange() const;
-        /*! \copydoc modifierMin
-            \see see modifierMin for details */ 
+        /*! \copydoc modifierMin */
         void setModifierMin(double __value);
-        /*! \copydoc modifierMin
-            \see see modifierMin for details */ 
+        /*! \copydoc modifierMin */
         double getModifierMin() const;
-        /*! \copydoc modifierMax
-            \see see modifierMax for details */ 
+        /*! \copydoc modifierMax */
         void setModifierMax(double __value);
-        /*! \copydoc modifierMax
-            \see see modifierMax for details */ 
+        /*! \copydoc modifierMax */
         double getModifierMax() const;
 
         void setPalette(int pal);
@@ -538,7 +472,20 @@ class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         virtual void getModifierMinMax(double& imin, double& imax) override;
 
         /** \brief return the value (raw data!) of the contained image at the given coordinate */
-        double getValueAt(double x, double y);
+        inline double getValueAt(double x, double y);
+
+        /** \brief retrieve size of a single sample in the image data (i.e. size of the datatype) */
+        inline int getSampleSize() const;
+        /** \brief retrieve image data at a given position as double */
+        inline double getPixelValue(int xIdx, int yIdx) const;
+
+        /** \brief return the value (raw data!) of the contained modifier image at the given coordinate */
+        inline double getModifierValueAt(double x, double y);
+
+        /** \brief retrieve size of a single sample in the modifier image data (i.e. size of the datatype) */
+        inline int getModifierSampleSize() const;
+        /** \brief retrieve modifier image data at a given position as double */
+        inline double getModifierPixelValue(int xIdx, int yIdx) const;
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
@@ -615,9 +562,173 @@ class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
 
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+double JKQTPMathImage::getValueAt(double x, double y)
+{
+    ensureImageData();
+    int xx=trunc((x-this->x)/width*double(Nx));
+    int yy=trunc((y-this->y)/height*double(Ny));
+    if (xx>=0 && xx<(int64_t)Nx && yy>=0 && yy<(int64_t)Ny) {
+        switch(datatype) {
+            case JKQTPMathImageBase::DoubleArray: return (static_cast<double*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::FloatArray: return (static_cast<float*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt8Array: return (static_cast<uint8_t*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt16Array: return (static_cast<uint16_t*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt32Array: return (static_cast<uint32_t*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt64Array: return (static_cast<uint64_t*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int8Array: return (static_cast<int8_t*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int16Array: return (static_cast<int16_t*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int32Array: return (static_cast<int32_t*>(data))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int64Array: return (static_cast<int64_t*>(data))[yy*Nx+xx]; break;
+        }    }
+    return 0.0;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+double JKQTPMathImage::getPixelValue(int xIdx, int yIdx) const {
+    // row-major in datastore
+    //ensureImageData();
+    if (!data) return 0;
+    switch(datatype) {
+        case JKQTPMathImageBase::DoubleArray:
+            return (static_cast<double*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::FloatArray:
+            return (static_cast<float*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt8Array:
+            return (static_cast<uint8_t*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt16Array:
+            return (static_cast<uint16_t*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt32Array:
+            return (static_cast<uint32_t*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt64Array:
+            return (static_cast<uint64_t*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int8Array:
+            return (static_cast<int8_t*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int16Array:
+            return (static_cast<int16_t*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int32Array:
+            return (static_cast<int32_t*>(data))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int64Array:
+            return (static_cast<int64_t*>(data))[yIdx*getNx()+xIdx];
+        default:
+            return 0;
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+int JKQTPMathImage::getSampleSize() const {
+    switch(datatype) {
+        case JKQTPMathImageBase::DoubleArray:
+            return sizeof(double);
+        case JKQTPMathImageBase::FloatArray:
+            return sizeof(float);
+        case JKQTPMathImageBase::UInt8Array:
+            return sizeof(uint8_t);
+        case JKQTPMathImageBase::UInt16Array:
+            return sizeof(uint16_t);
+        case JKQTPMathImageBase::UInt32Array:
+            return sizeof(uint32_t);
+        case JKQTPMathImageBase::UInt64Array:
+            return sizeof(uint64_t);
+        case JKQTPMathImageBase::Int8Array:
+            return sizeof(int8_t);
+        case JKQTPMathImageBase::Int16Array:
+            return sizeof(int16_t);
+        case JKQTPMathImageBase::Int32Array:
+            return sizeof(int32_t);
+        case JKQTPMathImageBase::Int64Array:
+            return sizeof(int64_t);
+        default:
+            return 0;
+    }
+}
 
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+double JKQTPMathImage::getModifierValueAt(double x, double y)
+{
+    ensureImageData();
+    int xx=trunc((x-this->x)/width*double(Nx));
+    int yy=trunc((y-this->y)/height*double(Ny));
+    if (xx>=0 && xx<(int64_t)Nx && yy>=0 && yy<(int64_t)Ny) {
+        switch(datatypeModifier) {
+            case JKQTPMathImageBase::DoubleArray: return (static_cast<double*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::FloatArray: return (static_cast<float*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt8Array: return (static_cast<uint8_t*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt16Array: return (static_cast<uint16_t*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt32Array: return (static_cast<uint32_t*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::UInt64Array: return (static_cast<uint64_t*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int8Array: return (static_cast<int8_t*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int16Array: return (static_cast<int16_t*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int32Array: return (static_cast<int32_t*>(dataModifier))[yy*Nx+xx]; break;
+            case JKQTPMathImageBase::Int64Array: return (static_cast<int64_t*>(dataModifier))[yy*Nx+xx]; break;
+        }    }
+    return 0.0;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+double JKQTPMathImage::getModifierPixelValue(int xIdx, int yIdx) const {
+    // row-major in datastore
+    //ensureImageData();
+    if (!dataModifier) return 0;
+    switch(datatypeModifier) {
+        case JKQTPMathImageBase::DoubleArray:
+            return (static_cast<double*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::FloatArray:
+            return (static_cast<float*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt8Array:
+            return (static_cast<uint8_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt16Array:
+            return (static_cast<uint16_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt32Array:
+            return (static_cast<uint32_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::UInt64Array:
+            return (static_cast<uint64_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int8Array:
+            return (static_cast<int8_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int16Array:
+            return (static_cast<int16_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int32Array:
+            return (static_cast<int32_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        case JKQTPMathImageBase::Int64Array:
+            return (static_cast<int64_t*>(dataModifier))[yIdx*getNx()+xIdx];
+        default:
+            return 0;
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+int JKQTPMathImage::getModifierSampleSize() const {
+    switch(datatypeModifier) {
+        case JKQTPMathImageBase::DoubleArray:
+            return sizeof(double);
+        case JKQTPMathImageBase::FloatArray:
+            return sizeof(float);
+        case JKQTPMathImageBase::UInt8Array:
+            return sizeof(uint8_t);
+        case JKQTPMathImageBase::UInt16Array:
+            return sizeof(uint16_t);
+        case JKQTPMathImageBase::UInt32Array:
+            return sizeof(uint32_t);
+        case JKQTPMathImageBase::UInt64Array:
+            return sizeof(uint64_t);
+        case JKQTPMathImageBase::Int8Array:
+            return sizeof(int8_t);
+        case JKQTPMathImageBase::Int16Array:
+            return sizeof(int16_t);
+        case JKQTPMathImageBase::Int32Array:
+            return sizeof(int32_t);
+        case JKQTPMathImageBase::Int64Array:
+            return sizeof(int64_t);
+        default:
+            return 0;
+    }
+}
 
 
 
@@ -644,17 +755,13 @@ class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
         JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPlotter* parent);
 
-        /*! \copydoc imageColumn
-            \see see imageColumn for details */ 
+        /*! \copydoc imageColumn */
         virtual void setImageColumn(int __value);
-        /*! \copydoc imageColumn
-            \see see imageColumn for details */ 
+        /*! \copydoc imageColumn */
         int getImageColumn() const;
-        /*! \copydoc modifierColumn
-            \see see modifierColumn for details */ 
+        /*! \copydoc modifierColumn */
         virtual void setModifierColumn(int __value);
-        /*! \copydoc modifierColumn
-            \see see modifierColumn for details */ 
+        /*! \copydoc modifierColumn */
         int getModifierColumn() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */

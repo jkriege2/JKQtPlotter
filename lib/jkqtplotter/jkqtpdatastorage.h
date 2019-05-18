@@ -239,6 +239,8 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         inline size_t getColumnImageWidth(int column) const;
         /** \brief returns the height of the image, represented by \a column (in row-major ordering) */
         inline size_t getColumnImageHeight(int column) const;
+        /** \brief returns the data checksum of the given column */
+        quint16 getColumnChecksum(int column) const;
 
         /** \brief returns the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!)  */
         inline double get(size_t column, size_t row) const ;
@@ -990,9 +992,9 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     /** \brief class destructor */
     ~JKQTPColumn() =default;
 
-    /*! \brief sets the property name ( \copybrief name ) to the specified \a __value. \details Description of the parameter name is: <BLOCKQUOTE>\copydoc JKQTPColumn::name </BLOCKQUOTE> \see JKQTPColumn::name for more information */
+    /*! \copydoc name */
     void setName (const QString& __value);
-    /*! \brief returns the property name ( \copybrief name ). \see name for more information */
+    /*! \copydoc name */
     QString getName () const;
 
     /*! \copydoc imageColumns */
@@ -1096,11 +1098,13 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     /** \brief set all values in the column to a specific \a value */
     void setAll(double value);
 
+    /** \brief calculates a checksum over the contents of the column (using <a href="https://doc.qt.io/qt-5/qbytearray.html#qChecksum">qChecksum()</a>) */
+    inline quint16 calculateChecksum() const;
 
-    /*! \brief returns the property datastoreItem ( \copybrief datastoreItem ). \details Description of the parameter datastoreItem is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreItem </BLOCKQUOTE>. \see JKQTPColumn::datastoreItem for more information */ \
+    /*! \copydoc datastoreItem */ \
     inline size_t getDatastoreItemNum() const  \
     {   return this->datastoreItem;   }
-    /*! \brief returns the property datastoreOffset ( \copybrief datastoreOffset ). \details Description of the parameter datastoreOffset is:  <BLOCKQUOTE>\copydoc JKQTPColumn::datastoreOffset </BLOCKQUOTE>. \see JKQTPColumn::datastoreOffset for more information */ \
+    /*! \copydoc datastoreOffset */ \
     inline size_t getDatastoreOffset() const  \
     {   return this->datastoreOffset;   }
 };
@@ -1316,6 +1320,14 @@ inline void JKQTPColumn::incValue(size_t n, double increment){
     if (!datastore) return ;
     if (!datastore->getItem(datastoreItem)) return ;
     datastore->getItem(datastoreItem)->set(datastoreOffset, n, datastore->getItem(datastoreItem)->get(datastoreOffset, n)+increment);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+quint16 JKQTPColumn::calculateChecksum() const
+{
+    if (!datastore) return 0;
+    if (!datastore->getItem(datastoreItem)) return 0;
+    return qChecksum(reinterpret_cast<const char*>(getPointer(0)), static_cast<uint>(getRows()*sizeof(double)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

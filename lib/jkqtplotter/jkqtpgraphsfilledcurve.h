@@ -162,22 +162,16 @@ class JKQTP_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph, publi
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc yColumn2
-            \see see yColumn2 for details */ 
+        /*! \copydoc yColumn2 */ 
         void setYColumn2(int __value);
-        /*! \copydoc yColumn2
-            \see see yColumn2 for details */ 
+        /*! \copydoc yColumn2 */ 
         int getYColumn2() const;
-        /*! \brief sets the property yColumn2 ( \copybrief yColumn2 ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter yColumn2 is:  <BLOCKQUOTE>\copydoc yColumn2 </BLOCKQUOTE> 
-            \see yColumn2 for more information */ 
+        /*! \copydoc yColumn2 */ 
         void setYColumn2 (size_t __value);
 
-        /*! \copydoc drawLine
-            \see see drawLine for details */
+        /*! \copydoc drawLine */
         void setDrawLine(bool __value);
-        /*! \copydoc drawLine
-            \see see drawLine for details */
+        /*! \copydoc drawLine */
         bool getDrawLine() const;
 
 

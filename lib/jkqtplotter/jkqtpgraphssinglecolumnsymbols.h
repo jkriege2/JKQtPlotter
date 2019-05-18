@@ -84,27 +84,21 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGr
         /** \brief set symbol color and fill color at the same time */
         void setColor(QColor col);
 
-        /*! \copydoc position
-            \see see position for details */
+        /*! \copydoc position */
         void setPosition(double __value);
-        /*! \copydoc position
-            \see see position for details */
+        /*! \copydoc position */
         double getPosition() const;
 
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         double getWidth() const;
 
 
 
-        /*! \copydoc positionScatterStyle
-            \see see positionScatterStyle for details */
+        /*! \copydoc positionScatterStyle */
         void setPositionScatterStyle(ScatterStyle __value);
-        /*! \copydoc positionScatterStyle
-            \see see positionScatterStyle for details */
+        /*! \copydoc positionScatterStyle */
         ScatterStyle getPositionScatterStyle() const;
 
 

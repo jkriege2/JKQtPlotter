@@ -353,10 +353,10 @@ Examples:
       <td>  JKQTPOverlayImageEnhanced, JKQTPColumnOverlayImageEnhanced
     <tr>
       <td>\image html JKQTPContour_small.png
-      <td> JKQTPContour
+      <td> JKQTPContourPlot, JKQTPColumnContourPlot
 </table>
 
-\defgroup jkqtplotter_imagelots_elements Matrix/Image Graphs
+\defgroup jkqtplotter_imagelots_elements Image Graphs
 \ingroup jkqtplotter_imagelots
 
 
@@ -393,7 +393,7 @@ Examples:
 \defgroup jkqtplotter_imagelots_tools Tool Functions & Classes for Image Drawing
 \ingroup jkqtplotter_imagelots
 
-\defgroup jkqtplotter_imagelots_contour Contour Graphs
+\defgroup jkqtplotter_imagelots_contour Contour Graphs (based on Image Data)
 \ingroup jkqtplotter_imagelots
 
 <table>
@@ -402,7 +402,7 @@ Examples:
       <th> Classes
     <tr>
       <td>\image html JKQTPContour_small.png
-      <td> JKQTPContour
+      <td> JKQTPContourPlot, JKQTPColumnContourPlot
 </table>
 
 \defgroup jkqtplotter_overlays Overlay Elements

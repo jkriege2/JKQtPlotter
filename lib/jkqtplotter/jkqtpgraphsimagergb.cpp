@@ -1247,6 +1247,7 @@ bool JKQTPColumnRGBMathImage::usesColumn(int c) const
 
 void JKQTPColumnRGBMathImage::ensureImageData()
 {
+    JKQTPRGBMathImage::ensureImageData();
     this->datatype=JKQTPMathImageBase::DoubleArray;
     this->datatypeG=JKQTPMathImageBase::DoubleArray;
     this->datatypeB=JKQTPMathImageBase::DoubleArray;
