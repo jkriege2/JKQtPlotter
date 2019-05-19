@@ -46,16 +46,46 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         using JKQTPMathImageBase::setData;
 
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param parent parent plotter object
+         *
+         */
         JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param parent parent plotter object
+         *
+         */
         JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPRGBMathImage(JKQTBasePlotter* parent=nullptr);
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPRGBMathImage(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -316,21 +346,57 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         bool colorbarsSideBySide;
 
 
-        /** \brief object used for color bar axes
+        /** \brief object used for color bar axes (right border, red image data)
          *
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
         JKQTPVerticalIndependentAxis* colorBarRightAxis;
+        /** \brief object used for color bar axes (top border, red image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxis;
+        /** \brief object used for color bar axes (right border, green image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPVerticalIndependentAxis* colorBarRightAxisG;
+        /** \brief object used for color bar axes (top border, green image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxisG;
+        /** \brief object used for color bar axes (right border, blue image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPVerticalIndependentAxis* colorBarRightAxisB;
+        /** \brief object used for color bar axes (top border, blue image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxisB;
 
 
+        /** \brief internal storage for minimum of the green image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMinG;
+        /** \brief internal storage for maximum of the green image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMaxG;
+        /** \brief internal storage for minimum of the blue image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMinB;
+        /** \brief internal storage for maximum of the blue image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMaxB;
 
     protected:
@@ -366,18 +432,114 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         Q_OBJECT
     public:
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPColumnRGBMathImage(JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param imageBColumn column for blue channel to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPColumnRGBMathImage(JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int Nx, int Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int Nx, int Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, int Nx, int Ny, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param imageBColumn column for blue channel to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, JKQTPlotter* parent);
 
         /*! \copydoc imageRColumn */ 
         virtual void setImageRColumn(int __value);
@@ -407,8 +569,20 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         int imageBColumn;
         /** \brief  column containing the modifier image */
         int modifierColumn;
-
+        /** \copydoc JKQTPRGBMathImage::ensureImageData() */
         void ensureImageData() override;
+
+    private:
+        using JKQTPRGBMathImage::setData;
+        using JKQTPRGBMathImage::setDatatype;
+        using JKQTPRGBMathImage::setDataR;
+        using JKQTPRGBMathImage::setDatatypeR;
+        using JKQTPRGBMathImage::setDataG;
+        using JKQTPRGBMathImage::setDatatypeG;
+        using JKQTPRGBMathImage::setDataB;
+        using JKQTPRGBMathImage::setDatatypeB;
+        using JKQTPRGBMathImage::setDataModifier;
+        using JKQTPRGBMathImage::setDatatypeModifier;
 };
 
 

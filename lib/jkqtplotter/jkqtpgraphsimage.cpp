@@ -889,18 +889,13 @@ JKQTPMathImage::JKQTPMathImage(JKQTBasePlotter *parent):
 
 
 JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent):
-    JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent)
+    JKQTPMathImage(x, y, width, height, datatype, data, Nx, Ny, palette, parent->getPlotter())
 {
-    initJKQTPMathImage();
-    this->palette=palette;
 }
 
 JKQTPMathImage::JKQTPMathImage(JKQTPlotter *parent):
-    JKQTPMathImageBase(0, 0, 1, 1, JKQTPMathImageBase::UInt8Array, nullptr, 0, 0, parent)
+    JKQTPMathImage(parent->getPlotter())
 {
-    initJKQTPMathImage();
-    if (parent) this->palette=parent->getPlotter()->getCurrentPlotterStyle().defaultPalette;
-
 }
 
 void JKQTPMathImage::setParent(JKQTBasePlotter* parent) {
@@ -1661,19 +1656,23 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(JKQTBasePlotter *parent):
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTBasePlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, JKQTBasePlotter *parent):
+    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,0,0,JKQTPMathImageGRAY,parent)
 {
     this->modifierColumn=-1;
     this->imageColumn=-1;
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTBasePlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,palette,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPMathImageColorPalette palette, JKQTBasePlotter *parent):
+    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,0,0,palette,parent)
 {
     this->modifierColumn=-1;
     this->imageColumn=imageColumn;
+    if (parent && imageColumn>=0 && parent->getDatastore()) {
+        Nx=parent->getDatastore()->getColumnImageWidth(imageColumn);
+        Ny=parent->getDatastore()->getColumnImageHeight(imageColumn);
+    }
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
@@ -1682,27 +1681,19 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(JKQTPlotter *parent):
 {
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTPlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, JKQTPlotter *parent):
+    JKQTPColumnMathImage(x,y,width,height,parent->getPlotter())
 {
-    this->modifierColumn=-1;
-    this->imageColumn=-1;
-    this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,palette,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPMathImageColorPalette palette, JKQTPlotter *parent):
+    JKQTPColumnMathImage(x,y,width,height,imageColumn,palette,parent->getPlotter())
 {
-    this->modifierColumn=-1;
-    this->imageColumn=imageColumn;
-    this->datatype=JKQTPMathImageBase::DoubleArray;
 }
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
+
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPlotter *parent):
+    JKQTPColumnMathImage(x,y,width,height,imageColumn,JKQTPMathImageGRAY,parent->getPlotter())
 {
-    this->modifierColumn=-1;
-    this->imageColumn=imageColumn;
-    this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
 void JKQTPColumnMathImage::setImageColumn(int __value)

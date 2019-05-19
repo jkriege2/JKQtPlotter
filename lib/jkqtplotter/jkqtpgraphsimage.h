@@ -40,13 +40,35 @@
 class JKQTP_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         Q_OBJECT
     public:
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPImageBase(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
         JKQTPImageBase(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPImageBase(JKQTPlotter* parent);
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
         JKQTPImageBase(double x, double y, double width, double height, JKQTPlotter* parent);
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
@@ -144,15 +166,65 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 
 
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPMathImageBase(JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
         JKQTPMathImageBase(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param parent parent plotter object
+         *
+         */
         JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
 
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPMathImageBase(JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
         JKQTPMathImageBase(double x, double y, double width, double height, JKQTPlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param parent parent plotter object
+         *
+         */
         JKQTPMathImageBase(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
@@ -187,15 +259,20 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /*! \copydoc modifierMode */
         ModifierMode getModifierMode() const;
 
+        /** \brief sets dataModifier (\copybrief dataModifier) and datatypeModifier (\copybrief datatypeModifier) */
         virtual void setDataModifier(void* data, DataType datatype);
+        /** \brief sets data (\copybrief data) and datatype (\copybrief datatype), as well as the size of data (Nx: \copybrief Nx and Ny: \copybrief Ny) */
         virtual void setData(void* data, int Nx, int Ny, DataType datatype);
+        /** \brief sets data (\copybrief data), as well as the size of data (Nx: \copybrief Nx and Ny: \copybrief Ny) */
         virtual void setData(void* data, int Nx, int Ny);
         /** \brief determine min/max data value of the image */
         virtual void getDataMinMax(double& imin, double& imax);
         /** \brief determine min/max data value of the image */
         virtual void getModifierMinMax(double& imin, double& imax);
 
+        /** \brief returns the contents of the internal data image as a QVector<double> */
         QVector<double> getDataAsDoubleVector() const;
+        /** \brief returns the contents of the internal modifier image as a QVector<double> */
         QVector<double> getDataModifierAsDoubleVector() const;
     protected:
         /** \brief points to the data array, holding the image */
@@ -212,16 +289,40 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /** \brief datatype of the data array data */
         DataType datatypeModifier;
 
+        /** \brief how to apply the modifier column dataModifier
+         *  \see ModifierMode
+         */
         ModifierMode modifierMode;
 
+        /** \brief internal storage for minimum of the image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMin;
+        /** \brief internal storage for maximum of the image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMax;
+        /** \brief internal storage for minimum of the modifier image value range
+         *
+         * This is set e.g. when calling modifyImage() or draw()
+         */
         double internalModifierMin;
+        /** \brief internal storage for maximum of the modifier image value range
+         *
+         * This is set e.g. when calling modifyImage() or draw()
+         */
         double internalModifierMax;
         /** \brief overwrite this to fill the data poiters before they are accessed (e.g. to load data from a column in the datastore */
         virtual void ensureImageData();
 
+        /** \brief modify the given image \a img, using the internally set modifier data
+         *  \see dataModifier, datatypeModifier
+         */
         void modifyImage(QImage& img);
+        /** \brief modify the given image \a img, using  modifier image \a dataModifier (of type \a datatypeModifier and size \a Nx * \a Ny), using values in the range \a internalModifierMin ... \a internalModifierMax
+         */
         void modifyImage(QImage& img, void* dataModifier, DataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
 
 
@@ -238,17 +339,59 @@ class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         Q_OBJECT
     public:
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPImage(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPImage(JKQTPlotter* parent);
-        /** \brief class constructor, which points to an external image (not owned by this object!!!) */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param image points to a QImage that shall be plotted (the constructed object does not take ownership!)
+         * \param parent parent plotter object
+         *
+         */
         JKQTPImage(double x, double y, double width, double height, QImage* image, JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor, which points to an external image (not owned by this object!!!) */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param image points to a QImage that shall be plotted (the constructed object does not take ownership!)
+         * \param parent parent plotter object
+         *
+         */
         JKQTPImage(double x, double y, double width, double height, QImage* image, JKQTPlotter* parent);
-        /** \brief class constructor, which generates an internal image object, by copying \a image */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param image a QImage that shall be plotted (the constructed object copies the contents into an internally owned variable)
+         * \param parent parent plotter object
+         *
+         */
         JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor, which generates an internal image object, by copying \a image */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param image a QImage that shall be plotted (the constructed object copies the contents into an internally owned variable)
+         * \param parent parent plotter object
+         *
+         */
         JKQTPImage(double x, double y, double width, double height, const QImage& image, JKQTPlotter* parent);
 
         virtual ~JKQTPImage() override;
@@ -276,16 +419,41 @@ class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         /** \brief indicates that the image \a image is owned by this object (i.e. freed, when the object is destroyed) */
         bool image_owned;
 
+        /** \brief create QActions that are shown in the context menu of the JKQTPlotter
+         *
+         * \see actSaveImage, actCopyImage, saveImagePlotAsImage(), copyImagePlotAsImage()
+         */
         void createImageActions();
 
     protected:
+        /** \brief QActions that saves the image (asking the user for a filename)
+         *
+         * \see actSaveImage, saveImagePlotAsImage()
+         */
         QAction* actSaveImage;
+        /** \brief QActions that copies the image into the clipboard
+         *
+         * \see actCopyImage, copyImagePlotAsImage()
+         */
         QAction* actCopyImage;
     public:
+        /** \copydoc JKQTPImageBase::setParent() */
         virtual void setParent(JKQTBasePlotter* parent) override;
+        /** \copydoc JKQTPImageBase::setTitle() */
         virtual void setTitle(const QString& title) override;
     public slots:
+        /** \brief saves the image (asking the user for a filename, if \a filename is empty)
+         *
+         * \param filename name of the file that should be create (if empty, a file save dialog is shown)
+         * \param outputFormat format of the output file, see <a href="https://doc.qt.io/qt-5/qimage.html#save">QImage::save()</a>
+         *
+         * \see actSaveImage, saveImagePlotAsImage(), <a href="https://doc.qt.io/qt-5/qimage.html#save">QImage::save()</a>
+         */
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
+        /** \brief copies the image into the clipboard
+         *
+         * \see actCopyImage, copyImagePlotAsImage()
+         */
         void copyImagePlotAsImage();
 };
 
@@ -304,10 +472,45 @@ class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
 
-        /** \brief class constructor */
-        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPMathImage(JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param palette color palette to use for plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param palette color palette to use for plotting
+         * \param parent parent plotter object
+         *
+         */
         JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPMathImage(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -538,26 +741,77 @@ class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         QColor infColor;
 
 
-        /** \brief object used for color bar axes
+        /** \brief object used for color bar axes (right border, image data)
          *
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
         JKQTPVerticalIndependentAxis* colorBarRightAxis;
+        /** \brief object used for color bar axes (top border, image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxis;
+        /** \brief object used for color bar axes (right border, modifier image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPVerticalIndependentAxis* modifierColorBarTopAxis;
+        /** \brief object used for color bar axes (top border, modifier image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* modifierColorBarRightAxis;
 
     protected:
+        /** \brief QActions that saves the image (asking the user for a filename)
+         *
+         * \see actSaveImage, saveImagePlotAsImage()
+         */
         QAction* actSaveImage;
+        /** \brief QActions that copies the image into the clipboard
+         *
+         * \see actCopyImage, copyImagePlotAsImage()
+         */
         QAction* actCopyImage;
+        /** \brief QActions that saves the current palette
+         *
+         * \see actSaveImage, saveColorbarPlotAsImage()
+         */
         QAction* actSavePalette;
+        /** \brief QActions that copies the current palette
+         *
+         * \see actCopyImage, copyColorbarPlotAsImage()
+         */
         QAction* actCopyPalette;
     public:
+        /** \copydoc JKQTPImageBase::setTitle() */
         virtual void setTitle(const QString& title) override;
     public slots:
+        /** \brief saves the image (asking the user for a filename, if \a filename is empty)
+         *
+         * \param filename name of the file that should be create (if empty, a file save dialog is shown)
+         * \param outputFormat format of the output file, see <a href="https://doc.qt.io/qt-5/qimage.html#save">QImage::save()</a>
+         *
+         * \see actSaveImage, saveImagePlotAsImage(), <a href="https://doc.qt.io/qt-5/qimage.html#save">QImage::save()</a>
+         */
         void saveImagePlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
+        /** \brief copies the image into the clipboard
+         *
+         * \see actCopyImage, copyImagePlotAsImage()
+         */
         void copyImagePlotAsImage();
+        /** \brief saves an image of the current palette (asking the user for a filename, if \a filename is empty)
+         *
+         * \param filename name of the file that should be create (if empty, a file save dialog is shown)
+         * \param outputFormat format of the output file, see <a href="https://doc.qt.io/qt-5/qimage.html#save">QImage::save()</a>
+         *
+         * \see actSavePalette, saveColorbarPlotAsImage(), <a href="https://doc.qt.io/qt-5/qimage.html#save">QImage::save()</a>
+         */
         void saveColorbarPlotAsImage(const QString &filename=QString(""), const QByteArray &outputFormat=QByteArray());
+        /** \brief copies an image of the current palette into the clipboard
+         *
+         * \see actCopyPalette, copyColorbarPlotAsImage()
+         */
         void copyColorbarPlotAsImage();
 
 };
@@ -745,15 +999,71 @@ class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         Q_OBJECT
     public:
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPColumnMathImage(JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnMathImage(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageColumn column to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPMathImageColorPalette palette=JKQTPMathImageGRAY, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPColumnMathImage(JKQTPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
-        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnMathImage(double x, double y, double width, double height, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageColumn column to be plotted
+         * \param palette color palette to use for the plotting
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPMathImageColorPalette palette, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageColumn column to be plotted
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPlotter* parent);
 
         /*! \copydoc imageColumn */
         virtual void setImageColumn(int __value);
@@ -775,7 +1085,14 @@ class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         /** \brief  column containing the modifier image */
         int modifierColumn;
 
+        /** \copydoc JKQTPMathImage::ensureImageData() */
         virtual void ensureImageData() override;
+
+    private:
+        using JKQTPMathImage::setData;
+        using JKQTPMathImage::setDatatype;
+        using JKQTPMathImage::setDataModifier;
+        using JKQTPMathImage::setDatatypeModifier;
 };
 
 
