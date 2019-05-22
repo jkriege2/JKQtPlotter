@@ -12,10 +12,18 @@
 }
 
 HEADERS += $$PWD/jkqtcommon/jkqtp_imexport.h \
-           $$PWD/jkqtcommon/jkqtptools.h
+           $$PWD/jkqtcommon/jkqtptools.h \
+           $$PWD/jkqtcommon/jkqtptoolsdebugging.h \
+           $$PWD/jkqtcommon/jkqtpcommonmathtools.h \
+           $$PWD/jkqtcommon/jkqtpalgorithms.h \
+           $$PWD/jkqtcommon/jkqtpstringtools.h
 
 
-SOURCES += $$PWD/jkqtcommon/jkqtptools.cpp
+SOURCES += $$PWD/jkqtcommon/jkqtptools.cpp \
+           $$PWD/jkqtcommon/jkqtptoolsdebugging.cpp \
+           $$PWD/jkqtcommon/jkqtpcommonmathtools.cpp \
+           $$PWD/jkqtcommon/jkqtpalgorithms.cpp \
+           $$PWD/jkqtcommon/jkqtpstringtools.cpp
 
 INCLUDEPATH += $$PWD 
 

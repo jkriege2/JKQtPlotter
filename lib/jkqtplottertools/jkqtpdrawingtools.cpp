@@ -25,6 +25,19 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 const double JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH= 0.02;
 
+
+
+QPolygonF jkqtpRotateRect(QRectF r, double angle) {
+    QPolygonF p;
+    QMatrix m;
+    m.rotate(angle);
+    p.append(m.map(r.bottomLeft()));
+    p.append(m.map(r.bottomRight()));
+    p.append(m.map(r.topRight()));
+    p.append(m.map(r.topLeft()));
+    return p;
+}
+
 void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor) {
     JKQTPEnhancedPainter p(&paintDevice);
     JKQTPPlotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor);

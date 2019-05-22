@@ -27,6 +27,7 @@
 class JKQTPEnhancedPainter; // forward
 
 
+
 /*! \brief tool class with static values used by JKQTPlotter/JKQTBasePlotter
    \ingroup jkqtptools_drawing
    */
@@ -35,6 +36,12 @@ JKQTP_LIB_EXPORT struct JKQTPlotterDrawingTools {
      */
     static const double ABS_MIN_LINEWIDTH;
 };
+
+
+/** \brief rotate a rectangle by  given angle (rotates all points around the center of the rectangle and returns it as a QPolygonF)
+ * \ingroup jkqtptools_drawing
+ */
+JKQTP_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
 
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools_drawing

@@ -1278,7 +1278,7 @@ void JKQTPBoxplotVerticalGraph::intSortData()
             datas<<xv;
         }
 
-        jkqtpSort(datas.data(), sortedIndices.data(), datas.size());
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
 
 
     }

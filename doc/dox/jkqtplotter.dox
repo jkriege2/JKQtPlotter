@@ -1,17 +1,32 @@
 /*!
 
-\defgroup jkqtptools Tool Functions and Definitions for JKQTPlotter
+\defgroup jkqtptools Support Function library (e.g. for JKQTPlotter)
 
-This group contains a set of tools that I've written over the years to enhance the
-C++ standard library.
+This group contains several tool functions and datatypesthat are neccessary for 
+JKQTPlotter, JKQTMathtext and the other major classes in this library, but may 
+also be used separately. The functions and datatypes are sorted into several
+functionaly groups.
 
-\defgroup jkqtpplotterclasses_tools Support Classes/Structs/Functions for JKQTPlotter&JKQTBasePlotter
+
+\defgroup jkqtptools_algorithms Diverse Algorithms
 \ingroup jkqtptools
 
-\defgroup jkqtptools_math Tools for Mathematical Computations & Equation Parsing
+\defgroup jkqtptools_math Mathematical Computations & Equation Parsing
 \ingroup jkqtptools
 
-\defgroup jkqtptools_string String Tool Functions
+\defgroup jkqtptools_math_basic Basic Math Functions
+\ingroup jkqtptools_math
+
+\defgroup jkqtptools_math_statistics Tools for Statistical Computations
+\ingroup jkqtptools_math
+
+\defgroup jkqtptools_math_array Data Array Tools
+\ingroup jkqtptools_math
+
+\defgroup jkqtptools_math_linalg Linear Algebra Tools
+\ingroup jkqtptools_math
+
+\defgroup jkqtptools_string String/String-Conversion Tool Functions
 \ingroup jkqtptools
 
 \defgroup jkqtptools_qt Additional Tools for Qt
@@ -24,6 +39,12 @@ C++ standard library.
 \ingroup jkqtptools
 
 \defgroup jkqtptools_debugging Debugging Tools
+\ingroup jkqtptools
+
+\defgroup jkqtptools_codestructuring Code Structuring Tools
+\ingroup jkqtptools
+
+\defgroup jkqtptools_enums Enums for JKQTPlotter (including String Conversion)
 \ingroup jkqtptools
 
 
@@ -55,6 +76,9 @@ Examples:
   - \ref JKQTPlotterImagePlotOpenCV  
   - \ref JKQTPlotterImagePlotRGBOpenCV 
 .
+
+\defgroup jkqtpplottersupprt Support Classes and Functions
+\ingroup jkqtplotter
 
 \defgroup jkqtpplotterclasses Plotter Class & Plotter Widget
 \ingroup jkqtplotter

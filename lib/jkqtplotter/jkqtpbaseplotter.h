@@ -57,11 +57,11 @@ class JKQTPGraph; // forward
 class JKQTPPlotElement; // forward
 
 /** \brief initialized Qt-ressources necessary for JKQTBasePlotter
- * \ingroup jkqtpplotterclasses_tools */
+ * \ingroup jkqtpplottersupprt */
 JKQTP_LIB_EXPORT void initJKQTBasePlotterResources();
 
 /** \brief virtual base-class for exporter classes that can be used to save data inot a file
- * \ingroup jkqtpplotterclasses_tools */
+ * \ingroup jkqtpplottersupprt */
 class JKQTP_LIB_EXPORT JKQTPSaveDataAdapter {
     public:
         virtual ~JKQTPSaveDataAdapter() ;
@@ -71,7 +71,7 @@ class JKQTP_LIB_EXPORT JKQTPSaveDataAdapter {
 
 /** \brief Service from this class to implement a special QPaintDevice as a plugin, that can be registered to JKQTBasePlotter/JKQTPlotter
  *         and then be used to export graphics, use registerPaintDeviceAdapter() to register such a plass
- * \ingroup jkqtpplotterclasses_tools*/
+ * \ingroup jkqtpplottersupprt */
 class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
     public:
         virtual ~JKQTPPaintDeviceAdapter()  {}
@@ -561,7 +561,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
         /** \brief represents a pen, when plotting in JKQTPlotter/JKQTBasePlotter
-         *   \ingroup jkqtpplotterclasses_tools
+         *   \ingroup jkqtpplottersupprt
          *
          * \see getPlotStyle()
          */
@@ -1210,7 +1210,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
         /** \brief internal tool class for text sizes
-         *   \ingroup jkqtpplotterclasses_tools
+         *   \ingroup jkqtpplottersupprt
          *  \internal */
         struct JKQTP_LIB_EXPORT textSizeData {
             explicit textSizeData();
@@ -1218,7 +1218,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         };
 
         /** \brief internal tool class for text-sizess in a plot key
-         *  \ingroup jkqtpplotterclasses_tools
+         *  \ingroup jkqtpplottersupprt
          *  \internal */
         struct JKQTP_LIB_EXPORT textSizeKey {
             explicit textSizeKey(const QFont& f, const QString& text, QPaintDevice *pd);
@@ -2255,7 +2255,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 };
 
 /** \brief qHash()-specialization
- *   \ingroup jkqtpplotterclasses_tools
+ *   \ingroup jkqtpplottersupprt
  */
 inline uint qHash(const JKQTBasePlotter::textSizeKey& data) {
     return qHash(data.f.family())+qHash(data.text);

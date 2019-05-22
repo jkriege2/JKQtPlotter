@@ -571,7 +571,7 @@ void JKQTPSingleColumnGraph::intSortData()
             datas<<xv;
         }
 
-        jkqtpSort(datas.data(), sortedIndices.data(), datas.size());
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
 
 
     }
@@ -632,7 +632,7 @@ void JKQTPXYGraph::intSortData()
             datas<<xv;
         }
 
-        jkqtpSort(datas.data(), sortedIndices.data(), datas.size());
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
 
 
     } else if (sortData==JKQTPXYLineGraph::SortedY) {
@@ -643,7 +643,7 @@ void JKQTPXYGraph::intSortData()
             datas<<xv;
         }
 
-        jkqtpSort(datas.data(), sortedIndices.data(), datas.size());
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
     }
 }
 

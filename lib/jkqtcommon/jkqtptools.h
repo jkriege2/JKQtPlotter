@@ -25,9 +25,7 @@
 #include <QString>
 #include <QElapsedTimer>
 #include <QLocale>
-#include <QPainter>
 #include <cfloat>
-#include <QPrinter>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -45,6 +43,10 @@
 #include <cstdint>
 #include <stdexcept>
 #include <cctype>
+#include "jkqtpstringtools.h"
+#include "jkqtptoolsdebugging.h"
+#include "jkqtpcommonmathtools.h"
+#include "jkqtpalgorithms.h"
 
 
 #ifndef __WINDOWS__
@@ -75,24 +77,23 @@
 class JKQTPEnhancedPainter; // forward
 class JKQTBasePlotter; // forward declaration
 
-/** \brief double-value NotANumber
- * \ingroup jkqtptools_math
- */
-#define JKQTP_DOUBLE_NAN (std::numeric_limits<double>::signaling_NaN())
 
-/** \brief float-value NotANumber
- * \ingroup jkqtptools_math
- */
-#define JKQTP_FLOAT_NAN (std::numeric_limits<float>::signaling_NaN())
-
-/** \brief double-value NotANumber
- * \ingroup jkqtptools_math
- */
-#define JKQTP_NAN JKQTP_DOUBLE_NAN
-
-
-/** \brief C++11 finally construct
- * \ingroup jkqtptools
+/** \brief C++11 finally construct (executes a callable-object when the edestructor is executed)
+ * \ingroup jkqtptools_codestructuring
+ *
+ * Typical usage:
+ * \code
+ *   {
+ *     // the instruction 'painter.restore()' will be executed at the end
+ *     // of the block, when __finalpaint is destroyed (see (*) below)
+ *     JKQTPFinalAct __finalpaint([&painter]() { painter.restore(); });
+ *
+ *     // ...
+ *     // do something ...
+ *     // ...
+ *
+ *   } // (*) 'painter.restore()' is executed before the end of this block!
+ * \endcode
  *
  * \see JKQTPFinally()
  */
@@ -123,8 +124,23 @@ private:
     bool invoke_;
 };
 
-/** \brief C++11 finally construct
- * \ingroup jkqtptools_math
+/** \brief C++11 finally construct (executes a callable-object at the end of a scope)
+ * \ingroup jkqtptools_codestructuring
+ *
+ * Typical usage:
+ * \code
+ *   {
+ *     // the instruction 'painter.restore()' will be executed at the end
+ *     // of the block, when __finalpaint is destroyed (see (*) below)
+ *     auto __finalpaint=JKQTPFinally([&painter]() { painter.restore(); });
+ *
+ *     // ...
+ *     // do something ...
+ *     // ...
+ *
+ *   } // (*) 'painter.restore()' is executed before the end of this block!
+ * \endcode
+ *
  * \see JKQTPFinalAct
  */
 template <class F>
@@ -133,8 +149,23 @@ inline JKQTPFinalAct<F> JKQTPFinally(const F& f) noexcept
     return JKQTPFinalAct<F>(f);
 }
 
-/** \brief C++11 finally construct
- * \ingroup jkqtptools_math
+/** \brief C++11 finally construct (executes a callable-object at the end of a scope)
+ * \ingroup jkqtptools_codestructuring
+ *
+ * Typical usage:
+ * \code
+ *   {
+ *     // the instruction 'painter.restore()' will be executed at the end
+ *     // of the block, when __finalpaint is destroyed (see (*) below)
+ *     auto __finalpaint=JKQTPFinally([&painter]() { painter.restore(); });
+ *
+ *     // ...
+ *     // do something ...
+ *     // ...
+ *
+ *   } // (*) 'painter.restore()' is executed before the end of this block!
+ * \endcode
+ *
  * \see JKQTPFinalAct
  */
 template <class F>
@@ -143,17 +174,10 @@ inline JKQTPFinalAct<F> JKQTPFinally(F&& f) noexcept
     return JKQTPFinalAct<F>(std::forward<F>(f));
 }
 
-/** \brief check whether the dlotaing point number is OK (i.e. non-inf, non-NAN)
- * \ingroup jkqtptools
- */
-template <typename T>
-inline bool JKQTPIsOKFloat(T v) {
-    return std::isfinite(v)&&(!std::isinf(v))&&(!std::isnan(v));
-}
 
 
 /** \brief Styles in which to mark single positions during user actions in JKQTPlotter
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
 
  */
 enum JKQTPUserActionMarkerType {
@@ -164,13 +188,13 @@ enum JKQTPUserActionMarkerType {
 
 
 /** \brief convert a JKQTPUserActionMarkerType to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see String2JKQTPUserActionMarkerType(), JKQTPUserActionMarkerType
  */
 JKQTP_LIB_EXPORT QString JKQTPUserActionMarkerType2String(JKQTPUserActionMarkerType act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPUserActionMarkerType2String() ) to JKQTPUserActionMarkerType
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPUserActionMarkerType2String(), JKQTPUserActionMarkerType
  */
@@ -180,7 +204,7 @@ JKQTP_LIB_EXPORT JKQTPUserActionMarkerType String2JKQTPUserActionMarkerType(cons
 
 /** \brief Availble action this JKQtPlotter can perform when mouse events occur.
  *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
 
  */
 enum JKQTPMouseDragActions {
@@ -198,20 +222,20 @@ enum JKQTPMouseDragActions {
 
 
 /** \brief convert a JKQTPMouseDragActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see String2JKQTPMouseDragActions(), JKQTPMouseDragActions
  */
 JKQTP_LIB_EXPORT QString JKQTPMouseDragActions2String(JKQTPMouseDragActions act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseDragActions2String() ) to JKQTPMouseDragActions
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPMouseDragActions2String(), JKQTPMouseDragActions
  */
 JKQTP_LIB_EXPORT JKQTPMouseDragActions String2JKQTPMouseDragActions(const QString &button);
 
 /** \brief actions that can be bound to a double-click of the mouse
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  */
 enum JKQTPMouseDoubleClickActions {
     jkqtpdcaClickZoomsIn=0, /*!< \brief a double-click zooms into the plot at the current mouse location */
@@ -222,20 +246,20 @@ enum JKQTPMouseDoubleClickActions {
 };
 
 /** \brief convert a JKQTPMouseDoubleClickActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see String2JKQTPMouseDoubleClickActions(), JKQTPMouseDoubleClickActions
  */
 JKQTP_LIB_EXPORT QString JKQTPMouseDoubleClickActions2String(JKQTPMouseDoubleClickActions act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseDoubleClickActions2String() ) to JKQTPMouseDoubleClickActions
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPMouseDoubleClickActions2String(), JKQTPMouseDoubleClickActions
  */
 JKQTP_LIB_EXPORT JKQTPMouseDoubleClickActions String2JKQTPMouseDoubleClickActions(const QString &act);
 
 /** \brief actions that can be bound to a mouse wheel event
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  */
 enum JKQTPMouseWheelActions {
     jkqtpmwaZoomByWheel=0, /*!< \brief use the mouse-wheel for zooming */
@@ -243,20 +267,20 @@ enum JKQTPMouseWheelActions {
 };
 
 /** \brief convert a JKQTPMouseWheelActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see String2JKQTPMouseWheelActions(), JKQTPMouseWheelActions
  */
 JKQTP_LIB_EXPORT QString JKQTPMouseWheelActions2String(JKQTPMouseWheelActions act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseWheelActions2String() ) to JKQTPMouseWheelActions
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPMouseWheelActions2String(), JKQTPMouseWheelActions
  */
 JKQTP_LIB_EXPORT JKQTPMouseWheelActions String2JKQTPMouseWheelActions(const QString &act);
 
 /** \brief modes for the context menu
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  */
 enum JKQTPContextMenuModes {
     jkqtpcmmStandardContextMenu=0,  /*!< \brief only show the standard context menu \image html zoomin_mouse_contextmenu.gif "Zooming with the mouse" */
@@ -266,50 +290,43 @@ enum JKQTPContextMenuModes {
 };
 
 /** \brief convert a JKQTPContextMenuModes to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see String2JKQTPContextMenuModes(), JKQTPContextMenuModes
  */
 JKQTP_LIB_EXPORT QString JKQTPContextMenuModes2String(JKQTPContextMenuModes act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPContextMenuModes2String() ) to JKQTPContextMenuModes
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPContextMenuModes2String(), JKQTPContextMenuModes
  */
 JKQTP_LIB_EXPORT JKQTPContextMenuModes String2JKQTPContextMenuModes(const QString &act);
 
+/** \brief data structure for storage of assigned JKQTPMouseDragActions \see JKQTPMouseDragActionsHashMapIterator
+ *  \ingroup jkqtpplottersupprt */
 typedef QHash<QPair<Qt::MouseButton,Qt::KeyboardModifiers>, JKQTPMouseDragActions> JKQTPMouseDragActionsHashMap;
+/** \brief iterator for JKQTPMouseDragActionsHashMap \see JKQTPMouseDragActionsHashMap
+ *  \ingroup jkqtpplottersupprt */
 typedef JKQTPMouseDragActionsHashMap::const_iterator JKQTPMouseDragActionsHashMapIterator;
 
+/** \brief data structure for storage of assigned JKQTPMouseWheelActions \see JKQTPMouseWheelActionsHashMapIterator
+ *  \ingroup jkqtpplottersupprt */
 typedef QHash<Qt::KeyboardModifiers, JKQTPMouseWheelActions> JKQTPMouseWheelActionsHashMap;
+/** \brief iterator for JKQTPMouseWheelActionsHashMap \see JKQTPMouseWheelActionsHashMap
+ *  \ingroup jkqtpplottersupprt */
 typedef JKQTPMouseWheelActionsHashMap::const_iterator JKQTPMouseWheelActionsHashMapIterator;
 
+/** \brief data structure for storage of assigned JKQTPMouseDoubleClickActions \see JKQTPMouseDoubleClickActionsHashMapIterator
+ *  \ingroup jkqtpplottersupprt */
 typedef QHash<QPair<Qt::MouseButton,Qt::KeyboardModifiers>, JKQTPMouseDoubleClickActions> JKQTPMouseDoubleClickActionsHashMap;
+/** \brief iterator for JKQTPMouseDoubleClickActionsHashMap \see JKQTPMouseDoubleClickActionsHashMap
+ *  \ingroup jkqtpplottersupprt */
 typedef JKQTPMouseDoubleClickActionsHashMap::const_iterator JKQTPMouseDoubleClickActionsHashMapIterator;
-
-/** \brief converts a QT::PenStyle into a string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT QString jkqtp_QPenStyle2String(Qt::PenStyle style);
-
-/** \brief converts a QString into a Qt::PenStyle
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT Qt::PenStyle jkqtp_String2QPenStyle(const QString& style);
-/** \brief converts a QT::BrushStyle into a string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT QString jkqtp_QBrushStyle2String(Qt::BrushStyle style);
-
-/** \brief converts a QString into a Qt::BrushStyle
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT Qt::BrushStyle jkqtp_String2QBrushStyle(const QString& style);
 
 
 
 /** \brief Specifies how a fill-color is derived from a given color
- * \ingroup jkqtptools
+ * \ingroup jkqtpplotter_styling
 
  */
 enum JKQTPColorDerivationMode {
@@ -326,14 +343,14 @@ enum JKQTPColorDerivationMode {
 };
 
 /** \brief use a JKQTPColorDerivationMode to derive a color from \a col as specified
- *  \ingroup jkqtptools_drawing
+ *  \ingroup jkqtpplotter_styling
  *
  *  \see JKQTPColorDerivationMode
  */
 JKQTP_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& col);
 
 /** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alphaF
- *  \ingroup jkqtptools_drawing
+ *  \ingroup jkqtpplotter_styling
  *  \see QColorWithAlpha()
  */
 inline QColor QColorWithAlphaF(const QColor& color, qreal alphaF) {
@@ -343,7 +360,7 @@ inline QColor QColorWithAlphaF(const QColor& color, qreal alphaF) {
 }
 
 /** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alpha
- *  \ingroup jkqtptools_drawing
+ *  \ingroup jkqtpplotter_styling
  *  \see QColorWithAlphaF()
  */
 inline QColor QColorWithAlpha(const QColor& color, int alpha) {
@@ -353,13 +370,13 @@ inline QColor QColorWithAlpha(const QColor& color, int alpha) {
 }
 
 /** \brief convert a JKQTPColorDerivationMode to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplotter_styling
  *
  *  \see String2JKQTPColorDerivationMode(), JKQTPColorDerivationMode
  */
 JKQTP_LIB_EXPORT QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPColorDerivationMode2String() ) to JKQTPColorDerivationMode
- *  \ingroup jkqtptools_string
+ *  \ingroup jkqtpplotter_styling
  *
  *  \see JKQTPColorDerivationMode2String(), JKQTPColorDerivationMode
  */
@@ -367,7 +384,7 @@ JKQTP_LIB_EXPORT JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const 
 
 
 /** \brief display mode for an axis
- * \ingroup jkqtptools */
+ * \ingroup jkqtpplottersupprt */
 enum JKQTPCADrawMode {
     JKQTPCADMcomplete=0, /*!< \brief draw axis with ticks, ticklabels and axis label */
     JKQTPCADMLineTicksTickLabels, /*!< \brief draw axis with ticks, line and tick labels */
@@ -382,40 +399,40 @@ enum JKQTPCADrawMode {
 };
 
 /** \brief determines whether JKQTPCADrawMode has the line
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasLine(JKQTPCADrawMode pos);
 
 /** \brief determines whether JKQTPCADrawMode has ticks
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasTicks(JKQTPCADrawMode pos);
 
 /** \brief determines whether JKQTPCADrawMode has tick labels
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasTickLabels(JKQTPCADrawMode pos);
 
 /** \brief determines whether JKQTPCADrawMode has the axis label
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos);
 
 
 
 /** \brief converts a JKQTPCADrawMode variable into a human-readable string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
 
 /** \brief converts a string into a JKQTPCADrawMode
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
 
 
 /** \brief display mode for the axis labels
- * \ingroup jkqtptools */
+ * \ingroup jkqtpplottersupprt */
 enum JKQTPCALabelType {
     JKQTPCALTdefault, /*!< \brief simply print the numbers \image html JKQTPCALTdefault.png */
     JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. \c 5µ for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ...  */
@@ -428,7 +445,7 @@ enum JKQTPCALabelType {
 
 
 /** \brief mode of the axis ticks
- * \ingroup jkqtptools */
+ * \ingroup jkqtpplottersupprt */
 enum JKQTPLabelTickMode {
     JKQTPLTMLinOrPower=0, /*!< \brief linear, or log, depending on whether the axis is log */
     JKQTPLTMLin, /*!< \brief always linear (even for log-axes) */
@@ -436,28 +453,28 @@ enum JKQTPLabelTickMode {
 };
 
 /** \brief converts a JKQTPLabelTickMode variable into a human-readable string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
 
 /** \brief converts a string into a JKQTPLabelTickMode
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(const QString& pos);
 
 
 /** \brief converts a JKQTPCALabelType variable into a human-readable string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT QString JKQTPCALabelType2String(JKQTPCALabelType pos);
 
 /** \brief converts a string into a JKQTPCALabelType
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& pos);
 
 /** \brief position of the axis labels
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  */
 enum JKQTPLabelPosition {
     JKQTPLabelMin=0,            /*!< \brief the axis label is near the min value of the axis (left/bottom) */
@@ -467,17 +484,17 @@ enum JKQTPLabelPosition {
 
 
 /** \brief converts a JKQTPLabelPosition variable into a human-readable string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT QString JKQTPLabelPosition2String(JKQTPLabelPosition pos);
 
 /** \brief converts a string into a JKQTPLabelPosition
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos);
 
 /** \brief position of the key
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  */
 enum JKQTPKeyPosition {
     JKQTPKeyOutsideTopRight=0,            /*!< \brief the key is positioned on the right side of the graph */
@@ -496,17 +513,17 @@ enum JKQTPKeyPosition {
 
 
 /** \brief converts a JKQTPLabelPosition variable into a human-readable string
- * \ingroup jkqjkqtptools_stringtptools
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT QString JKQTPKeyPosition2String(JKQTPKeyPosition pos);
 
 /** \brief converts a string into a JKQTPLabelPosition
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos);
 
 /** \brief layout of the key
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  */
 enum JKQTPKeyLayout {
     JKQTPKeyLayoutOneColumn,            /*!< \brief the key consists of one column */
@@ -516,19 +533,19 @@ enum JKQTPKeyLayout {
 
 
 /** \brief converts a JKQTPKeyLayout variable into a human-readable string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT QString JKQTPKeyLayout2String(JKQTPKeyLayout pos);
 
 /** \brief converts a String into a JKQTPKeyLayout
- * \ingroup jkqtptools_string
+ * \ingroup jkqtpplottersupprt
  */
 JKQTP_LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
 
 
 
 /** \brief used to represent the position of other graphs in \ref jkqtplotter_base_saveprint
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  * \internal
  */
 struct JKQTPGridPrintingItem {
@@ -543,7 +560,7 @@ struct JKQTPGridPrintingItem {
 
 
 /** \brief plot styles for the error information
- * \ingroup jkqtptools
+ * \ingroup jkqtplotter_basegraphserrors
  */
 enum JKQTPErrorPlotstyle {
     JKQTPErrorEllipses=10,           /*!< \brief an ellipse spanned by the errors \image html JKQTPErrorEllipses.png */
@@ -563,17 +580,17 @@ enum JKQTPErrorPlotstyle {
 
 
 /** \brief converts a JKQTPErrorPlotstyle variable into a human-readable string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtplotter_basegraphserrors
  */
 JKQTP_LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
 
 /** \brief converts a String into a JKQTPErrorPlotstyle
- * \ingroup jkqtptools_string
+ * \ingroup jkqtplotter_basegraphserrors
  */
 JKQTP_LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos);
 
 /** \brief plot styles for a graph
- * \ingroup jkqtptools
+ * \ingroup jkqtpplottersupprt
  */
 enum JKQTPGraphPlotstyle {
     JKQTPLines,                /*!< \brief plot y=f(x), connect the datapoints by straight lines */
@@ -588,7 +605,7 @@ enum JKQTPGraphPlotstyle {
 };
 
 /** \brief symbols that can be used to plot a datapoint for a graph
- * \ingroup jkqtptools
+ * \ingroup jkqtptools_drawing
  */
 enum JKQTPGraphSymbols {
     JKQTPNoSymbol=0,             /*!< \brief plots no symbol at all (usefull together with error bars) */
@@ -669,291 +686,24 @@ enum JKQTPGraphSymbols {
 };
 
 /** \brief converts a JKQTPGraphSymbols variable into a identifier string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtptools_drawing
  */
 JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos);
 /** \brief converts a JKQTPGraphSymbols variable into a human-readable string
- * \ingroup jkqtptools_string
+ * \ingroup jkqtptools_drawing
  */
 JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
 
 /** \brief converts a String into a JKQTPGraphSymbols
- * \ingroup jkqtptools_string
+ * \ingroup jkqtptools_drawing
  */
 JKQTP_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
-
-
-/** \brief convert a double to a string, using the loacle "C"
- * \ingroup jkqtptools_string
- */
-inline QString JKQTPCDoubleToQString(double value) {
-    QLocale loc=QLocale::c();
-    loc.setNumberOptions(QLocale::OmitGroupSeparator);
-    return loc.toString(value, 'g', 18);
-}
-
-/** \brief convert a double to a string
- * \ingroup jkqtptools_string
- */
-inline QString JKQTPDoubleToQString(double value, int prec = 10, char f = 'g', QChar decimalSeparator='.') {
-    QLocale loc=QLocale::c();
-    loc.setNumberOptions(QLocale::OmitGroupSeparator);
-    QString res=loc.toString(value, f, prec);
-    if (loc.decimalPoint()!=decimalSeparator) {
-        res=res.replace(loc.decimalPoint(), decimalSeparator);
-    }
-    return res;
-}
-
-
-
-/** \brief rotate a rectangle by  given angle (rotates all points around the center of the rectangle and returns it as a QPolygonF)
- * \ingroup jkqtptools_math
- */
-JKQTP_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
-
-
-
-
-
-/*! \brief swap two elements \a l and \a r in an array \a a
-    \ingroup jkqtptools
-
-*/
-template <class T>
-inline void jkqtpSwap(T* a, int l, int r){
-    const T tmp=a[l];
-    a[l]=a[r];
-    a[r]=tmp;
-}
-
-
-
-
-/*! \brief QuickSort (recursive implementation)
-    \ingroup jkqtptools
-
-    implementation from http://www.linux-related.de/index.html?/coding/sort/sort_quick.htm
-*/
-template <class T>
-inline void jkqtpQuicksort(T* a, int l, int r){
-    if(r>l){
-        int i=l-1;
-        int j=r;
-
-        for(;;){
-            while(a[++i]<a[r]);
-            while(a[--j]>a[r] && j>i);
-            if(i>=j) break;
-            jkqtpSwap<T>(a, i, j);
-        }
-        jkqtpSwap<T>(a, i, r);
-
-        jkqtpQuicksort(a, l, i-1);
-        jkqtpQuicksort(a, i+1, r);
-    }
-}
-
-
-/*! \brief QuickSort (recursive implementation), sorts \a a2 alongside \a a, using \a a as sort criterion
-    \ingroup jkqtptools
-
-    implementation from http://www.linux-related.de/index.html?/coding/sort/sort_quick.htm
-*/
-template <class T, class T2>
-inline void jkqtpQuicksort(T* a, T2* a2, int l, int r){
-    if(r>l){
-        int i=l-1;
-        int j=r;
-
-        for(;;){
-            while(a[++i]<a[r]);
-            while(a[--j]>a[r] && j>i);
-            if(i>=j) break;
-            jkqtpSwap(a, i, j);
-            jkqtpSwap(a2, i, j);
-        }
-        jkqtpSwap(a, i, r);
-        jkqtpSwap(a2, i, r);
-
-        jkqtpQuicksort(a, a2, l, i-1);
-        jkqtpQuicksort(a, a2, i+1, r);
-    }
-}
-
-
-
-
-/*! \brief sort the given arrays, using \a input as sort criterion
-    \ingroup jkqtptools
-
-    \param input array to be sorted
-    \param input2 array to be sorted
-    \param N size of the array input
-    \param output if \c !=nullptr data is written here (the memory location pointed at by \a output has to have at least the length \a N !!!),
-                  otherwise the array input is sorted inplace.
-    \param output2 if \c !=nullptr data is written here (the memory location pointed at by \a output has to have at least the length \a N !!!),
-                  otherwise the array input is sorted inplace.
-
- */
-template <class T, class T2>
-inline void jkqtpSort(T* input, T2* input2, int N, T* output=nullptr, T2* output2=nullptr) {
-    if ((!input)) return ;
-    if (N<=0) return;
-    T* data=input;
-    if (output!=nullptr) {
-        data=output;
-        memcpy(output, input, N*sizeof(T));
-    }
-    T2* data2=input2;
-    if (output2!=nullptr && input2!=nullptr) {
-        data2=output2;
-        memcpy(output2, input2, N*sizeof(T2));
-    }
-    jkqtpQuicksort(data, data2, 0, N-1);
-}
-
-/** \brief RAII construct that times its lifetime, outputting properly indented qDebug()-message
- * \ingroup jkqtptools_debugging
- */
-class JKQTP_LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
-{
-    public:
-        explicit JKQTPAutoOutputTimer(const QString& message);
-        ~JKQTPAutoOutputTimer();
-        void write(const QString& message) const;
-    protected:
-        QString message;
-        QString indent;
-        static int global_indent;
-
-};
-
-/** \brief convert a string to lower-case characters
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_tolower(const std::string& s);
-
-/** \brief convert a string to a boolean
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT bool jkqtp_strtobool(const std::string& data);
-/** \brief convert a string to upper-case
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
-
-/** \brief std::string wrapper around sprintf()
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
-
-/** \brief convert a number of bytes to a string, formatting e.g. 1024 as 1kB, ...
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_bytestostr(double bytes);
-
-/** \brief convert an integer to a string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_inttostr(long data);
-
-/** \brief convert an integer to a hex string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_inttohex(long data);
-
-/** \brief convert an unsigned int to a string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_uinttostr(unsigned long data);
-
-/** \brief convert a double to a string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_floattostr(double data, int past_comma=-1, bool remove_trail0=false, double belowIsZero=1e-16);
-
-/** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000,"g") will result in "1kg"
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_floattounitstr(double dataa, const std::string& unitname);
-/** \brief convert a boolean to a string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_booltostr(bool data);
-/** \brief converts a RGBA color into a string
- * \ingroup jkqtptools_string
- *
- * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
- *
- * \param r red value of the color to convert
- * \param g green value of the color to convert
- * \param b blue value of the color to convert
- * \param a alpha value of the color to convert
- * \param useSpecialTransparencySyntax is set (\c true ), the function uses a special syntax to denote color and transparency: \c color,trans
- */
-JKQTP_LIB_EXPORT QString jkqtp_rgbtostring(unsigned char r, unsigned char g, unsigned char b, unsigned char a=255, bool useSpecialTransparencySyntax=true);
-
-/** \brief converts a QColor into a string using the jkqtp_rgbtostring() method.
- * \ingroup jkqtptools_string
- *
- * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
- */
-JKQTP_LIB_EXPORT QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax=true);
-
-/** \brief converts a QString into a QColor, compatible with jkqtp_QColor2String(QColor color);
- * \ingroup jkqtptools_string
- *
- * This returns a QString which contains the name of named colors and the RGBA values in a QT readable form othertwise.
- */
-JKQTP_LIB_EXPORT QColor jkqtp_String2QColor(const QString& color);
-
-/** \brief clean a string to be usable as a variable name, e.g. in an expression parser, or a C++-expression
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_to_valid_variable_name(const std::string& input);
-
-/** \brief convert a double to a string, encoding powers of ten as characters, e.g. \c jkqtp_floattounitstr(1000) will result in "1k"
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5, bool remove_trail0=false);
-/** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. <code>-1.23\\cdot 10^{-5}</code>)
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
-/** \brief convert a double to a string, encoding powers of ten as exponent with HTML tags
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_floattohtmlstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
-/** \brief convert a character to a string
- * \ingroup jkqtptools_string
- */
-JKQTP_LIB_EXPORT std::string jkqtp_chartostr(char data);
-
-/** \brief wandelt einen Datentyp in einen double um, wird von JKQTPDatastore zur Wandlung benutzt
- *  \ingroup jkqtptools_math
- *
- * Diese Funktion nutzt per default static_cast<double>(), kann aber für spezielle Datentypen überschrieben werden, etwa für bool
-*/
-template<typename T>
-inline constexpr double jkqtp_todouble(const T& d) {
-    return static_cast<double>(d);
-}
-
-
-/** \brief wandelt einen boolean in einen double um, wird von JKQTPDatastore zur Wandlung benutzt,
- *         Spezialisierung für bool (true -> 1.0, false -> 0.0)
- *  \ingroup jkqtptools_math */
-template<>
-inline constexpr double jkqtp_todouble(const bool& d) {
-    return static_cast<double>((d)?1.0:0.0);
-}
 
 
 
 
 /** \brief plot styles for the error information
- * \ingroup jkqtptools
+ * \ingroup jkqtplotter_linesymbolgraphs_simple
  *
  * \see JKQTPSpecialLineTypeComboBox
  */
@@ -967,60 +717,15 @@ enum JKQTPSpecialLineType {
 
 
 /** \brief converts a JKQTPSpecialLineType variable into a human-readable string
- * \ingroup jkqtptools
+ * \ingroup jkqtplotter_linesymbolgraphs_simple
  */
 JKQTP_LIB_EXPORT QString JKQTPSpecialLineType2String(JKQTPSpecialLineType pos);
 
 /** \brief converts a String into a JKQTPSpecialLineType
- * \ingroup jkqtptools
+ * \ingroup jkqtplotter_linesymbolgraphs_simple
  */
 JKQTP_LIB_EXPORT JKQTPSpecialLineType String2JKQTPSpecialLineType(const QString& pos);
 
-/** \brief round a double using round() and convert it to a specified type T (static_cast!)
- *  \ingroup jkqtptools_math */
-template<typename T>
-inline T jkqtp_roundTo(const double& v) {
-    return static_cast<T>(round(v));
-}
-
-
-
-/** \brief compare two floats \a a and \a b for euqality, where any difference smaller than \a epsilon is seen as equality
- *  \ingroup jkqtptools_math */
-inline bool jkqtp_approximatelyEqual(float a, float b, float epsilon=2.0*std::numeric_limits<float>::epsilon())
-{
-    return fabsf(a - b) <= epsilon;
-}
-
-/** \brief compare two doubles \a a and \a b for euqality, where any difference smaller than \a epsilon is seen as equality
- *  \ingroup jkqtptools_math */
-inline bool jkqtp_approximatelyEqual(double a, double b, double epsilon=2.0*std::numeric_limits<double>::epsilon())
-{
-    return fabs(a - b) <= epsilon;
-}
-
-/** \brief returns the quare of the value \a v, i.e. \c v*v
- *  \ingroup jkqtptools_math */
-template<typename T>
-inline T jkqtp_sqr(const T& v) {
-    return v*v;
-}
-
-/** \brief calculate the distance between two QPointF points
- *  \ingroup jkqtptools_math
- *
- */
-inline double jkqtp_distance(const QPointF& p1, const QPointF& p2){
-    return sqrt(jkqtp_sqr<double>(p1.x()-p2.x())+jkqtp_sqr<double>(p1.y()-p2.y()));
-}
-
-/** \brief calculate the distance between two QPoint points
- *  \ingroup jkqtptools_math
- *
- */
-inline double jkqtp_distance(const QPoint& p1, const QPoint& p2){
-    return sqrt(jkqtp_sqr<double>(p1.x()-p2.x())+jkqtp_sqr<double>(p1.y()-p2.y()));
-}
 
 
 

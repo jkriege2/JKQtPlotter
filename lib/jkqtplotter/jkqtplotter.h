@@ -50,7 +50,7 @@
 #define JKQTPLOTTER_H
 
 /** \brief initialized Qt-ressources necessary for JKQTPlotter
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 JKQTP_LIB_EXPORT void initJKQTPlotterResources();
 
@@ -1340,7 +1340,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief ties a MouseActionMode to a mouse-button and a keyboard-modifier
          *  \internal
-         *  \ingroup jkqtpplotterclasses_tools
+         *  \ingroup jkqtpplottersupprt
          */
         struct JKQTP_LIB_EXPORT MouseDragAction {
                 /** \brief constructs an invalid object */
@@ -1669,7 +1669,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 template<>
 inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, uint seed ) noexcept(noexcept(qHash(key.first, seed)) && noexcept(qHash(key.second, seed))) {
@@ -1678,7 +1678,7 @@ inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, uint 
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 template<>
 inline uint qHash(const Qt::MouseButton &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {
@@ -1687,7 +1687,7 @@ inline uint qHash(const Qt::MouseButton &key, uint /*seed*/ ) noexcept(noexcept(
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 template<>
 inline uint qHash(const Qt::KeyboardModifiers &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {
