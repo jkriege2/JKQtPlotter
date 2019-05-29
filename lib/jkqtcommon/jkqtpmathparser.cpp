@@ -20,15 +20,10 @@
 
 
 #define COMPILING_THIS_JKMATHPARSER
-#include "jkqtplottertools/jkqtpmathparser.h" // class's header file
+#include "jkqtcommon/jkqtpmathparser.h" // class's header file
 #include <iostream>
 #include <float.h>
-
-#ifndef __WINDOWS__
-# ifndef __LINUX__
-#  warning("these methods are ment to be used under windows or linux ... no other system were tested")
-# endif
-#endif
+#include "jkqtcommon/jkqtpstringtools.h"
 
 /* This just distinguishes between the different path formats on Windows and Unix:
  *   - on Windows you use a backslash '\' do separate directories
@@ -603,6 +598,22 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
 }
 
 
+void JKQTPMathParser::jkmpError(const std::string &st) {
+    if (jkmathparser_exception_function!=nullptr) {
+        jkmathparser_exception_function(st);
+    } else {
+        throw jkmpException(st);
+    }
+}
+
+void JKQTPMathParser::setException_function(JKQTPMathParser::jkmpexceptionf exception_function) {
+    jkmathparser_exception_function=exception_function;
+}
+
+void JKQTPMathParser::resetException_function() {
+    jkmathparser_exception_function=nullptr;
+}
+
 std::string JKQTPMathParser::tokentostring(JKQTPMathParser::jkmpTokenType token) {
     switch(token) {
         case END: return "END";
@@ -678,7 +689,7 @@ std::string JKQTPMathParser::currenttokentostring() {
 
 
 /******************************************************************************************
- * jkMathParser
+ * JKQTPMathParser
  ******************************************************************************************/
 
 // class constructor
@@ -781,6 +792,16 @@ JKQTPMathParser::~JKQTPMathParser()
 {
     clearFunctions();
     clearVariables();
+}
+
+void JKQTPMathParser::setData(void *__value)
+{
+    this->data = __value;
+}
+
+void *JKQTPMathParser::getData() const
+{
+    return this->data;
 }
 
 void JKQTPMathParser::addVariableDouble(const std::string& ni, double* v)
@@ -903,6 +924,8 @@ void JKQTPMathParser::deleteVariable(const std::string& name) {
     }
 }
 
+void JKQTPMathParser::clearFunctions() {functions.clear();}
+
 
 void JKQTPMathParser::clearVariables(){
     if (variables.size()>0) {
@@ -987,8 +1010,20 @@ JKQTPMathParser::jkmpEvaluateFunc JKQTPMathParser::getFunctionDef(const std::str
   return nullptr;
 }
 
+bool JKQTPMathParser::tempvariableExists(const std::string &name){
+    if (tempvariables.size()<=0)  return false;
+    for (int i=tempvariables.size()-1; i>=0; i--) {
+        if (tempvariables[i].name==name) return true;
+    }
+    return false;
+}
+
+bool JKQTPMathParser::variableExists(const std::string &name){ return tempvariableExists(name)||(variables.find(name)!=variables.end()); }
+
+bool JKQTPMathParser::functionExists(const std::string &name){ return !(functions.find(name)==functions.end()); }
+
 void JKQTPMathParser::addTempVariable(const std::string& name, JKQTPMathParser::jkmpResult value) {
-  jkmpTempVariable v;
+    jkmpTempVariable v;
   v.name=name;
   v.type=value.type;
   v.internal=true;
@@ -1312,7 +1347,7 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
         }
 
         case NAME: {
-            //jkMathParser::jkmpNode* def=nullptr;
+            //JKQTPMathParser::jkmpNode* def=nullptr;
             std::string varname=StringValue;
         getToken();
             if (CurrentToken == ASSIGN) { // assign a variable name
@@ -1412,7 +1447,7 @@ std::string JKQTPMathParser::readDelim(char delimiter){
 
     while(program->get(ch)) {
         if (ch==delimiter ) {
-            char ch1=program->peek();
+            const char ch1=static_cast<char>(program->peek());
             if (ch1==delimiter) {
                     program->get(ch);
                     res=res+delimiter;
@@ -1714,27 +1749,22 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpBinaryBoolNode::evaluate(){
         res.type=JKQTPMathParser::jkmpBool;
         res.boolean=l.boolean&&r.boolean;
         return res;
-        break;
     case jkmpLOPor:
         res.type=JKQTPMathParser::jkmpBool;
         res.boolean=l.boolean||r.boolean;
         return res;
-        break;
     case jkmpLOPnor:
         res.type=JKQTPMathParser::jkmpBool;
         res.boolean=!(l.boolean||r.boolean);
         return res;
-        break;
     case jkmpLOPxor:
         res.type=JKQTPMathParser::jkmpBool;
         res.boolean=(l.boolean&& (!r.boolean))||(r.boolean&& (!l.boolean));
         return res;
-        break;
     case jkmpLOPnand:
         res.type=JKQTPMathParser::jkmpBool;
         res.boolean=!(l.boolean&&r.boolean);
         return res;
-        break;
      default: parser->jkmpError("unknown error");
   }
   res.isValid=false;
@@ -1775,6 +1805,8 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpNodeList::evaluate(){
   res.isValid=false;
   return res;
 }
+
+int JKQTPMathParser::jkmpNodeList::getCount() {return list.size();}
 
 JKQTPMathParser::jkmpNodeList::jkmpNodeList(JKQTPMathParser *p) { setParser(p); setParent(nullptr); }
 
@@ -1820,7 +1852,7 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpFunctionNode::evaluate() {
       data[i]=child[i]->evaluate();
     }
   }
-//  jkMathParser::jkmpResult r= getParser()->evaluateFunction(fun, data,n);
+//  JKQTPMathParser::jkmpResult r= getParser()->evaluateFunction(fun, data,n);
   return function(data,n, parser);
 }
 
@@ -1846,6 +1878,24 @@ JKQTPMathParser::jkmpResult::jkmpResult()
     str="";       /*!< \brief contains result if \c type==jkmpString */
     num=0;            /*!< \brief contains result if \c type==jkmpDouble */
     boolean=false;          /*!< \brief contains result if \c type==jkmpBool */
+}
+
+std::string JKQTPMathParser::jkmpResult::toString() {
+    switch(type) {
+        case jkmpDouble: return jkqtp_floattostr(num);
+        case jkmpString: return str;
+        case jkmpBool: return jkqtp_booltostr(boolean);
+    }
+    return "";
+}
+
+std::string JKQTPMathParser::jkmpResult::toTypeString() {
+    switch(type) {
+        case jkmpDouble: return jkqtp_floattostr(num)+" [number]";
+        case jkmpString: return str+" [string]";
+        case jkmpBool: return jkqtp_booltostr(boolean)+" [bool]";
+    }
+    return "";
 }
 
 JKQTPMathParser::jkmpVariable::jkmpVariable()
@@ -1881,6 +1931,26 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpConstantNode::evaluate() { retu
 
 JKQTPMathParser::jkmpException::~jkmpException() = default;
 
+JKQTPMathParser::jkmpException::jkmpException() {
+    errormessage="unknown error";
+}
+
+JKQTPMathParser::jkmpException::jkmpException(const std::string &msg) {
+    errormessage=msg;
+}
+
+std::string JKQTPMathParser::jkmpException::getMessage() const {
+    return errormessage;
+}
+
 const char *JKQTPMathParser::jkmpException::what() const noexcept {
     return getMessage().c_str();
 }
+
+JKQTPMathParser *JKQTPMathParser::jkmpNode::getParser(){ return parser; }
+
+void JKQTPMathParser::jkmpNode::setParser(JKQTPMathParser *mp){ parser=mp; }
+
+JKQTPMathParser::jkmpNode *JKQTPMathParser::jkmpNode::getParent(){ return parent; }
+
+void JKQTPMathParser::jkmpNode::setParent(JKQTPMathParser::jkmpNode *par) { parent=par; }

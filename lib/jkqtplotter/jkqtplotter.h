@@ -41,7 +41,7 @@
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/jkqtplotterstyle.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplottergui/jkvanishqtoolbar.h"
 #include <QKeyEvent>

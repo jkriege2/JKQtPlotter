@@ -8,7 +8,7 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsgeometric.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 
 #define sqr(x) ((x)*(x))
 

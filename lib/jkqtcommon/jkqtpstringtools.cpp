@@ -562,3 +562,18 @@ std::string jkqtp_chartostr(char data){
   ost<<data;
   return ost.str();
 }
+
+QString jkqtp_floattounitqstr(double data, int past_comma, bool remove_trail0)
+{
+    return QString::fromStdString(jkqtp_floattounitstr(data, past_comma, remove_trail0));
+}
+
+QString jkqtp_floattolatexqstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent)
+{
+    return QString::fromStdString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, minNoExponent, maxNoExponent));
+}
+
+QString jkqtp_floattohtmlqstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent)
+{
+    return QString::fromStdString(jkqtp_floattohtmlstr(data, past_comma, remove_trail0, belowIsZero, minNoExponent, maxNoExponent));
+}

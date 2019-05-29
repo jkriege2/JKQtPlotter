@@ -22,9 +22,9 @@
 #include <QPainter>
 #include <QPen>
 #include <QBrush>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 
 
 #ifndef jkqtpgraphsbasestylingmixins_H

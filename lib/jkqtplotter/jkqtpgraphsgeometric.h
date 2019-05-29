@@ -23,7 +23,7 @@
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 

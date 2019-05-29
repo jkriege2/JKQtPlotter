@@ -17,13 +17,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpelementsoverlay.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplottergui/jkqtpenhancedspinboxes.h"
 
 #include <QObject>

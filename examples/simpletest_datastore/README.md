@@ -1,6 +1,6 @@
 # Tutorial (JKQTPlotter): Basic Usage of JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastore}
 
-This project (see `./examples/simpletest_datastore/`) explains several advanced options of JKQTPDatastore, which is the class used to centrally store the data for (most) graphs on a JKQTPlotter widget.
+This tutorial project (see `./examples/simpletest_datastore/`) explains several options of JKQTPDatastore, which is the class used to centrally store the data for (most) graphs on a JKQTPlotter widget.
 
 [TOC]
 
@@ -140,6 +140,22 @@ Plotting these two columns versus each other results in a simple sine graph:
 
 ![simpletest_datastore_sine](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_sine.png)
 
+## Iterator Interface
+
+Alternatively you can also access the column via a C++ iterator:
+```.cpp
+    auto itX=datastore->begin(colX))
+    auto itY=datastore->begin(colY))
+    for (; itX!=datastore->end(colX); ++itX, ++itY) {
+        const double x=double(i)/double(Ndata)*8.0*M_PI;
+        *itX=x;
+        *itY=sin(x);
+    }
+```
+
+This, together with `JKQTPDatastore::backInserter()` allows to use `JKQTDatastore` together with algorithms from the C++ standard template libarary and other templated algorithms based on the same iterator-based interfaces (e.g. in boost).
+
+
 
 
 ## Generating Columns Preinitialized Columns
@@ -176,6 +192,15 @@ You can use the methods `JKQTPDatastore::appendToColumn()` and `JKQTPDatastore::
     for (double ii=10; ii<=20; ii++) datastore->appendToColumn(columnID, ii);
 ```
 Note that this operation changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards! If the first append is called on a column that cannot be extended, the contents will be copied and the column will reference the new, internally managed, memory afterwards.
+
+Alterantively there is also a `std::back_inserter`-like interface to append to a column:
+```.cpp
+    auto it=datastore->backInserter(columnID);
+    for (double ii=10; ii<=20; ii++) *++it=ii;
+```
+
+This, together with `JKQTPDatastore::begin()` and `JKQTPDatatstore::end()` allows to use `JKQTDatastore` together with algorithms from the C++ standard template libarary and other templated algorithms based on the same iterator-based interfaces (e.g. in boost).
+
 
 
 ## Using Data from one Column to Calculate Another

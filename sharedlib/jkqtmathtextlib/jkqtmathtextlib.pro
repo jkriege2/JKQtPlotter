@@ -13,3 +13,4 @@ win32 {
 }
 
 include(../../lib/jkqtmathtext.pri)
+include(../../lib/jkqtpcommon.pri)

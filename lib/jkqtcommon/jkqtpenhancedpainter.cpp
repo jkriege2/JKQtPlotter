@@ -22,7 +22,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 
 
 

@@ -20,7 +20,7 @@
 
 
 #include "jkqtfastplotter.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtcommon/jkqtpcodestructuring.h"
 #include <QLocale>
 #include <QPainter>
 #include <QPaintEvent>
@@ -47,7 +47,7 @@
     var=(settings).value((group)+(varname), var).varconvert;
 
 const double JKQTFastPlotter::ABS_MIN_LINEWIDTH=0.05;
-const int JKQTFastPlotter::LUTSIZE=256;
+const size_t JKQTFastPlotter::LUTSIZE=256;
 
 JKQTFPPlot::JKQTFPPlot(JKQTFastPlotter* parent):
     QObject(parent)
@@ -1119,7 +1119,7 @@ void JKQTFPXRangePlot::drawGraph(QPainter& painter) {
     painter.setPen(p);
     painter.fillRect(r, b);
     if (showCenterline) {
-        painter.drawLine(parent->x2p(centerline), parent->getInternalPlotBorderTop(), parent->x2p(centerline), parent->getInternalPlotBorderTop()+parent->getPlotHeight());
+        painter.drawLine(QLineF(parent->x2p(centerline), parent->getInternalPlotBorderTop(), parent->x2p(centerline), parent->getInternalPlotBorderTop()+parent->getPlotHeight()));
     }
     painter.drawRect(r);
 }
@@ -1276,7 +1276,7 @@ void JKQTFPimagePlot::drawGraph(QPainter& painter) {
         painter.drawImage(QRectF(pxmin, pymax, dx, dy), img.transformed(trans));
     if (drawColorBar && parent->getPlotHeight()>3) {
         uint8_t d[200];
-        for (int i=0; i<200; i++) d[i]=i;
+        for (uint8_t i=0; i<200; i++) d[i]=i;
         QImage b(1, 200, QImage::Format_ARGB32);
         JKQTFPimagePlot_array2image<uint8_t>(d, 1, 200, b, palette, 0, 199);
         //std::cout<<"bar.width="<<b.width()<<"   bar.height="<<b.height()<<"\n";
@@ -1428,7 +1428,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
     QRectF r(QPointF(parent->getInternalPlotBorderLeft(), parent->getInternalPlotBorderTop()), QPointF(parent->getInternalPlotBorderLeft()+parent->getPlotWidth(), parent->getInternalPlotBorderTop()+parent->getPlotHeight()));
 
     double borderfraction=0.1;
-    int yDistance=static_cast<double>(parent->getPlotHeight())*borderfraction;
+    int yDistance=static_cast<int>(static_cast<double>(parent->getPlotHeight())*borderfraction);
 
     QPen p(color);
     p.setWidthF(qMax(JKQTFastPlotter::ABS_MIN_LINEWIDTH, lineWidth));
@@ -1447,7 +1447,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(xx1+(xx2-xx1)/2-fm.width(s)/2, yy1+3*lineWidth+fm.ascent(), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1+3*lineWidth+fm.ascent()), s);
     } else if (position==JKQTFPQScaleBarXPlot::TopLeft) {
         yy1=parent->getInternalPlotBorderTop()+yDistance;
         yy2=yy1;
@@ -1458,7 +1458,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(xx1+(xx2-xx1)/2-fm.width(s)/2, yy1+3*lineWidth+fm.ascent(), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1+3*lineWidth+fm.ascent()), s);
     } else if (position==JKQTFPQScaleBarXPlot::BottomLeft) {
         yy1=parent->getInternalPlotBorderTop()+parent->getPlotHeight()-yDistance;
         yy2=yy1;
@@ -1469,7 +1469,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(xx1+(xx2-xx1)/2-fm.width(s)/2, yy1-3*lineWidth-fm.descent(), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1-3*lineWidth-fm.descent()), s);
     } else if (position==JKQTFPQScaleBarXPlot::BottomRight) {
         yy1=parent->getInternalPlotBorderTop()+parent->getPlotHeight()-yDistance;
         yy2=yy1;
@@ -1480,7 +1480,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(xx1+(xx2-xx1)/2-fm.width(s)/2, yy1-3*lineWidth-fm.descent(), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1-3*lineWidth-fm.descent()), s);
     }
 
 

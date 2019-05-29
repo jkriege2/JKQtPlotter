@@ -1,9 +1,7 @@
 /*
-Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
-    
-
-    
+    last modification: $LastChangedDate$  (revision $Rev$)
 
     This software is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License (LGPL) as published by
@@ -21,5 +19,6 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-#include "jkqtcommon/jkqtpcommonmathtools.h"
-#include <cmath>
+#include "jkqtparraytools.h"
+
+

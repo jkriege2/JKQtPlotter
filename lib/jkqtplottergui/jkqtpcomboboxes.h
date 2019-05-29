@@ -26,8 +26,8 @@
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include <QComboBox>
-#include "jkqtplottertools/jkqtpimagetools.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtptools.h"
 
 
 

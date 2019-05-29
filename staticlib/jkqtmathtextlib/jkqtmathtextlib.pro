@@ -8,3 +8,4 @@ CONFIG += staticlib
 CONFIG += create_prl
 
 include(../../lib/jkqtmathtext.pri)
+include(../../lib/jkqtpcommon.pri)

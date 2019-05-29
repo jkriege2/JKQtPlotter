@@ -20,9 +20,9 @@
 
 #include "jkqtplotter/jkqtpgraphscontour.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtplotter/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtpgraphscontour.h"
 #include <QDebug>

@@ -29,7 +29,7 @@
  */
 
 /**
-* \defgroup jkmpultil utilities for jkMathParser function parser class
+* \defgroup jkmpultil utilities for JKQTPMathParser function parser class
 * \ingroup jkmp
 */
 
@@ -54,7 +54,6 @@
 #include <ctype.h>
 #include <list>
 #include <utility>
-#include "jkqtcommon/jkqtptools.h"
 
 
 #ifndef JKQTPMATHPARSER_H
@@ -84,7 +83,7 @@
  memory is provided by the calling program. The parser supports a variable
  assign operation \code a=<expression>\endcode  which allows to define new
  variables during evaluation. There are some mathematical standard constants
- registered by calling jkMathParser::addStandardVariables():
+ registered by calling JKQTPMathParser::addStandardVariables():
    - \c pi = \f$ \pi \f$
    - \c e = \f$ \exp(1) \f$
    - \c sqrt2 = \f$ \sqrt{2} \f$
@@ -110,8 +109,8 @@
    - \c kB = \f$ k_B=1.380650424\cdot 10^{-23}\;\mathrm{\frac{J}{K}}  \f$ (Boltzman constant)
    - \c kB_eV = \f$ k_B=8.61734315\cdot 10^{-5}\;\mathrm{\frac{eV}{K}}  \f$ (Boltzman constant)
 .
- You can add user-defined contants by calling jkMathParser::addVariableDouble()
- jkMathParser::addVariableBoolean() or jkMathParser::addVariableString()
+ You can add user-defined contants by calling JKQTPMathParser::addVariableDouble()
+ JKQTPMathParser::addVariableBoolean() or JKQTPMathParser::addVariableString()
 
 
  \section jkmp_functions functions:
@@ -135,11 +134,11 @@
    - cmdparam, argv
  .
 
- these functions are registere by calling jkMathParser::addStandardFunctions().
- you can add new functions by calling jkMathParser::addFunction();
+ these functions are registered by calling JKQTPMathParser::addStandardFunctions().
+ you can add new functions by calling JKQTPMathParser::addFunction();
 
  \section jkmp_resultsofparsing result of parsing and evaluation:
- The result of calling jkMathParser::parse()
+ The result of calling JKQTPMathParser::parse()
  will be a tree-like structure in memory. The parse() function will return
  a pointer to the root node of this structure. All nodes inherit from
  jkmpNode class. To evaluate such a structure simply call jkmpNode::evaluate()
@@ -189,7 +188,7 @@
  \section jkmp_example Simple Example of Usage
  \code
      try {
-        jkMathParser mp; // instanciate
+        JKQTPMathParser mp; // instanciate
         jkmpNode* n;
         jkmpResult r;
         // parse some numeric expression
@@ -237,7 +236,7 @@
      }
 
      int main() {
-       jkMathParser mp;
+       JKQTPMathParser mp;
        mp.setException_function(error);  // make error ahndler known
        ...
      }
@@ -248,7 +247,7 @@ class JKQTPMathParser
     protected:
         void* data;
 
-        /** \brief the possible tokens that can be recognized by the tokenizer in jkMathParser::getToken() 
+        /** \brief the possible tokens that can be recognized by the tokenizer in JKQTPMathParser::getToken() 
         *   \ingroup jkmpultil
         */
         enum jkmpTokenType {
@@ -333,24 +332,10 @@ class JKQTPMathParser
           bool boolean;          /*!< \brief contains result if \c type==jkmpBool */
 
           /** \brief convert the value this struct representens into a std::string */
-          inline std::string toString() {
-              switch(type) {
-                  case jkmpDouble: return jkqtp_floattostr(num);
-                  case jkmpString: return str;
-                  case jkmpBool: return jkqtp_booltostr(boolean);
-              }
-              return "";
-          }
+          std::string toString();
 
           /** \brief convert the value this struct representens into a std::string and adds the name of the datatype in \c [...] */
-          inline std::string toTypeString() {
-              switch(type) {
-                  case jkmpDouble: return jkqtp_floattostr(num)+" [number]";
-                  case jkmpString: return str+" [string]";
-                  case jkmpBool: return jkqtp_booltostr(boolean)+" [bool]";
-              }
-              return "";
-          }
+          std::string toTypeString();
         };
 
 
@@ -386,7 +371,7 @@ class JKQTPMathParser
          *
          * If you want to add more math functions (like sin, cos , abs ...) to the
          * parser, you will have to implement it with this prototype and then register
-         * it with jkMathParser::addFunction(). The first parameter points to an array
+         * it with JKQTPMathParser::addFunction(). The first parameter points to an array
          * containing the input parameters while the second one specifies the number
          * of supplied parameters. The result has to be of type jkmpResult.
          *
@@ -433,17 +418,17 @@ class JKQTPMathParser
             /** \brief evaluate this node */
             virtual jkmpResult evaluate()=0;
 
-            /** \brief return a pointer to the jkMathParser  */
-            inline JKQTPMathParser* getParser(){ return parser; }
+            /** \brief return a pointer to the JKQTPMathParser  */
+            JKQTPMathParser *getParser();
 
-            /** \brief set the jkMathParser  */
-            inline void setParser(JKQTPMathParser* mp){ parser=mp; }
+            /** \brief set the JKQTPMathParser  */
+            void setParser(JKQTPMathParser* mp);
 
             /** \brief returns a pointer to the parent node */
-            inline jkmpNode* getParent(){ return parent; }
+            jkmpNode *getParent();
 
             /** \brief sets the parent node  */
-            inline void setParent(jkmpNode* par) { parent=par; }
+            void setParent(jkmpNode* par);
         };
 
 
@@ -461,7 +446,7 @@ class JKQTPMathParser
              *  \param op the operation to be performed: add (+), subtract (-), multiply (*), divide (/), a to the power of b (a^b)
              *  \param l left child node/operand
              *  \param r right child node/operand
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpBinaryArithmeticNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
@@ -486,7 +471,7 @@ class JKQTPMathParser
              *  \param op the operation to be performed: (a)nd, (o)r, (x)or, (n)or, nand (A)
              *  \param l left child node/operand
              *  \param r right child node/operand
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpBinaryBoolNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
@@ -511,7 +496,7 @@ class JKQTPMathParser
              *  \param op the operation to be performed: != (!), == (=), >= (b), <= (a), (>), (<)
              *  \param l left child node/operand
              *  \param r right child node/operand
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpCompareNode(char op, jkmpNode* l, jkmpNode* r, JKQTPMathParser* p, jkmpNode* par);
@@ -535,7 +520,7 @@ class JKQTPMathParser
             /** \brief constructor for a jkmpUnaryNode
              *  \param op the operation to be performed: (!), (-)
              *  \param c child node/operand
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpUnaryNode(char op, jkmpNode* c, JKQTPMathParser* p, jkmpNode* par);
@@ -563,7 +548,7 @@ class JKQTPMathParser
             /** \brief constructor for a jkmpVariableAssignNode
              *  \param var name of the variable to assign to
              *  \param c child node/right-hand-side expression
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpVariableAssignNode(const std::string& var, jkmpNode* c, JKQTPMathParser* p, jkmpNode* par);
@@ -582,7 +567,7 @@ class JKQTPMathParser
           public:
             /** \brief constructor for a jkmpConstantNode
              *  \param d the value of the constant
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpConstantNode(jkmpResult d, JKQTPMathParser* p, jkmpNode* par);
@@ -601,7 +586,7 @@ class JKQTPMathParser
           public:
             /** \brief constructor for a jkmpVariableNode
              *  \param name name of the variable
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpVariableNode(const std::string& name, JKQTPMathParser* p, jkmpNode* par);
@@ -615,7 +600,7 @@ class JKQTPMathParser
          * \ingroup jkmpNodes 
          *
          * When initialized this class will get the function description that is
-         * linked to the supplied function name from jkMathParser object. This
+         * linked to the supplied function name from JKQTPMathParser object. This
          * information is saved locally and won't be changed when evaluating!
          *
          * Functions may have 8 parameters at the most.
@@ -631,7 +616,7 @@ class JKQTPMathParser
              *  \param name name of the function
              *  \param c a pointer to an array of jkmpNode objects that represent the parameter expressions
              *  \param num number of children in c
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              *  \param par a pointer to the parent node
              */
             jkmpFunctionNode(const std::string& name, jkmpNode** c, unsigned char num, JKQTPMathParser* p, jkmpNode* par);
@@ -654,7 +639,7 @@ class JKQTPMathParser
             std::vector<jkmpNode*> list;
           public:
             /** \brief constructor for a jkmpNodeList
-             *  \param p a pointer to a jkMathParser object
+             *  \param p a pointer to a JKQTPMathParser object
              */
             jkmpNodeList(JKQTPMathParser* p);
 
@@ -668,7 +653,7 @@ class JKQTPMathParser
             virtual jkmpResult evaluate() override;
 
             /** \brief get the number of nodes in the list */
-            inline int getCount() {return list.size();};
+            int getCount();
         };
 
         /*@}*/
@@ -694,25 +679,19 @@ class JKQTPMathParser
                std::string errormessage;
             public:
                 /** \brief class constructors */
-                inline jkmpException() {
-                    errormessage="unknown error";
-                }
+                jkmpException();
 
                 /** \brief constructor with supplied error message */
-                inline jkmpException(const std::string& msg) {
-                    errormessage=msg;
-                }
+                jkmpException(const std::string& msg);
 
                 /** \brief class destructors */
                 virtual ~jkmpException() override;
 
                 /** \brief  returns the assigned errormessage */
-                inline std::string getMessage() const {
-                    return errormessage;
-                }
+                std::string getMessage() const;
 
                 /** \brief returns the error description as C string */
-                virtual const char* what() const throw();
+                virtual const char* what() const noexcept override;
         };
 
         /** \brief type for a custom error handler. This an alternative error handling
@@ -722,13 +701,7 @@ class JKQTPMathParser
 
         /** \brief function that throws an exception or calls an error handler 
          *  \ingroup jkmpErrorhandling */
-        inline void jkmpError(const std::string& st) {
-            if (jkmathparser_exception_function!=nullptr) {
-                jkmathparser_exception_function(st);
-            } else {
-                throw jkmpException(st);
-            }
-        }
+        void jkmpError(const std::string& st);
 
     private:
         /** \brief if this is nullptr then an exception may be thrown otherwise this should point to an error handler that will be called.
@@ -738,15 +711,11 @@ class JKQTPMathParser
     public:
         /** \brief activate error handling by use of an exception function
          *  \ingroup jkmpErrorhandling  */
-        inline void setException_function(jkmpexceptionf exception_function) {
-            jkmathparser_exception_function=exception_function;
-        }
+        void setException_function(jkmpexceptionf exception_function);
 
         /** \brief deactivate error handling by use of an exception function
          *  \ingroup jkmpErrorhandling  */
-        inline void resetException_function() {
-            jkmathparser_exception_function=nullptr;
-        }
+        void resetException_function();
 
 
     protected:
@@ -828,15 +797,9 @@ class JKQTPMathParser
         virtual ~JKQTPMathParser();
 
         /*! \copydoc data */ 
-        inline virtual void setData(void* __value)  
-        {
-            this->data = __value;
-        } 
+        virtual void setData(void* __value);
         /*! \copydoc data */ 
-        inline virtual void* getData() const  
-        {
-            return this->data; 
-        }
+        virtual void* getData() const;
 
         /** \brief  register a new function
          * \param name name of the new function
@@ -909,19 +872,13 @@ class JKQTPMathParser
         jkmpEvaluateFunc getFunctionDef(const std::string& name);
 
         /** \brief  tests whether a temporary variable exists */
-        inline bool tempvariableExists(const std::string& name){
-          if (tempvariables.size()<=0)  return false;
-          for (int i=tempvariables.size()-1; i>=0; i--) {
-            if (tempvariables[i].name==name) return true;
-          }
-          return false;
-        }
+        bool tempvariableExists(const std::string& name);
 
         /** \brief  tests whether a variable exists */
-        inline bool variableExists(const std::string& name){ return tempvariableExists(name)||(variables.find(name)!=variables.end()); };
+        bool variableExists(const std::string& name);
 
         /** \brief  tests whether a function exists */
-        inline bool functionExists(const std::string& name){ return !(functions.find(name)==functions.end()); };
+        bool functionExists(const std::string& name);
 
         /** \brief  deletes all defined variables. the memory of internal variables
          * will be released. the external memory will not be released.
@@ -932,7 +889,7 @@ class JKQTPMathParser
         void deleteVariable(const std::string& name);
 
         /** \brief  clears the list of internal functions*/
-        inline void clearFunctions() {functions.clear();}
+        void clearFunctions();
 
         /** \brief  registers standard variables*/
         void addStandardVariables();

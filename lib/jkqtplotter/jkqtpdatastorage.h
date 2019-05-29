@@ -20,10 +20,13 @@
 
 
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtptoolsdebugging.h"
 #include <vector>
 #include <cmath>
 #include <iostream>
+#include <memory>
+#include <cstdalign>
 #include <QString>
 #include <QMap>
 #include <QList>
@@ -39,8 +42,11 @@
 
 
 class JKQTPColumn; // forward declaration
+class JKQTPColumnIterator; // forward declaration
+class JKQTPColumnConstIterator; // forward declaration
 class JKQTPDatastoreItem; // foward declaration
 class JKQTPDatastoreModel; // forward declaration
+class JKQTPColumnBackInserter; // forward declaration
 
 
 /** \brief the types of data in one JKQTdatastoreItem
@@ -79,18 +85,163 @@ enum class JKQTPDatastoreItemFormat {
     MatrixRow,                   /*!< \brief a 1D C-array of doubles that represents a number of rows (C standard representation of matrices). The data is stored row after row (=row-major).*/
 };
 
-/** \brief This class manages chunks of memory that are used for column data in JKQTBasePlotter descendents
- * \ingroup jkqtpdatastorage
- *
- * \see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
- *
- * This class manages a list if JKQTPDatastoreItem onjects that may each contain a chunk of memory, containig
- * one or more columns of data. Each item can be accessed with get() by a specific ID which is returned by add().
- * JKQTPColumn. You may only clear all chunks of memory/items. If you no longer need some of the data, but still want
- * to access the rest you will simply have to destroy all JKQTPColumn that point to the item with their
- * JKQTPColumns:datastoreItem property.
- *
- * \verbatim
+/*! \brief This class manages data columns (with entries of type \c double ), used by JKQTPlotter/JKQTBasePlotter to represent data for plots
+    \ingroup jkqtpdatastorage
+
+    \see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
+
+
+    \section jkqtpdatastore_column_management Column Management
+
+    \subsection jkqtpdatastore_column_management_generation Column Generation/Deletion
+
+    A JKQTPDatastore manages a set of data columns. Each column is a continuous vector of numbers. Optionally it can be interpreted
+    as a 2D image. In the latter case, the data is assumed to be ordered in row-major ordering (i.e. row for row).
+
+    You can generate new columns e.g. by:
+      - addColumn() which either generates internally managed (and extensible) columns, or accepts a simple \c double* pointer
+        to external. In the latter case owner-ship may be transferred to the datastore, but can also retain externally.
+      - addImageColumn() adds a column that should be interpreted as an image with given width and height (i.e. a row-major
+        matrix with \c width columns and \c height rows.
+      - copyColumn() duplicates an existing column
+      - addCopiedColumn() copies an external dataset into the datastore. e.g. with code like:
+          \code
+             QVector<double> X, Y;
+             const int Ndata=100;
+             for (int i=0; i<Ndata; i++) {
+                 const double x=double(i)/double(Ndata)*8.0*M_PI;
+                 X<<x;
+                 Y<<sin(x);
+             }
+             plot.addGraph(linegraph=new JKQTPXYLineGraph(&plot));
+             // by calling JKQTPDatastore::addCopiedColumn() the data is COPIED from the vector into the datastore
+             linegraph->setXColumn(datastore->addCopiedColumn(X, "x"));
+             linegraph->setYColumn(datastore->addCopiedColumn(Y, "y"));
+           \endcode
+      - addLinearColumn() adds a column with linearly increasing numbers (in a given range)
+      - addLogColumn() and addDecadeLogColumn() add columns with logarithmically spaced values
+      - addLinearGridColumns() adds two columns which represent x- and y- coordinates of points
+        on a rectangular grid (useful for calculating image data)
+      - addCalculatedColumn() calculates a column, based on row numbers and a C++ functor
+      - addColumnCalculatedFromColumn() calculates a column, based on another column data
+      - addCopiedMap() copies data from a std::map/QMap into two columns
+      - ... several more functions for specific cases exist.
+      - Also note that there are even library extensions that allow to import data directly from OpenCV matrices: JKQTPCopyCvMatToColumn()
+    .
+
+    Of course columns can also be deleted by calling:
+      - deleteColumn()
+      - deleteAllColumns()
+      - deleteAllPrefixedColumns()
+      - clear()
+    .
+
+    \subsection jkqtpdatastore_column_management_props Column Properties
+
+    The properties of columns may be accessed using:
+      - getRows() returns the number of rows in a specific column
+      - getColumnPointer() returns a pointer to the data in the column
+      - getColumnChecksum() calculated a checksum over the data in the column
+      - getColumnNames() / getColumnName()
+    .
+
+    \subsection jkqtpdatastore_column_management_modify Modify Column Contents
+
+    You can modify all data in a column by functions like:
+      - setAll()
+      - scaleColumnValues()
+    .
+
+    Also you can access a single entry from a column, using:
+      - set() / get() set/read a column entry
+      - inc() / dec() increment/decrement a column entry
+      - appendToColumn() (adds a single row/new value to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
+      - appendFromContainerToColumn() (adds several rows from a container to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
+    .
+
+    \subsection jkqtpdatastore_column_management_iterators Iterator Interface
+
+    In addition to teh fucntions above, JKQTPDatastore also provides C++-style iteratos to read the data from a column:
+      - begin()
+      - end()
+    .
+
+    ... and also a \c std::back_inserter -style interface to append data to columns:
+      - backInserter()
+    .
+
+    These allow to use the C++ standard algorithms to work with columns and also enabled the
+    library \ref jkqtptools_math_statistics in this software package. You can use the functions
+    above e.g. for code like:
+
+    \code
+        auto inserter it=datastore->backInserter(datastore->addColumn("new column"));
+        for (auto it=datastore->begin(col1); it!=datastore->begin(col1) ++it) {
+            *++inserter=sqrt(*it);
+        }
+    \endcode
+
+    or simply
+
+    \code
+        // mean of a column in a JKQTPDatastore:
+        double mean=jkqtpstatAverage(datastore1->begin(col1), datastore1->end(col1));
+    \endcode
+
+    Also there are functions to add data from iterator-defined ranges, e.g.:
+      - addCopiedColumn()
+      - addCopiedMap()
+      - appendToColumn()
+    .
+
+
+    \subsection jkqtpdatastore_column_management_images Image Column
+
+    JKQTPDatastore stores the width and height of the represented image as metadata with any image column.
+    This metadata is used to provide convenience access to the image pixels with:
+      - setPixel()
+      - getPixel()
+    .
+
+    The image width/height are read using:
+      - getColumnImageWidth()
+      - getColumnImageHeight()
+    .
+
+    This allows to write code like:
+    \code
+        for (int iy=0; iy<10; iy++) {
+            for (int ix=0; ix<10; ix++) {
+                datastore->setPixel(imgColumn, ix, iy, sin(ix*iy/30.0));
+            }
+        }
+    \endcode
+
+    \section jkqtpdatastore_dataio Data Output
+
+    JKQTPDatastore provides several functions that allow to store its contents into files:
+      - saveCSV
+      - saveSYLK()
+      - saveMatlab()
+      - saveDIF()
+    .
+
+    ... and function to read data into different data structures:
+      - getData()
+    .
+
+
+
+
+    \section jkqtpdatastore_internals Internal Working
+
+    This class manages a list if JKQTPDatastoreItem onjects that may each contain a chunk of memory, containig
+    one or more columns of data. Each item can be accessed with get() by a specific ID which is returned by add().
+    JKQTPColumn. You may only clear all chunks of memory/items. If you no longer need some of the data, but still want
+    to access the rest you will simply have to destroy all JKQTPColumn that point to the item with their
+    JKQTPColumns:datastoreItem property.
+
+    \verbatim
 
 +- JKQTPDatastore ---------------------+               std::vector<JKQTPColumn>:
 |                                      |                   +- JKQTPColumn ----------------+
@@ -118,10 +269,10 @@ enum class JKQTPDatastoreItemFormat {
 
 
 \endverbatim
- *
- * In addition the JKQTPDatastore manages a std::vector<JKQTPColumn> which may be used to access the data chunks in the logical
- * notion of data columns. This class provides a set of interface methods for this list:
- *
+
+    In addition the JKQTPDatastore manages a std::vector<JKQTPColumn> which may be used to access the data chunks in the logical
+    notion of data columns. This class provides a set of interface methods for this list:
+
  */
 class JKQTP_LIB_EXPORT JKQTPDatastore{
     private:
@@ -130,7 +281,20 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         /** \brief a std::vector of all columns that may be used to access the managed chunks of memory. */
         QMap<size_t, JKQTPColumn> columns;
 
+        /** \brief an internal invalid column object, used e.g. to return invalid column iterators
+         *  \internal
+         */
+        std::unique_ptr<JKQTPColumn> m_invalidColumn;
+
+        /** \brief internal variable to keep track about the highest item ID (in items) used so far
+         *  \internal
+         *  \see items
+         */
         size_t maxItemID;
+        /** \brief internal variable to keep track about the highest column ID (in columns) used so far
+         *  \internal
+         *  \see columns
+         */
         size_t maxColumnsID;
     protected:
 
@@ -200,13 +364,48 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *           as the data may get moved in the meantime and then the object gets invalid, but is not informed of this fact!
          */
         JKQTPColumn getColumn(int i) const;
+        /** \brief mutable iterator for columns in the JKQTPDatastore (\c ColumnIterator::first: column number, \c ColumnIterator::second: column data) */
+        typedef QMap<size_t, JKQTPColumn>::iterator ColumnIterator;
+        /** \brief constant iterator for columns in the JKQTPDatastore (\c ColumnIterator::first: column number, \c ColumnIterator::second: column data) */
+        typedef QMap<size_t, JKQTPColumn>::const_iterator ConstColumnIterator;
+
+        /** \brief returns an iterator to the first column in the JKQTPDatastore \see ColumnIterator */
+        ColumnIterator begin();
+        /** \brief returns an iterator behind the last column in the JKQTPDatastore \see ColumnIterator */
+        ColumnIterator end();
+        /** \brief returns a const iterator to the first column in the JKQTPDatastore \see ConstColumnIterator */
+        ConstColumnIterator begin() const;
+        /** \brief returns a const iterator behind the last column in the JKQTPDatastore \see ConstColumnIterator */
+        ConstColumnIterator end() const;
     public:
+
         /** \brief class constructor, generates an empty datastore */
         JKQTPDatastore();
         /** \brief class destructor, destroys all subordered JKQTPDatastoreItem objects */
         ~JKQTPDatastore();
 
+        /** \brief returns an iterator to the first data entry in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::iterator */
+        JKQTPColumnIterator begin(int i);
+        /** \brief returns an iterator behind the last data entry data in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::iterator */
+        JKQTPColumnIterator end(int i);
+        /** \brief returns a const iterator to the first data entry in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::const_iterator */
+        JKQTPColumnConstIterator begin(int i) const;
+        /** \brief returns a const iterator behind the last data entry data in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::const_iterator */
+        JKQTPColumnConstIterator end(int i) const;
 
+        /** \brief returns an iterator to the first data entry in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::iterator */
+        JKQTPColumnIterator begin(size_t i);
+        /** \brief returns an iterator behind the last data entry data in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::iterator */
+        JKQTPColumnIterator end(size_t i);
+        /** \brief returns a const iterator to the first data entry in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::const_iterator */
+        JKQTPColumnConstIterator begin(size_t i) const;
+        /** \brief returns a const iterator behind the last data entry data in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::const_iterator */
+        JKQTPColumnConstIterator end(size_t i) const;
+
+        /** \brief returns a back-inserter iterator (JKQTPColumnBackInserter) to the \a i -th column in the JKQTPDatastore \see JKQTPColumnBackInserter */
+        JKQTPColumnBackInserter backInserter(int i);
+        /** \brief returns a back-inserter iterator (JKQTPColumnBackInserter) to the \a i -th column in the JKQTPDatastore \see JKQTPColumnBackInserter */
+        JKQTPColumnBackInserter backInserter(size_t i);
 
         /** \brief deletes all items from the datastore and possibly frees the memory they manage */
         void clear();
@@ -274,7 +473,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         inline void set(int column, size_t row, double value);
         /** \brief adds a value \a value to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards */
         inline void appendToColumn(size_t column, double value);
-        /** \brief adds a values in cintainer \a values to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards
+        /** \brief adds a values in container \a values to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards
          *
          *  \tparam TContainer a container with standard iterators
          *  \param column the column to extend
@@ -282,6 +481,15 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          */
         template<class TContainer>
         inline void appendFromContainerToColumn(size_t column, const TContainer& values);
+        /** \brief adds a values from a range \a first ... \a last (defined by C++ iterators) to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards
+         *
+         *  \tparam TIterator a standard C++ iterator
+         *  \param column the column to extend
+         *  \param first points to the first value in the range of values to add
+         *  \param last points behind the last value in the range of values to add
+         */
+        template<class TIterator>
+        inline void appendToColumn(size_t column, TIterator first, TIterator last);
 
         /** \brief returns the value at position (\c x, \c y) in the \a column-th column, which is interpreted with the imageWidth stored in that column  */
         inline double getPixel(size_t column, size_t x, size_t y) const ;
@@ -317,6 +525,13 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *  \see \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addColumn(size_t rows, const QString& name=QString(""));
+
+        /** \brief add a new and empty column to the datastore and return its column ID. The new item uses internal memory management.
+         *   \param name name for the column
+         *   \return the ID of the newly created column
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
+         */
+        size_t addColumn(const QString& name=QString(""));
 
         /** \brief add one external column to the datastore. It contains \a rows rows. This returns its logical column ID.
          *         Data is not owned by the JKQTPDatastore!
@@ -429,9 +644,48 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         size_t copyColumn(size_t old_column, const QString& name=QString(""));
 
 
+        /** \brief add one column to the datastore. It will be filled with the values from \a first ... \a last
+         *
+         *  \tparam TIterator a standard C++ iterator
+         *  \param first points to the first value in the range of values to add
+         *  \param last points behind the last value in the range of values to add
+         *  \param name name for the column
+         *  \return the ID of the newly created column
+         *
+         * \code
+         *    QVector<double> X, Y;
+         *    const int Ndata=100;
+         *    for (int i=0; i<Ndata; i++) {
+         *        const double x=double(i)/double(Ndata)*8.0*M_PI;
+         *        X<<x;
+         *        Y<<sin(x);
+         *    }
+         *    plot.addGraph(linegraph=new JKQTPXYLineGraph(&plot));
+         *    // by calling JKQTPDatastore::addCopiedColumn() the data is COPIED from the vector into the datastore
+         *    linegraph->setXColumn(datastore->addCopiedColumn(X.begin(), X.end(), "x"));
+         *    linegraph->setYColumn(datastore->addCopiedColumn(Y.begin(), Y.end(), "y"));
+         * \endcode
+         *
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore
+         */
+        template <typename TIterator>
+        size_t addCopiedColumn(TIterator first, TIterator last, const QString& name=QString("")) {
+            const size_t N=static_cast<size_t>(abs(std::distance(first,last)));
+            double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
+            if (N>0) {
+                size_t r=0;
+                for (auto it=first; it!=last; ++it) {
+                    d[r]=jkqtp_todouble(*it);
+                    r++;
+                }
+            }
+            size_t itemid=addInternalItem(d, N);
+            return addColumnForItem(itemid, 0, name);
+        }
+
         /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
          *
-         *   \tparam TContainer datatype of the container, which need to support standard C++ iterators and the function \c size(). The contents needs to be convertible to double.
+         *   \tparam TContainer datatype of the container, which need to support standard C++ iterators. The contents needs to be convertible to double.
          *   \param data data vector to be copied
          *   \param name name for the column
          *   \return the ID of the newly created column
@@ -454,19 +708,8 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          */
         template <typename TContainer>
         size_t addCopiedColumn(const TContainer& data, const QString& name=QString("")) {
-            const size_t N=static_cast<size_t>(data.size());
-            double* d=static_cast<double*>(malloc(static_cast<size_t>(N)*sizeof(double)));
-            if (N>0) {
-                size_t r=0;
-                for (auto it=data.begin(); it!=data.end(); ++it) {
-                    d[r]=jkqtp_todouble(*it);
-                    r++;
-                }
-            }
-            size_t itemid=addInternalItem(d, N);
-            return addColumnForItem(itemid, 0, name);
+            return addCopiedColumn(data.begin(), data.end(), name);
         }
-
 
         /** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
          *
@@ -723,6 +966,45 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          *         returns the two IDs of the items as a std::pair
          *  \see \ref JKQTPlotterBasicJKQTPDatastore, jkqtp_todouble()
          *
+         *  \tparam TIterator a standard C++ iterator for a map, dereferencing with \a it->first and \a it->second
+         *  \param first points to the first value in the range of values to add
+         *  \param last points behind the last value in the range of values to add
+         *   \param nameKey name for the column with the map keys
+         *   \param nameValue name for the column with the map values
+         *   \return a pair of IDs to the newly created columns (IDkeyColumn, IDvalueColumn)
+         * Example of usage:
+         * \code
+         *     std::map<int, double> datamap;
+         *    datamap[1]=1.1;
+         *    datamap[2]=1.4;
+         *    datamap[4]=1.2;
+         *    datamap[5]=1.8;
+         *    datamap[7]=0.9;
+         *    plot.addGraph(linegraph=new JKQTPXYLineGraph(&plot));
+         *    linegraph->setXYColumns(datastore->addCopiedMap(datamap.begin(), datamap.end(), "map_x", "map_y"));
+         *    linegraph->setTitle(QObject::tr("copied map"));
+         * \endcode
+         */
+       template <typename TIterator>
+        std::pair<size_t, size_t> addCopiedMap(TIterator first, TIterator last, const QString& nameKey=QString("map_key"), const QString& nameValue=QString("map_value")) {
+            const size_t N=static_cast<size_t>(abs(std::distance(first,last)));
+            double* xvals=static_cast<double*>(malloc(N*sizeof(double)));
+            double* yvals=static_cast<double*>(malloc(N*sizeof(double)));
+            size_t i=0;
+            for (auto it=first; it!=last; ++it) {
+                xvals[i]=(jkqtp_todouble(it->first));
+                yvals[i]=(jkqtp_todouble(it->second));
+                i++;
+            }
+            const size_t cx=addInternalColumn(xvals, N, nameKey);
+            const size_t cy=addInternalColumn(yvals, N, nameValue);
+            return std::pair<size_t, size_t>(cx,cy);
+        }
+
+        /** \brief copies the contents of the map-like container \a c into two columns of the datastore,
+         *         returns the two IDs of the items as a std::pair
+         *  \see \ref JKQTPlotterBasicJKQTPDatastore, jkqtp_todouble()
+         *
          *   \tparam TContainer datatype of the map-typed container (e.g. \c std::map or \c QMap ) The requiremen to this container is
          *                      that it supports standard iterators with \c begin() and \c end() .
          *   \param c the map to copy to the datastore
@@ -744,20 +1026,8 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          */
         template <typename TContainer>
         std::pair<size_t, size_t> addCopiedMap(const TContainer& c, const QString& nameKey=QString("map_key"), const QString& nameValue=QString("map_value")) {
-            const size_t N=std::distance(c.begin(), c.end());
-            double* xvals=static_cast<double*>(malloc(N*sizeof(double)));
-            double* yvals=static_cast<double*>(malloc(N*sizeof(double)));
-            size_t i=0;
-            for (auto it=c.begin(); it!=c.end(); ++it) {
-                xvals[i]=(jkqtp_todouble(it->first));
-                yvals[i]=(jkqtp_todouble(it->second));
-                i++;
-            }
-            const size_t cx=addInternalColumn(xvals, N, nameKey);
-            const size_t cy=addInternalColumn(yvals, N, nameValue);
-            return std::pair<size_t, size_t>(cx,cy);
+            return addCopiedMap(c.begin(), c.end(), nameKey, nameValue);
         }
-
 
 
 
@@ -863,6 +1133,9 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         /** \brief return the num of the first column  with the given name, or -1 if none was found */
         int getColumnNum(const QString& name);
 
+        /** \brief return the title of the first column  with the given name, or -1 if none was found */
+        QString getColumnName(size_t column);
+
         /** \brief return the num of the first column  with the given name, if none was found this creates a new column with no rows and returns its num */
         int ensureColumnNum(const QString& name);
 
@@ -946,6 +1219,9 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         /** \brief return a list with all columns available in the datastore */
         QStringList getColumnNames() const;
 
+
+
+
         friend class JKQTPColumn;
         friend class JKQTPDatastoreItem;
         friend class JKQTPDatastoreModel;
@@ -966,19 +1242,23 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     size_t datastoreItem;
     /** \brief offset, if the datastore item contains more than one column */
     size_t datastoreOffset;
-    /** \brief a name describing the column */
-    QString name;
-    /** \brief pointer to the datastore object used to manage the data of the plot */
-    JKQTPDatastore* datastore;
-    /** \brief is this item valid?/usable? */
-    bool valid;
     /** \brief number of columns, if interpreted as a row-major image */
     size_t imageColumns;
+    /** \brief pointer to the datastore object used to manage the data of the plot */
+    JKQTPDatastore* datastore;
+    /** \brief a name describing the column */
+    QString name;
+    /** \brief is this item valid?/usable? */
+    bool valid;
 
   protected:
     inline JKQTPDatastore* getDatastore() { return datastore; }
     inline const JKQTPDatastore* getDatastore() const { return datastore; }
   public:
+    typedef JKQTPColumnIterator iterator;
+    typedef JKQTPColumnConstIterator const_iterator;
+
+
     JKQTPColumn();
     /** \brief class constructor that binds the column to a specific datastore object.
      *
@@ -988,9 +1268,6 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     JKQTPColumn(JKQTPDatastore* datastore, const QString& name=QString(""), size_t datastoreItem=0, size_t datastoreOffset=0, size_t imageColumns=1);
 
     inline bool isValid() const { return valid; }
-
-    /** \brief class destructor */
-    ~JKQTPColumn() =default;
 
     /*! \copydoc name */
     void setName (const QString& __value);
@@ -1022,6 +1299,22 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
      * column.
      */
     inline double getValue(int n) const;
+    /** \brief returns a reference to the \a n -th row in this column (possibly throwing an exception if it does not exist!)
+     *
+     * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
+     * column.
+     *
+     * \see iterator
+     */
+    inline double& at(int n);
+    /** \brief returns a reference to the \a n -th row in this column (possibly throwing an exception if it does not exist!)
+     *
+     * This method accesses the datastore and returns the double value stored in the \a n'th row of the according
+     * column.
+     *
+     * \see const_iterator
+     */
+    inline const double& at(int n) const;
     /** \brief gets a pointer to the n-th value in the column */
     double* getPointer(size_t n=0) ;
     /** \brief gets a pointer to the n-th value in the column */
@@ -1107,9 +1400,316 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     /*! \copydoc datastoreOffset */ \
     inline size_t getDatastoreOffset() const  \
     {   return this->datastoreOffset;   }
+
+    /** \brief returns an iterator to the internal data
+     * \see JKQTPColumnIterator */
+    inline iterator begin();
+    /** \brief returns an iterator to the internal data
+     * \see JKQTPColumnIterator */
+    inline iterator end();
+
+    /** \brief returns an iterator to the internal data
+     * \see JKQTPColumnIterator */
+    inline const_iterator begin() const;
+    /** \brief returns an iterator to the internal data
+     * \see JKQTPColumnIterator */
+    inline const_iterator end() const;
+
+
+    friend class JKQTPColumnIterator;
+    friend class JKQTPColumnConstIterator;
+};
+
+/** \brief iterator over the data in the column of a JKQTPDatastore
+ * \ingroup jkqtpdatastorage
+ *
+ * \see JKQTPColumn, JKQTPDatastore::begin(), JKQTPDatastore::end(), JKQTPDatastore, JKQTPConstColumnIterator
+ */
+class JKQTPColumnIterator {
+    private:
+        /** \brief references the column this iterator iterates over */
+        JKQTPColumn* col_;
+        /** \brief current row in col_ this iterator points to */
+        int pos_;
+    protected:
+        /** \brief constructs an iterator for the data represented by \a col, starting with row \a startpos */
+        inline JKQTPColumnIterator(JKQTPColumn* col, int startpos=0) : col_(col), pos_(startpos) {  }
+    public:
+        typedef JKQTPColumnIterator self_type;
+        typedef double value_type;
+        typedef double& reference;
+        typedef const double& const_reference;
+        typedef double* pointer;
+        typedef std::forward_iterator_tag iterator_category;
+        typedef int difference_type;
+        /** \brief constructs an invalid iterator */
+        inline JKQTPColumnIterator() : col_(nullptr), pos_(-1) {  }
+        inline JKQTPColumnIterator(const JKQTPColumnIterator&)=default;
+        inline JKQTPColumnIterator(JKQTPColumnIterator&&)=default;
+        inline JKQTPColumnIterator& operator=(const JKQTPColumnIterator&)=default;
+        inline JKQTPColumnIterator& operator=(JKQTPColumnIterator&&)=default;
+        inline self_type operator++(int /*junk*/) { self_type i = *this; pos_++; return i; }
+        inline self_type operator++() { pos_++; return *this; }
+        inline self_type operator--(int /*junk*/) { self_type i = *this; pos_--; return i; }
+        inline self_type operator--() { pos_--; return *this; }
+        inline self_type operator+=(int inc) { pos_+=inc; return *this; }
+        inline self_type operator-=(int dec) { pos_-=dec; return *this; }
+        /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
+        inline reference operator*() {
+            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
+            return col_->at(pos_);
+        }
+        /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
+        inline const_reference operator*() const {
+            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
+            return col_->at(pos_);
+        }
+        /** \brief comparison operator (equals)
+         *
+         * two iterators are equal, if:
+         *   - they are both invalid (see isValid() )
+         *   - they point to the same column and are both invalid (isValid()) or equal to end()
+         *   - they point to the same column and the same row therein
+         * .
+         *
+         * \see operator!=()
+         * */
+        inline bool operator==(const self_type& rhs) const {
+            if (!isValid() && !rhs.isValid()) return true;
+            if (col_ == rhs.col_) {
+                if ((pos_<0 || pos_>=static_cast<int>(rhs.col_->getRows())) && (pos_<0 || rhs.pos_>=static_cast<int>(rhs.col_->getRows()))) return true;
+                return pos_==rhs.pos_;
+            }
+            return false;
+        }
+        /** \brief comparison operator (unequals), inverse result of operator==()
+         *
+         * \see operator==()
+         * */
+        inline bool operator!=(const self_type& rhs) const { return !this->operator==(rhs); }
+        /** \brief checks the iterator for validity (i.e. points to an existing column and position is in a valid range) */
+        inline bool isValid() const {
+            return col_ && pos_>=0 && pos_<static_cast<int>(col_->getRows());
+        }
+        /** \copydoc isValid() */
+        inline operator bool() const { return isValid(); }
+        /** \brief returns the referenced position/row, or -1 for an invalid iterator */
+        inline int getPosition() const {
+            if (!isValid()) return -1;
+            return pos_;
+        }
+        /** \brief returns the referenced position/row interpreted as an image pixel, returns (-1,-1) for an invalid operator */
+        inline QPoint getImagePosition() const {
+            if (!isValid()) return QPoint(-1,-1);
+            return QPoint(pos_ % static_cast<int>(col_->getImageColumns()), pos_ / static_cast<int>(col_->getImageColumns()));
+        }
+        /** \brief returns the referenced position/row interpreted as an image pixel, x-component, returns -1 for an invalid operator */
+        inline int getImagePositionX() const {
+            if (!isValid()) return -1;
+            return pos_ % static_cast<int>(col_->getImageColumns());
+        }
+        /** \brief returns the referenced position/row interpreted as an image pixel, y-component, returns -1 for an invalid operator */
+        inline int getImagePositionY() const {
+            if (!isValid()) return -1;
+            return pos_ / static_cast<int>(col_->getImageColumns());
+        }
+        /*! \brief if the data in the column is interpreted as an image, this is the number of columns (x-dimension) of the image
+            \see JKQTPColumn::imageColumns */
+        inline size_t getImageColumns () const {
+            if (!isValid()) return 0;
+            return col_->getImageColumns();
+        }
+        /*! \brief if the data in the column is interpreted as an image, this is the number of rows (y-dimension) of the image
+            \see JKQTPColumn::imageColumns */
+        inline size_t getImageRows () const {
+            if (!isValid()) return 0;
+            return col_->getRows() / col_->getImageColumns();
+        }
+        friend class JKQTPColumnConstIterator;
+        friend class JKQTPColumn;
+    protected:
+        /** \brief returns the referenced column */
+        inline JKQTPColumn* getColumn() { return col_; }
+        /** \brief returns the referenced column */
+        inline const JKQTPColumn* getColumn() const { return col_; }
 };
 
 
+
+
+
+
+/** \brief iterator, which allows to insert into a column of a JKQTPDatastore
+ * \ingroup jkqtpdatastorage
+ *
+ * \see JKQTPDatastore::backInserter(), JKQTPDatastore, http://www.cplusplus.com/reference/iterator/insert_iterator/
+ */
+class JKQTPColumnBackInserter {
+    private:
+        /** \brief references the datastore to access */
+        JKQTPDatastore* ds_;
+        /** \brief references the column to access */
+        size_t col_;
+    protected:
+        /** \brief constructs an iterator for the data represented by \a col, starting with row \a startpos */
+        inline JKQTPColumnBackInserter(JKQTPDatastore* ds, size_t col) : ds_(ds), col_(col) {  }
+    public:
+        typedef JKQTPColumnBackInserter self_type;
+        typedef double value_type;
+        typedef double& reference;
+        typedef const double& const_reference;
+        typedef double* pointer;
+        typedef std::output_iterator_tag iterator_category;
+        typedef int difference_type;
+        /** \brief constructs an invalid iterator */
+        inline JKQTPColumnBackInserter() : ds_(nullptr), col_(0) {  }
+        inline JKQTPColumnBackInserter(const JKQTPColumnBackInserter&)=default;
+        inline JKQTPColumnBackInserter(JKQTPColumnBackInserter&&)=default;
+        inline JKQTPColumnBackInserter& operator=(const JKQTPColumnBackInserter&)=default;
+        inline JKQTPColumnBackInserter& operator=(JKQTPColumnBackInserter&&)=default;
+        inline JKQTPColumnBackInserter& operator=(const double& val) {
+            JKQTPASSERT(ds_);
+            ds_->appendToColumn(col_, val);
+            return *this;
+        }
+        inline JKQTPColumnBackInserter& operator=(double&& val) {
+            JKQTPASSERT(ds_);
+            ds_->appendToColumn(col_, std::move(val));
+            return *this;
+        }
+        inline self_type operator++(int /*junk*/) { return *this; }
+        inline self_type operator++() { return *this; }
+        inline self_type operator*() {
+            return *this;
+        }
+        friend class JKQTPDatastore;
+};
+
+/** \brief iterator over the data in the column of a JKQTPDatastore
+ * \ingroup jkqtpdatastorage
+ *
+ * \see JKQTPColumn, JKQTPDatastore::begin(), JKQTPDatastore::end(), JKQTPDatastore, JKQTPColumnIterator
+ */
+class JKQTPColumnConstIterator {
+    private:
+        /** \brief references the column this iterator iterates over */
+        const JKQTPColumn* col_;
+        /** \brief current row in col_ this iterator points to */
+        int pos_;
+    protected:
+        /** \brief constructs an iterator for the data represented by \a col, starting with row \a startpos */
+        inline JKQTPColumnConstIterator(const JKQTPColumn* col, int startpos=0) : col_(col), pos_(startpos) {  }
+    public:
+        typedef JKQTPColumnConstIterator self_type;
+        typedef double value_type;
+        typedef const double& reference;
+        typedef reference const_reference;
+        typedef const double* pointer;
+        typedef std::forward_iterator_tag iterator_category;
+        typedef int difference_type;
+        /** \brief constructs an invalid iterator */
+        inline JKQTPColumnConstIterator() : col_(nullptr), pos_(-1) {  }
+        inline JKQTPColumnConstIterator(const JKQTPColumnConstIterator&)=default;
+        inline JKQTPColumnConstIterator(JKQTPColumnConstIterator&&)=default;
+        inline JKQTPColumnConstIterator(const JKQTPColumnIterator& rhs): col_(rhs.col_), pos_(rhs.pos_) {}
+        inline JKQTPColumnConstIterator(JKQTPColumnIterator&& rhs):
+            col_(std::move(rhs.col_)), pos_(std::move(rhs.pos_))
+        {
+            rhs.col_=nullptr;
+            rhs.pos_=-1;
+        }
+        inline JKQTPColumnConstIterator& operator=(const JKQTPColumnConstIterator&)=default;
+        inline JKQTPColumnConstIterator& operator=(JKQTPColumnConstIterator&&)=default;
+        inline JKQTPColumnConstIterator& operator=(const JKQTPColumnIterator&rhs){
+            col_=rhs.col_;
+            pos_=rhs.pos_;
+            return *this;
+        }
+        inline JKQTPColumnConstIterator& operator=(JKQTPColumnIterator&&rhs){
+            col_=rhs.col_;
+            pos_=rhs.pos_;
+            rhs.col_=nullptr;
+            rhs.pos_=-1;
+            return *this;
+        }
+        inline self_type operator++(int /*junk*/) { self_type i = *this; pos_++; return i; }
+        inline self_type operator++() { pos_++; return *this; }
+        inline self_type operator--(int /*junk*/) { self_type i = *this; pos_--; return i; }
+        inline self_type operator--() { pos_--; return *this; }
+        inline self_type operator+=(int inc) { pos_+=inc; return *this; }
+        inline self_type operator-=(int dec) { pos_-=dec; return *this; }
+        /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
+        inline reference operator*() const {
+            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
+            return col_->at(pos_);
+        }
+        /** \brief comparison operator (equals)
+         *
+         * two iterators are equal, if:
+         *   - they are both invalid (see isValid() )
+         *   - they point to the same column and are both invalid (isValid()) or equal to end()
+         *   - they point to the same column and the same row therein
+         * .
+         *
+         * \see operator!=()
+         * */
+        inline bool operator==(const self_type& rhs) const {
+            if (col_ == nullptr && rhs.col_==nullptr) return true;
+            if (col_ == rhs.col_) {
+                if ((pos_<0 || pos_>=static_cast<int>(rhs.col_->getRows())) && (pos_<0 || rhs.pos_>=static_cast<int>(rhs.col_->getRows()))) return true;
+                return pos_==rhs.pos_;
+            }
+            return false;
+        }
+        /** \brief comparison operator (unequals), inverse result of operator==()
+         *
+         * \see operator==()
+         * */
+        inline bool operator!=(const self_type& rhs) const { return !this->operator==(rhs); }
+        /** \brief checks the iterator for validity (i.e. points to an existing column and position is in a valid range) */
+        inline bool isValid() const {
+            return col_ && pos_>=0 && pos_<static_cast<int>(col_->getRows());
+        }
+        /** \copydoc isValid() */
+        inline operator bool() const { return isValid(); }
+        /** \brief returns the referenced position/row, or -1 for an invalid iterator */
+        inline int getPosition() const {
+            if (!isValid()) return -1;
+            return pos_;
+        }
+        /** \brief returns the referenced position/row interpreted as an image pixel, returns (-1,-1) for an invalid operator */
+        inline QPoint getImagePosition() const {
+            if (!isValid()) return QPoint(-1,-1);
+            return QPoint(pos_ % static_cast<int>(col_->getImageColumns()), pos_ / static_cast<int>(col_->getImageColumns()));
+        }
+        /** \brief returns the referenced position/row interpreted as an image pixel, x-component, returns -1 for an invalid operator */
+        inline int getImagePositionX() const {
+            if (!isValid()) return -1;
+            return pos_ % static_cast<int>(col_->getImageColumns());
+        }
+        /** \brief returns the referenced position/row interpreted as an image pixel, y-component, returns -1 for an invalid operator */
+        inline int getImagePositionY() const {
+            if (!isValid()) return -1;
+            return pos_ / static_cast<int>(col_->getImageColumns());
+        }
+        /*! \brief if the data in the column is interpreted as an image, this is the number of columns (x-dimension) of the image
+            \see JKQTPColumn::imageColumns */
+        inline size_t getImageColumns () const {
+            if (!isValid()) return 0;
+            return col_->getImageColumns();
+        }
+        /*! \brief if the data in the column is interpreted as an image, this is the number of rows (y-dimension) of the image
+            \see JKQTPColumn::imageColumns */
+        inline size_t getImageRows () const {
+            if (!isValid()) return 0;
+            return col_->getRows() / col_->getImageColumns();
+        }
+
+        friend class JKQTPColumn;
+    protected:
+        /** \brief returns the referenced column */
+        inline const JKQTPColumn* getColumn() const { return col_; }
+};
 
 
 /** \brief this represents one chunk of memory which can represent one or more columns of data for JKQTBasePlotter.
@@ -1133,25 +1733,26 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
  */
 class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
   private:
+    /** \brief how data is represented in this JKQTPDatastoreItem */
     enum class StorageType {
-        Internal,
-        External,
-        Vector
+        Internal, /*!< \brief data is stored in an internally managed (=owned, i.e. freed in the destructor) C-array */
+        External, /*!< \brief data is stored in an externally managed (=not owned) C-array */
+        Vector    /*!< \brief data is stored in the internal \a QVector<double> datavec */
     };
     /** \brief a pointer to the actual data */
     double* data;
-    /** \brief iif \a storageType is \c StorageType::Vector, the data is actually save here and data contains a pointer to the data in datavec */
-    QVector<double> datavec;
-    /** \brief specifies whether the datastore manages the memory (\c true ) or whether the user application does this (\c false ) .*/
-    StorageType storageType;
-    /** \brief Specifies whether memory for the data has been allocated. This is only used, when \c internal==true. */
-    bool allocated;
     /** \brief as data may also point to a matrix, this specifies the number of columns in this element (default: 1) */
     size_t columns;
     /** \brief number of rows in this item */
     size_t rows;
+    /** \brief iif \a storageType is \c StorageType::Vector, the data is actually save here and data contains a pointer to the data in datavec */
+    QVector<double> datavec;
     /** \brief memory format of the data in this item */
     JKQTPDatastoreItemFormat dataformat;
+    /** \brief specifies whether the datastore manages the memory (\c true ) or whether the user application does this (\c false ) .*/
+    StorageType storageType;
+    /** \brief Specifies whether memory for the data has been allocated. This is only used, when \c internal==true. */
+    bool allocated;
   protected:
     /** \brief hidden default constructor */
     JKQTPDatastoreItem();
@@ -1176,7 +1777,9 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     {   return columns;   }
 
 
-    /** \brief returns the data at the position (\a column, \a row ). The column index specifies the column inside THIS item, not the global column number. */
+    /** \brief returns the data at the position (\a column, \a row ).
+     *
+     * \note The column index specifies the column inside THIS item, not the global column number. */
     inline double get(size_t column, size_t row) {
         if (data!=nullptr) switch(dataformat) {
             case JKQTPDatastoreItemFormat::SingleColumn:
@@ -1187,6 +1790,41 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
               return data[row*columns+column];
         }
         return 0;
+    }
+
+
+    /** \brief returns a reference to the data at the position (\a column, \a row ). Throws an exception when the entry does not exist!
+     *
+     * \note The column index specifies the column inside THIS item, not the global column number. */
+    inline double& at(size_t column, size_t row) {
+        if (data!=nullptr) {
+            switch(dataformat) {
+                case JKQTPDatastoreItemFormat::SingleColumn:
+                  return data[row];
+                case JKQTPDatastoreItemFormat::MatrixColumn:
+                  return data[column*rows+row];
+                case JKQTPDatastoreItemFormat::MatrixRow:
+                  return data[row*columns+column];
+            }
+        }
+        throw std::out_of_range("index does not exist in JKQTPDatastoreItem");
+    }
+
+    /** \brief returns a const reference to the data at the position (\a column, \a row ). Throws an exception when the entry does not exist!
+     *
+     * \note The column index specifies the column inside THIS item, not the global column number. */
+    inline const double& at(size_t column, size_t row) const {
+        if (data!=nullptr) {
+            switch(dataformat) {
+                case JKQTPDatastoreItemFormat::SingleColumn:
+                  return data[row];
+                case JKQTPDatastoreItemFormat::MatrixColumn:
+                  return data[column*rows+row];
+                case JKQTPDatastoreItemFormat::MatrixRow:
+                  return data[row*columns+column];
+            }
+        }
+        throw std::out_of_range("index does not exist in JKQTPDatastoreItem");
     }
 
 
@@ -1275,6 +1913,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
         }
         return false;
     }
+
 };
 
 
@@ -1331,6 +1970,27 @@ quint16 JKQTPColumn::calculateChecksum() const
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumn::iterator JKQTPColumn::begin() {
+    return JKQTPColumn::iterator(this, 0);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumn::iterator JKQTPColumn::end() {
+    return JKQTPColumn::iterator(this, -1);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumn::const_iterator JKQTPColumn::begin() const {
+    return JKQTPColumn::const_iterator(this, 0);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumn::const_iterator JKQTPColumn::end() const {
+    return JKQTPColumn::const_iterator(this, -1);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(size_t n) const {
     if (!datastore) return JKQTP_NAN;
     if (!datastore->getItem(datastoreItem)) return JKQTP_NAN;
@@ -1343,6 +2003,20 @@ inline double JKQTPColumn::getValue(int n) const {
     if (!datastore->getItem(datastoreItem)) return JKQTP_NAN;
     if (n<0) return JKQTP_NAN;
     return datastore->getItem(datastoreItem)->get(datastoreOffset, static_cast<size_t>(n));
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline const double& JKQTPColumn::at(int n) const {
+    JKQTPASSERT(datastore && datastore->getItem(datastoreItem));
+    JKQTPASSERT(n>=0);
+    return datastore->getItem(datastoreItem)->at(datastoreOffset, static_cast<size_t>(n));
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+inline double& JKQTPColumn::at(int n) {
+    JKQTPASSERT(datastore && datastore->getItem(datastoreItem));
+    JKQTPASSERT(n>=0);
+    return datastore->getItem(datastoreItem)->at(datastoreOffset, static_cast<size_t>(n));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1451,7 +2125,14 @@ void JKQTPDatastore::appendToColumn(size_t column, double value)
 template<class TContainer>
 void JKQTPDatastore::appendFromContainerToColumn(size_t column, const TContainer &values)
 {
-    for(auto it=values.begin(); it!=values.end(); it++) {
+    appendToColumn(column, values.begin(), values.end());
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+template<class TIterator>
+inline void JKQTPDatastore::appendToColumn(size_t column, TIterator first, TIterator last)
+{
+    for(auto it=first; it!=last; it++) {
         appendToColumn(column, *it);
     }
 }

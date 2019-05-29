@@ -19,7 +19,7 @@
 
 #include "jkqtplotter/jkqtpcoordinateaxes.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplottertools/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include <QDebug>
 #include <QDateTime>
 #include <cfloat>

@@ -23,7 +23,7 @@
 #include <QSettings>
 #include <QString>
 #include <QColor>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 
 class JKQTBasePlotterStyle; // forward

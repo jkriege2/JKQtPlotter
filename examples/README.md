@@ -59,22 +59,12 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 
 
-## Data Management
+## Data Management (Tutorials) & Statistics
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | [Tutorial: Basic Usage of JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore |
-
-
-
-
-## More Complex Examples
-
-| Screenshot    | Description   | Notes         |
-|:-------------:| ------------- | ------------- |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | [Layouting Several Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_distributionplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) | [Plotting a Statistical Distribution of Data](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) | Combines several different graphs to draw random values, their distribution and some statistical properties |
-
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_statistics_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | [Tutorial: Advanced 1-Dimensional Statistics with JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | Advanced 1-Dimensional Statistical Computation with JKQTPDatastore (and the internal statistics library) |
 
 
 ## More Complex Examples

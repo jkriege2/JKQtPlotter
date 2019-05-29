@@ -34,8 +34,8 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 #include <QHeaderView>
 #include <QPrintDialog>
 #include <QLabel>
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 
 
 

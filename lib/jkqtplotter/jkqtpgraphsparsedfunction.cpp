@@ -21,7 +21,7 @@
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include <stdlib.h>
 #include <QDebug>
 #include <QElapsedTimer>

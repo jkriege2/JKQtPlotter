@@ -24,8 +24,8 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <iostream>
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"

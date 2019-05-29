@@ -84,6 +84,14 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
 
         /** \brief class constructor */
         JKQTPXFunctionLineGraph(JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
 
         /** \brief class destructor */
         virtual ~JKQTPXFunctionLineGraph() override;
@@ -392,6 +400,14 @@ class JKQTP_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         JKQTPYFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPYFunctionLineGraph(JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

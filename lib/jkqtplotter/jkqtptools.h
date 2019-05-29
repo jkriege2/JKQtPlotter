@@ -43,32 +43,11 @@
 #include <cstdint>
 #include <stdexcept>
 #include <cctype>
-#include "jkqtpstringtools.h"
-#include "jkqtptoolsdebugging.h"
-#include "jkqtpcommonmathtools.h"
-#include "jkqtpalgorithms.h"
-
-
-#ifndef __WINDOWS__
-# if defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32)
-#  define __WINDOWS__
-# endif
-#endif
-
-#ifndef __LINUX__
-# if defined(linux)
-#  define __LINUX__
-# endif
-#endif
-
-#undef JKTOOLS_TIMER_USE_TIME
-#if defined(__WINDOWS__)
-  #include<windows.h>
-#elif defined(__LINUX__)
-  #include <sys/time.h>
-#else
-  #define JKTOOLS_TIMER_USE_TIME
-#endif
+#include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtptoolsdebugging.h"
+#include "jkqtcommon/jkqtpmathtools.h"
+#include "jkqtcommon/jkqtpalgorithms.h"
+#include "jkqtcommon/jkqtpcodestructuring.h"
 
 
 
@@ -76,103 +55,6 @@
 
 class JKQTPEnhancedPainter; // forward
 class JKQTBasePlotter; // forward declaration
-
-
-/** \brief C++11 finally construct (executes a callable-object when the edestructor is executed)
- * \ingroup jkqtptools_codestructuring
- *
- * Typical usage:
- * \code
- *   {
- *     // the instruction 'painter.restore()' will be executed at the end
- *     // of the block, when __finalpaint is destroyed (see (*) below)
- *     JKQTPFinalAct __finalpaint([&painter]() { painter.restore(); });
- *
- *     // ...
- *     // do something ...
- *     // ...
- *
- *   } // (*) 'painter.restore()' is executed before the end of this block!
- * \endcode
- *
- * \see JKQTPFinally()
- */
-template <class F>
-class JKQTPFinalAct
-{
-public:
-    explicit JKQTPFinalAct(F f) noexcept
-      : f_(std::move(f)), invoke_(true) {}
-
-    JKQTPFinalAct(JKQTPFinalAct&& other) noexcept
-     : f_(std::move(other.f_)),
-       invoke_(other.invoke_)
-    {
-        other.invoke_ = false;
-    }
-
-    JKQTPFinalAct(const JKQTPFinalAct&) = delete;
-    JKQTPFinalAct& operator=(const JKQTPFinalAct&) = delete;
-
-    ~JKQTPFinalAct() noexcept
-    {
-        if (invoke_) f_();
-    }
-
-private:
-    F f_;
-    bool invoke_;
-};
-
-/** \brief C++11 finally construct (executes a callable-object at the end of a scope)
- * \ingroup jkqtptools_codestructuring
- *
- * Typical usage:
- * \code
- *   {
- *     // the instruction 'painter.restore()' will be executed at the end
- *     // of the block, when __finalpaint is destroyed (see (*) below)
- *     auto __finalpaint=JKQTPFinally([&painter]() { painter.restore(); });
- *
- *     // ...
- *     // do something ...
- *     // ...
- *
- *   } // (*) 'painter.restore()' is executed before the end of this block!
- * \endcode
- *
- * \see JKQTPFinalAct
- */
-template <class F>
-inline JKQTPFinalAct<F> JKQTPFinally(const F& f) noexcept
-{
-    return JKQTPFinalAct<F>(f);
-}
-
-/** \brief C++11 finally construct (executes a callable-object at the end of a scope)
- * \ingroup jkqtptools_codestructuring
- *
- * Typical usage:
- * \code
- *   {
- *     // the instruction 'painter.restore()' will be executed at the end
- *     // of the block, when __finalpaint is destroyed (see (*) below)
- *     auto __finalpaint=JKQTPFinally([&painter]() { painter.restore(); });
- *
- *     // ...
- *     // do something ...
- *     // ...
- *
- *   } // (*) 'painter.restore()' is executed before the end of this block!
- * \endcode
- *
- * \see JKQTPFinalAct
- */
-template <class F>
-inline JKQTPFinalAct<F> JKQTPFinally(F&& f) noexcept
-{
-    return JKQTPFinalAct<F>(std::forward<F>(f));
-}
 
 
 
@@ -435,7 +317,7 @@ JKQTP_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
  * \ingroup jkqtpplottersupprt */
 enum JKQTPCALabelType {
     JKQTPCALTdefault, /*!< \brief simply print the numbers \image html JKQTPCALTdefault.png */
-    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. \c 5µ for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ...  */
+    JKQTPCALTexponentCharacter, /*!< \brief print the numbers and show a unit character, i.e. 5&mu; for \f$ 5\cdot 10^{-6} \f$ , \c 3k for \f$ 3\cdot 10^3 \f$ ...  */
     JKQTPCALTexponent, /*!< \brief show numbers in exponential for, e.g. \f$ 3\cdot 10^5 \f$ ... \image html JKQTPCALTexponent.png */
     JKQTPCALTdate, /*!< \brief show numbers as dates \image html JKQTPCALTdate.png */
     JKQTPCALTtime, /*!< \brief show numbers as times \image html JKQTPCALTtime.png*/
@@ -603,102 +485,6 @@ enum JKQTPGraphPlotstyle {
     JKQTPStepsX,               /*!< \brief plot y=f(x), as a step curve */
     JKQTPStepsY                /*!< \brief plot x=f(y), as a step curve */
 };
-
-/** \brief symbols that can be used to plot a datapoint for a graph
- * \ingroup jkqtptools_drawing
- */
-enum JKQTPGraphSymbols {
-    JKQTPNoSymbol=0,             /*!< \brief plots no symbol at all (usefull together with error bars) */
-    JKQTPDot,                 /*!< \brief a small dot \image html symbols/symbol_dot.png */
-    JKQTPCross,               /*!< \brief a X cross \image html symbols/symbol_cross.png */
-    JKQTPPlus,                /*!< \brief a + cross \image html symbols/symbol_plus.png */
-    JKQTPCircle,              /*!< \brief an unfilled circle \image html symbols/symbol_circle.png */
-    JKQTPFilledCircle,        /*!< \brief a filled circle \image html symbols/symbol_filled_circle.png */
-    JKQTPRect,                /*!< \brief an unfilled rectangle \image html symbols/symbol_rect.png */
-    JKQTPFilledRect,          /*!< \brief a filled rectangle \image html symbols/symbol_filled_rect.png */
-    JKQTPTriangle,            /*!< \brief an unfilled triangle (tip at top) \image html symbols/symbol_triangle.png */
-    JKQTPFilledTriangle,      /*!< \brief a filled triangle (tip at top) \image html symbols/symbol_filled_triangle.png */
-    JKQTPDiamond,                /*!< \brief an unfilled diamond \image html symbols/symbol_diamond.png */
-    JKQTPFilledDiamond,          /*!< \brief a filled diamond \image html symbols/symbol_filled_diamond.png */
-    JKQTPstar,                /*!< \brief an unfilled diamond \image html symbols/symbol_star.png */
-    JKQTPFilledStar,          /*!< \brief a filled diamond \image html symbols/symbol_filled_star.png */
-    JKQTPPentagon,                /*!< \brief an unfilled pentagon \image html symbols/symbol_pentagon.png */
-    JKQTPFilledPentagon,          /*!< \brief a filled pentagon \image html symbols/symbol_filled_pentagon.png */
-    JKQTPAsterisc,          /*!< \brief an asterisc star with 5 arms \image html symbols/symbol_asterisc.png */
-    JKQTPHourglass,              /*!< \brief an hour glass symbol \image html symbols/symbol_hourglass.png */
-    JKQTPFilledHourglass,              /*!< \brief a filled hour glass symbol \image html symbols/symbol_filled_hourglass.png */
-    JKQTPCurvedTriangle,  /*!< \brief a  curved triangle\image html symbols/symbol_curved_triangle.png */
-    JKQTPFilledCurvedTriangle,  /*!< \brief a filled curved triangle\image html symbols/symbol_filled_curved_triangle.png */
-    JKQTPHexagon,                /*!< \brief an unfilled hexagon \image html symbols/symbol_hexagon.png */
-    JKQTPFilledHexagon,          /*!< \brief a filled hexagon \image html symbols/symbol_filled_hexagon.png */
-
-    JKQTPRectCross,              /*!< \brief a square symbol with a cross inside \image html symbols/symbol_rect_cross.png */
-    JKQTPRectPlus,              /*!< \brief a square symbol with a plus inside \image html symbols/symbol_rect_plus.png */
-    JKQTPRectTriangle,              /*!< \brief a square symbol with a triangle inside \image html symbols/symbol_rect_triangle.png */
-    JKQTPRectDownTriangle,              /*!< \brief a square symbol with a triangle (tip to the bottom) inside \image html symbols/symbol_rect_downtriangle.png */
-    JKQTPRectLeftTriangle,              /*!< \brief a square symbol with a triangle (tip to the left) inside \image html symbols/symbol_rect_lefttriangle.png */
-    JKQTPRectRightTriangle,              /*!< \brief a square symbol with a triangle (tip to the right) inside \image html symbols/symbol_rect_righttriangle.png */
-
-    JKQTPCircleCross,              /*!< \brief a circle symbol with a cross inside \image html symbols/symbol_circle_cross.png */
-    JKQTPCirclePlus,              /*!< \brief a circle symbol with a plus inside \image html symbols/symbol_circle_plus.png */
-    JKQTPCirclePeace,          /*!< \brief a circled peace symbol \image html symbols/symbol_circle_peace.png */
-
-    JKQTPDiamondPlus,              /*!< \brief a diamond symbol with a plus inside \image html symbols/symbol_diamond_plus.png */
-    JKQTPDiamondCross,              /*!< \brief a diamond symbol with a cross inside \image html symbols/symbol_diamond_cross.png */
-
-    JKQTPTripod,  /*!< \brief a tripod symbol \image html symbols/symbol_tripod.png */
-    JKQTPDownTripod,  /*!< \brief a tripod symbol, pointing down \image html symbols/symbol_down_tripod.png */
-    JKQTPLeftTripod,  /*!< \brief a tripod symbol, pointing to the left \image html symbols/symbol_left_tripod.png */
-    JKQTPRightTripod,  /*!< \brief a tripod symbol, pointing to the right \image html symbols/symbol_right_tripod.png */
-    JKQTPAsterisc6,          /*!< \brief an asterisc star with 6 arms \image html symbols/symbol_asterisc6.png */
-    JKQTPAsterisc8,          /*!< \brief an asterisc star with 8 arms \image html symbols/symbol_asterisc8.png */
-    JKQTPPeace,          /*!< \brief a peace symbol \image html symbols/symbol_peace.png */
-    JKQTPTarget,              /*!< \brief a target symbol (circle with cross) \image html symbols/symbol_target.png */
-
-    JKQTPDownTriangle,        /*!< \brief an unfilled triangle (tip at bottom) \image html symbols/symbol_down_triangle.png */
-    JKQTPFilledDownTriangle,  /*!< \brief a filled triangle (tip at bottom) \image html symbols/symbol_filled_down_triangle.png */
-    JKQTPLeftTriangle,        /*!< \brief an unfilled triangle (tip to the left) \image html symbols/symbol_left_triangle.png */
-    JKQTPFilledLeftTriangle,  /*!< \brief a filled triangle (tip to the left) \image html symbols/symbol_filled_left_triangle.png */
-    JKQTPRightTriangle,        /*!< \brief an unfilled triangle (tip to the right) \image html symbols/symbol_right_triangle.png */
-    JKQTPFilledRightTriangle,  /*!< \brief a filled triangle (tip to the right) \image html symbols/symbol_filled_right_triangle.png */
-    JKQTPDownCurvedTriangle,  /*!< \brief a  curved triangle, pointing down \image html symbols/symbol_down_curved_triangle.png */
-    JKQTPFilledDownCurvedTriangle,  /*!< \brief a filled curved triangle, pointing down \image html symbols/symbol_filled_down_curved_triangle.png */
-    JKQTPLeftCurvedTriangle,  /*!< \brief a  curved triangle, pointing to the left \image html symbols/symbol_left_curved_triangle.png */
-    JKQTPFilledLeftCurvedTriangle,  /*!< \brief a filled curved triangle, pointing to the left \image html symbols/symbol_filled_left_curved_triangle.png */
-    JKQTPRightCurvedTriangle,  /*!< \brief a  curved triangle, pointing to the right \image html symbols/symbol_right_curved_triangle.png */
-    JKQTPFilledRightCurvedTriangle,  /*!< \brief a filled curved triangle, pointing to the right \image html symbols/symbol_filled_right_curved_triangle.png */
-    JKQTPOctagon,                /*!< \brief an unfilled octagon \image html symbols/symbol_octagon.png */
-    JKQTPFilledOctagon,          /*!< \brief a filled octagon \image html symbols/symbol_filled_octagon.png */
-    JKQTPUpDownTriangle,              /*!< \brief a overlay of an up and a down triangle symbol \image html symbols/symbol_updowntriangle.png */
-    JKQTPFilledUpDownTriangle,              /*!< \brief a filled version of the overlay of an up and a down triangle \image html symbols/symbol_filled_updowntriangle.png */
-    JKQTPHorizontalHourglass,              /*!< \brief a horizontal hour glass symbol \image html symbols/symbol_horizontal_hourglass.png */
-    JKQTPFilledHorizontalHourglass,              /*!< \brief a filled horizontal hour glass symbol \image html symbols/symbol_filled_horizontal_hourglass.png */
-
-    JKQTPSantaClauseHouse,              /*!< \brief a small house symbol ("Das is das haus vom Nicolaus") \image html symbols/symbol_santaclause.png */
-    JKQTPFilledSantaClauseHouse,              /*!< \brief a filled small house symbol ("Das is das haus vom Nicolaus") \image html symbols/symbol_filled_santaclause.png */
-
-    JKQTPMale,                /*!< \brief a male symbol \image html symbols/symbol_male.png */
-    JKQTPFemale,                /*!< \brief a female symbol \image html symbols/symbol_female.png */
-
-    JKQTPSymbolCount, /*!< \brief can be used to iterate over all symbols using: <code>for (int i=0; i<static_cast<int>(JKQTPSymbolCount); i++) { JKQTPGraphSymbols s=static_cast<JKQTPGraphSymbols>(i); ... }</code> */
-    JKQTPMaxSymbolID=JKQTPSymbolCount-1, /*!< \brief points to the last available symbol, can be used to iterate over all symbols: <code>for (int i=0; i<=static_cast<int>(JKQTPMaxSymbolID); i++) { JKQTPGraphSymbols s=static_cast<JKQTPGraphSymbols>(i); ... }</code> */
-    JKQTPDefaultSymbol=JKQTPCross, /*!< \brief a default symbol used for plotting */
-};
-
-/** \brief converts a JKQTPGraphSymbols variable into a identifier string
- * \ingroup jkqtptools_drawing
- */
-JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos);
-/** \brief converts a JKQTPGraphSymbols variable into a human-readable string
- * \ingroup jkqtptools_drawing
- */
-JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
-
-/** \brief converts a String into a JKQTPGraphSymbols
- * \ingroup jkqtptools_drawing
- */
-JKQTP_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
-
 
 
 

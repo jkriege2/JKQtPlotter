@@ -525,7 +525,7 @@ void JKQTPlotter::paintUserAction() {
                         getPlotter()->getMathText()->draw(painter, Qt::AlignBottom, rec);
                     }
 
-                    txt=QString::fromStdString(jkqtp_floattolatexstr(dy, 3));
+                    txt=jkqtp_floattolatexqstr(dy, 3);
                     getPlotter()->getMathText()->parse("\\delta_{y}="+txt);
                     getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
                     //double dyh=a+d;

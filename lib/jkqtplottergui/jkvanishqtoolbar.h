@@ -22,7 +22,7 @@
 #ifndef jkvanishqtoolbar_H
 #define jkvanishqtoolbar_H
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include <QToolBar>
 
 /** \brief a modified <a href="http://doc.qt.io/qt-5/qtoolbar.html">QToolBar</a> which vanishes when the mouse leaves the toolbar.

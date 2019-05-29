@@ -20,7 +20,7 @@
 #ifndef JKQTPSTYLE_H
 #define JKQTPSTYLE_H
 
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include <QColor>
 #include <QString>

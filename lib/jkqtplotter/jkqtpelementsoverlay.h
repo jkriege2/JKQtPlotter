@@ -22,7 +22,7 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 

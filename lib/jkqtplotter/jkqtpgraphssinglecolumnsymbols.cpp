@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <iostream>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplottertools/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include <random>
 
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;

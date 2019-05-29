@@ -23,9 +23,9 @@
 #include <QPair>
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 
 #ifndef JKQTPGRAPHSBASE_H
 #define JKQTPGRAPHSBASE_H

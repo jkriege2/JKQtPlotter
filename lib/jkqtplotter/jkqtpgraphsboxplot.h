@@ -21,9 +21,9 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsboxplotstylingmixins.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
@@ -102,7 +102,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQT
         Q_OBJECT
     public:
 
-        /** \brief Sortierordnung für Daten in einem JKQTPBoxplotVerticalGraph (oder seinen Kindern) */
+        /** \brief Sort order in a  JKQTPBoxplotVerticalGraph (or one of its child classes) */
         enum DataSortOrder {
             Unsorted=0,
             Sorted=1
@@ -321,6 +321,8 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, publ
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
+        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
+        virtual void setColor(QColor c);
 
 
         /** \brief get the maximum and minimum x-value of the graph

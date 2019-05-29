@@ -21,7 +21,7 @@
 
 #include "jkqtplottergui/jkqtpcomboboxes.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include <QImage>
 
 

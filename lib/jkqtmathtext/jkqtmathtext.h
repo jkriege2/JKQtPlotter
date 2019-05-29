@@ -36,7 +36,6 @@
 #include <QString>
 #include <QSet>
 #include <QFile>
-#include "jkqtcommon/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include <QWidget>
 #include <QLabel>

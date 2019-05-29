@@ -532,7 +532,7 @@ void JKQTBasePlotter::propagateStyle() {
     xAxis->setCurrentAxisStyle(plotterStyle.xAxisStyle);
     yAxis->setCurrentAxisStyle(plotterStyle.yAxisStyle);
     for (int i=0; i<graphs.size(); i++) {
-        JKQTPColorPaletteTools* palTools=dynamic_cast<JKQTPColorPaletteTools*>(graphs[i]);
+        JKQTPColorPaletteStyleAndToolsMixin* palTools=dynamic_cast<JKQTPColorPaletteStyleAndToolsMixin*>(graphs[i]);
         if (palTools) {
             palTools->getColorBarRightAxis()->setCurrentAxisStyle(plotterStyle.rightColorbarAxisStyle);
             palTools->getColorBarTopAxis()->setCurrentAxisStyle(plotterStyle.topColorbarAxisStyle);

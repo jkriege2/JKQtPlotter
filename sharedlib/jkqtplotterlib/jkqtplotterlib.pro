@@ -13,3 +13,6 @@ win32 {
 }
 
 include(../../lib/jkqtplotter.pri)
+include(../../lib/jkqtpcommon.pri)
+include(../../lib/jkqtmathtext.pri)
+include(../../lib/jkqtfastplotter.pri)

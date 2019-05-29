@@ -146,13 +146,16 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 </table>
 
 
-\subsection jkqtp_extut_datamanagement Data Management
+\subsection jkqtp_extut_datamanagement Data Management & Statistics
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html simpletest_datastore_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastore
     <td> Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore
+<tr><td> \image html simpletest_datastore_statistics_small.png
+    <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatistics
+    <td> Advanced 1-Dimensional Statistical Computation with JKQTPODatastore (and the internal statistics library, see \ref jkqtptools_math_statistics )
 </table>
 
 

@@ -44,6 +44,8 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
       <li> new: advanced styling options for boxplots + example for the styling: \ref JKQTPlotterBoxplotStyling </li>
       <li> new: notched boxplots, see: \ref JKQTPlotterBoxplotStyling </li>
       <li> new: several new plot symbols, see: JKQTPGraphSymbols </li>
+      <li> new: Statistics library with functions to calculate histograms, regression, kernel density estimates, ... see: \ref jkqtptools_statistics </li>
+      <li> new: iterator interface and improved documentation for JKQTPDatastore </li>
       <li> changed: removed old selection-code and replaced by general highlighting feature </li>
       <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
       <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>

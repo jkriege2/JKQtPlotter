@@ -8,3 +8,4 @@ CONFIG+=staticlib
 CONFIG += create_prl
 
 include(../../lib/jkqtfastplotter.pri)
+include(../../lib/jkqtpcommon.pri)

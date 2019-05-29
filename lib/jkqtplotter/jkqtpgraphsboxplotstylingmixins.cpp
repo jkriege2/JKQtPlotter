@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <iostream>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
@@ -83,6 +83,7 @@ void JKQTPGraphBoxplotStyleMixin::initBoxplotStyle(JKQTBasePlotter *parent, int 
     setWhiskerLineColor(getLineColor());
     setWhiskerCapLineColor(getLineColor());
     setMedianLineColor(getLineColor());
+    setMeanSymbolType(JKQTPPlus);
 
     if (m_meanSymbolSize>0) {
         boxWidthAbsolute=m_meanSymbolSize*3.0;

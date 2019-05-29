@@ -24,8 +24,8 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpmathparser.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpmathparser.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
 

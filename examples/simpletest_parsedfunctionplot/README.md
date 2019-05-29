@@ -10,7 +10,7 @@ Adding an evaluated funtion to a graph is very simple:
     parsedFunc->setFunction("sin(x*8)*exp(-x/4)");
     parsedFunc->setTitle("user function");
 ```
-As you can see a graph of the type `JKQTPXParsedFunctionLineGraph` is used, which plots a function that depends on the variable `x`. The given function is parsed and evaluated (see [`lib/jkqtplottertools/jkqtpmathparser.h`](https://github.com/jkriege2/JKQTPlotter/blob/master/lib/jkqtplottertools/jkqtpmathparser.h) for details on the features of the math parser). An intelligent drawing algorithm chooses the number of control points for drawing a smooth graph, with sufficient amount of details, by evaluating locally the slope of the function.
+As you can see a graph of the type `JKQTPXParsedFunctionLineGraph` is used, which plots a function that depends on the variable `x`. The given function is parsed and evaluated (see [`lib/jkqtcommon/jkqtpmathparser.h`](https://github.com/jkriege2/JKQTPlotter/blob/master/lib/jkqtcommon/jkqtpmathparser.h) for details on the features of the math parser). An intelligent drawing algorithm chooses the number of control points for drawing a smooth graph, with sufficient amount of details, by evaluating locally the slope of the function.
 
 In the example in [`test/simpletest_parsedfunctionplot/simpletest_parsedfunctionplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_parsedfunctionplot/simpletest_parsedfunctionplot.cpp) we do not simply set a fixed function, but add a `QLineEdit` which allows to edit the function and redraws it, once ENTER is pressed:
 ```.cpp

@@ -13,3 +13,4 @@ win32 {
 }
 
 include(../../lib/jkqtfastplotter.pri)
+include(../../lib/jkqtpcommon.pri)

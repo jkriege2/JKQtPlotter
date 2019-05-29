@@ -22,11 +22,11 @@
 #include <QPainter>
 #include <QPair>
 #include <functional>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsrange.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
@@ -39,7 +39,7 @@ class JKQTBasePlotter;
 class JKQTPlotter;
 class JKQTPCoordinateAxis;
 class JKQTPDatastore;
-//class JKQTPColorPaletteTools;
+//class JKQTPColorPaletteStyleAndToolsMixin;
 
 
 
@@ -111,7 +111,7 @@ class JKQTP_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTPGraphL
 
     \see JKQTPXYParametrizedErrorScatterGraph, \ref JKQTPlotterParamScatter , \ref JKQTPlotterParamScatterImage
 */
-class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteTools {
+class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteStyleAndToolsMixin {
         Q_OBJECT
     public:
         /** \brief functor, which converts the value of the symbol column (at a location x,y) into a JKQTPGraphSymbols */
@@ -301,9 +301,6 @@ class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph,
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
-
-        virtual double getInternalDataMin() const  override;
-        virtual double getInternalDataMax() const  override;
     protected:
         /** \brief this column contains the symbol size in pt */
         int sizeColumn;

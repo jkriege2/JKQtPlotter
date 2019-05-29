@@ -20,9 +20,9 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
