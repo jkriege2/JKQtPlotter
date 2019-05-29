@@ -2,7 +2,8 @@
  
 [TOC]
  
-## Basic Description
+# Basic Description
+
 This project (see `./examples/test_styling/`) demonstrates different types of user-interactions in JKQTPlotter.
 
 It contains a simple plot with two graphs and provides several widgets that allow to modify the plot styling by editing an INI file:
@@ -10,9 +11,10 @@ It contains a simple plot with two graphs and provides several widgets that allo
 ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_styling.png)
 
 
-## Altering the Default Style
+# Altering the Default Style
 
-### Global/System-wide Settings
+## Global/System-wide Settings
+
 The `main()`-function can be found in  [`test_styling_main.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling/test_styling_main.cpp). Here the Qt application  is initialized in the usual way and the main window `win` is created and shown. After instanciating the `QApplication`, but befor instanciating the window (and thus the JKQTPlotter), you can already alter the system-wide default styling. It is accessible via the function `JKQTPGetSystemDefaultStyle()`, which returns a reference to the central style object of type `JKQTPlotterStyle`. In the example below, the color of the user-actions (e.g. of the zooming rectangle, that can be drawn with the mouse) is set to red:
 
 ```.cpp
@@ -41,7 +43,7 @@ You can also store these settings in an INI-file (or any file supported by [`QSe
     JKQTPGetSystemDefaultBaseStyle().loadSettings(plotSettings);
 ```
 
-### Apply a new Style to an Existing JKQTPlotter
+## Apply a new Style to an Existing JKQTPlotter
 
 The major part of the source code of the main application can be found in  [`test_styling.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling/test_styling.cpp). It opens a window with a plotter, that contains a set of test graphs to demonstrate the styling. The following function is connected to the "Update Graph"-button and applys the style defined by the INI in the plainTextEdit to the plotter:
 ```.cpp
@@ -71,7 +73,7 @@ The major part of the source code of the main application can be found in  [`tes
 ```
 
 
-## Some Example Styles
+# Some Example Styles
 The following gallery shows a set of example styles:
 
 

@@ -64,7 +64,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | [Tutorial: Basic Usage of JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_statistics_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | [Tutorial: Advanced 1-Dimensional Statistics with JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | Advanced 1-Dimensional Statistical Computation with JKQTPDatastore (and the internal statistics library) |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_statistics_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | [Tutorial: Advanced 1-Dimensional Statistics with JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | Advanced 1-Dimensional Statistical Computation with JKQTPDatastore (and the internal statistics library) |
 
 
 ## More Complex Examples

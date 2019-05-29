@@ -49,6 +49,7 @@ RESOURCES += jkqtplot_test.qrc
 
 
 win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX
 
 TARGET = jkqtplot_test
 

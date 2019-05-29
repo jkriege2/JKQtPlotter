@@ -48,7 +48,7 @@
         jkqtpstatAddHBoxplot(plot1->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -0.3);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstat5NumberStatistics()
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
 template <class InputIt>
 inline JKQTPBoxplotHorizontalElement* jkqtpstatAddHBoxplot(JKQTBasePlotter* plotter, InputIt first, InputIt last, double boxposY, double quantile1Spec=0.25, double quantile2Spec=0.75, double minimumQuantile=0, double maximumQuantile=1.0, JKQTPStat5NumberStatistics* statOutput=nullptr) {
@@ -93,7 +93,7 @@ inline JKQTPBoxplotHorizontalElement* jkqtpstatAddHBoxplot(JKQTBasePlotter* plot
         jkqtpstatAddVBoxplot(plot1->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -0.3);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstat5NumberStatistics()
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
 template <class InputIt>
 inline JKQTPBoxplotVerticalElement* jkqtpstatAddVBoxplot(JKQTBasePlotter* plotter, InputIt first, InputIt last, double boxposX, double quantile1Spec=0.25, double quantile2Spec=0.75, double minimumQuantile=0, double maximumQuantile=1.0, JKQTPStat5NumberStatistics* statOutput=nullptr) {
@@ -143,7 +143,7 @@ inline JKQTPBoxplotVerticalElement* jkqtpstatAddVBoxplot(JKQTBasePlotter* plotte
                                         0.05, 0.95 // Quantiles for the boxplot box whiskers' ends
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstat5NumberStatistics()
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
 template <class InputIt>
 inline std::pair<JKQTPBoxplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*> jkqtpstatAddHBoxplotAndOutliers(JKQTBasePlotter* plotter, InputIt first, InputIt last, double boxposY, double quantile1Spec=0.25, double quantile2Spec=0.75, double minimumQuantile=0.03, double maximumQuantile=0.97, const QString& outliercolumnBaseName=QString("boxplot"), JKQTPStat5NumberStatistics* statOutput=nullptr) {
@@ -202,7 +202,7 @@ inline std::pair<JKQTPBoxplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*> 
                                         0.05, 0.95 // Quantiles for the boxplot box whiskers' ends
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstat5NumberStatistics()
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
 template <class InputIt>
 inline std::pair<JKQTPBoxplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*> jkqtpstatAddVBoxplotAndOutliers(JKQTBasePlotter* plotter, InputIt first, InputIt last, double boxposX, double quantile1Spec=0.25, double quantile2Spec=0.75, double minimumQuantile=0.03, double maximumQuantile=0.97, const QString& outliercolumnBaseName=QString("boxplot"), JKQTPStat5NumberStatistics* statOutput=nullptr) {
@@ -255,7 +255,7 @@ inline std::pair<JKQTPBoxplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*> jk
         jkqtpstatAddHHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 11);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
 */
 template <class InputIt>
 inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, int bins=11, bool normalized=true, bool cummulative=false, const QString& histogramcolumnBaseName=QString("histogram")) {
@@ -290,7 +290,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
         jkqtpstatAddHHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.5);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
 */
 template <class InputIt>
 inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, double binWidth, bool normalized=true, bool cummulative=false, const QString& histogramcolumnBaseName=QString("histogram")) {
@@ -327,7 +327,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
         jkqtpstatAddHHistogram1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatHistogram1D(), JKQTPBarVerticalGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1D(), JKQTPBarVerticalGraph
 */
 template <class InputIt, class BinsInputIt>
 inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1D(JKQTBasePlotter* plotter, InputIt first, InputIt last, BinsInputIt binsFirst, BinsInputIt binsLast, bool normalized=true, bool cummulative=false, const QString& histogramcolumnBaseName=QString("histogram")) {
@@ -361,7 +361,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1D(JKQTBasePlotter* plotter,
         jkqtpstatAddVHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 11);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarHorizontalGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarHorizontalGraph
 */
 template <class InputIt>
 inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, int bins=11, bool normalized=true, bool cummulative=false, const QString& histogramcolumnBaseName=QString("histogram")) {
@@ -396,7 +396,7 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlott
         jkqtpstatAddVHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.5);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarHorizontalGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarHorizontalGraph
 */
 template <class InputIt>
 inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, double binWidth, bool normalized=true, bool cummulative=false, const QString& histogramcolumnBaseName=QString("histogram")) {
@@ -433,7 +433,7 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlott
         jkqtpstatAddVHistogram1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatHistogram1D(), JKQTPBarHorizontalGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1D(), JKQTPBarHorizontalGraph
 */
 template <class InputIt, class BinsInputIt>
 inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1D(JKQTBasePlotter* plotter, InputIt first, InputIt last, BinsInputIt binsFirst, BinsInputIt binsLast, bool normalized=true, bool cummulative=false, const QString& histogramcolumnBaseName=QString("histogram")) {
@@ -478,7 +478,7 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1D(JKQTBasePlotter* plotte
         jkqtpstatAddHKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 200);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
 */
 template <class InputIt>
 inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, int Nout=100, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {
@@ -516,7 +516,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
         jkqtpstatAddHKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.01);
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
 */
 template <class InputIt>
 inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, double binWidth, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {
@@ -556,7 +556,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
         jkqtpstatAddHKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
 */
 template <class InputIt, class BinsInputIt>
 inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt first, InputIt last, BinsInputIt binsFirst, BinsInputIt binsLast, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {
@@ -595,7 +595,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt fi
         jkqtpstatAddHKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \see \ref JKQTPlottersimpletest_datastore_statistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
 */
 template <class InputIt>
 inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt first, InputIt last, double binXLeft, double binXDelta, double binXRight, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {

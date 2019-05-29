@@ -22,6 +22,7 @@
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include <QDebug>
 #include <QtGlobal>
+#include <limits>
 #include <cmath>
 
 /**************************************************************************************************************************
@@ -395,8 +396,9 @@ JKQTPColumnConstIterator JKQTPDatastore::end(size_t i) const
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPColumnBackInserter JKQTPDatastore::backInserter(int i)
 {
-    auto it=columns.find(i);
-    if (i<0 || it==columns.end()) return JKQTPColumnBackInserter(this, std::numeric_limits<size_t>::max());
+    if (i<0) return JKQTPColumnBackInserter(this, std::numeric_limits<size_t>::max());
+    auto it=columns.find(static_cast<size_t>(i));
+    if (it==columns.end()) return JKQTPColumnBackInserter(this, std::numeric_limits<size_t>::max());
     else return JKQTPColumnBackInserter(this, static_cast<size_t>(i));
 }
 

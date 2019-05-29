@@ -718,7 +718,7 @@ inline double jkqtpstatMoment(InputIt first, InputIt last, int order, size_t* No
 
 
 
-/*! \briefcalculate empirical (Pearson's) correlation coefficient between two given data ranges \a first1 ... \a last1 and  \a first2 ... \a last2
+/*! \brief calculate empirical (Pearson's) correlation coefficient between two given data ranges \a first1 ... \a last1 and  \a first2 ... \a last2
     \ingroup jkqtptools_math_statistics_basic
 
     \tparam InputIt1 standard iterator type of \a first1 and \a last1.
@@ -839,7 +839,7 @@ inline double jkqtpstatMedianOfSortedVector(const TVector& data, size_t* Noutput
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
           are ignored when calculating.
 
-    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlottersimpletest_datastore_statistics
+    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class TVector>
 inline void jkqtpstat5NumberStatisticsOfSortedVector(const TVector& data, double* minimum=nullptr, double minimumQuantile=0, double* median=nullptr, double* maximum=nullptr, double maximumQuantile=1, double* quantile1=nullptr, double quantile1Spec=0.25, double* quantile2=nullptr, double quantile2Spec=0.75, double* IQR=nullptr, double* IQRSignificance=nullptr, size_t* Noutput=nullptr) {
@@ -902,7 +902,7 @@ inline void jkqtpstat5NumberStatisticsOfSortedVector(const TVector& data, double
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
           are ignored when calculating.
 
-    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlottersimpletest_datastore_statistics
+    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class TVector, class OutputIt>
 inline void jkqtpstat5NumberStatisticsAndOutliersOfSortedVector(const TVector& data, OutputIt outliersout, double* minimum=nullptr, double minimumQuantile=0, double* median=nullptr, double* maximum=nullptr, double maximumQuantile=1, double* quantile1=nullptr, double quantile1Spec=0.25, double* quantile2=nullptr, double quantile2Spec=0.75, double* IQR=nullptr, double* IQRSignificance=nullptr, size_t* Noutput=nullptr) {
@@ -971,7 +971,7 @@ inline void jkqtpstat5NumberStatisticsAndOutliersOfSortedVector(const TVector& d
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
           are ignored when calculating.
 
-    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlottersimpletest_datastore_statistics
+    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt>
 inline void jkqtpstat5NumberStatistics(InputIt first, InputIt last, double* minimum=nullptr, double minimumQuantile=0, double* median=nullptr, double* maximum=nullptr, double maximumQuantile=1, double quantile1Spec=0.25, double* quantile1=nullptr, double quantile2Spec=0.75, double* quantile2=nullptr, double* IQR=nullptr, double* IQRSignificance=nullptr, size_t* Noutput=nullptr) {
@@ -1008,7 +1008,7 @@ inline void jkqtpstat5NumberStatistics(InputIt first, InputIt last, double* mini
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
           are ignored when calculating.
 
-    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlottersimpletest_datastore_statistics
+    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt, class OutputIt>
 inline void jkqtpstat5NumberStatisticsAndOutliers(InputIt first, InputIt last, OutputIt outliersout, double* minimum=nullptr, double minimumQuantile=0, double* median=nullptr, double* maximum=nullptr, double maximumQuantile=1, double* quantile1=nullptr, double quantile1Spec=0.25, double* quantile2=nullptr, double quantile2Spec=0.75, double* IQR=nullptr, double* IQRSignificance=nullptr, size_t* Noutput=nullptr) {
@@ -1071,7 +1071,7 @@ struct JKQTPStat5NumberStatistics {
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
           are ignored when calculating.
 
-    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlottersimpletest_datastore_statistics
+    \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt>
 inline JKQTPStat5NumberStatistics jkqtpstat5NumberStatistics(InputIt first, InputIt last, double quantile1Spec=0.25, double quantile2Spec=0.75, double minimumQuantile=0, double maximumQuantile=1.0) {
@@ -1422,6 +1422,379 @@ inline void jkqtpstatHistogram1D(InputIt first, InputIt last, BinsInputIt binsFi
         *++histogramYOut=h;
     }
 }
+
+
+
+
+
+
+
+
+
+
+/*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t):=\frac{1}{\sqrt{2\pi}}\exp \left(-\frac{1}{2}t^2\right) \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DGaussian(double t);
+/*! \brief a 1D Cauchy kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t):=\frac{1}{\pi(1+t^2)} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DCauchy(double t);
+
+/*! \brief a 1D Picard kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t):=\frac{1}{2}\exp(-|t|) \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DPicard(double t);
+/*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t) :=\begin{cases}\frac{3}{4} ( 1- t^2 ),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DEpanechnikov(double t);
+/*! \brief a 1D uniform kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t) :=\begin{cases}1,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DUniform(double t);
+/*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t) :=\begin{cases}1-|t|,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DTriangle(double t);
+
+/*! \brief a 1D quartic kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t) :=\begin{cases}\frac{15}{16}(1-t^2)^2,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DQuartic(double t);
+/*! \brief a 1D triweight kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t) :=\begin{cases}\frac{35}{32}(1-t^2)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DTriweight(double t);
+
+/*! \brief a 1D tricube kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t) :=\begin{cases}\frac{70}{81}(1-|t|^3)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DTricube(double t);
+/*! \brief a 1D cosine kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \f[ k(t) :=\begin{cases}\frac{\pi}{4}\cos\left(\frac{\pi}{2}t\right),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_2dkde
+
+    \f[ k(t_x, t_y):=\frac{1}{2\pi}\exp \left(-\frac{t_x^2+t_y^2}{2}\right) \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel2DGaussian(double tx, double ty);
+
+/*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
+    \ingroup jkqtptools_math_statistics_2dkde
+
+    \f[ k(t_x, t_y):=\begin{cases}\frac{1}{4},  & \text{if }t_x,t_y\in [-1;1]\\0, & \text{else}\end{cases} \f]
+*/
+JKQTP_LIB_EXPORT double jkqtpstatKernel2DUniform(double tx, double ty);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*! \brief estimates a bandwidth for a Kernel Density Estimator (KDE) of the given data \a first ... \a last
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    evaluates \f[ h = \left(\frac{4\hat{\sigma}^5}{3n}\right)^{\frac{1}{5}} \approx 1.06 \hat{\sigma} n^{-1/5} \f]
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \return the estimated bandwidth
+
+*/
+template <class InputIt>
+inline double jkqtpstatEstimateKDEBandwidth(InputIt first, InputIt last) {
+    size_t N=0;
+    const double sigma=jkqtpstatStdDev(first, last, nullptr, &N);
+    return 1.06*sigma/pow(static_cast<double>(N), 1.0/5.0);
+}
+
+
+
+
+/*! \brief evaluates the Kernel Density Estimator (KDE) at a given position
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    evaluates \f[ \tilde{f}(t):=\frac{1}{N\cdot\text{bandwidth}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{t-x_i}{\text{bandwidth}}\right) \f]
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param t where to evaluate the kernel sum
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
+
+*/
+template <class InputIt>
+inline double jkqtpstatEvaluateKernelSum(double t, InputIt first, InputIt last, const std::function<double(double)>& kernel, double bandwidth) {
+    double res=0;
+    size_t cnt=0;
+    for (auto it=first; it!=last; ++it)  {
+        const double v=jkqtp_todouble(*it);
+        if (JKQTPIsOKFloat(v)) {
+            const double vx=(t-v)/bandwidth;
+            res+=kernel(vx);
+            cnt++;
+        }
+    }
+    return res/static_cast<double>(cnt)/bandwidth;
+}
+
+
+
+
+/*! \brief calculate an autoranged 1-dimensional Kernel Density Estimation (KDE) from the given data range \a first ... \a last, bins defined by their number
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \tparam OutputIt standard output iterator type used for the outliers output \a KDEXOut and \a KDEYOut, use e.g. std::back_inserter
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
+    \param[out] KDEXOut output iterator that receives x-positions of the KDE bins. Location of this value inside the bin range is defined by \a binXMode
+    \param[out] KDEYOut output iterator that receives counts/frequencies of the KDE bins
+    \param Nout number datapoints in the output KDE
+    \param cummulative if \c true, a cummulative KDE is calculated
+
+    This function performs <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel Density Estimation</a> for a given data array.
+    Then the resulting density is evaluated on a regular grid spanning [min(X)...max(X)] with bins datapoints in between.
+
+    \warning this functions is getting very slow for large dataset, as for each point in the resulting histogram N kernel functions have to be evaluated.
+
+    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+*/
+template <class InputIt, class OutputIt>
+inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXOut, OutputIt KDEYOut, int Nout=100, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
+    double minV=0, maxV=0;
+    size_t N=0;
+    jkqtpstatMinMax<InputIt>(first, last, minV, maxV, nullptr, nullptr, &N);
+
+    std::vector<double> histX;
+    std::vector<double> histY;
+
+    const double range=maxV-minV;
+    const double binw=range/static_cast<double>(Nout);
+
+    // calculate the KDE
+    for (int i=0; i<Nout; i++)  {
+        const double x=minV+static_cast<double>(i)*binw+binw/2.0;
+        histX.push_back(x);
+        histY.push_back(jkqtpstatEvaluateKernelSum(x, first, last, kernel, bandwidth));
+    }
+
+
+    // output the KDE
+    double h=0;
+    for (size_t i=0; i<histX.size(); i++) {
+        *++KDEXOut=histX[i];
+        if (cummulative) h+=histY[i];
+        else h=histY[i];
+        *++KDEYOut=h;
+    }
+}
+
+
+/*! \brief calculate an autoranged 1-dimensional Kernel Density Estimation (KDE) from the given data range \a first ... \a last, bins defined by their number
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \tparam OutputIt standard output iterator type used for the outliers output \a KDEXOut and \a KDEYOut, use e.g. std::back_inserter
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
+    \param[out] KDEXOut output iterator that receives x-positions of the KDE bins. Location of this value inside the bin range is defined by \a binXMode
+    \param[out] KDEYOut output iterator that receives counts/frequencies of the KDE bins
+    \param binWidth width of the bins
+    \param cummulative if \c true, a cummulative KDE is calculated
+
+    This function performs <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel Density Estimation</a> for a given data array.
+    Then the resulting density is evaluated on a regular grid spanning [min(X)...max(X)] with bins datapoints in between.
+
+    \warning this functions is getting very slow for large dataset, as for each point in the resulting histogram N kernel functions have to be evaluated.
+
+    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+*/
+template <class InputIt, class OutputIt>
+inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXOut, OutputIt KDEYOut, double binWidth, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
+    double minV=0, maxV=0;
+    size_t N=0;
+    jkqtpstatMinMax<InputIt>(first, last, minV, maxV, nullptr, nullptr, &N);
+
+    std::vector<double> histX;
+    std::vector<double> histY;
+
+    const double range=maxV-minV;
+    const double binw=binWidth;
+    const int Nout=static_cast<int>(ceil(range/binWidth));
+
+    // calculate the KDE
+    for (int i=0; i<Nout; i++)  {
+        histX.push_back(minV+static_cast<double>(i)*binw+binw/2.0);
+        histY.push_back(jkqtpstatEvaluateKernelSum(*(histX.end()), first, last, kernel, bandwidth));
+    }
+
+
+    // output the KDE
+
+    double h=0;
+    for (size_t i=0; i<histX.size(); i++) {
+        *++KDEXOut=histX[i];
+        if (cummulative) h+=histY[i];
+        else h=histY[i];
+        *++KDEYOut=h;
+    }
+
+}
+
+
+
+/*! \brief calculate an autoranged 1-dimensional Kernel Density Estimation (KDE) from the given data range \a first ... \a last, bins defined the range \a binsFirst ... \a binsLast
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \tparam BinsInputIt standard iterator type of \a binsFirst and \a binsLast.
+    \tparam OutputIt standard output iterator type used for the outliers output \a KDEXOut and \a KDEYOut, use e.g. std::back_inserter
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param binsFirst iterator pointing to the first item in the set of KDE bins
+    \param binsLast iterator pointing behind the last item in the set of KDE bins
+    \param[out] KDEXOut output iterator that receives x-positions of the KDE bins. Location of this value inside the bin range is defined by \a binXMode
+    \param[out] KDEYOut output iterator that receives counts/frequencies of the KDE bins
+    \param cummulative if \c true, a cummulative KDE is calculated
+
+    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+*/
+template <class InputIt, class BinsInputIt, class OutputIt>
+inline void jkqtpstatKDE1D(InputIt first, InputIt last, BinsInputIt binsFirst, BinsInputIt binsLast, OutputIt KDEXOut, OutputIt KDEYOut, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
+    double minV=0, maxV=0;
+    size_t N=0;
+    jkqtpstatMinMax<InputIt>(first, last, minV, maxV, nullptr, nullptr, &N);
+
+    std::vector<double> histX;
+    std::vector<double> histY;
+
+
+    // initialize the KDE
+    for (auto it=binsFirst; it!=binsLast; ++it)  {
+        histX.push_back(jkqtp_todouble(*it));
+    }
+    std::sort(histX.begin(), histX.end());
+
+    // calculate the KDE
+    for (auto it=histX.begin(); it!=histX.end(); ++it) {
+        histY.push_back(jkqtpstatEvaluateKernelSum(*it, first, last, kernel, bandwidth));
+    }
+
+
+    // output the KDE
+    double h=0;
+    for (size_t i=0; i<histX.size(); i++) {
+        *++KDEXOut=histX[i];
+        if (cummulative) h+=histY[i];
+        else h=histY[i];
+        *++KDEYOut=h;
+    }
+
+}
+
+
+
+
+/*! \brief calculate an autoranged 1-dimensional Kernel Density Estimation (KDE) from the given data range \a first ... \a last, evaluation positions are given by the range \a binXLeft ... \a binXRight (in steps of \a binxDelta )
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \tparam OutputIt standard output iterator type used for the outliers output \a KDEXOut and \a KDEYOut, use e.g. std::back_inserter
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param binXLeft first x-position, where to evaluate the KDE
+    \param binXDelta distance between two x-positions at which the KDE is evaluated
+    \param binXRight last x-position, where to evaluate the KDE
+    \param[out] KDEXOut output iterator that receives x-positions of the KDE bins. Location of this value inside the bin range is defined by \a binXMode
+    \param[out] KDEYOut output iterator that receives counts/frequencies of the KDE bins
+    \param cummulative if \c true, a cummulative KDE is calculated
+
+    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+*/
+template <class InputIt, class OutputIt>
+inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double binXDelta, double binXRight, OutputIt KDEXOut, OutputIt KDEYOut, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
+    double minV=0, maxV=0;
+    size_t N=0;
+    jkqtpstatMinMax<InputIt>(first, last, minV, maxV, nullptr, nullptr, &N);
+
+    std::vector<double> histX;
+    std::vector<double> histY;
+
+
+    // calculate the KDE
+    for (double x=binXLeft; x<=binXRight; x+=binXDelta)  {
+        histX.push_back(x);
+        histY.push_back(jkqtpstatEvaluateKernelSum(x, first, last, kernel, bandwidth));
+    }
+
+
+    // output the KDE
+    double h=0;
+    for (size_t i=0; i<histX.size(); i++) {
+        *++KDEXOut=histX[i];
+        if (cummulative) h+=histY[i];
+        else h=histY[i];
+        *++KDEYOut=h;
+    }
+
+}
+
 
 
 

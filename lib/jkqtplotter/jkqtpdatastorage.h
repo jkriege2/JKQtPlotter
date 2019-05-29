@@ -26,7 +26,6 @@
 #include <cmath>
 #include <iostream>
 #include <memory>
-#include <cstdalign>
 #include <QString>
 #include <QMap>
 #include <QList>
@@ -85,163 +84,163 @@ enum class JKQTPDatastoreItemFormat {
     MatrixRow,                   /*!< \brief a 1D C-array of doubles that represents a number of rows (C standard representation of matrices). The data is stored row after row (=row-major).*/
 };
 
-/*! \brief This class manages data columns (with entries of type \c double ), used by JKQTPlotter/JKQTBasePlotter to represent data for plots
-    \ingroup jkqtpdatastorage
-
-    \see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
-
-
-    \section jkqtpdatastore_column_management Column Management
-
-    \subsection jkqtpdatastore_column_management_generation Column Generation/Deletion
-
-    A JKQTPDatastore manages a set of data columns. Each column is a continuous vector of numbers. Optionally it can be interpreted
-    as a 2D image. In the latter case, the data is assumed to be ordered in row-major ordering (i.e. row for row).
-
-    You can generate new columns e.g. by:
-      - addColumn() which either generates internally managed (and extensible) columns, or accepts a simple \c double* pointer
-        to external. In the latter case owner-ship may be transferred to the datastore, but can also retain externally.
-      - addImageColumn() adds a column that should be interpreted as an image with given width and height (i.e. a row-major
-        matrix with \c width columns and \c height rows.
-      - copyColumn() duplicates an existing column
-      - addCopiedColumn() copies an external dataset into the datastore. e.g. with code like:
-          \code
-             QVector<double> X, Y;
-             const int Ndata=100;
-             for (int i=0; i<Ndata; i++) {
-                 const double x=double(i)/double(Ndata)*8.0*M_PI;
-                 X<<x;
-                 Y<<sin(x);
-             }
-             plot.addGraph(linegraph=new JKQTPXYLineGraph(&plot));
-             // by calling JKQTPDatastore::addCopiedColumn() the data is COPIED from the vector into the datastore
-             linegraph->setXColumn(datastore->addCopiedColumn(X, "x"));
-             linegraph->setYColumn(datastore->addCopiedColumn(Y, "y"));
-           \endcode
-      - addLinearColumn() adds a column with linearly increasing numbers (in a given range)
-      - addLogColumn() and addDecadeLogColumn() add columns with logarithmically spaced values
-      - addLinearGridColumns() adds two columns which represent x- and y- coordinates of points
-        on a rectangular grid (useful for calculating image data)
-      - addCalculatedColumn() calculates a column, based on row numbers and a C++ functor
-      - addColumnCalculatedFromColumn() calculates a column, based on another column data
-      - addCopiedMap() copies data from a std::map/QMap into two columns
-      - ... several more functions for specific cases exist.
-      - Also note that there are even library extensions that allow to import data directly from OpenCV matrices: JKQTPCopyCvMatToColumn()
-    .
-
-    Of course columns can also be deleted by calling:
-      - deleteColumn()
-      - deleteAllColumns()
-      - deleteAllPrefixedColumns()
-      - clear()
-    .
-
-    \subsection jkqtpdatastore_column_management_props Column Properties
-
-    The properties of columns may be accessed using:
-      - getRows() returns the number of rows in a specific column
-      - getColumnPointer() returns a pointer to the data in the column
-      - getColumnChecksum() calculated a checksum over the data in the column
-      - getColumnNames() / getColumnName()
-    .
-
-    \subsection jkqtpdatastore_column_management_modify Modify Column Contents
-
-    You can modify all data in a column by functions like:
-      - setAll()
-      - scaleColumnValues()
-    .
-
-    Also you can access a single entry from a column, using:
-      - set() / get() set/read a column entry
-      - inc() / dec() increment/decrement a column entry
-      - appendToColumn() (adds a single row/new value to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
-      - appendFromContainerToColumn() (adds several rows from a container to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
-    .
-
-    \subsection jkqtpdatastore_column_management_iterators Iterator Interface
-
-    In addition to teh fucntions above, JKQTPDatastore also provides C++-style iteratos to read the data from a column:
-      - begin()
-      - end()
-    .
-
-    ... and also a \c std::back_inserter -style interface to append data to columns:
-      - backInserter()
-    .
-
-    These allow to use the C++ standard algorithms to work with columns and also enabled the
-    library \ref jkqtptools_math_statistics in this software package. You can use the functions
-    above e.g. for code like:
-
-    \code
-        auto inserter it=datastore->backInserter(datastore->addColumn("new column"));
-        for (auto it=datastore->begin(col1); it!=datastore->begin(col1) ++it) {
-            *++inserter=sqrt(*it);
-        }
-    \endcode
-
-    or simply
-
-    \code
-        // mean of a column in a JKQTPDatastore:
-        double mean=jkqtpstatAverage(datastore1->begin(col1), datastore1->end(col1));
-    \endcode
-
-    Also there are functions to add data from iterator-defined ranges, e.g.:
-      - addCopiedColumn()
-      - addCopiedMap()
-      - appendToColumn()
-    .
-
-
-    \subsection jkqtpdatastore_column_management_images Image Column
-
-    JKQTPDatastore stores the width and height of the represented image as metadata with any image column.
-    This metadata is used to provide convenience access to the image pixels with:
-      - setPixel()
-      - getPixel()
-    .
-
-    The image width/height are read using:
-      - getColumnImageWidth()
-      - getColumnImageHeight()
-    .
-
-    This allows to write code like:
-    \code
-        for (int iy=0; iy<10; iy++) {
-            for (int ix=0; ix<10; ix++) {
-                datastore->setPixel(imgColumn, ix, iy, sin(ix*iy/30.0));
-            }
-        }
-    \endcode
-
-    \section jkqtpdatastore_dataio Data Output
-
-    JKQTPDatastore provides several functions that allow to store its contents into files:
-      - saveCSV
-      - saveSYLK()
-      - saveMatlab()
-      - saveDIF()
-    .
-
-    ... and function to read data into different data structures:
-      - getData()
-    .
-
-
-
-
-    \section jkqtpdatastore_internals Internal Working
-
-    This class manages a list if JKQTPDatastoreItem onjects that may each contain a chunk of memory, containig
-    one or more columns of data. Each item can be accessed with get() by a specific ID which is returned by add().
-    JKQTPColumn. You may only clear all chunks of memory/items. If you no longer need some of the data, but still want
-    to access the rest you will simply have to destroy all JKQTPColumn that point to the item with their
-    JKQTPColumns:datastoreItem property.
-
-    \verbatim
+/** \brief This class manages data columns (with entries of type \c double ), used by JKQTPlotter/JKQTBasePlotter to represent data for plots
+  *  \ingroup jkqtpdatastorage
+  *
+  *  \see \ref JKQTPlotterBasicJKQTPDatastore for a detailed description of how to use this class for data management!
+  *
+  *
+  *  \section jkqtpdatastore_column_management Column Management
+  *
+  *  \subsection jkqtpdatastore_column_management_generation Column Generation/Deletion
+  *
+  *  A JKQTPDatastore manages a set of data columns. Each column is a continuous vector of numbers. Optionally it can be interpreted
+  *  as a 2D image. In the latter case, the data is assumed to be ordered in row-major ordering (i.e. row for row).
+  *
+  *  You can generate new columns e.g. by:
+  *    - addColumn() which either generates internally managed (and extensible) columns, or accepts a simple \c double* pointer
+  *      to external. In the latter case owner-ship may be transferred to the datastore, but can also retain externally.
+  *    - addImageColumn() adds a column that should be interpreted as an image with given width and height (i.e. a row-major
+  *      matrix with \c width columns and \c height rows.
+  *    - copyColumn() duplicates an existing column
+  *    - addCopiedColumn() copies an external dataset into the datastore. e.g. with code like:
+  *        \code{.cpp}
+  *           QVector<double> X, Y;
+  *           const int Ndata=100;
+  *           for (int i=0; i<Ndata; i++) {
+  *            *   const double x=double(i)/double(Ndata)*8.0*M_PI;
+  *               X<<x;
+  *              Y<<sin(x);
+  *          }
+  *          plot.addGraph(linegraph=new JKQTPXYLineGraph(&plot));
+  *          // by calling JKQTPDatastore::addCopiedColumn() the data is COPIED from the vector into the datastore
+  *          linegraph->setXColumn(datastore->addCopiedColumn(X, "x"));
+  *          linegraph->setYColumn(datastore->addCopiedColumn(Y, "y"));
+  *        \endcode
+  *   - addLinearColumn() adds a column with linearly increasing numbers (in a given range)
+  *   - addLogColumn() and addDecadeLogColumn() add columns with logarithmically spaced values
+  *   - addLinearGridColumns() adds two columns which represent x- and y- coordinates of points
+  *     on a rectangular grid (useful for calculating image data)
+  *   - addCalculatedColumn() calculates a column, based on row numbers and a C++ functor
+  *   - addColumnCalculatedFromColumn() calculates a column, based on another column data
+  *   - addCopiedMap() copies data from a std::map/QMap into two columns
+  *   - ... several more functions for specific cases exist.
+  *   - Also note that there are even library extensions that allow to import data directly from OpenCV matrices: JKQTPCopyCvMatToColumn()
+  * .
+  *
+  * Of course columns can also be deleted by calling:
+  *   - deleteColumn()
+  *   - deleteAllColumns()
+  *   - deleteAllPrefixedColumns()
+  *   - clear()
+  * .
+  *
+  * \subsection jkqtpdatastore_column_management_props Column Properties
+  *
+  * The properties of columns may be accessed using:
+  *   - getRows() returns the number of rows in a specific column
+  *   - getColumnPointer() returns a pointer to the data in the column
+  *   - getColumnChecksum() calculated a checksum over the data in the column
+  *   - getColumnNames() / getColumnName()
+  * .
+  *
+  * \subsection jkqtpdatastore_column_management_modify Modify Column Contents
+  *
+  * You can modify all data in a column by functions like:
+  *   - setAll()
+  *   - scaleColumnValues()
+  * .
+  *
+  * Also you can access a single entry from a column, using:
+  *   - set() / get() set/read a column entry
+  *   - inc() / dec() increment/decrement a column entry
+  *   - appendToColumn() (adds a single row/new value to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
+  *   - appendFromContainerToColumn() (adds several rows from a container to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
+  * .
+  *
+  * \subsection jkqtpdatastore_column_management_iterators Iterator Interface
+  *
+  * In addition to teh fucntions above, JKQTPDatastore also provides C++-style iteratos to read the data from a column:
+  *   - begin()
+  *   - end()
+  * .
+  *
+  * ... and also a \c std::back_inserter -style interface to append data to columns:
+  *   - backInserter()
+  * .
+  *
+  * These allow to use the C++ standard algorithms to work with columns and also enabled the
+  * library \ref jkqtptools_math_statistics in this software package. You can use the functions
+  * above e.g. for code like:
+  *
+  * \code{.cpp}
+  *     auto inserter it=datastore->backInserter(datastore->addColumn("new column"));
+  *     for (auto it=datastore->begin(col1); it!=datastore->begin(col1) ++it) {
+  *         *++inserter=sqrt(*it);
+  *     }
+  * \endcode
+  *
+  * or simply
+  *
+  * \code{.cpp}
+  *     // mean of a column in a JKQTPDatastore:
+  *     double mean=jkqtpstatAverage(datastore1->begin(col1), datastore1->end(col1));
+  * \endcode
+  *
+  * Also there are functions to add data from iterator-defined ranges, e.g.:
+  *   - addCopiedColumn()
+  *   - addCopiedMap()
+  *   - appendToColumn()
+  * .
+  *
+  *
+  * \subsection jkqtpdatastore_column_management_images Image Column
+  *
+  * JKQTPDatastore stores the width and height of the represented image as metadata with any image column.
+  * This metadata is used to provide convenience access to the image pixels with:
+  *   - setPixel()
+  *   - getPixel()
+  * .
+  *
+  * The image width/height are read using:
+  *   - getColumnImageWidth()
+  *   - getColumnImageHeight()
+  * .
+  *
+  * This allows to write code like:
+  * \code{.cpp}
+  *     for (int iy=0; iy<10; iy++) {
+  *         for (int ix=0; ix<10; ix++) {
+  *             datastore->setPixel(imgColumn, ix, iy, sin(ix*iy/30.0));
+  *         }
+  *     }
+  * \endcode
+  *
+  * \section jkqtpdatastore_dataio Data Output
+  *
+  * JKQTPDatastore provides several functions that allow to store its contents into files:
+  *   - saveCSV
+  *   - saveSYLK()
+  *   - saveMatlab()
+  *   - saveDIF()
+  * .
+  *
+  * ... and function to read data into different data structures:
+  *   - getData()
+  * .
+  *
+  *
+  *
+  *
+  * \section jkqtpdatastore_internals Internal Working
+  *
+  * This class manages a list if JKQTPDatastoreItem onjects that may each contain a chunk of memory, containig
+  * one or more columns of data. Each item can be accessed with get() by a specific ID which is returned by add().
+  * JKQTPColumn. You may only clear all chunks of memory/items. If you no longer need some of the data, but still want
+  * to access the rest you will simply have to destroy all JKQTPColumn that point to the item with their
+  * JKQTPColumns:datastoreItem property.
+  *
+  * \verbatim
 
 +- JKQTPDatastore ---------------------+               std::vector<JKQTPColumn>:
 |                                      |                   +- JKQTPColumn ----------------+
@@ -269,11 +268,11 @@ enum class JKQTPDatastoreItemFormat {
 
 
 \endverbatim
-
-    In addition the JKQTPDatastore manages a std::vector<JKQTPColumn> which may be used to access the data chunks in the logical
-    notion of data columns. This class provides a set of interface methods for this list:
-
- */
+  *
+  * In addition the JKQTPDatastore manages a std::vector<JKQTPColumn> which may be used to access the data chunks in the logical
+  * notion of data columns. This class provides a set of interface methods for this list:
+  *
+  */
 class JKQTP_LIB_EXPORT JKQTPDatastore{
     private:
         /** \brief a std::vector that contains all items managed by this datastore */

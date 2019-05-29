@@ -23,6 +23,7 @@
 #define jkqtpmathtools_H_INCLUDED
 #include "jkqtcommon/jkqtp_imexport.h"
 #include <cmath>
+#include <limits>
 #include <QPoint>
 #include <QPointF>
 #include <vector>

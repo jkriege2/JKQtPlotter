@@ -7,7 +7,7 @@ This tutorial project (see `./examples/simpletest_datastore_statistics/`) explai
 The source code of the main application can be found in [`jkqtplotter_simpletest_datastore_statistics.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics/jkqtplotter_simpletest_datastore_statistics.cpp). 
 This tutorial cites only parts of this code to demonstrate different ways of working with data for the graphs.
 
-## Generating different sets of random numbers
+# Generating different sets of random numbers
 
 The code segments below will fill four instances of JKQTPlotter with different statistical plots. All these plots are based on three sets of random numbers generated as shown here:
 ```.cpp
@@ -34,7 +34,7 @@ The column `randomdatacol1` will contain 150 random numbers. Each one is drawn e
 The three columns are generated empyt by calling `JKQTPDatastore::addColumn()` with only a name. Then the actual values are added by calling `JKQTPDatastore::appendToColumn()`.
 
 
-## Basic Statistics
+# Basic Statistics
 
 The three sets of random numbers from above can be visualized e.g. by a `JKQTPPeakStreamGraph` graph with code as follows:
 ```.cpp
@@ -82,9 +82,9 @@ Of course, several other functions exist that calculate basic statistics from a 
 All these functions use all values in the given range and convert each value to a `double`, using `jkqtp_todouble()`. The return values is always a dohble. Therefore you can use these functions to calculate statistics of ranges of any type that can be converted to `double`. Values that do not result in a valid `double`are not used in calculating the statistics. Therefore you can exclude values by setting them `JKQTP_DOUBLE_NAN` (i.e. "not a number").
 
 
-## Boxplots
+# Boxplots
 
-### Standard Boxplots 
+## Standard Boxplots 
 
 As mentioned above and shown in several other examples, JKQTPlotter supports [Boxplots](https://en.wikipedia.org/wiki/Box_plot) with the classes `JKQTPBoxplotHorizontalElement`, `JKQTPBoxplotVerticalElement`, as well as `JKQTPBoxplotHorizontal` and `JKQTPBoxplotVertical`. You can then use the 5-Number Summray functions from the statistics library to calculate the data for such a boxplot (e.g. `jkqtpstat5NumberStatistics()`) and set it up by hand. Code would look roughly like this:
 ```.cpp
@@ -118,7 +118,7 @@ Here `-0.25`indicates the location (on the y-axis) of the boxplot. and the plot 
 
 ![jkqtplotter_simpletest_datastore_statistics_boxplots_simple](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_statistics_boxplots_simple.png)
 
-### Boxplots with Outliers
+## Boxplots with Outliers
 
 Usually the boxplot draws its whiskers at the minimum and maximum value of the dataset. But if your data contains a lot of outliers, it may make sense to draw them e.g. at the 3% and 97% quantiles and the draw the outliers as additional data points. This can also be done with `jkqtpstat5NumberStatistics()`, as you can specify the minimum and maximum quantile (default is 0 and 1, i.e. the true minimum and maximum) and the resulting object contains a vector with the outlier values. Then you could add them to the JKQTPDatastore and add a scatter plot that displays them. Also this task is sped up by an "adaptor". Simply call
 
@@ -136,7 +136,7 @@ As you can see this restuns the `JKQTPBoxplotHorizontalElement` and in addition 
 
 
 
-## Histograms 
+# Histograms 
 
 Calculating 1D-Histograms is supported by several functions from the statistics library, e.g. `jkqtpstatHistogram1DAutoranged()`. You can use the result to fill new columns in a `JKQTPDatastore`, which can then be used to draw the histogram (here wit 15 bins, spanning the full data range):
 
@@ -163,7 +163,7 @@ The resulting plot looks like this (the distributions used to generate the rando
 
 
 
-## Kernel Density Estimates (KDE)
+# Kernel Density Estimates (KDE)
 
 Especially when only few samples from a distribution are available, histograms are not good at representing the underlying data distribution. In such cases, [Kernel Density Estimates (KDE)](https://en.wikipedia.org/wiki/Kernel_density_estimation) can help, which are basically a smoothed variant of a histogram. The statistics library supports calculating them via e.g. `jkqtpstatKDE1D()`:
 
@@ -210,7 +210,7 @@ Plots that result from such calls look like this:
 ![jkqtplotter_simpletest_datastore_statistics_kde](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_statistics_kde.png)
 
 
-## Cummulative Histograms and KDEs
+# Cummulative Histograms and KDEs
 
 Both histograms and KDEs support a parameter `bool cummulative`, which allows to accumulate the data after calculation and drawing cummulative histograms/KDEs:
 
@@ -226,7 +226,7 @@ Both histograms and KDEs support a parameter `bool cummulative`, which allows to
 
 
 
-## Screenshot of the full Program
+# Screenshot of the full Program
 
 The output of the full test program [`jkqtplotter_simpletest_datastore_statistics.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics/jkqtplotter_simpletest_datastore_statistics.cpp) looks like this:
 

@@ -23,6 +23,7 @@
 #include "jkqtcommon/jkqtpmathparser.h" // class's header file
 #include <iostream>
 #include <float.h>
+#include <ctime>
 #include "jkqtcommon/jkqtpstringtools.h"
 
 /* This just distinguishes between the different path formats on Windows and Unix:

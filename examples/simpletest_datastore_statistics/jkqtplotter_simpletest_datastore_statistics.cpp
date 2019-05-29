@@ -1,7 +1,7 @@
 /** \example jkqtplotter_simpletest_datastore_statistics.cpp
  * Explains how to use the internal statistics library (see \ref jkqtptools_statistics ) together with JKQTPDatastore to generate advanced plots for 1-dimensional data.
  *
- * \ref JKQTPlottersimpletest_datastore_statistics
+ * \ref JKQTPlotterBasicJKQTPDatastoreStatistics
  */
  
 #include <QApplication>
