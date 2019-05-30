@@ -83,6 +83,7 @@
  *  \ingroup jkqtptools_math_linalg
  *
  *  \tparam type of the matrix cells (typically double or float)
+ *  \param matrix the matrix to print out
  *  \param L number of lines/rows in the matrix
  *  \param C number of columns in the matrix
  *  \param width width (in characters) of each cell in the output (used for formatting)
@@ -109,6 +110,7 @@ inline void jkqtplinalgPrintMatrix(T* matrix, long L, long C, int width=9, int p
  *  \ingroup jkqtptools_math_linalg
  *
  *  \tparam type of the matrix cells (typically double or float)
+ *  \param matrix the matrix to convert
  *  \param L number of lines/rows in the matrix
  *  \param C number of columns in the matrix
  *  \param width width (in characters) of each cell in the output (used for formatting)
@@ -173,6 +175,7 @@ inline void jkqtplinalgPM1ToRWBColors(double val, uint8_t& r, uint8_t& g, uint8_
  *  \param[out] r returns the red value (0..255)
  *  \param[out] g returns the green value (0..255)
  *  \param[out] b returns the blue value (0..255)
+ *  \param gamma a gamma-value for non-linear color scaling
 */
 inline void jkqtplinalgPM1ToNonlinRWBColors(double val, uint8_t& r, uint8_t& g, uint8_t& b, double gamma=0.5){
     if (val<0) {
@@ -186,6 +189,7 @@ inline void jkqtplinalgPM1ToNonlinRWBColors(double val, uint8_t& r, uint8_t& g, 
  *
  *
  *  \tparam type of the matrix cells (typically double or float)
+ *  \param matrix the matrix to convert
  *  \param L number of lines/rows in the matrix
  *  \param C number of columns in the matrix
  *  \param width width (in characters) of each cell in the output (used for formatting)
@@ -759,8 +763,7 @@ inline bool jkqtplinalgLinSolve(const T* A, T* B, long N, long C) {
 
     \param A an NxN matrix of coefficients
     \param b an N-entry vector
-    \param N number of equations
-    \param C number of columns in B
+    \param N number of rows and columns in \a A
     \param[out] result_out a N-entry vector with the result
     \return \c true on success
 
@@ -778,7 +781,7 @@ inline bool jkqtplinalgLinSolve(const T* A, const T* b, long N, T* result_out) {
     \param A an NxN matrix of coefficients
     \param[in,out] b an N-entry vector (also receives the result)
     \param N number of equations
-    \param C number of columns in B
+    \param N number of rows and columns in \a A
     \return \c true on success
 
     \note This function uses the Gauss-Jordan algorithm

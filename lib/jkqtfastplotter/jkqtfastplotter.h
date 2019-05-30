@@ -1387,12 +1387,12 @@ class JKQTP_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         /*! \brief class constructor
 
             \param parent parent widget
-            \param N number of datapoints in the plot
-            \param x points to the x values in the plot
-            \param y points to the y values in the plot
+            \param xmin range start
+            \param xmax range end
             \param color color of the plot
             \param style style of the graph
             \param width width of the plot (in pt)
+            \param fillStyle fill style of the range
          */
         JKQTFPXRangePlot(JKQTFastPlotter* parent, double xmin, double xmax, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1, Qt::BrushStyle fillStyle=Qt::NoBrush) ;
 
@@ -1551,12 +1551,12 @@ class JKQTP_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         /*! \brief class constructor
 
             \param parent parent widget
-            \param N number of datapoints in the plot
-            \param x points to the x values in the plot
-            \param y points to the y values in the plot
+            \param ymin range start
+            \param ymax range end
             \param color color of the plot
             \param style style of the graph
             \param width width of the plot (in pt)
+            \param fillStyle fill style of the range
          */
         JKQTFPYRangePlot(JKQTFastPlotter* parent, double ymin, double ymax, QColor color=QColor("red"), Qt::PenStyle style=Qt::SolidLine, double width=1, Qt::BrushStyle fillStyle=Qt::NoBrush) ;
 
@@ -1787,7 +1787,8 @@ class JKQTP_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
 /*!
    \brief An enum for selecting the palette for coloring
     \ingroup jkqtfastplotter
-   \details Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
+
+   Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
  */
 enum JKQTFPColorPalette {
     JKQTFP_RED=0, /*!< \image html palettes/palette_red.png */
@@ -1811,17 +1812,18 @@ enum JKQTFPColorPalette {
     JKQTFP_CYAN=18 /*!< \image html palettes/palette_cyan.png */
 };
 
-/*!datatype for an image plotpalette for coloring
+/*! \brief datatype for an image plotpalette for coloring
     \ingroup jkqtfastplotter
-   \details Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
+
+   Here, the color palettes are illustrated (left is the color for the minimum and right for the maximum).
  */
 enum JKQTFPImageFormat {
-    JKQTFP_uint8=0,  /*!< \image 8 bit int */
-    JKQTFP_uint16=1, /*!< \image 16 bit int */
-    JKQTFP_uint32=2, /*!< \image 32 bit int */
-    JKQTFP_float=3,  /*!< \image float */
-    JKQTFP_double=4, /*!< \image double */
-    JKQTFP_int64=5   /*!< \image 64 bit signed int */
+    JKQTFP_uint8=0,  /*!< \brief 8 bit int */
+    JKQTFP_uint16=1, /*!< \brief 16 bit int */
+    JKQTFP_uint32=2, /*!< \brief 32 bit int */
+    JKQTFP_float=3,  /*!< \brief float */
+    JKQTFP_double=4, /*!< \brief double */
+    JKQTFP_int64=5   /*!< \brief 64 bit signed int */
 };
 
 
@@ -2797,7 +2799,9 @@ class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
 
 
         /*! \brief sets the properties imageRed and imageFormatRed to the specified \a __value and \a __value2. 
-            \details Description of the parameter imageRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageRed </BLOCKQUOTE> \details Description of the parameter imageFormatRed is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatRed </BLOCKQUOTE> */ 
+
+            \see imageRed, imageFormatRed
+         */
         inline void setImageRed (void* __value, JKQTFPImageFormat __value2)
         {
             bool set=false; 
@@ -2817,8 +2821,10 @@ class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         inline void* getImageRed () const { return this->imageRed; }
         /*! \copydoc imageFormatRed */
         inline JKQTFPImageFormat getImageFormatRed () const { return this->imageFormatRed; }
-        /*! \brief sets the properties imageGreen and imageFormatGreen to the specified \a __value and \a __value2. 
-            \details Description of the parameter imageGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageGreen </BLOCKQUOTE> \details Description of the parameter imageFormatGreen is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatGreen </BLOCKQUOTE> */ 
+        /*! \brief sets the properties imageGreen and imageFormatGreen to the specified \a __value and \a __value2.
+
+            \see imageGreen, imageFormatGreen
+         */
         inline void setImageGreen (void* __value, JKQTFPImageFormat __value2)
         {
             bool set=false; 
@@ -2838,9 +2844,11 @@ class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         inline void* getImageGreen () const { return this->imageGreen; }
         /*! \copydoc imageFormatGreen */
         inline JKQTFPImageFormat getImageFormatGreen () const { return this->imageFormatGreen; }
-        /*! \brief sets the properties imageBlue and imageFormatBlue to the specified \a __value and \a __value2. 
-            \details Description of the parameter imageBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageBlue </BLOCKQUOTE> \details Description of the parameter imageFormatBlue is: <BLOCKQUOTE>\copydoc JKQTFPRGBImageOverlayPlot::imageFormatBlue </BLOCKQUOTE> */ 
-        inline void setImageBlue (void* __value, JKQTFPImageFormat __value2)
+        /*! \brief sets the properties imageBlue and imageFormatBlue to the specified \a __value and \a __value2.
+
+            \see imageBlue, imageFormatBlue
+         */
+         inline void setImageBlue (void* __value, JKQTFPImageFormat __value2)
         {
             bool set=false; 
             if (this->imageBlue != __value) { 

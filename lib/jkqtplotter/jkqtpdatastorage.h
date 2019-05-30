@@ -219,7 +219,7 @@ enum class JKQTPDatastoreItemFormat {
   * \section jkqtpdatastore_dataio Data Output
   *
   * JKQTPDatastore provides several functions that allow to store its contents into files:
-  *   - saveCSV
+  *   - saveCSV()
   *   - saveSYLK()
   *   - saveMatlab()
   *   - saveDIF()

@@ -16,3 +16,6 @@ CONFIG (debug, debug|release) {
     LIBS += -L../../staticlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 message("LIBS = $$LIBS")
+
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX

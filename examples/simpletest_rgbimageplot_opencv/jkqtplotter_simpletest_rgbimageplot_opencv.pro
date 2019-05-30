@@ -35,3 +35,6 @@ CONFIG (debug, debug|release) {
 message("LIBS = $$LIBS")
 
 INSTALLS += opencvdlls exampleimg
+
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX

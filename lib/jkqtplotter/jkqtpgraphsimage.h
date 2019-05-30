@@ -259,11 +259,11 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /*! \copydoc modifierMode */
         ModifierMode getModifierMode() const;
 
-        /** \brief sets dataModifier (\copybrief dataModifier) and datatypeModifier (\copybrief datatypeModifier) */
+        /** \brief sets dataModifier (\copybrief dataModifier ) and datatypeModifier (\copybrief datatypeModifier ) */
         virtual void setDataModifier(void* data, DataType datatype);
-        /** \brief sets data (\copybrief data) and datatype (\copybrief datatype), as well as the size of data (Nx: \copybrief Nx and Ny: \copybrief Ny) */
+        /** \brief sets data (\copybrief data ) and datatype (\copybrief datatype ), as well as the size of data (Nx: \copybrief Nx and Ny: \copybrief Ny ) */
         virtual void setData(void* data, int Nx, int Ny, DataType datatype);
-        /** \brief sets data (\copybrief data), as well as the size of data (Nx: \copybrief Nx and Ny: \copybrief Ny) */
+        /** \brief sets data (\copybrief data ), as well as the size of data (Nx: \copybrief Nx and Ny: \copybrief Ny ) */
         virtual void setData(void* data, int Nx, int Ny);
         /** \brief determine min/max data value of the image */
         virtual void getDataMinMax(double& imin, double& imax);

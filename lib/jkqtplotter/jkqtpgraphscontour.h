@@ -99,7 +99,7 @@ class JKQTP_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGrap
         void setIgnoreOnPlane(bool __value);
         /*! \copydoc ignoreOnPlane */ 
         bool getIgnoreOnPlane() const;
-        /*! \copydoc numberOfLevels */ 
+        /*! \copydoc contourLevels */
         int getNumberOfLevels() const;
         /*! \copydoc contourColoringMode */
         void setContourColoringMode(ContourColoringMode __value);

@@ -9,3 +9,6 @@ CONFIG += create_prl
 
 include(../../lib/jkqtmathtext.pri)
 include(../../lib/jkqtpcommon.pri)
+
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX

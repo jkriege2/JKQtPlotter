@@ -187,23 +187,6 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
 JKQTP_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
-/*! \brief plot an arrow between positions (x1,y1) and (x2,y2)
-   \ingroup jkqtptools_drawing
-
-    \param painter the <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a> to draw to
-    \param x1 first x-coordinate of the arrow
-    \param y1 first y-coordinate of the arrow
-    \param x2 second x-coordinate of the arrow
-    \param y2 second y-coordinate of the arrow
-    \param symbol type of the symbol to plot, see JKQTPGraphSymbols
-    \param size size (width/height) of the symbol around (\a x , \a y)
-    \param symbolLineWidth width of the lines used to draw the symbol
-    \param color color of the symbol lines
-    \param fillColor color of the symbol filling
- */
-//JKQTP_LIB_EXPORT void JKQTPPlotArrow(JKQTPEnhancedPainter& painter, int x, int y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
-
-
 /*! \brief draw an ellipse without setting pen or brush, or saving the painter!
     \ingroup jkqtptools_drawing
 
@@ -247,7 +230,7 @@ JKQTP_LIB_EXPORT QPolygonF JKQTPCleanPolygon(const QPolygonF& poly, double dista
 
 /** \brief takes a list of QLineF objesct \a lines and tries to combine as many of them as possible to QPolygonF objects.
  *         <b>Note: This method implements an incomplete algorithm with \a searchMaxSurroundingElements>0, as solving
- *         the complete problem is very time-consuming (cubic runtime)
+ *         the complete problem is very time-consuming (cubic runtime)</b>
  *  \ingroup jkqtptools_drawing
  *
  *  \param lines line segments to unify

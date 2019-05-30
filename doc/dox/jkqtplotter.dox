@@ -24,7 +24,7 @@ This group assembles a variety of mathematical tool functions that are used in d
 
 Functions in this group form the basis for the statistics  (\ref jkqtptools_math_statistics ) and linear algebra libraries  (\ref jkqtptools_math_linalg ), by providing allocation and freeing of (aligned) memory arrays.
 
-\seeJKQTPlotterBasicJKQTPDatastoreStatistics
+\see JKQTPlotterBasicJKQTPDatastoreStatistics
 
 \defgroup jkqtptools_math_linalg Linear Algebra Tools
 \ingroup jkqtptools_math
@@ -42,6 +42,7 @@ This group contains a statistics library, which offers several basic methods and
   - \ref jkqtptools_math_statistics_1dkde
   - \ref jkqtptools_math_statistics_2dkde
 .
+In addition there is a set of "adaptors" (see \ref jkqtptools_math_statistics_adaptors ) that shortcut the calculation of a statistical property and the subsequent parametrization of a plot with the results. With these adaptors you can add e.g. a boxplot or histogram chart to a plot by calling only one function.
 
 
 All statistics functions use an iterator-based interface, comparable to the interface of the <a href="http://www.cplusplus.com/reference/algorithm/">algorithms in the C++ standard template library</a>. To this end, the class `JKQTPDatastore` provides an iterator interface to its columns, using the functions `JKQTPDatastore::begin()` and `JKQTPDatastore::end()`. Both functions simply receive the column ID as parameter and exist in a const and a mutable variant. the latter allows to also edit the data. In addition the function `JKQTPDatastore::backInserter()` returns a back-inserter iterator (like generated for STL containers with `std::back_inserter(container)`) that also allows to append to the column.
@@ -78,6 +79,9 @@ All statistics functions use all values in the given range and convert each valu
 \ingroup jkqtptools_math_statistics
 
 \defgroup jkqtptools_math_statistics_2dkde 2-dimensional Kernel Density Estimates 
+\ingroup jkqtptools_math_statistics
+
+\defgroup jkqtptools_math_statistics_adaptors Statistics To Plot Adaptors
 \ingroup jkqtptools_math_statistics
 
 
@@ -359,6 +363,8 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html jkqtplotter_simpletest_boxplot_small.png
       <td> JKQTPBoxplotVerticalGraph, JKQTPBoxplotHorizontalGraph
 </table>
+
+\see \ref jkqtptools_math_statistics_adaptors for shortcuts to calculate statistical properties of data and then adding a plot with the results.
 
 \defgroup jkqtplotter_geoplots Geometric Elements (Lines, Rectangles, ...)
 \ingroup jkqtplotter_graphsgroup

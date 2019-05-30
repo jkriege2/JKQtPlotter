@@ -124,25 +124,25 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
         /*! \copydoc drawLine */ 
         bool getDrawLine() const;
 
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see plotFunction
+         */
         virtual void setPlotFunctionFunctor (jkqtpPlotFunctionType && __value);
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see plotFunction
+         */
         virtual void setPlotFunctionFunctor (const jkqtpPlotFunctionType & __value);
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see simplePlotFunction
+         */
         virtual void setPlotFunctionFunctor (jkqtpSimplePlotFunctionType && __value);
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see simplePlotFunction
+         */
         virtual void setPlotFunctionFunctor (const jkqtpSimplePlotFunctionType & __value);
         /*! \copydoc plotFunction */ \
         virtual jkqtpPlotFunctionType getPlotFunctionFunctor () const;
@@ -204,27 +204,27 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
         void setDrawErrorLines(bool __value);
         /*! \copydoc drawErrorLines */ 
         bool getDrawErrorLines() const;
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorPlotFunction
+         */
         virtual void setErrorPlotFunction (jkqtpPlotFunctionType && __value);
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorPlotFunction
+         */
         virtual void setErrorPlotFunction (const jkqtpPlotFunctionType & __value);
         /*! \copydoc errorPlotFunction */ \
         virtual jkqtpPlotFunctionType getErrorPlotFunction () const;
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorSimplePlotFunction
+         */
         virtual void setErrorPlotFunction (jkqtpSimplePlotFunctionType && __value);
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorSimplePlotFunction
+         */
         virtual void setErrorPlotFunction (const jkqtpSimplePlotFunctionType & __value);
         /*! \copydoc errorSimplePlotFunction */ \
         virtual jkqtpSimplePlotFunctionType getErrorSimplePlotFunction () const;

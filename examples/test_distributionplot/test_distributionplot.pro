@@ -11,6 +11,7 @@ SOURCES = test_distributionplot.cpp
     # To fix error: C2338: va_start argument must not
     # have reference type and must not be parenthesized
     DEFINES += _CRT_NO_VA_START_VALIDATION
+    DEFINES += NOMINMAX
 }
 
 # configure Qt

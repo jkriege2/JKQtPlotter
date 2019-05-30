@@ -45,3 +45,6 @@ CONFIG (debug, debug|release) {
     LIBS += -L../../staticlib/jkqtmathtextlib/release -ljkqtmathtextlib
 }
 message("LIBS = $$LIBS")
+
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX

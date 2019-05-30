@@ -243,7 +243,6 @@ class JKQTP_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
             \param x x-coordinate of the symbol center
             \param y y-coordinate of the symbol center
             \param type type of the symbol
-            \param symbolSize size of the symbol
          */
         void plotStyledSymbol(JKQTBasePlotter* parent, JKQTPEnhancedPainter& painter, double x, double y, JKQTPGraphSymbols type) const;
         /*! \brief plot a symbol at location x,y (in painter coordinates), using the current style

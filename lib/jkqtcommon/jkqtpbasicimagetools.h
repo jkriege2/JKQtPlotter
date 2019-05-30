@@ -744,7 +744,7 @@ inline void JKQTPImagePlot_array2image(const T* dbl_in, int width, int height, Q
     \param dbl_in pointer to a 1D array of template type \c T representing the image to plot. This array has to be of size \a width * \a height
     \param width width of the array in \a dbl
     \param height height of the array in \a dbl
-    \param[out] im the QImage object to draw to (should be initialized as \c QImage::Format_ARGB32 )
+    \param[out] img the QImage object to draw to (should be initialized as \c QImage::Format_ARGB32 )
     \param lutUser user-defined lookup-table
     \param lutUserSize number of entries in \a lutUser
     \param minColor lower boundary of color range in \a dbl pixels, if \a minColor == \a maxColor then this function will extract the image min and image max.

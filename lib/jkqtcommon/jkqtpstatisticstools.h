@@ -304,6 +304,7 @@ inline double jkqtpstatMaximum(InputIt first, InputIt last, InputIt* maxPos=null
     \tparam FF a functor type
     \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
     \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param modifierFunctor the function to apply to each element in the range before summation (of type \a FF )
     \param[out] Noutput optionally returns the number of accumulated valid values in this variable
     \return Sum of modified data returned between \a first and \a last (excluding invalid doubles).
             If the given range \a first ... \a last is empty, 0 is returned
@@ -881,7 +882,6 @@ inline void jkqtpstat5NumberStatisticsOfSortedVector(const TVector& data, double
 
     \tparam TVector a type, compatible with std::vector (i,e, providing size(), []-element access and iterators)
     \param data a sorted vector with values
-    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
     \param outliersout output iterator that receives the outliers, smaller than minimum and larger than maximum
     \param[out] minimum optionally returns the minimum value of the array
     \param minimumQuantile specifies a quantile for the return value minimum (default is 0 for the real minimum, but you could e.g. use 0.05 for the 5% quantile!)
@@ -1049,7 +1049,7 @@ struct JKQTPStat5NumberStatistics {
         double IQR() const;
         /** \brief interquartile range, calculated as \f[ 2\cdot\frac{1.58\cdot \mbox{IQR}}{\sqrt{N}} \f] \see https://en.wikipedia.org/wiki/Box_plot */
         double IQRSignificanceEstimate() const;
-        /** \brief list with the outlier values <minimum and >maximum */
+        /** \brief list with the outlier values < minimum and > maximum */
         std::vector<double> outliers;
 };
 
@@ -1711,6 +1711,8 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
     \param binsLast iterator pointing behind the last item in the set of KDE bins
     \param[out] KDEXOut output iterator that receives x-positions of the KDE bins. Location of this value inside the bin range is defined by \a binXMode
     \param[out] KDEYOut output iterator that receives counts/frequencies of the KDE bins
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
     \param cummulative if \c true, a cummulative KDE is calculated
 
     \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
@@ -1763,6 +1765,8 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, BinsInputIt binsFirst, B
     \param binXRight last x-position, where to evaluate the KDE
     \param[out] KDEXOut output iterator that receives x-positions of the KDE bins. Location of this value inside the bin range is defined by \a binXMode
     \param[out] KDEYOut output iterator that receives counts/frequencies of the KDE bins
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
     \param cummulative if \c true, a cummulative KDE is calculated
 
     \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
@@ -1794,6 +1798,7 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double 
     }
 
 }
+
 
 
 

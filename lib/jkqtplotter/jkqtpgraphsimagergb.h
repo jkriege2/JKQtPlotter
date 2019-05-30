@@ -454,7 +454,6 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
          * \param width width of the image in system coordinates
          * \param height height of the image in system coordinates
          * \param imageRColumn column for red channel to be plotted
-         * \param palette color palette to use for the plotting
          * \param parent parent plotter object
          *
          */
@@ -467,7 +466,6 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
          * \param height height of the image in system coordinates
          * \param imageRColumn column for red channel to be plotted
          * \param imageGColumn column for green channel to be plotted
-         * \param palette color palette to use for the plotting
          * \param parent parent plotter object
          *
          */
@@ -481,7 +479,6 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
          * \param imageRColumn column for red channel to be plotted
          * \param imageGColumn column for green channel to be plotted
          * \param imageBColumn column for blue channel to be plotted
-         * \param palette color palette to use for the plotting
          * \param parent parent plotter object
          *
          */
@@ -508,7 +505,6 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
          * \param width width of the image in system coordinates
          * \param height height of the image in system coordinates
          * \param imageRColumn column for red channel to be plotted
-         * \param palette color palette to use for the plotting
          * \param parent parent plotter object
          *
          */
@@ -521,7 +517,6 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
          * \param height height of the image in system coordinates
          * \param imageRColumn column for red channel to be plotted
          * \param imageGColumn column for green channel to be plotted
-         * \param palette color palette to use for the plotting
          * \param parent parent plotter object
          *
          */
@@ -535,7 +530,6 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
          * \param imageRColumn column for red channel to be plotted
          * \param imageGColumn column for green channel to be plotted
          * \param imageBColumn column for blue channel to be plotted
-         * \param palette color palette to use for the plotting
          * \param parent parent plotter object
          *
          */

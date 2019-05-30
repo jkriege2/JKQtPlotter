@@ -196,7 +196,7 @@ class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * accomodate the size of the key. If you select an \b inside key position the key will be plotted OVER the graph, i.e. the margins won't be changed
  * Note that the margin change is internal and not visible in the class interface!
  *
- * There is also a possibility to determine the size of the key automatically, so all text fits in. This is activted by the property keyAutosize ( \copybrief keyAutosize ). If this
+ * There is also a possibility to determine the size of the key automatically, so all text fits in. This is activted by the property keyAutosize ( \copybrief JKQTPKeyStyle::autosize ). If this
  * is \c true the function getKeyExtent() has to check the width of every key item and take it into account when calculating the width and height of the
  * key content. By default this feature is switched ON.
  *
@@ -766,9 +766,9 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /*! \copydoc JKQTBasePlotterStyle::plotFrameRounding */
         double getPlotFrameRounding() const;
 
-        /*! \copydoc plotLabelFontSize */ 
+        /*! \copydoc JKQTBasePlotterStyle::plotLabelFontSize */
         double getPlotLabelFontSize() const;
-        /*! \copydoc plotLabelFontName */
+        /*! \copydoc JKQTBasePlotterStyle::plotLabelFontName */
         QString getplotLabelFontName() const;
 
         /*! \copydoc plotLabel */ 
@@ -789,7 +789,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief set the x- and y-positions of this JKQTPlotter in the grid-printing grid
          *
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY() \ref JKQTPBASELOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY()
          */
         void setGridPrintingCurrentPos(size_t x, size_t y);
 
