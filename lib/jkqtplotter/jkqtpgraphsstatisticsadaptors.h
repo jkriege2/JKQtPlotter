@@ -29,7 +29,7 @@
 #define JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
 
 /*! \brief add a JKQTPBoxplotHorizontalElement to the given plotter, where the boxplot values are calculated from the data range \a first ... \a last
-    \ingroup jkqtptools_math_statistics_adaptors_adaptors
+    \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputIt standard iterator type of \a first and \a last.
     \param plotter the plotter to which to add the resulting graph
@@ -74,7 +74,7 @@ inline JKQTPBoxplotHorizontalElement* jkqtpstatAddHBoxplot(JKQTBasePlotter* plot
 
 
 /*! \brief add a JKQTPBoxplotVerticalElement to the given plotter, where the boxplot values are calculated from the data range \a first ... \a last
-    \ingroup jkqtptools_math_statistics_adaptors_adaptors
+    \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputIt standard iterator type of \a first and \a last.
     \param plotter the plotter to which to add the resulting graph
@@ -120,7 +120,7 @@ inline JKQTPBoxplotVerticalElement* jkqtpstatAddVBoxplot(JKQTBasePlotter* plotte
 
 
 /*! \brief add a JKQTPBoxplotHorizontalElement and a JKQTPSingleColumnSymbolsGraph for outliers  to the given plotter, where the boxplot values are calculated from the data range \a first ... \a last
-    \ingroup jkqtptools_math_statistics_adaptors_adaptors
+    \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputIt standard iterator type of \a first and \a last.
     \param plotter the plotter to which to add the resulting graph
@@ -239,7 +239,7 @@ inline std::pair<JKQTPBoxplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*> jk
 
 
 /*! \brief calculate an autoranged histogram and add a JKQTPBarVerticalGraph to the given plotter, where the histogram is calculated from the data range \a first ... \a last, bins defined by their number
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -275,7 +275,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
 
 
 /*! \brief calculate an autoranged histogram and add a JKQTPBarVerticalGraph to the given plotter, where the histogram is calculated from the data range \a first ... \a last, bins defined by their width
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -310,7 +310,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
 
 
 /*! \brief calculate an autoranged histogram and add a JKQTPBarVerticalGraph to the given plotter, where the histogram is calculated from the data range \a first ... \a last, bins defined by their width
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -348,7 +348,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1D(JKQTBasePlotter* plotter,
 
 
 /*! \brief calculate an autoranged histogram and add a JKQTPBarHorizontalGraph to the given plotter, where the histogram is calculated from the data range \a first ... \a last, bins defined by their number
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -384,7 +384,7 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlott
 
 
 /*! \brief calculate an autoranged histogram and add a JKQTPBarHorizontalGraph to the given plotter, where the histogram is calculated from the data range \a first ... \a last, bins defined by their width
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -419,7 +419,7 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlott
 
 
 /*! \brief calculate an autoranged histogram and add a JKQTPBarHorizontalGraph to the given plotter, where the histogram is calculated from the data range \a first ... \a last, bins defined by their width
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -467,7 +467,7 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1D(JKQTBasePlotter* plotte
 
 
 /*! \brief calculate an autoranged KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, bins defined by their number
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -506,7 +506,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
 
 
 /*! \brief calculate an autoranged KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, bins defined by their width
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -544,7 +544,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
 
 
 /*! \brief calculate an autoranged KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, bins defined by their width
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -584,7 +584,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt fi
 }
 
 /*! \brief calculate an autoranged KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, evaluation positions are given by the range \a binXLeft ... \a binXRight (in steps of \a binxDelta )
-    \ingroup jkqtptools_math_statistics_adaptors_1dhist
+    \ingroup jkqtptools_math_statistics_adaptors
 
 
     \tparam InputIt standard iterator type of \a first and \a last.

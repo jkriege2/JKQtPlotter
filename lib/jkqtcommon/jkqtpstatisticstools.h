@@ -1433,64 +1433,64 @@ inline void jkqtpstatHistogram1D(InputIt first, InputIt last, BinsInputIt binsFi
 
 
 /*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t):=\frac{1}{\sqrt{2\pi}}\exp \left(-\frac{1}{2}t^2\right) \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DGaussian(double t);
 /*! \brief a 1D Cauchy kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t):=\frac{1}{\pi(1+t^2)} \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DCauchy(double t);
 
 /*! \brief a 1D Picard kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t):=\frac{1}{2}\exp(-|t|) \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DPicard(double t);
 /*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{3}{4} ( 1- t^2 ),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DEpanechnikov(double t);
 /*! \brief a 1D uniform kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
-    \f[ k(t) :=\begin{cases}1,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
+    \f[ k(t) :=\begin{cases}0.5,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DUniform(double t);
 /*! \brief a 1D Epanechnikov kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}1-|t|,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DTriangle(double t);
 
 /*! \brief a 1D quartic kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{15}{16}(1-t^2)^2,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DQuartic(double t);
 /*! \brief a 1D triweight kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{35}{32}(1-t^2)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DTriweight(double t);
 
 /*! \brief a 1D tricube kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{70}{81}(1-|t|^3)^3,  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel1DTricube(double t);
 /*! \brief a 1D cosine kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_1dkde_kernels
 
     \f[ k(t) :=\begin{cases}\frac{\pi}{4}\cos\left(\frac{\pi}{2}t\right),  & \text{if }t\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
@@ -1509,14 +1509,14 @@ JKQTP_LIB_EXPORT double jkqtpstatKernel1DCosine(double t);
 
 
 /*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_2dkde
+    \ingroup jkqtptools_math_statistics_2dkde_kernels
 
     \f[ k(t_x, t_y):=\frac{1}{2\pi}\exp \left(-\frac{t_x^2+t_y^2}{2}\right) \f]
 */
 JKQTP_LIB_EXPORT double jkqtpstatKernel2DGaussian(double tx, double ty);
 
 /*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
-    \ingroup jkqtptools_math_statistics_2dkde
+    \ingroup jkqtptools_math_statistics_2dkde_kernels
 
     \f[ k(t_x, t_y):=\begin{cases}\frac{1}{4},  & \text{if }t_x,t_y\in [-1;1]\\0, & \text{else}\end{cases} \f]
 */
@@ -1798,8 +1798,6 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double 
     }
 
 }
-
-
 
 
 

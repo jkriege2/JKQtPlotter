@@ -72,8 +72,14 @@ All statistics functions use all values in the given range and convert each valu
 \defgroup jkqtptools_math_statistics_1dhist 1-dimensional Histograms 
 \ingroup jkqtptools_math_statistics
 
+\defgroup jkqtptools_math_statistics_1dhist_kernels Kernels for 1-dimensional Histograms
+\ingroup jkqtptools_math_statistics_1dhist
+
 \defgroup jkqtptools_math_statistics_2dhist 2-dimensional Histograms
 \ingroup jkqtptools_math_statistics
+
+\defgroup jkqtptools_math_statistics_2dhist_kernels Kernels for 2-dimensional Histograms
+\ingroup jkqtptools_math_statistics_2dhist
 
 \defgroup jkqtptools_math_statistics_1dkde 1-dimensional Kernel Density Estimates
 \ingroup jkqtptools_math_statistics
