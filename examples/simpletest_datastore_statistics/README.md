@@ -1,7 +1,18 @@
-# Tutorial (JKQTPlotter): Advanced 1-Dimensional Statistics with JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastoreStatistics}
+# Tutorial (JKQTPDatastore): Advanced 1-Dimensional Statistics with JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastoreStatistics}
 
-This tutorial project (see `./examples/simpletest_datastore_statistics/`) explains several advanced functions of JKQTPDatastore in combination with the statistics library conatined in JKQTPlotter.
+[JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"
+[statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
 
+
+This tutorial project (see `./examples/simpletest_datastore_statistics/`) explains several advanced functions of JKQTPDatastore in combination with the [[statisticslibrary]] conatined in JKQTPlotter.
+
+***Note*** that there are additional tutorial explaining other aspects of data mangement in JKQTPDatastore:
+  - [JKQTPlotterBasicJKQTPDatastore]
+  - [JKQTPlotterBasicJKQTPDatastoreIterators]
+  - [JKQTPlotterBasicJKQTPDatastoreStatistics]
+  
 [TOC]
 
 The source code of the main application can be found in [`jkqtplotter_simpletest_datastore_statistics.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics/jkqtplotter_simpletest_datastore_statistics.cpp). 
@@ -50,7 +61,7 @@ This (if repeated for all three columns) results in a plot like this:
 
 ![jkqtplotter_simpletest_datastore_statistics_dataonly](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_statistics_dataonly.png)
 
-Based on the raw data we can now use JKQTPlotter's statistics library to calculate some basic properties, like the average (`jkqtpstatAverage()`) or the standard deviation (`jkqtpstatStdDev()`):
+Based on the raw data we can now use JKQTPlotter's [statisticslibrary] to calculate some basic properties, like the average (`jkqtpstatAverage()`) or the standard deviation (`jkqtpstatStdDev()`):
 
 ```.cpp
     size_t N=0;
@@ -86,7 +97,7 @@ All these functions use all values in the given range and convert each value to 
 
 ## Standard Boxplots 
 
-As mentioned above and shown in several other examples, JKQTPlotter supports [Boxplots](https://en.wikipedia.org/wiki/Box_plot) with the classes `JKQTPBoxplotHorizontalElement`, `JKQTPBoxplotVerticalElement`, as well as `JKQTPBoxplotHorizontal` and `JKQTPBoxplotVertical`. You can then use the 5-Number Summray functions from the statistics library to calculate the data for such a boxplot (e.g. `jkqtpstat5NumberStatistics()`) and set it up by hand. Code would look roughly like this:
+As mentioned above and shown in several other examples, JKQTPlotter supports [Boxplots](https://en.wikipedia.org/wiki/Box_plot) with the classes `JKQTPBoxplotHorizontalElement`, `JKQTPBoxplotVerticalElement`, as well as `JKQTPBoxplotHorizontal` and `JKQTPBoxplotVertical`. You can then use the 5-Number Summray functions from the [statisticslibrary] to calculate the data for such a boxplot (e.g. `jkqtpstat5NumberStatistics()`) and set it up by hand. Code would look roughly like this:
 ```.cpp
     JKQTPStat5NumberStatistics stat=jkqtpstat5NumberStatistics(data.begin(), data.end(), 0.25, .5);
     JKQTPBoxplotVerticalElement* res=new JKQTPBoxplotVerticalElement(plotter);
@@ -106,7 +117,7 @@ As mentioned above and shown in several other examples, JKQTPlotter supports [Bo
     plotter->addGraph(res);
 ```
 
-In order to save you the work of writing out this code, the statistics library provides "adaptors", such as `jkqtpstatAddVBoxplot()`, which basically implements the code above. Then drawing a boxplot is reduced to:
+In order to save you the work of writing out this code, the [statisticslibrary] provides "adaptors", such as `jkqtpstatAddVBoxplot()`, which basically implements the code above. Then drawing a boxplot is reduced to:
 
 ```.cpp
     JKQTPBoxplotHorizontalElement* gBox2=jkqtpstatAddHBoxplot(plot1box->getPlotter(), datastore1->begin(randomdatacol2), datastore1->end(randomdatacol2), -0.25);
@@ -138,7 +149,7 @@ As you can see this restuns the `JKQTPBoxplotHorizontalElement` and in addition 
 
 # Histograms 
 
-Calculating 1D-Histograms is supported by several functions from the statistics library, e.g. `jkqtpstatHistogram1DAutoranged()`. You can use the result to fill new columns in a `JKQTPDatastore`, which can then be used to draw the histogram (here wit 15 bins, spanning the full data range):
+Calculating 1D-Histograms is supported by several functions from the [statisticslibrary], e.g. `jkqtpstatHistogram1DAutoranged()`. You can use the result to fill new columns in a `JKQTPDatastore`, which can then be used to draw the histogram (here wit 15 bins, spanning the full data range):
 
 ```.cpp
     size_t histcolX=plotter->getDatastore()->addColumn(histogramcolumnBaseName+", bins");
@@ -165,7 +176,7 @@ The resulting plot looks like this (the distributions used to generate the rando
 
 # Kernel Density Estimates (KDE)
 
-Especially when only few samples from a distribution are available, histograms are not good at representing the underlying data distribution. In such cases, [Kernel Density Estimates (KDE)](https://en.wikipedia.org/wiki/Kernel_density_estimation) can help, which are basically a smoothed variant of a histogram. The statistics library supports calculating them via e.g. `jkqtpstatKDE1D()`:
+Especially when only few samples from a distribution are available, histograms are not good at representing the underlying data distribution. In such cases, [Kernel Density Estimates (KDE)](https://en.wikipedia.org/wiki/Kernel_density_estimation) can help, which are basically a smoothed variant of a histogram. The [statisticslibrary] supports calculating them via e.g. `jkqtpstatKDE1D()`:
 
 ```.cpp
     size_t kdecolX=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", bins");
@@ -188,7 +199,7 @@ The function accepts different kernel functions (any C++ functor `double f(doubl
   
 The three parameters `-5.0, 0.01, 10.0` tell the function `jkqtpstatKDE1D()` to evaluate the KDE at positions between -5 and 10, in steps of 0.01.
 
-Finally the bandwidth constrols the smoothing and the statistics library provides a simple function to estimate it automatically from the data:
+Finally the bandwidth constrols the smoothing and the [statisticslibrary] provides a simple function to estimate it automatically from the data:
 ```.cpp
     double kdeBandwidth=jkqtpstatEstimateKDEBandwidth(datastore1->begin(randomdatacol1subset), datastore1->end(randomdatacol1subset));
 ```

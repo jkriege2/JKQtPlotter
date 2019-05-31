@@ -26,22 +26,15 @@
  In the context of the sequencer program this is a tool class that can be used by the classes
  in the project. E.g. used by JKQTPXParsedFunctionLineGraph, JKQTPYParsedFunctionLineGraph 
 
- */
+ \defgroup jkmpultil JKQTPMathParser: Utilities
+ \ingroup jkmp
 
-/**
-* \defgroup jkmpultil utilities for JKQTPMathParser function parser class
-* \ingroup jkmp
+ \defgroup jkmpNodes JKQTPMathParser: Memory Representation of Expressions
+ \ingroup jkmp
+
+ \defgroup jkmpErrorhandling JKQTPMathParser Error Handling
+ \ingroup jkmp
 */
-
-/**
- * \defgroup jkmpNodes memory representation of expressions
- * \ingroup jkmp
- */
- 
-/**
- * \defgroup jkmpErrorhandling error handling
- * \ingroup jkmp
- */
 
 #include <iostream>
 #include <cmath>

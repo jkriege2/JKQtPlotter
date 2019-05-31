@@ -211,6 +211,20 @@ JKQTPDatastoreItem::JKQTPDatastoreItem(size_t columns, size_t rows){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPDatastoreItem::JKQTPDatastoreItem(const QVector<double>& data_)
+{
+    this->storageType=StorageType::Internal;
+    this->allocated=false;
+    this->dataformat=JKQTPDatastoreItemFormat::SingleColumn;
+    this->storageType=StorageType::Vector;
+    this->datavec=data_;
+    this->data=datavec.data();
+    this->columns=1;
+    this->rows=static_cast<int>(data_.size());
+    this->allocated=true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 bool JKQTPDatastoreItem::resizeColumns(size_t new_rows) {
     bool dataRetained=false;
     if (storageType==StorageType::Internal && allocated && data!=nullptr) {

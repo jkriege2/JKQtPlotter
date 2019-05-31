@@ -193,6 +193,9 @@ enum class JKQTPDatastoreItemFormat {
   *   - appendToColumn()
   * .
   *
+  * \see \ref JKQTPlotterBasicJKQTPDatastoreIterators
+  *
+  *
   *
   * \subsection jkqtpdatastore_column_management_images Image Column
   *
@@ -400,6 +403,36 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         JKQTPColumnConstIterator begin(size_t i) const;
         /** \brief returns a const iterator behind the last data entry data in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::const_iterator */
         JKQTPColumnConstIterator end(size_t i) const;
+
+        /** \brief removes the entry \a pos
+         *
+         *  \warning If the memory was externally managed before, it will be internally managed afterwards
+         *
+         *  \warning the iterator \a pos is rendered invalid by this column, as the in some cases the internal column is redefined!
+         */
+        inline void eraseFromColumn(const JKQTPColumnIterator &pos);
+        /** \brief removes the entry \a pos
+         *
+         *  \warning If the memory was externally managed before, it will be internally managed afterwards
+         *
+         *  \warning the iterator \a pos is rendered invalid by this column, as the in some cases the internal column is redefined!
+         */
+        inline void eraseFromColumn(const JKQTPColumnConstIterator &pos);
+        /** \brief removes the entries \a pos to \a posEnd
+         *
+         *  \warning If the memory was externally managed before, it will be internally managed afterwards
+         *
+         *  \warning the iterator \a pos is rendered invalid by this column, as the in some cases the internal column is redefined!
+         */
+        inline void eraseFromColumn(const JKQTPColumnConstIterator &pos, const JKQTPColumnConstIterator &posEnd);
+        /** \brief removes the entries \a pos to \a posEnd
+         *
+         *  \warning If the memory was externally managed before, it will be internally managed afterwards
+         *
+         *  \warning the iterator \a pos is rendered invalid by this column, as the in some cases the internal column is redefined!
+         */
+        inline void eraseFromColumn(const JKQTPColumnIterator &pos, const JKQTPColumnIterator &posEnd);
+
 
         /** \brief returns a back-inserter iterator (JKQTPColumnBackInserter) to the \a i -th column in the JKQTPDatastore \see JKQTPColumnBackInserter */
         JKQTPColumnBackInserter backInserter(int i);
@@ -1249,10 +1282,6 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     QString name;
     /** \brief is this item valid?/usable? */
     bool valid;
-
-  protected:
-    inline JKQTPDatastore* getDatastore() { return datastore; }
-    inline const JKQTPDatastore* getDatastore() const { return datastore; }
   public:
     typedef JKQTPColumnIterator iterator;
     typedef JKQTPColumnConstIterator const_iterator;
@@ -1267,6 +1296,14 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     JKQTPColumn(JKQTPDatastore* datastore, const QString& name=QString(""), size_t datastoreItem=0, size_t datastoreOffset=0, size_t imageColumns=1);
 
     inline bool isValid() const { return valid; }
+
+    /** \brief two columns are equal, if the same memory in the same datastore is referenced */
+    inline bool operator==(const JKQTPColumn& other) const {
+        return (datastoreItem==other.datastoreItem)
+                && (datastoreOffset==other.datastoreOffset)
+                && (datastore==other.datastore)
+                && (valid==other.valid);
+    }
 
     /*! \copydoc name */
     void setName (const QString& __value);
@@ -1415,8 +1452,22 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
     inline const_iterator end() const;
 
 
+    friend class JKQTPDatastore;
     friend class JKQTPColumnIterator;
     friend class JKQTPColumnConstIterator;
+
+    protected:
+      inline JKQTPDatastore* getDatastore() { return datastore; }
+      inline const JKQTPDatastore* getDatastore() const { return datastore; }
+      inline void replaceMemory(size_t datastoreItem_=0, size_t datastoreOffset_=0) {
+          datastoreItem=datastoreItem_;
+          datastoreOffset=datastoreOffset_;
+      }
+      /** \brief removes the entry \a row */
+      inline void erase(size_t row);
+      /** \brief removes the entries \a row to \a rowEnd */
+      inline void erase(size_t row, size_t rowEnd);
+
 };
 
 /** \brief iterator over the data in the column of a JKQTPDatastore
@@ -1447,21 +1498,166 @@ class JKQTPColumnIterator {
         inline JKQTPColumnIterator(JKQTPColumnIterator&&)=default;
         inline JKQTPColumnIterator& operator=(const JKQTPColumnIterator&)=default;
         inline JKQTPColumnIterator& operator=(JKQTPColumnIterator&&)=default;
-        inline self_type operator++(int /*junk*/) { self_type i = *this; pos_++; return i; }
-        inline self_type operator++() { pos_++; return *this; }
-        inline self_type operator--(int /*junk*/) { self_type i = *this; pos_--; return i; }
-        inline self_type operator--() { pos_--; return *this; }
-        inline self_type operator+=(int inc) { pos_+=inc; return *this; }
-        inline self_type operator-=(int dec) { pos_-=dec; return *this; }
+        inline self_type operator++(int /*junk*/) {
+            self_type i = *this;
+            if (!isValid()) pos_++;
+            return i;
+        }
+        inline self_type operator++() {
+            if (!isValid()) return self_type(col_);
+            pos_++; return *this;
+        }
+        inline self_type operator--(int /*junk*/) {
+            self_type i = *this;
+            if (isValid()) {
+                pos_--;
+            } else {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())-1;
+            }
+            return i;
+        }
+        inline self_type operator--() {
+            if (isValid()) {
+                pos_--;
+            } else {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())-1;
+            }
+            return *this;
+        }
+        inline self_type operator+=(int inc) {
+            if (isValid()) {
+                pos_+=inc;
+            } else if (inc<0) {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())+inc;
+            }
+            return *this;
+        }
+        inline self_type operator-=(int dec) {
+            if (isValid()) {
+                pos_-=dec;
+            } else {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())-dec;
+            }
+
+            return *this;
+        }
+
+        friend self_type operator+(difference_type off, const self_type& right) {
+            if (right.isValid()) {
+                return self_type(right.col_, off + right.pos_);
+            } else {
+              if (off<0) return self_type(right.col_, off + static_cast<int>(right.col_->getRows()));
+              else return self_type(right.col_);
+            }
+        }
+        friend self_type operator-(difference_type off, const self_type& right) {
+            if (right.isValid()) {
+                return self_type(right.col_, off - right.pos_);
+            } else {
+              return self_type(right.col_);
+            }
+        }
+        inline self_type operator+(difference_type rhs) const {
+            if (isValid()) {
+                return self_type(col_, pos_+rhs);
+            } else if (rhs<0){
+                JKQTPASSERT(col_);
+                return self_type(col_, static_cast<int>(col_->getRows())+rhs);
+            } else {
+                return self_type(col_);
+            }
+        }
+        inline self_type operator-(difference_type rhs) const {
+            if (isValid()) {
+                return self_type(col_, pos_-rhs);
+            } else {
+                JKQTPASSERT(col_);
+                return self_type(col_, static_cast<int>(col_->getRows())-rhs);
+            }
+        }
+        inline difference_type operator-(self_type rhs) const {
+            if (!isValid() && !rhs.isValid()) return 0;
+            if (!isValid() && rhs.isValid() && col_==rhs.col_) return static_cast<difference_type>(col_->getRows())-rhs.pos_;
+            if (isValid() && !rhs.isValid() && col_==rhs.col_) return pos_-static_cast<difference_type>(col_->getRows());
+            JKQTPASSERT(isValid() && rhs.isValid() && col_==rhs.col_);
+            return pos_-rhs.pos_;
+        }
+
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
         inline reference operator*() {
             JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
             return col_->at(pos_);
         }
+        inline reference operator[](difference_type off) const
+        {
+            if (!isValid() && off<0) {
+                return col_->at(static_cast<int>(col_->getRows())+off);
+            }
+            JKQTPASSERT(col_!=nullptr && pos_+off>=0 && pos_+off<static_cast<int>(col_->getRows()));
+            return col_->at(pos_+off);
+        }
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
         inline const_reference operator*() const {
             JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
             return col_->at(pos_);
+        }
+        /** \brief comparison operator (less than)
+         *
+         * rules:
+         *   - ivalid iterators are never smaller than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator>(), operator>=()
+         * */
+        inline bool operator<(const self_type& rhs) const {
+            JKQTPASSERT(isValid() || rhs.isValid());
+            if (!isValid() && rhs.isValid()) {
+                return false;
+            } else if (isValid() && !rhs.isValid()) {
+                return true;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_<rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (less than, or equal)
+         * \see operator==(), operator<(), operator>(), operator>=()
+         * */
+        inline bool operator<=(const self_type& rhs) const {
+            return operator==(rhs) || operator<(rhs);
+        }
+        /** \brief comparison operator (larger than)
+         *
+         * rules:
+         *   - ivalid iterators are always larger than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator<(), operator>=()
+         * */
+        inline bool operator>(const self_type& rhs) const {
+            JKQTPASSERT(isValid() || rhs.isValid());
+            if (!isValid() && rhs.isValid()) {
+                return true;
+            } else if (isValid() && !rhs.isValid()) {
+                return false;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_>rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (larger than, or equal)
+         * \see operator==(), operator<(), operator>(), operator<=()
+         * */
+        inline bool operator>=(const self_type& rhs) const {
+            return operator==(rhs) || operator>(rhs);
         }
         /** \brief comparison operator (equals)
          *
@@ -1526,6 +1722,7 @@ class JKQTPColumnIterator {
         }
         friend class JKQTPColumnConstIterator;
         friend class JKQTPColumn;
+        friend class JKQTPDatastore;
     protected:
         /** \brief returns the referenced column */
         inline JKQTPColumn* getColumn() { return col_; }
@@ -1631,16 +1828,166 @@ class JKQTPColumnConstIterator {
             rhs.pos_=-1;
             return *this;
         }
-        inline self_type operator++(int /*junk*/) { self_type i = *this; pos_++; return i; }
-        inline self_type operator++() { pos_++; return *this; }
-        inline self_type operator--(int /*junk*/) { self_type i = *this; pos_--; return i; }
-        inline self_type operator--() { pos_--; return *this; }
-        inline self_type operator+=(int inc) { pos_+=inc; return *this; }
-        inline self_type operator-=(int dec) { pos_-=dec; return *this; }
+        inline self_type operator++(int /*junk*/) {
+            self_type i = *this;
+            if (!isValid()) pos_++;
+            return i;
+        }
+        inline self_type operator++() {
+            if (!isValid()) return self_type(col_);
+            pos_++; return *this;
+        }
+        inline self_type operator--(int /*junk*/) {
+            self_type i = *this;
+            if (isValid()) {
+                pos_--;
+            } else {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())-1;
+            }
+            return i;
+        }
+        inline self_type operator--() {
+            if (isValid()) {
+                pos_--;
+            } else {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())-1;
+            }
+            return *this;
+        }
+        inline self_type operator+=(int inc) {
+            if (isValid()) {
+                pos_+=inc;
+            } else if (inc<0) {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())+inc;
+            }
+            return *this;
+        }
+        inline self_type operator-=(int dec) {
+            if (isValid()) {
+                pos_-=dec;
+            } else {
+                JKQTPASSERT(col_);
+                pos_=static_cast<int>(col_->getRows())-dec;
+            }
+
+            return *this;
+        }
+
+        friend self_type operator+(difference_type off, const self_type& right) {
+            if (right.isValid()) {
+                return self_type(right.col_, off + right.pos_);
+            } else {
+              if (off<0) return self_type(right.col_, off + static_cast<int>(right.col_->getRows()));
+              else return self_type(right.col_);
+            }
+        }
+        friend self_type operator-(difference_type off, const self_type& right) {
+            if (right.isValid()) {
+                return self_type(right.col_, off - right.pos_);
+            } else {
+              return self_type(right.col_);
+            }
+        }
+        inline self_type operator+(difference_type rhs) const {
+            if (isValid()) {
+                return self_type(col_, pos_+rhs);
+            } else if (rhs<0){
+                JKQTPASSERT(col_);
+                return self_type(col_, static_cast<int>(col_->getRows())+rhs);
+            } else {
+                return self_type(col_);
+            }
+        }
+        inline self_type operator-(difference_type rhs) const {
+            if (isValid()) {
+                return self_type(col_, pos_-rhs);
+            } else {
+                JKQTPASSERT(col_);
+                return self_type(col_, static_cast<int>(col_->getRows())-rhs);
+            }
+        }
+        inline difference_type operator-(self_type rhs) const {
+            if (!isValid() && !rhs.isValid()) return 0;
+            if (!isValid() && rhs.isValid() && col_==rhs.col_) return static_cast<difference_type>(col_->getRows())-rhs.pos_;
+            if (isValid() && !rhs.isValid() && col_==rhs.col_) return pos_-static_cast<difference_type>(col_->getRows());
+            JKQTPASSERT(isValid() && rhs.isValid() && col_==rhs.col_);
+            return pos_-rhs.pos_;
+        }
+
         /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
-        inline reference operator*() const {
+        inline reference operator*() {
             JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
             return col_->at(pos_);
+        }
+        inline reference operator[](difference_type off) const
+        {
+            if (!isValid() && off<0) {
+                return col_->at(static_cast<int>(col_->getRows())+off);
+            }
+            JKQTPASSERT(col_!=nullptr && pos_+off>=0 && pos_+off<static_cast<int>(col_->getRows()));
+            return col_->at(pos_+off);
+        }
+        /** \brief dereferences the iterator, throws an exception if the iterator is invalid (see isValid() ) or the value does not exist in the column */
+        inline const_reference operator*() const {
+            JKQTPASSERT(col_!=nullptr && pos_>=0 && pos_<static_cast<int>(col_->getRows()));
+            return col_->at(pos_);
+        }
+        /** \brief comparison operator (less than)
+         *
+         * rules:
+         *   - ivalid iterators are never smaller than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator>(), operator>=()
+         * */
+        inline bool operator<(const self_type& rhs) const {
+            JKQTPASSERT(isValid() || rhs.isValid());
+            if (!isValid() && rhs.isValid()) {
+                return false;
+            } else if (isValid() && !rhs.isValid()) {
+                return true;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_<rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (less than, or equal)
+         * \see operator==(), operator<(), operator>(), operator>=()
+         * */
+        inline bool operator<=(const self_type& rhs) const {
+            return operator==(rhs) || operator<(rhs);
+        }
+        /** \brief comparison operator (larger than)
+         *
+         * rules:
+         *   - ivalid iterators are always larger than valid operators
+         *   - two valid operator must reference the same column
+         *   - a valid operator is smaller than another, if it points to a pos_ before another
+         * .
+         *
+         * \see operator<=(), operator<(), operator>=()
+         * */
+        inline bool operator>(const self_type& rhs) const {
+            JKQTPASSERT(isValid() || rhs.isValid());
+            if (!isValid() && rhs.isValid()) {
+                return true;
+            } else if (isValid() && !rhs.isValid()) {
+                return false;
+            } else {
+                JKQTPASSERT(col_ == rhs.col_);
+                return pos_>rhs.pos_;
+            }
+        }
+        /** \brief comparison operator (larger than, or equal)
+         * \see operator==(), operator<(), operator>(), operator<=()
+         * */
+        inline bool operator>=(const self_type& rhs) const {
+            return operator==(rhs) || operator>(rhs);
         }
         /** \brief comparison operator (equals)
          *
@@ -1653,7 +2000,7 @@ class JKQTPColumnConstIterator {
          * \see operator!=()
          * */
         inline bool operator==(const self_type& rhs) const {
-            if (col_ == nullptr && rhs.col_==nullptr) return true;
+            if (!isValid() && !rhs.isValid()) return true;
             if (col_ == rhs.col_) {
                 if ((pos_<0 || pos_>=static_cast<int>(rhs.col_->getRows())) && (pos_<0 || rhs.pos_>=static_cast<int>(rhs.col_->getRows()))) return true;
                 return pos_==rhs.pos_;
@@ -1665,6 +2012,7 @@ class JKQTPColumnConstIterator {
          * \see operator==()
          * */
         inline bool operator!=(const self_type& rhs) const { return !this->operator==(rhs); }
+
         /** \brief checks the iterator for validity (i.e. points to an existing column and position is in a valid range) */
         inline bool isValid() const {
             return col_ && pos_>=0 && pos_<static_cast<int>(col_->getRows());
@@ -1705,6 +2053,7 @@ class JKQTPColumnConstIterator {
         }
 
         friend class JKQTPColumn;
+        friend class JKQTPDatastore;
     protected:
         /** \brief returns the referenced column */
         inline const JKQTPColumn* getColumn() const { return col_; }
@@ -1755,9 +2104,12 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
   protected:
     /** \brief hidden default constructor */
     JKQTPDatastoreItem();
+
   public:
     /** \brief class constructor: initializes the object for internal data storage */
     JKQTPDatastoreItem(size_t columns, size_t rows);
+    /** \brief class constructor: initializes the object for internal data storage with the given data */
+    JKQTPDatastoreItem(const QVector<double> &data);
     /** \brief class constructor: initializes the object for external data storage */
     JKQTPDatastoreItem(JKQTPDatastoreItemFormat dataformat, double* data, size_t columns, size_t rows);
     /** \brief class constructor: initializes the object for external data storage */
@@ -1775,7 +2127,30 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     inline size_t getColumns() const
     {   return columns;   }
 
+    /** \brief checks whether dataformat==JKQTPDatastoreItemFormat::SingleColumn and storageType==StorageType::Vector */
+    inline bool isVector() const {
+        return dataformat==JKQTPDatastoreItemFormat::SingleColumn && storageType==StorageType::Vector;
+    }
 
+    /** \brief if \c isValid() : erase the row \a row */
+    inline void erase(size_t row) {
+        JKQTPASSERT(isVector());
+        datavec.erase(datavec.begin()+row, datavec.end());
+        rows=static_cast<int>(datavec.size());
+        data=datavec.data();
+    }
+    /** \brief if \c isValid() : erase all rows (and including) from  \a row to \a rowEnd */
+    inline void erase(size_t row, size_t rowEnd) {
+        if (row>rowEnd) erase(rowEnd, row);
+        else if (row==rowEnd) erase(row);
+        else {
+            JKQTPASSERT(isVector());
+            if (rowEnd>=static_cast<size_t>(datavec.size())) datavec.erase(datavec.begin()+row, datavec.end());
+            else datavec.erase(datavec.begin()+row, datavec.begin()+rowEnd);
+            rows=static_cast<int>(datavec.size());
+            data=datavec.data();
+        }
+    }
     /** \brief returns the data at the position (\a column, \a row ).
      *
      * \note The column index specifies the column inside THIS item, not the global column number. */
@@ -1912,7 +2287,6 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
         }
         return false;
     }
-
 };
 
 
@@ -1988,6 +2362,16 @@ JKQTPColumn::const_iterator JKQTPColumn::end() const {
     return JKQTPColumn::const_iterator(this, -1);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPColumn::erase(size_t row) {
+    datastore->getItem(datastoreItem)->erase(row);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPColumn::erase(size_t row, size_t rowEnd) {
+    datastore->getItem(datastoreItem)->erase(row, rowEnd);
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline double JKQTPColumn::getValue(size_t n) const {
@@ -2017,6 +2401,7 @@ inline double& JKQTPColumn::at(int n) {
     JKQTPASSERT(n>=0);
     return datastore->getItem(datastoreItem)->at(datastoreOffset, static_cast<size_t>(n));
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::getRows(size_t column) const {
@@ -2133,6 +2518,74 @@ inline void JKQTPDatastore::appendToColumn(size_t column, TIterator first, TIter
 {
     for(auto it=first; it!=last; it++) {
         appendToColumn(column, *it);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::eraseFromColumn(const JKQTPColumnIterator &pos) {
+    if (pos.isValid()) {
+        bool ok=pos.getColumn()->getDatastoreItem()->isVector();
+        auto itc=columns.key(*pos.getColumn());
+        if (!ok) {
+            QVector<double> old_data;
+            for (auto it=pos.getColumn()->begin(); it!=pos; ++it) old_data.push_back(*it);
+
+
+            size_t itemID=addItem(new JKQTPDatastoreItem(old_data));
+            columns[itc].replaceMemory(itemID, 0);
+        } else {
+            columns[itc].erase(static_cast<size_t>(pos.getPosition()));
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::eraseFromColumn(const JKQTPColumnConstIterator &pos) {
+    if (pos.isValid()) {
+        bool ok=pos.getColumn()->getDatastoreItem()->isVector();
+        auto itc=columns.key(*pos.getColumn());
+        if (!ok) {
+            QVector<double> old_data;
+            for (auto it=pos.getColumn()->begin(); it!=pos; ++it) old_data.push_back(*it);
+
+
+            size_t itemID=addItem(new JKQTPDatastoreItem(old_data));
+            columns[itc].replaceMemory(itemID, 0);
+        } else {
+            columns[itc].erase(static_cast<size_t>(pos.getPosition()));
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::eraseFromColumn(const JKQTPColumnIterator &pos, const JKQTPColumnIterator &posEnd) {
+    if (pos.isValid()) {
+        bool ok=pos.getColumn()->getDatastoreItem()->isVector();
+        auto itc=columns.key(*pos.getColumn());
+        if (!ok) {
+            QVector<double> old_data;
+            for (auto it=pos.getColumn()->begin(); it!=pos.getColumn()->end(); ++it) old_data.push_back(*it);
+            size_t itemID=addItem(new JKQTPDatastoreItem(old_data));
+            columns[itc].replaceMemory(itemID, 0);
+        }
+        if (posEnd.isValid()) columns[itc].erase(static_cast<size_t>(pos.getPosition()), static_cast<size_t>(posEnd.getPosition()));
+        else columns[itc].erase(static_cast<size_t>(pos.getPosition()), static_cast<size_t>(pos.getPosition())+columns[itc].getRows()+1);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::eraseFromColumn(const JKQTPColumnConstIterator &pos, const JKQTPColumnConstIterator &posEnd) {
+    if (pos.isValid()) {
+        bool ok=pos.getColumn()->getDatastoreItem()->isVector();
+        auto itc=columns.key(*pos.getColumn());
+        if (!ok) {
+            QVector<double> old_data;
+            for (auto it=pos.getColumn()->begin(); it!=pos.getColumn()->end(); ++it) old_data.push_back(*it);
+            size_t itemID=addItem(new JKQTPDatastoreItem(old_data));
+            columns[itc].replaceMemory(itemID, 0);
+        }
+        if (posEnd.isValid()) columns[itc].erase(static_cast<size_t>(pos.getPosition()), static_cast<size_t>(posEnd.getPosition()));
+        else columns[itc].erase(static_cast<size_t>(pos.getPosition()), static_cast<size_t>(pos.getPosition())+columns[itc].getRows()+1);
     }
 }
 

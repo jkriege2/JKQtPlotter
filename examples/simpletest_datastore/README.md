@@ -1,7 +1,17 @@
-# Tutorial (JKQTPlotter): Basic Usage of JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastore}
+# Tutorial (JKQTPDatastore): Basic Usage of JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastore}
+
+[JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"
+[statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
 
 This tutorial project (see `./examples/simpletest_datastore/`) explains several options of JKQTPDatastore, which is the class used to centrally store the data for (most) graphs on a JKQTPlotter widget.
 
+***Note*** that there are additional tutorial explaining other aspects of data mangement in JKQTPDatastore:
+  - [JKQTPlotterBasicJKQTPDatastore]
+  - [JKQTPlotterBasicJKQTPDatastoreIterators]
+  - [JKQTPlotterBasicJKQTPDatastoreStatistics]
+  
 [TOC]
 
 The source code of the main application can be found in [`jkqtplotter_simpletest_datastore.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore/jkqtplotter_simpletest_datastore.cpp). 
@@ -14,7 +24,7 @@ In every code-segment below, we will use these two declarations from the code to
     JKQTPDatastore* datastore=plot.getDatastore();
 ```
 
-# Copy Data from different data structures into JKQTPDatastore
+# Copying Data from External COntainers into JKQTPDatastore
 
 ## Copy Data from a Vector into a column of the JKQTPDatastore
 
@@ -118,7 +128,7 @@ In addition to the variants of `JKQTPDatastore::addColumn()`, that do not transf
 
 It is also possible to leave the data mangement completely to the JKQTPDatastore and just edit the data with access functions from JKQTPDatastore.
 
-## Generating Columns Non-Initialized Columns and Filling Them
+## Generating  Non-Initialized Columns and Filling Them
 
 The most basic way to generate data for a plot is to generate two non-initialized columns for the x- and y-coordinates of the graph points
 ```.cpp
@@ -139,22 +149,6 @@ Then use JKQTPDatastore::set() to fill them with data:
 Plotting these two columns versus each other results in a simple sine graph:
 
 ![simpletest_datastore_sine](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_sine.png)
-
-## Iterator Interface
-
-Alternatively you can also access the column via a C++ iterator:
-```.cpp
-    auto itX=datastore->begin(colX))
-    auto itY=datastore->begin(colY))
-    for (; itX!=datastore->end(colX); ++itX, ++itY) {
-        const double x=double(i)/double(Ndata)*8.0*M_PI;
-        *itX=x;
-        *itY=sin(x);
-    }
-```
-
-This, together with `JKQTPDatastore::backInserter()` allows to use `JKQTDatastore` together with algorithms from the C++ standard template libarary and other templated algorithms based on the same iterator-based interfaces (e.g. in boost).
-
 
 
 
@@ -325,3 +319,39 @@ The result will look like this (`JKQTPXYParametrizedScatterGraph` on the left an
 ![simpletest_datastore_image](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_image.png)
 
 
+
+# Iterator Interface
+
+Some sections before we discussed a code-fragment
+```.cpp
+    size_t itXColumn=datastore->addColumn(50, "cos curve: x-data");
+    size_t itYColumn=datastore->addColumn(50, "cos curve: y-data");
+    for (int i=0; i<datastore->getRows(itXColumn); i++) {
+        const double x=30.0+i/25.0*M_PI;
+        datastore->set(itXColumn, i, x);
+        datastore->set(itYColumn, i, cos(x));
+    }
+```
+in which an image was calculated pixel-by-pixel with explicit int indices. Alternatively you can also access the columns via C++ iterators:
+```.cpp
+    auto itX=datastore->begin(colX))
+    auto itY=datastore->begin(colY))
+    for (; itX!=datastore->end(colX); ++itX, ++itY) {
+        const double x=double(i)/double(Ndata)*8.0*M_PI;
+        *itX=x;
+        *itY=sin(x);
+    }
+```
+
+All these code fragments result in the same graphs:
+
+![simpletest_datastore_image](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_image.png)
+
+You can also use this interface to interface with algorithms e.g. from the C++ standard template library. E.g. if you want to sort the data in a column, you can simply call
+```.cpp
+    std::sort(datastore->begin(colY), datastore->end(colY));
+```
+
+![simpletest_datastore_image_sorted](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_image_sorted.png)
+
+This, together with `JKQTPDatastore::backInserter()` allows to use `JKQTDatastore` together with algorithms from the C++ standard template libarary and other templated algorithms based on the same iterator-based interfaces (e.g. in boost).

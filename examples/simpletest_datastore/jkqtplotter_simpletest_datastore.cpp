@@ -8,7 +8,7 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
-
+#include <algorithm>
 
 int main(int argc, char* argv[])
 {
@@ -21,6 +21,11 @@ int main(int argc, char* argv[])
     JKQTPXYLineGraph* linegraph;
     JKQTPColumnMathImage* imggraph;
     JKQTPXYParametrizedScatterGraph* paramscattergraph;
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /// externally provided data (i.e. from different containers)
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 2. first we create data inside a QVector for a simple plot (a sine curve) ... and add the plot
     //    note that you could use a std::vector equally well
@@ -43,6 +48,7 @@ int main(int argc, char* argv[])
 
 
     // 3. Now we generate a plot from data in a C-array, just reference in the JKQTPDatastore
+    //    Note: JKQTPDatastore does not take ownership of your data!
     #define NDATA 5
     double XCA[NDATA]= { 1, 2, 3, 4, 5 };
     double YCA[NDATA]= { 1, 0, 1, 0, 1 };
@@ -69,6 +75,10 @@ int main(int argc, char* argv[])
     linegraph->setTitle(QObject::tr("copied map"));
 
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    /// internally managed data
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 5. It is also possible to leave the data mangement completely to the JKQTPDatastore
     //    and just edit the data with access functions from JKQTPDatastore:
@@ -126,6 +136,7 @@ int main(int argc, char* argv[])
     imggraph->setWidth(10);
     imggraph->setHeight(1.5);
     imggraph->setTitle(QObject::tr("imgColumn"));
+
 
 
 
