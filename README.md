@@ -22,7 +22,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - complete with GUI (table view)
   - export capabilities (e.g. to CSV, SYLK, ...)
   - C++ standard iterator interface
-  - statistics library
+  - statistics library (basic statistics, boxplots, histograms, kernel density estimates, regression analysis, polynomial fitting)
 - large variety of graphs that can be added to a plot, e.g.:
   - scatter-plots (also parametrized color/size/symbol by a third data-column)
   - line graphs, step graphs, impulses
