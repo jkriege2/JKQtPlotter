@@ -20,10 +20,14 @@
 
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtcommon/jkqtpstatisticstools.h"
+#include "jkqtcommon/jkqtptoolsdebugging.h"
+#include "jkqtplotter/jkqtpgraphsbase.h"
+#include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsboxplot.h"
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphssinglecolumnsymbols.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
+#include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
 
 #ifndef JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
 #define JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
@@ -47,6 +51,9 @@
     \code
         jkqtpstatAddHBoxplot(plot1->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -0.3);
     \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_boxplots_simple.png
+
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
@@ -143,6 +150,8 @@ inline JKQTPBoxplotVerticalElement* jkqtpstatAddVBoxplot(JKQTBasePlotter* plotte
                                         0.05, 0.95 // Quantiles for the boxplot box whiskers' ends
     \endcode
 
+    \image html jkqtplotter_simpletest_datastore_statistics_boxplots_outliers.png
+
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
 template <class InputIt>
@@ -201,7 +210,7 @@ inline std::pair<JKQTPBoxplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*> 
         jkqtpstatAddVBoxplotAndOutliers(plot1->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -0.3,
                                         0.25, 0.75, // 1. and 3. Quartile for the boxplot box
                                         0.05, 0.95 // Quantiles for the boxplot box whiskers' ends
-    \endcode
+    \endcode    
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
@@ -257,6 +266,8 @@ inline std::pair<JKQTPBoxplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*> jk
         jkqtpstatAddHHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 11);
     \endcode
 
+    \image html jkqtplotter_simpletest_datastore_statistics_hist.png
+
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
 */
 template <class InputIt>
@@ -292,6 +303,8 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
     \code
         jkqtpstatAddHHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.5);
     \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_hist.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
 */
@@ -330,6 +343,8 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
         std::vector<double> bins{-2,-1.5,-1,-0.75,-0.5,-0.25,0,0.25,0.5,0.75,1,1.5,2,2.5,3,4,5,6,7,8,9,10};
         jkqtpstatAddHHistogram1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_hist.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1D(), JKQTPBarVerticalGraph
 */
@@ -486,6 +501,9 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1D(JKQTBasePlotter* plotte
         jkqtpstatAddHKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 200);
     \endcode
 
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
+
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
 */
 template <class InputIt>
@@ -524,6 +542,9 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
     \code
         jkqtpstatAddHKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.01);
     \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
 */
@@ -566,6 +587,9 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
         jkqtpstatAddHKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
+
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
 */
 template <class InputIt, class BinsInputIt>
@@ -606,6 +630,8 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt fi
         jkqtpstatAddHKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
 */
 template <class InputIt>
@@ -624,6 +650,617 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt fi
 }
 
 
+
+/*! \brief calculate the linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is \f$ f(x)=a+b\cdot x \f$
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+
+    Example:
+    \code
+        jkqtpstatAddLinearRegression(plot1->getPlotter(), datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_lin.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
+*/
+template <class InputItX, class InputItY>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false) {
+    double cA;
+    if (coeffA) cA=*coeffA;
+    double cB;
+    if (coeffB) cB=*coeffB;
+
+    JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
+    JKQTPASSERT_M(!fixB || (fixB && coeffB!=nullptr), "if fixB=true, coeffB needs to be provided");
+
+    jkqtpstatLinearRegression(firstX, lastX, firstY, lastY, cA, cB, fixA, fixB);
+    JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
+    g->setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction::Line);
+    g->setParamsV(cA, cB);
+    g->setTitle(QString("regression: $f(x) = %1 + %2 \\cdot x$").arg(jkqtp_floattolatexqstr(cA)).arg(jkqtp_floattolatexqstr(cB)));
+    plotter->addGraph(g);
+    if (coeffA) *coeffA=cA;
+    if (coeffB) *coeffB=cB;
+    return g;
+}
+
+
+/*! \brief calculate the linear regression coefficients for a given data data used to draw any `JKQTPXYGraph` \a datagraph  where the model is \f$ f(x)=a+b\cdot x \f$
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \param datagraph graph representing the (x,y) datapairs to which to fit the regression line
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+
+    Example:
+    \code
+        JKQTPXYLineGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        jkqtpstatAddLinearRegression(graphD);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_lin.png
+
+    \note The line graph is added to the same plotter that is the parent of \a datagraph !
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
+*/
+JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+
+
+
+/*! \brief  calculate the (robust) iteratively reweighted least-squares (IRLS) estimate for the parameters of the model \f$ f(x)=a+b\cdot x \f$
+           for a given data range \a firstX / \a firstY ... \a lastX / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+    \param p regularization parameter, the optimization problem is formulated in the \f$ L_p \f$ norm, using this \a p (see image below for an example)
+    \param iterations the number of iterations the IRLS algorithm performs
+
+    Example:
+    \code
+        jkqtpstatAddRobustIRLSLinearRegression(plot1->getPlotter(), datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSLinearRegression()
+*/
+template <class InputItX, class InputItY>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSLinearRegression(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100) {
+    double cA;
+    if (coeffA) cA=*coeffA;
+    double cB;
+    if (coeffB) cB=*coeffB;
+
+    JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
+    JKQTPASSERT_M(!fixB || (fixB && coeffB!=nullptr), "if fixB=true, coeffB needs to be provided");
+
+    jkqtpstatRobustIRLSLinearRegression(firstX, lastX, firstY, lastY, cA, cB, fixA, fixB, p, iterations);
+    JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
+    g->setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction::Line);
+    g->setParamsV(cA, cB);
+    g->setTitle(QString("robust regression: $f(x) = %1 + %2 \\cdot x$").arg(jkqtp_floattolatexqstr(cA)).arg(jkqtp_floattolatexqstr(cB)));
+    plotter->addGraph(g);
+    if (coeffA) *coeffA=cA;
+    if (coeffB) *coeffB=cB;
+    return g;
+}
+
+
+/*! \brief  calculate the (robust) iteratively reweighted least-squares (IRLS) estimate for the parameters of the model \f$ f(x)=a+b\cdot x \f$
+           for a given data range \a firstX / \a firstY ... \a lastX / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \param datagraph graph representing the (x,y) datapairs to which to fit the regression line
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+    \param p regularization parameter, the optimization problem is formulated in the \f$ L_p \f$ norm, using this \a p (see image below for an example)
+    \param iterations the number of iterations the IRLS algorithm performs
+
+    Example:
+    \code
+        JKQTPXYLineGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        jkqtpstatAddRobustIRLSLinearRegression(graphD);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+
+    \note The line graph is added to the same plotter that is the parent of \a datagraph !
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSLinearRegression()
+*/
+JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSLinearRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100);
+
+
+
+/*! \brief calculate the weighted linear regression coefficients for a given for a given data range \a firstX / \a firstY / \a firstW ... \a lastX / \a lastY / \a lastW  where the model is \f$ f(x)=a+b\cdot x \f$
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam InputItW standard iterator type of \a firstW and \a lastW.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param firstW iterator pointing to the first item in the weight-dataset to use \f$ w_1 \f$
+    \param lastW iterator pointing behind the last item in the weight-dataset to use \f$ w_N \f$
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+    \param fWeightDataToWi an optional function, which is applied to the data from \a firstW ... \a lastW to convert them to weight, i.e. \c wi=fWeightDataToWi(*itW)
+                           e.g. if you use data used to draw error bars, you can use jkqtp_inversePropSaveDefault(). The default is jkqtp_identity(), which just returns the values.
+                           In the case of jkqtp_inversePropSaveDefault(), a datapoint x,y, has a large weight, if it's error is small and in the case if jkqtp_identity() it's weight
+                           is directly proportional to the given value.
+
+    Example:
+    \code
+        double coeffA=0, coeffB=0;
+        jkqtpstatLinearWeightedRegression(datastore1->begin(colWLinX), datastore1->end(colWLinX),
+                                          datastore1->begin(colWLinY), datastore1->end(colWLinY),
+                                          datastore1->begin(colWLinE), datastore1->end(colWLinE),
+                                          coeffA, coeffB, false, false,
+                                          &jkqtp_inversePropSaveDefault<double>);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
+*/
+template <class InputItX, class InputItY, class InputItW>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, InputItW firstW, InputItW lastW, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, std::function<double(double)> fWeightDataToWi=&jkqtp_identity<double>) {
+    double cA;
+    if (coeffA) cA=*coeffA;
+    double cB;
+    if (coeffB) cB=*coeffB;
+
+    JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
+    JKQTPASSERT_M(!fixB || (fixB && coeffB!=nullptr), "if fixB=true, coeffB needs to be provided");
+
+    jkqtpstatLinearWeightedRegression(firstX, lastX, firstY, lastY, firstW, lastW, cA, cB, fixA, fixB, fWeightDataToWi);
+    JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
+    g->setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction::Line);
+    g->setParamsV(cA, cB);
+    g->setTitle(QString("weighted regression: $f(x) = %1 + %2 \\cdot x$").arg(jkqtp_floattolatexqstr(cA)).arg(jkqtp_floattolatexqstr(cB)));
+    plotter->addGraph(g);
+    if (coeffA) *coeffA=cA;
+    if (coeffB) *coeffB=cB;
+    return g;
+}
+
+/*! \brief calculate the linear weighted regression coefficients for a given data data used to draw any `JKQTPXYGraph` \a datagraph , which also implements JKQTPYGraphErrorData and where the model is \f$ f(x)=a+b\cdot x \f$
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \param datagraph graph representing the (x,y,error) data triples to which to fit the regression line
+                     The errors are used as iverse weights!
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+
+    Example:
+    \code
+        JKQTPXYLineErrorGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineErrorGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        graphD->setYErrorColumn(static_cast<int>(colWLinE));
+        jkqtpstatAddLinearWeightedRegression(graphD);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+
+    \note The line graph is added to the same plotter that is the parent of \a datagraph !
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
+*/
+JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*! \brief calculate the linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is defined by \a type
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param type model to be fitted
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+
+    Example:
+    \code
+        jkqtpstatRegression(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_nonlinreg.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRegression()
+*/
+template <class InputItX, class InputItY>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTBasePlotter* plotter, JKQTPStatRegressionModelType type, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false) {
+    double cA;
+    if (coeffA) cA=*coeffA;
+    double cB;
+    if (coeffB) cB=*coeffB;
+
+    JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
+    JKQTPASSERT_M(!fixB || (fixB && coeffB!=nullptr), "if fixB=true, coeffB needs to be provided");
+
+    jkqtpstatRegression(type, firstX, lastX, firstY, lastY, cA, cB, fixA, fixB);
+    JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
+    g->setPlotFunctionFunctor(jkqtpStatGenerateRegressionModel(type, cA, cB));
+    g->setTitle(QString("regression: $%1$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)));
+    plotter->addGraph(g);
+    if (coeffA) *coeffA=cA;
+    if (coeffB) *coeffB=cB;
+    return g;
+}
+
+
+/*! \brief calculate the linear regression coefficients for a given data data used to draw any `JKQTPXYGraph` \a datagraph  where the model is defined by \a type
+
+    \param datagraph graph representing the (x,y) datapairs to which to fit the regression line
+    \param type model to be fitted
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+
+    Example:
+    \code
+        JKQTPXYLineGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        jkqtpstatRegression(graphD, JKQTPStatRegressionModelType::Exponential);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_nonlinreg.png
+
+    \note The line graph is added to the same plotter that is the parent of \a datagraph !
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRegression()
+*/
+JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+
+
+
+/*! \brief  calculate the (robust) iteratively reweighted least-squares (IRLS) estimate for the parameters where the model is defined by \a type
+           for a given data range \a firstX / \a firstY ... \a lastX / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param type model to be fitted
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+    \param p regularization parameter, the optimization problem is formulated in the \f$ L_p \f$ norm, using this \a p (see image below for an example)
+    \param iterations the number of iterations the IRLS algorithm performs
+
+    Example:
+    \code
+        jkqtpstatAddRobustIRLSRegression(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSRegression()
+*/
+template <class InputItX, class InputItY>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSRegression(JKQTBasePlotter* plotter, JKQTPStatRegressionModelType type, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100) {
+    double cA;
+    if (coeffA) cA=*coeffA;
+    double cB;
+    if (coeffB) cB=*coeffB;
+
+    JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
+    JKQTPASSERT_M(!fixB || (fixB && coeffB!=nullptr), "if fixB=true, coeffB needs to be provided");
+
+    jkqtpstatRobustIRLSRegression(type, firstX, lastX, firstY, lastY, cA, cB, fixA, fixB, p, iterations);
+    JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
+    g->setPlotFunctionFunctor(jkqtpStatGenerateRegressionModel(type, cA, cB));
+    g->setTitle(QString("robust regression: $%1$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)));
+    plotter->addGraph(g);
+    if (coeffA) *coeffA=cA;
+    if (coeffB) *coeffB=cB;
+    return g;
+}
+
+
+/*! \brief  calculate the (robust) iteratively reweighted least-squares (IRLS) estimate for the parameters where the model is defined by \a type
+           for a given data range \a firstX / \a firstY ... \a lastX / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \param datagraph graph representing the (x,y) datapairs to which to fit the regression line
+    \param type model to be fitted
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+    \param p regularization parameter, the optimization problem is formulated in the \f$ L_p \f$ norm, using this \a p (see image below for an example)
+    \param iterations the number of iterations the IRLS algorithm performs
+
+    Example:
+    \code
+        JKQTPXYLineGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        jkqtpstatAddRobustIRLSRegression(graphD, JKQTPStatRegressionModelType::Exponential);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+
+    \note The line graph is added to the same plotter that is the parent of \a datagraph !
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSRegression()
+*/
+JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100);
+
+
+
+/*! \brief calculate the weighted linear regression coefficients for a given for a given data range \a firstX / \a firstY / \a firstW ... \a lastX / \a lastY / \a lastW  where the model is defined by \a type
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam InputItW standard iterator type of \a firstW and \a lastW.
+    \param plotter the plotter to which to add the resulting graph
+    \param type model to be fitted
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param firstW iterator pointing to the first item in the weight-dataset to use \f$ w_1 \f$
+    \param lastW iterator pointing behind the last item in the weight-dataset to use \f$ w_N \f$
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+    \param fWeightDataToWi an optional function, which is applied to the data from \a firstW ... \a lastW to convert them to weight, i.e. \c wi=fWeightDataToWi(*itW)
+                           e.g. if you use data used to draw error bars, you can use jkqtp_inversePropSaveDefault(). The default is jkqtp_identity(), which just returns the values.
+                           In the case of jkqtp_inversePropSaveDefault(), a datapoint x,y, has a large weight, if it's error is small and in the case if jkqtp_identity() it's weight
+                           is directly proportional to the given value.
+
+    Example:
+    \code
+        double coeffA=0, coeffB=0;
+        jkqtpstatAddWeightedRegression(plotter, JKQTPStatRegressionModelType::Exponential,
+                                          datastore1->begin(colWLinX), datastore1->end(colWLinX),
+                                          datastore1->begin(colWLinY), datastore1->end(colWLinY),
+                                          datastore1->begin(colWLinE), datastore1->end(colWLinE),
+                                          coeffA, coeffB, false, false,
+                                          &jkqtp_inversePropSaveDefault<double>);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatWeightedRegression()
+*/
+template <class InputItX, class InputItY, class InputItW>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTBasePlotter* plotter, JKQTPStatRegressionModelType type, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, InputItW firstW, InputItW lastW, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, std::function<double(double)> fWeightDataToWi=&jkqtp_identity<double>) {
+    double cA;
+    if (coeffA) cA=*coeffA;
+    double cB;
+    if (coeffB) cB=*coeffB;
+
+    JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
+    JKQTPASSERT_M(!fixB || (fixB && coeffB!=nullptr), "if fixB=true, coeffB needs to be provided");
+
+    jkqtpstatWeightedRegression(type, firstX, lastX, firstY, lastY, firstW, lastW, cA, cB, fixA, fixB, fWeightDataToWi);
+    JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
+    g->setPlotFunctionFunctor(jkqtpStatGenerateRegressionModel(type, cA, cB));
+    g->setTitle(QString("weighted regression: $%1$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)));
+    plotter->addGraph(g);
+    if (coeffA) *coeffA=cA;
+    if (coeffB) *coeffB=cB;
+    return g;
+}
+
+/*! \brief calculate the linear weighted regression coefficients for a given data data used to draw any `JKQTPXYGraph` \a datagraph , which also implements JKQTPYGraphErrorData and where the model is defined by \a type
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \param datagraph graph representing the (x,y,error) data triples to which to fit the regression line
+                     The errors are used as iverse weights!
+    \param type model to be fitted
+    \param[in,out] coeffA returns the offset of the linear model
+    \param[in,out] coeffB returns the slope of the linear model
+    \param fixA if \c true, the offset coefficient \f$ a \f$ is not determined by the fit, but the value provided in \a coeffA is used \note If \a fixA \c ==true, You need to provide a value for A in \a coeffA
+    \param fixB if \c true, the slope coefficient \f$ b \f$ is not determined by the fit, but the value provided in \a coeffB is used \note If \a fixB \c ==true, You need to provide a value for B in \a coeffB
+
+    Example:
+    \code
+        JKQTPXYLineErrorGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineErrorGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        graphD->setYErrorColumn(static_cast<int>(colWLinE));
+        jkqtpstatAddWeightedRegression(graphD, JKQTPStatRegressionModelType::Exponential);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+
+    \note The line graph is added to the same plotter that is the parent of \a datagraph !
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatWeightedRegression()
+*/
+JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+
+
+
+
+
+
+
+/*! \brief fits (in a least-squares sense) a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ of order P to a set of N data pairs \f$ (x_i,y_i) \f$ from a given data range \a firstX / \a firstY ... \a lastX / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam OutputItP output iterator for the polynomial coefficients
+    \param plotter the plotter to which to add the resulting graph
+    \param type model to be fitted
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param P degree of the polynomial (P>=N !!!)
+    \param[out] firstRes Iterator (of type \a OutputItP ), which receives the (P+1)-entry vector with the polynomial coefficients \f$ p_i \f$
+
+    Example:
+    \code
+        std::vector<double> pFit;
+        jkqtpstatAddPolyFit(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY), 3, std::back_inserter(pFit));
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
+*/
+template <class InputItX, class InputItY, class OutputItP>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, size_t P, OutputItP firstRes) {
+    std::vector<double> pFit;
+    JKQTPXFunctionLineGraph* gPoly=new JKQTPXFunctionLineGraph(plotter);
+    jkqtpstatPolyFit(firstX,lastX,firstY,lastY,P,std::back_inserter(pFit));
+    gPoly->setPlotFunctionFunctor(jkqtpstatGeneratePolynomialModel(pFit.begin(), pFit.end()));
+    gPoly->setTitle(QString("regression: $%1$").arg(jkqtpstatPolynomialModel2Latex(pFit.begin(), pFit.end())));
+    std::copy(pFit.begin(), pFit.end(), firstRes);
+    plotter->addGraph(gPoly);
+    return gPoly;
+}
+
+
+/*! \brief fits (in a least-squares sense) a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ of order P to a set of N data pairs \f$ (x_i,y_i) \f$ from a given data range \a firstX / \a firstY ... \a lastX / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param type model to be fitted
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param P degree of the polynomial (P>=N !!!)
+
+    Example:
+    \code
+        jkqtpstatAddPolyFit(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY), 3);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
+*/
+template <class InputItX, class InputItY>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, size_t P) {
+    std::vector<double> pFit;
+    return jkqtpstatAddPolyFit(plotter, firstX,lastX,firstY,lastY,P,std::back_inserter(pFit));
+}
+
+
+/*! \brief fits (in a least-squares sense) a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ of order P to a set of N data pairs \f$ (x_i,y_i) \f$ from a given JKQTPXYGraph \a datagraph
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam OutputItP output iterator for the polynomial coefficients
+    \param datagraph graph representing the (x,y) datapairs to which to fit the regression line
+    \param P degree of the polynomial (P>=N !!!)
+    \param[out] firstRes Iterator (of type \a OutputItP ), which receives the (P+1)-entry vector with the polynomial coefficients \f$ p_i \f$
+
+    Example:
+    \code
+        JKQTPXYLineGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        std::vector<double> pFit;
+        jkqtpstatAddPolyFit(graphD, 3,std::back_inserter(pFit));
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
+*/
+template <class OutputItP>
+inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTPXYGraph *datagraph, size_t P, OutputItP firstRes) {
+    JKQTBasePlotter* plt=datagraph->getParent();
+    JKQTPDatastore* ds=plt->getDatastore();
+    return jkqtpstatAddPolyFit(plt, ds->begin(datagraph->getXColumn()), ds->end(datagraph->getXColumn()), ds->begin(datagraph->getYColumn()), ds->end(datagraph->getYColumn()),P,firstRes);
+}
+
+
+
+/*! \brief fits (in a least-squares sense) a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ of order P to a set of N data pairs \f$ (x_i,y_i) \f$ from a given JKQTPXYGraph \a datagraph
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \param datagraph graph representing the (x,y) datapairs to which to fit the regression line
+    \param P degree of the polynomial (P>=N !!!)
+
+    Example:
+    \code
+        JKQTPXYLineGraph* graphD;
+        plot1->addGraph(graphD=new JKQTPXYLineGraph(plot1));
+        graphD->setXYColumns(colLinX, colLinY);
+        jkqtpstatAddPolyFit(graphD, 3);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
+*/
+JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTPXYGraph *datagraph, size_t P);
 
 
 

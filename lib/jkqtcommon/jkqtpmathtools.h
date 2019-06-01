@@ -213,15 +213,38 @@ inline T jkqtp_cube(T x) {
 }
 
 
-/*! \brief calculates the sign of number \a x
+/*! \brief calculates the sign of number \a x (-1 for x<0 and +1 for x>=0)
     \ingroup jkqtptools_math_basic
 */
 template <class T>
 inline T jkqtp_sign(T x) {
     if (x<0) return -1;
-    //else if (x==0) return 0;
     else return 1;
 }
+
+/** \brief returns the inversely proportional value 1/\a v of \a v
+ *  \ingroup jkqtptools_math_basic */
+template<typename T>
+inline T jkqtp_inverseProp(const T& v) {
+    return T(1.0)/v;
+}
+
+/** \brief returns the inversely proportional value 1/\a v of \a v and ensures that \f$ |v|\geq \mbox{absMinV} \f$
+ *  \ingroup jkqtptools_math_basic */
+template<typename T>
+inline T jkqtp_inversePropSave(const T& v, const T& absMinV) {
+    T vv=v;
+    if (fabs(vv)<absMinV) vv=jkqtp_sign(v)*absMinV;
+    return T(1.0)/vv;
+}
+
+/** \brief returns the inversely proportional value 1/\a v of \a v and ensures that \f$ |v|\geq \mbox{absMinV} \f$, uses \c absMinV=std::numeric_limits<T>::epsilon()*100.0
+ *  \ingroup jkqtptools_math_basic */
+template<typename T>
+inline T jkqtp_inversePropSaveDefault(const T& v) {
+    return jkqtp_inversePropSave<T>(v, std::numeric_limits<T>::epsilon()*100.0);
+}
+
 
 /** \brief calculate the distance between two QPointF points
  *  \ingroup jkqtptools_math_basic

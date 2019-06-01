@@ -1,8 +1,10 @@
 # Tutorial (JKQTPDatastore): Iterator-Based usage of JKQTPDatastore             {#JKQTPlotterBasicJKQTPDatastoreIterators}
 
+
 [JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreRegression]: @ref JKQTPlotterBasicJKQTPDatastoreRegression "Regression Analysis (with the Statistics Library)"
 [statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
 
 This tutorial project (see `./examples/simpletest_datastore_iterators/`) explains how to use the iterator-based interface to JKQTPDatastore.
@@ -11,6 +13,8 @@ This tutorial project (see `./examples/simpletest_datastore_iterators/`) explain
   - [JKQTPlotterBasicJKQTPDatastore]
   - [JKQTPlotterBasicJKQTPDatastoreIterators]
   - [JKQTPlotterBasicJKQTPDatastoreStatistics]
+  - [JKQTPlotterBasicJKQTPDatastoreRegression]
+
 
 
 [TOC]

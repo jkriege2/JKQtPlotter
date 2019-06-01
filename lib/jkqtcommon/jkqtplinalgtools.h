@@ -389,13 +389,13 @@ inline void jkqtplinalgMatrixProduct(const T* M1, long L1, long C1, const T* M2,
         }
     } else if (M1==M && M2!=M) {
         JKQTPArrayScopedPointer<T> MM(jkqtpArrayDuplicate(M1, L1*C1));
-        jkqtplinalgMatrixProduct(MM,L1,C1,M2,L2,C2,M);
+        jkqtplinalgMatrixProduct(MM.data(),L1,C1,M2,L2,C2,M);
     } else if (M1!=M && M2==M) {
         JKQTPArrayScopedPointer<T> MM(jkqtpArrayDuplicate(M1, L1*C1));
-        jkqtplinalgMatrixProduct(M1,L1,C1,MM,L2,C2,M);
+        jkqtplinalgMatrixProduct(M1,L1,C1,MM.data(),L2,C2,M);
     } else if (M1==M && M2==M) {
         JKQTPArrayScopedPointer<T> MM(jkqtpArrayDuplicate(M1, L1*C1));
-        jkqtplinalgMatrixProduct(MM,L1,C1,MM,L2,C2,M);
+        jkqtplinalgMatrixProduct(MM.data(),L1,C1,MM.data(),L2,C2,M);
     }
 }
 
@@ -581,7 +581,7 @@ inline bool jkqtplinalgMatrixInversion(const T* matrix, T* matrix_out, long N) {
     }
 
 
-    bool ok=linalgGaussJordanV(m, N, 2*N);
+    bool ok=jkqtplinalgGaussJordan(m.data(), N, 2*N);
 
     if (ok) {
         // finally we copy the result to matrix_out
@@ -714,7 +714,7 @@ inline bool jkqtplinalgLinSolve(const T* A, const T* B, long N, long C, T* resul
     }
 
 
-    bool ok=linalgGaussJordan(m.data(), N, N+C);
+    bool ok=jkqtplinalgGaussJordan(m.data(), N, N+C);
 
     if (ok) {
         for (long k=0; k<N; k++) {

@@ -104,3 +104,61 @@ double JKQTPStat5NumberStatistics::IQR() const {
 double JKQTPStat5NumberStatistics::IQRSignificanceEstimate() const {
     return 2.0*(1.58*(IQR()))/sqrt(static_cast<double>(N));
 }
+
+std::function<double (double, double, double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType type) {
+    switch(type) {
+        case JKQTPStatRegressionModelType::Linear: return [](double x, double a, double b)->double { return a+b*x; };
+        case JKQTPStatRegressionModelType::PowerLaw: return [](double x, double a, double b)->double { return a*pow(x,b); };
+        case JKQTPStatRegressionModelType::Exponential: return [](double x, double a, double b)->double { return a*exp(b*x); };
+    }
+    throw std::runtime_error("unknown JKQTPStatRegressionModelType in jkqtpStatGenerateRegressionModel()");
+}
+
+QString jkqtpstatRegressionModel2Latex(JKQTPStatRegressionModelType type, double a, double b) {
+    switch(type) {
+        case JKQTPStatRegressionModelType::Linear: return QString("f(x)=%1+%2{\\cdot}x").arg(jkqtp_floattolatexqstr(a, 3)).arg(jkqtp_floattolatexqstr(b, 3));
+        case JKQTPStatRegressionModelType::PowerLaw: return QString("f(x)=%1{\\cdot}x^{%2}").arg(jkqtp_floattolatexqstr(a, 3)).arg(jkqtp_floattolatexqstr(b, 3));
+        case JKQTPStatRegressionModelType::Exponential: return QString("f(x)=%1{\\cdot}\\exp(%2{\\cdot}x)").arg(jkqtp_floattolatexqstr(a, 3)).arg(jkqtp_floattolatexqstr(b, 3));
+    }
+    throw std::runtime_error("unknown JKQTPStatRegressionModelType in jkqtpstatRegressionModel2Latex()");
+}
+
+std::function<double (double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType type, double a, double b) {
+    auto res=jkqtpStatGenerateRegressionModel(type);
+    return std::bind(res, std::placeholders::_1, a, b);
+}
+
+std::pair<std::function<double (double)>, std::function<double (double)> > jkqtpStatGenerateTransformation(JKQTPStatRegressionModelType type) {
+    auto logF=[](double x)->double { return log(x); };
+    auto idF=&jkqtp_identity<double>;
+    switch(type) {
+        case JKQTPStatRegressionModelType::Linear: return std::pair<std::function<double(double)>,std::function<double(double)> >(idF, idF);
+        case JKQTPStatRegressionModelType::PowerLaw: return std::pair<std::function<double(double)>,std::function<double(double)> >(logF, logF);
+        case JKQTPStatRegressionModelType::Exponential: return std::pair<std::function<double(double)>,std::function<double(double)> >(idF, logF);
+    }
+    throw std::runtime_error("unknown JKQTPStatRegressionModelType in jkqtpStatGenerateTransformation()");
+}
+
+std::pair<std::function<double (double)>, std::function<double (double)> > jkqtpStatGenerateParameterATransformation(JKQTPStatRegressionModelType type) {
+    auto logF=[](double x)->double { return log(x); };
+    auto expF=[](double x)->double { return exp(x); };
+    auto idF=&jkqtp_identity<double>;
+    switch(type) {
+        case JKQTPStatRegressionModelType::Linear: return std::pair<std::function<double(double)>,std::function<double(double)> >(idF, idF);
+        case JKQTPStatRegressionModelType::PowerLaw: return std::pair<std::function<double(double)>,std::function<double(double)> >(logF, expF);
+        case JKQTPStatRegressionModelType::Exponential: return std::pair<std::function<double(double)>,std::function<double(double)> >(logF, expF);
+    }
+    throw std::runtime_error("unknown JKQTPStatRegressionModelType in jkqtpStatGenerateTransformation()");
+}
+
+std::pair<std::function<double (double)>, std::function<double (double)> > jkqtpStatGenerateParameterBTransformation(JKQTPStatRegressionModelType type) {
+    //auto logF=[](double x)->double { return log(x); };
+    //auto expF=[](double x)->double { return exp(x); };
+    auto idF=&jkqtp_identity<double>;
+    switch(type) {
+        case JKQTPStatRegressionModelType::Linear: return std::pair<std::function<double(double)>,std::function<double(double)> >(idF, idF);
+        case JKQTPStatRegressionModelType::PowerLaw: return std::pair<std::function<double(double)>,std::function<double(double)> >(idF, idF);
+        case JKQTPStatRegressionModelType::Exponential: return std::pair<std::function<double(double)>,std::function<double(double)> >(idF, idF);
+    }
+    throw std::runtime_error("unknown JKQTPStatRegressionModelType in jkqtpStatGenerateTransformation()");
+}
