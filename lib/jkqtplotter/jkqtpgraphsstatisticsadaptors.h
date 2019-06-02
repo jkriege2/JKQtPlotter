@@ -689,7 +689,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTBasePlotter* pl
     JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
     g->setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction::Line);
     g->setParamsV(cA, cB);
-    g->setTitle(QString("regression: $f(x) = %1 + %2 \\cdot x$").arg(jkqtp_floattolatexqstr(cA)).arg(jkqtp_floattolatexqstr(cB)));
+    g->setTitle(QString("regression: $f(x) = %1%2{\\cdot}x, \\chi^2=%4, R^2=%3$").arg(jkqtp_floattolatexqstr(cA, 2, true, 1e-16,1e-2, 1e4,false)).arg(jkqtp_floattolatexqstr(cB, 2, true, 1e-16,1e-2, 1e4,true)).arg(jkqtp_floattolatexqstr(jkqtpstatCoefficientOfDetermination(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Linear, cA, cB)),3)).arg(jkqtp_floattolatexqstr(jkqtpstatSumOfDeviations(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Linear, cA, cB)),3)));
     plotter->addGraph(g);
     if (coeffA) *coeffA=cA;
     if (coeffB) *coeffB=cB;
@@ -765,7 +765,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSLinearRegression(JKQTBaseP
     JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
     g->setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction::Line);
     g->setParamsV(cA, cB);
-    g->setTitle(QString("robust regression: $f(x) = %1 + %2 \\cdot x$").arg(jkqtp_floattolatexqstr(cA)).arg(jkqtp_floattolatexqstr(cB)));
+    g->setTitle(QString("robust regression: $f(x) = %1%2{\\cdot}x, \\chi^2=%4, R^2=%3$").arg(jkqtp_floattolatexqstr(cA, 2, true, 1e-16,1e-2, 1e4,false)).arg(jkqtp_floattolatexqstr(cB, 2, true, 1e-16,1e-2, 1e4,true)).arg(jkqtp_floattolatexqstr(jkqtpstatCoefficientOfDetermination(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Linear, cA, cB)),3)).arg(jkqtp_floattolatexqstr(jkqtpstatSumOfDeviations(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Linear, cA, cB)),3)));
     plotter->addGraph(g);
     if (coeffA) *coeffA=cA;
     if (coeffB) *coeffB=cB;
@@ -853,7 +853,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTBasePlo
     JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
     g->setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction::Line);
     g->setParamsV(cA, cB);
-    g->setTitle(QString("weighted regression: $f(x) = %1 + %2 \\cdot x$").arg(jkqtp_floattolatexqstr(cA)).arg(jkqtp_floattolatexqstr(cB)));
+    g->setTitle(QString("weighted regression: $f(x) = %1%2{\\cdot}x, \\chi^2=%4, R^2=%3$").arg(jkqtp_floattolatexqstr(cA, 2, true, 1e-16,1e-2, 1e4,false)).arg(jkqtp_floattolatexqstr(cB, 2, true, 1e-16,1e-2, 1e4,true)).arg(jkqtp_floattolatexqstr(jkqtpstatCoefficientOfDetermination(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Linear, cA, cB)),3)).arg(jkqtp_floattolatexqstr(jkqtpstatWeightedSumOfDeviations(firstX,lastX,firstY,lastY,firstW,lastW,jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Linear, cA, cB),fWeightDataToWi),3)));
     plotter->addGraph(g);
     if (coeffA) *coeffA=cA;
     if (coeffB) *coeffB=cB;
@@ -938,7 +938,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTBasePlotter* plotter,
     jkqtpstatRegression(type, firstX, lastX, firstY, lastY, cA, cB, fixA, fixB);
     JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
     g->setPlotFunctionFunctor(jkqtpStatGenerateRegressionModel(type, cA, cB));
-    g->setTitle(QString("regression: $%1$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)));
+    g->setTitle(QString("regression: $%1, \\chi^2=%3, R^2=%2$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)).arg(jkqtp_floattolatexqstr(jkqtpstatCoefficientOfDetermination(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(type, cA, cB)),3)).arg(jkqtp_floattolatexqstr(jkqtpstatSumOfDeviations(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(type, cA, cB)),3)));
     plotter->addGraph(g);
     if (coeffA) *coeffA=cA;
     if (coeffB) *coeffB=cB;
@@ -1014,7 +1014,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSRegression(JKQTBasePlotter
     jkqtpstatRobustIRLSRegression(type, firstX, lastX, firstY, lastY, cA, cB, fixA, fixB, p, iterations);
     JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
     g->setPlotFunctionFunctor(jkqtpStatGenerateRegressionModel(type, cA, cB));
-    g->setTitle(QString("robust regression: $%1$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)));
+    g->setTitle(QString("robust regression: $%1, \\chi^2=%3, R^2=%2$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)).arg(jkqtp_floattolatexqstr(jkqtpstatCoefficientOfDetermination(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(type, cA, cB)),3)).arg(jkqtp_floattolatexqstr(jkqtpstatSumOfDeviations(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(type, cA, cB)),3)));
     plotter->addGraph(g);
     if (coeffA) *coeffA=cA;
     if (coeffB) *coeffB=cB;
@@ -1104,7 +1104,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTBasePlotter* 
     jkqtpstatWeightedRegression(type, firstX, lastX, firstY, lastY, firstW, lastW, cA, cB, fixA, fixB, fWeightDataToWi);
     JKQTPXFunctionLineGraph* g=new JKQTPXFunctionLineGraph(plotter);
     g->setPlotFunctionFunctor(jkqtpStatGenerateRegressionModel(type, cA, cB));
-    g->setTitle(QString("weighted regression: $%1$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)));
+    g->setTitle(QString("weighted regression: $%1, \\chi^2=%3, R^2=%2$").arg(jkqtpstatRegressionModel2Latex(type, cA, cB)).arg(jkqtp_floattolatexqstr(jkqtpstatCoefficientOfDetermination(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(type, cA, cB)),3)).arg(jkqtp_floattolatexqstr(jkqtpstatSumOfDeviations(firstX,lastX,firstY,lastY,jkqtpStatGenerateRegressionModel(type, cA, cB)),3)));
     plotter->addGraph(g);
     if (coeffA) *coeffA=cA;
     if (coeffB) *coeffB=cB;
@@ -1176,7 +1176,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTBasePlotter* plotter, In
     JKQTPXFunctionLineGraph* gPoly=new JKQTPXFunctionLineGraph(plotter);
     jkqtpstatPolyFit(firstX,lastX,firstY,lastY,P,std::back_inserter(pFit));
     gPoly->setPlotFunctionFunctor(jkqtpstatGeneratePolynomialModel(pFit.begin(), pFit.end()));
-    gPoly->setTitle(QString("regression: $%1$").arg(jkqtpstatPolynomialModel2Latex(pFit.begin(), pFit.end())));
+    gPoly->setTitle(QString("regression: $%1, \\chi^2=%3, R^2=%2$").arg(jkqtpstatPolynomialModel2Latex(pFit.begin(), pFit.end())).arg(jkqtp_floattolatexqstr(jkqtpstatCoefficientOfDetermination(firstX,lastX,firstY,lastY,jkqtpstatGeneratePolynomialModel(pFit.begin(), pFit.end())),3)).arg(jkqtp_floattolatexqstr(jkqtpstatSumOfDeviations(firstX,lastX,firstY,lastY,jkqtpstatGeneratePolynomialModel(pFit.begin(), pFit.end())),3)));
     std::copy(pFit.begin(), pFit.end(), firstRes);
     plotter->addGraph(gPoly);
     return gPoly;

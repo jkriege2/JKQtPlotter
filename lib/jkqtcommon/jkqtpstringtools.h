@@ -163,7 +163,7 @@ JKQTP_LIB_EXPORT std::string jkqtp_floattounitstr(double data, int past_comma=5,
 /** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. <code>-1.23\\cdot 10^{-5}</code>)
  * \ingroup jkqtptools_string
  */
-JKQTP_LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
+JKQTP_LIB_EXPORT std::string jkqtp_floattolatexstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4, bool ensurePlusMinus=false);
 /** \brief convert a double to a string, encoding powers of ten as exponent with HTML tags
  * \ingroup jkqtptools_string
  */
@@ -176,7 +176,7 @@ JKQTP_LIB_EXPORT QString jkqtp_floattounitqstr(double data, int past_comma=5, bo
 /** \brief convert a double to a string, encoding powers of ten as exponent in LaTeX notation (e.g. <code>-1.23\\cdot 10^{-5}</code>)
  * \ingroup jkqtptools_string
  */
-JKQTP_LIB_EXPORT QString jkqtp_floattolatexqstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4);
+JKQTP_LIB_EXPORT QString jkqtp_floattolatexqstr(double data, int past_comma=5, bool remove_trail0=false, double belowIsZero=1e-16, double minNoExponent=1e-3, double maxNoExponent=1e4, bool ensurePlusMinus=false);
 /** \brief convert a double to a string, encoding powers of ten as exponent with HTML tags
  * \ingroup jkqtptools_string
  */

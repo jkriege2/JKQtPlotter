@@ -212,38 +212,46 @@ std::string jkqtp_tolower(const std::string& s){
    return res;
  }
 
- std::string jkqtp_floattolatexstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent){
-   if ((belowIsZero>0) && (fabs(data)<belowIsZero)) return "\\rm{0}";
-   if (data==0) return "\\rm{0}";
+ std::string jkqtp_floattolatexstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent, bool ensurePlusMinus){
+   if ((belowIsZero>0) && (fabs(data)<belowIsZero)) {
+       if (ensurePlusMinus) return "+\\rm{0}";
+       else return "\\rm{0}";
+   }
+   if (fabs(data)<5*std::numeric_limits<double>::epsilon()) {
+       if (ensurePlusMinus) return "+\\rm{0}";
+       else return "\\rm{0}";
+   }
+
    double adata=fabs(data);
    std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
-   /*std::string form="%."+inttostr(past_comma)+"lf";
-   std::string res=jkqtp_format(form,data);
-   std::string s="";
-   if (data<0) s="-";*/
 
-   long exp=(long)floor(log(adata)/log(10.0));
-   //std::cout<<"data="<<data<<"   res="<<res<<"   exp="<<exp<<"   past_comma="<<past_comma<<std::endl;
-   //if (exp==0 || exp==-1 || exp==1) return res;
-   if ((minNoExponent<=fabs(data)) && (fabs(data)<=maxNoExponent)) return res;
-   //if ((-past_comma<exp) && (exp<past_comma)) return res;
-
-   //std::cout<<"adata="<<adata<<"   log(adata)/log(10)="<<log(adata)/log(10.0)<<"   exp="<<exp<<"   adata/pow(10, exp)="<<adata/pow(10.0, (double)exp)<<"\n";
-   std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
-   //std::cout<<"floattolatexstr: v="<<v<<"   exp="<<exp<<std::endl;
-   if (v!="1" && v!="10")  return v+std::string("{\\times}10^{")+jkqtp_inttostr(exp)+"}";
-   if (v=="10") exp=exp+1;
-   return std::string("10^{")+jkqtp_inttostr(exp)+"}";
+   long exp=static_cast<long>(floor(log(adata)/log(10.0)));
+   if ((minNoExponent>fabs(data)) || (fabs(data)>maxNoExponent)) {
+       std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
+       if (v!="1" && v!="10")  {
+           res=v+std::string("{\\times}10^{")+jkqtp_inttostr(exp)+"}";
+       } else {
+           if (v=="10") exp=exp+1;
+           res=std::string("10^{")+jkqtp_inttostr(exp)+"}";
+       }
+   }
+   if (ensurePlusMinus && res.size()>0) {
+       if (res[0]!='-' && res[0]!='+') {
+           if (data<0) res="-"+res;
+           else res="+"+res;
+       }
+   }
+   return res;
  }
 
  std::string jkqtp_floattohtmlstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent){
    std::string result;
    if ((belowIsZero>0) && (fabs(data)<belowIsZero)) return "0";
-   if (data==0) return "0";
+   if (fabs(data)<5*std::numeric_limits<double>::epsilon()) return "0";
    double adata=fabs(data);
    std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
 
-   long exp=(long)floor(log(adata)/log(10.0));
+   long exp=static_cast<long>(floor(log(adata)/log(10.0)));
    if ((minNoExponent<=fabs(data)) && (fabs(data)<maxNoExponent)) return res;
    //if ((-past_comma<exp) && (exp<past_comma)) result= res;
    else {
@@ -568,9 +576,9 @@ QString jkqtp_floattounitqstr(double data, int past_comma, bool remove_trail0)
     return QString::fromStdString(jkqtp_floattounitstr(data, past_comma, remove_trail0));
 }
 
-QString jkqtp_floattolatexqstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent)
+QString jkqtp_floattolatexqstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent, bool ensurePlusMinus)
 {
-    return QString::fromStdString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, minNoExponent, maxNoExponent));
+    return QString::fromStdString(jkqtp_floattolatexstr(data, past_comma, remove_trail0, belowIsZero, minNoExponent, maxNoExponent, ensurePlusMinus));
 }
 
 QString jkqtp_floattohtmlqstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent)

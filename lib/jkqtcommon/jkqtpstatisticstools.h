@@ -1800,7 +1800,7 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double 
 
 
 /*! \brief calculate the linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is \f$ f(x)=a+b\cdot x \f$
-           So this function solves the least-squares optimization problem: \f[ (a^\ast, b^\ast)=\mathop{arg\;min}\limits_{a,b}\sum\limits_i\left(y_i-(a+b\cdot x_i)\right)^2 \f]
+           So this function solves the least-squares optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-(a+b\cdot x_i)\right)^2 \f]
     \ingroup jkqtptools_math_statistics_regression
 
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
@@ -1857,7 +1857,7 @@ inline void jkqtpstatLinearRegression(InputItX firstX, InputItX lastX, InputItY 
 
 
 /*! \brief calculate the weighted linear regression coefficients for a given for a given data range \a firstX / \a firstY / \a firstW ... \a lastX / \a lastY / \a lastW  where the model is \f$ f(x)=a+b\cdot x \f$
-           So this function solves the least-squares optimization problem: \f[ (a^\ast, b^\ast)=\mathop{arg\;min}\limits_{a,b}\sum\limits_iw_i^2\cdot\left(y_i-(a+b\cdot x_i)\right)^2 \f]
+           So this function solves the least-squares optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_iw_i^2\cdot\left(y_i-(a+b\cdot x_i)\right)^2 \f]
     \ingroup jkqtptools_math_statistics_regression
 
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
@@ -1937,7 +1937,7 @@ inline void jkqtpstatLinearWeightedRegression(InputItX firstX, InputItX lastX, I
 /*! \brief calculate the (robust) iteratively reweighted least-squares (IRLS) estimate for the parameters of the model \f$ f(x)=a+b\cdot x \f$
            for a given data range \a firstX / \a firstY ... \a lastX / \a lastY
            So this function finds an outlier-robust solution to the optimization problem:
-           \f[ (a^\ast,b^\ast)=\mathop{arg\;min}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^p \f]
+           \f[ (a^\ast,b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^p \f]
     \ingroup jkqtptools_math_statistics_regression
 
     \ingroup jkqtptools_math_statistics_regression
@@ -1957,16 +1957,16 @@ inline void jkqtpstatLinearWeightedRegression(InputItX firstX, InputItX lastX, I
 
     This is a simple form of the IRLS algorithm to estimate the parameters a and b in a linear model \f$ f(x)=a+b\cdot x \f$.
     This algorithm solves the optimization problem for a \f$ L_p\f$-norm:
-      \f[ (a^\ast,b^\ast)=\mathop{arg\;min}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^p \f]
+      \f[ (a^\ast,b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^p \f]
     by iteratively optimization weights \f$ \vec{w} \f$ and solving a weighted least squares problem in each iteration:
-      \f[ (a_n,b_n)=\mathop{arg\;min}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^{(p-2)}\cdot|a+b\cdot x_i-y_i|^2 \f]
+      \f[ (a_n,b_n)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i|a+b\cdot x_i-y_i|^{(p-2)}\cdot|a+b\cdot x_i-y_i|^2 \f]
 
 
     The IRLS-algorithm works as follows:
       - calculate initial \f$ a_0\f$ and \f$ b_0\f$ with unweighted regression from x and y
       - perform a number of iterations (parameter \a iterations ). In each iteration \f$ n\f$:
           - calculate the error vector \f$\vec{e}\f$: \f[ e_i = a+b\cdot x_i -y_i \f]
-          - estimate new weights \f$\vec{w}\f$: \[ w_i=|e_i|^{(p-2)/2} \f]
+          - estimate new weights \f$\vec{w}\f$: \f[ w_i=|e_i|^{(p-2)/2} \f]
           - calculate new estimates \f$ a_n\f$ and \f$ b_n\f$ with weighted regression from \f$ \vec{x}\f$ and \f$ \vec{y}\f$ and \f$ \vec{w}\f$
         .
       - return the last estimates \f$ a_n\f$ and \f$ b_n\f$
@@ -2024,6 +2024,7 @@ enum class JKQTPStatRegressionModelType {
     Linear,       /*!< \brief linear model \f$ f(x)=a+b\cdot x \f$ */
     PowerLaw,     /*!< \brief power law model \f$ f(x)=a\cdot x^b \f$ */
     Exponential,  /*!< \brief exponential model \f$ f(x)=a\cdot \exp(b\cdot x) \f$ */
+    Logarithm,   /*!< \brief exponential model \f$ f(x)=a+b\cdot \ln(x) \f$ */
 };
 
 
@@ -2064,7 +2065,7 @@ JKQTP_LIB_EXPORT std::pair<std::function<double(double)>,std::function<double(do
 
 
 /*! \brief calculate the linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is defined by \a type
-           So this function solves the least-squares optimization problem: \f[ (a^\ast, b^\ast)=\mathop{arg\;min}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^2 \f]
+           So this function solves the least-squares optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^2 \f]
            by reducing it to a linear fit by transforming x- and/or y-data
     \ingroup jkqtptools_math_statistics_regression
 
@@ -2108,7 +2109,7 @@ inline void jkqtpstatRegression(JKQTPStatRegressionModelType type, InputItX firs
 
 
 /*! \brief calculate the robust linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is defined by \a type
-           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{arg\;min}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^p \f]
+           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^p \f]
            by reducing it to a linear fit by transforming x- and/or y-data
     \ingroup jkqtptools_math_statistics_regression
 
@@ -2155,7 +2156,7 @@ inline void jkqtpstatRobustIRLSRegression(JKQTPStatRegressionModelType type, Inp
 
 
 /*! \brief calculate the robust linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is defined by \a type
-           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{arg\;min}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^p \f]
+           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^p \f]
            by reducing it to a linear fit by transforming x- and/or y-data
     \ingroup jkqtptools_math_statistics_regression
 
@@ -2395,11 +2396,124 @@ QString jkqtpstatPolynomialModel2Latex(PolyItP firstP, PolyItP lastP) {
 
 
 
+/*! \brief calculates the coefficient of determination \f$ R^2 \f$ for a set of measurements \f$ (x_i,y_i) \f$ with a fit function \f$ f(x) \f$
+    \ingroup jkqtptools_math_statistics_poly
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param f function \f$ f(x) \f$, result of a fit to the data
+    \return coeffcicient of determination \f[ R^2=1-\frac{\sum_i\bigl[y_i-f(x_i)\bigr]^2}{\sum_i\bigl[y_i-\overline{y}\bigr]^2} \f] where \f[ \overline{y}=\frac{1}{N}\cdot\sum_iy_i \f]
+
+
+
+    \see https://en.wikipedia.org/wiki/Coefficient_of_determination
+*/
+template <class InputItX, class InputItY>
+inline double jkqtpstatCoefficientOfDetermination(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, std::function<double(double)> f) {
+
+    auto itX=firstX;
+    auto itY=firstY;
+
+    const double yMean=jkqtpstatAverage(firstX,lastX);
+    double SSres=0;
+    double SStot=0;
+    for (; itX!=lastX && itY!=lastY; ++itX, ++itY) {
+        const double fit_x=jkqtp_todouble(*itX);
+        const double fit_y=jkqtp_todouble(*itY);
+        if (JKQTPIsOKFloat(fit_x) && JKQTPIsOKFloat(fit_y)) {
+            SStot+=jkqtp_sqr(fit_y-yMean);
+            SSres+=jkqtp_sqr(fit_y-f(fit_x));
+        }
+    }
+
+    return 1.0-SSres/SStot;
+}
 
 
 
 
+/*! \brief calculates the sum of deviations \f$ \chi^2 \f$ for a set of measurements \f$ (x_i,y_i) \f$ with a fit function \f$ f(x) \f$
+    \ingroup jkqtptools_math_statistics_poly
 
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param f function \f$ f(x) \f$, result of a fit to the data
+    \return sum of deviations  \f[ \chi^2=\sum_i\bigl[y_i-f(x_i)\bigr]^2 \f]
+
+
+
+    \see https://en.wikipedia.org/wiki/Coefficient_of_determination
+*/
+template <class InputItX, class InputItY>
+inline double jkqtpstatSumOfDeviations(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, std::function<double(double)> f) {
+
+    auto itX=firstX;
+    auto itY=firstY;
+
+    double SSres=0;
+    for (; itX!=lastX && itY!=lastY; ++itX, ++itY) {
+        const double fit_x=jkqtp_todouble(*itX);
+        const double fit_y=jkqtp_todouble(*itY);
+        if (JKQTPIsOKFloat(fit_x) && JKQTPIsOKFloat(fit_y)) {
+            SSres+=jkqtp_sqr(fit_y-f(fit_x));
+        }
+    }
+
+    return SSres;
+}
+
+
+
+
+/*! \brief calculates the weighted sum of deviations \f$ \chi^2 \f$ for a set of measurements \f$ (x_i,y_i,w_i) \f$ with a fit function \f$ f(x) \f$
+    \ingroup jkqtptools_math_statistics_poly
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam InputItW standard iterator type of \a firstW and \a lastW.
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param firstW iterator pointing to the first item in the weight-dataset to use \f$ w_1 \f$
+    \param lastW iterator pointing behind the last item in the weight-dataset to use \f$ w_N \f$
+    \param f function \f$ f(x) \f$, result of a fit to the data
+    \param fWeightDataToWi an optional function, which is applied to the data from \a firstW ... \a lastW to convert them to weight, i.e. \c wi=fWeightDataToWi(*itW)
+                           e.g. if you use data used to draw error bars, you can use jkqtp_inversePropSaveDefault(). The default is jkqtp_identity(), which just returns the values.
+                           In the case of jkqtp_inversePropSaveDefault(), a datapoint x,y, has a large weight, if it's error is small and in the case if jkqtp_identity() it's weight
+                           is directly proportional to the given value.
+    \return weighted sum of deviations  \f[ \chi^2=\sum_iw_i^2\cdot\bigl[y_i-f(x_i)\bigr]^2 \f]
+
+
+    \see https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic
+*/
+template <class InputItX, class InputItY, class InputItW>
+inline double jkqtpstatWeightedSumOfDeviations(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, InputItW firstW, InputItW lastW, std::function<double(double)> f, std::function<double(double)> fWeightDataToWi=&jkqtp_identity<double>) {
+
+    auto itX=firstX;
+    auto itY=firstY;
+    auto itW=firstW;
+
+    double SSres=0;
+    for (; itX!=lastX && itY!=lastY && itW!=lastW; ++itX, ++itY, ++itW) {
+        const double fit_x=jkqtp_todouble(*itX);
+        const double fit_y=jkqtp_todouble(*itY);
+        const double fit_w2=jkqtp_sqr(fWeightDataToWi(jkqtp_todouble(*itW)));
+        if (JKQTPIsOKFloat(fit_x) && JKQTPIsOKFloat(fit_y) && JKQTPIsOKFloat(fit_w2)) {
+            SSres+=fit_w2*jkqtp_sqr(fit_y-f(fit_x));
+        }
+    }
+
+    return SSres;
+}
 
 
 

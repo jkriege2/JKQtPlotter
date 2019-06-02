@@ -189,7 +189,10 @@ Again these two steps can be simplified using an "adaptor":
                                          datastore1->begin(colWLinE), datastore1->end(colWLinE),
                                          &coeffA, &coeffB, false, false,
                                          &jkqtp_inversePropSaveDefault<double>);
-```... or even shorter:
+```
+
+... or even shorter:
+
 ```.cpp
     jkqtpstatAddLinearWeightedRegression(graphD);
 ```
@@ -208,8 +211,9 @@ which performs a simple non-weighted regression. The difference between the two 
 # Linearizable Regression Models
 
 In addition to the simple linear regression model `f(x)=a+b*x`, it is also possible to fit a few non-linear models by transforming the data:
-  - power-law function`f(x)=a*x^b`, which is a linear function in a log-log-plot
-  - exponential function `f(x)=a*exp(b*x)`, which is a linear function in a semi-log-plot
+  - power-law function`f(x)=a*x^b`, which is a linear function in a log(x)-log(y)-plot
+  - exponential function `f(x)=a*exp(b*x)`, which is a linear function in a x-log(y)-plot
+  - logarithm function `f(x)=a+b*ln(x)`, which is a linear function in a exp(x)-y-plot
 The available models are defined in the enum `JKQTPStatRegressionModelType`. And there exists a function `jkqtpStatGenerateRegressionModel()`, which returns a C++-functor representing the function.
 
 To demonstrate these fitting options, we first generate data from an exponential and a power-law model. Note that we also add normally distributed errors, but in order to ensure that we do not obtain y-values <0, we use loops that draw normally distributed random numbers, until this condition is met:
@@ -234,11 +238,11 @@ To demonstrate these fitting options, we first generate data from an exponential
             ypow=model_powerlaw(x, a0_powerlaw, b0_powerlaw)+d1(gen);
         }
         datastore1->appendToColumn(colNLLinYPow, ypow);
-        double yexp=model_exp(x, a0_powerlaw, b0_powerlaw)+d1(gen);
+        double yexp=model_exp(x, a0_exp, b0_exp)+d1(gen);
         while (yexp<0) {
-            yexp=model_exp(x, a0_powerlaw, b0_powerlaw)+d1(gen);
+            yexp=model_exp(x, a0_exp, b0_exp)+d1(gen);
         }
-        datastore1->appendToColumn(colNLLinYExp, model_exp(x, a0_exp, b0_exp)+d1(gen));
+        datastore1->appendToColumn(colNLLinYExp, yexp);
     }
 ```
 
@@ -284,6 +288,7 @@ Of course also "adaptors" exist that allow to perform the steps above in a singl
     jkqtpstatAddRegression(plot5->getPlotter(), JKQTPStatRegressionModelType::PowerLaw, datastore1->begin(colNLLinX), datastore1->end(colNLLinX), datastore1->begin(colNLLinYPow), datastore1->end(colNLLinYPow));
 ```
 ... or even shorter:
+
 ```.cpp
     jkqtpstatAddRegression(graphD_exp, JKQTPStatRegressionModelType::Exponential);
     jkqtpstatAddRegression(graphD_powerlaw, JKQTPStatRegressionModelType::PowerLaw);

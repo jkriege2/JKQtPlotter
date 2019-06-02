@@ -206,11 +206,15 @@ int main(int argc, char* argv[])
     double b0_powerlaw=0.25;
     double a0_exp=5;
     double b0_exp=0.5;
+    double a0_log=0;
+    double b0_log=1;
     size_t colNLLinX=datastore1->addColumn("non-lin data, x");
     size_t colNLLinYExp=datastore1->addColumn("non-lin data, y, exponential model");
     size_t colNLLinYPow=datastore1->addColumn("non-lin data, y, power-law model");
+    size_t colNLLinYLog=datastore1->addColumn("non-lin data, y, log-law model");
     auto model_powerlaw=jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::PowerLaw);
     auto model_exp=jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Exponential);
+    auto model_log=jkqtpStatGenerateRegressionModel(JKQTPStatRegressionModelType::Logarithm);
     for (double x=0.1; x<=10; x+=0.5) {
         datastore1->appendToColumn(colNLLinX, x);
         double ypow=model_powerlaw(x, a0_powerlaw, b0_powerlaw)+d1(gen);
@@ -218,11 +222,12 @@ int main(int argc, char* argv[])
             ypow=model_powerlaw(x, a0_powerlaw, b0_powerlaw)+d1(gen);
         }
         datastore1->appendToColumn(colNLLinYPow, ypow);
-        double yexp=model_exp(x, a0_powerlaw, b0_powerlaw)+d1(gen);
+        double yexp=model_exp(x, a0_exp, b0_exp)+d1(gen);
         while (yexp<0) {
-            yexp=model_exp(x, a0_powerlaw, b0_powerlaw)+d1(gen);
+            yexp=model_exp(x, a0_exp, b0_exp)+d1(gen);
         }
-        datastore1->appendToColumn(colNLLinYExp, model_exp(x, a0_exp, b0_exp)+d1(gen));
+        datastore1->appendToColumn(colNLLinYExp, yexp);
+        datastore1->appendToColumn(colNLLinYLog, model_log(x, a0_log, b0_log));
     }
     //     we visualize this data with a simple scatter graphs:
     JKQTPXYLineGraph* graphD_powerlaw;
@@ -235,6 +240,11 @@ int main(int argc, char* argv[])
     graphD_exp->setXYColumns(colNLLinX, colNLLinYExp);
     graphD_exp->setDrawLine(false);
     graphD_exp->setTitle(QString("data $%1+\\mathcal{N}(0,1)$").arg(jkqtpstatRegressionModel2Latex(JKQTPStatRegressionModelType::Exponential, a0_exp, b0_exp)));
+    JKQTPXYLineGraph* graphD_log;
+    plot5->addGraph(graphD_log=new JKQTPXYLineGraph(plot5));
+    graphD_log->setXYColumns(colNLLinX, colNLLinYLog);
+    graphD_log->setDrawLine(false);
+    graphD_log->setTitle(QString("data $%1+\\mathcal{N}(0,1)$").arg(jkqtpstatRegressionModel2Latex(JKQTPStatRegressionModelType::Logarithm, a0_log, b0_log)));
     // 5.2. Now we calculate the regression models and add a plot to the graph:
     double cA=0, cB=0;
     JKQTPXFunctionLineGraph* gFunc;
@@ -253,6 +263,7 @@ int main(int argc, char* argv[])
     //jkqtpstatAddRegression(plot5->getPlotter(), JKQTPStatRegressionModelType::PowerLaw, datastore1->begin(colNLLinX), datastore1->end(colNLLinX), datastore1->begin(colNLLinYPow), datastore1->end(colNLLinYPow));
     //jkqtpstatAddRegression(graphD_exp, JKQTPStatRegressionModelType::Exponential);
     //jkqtpstatAddRegression(graphD_powerlaw, JKQTPStatRegressionModelType::PowerLaw);
+    jkqtpstatAddRegression(graphD_log, JKQTPStatRegressionModelType::Logarithm);
 
 
 
