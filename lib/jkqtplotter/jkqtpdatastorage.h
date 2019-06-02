@@ -21,7 +21,7 @@
 
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtptoolsdebugging.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <vector>
 #include <cmath>
 #include <iostream>

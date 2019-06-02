@@ -21,7 +21,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-#include "jkqtcommon/jkqtptoolsdebugging.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include <QDebug>
 #include <QApplication>
 

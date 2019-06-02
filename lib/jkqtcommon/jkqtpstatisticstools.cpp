@@ -132,7 +132,7 @@ std::function<double (double)> jkqtpStatGenerateRegressionModel(JKQTPStatRegress
 
 std::pair<std::function<double (double)>, std::function<double (double)> > jkqtpStatGenerateTransformation(JKQTPStatRegressionModelType type) {
     auto logF=[](double x)->double { return log(x); };
-    auto expF=[](double x)->double { return exp(x); };
+    //auto expF=[](double x)->double { return exp(x); };
     auto idF=&jkqtp_identity<double>;
     switch(type) {
         case JKQTPStatRegressionModelType::Linear: return std::pair<std::function<double(double)>,std::function<double(double)> >(idF, idF);

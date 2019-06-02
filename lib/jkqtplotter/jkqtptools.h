@@ -44,7 +44,7 @@
 #include <stdexcept>
 #include <cctype>
 #include "jkqtcommon/jkqtpstringtools.h"
-#include "jkqtcommon/jkqtptoolsdebugging.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpalgorithms.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"

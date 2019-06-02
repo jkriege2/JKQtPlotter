@@ -17,7 +17,7 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
     }
 
     HEADERS += $$PWD/jkqtcommon/jkqtp_imexport.h \
-               $$PWD/jkqtcommon/jkqtptoolsdebugging.h \
+               $$PWD/jkqtcommon/jkqtpdebuggingtools.h \
                $$PWD/jkqtcommon/jkqtpmathtools.h \
                $$PWD/jkqtcommon/jkqtpalgorithms.h \
                $$PWD/jkqtcommon/jkqtpstringtools.h  \
@@ -33,7 +33,7 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtpstatisticstools.h
 
 
-    SOURCES += $$PWD/jkqtcommon/jkqtptoolsdebugging.cpp \
+    SOURCES += $$PWD/jkqtcommon/jkqtpdebuggingtools.cpp \
                $$PWD/jkqtcommon/jkqtpmathtools.cpp \
                $$PWD/jkqtcommon/jkqtpalgorithms.cpp \
                $$PWD/jkqtcommon/jkqtpstringtools.cpp  \

@@ -274,22 +274,22 @@ int main(int argc, char* argv[])
     size_t colPolyY=datastore1->addColumn("polynomial data, y");
     for (double x=-10; x<=10; x++) {
         datastore1->appendToColumn(colPolyX, x);
-        datastore1->appendToColumn(colPolyY, jkqtpstatPolyEval(x, pPoly.begin(), pPoly.end())+d1(gen)*50.0);
+        datastore1->appendToColumn(colPolyY, jkqtp_polyEval(x, pPoly.begin(), pPoly.end())+d1(gen)*50.0);
     }
     //     we visualize this data with a simple scatter graph:
     JKQTPXYLineGraph* graphP;
     plot6->addGraph(graphP=new JKQTPXYLineGraph(plot6));
     graphP->setXYColumns(colPolyX, colPolyY);
     graphP->setDrawLine(false);
-    graphP->setTitle(QString("data $%1+\\mathcal{N}(0,50)$").arg(jkqtpstatPolynomialModel2Latex(pPoly.begin(), pPoly.end())));
+    graphP->setTitle(QString("data $%1+\\mathcal{N}(0,50)$").arg(jkqtp_polynomialModel2Latex(pPoly.begin(), pPoly.end())));
     // 6.2. now we can fit polynomials with different number of coefficients:
     for (size_t p=0; p<=5; p++) {
         std::vector<double> pFit;
         JKQTPXFunctionLineGraph* gPoly;
         jkqtpstatPolyFit(datastore1->begin(colPolyX), datastore1->end(colPolyX), datastore1->begin(colPolyY), datastore1->end(colPolyY), p, std::back_inserter(pFit));
         plot6->addGraph(gPoly=new JKQTPXFunctionLineGraph(plot6));
-        gPoly->setPlotFunctionFunctor(jkqtpstatGeneratePolynomialModel(pFit.begin(), pFit.end()));
-        gPoly->setTitle(QString("regression: $%1$").arg(jkqtpstatPolynomialModel2Latex(pFit.begin(), pFit.end())));
+        gPoly->setPlotFunctionFunctor(jkqtp_generatePolynomialModel(pFit.begin(), pFit.end()));
+        gPoly->setTitle(QString("regression: $%1$").arg(jkqtp_polynomialModel2Latex(pFit.begin(), pFit.end())));
     }
     // 6.3. of course also the "adaptor" shortcuts are available:
     //for (size_t p=0; p<=5; p++) {

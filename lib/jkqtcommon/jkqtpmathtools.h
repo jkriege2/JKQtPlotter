@@ -22,11 +22,14 @@
 #ifndef jkqtpmathtools_H_INCLUDED
 #define jkqtpmathtools_H_INCLUDED
 #include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtpstringtools.h"
 #include <cmath>
 #include <limits>
 #include <QPoint>
 #include <QPointF>
 #include <vector>
+#include <QString>
+#include <functional>
 
 
 
@@ -277,6 +280,76 @@ inline bool JKQTPIsOKFloat(T v) {
  */
 inline double jkqtp_gaussdist(double x, double mu=0.0, double sigma=1.0) {
     return exp(-0.5*jkqtp_sqr(x-mu)/jkqtp_sqr(sigma))/sqrt(2.0*M_PI*sigma*sigma);
+}
+
+/*! \brief evaluate a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ with \f$ p_i \f$ taken from the range \a firstP ... \a lastP
+    \ingroup jkqtptools_math_basic
+
+    \tparam PolyItP iterator for the polynomial coefficients
+    \param x where to evaluate
+    \param firstP points to the first polynomial coefficient \f$ p_1 \f$ (i.e. the offset with \f$ x^0 \f$ )
+    \param lastP points behind the last polynomial coefficient  \f$ p_P \f$
+    \return value of polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ at location \a x
+
+*/
+template <class PolyItP>
+inline double jkqtp_polyEval(double x, PolyItP firstP, PolyItP lastP) {
+    double v=0.0;
+    double xx=1.0;
+    for (auto itP=firstP; itP!=lastP; ++itP) {
+        v=v+(*itP)*xx;
+        xx=xx*x;
+    }
+    return v;
+}
+
+/*! \brief a C++-functor, which evaluates a polynomial
+    \ingroup jkqtptools_math_basic
+*/
+struct JKQTPPolynomialFunctor {
+        std::vector<double> P;
+        template <class PolyItP>
+        inline JKQTPPolynomialFunctor(PolyItP firstP, PolyItP lastP) {
+            for (auto itP=firstP; itP!=lastP; ++itP) {
+                P.push_back(*itP);
+            }
+        }
+        inline double operator()(double x) const { return jkqtp_polyEval(x, P.begin(), P.end()); }
+
+};
+
+/*! \brief returns a C++-functor, which evaluates a polynomial
+    \ingroup jkqtptools_math_basic
+
+    \tparam PolyItP iterator for the polynomial coefficients
+    \param firstP points to the first polynomial coefficient \f$ p_1 \f$ (i.e. the offset with \f$ x^0 \f$ )
+    \param lastP points behind the last polynomial coefficient  \f$ p_P \f$
+*/
+template <class PolyItP>
+inline std::function<double(double)> jkqtp_generatePolynomialModel(PolyItP firstP, PolyItP lastP) {
+    return JKQTPPolynomialFunctor(firstP, lastP);
+}
+
+/*! \brief Generates a LaTeX string for the polynomial model with the coefficients \a firstP ... \a lastP
+    \ingroup jkqtptools_math_basic
+
+    \tparam PolyItP iterator for the polynomial coefficients
+    \param firstP points to the first polynomial coefficient \f$ p_1 \f$ (i.e. the offset with \f$ x^0 \f$ )
+    \param lastP points behind the last polynomial coefficient  \f$ p_P \f$
+    */
+template <class PolyItP>
+QString jkqtp_polynomialModel2Latex(PolyItP firstP, PolyItP lastP) {
+    QString str="f(x)=";
+    size_t p=0;
+    for (auto itP=firstP; itP!=lastP; ++itP) {
+        if (p==0) str+=jkqtp_floattolatexqstr(*itP, 3);
+        else {
+            if (*itP>=0) str+="+";
+            str+=QString("%2{\\cdot}x^{%1}").arg(p).arg(jkqtp_floattolatexqstr(*itP, 3));
+        }
+        p++;
+    }
+    return str;
 }
 
 #endif // jkqtpmathtools_H_INCLUDED

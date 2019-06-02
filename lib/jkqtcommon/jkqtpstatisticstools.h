@@ -37,7 +37,7 @@
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtcommon/jkqtplinalgtools.h"
 #include "jkqtcommon/jkqtparraytools.h"
-#include "jkqtcommon/jkqtptoolsdebugging.h"
+#include "jkqtcommon/jkqtpdebuggingtools.h"
 
 
 
@@ -2209,6 +2209,7 @@ inline void jkqtpstatWeightedRegression(JKQTPStatRegressionModelType type, Input
 
 /*! \brief fits (in a least-squares sense) a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ of order P to a set of N data pairs \f$ (x_i,y_i) \f$
     \ingroup jkqtptools_math_statistics_poly
+    \ingroup jkqtptools_math_statistics_regression
 
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
     \tparam InputItY standard iterator type of \a firstY and \a lastY.
@@ -2322,82 +2323,9 @@ inline void jkqtpstatPolyFit(InputItX firstX, InputItX lastX, InputItY firstY, I
 
 }
 
-/*! \brief evaluate a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ with \f$ p_i \f$ taken from the range \a firstP ... \a lastP
-    \ingroup jkqtptools_math_statistics_poly
-
-    \tparam PolyItP iterator for the polynomial coefficients
-    \param x where to evaluate
-    \param firstP points to the first polynomial coefficient \f$ p_1 \f$ (i.e. the offset with \f$ x^0 \f$ )
-    \param lastP points behind the last polynomial coefficient  \f$ p_P \f$
-    \return value of polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ at location \a x
-
-*/
-template <class PolyItP>
-inline double jkqtpstatPolyEval(double x, PolyItP firstP, PolyItP lastP) {
-    double v=0.0;
-    double xx=1.0;
-    for (auto itP=firstP; itP!=lastP; ++itP) {
-        v=v+(*itP)*xx;
-        xx=xx*x;
-    }
-    return v;
-}
-
-/*! \brief a C++-functor, which evaluates a polynomial
-    \ingroup jkqtptools_math_statistics_poly
-*/
-struct JKQTPStatPolynomialFunctor {
-        std::vector<double> P;
-        template <class PolyItP>
-        inline JKQTPStatPolynomialFunctor(PolyItP firstP, PolyItP lastP) {
-            for (auto itP=firstP; itP!=lastP; ++itP) {
-                P.push_back(*itP);
-            }
-        }
-        inline double operator()(double x) const { return jkqtpstatPolyEval(x, P.begin(), P.end()); }
-
-};
-
-/*! \brief returns a C++-functor, which evaluates a polynomial
-    \ingroup jkqtptools_math_statistics_poly
-
-    \tparam PolyItP iterator for the polynomial coefficients
-    \param firstP points to the first polynomial coefficient \f$ p_1 \f$ (i.e. the offset with \f$ x^0 \f$ )
-    \param lastP points behind the last polynomial coefficient  \f$ p_P \f$
-*/
-template <class PolyItP>
-inline std::function<double(double)> jkqtpstatGeneratePolynomialModel(PolyItP firstP, PolyItP lastP) {
-    return JKQTPStatPolynomialFunctor(firstP, lastP);
-}
-
-/*! \brief Generates a LaTeX string for the polynomial model with the coefficients \a firstP ... \a lastP
-    \ingroup jkqtptools_math_statistics_regression
-
-    \tparam PolyItP iterator for the polynomial coefficients
-    \param firstP points to the first polynomial coefficient \f$ p_1 \f$ (i.e. the offset with \f$ x^0 \f$ )
-    \param lastP points behind the last polynomial coefficient  \f$ p_P \f$
-    */
-template <class PolyItP>
-QString jkqtpstatPolynomialModel2Latex(PolyItP firstP, PolyItP lastP) {
-    QString str="f(x)=";
-    size_t p=0;
-    for (auto itP=firstP; itP!=lastP; ++itP) {
-        if (p==0) str+=jkqtp_floattolatexqstr(*itP, 3);
-        else {
-            if (*itP>=0) str+="+";
-            str+=QString("%2{\\cdot}x^{%1}").arg(p).arg(jkqtp_floattolatexqstr(*itP, 3));
-        }
-        p++;
-    }
-    return str;
-}
-
-
-
-
 
 /*! \brief calculates the coefficient of determination \f$ R^2 \f$ for a set of measurements \f$ (x_i,y_i) \f$ with a fit function \f$ f(x) \f$
-    \ingroup jkqtptools_math_statistics_poly
+    \ingroup jkqtptools_math_statistics_regression
 
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
     \tparam InputItY standard iterator type of \a firstY and \a lastY.
@@ -2434,10 +2362,58 @@ inline double jkqtpstatCoefficientOfDetermination(InputItX firstX, InputItX last
 }
 
 
+/*! \brief calculates the weightedcoefficient of determination \f$ R^2 \f$ for a set of measurements \f$ (x_i,y_i,w_i) \f$ with a fit function \f$ f(x) \f$
+    \ingroup jkqtptools_math_statistics_regression
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam InputItW standard iterator type of \a firstW and \a lastW.
+    \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
+    \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
+    \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$
+    \param lastY iterator pointing behind the last item in the y-dataset to use \f$ y_N \f$
+    \param firstW iterator pointing to the first item in the weight-dataset to use \f$ w_1 \f$
+    \param lastW iterator pointing behind the last item in the weight-dataset to use \f$ w_N \f$
+    \param f function \f$ f(x) \f$, result of a fit to the data
+    \param fWeightDataToWi an optional function, which is applied to the data from \a firstW ... \a lastW to convert them to weight, i.e. \c wi=fWeightDataToWi(*itW)
+                           e.g. if you use data used to draw error bars, you can use jkqtp_inversePropSaveDefault(). The default is jkqtp_identity(), which just returns the values.
+                           In the case of jkqtp_inversePropSaveDefault(), a datapoint x,y, has a large weight, if it's error is small and in the case if jkqtp_identity() it's weight
+                           is directly proportional to the given value.
+    \return weighted coeffcicient of determination \f[ R^2=1-\frac{\sum_iw_i^2\bigl[y_i-f(x_i)\bigr]^2}{\sum_iw_i^2\bigl[y_i-\overline{y}\bigr]^2} \f] where \f[ \overline{y}=\frac{1}{N}\cdot\sum_iw_iy_i \f]
+            with \f[ \sum_iw_i=1 \f]
+
+
+
+    \see https://en.wikipedia.org/wiki/Coefficient_of_determination
+*/
+template <class InputItX, class InputItY, class InputItW>
+inline double jkqtpstatWeightedCoefficientOfDetermination(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, InputItW firstW, InputItW lastW, std::function<double(double)> f, std::function<double(double)> fWeightDataToWi=&jkqtp_identity<double>) {
+
+    auto itX=firstX;
+    auto itY=firstY;
+    auto itW=firstW;
+
+    const double yMean=jkqtpstatWeightedAverage(firstX,lastX,firstW);
+    double SSres=0;
+    double SStot=0;
+    for (; itX!=lastX && itY!=lastY && itW!=lastW; ++itX, ++itY, ++itW) {
+        const double fit_x=jkqtp_todouble(*itX);
+        const double fit_y=jkqtp_todouble(*itY);
+        const double fit_w2=jkqtp_sqr(fWeightDataToWi(jkqtp_todouble(*itW)));
+        if (JKQTPIsOKFloat(fit_x) && JKQTPIsOKFloat(fit_y) && JKQTPIsOKFloat(fit_w2)) {
+            SSres+=(fit_w2*jkqtp_sqr(fit_y-f(fit_x)));
+            SStot+=(fit_w2*jkqtp_sqr(fit_y-yMean));
+        }
+    }
+
+    return 1.0-SSres/SStot;
+}
+
+
 
 
 /*! \brief calculates the sum of deviations \f$ \chi^2 \f$ for a set of measurements \f$ (x_i,y_i) \f$ with a fit function \f$ f(x) \f$
-    \ingroup jkqtptools_math_statistics_poly
+    \ingroup jkqtptools_math_statistics_regression
 
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
     \tparam InputItY standard iterator type of \a firstY and \a lastY.
@@ -2474,7 +2450,7 @@ inline double jkqtpstatSumOfDeviations(InputItX firstX, InputItX lastX, InputItY
 
 
 /*! \brief calculates the weighted sum of deviations \f$ \chi^2 \f$ for a set of measurements \f$ (x_i,y_i,w_i) \f$ with a fit function \f$ f(x) \f$
-    \ingroup jkqtptools_math_statistics_poly
+    \ingroup jkqtptools_math_statistics_regression
 
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
     \tparam InputItY standard iterator type of \a firstY and \a lastY.

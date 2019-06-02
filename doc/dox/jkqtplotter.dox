@@ -17,6 +17,7 @@ functionaly groups.
 \defgroup jkqtptools_math_basic Mathematical Functions & Tools
 \ingroup jkqtptools_math
 
+
 This group assembles a variety of mathematical tool functions that are used in different places.
 
 \defgroup jkqtptools_math_array Data Array Tools
