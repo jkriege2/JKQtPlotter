@@ -1425,6 +1425,66 @@ inline void jkqtpstatHistogram1D(InputIt first, InputIt last, BinsInputIt binsFi
 
 
 
+/*! \brief calculate a 2-dimensional histogram from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_2dhist
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam OutputIt standard output iterator type used for the outliers output \a histogramXOut and \a histogramYOut, use e.g. std::back_inserter
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param[out] histogramImgOut output iterator that receives counts of the histogram bins in row-major ordering
+    \param xmin position of the first histogram bin in x-direction
+    \param xmax position of the last histogram bin in x-direction
+    \param ymin position of the first histogram bin in y-direction
+    \param ymax position of the last histogram bin in y-direction
+    \param xbins number of bins in x-direction (i.e. width of the output histogram \a histogramImgOut )
+    \param ybins number of bins in y-direction (i.e. height of the output histogram \a histogramImgOut )
+    \param normalized indicates whether the histogram has to be normalized
+
+    \see jkqtpstatAddHHistogram1DAutoranged()
+*/
+template <class InputItX, class InputItY, class OutputIt>
+inline void jkqtpstatHistogram2D(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, OutputIt histogramImgOut, double xmin, double xmax, double ymin, double ymax, size_t xbins=10, size_t ybins=10, bool normalized=true) {
+
+    const double binwx=fabs(xmax-xmin)/static_cast<double>(xbins);
+    const double binwy=fabs(ymax-ymin)/static_cast<double>(ybins);
+
+    std::vector<double> hist;
+    std::fill_n(std::back_inserter(hist), xbins*ybins, 0.0);
+
+    // calculate the histogram
+    auto itX=firstX;
+    auto itY=firstY;
+    size_t N=0;
+    for (; (itX!=lastX) && (itY!=lastY); ++itX, ++itY)  {
+        const double vx=jkqtp_todouble(*itX);
+        const double vy=jkqtp_todouble(*itY);
+        if (JKQTPIsOKFloat(vx) && JKQTPIsOKFloat(vy)) {
+            const size_t bx=jkqtp_bounded<size_t>(0, static_cast<size_t>(floor((vx-xmin)/binwx)), xbins-1);
+            const size_t by=jkqtp_bounded<size_t>(0, static_cast<size_t>(floor((vy-ymin)/binwy)), ybins-1);
+            hist[by*xbins+bx]++;
+            N++;
+        }
+    }
+
+
+    // output the histogram
+    double NNorm=1;
+    if (normalized) {
+        NNorm=static_cast<double>(N);
+    }
+    std::transform(hist.begin(), hist.end(), histogramImgOut, [NNorm](double v) { return v/NNorm; });
+}
+
+
+
+
+
+
+
 
 /*! \brief a 1D Gaussian kernel function, e.g. for Kernel Density Estimation
     \ingroup jkqtptools_math_statistics_1dkde_kernels
@@ -1580,6 +1640,7 @@ inline double jkqtpstatEvaluateKernelSum(double t, InputIt first, InputIt last, 
             cnt++;
         }
     }
+    if (cnt==0) return 0.0;
     return res/static_cast<double>(cnt)/bandwidth;
 }
 
@@ -1605,7 +1666,7 @@ inline double jkqtpstatEvaluateKernelSum(double t, InputIt first, InputIt last, 
 
     \warning this functions is getting very slow for large dataset, as for each point in the resulting histogram N kernel functions have to be evaluated.
 
-    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+    \see https://en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt, class OutputIt>
 inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXOut, OutputIt KDEYOut, int Nout=100, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
@@ -1657,7 +1718,7 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
 
     \warning this functions is getting very slow for large dataset, as for each point in the resulting histogram N kernel functions have to be evaluated.
 
-    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+    \see https://en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt, class OutputIt>
 inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXOut, OutputIt KDEYOut, double binWidth, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
@@ -1674,13 +1735,13 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
 
     // calculate the KDE
     for (int i=0; i<Nout; i++)  {
-        histX.push_back(minV+static_cast<double>(i)*binw+binw/2.0);
-        histY.push_back(jkqtpstatEvaluateKernelSum(*(histX.end()), first, last, kernel, bandwidth));
+        const double xi=minV+static_cast<double>(i)*binw+binw/2.0;
+        histX.push_back(xi);
+        histY.push_back(jkqtpstatEvaluateKernelSum(xi, first, last, kernel, bandwidth));
     }
 
 
     // output the KDE
-
     double h=0;
     for (size_t i=0; i<histX.size(); i++) {
         *++KDEXOut=histX[i];
@@ -1709,7 +1770,7 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
     \param bandwidth bandwidth used for the KDE
     \param cummulative if \c true, a cummulative KDE is calculated
 
-    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+    \see https://en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt, class BinsInputIt, class OutputIt>
 inline void jkqtpstatKDE1D(InputIt first, InputIt last, BinsInputIt binsFirst, BinsInputIt binsLast, OutputIt KDEXOut, OutputIt KDEYOut, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
@@ -1763,7 +1824,7 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, BinsInputIt binsFirst, B
     \param bandwidth bandwidth used for the KDE
     \param cummulative if \c true, a cummulative KDE is calculated
 
-    \see en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+    \see https://en.wikipedia.org/wiki/Kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt, class OutputIt>
 inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double binXDelta, double binXRight, OutputIt KDEXOut, OutputIt KDEYOut, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false) {
@@ -1792,6 +1853,126 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double 
     }
 
 }
+
+
+
+
+
+
+
+
+
+/*! \brief evaluates the Kernel Density Estimator (KDE) at a given position
+    \ingroup jkqtptools_math_statistics_1dkde
+
+    evaluates \f[ \tilde{f}(x,y):=\frac{1}{N\cdot\sqrt{\text{bandwidthx}}\cdot\sqrt{\text{bandwidthy}}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{x-x_i}{\text{bandwidthx}},\frac{y-y_i}{\text{bandwidthy}}\right) \f]
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param x where to evaluate the kernel sum, x-coordinate
+    \param y where to evaluate the kernel sum, y-coordinate
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel2DGaussian() )
+    \param bandwidthX x-bandwidth used for the KDE
+    \param bandwidthY y-bandwidth used for the KDE
+
+*/
+template <class InputItX, class InputItY>
+inline double jkqtpstatEvaluateKernelSum2D(double x, double y, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, const std::function<double(double,double)>& kernel, double bandwidthX, double bandwidthY) {
+    double res=0;
+    size_t cnt=0;
+    auto itX=firstX;
+    auto itY=firstY;
+    for (; (itX!=lastX)&&(itY!=lastY); ++itX, ++itY)  {
+        const double vx=jkqtp_todouble(*itX);
+        const double vy=jkqtp_todouble(*itY);
+        if (JKQTPIsOKFloat(vx) && JKQTPIsOKFloat(vy)) {
+            const double vvx=(x-vx)/bandwidthX;
+            const double vvy=(y-vy)/bandwidthY;
+            res+=kernel(vvx,vvy);
+            cnt++;
+        }
+    }
+    if (cnt==0) return 0.0;
+    return res/static_cast<double>(cnt)/sqrt(bandwidthX*bandwidthY);
+}
+
+
+
+
+/*! \brief calculate an autoranged 2-dimensional Kernel Density Estimation (KDE) from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_2dkde
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \tparam OutputIt standard output iterator type used for the outliers output \a histogramXOut and \a histogramYOut, use e.g. std::back_inserter
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param[out] histogramImgOut output iterator that receives counts of the histogram bins in row-major ordering
+    \param xmin position of the first histogram bin in x-direction
+    \param xmax position of the last histogram bin in x-direction
+    \param ymin position of the first histogram bin in y-direction
+    \param ymax position of the last histogram bin in y-direction
+    \param xbins number of bins in x-direction (i.e. width of the output histogram \a histogramImgOut )
+    \param ybins number of bins in y-direction (i.e. height of the output histogram \a histogramImgOut )
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel2DGaussian() )
+    \param bandwidthX x-bandwidth used for the KDE
+    \param bandwidthY y-bandwidth used for the KDE
+
+    \see https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
+*/
+
+template <class InputItX, class InputItY, class OutputIt>
+inline void jkqtpstatKDE2D(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, OutputIt histogramImgOut, double xmin, double xmax, double ymin, double ymax, size_t xbins, size_t ybins, const std::function<double(double,double)>& kernel=std::function<double(double,double)>(&jkqtpstatKernel2DGaussian), double bandwidthX=1.0, double bandwidthY=1.0) {
+
+    const double binwx=fabs(xmax-xmin)/static_cast<double>(xbins);
+    const double binwy=fabs(ymax-ymin)/static_cast<double>(ybins);
+
+    double y=ymin;
+    auto itOut=histogramImgOut;
+    for (size_t by=0; by<ybins; by++) {
+        double x=xmin;
+        for (size_t bx=0; bx<xbins; bx++) {
+            const double vv=jkqtpstatEvaluateKernelSum2D(x,y, firstX, lastX,firstY,lastY, kernel, bandwidthX,bandwidthY);
+            *itOut=vv;
+            //std::cout<<x<<","<<y<<","<<vv<<*itOut<<std::endl;
+            x+=binwx;
+            ++itOut;
+        }
+        y+=binwy;
+    }
+}
+
+
+
+
+/*! \brief estimates a bandwidth for a 2-dimensional Kernel Density Estimator (KDE) of the given data \a first ... \a last using Scott's rule
+    \ingroup jkqtptools_math_statistics_2dkde
+
+    evaluates \f[ h =  \hat{\sigma} n^{-1/(d+4)},\ \ \ \ \ d=2 \f]
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \return the estimated bandwidth
+
+    \see https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation#Rule_of_thumb
+
+*/
+template <class InputIt>
+inline double jkqtpstatEstimateKDEBandwidth2D(InputIt first, InputIt last) {
+    size_t N=0;
+    const double sigma=jkqtpstatStdDev(first, last, nullptr, &N);
+    return sigma/pow(static_cast<double>(N), 1.0/(2.0+4.0));
+}
+
+
 
 
 
@@ -2490,6 +2671,129 @@ inline double jkqtpstatWeightedSumOfDeviations(InputItX firstX, InputItX lastX, 
 
     return SSres;
 }
+
+
+
+
+
+
+
+
+///*! \brief evaluates the Kernel Density Estimator (KDE) at a given position
+//    \ingroup jkqtptools_math_statistics_2dkde
+
+//    evaluates \f[ \tilde{f}(t_x, t_y):=\frac{1}{N\cdot\sqrt{\text{bandwidthX}*\text{bandwidthY}}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{t_x-x_i}{\text{bandwidthX}}, \frac{t_y-y_i}{\text{bandwidthY}}\right) \f]
+
+//    \param tx evaluate at this x-coordinate
+//    \param ty evaluate at this y-coordinate
+//    \param inputX input data array x-values
+//    \param inputY input data array y-values
+//    \param mask if \c !=nullptr use only the datapoints, where \c mask[i]==maskUseValue
+//    \param N number of entries in mask and input
+//    \param kernel a kernel function or functor, e.g. jkqtpstatKernel2DGaussian()
+//    \param bandwidthX a smoothing parameter in x direction
+//    \param bandwidthY a smoothing parameter in y direction
+//    \param maskUseValue see mask
+
+//*/
+//template <class T, class THIST, typename TKERNEL>
+//inline THIST jkqtpstatEvaluate2DKernelSum(THIST tx, THIST ty, const T* inputX, const T* inputY, const bool* mask, long long N, TKERNEL kernel, THIST bandwidthX=1.0, THIST bandwidthY=1.0, bool maskUseValue=false) {
+//    if (!inputX || !inputY || N<=0) return 0.0;
+
+//    THIST res=0;
+//    THIST cnt=0;
+//    for (long long i=0; i<N; i++)  {
+//        if ((!mask || mask[i]==maskUseValue) && JKQTPIsOKFloat(inputX[i]) && JKQTPIsOKFloat(inputY[i])) {
+//            const THIST vx=(tx-(THIST)inputX[i])/bandwidthX;
+//            const THIST vy=(ty-(THIST)inputY[i])/bandwidthY;
+//            res+=kernel(vx, vy);
+//            cnt++;
+//        }
+//    }
+//    return res/cnt/sqrt(bandwidthX)/sqrt(bandwidthY);
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///*! \brief calculates a running average over the given data, the returned array is smaller (N-avgSize) than the input. The new size is returned, or the old size on error
+//    \ingroup jkqtptools_math_statistics
+
+//*/
+//template <class T>
+//inline int jkqtpstatRunningAverage(T* data, long long N, int avgSize) {
+//    if (N>=avgSize && data) {
+//        int it=0;
+//        while (it<N-avgSize) {
+//            T s=0;
+//            for (int i=it; i<it+avgSize; i++) {
+//                s+=data[i];
+//            }
+//            data[it]=s/T(avgSize);
+//            it++;
+//        }
+//        return N-avgSize;
+//    }
+//    return N;
+//}
+
+///*! \brief calculates a running average over the given data, the returned array is smaller (N-avgSize) than the input. The new size is returned, or the old size on error
+//    \ingroup jkqtptools_math_statistics
+
+//    if dataX is given, it is also reduced to the new x values.
+//*/
+//template <class T>
+//inline int jkqtpstatRunningAverage(T* dataX, T* data, long long N, int avgSize) {
+//    if (N>=avgSize && data) {
+//        int it=0;
+//        while (it<N-avgSize) {
+//            T s=0;
+//            T sX=0;
+//            for (int i=it; i<it+avgSize; i++) {
+//                s+=data[i];
+//                sX+=dataX[i];
+//            }
+//            data[it]=s/T(avgSize);
+//            dataX[it]=sX/T(avgSize);
+//            it++;
+//        }
+//        return N-avgSize;
+//    }
+//    return N;
+//}
+
+
+
+
+
+
+///*! \brief lookup the given value \a data in the given \a lut, which images the range \a lmin ... \lmax to \a lut_size values of type TLUT.
+//    \ingroup jkqtptools_math_statistics
+
+//    If the given data is out of range, then the nearest lut bound is returned.
+//*/
+//template <class T, class TLUT>
+//inline TLUT jkqtpstatLookupLUT(const T& data, const T& lmin, const T& lmax, const TLUT* lut, int lut_size) {
+//    if (!lut || lut_size<=0) return 0;
+//    int idx=(data-lmin)*T(lut_size-1)/(lmax-lmin);
+//    if (idx<0) return lut[0];
+//    else if (idx>=lut_size) return lut[lut_size-1];
+//    return lut[idx];
+//}
+
 
 
 

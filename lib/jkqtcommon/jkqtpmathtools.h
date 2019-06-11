@@ -115,6 +115,60 @@ inline T jkqtp_roundTo(const double& v) {
     return static_cast<T>(round(v));
 }
 
+/** \brief round a double \a v using ceil() and convert it to a specified type T (static_cast!)
+ *  \ingroup jkqtptools_math_basic
+ *
+ *  \tparam T a numeric datatype (int, double, ...)
+ *  \param v the value to ceil and cast
+ *
+ *  this is equivalent to
+ *  \code
+ *     static_cast<T>(ceil(v));
+ *  \endcode
+ *
+ * \callergraph
+ */
+template<typename T>
+inline T jkqtp_ceilTo(const double& v) {
+    return static_cast<T>(ceil(v));
+}
+
+/** \brief round a double \a v using trunc() and convert it to a specified type T (static_cast!)
+ *  \ingroup jkqtptools_math_basic
+ *
+ *  \tparam T a numeric datatype (int, double, ...)
+ *  \param v the value to trunc and cast
+ *
+ *  this is equivalent to
+ *  \code
+ *     static_cast<T>(trunc(v));
+ *  \endcode
+ *
+ * \callergraph
+ */
+template<typename T>
+inline T jkqtp_truncTo(const double& v) {
+    return static_cast<T>(trunc(v));
+}
+
+/** \brief round a double \a v using floor() and convert it to a specified type T (static_cast!)
+ *  \ingroup jkqtptools_math_basic
+ *
+ *  \tparam T a numeric datatype (int, double, ...)
+ *  \param v the value to floor and cast
+ *
+ *  this is equivalent to
+ *  \code
+ *     static_cast<T>(floor(v));
+ *  \endcode
+ *
+ * \callergraph
+ */
+template<typename T>
+inline T jkqtp_floorTo(const double& v) {
+    return static_cast<T>(floor(v));
+}
+
 
 /** \brief round a double \a v using round() and convert it to a specified type T (static_cast!).
  *         Finally the value is bounded to the range \a min ... \a max

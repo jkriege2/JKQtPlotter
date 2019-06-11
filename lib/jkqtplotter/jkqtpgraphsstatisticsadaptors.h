@@ -28,6 +28,9 @@
 #include "jkqtplotter/jkqtpgraphssinglecolumnsymbols.h"
 #include "jkqtplotter/jkqtpgraphsbarchart.h"
 #include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
+#include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/jkqtpgraphscontour.h"
+
 
 #ifndef JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
 #define JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
@@ -389,8 +392,8 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlott
     size_t histcolY=plotter->getDatastore()->addColumn(histogramcolumnBaseName+", values");
     jkqtpstatHistogram1DAutoranged(first, last, plotter->getDatastore()->backInserter(histcolX), plotter->getDatastore()->backInserter(histcolY), bins, normalized, cummulative, JKQTPStatHistogramBinXMode::XIsMid);
     JKQTPBarHorizontalGraph* resO=new JKQTPBarHorizontalGraph(plotter);
-    resO->setXColumn(histcolX);
-    resO->setYColumn(histcolY);
+    resO->setXColumn(histcolY);
+    resO->setYColumn(histcolX);
     resO->setTitle(histogramcolumnBaseName);
     plotter->addGraph(resO);
     return resO;
@@ -425,8 +428,8 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1DAutoranged(JKQTBasePlott
     size_t histcolY=plotter->getDatastore()->addColumn(histogramcolumnBaseName+", values");
     jkqtpstatHistogram1DAutoranged(first, last, plotter->getDatastore()->backInserter(histcolX), plotter->getDatastore()->backInserter(histcolY), binWidth, normalized, cummulative, JKQTPStatHistogramBinXMode::XIsMid);
     JKQTPBarHorizontalGraph* resO=new JKQTPBarHorizontalGraph(plotter);
-    resO->setXColumn(histcolX);
-    resO->setYColumn(histcolY);
+    resO->setXColumn(histcolY);
+    resO->setYColumn(histcolX);
     resO->setTitle(histogramcolumnBaseName);
     plotter->addGraph(resO);
     return resO;
@@ -463,8 +466,8 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1D(JKQTBasePlotter* plotte
     size_t histcolY=plotter->getDatastore()->addColumn(histogramcolumnBaseName+", values");
     jkqtpstatHistogram1D(first, last, binsFirst, binsLast, plotter->getDatastore()->backInserter(histcolX), plotter->getDatastore()->backInserter(histcolY), normalized, cummulative, JKQTPStatHistogramBinXMode::XIsMid);
     JKQTPBarHorizontalGraph* resO=new JKQTPBarHorizontalGraph(plotter);
-    resO->setXColumn(histcolX);
-    resO->setYColumn(histcolY);
+    resO->setXColumn(histcolY);
+    resO->setYColumn(histcolX);
     resO->setTitle(histogramcolumnBaseName);
     plotter->addGraph(resO);
     return resO;
@@ -477,6 +480,221 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1D(JKQTBasePlotter* plotte
 
 
 
+/*! \brief calculate calculate a 2-dimensional histogram and add a JKQTPColumnMathImage to the given plotter, where the histogram is calculated from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param xbins number of bins in x-direction
+    \param ybins number of bins in y-direction
+    \param normalized indicates whether the histogram has to be normalized
+    \param histogramcolumnBaseName this string is used in building the column names for the histogram data columns
+    \param[out] oxmin position of the first histogram bin in x-direction
+    \param[out] oxmax position of the last histogram bin in x-direction
+    \param[out] oymin position of the first histogram bin in y-direction
+    \param[out] oymax position of the last histogram bin in y-direction
+    \return a graph class pointer (of type \c JKQTPColumnMathImage ) displaying the histogram data
+
+    \image html jkqtplotter_simpletest_datastore_statistics_2d_hist.png
+
+    \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
+*/
+template <class InputItX, class InputItY>
+inline JKQTPColumnMathImage* jkqtpstatAddHistogram2DImage(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, size_t xbins=10, size_t ybins=10, bool normalized=true, const QString& histogramcolumnBaseName=QString("histogram"), double* oxmin=nullptr, double* oxmax=nullptr, double* oymin=nullptr, double* oymax=nullptr) {
+    double xmin=0, xmax=0;
+    double ymin=0, ymax=0;
+    jkqtpstatMinMax(firstX,lastX, xmin,xmax);
+    jkqtpstatMinMax(firstY,lastY, ymin,ymax);
+    size_t histcol=plotter->getDatastore()->addImageColumn(xbins, ybins, histogramcolumnBaseName);
+    jkqtpstatHistogram2D(firstX,lastX,firstY,lastY,
+                         plotter->getDatastore()->begin(histcol),
+                         xmin, xmax, ymin, ymax,
+                         xbins, ybins, normalized);
+    JKQTPColumnMathImage* gHist;
+    plotter->addGraph(gHist=new JKQTPColumnMathImage(plotter));
+    gHist->setImageColumn(static_cast<int>(histcol));
+    gHist->setX(xmin);
+    gHist->setY(ymin);
+    gHist->setWidth(xmax-xmin);
+    gHist->setHeight(ymax-ymin);
+    gHist->setTitle(QObject::tr("2D Histogram"));
+    if (oxmax) *oxmax=xmax;
+    if (oxmin) *oxmin=xmin;
+    if (oymax) *oymax=ymax;
+    if (oymin) *oymin=ymin;
+    return gHist;
+}
+
+
+
+
+
+
+/*! \brief calculate calculate a 2-dimensional histogram and add a JKQTPColumnContourPlot to the given plotter, where the histogram is calculated from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param xbins number of bins in x-direction
+    \param ybins number of bins in y-direction
+    \param normalized indicates whether the histogram has to be normalized
+    \param histogramcolumnBaseName this string is used in building the column names for the histogram data columns
+    \param[out] oxmin position of the first histogram bin in x-direction
+    \param[out] oxmax position of the last histogram bin in x-direction
+    \param[out] oymin position of the first histogram bin in y-direction
+    \param[out] oymax position of the last histogram bin in y-direction
+    \return a graph class pointer (of type \c JKQTPColumnContourPlot ) displaying the histogram data as a contour plot
+
+    \image html jkqtplotter_simpletest_datastore_statistics_2d_histcontour.png
+
+    \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
+*/
+template <class InputItX, class InputItY>
+inline JKQTPColumnContourPlot* jkqtpstatAddHistogram2DContour(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, size_t xbins=10, size_t ybins=10, bool normalized=true, const QString& histogramcolumnBaseName=QString("histogram"), double* oxmin=nullptr, double* oxmax=nullptr, double* oymin=nullptr, double* oymax=nullptr) {
+    double xmin=0, xmax=0;
+    double ymin=0, ymax=0;
+    jkqtpstatMinMax(firstX,lastX, xmin,xmax);
+    jkqtpstatMinMax(firstY,lastY, ymin,ymax);
+    size_t histcol=plotter->getDatastore()->addImageColumn(xbins, ybins, histogramcolumnBaseName);
+    jkqtpstatHistogram2D(firstX,lastX,firstY,lastY,
+                         plotter->getDatastore()->begin(histcol),
+                         xmin, xmax, ymin, ymax,
+                         xbins, ybins, true);
+    JKQTPColumnContourPlot* gHist;
+    plotter->addGraph(gHist=new JKQTPColumnContourPlot(plotter));
+    gHist->setImageColumn(static_cast<int>(histcol));
+    gHist->setX(xmin);
+    gHist->setY(ymin);
+    gHist->setWidth(xmax-xmin);
+    gHist->setHeight(ymax-ymin);
+    gHist->setTitle(QObject::tr("2D Histogram"));
+    gHist->createContourLevels(5);
+    if (oxmax) *oxmax=xmax;
+    if (oxmin) *oxmin=xmin;
+    if (oymax) *oymax=ymax;
+    if (oymin) *oymin=ymin;
+    return gHist;
+}
+/*! \brief calculate calculate a 2-dimensional histogram and add a JKQTPColumnMathImage to the given plotter, where the histogram is calculated from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param xbinwidth width of bins in x-direction
+    \param ybinwidth width of bins in y-direction
+    \param normalized indicates whether the histogram has to be normalized
+    \param histogramcolumnBaseName this string is used in building the column names for the histogram data columns
+    \param[out] oxmin position of the first histogram bin in x-direction
+    \param[out] oxmax position of the last histogram bin in x-direction
+    \param[out] oymin position of the first histogram bin in y-direction
+    \param[out] oymax position of the last histogram bin in y-direction
+    \return a graph class pointer (of type \c JKQTPColumnMathImage ) displaying the histogram data
+
+    \image html jkqtplotter_simpletest_datastore_statistics_2d_hist.png
+
+    \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
+*/
+template <class InputItX, class InputItY>
+inline JKQTPColumnMathImage* jkqtpstatAddHistogram2DImage(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double xbinwidth, double ybinwidth, bool normalized=true, const QString& histogramcolumnBaseName=QString("histogram"), double* oxmin=nullptr, double* oxmax=nullptr, double* oymin=nullptr, double* oymax=nullptr) {
+    double xmin=0, xmax=0;
+    double ymin=0, ymax=0;
+    jkqtpstatMinMax(firstX,lastX, xmin,xmax);
+    jkqtpstatMinMax(firstY,lastY, ymin,ymax);
+    size_t Nx=jkqtp_ceilTo<size_t>((xmax-xmin)/xbinwidth);
+    size_t Ny=jkqtp_ceilTo<size_t>((ymax-ymin)/ybinwidth);
+    size_t histcol=plotter->getDatastore()->addImageColumn(Nx, Ny, histogramcolumnBaseName);
+    jkqtpstatHistogram2D(firstX,lastX,firstY,lastY,
+                         plotter->getDatastore()->begin(histcol),
+                         xmin, xmax, ymin, ymax,
+                         Nx, Ny, normalized);
+    JKQTPColumnMathImage* gHist;
+    plotter->addGraph(gHist=new JKQTPColumnMathImage(plotter));
+    gHist->setImageColumn(static_cast<int>(histcol));
+    gHist->setX(xmin);
+    gHist->setY(ymin);
+    gHist->setWidth(xmax-xmin);
+    gHist->setHeight(ymax-ymin);
+    gHist->setTitle(QObject::tr("2D Histogram"));
+    if (oxmax) *oxmax=xmax;
+    if (oxmin) *oxmin=xmin;
+    if (oymax) *oymax=ymax;
+    if (oymin) *oymin=ymin;
+    return gHist;
+}
+
+
+
+
+
+
+/*! \brief calculate calculate a 2-dimensional histogram and add a JKQTPColumnContourPlot to the given plotter, where the histogram is calculated from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param xbinwidth width of bins in x-direction
+    \param ybinwidth width of bins in y-direction
+    \param normalized indicates whether the histogram has to be normalized
+    \param histogramcolumnBaseName this string is used in building the column names for the histogram data columns
+    \param[out] oxmin position of the first histogram bin in x-direction
+    \param[out] oxmax position of the last histogram bin in x-direction
+    \param[out] oymin position of the first histogram bin in y-direction
+    \param[out] oymax position of the last histogram bin in y-direction
+    \return a graph class pointer (of type \c JKQTPColumnContourPlot ) displaying the histogram data as a contour plot
+
+    \image html jkqtplotter_simpletest_datastore_statistics_2d_histcontour.png
+
+    \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
+
+*/
+template <class InputItX, class InputItY>
+inline JKQTPColumnContourPlot* jkqtpstatAddHistogram2DContour(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double xbinwidth, double ybinwidth, bool normalized=true, const QString& histogramcolumnBaseName=QString("histogram"), double* oxmin=nullptr, double* oxmax=nullptr, double* oymin=nullptr, double* oymax=nullptr) {
+    double xmin=0, xmax=0;
+    double ymin=0, ymax=0;
+    jkqtpstatMinMax(firstX,lastX, xmin,xmax);
+    jkqtpstatMinMax(firstY,lastY, ymin,ymax);
+    size_t Nx=jkqtp_ceilTo<size_t>((xmax-xmin)/xbinwidth);
+    size_t Ny=jkqtp_ceilTo<size_t>((ymax-ymin)/ybinwidth);
+    size_t histcol=plotter->getDatastore()->addImageColumn(Nx, Ny, histogramcolumnBaseName);
+    jkqtpstatHistogram2D(firstX,lastX,firstY,lastY,
+                         plotter->getDatastore()->begin(histcol),
+                         xmin, xmax, ymin, ymax,
+                         Nx, Ny, normalized);
+    JKQTPColumnContourPlot* gHist;
+    plotter->addGraph(gHist=new JKQTPColumnContourPlot(plotter));
+    gHist->setImageColumn(static_cast<int>(histcol));
+    gHist->setX(xmin);
+    gHist->setY(ymin);
+    gHist->setWidth(xmax-xmin);
+    gHist->setHeight(ymax-ymin);
+    gHist->setTitle(QObject::tr("2D Histogram"));
+    gHist->createContourLevels(5);
+    if (oxmax) *oxmax=xmax;
+    if (oxmin) *oxmin=xmin;
+    if (oymax) *oymax=ymax;
+    if (oymin) *oymin=ymin;
+    return gHist;
+}
 
 
 
@@ -648,6 +866,312 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt fi
     plotter->addGraph(resO);
     return resO;
 }
+
+
+
+
+
+
+
+
+
+
+
+/*! \brief calculate an autoranged vertical KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, bins defined by their number
+    \ingroup jkqtptools_math_statistics_adaptors
+
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param Nout number of points in the resulting KDE
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
+    \param cummulative if \c true, a cummulative KDE is calculated
+    \param KDEcolumnBaseName this string is used in building the column names for the KDE data columns
+    \return a graph class pointer (of type \a GraphClass ) displaying the KDE data
+
+    Example:
+    \code
+        jkqtpstatAddVKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 200);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
+*/
+template <class InputIt>
+inline JKQTPXYLineGraph* jkqtpstatAddVKDE1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, int Nout=100, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {
+    size_t histcolX=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", positions");
+    size_t histcolY=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", values");
+    jkqtpstatKDE1DAutoranged(first, last, plotter->getDatastore()->backInserter(histcolX), plotter->getDatastore()->backInserter(histcolY), Nout, kernel, bandwidth, cummulative);
+    JKQTPXYLineGraph* resO=new JKQTPXYLineGraph(plotter);
+    resO->setXColumn(histcolY);
+    resO->setYColumn(histcolX);
+    resO->setTitle(KDEcolumnBaseName);
+    resO->setDrawLine(true);
+    resO->setSymbolType(JKQTPNoSymbol);
+    plotter->addGraph(resO);
+    return resO;
+}
+
+
+
+/*! \brief calculate an autoranged vertical KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, bins defined by their width
+    \ingroup jkqtptools_math_statistics_adaptors
+
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param binWidth width of the bins
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
+    \param cummulative if \c true, a cummulative KDE is calculated
+    \param KDEcolumnBaseName this string is used in building the column names for the KDE data columns
+    \return a graph class pointer (of type \a GraphClass ) displaying the KDE data
+
+    Example:
+    \code
+        jkqtpstatAddVKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.01);
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
+*/
+template <class InputIt>
+inline JKQTPXYLineGraph* jkqtpstatAddVKDE1DAutoranged(JKQTBasePlotter* plotter, InputIt first, InputIt last, double binWidth, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {
+    size_t histcolX=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", bins");
+    size_t histcolY=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", values");
+    jkqtpstatKDE1DAutoranged(first, last, plotter->getDatastore()->backInserter(histcolX), plotter->getDatastore()->backInserter(histcolY), binWidth, kernel, bandwidth, cummulative);
+    JKQTPXYLineGraph* resO=new JKQTPXYLineGraph(plotter);
+    resO->setXColumn(histcolY);
+    resO->setYColumn(histcolX);
+    resO->setTitle(KDEcolumnBaseName);
+    resO->setDrawLine(true);
+    resO->setSymbolType(JKQTPNoSymbol);
+    plotter->addGraph(resO);
+    return resO;
+}
+
+
+/*! \brief calculate an autoranged vertical KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, bins defined by their width
+    \ingroup jkqtptools_math_statistics_adaptors
+
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \tparam BinsInputIt standard iterator type of \a binsFirst and \a binsLast.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param binsFirst iterator pointing to the first item in the set of KDE bins
+    \param binsLast iterator pointing behind the last item in the set of KDE bins
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
+    \param cummulative if \c true, a cummulative KDE is calculated
+    \param KDEcolumnBaseName this string is used in building the column names for the KDE data columns
+    \return a graph class pointer (of type \a GraphClass ) displaying the KDE data
+
+    Example:
+    \code
+        std::vector<double> bins{-2,-1.5,-1,-0.75,-0.5,-0.25,0,0.25,0.5,0.75,1,1.5,2,2.5,3,4,5,6,7,8,9,10};
+        jkqtpstatAddVKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
+*/
+template <class InputIt, class BinsInputIt>
+inline JKQTPXYLineGraph* jkqtpstatAddVKDE1D(JKQTBasePlotter* plotter, InputIt first, InputIt last, BinsInputIt binsFirst, BinsInputIt binsLast, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {
+    size_t histcolX=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", bins");
+    size_t histcolY=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", values");
+    jkqtpstatKDE1D(first, last, binsFirst, binsLast, plotter->getDatastore()->backInserter(histcolX), plotter->getDatastore()->backInserter(histcolY), kernel, bandwidth, cummulative);
+    JKQTPXYLineGraph* resO=new JKQTPXYLineGraph(plotter);
+    resO->setXColumn(histcolY);
+    resO->setYColumn(histcolX);
+    resO->setTitle(KDEcolumnBaseName);
+    resO->setDrawLine(true);
+    resO->setSymbolType(JKQTPNoSymbol);
+    plotter->addGraph(resO);
+    return resO;
+}
+
+/*! \brief calculate an autoranged vertical KDE and add a JKQTPXYLineGraph to the given plotter, where the KDE is calculated from the data range \a first ... \a last, evaluation positions are given by the range \a binXLeft ... \a binXRight (in steps of \a binxDelta )
+    \ingroup jkqtptools_math_statistics_adaptors
+
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param binXLeft first x-position, where to evaluate the KDE
+    \param binXDelta distance between two x-positions at which the KDE is evaluated
+    \param binXRight last x-position, where to evaluate the KDE
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE
+    \param cummulative if \c true, a cummulative KDE is calculated
+    \param KDEcolumnBaseName this string is used in building the column names for the KDE data columns
+    \return a graph class pointer (of type \a GraphClass ) displaying the KDE data
+
+    Example:
+    \code
+        std::vector<double> bins{-2,-1.5,-1,-0.75,-0.5,-0.25,0,0.25,0.5,0.75,1,1.5,2,2.5,3,4,5,6,7,8,9,10};
+        jkqtpstatAddVKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
+    \endcode
+
+    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
+*/
+template <class InputIt>
+inline JKQTPXYLineGraph* jkqtpstatAddVKDE1D(JKQTBasePlotter* plotter, InputIt first, InputIt last, double binXLeft, double binXDelta, double binXRight, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=1.0, bool cummulative=false, const QString& KDEcolumnBaseName=QString("KDE")) {
+    size_t histcolX=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", bins");
+    size_t histcolY=plotter->getDatastore()->addColumn(KDEcolumnBaseName+", values");
+    jkqtpstatKDE1D(first, last, binXLeft, binXDelta, binXRight, plotter->getDatastore()->backInserter(histcolX), plotter->getDatastore()->backInserter(histcolY), kernel, bandwidth, cummulative);
+    JKQTPXYLineGraph* resO=new JKQTPXYLineGraph(plotter);
+    resO->setXColumn(histcolY);
+    resO->setYColumn(histcolX);
+    resO->setTitle(KDEcolumnBaseName);
+    resO->setDrawLine(true);
+    resO->setSymbolType(JKQTPNoSymbol);
+    plotter->addGraph(resO);
+    return resO;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*! \brief calculate calculate a 2-dimensional kernel density estimate (KDE) and add a JKQTPColumnMathImage to the given plotter, where the KDE is calculated from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param xbins number of bins in x-direction (i.e. width of the output KDE)
+    \param ybins number of bins in y-direction (i.e. height of the output KDE)
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel2DGaussian() )
+    \param bandwidthX x-bandwidth used for the KDE
+    \param bandwidthY y-bandwidth used for the KDE
+    \param kdecolumnBaseName this string is used in building the column names for the KDE data columns
+    \param[out] oxmin position of the first KDE bin in x-direction
+    \param[out] oxmax position of the last KDE bin in x-direction
+    \param[out] oymin position of the first KDE bin in y-direction
+    \param[out] oymax position of the last KDE bin in y-direction
+    \return a graph class pointer (of type \c JKQTPColumnMathImage ) displaying the KDE data
+
+    \image html jkqtplotter_simpletest_datastore_statistics_2d_kde.png
+
+    \see jkqtpstatKDE2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
+*/
+template <class InputItX, class InputItY>
+inline JKQTPColumnMathImage* jkqtpstatAddKDE2DImage(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, size_t xbins=10, size_t ybins=10, const std::function<double(double,double)>& kernel=std::function<double(double,double)>(&jkqtpstatKernel2DGaussian), double bandwidthX=1.0, double bandwidthY=1.0, const QString& kdecolumnBaseName=QString("histogram"), double* oxmin=nullptr, double* oxmax=nullptr, double* oymin=nullptr, double* oymax=nullptr) {
+    double xmin=0, xmax=0;
+    double ymin=0, ymax=0;
+    jkqtpstatMinMax(firstX,lastX, xmin,xmax);
+    jkqtpstatMinMax(firstY,lastY, ymin,ymax);
+    size_t histcol=plotter->getDatastore()->addImageColumn(xbins, ybins, kdecolumnBaseName);
+    jkqtpstatKDE2D(firstX,lastX,firstY,lastY,
+                         plotter->getDatastore()->begin(histcol),
+                         xmin, xmax, ymin, ymax,
+                         xbins, ybins, kernel, bandwidthX, bandwidthY);
+    JKQTPColumnMathImage* gHist;
+    plotter->addGraph(gHist=new JKQTPColumnMathImage(plotter));
+    gHist->setImageColumn(static_cast<int>(histcol));
+    gHist->setX(xmin);
+    gHist->setY(ymin);
+    gHist->setWidth(xmax-xmin);
+    gHist->setHeight(ymax-ymin);
+    gHist->setTitle(QObject::tr("2D KDE"));
+    if (oxmax) *oxmax=xmax;
+    if (oxmin) *oxmin=xmin;
+    if (oymax) *oymax=ymax;
+    if (oymin) *oymin=ymin;
+    return gHist;
+}
+
+
+
+
+
+
+/*! \brief calculate calculate a 2-dimensional kernel density estimate (KDE) and add a JKQTPColumnContourPlot to the given plotter, where the KDE is calculated from the given data range \a firstX / \a firstY ... \a lastY / \a lastY
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputItX standard iterator type of \a firstX and \a lastX.
+    \tparam InputItY standard iterator type of \a firstY and \a lastY.
+    \param plotter the plotter to which to add the resulting graph
+    \param firstX iterator pointing to the first x-position item in the dataset to use \f$ X_1 \f$
+    \param lastX iterator pointing behind the last x-position item in the dataset to use \f$ X_N \f$
+    \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
+    \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
+    \param xbins number of bins in x-direction (i.e. width of the output KDE)
+    \param ybins number of bins in y-direction (i.e. height of the output KDE)
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel2DGaussian() )
+    \param bandwidthX x-bandwidth used for the KDE
+    \param bandwidthY y-bandwidth used for the KDE
+    \param kdecolumnBaseName this string is used in building the column names for the KDE data columns
+    \param[out] oxmin position of the first KDE bin in x-direction
+    \param[out] oxmax position of the last KDE bin in x-direction
+    \param[out] oymin position of the first KDE bin in y-direction
+    \param[out] oymax position of the last KDE bin in y-direction
+    \return a graph class pointer (of type \c JKQTPColumnContourPlot ) displaying the KDE data as a contour plot
+
+    \image html jkqtplotter_simpletest_datastore_statistics_2d_kdecontour.png
+
+    \see jkqtpstatKDE2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
+*/
+template <class InputItX, class InputItY>
+inline JKQTPColumnContourPlot* jkqtpstatAddKDE2DContour(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, size_t xbins=10, size_t ybins=10, const std::function<double(double,double)>& kernel=std::function<double(double,double)>(&jkqtpstatKernel2DGaussian), double bandwidthX=1.0, double bandwidthY=1.0, const QString& kdecolumnBaseName=QString("histogram"), double* oxmin=nullptr, double* oxmax=nullptr, double* oymin=nullptr, double* oymax=nullptr) {
+    double xmin=0, xmax=0;
+    double ymin=0, ymax=0;
+    jkqtpstatMinMax(firstX,lastX, xmin,xmax);
+    jkqtpstatMinMax(firstY,lastY, ymin,ymax);
+    size_t histcol=plotter->getDatastore()->addImageColumn(xbins, ybins, kdecolumnBaseName);
+    jkqtpstatKDE2D(firstX,lastX,firstY,lastY,
+                         plotter->getDatastore()->begin(histcol),
+                         xmin, xmax, ymin, ymax,
+                         xbins, ybins, kernel, bandwidthX, bandwidthY);
+    JKQTPColumnContourPlot* gHist;
+    plotter->addGraph(gHist=new JKQTPColumnContourPlot(plotter));
+    gHist->setImageColumn(static_cast<int>(histcol));
+    gHist->setX(xmin);
+    gHist->setY(ymin);
+    gHist->setWidth(xmax-xmin);
+    gHist->setHeight(ymax-ymin);
+    gHist->setTitle(QObject::tr("2D KDE"));
+    gHist->createContourLevels(5);
+    if (oxmax) *oxmax=xmax;
+    if (oxmin) *oxmin=xmin;
+    if (oymax) *oymax=ymax;
+    if (oymin) *oymin=ymin;
+    return gHist;
+}
+
+
+
+
 
 
 
