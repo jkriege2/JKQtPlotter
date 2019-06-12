@@ -1299,3 +1299,66 @@ void JKQTPDatastoreModel::reloadModel()
 int JKQTPDatastore::getNextHigherIndex(int column, size_t row) const {
     return getNextHigherIndex(static_cast<size_t>(column), row);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumn(size_t column, double value)
+{
+    bool ok=columns[column].getDatastoreItem()->append(columns[column].getDatastoreOffset(), value);
+    if (!ok) {
+        QVector<double> old_data=columns[column].copyData();
+        size_t itemID=addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size()+1)));
+        columns[column]=JKQTPColumn(this, columns[column].getName(), itemID, 0);
+        for (int i=0; i<old_data.size(); i++) {
+            columns[column].setValue(static_cast<size_t>(i), old_data[i]);
+        }
+        columns[column].setValue(static_cast<size_t>(old_data.size()), value);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, double value1, double value2)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t columnX, size_t columnY, const QPointF& value)
+{
+    appendToColumn(columnX,value.x());
+    appendToColumn(columnY,value.y());
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t columnX, size_t columnY, const QPoint& value)
+{
+    appendToColumn(columnX,value.x());
+    appendToColumn(columnY,value.y());
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, size_t column3, double value1, double value2, double value3)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+    appendToColumn(column3,value3);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, size_t column3, size_t column4, double value1, double value2, double value3, double value4)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+    appendToColumn(column3,value3);
+    appendToColumn(column4,value4);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, size_t column3, size_t column4, size_t column5, double value1, double value2, double value3, double value4, double value5)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+    appendToColumn(column3,value3);
+    appendToColumn(column4,value4);
+    appendToColumn(column5,value5);
+}

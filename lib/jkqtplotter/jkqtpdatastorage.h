@@ -155,6 +155,7 @@ enum class JKQTPDatastoreItemFormat {
   *   - set() / get() set/read a column entry
   *   - inc() / dec() increment/decrement a column entry
   *   - appendToColumn() (adds a single row/new value to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
+  *   - appendToColumns() (adds several values to several columns simultaneously, i.e. a shortcut to prevents writing several consecutive appendToColumn() for each column separately)
   *   - appendFromContainerToColumn() (adds several rows from a container to a column, if the column was not internally managed before, it will be copied into a new internal memory segment by the first call to this function!)
   * .
   *
@@ -503,8 +504,106 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         inline void set(size_t column, size_t row, double value);
         /** \brief sets the value at position (\c column, \c row). \c column is the logical column and will be mapped to the according memory block internally!) */
         inline void set(int column, size_t row, double value);
-        /** \brief adds a value \a value to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards */
-        inline void appendToColumn(size_t column, double value);
+        /** \brief adds a value \a value to the column \a column. This changes the column length (number of rows).
+         *
+         * \warning This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards .
+         *
+         * \see appendToColumns()
+         */
+        void appendToColumn(size_t column, double value);
+        /** \brief adds a value \a value1 to the column \a column1 and a value \a value2 to \a column2.
+         *
+         * This is equivalent to
+         * \code
+         *   appendToColumn(column1, value1);
+         *   appendToColumn(column2, value2);
+         * \endcode
+         *
+         * \warning This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards .
+         *
+         * \see appendToColumn()
+         */
+        void appendToColumns(size_t column1, size_t column2, double value1, double value2);
+
+        /** \brief adds a the x-coordinate of \a value to the column \a columnX and the y-coordinate to \a columnY.
+         *
+         * This is equivalent to
+         * \code
+         *   appendToColumn(columnX, value.x());
+         *   appendToColumn(columnY, value.y());
+         * \endcode
+         *
+         * \warning This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards .
+         *
+         * \see appendToColumn()
+         */
+        void appendToColumns(size_t columnX, size_t columnY, const QPointF& value);
+
+        /** \brief adds a the x-coordinate of \a value to the column \a columnX and the y-coordinate to \a columnY.
+         *
+         * This is equivalent to
+         * \code
+         *   appendToColumn(columnX, value.x());
+         *   appendToColumn(columnY, value.y());
+         * \endcode
+         *
+         * \warning This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards .
+         *
+         * \see appendToColumn()
+         */
+        void appendToColumns(size_t columnX, size_t columnY, const QPoint& value);
+
+        /** \brief adds a value \a value1 to the column \a column1, a value \a value2 to \a column2, etc.
+         *
+         * This is equivalent to
+         * \code
+         *   appendToColumn(column1, value1);
+         *   appendToColumn(column2, value2);
+         *   appendToColumn(column3, value3);
+         * \endcode
+         *
+         * \warning This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards .
+         *
+         * \see appendToColumn()
+         */
+        void appendToColumns(size_t column1, size_t column2, size_t column3, double value1, double value2, double value3);
+
+        /** \brief adds a value \a value1 to the column \a column1, a value \a value2 to \a column2, etc.
+         *
+         * This is equivalent to
+         * \code
+         *   appendToColumn(column1, value1);
+         *   appendToColumn(column2, value2);
+         *   appendToColumn(column3, value3);
+         *   appendToColumn(column4, value4);
+         * \endcode
+         *
+         * \warning This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards .
+         *
+         * \see appendToColumn()
+         */
+        void appendToColumns(size_t column1, size_t column2, size_t column3, size_t column4, double value1, double value2, double value3, double value4);
+
+        /** \brief adds a value \a value1 to the column \a column1, a value \a value2 to \a column2, etc.
+         *
+         * This is equivalent to
+         * \code
+         *   appendToColumn(column1, value1);
+         *   appendToColumn(column2, value2);
+         *   appendToColumn(column3, value3);
+         *   appendToColumn(column4, value4);
+         *   appendToColumn(column5, value5);
+         * \endcode
+         *
+         * \warning This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards .
+         *
+         * \see appendToColumn()
+         */
+        void appendToColumns(size_t column1, size_t column2, size_t column3, size_t column4, size_t column5, double value1, double value2, double value3, double value4, double value5);
+
+
+
+
         /** \brief adds a values in container \a values to the column \a column. This changes the column length (number of rows). If the memory was externally managed before, it will be internally managed afterwards
          *
          *  \tparam TContainer a container with standard iterators
@@ -2487,21 +2586,6 @@ inline void JKQTPDatastore::set(size_t column, size_t row, double value)  {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 inline void JKQTPDatastore::set(int column, size_t row, double value)  {
     set(static_cast<size_t>(column), static_cast<size_t>(row), value);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-void JKQTPDatastore::appendToColumn(size_t column, double value)
-{
-    bool ok=columns[column].getDatastoreItem()->append(columns[column].getDatastoreOffset(), value);
-    if (!ok) {
-        QVector<double> old_data=columns[column].copyData();
-        size_t itemID=addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size()+1)));
-        columns[column]=JKQTPColumn(this, columns[column].getName(), itemID, 0);
-        for (int i=0; i<old_data.size(); i++) {
-            columns[column].setValue(static_cast<size_t>(i), old_data[i]);
-        }
-        columns[column].setValue(static_cast<size_t>(old_data.size()), value);
-    }
 }
 
 
