@@ -18,17 +18,6 @@
 */
 
 
-#ifndef JKQTPSTATISTICSTOOLS_H_INCLUDED
-#define JKQTPSTATISTICSTOOLS_H_INCLUDED
 
-
-#include "jkqtcommon/jkqtpstatbasics.h"
-#include "jkqtcommon/jkqtpstathistogram.h"
-#include "jkqtcommon/jkqtpstatkde.h"
-#include "jkqtcommon/jkqtpstatpoly.h"
-#include "jkqtcommon/jkqtpstatregression.h"
-
-
-#endif // JKQTPSTATISTICSTOOLS_H_INCLUDED
-
+#include "jkqtpstatpoly.h"
 

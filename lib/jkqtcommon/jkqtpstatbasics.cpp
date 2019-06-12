@@ -18,17 +18,29 @@
 */
 
 
-#ifndef JKQTPSTATISTICSTOOLS_H_INCLUDED
-#define JKQTPSTATISTICSTOOLS_H_INCLUDED
+
+#include "jkqtpstatbasics.h"
 
 
-#include "jkqtcommon/jkqtpstatbasics.h"
-#include "jkqtcommon/jkqtpstathistogram.h"
-#include "jkqtcommon/jkqtpstatkde.h"
-#include "jkqtcommon/jkqtpstatpoly.h"
-#include "jkqtcommon/jkqtpstatregression.h"
 
+JKQTPStat5NumberStatistics::JKQTPStat5NumberStatistics():
+    minimum(JKQTP_DOUBLE_NAN),
+    minimumQuantile(0),
+    quantile1(JKQTP_DOUBLE_NAN),
+    quantile1Spec(0.25),
+    median(JKQTP_DOUBLE_NAN),
+    quantile2(JKQTP_DOUBLE_NAN),
+    quantile2Spec(0.75),
+    maximum(JKQTP_DOUBLE_NAN),
+    maximumQuantile(1),
+    N(0)
+{}
 
-#endif // JKQTPSTATISTICSTOOLS_H_INCLUDED
+double JKQTPStat5NumberStatistics::IQR() const {
+    return quantile2-quantile1;
+}
 
+double JKQTPStat5NumberStatistics::IQRSignificanceEstimate() const {
+    return 2.0*(1.58*(IQR()))/sqrt(static_cast<double>(N));
+}
 
