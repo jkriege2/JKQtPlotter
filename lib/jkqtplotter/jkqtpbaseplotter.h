@@ -1434,6 +1434,18 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief sets whether to plot grid lines or not */
         void setGrid(bool val);
 
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showX indicates whether to show the zero-axis associated with the x-axis (i.e. x==0 or the vertical zero-axis)
+         * \param showY indicates whether to show the zero-axis associated with the y-axis (i.e. y==0 or the horizontal zero-axis)
+         * */
+        void setShowZeroAxes(bool showX, bool showY);
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showXY indicates whether to show the zero-axis associated with the x- and y-axis
+         * */
+        void setShowZeroAxes(bool showXY);
+
         /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed */
         void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray());
 

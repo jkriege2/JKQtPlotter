@@ -304,7 +304,16 @@ JKQTBasePlotter::~JKQTBasePlotter(){
 void JKQTBasePlotter::setGrid(bool val) {
     xAxis->setDrawGrid(val);
     yAxis->setDrawGrid(val);
-};
+}
+
+void JKQTBasePlotter::setShowZeroAxes(bool showX, bool showY) {
+    getXAxis()->setShowZeroAxis(showX);
+    getYAxis()->setShowZeroAxis(showY);
+}
+
+void JKQTBasePlotter::setShowZeroAxes(bool showXY) {
+    setShowZeroAxes(showXY,showXY);
+}
 
 void JKQTBasePlotter::useExternalDatastore(JKQTPDatastore* newStore){
     if (datastoreInternal && datastore!=nullptr) {

@@ -926,6 +926,22 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
             plotter->setGrid(val);
         }
 
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showX indicates whether to show the zero-axis associated with the x-axis (i.e. x==0 or the vertical zero-axis)
+         * \param showY indicates whether to show the zero-axis associated with the y-axis (i.e. y==0 or the horizontal zero-axis)
+         * */
+        inline void setShowZeroAxes(bool showX, bool showY) {
+            plotter->setShowZeroAxes(showX, showY);
+        }
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showXY indicates whether to show the zero-axis associated with the x- and y-axis
+         * */
+        inline void setShowZeroAxes(bool showXY) {
+            plotter->setShowZeroAxes(showXY);
+        }
+
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
         inline void saveImage(const QString& filename=QString(""), bool displayPreview=true) {
