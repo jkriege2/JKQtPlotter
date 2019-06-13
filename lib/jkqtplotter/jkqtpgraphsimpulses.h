@@ -31,6 +31,8 @@
     \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesxplots.png
+
+    \see JKQTPImpulsesVerticalGraph, \ref JKQTPlotterImpulsePlots
  */
 class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin{
         Q_OBJECT
@@ -80,6 +82,8 @@ class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, public
     \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesxerrorsplots.png
+
+    \see jkqtpstatAddXErrorImpulsesGraph(), JKQTPImpulsesHorizontalGraph, \ref JKQTPlotterImpulsePlots
  */
 class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHorizontalGraph, public JKQTPXGraphErrors {
         Q_OBJECT
@@ -103,6 +107,8 @@ class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHo
     \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesyplots.png
+
+    \see \ref JKQTPlotterImpulsePlots
  */
 class JKQTP_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizontalGraph {
         Q_OBJECT
@@ -122,6 +128,8 @@ class JKQTP_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizonta
     \ingroup jkqtplotter_barssticks
 
     \image html plot_impulsesyerrorsplots.png
+
+    \see JKQTPImpulsesVerticalGraph, jkqtpstatAddYErrorImpulsesGraph(), \ref JKQTPlotterImpulsePlots
  */
 class JKQTP_LIB_EXPORT JKQTPImpulsesVerticalErrorGraph: public JKQTPImpulsesVerticalGraph, public JKQTPYGraphErrors {
         Q_OBJECT

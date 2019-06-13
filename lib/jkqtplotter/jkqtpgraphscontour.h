@@ -247,6 +247,8 @@ class JKQTP_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGrap
  *  \ingroup jkqtplotter_imagelots_contour
  *
  *  \copydetails JKQTPContourPlot
+ *
+ *  \see jkqtpstatAddKDE2DContour(), jkqtpstatAddHistogram2DContour(), \ref JKQTPlotterContourPlot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
  */
 class JKQTP_LIB_EXPORT JKQTPColumnContourPlot: public JKQTPContourPlot  {
         Q_OBJECT

@@ -37,7 +37,9 @@ This group assembles a basic set of linear algebra methods, including matrix inv
 
 This group contains a statistics library, which offers several basic methods and is based on an iterator interface:
   - \ref jkqtptools_math_statistics_basic
+  - \ref jkqtptools_math_statistics_grouped
   - \ref jkqtptools_math_statistics_regression
+  - \ref jkqtptools_math_statistics_poly
   - \ref jkqtptools_math_statistics_1dhist
   - \ref jkqtptools_math_statistics_2dhist
   - \ref jkqtptools_math_statistics_1dkde
@@ -67,7 +69,13 @@ All statistics functions use all values in the given range and convert each valu
 \defgroup jkqtptools_math_statistics_basic Basic statistics
 \ingroup jkqtptools_math_statistics
 
+\defgroup jkqtptools_math_statistics_grouped Grouped statistics
+\ingroup jkqtptools_math_statistics
+
 \defgroup jkqtptools_math_statistics_regression Regression Analysis
+\ingroup jkqtptools_math_statistics
+
+\defgroup jkqtptools_math_statistics_poly Polynomial Fits/Regression
 \ingroup jkqtptools_math_statistics
 
 \defgroup jkqtptools_math_statistics_1dhist 1-dimensional Histograms 

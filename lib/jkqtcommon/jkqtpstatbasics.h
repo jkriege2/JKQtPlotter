@@ -40,9 +40,6 @@
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 
 
-
-
-
 /*! \brief calculates the average of a given data range \a first ... \a last
     \ingroup jkqtptools_math_statistics_basic
 
@@ -75,6 +72,8 @@ inline double jkqtpstatAverage(InputIt first, InputIt last, size_t* Noutput=null
     if (NN<=0) return JKQTP_DOUBLE_NAN;
     else return sum/static_cast<double>(NN);
 }
+
+
 
 
 

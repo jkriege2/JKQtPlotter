@@ -162,6 +162,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_datastore_regression_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastoreRegression
     <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library<br>Regression Analysis (with the Statistics Library)<br>robust regression (IRLS)<br>weighted regression<br>non-linear regression<br>polynomial fitting
+<tr><td> \image html jkqtplotter_simpletest_datastore_groupedstat_small.png
+    <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat
+    <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>grouped statistics<br>error indicators from data<br>boxplots
 <tr><td> \image html jkqtplotter_simpletest_datastore_statistics_2d_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatistics2D
     <td> Advanced 2-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library (see \ref jkqtptools_math_statistics )<br>histograms<br>kernel density estimates (KDE)

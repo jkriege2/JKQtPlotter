@@ -35,7 +35,9 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtpstathistogram.h \
                $$PWD/jkqtcommon/jkqtpstatkde.h \
                $$PWD/jkqtcommon/jkqtpstatregression.h \
-               $$PWD/jkqtcommon/jkqtpstatpoly.h
+               $$PWD/jkqtcommon/jkqtpstatpoly.h \
+               $$PWD/jkqtcommon/jkqtpstatgrouped.h
+
 
 
     SOURCES += $$PWD/jkqtcommon/jkqtpdebuggingtools.cpp \
@@ -51,12 +53,12 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtpmathparser.cpp \
                $$PWD/jkqtcommon/jkqttools.cpp \
                $$PWD/jkqtcommon/jkqtparraytools.cpp \
-               $$PWD/jkqtcommon/jkqtpstatisticstools.cpp \
                $$PWD/jkqtcommon/jkqtpstatbasics.cpp \
                $$PWD/jkqtcommon/jkqtpstathistogram.cpp \
                $$PWD/jkqtcommon/jkqtpstatkde.cpp \
                $$PWD/jkqtcommon/jkqtpstatregression.cpp \
-               $$PWD/jkqtcommon/jkqtpstatpoly.cpp
+               $$PWD/jkqtcommon/jkqtpstatpoly.cpp \
+               $$PWD/jkqtcommon/jkqtpstatgrouped.cpp
 
 
     INCLUDEPATH += $$PWD

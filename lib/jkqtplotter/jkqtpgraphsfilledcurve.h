@@ -54,7 +54,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPSpecialLineHorizontal
     \image html plot_filledcurvexerrorplots.png
 
 
-    \see \ref JKQTPlotterFilledGraphs
+    \see \ref JKQTPlotterFilledGraphs, jkqtpstatAddXErrorFilledCurveGraph()
  */
 class JKQTP_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGraph, public JKQTPYGraphErrors {
         Q_OBJECT
@@ -103,7 +103,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPSpecialLineVerticalGr
 
     \image html plot_filledcurveyerrorplots.png
 
-    \see \ref JKQTPlotterFilledGraphs
+    \see \ref JKQTPlotterFilledGraphs, jkqtpstatAddYErrorFilledCurveGraph()
  */
 class JKQTP_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGraph, public JKQTPXGraphErrors {
         Q_OBJECT

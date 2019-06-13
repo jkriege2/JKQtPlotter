@@ -95,7 +95,7 @@
         graphOutliers->setSymbolSize(7);
     \endcode
 
-    \see \ref JKQTPlotterBoxplotsGraphs
+    \see \ref JKQTPlotterBoxplotsGraphs, jkqtpstatVAddBoxplots(),\ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat, \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotStyling
 
  */
 class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQTPGraphBoxplotStyleMixin {
@@ -252,7 +252,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQT
 
     \note See the documentation of JKQTPBoxplotVerticalGraph for details on the properties of this class!
 
-    \see JKQTPBoxplotVerticalGraph \ref JKQTPlotterBoxplotsGraphs
+    \see JKQTPBoxplotVerticalGraph \ref JKQTPlotterBoxplotsGraphs, jkqtpstatHAddBoxplots(), \ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat, \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotStyling
 
  */
 class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
@@ -305,6 +305,8 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalG
     The example \ref JKQTPlotterBoxplotStyling discusses different options to style boxplots:
 
     \image html test_styledboxplot.png
+
+    \see jkqtpstatVAddBoxplot(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotsGraphs, \ref JKQTPlotterBoxplotStyling, jkqtpstatAddVBoxplotAndOutliers()
 
  */
 class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphBoxplotStyleMixin {
@@ -428,7 +430,8 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, publ
 
     \note See JKQTPBoxplotVerticalElement for a detailed documentation
 
-    \see JKQTPBoxplotVerticalElement
+    \see JKQTPBoxplotVerticalElement, jkqtpstatHAddBoxplot(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotsGraphs, \ref JKQTPlotterBoxplotStyling, jkqtpstatAddHBoxplotAndOutliers()
+
  */
 class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
         Q_OBJECT

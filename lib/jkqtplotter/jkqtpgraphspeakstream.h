@@ -42,6 +42,8 @@ class JKQTPDatastore;
 
     \image html JKQTPPeakStreamGraphY.png "yPeaks=true"
     \image html JKQTPPeakStreamGraphX.png "yPeaks=false"
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics
  */
 class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph, public JKQTPGraphLineStyleMixin {
         Q_OBJECT

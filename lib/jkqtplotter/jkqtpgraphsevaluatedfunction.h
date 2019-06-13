@@ -65,6 +65,8 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
     the following image
     \image html plot_functionplots.png
+
+    \see \ref JKQTPlotterFunctionPlots, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
 class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
@@ -392,6 +394,7 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$
     \ingroup jkqtplotter_functiongraphs
 
+    \see \ref JKQTPlotterFunctionPlots
  */
 class JKQTP_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         Q_OBJECT

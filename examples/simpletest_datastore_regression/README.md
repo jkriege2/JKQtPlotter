@@ -4,9 +4,9 @@
 [JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreRegression]: @ref JKQTPlotterBasicJKQTPDatastoreRegression "Regression Analysis (with the Statistics Library)"
+[JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat]: @ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat "1-Dimensional Group Statistics with JKQTPDatastore"
 [JKQTPlotterBasicJKQTPDatastoreStatistics2D]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics2D "Advanced 2-Dimensional Statistics with JKQTPDatastore"
 [statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
-
 
 This tutorial project (see `./examples/simpletest_datastore_statistics/`) explains several advanced functions of JKQTPDatastore in combination with the [[statisticslibrary]] conatined in JKQTPlotter.
 
@@ -14,8 +14,9 @@ This tutorial project (see `./examples/simpletest_datastore_statistics/`) explai
   - [JKQTPlotterBasicJKQTPDatastore]
   - [JKQTPlotterBasicJKQTPDatastoreIterators]
   - [JKQTPlotterBasicJKQTPDatastoreStatistics]
-  - [JKQTPlotterBasicJKQTPDatastoreStatistics2D]
   - [JKQTPlotterBasicJKQTPDatastoreRegression]
+  - [JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat]
+  - [JKQTPlotterBasicJKQTPDatastoreStatistics2D]
 
   
 [TOC]

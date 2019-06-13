@@ -27,6 +27,7 @@
 #include "jkqtcommon/jkqtpstatkde.h"
 #include "jkqtcommon/jkqtpstatpoly.h"
 #include "jkqtcommon/jkqtpstatregression.h"
+#include "jkqtcommon/jkqtpstatgrouped.h"
 
 
 #endif // JKQTPSTATISTICSTOOLS_H_INCLUDED

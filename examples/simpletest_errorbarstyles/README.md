@@ -1,6 +1,11 @@
 # Example (JKQTPlotter): Different Types of Errorindicators {#JKQTPlotterErrorBarStyles}
 This project (see `./examples/simpletest_errorbarstyles/`) simply creates a JKQTPlotter widget (as a new window) and adds several curves show-casing different styles of error indicators. Data is initialized from two QVector<double> objects.
 
+[JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat]: @ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat "1-Dimensional Group Statistics with JKQTPDatastore"
+[statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
+
+***Note:*** This examples explains how to plot graphs with error indicators, when the data has already been calculated. The tutorial [JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat] explains one way how to use the [statisticslibrary] in order to calculate the errors from data.
+
 The source code of the main application can be found in  [`jkqtplotter_simpletest_errorbarstyles.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_errorbarstyles/jkqtplotter_simpletest_errorbarstyles.cpp). 
 
 First some data is added to the internal datastore (mostly, like explained in several other examples, like e.g. [Line Graph with Different Symbols and Line Styles](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_symbols_and_styles)). The (in a loop) several graphs are added, each with a distinct style for its error indicators:

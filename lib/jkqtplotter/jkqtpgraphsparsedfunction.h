@@ -42,6 +42,8 @@ class JKQTPlotter;
     Parameters may also be given from a data column. Then first the params from the column and the the parameters from the vector are numbered.
 
     Use the variable \c x in an equation to refer to the free parameter of the curve.
+
+    \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
  */
 class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
     Q_OBJECT
@@ -108,6 +110,9 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
     Parameters may also be given from a data column. Then first the params from the column and the the parameters from the vector are numbered.
 
     Use the variable \c y in an equation to refer to the free parameter of the curve (\c is also understood for convenience).
+
+    \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
+
  */
 class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         Q_OBJECT

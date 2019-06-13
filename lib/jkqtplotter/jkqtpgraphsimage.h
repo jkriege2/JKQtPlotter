@@ -334,6 +334,8 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
     \ingroup jkqtplotter_imagelots_elements
 
     \image html jkqtplotter_simpletest_rgbimageplot_qt.png
+
+    \see \ref JKQTPlotterImagePlotQImageRGB
  */
 class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         Q_OBJECT
@@ -467,6 +469,8 @@ class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
     \image html jkqtplotter_simpletest_imageplot.png
     \image html jkqtplotter_simpletest_imageplot_modifier.png
     \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
+
+    \see \ref JKQTPlotterImagePlotNoDatastore
  */
 class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         Q_OBJECT
@@ -994,6 +998,7 @@ int JKQTPMathImage::getModifierSampleSize() const {
     \image html jkqtplotter_simpletest_imageplot_modifier.png
     \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
 
+    \see jkqtpstatAddKDE2DImage(), jkqtpstatAddHistogram2DImage(), \ref JKQTPlotterImagePlot, \ref JKQTPlotterImagePlotModifier, \ref JKQTPlotterImagePlotOpenCV
  */
 class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         Q_OBJECT

@@ -1,5 +1,12 @@
 # Example (JKQTPlotter): Boxplots {#JKQTPlotterBoxplotsGraphs}
+
 This project (see [`simpletest_boxplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_boxplot) demonstrates how to use JKQTPlotter to draw <a href="https://en.wikipedia.org/wiki/Box_plot">box plots</a> using the classes `JKQTPBoxplotVerticalGraph` and `JKQTPBoxplotHorizontalGraph`.
+
+[JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"
+[statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
+[JKQTPlotterBoxplotStyling]: @ref JKQTPlotterBoxplotStyling "Styling different aspects of boxplots"
+
+***Note*** that this example explains how to add boxplots to a graph by hand, i.e. by calculating all the statistical properties for the boxplots by hand. The internal [statisticslibrary] offers methods to perform these calculations, which are explained in the tutorial [JKQTPlotterBasicJKQTPDatastoreStatistics] in detail. Additional advanced styling of boxplots is covered by the example [JKQTPlotterBoxplotStyling].
 
 The source code of the main application is (see [`jkqtplotter_simpletest_boxplot.cpp`](jkqtplotter_simpletest_boxplot.cpp).
 

@@ -19,4 +19,22 @@
 
 
 
-#include "jkqtpstatisticstools.h"
+#include "jkqtpstatgrouped.h"
+
+double jkqtpstatGroupingIdentity1D(double v) {
+    return v;
+}
+
+double jkqtpstatGroupingRound1D(double v) {
+    return round(v);
+}
+
+double jkqtpstatGroupingCustomRound1D(double v, double firstGroupCenter, double groupWidth) {
+    return round((v-firstGroupCenter)/(2.0*groupWidth));
+}
+
+
+JKQTPStatGroupDefinitionFunctor1D jkqtpstatMakeGroupingCustomRound1D(double firstGroupCenter, double groupWidth)
+{
+    return std::bind(&jkqtpstatGroupingCustomRound1D, std::placeholders::_1, firstGroupCenter, groupWidth);
+}

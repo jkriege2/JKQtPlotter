@@ -46,7 +46,6 @@
 
 /*! \brief fits (in a least-squares sense) a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ of order P to a set of N data pairs \f$ (x_i,y_i) \f$
     \ingroup jkqtptools_math_statistics_poly
-    \ingroup jkqtptools_math_statistics_regression
 
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
     \tparam InputItY standard iterator type of \a firstY and \a lastY.
