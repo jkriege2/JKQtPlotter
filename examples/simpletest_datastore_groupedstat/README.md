@@ -61,6 +61,8 @@ This dataset can be visualized with a simple scatter plot:
     gScatterForBar->setSymbolColor(QColorWithAlphaF(QColor("red"), 0.5));
 ```
 
+The resulting plot looks like this: 
+
 ![jkqtplotter_simpletest_datastore_groupedstat_barchartrawdata](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_groupedstat_barchartrawdata.png)
 
 ## Calculating Grouped Statistics for a Barchart 
@@ -93,6 +95,8 @@ Finally the calculated groups are drawn:
     gBar->setXYColumns(colBarGroup, colBarAverage);
     gBar->setYErrorColumn(static_cast<int>(colBarStdDev));
 ```
+
+The resulting plot looks like this: 
 
 ![jkqtplotter_simpletest_datastore_groupedstat_barchart](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_groupedstat_barchart.png)
 
@@ -140,6 +144,8 @@ The result can be plotted using JKQTPBoxplotVerticalGraph, which receives a colu
     gBoxplot->setPercentile75Column(colBarQ75);
 ```
 
+The resulting plot looks like this: 
+
 ![jkqtplotter_simpletest_datastore_groupedstat_boxplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_groupedstat_boxplot.png)
 
 In order to safe yo the typing of the code above, shortcuts in the form of adaptors exist:
@@ -183,6 +189,8 @@ This dataset can be visualized:
     gScatterRaw->setSymbolType(JKQTPCross);
     gScatterRaw->setSymbolSize(5);
 ```
+
+The resulting plot looks like this: 
 
 ![jkqtplotter_simpletest_datastore_groupedstat_scatterrawdata](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_groupedstat_scatterrawdata.png)
 
@@ -229,6 +237,8 @@ Finally the calculated groups are drawn
     gScatterErr->setSymbolType(JKQTPFilledTriangle);
     gScatterErr->setDrawLine(false);
 ```
+
+The resulting plot looks like this: 
 
 ![jkqtplotter_simpletest_datastore_groupedstat_scatter](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_groupedstat_scatter.png)
 

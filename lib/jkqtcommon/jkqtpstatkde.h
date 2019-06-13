@@ -421,7 +421,7 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double 
 
 
 /*! \brief evaluates the Kernel Density Estimator (KDE) at a given position
-    \ingroup jkqtptools_math_statistics_1dkde
+    \ingroup jkqtptools_math_statistics_2dkde
 
     evaluates \f[ \tilde{f}(x,y):=\frac{1}{N\cdot\sqrt{\text{bandwidthx}}\cdot\sqrt{\text{bandwidthy}}}\cdot\sum\limits_{i=0}^{N-1}K\left(\frac{x-x_i}{\text{bandwidthx}},\frac{y-y_i}{\text{bandwidthy}}\right) \f]
 

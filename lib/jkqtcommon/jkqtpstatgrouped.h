@@ -67,7 +67,7 @@ double jkqtpstatGroupingIdentity1D(double v);
     \see JKQTPStatGroupDefinitionFunctor1D
 */
 double jkqtpstatGroupingRound1D(double v);
-/*! \brief assign each value to groups \f$ \mbox{firstGroupCenter}, \mbox{firstGroupCenter}\pm\mbox{groupWidth}/2, \mbox{firstGroupCenter}\pm2\cdot\mbox{groupWidth}/2, , \mbox{firstGroupCenter}\pm3\cdot\mbox{groupWidth}/2, ... \f$
+/*! \brief assign each value to groups \f$ \mbox{firstGroupCenter} \f$ , \f$ \mbox{firstGroupCenter}\pm\mbox{groupWidth}/2\f$ , \f$ \mbox{firstGroupCenter}\pm2\cdot\mbox{groupWidth}/2 \f$ , \f$ \mbox{firstGroupCenter}\pm3\cdot\mbox{groupWidth}/2 \f$ , ...
     \ingroup jkqtptools_math_statistics_grouped
 
     This is equivalent to \f$ \mbox{round}\left(\frac{x-\mbox{firstGroupCenter}}{\mbox{groupWidth}/2}\right) \f$

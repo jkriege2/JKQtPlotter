@@ -356,7 +356,7 @@ inline void jkqtpstatRegression(JKQTPStatRegressionModelType type, InputItX firs
 
 
 /*! \brief calculate the robust linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is defined by \a type
-           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^p \f]
+           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i|y_i-f_{\text{type}}(x_i,a,b)|^p \f]
            by reducing it to a linear fit by transforming x- and/or y-data
     \ingroup jkqtptools_math_statistics_regression
 
@@ -403,7 +403,7 @@ inline void jkqtpstatRobustIRLSRegression(JKQTPStatRegressionModelType type, Inp
 
 
 /*! \brief calculate the robust linear regression coefficients for a given data range \a firstX / \a firstY ... \a lastX / \a lastY where the model is defined by \a type
-           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_i\left(y_i-f_{\text{type}}(x_i,a,b)\right)^p \f]
+           So this function solves the Lp-norm optimization problem: \f[ (a^\ast, b^\ast)=\mathop{\mathrm{arg\;min}}\limits_{a,b}\sum\limits_iw_i^2\left(y_i-f_{\text{type}}(x_i,a,b)\right)^2 \f]
            by reducing it to a linear fit by transforming x- and/or y-data
     \ingroup jkqtptools_math_statistics_regression
 

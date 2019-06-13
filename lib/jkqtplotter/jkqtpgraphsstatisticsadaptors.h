@@ -1842,7 +1842,7 @@ inline TGraph* jkqtpstatAddYErrorGraph(JKQTBasePlotter* plotter, InputCatIt inFi
 }
 
 
-/*! \brief create a JKQTPXYLineErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPXYLineErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -1866,7 +1866,7 @@ inline JKQTPXYLineErrorGraph* jkqtpstatAddYErrorLineGraph(JKQTBasePlotter* plott
 }
 
 
-/*! \brief create a JKQTPBarVerticalErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPBarVerticalErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -1890,7 +1890,7 @@ inline JKQTPBarVerticalErrorGraph* jkqtpstatAddYErrorBarGraph(JKQTBasePlotter* p
 }
 
 
-/*! \brief create a JKQTPImpulsesVerticalErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPImpulsesVerticalErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -1914,7 +1914,7 @@ inline JKQTPImpulsesVerticalErrorGraph* jkqtpstatAddYErrorImpulsesGraph(JKQTBase
 }
 
 
-/*! \brief create a JKQTPXYParametrizedErrorScatterGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPXYParametrizedErrorScatterGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -1938,7 +1938,7 @@ inline JKQTPXYParametrizedErrorScatterGraph* jkqtpstatAddYErrorParametrizedScatt
 }
 
 
-/*! \brief create a JKQTPFilledCurveYErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPFilledCurveYErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -2012,7 +2012,7 @@ inline TGraph* jkqtpstatAddXErrorGraph(JKQTBasePlotter* plotter, InputCatIt inFi
 }
 
 
-/*! \brief create a JKQTPXYLineErrorGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPXYLineErrorGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_Y and \a inLastCat_Y
@@ -2036,7 +2036,7 @@ inline JKQTPXYLineErrorGraph* jkqtpstatAddXErrorLineGraph(JKQTBasePlotter* plott
 }
 
 
-/*! \brief create a JKQTPBarHorizontalErrorGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPBarHorizontalErrorGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_Y and \a inLastCat_Y
@@ -2060,7 +2060,7 @@ inline JKQTPBarHorizontalErrorGraph* jkqtpstatAddXErrorBarGraph(JKQTBasePlotter*
 }
 
 
-/*! \brief create a JKQTPImpulsesHorizontalErrorGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPImpulsesHorizontalErrorGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_Y and \a inLastCat_Y
@@ -2084,7 +2084,7 @@ inline JKQTPImpulsesHorizontalErrorGraph* jkqtpstatAddXErrorImpulsesGraph(JKQTBa
 }
 
 
-/*! \brief create a JKQTPXYParametrizedErrorScatterGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPXYParametrizedErrorScatterGraph with x-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_Y and \a inLastCat_Y
@@ -2188,7 +2188,7 @@ inline TGraph* jkqtpstatAddXYErrorGraph(JKQTBasePlotter* plotter, InputCatIt inF
 }
 
 
-/*! \brief create a JKQTPXYLineErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPXYLineErrorGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -2213,7 +2213,7 @@ inline JKQTPXYLineErrorGraph* jkqtpstatAddXYErrorLineGraph(JKQTBasePlotter* plot
 
 
 
-/*! \brief create a JKQTPXYParametrizedErrorScatterGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
+/*! \brief create a \c JKQTPXYParametrizedErrorScatterGraph with y-direction error bars, calculated from average +/- stddev of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -2240,7 +2240,7 @@ inline JKQTPXYParametrizedErrorScatterGraph* jkqtpstatAddXYErrorParametrizedScat
 
 
 
-/*! \brief create horizontal boxplots of type \­a TGraph, from the 5-value-summary of groups in the input data
+/*! \brief create horizontal boxplots of type \c TGraph, from the 5-value-summary of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
     \internal
 
@@ -2307,7 +2307,7 @@ inline TGraph* jkqtpstatAddBoxplots(JKQTBasePlotter* plotter, InputCatIt inFirst
     return graph;
 }
 
-/*! \brief create vertical boxplots of type \­a JKQTPBoxplotVerticalGraph, from the 5-value-summary of groups in the input data
+/*! \brief create vertical boxplots of type \c JKQTPBoxplotVerticalGraph, from the 5-value-summary of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
     \internal
 
@@ -2336,7 +2336,7 @@ inline JKQTPBoxplotVerticalGraph* jkqtpstatVAddBoxplots(JKQTBasePlotter* plotter
     return jkqtpstatAddBoxplots<InputCatIt,InputValueIt,JKQTPBoxplotVerticalGraph>(plotter,  inFirstCat_Y,  inLastCat_Y,  inFirstValue_X,  inLastValue_X,  quantile1Spec,  quantile2Spec,  minimumQuantile,  maximumQuantile, groupDefFunc, columnBaseName);
 }
 
-/*! \brief create horizontal boxplots of type \­a JKQTPBoxplotHorizontalGraph, from the 5-value-summary of groups in the input data
+/*! \brief create horizontal boxplots of type \c JKQTPBoxplotHorizontalGraph, from the 5-value-summary of groups in the input data
     \ingroup jkqtptools_math_statistics_adaptors
     \internal
 
@@ -2365,7 +2365,7 @@ inline JKQTPBoxplotHorizontalGraph* jkqtpstatVAddBoxplots(JKQTBasePlotter* plott
     return jkqtpstatAddBoxplots<InputCatIt,InputValueIt,JKQTPBoxplotHorizontalGraph>(plotter,  inFirstCat_X,  inLastCat_X,  inFirstValue_Y,  inLastValue_Y,  quantile1Spec,  quantile2Spec,  minimumQuantile,  maximumQuantile, groupDefFunc, columnBaseName);
 }
 
-/*! \brief create vertical boxplots of type \­a JKQTPBoxplotVerticalGraph, from the 5-value-summary of groups in the input data, also adds a graph showing the outliers
+/*! \brief create vertical boxplots of type \c JKQTPBoxplotVerticalGraph, from the 5-value-summary of groups in the input data, also adds a graph showing the outliers
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_X and \a inLastCat_X
@@ -2441,7 +2441,7 @@ inline std::pair<JKQTPBoxplotVerticalGraph*, JKQTPXYLineGraph*> jkqtpstatAddVBox
 }
 
 
-/*! \brief create vertical boxplots of type \­a JKQTPBoxplotHorizontalGraph, from the 5-value-summary of groups in the input data, also adds a graph showing the outliers
+/*! \brief create vertical boxplots of type \c JKQTPBoxplotHorizontalGraph, from the 5-value-summary of groups in the input data, also adds a graph showing the outliers
     \ingroup jkqtptools_math_statistics_adaptors
 
     \tparam InputCatIt standard iterator type of \a inFirstCat_Y and \a inLastCat_Y

@@ -446,7 +446,7 @@ inline size_t jkqtpstatFilterGoodFloat(InputIt first, InputIt last, OutputIt out
 
 
 
-/*! \brief calculates the variance of a given data range \a first ... \a last
+/*! \brief calculates the variance \f$ \sigma_X^2=\mbox{Var}(X) \f$ of a given data range \a first ... \a last
     \ingroup jkqtptools_math_statistics_basic
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -459,7 +459,7 @@ inline size_t jkqtpstatFilterGoodFloat(InputIt first, InputIt last, OutputIt out
             If the given range \a first ... \a last is empty, 0 is returned
 
     This function implements:
-      \f[ \sigma_X=\text{Var}(X)=\frac{1}{N-1}\cdot\sum\limits_{i=1}^{N}(X_i-\overline{X})^2=\frac{1}{N-1}\cdot\left(\sum_{i=1}^NX_i^2-\frac{1}{N}\cdot\left(\sum_{i=1}^NX_i\right)^2\right) \f]
+      \f[ \sigma_X^2=\text{Var}(X)=\frac{1}{N-1}\cdot\sum\limits_{i=1}^{N}(X_i-\overline{X})^2=\frac{1}{N-1}\cdot\left(\sum_{i=1}^NX_i^2-\frac{1}{N}\cdot\left(\sum_{i=1}^NX_i\right)^2\right) \f]
 
     \note Each value is the specified range is converted to a double using jkqtp_todouble().
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
@@ -489,7 +489,7 @@ inline double jkqtpstatVariance(InputIt first, InputIt last, double* averageOut=
 
 
 
-/*! \brief calculates the variance of a given data range \a first ... \a last
+/*! \brief calculates the standard deviation \f$ \sigma_X=\sqrt{\mbox{Var}(X)} \f$ of a given data range \a first ... \a last
     \ingroup jkqtptools_math_statistics_basic
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -515,7 +515,7 @@ inline double jkqtpstatStdDev(InputIt first, InputIt last, double* averageOut=nu
 
 
 
-/*! \brief calculates the weighted variance of a given data range \a first ... \a last
+/*! \brief calculates the weighted variance \f$ \sigma_X^2=\mbox{Var}(X) \f$ of a given data range \a first ... \a last
     \ingroup jkqtptools_math_statistics_basic
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -529,7 +529,7 @@ inline double jkqtpstatStdDev(InputIt first, InputIt last, double* averageOut=nu
             If the given range \a first ... \a last is empty, 0 is returned
 
     This function implements:
-      \f[ \text{Var}(v)=\frac{\sum\limits_{i=1}^{N}w_i\cdot (v_i-\overline{v})^2}{\sum\limits_{i=1}^{N}w_i} \f]
+      \f[ \sigma_v^2=\text{Var}(v)=\frac{\sum\limits_{i=1}^{N}w_i\cdot (v_i-\overline{v})^2}{\sum\limits_{i=1}^{N}w_i} \f]
 
     \note Each value is the specified range is converted to a double using jkqtp_todouble().
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
@@ -559,7 +559,7 @@ inline double jkqtpstatWeightedVariance(InputIt first, InputIt last, InputWeight
 
 
 
-/*! \brief calculates the weighted standard deviation of a given data range \a first ... \a last
+/*! \brief calculates the weighted standard deviation \f$ \sigma_X=\sqrt{\mbox{Var}(X)} \f$ of a given data range \a first ... \a last
     \ingroup jkqtptools_math_statistics_basic
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -587,7 +587,7 @@ inline double jkqtpstatWeightedStdDev(InputIt first, InputIt last, InputWeightIt
 
 
 
-/*! \brief calculates the skewness of a given data range \a first ... \a last
+/*! \brief calculates the skewness \f$ \gamma_1=\mathbb{E}\left[\left(\frac{X-\mu}{\sigma}\right)^3\right] \f$ of a given data range \a first ... \a last
     \ingroup jkqtptools_math_statistics_basic
 
     \tparam InputIt standard iterator type of \a first and \a last.
@@ -712,7 +712,7 @@ inline double jkqtpstatMoment(InputIt first, InputIt last, int order, size_t* No
 
 
 
-/*! \brief calculate empirical (Pearson's) correlation coefficient between two given data ranges \a first1 ... \a last1 and  \a first2 ... \a last2
+/*! \brief calculate empirical (Pearson's) correlation coefficient \f$ \rho_{x,y} \f$ between two given data ranges \a first1 ... \a last1 and  \a first2 ... \a last2
     \ingroup jkqtptools_math_statistics_basic
 
     \tparam InputIt1 standard iterator type of \a first1 and \a last1.
@@ -727,7 +727,7 @@ inline double jkqtpstatMoment(InputIt first, InputIt last, int order, size_t* No
             If the given range \a first1 ... \a last1 is empty, JKQTP_DOUBLE_NAN is returned
 
     This function implements:
-        \f[ \text{Kor}(x,y)=\frac{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})(y_i-\overline{y})}{\sqrt{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})^2\cdot\sum\limits_{i=0}^{N-1}(y_i-\overline{y})^2}} \f]
+        \f[ \rho_{x,y}=\text{CorCoeff}_{\text{Pearson}}(x,y)=\frac{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})(y_i-\overline{y})}{\sqrt{\sum\limits_{i=0}^{N-1}(x_i-\overline{x})^2\cdot\sum\limits_{i=0}^{N-1}(y_i-\overline{y})^2}} \f]
 
     \note Each value is the specified range is converted to a double using jkqtp_todouble().
           Entries in the range that are invalid double (using JKQTPIsOKFloat() )
