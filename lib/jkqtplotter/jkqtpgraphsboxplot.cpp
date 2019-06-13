@@ -650,8 +650,8 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
                 const double min=transformX(minv);
                 const double max=transformX(maxv);
                 const double median=transformX(medianv);
-                const double medianu=transformY(medianv-medConf/2.0);
-                const double mediano=transformY(medianv+medConf/2.0);
+                const double medianu=transformX(medianv-medConf/2.0);
+                const double mediano=transformX(medianv+medConf/2.0);
                 const double mean=transformX(meanv);
 
 
