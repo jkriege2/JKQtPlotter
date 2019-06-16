@@ -926,6 +926,42 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
             plotter->setGrid(val);
         }
 
+        /** \brief sets the color of all Major grid lines
+         * */
+        inline void setGridColor(QColor color) {
+            plotter->setGridColor(color);
+        }
+
+        /** \brief sets the color of all minor grid lines
+         * */
+        inline void setMinorGridColor(QColor color) {
+            plotter->setMinorGridColor(color);
+        }
+
+        /** \brief sets the width of all Major grid lines
+         * */
+        inline void setGridWidth(double __value) {
+            plotter->setGridWidth(__value);
+        }
+
+        /** \brief sets the width of all minor grid lines
+         * */
+        inline void setMinorGridWidth(double __value) {
+            plotter->setMinorGridWidth(__value);
+        }
+
+        /** \brief sets the style of all Major grid lines
+         * */
+        inline void setGridStyle(Qt::PenStyle __value) {
+            plotter->setGridStyle(__value);
+        }
+
+        /** \brief sets the style of all minor grid lines
+         * */
+        inline void setMinorGridStyle(Qt::PenStyle __value) {
+            plotter->setMinorGridStyle(__value);
+        }
+
         /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
          *
          * \param showX indicates whether to show the zero-axis associated with the x-axis (i.e. x==0 or the vertical zero-axis)

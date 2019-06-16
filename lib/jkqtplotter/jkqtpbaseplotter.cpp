@@ -306,6 +306,41 @@ void JKQTBasePlotter::setGrid(bool val) {
     yAxis->setDrawGrid(val);
 }
 
+void JKQTBasePlotter::setGridColor(QColor color)
+{
+    xAxis->setGridColor(color);
+    yAxis->setGridColor(color);
+}
+
+void JKQTBasePlotter::setMinorGridColor(QColor color)
+{
+    xAxis->setMinorGridColor(color);
+    yAxis->setMinorGridColor(color);
+}
+
+void JKQTBasePlotter::setGridWidth(double __value)
+{
+    xAxis->setGridWidth(__value);
+    yAxis->setGridWidth(__value);
+}
+
+void JKQTBasePlotter::setMinorGridWidth(double __value)
+{
+    xAxis->setMinorGridWidth(__value);
+    yAxis->setMinorGridWidth(__value);
+}
+void JKQTBasePlotter::setGridStyle(Qt::PenStyle __value)
+{
+    xAxis->setGridStyle(__value);
+    yAxis->setGridStyle(__value);
+}
+
+void JKQTBasePlotter::setMinorGridStyle(Qt::PenStyle __value)
+{
+    xAxis->setMinorGridStyle(__value);
+    yAxis->setMinorGridStyle(__value);
+}
+
 void JKQTBasePlotter::setShowZeroAxes(bool showX, bool showY) {
     getXAxis()->setShowZeroAxis(showX);
     getYAxis()->setShowZeroAxis(showY);

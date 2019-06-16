@@ -1434,6 +1434,31 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief sets whether to plot grid lines or not */
         void setGrid(bool val);
 
+        /** \brief sets the color of all Major grid lines
+         * */
+        void setGridColor(QColor color);
+
+        /** \brief sets the color of all minor grid lines
+         * */
+        void setMinorGridColor(QColor color);
+
+        /** \brief sets the width of all Major grid lines
+         * */
+        void setGridWidth(double __value);
+
+        /** \brief sets the width of all minor grid lines
+         * */
+        void setMinorGridWidth(double __value);
+
+        /** \brief sets the style of all Major grid lines
+         * */
+        void setGridStyle(Qt::PenStyle __value);
+
+        /** \brief sets the style of all minor grid lines
+         * */
+        void setMinorGridStyle(Qt::PenStyle __value);
+
+
         /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
          *
          * \param showX indicates whether to show the zero-axis associated with the x-axis (i.e. x==0 or the vertical zero-axis)
