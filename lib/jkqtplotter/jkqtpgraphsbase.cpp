@@ -239,6 +239,25 @@ double JKQTPPlotElement::transformY(double y) const {
     return parent->getYAxis()->x2p(y);
 }
 
+QVector<double> JKQTPPlotElement::transformX(const QVector<double>& x) const {
+    QVector<double> res;
+    res.resize(x.size());
+    for (int i=0; i<x.size(); i++) {
+        res[i]=parent->getXAxis()->x2p(x[i]);
+    }
+    return res;
+}
+
+QVector<double> JKQTPPlotElement::transformY(const QVector<double>& y) const {
+    QVector<double> res;
+    res.resize(y.size());
+    for (int i=0; i<y.size(); i++) {
+        res[i]=parent->getYAxis()->x2p(y[i]);
+    }
+    return res;
+}
+
+
 double JKQTPPlotElement::backtransformX(double x) const {
     return parent->getXAxis()->p2x(x);
 }

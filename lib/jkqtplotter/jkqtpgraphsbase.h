@@ -244,6 +244,11 @@ class JKQTP_LIB_EXPORT JKQTPPlotElement: public QObject {
             return QPolygonF(transform(x));
         }
 
+        /** \brief transform all x-coordinates in a vector \a x */
+        QVector<double> transformX(const QVector<double>& x) const;
+        /** \brief transform all y-coordinates in a vector \a x */
+        QVector<double> transformY(const QVector<double>& x) const;
+
 
         /** \brief clear the internal datastore for hitTest()
          *
