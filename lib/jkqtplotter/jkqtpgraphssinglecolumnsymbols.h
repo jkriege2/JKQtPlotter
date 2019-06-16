@@ -57,6 +57,7 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGr
             NoScatter, /*!< \brief missing coordinate is exactly position for every datapoint in dataColumn \image html JKQTPSingleColumnSymbolsGraph_NoScatter.png */
             RandomScatter, /*!< \brief missing coordinate scatters around position (with distribution-width width ) \image html JKQTPSingleColumnSymbolsGraph_RandomScatter.png */
             BeeSwarmScatter, /*!< \brief missing coordinate scatters around position and the algorithm tries to prevent overlay of two symbols ("bee swarm plot", see e.g. <a href="https://www.r-statistics.com/2011/03/beeswarm-boxplot-and-plotting-it-with-r/">https://www.r-statistics.com/2011/03/beeswarm-boxplot-and-plotting-it-with-r/</a>). Note that this algorithm can be rather slow!!! \image html JKQTPSingleColumnSymbolsGraph_BeeSwarmScatter.png */
+            RugPlot, /*!< \brief like NoScatter but draws each data-point as a horzintal/vertical line, centered around position, not as a symbol ("rug plot", see e.g. <a href="https://en.wikipedia.org/wiki/Rug_plot">https://en.wikipedia.org/wiki/Rug_plot</a>).  \image html JKQTPSingleColumnSymbolsGraph_RugPlot.png */
         };
 
         /** \brief class constructor */
