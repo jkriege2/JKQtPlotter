@@ -62,6 +62,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_boxplot_small.png
     <td> \subpage JKQTPlotterBoxplotsGraphs
     <td> `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph`, ...
+<tr><td> \image html jkqtplotter_simpletest_violinplot_small.png
+    <td> \subpage JKQTPlotterViolinplotGraphs
+    <td> `JKQTPViolinplotVerticalElement`, `JKQTPViolinplotHorizontalElement`, ...
 </table>
 
 

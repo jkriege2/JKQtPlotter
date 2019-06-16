@@ -35,6 +35,8 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpgraphsimageoverlays.h \
                $$PWD/jkqtplotter/jkqtpgraphscontour.h \
                $$PWD/jkqtplotter/jkqtpgraphsimagergb.h \
+               $$PWD/jkqtplotter/jkqtpgraphsviolinplot.h \
+               $$PWD/jkqtplotter/jkqtpgraphsviolinplotstylingmixins.h \
                $$PWD/jkqtplotter/jkqtpgraphsstatisticsadaptors.h \
                $$PWD/jkqtplotter/jkqtplotter.h \
                $$PWD/jkqtplotter/jkqtplotterstyle.h \
@@ -76,7 +78,9 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpgraphssinglecolumnsymbols.cpp  \
                $$PWD/jkqtplotter/jkqtpgraphsimageoverlays.cpp  \
                $$PWD/jkqtplotter/jkqtpgraphscontour.cpp  \
-               $$PWD/jkqtplotter/jkqtpgraphsimagergb.cpp  \
+               $$PWD/jkqtplotter/jkqtpgraphsimagergb.cpp \
+               $$PWD/jkqtplotter/jkqtpgraphsviolinplot.cpp \
+               $$PWD/jkqtplotter/jkqtpgraphsviolinplotstylingmixins.cpp \
                $$PWD/jkqtplotter/jkqtpgraphsstatisticsadaptors.cpp  \
                $$PWD/jkqtplotter/jkqtplotter.cpp \
                $$PWD/jkqtplotter/jkqtplotterstyle.cpp \

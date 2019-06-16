@@ -26,7 +26,7 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
   <li> changed: using static const variables instead of <code>#define</code> for fixed default values (e.g. JKQTPImageTools::LUTSIZE, JKQTPImageTools::PALETTE_ICON_WIDTH, JKQTPlotterDrawinTools::ABS_MIN_LINEWIDTH, JKQTMathText::ABS_MIN_LINEWIDTH ...)</li>
   <li> Updates to JKQTPlotter: 
     <ul>
-	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swar plots </li>
+	  <li> new: added JKQTPSingleColumnSymbolsGraph for single-column data, e.g. drawn as (random) scatter or bee-swarm or rug plots </li>
 	  <li> new: stacked barcharts with JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph </li>
 	  <li> new: use/support of C++11 features (e.g. \c std::function<> and lambda functions in JKQTPXFunctionLineGraph / JKQTPYFunctionLineGraph )</li>
 	  <li> new: \ref jkqtpopencvinterface  "optional OpenCV interface" </li>
@@ -46,6 +46,7 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
       <li> new: several new plot symbols, see: JKQTPGraphSymbols </li>
       <li> new: Statistics library with functions to calculate histograms, regression, kernel density estimates, ... see: \ref jkqtptools_math_statistics </li>
       <li> new: iterator interface and improved documentation for JKQTPDatastore </li>
+      <li> new: violin plots (see \ref JKQTPlotterViolinplotGraphs ) </li>
       <li> changed: removed old selection-code and replaced by general highlighting feature </li>
       <li> changed: JKQTPStepHorizontalGraph has been renamed to JKQTPSpecialLineHorizontalGraph (vertical variants also) and have gained additional features (baseline for filling and drawing of symbols) </li>
       <li> changed: filled curve graphs (e.g. JKQTPSpecialLineHorizontalGraph) are now merely a specializedly initialized JKQTPSpecialLineHorizontalGraph </li>
