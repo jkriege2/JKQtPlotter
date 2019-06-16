@@ -316,6 +316,12 @@ JKQTPDatastore::~JKQTPDatastore() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+bool JKQTPDatastore::hasColumn(size_t i) const
+{
+    return columns.find(i)!=columns.end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPDatastore::ColumnIterator JKQTPDatastore::begin()
 {
     return columns.begin();
@@ -1156,6 +1162,17 @@ QList<QVector<double> > JKQTPDatastore::getData(QStringList *columnNames, const 
 
     if (columnNames) *columnNames=cl;
 
+    return res;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+QVector<double> JKQTPDatastore::getData(size_t column, QString *columnName) const
+{
+    QVector<double> res;
+    if (hasColumn(column)) {
+        if (columnName) *columnName=columns.value(column).getName();
+        columns.value(column).copyData(res);
+    }
     return res;
 }
 

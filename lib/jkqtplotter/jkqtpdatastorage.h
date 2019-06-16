@@ -387,6 +387,9 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
         /** \brief class destructor, destroys all subordered JKQTPDatastoreItem objects */
         ~JKQTPDatastore();
 
+        /** \brief determines whether a column  with the given ID exists */
+        bool hasColumn(size_t i) const;
+
         /** \brief returns an iterator to the first data entry in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::iterator */
         JKQTPColumnIterator begin(int i);
         /** \brief returns an iterator behind the last data entry data in the \a i -th column in the JKQTPDatastore \see JKQTPColumn::iterator */
@@ -1325,6 +1328,13 @@ class JKQTP_LIB_EXPORT JKQTPDatastore{
          * \param userColumns a list of all columns to export, an empty list means: export all, the indexes in the list refer to getColumnsNames()
          */
         QList<QVector<double> > getData(QStringList* columnNames=nullptr, const QSet<int>& userColumns=QSet<int>()) const;
+
+        /** \brief return contents of a given column as QVector<double>
+         *
+         * \param column column to copy
+         * \param columnName if \c !=nullptr this will afterwards conatin the column title
+         */
+        QVector<double> getData(size_t column, QString* columnName=nullptr) const;
 
         /** \brief save contents of datastore as <a href="http://www.fileformat.info/format/dif/egff.htm">DIF file (data interchange format)</a>
          *
