@@ -239,11 +239,15 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
     const double binw=range/static_cast<double>(Nout);
 
     // calculate the KDE
-    for (int i=0; i<Nout; i++)  {
-        const double x=minV+static_cast<double>(i)*binw+binw/2.0;
-        histX.push_back(x);
-        histY.push_back(jkqtpstatEvaluateKernelSum(x, first, last, kernel, bandwidth));
+    for (double xi=minV; xi<=maxV; xi+=binw)  {
+        histX.push_back(xi);
+        histY.push_back(jkqtpstatEvaluateKernelSum(xi, first, last, kernel, bandwidth));
     }
+    if (histX.size()>0 && histX[histX.size()-1]<maxV) {
+        histX.push_back(maxV);
+        histY.push_back(jkqtpstatEvaluateKernelSum(maxV, first, last, kernel, bandwidth));
+    }
+
 
 
     // output the KDE
@@ -287,15 +291,16 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
     std::vector<double> histX;
     std::vector<double> histY;
 
-    const double range=maxV-minV;
     const double binw=binWidth;
-    const int Nout=static_cast<int>(ceil(range/binWidth));
 
     // calculate the KDE
-    for (int i=0; i<Nout; i++)  {
-        const double xi=minV+static_cast<double>(i)*binw+binw/2.0;
+    for (double xi=minV; xi<=maxV; xi+=binw)  {
         histX.push_back(xi);
         histY.push_back(jkqtpstatEvaluateKernelSum(xi, first, last, kernel, bandwidth));
+    }
+    if (histX.size()>0 && histX[histX.size()-1]<maxV) {
+        histX.push_back(maxV);
+        histY.push_back(jkqtpstatEvaluateKernelSum(maxV, first, last, kernel, bandwidth));
     }
 
 
