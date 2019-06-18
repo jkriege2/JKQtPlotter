@@ -107,5 +107,17 @@ Finally note that if you use `JKQTPViolinplotHorizontalElement` instead of the `
 ![jkqtplotter_simpletest_violinplot_hor](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_violinplot_hor.png)
 
 
+# Adapters as shortcuts to drawing Violin Plots
 
+Note that there also exist "adapters" that allow to draw violin plots in one line of code:
+```.cpp
+    jkqtpstatAddVViolinplotHistogramAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -5);
+    jkqtpstatAddHViolinplotHistogramAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -5);
+    jkqtpstatAddVViolinplotHistogram(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -10);
+    jkqtpstatAddHViolinplotHistogram(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -10);
+    jkqtpstatAddVViolinplotKDEAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -15);
+    jkqtpstatAddHViolinplotKDEAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -15);
+    jkqtpstatAddVViolinplotKDE(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -20);
+    jkqtpstatAddHViolinplotKDE(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -20);
+```
 

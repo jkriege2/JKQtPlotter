@@ -32,6 +32,7 @@
 #include "jkqtplotter/jkqtpgraphscontour.h"
 #include "jkqtplotter/jkqtpgraphsimpulses.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
+#include "jkqtplotter/jkqtpgraphsviolinplot.h"
 
 
 #ifndef JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
@@ -249,6 +250,554 @@ inline std::pair<JKQTPBoxplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*> jk
     plotter->addGraph(resO);
     return std::pair<JKQTPBoxplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*>(resB, resO);
 }
+
+
+
+
+
+
+
+
+/*! \brief add a JKQTPViolinplotHorizontalElement to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a kernel density estimate as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE, if <0 then \c jkqtpstatEstimateKDEBandwidth(first,last) is called
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of samples of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddHViolinplotKDE(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -20);
+    \endcode
+
+    \image html JKQTPGraphViolinplot_ViolinHBoth.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotHorizontalElement, jkqtpstatKDE1DAutoranged()
+*/
+template <class InputIt>
+inline JKQTPViolinplotHorizontalElement* jkqtpstatAddHViolinplotKDE(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=-1, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=100) {
+    if (bandwidth<=0) bandwidth=jkqtpstatEstimateKDEBandwidth(first,last);
+    JKQTPStat5NumberStatistics stat=jkqtpstat5NumberStatistics(first, last);
+    size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+    size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", KDE");
+    jkqtpstatKDE1DAutoranged(first, last, plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq),
+                             violinDistSamples, kernel, bandwidth);
+    JKQTPViolinplotHorizontalElement* res=new JKQTPViolinplotHorizontalElement(plotter);
+    res->setMin(stat.minimum);
+    res->setMax(stat.maximum);
+    res->setMedian(stat.median);
+    res->setMean(jkqtpstatAverage(first, last));
+    res->setDrawMean(true);
+    res->setDrawMedian(true);
+    res->setDrawMinMax(true);
+    res->setPos(violinposY);
+    res->setViolinPositionColumn(cViol1Cat);
+    res->setViolinFrequencyColumn(cViol1Freq);
+    plotter->addGraph(res);
+    return res;
+}
+
+
+
+
+/*! \brief add a JKQTPViolinplotHorizontalElement to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a histogram as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of bin of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddHViolinplotHistogram(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -10);
+    \endcode
+
+    \image html jkqtpstatAddHViolinplotHistogram.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotHorizontalElement, jkqtpstatHistogram1DAutoranged()
+*/
+template <class InputIt>
+inline JKQTPViolinplotHorizontalElement* jkqtpstatAddHViolinplotHistogram(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=21) {
+    JKQTPStat5NumberStatistics stat=jkqtpstat5NumberStatistics(first, last);
+    size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+    size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", histogram");
+    jkqtpstatHistogram1DAutoranged(first, last, plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq),
+                             violinDistSamples);
+    JKQTPViolinplotHorizontalElement* res=new JKQTPViolinplotHorizontalElement(plotter);
+    res->setMin(stat.minimum);
+    res->setMax(stat.maximum);
+    res->setMedian(stat.median);
+    res->setMean(jkqtpstatAverage(first, last));
+    res->setDrawMean(true);
+    res->setDrawMedian(true);
+    res->setDrawMinMax(true);
+    res->setPos(violinposY);
+    res->setViolinPositionColumn(cViol1Cat);
+    res->setViolinFrequencyColumn(cViol1Freq);
+    res->setViolinStyle(JKQTPViolinplotHorizontalElement::StepViolin);
+    plotter->addGraph(res);
+    return res;
+}
+
+
+
+
+/*! \brief add a JKQTPViolinplotVerticalElement to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a kernel density estimate as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE, if <0 then \c jkqtpstatEstimateKDEBandwidth(first,last) is called
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of samples of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddVViolinplotKDE(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -20);
+    \endcode
+
+    \image html jkqtpstatAddVViolinplotKDE.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotVerticalElement, jkqtpstatKDE1DAutoranged()
+*/
+template <class InputIt>
+inline JKQTPViolinplotVerticalElement* jkqtpstatAddVViolinplotKDE(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=-1, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=100) {
+    if (bandwidth<=0) bandwidth=jkqtpstatEstimateKDEBandwidth(first,last);
+    JKQTPStat5NumberStatistics stat=jkqtpstat5NumberStatistics(first, last);
+    size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+    size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", KDE");
+    jkqtpstatKDE1DAutoranged(first, last, plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq),
+                             violinDistSamples, kernel, bandwidth);
+    JKQTPViolinplotVerticalElement* res=new JKQTPViolinplotVerticalElement(plotter);
+    res->setMin(stat.minimum);
+    res->setMax(stat.maximum);
+    res->setMedian(stat.median);
+    res->setMean(jkqtpstatAverage(first, last));
+    res->setDrawMean(true);
+    res->setDrawMedian(true);
+    res->setDrawMinMax(true);
+    res->setPos(violinposY);
+    res->setViolinPositionColumn(cViol1Cat);
+    res->setViolinFrequencyColumn(cViol1Freq);
+    plotter->addGraph(res);
+    return res;
+}
+
+
+
+
+/*! \brief add a JKQTPViolinplotVerticalElement to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a histogram as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of bin of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddVViolinplotHistogram(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -10);
+    \endcode
+
+    \image html jkqtpstatAddVViolinplotHistogram.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotVerticalElement, jkqtpstatHistogram1DAutoranged()
+*/
+template <class InputIt>
+inline JKQTPViolinplotVerticalElement* jkqtpstatAddVViolinplotHistogram(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=21) {
+    JKQTPStat5NumberStatistics stat=jkqtpstat5NumberStatistics(first, last);
+    size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+    size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", histogram");
+    jkqtpstatHistogram1DAutoranged(first, last, plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq),
+                             violinDistSamples);
+    JKQTPViolinplotVerticalElement* res=new JKQTPViolinplotVerticalElement(plotter);
+    res->setMin(stat.minimum);
+    res->setMax(stat.maximum);
+    res->setMedian(stat.median);
+    res->setMean(jkqtpstatAverage(first, last));
+    res->setDrawMean(true);
+    res->setDrawMedian(true);
+    res->setDrawMinMax(true);
+    res->setPos(violinposY);
+    res->setViolinPositionColumn(cViol1Cat);
+    res->setViolinFrequencyColumn(cViol1Freq);
+    res->setViolinStyle(JKQTPViolinplotVerticalElement::StepViolin);
+    plotter->addGraph(res);
+    return res;
+}
+
+
+
+
+
+
+
+
+
+
+/*! \brief add a JKQTPViolinplotHorizontalElement and an outliers graph to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a kernel density estimate as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE, if <0 then \c jkqtpstatEstimateKDEBandwidth(first,last) is called
+    \param minimumQuantile specifies a quantile for the return value minimum (default is 0 for the real minimum, but you could e.g. use 0.05 for the 5% quantile!)
+    \param maximumQuantile specifies a quantile for the return value maximum (default is 1 for the real maximum, but you could e.g. use 0.95 for the 95% quantile!)
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of samples of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddHViolinplotKDEAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -15);
+    \endcode
+
+    \image html jkqtpstatAddHViolinplotKDEAndOutliers.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotHorizontalElement, jkqtpstatKDE1DAutoranged()
+*/
+template <class InputIt>
+inline std::pair<JKQTPViolinplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*> jkqtpstatAddHViolinplotKDEAndOutliers(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=-1, double minimumQuantile=0.03, double maximumQuantile=0.97, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=100) {
+    size_t cOutliersY=plotter->getDatastore()->addColumn(distBasename+", outliers, value");
+    std::vector<double> datain, datause;
+    std::copy(first, last, std::back_inserter(datain));
+    std::sort(datain.begin(), datain.end());
+    datause.reserve(datain.size());
+    size_t i0=jkqtp_boundedRoundTo<size_t>(0,minimumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    size_t i1=jkqtp_boundedRoundTo<size_t>(0,maximumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    for (size_t i=0; i<datain.size(); i++) {
+        if (i<=i0 || i>=i1) {
+            plotter->getDatastore()->appendToColumn(cOutliersY, datain[i]);
+        } else {
+            datause.push_back(datain[i]);
+        }
+    }
+
+
+
+    if (datause.size()>0) {
+        if (bandwidth<=0) bandwidth=jkqtpstatEstimateKDEBandwidth(datause.begin(), datause.end());
+        size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+        size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", KDE");
+        jkqtpstatKDE1DAutoranged(datause.begin(), datause.end(), plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq),
+                                 violinDistSamples, kernel, bandwidth);
+        JKQTPViolinplotHorizontalElement* res=new JKQTPViolinplotHorizontalElement(plotter);
+        res->setMin(datause[0]);
+        res->setMax(datause[datause.size()-1]);
+        res->setMedian(jkqtpstatMedianOfSortedVector(datause));
+        res->setMean(jkqtpstatAverage(datause.begin(), datause.end()));
+        res->setDrawMean(true);
+        res->setDrawMedian(true);
+        res->setDrawMinMax(true);
+        res->setPos(violinposY);
+        res->setViolinPositionColumn(cViol1Cat);
+        res->setViolinFrequencyColumn(cViol1Freq);
+        plotter->addGraph(res);
+
+        JKQTPSingleColumnSymbolsGraph* resO=new JKQTPSingleColumnSymbolsGraph(plotter);
+        resO->setDataColumn(cOutliersY);
+        resO->setPosition(violinposY);
+        resO->setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::NoScatter);
+        resO->setDataDirection(JKQTPSingleColumnSymbolsGraph::DataDirection::X);
+        resO->setColor(res->getKeyLabelColor());
+        resO->setTitle("");
+
+        plotter->addGraph(res);
+        plotter->addGraph(resO);
+        return std::pair<JKQTPViolinplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*>(res,resO);
+    } else {
+        return std::pair<JKQTPViolinplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*>(nullptr,nullptr);
+    }
+
+}
+
+
+
+
+
+/*! \brief add a JKQTPViolinplotHorizontalElement and an outliers graph to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a histogram as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param minimumQuantile specifies a quantile for the return value minimum (default is 0 for the real minimum, but you could e.g. use 0.05 for the 5% quantile!)
+    \param maximumQuantile specifies a quantile for the return value maximum (default is 1 for the real maximum, but you could e.g. use 0.95 for the 95% quantile!)
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of samples of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddHViolinplotHistogramAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -5);
+    \endcode
+
+    \image html jkqtpstatAddHViolinplotHistogramAndOutliers.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotHorizontalElement, jkqtpstatHistogram1DAutoranged()
+*/
+template <class InputIt>
+inline std::pair<JKQTPViolinplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*> jkqtpstatAddHViolinplotHistogramAndOutliers(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, double minimumQuantile=0.03, double maximumQuantile=0.97, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=21) {
+    size_t cOutliersY=plotter->getDatastore()->addColumn(distBasename+", outliers, value");
+    std::vector<double> datain, datause;
+    std::copy(first, last, std::back_inserter(datain));
+    std::sort(datain.begin(), datain.end());
+    datause.reserve(datain.size());
+    size_t i0=jkqtp_boundedRoundTo<size_t>(0,minimumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    size_t i1=jkqtp_boundedRoundTo<size_t>(0,maximumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    for (size_t i=0; i<datain.size(); i++) {
+        if (i<=i0 || i>=i1) {
+            plotter->getDatastore()->appendToColumn(cOutliersY, datain[i]);
+        } else {
+            datause.push_back(datain[i]);
+        }
+    }
+
+
+
+    if (datause.size()>0) {
+        size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+        size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", Histogram");
+        jkqtpstatHistogram1DAutoranged(datause.begin(), datause.end(), plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq), violinDistSamples);
+        JKQTPViolinplotHorizontalElement* res=new JKQTPViolinplotHorizontalElement(plotter);
+        res->setMin(datause[0]);
+        res->setMax(datause[datause.size()-1]);
+        res->setMedian(jkqtpstatMedianOfSortedVector(datause));
+        res->setMean(jkqtpstatAverage(datause.begin(), datause.end()));
+        res->setDrawMean(true);
+        res->setDrawMedian(true);
+        res->setDrawMinMax(true);
+        res->setPos(violinposY);
+        res->setViolinPositionColumn(cViol1Cat);
+        res->setViolinFrequencyColumn(cViol1Freq);
+        res->setViolinStyle(JKQTPViolinplotVerticalElement::StepViolin);
+        plotter->addGraph(res);
+
+        JKQTPSingleColumnSymbolsGraph* resO=new JKQTPSingleColumnSymbolsGraph(plotter);
+        resO->setDataColumn(cOutliersY);
+        resO->setPosition(violinposY);
+        resO->setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::NoScatter);
+        resO->setDataDirection(JKQTPSingleColumnSymbolsGraph::DataDirection::X);
+        resO->setColor(res->getKeyLabelColor());
+        resO->setTitle("");
+
+        plotter->addGraph(res);
+        plotter->addGraph(resO);
+        return std::pair<JKQTPViolinplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*>(res,resO);
+    } else {
+        return std::pair<JKQTPViolinplotHorizontalElement*,JKQTPSingleColumnSymbolsGraph*>(nullptr,nullptr);
+    }
+
+}
+
+
+
+
+
+
+
+
+
+/*! \brief add a JKQTPViolinplotVerticalElement and an outliers graph to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a kernel density estimate as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
+    \param bandwidth bandwidth used for the KDE, if <0 then \c jkqtpstatEstimateKDEBandwidth(first,last) is called
+    \param minimumQuantile specifies a quantile for the return value minimum (default is 0 for the real minimum, but you could e.g. use 0.05 for the 5% quantile!)
+    \param maximumQuantile specifies a quantile for the return value maximum (default is 1 for the real maximum, but you could e.g. use 0.95 for the 95% quantile!)
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of samples of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddVViolinplotKDEAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -15);
+    \endcode
+
+    \image html jkqtpstatAddVViolinplotKDEAndOutliers.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotVerticalElement, jkqtpstatKDE1DAutoranged()
+*/
+template <class InputIt>
+inline std::pair<JKQTPViolinplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*> jkqtpstatAddVViolinplotKDEAndOutliers(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, const std::function<double(double)>& kernel=std::function<double(double)>(&jkqtpstatKernel1DGaussian), double bandwidth=-1, double minimumQuantile=0.03, double maximumQuantile=0.97, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=100) {
+    size_t cOutliersY=plotter->getDatastore()->addColumn(distBasename+", outliers, value");
+    std::vector<double> datain, datause;
+    std::copy(first, last, std::back_inserter(datain));
+    std::sort(datain.begin(), datain.end());
+    datause.reserve(datain.size());
+    size_t i0=jkqtp_boundedRoundTo<size_t>(0,minimumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    size_t i1=jkqtp_boundedRoundTo<size_t>(0,maximumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    for (size_t i=0; i<datain.size(); i++) {
+        if (i<=i0 || i>=i1) {
+            plotter->getDatastore()->appendToColumn(cOutliersY, datain[i]);
+        } else {
+            datause.push_back(datain[i]);
+        }
+    }
+
+
+
+    if (datause.size()>0) {
+        if (bandwidth<=0) bandwidth=jkqtpstatEstimateKDEBandwidth(datause.begin(), datause.end());
+        size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+        size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", KDE");
+        jkqtpstatKDE1DAutoranged(datause.begin(), datause.end(), plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq),
+                                 violinDistSamples, kernel, bandwidth);
+        JKQTPViolinplotVerticalElement* res=new JKQTPViolinplotVerticalElement(plotter);
+        res->setMin(datause[0]);
+        res->setMax(datause[datause.size()-1]);
+        res->setMedian(jkqtpstatMedianOfSortedVector(datause));
+        res->setMean(jkqtpstatAverage(datause.begin(), datause.end()));
+        res->setDrawMean(true);
+        res->setDrawMedian(true);
+        res->setDrawMinMax(true);
+        res->setPos(violinposY);
+        res->setViolinPositionColumn(cViol1Cat);
+        res->setViolinFrequencyColumn(cViol1Freq);
+        plotter->addGraph(res);
+
+        JKQTPSingleColumnSymbolsGraph* resO=new JKQTPSingleColumnSymbolsGraph(plotter);
+        resO->setDataColumn(cOutliersY);
+        resO->setPosition(violinposY);
+        resO->setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::NoScatter);
+        resO->setDataDirection(JKQTPSingleColumnSymbolsGraph::DataDirection::Y);
+        resO->setColor(res->getKeyLabelColor());
+        resO->setTitle("");
+
+        plotter->addGraph(res);
+        plotter->addGraph(resO);
+        return std::pair<JKQTPViolinplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*>(res,resO);
+    } else {
+        return std::pair<JKQTPViolinplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*>(nullptr,nullptr);
+    }
+
+}
+
+
+
+
+
+/*! \brief add a JKQTPViolinplotVerticalElement and an outliers graph to the given plotter, where the Violinplot values are calculated from the data range \a first ... \a last , uses a histogram as density distribution estimate
+    \ingroup jkqtptools_math_statistics_adaptors
+
+    \tparam InputIt standard iterator type of \a first and \a last.
+    \param plotter the plotter to which to add the resulting graph
+    \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
+    \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
+    \param violinposY y-coordinate of the Violinplot
+    \param minimumQuantile specifies a quantile for the return value minimum (default is 0 for the real minimum, but you could e.g. use 0.05 for the 5% quantile!)
+    \param maximumQuantile specifies a quantile for the return value maximum (default is 1 for the real maximum, but you could e.g. use 0.95 for the 95% quantile!)
+    \param distBasename name basing for added columns
+    \param violinDistSamples number of samples of the distribution (between min and max)
+    \return a Violinplot element with its values initialized from the given data range
+
+    Example:
+    \code
+        jkqtpstatAddVViolinplotHistogramAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -5);
+    \endcode
+
+    \image html jkqtpstatAddVViolinplotHistogramAndOutliers.png
+
+
+    \see \ref JKQTPlotterViolinplotGraphs, JKQTPViolinplotVerticalElement, jkqtpstatHistogram1DAutoranged()
+*/
+template <class InputIt>
+inline std::pair<JKQTPViolinplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*> jkqtpstatAddVViolinplotHistogramAndOutliers(JKQTBasePlotter* plotter, InputIt first, InputIt last, double violinposY, double minimumQuantile=0.03, double maximumQuantile=0.97, const QString& distBasename=QString("violin plot distribution"), int violinDistSamples=21) {
+    size_t cOutliersY=plotter->getDatastore()->addColumn(distBasename+", outliers, value");
+    std::vector<double> datain, datause;
+    std::copy(first, last, std::back_inserter(datain));
+    std::sort(datain.begin(), datain.end());
+    datause.reserve(datain.size());
+    size_t i0=jkqtp_boundedRoundTo<size_t>(0,minimumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    size_t i1=jkqtp_boundedRoundTo<size_t>(0,maximumQuantile*static_cast<double>(datain.size()),datain.size()-1);
+    for (size_t i=0; i<datain.size(); i++) {
+        if (i<=i0 || i>=i1) {
+            plotter->getDatastore()->appendToColumn(cOutliersY, datain[i]);
+        } else {
+            datause.push_back(datain[i]);
+        }
+    }
+
+
+
+    if (datause.size()>0) {
+        size_t cViol1Cat=plotter->getDatastore()->addColumn(distBasename+", category");
+        size_t cViol1Freq=plotter->getDatastore()->addColumn(distBasename+", Histogram");
+        jkqtpstatHistogram1DAutoranged(datause.begin(), datause.end(), plotter->getDatastore()->backInserter(cViol1Cat), plotter->getDatastore()->backInserter(cViol1Freq), violinDistSamples);
+        JKQTPViolinplotVerticalElement* res=new JKQTPViolinplotVerticalElement(plotter);
+        res->setMin(datause[0]);
+        res->setMax(datause[datause.size()-1]);
+        res->setMedian(jkqtpstatMedianOfSortedVector(datause));
+        res->setMean(jkqtpstatAverage(datause.begin(), datause.end()));
+        res->setDrawMean(true);
+        res->setDrawMedian(true);
+        res->setDrawMinMax(true);
+        res->setPos(violinposY);
+        res->setViolinPositionColumn(cViol1Cat);
+        res->setViolinFrequencyColumn(cViol1Freq);
+        res->setViolinStyle(JKQTPViolinplotVerticalElement::StepViolin);
+        plotter->addGraph(res);
+
+        JKQTPSingleColumnSymbolsGraph* resO=new JKQTPSingleColumnSymbolsGraph(plotter);
+        resO->setDataColumn(cOutliersY);
+        resO->setPosition(violinposY);
+        resO->setPositionScatterStyle(JKQTPSingleColumnSymbolsGraph::NoScatter);
+        resO->setDataDirection(JKQTPSingleColumnSymbolsGraph::DataDirection::Y);
+        resO->setColor(res->getKeyLabelColor());
+        resO->setTitle("");
+
+        plotter->addGraph(res);
+        plotter->addGraph(resO);
+        return std::pair<JKQTPViolinplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*>(res,resO);
+    } else {
+        return std::pair<JKQTPViolinplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*>(nullptr,nullptr);
+    }
+
+}
+
+
+
+
+
 
 
 

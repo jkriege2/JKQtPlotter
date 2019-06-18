@@ -967,7 +967,7 @@ inline void jkqtpstat5NumberStatisticsAndOutliersOfSortedVector(const TVector& d
     \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstatAddVBoxplotAndOutliers, jkqtpstatAddHBoxplotAndOutliers, jkqtpstatAddVBoxplot, jkqtpstatAddHBoxplot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics
 */
 template <class InputIt>
-inline void jkqtpstat5NumberStatistics(InputIt first, InputIt last, double* minimum=nullptr, double minimumQuantile=0, double* median=nullptr, double* maximum=nullptr, double maximumQuantile=1, double quantile1Spec=0.25, double* quantile1=nullptr, double quantile2Spec=0.75, double* quantile2=nullptr, double* IQR=nullptr, double* IQRSignificance=nullptr, size_t* Noutput=nullptr) {
+inline void jkqtpstat5NumberStatistics(InputIt first, InputIt last, double* minimum, double minimumQuantile=0, double* median=nullptr, double* maximum=nullptr, double maximumQuantile=1, double quantile1Spec=0.25, double* quantile1=nullptr, double quantile2Spec=0.75, double* quantile2=nullptr, double* IQR=nullptr, double* IQRSignificance=nullptr, size_t* Noutput=nullptr) {
     std::vector<double> dataFiltered;
     jkqtpstatFilterGoodFloat(first, last, std::back_inserter(dataFiltered));
     std::sort(dataFiltered.begin(), dataFiltered.end());

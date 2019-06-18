@@ -137,6 +137,17 @@ void showPlot() {
     gViol3->setViolinPositionMode(pos);
     gViol3->setTitle("box violin plot "+d3_latex);
 
+    // Note that there also exist "adapters" that allow to draw violin plots in one line of code:
+    /*jkqtpstatAddVViolinplotHistogramAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -5);
+    jkqtpstatAddHViolinplotHistogramAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -5);
+    jkqtpstatAddVViolinplotHistogram(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -10);
+    jkqtpstatAddHViolinplotHistogram(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -10);
+    jkqtpstatAddVViolinplotKDEAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -15);
+    jkqtpstatAddHViolinplotKDEAndOutliers(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -15);
+    jkqtpstatAddVViolinplotKDE(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -20);
+    jkqtpstatAddHViolinplotKDE(plot->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -20);
+    */
+
     // autoscale and style the plot
     plot->zoomToFit();
     plot->getPlotter()->setKeyPosition(JKQTPKeyInsideBottomRight);
