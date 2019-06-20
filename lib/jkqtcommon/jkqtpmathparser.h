@@ -47,7 +47,7 @@
 #include <ctype.h>
 #include <list>
 #include <utility>
-
+#include "jkqtp_imexport.h"
 
 #ifndef JKQTPMATHPARSER_H
 #define JKQTPMATHPARSER_H
@@ -235,7 +235,7 @@
      }
  \endcode
  */
-class JKQTPMathParser
+class JKQTP_LIB_EXPORT JKQTPMathParser
 {
     protected:
         void* data;

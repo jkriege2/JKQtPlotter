@@ -133,13 +133,13 @@ enum JKQTPMathImageColorPalette {
     \ingroup jkqtplotter_imagelots_tools
     \see String2JKQTPMathImageColorPalette()
  */
-QString JKQTPMathImageColorPalette2String(JKQTPMathImageColorPalette p);
+JKQTP_LIB_EXPORT QString JKQTPMathImageColorPalette2String(JKQTPMathImageColorPalette p);
 
 /*! \brief convert the palette name \a p to JKQTPMathImageColorPalette (compatible with String2JKQTPMathImageColorPalette() )
     \ingroup jkqtplotter_imagelots_tools
     \see JKQTPMathImageColorPalette2String()
  */
-JKQTPMathImageColorPalette String2JKQTPMathImageColorPalette(const QString& p);
+JKQTP_LIB_EXPORT JKQTPMathImageColorPalette String2JKQTPMathImageColorPalette(const QString& p);
 
 
 

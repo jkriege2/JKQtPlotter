@@ -19,7 +19,7 @@
 
 
 
-#include "jkqtplottergui/jkqtpgraphsmodel.h"
+#include "jkqtplotter/gui/jkqtpgraphsmodel.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsscatter.h"

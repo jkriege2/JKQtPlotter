@@ -21,7 +21,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-#include "jkqtplottergui/jkqtpenhancedspinboxes.h"
+#include "jkqtplotter/gui/jkqtpenhancedspinboxes.h"
 
 
 

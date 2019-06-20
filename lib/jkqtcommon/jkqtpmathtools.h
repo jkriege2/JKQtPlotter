@@ -360,7 +360,7 @@ inline double jkqtp_polyEval(double x, PolyItP firstP, PolyItP lastP) {
 /*! \brief a C++-functor, which evaluates a polynomial
     \ingroup jkqtptools_math_basic
 */
-struct JKQTPPolynomialFunctor {
+struct JKQTP_LIB_EXPORT JKQTPPolynomialFunctor {
         std::vector<double> P;
         template <class PolyItP>
         inline JKQTPPolynomialFunctor(PolyItP firstP, PolyItP lastP) {

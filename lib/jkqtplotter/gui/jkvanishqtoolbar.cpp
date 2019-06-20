@@ -19,7 +19,7 @@
 
 
 
-#include "jkqtplottergui/jkvanishqtoolbar.h"
+#include "jkqtplotter/gui/jkvanishqtoolbar.h"
 
 JKVanishQToolBar::JKVanishQToolBar(const QString &title, QWidget *parent): QToolBar(title, parent) {
     toolbarVanishes=true;

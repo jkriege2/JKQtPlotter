@@ -31,8 +31,8 @@
 #include <QPrintPreviewWidget>
 #include <QDialog>
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplottergui/jkqtpgraphsmodel.h"
-#include "jkqtplottergui/jkqtpenhancedtableview.h"
+#include "jkqtplotter/gui/jkqtpgraphsmodel.h"
+#include "jkqtplotter/gui/jkqtpenhancedtableview.h"
 #include <QPrinter>
 #include <QPrinterInfo>
 #include <QPrintDialog>

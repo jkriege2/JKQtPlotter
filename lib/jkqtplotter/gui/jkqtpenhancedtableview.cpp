@@ -22,7 +22,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
-#include "jkqtplottergui/jkqtpenhancedtableview.h"
+#include "jkqtplotter/gui/jkqtpenhancedtableview.h"
 #include <QAction>
 #include <QApplication>
 #include <QKeyEvent>

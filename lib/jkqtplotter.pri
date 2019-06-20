@@ -44,11 +44,11 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpbaseplotterstyle.h \
                $$PWD/jkqtplotter/jkqtpcoordinateaxes.h \
                $$PWD/jkqtplotter/jkqtpcoordinateaxesstyle.h \
-               $$PWD/jkqtplottergui/jkqtpcomboboxes.h \
-               $$PWD/jkqtplottergui/jkqtpenhancedspinboxes.h \
-               $$PWD/jkqtplottergui/jkqtpenhancedtableview.h \
-               $$PWD/jkqtplottergui/jkqtpgraphsmodel.h \
-               $$PWD/jkqtplottergui/jkvanishqtoolbar.h \
+               $$PWD/jkqtplotter/gui/jkqtpcomboboxes.h \
+               $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.h \
+               $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.h \
+               $$PWD/jkqtplotter/gui/jkqtpgraphsmodel.h \
+               $$PWD/jkqtplotter/gui/jkvanishqtoolbar.h \
                $$PWD/jkqtplotter/jkqtpimagetools.h
 
 
@@ -88,16 +88,16 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpbaseplotterstyle.cpp \
                $$PWD/jkqtplotter/jkqtpcoordinateaxes.cpp \
                $$PWD/jkqtplotter/jkqtpcoordinateaxesstyle.cpp \
-               $$PWD/jkqtplottergui/jkqtpcomboboxes.cpp \
-               $$PWD/jkqtplottergui/jkqtpenhancedspinboxes.cpp \
-               $$PWD/jkqtplottergui/jkqtpenhancedtableview.cpp \
-               $$PWD/jkqtplottergui/jkqtpgraphsmodel.cpp \
-               $$PWD/jkqtplottergui/jkvanishqtoolbar.cpp \
+               $$PWD/jkqtplotter/gui/jkqtpcomboboxes.cpp \
+               $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.cpp \
+               $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.cpp \
+               $$PWD/jkqtplotter/gui/jkqtpgraphsmodel.cpp \
+               $$PWD/jkqtplotter/gui/jkvanishqtoolbar.cpp \
                $$PWD/jkqtplotter/jkqtpimagetools.cpp
 
 
-    RESOURCES += $$PWD/jkqtplotterressources/jkqtpbaseplotter.qrc \
-                 $$PWD/jkqtplotterressources/jkqtpstyles.qrc
+    RESOURCES += $$PWD/jkqtplotter/resources/jkqtpbaseplotter.qrc \
+                 $$PWD/jkqtplotter/resources/jkqtpstyles.qrc
 
     QT += xml svg opengl
 

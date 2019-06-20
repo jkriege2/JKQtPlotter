@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(libBasename JKQTMathText)
+set(libBasename JKQTFastPlotter)
 
 message( STATUS )
 message( STATUS "-----------------------------------------------------------------------------" )
@@ -17,27 +17,23 @@ if(BUILD_STATIC_LIBS)
 endif(BUILD_STATIC_LIBS)
 
 
+find_package(Qt5 COMPONENTS Core Gui OpenGL Script Widgets PrintSupport)
 
 # Set up source files
 set(SRCS
-  jkqtmathtext.cpp
+  jkqtfastplotter.cpp
 )
 
 set(HEADERS
-  jkqtmathtext.h
+  jkqtfastplotter.h
 )
 
-if(BUILD_INCLUDE_XITS_FONTS)
-    set(RESOURCES
-      resources/xits.qrc
-    )
-endif(BUILD_INCLUDE_XITS_FONTS)
 
 
 if(BUILD_SHARED_LIBS)
     add_library(${libsh_name} SHARED  ${SRCS} ${HEADERS} ${RESOURCES})
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
-    target_link_libraries(${libsh_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport JKQTCommonSharedLib)
+    target_link_libraries(${libsh_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL JKQTCommonSharedLib)
     target_compile_definitions(${libsh_name} PRIVATE JKQTP_LIB_IN_DLL)
     target_compile_definitions(${libsh_name} PRIVATE JKQTP_LIB_EXPORT_LIBRARY)
 endif()
@@ -45,7 +41,7 @@ endif()
 if(BUILD_STATIC_LIBS)
     add_library(${lib_name} STATIC  ${SRCS} ${HEADERS} ${RESOURCES})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
-    target_link_libraries(${lib_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport JKQTCommonLib)
+    target_link_libraries(${lib_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL JKQTCommonLib)
 endif()
 
 
@@ -58,7 +54,7 @@ if(LIB_INSTALL)
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}jkqtmathtext
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}jkqtfastplotter
         )
     endif(BUILD_SHARED_LIBS)
 
@@ -67,12 +63,12 @@ if(LIB_INSTALL)
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}jkqtmathtext
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}jkqtfastplotter
         )
     endif(BUILD_STATIC_LIBS)
 
     install(FILES ${HEADERS}
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}jkqtmathtext
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}jkqtfastplotter
             COMPONENT Headers)
 
 endif(LIB_INSTALL)

@@ -16,7 +16,7 @@
 #include "jkqtplotter/jkqtpelementsoverlay.h"
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplottergui/jkqtpgraphsmodel.h"
+#include "jkqtplotter/gui/jkqtpgraphsmodel.h"
 #include "jkqtplotter/jkqtptools.h"
 
 

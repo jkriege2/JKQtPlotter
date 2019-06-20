@@ -6,7 +6,7 @@
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsboxplot.h"
 #include "jkqtplotter/jkqtpgraphsfilledcurve.h"
-#include "jkqtplottergui/jkqtpcomboboxes.h"
+#include "jkqtplotter/gui/jkqtpcomboboxes.h"
 
 
 

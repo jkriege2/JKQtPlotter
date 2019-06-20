@@ -16,8 +16,8 @@
 #include "jkqtplotter/jkqtpelementsoverlay.h"
 #include "jkqtplotter/jkqtpgraphsparsedfunction.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplottergui/jkqtpgraphsmodel.h"
-#include "jkqtplottergui/jkqtpcomboboxes.h"
+#include "jkqtplotter/gui/jkqtpgraphsmodel.h"
+#include "jkqtplotter/gui/jkqtpcomboboxes.h"
 #include "jkqtplotter/jkqtptools.h"
 
 #define N1 200

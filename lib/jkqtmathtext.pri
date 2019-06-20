@@ -9,7 +9,7 @@ isEmpty(JKQTP_MATHTEXT_PRI_INCLUDED) {
 
     SOURCES += $$PWD/jkqtmathtext/jkqtmathtext.cpp
 
-    include($$PWD/jkqtplotterressources/math_fonts/xits.pri)
+    include($$PWD/jkqtmathtext/resources/xits.pri)
     DEFINES += AUTOLOAD_XITS_FONTS
     DEFINES += USE_XITS_FONTS
 

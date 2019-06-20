@@ -24,7 +24,7 @@
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpelementsoverlay.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
-#include "jkqtplottergui/jkqtpenhancedspinboxes.h"
+#include "jkqtplotter/gui/jkqtpenhancedspinboxes.h"
 
 #include <QObject>
 #include <QAction>

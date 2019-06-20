@@ -23,6 +23,8 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "jkqtp_imexport.h"
+
 #ifndef __WINDOWS__
 # if defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32)
 #  define __WINDOWS__
@@ -125,7 +127,7 @@
  * \test you can find an example application in the file \link test_hrestimer.cpp \endlink.
  *
  */
-class JKQTPHighResTimer {
+class JKQTP_LIB_EXPORT JKQTPHighResTimer {
   protected:
     #ifdef __WINDOWS__
       /** \brief internal: time stamp of the last call of start() */
