@@ -46,7 +46,7 @@ class JKQTPDatastore;
 /*! \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
     \ingroup jkqtplotter_linesymbolgraphs_simple
 
-    \image html jkqtplotter_simpletest_stepplots.png
+    \image html stepplots.png
 
     \see JKQTPSpecialLineVerticalGraph, JKQTPFilledCurveXGraph, \ref JKQTPlotterSpecialStepLinePlot
  */
@@ -106,7 +106,7 @@ class JKQTP_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGraph, pub
 /*! \brief This implements a step plot with values \f$ \left(f(y), y \right) \f$
     \ingroup jkqtplotter_linesymbolgraphs_simple
 
-    \image html jkqtplotter_simpletest_stepplots_vertical.png
+    \image html stepplots_vertical.png
 
     \see JKQTPSpecialLineHorizontalGraph, JKQTPFilledCurveYGraph, \ref JKQTPlotterSpecialStepLinePlot
  */

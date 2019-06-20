@@ -98,9 +98,9 @@ class JKQTP_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTPGraphL
 
     set the properties sizeColumn and/or colorColumn to change the size and/or color of the symbols according to the values in the column.
 
-    \image html jkqtplotter_simpletest_paramscatterplot.png "Different Styles of Parametrized Scatter/Line Graphs"
+    \image html paramscatterplot.png "Different Styles of Parametrized Scatter/Line Graphs"
 
-    \image html jkqtplotter_simpletest_paramscatterplot_image_star.png "JKQTPXYParametrizedScatterGraph with symbols organized in a grid"
+    \image html paramscatterplot_image_star.png "JKQTPXYParametrizedScatterGraph with symbols organized in a grid"
 
     \note For the size, line width and symbol type columns, you can also set a functor, which converts the column value (optionally based
           also on the x- and y-location of the data point) into the local symbol size, symbol type or line width. Use the functions

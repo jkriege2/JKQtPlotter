@@ -65,7 +65,7 @@
         \f[ a=\overline{y}-b\cdot\overline{x} \f]
         \f[ b=\frac{\sum x_iy_i-N\cdot\overline{x}\cdot\overline{y}}{\sum x_i^2-N\cdot(\overline{x})^2} \f]
 
-    \image html jkqtplotter_simpletest_datastore_regression_lin.png
+    \image html datastore_regression_lin.png
 */
 template <class InputItX, class InputItY>
 inline void jkqtpstatLinearRegression(InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double& coeffA, double& coeffB, bool fixA=false, bool fixB=false) {
@@ -137,7 +137,7 @@ inline void jkqtpstatLinearRegression(InputItX firstX, InputItX lastX, InputItY 
         \f[ \overline{x^2}=\sum\limits_iw_i^2\cdot x_i^2 \f]
         \f[ \overline{w^2}=\sum\limits_iw_i^2 \f]
 
-    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+    \image html datastore_regression_linweight.png
 
 */
 template <class InputItX, class InputItY, class InputItW>
@@ -221,7 +221,7 @@ inline void jkqtpstatLinearWeightedRegression(InputItX firstX, InputItX lastX, I
 
     \image html irls.png
 
-    \image html jkqtplotter_simpletest_datastore_regression_linrobust_p.png
+    \image html datastore_regression_linrobust_p.png
 
     \see https://en.wikipedia.org/wiki/Iteratively_reweighted_least_squares, C. Sidney Burrus: "Iterative Reweighted Least Squares", <a href="http://cnx.org/content/m45285/latest/">http://cnx.org/content/m45285/latest/</a>
 */

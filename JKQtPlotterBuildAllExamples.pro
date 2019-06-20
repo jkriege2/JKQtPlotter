@@ -15,17 +15,17 @@ SUBDIRS +=  jkqtplotterlib \
             jkqtfastplotter_test
 
 
-jkqtplotterlib.file = staticlib/jkqtplotterlib/jkqtplotterlib.pro
-jkqtplotterlib_sharedlib.file = sharedlib/jkqtplotterlib/jkqtplotterlib.pro
+jkqtplotterlib.file = qmake/staticlib/jkqtplotterlib/jkqtplotterlib.pro
+jkqtplotterlib_sharedlib.file = qmake/sharedlib/jkqtplotterlib/jkqtplotterlib.pro
 
-jkqtmathtextlib.file = staticlib/jkqtmathtextlib/jkqtmathtextlib.pro
-jkqtmathtextlib_sharedlib.file = sharedlib/jkqtmathtextlib/jkqtmathtextlib.pro
+jkqtmathtextlib.file = qmake/staticlib/jkqtmathtextlib/jkqtmathtextlib.pro
+jkqtmathtextlib_sharedlib.file = qmake/sharedlib/jkqtmathtextlib/jkqtmathtextlib.pro
 
-jkqtpcommonlib.file = staticlib/jkqtpcommonlib/jkqtpcommonlib.pro
-jkqtpcommonlib_sharedlib.file = sharedlib/jkqtpcommonlib/jkqtpcommonlib.pro
+jkqtpcommonlib.file = qmake/staticlib/jkqtpcommonlib/jkqtpcommonlib.pro
+jkqtpcommonlib_sharedlib.file = qmake/sharedlib/jkqtpcommonlib/jkqtpcommonlib.pro
 
-jkqtfastplotterlib.file = staticlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
-jkqtfastplotterlib_sharedlib.file = sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
+jkqtfastplotterlib.file = qmake/staticlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
+jkqtfastplotterlib_sharedlib.file = qmake/sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
 
 jkqtmathtext_simpletest.subdir = examples/jkqtmathtext_simpletest
 jkqtmathtext_simpletest.depends = jkqtmathtextlib 
@@ -44,13 +44,13 @@ jkqtfastplotter_test.depends = jkqtfastplotterlib
 
 defineTest(addSimpleTest) {
     test_name = $$1
-    SUBDIRS += jkqtplotter_simpletest_$${test_name}
+    SUBDIRS += jkqtptst_$${test_name}
 
-    jkqtplotter_simpletest_$${test_name}.file = examples/simpletest_$${test_name}/jkqtplotter_simpletest_$${test_name}.pro
-    jkqtplotter_simpletest_$${test_name}.depends = jkqtplotterlib
+    jkqtptst_$${test_name}.file = examples/$${test_name}/$${test_name}.pro
+    jkqtptst_$${test_name}.depends = jkqtplotterlib
 
-    export (jkqtplotter_simpletest_$${test_name}.file)
-    export (jkqtplotter_simpletest_$${test_name}.depends)
+    export (jkqtptst_$${test_name}.file)
+    export (jkqtptst_$${test_name}.depends)
 
     export (SUBDIRS)
 }
@@ -96,7 +96,7 @@ defineTest(addTest) {
     test_name = $$1
     SUBDIRS += test_$${test_name}
 
-    test_$${test_name}.file = examples/test_$${test_name}/test_$${test_name}.pro
+    test_$${test_name}.file = examples/$${test_name}/test_$${test_name}.pro
     test_$${test_name}.depends = jkqtplotterlib
 
     export (test_$${test_name}.file)

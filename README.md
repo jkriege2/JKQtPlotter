@@ -61,8 +61,8 @@ The [Screenshots-page](./screenshots/) contains several screenshots, partly take
 ## Building
 Building instructions can be found here:
 - include necessary files into QMake project: [`./lib/*.pri`](./lib/README.md)
-- [build a static library](./staticlib): [`./staticlib/*.pro`](./staticlib/README.md)
-- [build a shared library (DLL, SO, ...)](./sharedlib): [`./sharedlib/*.pro`](./sharedlib/README.md)
+- [build a static library](./staticlib): [`./qmake/staticlib/*.pro`](./qmake/staticlib/README.md)
+- [build a shared library (DLL, SO, ...)](./sharedlib): [`./qmake/sharedlib/*.pro`](./qmake/sharedlib/README.md)
 
 
 ## Continuous Integration Status

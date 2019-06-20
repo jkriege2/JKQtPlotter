@@ -29,12 +29,12 @@ DEFINES += DEBUG_TIMING
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 # include JKQTPlotter library
-DEPENDPATH += ../../lib  ../../staticlib/jkqtfastplotterlib
+DEPENDPATH += ../../lib  ../../qmake/staticlib/jkqtfastplotterlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
-    LIBS += -L../../staticlib/jkqtfastplotterlib/debug -ljkqtfastplotterlib_debug
+    LIBS += -L../../qmake/staticlib/jkqtfastplotterlib/debug -ljkqtfastplotterlib_debug
 } else {
-    LIBS += -L../../staticlib/jkqtfastplotterlib/release -ljkqtfastplotterlib
+    LIBS += -L../../qmake/staticlib/jkqtfastplotterlib/release -ljkqtfastplotterlib
 }
 message("LIBS = $$LIBS")
 win32-msvc*: DEFINES += _USE_MATH_DEFINES

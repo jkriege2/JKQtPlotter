@@ -58,7 +58,7 @@
         jkqtpstatAddHBoxplot(plot1->getPlotter(), datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), -0.3);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_boxplots_simple.png
+    \image html datastore_statistics_boxplots_simple.png
 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
@@ -156,7 +156,7 @@ inline JKQTPBoxplotVerticalElement* jkqtpstatAddVBoxplot(JKQTBasePlotter* plotte
                                         0.05, 0.95 // Quantiles for the boxplot box whiskers' ends
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_boxplots_outliers.png
+    \image html datastore_statistics_boxplots_outliers.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstat5NumberStatistics()
 */
@@ -820,7 +820,7 @@ inline std::pair<JKQTPViolinplotVerticalElement*,JKQTPSingleColumnSymbolsGraph*>
         jkqtpstatAddHHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 11);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_hist.png
+    \image html datastore_statistics_hist.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
 */
@@ -858,7 +858,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
         jkqtpstatAddHHistogram1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.5);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_hist.png
+    \image html datastore_statistics_hist.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1DAutoranged(), JKQTPBarVerticalGraph
 */
@@ -898,7 +898,7 @@ inline JKQTPBarVerticalGraph* jkqtpstatAddHHistogram1DAutoranged(JKQTBasePlotter
         jkqtpstatAddHHistogram1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_hist.png
+    \image html datastore_statistics_hist.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatHistogram1D(), JKQTPBarVerticalGraph
 */
@@ -1051,7 +1051,7 @@ inline JKQTPBarHorizontalGraph* jkqtpstatAddVHistogram1D(JKQTBasePlotter* plotte
     \param[out] oymax position of the last histogram bin in y-direction
     \return a graph class pointer (of type \c JKQTPColumnMathImage ) displaying the histogram data
 
-    \image html jkqtplotter_simpletest_datastore_statistics_2d_hist.png
+    \image html datastore_statistics_2d_hist.png
 
     \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
 */
@@ -1106,7 +1106,7 @@ inline JKQTPColumnMathImage* jkqtpstatAddHistogram2DImage(JKQTBasePlotter* plott
     \param[out] oymax position of the last histogram bin in y-direction
     \return a graph class pointer (of type \c JKQTPColumnContourPlot ) displaying the histogram data as a contour plot
 
-    \image html jkqtplotter_simpletest_datastore_statistics_2d_histcontour.png
+    \image html datastore_statistics_2d_histcontour.png
 
     \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
 */
@@ -1156,7 +1156,7 @@ inline JKQTPColumnContourPlot* jkqtpstatAddHistogram2DContour(JKQTBasePlotter* p
     \param[out] oymax position of the last histogram bin in y-direction
     \return a graph class pointer (of type \c JKQTPColumnMathImage ) displaying the histogram data
 
-    \image html jkqtplotter_simpletest_datastore_statistics_2d_hist.png
+    \image html datastore_statistics_2d_hist.png
 
     \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
 */
@@ -1213,7 +1213,7 @@ inline JKQTPColumnMathImage* jkqtpstatAddHistogram2DImage(JKQTBasePlotter* plott
     \param[out] oymax position of the last histogram bin in y-direction
     \return a graph class pointer (of type \c JKQTPColumnContourPlot ) displaying the histogram data as a contour plot
 
-    \image html jkqtplotter_simpletest_datastore_statistics_2d_histcontour.png
+    \image html datastore_statistics_2d_histcontour.png
 
     \see jkqtpstatHistogram2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
 
@@ -1270,7 +1270,7 @@ inline JKQTPColumnContourPlot* jkqtpstatAddHistogram2DContour(JKQTBasePlotter* p
         jkqtpstatAddHKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 200);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
@@ -1312,7 +1312,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
         jkqtpstatAddHKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.01);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
@@ -1356,7 +1356,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1DAutoranged(JKQTBasePlotter* plotter, 
         jkqtpstatAddHKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
@@ -1399,7 +1399,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt fi
         jkqtpstatAddHKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
 */
@@ -1448,7 +1448,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddHKDE1D(JKQTBasePlotter* plotter, InputIt fi
         jkqtpstatAddVKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 200);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
@@ -1490,7 +1490,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddVKDE1DAutoranged(JKQTBasePlotter* plotter, 
         jkqtpstatAddVKDE1DAutoranged(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), 0.01);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1DAutoranged(), JKQTPXYLineGraph
@@ -1534,7 +1534,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddVKDE1DAutoranged(JKQTBasePlotter* plotter, 
         jkqtpstatAddVKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
@@ -1577,7 +1577,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddVKDE1D(JKQTBasePlotter* plotter, InputIt fi
         jkqtpstatAddVKDE1D(plot1->getPlotter(),  datastore1->begin(randomdatacol1), datastore1->end(randomdatacol1), bins.begin(), bins.end());
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_statistics_kde.png
+    \image html datastore_statistics_kde.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics, jkqtpstatKDE1D(), JKQTPXYLineGraph
 */
@@ -1632,7 +1632,7 @@ inline JKQTPXYLineGraph* jkqtpstatAddVKDE1D(JKQTBasePlotter* plotter, InputIt fi
     \param[out] oymax position of the last KDE bin in y-direction
     \return a graph class pointer (of type \c JKQTPColumnMathImage ) displaying the KDE data
 
-    \image html jkqtplotter_simpletest_datastore_statistics_2d_kde.png
+    \image html datastore_statistics_2d_kde.png
 
     \see jkqtpstatKDE2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
 */
@@ -1689,7 +1689,7 @@ inline JKQTPColumnMathImage* jkqtpstatAddKDE2DImage(JKQTBasePlotter* plotter, In
     \param[out] oymax position of the last KDE bin in y-direction
     \return a graph class pointer (of type \c JKQTPColumnContourPlot ) displaying the KDE data as a contour plot
 
-    \image html jkqtplotter_simpletest_datastore_statistics_2d_kdecontour.png
+    \image html datastore_statistics_2d_kdecontour.png
 
     \see jkqtpstatKDE2D(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
 */
@@ -1746,7 +1746,7 @@ inline JKQTPColumnContourPlot* jkqtpstatAddKDE2DContour(JKQTBasePlotter* plotter
         jkqtpstatAddLinearRegression(plot1->getPlotter(), datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_lin.png
+    \image html datastore_regression_lin.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
 */
@@ -1789,7 +1789,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTBasePlotter* pl
         jkqtpstatAddLinearRegression(graphD);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_lin.png
+    \image html datastore_regression_lin.png
 
     \note The line graph is added to the same plotter that is the parent of \a datagraph !
 
@@ -1822,7 +1822,7 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTPXYGr
         jkqtpstatAddRobustIRLSLinearRegression(plot1->getPlotter(), datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+    \image html datastore_regression_linrobust.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSLinearRegression()
 */
@@ -1868,7 +1868,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSLinearRegression(JKQTBaseP
         jkqtpstatAddRobustIRLSLinearRegression(graphD);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+    \image html datastore_regression_linrobust.png
 
     \note The line graph is added to the same plotter that is the parent of \a datagraph !
 
@@ -1910,7 +1910,7 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSLinearRegression
                                           &jkqtp_inversePropSaveDefault<double>);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+    \image html datastore_regression_linweight.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
 */
@@ -1954,7 +1954,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTBasePlo
         jkqtpstatAddLinearWeightedRegression(graphD);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+    \image html datastore_regression_linweight.png
 
     \note The line graph is added to the same plotter that is the parent of \a datagraph !
 
@@ -1996,7 +1996,7 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(J
         jkqtpstatRegression(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_nonlinreg.png
+    \image html datastore_regression_nonlinreg.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRegression()
 */
@@ -2038,7 +2038,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTBasePlotter* plotter,
         jkqtpstatRegression(graphD, JKQTPStatRegressionModelType::Exponential);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_nonlinreg.png
+    \image html datastore_regression_nonlinreg.png
 
     \note The line graph is added to the same plotter that is the parent of \a datagraph !
 
@@ -2072,7 +2072,7 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTPXYGraph *d
         jkqtpstatAddRobustIRLSRegression(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY));
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+    \image html datastore_regression_linrobust.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSRegression()
 */
@@ -2118,7 +2118,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSRegression(JKQTBasePlotter
         jkqtpstatAddRobustIRLSRegression(graphD, JKQTPStatRegressionModelType::Exponential);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linrobust.png
+    \image html datastore_regression_linrobust.png
 
     \note The line graph is added to the same plotter that is the parent of \a datagraph !
 
@@ -2162,7 +2162,7 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSRegression(JKQTP
                                           &jkqtp_inversePropSaveDefault<double>);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+    \image html datastore_regression_linweight.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatWeightedRegression()
 */
@@ -2206,7 +2206,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTBasePlotter* 
         jkqtpstatAddWeightedRegression(graphD, JKQTPStatRegressionModelType::Exponential);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_linweight.png
+    \image html datastore_regression_linweight.png
 
     \note The line graph is added to the same plotter that is the parent of \a datagraph !
 
@@ -2241,7 +2241,7 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTPXY
         jkqtpstatAddPolyFit(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY), 3, std::back_inserter(pFit));
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+    \image html datastore_regression_polynom.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
 */
@@ -2276,7 +2276,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTBasePlotter* plotter, In
         jkqtpstatAddPolyFit(plot1->getPlotter(), JKQTPStatRegressionModelType::Exponential, datastore1->begin(colLinX), datastore1->end(colLinX), datastore1->begin(colLinY), datastore1->end(colLinY), 3);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+    \image html datastore_regression_polynom.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
 */
@@ -2304,7 +2304,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTBasePlotter* plotter, In
         jkqtpstatAddPolyFit(graphD, 3,std::back_inserter(pFit));
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+    \image html datastore_regression_polynom.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
 */
@@ -2331,7 +2331,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTPXYGraph *datagraph, siz
         jkqtpstatAddPolyFit(graphD, 3);
     \endcode
 
-    \image html jkqtplotter_simpletest_datastore_regression_polynom.png
+    \image html datastore_regression_polynom.png
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
 */

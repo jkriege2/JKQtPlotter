@@ -33,7 +33,7 @@
 /*! \brief This implements filled curve plots where the area is filled between the plot line and the x-Axis.
     \ingroup jkqtplotter_filledgraphs
 
-    \image html jkqtplotter_simpletest_filledgraphs.png
+    \image html filledgraphs.png
 
     \see \ref JKQTPlotterFilledGraphs
  */
@@ -80,7 +80,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGrap
 /*! \brief This implements filled curve plots where the area is filled between the plot line and y-Axis
     \ingroup jkqtplotter_filledgraphs
 
-    \image html jkqtplotter_simpletest_filledgraphs_yaxis.png
+    \image html filledgraphs_yaxis.png
 
     \see \ref JKQTPlotterFilledGraphs
 

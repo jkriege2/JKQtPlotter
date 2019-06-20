@@ -14,55 +14,55 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest1_small.png 
     <td> \subpage JKQTPlotterSimpleTest 
 	<td> `JKQTPXYLineGraph` <br> C++-style QVector arrays of data 
-<tr><td> \image html jkqtplotter_simpletest_speed_small.png
+<tr><td> \image html speed_small.png
     <td> \subpage JKQTPlotterSpeedTest
     <td> `JKQTPXYLineGraph` <br> external `std::array<double,N>` data, not owned by datastore <br> live-data, measure plotting speed <br> tipps to increas plotting speed 
-<tr><td> \image html jkqtplotter_simpletest_symbols_and_styles_small.png
+<tr><td> \image html symbols_and_styles_small.png
     <td> \subpage JKQTPlotterSymbolsAndStyles
     <td> `JKQTPXYLineGraph` <br> C++ vector of data <br> setting line styles and symbol styles <br> automatic graph coloring 
-<tr><td> \image html jkqtplotter_simpletest_stepplots_small.png
+<tr><td> \image html stepplots_small.png
     <td> \subpage JKQTPlotterSpecialStepLinePlot
     <td> `JKQTPSpecialLineHorizontalGraph` <br> C++ vector of data <br> different step/special line modes, filled and line-only 
-<tr><td> \image html jkqtplotter_simpletest_symbols_and_errors_small.png
+<tr><td> \image html symbols_and_errors_small.png
     <td> \subpage JKQTPlotterSymbolsErrors
     <td> `JKQTPXYLineErrorGraph` <br> C-style arrays of data 
-<tr><td> \image html jkqtplotter_simpletest_errorbarstyles_small.png
+<tr><td> \image html errorbarstyles_small.png
     <td> \subpage JKQTPlotterErrorBarStyles
     <td> `JKQTPXYLineErrorGraph` <br> different styles of error indicators for x- and y-errors <br> C++-style QVector for data <br> styling error indicators <br> moving key and formatting plotter grid 
-<tr><td> \image html jkqtplotter_simpletest_barchart_small.png
+<tr><td> \image html barchart_small.png
     <td> \subpage JKQTPlotterBarcharts
     <td> `JKQTPBarVerticalGraph` <br> C-style arrays of data 
 <tr><td> \image html JKQTPBarHorizontalGraphStacked_small.png
     <td> \subpage JKQTPlotterStackedBarChart
     <td> `JKQTPBarVerticalStackableGraph`, `JKQTPBarHorizontalStackableGraph` <br> C++-style vectors of data 
-<tr><td> \image html jkqtplotter_simpletest_filledgraphs_small.png
+<tr><td> \image html filledgraphs_small.png
     <td> \subpage JKQTPlotterFilledGraphs
     <td> `JKQTPBarVerticalGraph` <br> setting/altering data in `JKQTPDatstore` directly <br>  transparent plots <br> calculating histograms 
-<tr><td> \image html jkqtplotter_simpletest_impulsesplot_small.png
+<tr><td> \image html impulsesplot_small.png
     <td> \subpage JKQTPlotterImpulsePlots
     <td> `JKQTPImpulsesVerticalGraph` and `JKQTPImpulsesHorizontalGraph` <br> C++-style QVector as plot data 
-<tr><td> \image html jkqtplotter_simpletest_paramscatterplot_small.png
+<tr><td> \image html paramscatterplot_small.png
     <td> \subpage JKQTPlotterParamScatter
     <td> `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> modify scatter/points/line-graph properties by data 
-<tr><td> \image html jkqtplotter_simpletest_paramscatterplot_image_small.png
+<tr><td> \image html paramscatterplot_image_small.png
     <td> \subpage JKQTPlotterParamScatterImage
     <td> `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> rectangular arrangement of scatters <br> generative computer graphics 
-<tr><td> \image html jkqtplotter_simpletest_parametriccurve_small.png
+<tr><td> \image html parametriccurve_small.png
     <td> \subpage JKQTPlotterParametricCurves
     <td> `JKQTPXYLineGraph` and `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> parametric curve plotting 
-<tr><td> \image html jkqtplotter_simpletest_functionplot_small.png
+<tr><td> \image html functionplot_small.png
     <td> \subpage JKQTPlotterFunctionPlots
     <td> `JKQTPXFunctionLineGraph`  <br> diretly plotting C/C++-functions 
-<tr><td> \image html jkqtplotter_simpletest_parsedfunctionplot_small.png
+<tr><td> \image html parsedfunctionplot_small.png
     <td> \subpage JKQTPlotterParsedFunctionPlot
     <td> `JKQTPXParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator 
-<tr><td> \image html jkqtplotter_simpletest_geometric_small.png
+<tr><td> \image html geometric_small.png
     <td> \subpage JKQTPlotterGeometricGraphs
     <td> `JKQTPPlotObject`, `JKQTPGeoArc`, `JKQTPGeoLine`, `JKQTPGeoRectangle`, ...
-<tr><td> \image html jkqtplotter_simpletest_boxplot_small.png
+<tr><td> \image html boxplot_small.png
     <td> \subpage JKQTPlotterBoxplotsGraphs
     <td> `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph`, ...
-<tr><td> \image html jkqtplotter_simpletest_violinplot_small.png
+<tr><td> \image html violinplot_small.png
     <td> \subpage JKQTPlotterViolinplotGraphs
     <td> `JKQTPViolinplotVerticalElement`, `JKQTPViolinplotHorizontalElement`, ...
 </table>
@@ -72,13 +72,13 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes         
-<tr><td> \image html jkqtplotter_simpletest_logaxes_small.png
+<tr><td> \image html logaxes_small.png
     <td> \subpage JKQTPlotterLogAxes
     <td> `JKQTPXYLineGraph` and `JKQTPGeoText` <br> C++ vector of data <br> logarithmic axes and styling <br> plot line styles <br> internal LaTeX parser <br> add commenting text to a graph 
-<tr><td> \image html jkqtplotter_simpletest_dateaxes_timeaxis_small.png
+<tr><td> \image html dateaxes_timeaxis_small.png
     <td> \subpage JKQTPlotterDateTimeAxes
     <td> `JKQTPXYLineGraph` and `JKQTPFilledVerticalRangeGraph` <br> C++ vector of data <br> date/time axes <br> plot min/max range graph <br> internal LaTeX parser <br> data from CSV files 
-<tr><td> \image html jkqtplotter_simpletest_advancedlineandfillstyling_small.png
+<tr><td> \image html advancedlineandfillstyling_small.png
     <td> \subpage JKQTPlotterAdvancedLineAndFillStyling
     <td> `JKQTPXYLineGraph`, `JKQTPSpecialLineHorizontalGraph` and `JKQTPBarVerticalGraph` <br> C++ vector of data <br> advanced line styling and filling
 <tr><td> \image html test_styledboxplot_small.png
@@ -95,28 +95,28 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
-<tr><td> \image html jkqtplotter_simpletest_rgbimageplot_qt_small.png
+<tr><td> \image html rgbimageplot_qt_small.png
     <td> \subpage JKQTPlotterImagePlotQImageRGB
     <td> `JKQTPImage` <br> `QImage` drawn onto a plot with arbitrary scaling  <br> inverted coordinate axes
-<tr><td> \image html jkqtplotter_simpletest_imageplot_small.png
+<tr><td> \image html imageplot_small.png
     <td> \subpage JKQTPlotterImagePlot
     <td> `JKQTPColumnMathImage` <br> image data copied from C-style row-major array into a single column of the internal datastore <br> Describes several options of the image plotting classes (different ways of color coding, what to do with data above/below the limits etc.) 
-<tr><td> \image html jkqtplotter_simpletest_imageplot_modifier_small.png
+<tr><td> \image html imageplot_modifier_small.png
     <td> \subpage JKQTPlotterImagePlotModifier
     <td> `JKQTPColumnMathImage` <br> image data copied from C-style row-major array into a single column of the internal datastore <br> Image is modified by a second image to display two data dimensions at the same time 
-<tr><td> \image html jkqtplotter_simpletest_imageplot_nodatastore_small.png
+<tr><td> \image html imageplot_nodatastore_small.png
     <td> \subpage JKQTPlotterImagePlotNoDatastore
     <td> `JKQTPMathImage` <br> image data in a C-style row-major array, not using internal datastore 
-<tr><td> \image html jkqtplotter_simpletest_rgbimageplot_small.png
+<tr><td> \image html rgbimageplot_small.png
     <td> \subpage JKQTPlotterRGBImagePlot
     <td> `JKQTPColumnRGBMathImage` <br> image data in a C-style row-major array, not using internal datastore <br> RGB/CMY color compositing
-<tr><td> \image html jkqtplotter_simpletest_imageplot_opencv_small.png
+<tr><td> \image html imageplot_opencv_small.png
     <td> \subpage JKQTPlotterImagePlotOpenCV
     <td> `JKQTPColumnMathImage` <br> image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore 
-<tr><td> \image html jkqtplotter_simpletest_rgbimageplot_opencv_small.png
+<tr><td> \image html rgbimageplot_opencv_small.png
     <td> \subpage JKQTPlotterImagePlotRGBOpenCV
     <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore <br> inverted coordinate axes
-<tr><td> \image html jkqtplotter_simpletest_contourplot_small.png
+<tr><td> \image html contourplot_small.png
     <td> \subpage JKQTPlotterContourPlot
     <td> `JKQTPColumnContourPlot` <br> image data edited inside JKQTPDatastore 
 </table>
@@ -127,7 +127,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
-<tr><td> \image html jkqtplotter_simpletest_ui_small.png
+<tr><td> \image html ui_small.png
     <td> \subpage JKQTPlotterQtCreator
     <td> using Qt Form Designer <br> parsed function plots (`JKQTPXParsedFunctionLineGraph`) 
 <tr><td> \image html jkqtplotter_test_user_interaction_small.gif
@@ -153,22 +153,22 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
-<tr><td> \image html simpletest_datastore_small.png
+<tr><td> \image html datastore_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastore
     <td> Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore
-<tr><td> \image html simpletest_datastore_iterators_small.png
+<tr><td> \image html datastore_iterators_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastoreIterators
     <td> Iterator-based Data Management with JKQTPDatastore 
-<tr><td> \image html jkqtplotter_simpletest_datastore_statistics_small.png
+<tr><td> \image html datastore_statistics_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatistics
     <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library (see \ref jkqtptools_math_statistics )<br>basic statistics (mean, standard deviation, ...)<br>boxplots<br>histograms<br>kernel density estimates (KDE)
-<tr><td> \image html jkqtplotter_simpletest_datastore_regression_small.png
+<tr><td> \image html datastore_regression_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastoreRegression
     <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library<br>Regression Analysis (with the Statistics Library)<br>robust regression (IRLS)<br>weighted regression<br>non-linear regression<br>polynomial fitting
-<tr><td> \image html jkqtplotter_simpletest_datastore_groupedstat_small.png
+<tr><td> \image html datastore_groupedstat_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat
     <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>grouped statistics<br>error indicators from data<br>boxplots
-<tr><td> \image html jkqtplotter_simpletest_datastore_statistics_2d_small.png
+<tr><td> \image html datastore_statistics_2d_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatistics2D
     <td> Advanced 2-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library (see \ref jkqtptools_math_statistics )<br>histograms<br>kernel density estimates (KDE)
 </table>

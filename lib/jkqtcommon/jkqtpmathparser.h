@@ -315,7 +315,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
 
         /** \brief result of any expression  
         *   \ingroup jkmpultil*/
-        struct jkmpResult {
+        struct JKQTP_LIB_EXPORT jkmpResult {
           jkmpResult();
 
           bool isValid;
@@ -336,7 +336,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
           * only contains pointers to the data
         *   \ingroup jkmpultil
           */
-        struct jkmpVariable {
+        struct JKQTP_LIB_EXPORT jkmpVariable {
           jkmpVariable();
           jkmpResultType type;     /*!< \brief type of the variable */
           bool internal;           /*!< \brief this is an internal variable */
@@ -348,7 +348,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
         /** \brief This struct is for managing temporary variables. It is generally like jkmpVariable.
         *   \ingroup jkmpultil
           */
-        struct jkmpTempVariable {
+        struct JKQTP_LIB_EXPORT jkmpTempVariable {
           std::string name;       /*!< \brief name of the variable */
           jkmpResultType type;    /*!< \brief type of the variable */
           bool internal;          /*!< \brief this is an internal variable */
@@ -385,7 +385,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
 
 
         /** \brief description of a user registered function */
-        struct jkmpFunctionDescriptor {
+        struct JKQTP_LIB_EXPORT jkmpFunctionDescriptor {
           jkmpEvaluateFunc function;    /*!< \brief a pointer to the function implementation */
           std::string name;             /*!< \brief name of the function */
         };
@@ -400,7 +400,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * All allowed node types must inherit from jkmpNode
          * \ingroup jkmpNodes 
          */
-        class jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpNode {
           protected:
             JKQTPMathParser* parser;  /*!< \brief points to the parser object that is used to evaluate this node */
             jkmpNode* parent;      /*!< \brief points to the parent node */
@@ -430,7 +430,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          *  add (+), subtract (-), multiply (*), divide (/), a to the power of b (a^b)
          * \ingroup jkmpNodes 
          */
-        class jkmpBinaryArithmeticNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpBinaryArithmeticNode: public jkmpNode {
           private:
             jkmpNode* left, *right;
             char operation;
@@ -455,7 +455,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * \brief This class represents a binary boolean operation: and, or, xor, nor, nand
          * \ingroup jkmpNodes 
          */
-        class jkmpBinaryBoolNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpBinaryBoolNode: public jkmpNode {
           private:
             jkmpNode* left, *right;
             char operation;
@@ -480,7 +480,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * \brief This class represents a binary compare operation: !=, ==, >=, <=, >, <
          * \ingroup jkmpNodes 
          */
-        class jkmpCompareNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpCompareNode: public jkmpNode {
           private:
             jkmpNode* left, *right;
             char operation;
@@ -505,7 +505,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * \brief This class represents a unary operations: ! (bool negation), - (arithmetic negation)
          * \ingroup jkmpNodes 
          */
-        class jkmpUnaryNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpUnaryNode: public jkmpNode {
           private:
             jkmpNode* child;
             char operation;
@@ -529,7 +529,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * \brief This class represents a variable assignment (a = expression)
          * \ingroup jkmpNodes 
          */
-        class jkmpVariableAssignNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpVariableAssignNode: public jkmpNode {
           private:
             jkmpNode* child;
             std::string variable;
@@ -554,7 +554,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * \brief This class represents a number, a string contant or a boolean contant (true/false)
          * \ingroup jkmpNodes 
          */
-        class jkmpConstantNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpConstantNode: public jkmpNode {
           private:
             jkmpResult data;
           public:
@@ -573,7 +573,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * \brief This class represents a variable.
          * \ingroup jkmpNodes 
          */
-        class jkmpVariableNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpVariableNode: public jkmpNode {
           private:
             std::string var;
           public:
@@ -598,7 +598,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          *
          * Functions may have 8 parameters at the most.
          */
-        class jkmpFunctionNode: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpFunctionNode: public jkmpNode {
           private:
             std::string fun;
             jkmpNode** child;
@@ -627,7 +627,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          *
          * when evaluating the result will be the result of the last node in the list.
          */
-        class jkmpNodeList: public jkmpNode {
+        class JKQTP_LIB_EXPORT jkmpNodeList: public jkmpNode {
           private:
             std::vector<jkmpNode*> list;
           public:
@@ -666,7 +666,7 @@ class JKQTP_LIB_EXPORT JKQTPMathParser
          * error handler and assign it (function pointer) to the global variable jkmathparser_exception_function.
          * If this is not nullptr this function will be called instead of throwing an exception.
          */
-        class jkmpException : public std::exception {
+        class JKQTP_LIB_EXPORT jkmpException : public std::exception {
           private:
                /** \brief the error message */
                std::string errormessage;

@@ -378,6 +378,10 @@ bool JKQTMathText::MTtextNode::toHtml(QString &html, JKQTMathText::MTenvironment
     return true;
 }
 
+QString JKQTMathText::MTtextNode::getText() const {
+    return this->text;
+}
+
 QString JKQTMathText::MTtextNode::getTypeName() const
 {
     return QLatin1String("MTtextNode(")+text+")";
@@ -512,6 +516,18 @@ void JKQTMathText::MTinstruction1Node::setDrawBoxes(bool draw)
 {
     drawBoxes=draw;
     child->setDrawBoxes(draw);
+}
+
+JKQTMathText::MTnode *JKQTMathText::MTinstruction1Node::getChild() const {
+    return this->child;
+}
+
+QString JKQTMathText::MTinstruction1Node::getName() const {
+    return this->name;
+}
+
+QStringList JKQTMathText::MTinstruction1Node::getParameters() const {
+    return this->parameters;
 }
 
 bool JKQTMathText::MTinstruction1Node::setupMTenvironment(JKQTMathText::MTenvironment &ev)
@@ -1976,6 +1992,10 @@ void JKQTMathText::MTlistNode::setDrawBoxes(bool draw)
     }
 }
 
+QList<JKQTMathText::MTnode *> JKQTMathText::MTlistNode::getNodes() const {
+    return this->nodes;
+}
+
 
 
 
@@ -3190,6 +3210,10 @@ bool JKQTMathText::MTsymbolNode::toHtml(QString &html, JKQTMathText::MTenvironme
 
     if (ok) html=html+ev.toHtmlStart(defaultEv)+s+ev.toHtmlAfter(defaultEv);
     return ok;
+}
+
+QString JKQTMathText::MTsymbolNode::getSymbolName() const {
+    return this->symbolName;
 }
 
 QString JKQTMathText::MTsymbolNode::getSymbolFontName() const {

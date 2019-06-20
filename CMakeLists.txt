@@ -19,11 +19,15 @@ endif()
 if(NOT DEFINED BUILD_EXAMPLES)
     option(BUILD_EXAMPLES "Build examples" ON)
 endif()
+if(NOT DEFINED BUILD_HAS_OPENCV)
+    option(BUILD_HAS_OPENCV "OpenCV available?" OFF)
+endif()
 if(NOT DEFINED LIB_INSTALL)
     option(LIB_INSTALL "Install library" ON)
 endif()
+
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-    option(CMAKE_INSTALL_PREFIX "Install directory" ${CMAKE_CURRENT_SOURCE_DIR}/instal)
+    option(CMAKE_INSTALL_PREFIX "Install directory" ${CMAKE_CURRENT_SOURCE_DIR}/install)
 endif()
 
 
@@ -36,9 +40,13 @@ if (NOT WIN32)
     include(GNUInstallDirs)
 endif(NOT WIN32)
 
-# Instruct CMake to run moc+rcc automatically when needed.
+# Instruct CMake to run moc+rcc+uic automatically when needed.
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+# Find includes in the build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Set a default build type if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -61,7 +69,8 @@ if (NOT CMAKE_INSTALL_INCLUDEDIR)
 endif()
 
 
-find_package(Qt5 5.0 REQUIRED Core Gui Widgets PrintSupport)
+find_package(Qt5 5.0 REQUIRED Core Gui Widgets PrintSupport Svg Xml OpenGl)
+
 
 
 set (CMAKE_CXX_STANDARD 11)
@@ -93,8 +102,16 @@ endif()
 
 
 
+# place all DLLs and EXEs in the subdirectory output of the top level directory of the build tree
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output)
+
+
+
 add_subdirectory(lib)
 if(BUILD_EXAMPLES)
-    #add_subdirectory(examples)
+    add_subdirectory(examples)
 endif()
+
+
 

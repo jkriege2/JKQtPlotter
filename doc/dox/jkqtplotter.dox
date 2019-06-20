@@ -260,13 +260,13 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html beeswarmplot_small.png
       <td> JKQTPSingleColumnSymbolsGraph
     <tr>
-      <td>\image html jkqtplotter_simpletest_symbols_and_styles_small.png
+      <td>\image html symbols_and_styles_small.png
       <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
     <tr>
-      <td>\image html jkqtplotter_simpletest_paramscatterplot_small.png
+      <td>\image html paramscatterplot_small.png
       <td> JKQTPXYParametrizedScatterGraph, JKQTPXYParametrizedErrorScatterGraph
     <tr>
-      <td>\image html jkqtplotter_simpletest_stepplots_small.png
+      <td>\image html stepplots_small.png
       <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
 </table>
 
@@ -281,10 +281,10 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html beeswarmplot_small.png
       <td> JKQTPSingleColumnSymbolsGraph
     <tr>
-      <td>\image html jkqtplotter_simpletest_symbols_and_styles_small.png
+      <td>\image html symbols_and_styles_small.png
       <td> JKQTPXYLineGraph, JKQTPXYLineErrorGraph
     <tr>
-      <td>\image html jkqtplotter_simpletest_stepplots_small.png
+      <td>\image html stepplots_small.png
       <td> JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
 </table>
 
@@ -297,7 +297,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_paramscatterplot_small.png
+      <td>\image html paramscatterplot_small.png
       <td> JKQTPXYParametrizedScatterGraph, JKQTPXYParametrizedErrorScatterGraph
 </table>
 
@@ -309,7 +309,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_filledgraphs_small.png
+      <td>\image html filledgraphs_small.png
       <td> JKQTPFilledCurveXGraph, JKQTPFilledCurveYGraph
     <tr>
       <td>\image html plot_filledcurvexerrorplots_small.png
@@ -327,7 +327,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_functionplot_small.png
+      <td>\image html functionplot_small.png
       <td> JKQTPXParsedFunctionLineGraph,  JKQTPYParsedFunctionLineGraph
 </table>
 
@@ -339,7 +339,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_functionplot_small.png
+      <td>\image html functionplot_small.png
       <td> JKQTPXFunctionLineGraph,  JKQTPYFunctionLineGraph
 </table>
 
@@ -351,7 +351,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_barchart_small.png
+      <td>\image html barchart_small.png
       <td> JKQTPBarVerticalGraph,  JKQTPBarHorizontalGraph
     <tr>
       <td>\image html barchart_error_small.png
@@ -360,7 +360,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html JKQTPbarVerticalGraphStacked_small.png
       <td> JKQTPBarVerticalStackableGraph, JKQTPBarHorizontalStackableGraph
     <tr>
-      <td>\image html jkqtplotter_simpletest_impulsesplot_small.png
+      <td>\image html impulsesplot_small.png
       <td> JKQTPImpulsesHorizontalGraph, JKQTPImpulsesVerticalGraph
     <tr>
       <td>\image html impulses_errors_small.png
@@ -375,7 +375,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_boxplot_small.png
+      <td>\image html boxplot_small.png
       <td> JKQTPBoxplotVerticalGraph, JKQTPBoxplotHorizontalGraph
     <tr>
       <td>\image html JKQTPViolinplotVerticalElement_small.png
@@ -453,7 +453,7 @@ Examples:
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_rgbimageplot_qt_small.png
+      <td>\image html rgbimageplot_qt_small.png
       <td> JKQTPImage
     <tr>
       <td>\image html JKQTPMathImageBaseModifyNone_small.png
@@ -481,13 +481,13 @@ Examples:
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html jkqtplotter_simpletest_rgbimageplot_qt_small.png
+      <td>\image html rgbimageplot_qt_small.png
       <td> JKQTPImage
     <tr>
       <td>\image html JKQTPMathImageBaseModifyNone_small.png
       <td> JKQTPMathImage, JKQTPColumnMathImage
     <tr>
-      <td>\image html jkqtplotter_simpletest_rgbimageplot_opencv_small.png
+      <td>\image html rgbimageplot_opencv_small.png
       <td> JKQTPRGBMathImage, JKQTPColumnRGBMathImage
 </table>
 

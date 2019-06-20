@@ -127,7 +127,7 @@ class JKQTP_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
 /*! \brief base class to hold an image from an 2-dimensional array of values
     \ingroup jkqtplotter_imagelots_elements
 
-    \image html jkqtplotter_simpletest_imageplot.png
+    \image html imageplot.png
 
  */
 class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
@@ -333,7 +333,7 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 /*! \brief class to plot an image from a QImage object
     \ingroup jkqtplotter_imagelots_elements
 
-    \image html jkqtplotter_simpletest_rgbimageplot_qt.png
+    \image html rgbimageplot_qt.png
 
     \see \ref JKQTPlotterImagePlotQImageRGB
  */
@@ -466,9 +466,9 @@ class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
 /*! \brief class to plot an image from an 2-dimensional array of values
     \ingroup jkqtplotter_imagelots_elements
 
-    \image html jkqtplotter_simpletest_imageplot.png
-    \image html jkqtplotter_simpletest_imageplot_modifier.png
-    \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
+    \image html imageplot.png
+    \image html imageplot_modifier.png
+    \image html imageplot__smallscaletransparent.png
 
     \see \ref JKQTPlotterImagePlotNoDatastore
  */
@@ -994,9 +994,9 @@ int JKQTPMathImage::getModifierSampleSize() const {
 /*! \brief class to plot an image from an 2-dimensional array of values stored in a column of the datastore
     \ingroup jkqtplotter_imagelots_elements
 
-    \image html jkqtplotter_simpletest_imageplot.png
-    \image html jkqtplotter_simpletest_imageplot_modifier.png
-    \image html jkqtplotter_simpletest_imageplot__smallscaletransparent.png
+    \image html imageplot.png
+    \image html imageplot_modifier.png
+    \image html imageplot__smallscaletransparent.png
 
     \see jkqtpstatAddKDE2DImage(), jkqtpstatAddHistogram2DImage(), \ref JKQTPlotterImagePlot, \ref JKQTPlotterImagePlotModifier, \ref JKQTPlotterImagePlotOpenCV
  */

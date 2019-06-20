@@ -36,7 +36,7 @@
     \ingroup jkqtplotter_basegraphserrors
     \ingroup jkqtplotter_basegraphs_stylemixins
 
-    \image html jkqtplotter_simpletest_errorbarstyles.png "line-graphs with different types of error indicators"
+    \image html errorbarstyles.png "line-graphs with different types of error indicators"
 
     \see \ref jkqtplotter_graphsgroup_classstructure_mixins
 

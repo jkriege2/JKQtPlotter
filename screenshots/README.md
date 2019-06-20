@@ -12,7 +12,7 @@ You can plot C-arrays as images in different color-coding styles. Diferent Overl
 
 ![Scatterplots](./screen_images_latex.png)
 
-![Scatterplots](./jkqtplotter_simpletest_imageplot.png)
+![Scatterplots](./imageplot.png)
 
 
 ## Plotting a user-defined (parsed) function
@@ -34,7 +34,7 @@ Scatter Plots can have symbols where the shape/color/size is parametrized by a d
 
 ![JKQTPBarVerticalGraphStacked](../doc/images/JKQTPBarVerticalGraphStacked.png)
 ![JKQTPBarHorizontalGraphStacked](../doc/images/JKQTPBarHorizontalGraphStacked.png)
-![jkqtplotter_simpletest_barchart](./jkqtplotter_simpletest_barchart.png)
+![barchart](./barchart.png)
 
 ## Screenshots of included LaTeX renderer
 

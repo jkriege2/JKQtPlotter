@@ -1015,7 +1015,7 @@ inline void jkqtpstat5NumberStatisticsAndOutliers(InputIt first, InputIt last, O
     \ingroup jkqtptools_math_statistics_basic
     \see https://en.wikipedia.org/wiki/Five-number_summary, jkqtpstat5NumberStatistics()
 */
-struct JKQTPStat5NumberStatistics {
+struct JKQTP_LIB_EXPORT JKQTPStat5NumberStatistics {
         JKQTPStat5NumberStatistics();
 
         /** \brief minimum value */

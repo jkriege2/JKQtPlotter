@@ -66,12 +66,12 @@ class JKQTP_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, public
 
         /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
          *
-         * \image html jkqtplotter_simpletest_impulsesplot_baseline.png
+         * \image html impulsesplot_baseline.png
          */
         double baseline;
         /** \brief indicates whether to draw symbols at the top of the impulse
          *
-         * \image html jkqtplotter_simpletest_impulsesplot_symbols.png
+         * \image html impulsesplot_symbols.png
          */
         bool drawSymbols;
 };

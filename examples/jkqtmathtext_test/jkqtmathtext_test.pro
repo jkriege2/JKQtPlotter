@@ -35,14 +35,14 @@ DEFINES += AUTOLOAD_XITS_FONTS AUTOLOAD_Asana_FONTS
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 
-DEPENDPATH += ../../lib  ../../staticlib/jkqtmathtextlib
+DEPENDPATH += ../../lib  ../../qmake/staticlib/jkqtmathtextlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
-    DEPENDPATH += ../../staticlib/jkqtmathtextlib/debug
-    LIBS += -L../../staticlib/jkqtmathtextlib/debug -ljkqtmathtextlib_debug
+    DEPENDPATH += ../../qmake/staticlib/jkqtmathtextlib/debug
+    LIBS += -L../../qmake/staticlib/jkqtmathtextlib/debug -ljkqtmathtextlib_debug
 } else {
-    DEPENDPATH += ../../staticlib/jkqtmathtextlib/release
-    LIBS += -L../../staticlib/jkqtmathtextlib/release -ljkqtmathtextlib
+    DEPENDPATH += ../../qmake/staticlib/jkqtmathtextlib/release
+    LIBS += -L../../qmake/staticlib/jkqtmathtextlib/release -ljkqtmathtextlib
 }
 message("LIBS = $$LIBS")
 

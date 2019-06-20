@@ -38,7 +38,7 @@
     \ingroup jkqtplotter_imagelots_elements
 
     \image html rgbimageplots.png
-    \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
+    \image html rgbimageplot_opencv.png
 */
 class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
@@ -422,9 +422,9 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
     \image html rgbimageplots.png
 
-    \image html jkqtplotter_simpletest_rgbimageplot_opencv.png
+    \image html rgbimageplot_opencv.png
 
-    \image html jkqtplotter_simpletest_rgbimageplot.png
+    \image html rgbimageplot.png
 
     \see Examples: \ref JKQTPlotterRGBImagePlot and  \ref JKQTPlotterImagePlotRGBOpenCV
  */

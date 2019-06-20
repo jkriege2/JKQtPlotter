@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.0)
 
 set(libBasename JKQTPlotter)
 
-message( STATUS )
-message( STATUS "-----------------------------------------------------------------------------" )
 if(BUILD_SHARED_LIBS)
     set(libsh_name ${libBasename}SharedLib)
     set(${libsh_name}_LIBRARY ${libsh_name} PARENT_SCOPE)
@@ -16,10 +14,8 @@ if(BUILD_STATIC_LIBS)
     message( STATUS "-- Building ${lib_name}" )
 endif(BUILD_STATIC_LIBS)
 
-find_package(Qt5 5.0 REQUIRED Core Gui Widgets PrintSupport Svg Xml)
-
 # Set up source files
-set(SRCS
+set(SOURCES
     jkqtptools.cpp
     jkqtpbaseelements.cpp
     jkqtpbaseplotter.cpp
@@ -36,7 +32,7 @@ set(SRCS
     jkqtpcoordinateaxesstyle.cpp
     jkqtpimagetools.cpp
     )
-set(SRCS_GRAPHS
+set(SOURCES_GRAPHS
     graphs/jkqtpscatter.cpp
     graphs/jkqtprange.cpp
     graphs/jkqtpspecialline.cpp
@@ -58,10 +54,10 @@ set(SRCS_GRAPHS
     graphs/jkqtpviolinplotstylingmixins.cpp
     graphs/jkqtpstatisticsadaptors.cpp 
     )
-set(SRCS_OVERLAYS
+set(SOURCES_OVERLAYS
     overlays/jkqtpbasicoverlays.cpp
 )
-set(SRCS_GUI
+set(SOURCES_GUI
     gui/jkqtpcomboboxes.cpp
     gui/jkqtpenhancedspinboxes.cpp
     gui/jkqtpenhancedtableview.cpp
@@ -127,15 +123,15 @@ set(RESOURCES
 
 
 if(BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED  ${SRCS} ${SRCS_GRAPHS} ${SRCS_GUI} ${SRCS_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
+    add_library(${libsh_name} SHARED  ${SOURCES} ${SOURCES_GRAPHS} ${SOURCES_GUI} ${SOURCES_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     target_link_libraries(${libsh_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
-    target_compile_definitions(${libsh_name} PRIVATE JKQTP_LIB_IN_DLL)
+    target_compile_definitions(${libsh_name} PUBLIC JKQTP_LIB_IN_DLL)
     target_compile_definitions(${libsh_name} PRIVATE JKQTP_LIB_EXPORT_LIBRARY)
 endif()
 
 if(BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC   ${SRCS} ${SRCS_GRAPHS} ${SRCS_GUI} ${SRCS_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
+    add_library(${lib_name} STATIC   ${SOURCES} ${SOURCES_GRAPHS} ${SOURCES_GUI} ${SOURCES_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     target_link_libraries(${lib_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonLib JKQTMathTextLib)
 endif()
@@ -175,7 +171,7 @@ if(LIB_INSTALL)
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter/gui
             COMPONENT Headers)
 
-    install(FILES ${SRCS_OVERLAYS}
+    install(FILES ${SOURCES_OVERLAYS}
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter/overlays
             COMPONENT Headers)
 

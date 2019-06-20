@@ -64,7 +64,7 @@
  *
  * \image html JKQTPContour.png
  *
- * \image html jkqtplotter_simpletest_contourplot.png
+ * \image html contourplot.png
  *
  * \note This class uses a caching strategy to determine whether contour lines need to be recalculated (which is time-consuming):
  *       Whenever contours have been calculated, these contours are stored in the member contourLinesCache and can then be used for
@@ -78,9 +78,9 @@ class JKQTP_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGrap
     public:
         /** \brief options of how the colors for the contours are chosen (note that all images in the documentation show the same graph, just with different coloring modes!)*/
         enum ContourColoringMode {
-            SingleColorContours, /*!< \brief each contour line has the same color \image html jkqtplotter_simpletest_contourplot_SingleColorContours.png */
-            ColorContoursFromPaletteByValue, /*!< \brief the color for each contour line is determined by the current color palette, image range and the value associated with each contour line \image html jkqtplotter_simpletest_contourplot_ColorContoursFromPaletteByValue.png */
-            ColorContoursFromPalette, /*!< \brief the color for each contour line is chosen from the current color palette, distributing the contour lines evenly over the palette, wirhout any connection to the value associated with each contour line \image html jkqtplotter_simpletest_contourplot_ColorContoursFromPalette.png */
+            SingleColorContours, /*!< \brief each contour line has the same color \image html contourplot_SingleColorContours.png */
+            ColorContoursFromPaletteByValue, /*!< \brief the color for each contour line is determined by the current color palette, image range and the value associated with each contour line \image html contourplot_ColorContoursFromPaletteByValue.png */
+            ColorContoursFromPalette, /*!< \brief the color for each contour line is chosen from the current color palette, distributing the contour lines evenly over the palette, wirhout any connection to the value associated with each contour line \image html contourplot_ColorContoursFromPalette.png */
         };
 
         /** \brief class constructor */
@@ -133,14 +133,14 @@ class JKQTP_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGrap
         void addContourLevel(double level);
         /** \brief add another level for which to draw a contour and define an override color for this line
          *
-         *  \image html jkqtplotter_simpletest_contourplot_overridecolors.png
+         *  \image html contourplot_overridecolors.png
          *
          *  \see setOverrideColor(), addContourLevel(), hasOverrideColor(), removeOverrideColor(), getOverrideColor()
          */
         void addContourLevel(double level, QColor overrideColor);
         /** \brief define an override color for the contour line at the given level
          *
-         *  \image html jkqtplotter_simpletest_contourplot_overridecolors.png
+         *  \image html contourplot_overridecolors.png
          *
          *  \see setOverrideColor(), addContourLevel(), hasOverrideColor(), removeOverrideColor(), getOverrideColor()
          */
