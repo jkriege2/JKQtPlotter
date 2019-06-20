@@ -60,7 +60,15 @@ The [Screenshots-page](./screenshots/) contains several screenshots, partly take
 
 
 ## Building
-Building instructions can be found here:
+Simply use CMake, e.g. from QTCreator, or by calling something like:
+```
+    $ mkdir build; cd build
+    $ cmake ../
+    $ make
+    $ make install
+```
+
+Building instructions for QMake can be found here:
 - include necessary files into QMake project: [`./lib/*.pri`](./lib/README.md)
 - [build a static library](./staticlib): [`./qmake/staticlib/*.pro`](./qmake/staticlib/README.md)
 - [build a shared library (DLL, SO, ...)](./sharedlib): [`./qmake/sharedlib/*.pro`](./qmake/sharedlib/README.md)
