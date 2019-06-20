@@ -7,8 +7,8 @@
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsimagergb.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpimagergb.h"
 
 
 

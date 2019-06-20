@@ -570,7 +570,7 @@ You can e.g. use these general methods to alter the styles for all JKQTPlotter i
     JKQTPGetSystemDefaultStyle().userActionColor=QColor("red");
 \endcode
 
-Several pre-made styles are available in the JKQTPlotter repository (<a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/">https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/</a>). 
+Several pre-made styles are available in the JKQTPlotter repository (<a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/">https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/</a>). 
 These are also linked into the JKQTPlotter library as Qt ressource into the subdirectory \c :/JKQTPlotter/styles/ . You can use them as follows:
 
 \code{.cpp}
@@ -588,22 +588,22 @@ Here is a table with all available ready-made styles:
       <td> <b> The Default Style </b>
       <td> \image html style_default.png
     <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/simple_gridandticks.ini"> \c :/JKQTPlotter/styles/simple_gridandticks.ini</a>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_gridandticks.ini"> \c :/JKQTPlotter/styles/simple_gridandticks.ini</a>
       <td> \image html style_simple_axesoffset_plotbox.png
     <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/simple_axesoffset.ini"> \c :/JKQTPlotter/styles/simple_axesoffset.ini</a>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset.ini"> \c :/JKQTPlotter/styles/simple_axesoffset.ini</a>
       <td> \image html style_simple_axesoffset.png
     <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/simple_axesoffset_plotbox.ini"> \c :/JKQTPlotter/styles/simple_axesoffset_plotbox.ini</a>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset_plotbox.ini"> \c :/JKQTPlotter/styles/simple_axesoffset_plotbox.ini</a>
       <td> \image html style_simple_axesoffset_plotbox.png
     <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/dark.ini"> \c :/JKQTPlotter/styles/dark.ini</a>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/dark.ini"> \c :/JKQTPlotter/styles/dark.ini</a>
       <td> \image html style_dark.png
     <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/blueprint.ini"> \c :/JKQTPlotter/styles/blueprint.ini</a>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blueprint.ini"> \c :/JKQTPlotter/styles/blueprint.ini</a>
       <td> \image html style_blueprint.png
     <tr>
-      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/blackandwhite.ini"> \c :/JKQTPlotter/styles/blackandwhite.ini</a>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini"> \c :/JKQTPlotter/styles/blackandwhite.ini</a>
       <td> \image html style_blackandwhite.png
 </table>
 

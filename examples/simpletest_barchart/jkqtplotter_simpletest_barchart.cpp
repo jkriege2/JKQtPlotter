@@ -6,8 +6,8 @@
  
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsbarchart.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
 
 #define Ndata 5
 int main(int argc, char* argv[])

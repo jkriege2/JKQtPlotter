@@ -6,9 +6,9 @@
  
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsbarchart.h"
-#include "jkqtplotter/jkqtpgraphsstatisticsadaptors.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
+#include "jkqtplotter/graphs/jkqtpstatisticsadaptors.h"
 #include "jkqtcommon/jkqtpstatisticstools.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include <random>

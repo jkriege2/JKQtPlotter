@@ -8,7 +8,7 @@
 #include <QVector>
 #include <QMap>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
+#include "jkqtplotter/graphs/jkqtpevaluatedfunction.h"
 
 double sinc(double x) {
     return 10.0*sin(x)/x;

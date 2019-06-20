@@ -6,8 +6,8 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsspecialline.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpspecialline.h"
 #include "jkqtplotter/jkqtptools.h"
 
 int main(int argc, char* argv[])

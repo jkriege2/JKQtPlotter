@@ -9,7 +9,7 @@ The source code of the main application is (see [`jkqtplotter_simpletest_imagepl
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsimage.h"
+#include "jkqtplotter/graphs/jkqtpimage.h"
 #include "jkqtplotter/jkqtpopencvinterface.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>

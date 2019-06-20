@@ -6,8 +6,8 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpgeometric.h"
 #include "jkqtplotter/jkqtptools.h"
 
 #define sqr(x) ((x)*(x))

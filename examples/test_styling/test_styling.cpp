@@ -1,10 +1,10 @@
 #include "test_styling.h"
 #include "ui_test_styling.h"
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsbarchart.h"
-#include "jkqtplotter/jkqtpgraphsimage.h"
-#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
+#include "jkqtplotter/graphs/jkqtpimage.h"
+#include "jkqtplotter/graphs/jkqtpgeometric.h"
 #include <QDir>
 #include <QTextStream>
 #include <QFileDialog>

@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/graphs/jkqtpgeometric.h"
 
 
 int main(int argc, char* argv[])

@@ -885,7 +885,7 @@ RECURSIVE              = YES
 EXCLUDE                = moc_*.* \
                          qrc_*.* \
                          build-* \
-                         ../lib/jkqtplotterressources/math_fonts/xits \
+                         ../lib/jkqtplotter/resources/math_fonts/xits \
                          Makefile \
                          Makefile*.* \
                          ../examples/jkqtmathtext_test/asana \

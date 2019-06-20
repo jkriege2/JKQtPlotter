@@ -7,7 +7,7 @@
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphscontour.h"
+#include "jkqtplotter/graphs/jkqtpcontour.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

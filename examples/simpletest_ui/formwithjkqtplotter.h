@@ -2,7 +2,7 @@
 #define FORMWITHJKQTPLOTTER_H
 
 #include <QWidget>
-#include "jkqtplotter/jkqtpgraphsparsedfunction.h"
+#include "jkqtplotter/graphs/jkqtpparsedfunction.h"
 
 namespace Ui {
     class FormWithJKQTPlotter;

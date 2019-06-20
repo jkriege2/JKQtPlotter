@@ -5,7 +5,7 @@
  */
 
 #include "speedtestplot.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
 
 
 SpeedTestPlot::SpeedTestPlot():

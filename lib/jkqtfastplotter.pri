@@ -11,7 +11,7 @@ isEmpty(JKQTP_FASTPLOTTER_PRI_INCLUDED) {
     SOURCES += $$PWD/jkqtfastplotter/jkqtfastplotter.cpp
 
 
-    RESOURCES += $$PWD/jkqtplotterressources/jkqtpbaseplotter.qrc
+    RESOURCES += $$PWD/jkqtplotter/resources/jkqtpbaseplotter.qrc
 
     QT += opengl
 

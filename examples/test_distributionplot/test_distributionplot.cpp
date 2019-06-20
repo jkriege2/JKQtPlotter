@@ -6,11 +6,11 @@
  
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsboxplot.h"
-#include "jkqtplotter/jkqtpgraphsbarchart.h"
-#include "jkqtplotter/jkqtpgraphssinglecolumnsymbols.h"
-#include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpboxplot.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
+#include "jkqtplotter/graphs/jkqtpsinglecolumnsymbols.h"
+#include "jkqtplotter/graphs/jkqtpevaluatedfunction.h"
 #include <map>
 #include <random>
 #include <cmath>

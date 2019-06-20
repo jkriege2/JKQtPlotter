@@ -23,7 +23,7 @@ if(NOT DEFINED LIB_INSTALL)
     option(LIB_INSTALL "Install library" ON)
 endif()
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-    option(CMAKE_INSTALL_PREFIX "Install directory" .)
+    option(CMAKE_INSTALL_PREFIX "Install directory" ${CMAKE_CURRENT_SOURCE_DIR}/instal)
 endif()
 
 
@@ -74,10 +74,17 @@ if(MSVC)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
     
     add_compile_options(/EHsc)
-    add_definitions(/D_USE_MATH_DEFINES /D_CRT_NO_VA_START_VALIDATION /DNOMINMAX)
+    # To enable M_PI, M_E,...
+    add_definitions(/D_USE_MATH_DEFINES)
+    # To Prevent Errors with min() and max()
+    add_definitions(/DNOMINMAX)
+    # To fix error: C2338: va_start argument must not
+    # have reference type and must not be parenthesized
+    add_definitions(/D_CRT_NO_VA_START_VALIDATION)
 else()
     add_compile_options(-fexceptions)
 endif()
+
 if(BUILD_INCLUDE_XITS_FONTS)
     add_definitions(-DAUTOLOAD_XITS_FONTS -DUSE_XITS_FONTS )
 else()

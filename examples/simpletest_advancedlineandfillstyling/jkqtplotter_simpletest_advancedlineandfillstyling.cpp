@@ -6,10 +6,10 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsspecialline.h"
-#include "jkqtplotter/jkqtpgraphsbarchart.h"
-#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpspecialline.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
+#include "jkqtplotter/graphs/jkqtpgeometric.h"
 
 int main(int argc, char* argv[])
 {

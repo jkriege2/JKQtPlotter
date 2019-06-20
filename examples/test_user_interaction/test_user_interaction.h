@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
 #include <QFormLayout>
 #include <QCheckBox>
 #include <QComboBox>

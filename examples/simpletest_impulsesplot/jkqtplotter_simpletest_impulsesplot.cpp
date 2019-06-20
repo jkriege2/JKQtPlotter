@@ -6,7 +6,7 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsimpulses.h"
+#include "jkqtplotter/graphs/jkqtpimpulses.h"
 
 // number of datapoints:
 #define Ndata 40

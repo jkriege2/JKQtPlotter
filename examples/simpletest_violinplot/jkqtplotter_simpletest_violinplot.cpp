@@ -6,9 +6,9 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsviolinplot.h"
-#include "jkqtplotter/jkqtpgraphssinglecolumnsymbols.h"
-#include "jkqtplotter/jkqtpgraphsstatisticsadaptors.h"
+#include "jkqtplotter/graphs/jkqtpviolinplot.h"
+#include "jkqtplotter/graphs/jkqtpsinglecolumnsymbols.h"
+#include "jkqtplotter/graphs/jkqtpstatisticsadaptors.h"
 #include "jkqtcommon/jkqtpstatisticstools.h"
 #include <random>
 #include <cmath>

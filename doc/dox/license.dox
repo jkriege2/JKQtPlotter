@@ -547,7 +547,7 @@ high-quality math rendering. It is possible to use the class with other fonts, b
 The source for this library can be found here: https://github.com/alif-type/xits
 
 \note The XITS fonts are distributed in 
-      <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/math_fonts/xits">lib/jkqtplotterressources/math_fonts/xits</a> 
+      <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/math_fonts/xits">lib/jkqtplotter/resources/math_fonts/xits</a> 
       and are automatically added to the binary libraries as Qt Resources. You can prevent this by adding the line 
       \code
         DEFINES += NO_XITS_FONTS

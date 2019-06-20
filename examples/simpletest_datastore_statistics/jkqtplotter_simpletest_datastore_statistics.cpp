@@ -6,10 +6,10 @@
  
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphspeakstream.h"
-#include "jkqtplotter/jkqtpgraphsboxplot.h"
-#include "jkqtplotter/jkqtpgraphsstatisticsadaptors.h"
-#include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
+#include "jkqtplotter/graphs/jkqtppeakstream.h"
+#include "jkqtplotter/graphs/jkqtpboxplot.h"
+#include "jkqtplotter/graphs/jkqtpstatisticsadaptors.h"
+#include "jkqtplotter/graphs/jkqtpevaluatedfunction.h"
 #include "jkqtcommon/jkqtpstatisticstools.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include <random>

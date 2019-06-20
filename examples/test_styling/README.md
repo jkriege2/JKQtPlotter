@@ -81,12 +81,12 @@ The following gallery shows a set of example styles:
 | Style-file    | Screenshot    |
 |:-------------:| ------------- | 
 | <b> The Default Style </b> | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_default.png) |
-| [`lib/jkqtplotterressources/style/simple_gridandticks.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/simple_gridandticks.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_simple_axesoffset_plotbox.png) |
-| [`lib/jkqtplotterressources/style/simple_axesoffset.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/simple_axesoffset.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_simple_axesoffset.png) |
-| [`lib/jkqtplotterressources/style/simple_axesoffset_plotbox.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/simple_axesoffset_plotbox.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_simple_axesoffset_plotbox.png) |
-| [`lib/jkqtplotterressources/style/dark.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/dark.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_dark.png) |
-| [`lib/jkqtplotterressources/style/blueprint.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/blueprint.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_blueprint.png) |
-| [`lib/jkqtplotterressources/style/blackandwhite.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotterressources/styles/blackandwhite.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_blackandwhite.png) |
+| [`lib/jkqtplotter/resources/style/simple_gridandticks.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_gridandticks.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_simple_axesoffset_plotbox.png) |
+| [`lib/jkqtplotter/resources/style/simple_axesoffset.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_simple_axesoffset.png) |
+| [`lib/jkqtplotter/resources/style/simple_axesoffset_plotbox.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_axesoffset_plotbox.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_simple_axesoffset_plotbox.png) |
+| [`lib/jkqtplotter/resources/style/dark.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/dark.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_dark.png) |
+| [`lib/jkqtplotter/resources/style/blueprint.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blueprint.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_blueprint.png) |
+| [`lib/jkqtplotter/resources/style/blackandwhite.ini`](https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini) | ![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/style_blackandwhite.png) |
 
 
 <b>Note:</b> The styles listed above are also linked into the executable as Qt ressource ... you can use them e.g. as follows:

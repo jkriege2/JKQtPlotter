@@ -10,10 +10,10 @@
 #include <QFile>
 #include <QTextStream>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsgeometric.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpgeometric.h"
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtplotter/jkqtpgraphsfilledcurve.h"
+#include "jkqtplotter/graphs/jkqtpfilledcurve.h"
 
 void drawWithDateAxis(JKQTPlotter& plot) {
 

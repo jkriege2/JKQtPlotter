@@ -11,7 +11,7 @@
 #include <QFormLayout>
 #include <QCheckBox>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphspeakstream.h"
+#include "jkqtplotter/graphs/jkqtppeakstream.h"
 
 #define N1 200
 #define N2 50

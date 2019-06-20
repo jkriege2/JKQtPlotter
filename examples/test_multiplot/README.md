@@ -94,7 +94,7 @@ The result looks like this:
 
 ![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot.png)
 
-You push the print button (![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/lib/jkqtplotterressources/images/jkqtp_24_print.png)) to open a print preview dialog, which will give an impression of how the three plots will be arranged in a printout:
+You push the print button (![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQTPlotter/master/lib/jkqtplotter/resources/images/jkqtp_24_print.png)) to open a print preview dialog, which will give an impression of how the three plots will be arranged in a printout:
 
 ![test_multiplot](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_printpreview.png)
 

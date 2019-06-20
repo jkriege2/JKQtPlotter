@@ -24,85 +24,100 @@ set(SRCS
     jkqtpbaseelements.cpp
     jkqtpbaseplotter.cpp
     jkqtpdatastorage.cpp
-    jkqtpelementsoverlay.cpp 
-    jkqtpgraphsscatter.cpp
-    jkqtpgraphsrange.cpp
-    jkqtpgraphsspecialline.cpp
-    jkqtpgraphsbarchart.cpp 
+    jkqtpoverlaysbase.cpp
     jkqtpgraphsbase.cpp
     jkqtpgraphsbaseerrors.cpp
     jkqtpgraphsbasestylingmixins.cpp
-    jkqtpgraphsboxplot.cpp 
-    jkqtpgraphsboxplotstylingmixins.cpp 
-    jkqtpgraphsevaluatedfunction.cpp 
-    jkqtpgraphsfilledcurve.cpp 
-    jkqtpgraphsgeometric.cpp 
-    jkqtpgraphsimage.cpp 
-    jkqtpgraphsimpulses.cpp 
-    jkqtpgraphsparsedfunction.cpp 
-    jkqtpgraphspeakstream.cpp 
-    jkqtpgraphssinglecolumnsymbols.cpp 
-    jkqtpgraphsimageoverlays.cpp 
-    jkqtpgraphscontour.cpp 
-    jkqtpgraphsimagergb.cpp
-    jkqtpgraphsviolinplot.cpp
-    jkqtpgraphsviolinplotstylingmixins.cpp
-    jkqtpgraphsstatisticsadaptors.cpp 
     jkqtplotter.cpp
     jkqtplotterstyle.cpp
     jkqtpkeystyle.cpp
     jkqtpbaseplotterstyle.cpp
     jkqtpcoordinateaxes.cpp
     jkqtpcoordinateaxesstyle.cpp
+    jkqtpimagetools.cpp
+    )
+set(SRCS_GRAPHS
+    graphs/jkqtpscatter.cpp
+    graphs/jkqtprange.cpp
+    graphs/jkqtpspecialline.cpp
+    graphs/jkqtpbarchart.cpp 
+    graphs/jkqtpboxplot.cpp 
+    graphs/jkqtpboxplotstylingmixins.cpp 
+    graphs/jkqtpevaluatedfunction.cpp 
+    graphs/jkqtpfilledcurve.cpp 
+    graphs/jkqtpgeometric.cpp 
+    graphs/jkqtpimage.cpp 
+    graphs/jkqtpimpulses.cpp 
+    graphs/jkqtpparsedfunction.cpp 
+    graphs/jkqtppeakstream.cpp 
+    graphs/jkqtpsinglecolumnsymbols.cpp 
+    graphs/jkqtpimageoverlays.cpp 
+    graphs/jkqtpcontour.cpp 
+    graphs/jkqtpimagergb.cpp
+    graphs/jkqtpviolinplot.cpp
+    graphs/jkqtpviolinplotstylingmixins.cpp
+    graphs/jkqtpstatisticsadaptors.cpp 
+    )
+set(SRCS_OVERLAYS
+    overlays/jkqtpbasicoverlays.cpp
+)
+set(SRCS_GUI
     gui/jkqtpcomboboxes.cpp
     gui/jkqtpenhancedspinboxes.cpp
     gui/jkqtpenhancedtableview.cpp
     gui/jkqtpgraphsmodel.cpp
     gui/jkvanishqtoolbar.cpp
-    jkqtpimagetools.cpp
 )
+
 
 set(HEADERS
     jkqtptools.h
     jkqtpbaseelements.h
     jkqtpbaseplotter.h
     jkqtpdatastorage.h
-    jkqtpelementsoverlay.h
-    jkqtpgraphsscatter.h
-    jkqtpgraphsrange.h
-    jkqtpgraphsspecialline.h
-    jkqtpgraphsbarchart.h
+    jkqtpoverlaysbase.h
     jkqtpgraphsbase.h
     jkqtpgraphsbaseerrors.h
     jkqtpgraphsbasestylingmixins.h
-    jkqtpgraphsboxplot.h
-    jkqtpgraphsboxplotstylingmixins.h
-    jkqtpgraphsevaluatedfunction.h
-    jkqtpgraphsfilledcurve.h
-    jkqtpgraphsgeometric.h
-    jkqtpgraphsimage.h
-    jkqtpgraphsimpulses.h
-    jkqtpgraphsparsedfunction.h
-    jkqtpgraphspeakstream.h
-    jkqtpgraphssinglecolumnsymbols.h
-    jkqtpgraphsimageoverlays.h
-    jkqtpgraphscontour.h
-    jkqtpgraphsimagergb.h
-    jkqtpgraphsviolinplot.h
-    jkqtpgraphsviolinplotstylingmixins.h
-    jkqtpgraphsstatisticsadaptors.h
     jkqtplotter.h
     jkqtplotterstyle.h
     jkqtpkeystyle.h
     jkqtpbaseplotterstyle.h
     jkqtpcoordinateaxes.h
     jkqtpcoordinateaxesstyle.h
+    jkqtpimagetools.h
+)
+set(HEADERS_GRAPHS
+    graphs/jkqtpboxplot.h
+    graphs/jkqtpboxplotstylingmixins.h
+    graphs/jkqtpevaluatedfunction.h
+    graphs/jkqtpfilledcurve.h
+    graphs/jkqtpgeometric.h
+    graphs/jkqtpimage.h
+    graphs/jkqtpimpulses.h
+    graphs/jkqtpparsedfunction.h
+    graphs/jkqtppeakstream.h
+    graphs/jkqtpsinglecolumnsymbols.h
+    graphs/jkqtpimageoverlays.h
+    graphs/jkqtpcontour.h
+    graphs/jkqtpimagergb.h
+    graphs/jkqtpviolinplot.h
+    graphs/jkqtpviolinplotstylingmixins.h
+    graphs/jkqtpstatisticsadaptors.h
+    graphs/jkqtpscatter.h
+    graphs/jkqtprange.h
+    graphs/jkqtpspecialline.h
+    graphs/jkqtpbarchart.h
+)
+set(HEADERS_OVERLAY
+    overlays/jkqtpbasicoverlays.h
+)
+set(HEADERS_GUI
     gui/jkqtpcomboboxes.h
     gui/jkqtpenhancedspinboxes.h
     gui/jkqtpenhancedtableview.h
     gui/jkqtpgraphsmodel.h
     gui/jkvanishqtoolbar.h
-    jkqtpimagetools.h
 )
 
 set(RESOURCES
@@ -112,7 +127,7 @@ set(RESOURCES
 
 
 if(BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED  ${SRCS} ${HEADERS} ${RESOURCES})
+    add_library(${libsh_name} SHARED  ${SRCS} ${SRCS_GRAPHS} ${SRCS_GUI} ${SRCS_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     target_link_libraries(${libsh_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
     target_compile_definitions(${libsh_name} PRIVATE JKQTP_LIB_IN_DLL)
@@ -120,7 +135,7 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 if(BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC  ${SRCS} ${HEADERS} ${RESOURCES})
+    add_library(${lib_name} STATIC   ${SRCS} ${SRCS_GRAPHS} ${SRCS_GUI} ${SRCS_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     target_link_libraries(${lib_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonLib JKQTMathTextLib)
 endif()
@@ -135,7 +150,7 @@ if(LIB_INSTALL)
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         )
     endif(BUILD_SHARED_LIBS)
 
@@ -144,12 +159,24 @@ if(LIB_INSTALL)
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
         )
     endif(BUILD_STATIC_LIBS)
 
     install(FILES ${HEADERS}
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter
+            COMPONENT Headers)
+
+    install(FILES ${HEADERS_GRAPHS}
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter/graphs
+            COMPONENT Headers)
+
+    install(FILES ${HEADERS_GUI}
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter/gui
+            COMPONENT Headers)
+
+    install(FILES ${SRCS_OVERLAYS}
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtplotter/overlays
             COMPONENT Headers)
 
 endif(LIB_INSTALL)

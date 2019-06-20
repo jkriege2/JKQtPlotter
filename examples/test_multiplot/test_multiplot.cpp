@@ -6,9 +6,9 @@
 
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsparsedfunction.h"
-#include "jkqtplotter/jkqtpgraphsbarchart.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpparsedfunction.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
 #include <random>
 #include <cmath>
 #include "test_multiplot_ui.h"

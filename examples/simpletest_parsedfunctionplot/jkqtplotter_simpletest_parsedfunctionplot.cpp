@@ -10,8 +10,8 @@
 #include <QFormLayout>
 #include <QDoubleSpinBox>
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsparsedfunction.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpparsedfunction.h"
 
 
 

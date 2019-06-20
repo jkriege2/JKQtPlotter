@@ -46,15 +46,15 @@
 #ifdef QFWIDLIB_LIBRARY
 #  include "qftools.h"
 #endif
-#include "jkqtplotter/jkqtpgraphsboxplot.h"
-#include "jkqtplotter/jkqtpgraphsbarchart.h"
-#include "jkqtplotter/jkqtpgraphsfilledcurve.h"
-#include "jkqtplotter/jkqtpgraphsspecialline.h"
-#include "jkqtplotter/jkqtpgraphsimpulses.h"
-#include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtplotter/jkqtpgraphsgeometric.h"
-#include "jkqtplotter/jkqtpgraphsimage.h"
-#include "jkqtplotter/jkqtpgraphsimagergb.h"
+#include "jkqtplotter/graphs/jkqtpboxplot.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
+#include "jkqtplotter/graphs/jkqtpfilledcurve.h"
+#include "jkqtplotter/graphs/jkqtpspecialline.h"
+#include "jkqtplotter/graphs/jkqtpimpulses.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpgeometric.h"
+#include "jkqtplotter/graphs/jkqtpimage.h"
+#include "jkqtplotter/graphs/jkqtpimagergb.h"
 
 static QString globalUserSettigsFilename="";
 static QString globalUserSettigsPrefix="";

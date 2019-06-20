@@ -22,7 +22,7 @@
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplotter/jkqtpelementsoverlay.h"
+#include "jkqtplotter/overlays/jkqtpbasicoverlays.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/gui/jkqtpenhancedspinboxes.h"
 
