@@ -12,6 +12,8 @@
 	  - \ref JKQTMathTextSimpleExample 
 	.
 
+\defgroup jkqtmathtext_items JKQTMathText Render-Tree Items
+\ingroup jkqtmathtext
 
 
 */

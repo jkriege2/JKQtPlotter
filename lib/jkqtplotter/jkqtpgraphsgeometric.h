@@ -23,7 +23,7 @@
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsscatter.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 
@@ -44,6 +44,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGra
             \param color color of drawing
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
+            \param parent the parent plotter object
          */
         explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
         /*! \brief class contructor
@@ -51,6 +52,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGra
             \param color color of drawing
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
+            \param parent the parent plotter object
          */
         explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
         /*! \brief class contructor
@@ -94,7 +96,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param style line style of drawing
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
-            \param parent the parent plotter class
+            \param parent the parent plotter object
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style=Qt::SolidLine, Qt::BrushStyle fillStyle=Qt::SolidPattern, JKQTBasePlotter* parent=nullptr);
         /*! \brief class contructor
@@ -104,7 +106,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param style line style of drawing
             \param fillStyle filling style of the graph
             \param lineWidth lineWidth of drawing
-            \param parent the parent plotter class
+            \param parent the parent plotter object
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPlotter* parent);
         /*! \brief class contructor
@@ -113,7 +115,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param fillColor color of the filling in the drawing
             \param style line style of drawing
             \param lineWidth lineWidth of drawing
-            \param parent the parent plotter class
+            \param parent the parent plotter object
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
         /*! \brief class contructor
@@ -121,14 +123,14 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
             \param color color of drawing
             \param fillColor color of the filling in the drawing
             \param lineWidth lineWidth of drawing
-            \param parent the parent plotter class
+            \param parent the parent plotter object
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPlotter* parent);
         /*! \brief class contructor
 
             \param color color of drawing
             \param fillColor color of the filling in the drawing
-            \param parent the parent plotter class
+            \param parent the parent plotter object
          */
         JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPlotter* parent);
 
@@ -181,17 +183,13 @@ class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraph
         /*! set the symbol color and symbol fill color */
         virtual void setColor(QColor c);
 
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
 
         /** \copydoc JKQTPGraph::getXMinMax()        */
@@ -261,23 +259,17 @@ class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTe
          */
         JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text);
 
-        /*! \copydoc text
-            \see see text for details */ 
+        /*! \copydoc text */ 
         void setText(const QString & __value);
-        /*! \copydoc text
-            \see see text for details */ 
+        /*! \copydoc text */ 
         QString getText() const;
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
 
         /** \brief set line and fill color */
@@ -319,7 +311,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x1 x-coordinate of first point of line
             \param y1 y-coordinate of first point of line
             \param x2 x-coordinate of second point of line
@@ -327,12 +319,12 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
             \param color color of line
             \param lineWidth width of line
             \param style line style
-            \param parent the parent plotter class
+            \param parent the parent plotter object
          */
         JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x1 x-coordinate of first point of line
             \param y1 y-coordinate of first point of line
             \param x2 x-coordinate of second point of line
@@ -340,12 +332,12 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
             \param color color of line
             \param lineWidth width of line
             \param style line style
-            \param parent the parent plotter class
+            \param parent the parent plotter object
          */
         JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x1 x-coordinate of first point of line
             \param y1 y-coordinate of first point of line
             \param x2 x-coordinate of second point of line
@@ -355,7 +347,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
         JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x1 x-coordinate of first point of line
             \param y1 y-coordinate of first point of line
             \param x2 x-coordinate of second point of line
@@ -373,29 +365,21 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc x1
-            \see see x1 for details */ 
+        /*! \copydoc x1 */ 
         void setX1(double __value);
-        /*! \copydoc x1
-            \see see x1 for details */ 
+        /*! \copydoc x1 */ 
         double getX1() const;
-        /*! \copydoc y1
-            \see see y1 for details */ 
+        /*! \copydoc y1 */ 
         void setY1(double __value);
-        /*! \copydoc y1
-            \see see y1 for details */ 
+        /*! \copydoc y1 */ 
         double getY1() const;
-        /*! \copydoc x2
-            \see see x2 for details */ 
+        /*! \copydoc x2 */ 
         void setX2(double __value);
-        /*! \copydoc x2
-            \see see x2 for details */ 
+        /*! \copydoc x2 */ 
         double getX2() const;
-        /*! \copydoc y2
-            \see see y2 for details */ 
+        /*! \copydoc y2 */ 
         void setY2(double __value);
-        /*! \copydoc y2
-            \see see y2 for details */ 
+        /*! \copydoc y2 */ 
         double getY2() const;
     protected:
         /** \brief x-coordinate of first point of line */
@@ -425,7 +409,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of start point of line
             \param y y-coordinate of start point of line
             \param dx x-direction of the line
@@ -437,7 +421,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
         JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, double y, double dx, double dy, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of start point of line
             \param y y-coordinate of start point of line
             \param dx x-direction of the line
@@ -457,35 +441,25 @@ class JKQTP_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
-        /*! \copydoc dx
-            \see see dx for details */ 
+        /*! \copydoc dx */ 
         void setDx(double __value);
-        /*! \copydoc dx
-            \see see dx for details */ 
+        /*! \copydoc dx */ 
         double getDx() const;
-        /*! \copydoc dy
-            \see see dy for details */ 
+        /*! \copydoc dy */ 
         void setDy(double __value);
-        /*! \copydoc dy
-            \see see dy for details */ 
+        /*! \copydoc dy */ 
         double getDy() const;
-        /*! \copydoc two_sided
-            \see see two_sided for details */ 
+        /*! \copydoc two_sided */ 
         void setTwoSided(bool __value);
-        /*! \copydoc two_sided
-            \see see two_sided for details */ 
+        /*! \copydoc two_sided */ 
         bool getTwoSided() const;
     protected:
         /** \brief x-coordinate of a point on the line */
@@ -513,7 +487,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
@@ -522,7 +496,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
@@ -531,7 +505,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -539,7 +513,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         JKQTPGeoPolyLines(JKQTBasePlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -555,11 +529,9 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         void setPoints(const QVector<QPointF> & __value);
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         QVector<QPointF> getPoints() const;
 
         /** \brief append a point to the polygon */
@@ -582,7 +554,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of rectangle
             \param y y-coordinate of center of rectangle
             \param width width of rectangle
@@ -596,7 +568,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         JKQTPGeoRectangle(JKQTBasePlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of rectangle
             \param y y-coordinate of center of rectangle
             \param width width of rectangle
@@ -610,7 +582,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of rectangle
             \param y y-coordinate of center of rectangle
             \param width width of rectangle
@@ -625,7 +597,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         JKQTPGeoRectangle(JKQTBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of rectangle
             \param y y-coordinate of center of rectangle
             \param width width of rectangle
@@ -640,7 +612,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param bottomleft bottom left corner of rectangle
             \param topright top right corner of rectangle
             \param color color of line
@@ -652,7 +624,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         JKQTPGeoRectangle(JKQTBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param bottomleft bottom left corner of rectangle
             \param topright top right corner of rectangle
             \param color color of line
@@ -673,35 +645,25 @@ class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */ 
+        /*! \copydoc x */ 
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */ 
+        /*! \copydoc y */ 
         double getY() const;
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         double getWidth() const;
-        /*! \copydoc height
-            \see see height for details */ 
+        /*! \copydoc height */ 
         void setHeight(double __value);
-        /*! \copydoc height
-            \see see height for details */ 
+        /*! \copydoc height */ 
         double getHeight() const;
-        /*! \copydoc angle
-            \see see angle for details */ 
+        /*! \copydoc angle */ 
         void setAngle(double __value);
-        /*! \copydoc angle
-            \see see angle for details */ 
+        /*! \copydoc angle */ 
         double getAngle() const;
         /** \brief set the rectangle using the bottom-left corner, as well as its width and height */
         void setBottomleftrectangle(double x, double y, double width, double height);
@@ -734,7 +696,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
@@ -746,7 +708,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         JKQTPGeoPolygon(JKQTBasePlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param points points on the polygon
             \param color color of line
             \param lineWidth width of line
@@ -758,7 +720,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
 
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -769,7 +731,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         JKQTPGeoPolygon(JKQTBasePlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param color color of line
             \param lineWidth width of line
             \param style line style
@@ -787,11 +749,9 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         void setPoints(const QVector<QPointF> & __value);
-        /*! \copydoc points
-            \see see points for details */ 
+        /*! \copydoc points */ 
         QVector<QPointF> getPoints() const;
 
         /** \brief append a point to the polygon */
@@ -818,7 +778,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
@@ -833,7 +793,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
 
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
@@ -847,7 +807,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of rectangle
             \param y y-coordinate of center of rectangle
             \param width width of rectangle
@@ -862,7 +822,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         JKQTPGeoEllipse(JKQTBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of rectangle
             \param y y-coordinate of center of rectangle
             \param width width of rectangle
@@ -877,7 +837,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param bottomleft bottom left corner of rectangle
             \param topright top right corner of rectangle
             \param color color of line
@@ -889,7 +849,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         JKQTPGeoEllipse(JKQTBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param bottomleft bottom left corner of rectangle
             \param topright top right corner of rectangle
             \param color color of line
@@ -904,11 +864,9 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */ 
+        /*! \copydoc controlPoints */ 
         void setControlPoints(const unsigned int & __value);
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */ 
+        /*! \copydoc controlPoints */ 
         unsigned int getControlPoints() const;
     protected:
         /** \brief number of steps/control points to draw the ellipse */
@@ -926,7 +884,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
@@ -941,7 +899,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
         JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
@@ -964,53 +922,37 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */
+        /*! \copydoc controlPoints */
         void setControlPoints(const unsigned int & __value);
-        /*! \copydoc controlPoints
-            \see see controlPoints for details */
+        /*! \copydoc controlPoints */
         unsigned int getControlPoints() const;
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         void setAngleStart(double __value);
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         double getAngleStart() const;
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         void setAngleStop(double __value);
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         double getAngleStop() const;
-        /*! \copydoc x
-            \see see x for details */
+        /*! \copydoc x */
         void setX(double __value);
-        /*! \copydoc x
-            \see see x for details */
+        /*! \copydoc x */
         double getX() const;
-        /*! \copydoc y
-            \see see y for details */
+        /*! \copydoc y */
         void setY(double __value);
-        /*! \copydoc y
-            \see see y for details */
+        /*! \copydoc y */
         double getY() const;
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         double getWidth() const;
-        /*! \copydoc height
-            \see see height for details */
+        /*! \copydoc height */
         void setHeight(double __value);
-        /*! \copydoc height
-            \see see height for details */
+        /*! \copydoc height */
         double getHeight() const;
-        /*! \copydoc angle
-            \see see angle for details */
+        /*! \copydoc angle */
         void setAngle(double __value);
-        /*! \copydoc angle
-            \see see angle for details */
+        /*! \copydoc angle */
         double getAngle() const;
     protected:
         /** \brief x-coordinate of a center of the rectangle */
@@ -1051,7 +993,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
@@ -1067,7 +1009,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         JKQTPGeoPie(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
@@ -1092,17 +1034,13 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         void setAngleStart(double __value);
-        /*! \copydoc angleStart
-            \see see angleStart for details */ 
+        /*! \copydoc angleStart */ 
         double getAngleStart() const;
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         void setAngleStop(double __value);
-        /*! \copydoc angleStop
-            \see see angleStop for details */ 
+        /*! \copydoc angleStop */ 
         double getAngleStop() const;
     protected:
          /** \brief if we only draw an arc, this is the starting angle */
@@ -1124,7 +1062,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
     public:
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)
@@ -1140,7 +1078,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
         JKQTPGeoChord(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
         /*! \brief class constructor
 
-            \param parent the parent plotter class
+            \param parent the parent plotter object
             \param x x-coordinate of center of ellipse
             \param y y-coordinate of center of ellipse
             \param width width of ellipse (2 * half axis)

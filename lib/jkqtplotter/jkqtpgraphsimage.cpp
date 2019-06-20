@@ -20,9 +20,9 @@
 
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtplotter/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtplotter.h"
 #include <QDebug>
 #include <QImageWriter>
@@ -889,18 +889,13 @@ JKQTPMathImage::JKQTPMathImage(JKQTBasePlotter *parent):
 
 
 JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent):
-    JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent)
+    JKQTPMathImage(x, y, width, height, datatype, data, Nx, Ny, palette, parent->getPlotter())
 {
-    initJKQTPMathImage();
-    this->palette=palette;
 }
 
 JKQTPMathImage::JKQTPMathImage(JKQTPlotter *parent):
-    JKQTPMathImageBase(0, 0, 1, 1, JKQTPMathImageBase::UInt8Array, nullptr, 0, 0, parent)
+    JKQTPMathImage(parent->getPlotter())
 {
-    initJKQTPMathImage();
-    if (parent) this->palette=parent->getPlotter()->getCurrentPlotterStyle().defaultPalette;
-
 }
 
 void JKQTPMathImage::setParent(JKQTBasePlotter* parent) {
@@ -1252,26 +1247,7 @@ void JKQTPMathImage::getModifierMinMax(double &imin, double &imax)
     }
 }
 
-double JKQTPMathImage::getValueAt(double x, double y)
-{
-    ensureImageData();
-    int xx=trunc((x-this->x)/width*double(Nx));
-    int yy=trunc((y-this->y)/height*double(Ny));
-    if (xx>=0 && xx<(int64_t)Nx && yy>=0 && yy<(int64_t)Ny) {
-        switch(datatype) {
-            case JKQTPMathImageBase::DoubleArray: return (static_cast<double*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::FloatArray: return (static_cast<float*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::UInt8Array: return (static_cast<uint8_t*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::UInt16Array: return (static_cast<uint16_t*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::UInt32Array: return (static_cast<uint32_t*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::UInt64Array: return (static_cast<uint64_t*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::Int8Array: return (static_cast<int8_t*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::Int16Array: return (static_cast<int16_t*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::Int32Array: return (static_cast<int32_t*>(data))[yy*Nx+xx]; break;
-            case JKQTPMathImageBase::Int64Array: return (static_cast<int64_t*>(data))[yy*Nx+xx]; break;
-        }    }
-    return 0.0;
-}
+
 
 void JKQTPMathImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 {
@@ -1680,19 +1656,23 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(JKQTBasePlotter *parent):
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTBasePlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, JKQTBasePlotter *parent):
+    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,0,0,JKQTPMathImageGRAY,parent)
 {
     this->modifierColumn=-1;
     this->imageColumn=-1;
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTBasePlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,palette,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPMathImageColorPalette palette, JKQTBasePlotter *parent):
+    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,0,0,palette,parent)
 {
     this->modifierColumn=-1;
     this->imageColumn=imageColumn;
+    if (parent && imageColumn>=0 && parent->getDatastore()) {
+        Nx=parent->getDatastore()->getColumnImageWidth(imageColumn);
+        Ny=parent->getDatastore()->getColumnImageHeight(imageColumn);
+    }
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
@@ -1701,27 +1681,19 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(JKQTPlotter *parent):
 {
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTPlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, JKQTPlotter *parent):
+    JKQTPColumnMathImage(x,y,width,height,parent->getPlotter())
 {
-    this->modifierColumn=-1;
-    this->imageColumn=-1;
-    this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,palette,parent)
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPMathImageColorPalette palette, JKQTPlotter *parent):
+    JKQTPColumnMathImage(x,y,width,height,imageColumn,palette,parent->getPlotter())
 {
-    this->modifierColumn=-1;
-    this->imageColumn=imageColumn;
-    this->datatype=JKQTPMathImageBase::DoubleArray;
 }
-JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, int Nx, int Ny, JKQTPlotter *parent):
-    JKQTPMathImage(x,y,width,height,JKQTPMathImageBase::DoubleArray,nullptr,Nx,Ny,JKQTPMathImageGRAY,parent)
+
+JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPlotter *parent):
+    JKQTPColumnMathImage(x,y,width,height,imageColumn,JKQTPMathImageGRAY,parent->getPlotter())
 {
-    this->modifierColumn=-1;
-    this->imageColumn=imageColumn;
-    this->datatype=JKQTPMathImageBase::DoubleArray;
 }
 
 void JKQTPColumnMathImage::setImageColumn(int __value)
@@ -1741,6 +1713,10 @@ int JKQTPColumnMathImage::getImageColumn() const
 void JKQTPColumnMathImage::setModifierColumn(int __value)
 {
     this->modifierColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
 
 int JKQTPColumnMathImage::getModifierColumn() const

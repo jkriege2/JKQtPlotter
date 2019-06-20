@@ -20,9 +20,9 @@
 
 #include "jkqtplotter/jkqtpgraphsimageoverlays.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtplotter/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtplotter.h"
 #include <QDebug>
 #include <QImageWriter>
@@ -345,6 +345,10 @@ JKQTPColumnOverlayImageEnhanced::JKQTPColumnOverlayImageEnhanced(JKQTPlotter *pa
 void JKQTPColumnOverlayImageEnhanced::setImageColumn(int __value)
 {
     this->imageColumn = __value;
+    if (parent && __value>=0 && parent->getDatastore()) {
+        setNx(parent->getDatastore()->getColumnImageWidth(__value));
+        setNy(parent->getDatastore()->getColumnImageHeight(__value));
+    }
 }
 
 int JKQTPColumnOverlayImageEnhanced::getImageColumn() const

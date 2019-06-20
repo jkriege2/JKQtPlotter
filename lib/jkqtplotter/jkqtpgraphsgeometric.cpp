@@ -515,7 +515,7 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
         if (l.length()>0) {
             painter.drawLine(l);
             addHitTestData(x, y, formatHitTestDefaultLabel(x,y)+
-                                 QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(QString::fromStdString(jkqtp_floattolatexstr(dy, 3))).arg(QString::fromStdString(jkqtp_floattolatexstr(dx, 3))).arg(QString::fromStdString(jkqtp_floattolatexstr(dy/dx, 3))).arg(QString::fromStdString(jkqtp_floattolatexstr(atan2(dy,dx), 1))));
+                                 QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(jkqtp_floattolatexqstr(dy, 3)).arg(jkqtp_floattolatexqstr(dx, 3)).arg(jkqtp_floattolatexqstr(dy/dx, 3)).arg(jkqtp_floattolatexqstr(atan2(dy,dx), 1)));
             addHitTestData(x1, y1);
             addHitTestData(x2, y2);
         }

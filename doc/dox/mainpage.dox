@@ -28,6 +28,8 @@
   - external or internal datasets
   - complete with GUI (table view)
   - built-in export capabilities for datatables (e.g. to CSV, SYLK, ...)
+  - C++ standard iterator interface
+  - \ref jkqtptools_math_statistics (basic statistics, boxplots, histograms, kernel density estimates, regression analysis, polynomial fitting)
 - <b>\ref jkqtplotter_elements "large variety of graphs that can be added to a plot", e.g.:</b>
   - \ref jkqtplotter_linesymbolgraphs_simple "scatter-plots" (also \ref jkqtplotter_linesymbolgraphs_param "parametrized color/size/symbol by a third data-column")
   - \ref jkqtplotter_linesymbolgraphs "line graphs, step graphs", \ref jkqtplotter_barssticks "impulses"

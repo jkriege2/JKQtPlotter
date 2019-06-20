@@ -304,7 +304,51 @@ JKQTBasePlotter::~JKQTBasePlotter(){
 void JKQTBasePlotter::setGrid(bool val) {
     xAxis->setDrawGrid(val);
     yAxis->setDrawGrid(val);
-};
+}
+
+void JKQTBasePlotter::setGridColor(QColor color)
+{
+    xAxis->setGridColor(color);
+    yAxis->setGridColor(color);
+}
+
+void JKQTBasePlotter::setMinorGridColor(QColor color)
+{
+    xAxis->setMinorGridColor(color);
+    yAxis->setMinorGridColor(color);
+}
+
+void JKQTBasePlotter::setGridWidth(double __value)
+{
+    xAxis->setGridWidth(__value);
+    yAxis->setGridWidth(__value);
+}
+
+void JKQTBasePlotter::setMinorGridWidth(double __value)
+{
+    xAxis->setMinorGridWidth(__value);
+    yAxis->setMinorGridWidth(__value);
+}
+void JKQTBasePlotter::setGridStyle(Qt::PenStyle __value)
+{
+    xAxis->setGridStyle(__value);
+    yAxis->setGridStyle(__value);
+}
+
+void JKQTBasePlotter::setMinorGridStyle(Qt::PenStyle __value)
+{
+    xAxis->setMinorGridStyle(__value);
+    yAxis->setMinorGridStyle(__value);
+}
+
+void JKQTBasePlotter::setShowZeroAxes(bool showX, bool showY) {
+    getXAxis()->setShowZeroAxis(showX);
+    getYAxis()->setShowZeroAxis(showY);
+}
+
+void JKQTBasePlotter::setShowZeroAxes(bool showXY) {
+    setShowZeroAxes(showXY,showXY);
+}
 
 void JKQTBasePlotter::useExternalDatastore(JKQTPDatastore* newStore){
     if (datastoreInternal && datastore!=nullptr) {
@@ -532,7 +576,7 @@ void JKQTBasePlotter::propagateStyle() {
     xAxis->setCurrentAxisStyle(plotterStyle.xAxisStyle);
     yAxis->setCurrentAxisStyle(plotterStyle.yAxisStyle);
     for (int i=0; i<graphs.size(); i++) {
-        JKQTPColorPaletteTools* palTools=dynamic_cast<JKQTPColorPaletteTools*>(graphs[i]);
+        JKQTPColorPaletteStyleAndToolsMixin* palTools=dynamic_cast<JKQTPColorPaletteStyleAndToolsMixin*>(graphs[i]);
         if (palTools) {
             palTools->getColorBarRightAxis()->setCurrentAxisStyle(plotterStyle.rightColorbarAxisStyle);
             palTools->getColorBarTopAxis()->setCurrentAxisStyle(plotterStyle.topColorbarAxisStyle);

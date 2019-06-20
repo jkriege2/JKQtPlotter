@@ -62,6 +62,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_boxplot_small.png
     <td> \subpage JKQTPlotterBoxplotsGraphs
     <td> `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph`, ...
+<tr><td> \image html jkqtplotter_simpletest_violinplot_small.png
+    <td> \subpage JKQTPlotterViolinplotGraphs
+    <td> `JKQTPViolinplotVerticalElement`, `JKQTPViolinplotHorizontalElement`, ...
 </table>
 
 
@@ -113,6 +116,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html jkqtplotter_simpletest_rgbimageplot_opencv_small.png
     <td> \subpage JKQTPlotterImagePlotRGBOpenCV
     <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore <br> inverted coordinate axes
+<tr><td> \image html jkqtplotter_simpletest_contourplot_small.png
+    <td> \subpage JKQTPlotterContourPlot
+    <td> `JKQTPColumnContourPlot` <br> image data edited inside JKQTPDatastore 
 </table>
 
  
@@ -143,13 +149,28 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 </table>
 
 
-\subsection jkqtp_extut_datamanagement Data Management
+\subsection jkqtp_extut_datamanagement Data Management & Statistics
 
 <table>
 <tr><th> Screenshot    <th> Description   <th> Notes  
 <tr><td> \image html simpletest_datastore_small.png
     <td> \subpage JKQTPlotterBasicJKQTPDatastore
     <td> Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore
+<tr><td> \image html simpletest_datastore_iterators_small.png
+    <td> \subpage JKQTPlotterBasicJKQTPDatastoreIterators
+    <td> Iterator-based Data Management with JKQTPDatastore 
+<tr><td> \image html jkqtplotter_simpletest_datastore_statistics_small.png
+    <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatistics
+    <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library (see \ref jkqtptools_math_statistics )<br>basic statistics (mean, standard deviation, ...)<br>boxplots<br>histograms<br>kernel density estimates (KDE)
+<tr><td> \image html jkqtplotter_simpletest_datastore_regression_small.png
+    <td> \subpage JKQTPlotterBasicJKQTPDatastoreRegression
+    <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library<br>Regression Analysis (with the Statistics Library)<br>robust regression (IRLS)<br>weighted regression<br>non-linear regression<br>polynomial fitting
+<tr><td> \image html jkqtplotter_simpletest_datastore_groupedstat_small.png
+    <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat
+    <td> Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>grouped statistics<br>error indicators from data<br>boxplots
+<tr><td> \image html jkqtplotter_simpletest_datastore_statistics_2d_small.png
+    <td> \subpage JKQTPlotterBasicJKQTPDatastoreStatistics2D
+    <td> Advanced 2-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library (see \ref jkqtptools_math_statistics )<br>histograms<br>kernel density estimates (KDE)
 </table>
 
 

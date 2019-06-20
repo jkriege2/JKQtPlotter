@@ -20,9 +20,9 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
@@ -54,7 +54,7 @@
     You can use JKQTPlotter::addHorizontalBargraph() to add a series of bargraphs, where the width and shift are determined
     automatically. The y-columns are given as a QVector<int> to this function.
 
-
+    \see JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts, jkqtpstatAddHHistogram1D(), jkqtpstatAddHHistogram1DAutoranged()
  */
 class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
@@ -103,23 +103,17 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPG
          */
         virtual void setColor(QColor c);
 
-        /*! \copydoc shift
-            \see see shift for details */ 
+        /*! \copydoc shift */ 
         void setShift(double __value);
-        /*! \copydoc shift
-            \see see shift for details */ 
+        /*! \copydoc shift */ 
         double getShift() const;
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */ 
+        /*! \copydoc width */ 
         double getWidth() const;
-        /*! \copydoc baseline
-            \see see baseline for details */ 
+        /*! \copydoc baseline */ 
         void setBaseline(double __value);
-        /*! \copydoc baseline
-            \see see baseline for details */ 
+        /*! \copydoc baseline */ 
         double getBaseline() const;
         /** \brief sets the fill color and the color together, where fillColor is set to \a fill and the line-color is set to \c fill.darker(colorDarker)
          *  \see setColor()
@@ -179,6 +173,7 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPG
  *  Draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
  *  \image html JKQTPBarVerticalGraphStacked.png
  *
+ * \see JKQTPBarVerticalGraph, \ref JKQTPlotterStackedBarChart
  */
 class JKQTP_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
@@ -218,6 +213,7 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGr
  *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
  *  \image html plot_bargraphverploterr.png
  *
+ * \see jkqtpstatAddYErrorBarGraph(), JKQTPBarVerticalGraph, \ref JKQTPlotterBarcharts
  */
 class JKQTP_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, public JKQTPYGraphErrors {
         Q_OBJECT
@@ -247,8 +243,11 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph,
     \ingroup jkqtplotter_barssticks
 
     This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
+
     \image html plot_bargraphhorplot.png
 
+
+    \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()
  */
 class JKQTP_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
@@ -285,6 +284,8 @@ class JKQTP_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
  *  Draw stacked barcharts by connecting several plots by calling \c setStackedParent(belowPlot) for each plot
  *  \image html JKQTPBarHorizontalGraphStacked.png
  *
+ *
+ * \see JKQTPBarHorizontalGraph, \ref JKQTPlotterStackedBarChart
  */
 class JKQTP_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph {
         Q_OBJECT
@@ -323,6 +324,8 @@ class JKQTP_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizont
  *
  *  This works much the same as JKQTPBarHorizontalGraph. Here is an example output:
  *  \image html plot_bargraphhorploterr.png
+ *
+ * \see jkqtpstatAddXErrorBarGraph(), JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts
  *
  */
 class JKQTP_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizontalGraph, public JKQTPXGraphErrors {

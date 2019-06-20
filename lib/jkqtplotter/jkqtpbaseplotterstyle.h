@@ -20,11 +20,14 @@
 #ifndef JKQTBASEPLOTTERSTYLE_H
 #define JKQTBASEPLOTTERSTYLE_H
 
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpcoordinateaxesstyle.h"
 #include "jkqtplotter/jkqtpkeystyle.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpbasicimagetools.h"
 #include <QColor>
 #include <QPainter>
 #include <QString>

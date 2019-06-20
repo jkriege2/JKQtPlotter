@@ -36,7 +36,6 @@
 #include <QString>
 #include <QSet>
 #include <QFile>
-#include "jkqtcommon/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include <QWidget>
 #include <QLabel>
@@ -477,15 +476,11 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         {
             return this->fontEncoding;
         }
-        /*! \brief returns the property useSTIXfonts ( \copybrief useSTIXfonts ).
-            \details Description of the parameter useSTIXfonts is:  <BLOCKQUOTE>\copydoc useSTIXfonts </BLOCKQUOTE>. 
-            \see useSTIXfonts for more information */ 
+        /*! \copydoc useSTIXfonts */ 
         inline bool isUsingSTIXfonts() const { 
             return this->useSTIXfonts; 
         }
-        /*! \brief returns the property useXITSfonts ( \copybrief useXITSfonts ).
-            \details Description of the parameter useXITSfonts is:  <BLOCKQUOTE>\copydoc useXITSfonts </BLOCKQUOTE>. 
-            \see useXITSfonts for more information */ 
+        /*! \copydoc useXITSfonts */ 
         inline bool isUsingXITSfonts() const { 
             return this->useXITSfonts; 
         }
@@ -649,9 +644,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         {
             return this->useUnparsed; 
         }
-        /*! \brief returns the property error_list ( \copybrief error_list ).
-            \details Description of the parameter error_list is:  <BLOCKQUOTE>\copydoc error_list </BLOCKQUOTE>. 
-            \see error_list for more information */ 
+        /*! \copydoc error_list */ 
         inline QStringList getErrorList() const { 
             return this->error_list; 
         }
@@ -721,6 +714,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
     public:
         /** \brief subclass representing one node in the syntax tree
+         *  \ingroup jkqtmathtext_items
          *
          * \image html jkqtmathtext_node_geo.png
          */
@@ -792,7 +786,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 void doDrawBoxes(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv);
         };
 
-        /** \brief subclass representing one text node in the syntax tree */
+        /** \brief subclass representing one text node in the syntax tree
+         *  \ingroup jkqtmathtext_items
+         */
         class MTtextNode: public MTnode {
             public:
                 MTtextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
@@ -801,9 +797,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
-                /*! \brief returns the property text ( \copybrief text ).
-                    \details Description of the parameter text is:  <BLOCKQUOTE>\copydoc text </BLOCKQUOTE>. 
-                    \see text for more information */ 
+                /*! \copydoc text */ 
                 inline QString getText() const { 
                     return this->text; 
                 }
@@ -816,7 +810,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false);
         };
 
-        /** \brief subclass representing one text node in the syntax tree */
+        /** \brief subclass representing one text node in the syntax tree
+         *  \ingroup jkqtmathtext_items
+         */
         class MTplainTextNode: public MTtextNode {
             public:
                 MTplainTextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
@@ -826,7 +822,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 /** \copydoc MTtextNode::textTransform() */
                 virtual QString textTransform(const QString& text, JKQTMathText::MTenvironment currentEv, bool forSize=false) override;
         };
-        /** \brief subclass representing one whitepsace node in the syntax tree */
+        /** \brief subclass representing one whitepsace node in the syntax tree
+         *  \ingroup jkqtmathtext_items
+         */
         class MTwhitespaceNode: public MTtextNode {
             public:
                 MTwhitespaceNode(JKQTMathText* parent);
@@ -838,7 +836,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
         };
 
-        /** \brief subclass representing one symbol (e.g. \c \\alpha , \c \\cdot ...) node in the syntax tree */
+        /** \brief subclass representing one symbol (e.g. \c \\alpha , \c \\cdot ...) node in the syntax tree
+         *  \ingroup jkqtmathtext_items
+         */
         class MTsymbolNode: public MTnode {
             public:
                 MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
@@ -849,9 +849,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
-                /*! \brief returns the property symbolName ( \copybrief symbolName ).
-                    \details Description of the parameter symbolName is:  <BLOCKQUOTE>\copydoc symbolName </BLOCKQUOTE>. 
-                    \see symbolName for more information */ 
+                /*! \copydoc symbolName */ 
                 inline QString getSymbolName() const {
                     return this->symbolName;
                 }
@@ -885,6 +883,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
 
         /** \brief subclass representing a list of nodes in the syntax tree
+         *  \ingroup jkqtmathtext_items
          */
         class MTlistNode: public MTnode {
             public:
@@ -899,9 +898,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
-                /*! \brief returns the property nodes ( \copybrief nodes ).
-                    \details Description of the parameter nodes is:  <BLOCKQUOTE>\copydoc nodes </BLOCKQUOTE>. 
-                    \see nodes for more information */ 
+                /*! \copydoc nodes */ 
                 inline QList<MTnode*> getNodes() const { 
                     return this->nodes; 
                 }
@@ -912,7 +909,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 QSet<QString> subsupOperations;
         };
 
-        /** \brief subclass representing an instruction node with exactly one argument in the syntax tree */
+        /** \brief subclass representing an instruction node with exactly one argument in the syntax tree
+         *  \ingroup jkqtmathtext_items
+         */
         class MTinstruction1Node: public MTnode {
             public:
                 MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters=QStringList());
@@ -930,15 +929,11 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 inline MTnode* getChild() const {
                     return this->child; 
                 }
-                /*! \brief returns the property name ( \copybrief name ).
-                    \details Description of the parameter name is:  <BLOCKQUOTE>\copydoc name </BLOCKQUOTE>. 
-                    \see name for more information */ 
+                /*! \copydoc name */ 
                 inline QString getName() const { 
                     return this->name; 
                 }
-                /*! \brief returns the property parameters ( \copybrief parameters ).
-                    \details Description of the parameter parameters is:  <BLOCKQUOTE>\copydoc parameters </BLOCKQUOTE>. 
-                    \see parameters for more information */ 
+                /*! \copydoc parameters */ 
                 inline QStringList getParameters() const { 
                     return this->parameters; 
                 }
@@ -955,6 +950,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
 
         /** \brief subclass representing an subscript node with exactly one argument in the syntax tree
+         *  \ingroup jkqtmathtext_items
          *
          * \image html jkqtmathtext_subscriptnode_getSizeInternal.png
          */
@@ -980,6 +976,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
 
         /** \brief subclass representing an superscript node with exactly one argument in the syntax tree
+         *  \ingroup jkqtmathtext_items
          *
          * \image html jkqtmathtext_subscriptnode_getSizeInternal.png
          *
@@ -1007,7 +1004,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 MTnode* child;
         };
 
-        /** \brief subclass representing a brace node  */
+        /** \brief subclass representing a brace node
+         *  \ingroup jkqtmathtext_items
+          */
         class MTbraceNode: public MTnode {
             public:
                 MTbraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace=true);
@@ -1024,21 +1023,15 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 inline MTnode* getChild() const {
                     return this->child; 
                 }
-                /*! \brief returns the property openbrace ( \copybrief openbrace ).
-                    \details Description of the parameter openbrace is:  <BLOCKQUOTE>\copydoc openbrace </BLOCKQUOTE>. 
-                    \see openbrace for more information */ 
+                /*! \copydoc openbrace */ 
                 inline QString getOpenbrace() const { 
                     return this->openbrace; 
                 }
-                /*! \brief returns the property closebrace ( \copybrief closebrace ).
-                    \details Description of the parameter closebrace is:  <BLOCKQUOTE>\copydoc closebrace </BLOCKQUOTE>. 
-                    \see closebrace for more information */ 
+                /*! \copydoc closebrace */ 
                 inline QString getClosebrace() const { 
                     return this->closebrace; 
                 }
-                /*! \brief returns the property showRightBrace ( \copybrief showRightBrace ).
-                    \details Description of the parameter showRightBrace is:  <BLOCKQUOTE>\copydoc showRightBrace </BLOCKQUOTE>. 
-                    \see showRightBrace for more information */ 
+                /*! \copydoc showRightBrace */ 
                 inline bool getShowRightBrace() const { 
                     return this->showRightBrace; 
                 }
@@ -1054,7 +1047,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
 
 
-        /** \brief subclass representing a sqrt node  */
+        /** \brief subclass representing a sqrt node
+         *  \ingroup jkqtmathtext_items
+          */
         class MTsqrtNode: public MTnode {
             public:
                 MTsqrtNode(JKQTMathText* parent, MTnode* child, int degree=2);
@@ -1070,9 +1065,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 inline MTnode* getChild() const {
                     return this->child; 
                 }
-                /*! \brief returns the property degree ( \copybrief degree ).
-                    \details Description of the parameter degree is:  <BLOCKQUOTE>\copydoc degree </BLOCKQUOTE>. 
-                    \see degree for more information */ 
+                /*! \copydoc degree */ 
                 inline int getDegree() const { 
                     return this->degree; 
                 }
@@ -1098,7 +1091,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
         static QString fracModeToString(MTfracMode mode);
 
-        /** \brief subclass representing a \\frac node  */
+        /** \brief subclass representing a \\frac node
+         *  \ingroup jkqtmathtext_items
+          */
         class MTfracNode: public MTnode {
             public:
                 MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
@@ -1118,9 +1113,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                  inline MTnode* getChild2() const {
                     return this->child2; 
                 }
-                /*! \brief returns the property mode ( \copybrief mode ).
-                    \details Description of the parameter mode is:  <BLOCKQUOTE>\copydoc mode </BLOCKQUOTE>. 
-                    \see mode for more information */ 
+                /*! \copydoc mode */ 
                 inline MTfracMode getMode() const { 
                     return this->mode; 
                 }
@@ -1132,7 +1125,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 MTfracMode mode;
         };
 
-        /** \brief subclass representing a \\begin{matrix} node  */
+        /** \brief subclass representing a \\begin{matrix} node
+         *  \ingroup jkqtmathtext_items
+          */
         class MTmatrixNode: public MTnode {
             public:
                 MTmatrixNode(JKQTMathText* parent, QVector<QVector<MTnode*> > children);
@@ -1145,15 +1140,11 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                 inline QVector<QVector<MTnode*> > getChildren() const {
                     return this->children; 
                 }
-                /*! \brief returns the property columns ( \copybrief columns ).
-                    \details Description of the parameter columns is:  <BLOCKQUOTE>\copydoc columns </BLOCKQUOTE>. 
-                    \see columns for more information */ 
+                /*! \copydoc columns */ 
                 inline int getColumns() const { 
                     return this->columns; 
                 }
-                /*! \brief returns the property lines ( \copybrief lines ).
-                    \details Description of the parameter lines is:  <BLOCKQUOTE>\copydoc lines </BLOCKQUOTE>. 
-                    \see lines for more information */ 
+                /*! \copydoc lines */ 
                 inline int getLines() const { 
                     return this->lines; 
                 }
@@ -1183,7 +1174,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
         static QString decorationToString(MTdecoration mode);
 
-        /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node  */
+        /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node
+         *  \ingroup jkqtmathtext_items
+         */
         class MTdecoratedNode: public MTnode {
             public:
                 MTdecoratedNode(JKQTMathText* parent, MTdecoration decoration, MTnode* child);
@@ -1199,9 +1192,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
                  inline MTnode* getChild() const {
                     return this->child; 
                 }
-                /*! \brief returns the property decoration ( \copybrief decoration ).
-                    \details Description of the parameter decoration is:  <BLOCKQUOTE>\copydoc decoration </BLOCKQUOTE>. 
-                    \see decoration for more information */ 
+                /*! \copydoc decoration */ 
                 inline MTdecoration getDecoration() const { 
                     return this->decoration; 
                 }
@@ -1439,9 +1430,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
 
     public:
-        /*! \brief returns the property parsedNode ( \copybrief parsedNode ).
-            \details Description of the parameter parsedNode is:  <BLOCKQUOTE>\copydoc parsedNode </BLOCKQUOTE>. 
-            \see parsedNode for more information */ 
+        /*! \copydoc parsedNode */ 
         inline MTnode* getParsedNode() const { 
             return this->parsedNode; 
         }

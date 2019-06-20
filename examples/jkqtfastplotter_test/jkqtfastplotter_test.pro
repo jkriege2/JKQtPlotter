@@ -37,3 +37,5 @@ CONFIG (debug, debug|release) {
     LIBS += -L../../staticlib/jkqtfastplotterlib/release -ljkqtfastplotterlib
 }
 message("LIBS = $$LIBS")
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX

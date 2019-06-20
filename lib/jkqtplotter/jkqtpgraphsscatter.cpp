@@ -24,8 +24,8 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <iostream>
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
@@ -311,7 +311,7 @@ void JKQTPXYLineErrorGraph::drawErrorsBefore(JKQTPEnhancedPainter &painter)
 
 JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter *parent):
     JKQTPXYLineGraph(parent),
-    JKQTPColorPaletteTools(parent)
+    JKQTPColorPaletteStyleAndToolsMixin(parent)
 {
     sizeColumn=-1;
     colorColumn=-1;
@@ -808,15 +808,6 @@ bool JKQTPXYParametrizedScatterGraph::usesColumn(int c) const
     return (c==colorColumn) || (c==sizeColumn) || (c==symbolColumn) || (c==linewidthColumn) || JKQTPXYLineGraph::usesColumn(c);
 }
 
-double JKQTPXYParametrizedScatterGraph::getInternalDataMin() const
-{
-    return 0;
-}
-
-double JKQTPXYParametrizedScatterGraph::getInternalDataMax() const
-{
-    return 0;
-}
 
 double JKQTPXYParametrizedScatterGraph::getLocalSymbolSize(int i)
 {

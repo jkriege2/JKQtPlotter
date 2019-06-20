@@ -22,6 +22,8 @@ CONFIG (debug, debug|release) {
 message("LIBS = $$LIBS")
 
 
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX
 
 
 

@@ -28,7 +28,7 @@
 #include <QPainter>
 #include <QPair>
 #include <QSettings>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpcoordinateaxesstyle.h"
@@ -330,18 +330,14 @@ class JKQTP_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         }
         /*! \copydoc parent */
         inline const JKQTBasePlotter* getParent() const { return this->parent; }
-        /*! \brief returns the property parent ( \copybrief parent ). \details Description of the parameter parent is:  <BLOCKQUOTE>\copydoc parent </BLOCKQUOTE>. \see parent for more information */
+        /*! \copydoc parent */
         inline JKQTBasePlotter* getParent()  { return this->parent; }
-        /*! \brief sets the property doUpdateScaling ( \copybrief doUpdateScaling ) to the specified \a __value.
-            \details Description of the parameter doUpdateScaling is: <BLOCKQUOTE>\copydoc doUpdateScaling </BLOCKQUOTE> 
-            \see doUpdateScaling for more information */ 
+        /*! \copydoc doUpdateScaling */ 
         inline void setDoUpdateScaling(bool __value)
         {
             this->doUpdateScaling = __value;
         } 
-        /*! \brief returns the property doUpdateScaling ( \copybrief doUpdateScaling ). 
-            \details Description of the parameter doUpdateScaling is: <BLOCKQUOTE>\copydoc doUpdateScaling </BLOCKQUOTE> 
-            \see doUpdateScaling for more information */ 
+        /*! \copydoc doUpdateScaling */ 
         inline bool getDoUpdateScaling() const
         {
             return this->doUpdateScaling; 

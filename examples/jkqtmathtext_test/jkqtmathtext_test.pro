@@ -39,13 +39,12 @@ DEPENDPATH += ../../lib  ../../staticlib/jkqtmathtextlib
 INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
     DEPENDPATH += ../../staticlib/jkqtmathtextlib/debug
-    DEPENDPATH += ../../staticlib/jkqtphighrestimerlib/debug
     LIBS += -L../../staticlib/jkqtmathtextlib/debug -ljkqtmathtextlib_debug
-    LIBS += -L../../staticlib/jkqtphighrestimerlib/debug -ljkqtphighrestimerlib_debug
 } else {
     DEPENDPATH += ../../staticlib/jkqtmathtextlib/release
-    DEPENDPATH += ../../staticlib/jkqtphighrestimerlib/release
     LIBS += -L../../staticlib/jkqtmathtextlib/release -ljkqtmathtextlib
-    LIBS += -L../../staticlib/jkqtphighrestimerlib/release -ljkqtphighrestimerlib
 }
 message("LIBS = $$LIBS")
+
+win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX

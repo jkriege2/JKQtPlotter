@@ -27,11 +27,11 @@
 #include <QImage>
 #include <QIcon>
 #include "jkqtplotter/jkqtpgraphsscatter.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 
 
 
@@ -64,35 +64,25 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc trueColor
-            \see see trueColor for details */ 
+        /*! \copydoc trueColor */ 
         void setTrueColor(const QColor & __value);
-        /*! \copydoc trueColor
-            \see see trueColor for details */ 
+        /*! \copydoc trueColor */ 
         QColor getTrueColor() const;
-        /*! \copydoc falseColor
-            \see see falseColor for details */ 
+        /*! \copydoc falseColor */ 
         void setFalseColor(const QColor & __value);
-        /*! \copydoc falseColor
-            \see see falseColor for details */ 
+        /*! \copydoc falseColor */ 
         QColor getFalseColor() const;
-        /*! \copydoc Nx
-            \see see Nx for details */ 
+        /*! \copydoc Nx */ 
         void setNx(int __value);
-        /*! \copydoc Nx
-            \see see Nx for details */ 
+        /*! \copydoc Nx */ 
         int getNx() const;
-        /*! \copydoc Ny
-            \see see Ny for details */ 
+        /*! \copydoc Ny */ 
         void setNy(int __value);
-        /*! \copydoc Ny
-            \see see Ny for details */ 
+        /*! \copydoc Ny */ 
         int getNy() const;
-        /*! \copydoc data
-            \see see data for details */ 
+        /*! \copydoc data */ 
         virtual void setData(bool*  __value);
-        /*! \copydoc data
-            \see see data for details */ 
+        /*! \copydoc data */ 
         bool *getData() const;
 
         /** \brief set the plot-data to a given array \a data with size \a Nx * \a Ny in row-major ordering */
@@ -163,29 +153,21 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-        /*! \copydoc symbol
-            \see see symbol for details */ 
+        /*! \copydoc symbol */ 
         void setSymbolType(JKQTPGraphSymbols __value);
-        /*! \copydoc symbol
-            \see see symbol for details */ 
+        /*! \copydoc symbol */ 
         JKQTPGraphSymbols getSymbol() const;
-        /*! \copydoc symbolLineWidth
-            \see see symbolLineWidth for details */
+        /*! \copydoc symbolLineWidth */
         void setSymbolLineWidth(double __value);
-        /*! \copydoc symbolLineWidth
-            \see see symbolLineWidth for details */
+        /*! \copydoc symbolLineWidth */
         double getSymbolLineWidth() const;
-        /*! \copydoc drawMode
-            \see see drawMode for details */
+        /*! \copydoc drawMode */
         void setDrawMode(OverlayImageEnhancedDrawMode __value);
-        /*! \copydoc drawMode
-            \see see drawMode for details */
+        /*! \copydoc drawMode */
         OverlayImageEnhancedDrawMode getDrawMode() const;
-        /*! \copydoc symbolSizeFactor
-            \see see symbolSizeFactor for details */ 
+        /*! \copydoc symbolSizeFactor */ 
         void setSymbolSizeFactor(double __value);
-        /*! \copydoc symbolSizeFactor
-            \see see symbolSizeFactor for details */ 
+        /*! \copydoc symbolSizeFactor */ 
         double getSymbolSizeFactor() const;
 
     protected:
@@ -221,11 +203,9 @@ class JKQTP_LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImage
         JKQTPColumnOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);
         JKQTPColumnOverlayImageEnhanced(JKQTPlotter* parent);
 
-        /*! \copydoc imageColumn
-            \see see imageColumn for details */ 
+        /*! \copydoc imageColumn */ 
         virtual void setImageColumn(int __value);
-        /*! \copydoc imageColumn
-            \see see imageColumn for details */ 
+        /*! \copydoc imageColumn */ 
         int getImageColumn() const;
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

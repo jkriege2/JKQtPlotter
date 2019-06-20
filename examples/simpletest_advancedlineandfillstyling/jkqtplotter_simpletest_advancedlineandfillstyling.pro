@@ -29,6 +29,8 @@ win32-msvc* {
     # To fix error: C2338: va_start argument must not
     # have reference type and must not be parenthesized
     DEFINES += _CRT_NO_VA_START_VALIDATION
+    # fix errors with min()/max() macros from windows
+    DEFINES += NOMINMAX
 }
 
 

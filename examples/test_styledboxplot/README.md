@@ -1,6 +1,19 @@
 # Example (JKQTPlotter): Styling different aspects of boxplots {#JKQTPlotterBoxplotStyling}
 This project (see [`test_styledboxplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styledboxplot) demonstrates how to style different aspects of boxplots and how to draw different types and styles of boxplots. For a simple introduction into how to use boxplots, see [Plotting Box Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_boxplot) and [Plotting a Statistical Distribution of Data](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot).
 
+[JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreRegression]: @ref JKQTPlotterBasicJKQTPDatastoreRegression "Regression Analysis (with the Statistics Library)"
+[JKQTPlotterBasicJKQTPDatastoreStatistics2D]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics2D "Advanced 2-Dimensional Statistics with JKQTPDatastore"
+[statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
+[JKQTPlotterBoxplotStyling]: @ref JKQTPlotterBoxplotStyling "Styling different aspects of boxplots"
+[JKQTPlotterBoxplotsGraphs]: @ref JKQTPlotterBoxplotsGraphs "Boxplots"
+
+***Note*** that this example explains how to style boxplots. The example [JKQTPlotterBoxplotsGraphs] explains basics of how to create boxplots. The internal [statisticslibrary] offers methods to calculate the statistical properties necessary for boxplots, which is explained in the tutorial [JKQTPlotterBasicJKQTPDatastoreStatistics] in detail. 
+
+
+
 The link http://vita.had.co.nz/papers/boxplots.pdf leads to a paper that described the history and different types of boxplots.
 
 The source code of the main application can be found in [`test_styledboxplot.cpp`](test_styledboxplot.cpp).

@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <iostream>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
@@ -167,11 +167,11 @@ QString JKQTPPlotElement::formatHitTestDefaultLabel(double x, double y, int inde
         if (errgx->getXErrorColumn()>=0) {
             if (errgx->getXErrorColumnLower()>=0) {
                 xerrstr=QString("\\:+%1\\:-%2")
-                            .arg(QString::fromStdString(jkqtp_floattolatexstr(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index)), 3)))
-                            .arg(QString::fromStdString(jkqtp_floattolatexstr(datastore->get(errgx->getXErrorColumnLower(),static_cast<size_t>(index)), 3)));
+                            .arg(jkqtp_floattolatexqstr(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index)), 3))
+                            .arg(jkqtp_floattolatexqstr(datastore->get(errgx->getXErrorColumnLower(),static_cast<size_t>(index)), 3));
             } else {
                 xerrstr=QString("{\\:}{\\pm}%1")
-                            .arg(QString::fromStdString(jkqtp_floattolatexstr(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index)), 3)));
+                            .arg(jkqtp_floattolatexqstr(datastore->get(errgx->getXErrorColumn(),static_cast<size_t>(index)), 3));
             }
         }
     }
@@ -183,15 +183,15 @@ QString JKQTPPlotElement::formatHitTestDefaultLabel(double x, double y, int inde
         if (errgy->getYErrorColumn()>=0) {
             if (errgy->getYErrorColumnLower()>=0) {
                 yerrstr=QString("\\:+%1\\:-%2")
-                            .arg(QString::fromStdString(jkqtp_floattolatexstr(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index)), 3)))
-                            .arg(QString::fromStdString(jkqtp_floattolatexstr(datastore->get(errgy->getYErrorColumnLower(),static_cast<size_t>(index)), 3)));
+                            .arg(jkqtp_floattolatexqstr(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index)), 3))
+                            .arg(jkqtp_floattolatexqstr(datastore->get(errgy->getYErrorColumnLower(),static_cast<size_t>(index)), 3));
             } else {
                 yerrstr=QString("{\\:}{\\pm}%1")
-                            .arg(QString::fromStdString(jkqtp_floattolatexstr(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index)), 3)));
+                            .arg(jkqtp_floattolatexqstr(datastore->get(errgy->getYErrorColumn(),static_cast<size_t>(index)), 3));
             }
         }
     }
-    return QString("\\ensuremath{\\left[{\\:}%1%3{\\;},{\\;}%2%4{\\:}\\right]}").arg(QString::fromStdString(jkqtp_floattolatexstr(x, 3))).arg(QString::fromStdString(jkqtp_floattolatexstr(y, 3))).arg(xerrstr).arg(yerrstr);
+    return QString("\\ensuremath{\\left[{\\:}%1%3{\\;},{\\;}%2%4{\\:}\\right]}").arg(jkqtp_floattolatexqstr(x, 3)).arg(jkqtp_floattolatexqstr(y, 3)).arg(xerrstr).arg(yerrstr);
 
 }
 
@@ -238,6 +238,25 @@ double JKQTPPlotElement::transformX(double x) const {
 double JKQTPPlotElement::transformY(double y) const {
     return parent->getYAxis()->x2p(y);
 }
+
+QVector<double> JKQTPPlotElement::transformX(const QVector<double>& x) const {
+    QVector<double> res;
+    res.resize(x.size());
+    for (int i=0; i<x.size(); i++) {
+        res[i]=parent->getXAxis()->x2p(x[i]);
+    }
+    return res;
+}
+
+QVector<double> JKQTPPlotElement::transformY(const QVector<double>& y) const {
+    QVector<double> res;
+    res.resize(y.size());
+    for (int i=0; i<y.size(); i++) {
+        res[i]=parent->getYAxis()->x2p(y[i]);
+    }
+    return res;
+}
+
 
 double JKQTPPlotElement::backtransformX(double x) const {
     return parent->getXAxis()->p2x(x);
@@ -506,6 +525,7 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTPlotter *parent):
 void JKQTPSingleColumnGraph::setDataColumn(int __value)
 {
     this->dataColumn = __value;
+    if (this->title.size()==0 && parent && __value>=0) this->title=parent->getDatastore()->getColumnName(static_cast<size_t>(__value));
 }
 
 int JKQTPSingleColumnGraph::getDataColumn() const
@@ -515,6 +535,7 @@ int JKQTPSingleColumnGraph::getDataColumn() const
 
 void JKQTPSingleColumnGraph::setDataColumn(size_t __value) {
     this->dataColumn = static_cast<int>(__value);
+    if (this->title.size()==0 && parent) this->title=parent->getDatastore()->getColumnName(__value);
 }
 
 void JKQTPSingleColumnGraph::setDataSortOrder(JKQTPSingleColumnGraph::DataSortOrder __value)
@@ -571,7 +592,7 @@ void JKQTPSingleColumnGraph::intSortData()
             datas<<xv;
         }
 
-        jkqtpSort(datas.data(), sortedIndices.data(), datas.size());
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
 
 
     }
@@ -632,7 +653,7 @@ void JKQTPXYGraph::intSortData()
             datas<<xv;
         }
 
-        jkqtpSort(datas.data(), sortedIndices.data(), datas.size());
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
 
 
     } else if (sortData==JKQTPXYLineGraph::SortedY) {
@@ -643,7 +664,7 @@ void JKQTPXYGraph::intSortData()
             datas<<xv;
         }
 
-        jkqtpSort(datas.data(), sortedIndices.data(), datas.size());
+        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
     }
 }
 

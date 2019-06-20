@@ -42,6 +42,8 @@ class JKQTPDatastore;
 
     \image html JKQTPPeakStreamGraphY.png "yPeaks=true"
     \image html JKQTPPeakStreamGraphX.png "yPeaks=false"
+
+    \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics
  */
 class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
@@ -70,29 +72,21 @@ class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph, publ
         virtual QColor getKeyLabelColor() const override;
         /** \brief set symbol color and fill color at the same time */
         void setColor(QColor col);
-        /*! \copydoc baseline
-            \see see baseline for details */ 
+        /*! \copydoc baseline */ 
         void setBaseline(double __value);
-        /*! \copydoc baseline
-            \see see baseline for details */ 
+        /*! \copydoc baseline */ 
         double getBaseline() const;
-        /*! \copydoc peakHeight
-            \see see peakHeight for details */ 
+        /*! \copydoc peakHeight */ 
         void setPeakHeight(double __value);
-        /*! \copydoc peakHeight
-            \see see peakHeight for details */ 
+        /*! \copydoc peakHeight */ 
         double getPeakHeight() const;
-        /*! \copydoc yPeaks
-            \see see yPeaks for details */ 
+        /*! \copydoc yPeaks */ 
         void setYPeaks(bool __value);
-        /*! \copydoc yPeaks
-            \see see yPeaks for details */ 
+        /*! \copydoc yPeaks */ 
         bool getYPeaks() const;
-        /*! \copydoc drawBaseline
-            \see see drawBaseline for details */ 
+        /*! \copydoc drawBaseline */ 
         void setDrawBaseline(bool __value);
-        /*! \copydoc drawBaseline
-            \see see drawBaseline for details */ 
+        /*! \copydoc drawBaseline */ 
         bool getDrawBaseline() const;
 
     protected:

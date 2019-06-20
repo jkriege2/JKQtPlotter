@@ -22,6 +22,7 @@
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include <QDebug>
 #include <QtGlobal>
+#include <limits>
 #include <cmath>
 
 /**************************************************************************************************************************
@@ -210,6 +211,20 @@ JKQTPDatastoreItem::JKQTPDatastoreItem(size_t columns, size_t rows){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPDatastoreItem::JKQTPDatastoreItem(const QVector<double>& data_)
+{
+    this->storageType=StorageType::Internal;
+    this->allocated=false;
+    this->dataformat=JKQTPDatastoreItemFormat::SingleColumn;
+    this->storageType=StorageType::Vector;
+    this->datavec=data_;
+    this->data=datavec.data();
+    this->columns=1;
+    this->rows=static_cast<int>(data_.size());
+    this->allocated=true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 bool JKQTPDatastoreItem::resizeColumns(size_t new_rows) {
     bool dataRetained=false;
     if (storageType==StorageType::Internal && allocated && data!=nullptr) {
@@ -287,7 +302,8 @@ size_t JKQTPDatastore::addColumn(JKQTPColumn col) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-JKQTPDatastore::JKQTPDatastore()
+JKQTPDatastore::JKQTPDatastore():
+    m_invalidColumn(new JKQTPColumn)
 {
     maxItemID=0;
     maxColumnsID=0;
@@ -297,6 +313,121 @@ JKQTPDatastore::JKQTPDatastore()
 ////////////////////////////////////////////////////////////////////////////////////////////////
 JKQTPDatastore::~JKQTPDatastore() {
     clear();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+bool JKQTPDatastore::hasColumn(size_t i) const
+{
+    return columns.find(i)!=columns.end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPDatastore::ColumnIterator JKQTPDatastore::begin()
+{
+    return columns.begin();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPDatastore::ColumnIterator JKQTPDatastore::end()
+{
+    return columns.end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPDatastore::ConstColumnIterator JKQTPDatastore::begin() const
+{
+    return columns.begin();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPDatastore::ConstColumnIterator JKQTPDatastore::end() const
+{
+    return columns.end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnIterator JKQTPDatastore::begin(int i)
+{
+    if (i<0) return m_invalidColumn->end();
+    auto it=columns.find(static_cast<size_t>(i));
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->begin();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnIterator JKQTPDatastore::end(int i)
+{
+    if (i<0) return m_invalidColumn->end();
+    auto it=columns.find(static_cast<size_t>(i));
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnConstIterator JKQTPDatastore::begin(int i) const
+{
+    if (i<0) return m_invalidColumn->end();
+    auto it=columns.find(static_cast<size_t>(i));
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->begin();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnConstIterator JKQTPDatastore::end(int i) const
+{
+    if (i<0) return m_invalidColumn->end();
+    auto it=columns.find(static_cast<size_t>(i));
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnIterator JKQTPDatastore::begin(size_t i)
+{
+    auto it=columns.find(i);
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->begin();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnIterator JKQTPDatastore::end(size_t i)
+{
+    auto it=columns.find(i);
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnConstIterator JKQTPDatastore::begin(size_t i) const
+{
+    auto it=columns.find(i);
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->begin();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnConstIterator JKQTPDatastore::end(size_t i) const
+{
+    auto it=columns.find(i);
+    if (it==columns.end()) return m_invalidColumn->end();
+    else return it->end();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnBackInserter JKQTPDatastore::backInserter(int i)
+{
+    if (i<0) return JKQTPColumnBackInserter(this, std::numeric_limits<size_t>::max());
+    auto it=columns.find(static_cast<size_t>(i));
+    if (it==columns.end()) return JKQTPColumnBackInserter(this, std::numeric_limits<size_t>::max());
+    else return JKQTPColumnBackInserter(this, static_cast<size_t>(i));
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+JKQTPColumnBackInserter JKQTPDatastore::backInserter(size_t i)
+{
+    auto it=columns.find(i);
+    if (it==columns.end()) return JKQTPColumnBackInserter(this, std::numeric_limits<size_t>::max());
+    else return JKQTPColumnBackInserter(this, static_cast<size_t>(i));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -348,6 +479,12 @@ void JKQTPDatastore::deleteAllPrefixedColumns(QString prefix, bool removeItems) 
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+quint16 JKQTPDatastore::getColumnChecksum(int column) const
+{
+    return getColumn(column).calculateChecksum();
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPDatastore::deleteColumn(size_t column, bool removeItems) {
@@ -378,6 +515,15 @@ int JKQTPDatastore::getColumnNum(const QString& name) {
         if (it.value().getName()==name) return static_cast<int>(it.key());
     }
     return -1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+QString JKQTPDatastore::getColumnName(size_t column)
+{
+    auto it=columns.find(column);
+
+    if (it==columns.end()) return "";
+    else return it->getName();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -482,36 +628,28 @@ size_t JKQTPDatastore::addCopiedItem(const double* data, size_t rows) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::addColumnForItem(size_t itemID, size_t columnInItem, const QString& name) {
-    /*JKQTPColumn c(this, name, itemID, columnInItem);
-    columns.push_back(c);
-    return columns.size()-1;*/
     return addColumn(JKQTPColumn(this, name, itemID, columnInItem));
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::addColumn(size_t rows, const QString& name) {
-    //items.push_back(new JKQTPDatastoreItem(1, rows));
-    //return addColumnForItem(items.size()-1, 0, name);
     size_t item= addItem(new JKQTPDatastoreItem(1, rows));
     return addColumnForItem(item, 0, name);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+size_t JKQTPDatastore::addColumn(const QString& name) {
+    return addColumn(0, name);
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::addColumn(double* data, size_t rows, const QString& name) {
-    //items.push_back(new JKQTPDatastoreItem(JKQTPSingleColumn, data, 1, rows));
-    //std::cout<<"added item\n";
-    //size_t it=items.size()-1;
-    //std::cout<<"adding column\n";
     size_t it=addItem(new JKQTPDatastoreItem(JKQTPDatastoreItemFormat::SingleColumn, data, 1, rows));
     return addColumnForItem(it, 0, name);
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::addInternalColumn(double* data, size_t rows, const QString& name) {
-    //items.push_back(new JKQTPDatastoreItem(JKQTPSingleColumn, data, 1, rows));
-    //std::cout<<"added item\n";
-    //size_t it=items.size()-1;
-    //std::cout<<"adding column\n";
     size_t it=addItem(new JKQTPDatastoreItem(JKQTPDatastoreItemFormat::SingleColumn, data, 1, rows,true));
     return addColumnForItem(it, 0, name);
 }
@@ -1027,6 +1165,17 @@ QList<QVector<double> > JKQTPDatastore::getData(QStringList *columnNames, const 
     return res;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+QVector<double> JKQTPDatastore::getData(size_t column, QString *columnName) const
+{
+    QVector<double> res;
+    if (hasColumn(column)) {
+        if (columnName) *columnName=columns.value(column).getName();
+        columns.value(column).copyData(res);
+    }
+    return res;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPDatastore::saveDIF(const QString& filename, const QSet<int>& userColumns, const QString& floatformat) const {
@@ -1166,4 +1315,67 @@ void JKQTPDatastoreModel::reloadModel()
 ////////////////////////////////////////////////////////////////////////////////////////////////
 int JKQTPDatastore::getNextHigherIndex(int column, size_t row) const {
     return getNextHigherIndex(static_cast<size_t>(column), row);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumn(size_t column, double value)
+{
+    bool ok=columns[column].getDatastoreItem()->append(columns[column].getDatastoreOffset(), value);
+    if (!ok) {
+        QVector<double> old_data=columns[column].copyData();
+        size_t itemID=addItem(new JKQTPDatastoreItem(1, static_cast<size_t>(old_data.size()+1)));
+        columns[column]=JKQTPColumn(this, columns[column].getName(), itemID, 0);
+        for (int i=0; i<old_data.size(); i++) {
+            columns[column].setValue(static_cast<size_t>(i), old_data[i]);
+        }
+        columns[column].setValue(static_cast<size_t>(old_data.size()), value);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, double value1, double value2)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t columnX, size_t columnY, const QPointF& value)
+{
+    appendToColumn(columnX,value.x());
+    appendToColumn(columnY,value.y());
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t columnX, size_t columnY, const QPoint& value)
+{
+    appendToColumn(columnX,value.x());
+    appendToColumn(columnY,value.y());
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, size_t column3, double value1, double value2, double value3)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+    appendToColumn(column3,value3);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, size_t column3, size_t column4, double value1, double value2, double value3, double value4)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+    appendToColumn(column3,value3);
+    appendToColumn(column4,value4);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+void JKQTPDatastore::appendToColumns(size_t column1, size_t column2, size_t column3, size_t column4, size_t column5, double value1, double value2, double value3, double value4, double value5)
+{
+    appendToColumn(column1,value1);
+    appendToColumn(column2,value2);
+    appendToColumn(column3,value3);
+    appendToColumn(column4,value4);
+    appendToColumn(column5,value5);
 }

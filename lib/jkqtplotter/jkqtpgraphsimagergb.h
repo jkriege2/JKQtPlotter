@@ -27,10 +27,10 @@
 #include <QImage>
 #include <QIcon>
 #include "jkqtplotter/jkqtpgraphsimage.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpimagetools.h"
 
 
 
@@ -46,16 +46,46 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         using JKQTPMathImageBase::setData;
 
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param parent parent plotter object
+         *
+         */
         JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param datatype datatype of the image given in \a data
+         * \param data points to an image to be plotted (of size \a Nx * \a Ny )
+         * \param Nx width (in number of pixels) of \a data
+         * \param Ny height (in number of pixels) of \a data
+         * \param parent parent plotter object
+         *
+         */
         JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPRGBMathImage(JKQTBasePlotter* parent=nullptr);
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPRGBMathImage(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -81,206 +111,150 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         virtual void getDataMinMax(double& imin, double& imax) override;
 
 
-        /*! \copydoc data
-            \see see data for details */
+        /*! \copydoc data */
         virtual void setDataR(void* __value);
-        /*! \copydoc data
-            \see see data for details */
+        /*! \copydoc data */
         void* getDataR() const;
-        /*! \copydoc datatype
-            \see see datatype for details */
+        /*! \copydoc datatype */
         void setDatatypeR(DataType __value);
-        /*! \copydoc datatype
-            \see see datatype for details */
+        /*! \copydoc datatype */
         DataType getDatatypeR() const;
 
-        /*! \copydoc dataG
-            \see see dataG for details */
+        /*! \copydoc dataG */
         virtual void setDataG(void* __value);
-        /*! \copydoc dataG
-            \see see dataG for details */
+        /*! \copydoc dataG */
         void* getDataG() const;
-        /*! \copydoc datatypeG
-            \see see datatypeG for details */
+        /*! \copydoc datatypeG */
         void setDatatypeG(DataType __value);
-        /*! \copydoc datatypeG
-            \see see datatypeG for details */
+        /*! \copydoc datatypeG */
         DataType getDatatypeG() const;
-        /*! \copydoc dataB
-            \see see dataB for details */ 
+        /*! \copydoc dataB */ 
         virtual void setDataB(void* __value);
-        /*! \copydoc dataB
-            \see see dataB for details */ 
+        /*! \copydoc dataB */ 
         void* getDataB() const;
-        /*! \copydoc datatypeB
-            \see see datatypeB for details */ 
+        /*! \copydoc datatypeB */ 
         void setDatatypeB(DataType __value);
-        /*! \copydoc datatypeB
-            \see see datatypeB for details */ 
+        /*! \copydoc datatypeB */ 
         DataType getDatatypeB() const;
-        /*! \copydoc showColorBar
-            \see see showColorBar for details */ 
+        /*! \copydoc showColorBar */ 
         void setShowColorBar(bool __value);
-        /*! \copydoc showColorBar
-            \see see showColorBar for details */ 
+        /*! \copydoc showColorBar */ 
         bool getShowColorBar() const;
-        /*! \copydoc colorBarWidth
-            \see see colorBarWidth for details */ 
+        /*! \copydoc colorBarWidth */ 
         void setColorBarWidth(int __value);
-        /*! \copydoc colorBarWidth
-            \see see colorBarWidth for details */ 
+        /*! \copydoc colorBarWidth */ 
         int getColorBarWidth() const;
-        /*! \copydoc colorBarOffset
-            \see see colorBarOffset for details */ 
+        /*! \copydoc colorBarOffset */ 
         void setColorBarOffset(int __value);
-        /*! \copydoc colorBarOffset
-            \see see colorBarOffset for details */ 
+        /*! \copydoc colorBarOffset */ 
         int getColorBarOffset() const;
-        /*! \copydoc colorBarRelativeHeight
-            \see see colorBarRelativeHeight for details */ 
+        /*! \copydoc colorBarRelativeHeight */ 
         void setColorBarRelativeHeight(double __value);
-        /*! \copydoc colorBarRelativeHeight
-            \see see colorBarRelativeHeight for details */ 
+        /*! \copydoc colorBarRelativeHeight */ 
         double getColorBarRelativeHeight() const;
-        /*! \copydoc imageMinR
-            \see see imageMinR for details */
+        /*! \copydoc imageMinR */
         void setImageMin(double __value);
-        /*! \copydoc imageMinR
-            \see see imageMinR for details */
+        /*! \copydoc imageMinR */
         double getImageMin() const;
-        /*! \copydoc imageMinR
-            \see see imageMinR for details */
+        /*! \copydoc imageMinR */
         void setImageMinR(double m);
-        /*! \copydoc imageMaxR
-            \see see imageMaxR for details */
+        /*! \copydoc imageMaxR */
         void setImageMax(double __value);
-        /*! \copydoc imageMaxR
-            \see see imageMaxR for details */
+        /*! \copydoc imageMaxR */
         double getImageMax() const;
-        /*! \copydoc imageMaxR
-            \see see imageMaxR for details */
+        /*! \copydoc imageMaxR */
         void setImageMaxR(double m);
-        /*! \copydoc imageMinG
-            \see see imageMinG for details */ 
+        /*! \copydoc imageMinG */ 
         void setImageMinG(double __value);
-        /*! \copydoc imageMinG
-            \see see imageMinG for details */ 
+        /*! \copydoc imageMinG */ 
         double getImageMinG() const;
-        /*! \copydoc imageMaxG
-            \see see imageMaxG for details */ 
+        /*! \copydoc imageMaxG */ 
         void setImageMaxG(double __value);
-        /*! \copydoc imageMaxG
-            \see see imageMaxG for details */ 
+        /*! \copydoc imageMaxG */ 
         double getImageMaxG() const;
-        /*! \copydoc imageMinB
-            \see see imageMinB for details */ 
+        /*! \copydoc imageMinB */ 
         void setImageMinB(double __value);
-        /*! \copydoc imageMinB
-            \see see imageMinB for details */ 
+        /*! \copydoc imageMinB */ 
         double getImageMinB() const;
-        /*! \copydoc imageMaxB
-            \see see imageMaxB for details */ 
+        /*! \copydoc imageMaxB */ 
         void setImageMaxB(double __value);
-        /*! \copydoc imageMaxB
-            \see see imageMaxB for details */
+        /*! \copydoc imageMaxB */
         double getImageMaxB() const;
-        /*! \copydoc autoImageRange
-            \see see autoImageRange for details */ 
+        /*! \copydoc autoImageRange */ 
         void setAutoImageRange(bool __value);
-        /*! \copydoc autoImageRange
-            \see see autoImageRange for details */ 
+        /*! \copydoc autoImageRange */ 
         bool getAutoImageRange() const;
-        /*! \copydoc imageNameR
-            \see see imageNameR for details */
+        /*! \copydoc imageNameR */
         void setImageName(const QString & __value);
-        /*! \copydoc imageNameR
-            \see see imageNameR for details */
+        /*! \copydoc imageNameR */
         QString getImageName() const;
-        /*! \copydoc imageNameR
-            \see see imageNameR for details */
+        /*! \copydoc imageNameR */
         QString getImageNameR() const;
-        /*! \copydoc imageNameR
-            \see see imageNameR for details */
+        /*! \copydoc imageNameR */
         void setImageNameR(const QString& m);
-        /*! \copydoc imageNameG
-            \see see imageNameG for details */ 
+        /*! \copydoc imageNameG */ 
         void setImageNameG(const QString & __value);
-        /*! \copydoc imageNameG
-            \see see imageNameG for details */ 
+        /*! \copydoc imageNameG */ 
         QString getImageNameG() const;
-        /*! \copydoc imageNameB
-            \see see imageNameB for details */ 
+        /*! \copydoc imageNameB */ 
         void setImageNameB(const QString & __value);
-        /*! \copydoc imageNameB
-            \see see imageNameB for details */ 
+        /*! \copydoc imageNameB */ 
         QString getImageNameB() const;
-        /*! \copydoc imageNameFontName
-            \see see imageNameFontName for details */ 
+        /*! \copydoc imageNameFontName */ 
         void setImageNameFontName(const QString & __value);
-        /*! \copydoc imageNameFontName
-            \see see imageNameFontName for details */ 
+        /*! \copydoc imageNameFontName */ 
         QString getImageNameFontName() const;
-        /*! \copydoc imageNameFontSize
-            \see see imageNameFontSize for details */ 
+        /*! \copydoc imageNameFontSize */ 
         void setImageNameFontSize(double __value);
-        /*! \copydoc imageNameFontSize
-            \see see imageNameFontSize for details */ 
+        /*! \copydoc imageNameFontSize */ 
         double getImageNameFontSize() const;
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        /*! \copydoc colorBarRightAxis */
         JKQTPVerticalIndependentAxis* getColorBarRightAxis();
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        /*! \copydoc colorBarTopAxis */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxis();
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        /*! \copydoc colorBarRightAxis */
         JKQTPVerticalIndependentAxis* getColorBarRightAxisR();
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        /*! \copydoc colorBarTopAxis */
         JKQTPHorizontalIndependentAxis *getColorBarTopAxisR();
-        /*! \brief returns the property colorBarRightAxisG ( \copybrief colorBarRightAxisG ). \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */
+        /*! \copydoc colorBarRightAxisG */
         JKQTPVerticalIndependentAxis* getColorBarRightAxisG();
-        /*! \brief returns the property colorBarTopAxisG ( \copybrief colorBarTopAxisG ). \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */
+        /*! \copydoc colorBarTopAxisG */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxisG();
-        /*! \brief returns the property colorBarRightAxisB ( \copybrief colorBarRightAxisB ). \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */
+        /*! \copydoc colorBarRightAxisB */
         JKQTPVerticalIndependentAxis* getColorBarRightAxisB();
-        /*! \brief returns the property colorBarTopAxisB ( \copybrief colorBarTopAxisB ). \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */
+        /*! \copydoc colorBarTopAxisB */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxisB();
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        /*! \copydoc colorBarRightAxis */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const;
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        /*! \copydoc colorBarTopAxis */
         const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const;
-        /*! \brief returns the property colorBarRightAxis ( \copybrief colorBarRightAxis ). \details Description of the parameter colorBarRightAxis is:  <BLOCKQUOTE>\copydoc colorBarRightAxis </BLOCKQUOTE>. \see colorBarRightAxis for more information */
+        /*! \copydoc colorBarRightAxis */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxisR() const;
-        /*! \brief returns the property colorBarTopAxis ( \copybrief colorBarTopAxis ). \details Description of the parameter colorBarTopAxis is:  <BLOCKQUOTE>\copydoc colorBarTopAxis </BLOCKQUOTE>. \see colorBarTopAxis for more information */
+        /*! \copydoc colorBarTopAxis */
         const JKQTPHorizontalIndependentAxis* getColorBarTopAxisR() const;
-        /*! \brief returns the property colorBarRightAxisG ( \copybrief colorBarRightAxisG ). \details Description of the parameter colorBarRightAxisG is:  <BLOCKQUOTE>\copydoc colorBarRightAxisG </BLOCKQUOTE>. \see colorBarRightAxisG for more information */
+        /*! \copydoc colorBarRightAxisG */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxisG() const;
-        /*! \brief returns the property colorBarTopAxisG ( \copybrief colorBarTopAxisG ). \details Description of the parameter colorBarTopAxisG is:  <BLOCKQUOTE>\copydoc colorBarTopAxisG </BLOCKQUOTE>. \see colorBarTopAxisG for more information */
+        /*! \copydoc colorBarTopAxisG */
         const JKQTPHorizontalIndependentAxis *getColorBarTopAxisG() const;
-        /*! \brief returns the property colorBarRightAxisB ( \copybrief colorBarRightAxisB ). \details Description of the parameter colorBarRightAxisB is:  <BLOCKQUOTE>\copydoc colorBarRightAxisB </BLOCKQUOTE>. \see colorBarRightAxisB for more information */
+        /*! \copydoc colorBarRightAxisB */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxisB() const;
-        /*! \brief returns the property colorBarTopAxisB ( \copybrief colorBarTopAxisB ). \details Description of the parameter colorBarTopAxisB is:  <BLOCKQUOTE>\copydoc colorBarTopAxisB </BLOCKQUOTE>. \see colorBarTopAxisB for more information */
+        /*! \copydoc colorBarTopAxisB */
         const JKQTPHorizontalIndependentAxis *getColorBarTopAxisB() const;
-        /*! \copydoc colorBarTopVisible
-            \see see colorBarTopVisible for details */ 
+        /*! \copydoc colorBarTopVisible */ 
         void setColorBarTopVisible(bool __value);
-        /*! \copydoc colorBarTopVisible
-            \see see colorBarTopVisible for details */ 
+        /*! \copydoc colorBarTopVisible */ 
         bool getColorBarTopVisible() const;
-        /*! \copydoc colorBarRightVisible
-            \see see colorBarRightVisible for details */ 
+        /*! \copydoc colorBarRightVisible */ 
         void setColorBarRightVisible(bool __value);
-        /*! \copydoc colorBarRightVisible
-            \see see colorBarRightVisible for details */ 
+        /*! \copydoc colorBarRightVisible */ 
         bool getColorBarRightVisible() const;
-        /*! \copydoc colorbarsSideBySide
-            \see see colorbarsSideBySide for details */ 
+        /*! \copydoc colorbarsSideBySide */ 
         void setColorbarsSideBySide(bool __value);
-        /*! \copydoc colorbarsSideBySide
-            \see see colorbarsSideBySide for details */ 
+        /*! \copydoc colorbarsSideBySide */ 
         bool getColorbarsSideBySide() const;
-        /*! \copydoc rgbMode
-            \see see rgbMode for details */ 
+        /*! \copydoc rgbMode */ 
         void setRgbMode(JKQTPRGBMathImageRGBMode __value);
-        /*! \copydoc rgbMode
-            \see see rgbMode for details */ 
+        /*! \copydoc rgbMode */ 
         JKQTPRGBMathImageRGBMode getRgbMode() const;
 
         /** \brief return the data of the green channel used for plotting as a QVector<double> in row-major data-ordering */
@@ -372,21 +346,57 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         bool colorbarsSideBySide;
 
 
-        /** \brief object used for color bar axes
+        /** \brief object used for color bar axes (right border, red image data)
          *
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
         JKQTPVerticalIndependentAxis* colorBarRightAxis;
+        /** \brief object used for color bar axes (top border, red image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxis;
+        /** \brief object used for color bar axes (right border, green image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPVerticalIndependentAxis* colorBarRightAxisG;
+        /** \brief object used for color bar axes (top border, green image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxisG;
+        /** \brief object used for color bar axes (right border, blue image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPVerticalIndependentAxis* colorBarRightAxisB;
+        /** \brief object used for color bar axes (top border, blue image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxisB;
 
 
+        /** \brief internal storage for minimum of the green image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMinG;
+        /** \brief internal storage for maximum of the green image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMaxG;
+        /** \brief internal storage for minimum of the blue image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMinB;
+        /** \brief internal storage for maximum of the blue image value range
+         *
+         * This is set e.g. when calling drawImage() or draw()
+         */
         double internalDataMaxB;
 
     protected:
@@ -422,42 +432,124 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         Q_OBJECT
     public:
 
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPColumnRGBMathImage(JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param imageBColumn column for blue channel to be plotted
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor
+         *
+         * \param parent parent plotter object
+         */
         JKQTPColumnRGBMathImage(JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int Nx, int Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int Nx, int Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int Nx, int Ny, JKQTPlotter* parent);
-        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, int Nx, int Ny, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, JKQTPlotter* parent);
+        /** \brief class constructor
+         *
+         * \param x origin of the image (x-direction) in system coordinates
+         * \param y origin of the image (y-direction) in system coordinates
+         * \param width width of the image in system coordinates
+         * \param height height of the image in system coordinates
+         * \param imageRColumn column for red channel to be plotted
+         * \param imageGColumn column for green channel to be plotted
+         * \param imageBColumn column for blue channel to be plotted
+         * \param parent parent plotter object
+         *
+         */
+        JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, JKQTPlotter* parent);
 
-        /*! \copydoc imageRColumn
-            \see see imageRColumn for details */ 
+        /*! \copydoc imageRColumn */ 
         virtual void setImageRColumn(int __value);
-        /*! \copydoc imageRColumn
-            \see see imageRColumn for details */ 
+        /*! \copydoc imageRColumn */ 
         int getImageRColumn() const;
-        /*! \copydoc imageGColumn
-            \see see imageGColumn for details */ 
+        /*! \copydoc imageGColumn */ 
         virtual void setImageGColumn(int __value);
-        /*! \copydoc imageGColumn
-            \see see imageGColumn for details */ 
+        /*! \copydoc imageGColumn */ 
         int getImageGColumn() const;
-        /*! \copydoc imageBColumn
-            \see see imageBColumn for details */ 
+        /*! \copydoc imageBColumn */ 
         virtual void setImageBColumn(int __value);
-        /*! \copydoc imageBColumn
-            \see see imageBColumn for details */ 
+        /*! \copydoc imageBColumn */ 
         int getImageBColumn() const;
-        /*! \copydoc modifierColumn
-            \see see modifierColumn for details */ 
+        /*! \copydoc modifierColumn */ 
         virtual void setModifierColumn(int __value);
-        /*! \copydoc modifierColumn
-            \see see modifierColumn for details */ 
+        /*! \copydoc modifierColumn */ 
         int getModifierColumn() const;
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
@@ -471,8 +563,20 @@ class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         int imageBColumn;
         /** \brief  column containing the modifier image */
         int modifierColumn;
-
+        /** \copydoc JKQTPRGBMathImage::ensureImageData() */
         void ensureImageData() override;
+
+    private:
+        using JKQTPRGBMathImage::setData;
+        using JKQTPRGBMathImage::setDatatype;
+        using JKQTPRGBMathImage::setDataR;
+        using JKQTPRGBMathImage::setDatatypeR;
+        using JKQTPRGBMathImage::setDataG;
+        using JKQTPRGBMathImage::setDatatypeG;
+        using JKQTPRGBMathImage::setDataB;
+        using JKQTPRGBMathImage::setDatatypeB;
+        using JKQTPRGBMathImage::setDataModifier;
+        using JKQTPRGBMathImage::setDatatypeModifier;
 };
 
 

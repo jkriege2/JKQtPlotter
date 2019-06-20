@@ -1,17 +1,18 @@
-# uncomment this line to prevent linking in of the XITS fonts
-#DEFINES += NO_XITS_FONTS
 
-include($$PWD/common.pri)
+isEmpty(JKQTP_FASTPLOTTER_PRI_INCLUDED) {
+    JKQTP_FASTPLOTTER_PRI_INCLUDED = 1
 
-
-HEADERS += $$PWD/jkqtfastplotter/jkqtfastplotter.h \
-           $$PWD/jkqtplottertools/jkqtphighrestimer.h
+    INCLUDEPATH += $PWD
 
 
-SOURCES += $$PWD/jkqtfastplotter/jkqtfastplotter.cpp \
-           $$PWD/jkqtplottertools/jkqtphighrestimer.cpp
+    HEADERS += $$PWD/jkqtfastplotter/jkqtfastplotter.h
 
 
-RESOURCES += $$PWD/jkqtplotterressources/jkqtpbaseplotter.qrc
+    SOURCES += $$PWD/jkqtfastplotter/jkqtfastplotter.cpp
 
-QT += opengl
+
+    RESOURCES += $$PWD/jkqtplotterressources/jkqtpbaseplotter.qrc
+
+    QT += opengl
+
+}

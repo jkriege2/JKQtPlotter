@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <iostream>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpgraphsimage.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
@@ -80,6 +80,46 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPlotter* parent):
     JKQTPXFunctionLineGraph(parent->getPlotter())
 {
 
+}
+
+JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title_, JKQTBasePlotter *parent):
+    JKQTPXFunctionLineGraph(parent)
+{
+    title=title_;
+    plotFunction=jkqtpPlotFunctionType();
+    simplePlotFunction=f;
+    functionType=SpecialFunction::UserFunction;
+    clearData();
+}
+
+JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title_, JKQTPlotter *parent):
+    JKQTPXFunctionLineGraph(parent)
+{
+    title=title_;
+    plotFunction=jkqtpPlotFunctionType();
+    simplePlotFunction=f;
+    functionType=SpecialFunction::UserFunction;
+    clearData();
+}
+
+JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title_, JKQTBasePlotter *parent):
+    JKQTPXFunctionLineGraph(parent)
+{
+    title=title_;
+    plotFunction=jkqtpPlotFunctionType();
+    simplePlotFunction=std::move(f);
+    functionType=SpecialFunction::UserFunction;
+    clearData();
+}
+
+JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title_, JKQTPlotter *parent):
+    JKQTPXFunctionLineGraph(parent)
+{
+    title=title_;
+    plotFunction=jkqtpPlotFunctionType();
+    simplePlotFunction=std::move(f);
+    functionType=SpecialFunction::UserFunction;
+    clearData();
 }
 
 
@@ -518,6 +558,16 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(parent) {}
 
 JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPlotter *parent):JKQTPYFunctionLineGraph(parent->getPlotter()) {}
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title, JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(f, title, parent) {}
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title, JKQTPlotter *parent):JKQTPXFunctionLineGraph(f, title, parent) {}
+
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title, JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(std::move(f), title, parent) {}
+
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title, JKQTPlotter *parent):JKQTPXFunctionLineGraph(std::move(f), title, parent) {}
 
 void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER

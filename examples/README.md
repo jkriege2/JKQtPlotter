@@ -24,6 +24,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_parsedfunctionplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_parsedfunctionplot) | [Plotting Parsed Mathematical Functions as Line Graphs](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_parsedfunctionplot) | `JKQTPXParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_geometric_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_geometric) | [Plotting Geometric Objects](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_geometric) |  |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_boxplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_boxplot) | [Plotting Box Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_boxplot) | `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph` |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_violinplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_violinplot) | [Plotting Violin Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_violinplot) | `JKQTPViolinplotVerticalElement`, `JKQTPViolinplotHorizontalElement` |
 
 ## Styling the Plot, Keys, Axes, ...
 
@@ -34,7 +35,6 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_advancedlineandfillstyling_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_advancedlineandfillstyling) | [advanced line and fill styling](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_advancedlineandfillstyling) | `JKQTPXYLineGraph`, `JKQTPSpecialLineHorizontalGraph` and `JKQTPBarVerticalGraph` <br> C++ vector of data <br> advanced line styling and filling |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_styledboxplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styledboxplot) | [Styling of Boxplots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styledboxplot) | Modifying different Aspects of the Styling of boxplots |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_styling_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling) | [Styling of JKQTPlotter](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_styling) | Modifying different Aspects of the Styling of JKQTPlotter |
-
 
 ## Image data Plots
 
@@ -47,6 +47,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtplotter_simpletest_rgbimageplot) | [Simple 3-channel Math RGB/CMY Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtplotter_simpletest_rgbimageplot) | `JKQTPColumnRGBMathImage` <br> image data in a C-style row-major array, not using internal datastore <br> RGB/CMY color compositing |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_imageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot_opencv) | [1-channel OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_imageplot_opencv) | `JKQTPColumnMathImage` <br> image data copied from OpenCV cv::Mat-structure into a single column of the internal datastore |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_rgbimageplot_opencv_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_rgbimageplot_opencv) | [RGB OpenCV cv::Mat Image Plot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_rgbimageplot_opencv) | `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns  <br> inverted coordinate axesof the internal datastore |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_contourplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_contourplot) | [Contour Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_contourplot) | `JKQTPColumnContourPlot` <br> image data edited inside JKQTPDatastore  |
 
 
 
@@ -58,23 +59,16 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_test_user_interaction_small.gif)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_user_interaction) | [User Interaction](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_user_interaction) | different possibilities of user-interaction in JKQtPlotter |
 
 
-
-## Data Management
+## Data Management & Statistics (Tutorials)
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | [Tutorial: Basic Usage of JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore) | Basic Data Management with JKQTPDatastore <br/> Copying data into a JKQTPDatastore <br/> Editing data inside a JKQTPDatastore <br/> Editing Image Data in a JKQTPDatastore |
-
-
-
-
-## More Complex Examples
-
-| Screenshot    | Description   | Notes         |
-|:-------------:| ------------- | ------------- |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | [Layouting Several Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_multiplot) | Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_distributionplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) | [Plotting a Statistical Distribution of Data](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) | Combines several different graphs to draw random values, their distribution and some statistical properties |
-
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/simpletest_datastore_iterators_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_iterators) | [Tutorial: Iterator-based access to JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_iterators) | Iterator-based Data Management with JKQTPDatastore  |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_statistics_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | [Tutorial: Advanced 1-Dimensional Statistics with JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics) | Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library<br>basic statistics (mean, standard deviation, ...)<br>boxplots<br>histograms<br>kernel density estimates (KDE) |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_regression_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_regression) | [Tutorial: Regression Analysis (with the Statistics Library)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_regression) | Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library<br>Regression Analysis (with the Statistics Library)<br>robust regression (IRLS)<br>weighted regression<br>non-linear regression<br>polynomial fitting |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_groupedstat_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_groupedstat) | [Tutorial: 1-Dimensional Group Statistics (with the Statistics Library)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_groupedstat) | Advanced 1-Dimensional Statistical Computation with JKQTPDatastore<br>grouped statistics<br>error indicators from data<br>boxplots |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest_datastore_statistics_2d_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics_2d) | [Tutorial: Advanced 2-Dimensional Statistics with JKQTPDatastore](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_datastore_statistics_2d) | Advanced 2-Dimensional Statistical Computation with JKQTPDatastore<br>using the internal statistics library<br>histograms<br>kernel density estimates (KDE) |
 
 
 ## More Complex Examples

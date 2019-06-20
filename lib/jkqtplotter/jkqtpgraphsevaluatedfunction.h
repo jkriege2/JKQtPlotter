@@ -65,6 +65,8 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
     the following image
     \image html plot_functionplots.png
+
+    \see \ref JKQTPlotterFunctionPlots, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
 class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
@@ -84,6 +86,14 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
 
         /** \brief class constructor */
         JKQTPXFunctionLineGraph(JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
 
         /** \brief class destructor */
         virtual ~JKQTPXFunctionLineGraph() override;
@@ -111,43 +121,39 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
         /*! \brief set color, fill color and error color at the same time */
         void setColor(QColor c);
 
-        /*! \copydoc drawLine
-            \see see drawLine for details */ 
+        /*! \copydoc drawLine */ 
         void setDrawLine(bool __value);
-        /*! \copydoc drawLine
-            \see see drawLine for details */ 
+        /*! \copydoc drawLine */ 
         bool getDrawLine() const;
 
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see plotFunction
+         */
         virtual void setPlotFunctionFunctor (jkqtpPlotFunctionType && __value);
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see plotFunction
+         */
         virtual void setPlotFunctionFunctor (const jkqtpPlotFunctionType & __value);
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see simplePlotFunction
+         */
         virtual void setPlotFunctionFunctor (jkqtpSimplePlotFunctionType && __value);
-        /** \brief sets the property plotFunction ( \copybrief plotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be plotted
          *
-         *  \details Description of the parameter plotFunction is: <BLOCKQUOTE>\copydoc plotFunction </BLOCKQUOTE>
-         * \see plotFunction for more information */
+         * \see simplePlotFunction
+         */
         virtual void setPlotFunctionFunctor (const jkqtpSimplePlotFunctionType & __value);
-        /*! \brief returns the property plotFunction ( \copybrief plotFunction ). \see plotFunction for more information */ \
+        /*! \copydoc plotFunction */ \
         virtual jkqtpPlotFunctionType getPlotFunctionFunctor () const;
-        /*! \brief returns the property simplePlotFunction ( \copybrief simplePlotFunction ). \see simplePlotFunction for more information */ \
+        /*! \copydoc simplePlotFunction */ \
         virtual jkqtpSimplePlotFunctionType getSimplePlotFunction () const;
 
-        /*! \copydoc params
-            \see see params for details */ 
+        /*! \copydoc params */ 
         virtual void setParams(void* __value);
-        /*! \copydoc params
-            \see see params for details */ 
+        /*! \copydoc params */ 
         void* getParams() const;
         /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         virtual void setParams(const QVector<double>& params);
@@ -168,164 +174,128 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
         QVector<double> getInternalParams() const;
         /** \brief returns the currently set internal parameter vector */
         QVector<double> getInternalErrorParams() const;
-        /*! \copydoc minSamples
-            \see see minSamples for details */ 
+        /*! \copydoc minSamples */ 
         void setMinSamples(const unsigned int & __value);
-        /*! \copydoc minSamples
-            \see see minSamples for details */ 
+        /*! \copydoc minSamples */ 
         unsigned int getMinSamples() const;
-        /*! \copydoc maxRefinementDegree
-            \see see maxRefinementDegree for details */ 
+        /*! \copydoc maxRefinementDegree */ 
         void setMaxRefinementDegree(const unsigned int & __value);
-        /*! \copydoc maxRefinementDegree
-            \see see maxRefinementDegree for details */ 
+        /*! \copydoc maxRefinementDegree */ 
         unsigned int getMaxRefinementDegree() const;
-        /*! \copydoc slopeTolerance
-            \see see slopeTolerance for details */ 
+        /*! \copydoc slopeTolerance */ 
         void setSlopeTolerance(double __value);
-        /*! \copydoc slopeTolerance
-            \see see slopeTolerance for details */ 
+        /*! \copydoc slopeTolerance */ 
         double getSlopeTolerance() const;
-        /*! \copydoc minPixelPerSample
-            \see see minPixelPerSample for details */ 
+        /*! \copydoc minPixelPerSample */ 
         void setMinPixelPerSample(double __value);
-        /*! \copydoc minPixelPerSample
-            \see see minPixelPerSample for details */ 
+        /*! \copydoc minPixelPerSample */ 
         double getMinPixelPerSample() const;
-        /*! \copydoc plotRefinement
-            \see see plotRefinement for details */ 
+        /*! \copydoc plotRefinement */ 
         void setPlotRefinement(bool __value);
-        /*! \copydoc plotRefinement
-            \see see plotRefinement for details */ 
+        /*! \copydoc plotRefinement */ 
         bool getPlotRefinement() const;
-        /*! \copydoc displaySamplePoints
-            \see see displaySamplePoints for details */ 
+        /*! \copydoc displaySamplePoints */ 
         void setDisplaySamplePoints(bool __value);
-        /*! \copydoc displaySamplePoints
-            \see see displaySamplePoints for details */ 
+        /*! \copydoc displaySamplePoints */ 
         bool getDisplaySamplePoints() const;
-        /*! \copydoc drawErrorPolygons
-            \see see drawErrorPolygons for details */ 
+        /*! \copydoc drawErrorPolygons */ 
         void setDrawErrorPolygons(bool __value);
-        /*! \copydoc drawErrorPolygons
-            \see see drawErrorPolygons for details */ 
+        /*! \copydoc drawErrorPolygons */ 
         bool getDrawErrorPolygons() const;
-        /*! \copydoc drawErrorLines
-            \see see drawErrorLines for details */ 
+        /*! \copydoc drawErrorLines */ 
         void setDrawErrorLines(bool __value);
-        /*! \copydoc drawErrorLines
-            \see see drawErrorLines for details */ 
+        /*! \copydoc drawErrorLines */ 
         bool getDrawErrorLines() const;
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorPlotFunction
+         */
         virtual void setErrorPlotFunction (jkqtpPlotFunctionType && __value);
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorPlotFunction
+         */
         virtual void setErrorPlotFunction (const jkqtpPlotFunctionType & __value);
-        /*! \brief returns the property errorPlotFunction ( \copybrief errorPlotFunction ). \see errorPlotFunction for more information */ \
+        /*! \copydoc errorPlotFunction */ \
         virtual jkqtpPlotFunctionType getErrorPlotFunction () const;
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorSimplePlotFunction
+         */
         virtual void setErrorPlotFunction (jkqtpSimplePlotFunctionType && __value);
-        /** \brief sets the property errorPlotFunction ( \copybrief errorPlotFunction ) to the specified \a __value.
+        /** \brief sets a functor to be used for calculating errors
          *
-         *  \details Description of the parameter errorPlotFunction is: <BLOCKQUOTE>\copydoc errorPlotFunction </BLOCKQUOTE>
-         * \see errorPlotFunction for more information */
+         * \see errorSimplePlotFunction
+         */
         virtual void setErrorPlotFunction (const jkqtpSimplePlotFunctionType & __value);
-        /*! \brief returns the property errorSimplePlotFunction ( \copybrief errorSimplePlotFunction ). \see errorSimplePlotFunction for more information */ \
+        /*! \copydoc errorSimplePlotFunction */ \
         virtual jkqtpSimplePlotFunctionType getErrorSimplePlotFunction () const;
-        /*! \copydoc errorParams
-            \see see errorParams for details */ 
+        /*! \copydoc errorParams */ 
         virtual void setErrorParams(void* __value);
-        /*! \copydoc errorParams
-            \see see errorParams for details */ 
+        /*! \copydoc errorParams */ 
         void *getErrorParams() const;
         /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void setErrorParams(const QVector<double>& errorParams);
 
-        /*! \copydoc parameterColumn
-            \see see parameterColumn for details */ 
+        /*! \copydoc parameterColumn */ 
         void setParameterColumn(int __value);
-        /*! \copydoc parameterColumn
-            \see see parameterColumn for details */ 
+        /*! \copydoc parameterColumn */ 
         int getParameterColumn() const;
-        /*! \brief sets the property parameterColumn ( \copybrief parameterColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter parameterColumn is:  <BLOCKQUOTE>\copydoc parameterColumn </BLOCKQUOTE> 
-            \see parameterColumn for more information */ 
+        /*! \copydoc parameterColumn */ 
         void setParameterColumn (size_t __value);
-        /*! \copydoc errorParameterColumn
-            \see see errorParameterColumn for details */ 
+        /*! \copydoc errorParameterColumn */ 
         void setErrorParameterColumn(int __value);
-        /*! \copydoc errorParameterColumn
-            \see see errorParameterColumn for details */ 
+        /*! \copydoc errorParameterColumn */ 
         int getErrorParameterColumn() const;
-        /*! \brief sets the property errorParameterColumn ( \copybrief errorParameterColumn ) to the specified \a __value, where __value is static_cast'ed from size_t to int. 
-            \details Description of the parameter errorParameterColumn is:  <BLOCKQUOTE>\copydoc errorParameterColumn </BLOCKQUOTE> 
-            \see errorParameterColumn for more information */ 
+        /*! \copydoc errorParameterColumn */ 
         void setErrorParameterColumn (size_t __value);
 
-        /*! \copydoc errorColor
-            \see see errorColor for details */ 
+        /*! \copydoc errorColor */ 
         inline virtual void setErrorLineColor(const QColor & __value)  
         {
             this->errorColor = __value;
         } 
-        /*! \copydoc errorColor
-            \see see errorColor for details */ 
+        /*! \copydoc errorColor */ 
         inline virtual QColor getErrorLineColor() const  
         {
             return this->errorColor; 
         }
-        /*! \copydoc errorFillColor
-            \see see errorFillColor for details */ 
+        /*! \copydoc errorFillColor */ 
         inline virtual void setErrorFillColor(const QColor & __value)  
         {
             this->errorFillColor = __value;
         } 
-        /*! \copydoc errorFillColor
-            \see see errorFillColor for details */ 
+        /*! \copydoc errorFillColor */ 
         inline virtual QColor getErrorFillColor() const  
         {
             return this->errorFillColor; 
         }
-        /*! \copydoc errorFillStyle
-            \see see errorFillStyle for details */ 
+        /*! \copydoc errorFillStyle */ 
         inline virtual void setErrorFillStyle(Qt::BrushStyle  __value)  
         {
             this->errorFillStyle = __value;
         } 
-        /*! \copydoc errorFillStyle
-            \see see errorFillStyle for details */ 
+        /*! \copydoc errorFillStyle */ 
         inline virtual Qt::BrushStyle getErrorFillStyle() const  
         {
             return this->errorFillStyle; 
         }
-        /*! \copydoc errorStyle
-            \see see errorStyle for details */ 
+        /*! \copydoc errorStyle */ 
         inline virtual void setErrorLineStyle(Qt::PenStyle  __value)  
         {
             this->errorStyle = __value;
         } 
-        /*! \copydoc errorStyle
-            \see see errorStyle for details */ 
+        /*! \copydoc errorStyle */ 
         inline virtual Qt::PenStyle getErrorLineStyle() const  
         {
             return this->errorStyle; 
         }
-        /*! \copydoc errorLineWidth
-            \see see errorLineWidth for details */ 
+        /*! \copydoc errorLineWidth */ 
         inline virtual void setErrorLineWidth(double __value)
         {
             this->errorLineWidth = __value;
         } 
-        /*! \copydoc errorLineWidth
-            \see see errorLineWidth for details */ 
+        /*! \copydoc errorLineWidth */ 
         inline virtual double getErrorLineWidth() const  
         {
             return this->errorLineWidth; 
@@ -424,6 +394,7 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$
     \ingroup jkqtplotter_functiongraphs
 
+    \see \ref JKQTPlotterFunctionPlots
  */
 class JKQTP_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         Q_OBJECT
@@ -432,6 +403,14 @@ class JKQTP_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         JKQTPYFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPYFunctionLineGraph(JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

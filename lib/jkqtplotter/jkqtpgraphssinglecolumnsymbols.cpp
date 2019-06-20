@@ -24,10 +24,10 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <iostream>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
-#include "jkqtplottertools/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include <random>
 
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
@@ -119,6 +119,11 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
         std::uniform_real_distribution<> dRandomScatter{position-width/2.0, position+width/2.0};
 
         const double symSize=parent->pt2px(painter, getSymbolSize());
+        QPen p=painter.pen();
+        p.setColor(getSymbolColor());
+        p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,  parent->pt2px(painter, getSymbolLineWidth())));
+        p.setStyle(Qt::SolidLine);
+        p.setCapStyle(Qt::FlatCap);
 
 
         QVector<QPointF> plotSymbols; // collects symbol locations e.g. for BeeSwarmScatter-plots
@@ -154,7 +159,13 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                 }
                 plotSymbols.append(QPointF(x,y));
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                    plotStyledSymbol(parent, painter, x, y);
+                    if (positionScatterStyle!=RugPlot) {
+                        plotStyledSymbol(parent, painter, x, y);
+                    } else {
+                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.setPen(p);
+                        painter.drawLine(QLineF(x, y-symSize,x,y+symSize));
+                    }
                     addHitTestData(xv, yv,iii, datastore);
                 }
             }
@@ -180,8 +191,13 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                 }
                 plotSymbols.append(QPointF(x,y));
                 if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                    plotSymbols.append(QPointF(x,y));
-                    plotStyledSymbol(parent, painter, x, y);
+                    if (positionScatterStyle!=RugPlot) {
+                        plotStyledSymbol(parent, painter, x, y);
+                    } else {
+                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.setPen(p);
+                        painter.drawLine(QLineF(x-symSize, y,x+symSize,y));
+                    }
                     addHitTestData(xv, yv,iii, datastore);
                 }
             }
@@ -206,7 +222,21 @@ void JKQTPSingleColumnSymbolsGraph::drawKeyMarker(JKQTPEnhancedPainter &painter,
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getSymbolPen(painter, parent);
     painter.setPen(p);
-    JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), symbolSize, symbolWidth, getKeyLabelColor(), getSymbolFillColor());
+    if (positionScatterStyle!=RugPlot) {
+        JKQTPPlotSymbol(painter, rect.left()+rect.width()/2.0, rect.top()+rect.height()/2.0, getSymbolType(), symbolSize, symbolWidth, getKeyLabelColor(), getSymbolFillColor());
+    } else {
+        painter.translate(rect.center());
+        if (dataDirection==DataDirection::X) {
+            painter.rotate(90);
+        }
+        painter.drawLine(QLineF(-rect.width()/4.0, rect.height()*(-0.4), rect.width()/4.0, rect.height()*(-0.4)));
+        painter.drawLine(QLineF(-rect.width()/4.0, rect.height()*(-0.2), rect.width()/4.0, rect.height()*(-0.2)));
+        painter.drawLine(QLineF(-rect.width()/4.0, rect.height()*0.0, rect.width()/4.0, rect.height()*0.0));
+        painter.drawLine(QLineF(-rect.width()/4.0, rect.height()*0.05, rect.width()/4.0, rect.height()*0.05));
+        painter.drawLine(QLineF(-rect.width()/4.0, rect.height()*0.15, rect.width()/4.0, rect.height()*0.15));
+        painter.drawLine(QLineF(-rect.width()/4.0, rect.height()*0.3, rect.width()/4.0, rect.height()*0.3));
+        painter.drawLine(QLineF(-rect.width()/4.0, rect.height()*0.45, rect.width()/4.0, rect.height()*0.45));
+    }
 
 }
 

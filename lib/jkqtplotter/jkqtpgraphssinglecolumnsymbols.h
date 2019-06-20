@@ -41,12 +41,13 @@
 
     The second coordinate is:
       - if positionScatterStyle==NoScatter it is simply the value of position, e.g. <br>\image html JKQTPSingleColumnSymbolsGraph_NoScatter.png
+      - if positionScatterStyle==RugPlot is like a NoScatter-plot, but with lines instead of symbols (see <a href="https://en.wikipedia.org/wiki/Rug_plot">https://en.wikipedia.org/wiki/Rug_plot</a>) <br>\image html JKQTPSingleColumnSymbolsGraph_RugPlot.png
       - if positionScatterStyle==RandomScatter it scatters around position in the range [position-width/2 ... position+width/2], e.g. <br>\image html JKQTPSingleColumnSymbolsGraph_RandomScatter.png
       - if positionScatterStyle==BeeSwarmScatter it scatters around position with an algorithm that tries to avoid any overlay of the plot symbols (SLOW!), e.g. <br>\image html JKQTPSingleColumnSymbolsGraph_BeeSwarmScatter.png
     .
     All example images above have dataDirection==DataDirection::X !
 
-    \see \ref JKQTPlotterDistributionPlot
+    \see \ref JKQTPlotterDistributionPlot, \ref JKQTPlotterViolinplotGraphs
 
  */
 class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph, public JKQTPGraphSymbolStyleMixin {
@@ -55,6 +56,7 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGr
         /** \brief describes how data from dataColumn of a JKQTPSingleColumnSymbolsGraph positioned at position */
         enum ScatterStyle {
             NoScatter, /*!< \brief missing coordinate is exactly position for every datapoint in dataColumn \image html JKQTPSingleColumnSymbolsGraph_NoScatter.png */
+            RugPlot, /*!< \brief like NoScatter but draws each data-point as a horzintal/vertical line, centered around position, not as a symbol ("rug plot", see e.g. <a href="https://en.wikipedia.org/wiki/Rug_plot">https://en.wikipedia.org/wiki/Rug_plot</a>).  \image html JKQTPSingleColumnSymbolsGraph_RugPlot.png */
             RandomScatter, /*!< \brief missing coordinate scatters around position (with distribution-width width ) \image html JKQTPSingleColumnSymbolsGraph_RandomScatter.png */
             BeeSwarmScatter, /*!< \brief missing coordinate scatters around position and the algorithm tries to prevent overlay of two symbols ("bee swarm plot", see e.g. <a href="https://www.r-statistics.com/2011/03/beeswarm-boxplot-and-plotting-it-with-r/">https://www.r-statistics.com/2011/03/beeswarm-boxplot-and-plotting-it-with-r/</a>). Note that this algorithm can be rather slow!!! \image html JKQTPSingleColumnSymbolsGraph_BeeSwarmScatter.png */
         };
@@ -84,27 +86,21 @@ class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGr
         /** \brief set symbol color and fill color at the same time */
         void setColor(QColor col);
 
-        /*! \copydoc position
-            \see see position for details */
+        /*! \copydoc position */
         void setPosition(double __value);
-        /*! \copydoc position
-            \see see position for details */
+        /*! \copydoc position */
         double getPosition() const;
 
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         void setWidth(double __value);
-        /*! \copydoc width
-            \see see width for details */
+        /*! \copydoc width */
         double getWidth() const;
 
 
 
-        /*! \copydoc positionScatterStyle
-            \see see positionScatterStyle for details */
+        /*! \copydoc positionScatterStyle */
         void setPositionScatterStyle(ScatterStyle __value);
-        /*! \copydoc positionScatterStyle
-            \see see positionScatterStyle for details */
+        /*! \copydoc positionScatterStyle */
         ScatterStyle getPositionScatterStyle() const;
 
 

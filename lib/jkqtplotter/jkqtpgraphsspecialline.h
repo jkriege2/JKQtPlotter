@@ -21,11 +21,11 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
-#include "jkqtplottertools/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsrange.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
@@ -38,7 +38,7 @@ class JKQTBasePlotter;
 class JKQTPlotter;
 class JKQTPCoordinateAxis;
 class JKQTPDatastore;
-//class JKQTPColorPaletteTools;
+//class JKQTPColorPaletteStyleAndToolsMixin;
 
 
 

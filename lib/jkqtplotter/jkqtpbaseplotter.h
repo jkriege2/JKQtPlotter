@@ -17,13 +17,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtpelementsoverlay.h"
-#include "jkqtplottertools/jkqtpenhancedpainter.h"
+#include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplottergui/jkqtpenhancedspinboxes.h"
 
 #include <QObject>
@@ -57,11 +57,11 @@ class JKQTPGraph; // forward
 class JKQTPPlotElement; // forward
 
 /** \brief initialized Qt-ressources necessary for JKQTBasePlotter
- * \ingroup jkqtpplotterclasses_tools */
+ * \ingroup jkqtpplottersupprt */
 JKQTP_LIB_EXPORT void initJKQTBasePlotterResources();
 
 /** \brief virtual base-class for exporter classes that can be used to save data inot a file
- * \ingroup jkqtpplotterclasses_tools */
+ * \ingroup jkqtpplottersupprt */
 class JKQTP_LIB_EXPORT JKQTPSaveDataAdapter {
     public:
         virtual ~JKQTPSaveDataAdapter() ;
@@ -71,7 +71,7 @@ class JKQTP_LIB_EXPORT JKQTPSaveDataAdapter {
 
 /** \brief Service from this class to implement a special QPaintDevice as a plugin, that can be registered to JKQTBasePlotter/JKQTPlotter
  *         and then be used to export graphics, use registerPaintDeviceAdapter() to register such a plass
- * \ingroup jkqtpplotterclasses_tools*/
+ * \ingroup jkqtpplottersupprt */
 class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
     public:
         virtual ~JKQTPPaintDeviceAdapter()  {}
@@ -196,7 +196,7 @@ class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * accomodate the size of the key. If you select an \b inside key position the key will be plotted OVER the graph, i.e. the margins won't be changed
  * Note that the margin change is internal and not visible in the class interface!
  *
- * There is also a possibility to determine the size of the key automatically, so all text fits in. This is activted by the property keyAutosize ( \copybrief keyAutosize ). If this
+ * There is also a possibility to determine the size of the key automatically, so all text fits in. This is activted by the property keyAutosize ( \copybrief JKQTPKeyStyle::autosize ). If this
  * is \c true the function getKeyExtent() has to check the width of every key item and take it into account when calculating the width and height of the
  * key content. By default this feature is switched ON.
  *
@@ -561,7 +561,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
         /** \brief represents a pen, when plotting in JKQTPlotter/JKQTBasePlotter
-         *   \ingroup jkqtpplotterclasses_tools
+         *   \ingroup jkqtpplottersupprt
          *
          * \see getPlotStyle()
          */
@@ -766,48 +766,30 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /*! \copydoc JKQTBasePlotterStyle::plotFrameRounding */
         double getPlotFrameRounding() const;
 
-        /*! \brief returns the property plotLabelFontSize ( \copybrief plotLabelFontSize ). 
-            \details Description of the parameter plotLabelFontSize is: <BLOCKQUOTE>\copydoc plotLabelFontSize </BLOCKQUOTE> 
-            \see plotLabelFontSize for more information */ 
+        /*! \copydoc JKQTBasePlotterStyle::plotLabelFontSize */
         double getPlotLabelFontSize() const;
-        /*! \brief returns the property plotLabelFontName ( \copybrief plotLabelFontName ).
-            \details Description of the parameter plotLabelFontName is: <BLOCKQUOTE>\copydoc plotLabelFontName </BLOCKQUOTE>
-            \see plotLabelFontName for more information */
+        /*! \copydoc JKQTBasePlotterStyle::plotLabelFontName */
         QString getplotLabelFontName() const;
 
-        /*! \brief returns the property plotLabel ( \copybrief plotLabel ). 
-            \details Description of the parameter plotLabel is: <BLOCKQUOTE>\copydoc plotLabel </BLOCKQUOTE> 
-            \see plotLabel for more information */ 
+        /*! \copydoc plotLabel */ 
         QString getPlotLabel() const;
 
-        /*! \brief sets the property gridPrinting ( \copybrief gridPrinting ) to the specified \a __value. 
-            \details Description of the parameter gridPrinting is: <BLOCKQUOTE>\copydoc gridPrinting </BLOCKQUOTE> 
-            \see gridPrinting for more information */ 
+        /*! \copydoc gridPrinting */ 
         void setGridPrinting(bool __value);
-        /*! \brief returns the property gridPrinting ( \copybrief gridPrinting ). 
-            \details Description of the parameter gridPrinting is: <BLOCKQUOTE>\copydoc gridPrinting </BLOCKQUOTE> 
-            \see gridPrinting for more information */ 
+        /*! \copydoc gridPrinting */ 
         bool getGridPrinting() const;
-        /*! \brief sets the property gridPrintingCurrentX ( \copybrief gridPrintingCurrentX ) to the specified \a __value. 
-            \details Description of the parameter gridPrintingCurrentX is: <BLOCKQUOTE>\copydoc gridPrintingCurrentX </BLOCKQUOTE> 
-            \see gridPrintingCurrentX for more information */ 
+        /*! \copydoc gridPrintingCurrentX */ 
         void setGridPrintingCurrentX(size_t __value);
-        /*! \brief returns the property gridPrintingCurrentX ( \copybrief gridPrintingCurrentX ). 
-            \details Description of the parameter gridPrintingCurrentX is: <BLOCKQUOTE>\copydoc gridPrintingCurrentX </BLOCKQUOTE> 
-            \see gridPrintingCurrentX for more information */ 
+        /*! \copydoc gridPrintingCurrentX */ 
         size_t getGridPrintingCurrentX() const;
-        /*! \brief sets the property gridPrintingCurrentY ( \copybrief gridPrintingCurrentY ) to the specified \a __value. 
-            \details Description of the parameter gridPrintingCurrentY is: <BLOCKQUOTE>\copydoc gridPrintingCurrentY </BLOCKQUOTE> 
-            \see gridPrintingCurrentY for more information */ 
+        /*! \copydoc gridPrintingCurrentY */ 
         void setGridPrintingCurrentY(size_t __value);
-        /*! \brief returns the property gridPrintingCurrentY ( \copybrief gridPrintingCurrentY ). 
-            \details Description of the parameter gridPrintingCurrentY is: <BLOCKQUOTE>\copydoc gridPrintingCurrentY </BLOCKQUOTE> 
-            \see gridPrintingCurrentY for more information */ 
+        /*! \copydoc gridPrintingCurrentY */ 
         size_t getGridPrintingCurrentY() const;
 
         /** \brief set the x- and y-positions of this JKQTPlotter in the grid-printing grid
          *
-         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY() \ref JKQTPBASELOTTER_SYNCMULTIPLOT
+         * \see setGridPrinting(), addGridPrintingPlotter(), clearGridPrintingPlotters(), setGridPrintingCurrentX(), setGridPrintingCurrentY()
          */
         void setGridPrintingCurrentPos(size_t x, size_t y);
 
@@ -821,13 +803,13 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief set the string used to introduce comments in text output when exporting data */
         QString getCSVcommentInitializer() const;
 
-        /*! \brief returns the property internalPlotBorderTop ( \copybrief internalPlotBorderTop ). \details Description of the parameter internalPlotBorderTop is:  <BLOCKQUOTE>\copydoc internalPlotBorderTop </BLOCKQUOTE>. \see internalPlotBorderTop for more information */
+        /*! \copydoc internalPlotBorderTop */
         inline double getInternalPlotBorderTop() const { return this->internalPlotBorderTop; }
-        /*! \brief returns the property internalPlotBorderLeft ( \copybrief internalPlotBorderLeft ). \details Description of the parameter internalPlotBorderLeft is:  <BLOCKQUOTE>\copydoc internalPlotBorderLeft </BLOCKQUOTE>. \see internalPlotBorderLeft for more information */
+        /*! \copydoc internalPlotBorderLeft */
         inline double getInternalPlotBorderLeft() const { return this->internalPlotBorderLeft; }
-        /*! \brief returns the property internalPlotBorderBottom ( \copybrief internalPlotBorderBottom ). \details Description of the parameter internalPlotBorderBottom is:  <BLOCKQUOTE>\copydoc internalPlotBorderBottom </BLOCKQUOTE>. \see internalPlotBorderBottom for more information */
+        /*! \copydoc internalPlotBorderBottom */
         inline double getInternalPlotBorderBottom() const { return this->internalPlotBorderBottom; }
-        /*! \brief returns the property internalPlotBorderRight ( \copybrief internalPlotBorderRight ). \details Description of the parameter internalPlotBorderRight is:  <BLOCKQUOTE>\copydoc internalPlotBorderRight </BLOCKQUOTE>. \see internalPlotBorderRight for more information */
+        /*! \copydoc internalPlotBorderRight */
         inline double getInternalPlotBorderRight() const { return this->internalPlotBorderRight; }
         /*! \copydoc internalPlotWidth */
         inline int getPlotWidth() const { return this->internalPlotWidth; }
@@ -847,39 +829,39 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         const JKQTPVerticalAxis *getYAxis() const;
 
 
-        /*! \brief returns the property actSavePlot ( \copybrief actSavePlot ). \details Description of the parameter actSavePlot is:  <BLOCKQUOTE>\copydoc actSavePlot </BLOCKQUOTE>. \see actSavePlot for more information */ 
+        /*! \copydoc actSavePlot */ 
         QAction* getActionSavePlot() const;
-        /*! \brief returns the property actSaveData ( \copybrief actSaveData ). \details Description of the parameter actSaveData is:  <BLOCKQUOTE>\copydoc actSaveData </BLOCKQUOTE>. \see actSaveData for more information */ 
+        /*! \copydoc actSaveData */ 
         QAction* getActionSaveData() const;
-        /*! \brief returns the property actCopyData ( \copybrief actCopyData ). \details Description of the parameter actCopyData is:  <BLOCKQUOTE>\copydoc actCopyData </BLOCKQUOTE>. \see actCopyData for more information */ 
+        /*! \copydoc actCopyData */ 
         QAction* getActionCopyData() const;
-        /*! \brief returns the property actCopyPixelImage ( \copybrief actCopyPixelImage ). \details Description of the parameter actCopyPixelImage is:  <BLOCKQUOTE>\copydoc actCopyPixelImage </BLOCKQUOTE>. \see actCopyPixelImage for more information */ 
+        /*! \copydoc actCopyPixelImage */ 
         QAction* getActionCopyPixelImage() const;
-        /*! \brief returns the property actCopyMatlab ( \copybrief actCopyMatlab ). \details Description of the parameter actCopyMatlab is:  <BLOCKQUOTE>\copydoc actCopyMatlab </BLOCKQUOTE>. \see actCopyMatlab for more information */ 
+        /*! \copydoc actCopyMatlab */ 
         QAction* getActionCopyMatlab() const;
-        /*! \brief returns the property actSavePDF ( \copybrief actSavePDF ). \details Description of the parameter actSavePDF is:  <BLOCKQUOTE>\copydoc actSavePDF </BLOCKQUOTE>. \see actSavePDF for more information */ 
+        /*! \copydoc actSavePDF */ 
         QAction* getActionSavePDF() const;
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        /*! \brief returns the property actSavePS ( \copybrief actSavePS ). \details Description of the parameter actSavePS is:  <BLOCKQUOTE>\copydoc actSavePS </BLOCKQUOTE>. \see actSavePS for more information */
+        /*! \copydoc actSavePS */
         QAction* getActionSavePS() const;
 #endif
-        /*! \brief returns the property actSavePix ( \copybrief actSavePix ). \details Description of the parameter actSavePix is:  <BLOCKQUOTE>\copydoc actSavePix </BLOCKQUOTE>. \see actSavePix for more information */ 
+        /*! \copydoc actSavePix */ 
         QAction* getActionSavePix() const;
-        /*! \brief returns the property actSaveSVG ( \copybrief actSaveSVG ). \details Description of the parameter actSaveSVG is:  <BLOCKQUOTE>\copydoc actSaveSVG </BLOCKQUOTE>. \see actSaveSVG for more information */ 
+        /*! \copydoc actSaveSVG */ 
         QAction* getActionSaveSVG() const;
-        /*! \brief returns the property actPrint ( \copybrief actPrint ). \details Description of the parameter actPrint is:  <BLOCKQUOTE>\copydoc actPrint </BLOCKQUOTE>. \see actPrint for more information */ 
+        /*! \copydoc actPrint */ 
         QAction* getActionPrint() const;
-        /*! \brief returns the property actSaveCSV ( \copybrief actSaveCSV ). \details Description of the parameter actSaveCSV is:  <BLOCKQUOTE>\copydoc actSaveCSV </BLOCKQUOTE>. \see actSaveCSV for more information */ 
+        /*! \copydoc actSaveCSV */ 
         QAction* getActionSaveCSV() const;
-        /*! \brief returns the property actZoomAll ( \copybrief actZoomAll ). \details Description of the parameter actZoomAll is:  <BLOCKQUOTE>\copydoc actZoomAll </BLOCKQUOTE>. \see actZoomAll for more information */ 
+        /*! \copydoc actZoomAll */ 
         QAction* getActionZoomAll() const;
-        /*! \brief returns the property actZoomIn ( \copybrief actZoomIn ). \details Description of the parameter actZoomIn is:  <BLOCKQUOTE>\copydoc actZoomIn </BLOCKQUOTE>. \see actZoomIn for more information */ 
+        /*! \copydoc actZoomIn */ 
         QAction* getActionZoomIn() const;
-        /*! \brief returns the property actZoomOut ( \copybrief actZoomOut ). \details Description of the parameter actZoomOut is:  <BLOCKQUOTE>\copydoc actZoomOut </BLOCKQUOTE>. \see actZoomOut for more information */ 
+        /*! \copydoc actZoomOut */ 
         QAction *getActionZoomOut() const;
-        /*! \brief returns the property actShowPlotData ( \copybrief actShowPlotData ). \details Description of the parameter actShowPlotData is:  <BLOCKQUOTE>\copydoc actShowPlotData </BLOCKQUOTE>. \see actShowPlotData for more information */ 
+        /*! \copydoc actShowPlotData */ 
         QAction *getActionShowPlotData() const;
-        /*! \brief returns the property lstAdditionalPlotterActions ( \copybrief lstAdditionalPlotterActions ). \details Description of the parameter lstAdditionalPlotterActions is:  <BLOCKQUOTE>\copydoc lstAdditionalPlotterActions </BLOCKQUOTE>. \see lstAdditionalPlotterActions for more information */ 
+        /*! \copydoc lstAdditionalPlotterActions */ 
         AdditionalActionsMap getLstAdditionalPlotterActions() const;
 
         /** \brief this function registers additional actions to lstAdditionalPlotterActions, which are displayed in the context-menu */
@@ -890,29 +872,21 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         void deregisterAdditionalAction(QAction* act);
 
-        /*! \brief returns the property masterSynchronizeWidth ( \copybrief masterSynchronizeWidth ). \details Description of the parameter masterSynchronizeWidth is:  <BLOCKQUOTE>\copydoc masterSynchronizeWidth </BLOCKQUOTE>. \see masterSynchronizeWidth for more information */ 
+        /*! \copydoc masterSynchronizeWidth */ 
         bool getMasterSynchronizeWidth() const;
-        /*! \brief returns the property masterSynchronizeHeight ( \copybrief masterSynchronizeHeight ). \details Description of the parameter masterSynchronizeHeight is:  <BLOCKQUOTE>\copydoc masterSynchronizeHeight </BLOCKQUOTE>. \see masterSynchronizeHeight for more information */ 
+        /*! \copydoc masterSynchronizeHeight */ 
         bool getMasterSynchronizeHeight() const;
-        /*! \brief sets the property fontSizePrintMultiplier ( \copybrief fontSizePrintMultiplier ) to the specified \a __value. 
-            \details Description of the parameter fontSizePrintMultiplier is: <BLOCKQUOTE>\copydoc fontSizePrintMultiplier </BLOCKQUOTE> 
-            \see fontSizePrintMultiplier for more information */ 
+        /*! \copydoc fontSizePrintMultiplier */ 
         void setFontSizePrintMultiplier(double __value);
-        /*! \brief returns the property fontSizePrintMultiplier ( \copybrief fontSizePrintMultiplier ). 
-            \details Description of the parameter fontSizePrintMultiplier is: <BLOCKQUOTE>\copydoc fontSizePrintMultiplier </BLOCKQUOTE> 
-            \see fontSizePrintMultiplier for more information */ 
+        /*! \copydoc fontSizePrintMultiplier */ 
         double getFontSizePrintMultiplier() const;
-        /*! \brief sets the property lineWidthPrintMultiplier ( \copybrief lineWidthPrintMultiplier ) to the specified \a __value. 
-            \details Description of the parameter lineWidthPrintMultiplier is: <BLOCKQUOTE>\copydoc lineWidthPrintMultiplier </BLOCKQUOTE> 
-            \see lineWidthPrintMultiplier for more information */ 
+        /*! \copydoc lineWidthPrintMultiplier */ 
         void setLineWidthPrintMultiplier(double __value);
-        /*! \brief returns the property lineWidthPrintMultiplier ( \copybrief lineWidthPrintMultiplier ). 
-            \details Description of the parameter lineWidthPrintMultiplier is: <BLOCKQUOTE>\copydoc lineWidthPrintMultiplier </BLOCKQUOTE> 
-            \see lineWidthPrintMultiplier for more information */ 
+        /*! \copydoc lineWidthPrintMultiplier */ 
         double getLineWidthPrintMultiplier() const;
-        /*! \brief returns the property fontSizeMultiplier ( \copybrief fontSizeMultiplier ). \details Description of the parameter fontSizeMultiplier is:  <BLOCKQUOTE>\copydoc fontSizeMultiplier </BLOCKQUOTE>. \see fontSizeMultiplier for more information */ 
+        /*! \copydoc fontSizeMultiplier */ 
         double getFontSizeMultiplier() const;
-        /*! \brief returns the property lineWidthMultiplier ( \copybrief lineWidthMultiplier ). \details Description of the parameter lineWidthMultiplier is:  <BLOCKQUOTE>\copydoc lineWidthMultiplier </BLOCKQUOTE>. \see lineWidthMultiplier for more information */ 
+        /*! \copydoc lineWidthMultiplier */ 
         double getLineWidthMultiplier() const;
 
 
@@ -1236,7 +1210,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
         /** \brief internal tool class for text sizes
-         *   \ingroup jkqtpplotterclasses_tools
+         *   \ingroup jkqtpplottersupprt
          *  \internal */
         struct JKQTP_LIB_EXPORT textSizeData {
             explicit textSizeData();
@@ -1244,7 +1218,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         };
 
         /** \brief internal tool class for text-sizess in a plot key
-         *  \ingroup jkqtpplotterclasses_tools
+         *  \ingroup jkqtpplottersupprt
          *  \internal */
         struct JKQTP_LIB_EXPORT textSizeKey {
             explicit textSizeKey(const QFont& f, const QString& text, QPaintDevice *pd);
@@ -1459,6 +1433,43 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief sets whether to plot grid lines or not */
         void setGrid(bool val);
+
+        /** \brief sets the color of all Major grid lines
+         * */
+        void setGridColor(QColor color);
+
+        /** \brief sets the color of all minor grid lines
+         * */
+        void setMinorGridColor(QColor color);
+
+        /** \brief sets the width of all Major grid lines
+         * */
+        void setGridWidth(double __value);
+
+        /** \brief sets the width of all minor grid lines
+         * */
+        void setMinorGridWidth(double __value);
+
+        /** \brief sets the style of all Major grid lines
+         * */
+        void setGridStyle(Qt::PenStyle __value);
+
+        /** \brief sets the style of all minor grid lines
+         * */
+        void setMinorGridStyle(Qt::PenStyle __value);
+
+
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showX indicates whether to show the zero-axis associated with the x-axis (i.e. x==0 or the vertical zero-axis)
+         * \param showY indicates whether to show the zero-axis associated with the y-axis (i.e. y==0 or the horizontal zero-axis)
+         * */
+        void setShowZeroAxes(bool showX, bool showY);
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showXY indicates whether to show the zero-axis associated with the x- and y-axis
+         * */
+        void setShowZeroAxes(bool showXY);
 
         /** \brief save the current plot as a pixel image image (PNG ...), if filename is empty a file selection dialog is displayed */
         void saveAsPixelImage(const QString& filename=QString(""), bool displayPreview=true, const QByteArray &outputFormat=QByteArray());
@@ -1823,29 +1834,17 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief show the export preview window for a given page size \a pageSize, either in pixels (\a unitIsMM \c ==false ) or in millimeters (\a unitIsMM \c ==true ) */
         bool exportpreview(QSizeF pageSize, bool unitIsMM=false);
 
-        /*! \brief sets the property fontSizeMultiplier ( \copybrief fontSizeMultiplier ) to the specified \a __value.
-            \details Description of the parameter fontSizeMultiplier is:  <BLOCKQUOTE>\copydoc fontSizeMultiplier </BLOCKQUOTE>
-            \see fontSizeMultiplier for more information */
+        /*! \copydoc fontSizeMultiplier */
         void setFontSizeMultiplier(double __value);
-        /*! \brief sets the property lineWidthMultiplier ( \copybrief lineWidthMultiplier ) to the specified \a __value.
-            \details Description of the parameter lineWidthMultiplier is:  <BLOCKQUOTE>\copydoc lineWidthMultiplier </BLOCKQUOTE>
-            \see lineWidthMultiplier for more information */
+        /*! \copydoc lineWidthMultiplier */
         void setLineWidthMultiplier(double __value);
-        /*! \brief sets the property printMagnification ( \copybrief printMagnification ) to the specified \a __value.
-            \details Description of the parameter printMagnification is: <BLOCKQUOTE>\copydoc printMagnification </BLOCKQUOTE>
-            \see printMagnification for more information */
+        /*! \copydoc printMagnification */
         void setPrintMagnification(double __value);
-        /*! \brief returns the property printMagnification ( \copybrief printMagnification ).
-            \details Description of the parameter printMagnification is: <BLOCKQUOTE>\copydoc printMagnification </BLOCKQUOTE>
-            \see printMagnification for more information */
+        /*! \copydoc printMagnification */
         double getPrintMagnification() const;
-        /*! \brief sets the property paintMagnification ( \copybrief paintMagnification ) to the specified \a __value.
-            \details Description of the parameter paintMagnification is: <BLOCKQUOTE>\copydoc paintMagnification </BLOCKQUOTE>
-            \see paintMagnification for more information */
+        /*! \copydoc paintMagnification */
         void setPaintMagnification(double __value);
-        /*! \brief returns the property paintMagnification ( \copybrief paintMagnification ).
-            \details Description of the parameter paintMagnification is: <BLOCKQUOTE>\copydoc paintMagnification </BLOCKQUOTE>
-            \see paintMagnification for more information */
+        /*! \copydoc paintMagnification */
         double getPaintMagnification() const;
 
 
@@ -2293,7 +2292,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
 };
 
 /** \brief qHash()-specialization
- *   \ingroup jkqtpplotterclasses_tools
+ *   \ingroup jkqtpplottersupprt
  */
 inline uint qHash(const JKQTBasePlotter::textSizeKey& data) {
     return qHash(data.f.family())+qHash(data.text);

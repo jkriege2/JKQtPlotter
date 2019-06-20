@@ -525,7 +525,7 @@ void JKQTPlotter::paintUserAction() {
                         getPlotter()->getMathText()->draw(painter, Qt::AlignBottom, rec);
                     }
 
-                    txt=QString::fromStdString(jkqtp_floattolatexstr(dy, 3));
+                    txt=jkqtp_floattolatexqstr(dy, 3);
                     getPlotter()->getMathText()->parse("\\delta_{y}="+txt);
                     getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
                     //double dyh=a+d;
@@ -540,7 +540,7 @@ void JKQTPlotter::paintUserAction() {
                     }
 
 
-                    txt=QString::fromStdString("\\delta_{x,y}="+jkqtp_floattolatexstr(dxy)+", \\alpha="+jkqtp_floattolatexstr(alpha, 1)+"\\degree");
+                    txt=QString::fromStdString("\\delta_{x,y}="+jkqtp_floattolatexstr(dxy)+", \\alpha="+jkqtp_floattolatexstr(alpha, 1)+"\\degree, \\stfrac{\\mathrm{d}y}{\\mathrm{d}x}="+jkqtp_floattolatexstr(dy/dx, 1));
                     getPlotter()->getMathText()->parse(txt);
                     getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
                     if (x2<x1) {

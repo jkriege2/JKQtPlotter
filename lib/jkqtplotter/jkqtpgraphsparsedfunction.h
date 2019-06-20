@@ -24,8 +24,8 @@
 #include <QString>
 #include <QPainter>
 #include <QPair>
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpmathparser.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpmathparser.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsevaluatedfunction.h"
 
@@ -42,6 +42,8 @@ class JKQTPlotter;
     Parameters may also be given from a data column. Then first the params from the column and the the parameters from the vector are numbered.
 
     Use the variable \c x in an equation to refer to the free parameter of the curve.
+
+    \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
  */
 class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
     Q_OBJECT
@@ -57,18 +59,14 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
         /** \brief class destructor */
         virtual ~JKQTPXParsedFunctionLineGraph() override;
 
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         void setFunction(const QString & __value);
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         QString getFunction() const;
 
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         void setErrorFunction(const QString & __value);
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         QString getErrorFunction() const;
 
         /** \brief INTERNAL data structure
@@ -112,6 +110,9 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
     Parameters may also be given from a data column. Then first the params from the column and the the parameters from the vector are numbered.
 
     Use the variable \c y in an equation to refer to the free parameter of the curve (\c is also understood for convenience).
+
+    \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
+
  */
 class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         Q_OBJECT
@@ -127,18 +128,14 @@ class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineG
         /** \brief class destructor */
         virtual ~JKQTPYParsedFunctionLineGraph() override;
 
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         void setFunction(const QString & __value);
-        /*! \copydoc function
-            \see see function for details */ 
+        /*! \copydoc function */ 
         QString getFunction() const;
 
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         void setErrorFunction(const QString & __value);
-        /*! \copydoc errorFunction
-            \see see errorFunction for details */ 
+        /*! \copydoc errorFunction */ 
         QString getErrorFunction() const;
 
         /** \brief INTERNAL data structure

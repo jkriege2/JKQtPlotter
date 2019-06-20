@@ -1,6 +1,19 @@
 # Example (JKQTPlotter): Plotting a Statistical Distribution of Data {#JKQTPlotterDistributionPlot}
 This project (see [`test_distributionplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/test_distributionplot) demonstrates how to combine several different graphs and geometric elements to show a set of random values and their statistics.
 
+
+[JKQTPlotterBasicJKQTPDatastore]: @ref JKQTPlotterBasicJKQTPDatastore "Basic Usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreIterators]: @ref JKQTPlotterBasicJKQTPDatastoreIterators "Iterator-Based usage of JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreStatistics]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics "Advanced 1-Dimensional Statistics with JKQTPDatastore"
+[JKQTPlotterBasicJKQTPDatastoreRegression]: @ref JKQTPlotterBasicJKQTPDatastoreRegression "Regression Analysis (with the Statistics Library)"
+[JKQTPlotterBasicJKQTPDatastoreStatistics2D]: @ref JKQTPlotterBasicJKQTPDatastoreStatistics2D "Advanced 2-Dimensional Statistics with JKQTPDatastore"
+[statisticslibrary]: @ref jkqtptools_math_statistics "JKQTPlotter Statistics Library"
+[JKQTPlotterBoxplotStyling]: @ref JKQTPlotterBoxplotStyling "Styling different aspects of boxplots"
+[JKQTPlotterBoxplotsGraphs]: @ref JKQTPlotterBoxplotsGraphs "Boxplots"
+
+***Note*** that this example explains how to generate the statistics plots by hand, i.e. by calculating all the statistical properties for the boxplots and then adding the necessary graphs. The internal [statisticslibrary] offers methods to perform these calculations, which are explained in the tutorial [JKQTPlotterBasicJKQTPDatastoreStatistics] in detail. Several examples give more details on boxplots: [JKQTPlotterBoxplotsGraphs], [JKQTPlotterBoxplotStyling].
+
+
 The source code of the main application is (see [`test_distributionplot.cpp`](test_distributionplot.cpp).
 
 After adding all necessary data to the JKQTDatastore:

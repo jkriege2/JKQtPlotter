@@ -1,17 +1,18 @@
 TEMPLATE = subdirs
 
 SUBDIRS +=  jkqtplotterlib \
-			jkqtplotterlib_sharedlib \
+            jkqtplotterlib_sharedlib \
             jkqtmathtextlib \
             jkqtmathtextlib_sharedlib \
+            jkqtpcommonlib \
+            jkqtpcommonlib_sharedlib \
             jkqtfastplotterlib \
             jkqtfastplotterlib_sharedlib \
-            jkqtphighrestimerlib \
             jkqtmathtext_simpletest \
             jkqtplot_test \
             jkqtplotter_simpletest \
-			test_multiplot \
-			jkqtfastplotter_test
+            test_multiplot \
+            jkqtfastplotter_test
 
 
 jkqtplotterlib.file = staticlib/jkqtplotterlib/jkqtplotterlib.pro
@@ -20,13 +21,14 @@ jkqtplotterlib_sharedlib.file = sharedlib/jkqtplotterlib/jkqtplotterlib.pro
 jkqtmathtextlib.file = staticlib/jkqtmathtextlib/jkqtmathtextlib.pro
 jkqtmathtextlib_sharedlib.file = sharedlib/jkqtmathtextlib/jkqtmathtextlib.pro
 
+jkqtpcommonlib.file = staticlib/jkqtpcommonlib/jkqtpcommonlib.pro
+jkqtpcommonlib_sharedlib.file = sharedlib/jkqtpcommonlib/jkqtpcommonlib.pro
+
 jkqtfastplotterlib.file = staticlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
 jkqtfastplotterlib_sharedlib.file = sharedlib/jkqtfastplotterlib/jkqtfastplotterlib.pro
 
-jkqtphighrestimerlib.file = staticlib/jkqtphighrestimerlib/jkqtphighrestimerlib.pro
-
 jkqtmathtext_simpletest.subdir = examples/jkqtmathtext_simpletest
-jkqtmathtext_simpletest.depends = jkqtmathtextlib jkqtphighrestimerlib
+jkqtmathtext_simpletest.depends = jkqtmathtextlib 
 
 jkqtmathtext_test.subdir = examples/jkqtmathtext_test
 jkqtmathtext_test.depends = jkqtplotterlib
@@ -78,6 +80,13 @@ addSimpleTest(boxplot)
 addSimpleTest(advancedlineandfillstyling)
 addSimpleTest(imageplot_nodatastore)
 addSimpleTest(datastore)
+addSimpleTest(datastore_iterators)
+addSimpleTest(datastore_statistics)
+addSimpleTest(datastore_statistics_2d)
+addSimpleTest(datastore_regression)
+addSimpleTest(datastore_groupedstat)
+addSimpleTest(contourplot)
+addSimpleTest(violinplot)
 #addSimpleTest(rgbimageplot_opencv)
 #addSimpleTest(imageplot_opencv)
 

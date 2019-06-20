@@ -41,7 +41,7 @@
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/jkqtplotterstyle.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplottergui/jkvanishqtoolbar.h"
 #include <QKeyEvent>
@@ -50,7 +50,7 @@
 #define JKQTPLOTTER_H
 
 /** \brief initialized Qt-ressources necessary for JKQTPlotter
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 JKQTP_LIB_EXPORT void initJKQTPlotterResources();
 
@@ -926,6 +926,58 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
             plotter->setGrid(val);
         }
 
+        /** \brief sets the color of all Major grid lines
+         * */
+        inline void setGridColor(QColor color) {
+            plotter->setGridColor(color);
+        }
+
+        /** \brief sets the color of all minor grid lines
+         * */
+        inline void setMinorGridColor(QColor color) {
+            plotter->setMinorGridColor(color);
+        }
+
+        /** \brief sets the width of all Major grid lines
+         * */
+        inline void setGridWidth(double __value) {
+            plotter->setGridWidth(__value);
+        }
+
+        /** \brief sets the width of all minor grid lines
+         * */
+        inline void setMinorGridWidth(double __value) {
+            plotter->setMinorGridWidth(__value);
+        }
+
+        /** \brief sets the style of all Major grid lines
+         * */
+        inline void setGridStyle(Qt::PenStyle __value) {
+            plotter->setGridStyle(__value);
+        }
+
+        /** \brief sets the style of all minor grid lines
+         * */
+        inline void setMinorGridStyle(Qt::PenStyle __value) {
+            plotter->setMinorGridStyle(__value);
+        }
+
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showX indicates whether to show the zero-axis associated with the x-axis (i.e. x==0 or the vertical zero-axis)
+         * \param showY indicates whether to show the zero-axis associated with the y-axis (i.e. y==0 or the horizontal zero-axis)
+         * */
+        inline void setShowZeroAxes(bool showX, bool showY) {
+            plotter->setShowZeroAxes(showX, showY);
+        }
+        /** \brief switches the visibility of the zero-axes associated with the x- and y-axis
+         *
+         * \param showXY indicates whether to show the zero-axis associated with the x- and y-axis
+         * */
+        inline void setShowZeroAxes(bool showXY) {
+            plotter->setShowZeroAxes(showXY);
+        }
+
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
         inline void saveImage(const QString& filename=QString(""), bool displayPreview=true) {
@@ -1340,7 +1392,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief ties a MouseActionMode to a mouse-button and a keyboard-modifier
          *  \internal
-         *  \ingroup jkqtpplotterclasses_tools
+         *  \ingroup jkqtpplottersupprt
          */
         struct JKQTP_LIB_EXPORT MouseDragAction {
                 /** \brief constructs an invalid object */
@@ -1669,7 +1721,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 template<>
 inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, uint seed ) noexcept(noexcept(qHash(key.first, seed)) && noexcept(qHash(key.second, seed))) {
@@ -1678,7 +1730,7 @@ inline uint qHash(const QPair<Qt::MouseButton,Qt::KeyboardModifiers> &key, uint 
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 template<>
 inline uint qHash(const Qt::MouseButton &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {
@@ -1687,7 +1739,7 @@ inline uint qHash(const Qt::MouseButton &key, uint /*seed*/ ) noexcept(noexcept(
 
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
- *  \ingroup jkqtpplotterclasses_tools
+ *  \ingroup jkqtpplottersupprt
 */
 template<>
 inline uint qHash(const Qt::KeyboardModifiers &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {

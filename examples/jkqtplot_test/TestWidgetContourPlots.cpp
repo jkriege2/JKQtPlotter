@@ -90,10 +90,10 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     plotContour->setGrid(false);
     plotDensity->zoom(-0.1,1.1,-0.1,1.1);
 
-    QList<double> levels;
+    QVector<double> levels;
 //    levels<<5<<10<<25; //    levels<<5.1<<10.1;
     levels<<4<<5<<9<<14;
-    JKQTPContour* cp=new JKQTPContour(plotContour->getPlotter());
+    JKQTPColumnContourPlot* cp=new JKQTPColumnContourPlot(plotContour->getPlotter());
     cp->setX(-0.1);
     cp->setY(-0.1);
     cp->setWidth(1.1);

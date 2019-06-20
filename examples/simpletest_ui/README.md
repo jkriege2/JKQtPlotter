@@ -1,7 +1,7 @@
 # Tutorial (JKQTPlotter): Using a JKQTPlotter inside a Qt User Interface Designer (UI) File {#JKQTPlotterQtCreator}
 This project (see `./examples/simpletest_ui/`) demonstrates how to create add a `JKQTPlotter` inside the Qt Form Editor (e.g. called from of Qt Creator) into a widget. 
 
-## Instructions on how to use JKQTPlotter in the Qt Form Designer
+# Instructions on how to use JKQTPlotter in the Qt Form Designer
 
 For this to work you have to follow the steps shown below:
 
@@ -16,7 +16,7 @@ For this to work you have to follow the steps shown below:
    
    
    
-## QMake-Project of this example
+# QMake-Project of this example
 
 The QMake project for such a project looks like this (see [`jkqtplotter_simpletest_ui.pro`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest_ui/jkqtplotter_simpletest_ui.pro):
 ```.qmake
@@ -47,6 +47,7 @@ CONFIG (debug, debug|release) {
 message("LIBS = $$LIBS")
 
 win32-msvc*: DEFINES += _USE_MATH_DEFINES
+win32-msvc*: DEFINES += NOMINMAX
 
 
 
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
 }
 ```
 
-## Form Class `FormWithJKQTPlotter`
+# Form Class `FormWithJKQTPlotter`
 
 The Form was designed in the Qt Form Designer within Qt Creator, using the method described above (see `formwithjkqtplotter.ui`):
 

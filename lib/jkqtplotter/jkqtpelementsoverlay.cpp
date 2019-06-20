@@ -21,8 +21,8 @@
 
 #include "jkqtplotter/jkqtpelementsoverlay.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtcommon/jkqtptools.h"
-#include "jkqtplottertools/jkqtpdrawingtools.h"
+#include "jkqtplotter/jkqtptools.h"
+#include "jkqtcommon/jkqtpdrawingtools.h"
 #include <stdlib.h>
 #include <QDebug>
 

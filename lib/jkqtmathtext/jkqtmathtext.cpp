@@ -20,7 +20,9 @@
 
 
 #include "jkqtmathtext/jkqtmathtext.h"
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtcommon/jkqtpcodestructuring.h"
+#include "jkqtcommon/jkqtpstringtools.h"
+#include <cmath>
 #include <QFontMetricsF>
 #include <QDebug>
 #include <QFontDatabase>

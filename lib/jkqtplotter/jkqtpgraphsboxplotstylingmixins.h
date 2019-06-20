@@ -20,7 +20,7 @@
 
 #include <QString>
 #include <QPainter>
-#include "jkqtcommon/jkqtptools.h"
+#include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtp_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
@@ -49,32 +49,24 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
         JKQTPGraphBoxplotStyleMixin();
 
         void initBoxplotStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
-        /*! \copydoc boxWidthAbsolute
-            \see see boxWidthAbsolute for details */
+        /*! \copydoc boxWidthAbsolute */
         void setBoxWidthAbsolute(double __value);
-        /*! \copydoc boxWidthAbsolute
-            \see see boxWidthAbsolute for details */
+        /*! \copydoc boxWidthAbsolute */
         double getBoxWidthAbsolute() const;
 
-        /*! \copydoc drawBox
-            \see see drawBox for details */
+        /*! \copydoc drawBox */
         void setDrawBox(bool __value);
-        /*! \copydoc drawBox
-            \see see drawBox for details */
+        /*! \copydoc drawBox */
         bool getDrawBox() const;
 
-        /*! \copydoc relativeWhiskerWidth
-            \see see relativeWhiskerWidth for details */
+        /*! \copydoc relativeWhiskerWidth */
         void setRelativeWhiskerWidth(double __value);
-        /*! \copydoc relativeWhiskerWidth
-            \see see relativeWhiskerWidth for details */
+        /*! \copydoc relativeWhiskerWidth */
         double getRelativeWhiskerWidth() const;
 
-        /*! \copydoc relativeNotchIndent
-            \see see relativeNotchIndent for details */
+        /*! \copydoc relativeNotchIndent */
         void setRelativeNotchIndent(double __value);
-        /*! \copydoc relativeNotchIndent
-            \see see relativeNotchIndent for details */
+        /*! \copydoc relativeNotchIndent */
         double getRelativeNotchIndent() const;
 
 
@@ -209,11 +201,9 @@ class JKQTP_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineStyleMi
             MeanAsLine    /*!< \brief draw mean as a lie (specified by the pen settings in JKQTPGraphSymbolStyleMixin) */
         };
 
-        /*! \copydoc meanMode
-            \see see meanMode for details */
+        /*! \copydoc meanMode */
         void setMeanMode(MeanMode __value);
-        /*! \copydoc meanMode
-            \see see meanMode for details */
+        /*! \copydoc meanMode */
         MeanMode getMeanMode() const;
 
 

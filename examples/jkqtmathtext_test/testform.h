@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QStringList>
 #include "jkqtmathtext/jkqtmathtext.h"
-#include "jkqtplottertools/jkqtphighrestimer.h"
+#include "jkqtcommon/jkqtphighrestimer.h"
 #include <QPainter>
 #include <QTreeWidget>
 
