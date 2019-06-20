@@ -16,6 +16,7 @@ Starting in summer 2018, JKQTPlotter received some major workover. During this, 
 
 Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 <ul>
+  <li> new: CMake-base build, which deprecated the QMake-build</li>
   <li> new: added QMake-Projects for static and for shared library builds </li>
   <li> new: \ref exampleTutorialProjects "extensive set of Examples and Tutorials" </li>
   <li> new: checked builds with continuous integration from AppVeyor: <a href="https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master">https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master</a> </li>

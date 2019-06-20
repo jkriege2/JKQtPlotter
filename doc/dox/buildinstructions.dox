@@ -5,6 +5,22 @@ This page explains how to use JKQTPlotter in your own Projects
 
 \tableofcontents
 
+\section page_buildinstructions_CMAKE Build using CMake
+
+The preferred way to build JKQTPlotter is using CMake. The CMake-build is defined in `CMakeLists.txt` files, found in many of the directories of the code repository.
+
+You can build JKQTPlotter (and also the examples) by:
+  - Either opening the file <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/CMakeLists.txt">CMakeLists.txt</a> in QTCreator (which has CMake integration)
+  - Or by calling something like this from the source directory:
+    \code{.sh}
+        $ mkdir build; cd build
+        $ cmake ../
+        $ make
+        $ make install
+    \endcode
+.
+
+
 \section page_buildinstructions_QMAKE Build using QMake
 \subsection page_buildinstructions_QMAKEINCLUDE QMake Include Project
 If you want to simply include the JKQTPlotter Source code into your projects, without build a shared or static library and linking against it, you can use one of  these QMake-Include files:
