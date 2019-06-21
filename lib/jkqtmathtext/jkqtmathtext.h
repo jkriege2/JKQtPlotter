@@ -1160,7 +1160,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             MTDdoubleunderline,  /*!< \brief double underline under block \image html mathparser/MTDdoubleunderline.png */
             MTDtilde  /*!< \brief tilde over block \image html mathparser/MTDtilde.png */
         };
-        JKQTP_LIB_EXPORT static QString decorationToString(MTdecoration mode);
+        static QString decorationToString(MTdecoration mode);
 
         /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node
          *  \ingroup jkqtmathtext_items
@@ -1442,9 +1442,9 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
             bool operator==(const tbrDataH& other) const;
         };
-        JKQTP_LIB_EXPORT static QList<JKQTMathText::tbrData> tbrs;
-        JKQTP_LIB_EXPORT static QHash<JKQTMathText::tbrDataH, QRectF> tbrh;
-        JKQTP_LIB_EXPORT static QRectF getTightBoundingRect(const QFont &fm, const QString& text,  QPaintDevice *pd);
+        static QList<JKQTMathText::tbrData> tbrs;
+        static QHash<JKQTMathText::tbrDataH, QRectF> tbrh;
+        static QRectF getTightBoundingRect(const QFont &fm, const QString& text,  QPaintDevice *pd);
 };
 
 
