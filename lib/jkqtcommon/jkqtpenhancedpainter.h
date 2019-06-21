@@ -35,7 +35,6 @@ class JKQTP_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
     public:
         JKQTPEnhancedPainter(QPaintDevice* device);
         JKQTPEnhancedPainter();
-        virtual ~JKQTPEnhancedPainter() ;
 
 
         //void drawPath(const QPainterPath &path);
@@ -130,7 +129,7 @@ class JKQTP_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
 //        }
 
     protected:
-        virtual void initQEnhacedPainter();
+        void initQEnhacedPainter();
     private:
 
 };

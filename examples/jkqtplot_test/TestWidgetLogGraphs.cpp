@@ -38,7 +38,11 @@ TestWidgetLogGraphs::TestWidgetLogGraphs(QWidget *parent) :
     resize(1000, 800);
 
 
-    plotLOG->getPlotter()->addGraph(cx2, cy23, "data, $f(x)=5^{x/5}$", JKQTPLines);
+    JKQTPXYLineGraph* gLines;
+    plotLOG->getPlotter()->addGraph(gLines=new JKQTPXYLineGraph(plotLOG));
+    gLines->setXColumn(cx2);
+    gLines->setYColumn(cy23);
+    gLines->setTitle("data, $f(x)=5^{x/5}$");
 
 
     plotLOG->setPlotUpdateEnabled(true);

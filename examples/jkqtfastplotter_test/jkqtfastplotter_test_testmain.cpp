@@ -23,7 +23,7 @@ TestMain::TestMain(QWidget *parent) :
     y3=(double*)calloc(N1, sizeof(double));
 
 
-    QGridLayout* gl=new QGridLayout(this);
+    QGridLayout* gl=new QGridLayout();
     setLayout(gl);
     QTabWidget* t=new QTabWidget(this);
     gl->addWidget(t,0,0);

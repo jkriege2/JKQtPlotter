@@ -1,5 +1,6 @@
 #include "jkqtplotterstyle.h"
 #include <QApplication>
+#include <QDebug>
 #include "jkqtcommon/jkqttools.h"
 #include "jkqtplotter/jkqtptools.h"
 
@@ -21,13 +22,17 @@ JKQTPlotterStyle::JKQTPlotterStyle():
     displayMousePosition(true),
     toolbarEnabled(true),
     toolbarAlwaysOn(false),
-    usePaletteColors(true)
+    usePaletteColors(true),
+    registeredMouseDragActionModes(),
+    registeredMouseWheelActions(),
+    registeredMouseDoubleClickActions()
 {
     // default user-actions:
     registeredMouseDragActionModes[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(Qt::LeftButton, Qt::NoModifier)]=JKQTPMouseDragActions::jkqtpmdaZoomByRectangle;
     registeredMouseDragActionModes[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(Qt::LeftButton, Qt::ControlModifier)]=JKQTPMouseDragActions::jkqtpmdaPanPlotOnMove;
     registeredMouseDoubleClickActions[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(Qt::LeftButton, Qt::NoModifier)]=JKQTPMouseDoubleClickActions::jkqtpdcaClickMovesViewport;
     registeredMouseWheelActions[Qt::NoModifier]=JKQTPMouseWheelActions::jkqtpmwaZoomByWheel;
+    //qDebug()<<"JKQTPlotterStyle(): registeredMouseWheelActions="<<registeredMouseWheelActions;
 }
 
 void JKQTPlotterStyle::loadSettings(const QSettings &settings, const QString &group, const JKQTPlotterStyle &defaultStyle)

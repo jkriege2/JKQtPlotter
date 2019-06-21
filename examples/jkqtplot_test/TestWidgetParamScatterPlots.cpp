@@ -13,7 +13,7 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
     QWidget(parent)
 {
 
-    QVBoxLayout* layoutPSP=new QVBoxLayout(this);
+    QVBoxLayout* layoutPSP=new QVBoxLayout();
 
     setLayout(layoutPSP);
     resize(1000, 800);

@@ -29,44 +29,40 @@
 //#undef SHOW_JKQTPLOTTER_DEBUG
 //#define SHOW_JKQTPLOTTER_DEBUG
 
-JKQTPCoordinateAxis::JKQTPCoordinateAxis(JKQTBasePlotter* parent):
-    QObject(parent)
+JKQTPCoordinateAxis::JKQTPCoordinateAxis(JKQTBasePlotter* _parent):
+    QObject(_parent),
+    paramsChanged(true),
+    doUpdateScaling(true),
+    tickLabels(),
+    parent(_parent),
+    axismin(-10),
+    axismax(10),
+    axisabsoultemin(-DBL_MAX/100.),
+    axisabsoultemax(DBL_MAX/100.0),
+    axisStyle(),
+    axisMinWidth(-1),
+    width(20),
+    scale(0),
+    offset(0),
+    inverted(false),
+    tickStart(1),
+    autoAxisSpacing(true),
+    logAxis(false),
+    logAxisBase(10),
+    userTickSpacing(1),
+    userLogTickSpacing(10),
+    tickSpacing(0),
+    tickSpacingLog(10),
+    axisLabel(),
+    axisPrefix(),
+    scaleSign(1)
 {
-    this->parent=parent;
 
-    axisPrefix="";
-    scaleSign=1;
-    doUpdateScaling=true;
-
-    axismin=-10;
-    axismax=10;
-    axisabsoultemin=-DBL_MAX/100.0;
-    axisabsoultemax=DBL_MAX/100.0;
-    axisMinWidth=-1;
-
-    width=20;
-
-    scale=0;
-    offset=0;
-    inverted=false;
-
-    tickSpacing=0;
-    tickSpacingLog=10;
-    tickStart=0;
-
-    autoAxisSpacing=true;
-    logAxis=false;
-    logAxisBase=10;
-    userTickSpacing=1;
-    userLogTickSpacing=10;
-
-    axisLabel="";
-
-
-    paramsChanged=true;
 }
 
-JKQTPCoordinateAxis::~JKQTPCoordinateAxis() = default;
+JKQTPCoordinateAxis::~JKQTPCoordinateAxis() {
+
+}
 
 void JKQTPCoordinateAxis::setParent(JKQTBasePlotter* parent) {
     this->parent=parent;
@@ -1617,14 +1613,14 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
 
 
-JKQTPVerticalIndependentAxis::JKQTPVerticalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent):
-    JKQTPVerticalAxis(parent)
+JKQTPVerticalIndependentAxis::JKQTPVerticalIndependentAxis(double _axisOffset, double _axisWidth, double _otherAxisOffset, double _otherAxisWidth, JKQTBasePlotter* parent):
+    JKQTPVerticalAxis(parent),
+    axisOffset(_axisOffset),
+    axisWidth(_axisWidth),
+    otherAxisWidth(_otherAxisOffset),
+    otherAxisOffset(_otherAxisWidth),
+    otherAxisInverted(false)
 {
-    this->axisOffset=axisOffset;
-    this->axisWidth=axisWidth;
-    this->otherAxisOffset=otherAxisOffset;
-    this->otherAxisWidth=otherAxisWidth;
-    this->otherAxisInverted=false;
     if (parent) {
         axisStyle=parent->getCurrentPlotterStyle().rightColorbarAxisStyle;
     } else {
@@ -1716,7 +1712,7 @@ QSizeF JKQTPHorizontalAxis::getSize1(JKQTPEnhancedPainter& painter) {
     if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
         ptwidth+=axisStyle.labelDistance;
         // find out size of axis label
-        labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).width();
+        labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     }
 
     return QSizeF(getParentPlotWidth(), parent->pt2px(painter, ptwidth)+labwidth);
@@ -1735,7 +1731,7 @@ QSizeF JKQTPHorizontalAxis::getSize2(JKQTPEnhancedPainter& painter) {
     if (JKQTPCADrawModeHasTickLabels(axisStyle.drawMode2)) {
         ptwidth+=axisStyle.labelDistance;
         // find out size of axis label
-        labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).width();
+        labwidth+=parent->getTextSizeSize(getParent()->getCurrentPlotterStyle().defaultFontName, axisStyle.labelFontSize*parent->getFontSizeMultiplier(), axisLabel, painter).height();
     }
 
     return QSizeF(getParentPlotWidth(), parent->pt2px(painter, ptwidth)+labwidth);
@@ -2198,14 +2194,14 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
 
 
-JKQTPHorizontalIndependentAxis::JKQTPHorizontalIndependentAxis(double axisOffset, double axisWidth, double otherAxisOffset, double otherAxisWidth, JKQTBasePlotter* parent):
-    JKQTPHorizontalAxis(parent)
+JKQTPHorizontalIndependentAxis::JKQTPHorizontalIndependentAxis(double _axisOffset, double _axisWidth, double _otherAxisOffset, double _otherAxisWidth, JKQTBasePlotter* parent):
+    JKQTPHorizontalAxis(parent),
+    axisOffset(_axisOffset),
+    axisWidth(_axisWidth),
+    otherAxisWidth(_otherAxisOffset),
+    otherAxisOffset(_otherAxisWidth),
+    otherAxisInverted(false)
 {
-    this->axisOffset=axisOffset;
-    this->axisWidth=axisWidth;
-    this->otherAxisOffset=otherAxisOffset;
-    this->otherAxisWidth=otherAxisWidth;
-    this->otherAxisInverted=false;
     if (parent) {
         axisStyle=parent->getCurrentPlotterStyle().topColorbarAxisStyle;
     } else {

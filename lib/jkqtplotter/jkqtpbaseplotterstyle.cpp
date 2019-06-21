@@ -34,6 +34,7 @@ JKQTBasePlotterStyle::JKQTBasePlotterStyle():
     graphFillColorDerivationMode(JKQTPFFCMLighterColor),
     graphErrorColorDerivationMode(JKQTPFFCMDarkerColor),
     graphErrorFillColorDerivationMode(JKQTPFFCMEvenLighterColor),
+    defaultGraphColors(), defaultGraphPenStyles(), defaultGraphSymbols(), defaultGraphFillStyles(),
     keyStyle(*this),
     xAxisStyle(*this),
     yAxisStyle(*this),

@@ -12,6 +12,7 @@ The preferred way to build JKQTPlotter is using CMake. The CMake-build is define
 You can build JKQTPlotter (and also the examples) by:
   - Either opening the file <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/CMakeLists.txt">CMakeLists.txt</a> in QTCreator (which has CMake integration)
   - Or by calling something like this from the source directory:
+  
     \code{.sh}
         $ mkdir build; cd build
         $ cmake ../

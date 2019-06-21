@@ -12,11 +12,10 @@
 TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
     QWidget(parent)
 {
-
     // plotter for images
     QWidget* winrgb=new QWidget(this);
-    QVBoxLayout* layoutrgb=new QVBoxLayout(this);
-    QFormLayout* frm=new QFormLayout(nullptr);
+    QVBoxLayout* layoutrgb=new QVBoxLayout();
+    QFormLayout* frm=new QFormLayout();
     winrgb->setLayout(layoutrgb);
     winrgb->resize(1000, 800);
     plotImgRGB=new JKQTPlotter(true, winrgb);

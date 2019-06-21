@@ -14,7 +14,7 @@
 #include <cmath>
 
 template <class TGraph, JKQTPSingleColumnSymbolsGraph::DataDirection DataOrientation>
-void showPlot() {
+JKQTPlotter* showPlot() {
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPlotter* plot=new JKQTPlotter();
@@ -157,6 +157,8 @@ void showPlot() {
     // show plotter and make it a decent size
     plot->show();
     plot->resize(800,600);
+
+    return plot;
 }
 
 int main(int argc, char* argv[])

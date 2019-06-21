@@ -41,6 +41,7 @@ JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *pa
     parentPlotStyle=-1;
     dataDirection=DataDirection::Y;
     position=0;
+    width=1;
 
     initSymbolStyle(parent, parentPlotStyle);
 }
@@ -56,8 +57,11 @@ JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTPlotter *parent
 
 bool JKQTPSingleColumnSymbolsGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
 {
+    //std::cout<<"JKQTPSingleColumnSymbolsGraph::getXMinMax(minx="<<minx<<", maxx="<<maxx<<", smallestGreaterZero="<<smallestGreaterZero<<")\n";
     if (dataDirection==DataDirection::X) {
-        return getDataMinMax(dataColumn, minx, maxx, smallestGreaterZero);
+        bool res= getDataMinMax(dataColumn, minx, maxx, smallestGreaterZero);
+        //std::cout<<"JKQTPSingleColumnSymbolsGraph::getXMinMax(minx="<<minx<<", maxx="<<maxx<<", smallestGreaterZero="<<smallestGreaterZero<<"): dataDirection==DataDirection::X -->"<<std::boolalpha<<res<<"\n";
+        return res;
     } else {
         minx=position;
         maxx=position;
@@ -65,6 +69,7 @@ bool JKQTPSingleColumnSymbolsGraph::getXMinMax(double &minx, double &maxx, doubl
             minx=position-width/2;
             maxx=position+width/2;
         }
+        ///std::cout<<"JKQTPSingleColumnSymbolsGraph::getXMinMax(minx="<<minx<<", maxx="<<maxx<<", smallestGreaterZero="<<smallestGreaterZero<<"): dataDirection!=DataDirection::X -->"<<std::boolalpha<<true<<"\n";
         return true;
         //smallestGreaterZero=qMax(double(0.0), qMin(baseline, baseline+peakHeight));
     }
@@ -72,8 +77,11 @@ bool JKQTPSingleColumnSymbolsGraph::getXMinMax(double &minx, double &maxx, doubl
 
 bool JKQTPSingleColumnSymbolsGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
 {
+    //std::cout<<"JKQTPSingleColumnSymbolsGraph::getYMinMax(miny="<<miny<<", maxy="<<maxy<<", smallestGreaterZero="<<smallestGreaterZero<<")\n";
     if (dataDirection==DataDirection::Y) {
-        return getDataMinMax(dataColumn, miny, maxy, smallestGreaterZero);
+        bool res= getDataMinMax(dataColumn, miny, maxy, smallestGreaterZero);
+        //std::cout<<"JKQTPSingleColumnSymbolsGraph::getYMinMax(miny="<<miny<<", maxy="<<maxy<<", smallestGreaterZero="<<smallestGreaterZero<<"): dataDirection!=DataDirection::Y -->"<<std::boolalpha<<res<<"\n";
+        return res;
     } else {
         miny=position;
         maxy=position;
@@ -81,6 +89,7 @@ bool JKQTPSingleColumnSymbolsGraph::getYMinMax(double &miny, double &maxy, doubl
             miny=position-width/2;
             maxy=position+width/2;
         }
+        //std::cout<<"JKQTPSingleColumnSymbolsGraph::getYMinMax(miny="<<miny<<", maxy="<<maxy<<", smallestGreaterZero="<<smallestGreaterZero<<"): dataDirection!=DataDirection::Y -->"<<std::boolalpha<<true<<" position="<<position<<", width="<<width<<"\n";
         return true;
         //smallestGreaterZero=qMax(double(0.0), qMin(baseline, baseline+peakHeight));
     }

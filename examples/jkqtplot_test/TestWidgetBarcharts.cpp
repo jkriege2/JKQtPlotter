@@ -14,7 +14,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
 {
 
 
-    QVBoxLayout* barchartLayout=new QVBoxLayout(this);
+    QVBoxLayout* barchartLayout=new QVBoxLayout();
     setLayout(barchartLayout);
     resize(1000, 800);
     plotBarchart=new JKQTPlotter(true, this);

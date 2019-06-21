@@ -235,6 +235,20 @@ inline bool jkqtp_approximatelyEqual(double a, double b, double epsilon=2.0*JKQT
     return fabs(a - b) <= epsilon;
 }
 
+/** \brief compare two floats \a a and \a b for uneuqality, where any difference smaller than \a epsilon is seen as equality
+ *  \ingroup jkqtptools_math_basic */
+inline bool jkqtp_approximatelyUnequal(float a, float b, float epsilon=2.0f*JKQTP_FLOAT_EPSILON)
+{
+    return fabsf(a - b) > epsilon;
+}
+
+/** \brief compare two doubles \a a and \a b for uneuqality, where any difference smaller than \a epsilon is seen as equality
+ *  \ingroup jkqtptools_math_basic */
+inline bool jkqtp_approximatelyUnequal(double a, double b, double epsilon=2.0*JKQTP_DOUBLE_EPSILON)
+{
+    return fabs(a - b) > epsilon;
+}
+
 /** \brief returns the given value \a v (i.e. identity function)
  *  \ingroup jkqtptools_math_basic */
 template<typename T>

@@ -297,7 +297,7 @@ void JKQTPContourPlot::calcContourLines(QList<QVector<QLineF> > &ContourLines)
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaat(QString("JKQTPContourPlot::calcContourLines()"));
 #else
-    qDebug()<<"JKQTPContourPlot::calcContourLines()";
+    //qDebug()<<"JKQTPContourPlot::calcContourLines()";
 #endif
 
     double scale=1; ///< scale of the contour levels;

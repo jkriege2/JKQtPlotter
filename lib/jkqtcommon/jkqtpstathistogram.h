@@ -108,10 +108,12 @@ inline void jkqtpstatHistogram1DAutoranged(InputIt first, InputIt last, OutputIt
     }
     double h=0;
     for (size_t i=0; i<histX.size(); i++) {
-        *++histogramXOut=histX[i]+xoffset;
+        *histogramXOut=histX[i]+xoffset;
         if (cummulative) h+=(histY[i]/NNorm);
         else h=histY[i]/NNorm;
-        *++histogramYOut=h;
+        *histogramYOut=h;
+        ++histogramXOut;
+        ++histogramYOut;
     }
 }
 
@@ -171,11 +173,12 @@ inline void jkqtpstatHistogram1DAutoranged(InputIt first, InputIt last, OutputIt
     }
     double h=0;
     for (size_t i=0; i<histX.size(); i++) {
-        *++histogramXOut=histX[i]+xoffset;
+        *histogramXOut=histX[i]+xoffset;
         if (cummulative) h+=(histY[i]/NNorm);
         else h=histY[i]/NNorm;
-        *++histogramYOut=h;
-    }
+        *histogramYOut=h;
+        ++histogramXOut;
+        ++histogramYOut;    }
 }
 
 
@@ -243,11 +246,12 @@ inline void jkqtpstatHistogram1D(InputIt first, InputIt last, BinsInputIt binsFi
             if (binXMode==JKQTPStatHistogramBinXMode::XIsMid) xoffset=binw/2.0;
         }
 
-        *++histogramXOut=histX[i]+xoffset;
+        *histogramXOut=histX[i]+xoffset;
         if (cummulative) h+=(histY[i]/NNorm);
         else h=histY[i]/NNorm;
-        *++histogramYOut=h;
-    }
+        *histogramYOut=h;
+        ++histogramXOut;
+        ++histogramYOut;    }
 }
 
 

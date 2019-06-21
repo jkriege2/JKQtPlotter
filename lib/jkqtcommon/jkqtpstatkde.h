@@ -253,10 +253,12 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
     // output the KDE
     double h=0;
     for (size_t i=0; i<histX.size(); i++) {
-        *++KDEXOut=histX[i];
+        *KDEXOut=histX[i];
         if (cummulative) h+=histY[i];
         else h=histY[i];
-        *++KDEYOut=h;
+        *KDEYOut=h;
+        ++KDEXOut;
+        ++KDEYOut;
     }
 }
 
@@ -307,10 +309,12 @@ inline void jkqtpstatKDE1DAutoranged(InputIt first, InputIt last, OutputIt KDEXO
     // output the KDE
     double h=0;
     for (size_t i=0; i<histX.size(); i++) {
-        *++KDEXOut=histX[i];
+        *KDEXOut=histX[i];
         if (cummulative) h+=histY[i];
         else h=histY[i];
-        *++KDEYOut=h;
+        *KDEYOut=h;
+        ++KDEXOut;
+        ++KDEYOut;
     }
 
 }
@@ -360,10 +364,12 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, BinsInputIt binsFirst, B
     // output the KDE
     double h=0;
     for (size_t i=0; i<histX.size(); i++) {
-        *++KDEXOut=histX[i];
+        *KDEXOut=histX[i];
         if (cummulative) h+=histY[i];
         else h=histY[i];
-        *++KDEYOut=h;
+        *KDEYOut=h;
+        ++KDEXOut;
+        ++KDEYOut;
     }
 
 }
@@ -409,10 +415,12 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double 
     // output the KDE
     double h=0;
     for (size_t i=0; i<histX.size(); i++) {
-        *++KDEXOut=histX[i];
+        *KDEXOut=histX[i];
         if (cummulative) h+=histY[i];
         else h=histY[i];
-        *++KDEYOut=h;
+        *KDEYOut=h;
+        ++KDEXOut;
+        ++KDEYOut;
     }
 
 }

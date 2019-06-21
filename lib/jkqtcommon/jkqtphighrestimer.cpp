@@ -28,7 +28,7 @@
 #include "jkqtphighrestimer.h" // class's header file
 
 
-JKQTPHighResTimer::JKQTPHighResTimer() {
+JKQTPHighResTimer::JKQTPHighResTimer(): last(), freq(0) {
   start();
 }
 

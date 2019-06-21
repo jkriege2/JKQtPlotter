@@ -1752,9 +1752,9 @@ inline JKQTPColumnContourPlot* jkqtpstatAddKDE2DContour(JKQTBasePlotter* plotter
 */
 template <class InputItX, class InputItY>
 inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false) {
-    double cA;
+    double cA=0;
     if (coeffA) cA=*coeffA;
-    double cB;
+    double cB=0;
     if (coeffB) cB=*coeffB;
 
     JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
@@ -1828,9 +1828,9 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTPXYGr
 */
 template <class InputItX, class InputItY>
 inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSLinearRegression(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100) {
-    double cA;
+    double cA=0;
     if (coeffA) cA=*coeffA;
-    double cB;
+    double cB=0;
     if (coeffB) cB=*coeffB;
 
     JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
@@ -1916,9 +1916,9 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSLinearRegression
 */
 template <class InputItX, class InputItY, class InputItW>
 inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTBasePlotter* plotter, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, InputItW firstW, InputItW lastW, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, std::function<double(double)> fWeightDataToWi=&jkqtp_identity<double>) {
-    double cA;
+    double cA=0;
     if (coeffA) cA=*coeffA;
-    double cB;
+    double cB=0;
     if (coeffB) cB=*coeffB;
 
     JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
@@ -2002,9 +2002,9 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(J
 */
 template <class InputItX, class InputItY>
 inline JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTBasePlotter* plotter, JKQTPStatRegressionModelType type, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false) {
-    double cA;
+    double cA=0;
     if (coeffA) cA=*coeffA;
-    double cB;
+    double cB=0;
     if (coeffB) cB=*coeffB;
 
     JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
@@ -2078,9 +2078,9 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTPXYGraph *d
 */
 template <class InputItX, class InputItY>
 inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSRegression(JKQTBasePlotter* plotter, JKQTPStatRegressionModelType type, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100) {
-    double cA;
+    double cA=0;
     if (coeffA) cA=*coeffA;
-    double cB;
+    double cB=0;
     if (coeffB) cB=*coeffB;
 
     JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");
@@ -2168,9 +2168,9 @@ JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSRegression(JKQTP
 */
 template <class InputItX, class InputItY, class InputItW>
 inline JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTBasePlotter* plotter, JKQTPStatRegressionModelType type, InputItX firstX, InputItX lastX, InputItY firstY, InputItY lastY, InputItW firstW, InputItW lastW, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, std::function<double(double)> fWeightDataToWi=&jkqtp_identity<double>) {
-    double cA;
+    double cA=0;
     if (coeffA) cA=*coeffA;
-    double cB;
+    double cB=0;
     if (coeffB) cB=*coeffB;
 
     JKQTPASSERT_M(!fixA || (fixA && coeffA!=nullptr), "if fixA=true, coeffA needs to be provided");

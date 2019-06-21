@@ -30,12 +30,11 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 int JKQTPAutoOutputTimer::global_indent=0;
 
-JKQTPAutoOutputTimer::JKQTPAutoOutputTimer(const QString& message) :
-    QElapsedTimer()
+JKQTPAutoOutputTimer::JKQTPAutoOutputTimer(const QString& _message) :
+    QElapsedTimer(),message(_message),indent()
 {
     this->indent=QString(global_indent, QLatin1Char(' '));
     global_indent+=4;
-    this->message=message;
 #if QT_VERSION >= 0x040800
     qDebug()<<this->indent<<"TIMER_START:  "<<message;
 #else

@@ -8,9 +8,20 @@ environment:
     QTVER: 5.11
     JOMDIR: C:\Qt\Tools\QtCreator\bin
     MINGWDIR: C:\Qt\Tools\mingw530_32
-    
+    VSVER: 0
 
   matrix:
+    - QTABI: mingw53_32
+      ARCH: x86
+      MAKETOOL: mingw32-make
+      CMAKE_GENERATOR: "MinGW Makefiles"
+      USE_CMAKE: true
+      MSBUILD_FLAGS: 
+    - QTABI: mingw53_32
+      ARCH: x86
+      QMAKESPEC: win32-g++
+      MAKETOOL: mingw32-make
+      USE_CMAKE: false
     - QTABI: msvc2017_64
       ARCH: x64
       VSVER: 2017
@@ -35,17 +46,6 @@ environment:
       QMAKESPEC: win32-msvc
       MAKETOOL: jom
       USE_CMAKE: false
-    - QTABI: mingw53_32
-      ARCH: x86
-      MAKETOOL: mingw32-make
-      CMAKE_GENERATOR: "MinGW Makefiles"
-      USE_CMAKE: true
-      MSBUILD_FLAGS: 
-    - QTABI: mingw53_32
-      ARCH: x86
-      QMAKESPEC: win32-g++
-      MAKETOOL: mingw32-make
-      USE_CMAKE: false
 
 skip_tags: true
 
@@ -56,6 +56,7 @@ build:
 configuration:
   - release
   - debug
+
 
 install:
   - IF %VSVER% GTR 14 (
@@ -69,6 +70,8 @@ install:
     )
   - set PATH=C:\Qt\%QTVER%\%QTABI%\bin;%JOMDIR%;%PATH%
   - echo "BUILD ID Qt%QTVER%_%QTABI%_%APPVEYOR_BUILD_VERSION%_%CONFIGURATION%"
+  # Rename sh.exe as sh.exe in PATH interferes with MinGW
+  - rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
 
 build_script:
 #  - dir "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"
@@ -83,7 +86,7 @@ build_script:
       cmake --version &&
       cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QT5%" .. &&
       echo "Build..." &&
-      cmake --build --config "%CMAKE_CONFIGURATION%" -- %MSBUILD_FLAGS% ) 
+      cmake --build . --config "%CMAKE_CONFIGURATION%" -- %MSBUILD_FLAGS% ) 
     else (
       echo "Call QMake..." &&
       qmake.exe -v &&

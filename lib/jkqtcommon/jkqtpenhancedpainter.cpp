@@ -38,9 +38,6 @@ JKQTPEnhancedPainter::JKQTPEnhancedPainter():
     initQEnhacedPainter();
 }
 
-JKQTPEnhancedPainter::~JKQTPEnhancedPainter()
-= default;
-
 //void JKQTPEnhancedPainter::drawLines(const QLineF *lines, int lineCount)
 //{
 

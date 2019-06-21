@@ -405,7 +405,8 @@ inline void jkqtpstatCumSum(InputIt first, InputIt last, OutputIt output) {
         if (JKQTPIsOKFloat(v)) {
             sum=sum+v;
         }
-        *++output=sum;
+        *output=sum;
+        ++output;
     }
 }
 
@@ -430,7 +431,8 @@ inline size_t jkqtpstatFilterGoodFloat(InputIt first, InputIt last, OutputIt out
     for (auto it=first; it!=last; ++it) {
         const double v=jkqtp_todouble(*it);
         if (JKQTPIsOKFloat(v)) {
-            *++output=v;
+            *output=v;
+            ++output;
             NN++;
         }
     }
@@ -913,7 +915,8 @@ inline void jkqtpstat5NumberStatisticsAndOutliersOfSortedVector(const TVector& d
         if (maximum) *maximum=qmax;
         for (auto it=data.begin(); it!=data.end(); ++it) {
             if (*it<qmin || *it>qmax) {
-                *++outliersout=*it;
+                *outliersout=*it;
+                ++outliersout;
             }
         }
         if (median) {

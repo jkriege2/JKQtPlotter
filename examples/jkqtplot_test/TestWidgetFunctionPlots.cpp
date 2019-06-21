@@ -14,7 +14,7 @@ TestWidgetFunctionPlots::TestWidgetFunctionPlots(QWidget *parent) :
 {
 
 
-    QVBoxLayout* plotFuncLayout=new QVBoxLayout(this);
+    QVBoxLayout* plotFuncLayout=new QVBoxLayout();
     setLayout(plotFuncLayout);
     plotFuncPlt=new JKQTPlotter(true, this);
     plotFuncLayout->addWidget(plotFuncPlt);

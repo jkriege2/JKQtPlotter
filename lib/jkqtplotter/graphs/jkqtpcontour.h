@@ -217,7 +217,7 @@ class JKQTP_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGrap
          * @param level contour plane
          * @return above (1), on the plane (0), below (-1);
          */
-        inline int compare2level(const QVector3D &vertex, double level) const ;
+        inline int compare2level(const QVector3D &vertex, float level) const ;
         /** \brief calcContourLines calculates the contour lines using the CONREC algorithm */
         void calcContourLines(QList<QVector<QLineF > > &ContourLines);
         /** \brief For Caching: the contour lines as vector of single lines (one for each triangle). the list index refers to the contour level.
@@ -445,12 +445,14 @@ QPointF JKQTPContourPlot::interpolatePoint(const QVector3D &point1, const QVecto
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-int JKQTPContourPlot::compare2level(const QVector3D &vertex, double level) const {
-    if (vertex.z() > level)
+int JKQTPContourPlot::compare2level(const QVector3D &vertex, float level) const {
+    if (vertex.z() > level)  {
         return 1;
+    }
 
-    if (vertex.z() < level)
+    if (vertex.z() < level) {
         return -1;
+    }
 
     return 0;
 }

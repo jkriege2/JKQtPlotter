@@ -40,8 +40,10 @@ int main(int argc, char* argv[])
     auto biXCol=datastore->backInserter(XCol);
     auto biYCol=datastore->backInserter(YCol);
     for (double x=0; x<4.0*M_PI; x+=4.0*M_PI/50.0) {
-        *++biXCol=x;
-        *++biYCol=cos(x);
+        *biXCol=x;
+        *biYCol=cos(x);
+        ++biXCol;
+        ++biYCol;
     }
     // 2.3 combining with addLinearColumn() you can also use C++ STL algorithms:
     //size_t XCol=datastore->addLinearColumn(50, 0, 4.0*M_PI, "cos curve: x-data");

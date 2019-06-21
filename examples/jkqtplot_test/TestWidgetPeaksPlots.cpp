@@ -15,7 +15,7 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
 {
 
 
-    QVBoxLayout* layoutpeaks=new QVBoxLayout(this);
+    QVBoxLayout* layoutpeaks=new QVBoxLayout();
     setLayout(layoutpeaks);
     resize(1000, 800);
     plotPeaks=new JKQTPlotter(true, this);

@@ -43,24 +43,36 @@
  **************************************************************************************************************************/
 JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastore* datast):
     QWidget(parent, Qt::Widget),
-    plotterStyle(JKQTPGetSystemDefaultStyle())
+    currentMouseDragAction(),
+    doDrawing(false),
+    plotter(nullptr),
+    mouseDragingRectangle(false),
+    mouseDragRectXStart(0), mouseDragRectXStartPixel(0), mouseDragRectXEndPixel(0),
+    mouseDragRectYEndPixel(0),  mouseDragRectXEnd(0), mouseDragRectYStart(0),
+    mouseDragRectYStartPixel(0), mouseDragRectYEnd(0),
+    mouseDragMarkers(),
+    image(), imageNoOverlays(), oldImage(),
+    menuSpecialContextMenu(nullptr),toolbar(nullptr), masterPlotterX(nullptr), masterPlotterY(nullptr),
+    mousePosX(0), mousePosY(0),
+    magnification(1),
+    minSize(),
+    contextMenu(nullptr),
+    contextMenuMode(JKQTPContextMenuModes::jkqtpcmmStandardContextMenu),
+    mouseContextX(0), mouseContextY(0), mouseLastClickX(0),  mouseLastClickY(0),
+    contextSubMenus(),
+    plotterStyle(JKQTPGetSystemDefaultStyle()),
+    resizeTimer(), registeredOverrideMouseDragActionModes(),
+    actgrpMouseLeft(nullptr), actMouseLeftAsDefault(nullptr), actMouseLeftAsRuler(nullptr), actMouseLeftAsToolTip(nullptr), actMouseLeftAsZoomRect(nullptr), actMouseLeftAsPanView(nullptr)
 {    
     initJKQTPlotterResources();
 
-    menuSpecialContextMenu=nullptr;
-    mouseContextX=0;
-    mouseContextY=0;
     setParent(parent);
     connect(&resizeTimer, SIGNAL(timeout()), this, SLOT(delayedResizeEvent()));
-    doDrawing=false;
-    magnification=1;
+
     plotter=new JKQTBasePlotter(datastore_internal, this, datast);
     plotter->setEmittingSignalsEnabled(false);
     fixBasePlotterSettings();
 
-
-    mousePosX=0;
-    mousePosY=0;
 
     connect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
     connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
@@ -70,10 +82,6 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     image=QImage(width(), height(), QImage::Format_ARGB32);
     oldImage=image;
     imageNoOverlays=image;
-    mouseDragingRectangle=false;
-
-    // set default user-interactions:
-    contextMenuMode=JKQTPContextMenuModes::jkqtpcmmStandardContextMenu;
 
     // enable mouse-tracking, so mouseMoved-Events can be caught
     setMouseTracking(true);
@@ -334,17 +342,23 @@ JKQTPUserActionMarkerType JKQTPlotter::getUserActionMarkerType() const
 
 void JKQTPlotter::registerMouseWheelAction(Qt::KeyboardModifiers modifier, JKQTPMouseWheelActions action)
 {
+    qDebug()<<"registerMouseWheelAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseWheelActions;
     plotterStyle.registeredMouseWheelActions[modifier]=action;
+    qDebug()<<"registerMouseWheelAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseWheelActions;
 }
 
 void JKQTPlotter::deregisterMouseWheelAction(Qt::KeyboardModifiers modifier)
 {
+    qDebug()<<"deregisterMouseWheelAction("<<modifier<<"): "<<plotterStyle.registeredMouseWheelActions;
     plotterStyle.registeredMouseWheelActions.remove(modifier);
+    qDebug()<<"deregisterMouseWheelAction("<<modifier<<"): "<<plotterStyle.registeredMouseWheelActions;
 }
 
 void JKQTPlotter::clearAllMouseWheelActions()
 {
+    qDebug()<<"clearAllMouseWheelActions(): "<<plotterStyle.registeredMouseWheelActions;
     plotterStyle.registeredMouseWheelActions.clear();
+    qDebug()<<"clearAllMouseWheelActions(): "<<plotterStyle.registeredMouseWheelActions;
 }
 
 
@@ -472,7 +486,7 @@ void JKQTPlotter::paintUserAction() {
             painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, true);
             painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, true);
             painter.setPen(plotterStyle.userActionOverlayPen);
-            if ((mouseDragRectXEnd!=mouseDragRectXStart) && (mouseDragRectYEnd!=mouseDragRectYStart)) {
+            if (jkqtp_approximatelyUnequal(mouseDragRectXEnd,mouseDragRectXStart) && jkqtp_approximatelyUnequal(mouseDragRectYEnd,mouseDragRectYStart)) {
                 double x1=plotter->x2p(mouseDragRectXStart)*magnification;
                 double y1=plotter->y2p(mouseDragRectYStart)*magnification;
                 double x2=plotter->x2p(mouseDragRectXEnd)*magnification;
@@ -708,10 +722,10 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
             if (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) {
                 emit plotNewZoomRectangle(mouseDragRectXStart, mouseDragRectXEnd, mouseDragRectYStart, mouseDragRectYEnd, event->modifiers());
             }
-            if ((currentMouseDragAction.mode==jkqtpmdaScribbleForEvents) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
+            if ((currentMouseDragAction.mode==jkqtpmdaScribbleForEvents) && (jkqtp_approximatelyUnequal(mouseDragRectXStart,mouseDragRectXEnd) || jkqtp_approximatelyUnequal(mouseDragRectYStart,mouseDragRectYEnd)) ) {
                 emit userScribbleClick(mouseDragRectXEnd, mouseDragRectYEnd, event->modifiers(), false, false);
             }
-            if ((currentMouseDragAction.mode==jkqtpmdaPanPlotOnMove) && ((mouseDragRectXStart!=mouseDragRectXEnd) || (mouseDragRectYStart!=mouseDragRectYEnd)) ) {
+            if ((currentMouseDragAction.mode==jkqtpmdaPanPlotOnMove) && (jkqtp_approximatelyUnequal(mouseDragRectXStart,mouseDragRectXEnd) || jkqtp_approximatelyUnequal(mouseDragRectYStart,mouseDragRectYEnd)) ) {
                 QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
                 if  ( (mouseLastClickX/magnification<plotter->getInternalPlotBorderLeft()) || (mouseLastClickX/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
                     zoomRect.translate(0, mouseDragRectYStartPixel-mouseDragRectYEndPixel);
@@ -797,7 +811,7 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
         double x2=mouseDragRectXEnd;
         double y2=mouseDragRectYEnd;
 
-        if ((mouseDragRectXStart!=mouseDragRectXEnd) && (mouseDragRectYStart!=mouseDragRectYEnd)) {
+        if (jkqtp_approximatelyUnequal(mouseDragRectXStart,mouseDragRectXEnd) && jkqtp_approximatelyUnequal(mouseDragRectYStart,mouseDragRectYEnd)) {
             if (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) {
                 double xmin=mouseDragRectXStart;
                 double xmax=mouseDragRectXEnd;
@@ -913,11 +927,15 @@ void JKQTPlotter::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
-    //qDebug()<<"wheelEvent()";
+    //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
     auto itAction=findMatchingMouseWheelAction(event->modifiers());
-    if (itAction!=plotterStyle.registeredMouseWheelActions.end())  {
+    //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
+    //qDebug()<<"wheelEvent("<<event->modifiers()<<"): itAction="<<itAction.key()<<","<<itAction.value()<<"  !=end:"<<(itAction!=plotterStyle.registeredMouseWheelActions.end())<<"  ==end:"<<(itAction==plotterStyle.registeredMouseWheelActions.end());
+
+    if (itAction!=plotterStyle.registeredMouseWheelActions.end()) {
         if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
-            //qDebug()<<"wheelEvent():ZoomByWheel";
+        //if (act==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
+            //qDebug()<<"wheelEvent("<<event->modifiers()<<"):ZoomByWheel";
             double factor=pow(2.0, 1.0*static_cast<double>(event->delta())/120.0)*2.0;
             double xmin=plotter->p2x(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
             double xmax=plotter->p2x(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
@@ -932,7 +950,8 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
             }
             plotter->setXY(xmin, xmax, ymin, ymax);
         } else if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
-            //qDebug()<<"wheelEvent():PanByWheel";
+        //} else if (act==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
+            //qDebug()<<"wheelEvent("<<event->modifiers()<<"):PanByWheel";
             QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
             QPointF d=QPointF(event->angleDelta().x()/120.0*zoomRect.width()/10.0,
                               event->angleDelta().y()/120.0*zoomRect.height()/10.0);
@@ -1131,7 +1150,7 @@ void JKQTPlotter::redrawPlot() {
     if (!doDrawing) return;
     disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
     disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
-    plotter->setWidgetSize(width()/magnification, height()/magnification-getPlotYOffset());
+    plotter->setWidgetSize(jkqtp_roundTo<int>(width()/magnification), jkqtp_roundTo<int>(height()/magnification-getPlotYOffset()));
     JKQTPEnhancedPainter painter(&image);
     if (painter.isActive()) {
         painter.scale(magnification, magnification);
@@ -1167,7 +1186,7 @@ void JKQTPlotter::paintEvent(QPaintEvent *event){
         p->drawRect(geometry());
         p->restore();
         if (plotterStyle.displayMousePosition ) {
-            p->drawText(plotter->getInternalPlotBorderLeft(), getPlotYOffset()-1, plotterStyle.mousePositionTemplate.arg(mousePosX).arg(mousePosY));
+            p->drawText(QPointF(plotter->getInternalPlotBorderLeft(), getPlotYOffset()-1), plotterStyle.mousePositionTemplate.arg(mousePosX).arg(mousePosY));
         }
 
         int plotImageWidth=width();
@@ -1205,7 +1224,7 @@ void JKQTPlotter::resizeEvent(QResizeEvent *event) {
      }
 
      //updateGeometry();
-     //std::cout<<"resize DONE\n";
+     //qDebug()<<"resize DONE width()="<<width()<<" height()="<<height()<<" plotImageWidth="<<plotImageWidth<<" plotImageHeight="<<plotImageHeight<<" sizeChanged="<<sizeChanged<<"\n";
 }
 
 void JKQTPlotter::delayedResizeEvent()
@@ -1214,7 +1233,7 @@ void JKQTPlotter::delayedResizeEvent()
     int plotImageHeight=height();
 
     plotImageHeight=plotImageHeight-getPlotYOffset();
-    //std::cout<<"resize: "<<plotImageWidth<<" x "<<plotImageHeight<<std::endl;
+    //qDebug()<<"resize: "<<plotImageWidth<<" x "<<plotImageHeight<<std::endl;
     bool sizeChanged=false;
     if (plotImageWidth != image.width() || plotImageHeight != image.height()) {
 
@@ -1335,7 +1354,7 @@ bool JKQTPlotter::isPlotUpdateEnabled() const {
 
 void JKQTPlotter::pzoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* /*sender*/) {
     emit zoomChangedLocally(newxmin, newxmax, newymin, newymax, this);
-    minSize=QSize(plotter->getInternalPlotBorderLeft()+plotter->getInternalPlotBorderRight()+10, plotter->getInternalPlotBorderTop()+plotter->getInternalPlotBorderBottom()+10);
+    minSize=QSizeF(plotter->getInternalPlotBorderLeft()+plotter->getInternalPlotBorderRight()+10, plotter->getInternalPlotBorderTop()+plotter->getInternalPlotBorderBottom()+10).toSize();
 }
 
 void JKQTPlotter::intBeforePlotScalingRecalculate() {
@@ -1650,25 +1669,46 @@ void JKQTPlotter::openStandardAndSpecialContextMenu(int x, int y)
 
 JKQTPMouseDragActionsHashMapIterator JKQTPlotter::findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool* found) const
 {
-    auto it=registeredOverrideMouseDragActionModes.find(qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers));
-    if (it!=registeredOverrideMouseDragActionModes.end()) {
-        if (found) *found=true;
-        return it;
+    JKQTPMouseDragActionsHashMapIterator it=registeredOverrideMouseDragActionModes.begin();
+    while (it!=registeredOverrideMouseDragActionModes.end() ) {
+        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+            if (found) *found=true;
+            return it;
+        }
+        ++it;
     }
-    auto itt=plotterStyle.registeredMouseDragActionModes.find(qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers));
-    if (found) *found=(itt!=plotterStyle.registeredMouseDragActionModes.end());
-    return itt;
+    it=plotterStyle.registeredMouseDragActionModes.begin();
+    while (it!=plotterStyle.registeredMouseDragActionModes.end() ) {
+        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+            if (found) *found=true;
+            return it;
+        }
+        ++it;
+    }
+    if (found) *found=false;
+    return plotterStyle.registeredMouseDragActionModes.end();
 }
 
 JKQTPMouseDoubleClickActionsHashMapIterator JKQTPlotter::findMatchingMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const
 {
-    return plotterStyle.registeredMouseDoubleClickActions.find(qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers));
+    for (JKQTPMouseDoubleClickActionsHashMapIterator it=plotterStyle.registeredMouseDoubleClickActions.begin(); it!=plotterStyle.registeredMouseDoubleClickActions.end(); ++it) {
+        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+            return it;
+        }
+    }
+    return plotterStyle.registeredMouseDoubleClickActions.end();
 }
 
 JKQTPMouseWheelActionsHashMapIterator JKQTPlotter::findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers) const
 {
-    //qDebug()<<"findMatchingMouseWheelAction("<<modifiers<<"): "<<plotterStyle.registeredMouseWheelActions;
-    return plotterStyle.registeredMouseWheelActions.find(modifiers);
+    for (JKQTPMouseWheelActionsHashMapIterator it=plotterStyle.registeredMouseWheelActions.begin(); it!=plotterStyle.registeredMouseWheelActions.end(); ++it) {
+        if (it.key()==modifiers) {
+            return it;
+        }
+    }
+    return plotterStyle.registeredMouseWheelActions.end();
+
+    //return plotterStyle.registeredMouseWheelActions.find(modifiers);
 }
 
 void JKQTPlotter::setPlotUpdateEnabled(bool enable)

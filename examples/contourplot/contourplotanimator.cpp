@@ -30,9 +30,9 @@ void ContourPlotAnimator::step() {
     const double Q4=-1.6e-19;          // charge of charged particle 4
     const double Q4_x0=r2*cos(angle);         // x-position of charged particle 4
     const double Q4_y0=-r2*sin(angle);        // y-position of charged particle 4
-    for (size_t iy=0; iy<NY; iy++ ) {
+    for (size_t iy=0; iy<static_cast<size_t>(NY); iy++ ) {
         x=-w/2.0;
-        for (size_t ix=0; ix<NX; ix++ ) {
+        for (size_t ix=0; ix<static_cast<size_t>(NX); ix++ ) {
             const double r1=sqrt((x-Q1_x0)*(x-Q1_x0)+(y-Q1_y0)*(y-Q1_y0));
             const double r2=sqrt((x-Q2_x0)*(x-Q2_x0)+(y-Q2_y0)*(y-Q2_y0));
             const double r3=sqrt((x-Q3_x0)*(x-Q3_x0)+(y-Q3_y0)*(y-Q3_y0));

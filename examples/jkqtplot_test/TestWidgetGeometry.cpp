@@ -12,7 +12,7 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     QWidget(parent)
 {
     // create third plotter with output of a geometric drawing
-    QVBoxLayout* layout1=new QVBoxLayout(this);
+    QVBoxLayout* layout1=new QVBoxLayout();
     setLayout(layout1);
     resize(1000, 800);
     JKQTPlotter* plotGeo=new JKQTPlotter(true, this);

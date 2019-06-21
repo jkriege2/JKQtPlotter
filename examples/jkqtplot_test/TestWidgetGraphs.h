@@ -30,7 +30,7 @@ class TestWidgetGraphs : public QWidget
 {
         Q_OBJECT
     public:
-        explicit TestWidgetGraphs(QWidget *parent = 0);
+        explicit TestWidgetGraphs(QWidget *parent = nullptr);
         
     signals:
         
@@ -47,8 +47,8 @@ class TestWidgetGraphs : public QWidget
         void setKeyPos2(JKQTPKeyPosition layout);
 
     protected:
-        double x1[N1], x2[N2], x2r[N2]/*, x3[N3]*/;
-        double y11[N1], y12[N1], y13[N1], y21[N2], y21r[N2], y21re[N2], y22[N2], y23[N2], y24[N2];
+        double x1[N1], x2[N2], x2r[N1]/*, x3[N3]*/;
+        double y11[N1], y12[N1], y13[N1], y21[N1], y21r[N1], y21re[N1], y22[N1], y23[N1], y24[N1];
         double xbox[N3], ymed[N3], ymean[N3], ymin[N3], ymax[N3], yp25[N3], yp75[N3];
         double b1[N3], b2[N3], b3[N3];
 

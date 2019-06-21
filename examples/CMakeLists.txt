@@ -10,6 +10,7 @@ add_subdirectory(jkqtfastplotter_test)
 add_subdirectory(jkqtmathtext_simpletest)
 add_subdirectory(jkqtmathtext_test)
 
+add_subdirectory(jkqtplot_test)
 
 add_subdirectory(advplotstyling)
 add_subdirectory(barchart)

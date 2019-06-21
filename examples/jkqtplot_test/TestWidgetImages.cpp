@@ -17,7 +17,7 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     QWidget(parent)
 {
 
-    QVBoxLayout* layouti=new QVBoxLayout(this);
+    QVBoxLayout* layouti=new QVBoxLayout();
     QFormLayout* layWid=new QFormLayout;
     layouti->addLayout(layWid);
     setLayout(layouti);

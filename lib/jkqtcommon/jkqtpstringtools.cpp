@@ -272,6 +272,7 @@ QString jkqtp_QPenStyle2String(Qt::PenStyle style) {
         case Qt::DotLine:        return "dot";
         case Qt::DashDotLine:    return "dashdot";
         case Qt::DashDotDotLine: return "dashdotdot";
+        case Qt::NoPen:          return "none";
         default:
         case Qt::SolidLine:      return "solid";
     }
@@ -284,6 +285,7 @@ Qt::PenStyle jkqtp_String2QPenStyle(const QString& style) {
     if (s=="dashdot" || s=="-.") return Qt::DashDotLine;
     if (s=="dashdotdot" || s=="-..") return Qt::DashDotDotLine;
     if (s=="solid" || s=="-") return Qt::SolidLine;
+    if (s=="none" || s=="" || s=="n") return Qt::NoPen;
     return Qt::SolidLine;
 }
 

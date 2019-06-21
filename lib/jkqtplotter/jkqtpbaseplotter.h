@@ -948,135 +948,6 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
             }
         }
 
-        /** \brief add a new graph, returns it's position in the graphs list.
-         *
-         * \param xColumn      the column which contains the x-values of the datapoints
-         * \param yColumn      the column which contains the y-values of the datapoints
-         * \param title        a title for this specific graph which can be displayed in the key
-         * \param graphStyle   the way how to plot the graph
-         *
-         * Both point to columns in the datastore explained in the JKQTBasePlotter class. The plotWidth, color, pen style ...
-         * will be extracted from the automatic plot style creation mechanism implemented in JKQTBasePlotter::getNextStyle().
-         * If you want to change them either use another overloaded version of addGraph(), or use getGraph() and setGraph():
-         * \code
-         * size_t i=addGraph(0,1,"graph1");
-         * JKQTPPlotElement gr=getGraph(i);
-         * gr.color=QColor("red");
-         * setGraph(i, gr);
-         * \endcode
-         */
-        size_t addGraph(size_t xColumn, size_t yColumn, const QString& title, JKQTPGraphPlotstyle graphStyle=JKQTPLines);
-
-        /** \brief add a new graph, returns it's position in the graphs list.
-         *
-         * \param xColumn      the column which contains the x-values of the datapoints
-         * \param yColumn      the column which contains the y-values of the datapoints
-         * \param title        a title for this specific graph which can be displayed in the key
-         * \param graphStyle   the way how to plot the graph
-         * \param symbol       a symbol to use for the datapoints in some plot styles
-         * \param color        the color of the graph
-         * \param width        width (in pixel) of the graph
-         * \param penstyle     the drawing style (solid, dashed ...) of the graph lines.
-         *
-         * Both point to columns in the datastore explained in the JKQTBasePlotter class.
-         * The symbolSize is set to 10 and no error information is expected.
-         */
-        size_t addGraph(size_t xColumn, size_t yColumn, const QString& title, JKQTPGraphPlotstyle graphStyle, QColor color, JKQTPGraphSymbols symbol=JKQTPCross, Qt::PenStyle penstyle=Qt::SolidLine, double width=2);
-
-        /** \brief add a new graph with x-error information, returns it's position in the graphs list.
-         *
-         *
-         * \param xColumn      the column which contains the x-values of the datapoints
-         * \param yColumn      the column which contains the y-values of the datapoints
-         * \param xErrorColumn the column which contains the x-value errors of the datapoints
-         * \param title        a title for this specific graph which can be displayed in the key
-         * \param graphStyle   the way how to plot the graph
-         * \param errorStyle   the drawing style (bars, lines ...) of the errors.
-         *
-         * Both point to columns in the datastore explained in the JKQTBasePlotter class.
-         * The symbolSize is set to 10 and no error information is expected.
-         */
-        size_t addGraphWithXError(size_t xColumn, size_t yColumn, size_t xErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle=JKQTPPoints, JKQTPErrorPlotstyle errorStyle=JKQTPErrorBars);
-
-        /** \brief add a new graph with x-error information, returns it's position in the graphs list.
-         *
-         *
-         * \param xColumn      the column which contains the x-values of the datapoints
-         * \param yColumn      the column which contains the y-values of the datapoints
-         * \param yErrorColumn the column which contains the y-value errors of the datapoints
-         * \param title        a title for this specific graph which can be displayed in the key
-         * \param graphStyle   the way how to plot the graph
-         * \param errorStyle   the drawing style (bars, lines ...) of the errors.
-         *
-         * Both point to columns in the datastore explained in the JKQTBasePlotter class.
-         * The symbolSize is set to 10 and no error information is expected.
-         */
-        size_t addGraphWithYError(size_t xColumn, size_t yColumn, size_t yErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle=JKQTPPoints, JKQTPErrorPlotstyle errorStyle=JKQTPErrorBars);
-
-        /** \brief add a new graph with x-error information, returns it's position in the graphs list.
-         *
-         *
-         * \param xColumn      the column which contains the x-values of the datapoints
-         * \param yColumn      the column which contains the y-values of the datapoints
-         * \param xErrorColumn the column which contains the x-value errors of the datapoints
-         * \param yErrorColumn the column which contains the y-value errors of the datapoints
-         * \param title        a title for this specific graph which can be displayed in the key
-         * \param graphStyle   the way how to plot the graph
-         *
-         * Both point to columns in the datastore explained in the JKQTBasePlotter class.
-         * The symbolSize is set to 10 and no error information is expected. The errorStyle is set to JKQTPErrorBars
-         * for both directions.
-         */
-        size_t addGraphWithXYError(size_t xColumn, size_t yColumn, size_t xErrorColumn, size_t yErrorColumn, const QString& title, JKQTPGraphPlotstyle graphStyle=JKQTPPoints);
-
-        /** \brief add a boxplot graph to the plot
-         *
-         * \param title title of the plot
-         * \param posColumn column containing the positions
-         * \param medianColumn column containing the median values
-         * \param minColumn column containing the minimum values
-         * \param maxColumn column containing the maximum values
-         * \param percentile25Column column containing the 25% percentiles
-         * \param percentile75Column column containing the 75% percentiles
-         * \param meanColumn column containing the mean value (this column is optional. If you don't want a mean symbol, set this to -1
-         */
-        size_t addHorizontalBoxplot(QString title, int posColumn, int medianColumn, int minColumn, int maxColumn, int percentile25Column, int percentile75Column, int meanColumn=-1);
-
-        /** \brief add a boxplot graph to the plot
-         *
-         * \param title title of the plot
-         * \param posColumn column containing the positions
-         * \param medianColumn column containing the median values
-         * \param minColumn column containing the minimum values
-         * \param maxColumn column containing the maximum values
-         * \param percentile25Column column containing the 25% percentiles
-         * \param percentile75Column column containing the 75% percentiles
-         * \param meanColumn column containing the mean value (this column is optional. If you don't want a mean symbol, set this to -1
-         */
-        size_t addVerticalBoxplot(QString title, int posColumn, int medianColumn, int minColumn, int maxColumn, int percentile25Column, int percentile75Column, int meanColumn=-1);
-
-        /** \brief add one bargraph for each of the given set of \f$ f(x) \f$ -values which all use one column of x-values
-         *
-         *  \param xColumn column with the x-values, which are common to all bargraphs
-         *  \param yColumns columns for the y-values
-         *  \param titles titles of the plot
-         *
-         * Here is an example output:
-         *   \image html plot_bargraphhorplot.png
-         */
-        void addHorizontalBargraph(size_t xColumn, QVector<size_t> yColumns, QStringList titles);
-
-        /** \brief add a bargraph for the given set of \f$ f(x) \f$ -values for one column of x-values
-         *
-         *  \param xColumns columns with the x-values
-         *  \param yColumn column for the y-values, which are common to all bargraphs
-         *  \param titles titles of the plot
-         *
-         * Here is an example output:
-         *   \image html plot_bargraphhorplot.png
-         */
-        void addVerticalBargraph(QVector<size_t> xColumns, size_t yColumn, QStringList titles);
-
         /** \brief get the maximum and minimum x-value over all graphs in the plot
          *  \param[out] minx smallest x value
          *  \param[out] maxx largest x value
@@ -1738,7 +1609,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /*! \copydoc JKQTBasePlotterStyle::defaultTextColor */
         void setDefaultTextColor(QColor __value) ;
         /*! \copydoc JKQTBasePlotterStyle::defaultFontSize */
-        void setDefaultTextSize(float __value) ;
+        void setDefaultTextSize(double __value) ;
         /*! \copydoc JKQTBasePlotterStyle::defaultFontName */
         void setDefaultTextFontName(const QString& __value) ;
         /** \brief sets the current directory in which to open SaveAs ... dialogs */
@@ -2001,9 +1872,9 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief list that manages all the additional graphs for \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" mode */
         QList<JKQTPGridPrintingItem> gridPrintingList;
         /** \brief this list contains all the rows of the current \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" and stores its heights */
-        QList<int> gridPrintingRows;
+        QList<size_t> gridPrintingRows;
         /** \brief this list contains all the columns of the current \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" and stores its widths */
-        QList<int> gridPrintingColumns;
+        QList<size_t> gridPrintingColumns;
         /** \brief size of all plots in \ref JKQTBASEPLOTTER_SYNCMULTIPLOT_GRIDPRINT "grid printing" mode, filled by gridPrintingCalc() */
         QSizeF gridPrintingSize;
 

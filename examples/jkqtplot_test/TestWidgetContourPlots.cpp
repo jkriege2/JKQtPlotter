@@ -14,7 +14,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
 
 
     // contour plot
-    QHBoxLayout* layoutContour=new QHBoxLayout(this);
+    QHBoxLayout* layoutContour=new QHBoxLayout();
     setLayout(layoutContour);
     JKQTPlotter* plotContour=new JKQTPlotter(true, this);
     plotContour->setPlotUpdateEnabled(false);

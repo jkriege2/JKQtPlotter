@@ -145,7 +145,8 @@ inline void jkqtpstatPolyFit(InputItX firstX, InputItX lastX, InputItY firstY, I
     if (ok) {
         auto itR=firstRes;
         for (size_t p=0; p<P+1; p++) {
-            *++itR=VTY[p];
+            *itR=VTY[p];
+            ++itR;
         }
     } else {
         throw std::runtime_error("jkqtplinalgLinSolve() didn't return a result!");

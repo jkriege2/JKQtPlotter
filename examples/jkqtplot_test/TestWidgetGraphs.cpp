@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QApplication>
 #include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter/graphs/jkqtpbarchart.h"
 #include "jkqtplotter/graphs/jkqtpboxplot.h"
 #include "jkqtplotter/graphs/jkqtpfilledcurve.h"
 #include "jkqtplotter/gui/jkqtpcomboboxes.h"
@@ -36,8 +37,8 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     QListView* listPlots=new QListView(this);
     listPlots->setModel(plot->getPlotter()->getPlotsModel());
     listPlots->setMaximumWidth(256);
-    QVBoxLayout* layout=new QVBoxLayout(this);
-    QGridLayout* layout_grid=new QGridLayout(this);
+    QVBoxLayout* layout=new QVBoxLayout();
+    QGridLayout* layout_grid=new QGridLayout();
     layout_grid->addWidget(plot,0,0,1,1);
     layout_grid->addWidget(plotBot,1,0,1,1);
     layout_grid->addWidget(listPlots,0,1,1,1);
@@ -47,7 +48,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     setLayout(layout);
     resize(1000, 800);
 
-    plotBot->synchronizeToMaster(plot, JKQTBasePlotter::sdXAxis, true, true, true);
+    plotBot->synchronizeXToMaster(plot);
     plot->getPlotter()->setGridPrinting(true);
     plot->getPlotter()->addGridPrintingPlotter(0,1,plotBot->getPlotter());
     plot->getPlotter()->addGridPrintingPlotter(0,2,plotBot2->getPlotter());
@@ -103,16 +104,30 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     size_t cy21re=ds->addColumn(y21re, N2, "y21re");
 
 
-    size_t id=plot->getPlotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPFilledCurveX);
-    JKQTPFilledCurveXGraph* fcxgr=qobject_cast<JKQTPFilledCurveXGraph*>(plot->getPlotter()->getGraph(id));
+    JKQTPFilledCurveXGraph* fcxgr;
+    size_t id=plot->getPlotter()->addGraph(fcxgr=new JKQTPFilledCurveXGraph(plot));
+    fcxgr->setXColumn(cx2);
+    fcxgr->setYColumn(cy21);
+    fcxgr->setTitle("$5\\cdot\\sin(x)$");
+    qobject_cast<JKQTPFilledCurveXGraph*>(plot->getPlotter()->getGraph(id));
     if (fcxgr) {
         fcxgr->setBaseline(2);
     }
 
-    size_t yeb=plot->getPlotter()->addGraphWithXYError(cx2, cy21, cy22, cy22, "sine with errors", JKQTPFilledCurveX);
+    JKQTPFilledCurveXErrorGraph* gELines;
+    size_t yeb=plot->getPlotter()->addGraph(gELines=new JKQTPFilledCurveXErrorGraph(plot));
+    gELines->setXColumn(cx2);
+    gELines->setYErrorColumnLower(cy22);
+    gELines->setYColumn(cy22);
+    gELines->setYErrorColumn(cy21);
+    gELines->setTitle("sine with errors");
     plteErrors=plot->getPlotter()->getGraph(yeb);
     setErrorLineStyle(0);
-    yeb=plot->getPlotter()->addGraph(cx2, cy21, "$5\\cdot\\sin(x)$", JKQTPLinesPoints);
+    JKQTPXYLineGraph* gLines;
+    yeb=plot->getPlotter()->addGraph(gLines=new JKQTPXYLineGraph(plot));
+    gLines->setXColumn(cx2);
+    gLines->setYColumn(cy21);
+    gLines->setTitle("$5\\cdot\\sin(x)$");
     plteSymbols=plot->getPlotter()->getGraph(yeb);
 
     pltePlot2=new JKQTPXYLineErrorGraph(plotBot->getPlotter());
@@ -120,7 +135,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     pltePlot2->setYColumn(cy21r);
     pltePlot2->setTitle(tr("random numbers"));
     pltePlot2->setDrawLine(true);
-    pltePlot2->setYErrorColumn(cy21re);
+    pltePlot2->setYErrorColumn(static_cast<int>(cy21re));
     pltePlot2->setYErrorStyle(JKQTPErrorBarsPolygons);
     pltePlot2->setSymbolType(JKQTPFilledStar);
     plotBot->getPlotter()->addGraph(pltePlot2);
@@ -161,7 +176,33 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     cb.push_back(ds->addColumn(b3, N3, "b3"));
     QStringList ts;
     ts<<"bars 1"<<"bars 2"<<"bars 3";
-    plot->getPlotter()->addVerticalBargraph(cb, cbp, ts);
+    JKQTPBarVerticalGraph* gbar1;
+    JKQTPBarVerticalGraph* gbar2;
+    JKQTPBarVerticalGraph* gbar3;
+    double w=0.9;
+    double width=w/static_cast<double>(3);
+    double s=-1.0*w/2.0+width/2.0;
+    plot->getPlotter()->addGraph(gbar1=new JKQTPBarVerticalGraph(plot));
+    gbar1->setXColumn(cbp);
+    gbar1->setYColumn(cb[0]);
+    gbar1->setTitle(ts[0]);
+    gbar1->setShift(s);
+    gbar1->setWidth(width);
+    s=s+width;
+    plot->getPlotter()->addGraph(gbar2=new JKQTPBarVerticalGraph(plot));
+    gbar2->setXColumn(cbp);
+    gbar2->setYColumn(cb[1]);
+    gbar2->setTitle(ts[1]);
+    gbar2->setShift(s);
+    gbar2->setWidth(width);
+    s=s+width;
+    plot->getPlotter()->addGraph(gbar3=new JKQTPBarVerticalGraph(plot));
+    gbar3->setXColumn(cbp);
+    gbar3->setYColumn(cb[2]);
+    gbar3->setTitle(ts[2]);
+    gbar3->setShift(s);
+    gbar3->setWidth(width);
+    s=s+width;
 
     JKQTPVerticalRange* r1=new JKQTPVerticalRange(plot->getPlotter());
     r1->setRangeMin(5);

@@ -1579,6 +1579,7 @@ class JKQTP_LIB_EXPORT JKQTPColumn {
 
 };
 
+#pragma pack(push,1)
 /** \brief iterator over the data in the column of a JKQTPDatastore
  * \ingroup jkqtpdatastorage
  *
@@ -2245,7 +2246,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
     inline void erase(size_t row) {
         JKQTPASSERT(isVector());
         datavec.erase(datavec.begin()+row, datavec.end());
-        rows=static_cast<int>(datavec.size());
+        rows=static_cast<size_t>(datavec.size());
         data=datavec.data();
     }
     /** \brief if \c isValid() : erase all rows (and including) from  \a row to \a rowEnd */
@@ -2256,7 +2257,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
             JKQTPASSERT(isVector());
             if (rowEnd>=static_cast<size_t>(datavec.size())) datavec.erase(datavec.begin()+row, datavec.end());
             else datavec.erase(datavec.begin()+row, datavec.begin()+rowEnd);
-            rows=static_cast<int>(datavec.size());
+            rows=static_cast<size_t>(datavec.size());
             data=datavec.data();
         }
     }
@@ -2397,6 +2398,7 @@ class JKQTP_LIB_EXPORT JKQTPDatastoreItem {
         return false;
     }
 };
+#pragma pack(pop)
 
 
 /** \brief     QAbstractTableModel descendent that allows to view data in a JKQTPDatastore

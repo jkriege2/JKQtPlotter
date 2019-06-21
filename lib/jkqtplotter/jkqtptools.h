@@ -430,11 +430,11 @@ JKQTP_LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
  * \ingroup jkqtpplottersupprt
  * \internal
  */
-struct JKQTPGridPrintingItem {
+struct JKQTP_LIB_EXPORT JKQTPGridPrintingItem {
     /** \brief logic x-position of a graph, relative to the current JKQtPlotter */
-    int x;
+    size_t x;
     /** \brief logic y-position of a graph, relative to the current JKQtPlotter */
-    int y;
+    size_t y;
     /** \brief JKQTBasePlotter */
     JKQTBasePlotter* plotter;
 };
@@ -471,20 +471,6 @@ JKQTP_LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
  */
 JKQTP_LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos);
 
-/** \brief plot styles for a graph
- * \ingroup jkqtpplottersupprt
- */
-enum JKQTPGraphPlotstyle {
-    JKQTPLines,                /*!< \brief plot y=f(x), connect the datapoints by straight lines */
-    JKQTPFilledCurveX,         /*!< \brief plot y=f(x), as filled curve (filled until the y=0/x-axis) */
-    JKQTPFilledCurveY,         /*!< \brief plot x=f(y), as filled curve (filled until the x=0/y-axis) */
-    JKQTPPoints,               /*!< \brief plot y=f(x), plot each datapoint with a symbol */
-    JKQTPLinesPoints,          /*!< \brief plot y=f(x), plot each datapoint with a symbol and connect them by straight lines */
-    JKQTPImpulsesHorizontal,   /*!< \brief plot y=f(x), plot each datapoint as a line from (x,0) to (x,f(x))  */
-    JKQTPImpulsesVertical,     /*!< \brief plot x=f(y), plot each datapoint as a line from (0,f(x)) to (x,f(x))  */
-    JKQTPStepsX,               /*!< \brief plot y=f(x), as a step curve */
-    JKQTPStepsY                /*!< \brief plot x=f(y), as a step curve */
-};
 
 
 
