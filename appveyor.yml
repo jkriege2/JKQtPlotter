@@ -6,22 +6,43 @@ image:
 environment:
   global:
     QTVER: 5.11
-    ARCH: x86
-    QMAKESPEC: win32-msvc
-    MAKETOOL: jom
-    VSVER: 0
     JOMDIR: C:\Qt\Tools\QtCreator\bin
     MINGWDIR: C:\Qt\Tools\mingw530_32
+    MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
 
   matrix:
     - QTABI: msvc2017_64
       ARCH: x64
       VSVER: 2017
+      CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+      RUN_CMAKE: 1
+    - QTABI: msvc2017_64
+      ARCH: x64
+      VSVER: 2017
+      QMAKESPEC: win32-msvc
+      MAKETOOL: jom
+      RUN_CMAKE: 0
     - QTABI: msvc2015
+      ARCH: x86
       VSVER: 14
+      CMAKE_GENERATOR: "Visual Studio 15 2017"
+      RUN_CMAKE: 1
+    - QTABI: msvc2015
+      ARCH: x86
+      VSVER: 14
+      QMAKESPEC: win32-msvc
+      MAKETOOL: jom
+      RUN_CMAKE: 0
     - QTABI: mingw53_32
+      ARCH: x86
+      MAKETOOL: mingw32-make
+      CMAKE_GENERATOR: "MinGW Makefiles"
+      RUN_CMAKE: 1
+    - QTABI: mingw53_32
+      ARCH: x86
       QMAKESPEC: win32-g++
       MAKETOOL: mingw32-make
+      RUN_CMAKE: 0
 
 skip_tags: true
 
@@ -53,11 +74,19 @@ build_script:
 #  - type "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE\random"
   - mkdir build
   - cd build
-  - echo "Call QMake..."
-  - qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro
-  - echo "Build..."
-  - call %MAKETOOL%
-  - cd ..
+  - IF %RUN_CMAKE% EQ 1 (
+      echo "Call CMake..."
+      if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=RelWithDebInfo) else (set CMAKE_CONFIGURATION=Debug)
+      cmake -H. -Bbuild -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QT5%"
+      echo "Build..."
+      cmake --build build --config "%CMAKE_CONFIGURATION%" -- %MSBUILD_FLAGS%  
+    ) ELSE (
+      echo "Call QMake..."
+      qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro
+      echo "Build..."
+      call %MAKETOOL%
+      cd ..
+    )
 
 #artifacts:
 #   - path: build\staticlib\**\*.a
