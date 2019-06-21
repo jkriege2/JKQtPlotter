@@ -913,10 +913,11 @@ void JKQTPlotter::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
-
+    //qDebug()<<"wheelEvent()";
     auto itAction=findMatchingMouseWheelAction(event->modifiers());
     if (itAction!=plotterStyle.registeredMouseWheelActions.end())  {
         if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
+            //qDebug()<<"wheelEvent():ZoomByWheel";
             double factor=pow(2.0, 1.0*static_cast<double>(event->delta())/120.0)*2.0;
             double xmin=plotter->p2x(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
             double xmax=plotter->p2x(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
@@ -931,6 +932,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
             }
             plotter->setXY(xmin, xmax, ymin, ymax);
         } else if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaPanByWheel) {
+            //qDebug()<<"wheelEvent():PanByWheel";
             QRectF zoomRect= QRectF(QPointF(plotter->x2p(getXAxis()->getMin()),plotter->y2p(getYAxis()->getMax())), QPointF(plotter->x2p(getXAxis()->getMax()),plotter->y2p(getYAxis()->getMin())));
             QPointF d=QPointF(event->angleDelta().x()/120.0*zoomRect.width()/10.0,
                               event->angleDelta().y()/120.0*zoomRect.height()/10.0);
@@ -1665,6 +1667,7 @@ JKQTPMouseDoubleClickActionsHashMapIterator JKQTPlotter::findMatchingMouseDouble
 
 JKQTPMouseWheelActionsHashMapIterator JKQTPlotter::findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers) const
 {
+    //qDebug()<<"findMatchingMouseWheelAction("<<modifiers<<"): "<<plotterStyle.registeredMouseWheelActions;
     return plotterStyle.registeredMouseWheelActions.find(modifiers);
 }
 

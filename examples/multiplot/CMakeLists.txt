@@ -15,9 +15,9 @@ set(UIS test_multiplot_ui.ui )
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
 if(BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterLib)
+    target_link_libraries(${EXENAME} JKQTPlotterLib${LIBNAME_ADDITION})
 elseif(BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
+    target_link_libraries(${EXENAME} JKQTPlotterSharedLib${LIBNAME_ADDITION})
 endif()
 
 

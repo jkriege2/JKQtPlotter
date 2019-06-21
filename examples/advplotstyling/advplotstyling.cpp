@@ -1,4 +1,4 @@
-/** \example advancedlineandfillstyling.cpp
+/** \example advplotstyling.cpp
  * Shows how to use advanced line styling and filling options with JKQTPlotter
  *
  * \ref JKQTPlotterAdvancedLineAndFillStyling, JKQTPXYLineGraph, JKQTPSpecialLineHorizontalGraph, JKQTPBarVerticalGraph

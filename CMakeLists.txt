@@ -16,6 +16,9 @@ endif()
 if(NOT DEFINED BUILD_INCLUDE_XITS_FONTS)
     option(BUILD_INCLUDE_XITS_FONTS "Include XITS fonts as resources in library" ON)
 endif()
+if(NOT DEFINED BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE)
+    option(BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE "If set, the build-type is appended to the library name" ON)
+endif()
 if(NOT DEFINED BUILD_EXAMPLES)
     option(BUILD_EXAMPLES "Build examples" ON)
 endif()
@@ -49,12 +52,12 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Set a default build type if none was specified
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "Setting build type to 'Debug' as none was specified")
-  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build" FORCE)
-  # Set the possible values of build type for cmake-gui
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
-endif()
+#if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+#  message(STATUS "Setting build type to 'Debug' as none was specified")
+#  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build" FORCE)
+#  # Set the possible values of build type for cmake-gui
+#  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+#endif()
 
 if (NOT CMAKE_INSTALL_LIBDIR)
     set(CMAKE_INSTALL_LIBDIR "lib")
@@ -98,6 +101,12 @@ if(BUILD_INCLUDE_XITS_FONTS)
     add_definitions(-DAUTOLOAD_XITS_FONTS -DUSE_XITS_FONTS )
 else()
     add_definitions(-DNO_XITS_FONTS )
+endif()
+
+if(BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE)
+    set(LIBNAME_ADDITION "_${CMAKE_BUILD_TYPE}")
+else()
+    set(LIBNAME_ADDITION )
 endif()
 
 

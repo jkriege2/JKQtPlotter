@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Advanced Line and Fill Styling {#JKQTPlotterAdvancedLineAndFillStyling}
-This project (see `./examples/advancedlineandfillstyling/`) demonstrates how to use advanced line styling and filling options (e.g. custom dash-styles, gradient, image fills, transparencies, ...) with JKQtPlotter.
+This project (see `./examples/advplotstyling/`) demonstrates how to use advanced line styling and filling options (e.g. custom dash-styles, gradient, image fills, transparencies, ...) with JKQtPlotter.
 
-The source code of the main application can be found in  [`advancedlineandfillstyling.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/advancedlineandfillstyling/advancedlineandfillstyling.cpp). 
+The source code of the main application can be found in  [`advplotstyling.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/advplotstyling/advplotstyling.cpp). 
 
 Initially several data columns are generated and added to the internal datastore. Then several line graphs are added that all use different custom dashes. In addition the third line does not use a single color, but a gradient for coloring:
 ```.cpp
@@ -104,7 +104,7 @@ In addition to the graph background properties, also the plot/widget/key backgro
 
 The result looks like this:
 
-![advancedlineandfillstyling](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/advancedlineandfillstyling.png)
+![advplotstyling](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/advplotstyling.png)
 
 
 

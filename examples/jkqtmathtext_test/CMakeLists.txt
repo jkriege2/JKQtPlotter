@@ -18,9 +18,9 @@ set(UIS testform.ui )
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
 if(BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTMathTextLib)
+    target_link_libraries(${EXENAME} JKQTMathTextLib${LIBNAME_ADDITION})
 elseif(BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTMathTextSharedLib)
+    target_link_libraries(${EXENAME} JKQTMathTextSharedLib${LIBNAME_ADDITION})
 endif()
 
 

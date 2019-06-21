@@ -1,7 +1,7 @@
 # source code for this simple demo
-SOURCES = advancedlineandfillstyling.cpp 
+SOURCES = advplotstyling.cpp 
 
-RESOURCES += advancedlineandfillstyling.qrc
+RESOURCES += advplotstyling.qrc
 
 # configure Qt
 CONFIG += link_prl qt
@@ -9,7 +9,7 @@ QT += core gui xml  svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 # output executable name
-TARGET = advancedlineandfillstyling
+TARGET = advplotstyling
 
 
 # include JKQTPlotter source code

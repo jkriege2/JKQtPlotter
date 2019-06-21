@@ -78,7 +78,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html dateaxes_timeaxis_small.png
     <td> \subpage JKQTPlotterDateTimeAxes
     <td> `JKQTPXYLineGraph` and `JKQTPFilledVerticalRangeGraph` <br> C++ vector of data <br> date/time axes <br> plot min/max range graph <br> internal LaTeX parser <br> data from CSV files 
-<tr><td> \image html advancedlineandfillstyling_small.png
+<tr><td> \image html advplotstyling_small.png
     <td> \subpage JKQTPlotterAdvancedLineAndFillStyling
     <td> `JKQTPXYLineGraph`, `JKQTPSpecialLineHorizontalGraph` and `JKQTPBarVerticalGraph` <br> C++ vector of data <br> advanced line styling and filling
 <tr><td> \image html test_styledboxplot_small.png

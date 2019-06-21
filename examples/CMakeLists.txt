@@ -11,7 +11,7 @@ add_subdirectory(jkqtmathtext_simpletest)
 add_subdirectory(jkqtmathtext_test)
 
 
-add_subdirectory(advancedlineandfillstyling)
+add_subdirectory(advplotstyling)
 add_subdirectory(barchart)
 add_subdirectory(boxplot)
 add_subdirectory(contourplot)

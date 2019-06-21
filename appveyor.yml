@@ -74,7 +74,7 @@ build_script:
 #  - type "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE\random"
   - mkdir build
   - cd build
-  - IF %RUN_CMAKE% EQ 1 (
+  - IF %RUN_CMAKE% == 1 (
       echo "Call CMake..."
       if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=RelWithDebInfo) else (set CMAKE_CONFIGURATION=Debug)
       cmake -H. -Bbuild -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QT5%"
