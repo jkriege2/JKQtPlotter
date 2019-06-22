@@ -101,5 +101,7 @@ if(LIB_INSTALL)
     configure_file(${CMAKE_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt @ONLY)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION doc/ )
     install(FILES "${CMAKE_SOURCE_DIR}/LICENSE" DESTINATION doc/ RENAME "${lib_name}_LICENSE.txt" )
+    install(FILES "${CMAKE_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/OFL.txt" DESTINATION doc/ RENAME "${lib_name}_XITS_LICENSE.txt" )
+    install(FILES "${CMAKE_SOURCE_DIR}/lib/jkqtmathtext/resources/xits/README.md" DESTINATION doc/ RENAME "${lib_name}_XITS_README.md" )
 
 endif(LIB_INSTALL)
