@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 set(libBasename JKQTMathText)
+set(libIncludeSubdir jkqtmathtext)
 
 if(BUILD_SHARED_LIBS)
     set(libsh_name ${libBasename}SharedLib)
@@ -35,6 +36,8 @@ if(BUILD_INCLUDE_XITS_FONTS)
 endif(BUILD_INCLUDE_XITS_FONTS)
 
 
+include(CMakePackageConfigHelpers)
+
 if(BUILD_SHARED_LIBS)
     add_library(${libsh_name} SHARED  ${SOURCES} ${HEADERS} ${RESOURCES})
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
@@ -43,8 +46,9 @@ if(BUILD_SHARED_LIBS)
     target_compile_definitions(${libsh_name} PUBLIC JKQTMATHTEXT_LIB_IN_DLL)
     target_compile_definitions(${libsh_name} PRIVATE JKQTMATHTEXT_LIB_EXPORT_LIBRARY)
     set_property(TARGET ${libsh_name} PROPERTY WINDOWS_EXPORT_ALL_SYMBOLS "ON")
-#	include(GenerateExportHeader)
-#	generate_export_header(${libsh_name})
+    write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake 
+                                     VERSION ${PROJECT_VERSION} 
+                                     COMPATIBILITY AnyNewerVersion )    
 endif()
 
 if(BUILD_STATIC_LIBS)
@@ -52,6 +56,9 @@ if(BUILD_STATIC_LIBS)
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
     target_link_libraries(${lib_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport JKQTCommonLib)
+    write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake
+                                     VERSION ${PROJECT_VERSION} 
+                                     COMPATIBILITY AnyNewerVersion )    
 endif()
 
 
@@ -64,8 +71,13 @@ if(LIB_INSTALL)
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtmathtext
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
         )
+        install(EXPORT ${libsh_name}_TARGETS
+            FILE ${libsh_name}Config.cmake 
+            DESTINATION lib/cmake
+        )
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake" DESTINATION lib/cmake  )
     endif(BUILD_SHARED_LIBS)
 
     if(BUILD_STATIC_LIBS)
@@ -73,12 +85,21 @@ if(LIB_INSTALL)
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtmathtext
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
         )
+        install(EXPORT ${lib_name}_TARGETS
+            FILE ${lib_name}Config.cmake 
+            DESTINATION lib/cmake
+        )
+        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake" DESTINATION lib/cmake  )
     endif(BUILD_STATIC_LIBS)
 
     install(FILES ${HEADERS}
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/jkqtmathtext
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
             COMPONENT Headers)
+
+    configure_file(${CMAKE_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt @ONLY)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION doc/ )
+    install(FILES "${CMAKE_SOURCE_DIR}/LICENSE" DESTINATION doc/ RENAME "${lib_name}_LICENSE.txt" )
 
 endif(LIB_INSTALL)

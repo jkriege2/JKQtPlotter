@@ -1,0 +1,20 @@
+=============================================================================
+== JKQTPlotters is a library for scientific plotting using Qt5             ==
+==     sub-library: @libBasename@
+=============================================================================
+
+Library Information:
+  version:                @PROJECT_VERSION@
+  main author/maintainer: Jan Krieger <jan@jkrieger.de>
+  copyright:              (c) 2008-2019 by Jan Krieger
+  license:                GNU LESSER GENERAL PUBLIC LICENSE >= v2.1
+  repository:             https://github.com/jkriege2/JKQtPlotter
+  documentation:          http://jkriege2.github.io/JKQtPlotter/index.html
+
+Build information:
+  used compiler:          @CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@
+  used Qt version:        @Qt5_VERSION@
+  built static libs:      @BUILD_STATIC_LIBS@
+  built shared libs:      @BUILD_SHARED_LIBS@
+  built examples:         @BUILD_EXAMPLES@
+  included XITS fonts:    @BUILD_INCLUDE_XITS_FONTS@

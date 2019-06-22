@@ -87,3 +87,10 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtmathtext_simpletest_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtmathtext_simpletest) | [JKQTMathText: Simple Demonstration](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtmathtext_simpletest) |  |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtmathtext_testapp_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtmathtext_test) | [JKQTMathText: Full Testing Application](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtmathtext_test) |  |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtfastplotter_test_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtfastplotter_test) | [JKQTFastPlotter: Example](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/jkqtfastplotter_test) |  |
+
+
+## CMake Build System
+
+| Screenshot    | Description   | Notes         |
+|:-------------:| ------------- | ------------- |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/jkqtplotter_simpletest1_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/simpletest/README.md) | [CMake Example Linking Against JKQTPlotter](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/cmake_link_example) | explains how to link against JKQTPlotter with CMake |

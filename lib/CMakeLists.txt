@@ -6,7 +6,7 @@ message( STATUS )
 message( STATUS "=============================================================================" )
 message( STATUS "== JKQTPlotterLib Build Information                                        ==" )
 message( STATUS "=============================================================================" )
-message( STATUS "Version:          ${PROJECT_VERSION}")
+message( STATUS "Version:           ${PROJECT_VERSION}")
 if (CMAKE_BUILD_TYPE)
     message( STATUS "Build type:       ${CMAKE_BUILD_TYPE}")
 endif(CMAKE_BUILD_TYPE)
@@ -20,6 +20,8 @@ message( STATUS "Installing to:     ${CMAKE_INSTALL_PREFIX}" )
 message( STATUS "=============================================================================" )
 message( STATUS )
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/jkqtplotter_version.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/jkqtplotter_version.h)
 
 
 include_directories(.)

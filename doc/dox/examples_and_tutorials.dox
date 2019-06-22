@@ -203,6 +203,15 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> \subpage JKQTFastPlotterTest 
 	<td> JKQTFastPlotter
 </table>
+	
+	
+\subsection jkqtp_extut_cmake_build CMake Build System
 
+<table>
+<tr><th> Screenshot    <th> Description   <th> Notes  
+<tr><td> \image html jkqtmathtext_simpletest_small.png
+    <td> \subpage JKQTCMakeLinkExample
+	<td> explains how to link against JKQTPlotter with CMake
+</table>
 
 */
