@@ -50,7 +50,7 @@
     \see \ref JKQTPlotterDistributionPlot, \ref JKQTPlotterViolinplotGraphs
 
  */
-class JKQTP_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnSymbolsGraph: public JKQTPSingleColumnGraph, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /** \brief describes how data from dataColumn of a JKQTPSingleColumnSymbolsGraph positioned at position */

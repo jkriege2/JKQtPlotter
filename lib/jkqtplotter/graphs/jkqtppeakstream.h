@@ -45,7 +45,7 @@ class JKQTPDatastore;
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreStatistics
  */
-class JKQTP_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph, public JKQTPGraphLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */

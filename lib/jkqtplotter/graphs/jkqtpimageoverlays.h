@@ -30,7 +30,7 @@
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 
 
@@ -41,7 +41,7 @@
     \image html overlayimage.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         Q_OBJECT
     public:
 
@@ -75,9 +75,13 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /*! \copydoc Nx */ 
         void setNx(int __value);
         /*! \copydoc Nx */ 
+        void setNx(size_t __value);
+        /*! \copydoc Nx */ 
         int getNx() const;
         /*! \copydoc Ny */ 
         void setNy(int __value);
+        /*! \copydoc Ny */ 
+        void setNy(size_t __value);
         /*! \copydoc Ny */ 
         int getNy() const;
         /*! \copydoc data */ 
@@ -132,7 +136,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
 
     \image html overlayimageenhanced.png
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
         Q_OBJECT
     public:
         enum OverlayImageEnhancedDrawMode {
@@ -197,7 +201,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayImageEnhanced: public JKQTPOverlayImage {
     \image html overlayimageenhanced.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanced {
+class JKQTPLOTTER_LIB_EXPORT JKQTPColumnOverlayImageEnhanced: public JKQTPOverlayImageEnhanced {
         Q_OBJECT
     public:
         JKQTPColumnOverlayImageEnhanced(JKQTBasePlotter* parent=nullptr);

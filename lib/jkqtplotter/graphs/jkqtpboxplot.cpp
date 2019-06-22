@@ -257,7 +257,7 @@ bool JKQTPBoxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=datastore->getRows(medianColumn);
+    int imax= static_cast<int>(datastore->getRows(medianColumn));
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -478,7 +478,7 @@ bool JKQTPBoxplotHorizontalGraph::getXMinMax(double& miny, double& maxy, double&
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=datastore->getRows(medianColumn);
+    int imax= static_cast<int>(datastore->getRows(medianColumn));
     if (imax<imin) {
         int h=imin;
         imin=imax;

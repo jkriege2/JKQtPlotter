@@ -20,7 +20,7 @@
 
 #ifndef jkqtpenhancedspinboxes_H_INCLUDED
 #define jkqtpenhancedspinboxes_H_INCLUDED
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 
 #include <QSpinBox>
 #include <QDoubleSpinBox>
@@ -30,7 +30,7 @@
 
     This class adds an event editingFinished() to QDoubleSpinBox.
 */
-class JKQTP_LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
         Q_OBJECT
     public:
         JKQTPEnhancedDoubleSpinBox(QWidget* parent=nullptr);
@@ -48,7 +48,7 @@ class JKQTP_LIB_EXPORT JKQTPEnhancedDoubleSpinBox : public QDoubleSpinBox {
 
     This class adds an event editingFinished() to QDoubleSpinBox.
 */
-class JKQTP_LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedSpinBox : public QSpinBox {
         Q_OBJECT
     public:
         JKQTPEnhancedSpinBox(QWidget* parent=nullptr);

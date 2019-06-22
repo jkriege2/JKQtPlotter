@@ -21,7 +21,7 @@
 
 #ifndef jkvanishqtoolbar_H
 #define jkvanishqtoolbar_H
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtptools.h"
 #include <QToolBar>
 
@@ -35,7 +35,7 @@
  * \image html jkqtvanishtoolbar.gif
  *
  */
-class JKQTP_LIB_EXPORT JKVanishQToolBar: public QToolBar {
+class JKQTPLOTTER_LIB_EXPORT JKVanishQToolBar: public QToolBar {
         Q_OBJECT
     public:
         /** \brief class constructor */

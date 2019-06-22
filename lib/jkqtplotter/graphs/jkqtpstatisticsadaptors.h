@@ -18,7 +18,7 @@
 */
 
 
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpstatisticstools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
@@ -1795,7 +1795,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTBasePlotter* pl
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
 */
-JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
 
 
 
@@ -1874,7 +1874,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSLinearRegression(JKQTBaseP
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSLinearRegression()
 */
-JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSLinearRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100);
+JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSLinearRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100);
 
 
 
@@ -1960,7 +1960,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTBasePlo
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatLinearRegression()
 */
-JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddLinearWeightedRegression(JKQTPXYGraph *datagraph, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
 
 
 
@@ -2044,7 +2044,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTBasePlotter* plotter,
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRegression()
 */
-JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
 
 
 
@@ -2124,7 +2124,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddRobustIRLSRegression(JKQTBasePlotter
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatRobustIRLSRegression()
 */
-JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100);
+JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph *jkqtpstatAddRobustIRLSRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false, double p=1.1, int iterations=100);
 
 
 
@@ -2212,7 +2212,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTBasePlotter* 
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatWeightedRegression()
 */
-JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
+JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddWeightedRegression(JKQTPXYGraph *datagraph, JKQTPStatRegressionModelType type, double* coeffA=nullptr, double* coeffB=nullptr, bool fixA=false, bool fixB=false);
 
 
 
@@ -2335,7 +2335,7 @@ inline JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTPXYGraph *datagraph, siz
 
     \see \ref JKQTPlotterBasicJKQTPDatastoreRegression, jkqtpstatPolyFit()
 */
-JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTPXYGraph *datagraph, size_t P);
+JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph* jkqtpstatAddPolyFit(JKQTPXYGraph *datagraph, size_t P);
 
 
 

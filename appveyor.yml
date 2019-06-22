@@ -17,35 +17,35 @@ environment:
       CMAKE_GENERATOR: "MinGW Makefiles"
       USE_CMAKE: true
       MSBUILD_FLAGS: 
-    - QTABI: mingw53_32
-      ARCH: x86
-      QMAKESPEC: win32-g++
-      MAKETOOL: mingw32-make
-      USE_CMAKE: false
+#    - QTABI: mingw53_32
+#      ARCH: x86
+#      QMAKESPEC: win32-g++
+#      MAKETOOL: mingw32-make
+#      USE_CMAKE: false
     - QTABI: msvc2017_64
       ARCH: x64
       VSVER: 2017
       CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
       USE_CMAKE: true
       MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
-    - QTABI: msvc2017_64
-      ARCH: x64
-      VSVER: 2017
-      QMAKESPEC: win32-msvc
-      MAKETOOL: jom
-      USE_CMAKE: false
+#    - QTABI: msvc2017_64
+#      ARCH: x64
+#      VSVER: 2017
+#      QMAKESPEC: win32-msvc
+#      MAKETOOL: jom
+#      USE_CMAKE: false
     - QTABI: msvc2015
       ARCH: x86
       VSVER: 14
       CMAKE_GENERATOR: "Visual Studio 15 2017"
       USE_CMAKE: true
       MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
-    - QTABI: msvc2015
-      ARCH: x86
-      VSVER: 14
-      QMAKESPEC: win32-msvc
-      MAKETOOL: jom
-      USE_CMAKE: false
+#    - QTABI: msvc2015
+#      ARCH: x86
+#      VSVER: 14
+#      QMAKESPEC: win32-msvc
+#      MAKETOOL: jom
+#      USE_CMAKE: false
 
 skip_tags: true
 

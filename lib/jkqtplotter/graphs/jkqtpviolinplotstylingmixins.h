@@ -21,7 +21,7 @@
 #include <QString>
 #include <QPainter>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
@@ -39,7 +39,7 @@
     \image html JKQTPViolinplotHorizontalElement_elements.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_GADGET
     public:
 

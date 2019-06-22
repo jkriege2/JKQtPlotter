@@ -93,7 +93,7 @@ QPen JKQTPGraphErrorStyleMixin::getErrorLinePenForRects(JKQTPEnhancedPainter &pa
     return p;
 }
 
-QBrush JKQTPGraphErrorStyleMixin::getErrorFillBrush(JKQTPEnhancedPainter &/*painter*/, JKQTBasePlotter */*parent*/) const
+QBrush JKQTPGraphErrorStyleMixin::getErrorFillBrush(JKQTPEnhancedPainter &/*painter*/, JKQTBasePlotter * /*parent*/) const
 {
     return m_errorFillBrush;
 }

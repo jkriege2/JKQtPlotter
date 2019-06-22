@@ -18,9 +18,9 @@ set(UIS  )
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
 if(BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTFastPlotterLib${LIBNAME_ADDITION})
+    target_link_libraries(${EXENAME} JKQTFastPlotterLib)
 elseif(BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTFastPlotterSharedLib${LIBNAME_ADDITION})
+    target_link_libraries(${EXENAME} JKQTFastPlotterSharedLib)
 endif()
 
 

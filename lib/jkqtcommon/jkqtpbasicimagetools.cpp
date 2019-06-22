@@ -30,7 +30,7 @@ const int JKQTPImageTools::PALETTE_ICON_WIDTH = 64;
 const int JKQTPImageTools::PALETTE_IMAGEICON_HEIGHT = 64;
 const int JKQTPImageTools::LUTSIZE = 256;
 
-QList<int*> global_jkqtpimagetools_lutstore = QList<int*>();
+QList<int*> JKQTPImageTools::global_jkqtpimagetools_lutstore = QList<int*>();
 
 
 bool JKQTPImagePlot_buildDefinedPaletteLessThan(const QPair<double, QRgb> &s1, const QPair<double, QRgb> &s2)

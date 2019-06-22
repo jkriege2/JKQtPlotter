@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>) (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>) (DKFZ) & IWR, University of Heidelberg
 
     last modification: $LastChangedDate: 2015-06-10 19:19:10 +0200 (Mi, 10 Jun 2015) $  (revision $Rev: 3976 $)
 
@@ -23,7 +23,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "jkqtp_imexport.h"
+#include "jkqtcommon_imexport.h"
 
 #ifndef __WINDOWS__
 # if defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32)
@@ -127,7 +127,7 @@
  * \test you can find an example application in the file \link test_hrestimer.cpp \endlink.
  *
  */
-class JKQTP_LIB_EXPORT JKQTPHighResTimer {
+class JKQTCOMMON_LIB_EXPORT JKQTPHighResTimer {
   protected:
     #ifdef __WINDOWS__
       /** \brief internal: time stamp of the last call of start() */

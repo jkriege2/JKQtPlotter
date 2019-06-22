@@ -24,7 +24,7 @@
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpoverlaysbase.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpbasicoverlays_H
@@ -40,7 +40,7 @@ class JKQTBasePlotter;
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphTextStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
     public:
         explicit JKQTPOverlayVerticalLine(double pos, JKQTBasePlotter *parent = nullptr);
@@ -67,7 +67,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayVerticalLine : public JKQTPOverlayOneCoordOve
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphTextStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
     public:
         explicit JKQTPOverlayVerticalRange(double pos, double pos2, JKQTBasePlotter *parent = nullptr);
@@ -98,7 +98,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayVerticalRange : public JKQTPOverlayTwoCoordOv
    \ingroup jkqtplotter_overlays
 
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay, public JKQTPGraphLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
         explicit JKQTPOverlayLine(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = nullptr);
@@ -121,7 +121,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayLine : public JKQTPOverlayTwoPositionOverlay,
    \ingroup jkqtplotter_overlays
 
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayRectangle : public JKQTPOverlayTwoPositionOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayRectangle : public JKQTPOverlayTwoPositionOverlay, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         explicit JKQTPOverlayRectangle(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = nullptr);

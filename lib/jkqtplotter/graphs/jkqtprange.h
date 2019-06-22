@@ -22,7 +22,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
@@ -50,7 +50,7 @@ class JKQTPDatastore;
 
     \image html JKQTPHorizontalRange.png
  */
-class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -184,7 +184,7 @@ class JKQTP_LIB_EXPORT JKQTPHorizontalRange: public JKQTPGraph, public JKQTPGrap
 
     \image html JKQTPVerticalRange.png
  */
-class JKQTP_LIB_EXPORT JKQTPVerticalRange: public JKQTPHorizontalRange {
+class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalRange: public JKQTPHorizontalRange {
         Q_OBJECT
     public:
         /** \brief class constructor */

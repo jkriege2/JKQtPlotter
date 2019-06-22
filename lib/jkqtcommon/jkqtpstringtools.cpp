@@ -85,7 +85,7 @@ std::string jkqtp_tolower(const std::string& s){
   va_list ap;
   char buffer[4096];
   va_start (ap, templ);
-  vsprintf (buffer, templ.c_str(), ap);
+  vsnprintf(buffer, 4096, templ.c_str(), ap);
   va_end (ap);
   std::string ret(buffer);
   return ret;
@@ -140,7 +140,7 @@ std::string jkqtp_tolower(const std::string& s){
       if (dpos==std::string::npos) {
           return r;
       } else {
-          long i=r.size()-1;
+          long i= static_cast<long>(r.size())-1;
           bool nonz=false;
           while (i>=0) {
               //std::cout<<i<<"\n";

@@ -22,7 +22,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/graphs/jkqtpboxplotstylingmixins.h"
@@ -98,7 +98,7 @@
     \see \ref JKQTPlotterBoxplotsGraphs, jkqtpstatVAddBoxplots(),\ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat, \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotStyling
 
  */
-class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQTPGraphBoxplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQTPGraphBoxplotStyleMixin {
         Q_OBJECT
     public:
 
@@ -255,7 +255,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQT
     \see JKQTPBoxplotVerticalGraph \ref JKQTPlotterBoxplotsGraphs, jkqtpstatHAddBoxplots(), \ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat, \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotStyling
 
  */
-class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -309,7 +309,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalG
     \see jkqtpstatVAddBoxplot(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotsGraphs, \ref JKQTPlotterBoxplotStyling, jkqtpstatAddVBoxplotAndOutliers()
 
  */
-class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphBoxplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphBoxplotStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -433,7 +433,7 @@ class JKQTP_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, publ
     \see JKQTPBoxplotVerticalElement, jkqtpstatHAddBoxplot(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotsGraphs, \ref JKQTPlotterBoxplotStyling, jkqtpstatAddHBoxplotAndOutliers()
 
  */
-class JKQTP_LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
         Q_OBJECT
     public:
         /** \brief class constructor */

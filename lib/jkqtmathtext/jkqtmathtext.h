@@ -36,7 +36,7 @@
 #include <QString>
 #include <QSet>
 #include <QFile>
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtmathtext/jkqtmathtext_imexport.h"
 #include <QWidget>
 #include <QLabel>
 #include <QHash>
@@ -46,7 +46,7 @@
 /** \brief initialized Qt-ressources necessary for JKQTMathText
  *  \ingroup jkqtmathtext
  */
-JKQTP_LIB_EXPORT void initJKQTMathTextResources();
+JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
 
 /*! \brief this class parses a LaTeX string and can then draw the contained text/equation onto a <a href="http://doc.qt.io/qt-5/qpainter.html">QPainter</a>
     \ingroup jkqtmathtext
@@ -217,7 +217,7 @@ JKQTP_LIB_EXPORT void initJKQTMathTextResources();
 
 
  */
-class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         Q_OBJECT
     public:
         /** \brief minimum linewidth allowed in a JKQTMathText (given in pt) */
@@ -703,7 +703,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         };
 
         /** \brief beschreibt die Größe eines Knotens */
-        struct JKQTP_LIB_EXPORT MTnodeSize {
+        struct JKQTMATHTEXT_LIB_EXPORT MTnodeSize {
             MTnodeSize();
             double width;
             double baselineHeight;
@@ -718,7 +718,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
          *
          * \image html jkqtmathtext_node_geo.png
          */
-        class JKQTP_LIB_EXPORT MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTnode {
             public:
                 MTnode(JKQTMathText* parent);
                 virtual ~MTnode();
@@ -789,7 +789,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing one text node in the syntax tree
          *  \ingroup jkqtmathtext_items
          */
-        class JKQTP_LIB_EXPORT MTtextNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTtextNode: public MTnode {
             public:
                 MTtextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
                 virtual ~MTtextNode() override;
@@ -811,7 +811,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing one text node in the syntax tree
          *  \ingroup jkqtmathtext_items
          */
-        class JKQTP_LIB_EXPORT MTplainTextNode: public MTtextNode {
+        class JKQTMATHTEXT_LIB_EXPORT MTplainTextNode: public MTtextNode {
             public:
                 MTplainTextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
                 /** \copydoc MTnode::getTypeName() */
@@ -823,7 +823,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing one whitepsace node in the syntax tree
          *  \ingroup jkqtmathtext_items
          */
-        class JKQTP_LIB_EXPORT MTwhitespaceNode: public MTtextNode {
+        class JKQTMATHTEXT_LIB_EXPORT MTwhitespaceNode: public MTtextNode {
             public:
                 MTwhitespaceNode(JKQTMathText* parent);
                 virtual ~MTwhitespaceNode() override;
@@ -837,7 +837,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing one symbol (e.g. \c \\alpha , \c \\cdot ...) node in the syntax tree
          *  \ingroup jkqtmathtext_items
          */
-        class JKQTP_LIB_EXPORT MTsymbolNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTsymbolNode: public MTnode {
             public:
                 MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
                 virtual ~MTsymbolNode() override;
@@ -881,7 +881,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing a list of nodes in the syntax tree
          *  \ingroup jkqtmathtext_items
          */
-        class JKQTP_LIB_EXPORT MTlistNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTlistNode: public MTnode {
             public:
                 MTlistNode(JKQTMathText* parent);
                 virtual ~MTlistNode() override;
@@ -906,7 +906,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing an instruction node with exactly one argument in the syntax tree
          *  \ingroup jkqtmathtext_items
          */
-        class JKQTP_LIB_EXPORT MTinstruction1Node: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTinstruction1Node: public MTnode {
             public:
                 MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters=QStringList());
                 virtual ~MTinstruction1Node() override;
@@ -942,7 +942,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
          *
          * \image html jkqtmathtext_subscriptnode_getSizeInternal.png
          */
-        class JKQTP_LIB_EXPORT MTsubscriptNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTsubscriptNode: public MTnode {
             public:
                 MTsubscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsubscriptNode() override;
@@ -970,7 +970,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
          *
          * \note a MTlistNode might modify the positioning slightly for special cases (e.g. \c \\int , \c \\sum ... or after braces)
          */
-        class JKQTP_LIB_EXPORT MTsuperscriptNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTsuperscriptNode: public MTnode {
             public:
                 MTsuperscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsuperscriptNode() override;
@@ -995,7 +995,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing a brace node
          *  \ingroup jkqtmathtext_items
           */
-        class JKQTP_LIB_EXPORT MTbraceNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTbraceNode: public MTnode {
             public:
                 MTbraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace=true);
                 virtual ~MTbraceNode() override;
@@ -1038,7 +1038,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing a sqrt node
          *  \ingroup jkqtmathtext_items
           */
-        class JKQTP_LIB_EXPORT MTsqrtNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTsqrtNode: public MTnode {
             public:
                 MTsqrtNode(JKQTMathText* parent, MTnode* child, int degree=2);
                 virtual ~MTsqrtNode() override;
@@ -1082,7 +1082,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing a \\frac node
          *  \ingroup jkqtmathtext_items
           */
-        class JKQTP_LIB_EXPORT MTfracNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTfracNode: public MTnode {
             public:
                 MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode);
                 virtual ~MTfracNode() override;
@@ -1116,7 +1116,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing a \\begin{matrix} node
          *  \ingroup jkqtmathtext_items
           */
-        class JKQTP_LIB_EXPORT MTmatrixNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTmatrixNode: public MTnode {
             public:
                 MTmatrixNode(JKQTMathText* parent, QVector<QVector<MTnode*> > children);
                 virtual ~MTmatrixNode() override;
@@ -1165,7 +1165,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief subclass representing a decorated text m (e.g. \c \\vec \c \\hat ...) node
          *  \ingroup jkqtmathtext_items
          */
-        class JKQTP_LIB_EXPORT MTdecoratedNode: public MTnode {
+        class JKQTMATHTEXT_LIB_EXPORT MTdecoratedNode: public MTnode {
             public:
                 MTdecoratedNode(JKQTMathText* parent, MTdecoration decoration, MTnode* child);
                 virtual ~MTdecoratedNode() override;
@@ -1423,7 +1423,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
             return this->parsedNode; 
         }
 
-        struct JKQTP_LIB_EXPORT tbrData {
+        struct JKQTMATHTEXT_LIB_EXPORT tbrData {
             explicit tbrData(const QFont& f, const QString& text, QPaintDevice *pd);
             QFontMetricsF fm;
             QString text;
@@ -1434,7 +1434,7 @@ class JKQTP_LIB_EXPORT JKQTMathText : public QObject {
 
             bool operator==(const tbrData& other) const;
         };
-        struct JKQTP_LIB_EXPORT tbrDataH {
+        struct JKQTMATHTEXT_LIB_EXPORT tbrDataH {
             explicit tbrDataH(const QFont& f, const QString& text, QPaintDevice *pd);
             QString text;
             QFont f;
@@ -1461,7 +1461,7 @@ inline uint qHash(const JKQTMathText::tbrDataH& data) {
 
     \see JKQTMathText
 */
-class JKQTP_LIB_EXPORT JKQTMathTextLabel: public QLabel {
+class JKQTMATHTEXT_LIB_EXPORT JKQTMathTextLabel: public QLabel {
         Q_OBJECT
     public:
         explicit JKQTMathTextLabel(QWidget* parent=nullptr);

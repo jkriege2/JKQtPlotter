@@ -17,9 +17,9 @@ set(UIS  )
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
 if(BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTMathTextLib${LIBNAME_ADDITION})
+    target_link_libraries(${EXENAME} JKQTMathTextLib)
 elseif(BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTMathTextSharedLib${LIBNAME_ADDITION})
+    target_link_libraries(${EXENAME} JKQTMathTextSharedLib)
 endif()
 
 

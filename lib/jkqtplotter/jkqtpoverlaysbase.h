@@ -23,7 +23,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
 #ifndef jkqtpelementsoverlay_H
@@ -38,7 +38,7 @@ class JKQTBasePlotter;
 
    These simple primitive elements can be used to e.g. display fast changing indicators on the graph ...
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayElement : public QObject {
         Q_OBJECT
     public:
         explicit JKQTPOverlayElement(JKQTBasePlotter *parent = nullptr);
@@ -106,7 +106,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayElement : public QObject {
 /*! \brief baseclass for a two-position overlay
    \ingroup jkqtplotter_overlays
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
         explicit JKQTPOverlayTwoPositionOverlay(double x1, double y1, double x2, double y2, JKQTBasePlotter *parent = nullptr);
@@ -143,7 +143,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayTwoPositionOverlay : public JKQTPOverlayEleme
 /*! \brief baseclass for one-coordinate indicator overlays (horizontal/vertical lines
    \ingroup jkqtplotter_overlays
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement {
         Q_OBJECT
     public:
         explicit JKQTPOverlayOneCoordOverlay(double pos, JKQTBasePlotter *parent = nullptr);
@@ -162,7 +162,7 @@ class JKQTP_LIB_EXPORT JKQTPOverlayOneCoordOverlay : public JKQTPOverlayElement 
 /*! \brief baseclass for two-coordinate indicator overlays (horizontal/vertical lines
    \ingroup jkqtplotter_overlays
  */
-class JKQTP_LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverlay {
+class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayTwoCoordOverlay : public JKQTPOverlayOneCoordOverlay {
         Q_OBJECT
     public:
         explicit JKQTPOverlayTwoCoordOverlay(double pos, double pos2, JKQTBasePlotter *parent = nullptr);

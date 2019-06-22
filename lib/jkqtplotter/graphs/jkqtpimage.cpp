@@ -417,7 +417,12 @@ void JKQTPMathImageBase::drawKeyMarker(JKQTPEnhancedPainter &/*painter*/, QRectF
 
 void JKQTPMathImageBase::setNx(int __value)
 {
-    this->Nx = __value;
+	this->Nx = __value;
+}
+
+void JKQTPMathImageBase::setNx(size_t __value)
+{
+	this->Nx = static_cast<int>(__value);
 }
 
 int JKQTPMathImageBase::getNx() const
@@ -427,7 +432,12 @@ int JKQTPMathImageBase::getNx() const
 
 void JKQTPMathImageBase::setNy(int __value)
 {
-    this->Ny = __value;
+	this->Ny = __value;
+}
+
+void JKQTPMathImageBase::setNy(size_t __value)
+{
+	this->Ny = static_cast<int>(__value);
 }
 
 int JKQTPMathImageBase::getNy() const
@@ -1670,8 +1680,8 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, dou
     this->modifierColumn=-1;
     this->imageColumn=imageColumn;
     if (parent && imageColumn>=0 && parent->getDatastore()) {
-        Nx=parent->getDatastore()->getColumnImageWidth(imageColumn);
-        Ny=parent->getDatastore()->getColumnImageHeight(imageColumn);
+        Nx= static_cast<int>(parent->getDatastore()->getColumnImageWidth(imageColumn));
+        Ny= static_cast<int>(parent->getDatastore()->getColumnImageHeight(imageColumn));
     }
     this->datatype=JKQTPMathImageBase::DoubleArray;
 }
@@ -1696,6 +1706,15 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, dou
 {
 }
 
+void JKQTPColumnMathImage::setImageColumn(size_t __value)
+{
+	setImageColumn(static_cast<int>(__value));
+}
+
+void JKQTPColumnMathImage::setModifierColumn(size_t __value)
+{
+	setImageColumn(static_cast<int>(__value));
+}
 void JKQTPColumnMathImage::setImageColumn(int __value)
 {
     this->imageColumn = __value;
@@ -1739,7 +1758,7 @@ void JKQTPColumnMathImage::ensureImageData()
     } else {
         this->datatype=JKQTPMathImageBase::DoubleArray;
         this->data=parent->getDatastore()->getColumnPointer(imageColumn,0);
-        this->Ny=parent->getDatastore()->getRows(imageColumn)/this->Nx;
+        this->Ny= static_cast<int>(parent->getDatastore()->getRows(imageColumn)/this->Nx);
     }
     if (this->Nx==0 || modifierColumn<0 || !parent->getDatastore()->getColumnPointer(modifierColumn,0)) {
         this->dataModifier=nullptr;

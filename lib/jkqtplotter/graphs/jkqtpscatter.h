@@ -23,7 +23,7 @@
 #include <QPair>
 #include <functional>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
@@ -53,7 +53,7 @@ class JKQTPDatastore;
 
     \see \ref JKQTPlotterAdvancedLineAndFillStyling, \ref JKQTPlotterSimpleTest, \ref JKQTPlotterSymbolsAndStyles, jkqtpstatAddVKDE1D(), jkqtpstatAddVKDE1DAutoranged(), jkqtpstatAddHKDE1D(), jkqtpstatAddHKDE1DAutoranged()
  */
-class JKQTP_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -113,7 +113,7 @@ class JKQTP_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTPGraphL
 
     \see JKQTPXYParametrizedErrorScatterGraph, \ref JKQTPlotterParamScatter , \ref JKQTPlotterParamScatterImage, \ref JKQTPlotterParametricCurves
 */
-class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteStyleAndToolsMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph, public JKQTPColorPaletteStyleAndToolsMixin {
         Q_OBJECT
     public:
         /** \brief functor, which converts the value of the symbol column (at a location x,y) into a JKQTPGraphSymbols */
@@ -372,7 +372,7 @@ class JKQTP_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLineGraph,
 
     \see jkqtpstatAddXYErrorLineGraph(), jkqtpstatAddXErrorLineGraph(), jkqtpstatAddYErrorLineGraph(), \ref JKQTPlotterErrorBarStyles, \ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat
  */
-class JKQTP_LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYGraphErrors {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JKQTPXYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -409,7 +409,7 @@ class JKQTP_LIB_EXPORT JKQTPXYLineErrorGraph: public JKQTPXYLineGraph, public JK
 
     \see JKQTPXYParametrizedScatterGraph, \ref JKQTPlotterParamScatter, jkqtpstatAddXErrorParametrizedScatterGraph(), jkqtpstatAddYErrorParametrizedScatterGraph()
  */
-class JKQTP_LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrizedScatterGraph, public JKQTPXYGraphErrors {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedErrorScatterGraph: public JKQTPXYParametrizedScatterGraph, public JKQTPXYGraphErrors {
         Q_OBJECT
     public:
         JKQTPXYParametrizedErrorScatterGraph(JKQTBasePlotter* parent=nullptr);

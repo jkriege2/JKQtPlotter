@@ -42,7 +42,7 @@
 #include "jkqtplotter/jkqtplotterstyle.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/gui/jkvanishqtoolbar.h"
 #include <QKeyEvent>
 
@@ -52,7 +52,7 @@
 /** \brief initialized Qt-ressources necessary for JKQTPlotter
  *  \ingroup jkqtpplottersupprt
 */
-JKQTP_LIB_EXPORT void initJKQTPlotterResources();
+JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
 
 
 /** \brief plotter widget for scientific plots (uses JKQTBasePlotter to do the actual drawing)
@@ -429,7 +429,7 @@ JKQTP_LIB_EXPORT void initJKQTPlotterResources();
  * \see \ref JKQTPlotterQtCreator <br> Also see \ref JKQTPlotterStyling for another example of using the Qt UI Designer with JKQTPlotter
  *
  */
-class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
+class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         Q_OBJECT
     public:
         /** \brief class constructor
@@ -1394,7 +1394,7 @@ class JKQTP_LIB_EXPORT JKQTPlotter: public QWidget {
          *  \internal
          *  \ingroup jkqtpplottersupprt
          */
-        struct JKQTP_LIB_EXPORT MouseDragAction {
+        struct JKQTPLOTTER_LIB_EXPORT MouseDragAction {
                 /** \brief constructs an invalid object */
                 MouseDragAction();
                 MouseDragAction(Qt::MouseButton _mouseButton, Qt::KeyboardModifiers _modifier, JKQTPMouseDragActions _mode);

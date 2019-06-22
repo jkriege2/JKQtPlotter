@@ -374,7 +374,7 @@ void JKQTPGraphFillStyleMixin::setFillTransform(const QTransform &b)
     m_fillBrush.setTransform(b);
 }
 
-QBrush JKQTPGraphFillStyleMixin::getFillBrush(JKQTPEnhancedPainter &/*painter*/, JKQTBasePlotter */*parent*/) const
+QBrush JKQTPGraphFillStyleMixin::getFillBrush(JKQTPEnhancedPainter &/*painter*/, JKQTBasePlotter * /*parent*/) const
 {
     return m_fillBrush;
 }

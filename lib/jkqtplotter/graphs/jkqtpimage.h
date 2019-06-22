@@ -29,7 +29,7 @@
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 
 
@@ -37,7 +37,7 @@
 /*! \brief base class for plotting an image
     \ingroup jkqtplotter_imagelots_elements
  */
-class JKQTP_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         Q_OBJECT
     public:
         /** \brief class constructor
@@ -130,7 +130,7 @@ class JKQTP_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
     \image html imageplot.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
+class JKQTPLOTTER_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         Q_OBJECT
     public:
         /** \brief possible datatypes of the data array, plotted by this class. */
@@ -230,13 +230,17 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-        /*! \copydoc Nx */
-        void setNx(int __value);
-        /*! \copydoc Nx */
+		/*! \copydoc Nx */
+		void setNx(int __value);
+		/*! \copydoc Nx */
+		void setNx(size_t __value);
+		/*! \copydoc Nx */
         int getNx() const;
         /*! \copydoc Ny */
         void setNy(int __value);
-        /*! \copydoc Ny */
+         /*! \copydoc Ny */
+        void setNy(size_t __value);
+       /*! \copydoc Ny */
         int getNy() const;
         /*! \copydoc data */
         virtual void setData(void* __value);
@@ -337,7 +341,7 @@ class JKQTP_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
 
     \see \ref JKQTPlotterImagePlotQImageRGB
  */
-class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
+class JKQTPLOTTER_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         Q_OBJECT
     public:
 
@@ -472,7 +476,7 @@ class JKQTP_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
 
     \see \ref JKQTPlotterImagePlotNoDatastore
  */
-class JKQTP_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
+class JKQTPLOTTER_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
 
@@ -1000,7 +1004,7 @@ int JKQTPMathImage::getModifierSampleSize() const {
 
     \see jkqtpstatAddKDE2DImage(), jkqtpstatAddHistogram2DImage(), \ref JKQTPlotterImagePlot, \ref JKQTPlotterImagePlotModifier, \ref JKQTPlotterImagePlotOpenCV
  */
-class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
+class JKQTPLOTTER_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
         Q_OBJECT
     public:
 
@@ -1072,11 +1076,16 @@ class JKQTP_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
 
         /*! \copydoc imageColumn */
         virtual void setImageColumn(int __value);
+
+        /*! \copydoc imageColumn */
+        virtual void setImageColumn(size_t __value);
         /*! \copydoc imageColumn */
         int getImageColumn() const;
         /*! \copydoc modifierColumn */
         virtual void setModifierColumn(int __value);
-        /*! \copydoc modifierColumn */
+         /*! \copydoc modifierColumn */
+        virtual void setModifierColumn(size_t __value);
+       /*! \copydoc modifierColumn */
         int getModifierColumn() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */

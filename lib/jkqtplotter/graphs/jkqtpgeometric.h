@@ -24,7 +24,7 @@
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 
 #ifndef jkqtpgraphsgeometric_H_INCLUDED
@@ -36,7 +36,7 @@
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGraphLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -86,7 +86,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGra
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -154,7 +154,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public JKQTP
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -219,7 +219,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraph
     \ingroup jkqtplotter_geoplots
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTextStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -306,7 +306,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTe
     \image html plot_geoline.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -404,7 +404,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
     \image html plot_geoinfiniteline.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -482,7 +482,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
     \image html plot_geolines.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -549,7 +549,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
 
     \image html plot_georectangle.png
  */
-class JKQTP_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -691,7 +691,7 @@ protected:
     \image html plot_geopolygon.png
 
  */
-class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -773,7 +773,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
     \see <a href="http://www.codeguru.com/cpp/g-m/gdi/article.php/c131">http://www.codeguru.com/cpp/g-m/gdi/article.php/c131</a> and
          <a href="http://en.wikipedia.org/wiki/Ellipse#General_parametric_form">http://en.wikipedia.org/wiki/Ellipse#General_parametric_form</a>
  */
-class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -879,7 +879,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
 
     \image html plot_geoarc.png
  */
-class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -988,7 +988,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
 
     \image html plot_geopie.png
  */
-class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -1057,7 +1057,7 @@ class JKQTP_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
 
     \image html plot_geochord.png
  */
-class JKQTP_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
         Q_OBJECT
     public:
         /*! \brief class constructor

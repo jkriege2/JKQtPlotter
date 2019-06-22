@@ -3,14 +3,16 @@ cmake_minimum_required(VERSION 3.0)
 set(libBasename JKQTPlotter)
 
 if(BUILD_SHARED_LIBS)
-    set(libsh_name ${libBasename}SharedLib${LIBNAME_ADDITION})
-    set(${libsh_name}_LIBRARY ${libsh_name} PARENT_SCOPE)
+    set(libsh_name ${libBasename}SharedLib)
+    set(libsh_name_decorated ${libsh_name}${LIBNAME_ADDITION})
+    set(${libBasename}_SHARED_LIBRARY ${libsh_name_decorated}  CACHE STRING "name of static library for ${libBasename}" FORCE)
     message( STATUS "-- Building ${libsh_name}" )
 endif(BUILD_SHARED_LIBS)
 
 if(BUILD_STATIC_LIBS)
-    set(lib_name ${libBasename}Lib${LIBNAME_ADDITION})
-    set(${lib_name}_LIBRARY ${lib_name} PARENT_SCOPE)
+    set(lib_name ${libBasename}Lib)
+    set(lib_name_decorated ${lib_name}${LIBNAME_ADDITION})
+    set(${libBasename}_STATIC_LIBRARY ${lib_name_decorated} CACHE STRING "name of static library for ${libBasename}" FORCE)
     message( STATUS "-- Building ${lib_name}" )
 endif(BUILD_STATIC_LIBS)
 
@@ -82,6 +84,7 @@ set(HEADERS
     jkqtpcoordinateaxes.h
     jkqtpcoordinateaxesstyle.h
     jkqtpimagetools.h
+    jkqtplotter_imexport.h
 )
 set(HEADERS_GRAPHS
     graphs/jkqtpboxplot.h
@@ -125,15 +128,20 @@ set(RESOURCES
 if(BUILD_SHARED_LIBS)
     add_library(${libsh_name} SHARED  ${SOURCES} ${SOURCES_GRAPHS} ${SOURCES_GUI} ${SOURCES_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
-    target_link_libraries(${libsh_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonSharedLib${LIBNAME_ADDITION} JKQTMathTextSharedLib${LIBNAME_ADDITION})
-    target_compile_definitions(${libsh_name} PUBLIC JKQTP_LIB_IN_DLL)
-    target_compile_definitions(${libsh_name} PRIVATE JKQTP_LIB_EXPORT_LIBRARY)
+    set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
+    target_link_libraries(${libsh_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
+    target_compile_definitions(${libsh_name} PUBLIC JKQTPLOTTER_LIB_IN_DLL)
+    target_compile_definitions(${libsh_name} PRIVATE JKQTPLOTTER_LIB_EXPORT_LIBRARY)
+    set_property(TARGET ${libsh_name} PROPERTY WINDOWS_EXPORT_ALL_SYMBOLS "ON")
+#	include(GenerateExportHeader)
+#	generate_export_header(${libsh_name})
 endif()
 
 if(BUILD_STATIC_LIBS)
     add_library(${lib_name} STATIC   ${SOURCES} ${SOURCES_GRAPHS} ${SOURCES_GUI} ${SOURCES_OVERLAYS} ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI} ${HEADERS_OVERLAYS} ${RESOURCES})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
-    target_link_libraries(${lib_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonLib${LIBNAME_ADDITION} JKQTMathTextLib${LIBNAME_ADDITION})
+    set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
+    target_link_libraries(${lib_name} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonLib JKQTMathTextLib)
 endif()
 
 

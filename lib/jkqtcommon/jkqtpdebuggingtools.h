@@ -21,7 +21,7 @@
 
 #ifndef JKQTPDEBUGGINGTOOLS_H_INCLUDED
 #define JKQTPDEBUGGINGTOOLS_H_INCLUDED
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtcommon_imexport.h"
 #include <QString>
 #include <QElapsedTimer>
 
@@ -52,7 +52,7 @@
 /** \brief RAII construct that times its lifetime, outputting properly indented qDebug()-message
  * \ingroup jkqtptools_debugging
  */
-class JKQTP_LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
+class JKQTCOMMON_LIB_EXPORT JKQTPAutoOutputTimer : public QElapsedTimer
 {
     public:
         explicit JKQTPAutoOutputTimer(const QString& message);

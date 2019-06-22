@@ -22,7 +22,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
@@ -50,7 +50,7 @@ class JKQTPDatastore;
 
     \see JKQTPSpecialLineVerticalGraph, JKQTPFilledCurveXGraph, \ref JKQTPlotterSpecialStepLinePlot
  */
-class JKQTP_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -110,7 +110,7 @@ class JKQTP_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGraph, pub
 
     \see JKQTPSpecialLineHorizontalGraph, JKQTPFilledCurveYGraph, \ref JKQTPlotterSpecialStepLinePlot
  */
-class JKQTP_LIB_EXPORT JKQTPSpecialLineVerticalGraph: public JKQTPSpecialLineHorizontalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineVerticalGraph: public JKQTPSpecialLineHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */

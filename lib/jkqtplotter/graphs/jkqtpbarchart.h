@@ -21,7 +21,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
@@ -56,7 +56,7 @@
 
     \see JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts, jkqtpstatAddHHistogram1D(), jkqtpstatAddHHistogram1DAutoranged()
  */
-class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -175,7 +175,7 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalGraph: public JKQTPXYGraph, public JKQTPG
  *
  * \see JKQTPBarVerticalGraph, \ref JKQTPlotterStackedBarChart
  */
-class JKQTP_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -215,7 +215,7 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalStackableGraph: public JKQTPBarVerticalGr
  *
  * \see jkqtpstatAddYErrorBarGraph(), JKQTPBarVerticalGraph, \ref JKQTPlotterBarcharts
  */
-class JKQTP_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, public JKQTPYGraphErrors {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph, public JKQTPYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -249,7 +249,7 @@ class JKQTP_LIB_EXPORT JKQTPBarVerticalErrorGraph: public JKQTPBarVerticalGraph,
 
     \see \ref JKQTPlotterBarcharts, jkqtpstatAddVHistogram1D(), jkqtpstatAddVHistogram1DAutoranged()
  */
-class JKQTP_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -287,7 +287,7 @@ class JKQTP_LIB_EXPORT JKQTPBarHorizontalGraph: public JKQTPBarVerticalGraph {
  *
  * \see JKQTPBarHorizontalGraph, \ref JKQTPlotterStackedBarChart
  */
-class JKQTP_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -328,7 +328,7 @@ class JKQTP_LIB_EXPORT JKQTPBarHorizontalStackableGraph: public JKQTPBarHorizont
  * \see jkqtpstatAddXErrorBarGraph(), JKQTPBarHorizontalGraph, \ref JKQTPlotterBarcharts
  *
  */
-class JKQTP_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizontalGraph, public JKQTPXGraphErrors {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarHorizontalErrorGraph: public JKQTPBarHorizontalGraph, public JKQTPXGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */

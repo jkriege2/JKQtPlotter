@@ -45,7 +45,7 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
- #include "jkqtcommon/jkqtp_imexport.h"
+ #include "jkqtplotter/jkqtplotter_imexport.h"
 
 
 #ifndef JKQTPBASEPLOTTER_H
@@ -58,11 +58,11 @@ class JKQTPPlotElement; // forward
 
 /** \brief initialized Qt-ressources necessary for JKQTBasePlotter
  * \ingroup jkqtpplottersupprt */
-JKQTP_LIB_EXPORT void initJKQTBasePlotterResources();
+JKQTPLOTTER_LIB_EXPORT void initJKQTBasePlotterResources();
 
 /** \brief virtual base-class for exporter classes that can be used to save data inot a file
  * \ingroup jkqtpplottersupprt */
-class JKQTP_LIB_EXPORT JKQTPSaveDataAdapter {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSaveDataAdapter {
     public:
         virtual ~JKQTPSaveDataAdapter() ;
         virtual QString getFilter() const=0;
@@ -72,7 +72,7 @@ class JKQTP_LIB_EXPORT JKQTPSaveDataAdapter {
 /** \brief Service from this class to implement a special QPaintDevice as a plugin, that can be registered to JKQTBasePlotter/JKQTPlotter
  *         and then be used to export graphics, use registerPaintDeviceAdapter() to register such a plass
  * \ingroup jkqtpplottersupprt */
-class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
+class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
     public:
         virtual ~JKQTPPaintDeviceAdapter()  {}
         virtual QString getFilter() const=0;
@@ -326,7 +326,7 @@ class JKQTP_LIB_EXPORT JKQTPPaintDeviceAdapter {
  * These methods MAY (strictly optional and turned off by default) be called by saveSettings() and loadSettings(), if the property userSettigsFilename ( \copybrief userSettigsFilename )is
  * set (not-empty). In this case the suer settings are stored/loaded also everytime they are changed by the user or programmatically.
  */
-class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
+class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         Q_OBJECT
     public:
         typedef QMap<QString, QList<QPointer<QAction> > > AdditionalActionsMap;
@@ -565,7 +565,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          * \see getPlotStyle()
          */
-        class JKQTP_LIB_EXPORT JKQTPPen {
+        class JKQTPLOTTER_LIB_EXPORT JKQTPPen {
             protected:
                 QColor m_color;
                 QColor m_fillColor;
@@ -1083,7 +1083,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief internal tool class for text sizes
          *   \ingroup jkqtpplottersupprt
          *  \internal */
-        struct JKQTP_LIB_EXPORT textSizeData {
+        struct JKQTPLOTTER_LIB_EXPORT textSizeData {
             explicit textSizeData();
             double ascent, descent, width, strikeoutPos;
         };
@@ -1091,7 +1091,7 @@ class JKQTP_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief internal tool class for text-sizess in a plot key
          *  \ingroup jkqtpplottersupprt
          *  \internal */
-        struct JKQTP_LIB_EXPORT textSizeKey {
+        struct JKQTPLOTTER_LIB_EXPORT textSizeKey {
             explicit textSizeKey(const QFont& f, const QString& text, QPaintDevice *pd);
             explicit textSizeKey(const QString& fontName, double fontSize, const QString& text, QPaintDevice *pd);
             QString text;

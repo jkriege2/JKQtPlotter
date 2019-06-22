@@ -21,7 +21,7 @@
 #define JKQTPLOTTERSTYLE_H
 
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include <QColor>
 #include <QPainter>
 #include <QString>
@@ -36,7 +36,7 @@
  *
  *  \see JKQTPlotter, \ref jkqtpplotter_styling
  */
-class JKQTP_LIB_EXPORT JKQTPlotterStyle {
+class JKQTPLOTTER_LIB_EXPORT JKQTPlotterStyle {
     Q_GADGET
 public:
     /** \brief initialize with default values */
@@ -159,14 +159,14 @@ public:
  *
  * \see JKQTPSetSystemDefaultStyle(), JKQTPGetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), \ref jkqtpplotter_styling
  */
-JKQTP_LIB_EXPORT JKQTPlotterStyle& JKQTPGetSystemDefaultStyle();
+JKQTPLOTTER_LIB_EXPORT JKQTPlotterStyle& JKQTPGetSystemDefaultStyle();
 
 /** \brief replaces the system-wide default JKQTPlotterStyle with the given \a newStyle
  *  \ingroup jkqtpplotter_styling
  *
  * \see JKQTPGetSystemDefaultStyle(), JKQTPGetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), \ref jkqtpplotter_styling
  */
-JKQTP_LIB_EXPORT void JKQTPSetSystemDefaultStyle(JKQTPlotterStyle& newStyle);
+JKQTPLOTTER_LIB_EXPORT void JKQTPSetSystemDefaultStyle(JKQTPlotterStyle& newStyle);
 
 
 #endif // JKQTPLOTTERSTYLE_H

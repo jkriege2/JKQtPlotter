@@ -78,7 +78,7 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         QPen penSelection=getHighlightingLinePen(painter, parent);
 
 
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax= static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
         int imin=0;
 
         if (imax<imin) {
@@ -208,7 +208,7 @@ bool JKQTPXYLineErrorGraph::getXMinMax(double &minx, double &maxx, double &small
 
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax= static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
 
         if (imax<imin) {
             int h=imin;
@@ -250,7 +250,7 @@ bool JKQTPXYLineErrorGraph::getYMinMax(double &miny, double &maxy, double &small
 
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax= static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
 
         if (imax<imin) {
             int h=imin;
@@ -364,7 +364,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
     QPen penSelection=getHighlightingLinePen(painter, parent);
 
 
-    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+    int imax= static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     int imin=0;
     if (imax<imin) {
         int h=imin;
@@ -774,7 +774,7 @@ void JKQTPXYParametrizedScatterGraph::cbGetDataMinMax(double &dmin, double &dmax
         JKQTPDatastore* datastore=parent->getDatastore();
         if (datastore==nullptr) return;
         if (colorColumn<0) return;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax= static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
         int imin=0;
         if (imax<imin) {
             int h=imin;
@@ -897,7 +897,7 @@ bool JKQTPXYParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx
 
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax= static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
 
         if (imax<imin) {
             int h=imin;
@@ -940,7 +940,7 @@ bool JKQTPXYParametrizedErrorScatterGraph::getYMinMax(double &miny, double &maxy
 
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax= static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
 
         if (imax<imin) {
             int h=imin;

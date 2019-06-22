@@ -24,7 +24,7 @@
 #include <QPair>
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include <functional>
 
 #ifndef jkqtpgraphsevaluatedfunction_H
@@ -68,7 +68,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
     \see \ref JKQTPlotterFunctionPlots, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
-class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
 
@@ -396,7 +396,7 @@ class JKQTP_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPG
 
     \see \ref JKQTPlotterFunctionPlots
  */
-class JKQTP_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */

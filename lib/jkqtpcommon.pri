@@ -16,7 +16,7 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
         DEFINES += NOMINMAX
     }
 
-    HEADERS += $$PWD/jkqtcommon/jkqtp_imexport.h \
+    HEADERS += $$PWD/jkqtcommon/jkqtcommon_imexport.h \
                $$PWD/jkqtcommon/jkqtpdebuggingtools.h \
                $$PWD/jkqtcommon/jkqtpmathtools.h \
                $$PWD/jkqtcommon/jkqtpalgorithms.h \

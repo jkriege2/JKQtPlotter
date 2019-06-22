@@ -21,7 +21,7 @@
 
 #ifndef jkqtpmathtools_H_INCLUDED
 #define jkqtpmathtools_H_INCLUDED
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtcommon_imexport.h"
 #include "jkqtcommon/jkqtpstringtools.h"
 #include <cmath>
 #include <limits>
@@ -374,7 +374,7 @@ inline double jkqtp_polyEval(double x, PolyItP firstP, PolyItP lastP) {
 /*! \brief a C++-functor, which evaluates a polynomial
     \ingroup jkqtptools_math_basic
 */
-struct JKQTP_LIB_EXPORT JKQTPPolynomialFunctor {
+struct JKQTCOMMON_LIB_EXPORT JKQTPPolynomialFunctor {
         std::vector<double> P;
         template <class PolyItP>
         inline JKQTPPolynomialFunctor(PolyItP firstP, PolyItP lastP) {

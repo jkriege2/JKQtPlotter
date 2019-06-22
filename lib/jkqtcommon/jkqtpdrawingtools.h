@@ -20,7 +20,7 @@
 
 #ifndef JKQTPDRAWINGTOOLS_H_INCLUDED
 #define JKQTPDRAWINGTOOLS_H_INCLUDED
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtcommon_imexport.h"
 #include <QPaintDevice>
 #include <QPainter>
 #include <QPolygonF>
@@ -44,10 +44,10 @@ class JKQTPEnhancedPainter; // forward
 /*! \brief tool class with static values used by JKQTPlotter/JKQTBasePlotter
    \ingroup jkqtptools_drawing
    */
-struct JKQTP_LIB_EXPORT JKQTPlotterDrawingTools {
+struct JKQTPlotterDrawingTools {
     /** \brief smallest linewidth any line in JKQTPlotter/JKQTBasePlotter may have
      */
-    static const double ABS_MIN_LINEWIDTH;
+    static JKQTCOMMON_LIB_EXPORT const double ABS_MIN_LINEWIDTH;
 };
 
 
@@ -137,16 +137,16 @@ enum JKQTPGraphSymbols {
 /** \brief converts a JKQTPGraphSymbols variable into a identifier string
  * \ingroup jkqtptools_drawing
  */
-JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos);
+JKQTCOMMON_LIB_EXPORT QString JKQTPGraphSymbols2String(JKQTPGraphSymbols pos);
 /** \brief converts a JKQTPGraphSymbols variable into a human-readable string
  * \ingroup jkqtptools_drawing
  */
-JKQTP_LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
+JKQTCOMMON_LIB_EXPORT QString JKQTPGraphSymbols2NameString(JKQTPGraphSymbols pos);
 
 /** \brief converts a String into a JKQTPGraphSymbols
  * \ingroup jkqtptools_drawing
  */
-JKQTP_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
+JKQTCOMMON_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
 
 
 
@@ -154,7 +154,7 @@ JKQTP_LIB_EXPORT JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos);
 /** \brief rotate a rectangle by  given angle (rotates all points around the center of the rectangle and returns it as a QPolygonF)
  * \ingroup jkqtptools_drawing
  */
-JKQTP_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
+JKQTCOMMON_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
 
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools_drawing
@@ -184,7 +184,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
     \param color color of the symbol lines
     \param fillColor color of the symbol filling
  */
-JKQTP_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
+JKQTCOMMON_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
 /*! \brief draw an ellipse without setting pen or brush, or saving the painter!
@@ -204,7 +204,7 @@ JKQTP_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, doubl
 
     \note all angles are given in degrees [0..360]
 */
-JKQTP_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
+JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
 
 /*! \brief draw a tooltip, using the current brush and pen of the provided painter
     \ingroup jkqtptools_drawing
@@ -226,7 +226,7 @@ inline void JKQTPDrawTooltip(TPainter& painter, double x, double y, const QRectF
  *  \param distanceThreshold if two end-points are closer together as this value, they are united to a single point
  *  \return a cleaned polygon, where all consecutive points that were closer than distanceThreshold are united
  */
-JKQTP_LIB_EXPORT QPolygonF JKQTPCleanPolygon(const QPolygonF& poly, double distanceThreshold=0.3);
+JKQTCOMMON_LIB_EXPORT QPolygonF JKQTPCleanPolygon(const QPolygonF& poly, double distanceThreshold=0.3);
 
 /** \brief takes a list of QLineF objesct \a lines and tries to combine as many of them as possible to QPolygonF objects.
  *         <b>Note: This method implements an incomplete algorithm with \a searchMaxSurroundingElements>0, as solving
@@ -238,7 +238,7 @@ JKQTP_LIB_EXPORT QPolygonF JKQTPCleanPolygon(const QPolygonF& poly, double dista
  *  \param searchMaxSurroundingElements limits the search for a connected polygon to at most this number of neighbors
  *  \return a vector of QPolygonF objects, which contain longer line-segments formed from \a lines
  */
-JKQTP_LIB_EXPORT QVector<QPolygonF> JKQTPUnifyLinesToPolygons(const QVector<QLineF>& lines, double distanceThreshold=0.3, int searchMaxSurroundingElements=10);
+JKQTCOMMON_LIB_EXPORT QVector<QPolygonF> JKQTPUnifyLinesToPolygons(const QVector<QLineF>& lines, double distanceThreshold=0.3, int searchMaxSurroundingElements=10);
 
 
 

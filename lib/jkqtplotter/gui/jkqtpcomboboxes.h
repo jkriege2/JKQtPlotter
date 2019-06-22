@@ -23,7 +23,7 @@
 #define JKQTPCOMBOBOXES_H
 
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include <QComboBox>
 #include "jkqtplotter/jkqtpimagetools.h"
@@ -36,7 +36,7 @@
 
     \image html JKQTPMathImageColorPaletteComboBox.png
  */
-class JKQTP_LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPMathImageColorPaletteComboBox(QWidget* parent=nullptr);
@@ -57,7 +57,7 @@ class JKQTP_LIB_EXPORT JKQTPMathImageColorPaletteComboBox: public QComboBox {
 /*! \brief a QComboBox which shows  JKQTPCADrawMode
     \ingroup jkqtpcomboboxes
  */
-class JKQTP_LIB_EXPORT JKQTPCADrawModeComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPCADrawModeComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPCADrawModeComboBox(QWidget* parent=nullptr);
@@ -73,7 +73,7 @@ class JKQTP_LIB_EXPORT JKQTPCADrawModeComboBox: public QComboBox {
 /*! \brief a QComboBox which shows  JKQTPCALabelType
     \ingroup jkqtpcomboboxes
  */
-class JKQTP_LIB_EXPORT JKQTPCALabelTypeComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPCALabelTypeComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPCALabelTypeComboBox(QWidget* parent=nullptr);
@@ -88,7 +88,7 @@ class JKQTP_LIB_EXPORT JKQTPCALabelTypeComboBox: public QComboBox {
 /*! \brief a QComboBox which shows  JKQTPLabelPosition
     \ingroup jkqtpcomboboxes
  */
-class JKQTP_LIB_EXPORT JKQTPLabelPositionComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPLabelPositionComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPLabelPositionComboBox(QWidget* parent=nullptr);
@@ -106,7 +106,7 @@ class JKQTP_LIB_EXPORT JKQTPLabelPositionComboBox: public QComboBox {
 
     \image html JKQTPKeyPositionComboBox.png
  */
-class JKQTP_LIB_EXPORT JKQTPKeyPositionComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPKeyPositionComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPKeyPositionComboBox(QWidget* parent=nullptr);
@@ -128,7 +128,7 @@ class JKQTP_LIB_EXPORT JKQTPKeyPositionComboBox: public QComboBox {
 
     \image html JKQTPKeyLayoutComboBox.png
  */
-class JKQTP_LIB_EXPORT JKQTPKeyLayoutComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPKeyLayoutComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPKeyLayoutComboBox(QWidget* parent=nullptr);
@@ -149,7 +149,7 @@ class JKQTP_LIB_EXPORT JKQTPKeyLayoutComboBox: public QComboBox {
 
     \image html JKQTPErrorPlotstyleComboBox.png
  */
-class JKQTP_LIB_EXPORT JKQTPErrorPlotstyleComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPErrorPlotstyleComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPErrorPlotstyleComboBox(QWidget* parent=nullptr);
@@ -168,7 +168,7 @@ class JKQTP_LIB_EXPORT JKQTPErrorPlotstyleComboBox: public QComboBox {
 
     \image html JKQTPSymbolComboBox.png
  */
-class JKQTP_LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPSymbolComboBox(QWidget* parent=nullptr);
@@ -184,7 +184,7 @@ class JKQTP_LIB_EXPORT JKQTPSymbolComboBox: public QComboBox {
 /*! \brief a QComboBox to select whether a line, symbols or both should be displayed
     \ingroup jkqtpcomboboxes
  */
-class JKQTP_LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPLinePlotStyleComboBox(QWidget* parent=nullptr);
@@ -205,7 +205,7 @@ class JKQTP_LIB_EXPORT JKQTPLinePlotStyleComboBox: public QComboBox {
 /*! \brief a QComboBox to select whether a line, symbols or both should be displayed, in addition to JKQTPLinePlotStyleComboBox this may also have different symbol sizes!
     \ingroup jkqtpcomboboxes
  */
-class JKQTP_LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPLinePlotStyleWithSymbolSizeComboBox(QWidget* parent=nullptr);
@@ -237,7 +237,7 @@ class JKQTP_LIB_EXPORT JKQTPLinePlotStyleWithSymbolSizeComboBox: public QComboBo
 
     \see JKQTPSpecialLineType
  */
-class JKQTP_LIB_EXPORT JKQTPSpecialLineTypeComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineTypeComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPSpecialLineTypeComboBox(QWidget* parent=nullptr);
@@ -255,7 +255,7 @@ class JKQTP_LIB_EXPORT JKQTPSpecialLineTypeComboBox: public QComboBox {
 
     \see JKQTPMathImageBase::ModifierMode
  */
-class JKQTP_LIB_EXPORT JKQTPImageModifierModeComboBox: public QComboBox {
+class JKQTPLOTTER_LIB_EXPORT JKQTPImageModifierModeComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPImageModifierModeComboBox(QWidget* parent=nullptr);

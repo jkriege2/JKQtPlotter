@@ -25,7 +25,7 @@
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 
 #ifndef JKQTPGRAPHSBASEERROR_H
@@ -41,7 +41,7 @@
     \see \ref jkqtplotter_graphsgroup_classstructure_mixins
 
  */
-class JKQTP_LIB_EXPORT JKQTPGraphErrorStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGraphErrorStyleMixin {
         Q_GADGET
     public:
         /** \brief class contructor */
@@ -193,7 +193,7 @@ class JKQTP_LIB_EXPORT JKQTPGraphErrorStyleMixin {
     \ingroup jkqtplotter_basegraphserrors
     \see JKQTPYGraphErrorData, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPXGraphErrorData  {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXGraphErrorData  {
         Q_GADGET
     public:
         /** \brief class contructor */
@@ -243,7 +243,7 @@ class JKQTP_LIB_EXPORT JKQTPXGraphErrorData  {
     \ingroup jkqtplotter_basegraphserrors
     \see JKQTPXGraphErrorData \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPYGraphErrorData  {
+class JKQTPLOTTER_LIB_EXPORT JKQTPYGraphErrorData  {
         Q_GADGET
     public:
         /** \brief class contructor */
@@ -291,7 +291,7 @@ class JKQTP_LIB_EXPORT JKQTPYGraphErrorData  {
     \ingroup jkqtplotter_basegraphserrors
     \see JKQTPXGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPXGraphErrors: public JKQTPXGraphErrorData, public JKQTPGraphErrorStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXGraphErrors: public JKQTPXGraphErrorData, public JKQTPGraphErrorStyleMixin {
         Q_GADGET
     public:
         /** \brief class contructor */
@@ -313,7 +313,7 @@ class JKQTP_LIB_EXPORT JKQTPXGraphErrors: public JKQTPXGraphErrorData, public JK
     \ingroup jkqtplotter_basegraphserrors
     \see JKQTPYGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPYGraphErrors: public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPYGraphErrors: public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
         Q_GADGET
     public:
         /** \brief class contructor */
@@ -337,7 +337,7 @@ class JKQTP_LIB_EXPORT JKQTPYGraphErrors: public JKQTPYGraphErrorData, public JK
     \ingroup jkqtplotter_basegraphserrors
     \see JKQTPXGraphErrorData, JKQTPYGraphErrorData, JKQTPGraphErrorStyleMixin, \ref jkqtplotter_graphsgroup_classstructure_mixins
  */
-class JKQTP_LIB_EXPORT JKQTPXYGraphErrors: public JKQTPXGraphErrorData, public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYGraphErrors: public JKQTPXGraphErrorData, public JKQTPYGraphErrorData, public JKQTPGraphErrorStyleMixin {
         Q_GADGET
     public:
         /** \brief class contructor */

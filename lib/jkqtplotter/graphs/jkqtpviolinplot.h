@@ -22,7 +22,7 @@
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/graphs/jkqtpviolinplotstylingmixins.h"
@@ -60,7 +60,7 @@
     \see \ref JKQTPlotterViolinplotGraphs
 
  */
-class JKQTP_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphViolinplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphViolinplotStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -191,7 +191,7 @@ class JKQTP_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPPlotObject, p
     \see \ref JKQTPlotterViolinplotGraphs
 
  */
-class JKQTP_LIB_EXPORT JKQTPViolinplotHorizontalElement: public JKQTPViolinplotVerticalElement {
+class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotHorizontalElement: public JKQTPViolinplotVerticalElement {
         Q_OBJECT
     public:
         /** \brief class constructor */

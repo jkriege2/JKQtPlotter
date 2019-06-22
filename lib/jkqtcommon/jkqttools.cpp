@@ -97,7 +97,7 @@ QString jkVariantListToString(const QList<QVariant>& data, const QString& separa
     return r;
 }
 
-JKQTP_LIB_EXPORT QString jkqtp_filenameize(const QString& data) {
+JKQTCOMMON_LIB_EXPORT QString jkqtp_filenameize(const QString& data) {
     QString r;
     QString data1=data.simplified();
     for (int i=0; i<data1.size(); i++) {

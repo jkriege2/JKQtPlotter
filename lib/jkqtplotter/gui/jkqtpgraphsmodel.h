@@ -23,7 +23,7 @@
 #define jkqtpgraphsmodel_H
 
 #include "jkqtplotter/jkqtpbaseplotter.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 
 #include <QAbstractTableModel>
 

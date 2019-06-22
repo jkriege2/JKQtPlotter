@@ -29,7 +29,7 @@
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 
 
@@ -40,7 +40,7 @@
     \image html rgbimageplots.png
     \image html rgbimageplot_opencv.png
 */
-class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
+class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
     public:
         using JKQTPMathImageBase::setData;
@@ -428,7 +428,7 @@ class JKQTP_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
     \see Examples: \ref JKQTPlotterRGBImagePlot and  \ref JKQTPlotterImagePlotRGBOpenCV
  */
-class JKQTP_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
+class JKQTPLOTTER_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
         Q_OBJECT
     public:
 

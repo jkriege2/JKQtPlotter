@@ -21,7 +21,7 @@
 
 #ifndef JKQTPTOOLS_H_INCLUDED
 #define JKQTPTOOLS_H_INCLUDED
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include <QString>
 #include <QElapsedTimer>
 #include <QLocale>
@@ -74,13 +74,13 @@ enum JKQTPUserActionMarkerType {
  *
  *  \see String2JKQTPUserActionMarkerType(), JKQTPUserActionMarkerType
  */
-JKQTP_LIB_EXPORT QString JKQTPUserActionMarkerType2String(JKQTPUserActionMarkerType act);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPUserActionMarkerType2String(JKQTPUserActionMarkerType act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPUserActionMarkerType2String() ) to JKQTPUserActionMarkerType
  *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPUserActionMarkerType2String(), JKQTPUserActionMarkerType
  */
-JKQTP_LIB_EXPORT JKQTPUserActionMarkerType String2JKQTPUserActionMarkerType(const QString &act);
+JKQTPLOTTER_LIB_EXPORT JKQTPUserActionMarkerType String2JKQTPUserActionMarkerType(const QString &act);
 
 
 
@@ -108,13 +108,13 @@ enum JKQTPMouseDragActions {
  *
  *  \see String2JKQTPMouseDragActions(), JKQTPMouseDragActions
  */
-JKQTP_LIB_EXPORT QString JKQTPMouseDragActions2String(JKQTPMouseDragActions act);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPMouseDragActions2String(JKQTPMouseDragActions act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseDragActions2String() ) to JKQTPMouseDragActions
  *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPMouseDragActions2String(), JKQTPMouseDragActions
  */
-JKQTP_LIB_EXPORT JKQTPMouseDragActions String2JKQTPMouseDragActions(const QString &button);
+JKQTPLOTTER_LIB_EXPORT JKQTPMouseDragActions String2JKQTPMouseDragActions(const QString &button);
 
 /** \brief actions that can be bound to a double-click of the mouse
  * \ingroup jkqtpplottersupprt
@@ -132,13 +132,13 @@ enum JKQTPMouseDoubleClickActions {
  *
  *  \see String2JKQTPMouseDoubleClickActions(), JKQTPMouseDoubleClickActions
  */
-JKQTP_LIB_EXPORT QString JKQTPMouseDoubleClickActions2String(JKQTPMouseDoubleClickActions act);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPMouseDoubleClickActions2String(JKQTPMouseDoubleClickActions act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseDoubleClickActions2String() ) to JKQTPMouseDoubleClickActions
  *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPMouseDoubleClickActions2String(), JKQTPMouseDoubleClickActions
  */
-JKQTP_LIB_EXPORT JKQTPMouseDoubleClickActions String2JKQTPMouseDoubleClickActions(const QString &act);
+JKQTPLOTTER_LIB_EXPORT JKQTPMouseDoubleClickActions String2JKQTPMouseDoubleClickActions(const QString &act);
 
 /** \brief actions that can be bound to a mouse wheel event
  * \ingroup jkqtpplottersupprt
@@ -153,13 +153,13 @@ enum JKQTPMouseWheelActions {
  *
  *  \see String2JKQTPMouseWheelActions(), JKQTPMouseWheelActions
  */
-JKQTP_LIB_EXPORT QString JKQTPMouseWheelActions2String(JKQTPMouseWheelActions act);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPMouseWheelActions2String(JKQTPMouseWheelActions act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseWheelActions2String() ) to JKQTPMouseWheelActions
  *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPMouseWheelActions2String(), JKQTPMouseWheelActions
  */
-JKQTP_LIB_EXPORT JKQTPMouseWheelActions String2JKQTPMouseWheelActions(const QString &act);
+JKQTPLOTTER_LIB_EXPORT JKQTPMouseWheelActions String2JKQTPMouseWheelActions(const QString &act);
 
 /** \brief modes for the context menu
  * \ingroup jkqtpplottersupprt
@@ -176,13 +176,13 @@ enum JKQTPContextMenuModes {
  *
  *  \see String2JKQTPContextMenuModes(), JKQTPContextMenuModes
  */
-JKQTP_LIB_EXPORT QString JKQTPContextMenuModes2String(JKQTPContextMenuModes act);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPContextMenuModes2String(JKQTPContextMenuModes act);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPContextMenuModes2String() ) to JKQTPContextMenuModes
  *  \ingroup jkqtpplottersupprt
  *
  *  \see JKQTPContextMenuModes2String(), JKQTPContextMenuModes
  */
-JKQTP_LIB_EXPORT JKQTPContextMenuModes String2JKQTPContextMenuModes(const QString &act);
+JKQTPLOTTER_LIB_EXPORT JKQTPContextMenuModes String2JKQTPContextMenuModes(const QString &act);
 
 /** \brief data structure for storage of assigned JKQTPMouseDragActions \see JKQTPMouseDragActionsHashMapIterator
  *  \ingroup jkqtpplottersupprt */
@@ -229,7 +229,7 @@ enum JKQTPColorDerivationMode {
  *
  *  \see JKQTPColorDerivationMode
  */
-JKQTP_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& col);
+JKQTPLOTTER_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& col);
 
 /** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alphaF
  *  \ingroup jkqtpplotter_styling
@@ -256,13 +256,13 @@ inline QColor QColorWithAlpha(const QColor& color, int alpha) {
  *
  *  \see String2JKQTPColorDerivationMode(), JKQTPColorDerivationMode
  */
-JKQTP_LIB_EXPORT QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPColorDerivationMode2String() ) to JKQTPColorDerivationMode
  *  \ingroup jkqtpplotter_styling
  *
  *  \see JKQTPColorDerivationMode2String(), JKQTPColorDerivationMode
  */
-JKQTP_LIB_EXPORT JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode);
+JKQTPLOTTER_LIB_EXPORT JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode);
 
 
 /** \brief display mode for an axis
@@ -283,34 +283,34 @@ enum JKQTPCADrawMode {
 /** \brief determines whether JKQTPCADrawMode has the line
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasLine(JKQTPCADrawMode pos);
+JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasLine(JKQTPCADrawMode pos);
 
 /** \brief determines whether JKQTPCADrawMode has ticks
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasTicks(JKQTPCADrawMode pos);
+JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasTicks(JKQTPCADrawMode pos);
 
 /** \brief determines whether JKQTPCADrawMode has tick labels
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasTickLabels(JKQTPCADrawMode pos);
+JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasTickLabels(JKQTPCADrawMode pos);
 
 /** \brief determines whether JKQTPCADrawMode has the axis label
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos);
+JKQTPLOTTER_LIB_EXPORT bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos);
 
 
 
 /** \brief converts a JKQTPCADrawMode variable into a human-readable string
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPCADrawMode2String(JKQTPCADrawMode pos);
 
 /** \brief converts a string into a JKQTPCADrawMode
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos);
 
 
 /** \brief display mode for the axis labels
@@ -337,23 +337,23 @@ enum JKQTPLabelTickMode {
 /** \brief converts a JKQTPLabelTickMode variable into a human-readable string
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPLabelTickMode2String(JKQTPLabelTickMode pos);
 
 /** \brief converts a string into a JKQTPLabelTickMode
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPLabelTickMode String2JKQTPLabelTickMode(const QString& pos);
 
 
 /** \brief converts a JKQTPCALabelType variable into a human-readable string
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT QString JKQTPCALabelType2String(JKQTPCALabelType pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPCALabelType2String(JKQTPCALabelType pos);
 
 /** \brief converts a string into a JKQTPCALabelType
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPCALabelType String2JKQTPCALabelType(const QString& pos);
 
 /** \brief position of the axis labels
  * \ingroup jkqtpplottersupprt
@@ -368,12 +368,12 @@ enum JKQTPLabelPosition {
 /** \brief converts a JKQTPLabelPosition variable into a human-readable string
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT QString JKQTPLabelPosition2String(JKQTPLabelPosition pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPLabelPosition2String(JKQTPLabelPosition pos);
 
 /** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPLabelPosition String2JKQTPLabelPosition(const QString& pos);
 
 /** \brief position of the key
  * \ingroup jkqtpplottersupprt
@@ -397,12 +397,12 @@ enum JKQTPKeyPosition {
 /** \brief converts a JKQTPLabelPosition variable into a human-readable string
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT QString JKQTPKeyPosition2String(JKQTPKeyPosition pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPKeyPosition2String(JKQTPKeyPosition pos);
 
 /** \brief converts a string into a JKQTPLabelPosition
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPKeyPosition String2JKQTPKeyPosition(const QString& pos);
 
 /** \brief layout of the key
  * \ingroup jkqtpplottersupprt
@@ -417,12 +417,12 @@ enum JKQTPKeyLayout {
 /** \brief converts a JKQTPKeyLayout variable into a human-readable string
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT QString JKQTPKeyLayout2String(JKQTPKeyLayout pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPKeyLayout2String(JKQTPKeyLayout pos);
 
 /** \brief converts a String into a JKQTPKeyLayout
  * \ingroup jkqtpplottersupprt
  */
-JKQTP_LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
 
 
 
@@ -430,7 +430,7 @@ JKQTP_LIB_EXPORT JKQTPKeyLayout String2JKQTPKeyLayout(const QString& pos);
  * \ingroup jkqtpplottersupprt
  * \internal
  */
-struct JKQTP_LIB_EXPORT JKQTPGridPrintingItem {
+struct JKQTPLOTTER_LIB_EXPORT JKQTPGridPrintingItem {
     /** \brief logic x-position of a graph, relative to the current JKQtPlotter */
     size_t x;
     /** \brief logic y-position of a graph, relative to the current JKQtPlotter */
@@ -464,12 +464,12 @@ enum JKQTPErrorPlotstyle {
 /** \brief converts a JKQTPErrorPlotstyle variable into a human-readable string
  * \ingroup jkqtplotter_basegraphserrors
  */
-JKQTP_LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPErrorPlotstyle2String(JKQTPErrorPlotstyle pos);
 
 /** \brief converts a String into a JKQTPErrorPlotstyle
  * \ingroup jkqtplotter_basegraphserrors
  */
-JKQTP_LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPErrorPlotstyle String2JKQTPErrorPlotstyle(const QString& pos);
 
 
 
@@ -491,12 +491,12 @@ enum JKQTPSpecialLineType {
 /** \brief converts a JKQTPSpecialLineType variable into a human-readable string
  * \ingroup jkqtplotter_linesymbolgraphs_simple
  */
-JKQTP_LIB_EXPORT QString JKQTPSpecialLineType2String(JKQTPSpecialLineType pos);
+JKQTPLOTTER_LIB_EXPORT QString JKQTPSpecialLineType2String(JKQTPSpecialLineType pos);
 
 /** \brief converts a String into a JKQTPSpecialLineType
  * \ingroup jkqtplotter_linesymbolgraphs_simple
  */
-JKQTP_LIB_EXPORT JKQTPSpecialLineType String2JKQTPSpecialLineType(const QString& pos);
+JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineType String2JKQTPSpecialLineType(const QString& pos);
 
 
 

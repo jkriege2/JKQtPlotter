@@ -161,6 +161,11 @@ void JKQTPOverlayImage::setNx(int __value)
     this->Nx = __value;
 }
 
+void JKQTPOverlayImage::setNx(size_t __value)
+{
+    this->Nx = static_cast<int>(__value);
+}
+
 int JKQTPOverlayImage::getNx() const
 {
     return this->Nx;
@@ -171,6 +176,10 @@ void JKQTPOverlayImage::setNy(int __value)
     this->Ny = __value;
 }
 
+void JKQTPOverlayImage::setNy(size_t __value)
+{
+    this->Ny = static_cast<int>(__value);
+}
 int JKQTPOverlayImage::getNy() const
 {
     return this->Ny;
@@ -359,7 +368,7 @@ void JKQTPColumnOverlayImageEnhanced::draw(JKQTPEnhancedPainter &painter) {
     double* d=parent->getDatastore()->getColumnPointer(imageColumn,0);
     size_t imgSize=parent->getDatastore()->getRows(imageColumn);
     this->data=(bool*)malloc(imgSize*sizeof(bool));
-    this->Ny=imgSize/this->Nx;
+    this->Ny= static_cast<int>(imgSize/this->Nx);
     for (size_t i=0; i<imgSize; i++) {
         data[i]=(d[i]!=0.0);
     }

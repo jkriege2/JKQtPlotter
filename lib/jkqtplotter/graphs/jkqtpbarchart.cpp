@@ -84,7 +84,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QBrush b=getFillBrush(painter, parent);
 
-    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     int imin=0;
 
     if (imax<imin) {
@@ -167,7 +167,7 @@ bool JKQTPBarVerticalGraph::getXMinMax(double& minx, double& maxx, double& small
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -222,7 +222,7 @@ bool JKQTPBarVerticalGraph::getYMinMax(double& miny, double& maxy, double& small
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -328,7 +328,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     QBrush b=getFillBrush(painter, parent);
 
-    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     int imin=0;
     if (imax<imin) {
         int h=imin;
@@ -414,7 +414,7 @@ bool JKQTPBarHorizontalGraph::getXMinMax(double& minx, double& maxx, double& sma
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(xColumn)));
+    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -457,7 +457,7 @@ bool JKQTPBarHorizontalGraph::getYMinMax(double& miny, double& maxy, double& sma
 
     JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
-    int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
     if (imax<imin) {
         int h=imin;
         imin=imax;
@@ -607,7 +607,7 @@ bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
 
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -676,7 +676,7 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
 
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
         if (imax<imin) {
             int h=imin;
             imin=imax;
@@ -717,7 +717,7 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
 
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn)));
+        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
         if (imax<imin) {
             int h=imin;
             imin=imax;

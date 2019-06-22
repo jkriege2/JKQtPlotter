@@ -1167,8 +1167,8 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->imageBColumn=-1;
     this->datatype=JKQTPMathImageBase::DoubleArray;
     if (parent && imageRColumn>=0 && parent->getDatastore()) {
-        Nx=parent->getDatastore()->getColumnImageWidth(imageRColumn);
-        Ny=parent->getDatastore()->getColumnImageHeight(imageRColumn);
+        Nx= static_cast<int>(parent->getDatastore()->getColumnImageWidth(imageRColumn));
+        Ny= static_cast<int>(parent->getDatastore()->getColumnImageHeight(imageRColumn));
     }
 }
 
@@ -1181,8 +1181,8 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->imageBColumn=-1;
     this->datatype=JKQTPMathImageBase::DoubleArray;
     if (parent && imageRColumn>=0 && parent->getDatastore()) {
-        Nx=parent->getDatastore()->getColumnImageWidth(imageRColumn);
-        Ny=parent->getDatastore()->getColumnImageHeight(imageRColumn);
+        Nx= static_cast<int>(parent->getDatastore()->getColumnImageWidth(imageRColumn));
+        Ny= static_cast<int>(parent->getDatastore()->getColumnImageHeight(imageRColumn));
     }
 }
 
@@ -1195,8 +1195,8 @@ JKQTPColumnRGBMathImage::JKQTPColumnRGBMathImage(double x, double y, double widt
     this->imageBColumn=imageBColumn;
     this->datatype=JKQTPMathImageBase::DoubleArray;
     if (parent && imageRColumn>=0 && parent->getDatastore()) {
-        Nx=parent->getDatastore()->getColumnImageWidth(imageRColumn);
-        Ny=parent->getDatastore()->getColumnImageHeight(imageRColumn);
+        Nx= static_cast<int>(parent->getDatastore()->getColumnImageWidth(imageRColumn));
+        Ny= static_cast<int>(parent->getDatastore()->getColumnImageHeight(imageRColumn));
     }
 }
 

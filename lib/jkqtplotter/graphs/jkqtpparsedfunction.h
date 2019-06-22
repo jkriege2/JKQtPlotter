@@ -26,7 +26,7 @@
 #include <QPair>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtpmathparser.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/graphs/jkqtpevaluatedfunction.h"
 
 // forward declarations
@@ -45,7 +45,7 @@ class JKQTPlotter;
 
     \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
  */
-class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
     Q_OBJECT
     public:
 
@@ -114,7 +114,7 @@ class JKQTP_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineG
     \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
 
  */
-class JKQTP_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
         Q_OBJECT
     public:
 

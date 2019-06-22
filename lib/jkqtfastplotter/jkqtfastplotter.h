@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2015 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>) (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>) (DKFZ) & IWR, University of Heidelberg
 
     
 
@@ -18,17 +18,11 @@
 */
 
 
-/*
-  Name: jkqtpfastplotter.h
-  Copyright: (c) 2010-2019
-  Author: Jan krieger <jan@jkrieger.de>, http://www.jkrieger.de/
-*/
-
 
 #ifndef JKQTFASTPLOTTER_H
 #define JKQTFASTPLOTTER_H
 
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtfastplotter_imexport.h"
 #include <QWidget>
 #include <QVector>
 #include <QSettings>
@@ -89,7 +83,7 @@ class JKQTFPPlot;
     .
 
 */
-class JKQTP_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         Q_OBJECT
     public:
 
@@ -1004,7 +998,7 @@ class JKQTP_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
 /*! \brief base class for all plots that may be plotted by JKQTFastPlotter
     \ingroup jkqtfastplotter
 */
-class JKQTP_LIB_EXPORT JKQTFPPlot: public QObject {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPPlot: public QObject {
         Q_OBJECT
     protected:
         /** \brief parent class, i.e. the plotter to plot on */
@@ -1046,7 +1040,7 @@ class JKQTP_LIB_EXPORT JKQTFPPlot: public QObject {
     This class plots data as (x,y) points connected by straight lines. If errors for the y values are
     provided, also y+/-yerr errorlines are drawn.
 */
-class JKQTP_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
     public:
         /** \brief used to store which datatype is used for the plot data */
         enum DataType {
@@ -1274,7 +1268,7 @@ class JKQTP_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
 
     This class does not support y errors!
 */
-class JKQTP_LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -1329,7 +1323,7 @@ class JKQTP_LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
 
     This class does not support y errors!
 */
-class JKQTP_LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -1364,7 +1358,7 @@ class JKQTP_LIB_EXPORT JKQTFPVBarPlot: public JKQTFPLinePlot {
     \ingroup jkqtfastplotter
 
 */
-class JKQTP_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         Q_OBJECT
     protected:
         /** \brief start of x range */
@@ -1528,7 +1522,7 @@ class JKQTP_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
     \ingroup jkqtfastplotter
 
 */
-class JKQTP_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         Q_OBJECT
     protected:
         /** \brief start of x range */
@@ -1691,7 +1685,7 @@ class JKQTP_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
 /*! \brief a plot of a QImage
     \ingroup jkqtfastplotter
 */
-class JKQTP_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
         Q_OBJECT
     protected:
         /** \brief image to plot */
@@ -2352,17 +2346,17 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
     \ingroup jkqtfastplotter
     \see JKQTFPimagePlot_array2image()
  */
-JKQTP_LIB_EXPORT QStringList JKQTFPimagePlot_getPalettes();
+JKQTFASTPLOTTER_LIB_EXPORT QStringList JKQTFPimagePlot_getPalettes();
 /*! \brief get QIcon representing the given palette
     \ingroup jkqtfastplotter
     \see JKQTFPimagePlot_array2image()
 */
-JKQTP_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(int i);
+JKQTFASTPLOTTER_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(int i);
 /*! \brief get QIcon representing the given palette
     \ingroup jkqtfastplotter
     \see JKQTFPimagePlot_array2image()
 */
-JKQTP_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(JKQTFPColorPalette palette);
+JKQTFASTPLOTTER_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(JKQTFPColorPalette palette);
 
 
 /*! \brief plots a given grayscale image with a given color palette
@@ -2373,7 +2367,7 @@ JKQTP_LIB_EXPORT QIcon JKQTFPimagePlot_getPaletteIcon(JKQTFPColorPalette palette
     .
 
 */
-class JKQTP_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
         Q_OBJECT
     protected:
         /** \brief image to plot */
@@ -2744,7 +2738,7 @@ inline void JKQTFPRGBImageOverlayPlot_array2image(T* dbl, int width, int height,
     .
 
 */
-class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
         Q_OBJECT
     protected:
         /** \brief image to plot */
@@ -3106,7 +3100,7 @@ class JKQTP_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
     \ingroup jkqtfastplotter
 
 */
-class JKQTP_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
         Q_OBJECT
     public:
         enum SymbolType {
@@ -3261,7 +3255,7 @@ class JKQTP_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
     \ingroup jkqtfastplotter
 
 */
-class JKQTP_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         Q_OBJECT
     public:
         enum Position {
@@ -3385,7 +3379,7 @@ class JKQTP_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
     \ingroup jkqtfastplotter
 
 */
-class JKQTP_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot {
         Q_OBJECT
 
     protected:

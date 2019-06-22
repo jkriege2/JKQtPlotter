@@ -24,7 +24,7 @@
 #include <QDebug>
 #include <QImage>
 #include <QStringList>
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpbasicimagetools.h"
 #include <cmath>
 #include <cfloat>
@@ -39,7 +39,7 @@ class JKQTBasePlotter; // forward
 /*! \brief if a class is derived from this class, it may use color bars
     \ingroup jkqtplotter_imagelots_tools
  */
-class JKQTP_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
         Q_GADGET
     public:
 

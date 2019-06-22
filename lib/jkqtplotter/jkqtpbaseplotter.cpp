@@ -1364,8 +1364,8 @@ void JKQTBasePlotter::gridPrintingCalc() {
         }
         int w=0;
         int h=0;
-        for (int i=0; i<gridPrintingColumns.size(); i++) { w+=gridPrintingColumns[i]; };
-        for (int i=0; i<gridPrintingRows.size(); i++) { h+=gridPrintingRows[i]; };
+        for (int i=0; i<gridPrintingColumns.size(); i++) { w+=static_cast<int>(gridPrintingColumns[i]); };
+        for (int i=0; i<gridPrintingRows.size(); i++) { h+= static_cast<int>(gridPrintingRows[i]); };
         gridPrintingSize=QSize(w, h);
     }
 }
@@ -1426,8 +1426,8 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
             int t_x=0;
             int t_y=0;
             //std::cout<<"printing this ...\n";
-            for (size_t i=0; i<gridPrintingCurrentX; i++) { t_x+=gridPrintingColumns[static_cast<int>(i)]; }
-            for (size_t i=0; i<gridPrintingCurrentY; i++) { t_y+=gridPrintingRows[static_cast<int>(i)]; }
+            for (size_t i=0; i<gridPrintingCurrentX; i++) { t_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(i)]); }
+            for (size_t i=0; i<gridPrintingCurrentY; i++) { t_y+= static_cast<int>(gridPrintingRows[static_cast<int>(i)]); }
             //std::cout<<"printing this @ "<<t_x<<", "<<t_y<<" ...\n";
             painter.translate(t_x, t_y);
             drawPlot(painter, showOverlays);
@@ -1442,8 +1442,8 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
                 int t_y=0;
                 //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
                 //std::cout<<"colrowlistsizes     "<<gridPrintingColumns.size()<<", "<<gridPrintingRows.size()<<" ...\n";
-                for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+=gridPrintingColumns[static_cast<int>(j)];  }
-                for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+=gridPrintingRows[static_cast<int>(j)]; }
+                for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(j)]);  }
+                for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
                 //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
                 painter.translate(t_x, t_y);
                 gridPrintingList[i].plotter->drawPlot(painter, showOverlays);
@@ -1509,8 +1509,8 @@ void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pa
                 int t_y=0;
                 //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
                 //std::cout<<"colrowlistsizes     "<<gridPrintingColumns.size()<<", "<<gridPrintingRows.size()<<" ...\n";
-                for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+=gridPrintingColumns[static_cast<int>(j)];  }
-                for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+=gridPrintingRows[static_cast<int>(j)]; }
+                for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(j)]);  }
+                for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
                 //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
                 painter.translate(t_x, t_y);
                 gridPrintingList[i].plotter->drawOverlaysWithHints(painter);

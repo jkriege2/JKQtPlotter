@@ -21,7 +21,7 @@
 
 #ifndef JKQTPALGORITHMS_H_INCLUDED
 #define JKQTPALGORITHMS_H_INCLUDED
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtcommon_imexport.h"
 
 
 

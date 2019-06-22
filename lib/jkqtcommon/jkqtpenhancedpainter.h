@@ -20,7 +20,7 @@
 
 #ifndef JKQTPENHANCED_PAINTERS_H
 #define JKQTPENHANCED_PAINTERS_H
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtcommon_imexport.h"
 #include <QPainter>
 
 
@@ -30,7 +30,7 @@
 
 
 */
-class JKQTP_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
+class JKQTCOMMON_LIB_EXPORT JKQTPEnhancedPainter : public QPainter {
         Q_GADGET
     public:
         JKQTPEnhancedPainter(QPaintDevice* device);

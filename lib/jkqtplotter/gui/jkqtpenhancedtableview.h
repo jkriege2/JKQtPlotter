@@ -20,7 +20,7 @@
 
 #ifndef JKQTPEnhancedTableView_H_INCLUDED
 #define JKQTPEnhancedTableView_H_INCLUDED
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include <QTableView>
 #include <QPrinter>
 
@@ -38,7 +38,7 @@
 
     \image html JKQTPEnhancedTableView.png
 */
-class JKQTP_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
+class JKQTPLOTTER_LIB_EXPORT JKQTPEnhancedTableView : public QTableView {
         Q_OBJECT
     public:
         JKQTPEnhancedTableView(QWidget* parent=nullptr);

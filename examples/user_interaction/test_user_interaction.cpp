@@ -457,7 +457,7 @@ void TestUserInteraction::contextMenuOpened(double x, double y, QMenu *contextMe
     labMouseAction->setText(QString("contextMenuOpened(x=%1, y=%2)").arg(x).arg(y));
 }
 
-void TestUserInteraction::zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter */*sender*/)
+void TestUserInteraction::zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter * /*sender*/)
 {
     labMouseAction->setText(QString("zoomChangedLocally(x=%1..%2, y=%3..%4)").arg(newxmin).arg(newxmax).arg(newymin).arg(newymax));
 }

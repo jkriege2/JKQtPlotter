@@ -60,18 +60,17 @@ The [Screenshots-page](./screenshots/) contains several screenshots, partly take
 
 
 ## Building
-Simply use CMake, e.g. from QTCreator, or by calling something like:
+
+JKQTPlotter contains two different build systems: A modern [CMake](https://cmake.org/)-based build and an older QMake-based build (which works out of the box with Qt 5.x). Both systems are explained in detail in http://jkriege2.github.io/JKQtPlotter/page_buildinstructions.html.
+
+
+With [CMake](https://cmake.org/) you can easily build JKQTPlotter and all its examples, by calling something like:
 ```
     $ mkdir build; cd build
-    $ cmake ../
-    $ make
-    $ make install
+    $ cmake .. -G "<cmake_generator>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+    $ cmake --build . --config "Debug"
 ```
 
-Building instructions for QMake can be found here:
-- include necessary files into QMake project: [`./lib/*.pri`](./lib/README.md)
-- [build a static library](./staticlib): [`./qmake/staticlib/*.pro`](./qmake/staticlib/README.md)
-- [build a shared library (DLL, SO, ...)](./sharedlib): [`./qmake/sharedlib/*.pro`](./qmake/sharedlib/README.md)
 
 
 ## Continuous Integration Status

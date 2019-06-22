@@ -7,23 +7,68 @@ This page explains how to use JKQTPlotter in your own Projects
 
 \section page_buildinstructions_CMAKE Build using CMake
 
-The preferred way to build JKQTPlotter is using CMake. The CMake-build is defined in `CMakeLists.txt` files, found in many of the directories of the code repository.
+\subsection page_buildinstructions_CMAKE_RUN Running a Build with CMake
 
-You can build JKQTPlotter (and also the examples) by:
-  - Either opening the file <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/CMakeLists.txt">CMakeLists.txt</a> in QTCreator (which has CMake integration)
-  - Or by calling something like this from the source directory:
-  
-    \code{.sh}
-        $ mkdir build; cd build
-        $ cmake ../
-        $ make
-        $ make install
-    \endcode
+The preferred way to build JKQTPlotter is using <a href="https://cmake.org/">CMake</a>. The CMake-build is defined in `CMakeLists.txt` files, found in many of the directories of the code repository.
+
+You can build JKQTPlotter (and also the examples) by either opening the file <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/CMakeLists.txt">CMakeLists.txt</a> in QTCreator (which has CMake integration), or by calling \c CMake by hand. How to do this depends on your local system und build environment. 
+
+
+\subsubsection page_buildinstructions_CMAKE_MAKEFILE Building with MinGW/GNU/... Makefiles
+
+You can use (MinGW) Makefiles by calling:
+
+\code{.sh}
+    $ mkdir build
+    $ cd build
+    $ cmake .. -G "MinGW Makefiles" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+    $ cmake --build . --config "Debug"
+\endcode
+
+\subsubsection page_buildinstructions_CMAKE_VSTUDIO Building with Visual Studio
+
+For Visual Studio it could look like this:
+\code{.sh}
+    $ mkdir build
+    $ cd build
+    $ cmake .. -G "Visual Studio 15 2017 Win64" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
+\endcode
+Where \c <path_to_your_qt_sources> could be e.g. \c C:/development/Qt5/5.12.0/msvc2017_64 . This call results in a Visual Studio solution \c build/JKQTPlotter.sln that you can load and compile from the Visual Studio IDE. Alternatively you can also build the solution directly calling:
+\code{.sh}
+    $ cmake --build . --config "Debug"
+\endcode
+
+
+
+\subsection page_buildinstructions_CMAKE_CONFIG Configuring a Build with CMake
+
+The CMake build system offers several configuration variables that you may set/change to modify the outcome of the build:
+  - \c CMAKE_PREFIX_PATH : add the path to your Qt installatrion to this variable, so the \c find_package(Qt5...) commands find the libraries you want to use
+  - \c BUILD_SHARED_LIBS : Build as shared library (default: \c ON )
+  - \c BUILD_STATIC_LIBS : Build as static library (default: \c ON )
+  - \c BUILD_INCLUDE_XITS_FONTS : Include XITS fonts as resources in library (default: \c ON )
+  - \c BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE : If set, the build-type is appended to the library name (default: \c ON )
+  - \c BUILD_HIGH_COMPILE_WARNING_LEVEL : Set Compiler Warning level to high (default: \c OFF )
+  - \c BUILD_EXAMPLES : Build examples (default: \c ON )
+  - \c BUILD_HAS_OPENCV : OpenCV available? If yes, OpenCV examples are built when BUILD_EXAMPLES=ON (default: \c OFF )
+  - \c LIB_INSTALL : Install library (default: \c ON )
+  - \c CMAKE_INSTALL_PREFIX : Install directory (default: \c${CMAKE_CURRENT_SOURCE_DIR}/install )
 .
 
 
+
+
+
+
+
+
+
+
+
 \section page_buildinstructions_QMAKE Build using QMake
+
 \subsection page_buildinstructions_QMAKEINCLUDE QMake Include Project
+
 If you want to simply include the JKQTPlotter Source code into your projects, without build a shared or static library and linking against it, you can use one of  these QMake-Include files:
   - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/lib/jkqtplotter.pri">lib/jkqtplotter.pri</a> includes the complete library (JKQTPlotter, JKQTFastPlotter, JKQTMathText)
   - <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/lib/jkqtmathtext.pri">lib/jkqtmathtext.pri</a> includes only JKQTMathText
@@ -32,7 +77,7 @@ If you want to simply include the JKQTPlotter Source code into your projects, wi
 
 In your QMake-projects it is then sufficient to add a line like:
 \code{.qmake}
-include(<PATHTOJKQTPLOTTERDIR>/lib/jkqtplotter.pri)
+  include(<PATHTOJKQTPLOTTERDIR>/lib/jkqtplotter.pri)
 \endcode
 
 \subsection page_buildinstructions_QMAKESTATIC QMake Static Library
@@ -91,6 +136,7 @@ DEPENDPATH += \
               <PATHTOJKQTPLOTTERDIR>/lib \
               <PATHTOJKQTPLOTTERDIR>/qmake/sharedlib/jkqtplotterlib
 INCLUDEPATH += <PATHTOJKQTPLOTTERDIR>/lib
+DEFINES += JKQTCOMMON_LIB_IN_DLL JKQTFASTPLOTTER_LIB_IN_DLL JKQTMATHTEXT_LIB_IN_DLL JKQTPLOTTER_LIB_IN_DLL
 CONFIG (debug, debug|release) {
     # ensure that DLLs are copied to the output directory
     install_jkqtplotter_dll.files = <PATHTOJKQTPLOTTERDIR>/qmake/sharedlib/jkqtplotterlib/debug/jkqtplotterlib_debug.*

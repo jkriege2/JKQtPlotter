@@ -32,7 +32,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     layoutContour->addWidget(plotDensity);
 
     QVector<double> histAlex;
-    uint histAlexNx,histAlexNy;
+    size_t histAlexNx,histAlexNy;
 
     // choose the test data
     histAlex.clear();
@@ -47,7 +47,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     histAlex.append(6);
     histAlex.resize(16);
 
-    histAlexNx=(uint)sqrt(histAlex.size());
+    histAlexNx=(size_t)sqrt(histAlex.size());
     histAlexNy=histAlexNx;
 
     auto ds=plotDensity->getPlotter()->getDatastore();

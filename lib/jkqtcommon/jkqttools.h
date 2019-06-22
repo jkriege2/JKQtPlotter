@@ -24,7 +24,7 @@
 #ifndef JKQTTOOLS_H
 #define JKQTTOOLS_H
 
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtcommon/jkqtcommon_imexport.h"
 #include <QSettings>
 #include <QWidget>
 #include <QSplitter>
@@ -38,7 +38,7 @@
     \param widget the widget to store
     \param prefix this prefix is prepended to the QSettings keys
 */
-JKQTP_LIB_EXPORT void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix=QString(""));
+JKQTCOMMON_LIB_EXPORT void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix=QString(""));
 
 /*! \brief load the geometry of a given widget to a QSettings
     \ingroup jkqtpjkqtptools_qt
@@ -49,7 +49,7 @@ JKQTP_LIB_EXPORT void jksaveWidgetGeometry(QSettings& settings, QWidget* widget,
     \param[out] widget the widget to change
     \param prefix this prefix is prepended to the QSettings keys
 */
-JKQTP_LIB_EXPORT void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix=QString(""));
+JKQTCOMMON_LIB_EXPORT void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix=QString(""));
 
 
 /*! \brief load the geometry of a given widget to a QSettings
@@ -63,7 +63,7 @@ JKQTP_LIB_EXPORT void jkloadWidgetGeometry(QSettings& settings, QWidget* widget,
     \param defaultSize default size of the widget
     \param prefix this prefix is prepended to the QSettings keys
 */
-JKQTP_LIB_EXPORT void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QPoint defaultPosition, QSize defaultSize, const QString& prefix=QString(""));
+JKQTCOMMON_LIB_EXPORT void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QPoint defaultPosition, QSize defaultSize, const QString& prefix=QString(""));
 
 /*! \brief store the geometry of a given widget to a QSettings
     \ingroup jkqtpjkqtptools_qt
@@ -74,7 +74,7 @@ JKQTP_LIB_EXPORT void jkloadWidgetGeometry(QSettings& settings, QWidget* widget,
     \param widget the widget to store
     \param prefix this prefix is prepended to the QSettings keys
 */
-JKQTP_LIB_EXPORT void jksaveSplitter(QSettings& settings, QSplitter* splitter, const QString& prefix=QString(""));
+JKQTCOMMON_LIB_EXPORT void jksaveSplitter(QSettings& settings, QSplitter* splitter, const QString& prefix=QString(""));
 
 /*! \brief load the geometry of a given widget to a QSettings
     \ingroup jkqtpjkqtptools_qt
@@ -85,23 +85,23 @@ JKQTP_LIB_EXPORT void jksaveSplitter(QSettings& settings, QSplitter* splitter, c
     \param[out] plitter the plitter to change
     \param prefix this prefix is prepended to the QSettings keys
 */
-JKQTP_LIB_EXPORT void jkloadSplitter(QSettings& settings, QSplitter* splitter, const QString& prefix=QString(""));
+JKQTCOMMON_LIB_EXPORT void jkloadSplitter(QSettings& settings, QSplitter* splitter, const QString& prefix=QString(""));
 
 
 /*! \brief convert a QList<QVariant> to a string
     \ingroup jkqtpjkqtptools_qt
 
 */
-JKQTP_LIB_EXPORT QString jkVariantListToString(const QList<QVariant>& data, const QString& separator=QString(", "));
+JKQTCOMMON_LIB_EXPORT QString jkVariantListToString(const QList<QVariant>& data, const QString& separator=QString(", "));
 
 
 /*! \brief filename-ize a string, i.e. replace every non-number and non-character (and also not <code> _ -</code>) character to \c _
     \ingroup tools */
-JKQTP_LIB_EXPORT QString jkqtp_filenameize(const QString& data);
+JKQTCOMMON_LIB_EXPORT QString jkqtp_filenameize(const QString& data);
 
 /** \brief create a valid variable name from the string, i.e. a string with only characters and digits and \c '_'. ALso the first character has to be a charcter.
  *  \ingroup tools */
-JKQTP_LIB_EXPORT QString jkqtp_toValidVariableName(const QString& input);
+JKQTCOMMON_LIB_EXPORT QString jkqtp_toValidVariableName(const QString& input);
 
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</a> to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
  *  \ingroup tools
@@ -111,14 +111,14 @@ JKQTP_LIB_EXPORT QString jkqtp_toValidVariableName(const QString& input);
  *
  *  \see jkqtp_String2KeyboardModifiers()
  */
-JKQTP_LIB_EXPORT QString jkqtp_KeyboardModifiers2String(Qt::KeyboardModifiers modifiers, bool useNONE=true);
+JKQTCOMMON_LIB_EXPORT QString jkqtp_KeyboardModifiers2String(Qt::KeyboardModifiers modifiers, bool useNONE=true);
 
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by jkqtp_KeyboardModifiers2String() ) to <a href="http://doc.qt.io/qt-5/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</a>
  *  \ingroup tools
  *
  *  \see jkqtp_KeyboardModifiers2String()
  */
-JKQTP_LIB_EXPORT Qt::KeyboardModifiers jkqtp_String2KeyboardModifiers(const QString& modifiers);
+JKQTCOMMON_LIB_EXPORT Qt::KeyboardModifiers jkqtp_String2KeyboardModifiers(const QString& modifiers);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qt.html#MouseButton-enum">Qt::MouseButton</a> to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
  *  \ingroup tools
  *
@@ -127,13 +127,13 @@ JKQTP_LIB_EXPORT Qt::KeyboardModifiers jkqtp_String2KeyboardModifiers(const QStr
  *
  *  \see jkqtp_MouseButton2String()
  */
-JKQTP_LIB_EXPORT QString jkqtp_MouseButton2String(Qt::MouseButton button, bool useNONE=true);
+JKQTCOMMON_LIB_EXPORT QString jkqtp_MouseButton2String(Qt::MouseButton button, bool useNONE=true);
 /** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by jkqtp_MouseButton2String() ) to <a href="http://doc.qt.io/qt-5/qt.html#MouseButton-enum">Qt::MouseButton</a>
  *  \ingroup tools
  *
  *  \see jkqtp_MouseButton2String()
  */
-JKQTP_LIB_EXPORT Qt::MouseButton jkqtp_String2MouseButton(const QString &button);
+JKQTCOMMON_LIB_EXPORT Qt::MouseButton jkqtp_String2MouseButton(const QString &button);
 
 
 #endif // JKQTTOOLS_H

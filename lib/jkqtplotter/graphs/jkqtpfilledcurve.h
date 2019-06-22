@@ -18,7 +18,7 @@
 */
 
 
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/graphs/jkqtpspecialline.h"
@@ -37,7 +37,7 @@
 
     \see \ref JKQTPlotterFilledGraphs
  */
-class JKQTP_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPSpecialLineHorizontalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPSpecialLineHorizontalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -56,7 +56,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPSpecialLineHorizontal
 
     \see \ref JKQTPlotterFilledGraphs, jkqtpstatAddXErrorFilledCurveGraph()
  */
-class JKQTP_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGraph, public JKQTPYGraphErrors {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGraph, public JKQTPYGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -85,7 +85,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurveXGrap
     \see \ref JKQTPlotterFilledGraphs
 
  */
-class JKQTP_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPSpecialLineVerticalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPSpecialLineVerticalGraph {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -105,7 +105,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPSpecialLineVerticalGr
 
     \see \ref JKQTPlotterFilledGraphs, jkqtpstatAddYErrorFilledCurveGraph()
  */
-class JKQTP_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGraph, public JKQTPXGraphErrors {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGraph, public JKQTPXGraphErrors {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -139,7 +139,7 @@ class JKQTP_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurveYGrap
 
     \see \ref JKQTPlotterDateTimeAxes
  */
-class JKQTP_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */

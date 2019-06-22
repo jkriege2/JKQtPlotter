@@ -302,7 +302,7 @@ void JKQTPXFunctionLineGraph::collectParameters()
         iparams.clear();
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=datastore->getRows(parameterColumn);
+        int imax=static_cast<int>(datastore->getRows(parameterColumn));
 
         for (int i=imin; i<imax; i++) {
             double xv=datastore->get(parameterColumn,i);
@@ -325,7 +325,7 @@ void JKQTPXFunctionLineGraph::collectParameters()
         ierrorparams.clear();
         JKQTPDatastore* datastore=parent->getDatastore();
         int imin=0;
-        int imax=datastore->getRows(errorParameterColumn);
+        int imax= static_cast<int>(datastore->getRows(errorParameterColumn));
 
         for (int i=imin; i<imax; i++) {
             double xv=datastore->get(errorParameterColumn,i);

@@ -30,7 +30,7 @@
 #include <QSettings>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtmathtext/jkqtmathtext.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpcoordinateaxesstyle.h"
 
 // forward declarations
@@ -151,7 +151,7 @@ class JKQTBasePlotter;
     nearest but \c ">=" to the given \c JKQTPCoordinateAxisStyle::minTicks. The Algorithm is described in detail with the function
     calcLinearTickSpacing(). To activate this automatic tick spacing you have to set <code>autoAxisSpacing=true</code>.
  */
-class JKQTP_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
+class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         Q_OBJECT
     protected:
     public:
@@ -737,7 +737,7 @@ class JKQTP_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
     \ingroup jkqtpbaseplotter_elements
 
  */
-class JKQTP_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
+class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
     protected:
     public:
@@ -778,7 +778,7 @@ class JKQTP_LIB_EXPORT JKQTPVerticalAxis: public JKQTPCoordinateAxis {
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
-class JKQTP_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
+class JKQTPLOTTER_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
         Q_OBJECT
     protected:
     public:
@@ -818,7 +818,7 @@ class JKQTP_LIB_EXPORT JKQTPVerticalIndependentAxis: public JKQTPVerticalAxis {
     \ingroup jkqtpbaseplotter_elements
 
  */
-class JKQTP_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
+class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
         Q_OBJECT
     protected:
     public:
@@ -860,7 +860,7 @@ class JKQTP_LIB_EXPORT JKQTPHorizontalAxis: public JKQTPCoordinateAxis {
 
     This axis may be draw at a user-supplied position (used e.g. for color bar axes)
  */
-class JKQTP_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizontalAxis {
+class JKQTPLOTTER_LIB_EXPORT JKQTPHorizontalIndependentAxis: public JKQTPHorizontalAxis {
         Q_OBJECT
     protected:
     public:

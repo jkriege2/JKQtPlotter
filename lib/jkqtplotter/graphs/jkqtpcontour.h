@@ -32,7 +32,7 @@
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#include "jkqtcommon/jkqtp_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 
 
@@ -73,7 +73,7 @@
  *       is necessary. If it doesn't match, the contours are recalculated. In addition several methods that change certain
  *       properties of the plot will force a recalculation. Finally you can call clearCachedContours() to force a recalculation!
  */
-class JKQTP_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGraphLineStyleMixin  {
+class JKQTPLOTTER_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGraphLineStyleMixin  {
         Q_OBJECT
     public:
         /** \brief options of how the colors for the contours are chosen (note that all images in the documentation show the same graph, just with different coloring modes!)*/
@@ -250,7 +250,7 @@ class JKQTP_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQTPGrap
  *
  *  \see jkqtpstatAddKDE2DContour(), jkqtpstatAddHistogram2DContour(), \ref JKQTPlotterContourPlot, \ref JKQTPlotterBasicJKQTPDatastoreStatistics2D
  */
-class JKQTP_LIB_EXPORT JKQTPColumnContourPlot: public JKQTPContourPlot  {
+class JKQTPLOTTER_LIB_EXPORT JKQTPColumnContourPlot: public JKQTPContourPlot  {
         Q_OBJECT
     public:
 
@@ -261,7 +261,10 @@ class JKQTP_LIB_EXPORT JKQTPColumnContourPlot: public JKQTPContourPlot  {
         JKQTPColumnContourPlot(JKQTPlotter* parent);
 
         /*! \copydoc imageColumn */
-        virtual void setImageColumn(int __value);
+        void setImageColumn(int __value);
+
+        /*! \copydoc imageColumn */
+        void setImageColumn(size_t __value);
         /*! \copydoc imageColumn */
         int getImageColumn() const;
 
