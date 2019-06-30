@@ -3270,54 +3270,59 @@ JKQTMathText::JKQTMathText(QObject* parent):
     blackboardSimulated=true;
 
 
-    QString serifFont="serif";
-    QString sansFont="sans";
-    QString symbolFont="symbol";
-    QString scriptFont="script";
-    QString typewriterFont="typewriter";
-    QString decorativeFont="decorative";
-    QString blackboardFont="blackboard";
-    QString fracturFont="fraktur";
+    static QString serifFont="serif";
+    static QString sansFont="sans";
+    static QString symbolFont="symbol";
+    static QString scriptFont="script";
+    static QString typewriterFont="typewriter";
+    static QString decorativeFont="decorative";
+    static QString blackboardFont="blackboard";
+    static QString fracturFont="fraktur";
+    static bool firstStart=true;
 
-    QStringList fonts=fontdb.families();
-    //qDebug()<<"fonts:\n"<<fonts;
+    if (firstStart) {
+        firstStart=false;
+        QStringList fonts=fontdb.families();
+        //qDebug()<<"fonts:\n"<<fonts;
 
-    for (const QString& f: fonts) {
-        if (typewriterFont=="typewriter" && QFontInfo(QFont(f)).styleHint()==QFont::TypeWriter) {
-            typewriterFont=f;
-        }
-        if (decorativeFont=="decorative" && QFontInfo(QFont(f)).styleHint()==QFont::Decorative) {
-            decorativeFont=f;
-        }
-        if (serifFont=="serif" && QFontInfo(QFont(f)).styleHint()==QFont::Serif) {
-            serifFont=f;
-        }
-        if (sansFont=="sans" && QFontInfo(QFont(f)).styleHint()==QFont::SansSerif) {
-            sansFont=f;
-        }
-        if (scriptFont=="script" && QFontInfo(QFont(f)).styleHint()==QFont::Cursive) {
-            scriptFont=f;
-        }
-    }
-
-    auto checkForFonts=[&fonts](QString& targetfont, const QStringList& fontoptions) {
-        for (auto& f: fontoptions) {
-            if (fonts.contains(f)) {
-                targetfont=f;
-                break;
+        for (const QString& f: fonts) {
+            QFont fnt(f);
+            QFontInfo fi(fnt);
+            if (typewriterFont=="typewriter" && fi.styleHint()==QFont::TypeWriter) {
+                typewriterFont=f;
+            }
+            if (decorativeFont=="decorative" && fi.styleHint()==QFont::Decorative) {
+                decorativeFont=f;
+            }
+            if (serifFont=="serif" && fi.styleHint()==QFont::Serif) {
+                serifFont=f;
+            }
+            if (sansFont=="sans" && fi.styleHint()==QFont::SansSerif) {
+                sansFont=f;
+            }
+            if (scriptFont=="script" && fi.styleHint()==QFont::Cursive) {
+                scriptFont=f;
             }
         }
-    };
 
-    checkForFonts(serifFont, QStringList {"Times New Roman", "Times", "FreeSerif", "DejaVu Serif"});
-    checkForFonts(sansFont, QStringList {"Arial Unicode MS", "Arial Unicode", "Lucida Sans Unicode", "Arial", "Helvetica", "FreeSans", "DejaVu Sans", "Lucida Sans"});
-    checkForFonts(symbolFont, QStringList {"SymbolStandard", "Symbol"});
-    checkForFonts(typewriterFont, QStringList {"Courier New", "Courier", "Courier Std", "FreeMono", "CMU Typewriter Text", "UM Typewriter"});
-    checkForFonts(blackboardFont, QStringList {"Double Stroke", "CloisterOpenFace BT", "GoudyHandtooled BT", "Castellar", "MathJax_AMS", "Castellar Standard", "MathJax_AMS Standard", "Colonna MT"});
-    checkForFonts(decorativeFont, QStringList {"Lucida Calligraphy", "Cookie", "Segoe Print", "Comic Sans", "Comic Sans MS", "Gabriola", "Gabriola Standard", "Lucida Handwriting Kursiv", "Lucida Handwriting", "Pristina", "Pristina Standard", "MathJax_Caligraphics"});
-    checkForFonts(scriptFont, QStringList {"Lucida Handwriting", "Dancing Script", "Amazone BT", "ScriptS", "ScriptC", "ScriptC Standard", "Script", "Brush Script MT", "Brush Script MT Kursiv", "MathJax_Script"});
-    checkForFonts(fracturFont, QStringList {"Old English Text MT", "Old English Text MT Standard", "UnifrakturMaguntia Standard", "UnifrakturMaguntia", "MathJax_Fraktur", "UnifrakturCook Fett"});
+        auto checkForFonts=[&fonts](QString& targetfont, const QStringList& fontoptions) {
+            for (auto& f: fontoptions) {
+                if (fonts.contains(f)) {
+                    targetfont=f;
+                    break;
+                }
+            }
+        };
 
+        checkForFonts(serifFont, QStringList {"Times New Roman", "Times", "FreeSerif", "DejaVu Serif"});
+        checkForFonts(sansFont, QStringList {"Arial Unicode MS", "Arial Unicode", "Lucida Sans Unicode", "Arial", "Helvetica", "FreeSans", "DejaVu Sans", "Lucida Sans"});
+        checkForFonts(symbolFont, QStringList {"SymbolStandard", "Symbol"});
+        checkForFonts(typewriterFont, QStringList {"Courier New", "Courier", "Courier Std", "FreeMono", "CMU Typewriter Text", "UM Typewriter"});
+        checkForFonts(blackboardFont, QStringList {"Double Stroke", "CloisterOpenFace BT", "GoudyHandtooled BT", "Castellar", "MathJax_AMS", "Castellar Standard", "MathJax_AMS Standard", "Colonna MT"});
+        checkForFonts(decorativeFont, QStringList {"Lucida Calligraphy", "Cookie", "Segoe Print", "Comic Sans", "Comic Sans MS", "Gabriola", "Gabriola Standard", "Lucida Handwriting Kursiv", "Lucida Handwriting", "Pristina", "Pristina Standard", "MathJax_Caligraphics"});
+        checkForFonts(scriptFont, QStringList {"Lucida Handwriting", "Dancing Script", "Amazone BT", "ScriptS", "ScriptC", "ScriptC Standard", "Script", "Brush Script MT", "Brush Script MT Kursiv", "MathJax_Script"});
+        checkForFonts(fracturFont, QStringList {"Old English Text MT", "Old English Text MT Standard", "UnifrakturMaguntia Standard", "UnifrakturMaguntia", "MathJax_Fraktur", "UnifrakturCook Fett"});
+    }
 
     if (serifFont!="serif") addReplacementFont("serif", serifFont);
     if (sansFont!="sans") addReplacementFont("sans", sansFont);
@@ -3406,43 +3411,45 @@ void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const
 }
 
 bool JKQTMathText::useSTIX(bool mathModeOnly) {
-    QFontDatabase fdb;
 
     static QStringList mathNames{"STIX Two Math", "STIX Math", "STIX Two Math Standard", "STIX Math Standard"};
     static QStringList textNames{"STIX", "STIXGeneral", "STIX General"};
 
-    QString textFamily;
-    QString mathFamily;
-    for (const QString& name:mathNames) {
-        for (int i=0; i<fdb.families().size(); i++) {
-            if (fdb.families().at(i).contains(name) ) {
-                mathFamily=fdb.families().at(i);
+    static QString textFamily;
+    static QString mathFamily;
+    if (textFamily.isEmpty() && mathFamily.isEmpty()) {
+        QFontDatabase fdb;
+        for (const QString& name:mathNames) {
+            for (int i=0; i<fdb.families().size(); i++) {
+                if (fdb.families().at(i).contains(name) ) {
+                    mathFamily=fdb.families().at(i);
+                }
+                if (mathFamily.size()>0) {
+                    break;
+                }
             }
             if (mathFamily.size()>0) {
                 break;
             }
         }
-        if (mathFamily.size()>0) {
-            break;
-        }
-    }
-    for (const QString& name:textNames) {
-        for (int i=0; i<fdb.families().size(); i++) {
-            if (fdb.families().at(i).contains(name) ) {
-                textFamily=fdb.families().at(i);
+        for (const QString& name:textNames) {
+            for (int i=0; i<fdb.families().size(); i++) {
+                if (fdb.families().at(i).contains(name) ) {
+                    textFamily=fdb.families().at(i);
+                }
+                if (textFamily.size()>0) {
+                    break;
+                }
             }
             if (textFamily.size()>0) {
                 break;
             }
         }
-        if (textFamily.size()>0) {
-            break;
+        if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
+            mathFamily=textFamily;
+        } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
+            textFamily=mathFamily;
         }
-    }
-    if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
-        mathFamily=textFamily;
-    } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
-        textFamily=mathFamily;
     }
 
     bool res=false;
@@ -3473,22 +3480,24 @@ bool JKQTMathText::useXITS(bool mathModeOnly)
     }
 
 
-    QString textFamily;
-    QString mathFamily;
-    for (int i=0; i<fdb.families().size(); i++) {
-        if (fdb.families().at(i).contains("XITS Math")) {
-            mathFamily=fdb.families().at(i);
-        } else if (fdb.families().at(i).contains("XITS")) {
-            textFamily=fdb.families().at(i);
+    static QString textFamily;
+    static QString mathFamily;
+    if (textFamily.isEmpty() && mathFamily.isEmpty()) {
+        for (int i=0; i<fdb.families().size(); i++) {
+            if (fdb.families().at(i).contains("XITS Math")) {
+                mathFamily=fdb.families().at(i);
+            } else if (fdb.families().at(i).contains("XITS")) {
+                textFamily=fdb.families().at(i);
+            }
+            if (mathFamily.size()>0 && textFamily.size()>0) {
+                break;
+            }
         }
-        if (mathFamily.size()>0 && textFamily.size()>0) {
-            break;
+        if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
+            mathFamily=textFamily;
+        } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
+            textFamily=mathFamily;
         }
-    }
-    if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
-        mathFamily=textFamily;
-    } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
-        textFamily=mathFamily;
     }
 
     bool res=false;
@@ -3510,28 +3519,29 @@ bool JKQTMathText::useXITS(bool mathModeOnly)
 bool JKQTMathText::useASANA(bool mathModeOnly)
 {
     QFontDatabase fdb;
-
     if (!fdb.families().contains("Asana") && !fdb.families().contains("Asana Math")) {
         if (QFile::exists(":/JKQTMathText/fonts/asana-math.otf")) { /*i=*/QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/asana-math.otf"); }
     }
 
 
-    QString textFamily;
-    QString mathFamily;
-    for (int i=0; i<fdb.families().size(); i++) {
-        if (fdb.families().at(i).contains("Asana Math")) {
-            mathFamily=fdb.families().at(i);
-        } else if (fdb.families().at(i).contains("Asana")) {
-            textFamily=fdb.families().at(i);
+    static QString textFamily;
+    static QString mathFamily;
+    if (textFamily.isEmpty() && mathFamily.isEmpty()) {
+        for (int i=0; i<fdb.families().size(); i++) {
+            if (fdb.families().at(i).contains("Asana Math")) {
+                mathFamily=fdb.families().at(i);
+            } else if (fdb.families().at(i).contains("Asana")) {
+                textFamily=fdb.families().at(i);
+            }
+            if (mathFamily.size()>0 && textFamily.size()>0) {
+                break;
+            }
         }
-        if (mathFamily.size()>0 && textFamily.size()>0) {
-            break;
+        if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
+            mathFamily=textFamily;
+        } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
+            textFamily=mathFamily;
         }
-    }
-    if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
-        mathFamily=textFamily;
-    } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
-        textFamily=mathFamily;
     }
 
     bool res=false;
