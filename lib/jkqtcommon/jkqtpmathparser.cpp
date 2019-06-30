@@ -35,15 +35,11 @@
   #define JKQTPPATHSEPARATOR_STRING "\\"
   /** \brief a separator between two directories in a path between \c ' quotes */
   #define JKQTPPATHSEPARATOR_CHAR '\\'
-  #include<windows.h>
-  #include <io.h>
 #else
   /** \brief a separator between two directories in a path between \c " quotes */
   #define JKQTPPATHSEPARATOR_STRING "/"
   /** \brief a separator between two directories in a path between \c ' quotes */
   #define JKQTPPATHSEPARATOR_CHAR '/'
-  #include <unistd.h>
-  #include <dirent.h>
 #endif
 
 
@@ -1013,8 +1009,8 @@ JKQTPMathParser::jkmpEvaluateFunc JKQTPMathParser::getFunctionDef(const std::str
 
 bool JKQTPMathParser::tempvariableExists(const std::string &name){
     if (tempvariables.size()<=0)  return false;
-    for (int i=tempvariables.size()-1; i>=0; i--) {
-        if (tempvariables[i].name==name) return true;
+    for (int i=static_cast<int>(tempvariables.size())-1; i>=0; i--) {
+        if (tempvariables[static_cast<size_t>(i)].name==name) return true;
     }
     return false;
 }
@@ -1807,14 +1803,20 @@ JKQTPMathParser::jkmpResult JKQTPMathParser::jkmpNodeList::evaluate(){
   return res;
 }
 
-int JKQTPMathParser::jkmpNodeList::getCount() {return list.size();}
+int JKQTPMathParser::jkmpNodeList::getCount() {
+    return static_cast<int>(list.size());
+}
 
-JKQTPMathParser::jkmpNodeList::jkmpNodeList(JKQTPMathParser *p) { setParser(p); setParent(nullptr); }
+JKQTPMathParser::jkmpNodeList::jkmpNodeList(JKQTPMathParser *p) {
+    setParser(p); setParent(nullptr);
+}
 
 JKQTPMathParser::jkmpNodeList::~jkmpNodeList() = default;
 
 
-JKQTPMathParser::jkmpVariableAssignNode::~jkmpVariableAssignNode() {delete child;}
+JKQTPMathParser::jkmpVariableAssignNode::~jkmpVariableAssignNode() {
+    delete child;
+}
 
 JKQTPMathParser::jkmpVariableAssignNode::jkmpVariableAssignNode(const std::string& var, JKQTPMathParser::jkmpNode* c, JKQTPMathParser* p, JKQTPMathParser::jkmpNode* par){
   child=c;

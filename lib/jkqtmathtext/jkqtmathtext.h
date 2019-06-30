@@ -185,10 +185,10 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
       - A "sans-serif" font which may be activated with \c \\sf ... ( setFontSans()  )
       - A "typewriter" font which may be activated with \c \\tt ... ( setFontTypewriter() )
       - A "script" font which may be activated with \c \\script ... ( setFontScript() )
-      - A greek font which is used to display greek letters \c \\alpha ... ( setFontGreek() )
-      - A symbol font used to display special (math) symbols.
-      - A "roman" font used as the standard font in math mode
-      - A "sans-serif" used as sans serif font in math mode
+      - A greek font which is used to display greek letters \c \\alpha ... ( setSymbolfontGreek() )
+      - A symbol font used to display special (math) symbols. ( setSymbolfontSymbol() )
+      - A "roman" font used as the standard font in math mode ( setFontMathRoman() )
+      - A "sans-serif" used as sans serif font in math mode ( setFontMathSans() )
       - A "blackboard" font used to display double stroked characters (setFontBlackboard() )
       - A "caligraphic" font used to display caligraphic characters ( setFontCaligraphic() )
     .
@@ -249,13 +249,171 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         void draw(QPainter& painter, unsigned int flags, QRectF rect, bool drawBoxes=false);
 
+
+        /** \brief convert LaTeX to HTML. returns \c ok=true on success and \c ok=false else. */
+        QString toHtml(bool* ok=nullptr, double fontPointSize=10);
+
+        /*! \brief used to specify the font encoding used for drawing
+        */
+        enum MTfontEncoding {
+            MTFEwinSymbol,      /*!< \brief This assumes that symbols shall be taken from a MS Windows style Symbol font */
+            MTFEunicode,        /*!< \brief This assumes that symbols shall be taken from a Unicode font  (e.g. the STIX fonts from <a href="http://www.stixfonts.org/">http://www.stixfonts.org/</a>)*/
+            MTFEunicodeLimited, /*!< \brief This assumes that the fonts used are Unicode, but only offer a limited set of symbols.  Especially math symbols are missing from this encoding */
+            MTFEStandard,       /*!< \brief the encoding of a standard TTF font (i.e. we can only expect letters,number and not many special characters) */
+        };
+
+        /** \brief convert MTfontEncoding to a string */
+        static QString encoding2String(MTfontEncoding e);
+
+
+        /** \brief the available logical fonts (default is MTEroman)  */
+        enum MTenvironmentFont {
+            MTEroman,       /*!< \brief roman font, e.g. <code>\\rm{}</code> */
+            MTEsans,        /*!< \brief sans-serif font, e.g. <code>\\sf{}</code> */
+            MTEmathRoman,   /*!< \brief math-mode roman font, e.g. <code>\\mathrm{}</code> */
+            MTEmathSans,    /*!< \brief math-mode sans-serif font, e.g. <code>\\mathsf{}</code> */
+            MTEtypewriter,  /*!< \brief typewriter font, e.g. <code>\\tt{},\\mathtt{}</code> */
+            MTEscript,      /*!< \brief script font, e.g. <code>\\script{},\\mathscript{}</code> */
+            MTEblackboard,  /*!< \brief blackboard font, e.g. <code>\\mathbb{}</code> */
+            MTEcaligraphic, /*!< \brief caligraphic font, e.g. <code>\\mathcal{}</code> */
+            MTEfraktur,     /*!< \brief fraktur font, e.g. <code>\\mathfrak{}</code> */
+
+            MTenvironmentFontCount  /*!< \brief internal enum value that allows to iterate over MTenvironmentFont \internal */
+        };
+
+
+        /*! \copydoc fontColor */ 
+        void setFontColor(const QColor & __value);
+        /*! \copydoc fontColor */ 
+        QColor getFontColor() const;
+        /*! \copydoc fontSize */ 
+        void setFontSize(double __value);
+        /*! \copydoc fontSize */ 
+        double getFontSize() const;
+        /** \brief add a font pair to the table with font replacements
+         *
+         * e.g. if it is known that a certain font is not good for rendering, you can add an alternative with this function.
+         * These are automatically applied, when setting a new font name!
+         *
+         * \param nonUseFont the font not to use
+         * \param useFont replacement font for nonUseFont
+         *
+         * The entry in the encodings for this font is kept empty (or even deleted), so the default encoding of the font to be replaced is used!
+         */
+        void addReplacementFont(const QString& nonUseFont, const QString& useFont);
+        /** \brief add a font pair to the table with font replacements
+         *
+         * e.g. if it is known that a certain font is not good for rendering, you can add an alternative with this function.
+         * These are automatically applied, when setting a new font name!
+         *
+         * \param nonUseFont the font not to use
+         * \param useFont replacement font for nonUseFont
+         * \param useFontEncoding encoding of the replacement font
+         */
+        void addReplacementFont(const QString& nonUseFont, const QString& useFont, MTfontEncoding useFontEncoding);
+        /** \brief retrieves a replacement for the given font name \a nonUseFont, including its encoding. Returns the given default values \a defaultFont and/or \a defaultFontEncoding if one of the two is not found */
+        QPair<QString, MTfontEncoding> getReplacementFont(const QString &nonUseFont, const QString &defaultFont, MTfontEncoding defaultFontEncoding) const;
+
+        enum class FontSubclass {
+            Text,
+            Default=Text,
+            Symbols,
+            Greek,
+        };
+
+        /** \brief retrieve the font and encoding to be used for \a font, which might optionally be typeset inside a math environment, specified by in_math_environment, possibly for the given font subclass \a subclass */
+        QPair<QString, MTfontEncoding> getFontData(MTenvironmentFont font, bool in_math_environment=false, FontSubclass subclass=FontSubclass::Default) const;
+
+        /*! \brief calls setFontRoman(), or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
+
+            \see setFontRoman(), useXITS(), useSTIX() for more information */
+        void setFontRomanOrSpecial(const QString & fontName);
+
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEroman  */
+        void setFontRoman(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEroman  */
+        QString getFontRoman() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEsans  */
+        void setFontSans(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEsans  */
+        QString getFontSans() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEtypewriter  */
+        void setFontTypewriter(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEtypewriter  */
+        QString getFontTypewriter() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEscript  */
+        void setFontScript(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEscript  */
+        QString getFontScript() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEfraktur  */
+        void setFontFraktur(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEfraktur  */
+        QString getFontFraktur() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEcaligraphic  */
+        void setFontCaligraphic(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEcaligraphic  */
+        QString getFontCaligraphic() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEblackboard  */
+        void setFontBlackboard(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief blackboard font is simulated by using roman with outlines only */
+        void setFontBlackboardSimulated(bool doSimulate);
+        /*! \brief is blackboard font simulated by using roman with outlines only */
+        bool isFontBlackboardSimulated() const;
+        /*! \brief retrieves the font to be used for text in the logical font MTEblackboard  */
+        QString getFontBlackboard() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for greek letters in the logical font \a font  */
+        void setSymbolfontGreek(MTenvironmentFont font, const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for integrals in all logical fonts  */
+        void setSymbolfontGreek(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for greek letters in the logical font \a font  */
+        QString getSymbolfontGreek(MTenvironmentFont font) const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font  */
+        void setSymbolfontSymbol(MTenvironmentFont font, const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for integrals in all logical fonts  */
+        void setSymbolfontSymbol(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for symbols in the logical font \a font  */
+        QString getSymbolfontSymbol(MTenvironmentFont font) const;
+
+        /*! \brief retrieves the encoding used for the symbol font to be used for symbols in the logical font \a font  */
+        MTfontEncoding getSymbolfontEncodingSymbol(MTenvironmentFont font) const;
+        /*! \brief retrieves the encoding used for the greek letter font to be used for symbols in the logical font \a font  */
+        MTfontEncoding getSymbolfontEncodingGreek(MTenvironmentFont font) const;
+        /*! \brief retrieves the encoding used for the script font */
+        MTfontEncoding getFontEncodingScript() const;
+        /*! \brief retrieves the encoding used for the Fraktur font */
+        MTfontEncoding getFontEncodingFraktur() const;
+        /*! \brief retrieves the encoding used for the typewriter font */
+        MTfontEncoding getFontEncodingTypewriter() const;
+        /*! \brief retrieves the encoding used for the sans-serif font */
+        MTfontEncoding getFontEncodingSans() const;
+        /*! \brief retrieves the encoding used for the roman font */
+        MTfontEncoding getFontEncodingRoman() const;
+        /*! \brief retrieves the encoding used for the blackboard font */
+        MTfontEncoding getFontEncodingBlackboard() const;
+        /*! \brief retrieves the encoding used for the caligraphic font */
+        JKQTMathText::MTfontEncoding getFontEncodingCaligraphic() const;
+
+
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathRoman  */
+        void setFontMathRoman(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEroman  */
+        QString getFontMathRoman() const;
+        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathSans  */
+        void setFontMathSans(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
+        /*! \brief retrieves the font to be used for text in the logical font MTEsans  */
+        QString getFontMathSans() const;
+        /*! \brief retrieves the encoding used for the math-mode sans-serif font */
+        MTfontEncoding getFontEncodingMathSans() const;
+        /*! \brief retrieves the encoding used for the math-mode roman font */
+        MTfontEncoding getFontEncodingMathRoman() const;
+
         /** \brief configures the class to use the STIX fonts in mathmode
          *
          * use STIX (1.x/2.x) fonts from <a href="https://www.stixfonts.org/">https://www.stixfonts.org/</a> in math-mode
          *
          * \image html jkqtmathparser_stix.png
          */
-        void useSTIX();
+        bool useSTIX(bool mathModeOnly=true);
 
         /** \brief configures the class to use the XITS fonts in mathmode
          *
@@ -264,7 +422,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *
          * \image html jkqtmathparser_xits.png
          */
-        void useXITS();
+        bool useXITS(bool mathModeOnly=true);
 
         /** \brief configures the class to use the ASANA fonts in mathmode
          *
@@ -272,394 +430,91 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          *
          * \image html jkqtmathparser_asana.png
          */
-        void useASANA();
+        bool useASANA(bool mathModeOnly=true);
 
-        /** \brief configures the class to use a unicode font for symbols in mathmode
+        /** \brief sets \a timesFont (with its encoding \a encodingTimes ) for serif-text and \a sansFont (with its encoding \a encodingSans ) for both mathmode and textmode fonts
          *
          * use generic Unicode fonts, e.g. "Arial" and "Times New Roman" in math-mode.
          * You should use fonts that contain as many of the mathematical symbols as possible to ensure good rendering results.
          *
-         * <code>setAnyUnicode("Times New Roman", "Times New Roman")</code>:<br>\image html jkqtmathparser_timesnewroman.png
-         * <code>setAnyUnicode("Arial", "Arial")</code>:<br>\image html jkqtmathparser_arial.png
-         * <code>setAnyUnicode("Courier New", "Courier New")</code>:<br>\image html jkqtmathparser_couriernew.png
-         * <code>setAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathparser_comicsans.png
+         * <code>setAnyUnicode("Times New Roman", "Times New Roman")</code>:<br>\image html jkqtmathparser_timesnewroman.png  <br><br>
+         * <code>setAnyUnicode("Arial", "Arial")</code>:<br>\image html jkqtmathparser_arial.png  <br><br>
+         * <code>setAnyUnicode("Courier New", "Courier New")</code>:<br>\image html jkqtmathparser_couriernew.png  <br><br>
+         * <code>setAnyUnicode("Comic Sans MS", "Comic Sans MS")</code>:<br>\image html jkqtmathparser_comicsans.png  <br><br>
          *
-         * The parameter \a fullMathUnicodeFont specifies, whether the unicode fonts encode also math symbols, or are
-         * limited to latin+greek+basic symbols.
          */
-        void useAnyUnicode(QString timesFont=QString(""), const QString& sansFont=QString(""), bool fullMathUnicodeFont=false);
-
-        void useLatexFonts(QString prefix=QString(""), const QString& postfix=QString(""));
-
-        /** \brief convert LaTeX to HTML. returns \c ok=true on success and \c ok=false else. */
-        QString toHtml(bool* ok=nullptr, double fontPointSize=10);
-
-        /*! \brief used to specify the font encoding used for drawing
-
-               - \c MTFEwinSymbol: This assumes that symbols shal be taken from a MS Windows style Symbol font
-               - \c MTFElatex:     This assumes that symbols shal be taken from the CM (computer modern) fonts, used by LaTeX
-               - \c MTFEunicode:   This assumes that symbols shall be taken from a Unicode font
-                                   (e.g. the STIX fonts from <a href="http://www.stixfonts.org/">http://www.stixfonts.org/</a>)
-               - \c MTFEunicodeLimited: This assumes that the fonts used are Unicode, but only offer a limited set of symbols.
-                                        Especially math symbols are missing from this encoding
-            .
-        */
-        enum MTfontEncoding {
-            MTFEwinSymbol,
-            MTFEunicode,
-            MTFEunicodeLimited,
-            MTFElatex
-        };
-
-        /*! \copydoc fontColor */ 
-        inline void setFontColor(const QColor & __value)
-        {
-            this->fontColor = __value;
-        } 
-        /*! \copydoc fontColor */ 
-        inline QColor getFontColor() const
-        {
-            return this->fontColor; 
-        }
-        /*! \copydoc fontSize */ 
-        inline void setFontSize(double __value)
-        {
-            this->fontSize = __value;
-        } 
-        /*! \copydoc fontSize */ 
-        inline double getFontSize() const
-        {
-            return this->fontSize; 
-        }
-        /** \brief add a font pair to the table with font replacements
-         *
-         * e.g. if it is known that a certain font is not good for rendering, you can add an alternative with this function.
-         * These are automatically applied, when setting a new font name!
-         *
-         * \param nonUseFont the font not to use
-         * \param useFont replacement font for nonUseFont
-         */
-        void addReplacementFont(const QString& nonUseFont, const QString& useFont);
+        void useAnyUnicode(QString timesFont=QString(""), const QString& sansFont=QString(""), MTfontEncoding encodingTimes=MTfontEncoding::MTFEunicode, MTfontEncoding encodingSans=MTfontEncoding::MTFEunicode);
 
 
-        /*! \copydoc fontRoman */
-        inline void setFontRoman(const QString & __value)
-        {
-            this->fontRoman = fontReplacements.value(__value, __value);
-        }
-        /*! \brief sets the property fontRoman ( \copybrief fontRoman ) to \a __value, or calls useXITS() if \a __value \c =="XITS".  calls useSTIX() if \a __value \c =="STIX", ...
 
-            \see fontRoman for more information */
-        void setFontRomanOrSpecial(const QString & __value);
-        /*! \copydoc fontRoman */
-        inline QString getFontRoman() const
-        {
-            return this->fontRoman; 
-        }
-        /*! \copydoc fontSans */ 
-        inline void setFontSans(const QString & __value)
-        {
-            this->fontSans = fontReplacements.value(__value, __value);
-        } 
-        /*! \copydoc fontSans */ 
-        inline QString getFontSans() const
-        {
-            return this->fontSans; 
-        }
-        /*! \copydoc fontTypewriter */ 
-        inline void setFontTypewriter(const QString & __value)
-        {
-            this->fontTypewriter = __value;
-        } 
-        /*! \copydoc fontTypewriter */ 
-        inline QString getFontTypewriter() const
-        {
-            return this->fontTypewriter; 
-        }
-        /*! \copydoc fontScript */ 
-        inline void setFontScript(const QString & __value)
-        {
-            this->fontScript = __value;
-        } 
-        /*! \copydoc fontScript */ 
-        inline QString getFontScript() const
-        {
-            return this->fontScript; 
-        }
-        /*! \copydoc fontGreek */ 
-        inline void setFontGreek(const QString & __value)
-        {
-            this->fontGreek = __value;
-        } 
-        /*! \copydoc fontGreek */ 
-        inline QString getFontGreek() const
-        {
-            return this->fontGreek; 
-        }
-        /*! \copydoc fontSymbol */ 
-        inline void setFontSymbol(const QString & __value)
-        {
-            this->fontSymbol = __value;
-        } 
-        /*! \copydoc fontSymbol */ 
-        inline QString getFontSymbol() const
-        {
-            return this->fontSymbol; 
-        }
-        /*! \copydoc fontBraces */ 
-        inline void setFontBraces(const QString & __value)
-        {
-            this->fontBraces = __value;
-        } 
-        /*! \copydoc fontBraces */ 
-        inline QString getFontBraces() const
-        {
-            return this->fontBraces; 
-        }
-        /*! \copydoc fontIntegrals */ 
-        inline void setFontIntegrals(const QString & __value)
-        {
-            this->fontIntegrals = __value;
-        } 
-        /*! \copydoc fontIntegrals */ 
-        inline QString getFontIntegrals() const
-        {
-            return this->fontIntegrals; 
-        }
-        /*! \copydoc fontCaligraphic */ 
-        inline void setFontCaligraphic(const QString & __value)
-        {
-            this->fontCaligraphic = __value;
-        } 
-        /*! \copydoc fontCaligraphic */ 
-        inline QString getFontCaligraphic() const
-        {
-            return this->fontCaligraphic; 
-        }
-        /*! \copydoc fontBlackboard */ 
-        inline void setFontBlackboard(const QString & __value)
-        {
-            this->fontBlackboard = __value;
-        } 
-        /*! \copydoc fontBlackboard */ 
-        inline QString getFontBlackboard() const
-        {
-            return this->fontBlackboard; 
-        }
-        /*! \copydoc fontLatexPrefix */ 
-        inline void setFontLatexPrefix(const QString & __value)
-        {
-            this->fontLatexPrefix = __value;
-        } 
-        /*! \copydoc fontLatexPrefix */ 
-        inline QString getFontLatexPrefix() const
-        {
-            return this->fontLatexPrefix; 
-        }
-        /*! \copydoc fontLatexPostfix */ 
-        inline void setFontLatexPostfix(const QString & __value)
-        {
-            this->fontLatexPostfix = __value;
-        } 
-        /*! \copydoc fontLatexPostfix */ 
-        inline QString getFontLatexPostfix() const
-        {
-            return this->fontLatexPostfix; 
-        }
-        /*! \copydoc fontEncoding */ 
-        inline void setFontEncoding(const MTfontEncoding & __value)
-        {
-            this->fontEncoding = __value;
-        } 
-        /*! \copydoc fontEncoding */
-        inline MTfontEncoding getFontEncoding() const
-        {
-            return this->fontEncoding;
-        }
-        /*! \copydoc useSTIXfonts */ 
-        inline bool isUsingSTIXfonts() const { 
-            return this->useSTIXfonts; 
-        }
-        /*! \copydoc useXITSfonts */ 
-        inline bool isUsingXITSfonts() const { 
-            return this->useXITSfonts; 
-        }
         /*! \copydoc brace_factor */ 
-        inline void setBraceFactor(double __value)
-        {
-            this->brace_factor = __value;
-        } 
+        void setBraceFactor(double __value);
         /*! \copydoc brace_factor */ 
-        inline double getBraceFactor() const
-        {
-            return this->brace_factor; 
-        }
+        double getBraceFactor() const;
         /*! \copydoc subsuper_size_factor */ 
-        inline void setSubsuperSizeFactor(double __value)
-        {
-            this->subsuper_size_factor = __value;
-        } 
+        void setSubsuperSizeFactor(double __value);
         /*! \copydoc subsuper_size_factor */ 
-        inline double getSubsuperSizeFactor() const
-        {
-            return this->subsuper_size_factor; 
-        }
+        double getSubsuperSizeFactor() const;
         /*! \copydoc italic_correction_factor */ 
-        inline void setItalicCorrectionFactor(double __value)
-        {
-            this->italic_correction_factor = __value;
-        } 
+        void setItalicCorrectionFactor(double __value);
         /*! \copydoc italic_correction_factor */ 
-        inline double getItalicCorrectionFactor() const
-        {
-            return this->italic_correction_factor; 
-        }
+        double getItalicCorrectionFactor() const;
         /*! \copydoc operatorsubsuper_size_factor */ 
-        inline void setOperatorsubsuperSizeFactor(double __value)
-        {
-            this->operatorsubsuper_size_factor = __value;
-        } 
+        void setOperatorsubsuperSizeFactor(double __value);
         /*! \copydoc operatorsubsuper_size_factor */ 
-        inline double getOperatorsubsuperSizeFactor() const
-        {
-            return this->operatorsubsuper_size_factor; 
-        }
+        double getOperatorsubsuperSizeFactor() const;
         /*! \copydoc mathoperator_width_factor */ 
-        inline void setMathoperatorWidthFactor(double __value)
-        {
-            this->mathoperator_width_factor = __value;
-        } 
+        void setMathoperatorWidthFactor(double __value);
         /*! \copydoc mathoperator_width_factor */ 
-        inline double getMathoperatorWidthFactor() const
-        {
-            return this->mathoperator_width_factor; 
-        }
+        double getMathoperatorWidthFactor() const;
         /*! \copydoc super_shift_factor */ 
-        inline void setSuperShiftFactor(double __value)
-        {
-            this->super_shift_factor = __value;
-        } 
+        void setSuperShiftFactor(double __value);
         /*! \copydoc super_shift_factor */ 
-        inline double getSuperShiftFactor() const
-        {
-            return this->super_shift_factor; 
-        }
+        double getSuperShiftFactor() const;
         /*! \copydoc sub_shift_factor */ 
-        inline void setSubShiftFactor(double __value)
-        {
-            this->sub_shift_factor = __value;
-        } 
+        void setSubShiftFactor(double __value);
         /*! \copydoc sub_shift_factor */ 
-        inline double getSubShiftFactor() const
-        {
-            return this->sub_shift_factor; 
-        }
+        double getSubShiftFactor() const;
         /*! \copydoc brace_shrink_factor */ 
-        inline void setBraceShrinkFactor(double __value)
-        {
-            this->brace_shrink_factor = __value;
-        } 
+        void setBraceShrinkFactor(double __value);
         /*! \copydoc brace_shrink_factor */ 
-        inline double getBraceShrinkFactor() const
-        {
-            return this->brace_shrink_factor; 
-        }
+        double getBraceShrinkFactor() const;
         /*! \copydoc underbrace_factor */ 
-        inline void setUnderbraceFactor(double __value)
-        {
-            this->underbrace_factor = __value;
-        } 
+        void setUnderbraceFactor(double __value);
         /*! \copydoc underbrace_factor */ 
-        inline double getUnderbraceFactor() const
-        {
-            return this->underbrace_factor; 
-        }
+        double getUnderbraceFactor() const;
         /*! \copydoc undersetFactor */ 
-        inline void setUndersetFactor(double __value)
-        {
-            this->undersetFactor = __value;
-        } 
+        void setUndersetFactor(double __value);
         /*! \copydoc undersetFactor */ 
-        inline double getUndersetFactor() const
-        {
-            return this->undersetFactor; 
-        }
+        double getUndersetFactor() const;
         /*! \copydoc frac_factor */ 
-        inline void setFracFactor(double __value)
-        {
-            this->frac_factor = __value;
-        } 
+        void setFracFactor(double __value);
         /*! \copydoc frac_factor */ 
-        inline double getFracFactor() const
-        {
-            return this->frac_factor; 
-        }
+        double getFracFactor() const;
         /*! \copydoc frac_shift_factor */ 
-        inline void setFracShiftFactor(double __value)
-        {
-            this->frac_shift_factor = __value;
-        } 
+        void setFracShiftFactor(double __value);
         /*! \copydoc frac_shift_factor */ 
-        inline double getFracShiftFactor() const
-        {
-            return this->frac_shift_factor; 
-        }
+        double getFracShiftFactor() const;
         /*! \copydoc brace_y_shift_factor */ 
-        inline void setBraceYShiftFactor(double __value)
-        {
-            this->brace_y_shift_factor = __value;
-        } 
+        void setBraceYShiftFactor(double __value);
         /*! \copydoc brace_y_shift_factor */ 
-        inline double getBraceYShiftFactor() const
-        {
-            return this->brace_y_shift_factor; 
-        }
+        double getBraceYShiftFactor() const;
         /*! \copydoc decoration_height_factor */ 
-        inline void setDecorationHeightFactor(double __value)
-        {
-            this->decoration_height_factor = __value;
-        } 
+        void setDecorationHeightFactor(double __value);
         /*! \copydoc decoration_height_factor */ 
-        inline double getDecorationHeightFactor() const
-        {
-            return this->decoration_height_factor; 
-        }
+        double getDecorationHeightFactor() const;
         /*! \copydoc expensiveRendering */ 
-        inline void setExpensiveRendering(bool __value)
-        {
-            this->expensiveRendering = __value;
-        } 
+        void setExpensiveRendering(bool __value);
         /*! \copydoc expensiveRendering */ 
-        inline bool getExpensiveRendering() const
-        {
-            return this->expensiveRendering; 
-        }
+        bool getExpensiveRendering() const;
         /*! \copydoc useUnparsed */ 
-        inline void setUseUnparsed(bool __value)
-        {
-            this->useUnparsed = __value;
-        } 
+        void setUseUnparsed(bool __value);
         /*! \copydoc useUnparsed */ 
-        inline bool isUsingUnparsed() const
-        {
-            return this->useUnparsed; 
-        }
+        bool isUsingUnparsed() const;
         /*! \copydoc error_list */ 
-        inline QStringList getErrorList() const { 
-            return this->error_list; 
-        }
+        QStringList getErrorList() const;
 
     protected:
-
-        /** \brief the available fonts */
-        enum MTenvironmentFont {
-            MTEroman,
-            MTEsans,
-            MTEtypewriter,
-            MTEscript,
-            MTEblackboard,
-            MTEcaligraphic
-        };
 
         /** \brief describes the current drawing environment (base fontname ...) */
         struct MTenvironment {
@@ -720,7 +575,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTnode {
             public:
-                MTnode(JKQTMathText* parent);
+                explicit MTnode(JKQTMathText* parent);
+                MTnode(const MTnode&)=delete;
+                MTnode& operator=(const MTnode&)=delete;
                 virtual ~MTnode();
                 /** \brief determine the size of the node, calls getSizeInternal() implementation of the actual type \see getSizeInternal()
                  *
@@ -791,7 +648,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTtextNode: public MTnode {
             public:
-                MTtextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
+                explicit MTtextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
                 virtual ~MTtextNode() override;
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
@@ -813,7 +670,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTplainTextNode: public MTtextNode {
             public:
-                MTplainTextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
+                explicit MTplainTextNode(JKQTMathText* parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace=false);
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
             protected:
@@ -825,7 +682,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTwhitespaceNode: public MTtextNode {
             public:
-                MTwhitespaceNode(JKQTMathText* parent);
+                explicit MTwhitespaceNode(JKQTMathText* parent);
                 virtual ~MTwhitespaceNode() override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
@@ -839,7 +696,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTsymbolNode: public MTnode {
             public:
-                MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
+                explicit MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace);
                 virtual ~MTsymbolNode() override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
@@ -849,33 +706,49 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /*! \copydoc symbolName */ 
                 QString getSymbolName() const;
-                QString getSymbolFontName() const;
+                QString getSymbolfontName() const;
+                bool getAddWhitespace() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
+
                 /** \brief this string will be sent to the drawText method with properly set fonts */
-                QString symbol;
-                /** \brief the symbol name supplied to the constructor */
                 QString symbolName;
-                /** \brief these fonts may be used for symbols */
-                enum symbolFont { MTSFdefault, MTSFsymbol, MTSFgreek, MTSFbraces, MTSFintegrals, MTSFcaligraphic, MTSFblackboard };
-                /** \brief changes the font name according to a given symbolFont value */
-                QFont getFontName(symbolFont f, QFont& fi) const;
-                /** \brief magnification factor for the font size */
-                symbolFont font;
-                /** \brief magnification factor for the font size */
-                double fontFactor;
-                /** \brief 0: leave italic setting as is, >0: set italic, <0 set italic to false */
-                char italic;
-                /** \brief 0: leave bold setting as is, >0: set bold, <0 set bold to false */
-                char bold;
-                /** \brief this corrects the y position of a symbol: draws at y <- y+ height*yfactor) */
-                double yfactor;
-                /** \brief indicates whether to draw a bar (like for \c \\hbar ) */
-                bool drawBar;
-                bool heightIsAscent;
-                bool exactAscent;
-                bool extendWidthInMathmode;
+                /** \brief add a whitespace to the symbol? */
+                bool addWhitespace;
+                struct SymbolProps {
+                    /** \brief the symbol name supplied to the constructor */
+                    QString symbol;
+                    /** \brief font to use for output */
+                    QString font;
+                    /** \brief magnification factor for the font size */
+                    double fontFactor;
+                    /** \brief 0: leave italic setting as is, >0: set italic, <0 set italic to false */
+                    char italic;
+                    /** \brief 0: leave bold setting as is, >0: set bold, <0 set bold to false */
+                    char bold;
+                    /** \brief this corrects the y position of a symbol: draws at y <- y+ height*yfactor) */
+                    double yfactor;
+                    /** \brief indicates whether to draw a bar (like for \c \\hbar ) */
+                    bool drawBar;
+                    bool heightIsAscent;
+                    bool exactAscent;
+                    bool extendWidthInMathmode;
+                };
+                /** \brief retrieve the properties to render the given symbol \a symName in the current environment \a currentEv */
+                SymbolProps getSymbolProp(const QString& symName, const MTenvironment& currentEv) const;
+                /** \brief fill \a props for the symbol named \a n in the given environment \a currentEv and with the given \a mathFontFactor , returns \c true if the symbol can be drawn using Unicode font (or WinSymbol as Fallback)*/
+                bool getSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps &props, const QString &n, const MTenvironment &currentEv, double mathFontFactor) const;
+                /** \brief fill \a props for the greek letter symbol named \a n in the given environment \a currentEv and with the given \a mathFontFactor , returns \c true if the symbol can be drawn using Unicode font (or WinSymbol as Fallback) */
+                bool getGreekSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps &props, const QString &n, const MTenvironment &currentEv, double mathFontFactor) const;
+                /** \brief fill \a props for the symbol named \a n in the given environment \a currentEv and with the given \a mathFontFactor , returns \c true if the symbol can be drawn using WinSymbol font */
+                bool getWinSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps &props, const QString &n, const MTenvironment &currentEv, double mathFontFactor) const;
+                /** \brief fill \a props for the symbol named \a n  , returns \c true if the symbol can be drawn using any font, does not alter the font name!!! */
+                bool getStandardTextSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps &props, const QString &n) const;
+                /** \brief fill \a props for the symbol named \a n  , returns \c true if the symbol can be drawn using any unicode font, does not alter the font name!!! */
+                bool getUnicodeBaseSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps &props, const QString &n) const;
+                /** \brief fill \a props for the symbol named \a n  , returns \c true if the symbol can be drawn using a full unicode font, does not alter the font name!!! */
+                bool getUnicodeFullSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps &props, const QString &n, double mathFontFactor) const;
         };
 
         /** \brief subclass representing a list of nodes in the syntax tree
@@ -883,7 +756,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTlistNode: public MTnode {
             public:
-                MTlistNode(JKQTMathText* parent);
+                explicit MTlistNode(JKQTMathText* parent);
                 virtual ~MTlistNode() override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
@@ -908,7 +781,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTinstruction1Node: public MTnode {
             public:
-                MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters=QStringList());
+                explicit MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters=QStringList());
                 virtual ~MTinstruction1Node() override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
@@ -944,15 +817,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTsubscriptNode: public MTnode {
             public:
-                MTsubscriptNode(JKQTMathText* parent, MTnode* child);
+                explicit MTsubscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsubscriptNode() override;
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;                /*! \brief returns the child node */
-                 inline MTnode* getChild() const {
-                    return this->child; 
-                }
+                 MTnode *getChild() const;
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
@@ -972,14 +843,12 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          */
         class JKQTMATHTEXT_LIB_EXPORT MTsuperscriptNode: public MTnode {
             public:
-                MTsuperscriptNode(JKQTMathText* parent, MTnode* child);
+                explicit MTsuperscriptNode(JKQTMathText* parent, MTnode* child);
                 virtual ~MTsuperscriptNode() override;
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /*! \brief returns the child node */
-                inline MTnode* getChild() const { 
-                    return this->child; 
-                }
+                MTnode* getChild() const;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
                 /** \copydoc MTnode::toHtml() */
@@ -1050,13 +919,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual void setDrawBoxes(bool draw) override;
                 virtual QString getTypeName() const override ;
                 /*! \brief returns the child node */
-                inline MTnode* getChild() const {
-                    return this->child; 
-                }
+                MTnode *getChild() const;
                 /*! \copydoc degree */ 
-                inline int getDegree() const { 
-                    return this->degree; 
-                }
+                int getDegree() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
@@ -1094,17 +959,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
                 /*! \brief returns the 1st child node */
-                inline MTnode* getChild1() const {
-                    return this->child1; 
-                }
+                MTnode* getChild1() const;
                 /*! \brief returns the 2nd child node */
-                 inline MTnode* getChild2() const {
-                    return this->child2; 
-                }
+                MTnode* getChild2() const;
                 /*! \copydoc mode */ 
-                inline MTfracMode getMode() const { 
-                    return this->mode; 
-                }
+                MTfracMode getMode() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
@@ -1125,17 +984,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /*! \brief returns the child nodes */
-                inline QVector<QVector<MTnode*> > getChildren() const {
-                    return this->children; 
-                }
+                QVector<QVector<MTnode*> > getChildren() const;
                 /*! \copydoc columns */ 
-                inline int getColumns() const { 
-                    return this->columns; 
-                }
+                int getColumns() const;
                 /*! \copydoc lines */ 
-                inline int getLines() const { 
-                    return this->lines; 
-                }
+                int getLines() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
@@ -1177,13 +1030,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual void setDrawBoxes(bool draw) override;
                 virtual QString getTypeName() const override ;
                 /*! \brief returns the child node */
-                 inline MTnode* getChild() const {
-                    return this->child; 
-                }
+                MTnode* getChild() const;
                 /*! \copydoc decoration */ 
-                inline MTdecoration getDecoration() const { 
-                    return this->decoration; 
-                }
+                MTdecoration getDecoration() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
                 virtual void getSizeInternal(QPainter& painter, MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* prevNodeSize=nullptr) override;
@@ -1195,178 +1044,74 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief table with font replacements to use (e.g. if it is known that a certain font is not good for rendering, you can add
          *         an alternative using addReplacementFont(). These are automatically applied, when setting a new font name! */
         QMap<QString, QString> fontReplacements;
+        /** \brief acompanies fontReplacements and collects the encodings of the replacement fonts, if no entry is present, the default encoding is used, as given to the setter! */
+        QMap<QString, MTfontEncoding> fontEncodingReplacements;
 
         /** \brief font color */
         QColor fontColor;
-        /*! \brief default value for property fontColor.
-            \see fontColor for more information */
-        QColor default_fontColor;
         /** \brief base font size in points */
         double fontSize;
-        /*! \brief default value for property fontSize.
-            \see fontSize for more information */
-        double default_fontSize;
-        /** \brief roman font */
-        QString fontRoman;
-        /*! \brief default value for property fontRoman.
-            \see fontRoman for more information */
-        QString default_fontRoman;
-        /** \brief sans-serif font */
-        QString fontSans;
-        /*! \brief default value for property fontSans.
-            \see fontSans for more information */
-        QString default_fontSans;
-        /** \brief typewriter font */
-        QString fontTypewriter;
-        /*! \brief default value for property fontTypewriter.
-            \see fontTypewriter for more information */
-        QString default_fontTypewriter;
-        /** \brief script font */
-        QString fontScript;
-        /*! \brief default value for property fontScript.
-            \see fontScript for more information */
-        QString default_fontScript;
-        /** \brief greek font */
-        QString fontGreek;
-        /*! \brief default value for property fontGreek.
-            \see fontGreek for more information */
-        QString default_fontGreek;
-        /** \brief symbol font, used for math symbols. */
-        QString fontSymbol;
-        /*! \brief default value for property fontSymbol.
-            \see fontSymbol for more information */
-        QString default_fontSymbol;
-        /** \brief symbol font, used for braces in math mode. */
-        QString fontBraces;
-        /*! \brief default value for property fontBraces.
-            \see fontBraces for more information */
-        QString default_fontBraces;
-        /** \brief symbol font, used for integrals in math mode. */
-        QString fontIntegrals;
-        /*! \brief default value for property fontIntegrals.
-            \see fontIntegrals for more information */
-        QString default_fontIntegrals;
-        /** \brief font used for caligraphic symbols (escepcially in math environments) */
-        QString fontCaligraphic;
-        /*! \brief default value for property fontCaligraphic.
-            \see fontCaligraphic for more information */
-        QString default_fontCaligraphic;
-        /** \brief font used for blackboard (double-stroke) symbols (escepcially in math environments) */
-        QString fontBlackboard;
-        /*! \brief default value for property fontBlackboard.
-            \see fontBlackboard for more information */
-        QString default_fontBlackboard;
-        /** \brief prefix for LaTeX fonts */
-        QString fontLatexPrefix;
-        /*! \brief default value for property fontLatexPrefix.
-            \see fontLatexPrefix for more information */
-        QString default_fontLatexPrefix;
-        /** \brief postfix for LaTeX fonts */
-        QString fontLatexPostfix;
-        /*! \brief default value for property fontLatexPostfix.
-            \see fontLatexPostfix for more information */
-        QString default_fontLatexPostfix;
-        /** \brief specifies the encoding of special character fonts (default is \c MTFEwinSymbol ) */
-        MTfontEncoding fontEncoding;
-        /*! \brief default value for property fontEncoding.
-            \see fontEncoding for more information */
-        MTfontEncoding default_fontEncoding;
+
+
+        /*! \brief summarizes all information available on a font for a specific MTenvironmentFont
+            \see fontDefinitions */
+        struct FontDefinition {
+            FontDefinition();
+            /** \brief name of the font */
+            QString fontName;
+            /** \brief specifies the encoding of the font (default is \c MTFEwinSymbol ) */
+            MTfontEncoding fontEncoding;
+
+            /** \brief symbol font used for greek symbols, or empty when \a fontName shall be used */
+            QString symbolfontGreek;
+            /** \brief specifies the encoding of symbolfontGreek */
+            MTfontEncoding symbolfontGreekEncoding;
+            /** \brief symbol font, used for math symbols, or empty when \a fontName shall be used */
+            QString symbolfontSymbol;
+            /** \brief specifies the encoding of symbolfontSymbol */
+            MTfontEncoding symbolfontSymbolEncoding;
+        };
+
+        /** \brief stores information about the different fonts used by LaTeX markup */
+        QHash<MTenvironmentFont, FontDefinition> fontDefinitions;
+        /** \brief if enabled, the blackboard-characters are simulated by using font outlines only */
+        bool blackboardSimulated;
+
+
         /** \brief resizing factor for braces in math mode */
         double brace_factor;
-        /*! \brief default value for property brace_factor.
-            \see brace_factor for more information */
-        double default_brace_factor;
         /** \brief shrinking the width of braces in math mode 0: reduce to 0 pixel width, 1: leave unchanged*/
         double brace_shrink_factor;
-        /*! \brief default value for property brace_shrink_factor.
-            \see brace_shrink_factor for more information */
-        double default_brace_shrink_factor;
         /** \brief resizing factor for font size in sub-/superscript */
         double subsuper_size_factor;
-        /*! \brief default value for property subsuper_size_factor.
-            \see subsuper_size_factor for more information */
-        double default_subsuper_size_factor;
         /** \brief fraction of a whitespace by which to shift a sub-/superscript left/right when the previous text is italic */
         double italic_correction_factor;
-        /*! \brief default value for property italic_correction_factor.
-            \see italic_correction_factor for more information */
-        double default_italic_correction_factor;
         /** \brief like subsuper_size_factor, but for operators (\\sum, \\int) where the text is placed above/below the symbol */
         double operatorsubsuper_size_factor;
-        /*! \brief default value for property operatorsubsuper_size_factor.
-            \see operatorsubsuper_size_factor for more information */
-        double default_operatorsubsuper_size_factor;
         /** \brief factor, used to extend the size of an operator in math mode */
         double mathoperator_width_factor;
-        /*! \brief default value for property mathoperator_width_factor.
-            \see mathoperator_width_factor for more information */
-        double default_mathoperator_width_factor;
         /** \brief relative shift of text in superscript to normal text:
          *         0= baseline kept, 1: baseline shifted to top of normal text */
         double super_shift_factor;
-        /*! \brief default value for property super_shift_factor.
-            \see super_shift_factor for more information */
-        double default_super_shift_factor;
         /** \brief relative shift of text in subscript to normal text:
          *         0= baseline kept, 1: baseline shifted to bottom of normal text */
         double sub_shift_factor;
-        /*! \brief default value for property sub_shift_factor.
-            \see sub_shift_factor for more information */
-        double default_sub_shift_factor;
-        /** \brief indicates whether to use STIX fonts or not */
-        bool useSTIXfonts;
-        /*! \brief default value for property useSTIXfonts.
-            \see useSTIXfonts for more information */
-        bool default_useSTIXfonts;
-        /** \brief indicates whether to use XITS fonts or not */
-        bool useXITSfonts;
-        /** \brief the first call to useXITS() determines this name for the default XITS fonts */
-        QString defaultXITSFontName;
-        /** \brief the call to useXITS() determines this name for the default XITS Math fonts */
-        QString defaultXITSMathFontName;
-        /*! \brief default value for property useXITSfonts.
-            \see useXITSfonts for more information */
-        bool default_useXITSfonts;
-        /** \brief indicates whether to use XITS fonts or not */
-        bool useASANAfonts;
-        /*! \brief default value for property useASANAfonts.
-            \see useASANAfonts for more information */
-        bool default_useASANAfonts;
+
+
         /** \brief scaling factor for font of nominator and denominator of a fraction */
         double frac_factor;
-        /*! \brief default value for property frac_factor.
-            \see frac_factor for more information */
-        double default_frac_factor;
         /** \brief shift of denominator/nummerator away from central line of a frac */
         double frac_shift_factor;
-        /*! \brief default value for property frac_shift_factor.
-            \see frac_shift_factor for more information */
-        double default_frac_shift_factor;
         /** \brief scaling factor for font of underbrace/overbrace text */
         double underbrace_factor;
-        /*! \brief default value for property underbrace_factor.
-            \see underbrace_factor for more information */
-        double default_underbrace_factor;
         /** \brief scaling factor for font of underset/overset text */
         double undersetFactor;
-        /*! \brief default value for property undersetFactor.
-            \see undersetFactor for more information */
-        double default_undersetFactor;
         /** \brief fraction of the brace ascent that the brace is shifted downwards, when scaled */
         double brace_y_shift_factor;
-        /*! \brief default value for property brace_y_shift_factor.
-            \see brace_y_shift_factor for more information */
-        double default_brace_y_shift_factor;
         /** \brief size of the decorations (dot, tilde, ...), as fractio of the baselineheight */
         double decoration_height_factor;
-        /*! \brief default value for property decoration_height_factor.
-            \see decoration_height_factor for more information */
-        double default_decoration_height_factor;
         /** \brief switches on some options that will grant better rendering at the expense of higher time consumption */
         bool expensiveRendering;
-        /*! \brief default value for property expensiveRendering.
-            \see expensiveRendering for more information */
-        bool default_expensiveRendering;
         /** \brief a list that will be filled with error messages while parsing, if any error occur */
         QStringList error_list;
         /** \brief used by the parser. This is used to implement brace pairs with \\right. */
@@ -1379,10 +1124,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         /** \brief if true, the unparsedNode is drawn */
         bool useUnparsed;
 
-        inline MTnode* getTree() const {
-            if (useUnparsed) return unparsedNode;
-            return parsedNode;
-        }
+        MTnode* getTree() const;
 
         /** \brief the token types that may arrise in the string */
         enum tokenType {
@@ -1419,9 +1161,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
     public:
         /*! \copydoc parsedNode */ 
-        inline MTnode* getParsedNode() const { 
-            return this->parsedNode; 
-        }
+        MTnode *getParsedNode() const;
 
         struct JKQTMATHTEXT_LIB_EXPORT tbrData {
             explicit tbrData(const QFont& f, const QString& text, QPaintDevice *pd);
@@ -1445,6 +1185,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         static QList<JKQTMathText::tbrData> tbrs;
         static QHash<JKQTMathText::tbrDataH, QRectF> tbrh;
         static QRectF getTightBoundingRect(const QFont &fm, const QString& text,  QPaintDevice *pd);
+
 };
 
 

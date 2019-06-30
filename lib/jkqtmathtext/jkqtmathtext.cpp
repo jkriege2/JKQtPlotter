@@ -29,21 +29,6 @@
 #include <typeinfo>
 #include <QApplication>
 
-/**
- * \brief saves the given property (for which also a default_property exists) into the given settings object
- * \ingroup jkqtmathtext
- * \internal
- */
-#define JKQTMTPROPERTYsave(settings, group, var, varname) \
-    if (var!=default_##var) settings.setValue(group+varname, var);
-/**
- * \brief loads the given property from the given settings object
- * \ingroup jkqtmathtext
- * \internal
- */
-#define JKQTMTPROPERTYload(settings, group, var, varname, varconvert) \
-    var=settings.value(group+varname, var).varconvert;
-
 const double JKQTMathText::ABS_MIN_LINEWIDTH=0.02;
 
 QPainterPath makeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink=0.5, double cubiccontrolfac=0.3) {
@@ -140,16 +125,26 @@ JKQTMathText::MTenvironment::MTenvironment() {
 QFont JKQTMathText::MTenvironment::getFont(JKQTMathText* parent) const {
     QFont f;
     switch (font) {
-        case MTEsans:
+        case MTEsans: if (insideMath) {
+                f.setFamily(parent->getFontMathSans());
+            } else {
                 f.setFamily(parent->getFontSans());
-                break;
+            }
+            break;
+        case MTEmathSans: f.setFamily(parent->getFontMathSans()); break;
         case MTEtypewriter: f.setFamily(parent->getFontTypewriter()); break;
         case MTEscript: f.setFamily(parent->getFontScript()); break;
-        case MTEroman:
-                f.setFamily(parent->getFontRoman());
-                break;
         case MTEcaligraphic: f.setFamily(parent->getFontCaligraphic()); break;
         case MTEblackboard: f.setFamily(parent->getFontBlackboard()); break;
+        case MTEfraktur: f.setFamily(parent->getFontFraktur()); break;
+        case MTEmathRoman: f.setFamily(parent->getFontMathRoman()); break;
+        default:
+        case MTEroman: if (insideMath) {
+                f.setFamily(parent->getFontMathRoman());
+            } else {
+                f.setFamily(parent->getFontRoman());
+            }
+            break;
     };
     f.setBold(bold);
     f.setItalic(italic);
@@ -273,7 +268,7 @@ void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
                                  text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
             f.setItalic(false);
-            f.setFamily(parent->getFontBraces());
+            //f.setFamily(parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Text).first);
         }
     QString txt=textTransform(text, currentEv, true);
     QFontMetricsF fm(f, painter.device());
@@ -325,9 +320,8 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
     if (currentEv.insideMath && (text=="(" || text=="[" || text=="|" || text=="]" || text==")" || text=="<" || text==">" ||
                                  text==QString(QChar(0x2329)) || text==QString(QChar(0x232A)) || text==QString(QChar(0x2308)) ||
                                  text==QString(QChar(0x2309)) || text==QString(QChar(0x230A)) || text==QString(QChar(0x230B)))) {
-            f.setItalic(false);
-            f.setFamily(parent->getFontBraces());
-        }
+        f.setItalic(false);
+    }
 
 
     if (onlyDigits && currentEv.insideMath) {
@@ -335,6 +329,8 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
     }
 
     painter.setFont(f);
+
+    //qDebug()<<"MTtextNode: text="<<text<<" font="<<f;
 
     QPen p=painter.pen();
     p.setColor(currentEv.color);
@@ -347,7 +343,13 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
     }*/
 
     if (!hasDigits || !f.italic()) {
-        painter.drawText(QPointF(x+dx, y), txt);//.simplified());
+        if (currentEv.font==MTEblackboard && parent->blackboardSimulated) {
+            QPainterPath path;
+            path.addText(QPointF(x+dx, y), f, txt);
+            painter.drawPath(path);
+        } else {
+            painter.drawText(QPointF(x+dx, y), txt);//.simplified());
+        }
     } else {
         int i=0;
         double xx=x+dx;
@@ -356,12 +358,24 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
         ff.setItalic(false);
         while (i<txt.size()) {
             if (txt[i].isDigit()) {
-                painter.setFont(ff);
-                painter.drawText(QPointF(xx, y), QString(txt[i]));
+                if (currentEv.font==MTEblackboard && parent->blackboardSimulated) {
+                    QPainterPath path;
+                    path.addText(QPointF(xx, y), ff, QString(txt[i]));
+                    painter.drawPath(path);
+                } else {
+                    painter.setFont(ff);
+                    painter.drawText(QPointF(xx, y), QString(txt[i]));
+                }
                 xx=xx+fmff.width(txt[i]);
             } else {
-                painter.setFont(f);
-                painter.drawText(QPointF(xx, y), QString(txt[i]));
+                if (currentEv.font==MTEblackboard && parent->blackboardSimulated) {
+                    QPainterPath path;
+                    path.addText(QPointF(xx, y), f, QString(txt[i]));
+                    painter.drawPath(path);
+                } else {
+                    painter.setFont(f);
+                    painter.drawText(QPointF(xx, y), QString(txt[i]));
+                }
                 xx=xx+fm.width(txt[i]);
             }
             i++;
@@ -390,7 +404,8 @@ QString JKQTMathText::MTtextNode::getTypeName() const
 QString JKQTMathText::MTtextNode::textTransform(const QString &text, JKQTMathText::MTenvironment currentEv, bool /*forSize*/)
 {
     QString txt=text;
-    if (parent->getFontEncoding()==MTFEunicode || parent->getFontEncoding()==MTFEunicodeLimited) {
+    auto fnt=parent->getFontData(currentEv.font);
+    if (fnt.second==MTFEunicode || fnt.second==MTFEunicodeLimited) {
         if (currentEv.insideMath) {
             txt="";
             for (int i=0; i<text.size(); i++) {
@@ -409,27 +424,7 @@ QString JKQTMathText::MTtextNode::textTransform(const QString &text, JKQTMathTex
             txt=txt.replace("  ", " ");
         }
     }
-    if (currentEv.font==MTEblackboard && parent->getFontEncoding()==MTFEunicode) {
-        txt="";
-        for (int i=0; i<text.size(); i++) {
-            QChar c=text[i];
-            switch(c.unicode()) {
-                case 'C': txt+=QChar(0x2102); break;
-                case 'H': txt+=QChar(0x210D); break;
-                case 'N': txt+=QChar(0x2115); break;
-                case 'P': txt+=QChar(0x2119); break;
-                case 'Q': txt+=QChar(0x211A); break;
-                case 'R': txt+=QChar(0x211D); break;
-                case 'Z': txt+=QChar(0x2124); break;
-                case 'd': txt+=QChar(0x2146); break;
-                case 'e': txt+=QChar(0x2147); break;
-                case 'i': txt+=QChar(0x2148); break;
-                case 'j': txt+=QChar(0x2149); break;
-                default: txt+=c; break;
-            }
 
-        }
-    }
     return txt;
 }
 
@@ -541,15 +536,21 @@ bool JKQTMathText::MTinstruction1Node::setupMTenvironment(JKQTMathText::MTenviro
     else if (name=="ul" || name=="underline" || name=="underlined") ev.underlined=true;
     else if (name=="ol" || name=="overline" || name=="overlined") ev.overline=true;
     else if (name=="strike") ev.strike=true;
-    else if (name=="rm" || name=="textrm") { ev.font=JKQTMathText::MTEroman; }
+    else if (name=="rm" || name=="textrm") { ev.font=JKQTMathText::MTEroman; ev.italic=false; }
     else if (name=="mathrm" ||  name=="operatorname") { ev.font=JKQTMathText::MTEroman; ev.italic=false; }
+    else if (name=="mathbfit" || name=="bfit" || name=="textbfit") { ev.bold=true; ev.italic=true; }
     else if (name=="text" || name=="mbox" || name=="ensuretext") { ev.insideMath=false; ev.font=JKQTMathText::MTEroman; ev.italic=false; }
     else if (name=="mat") { ev.font=JKQTMathText::MTEroman; ev.italic=false; ev.bold=true; }
-    else if (name=="cal" || name=="textcal" || name=="mathcal") { ev.font=JKQTMathText::MTEcaligraphic; }
-    else if (name=="bb" || name=="textbb" || name=="mathbb") { ev.font=JKQTMathText::MTEblackboard; }
-    else if (name=="tt" || name=="texttt" || name=="mathtt") { ev.font=JKQTMathText::MTEtypewriter; }
-    else if (name=="sf" || name=="textsf" || name=="mathsf") { ev.font=JKQTMathText::MTEsans; }
-    else if (name=="script" || name=="textscript" || name=="mathscript") { ev.font=JKQTMathText::MTEscript; }
+    else if (name=="cal" || name=="textcal" || name=="mathcal") { ev.font=JKQTMathText::MTEcaligraphic; ev.italic=false; }
+    else if (name=="fcal" || name=="textfcal" || name=="mathfcal") { ev.font=JKQTMathText::MTEcaligraphic; ev.bold=true; }
+    else if (name=="frak" || name=="textfrak" || name=="mathfrak") { ev.font=JKQTMathText::MTEfraktur; ev.italic=false; }
+    else if (name=="ffrak" || name=="textffrak" || name=="mathffrak") { ev.font=JKQTMathText::MTEfraktur; ev.bold=true; }
+    else if (name=="bb" || name=="textbb" || name=="mathbb") { ev.font=JKQTMathText::MTEblackboard; ev.italic=false; }
+    else if (name=="tt" || name=="texttt" || name=="mathtt") { ev.font=JKQTMathText::MTEtypewriter; ev.italic=false; }
+    else if (name=="sf" || name=="textsf" || name=="mathsf") { ev.font=JKQTMathText::MTEsans; ev.italic=false; }
+    else if (name=="sfit" || name=="textsfit" || name=="mathsfit") { ev.font=JKQTMathText::MTEsans; ev.italic=true; }
+    else if (name=="script" || name=="scr" || name=="textscript" || name=="textscr" || name=="mathscript" || name=="mathscr") { ev.font=JKQTMathText::MTEscript; ev.italic=false; }
+    else if (name=="fscript" || name=="fscr" || name=="textfscript" || name=="textfscr" || name=="mathfscript" || name=="mathfscr") { ev.font=JKQTMathText::MTEscript; ev.bold=true; ev.italic=false; }
     else if (name=="displaystyle") { ev.fontSize=ev.fontSize/0.8; }
     else if (name=="scriptstyle") { ev.fontSize=ev.fontSize*0.8; }
     else if (name=="scriptscriptstyle") { ev.fontSize=ev.fontSize*0.8*0.8; }
@@ -621,6 +622,10 @@ double JKQTMathText::MTsubscriptNode::draw(QPainter& painter, double x, double y
 QString JKQTMathText::MTsubscriptNode::getTypeName() const
 {
     return "MTsubscriptNode";
+}
+
+JKQTMathText::MTnode *JKQTMathText::MTsubscriptNode::getChild() const {
+    return this->child;
 }
 
 
@@ -721,6 +726,14 @@ void JKQTMathText::MTsqrtNode::setDrawBoxes(bool draw)
 QString JKQTMathText::MTsqrtNode::getTypeName() const
 {
     return "MTsqrtNode";
+}
+
+JKQTMathText::MTnode *JKQTMathText::MTsqrtNode::getChild() const {
+    return this->child;
+}
+
+int JKQTMathText::MTsqrtNode::getDegree() const {
+    return this->degree;
 }
 
 
@@ -936,6 +949,18 @@ void JKQTMathText::MTfracNode::setDrawBoxes(bool draw)
 
 }
 
+JKQTMathText::MTnode *JKQTMathText::MTfracNode::getChild1() const {
+    return this->child1;
+}
+
+JKQTMathText::MTnode *JKQTMathText::MTfracNode::getChild2() const {
+    return this->child2;
+}
+
+JKQTMathText::MTfracMode JKQTMathText::MTfracNode::getMode() const {
+    return this->mode;
+}
+
 
 
 
@@ -1075,6 +1100,18 @@ double JKQTMathText::MTmatrixNode::draw(QPainter& painter, double x, double y, J
 bool JKQTMathText::MTmatrixNode::toHtml(QString &/*html*/, JKQTMathText::MTenvironment /*currentEv*/, JKQTMathText::MTenvironment /*defaultEv*/)
 {
     return false;
+}
+
+QVector<QVector<JKQTMathText::MTnode *> > JKQTMathText::MTmatrixNode::getChildren() const {
+    return this->children;
+}
+
+int JKQTMathText::MTmatrixNode::getColumns() const {
+    return this->columns;
+}
+
+int JKQTMathText::MTmatrixNode::getLines() const {
+    return this->lines;
 }
 
 void JKQTMathText::MTmatrixNode::setDrawBoxes(bool draw)
@@ -1251,6 +1288,14 @@ QString JKQTMathText::MTdecoratedNode::getTypeName() const
     return "MTdecoratedNode";
 }
 
+JKQTMathText::MTnode *JKQTMathText::MTdecoratedNode::getChild() const {
+    return this->child;
+}
+
+JKQTMathText::MTdecoration JKQTMathText::MTdecoratedNode::getDecoration() const {
+    return this->decoration;
+}
+
 
 
 
@@ -1305,6 +1350,10 @@ double JKQTMathText::MTsuperscriptNode::draw(QPainter& painter, double x, double
     if (currentEv.italic && prevNodeSize==nullptr) xx=xx+double(fm.width(' '))*parent->getItalicCorrectionFactor();
 
     return child->draw(painter, xx, y-yshift, ev);//+0.5*fm.boundingRect("A").width();
+}
+
+JKQTMathText::MTnode *JKQTMathText::MTsuperscriptNode::getChild() const {
+    return this->child;
 }
 
 
@@ -2000,99 +2049,167 @@ QList<JKQTMathText::MTnode *> JKQTMathText::MTlistNode::getNodes() const {
 
 
 
-JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& name, bool addWhitespace):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& name, bool _addWhitespace):
+    JKQTMathText::MTnode(parent), symbolName(name), addWhitespace(_addWhitespace)
 {
-    double mathFontFactor=1.8;
-    symbol = "";
-    symbolName=name;
-    fontFactor=1.0;
-    bold=0;
-    italic=-1;
-    yfactor=0;
-    QString n=name;
-    drawBar=false;
-    font=MTSFdefault;
-    heightIsAscent=false;
-    exactAscent=false;
-    extendWidthInMathmode=false;
+}
 
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // statische Lookup-Tabellen vorbereiten
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    static QStringList extendWInMM;
-    if (extendWInMM.isEmpty()) {
-        extendWInMM <<"ll"<<"gg"<<"leq"<<"geq"<<"leftrightarrow"<<"leftarrow"<<"rightarrow"<<"to"<<"uparrow"<<"downarrow"<<"updownarrow"<<"Leftrightarrow"
-                    <<"iff"<<"Leftarrow"<<"Rightarrow"<<"Uparrow"<<"Downarrow"<<"Updownarrow"<<"pm"<<"mp"<<"nexists"<<"ni"<<"notni"<<"circ"<<"sim"<<"emptyset"<<"odot"<<"ominus"
-                    <<"subsetnot"<<"bot"<<"leftharpoonup"<<"rightharpoonup"<<"upharpoonleft"<<"downharpoonleft"<<"leftrightharpoon"<<"rightleftharpoon"<<"coprod"<<"leftharpoondown"
-                    <<"rightharpoondown"<<"upharpoonright"<<"downharpoonright"<<"nwarrow"<<"nearrow"<<"searrow"<<"swarrow"<<"mapsto"<<"div"<<"multimap"<<"maporiginal"<<"mapimage"
-                    <<"times"<<"propto"<<"bullet"<<"neq"<<"ne"<<"equiv"<<"approx"<<"otimes"<<"oplus"<<"oslash"<<"cap"<<"land"<<"cup"<<"lor"<<"supset"<<"supseteq"<<"supsetnot"
-                    <<"subset"<<"subseteq"<<"in"<<"notin"<<"cdot"<<"wedge"<<"vee"<<"cong"<<"bot"<<"mid";
+JKQTMathText::MTsymbolNode::~MTsymbolNode() = default;
+
+QString JKQTMathText::MTsymbolNode::getTypeName() const
+{
+    return QLatin1String("MTsymbolNode(")+symbolName+QLatin1String(")");
+}
+
+bool JKQTMathText::MTsymbolNode::getWinSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps& props, const QString &n, const MTenvironment& currentEv, double mathFontFactor) const
+{
+    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Text);
+    auto fntSym=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Symbols);
+
+    //qDebug()<<"  +--- getWinSymbolProp("<<n<<"): fnt: "<<fnt.first<<", "<<fnt.second<<" / sym: "<<fntSym.first<<", "<<fntSym.second;
+
+    static QHash<QString, QString> winSymbolSymbol;
+    if (winSymbolSymbol.isEmpty()) {
+      winSymbolSymbol.insert("leftrightarrow", QChar(0xAB));
+      winSymbolSymbol.insert("leftarrow", QChar(0xAC));
+      winSymbolSymbol.insert("rightarrow", QChar(0xAE));
+      winSymbolSymbol.insert("to", QChar(0xAE));
+      winSymbolSymbol.insert("uparrow", QChar(0xAD));
+      winSymbolSymbol.insert("downarrow", QChar(0xAF));
+      winSymbolSymbol.insert("Leftrightarrow", QChar(0xDB));
+      winSymbolSymbol.insert("iff", QChar(0xDB));
+      winSymbolSymbol.insert("Leftarrow", QChar(0xDC));
+      winSymbolSymbol.insert("Rightarrow", QChar(0xDE));
+      winSymbolSymbol.insert("Uparrow", QChar(0xDD));
+      winSymbolSymbol.insert("Downarrow", QChar(0xFF));
+      winSymbolSymbol.insert("pm", QChar(0xB1));
+      winSymbolSymbol.insert("leq", QChar(0xA3));
+      winSymbolSymbol.insert("geq", QChar(0xB3));
+      winSymbolSymbol.insert("le", QChar(0xA3));
+      winSymbolSymbol.insert("ge", QChar(0xB3));
+      winSymbolSymbol.insert("times", QChar(0xB4));
+      winSymbolSymbol.insert("propto", QChar(0xB5));
+      winSymbolSymbol.insert("partial", QChar(0xB6));
+      winSymbolSymbol.insert("bullet", QChar(0xB7));
+      winSymbolSymbol.insert("neq", QChar(0xB9));
+      winSymbolSymbol.insert("ne", QChar(0xB9));
+      winSymbolSymbol.insert("equiv", QChar(0xBA));
+      winSymbolSymbol.insert("approx", QChar(0xBB));
+      winSymbolSymbol.insert("ellipsis", QChar(0xBC));
+      winSymbolSymbol.insert("Im", QChar(0xC1));
+      winSymbolSymbol.insert("Re", QChar(0xC2));
+      winSymbolSymbol.insert("otimes", QChar(0xC4));
+      winSymbolSymbol.insert("oplus", QChar(0xC5));
+      winSymbolSymbol.insert("oslash", QChar(0xC6));
+      winSymbolSymbol.insert("cap", QChar(0xC7));
+      winSymbolSymbol.insert("land", QChar(0xC7));
+      winSymbolSymbol.insert("cup", QChar(0xC8));
+      winSymbolSymbol.insert("lor", QChar(0xC8));
+      winSymbolSymbol.insert("supset", QChar(0xC9));
+      winSymbolSymbol.insert("supseteq", QChar(0xCA));
+      winSymbolSymbol.insert("supsetnot", QChar(0xCB));
+      winSymbolSymbol.insert("subset", QChar(0xCC));
+      winSymbolSymbol.insert("subseteq", QChar(0xCD));
+      winSymbolSymbol.insert("in", QChar(0xCE));
+      winSymbolSymbol.insert("notin", QChar(0xCF));
+      winSymbolSymbol.insert("angle", QChar(0xD0));
+      winSymbolSymbol.insert("nabla", QChar(0xD1));
+      winSymbolSymbol.insert("copyright", QChar(0xD3));
+      winSymbolSymbol.insert("registered", QChar(0xD2));
+      winSymbolSymbol.insert("circledR", QChar(0xD2));
+      winSymbolSymbol.insert("trademark", QChar(0xD4));
+      winSymbolSymbol.insert("textregistered", QChar(0xD4));
+      winSymbolSymbol.insert("cdot", QChar(0xD7));
+      winSymbolSymbol.insert("neg", QChar(0xD8));
+      winSymbolSymbol.insert("wedge", QChar(0xD9));
+      winSymbolSymbol.insert("vee", QChar(0xDA));
+      winSymbolSymbol.insert("diamond", QChar(0xE0));
+      winSymbolSymbol.insert("langle", QChar(0xE1));
+      winSymbolSymbol.insert("rangle", QChar(0xF1));
+      winSymbolSymbol.insert("forall", QChar(0x22));
+      winSymbolSymbol.insert("exists", QChar(0x24));
+      winSymbolSymbol.insert("cong", QChar(0x40));
+      winSymbolSymbol.insert("bot", QChar(0x5E));
+      winSymbolSymbol.insert("ll", "<<");
+      winSymbolSymbol.insert("gg", ">>");
+      winSymbolSymbol.insert("Alef", QChar(0xC0));
+      winSymbolSymbol.insert("alef", QChar(0xC0));
+      winSymbolSymbol.insert("tilde", "~");
+      winSymbolSymbol.insert("emptyset", QChar(0xC6));
+      winSymbolSymbol.insert("varnothing", QChar(0xC6));
+      winSymbolSymbol.insert("lceil", QChar(0xE9));
+      winSymbolSymbol.insert("rceil", QChar(0xF9));
+      winSymbolSymbol.insert("lfloor", QChar(0xEB));
+      winSymbolSymbol.insert("rfloor", QChar(0xFB));
+      winSymbolSymbol.insert("subsetnot", QChar(0xCB));
+      winSymbolSymbol.insert("DC", "=");
+      winSymbolSymbol.insert("mid", "|");
+      winSymbolSymbol.insert("cdots", QString(3, QChar(0xD7)));
+      winSymbolSymbol.insert("dots", QChar(0xDC));
+      winSymbolSymbol.insert("ldots", QChar(0xDC));
+      winSymbolSymbol.insert("cent", "c");
+      winSymbolSymbol.insert("sim", QChar(0x7E));
+      winSymbolSymbol.insert("infty", QChar(0xA5));
     }
-    
-    if (extendWInMM.contains(n)) {
-        extendWidthInMathmode=true;
+
+    QHash<QString, QString>::iterator itsymbol = winSymbolSymbol.find(n);
+    if (itsymbol!=winSymbolSymbol.end()) {
+      props.symbol = itsymbol.value();
+    } else if (n == "int") { props.symbol = QChar(0xF2); props.fontFactor = mathFontFactor; props.yfactor = +0.1; }
+    else if (n == "bbC") { props.symbol = "C"; props.bold = +1; props.italic = -1; }
+    else if (n == "bbH") { props.symbol = "H"; props.bold = +1; props.italic = -1; }
+    else if (n == "bbN") { props.symbol = "N"; props.bold = +1; props.italic = -1; }
+    else if (n == "bbP") { props.symbol = "P"; props.bold = +1; props.italic = -1; }
+    else if (n == "bbQ") { props.symbol = "Q"; props.bold = +1; props.italic = -1; }
+    else if (n == "bbR") { props.symbol = "R"; props.bold = +1; props.italic = -1; }
+    else if (n == "bbZ") { props.symbol = "Z"; props.bold = +1; props.italic = -1; }
+    else if (n == "iint") { props.symbol = QString(2, QChar(0xF2)); props.fontFactor = mathFontFactor; props.yfactor = +0.1; }
+    else if (n == "iiint") { props.symbol = QString(3, QChar(0xF2)); props.fontFactor = mathFontFactor; props.yfactor = +0.1; }
+    else if (n == "bigcap") { props.symbol = QChar(0xC7); props.fontFactor = 2; }
+    else if (n == "bigcup") { props.symbol = QChar(0xC8); props.fontFactor = 2; }
+    else if (n == "bigvee") { props.symbol = QChar(0xDA); props.fontFactor = 2; }
+    else if (n == "bighat") { props.symbol = QChar(0xD9); props.fontFactor = 2; }
+
+    else { // here are text mode symbols, i.e. bold and italic won't be touched
+      props.bold = -1;
+      props.italic = -1;
+      props.font = fnt.first;
+      if (n == "_") { props.symbol = "_"; props.bold = 0; props.italic = 0; }
+      else if (n == "}") { props.symbol = "}"; }
+      else if (n == "{") { props.symbol = "{"; }
+      else if (n == "hbar") { props.symbol = "h"; props.bold = 0; props.italic = 0; props.drawBar = true; }
+      else if (n == "euro") { props.symbol = ""; props.bold = 0; props.italic = 0; }
+      else if (n == "cent") { props.symbol = QChar(0xA2); props.bold = 0; props.italic = 0; }
+      else if (n == "pound") { props.symbol = QChar(0xA3); props.bold = 0; props.italic = 0; }
+      else if (n == "yen") { props.symbol = QChar(0xA5); props.bold = 0; props.italic = 0; }
+      else if (n == "div") { props.symbol = QChar(0xF7); props.bold = 0; props.italic = 0; }
+      else if (n == "backslash") { props.symbol = "\\"; props.bold = 0; props.italic = 0; }
+      //else if (n=="|") { symbol="||"; bold=0; italic=0; }
+      else if (n == "$") { props.symbol = "$"; props.bold = 0; props.italic = 0; }
+      else if (n == "%") { props.symbol = "%"; props.bold = 0; props.italic = 0; }
+      else if (n == "&") { props.symbol = "&"; props.bold = 0; props.italic = 0; }
+      else if (n == "#") { props.symbol = "#"; props.bold = 0; props.italic = 0; }
+      else if (n == "ast") { props.symbol = "*"; props.bold = 0; props.italic = 0; }
+      else if (n == "glq") { props.symbol = "'"; props.bold = 0; props.italic = 0; }
+      else if (n == "grq") { props.symbol = "'"; props.bold = 0; props.italic = 0; }
+      else if (n == "glqq") { props.symbol = "\""; props.bold = 0; props.italic = 0; }
+      else if (n == "grqq") { props.symbol = "\""; props.bold = 0; props.italic = 0; }
+      else if (n == "flq") { props.symbol = "<"; props.bold = 0; props.italic = 0; }
+      else if (n == "frq") { props.symbol = ">"; props.bold = 0; props.italic = 0; }
+      else if (n == "flqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
+      else if (n == "frqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
+      else { return false; }
     }
 
+    return true;
+}
 
-    static QHash<QString, QString> simpleTranslations;
-    if (simpleTranslations.isEmpty()) {
-      simpleTranslations.insert("", " ");
-      simpleTranslations.insert("sin", "sin");
-      simpleTranslations.insert("cos", "cos");
-      simpleTranslations.insert("tan", "tan");
-      simpleTranslations.insert("sinh", "sinh");
-      simpleTranslations.insert("cosh", "cosh");
-      simpleTranslations.insert("tanh", "tanh");
-      simpleTranslations.insert("atan", "atan");
-      simpleTranslations.insert("acos", "acos");
-      simpleTranslations.insert("asin", "asin");
-      simpleTranslations.insert("arcsin", "arcsin");
-      simpleTranslations.insert("arccos", "arccos");
-      simpleTranslations.insert("arctan", "arctan");
-      simpleTranslations.insert("degree", QLatin1String("\xB0"));
-      simpleTranslations.insert("ii", "i");
-      simpleTranslations.insert("dd", "d");
-      simpleTranslations.insert("exp", "exp");
-      simpleTranslations.insert("log", "log");
-      simpleTranslations.insert("ln", "ln");
-      simpleTranslations.insert("ld", "ld");
-      simpleTranslations.insert("lb", "lb");
-      simpleTranslations.insert("argmin", "argmin");
-      simpleTranslations.insert("argmax", "argmax");
-      simpleTranslations.insert("max", "max");
-      simpleTranslations.insert("mod", "mod");
-      simpleTranslations.insert("min", "min");
-      simpleTranslations.insert("median", "median");
-      simpleTranslations.insert("sign", "sign");
-      simpleTranslations.insert("sgn", "sgn");
-      simpleTranslations.insert("sec", "sec");
-      simpleTranslations.insert("gcd", "gcd");
-      simpleTranslations.insert("hom", "hom");
-      simpleTranslations.insert("ker", "ker");
-      simpleTranslations.insert("dim", "dim");
-      simpleTranslations.insert("cot", "cot");
-      simpleTranslations.insert("arg", "arg");
-      simpleTranslations.insert("det", "det");
-      simpleTranslations.insert("deg", "deg");
-      simpleTranslations.insert("Pr", "Pr");
-      simpleTranslations.insert("coth", "coth");
-    }
+bool JKQTMathText::MTsymbolNode::getGreekSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps& props, const QString &n, const MTenvironment& currentEv, double mathFontFactor) const
+{
+    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Text);
+    auto fntGreek=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Greek);
 
-
-    static QHash<QString, QString> simpleTranslations_heightIsAscent;
-    if (simpleTranslations_heightIsAscent.isEmpty()) {
-      simpleTranslations_heightIsAscent.insert("erf", "erf");
-      simpleTranslations_heightIsAscent.insert("median", "median");
-      simpleTranslations_heightIsAscent.insert("min", "min");
-      simpleTranslations_heightIsAscent.insert("max", "max");
-      simpleTranslations_heightIsAscent.insert("inf", "inf");
-      simpleTranslations_heightIsAscent.insert("sup", "sup");
-      simpleTranslations_heightIsAscent.insert("liminf", "liminf");
-      simpleTranslations_heightIsAscent.insert("limsup", "limsup");
-      simpleTranslations_heightIsAscent.insert("lim", "lim");
-    }
+    //qDebug()<<"  +--- getGreekSymbolProp("<<n<<"): fnt: "<<fnt.first<<", "<<fnt.second<<" / greek: "<<fntGreek.first<<", "<<fntGreek.second;
 
     static QHash<QString, QString> winSymbolGreek;
     if (winSymbolGreek.isEmpty()) {
@@ -2136,85 +2253,6 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
       winSymbolGreek.insert("Phi", "F");
       winSymbolGreek.insert("Psi", "Y");
     }
-
-    static QHash<QString, QString> winSymbolSymbol;
-    if (winSymbolSymbol.isEmpty()) {
-      winSymbolSymbol.insert("leftrightarrow", QChar(0xAB));
-      winSymbolSymbol.insert("leftarrow", QChar(0xAC));
-      winSymbolSymbol.insert("rightarrow", QChar(0xAE));
-      winSymbolSymbol.insert("to", QChar(0xAE));
-      winSymbolSymbol.insert("uparrow", QChar(0xAD));
-      winSymbolSymbol.insert("downarrow", QChar(0xAF));
-      winSymbolSymbol.insert("Leftrightarrow", QChar(0xDB));
-      winSymbolSymbol.insert("iff", QChar(0xDB));
-      winSymbolSymbol.insert("Leftarrow", QChar(0xDC));
-      winSymbolSymbol.insert("Rightarrow", QChar(0xDE));
-      winSymbolSymbol.insert("Uparrow", QChar(0xDD));
-      winSymbolSymbol.insert("Downarrow", QChar(0xFF));
-      winSymbolSymbol.insert("pm", QChar(0xB1));
-      winSymbolSymbol.insert("leq", QChar(0xA3));
-      winSymbolSymbol.insert("geq", QChar(0xB3));
-      winSymbolSymbol.insert("times", QChar(0xB4));
-      winSymbolSymbol.insert("propto", QChar(0xB5));
-      winSymbolSymbol.insert("partial", QChar(0xB6));
-      winSymbolSymbol.insert("bullet", QChar(0xB7));
-      winSymbolSymbol.insert("neq", QChar(0xB9));
-      winSymbolSymbol.insert("ne", QChar(0xB9));
-      winSymbolSymbol.insert("equiv", QChar(0xBA));
-      winSymbolSymbol.insert("approx", QChar(0xBB));
-      winSymbolSymbol.insert("ellipsis", QChar(0xBC));
-      winSymbolSymbol.insert("Im", QChar(0xC1));
-      winSymbolSymbol.insert("Re", QChar(0xC2));
-      winSymbolSymbol.insert("otimes", QChar(0xC4));
-      winSymbolSymbol.insert("oplus", QChar(0xC5));
-      winSymbolSymbol.insert("oslash", QChar(0xC6));
-      winSymbolSymbol.insert("cap", QChar(0xC7));
-      winSymbolSymbol.insert("land", QChar(0xC7));
-      winSymbolSymbol.insert("cup", QChar(0xC8));
-      winSymbolSymbol.insert("lor", QChar(0xC8));
-      winSymbolSymbol.insert("supset", QChar(0xC9));
-      winSymbolSymbol.insert("supseteq", QChar(0xCA));
-      winSymbolSymbol.insert("supsetnot", QChar(0xCB));
-      winSymbolSymbol.insert("subset", QChar(0xCC));
-      winSymbolSymbol.insert("subseteq", QChar(0xCD));
-      winSymbolSymbol.insert("in", QChar(0xCE));
-      winSymbolSymbol.insert("notin", QChar(0xCF));
-      winSymbolSymbol.insert("angle", QChar(0xD0));
-      winSymbolSymbol.insert("nabla", QChar(0xD1));
-      winSymbolSymbol.insert("copyright", QChar(0xD3));
-      winSymbolSymbol.insert("registered", QChar(0xD2));
-      winSymbolSymbol.insert("trademark", QChar(0xD4));
-      winSymbolSymbol.insert("cdot", QChar(0xD7));
-      winSymbolSymbol.insert("neg", QChar(0xD8));
-      winSymbolSymbol.insert("wedge", QChar(0xD9));
-      winSymbolSymbol.insert("vee", QChar(0xDA));
-      winSymbolSymbol.insert("diamond", QChar(0xE0));
-      winSymbolSymbol.insert("langle", QChar(0xE1));
-      winSymbolSymbol.insert("rangle", QChar(0xF1));
-      winSymbolSymbol.insert("forall", QChar(0x22));
-      winSymbolSymbol.insert("exists", QChar(0x24));
-      winSymbolSymbol.insert("cong", QChar(0x40));
-      winSymbolSymbol.insert("bot", QChar(0x5E));
-      winSymbolSymbol.insert("ll", "<<");
-      winSymbolSymbol.insert("gg", ">>");
-      winSymbolSymbol.insert("Alef", QChar(0xC0));
-      winSymbolSymbol.insert("alef", QChar(0xC0));
-      winSymbolSymbol.insert("tilde", "~");
-      winSymbolSymbol.insert("emptyset", QChar(0xC6));
-      winSymbolSymbol.insert("varnothing", QChar(0xC6));
-      winSymbolSymbol.insert("lceil", QChar(0xE9));
-      winSymbolSymbol.insert("rceil", QChar(0xF9));
-      winSymbolSymbol.insert("lfloor", QChar(0xEB));
-      winSymbolSymbol.insert("rfloor", QChar(0xFB));
-      winSymbolSymbol.insert("subsetnot", QChar(0xCB));
-      winSymbolSymbol.insert("DC", "=");
-      winSymbolSymbol.insert("mid", "|");
-      winSymbolSymbol.insert("cdots", QString(3, QChar(0xD7)));
-      winSymbolSymbol.insert("dots", QChar(0xDC));
-      winSymbolSymbol.insert("ldots", QChar(0xDC));
-      winSymbolSymbol.insert("cent", "c");
-    }
-
 
     static QHash<QString, QString> unicodeGreek;
     if (unicodeGreek.isEmpty()) {
@@ -2260,6 +2298,138 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
       unicodeGreek.insert("Psi", QChar(0x3A8));
     }
 
+    props.italic = -1;
+    if(fnt.second==MTFEunicodeLimited || fnt.second==MTFEunicode) {
+        props.font = fnt.first;
+        //std::cout<<"encoding unicode\n";
+        QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
+        if (itgreek!=unicodeGreek.end()) {
+            props.symbol = itgreek.value();
+            return true;
+        }
+    }
+
+    if(fntGreek.second==MTFEunicodeLimited || fntGreek.second==MTFEunicode) {
+        props.font = fntGreek.first;
+        //std::cout<<"encoding unicode\n";
+        QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
+        if (itgreek!=unicodeGreek.end()) {
+            props.symbol = itgreek.value();
+            return true;
+        }
+    }
+
+    props.font = fntGreek.first;
+    QHash<QString, QString>::iterator itgreek = winSymbolGreek.find(n);
+    if (itgreek!=winSymbolGreek.end()) {
+        props.symbol = itgreek.value();
+    } else if (n == "sum") { props.symbol = "S"; props.fontFactor = mathFontFactor; props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "prod") { props.symbol = "P"; props.fontFactor = mathFontFactor; props.heightIsAscent = true; props.exactAscent = true; }
+    else {
+        return false;
+    }
+
+
+    return true;
+}
+
+
+bool JKQTMathText::MTsymbolNode::getStandardTextSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps& props, const QString &n) const
+{
+    props.bold = -1;
+    props.italic = -1;
+
+    //qDebug()<<"  +--- getStandardTextSymbolProp("<<n<<")";
+
+    if (n == "_") { props.symbol = "_"; }
+    else if (n == "}") { props.symbol = "}"; }
+    else if (n == "{") { props.symbol = "{"; }
+    else if (n == "backslash") { props.symbol = "\\"; props.bold = 0; props.italic = 0; }
+    else if (n == "$") { props.symbol = "$"; }
+    else if (n == "%") { props.symbol = "%"; }
+    else if (n == "&") { props.symbol = "&"; }
+    else if (n == "#") { props.symbol = "#"; }
+    else if (n == "ast") { props.symbol = "*"; }
+    else if (n == "dots") { props.symbol = "..."; }
+    else if (n == "ldots") { props.symbol = "..."; }
+    else if (n == "colon") { props.symbol = ":"; }
+
+    else {return false;}
+    return true;
+}
+
+bool JKQTMathText::MTsymbolNode::getUnicodeBaseSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps& props, const QString &n) const
+{
+
+    //qDebug()<<"--- getUnicodeBaseSymbolProp("<<n<<"): ";
+    static QHash<QString, QString> unicodeBaseSymbol;
+    if (unicodeBaseSymbol.isEmpty()) {
+
+        unicodeBaseSymbol.insert("diamond", QChar(0xE0));
+        unicodeBaseSymbol.insert("infty", QChar(0x221E));
+        unicodeBaseSymbol.insert("partial", QChar(0x2202));
+        unicodeBaseSymbol.insert("times", QChar(0x2A2F));
+        unicodeBaseSymbol.insert("bullet", QChar(0x2219));
+        unicodeBaseSymbol.insert("copyright", QChar(0x00A9));
+        unicodeBaseSymbol.insert("registered", QChar(0x00AE));
+        unicodeBaseSymbol.insert("circledR", QChar(0x00AE));
+        unicodeBaseSymbol.insert("trademark", QChar(0x2122));
+        unicodeBaseSymbol.insert("textregistered", QChar(0x2122));
+        unicodeBaseSymbol.insert("cdot", QChar(0x00B7));
+        unicodeBaseSymbol.insert("pm", QChar(0x00B1));
+        unicodeBaseSymbol.insert("leq", QChar(0x2264));
+        unicodeBaseSymbol.insert("geq", QChar(0x2265));
+        unicodeBaseSymbol.insert("le", QChar(0x2264));
+        unicodeBaseSymbol.insert("ge", QChar(0x2265));
+        unicodeBaseSymbol.insert("hbar", QChar(0x210F));
+        unicodeBaseSymbol.insert("EUR", QChar(0x20AC));
+        unicodeBaseSymbol.insert("euro", QChar(0x20AC));
+        unicodeBaseSymbol.insert("circ", QChar(0x2218));
+        unicodeBaseSymbol.insert("cent", QChar(0x00A2));
+        unicodeBaseSymbol.insert("pound", QChar(0x00A3));
+        unicodeBaseSymbol.insert("yen", QChar(0x00A5));
+        unicodeBaseSymbol.insert("dollar", QChar(0x0024));
+        unicodeBaseSymbol.insert("neq", QChar(0x2260));
+        unicodeBaseSymbol.insert("lnot", QChar(0x2260));
+        unicodeBaseSymbol.insert("Angstrom", QChar(0x00AC));
+        unicodeBaseSymbol.insert("co", QChar(0x2105));
+        unicodeBaseSymbol.insert("No", QChar(0x2116));
+        unicodeBaseSymbol.insert("Ohm", QChar(0x2126));
+        unicodeBaseSymbol.insert("ohm", QChar(0x2126));
+        unicodeBaseSymbol.insert("tcohm", QChar(0x2126));
+        unicodeBaseSymbol.insert("partial", QChar(0x2202));
+        unicodeBaseSymbol.insert("cdots", QString(QChar(0x00B7)) + QString(QChar(0x00B7)) + QString(QChar(0x00B7)));
+        unicodeBaseSymbol.insert("approx", QChar(0x2248));
+
+        unicodeBaseSymbol.insert("Angstroem", QChar(0x212B));
+    }
+
+    QHash<QString, QString>::iterator itbasesymbol = unicodeBaseSymbol.find(n);
+    if (itbasesymbol!=unicodeBaseSymbol.end()) {
+      props.symbol = itbasesymbol.value();
+    } else {
+        props.bold = -1;
+        props.italic = -1;
+
+
+        if (n == "glq") { props.symbol = QChar(0x2018); props.bold = 0; props.italic = 0; }
+        else if (n == "grq") { props.symbol = QChar(0x2019); props.bold = 0; props.italic = 0; }
+        else if (n == "glqq") { props.symbol = QChar(0x201C); props.bold = 0; props.italic = 0; }
+        else if (n == "grqq") { props.symbol = QChar(0x201D); props.bold = 0; props.italic = 0; }
+        else if (n == "flq") { props.symbol = QChar(0x2039); props.bold = 0; props.italic = 0; }
+        else if (n == "frq") { props.symbol = QChar(0x203A); props.bold = 0; props.italic = 0; }
+        else if (n == "flqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
+        else if (n == "frqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
+        else {return false;}
+    }
+    return true;
+}
+
+bool JKQTMathText::MTsymbolNode::getUnicodeFullSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps& props, const QString &n, double mathFontFactor) const
+{
+
+    //qDebug()<<"  +--- getUnicodeFullSymbolProp("<<n<<")";
+
     static QHash<QString, QString> unicodeSymbol;
     if (unicodeSymbol.isEmpty()) {
       unicodeSymbol.insert("leftrightarrow", QChar(0x2194));
@@ -2280,17 +2450,22 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
       unicodeSymbol.insert("ll", QChar(0x226A));
       unicodeSymbol.insert("gg", QChar(0x226B));
       unicodeSymbol.insert("Alef", QChar(0x2135));
+      unicodeSymbol.insert("Aleph", QChar(0x2135));
       unicodeSymbol.insert("Bet", QChar(0x2136));
+      unicodeSymbol.insert("Beth", QChar(0x2136));
       unicodeSymbol.insert("Gimel", QChar(0x2137));
       unicodeSymbol.insert("Dalet", QChar(0x2138));
       unicodeSymbol.insert("alef", QChar(0x2135));
+      unicodeSymbol.insert("aleph", QChar(0x2135));
       unicodeSymbol.insert("bet", QChar(0x2136));
+      unicodeSymbol.insert("beth", QChar(0x2136));
       unicodeSymbol.insert("gimel", QChar(0x2137));
       unicodeSymbol.insert("dalet", QChar(0x2138));
       unicodeSymbol.insert("nexists", QChar(0x2204));
       unicodeSymbol.insert("ni", QChar(0x220B));
       unicodeSymbol.insert("notni", QChar(0x220C));
       unicodeSymbol.insert("tilde", QChar(0x223C));
+      unicodeSymbol.insert("sim", QChar(0x223C));
       unicodeSymbol.insert("emptyset", QChar(0x2300));
       unicodeSymbol.insert("varnothing", QChar(0x2300));
       unicodeSymbol.insert("odot", QChar(0x2299));
@@ -2302,7 +2477,14 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
       unicodeSymbol.insert("subsetnot", QChar(0x2284));
       unicodeSymbol.insert("DC", QChar(0x2393));
       unicodeSymbol.insert("bot", QChar(0x22A4));
-      unicodeSymbol.insert("mid", QChar(0xFF5C));
+      unicodeSymbol.insert("perp", QChar(0x22A5));
+      unicodeSymbol.insert("sqcap", QChar(0x2293));
+      unicodeSymbol.insert("sqcup", QChar(0x2294));
+      unicodeSymbol.insert("triangle", QChar(0x2206));
+      unicodeSymbol.insert("square", QChar(0x25A1));
+      unicodeSymbol.insert("setminus", QChar(0x2216));
+      unicodeSymbol.insert("mid", QChar(0x2223));
+      unicodeSymbol.insert("nmid", QChar(0x2224));
       unicodeSymbol.insert("vdots", QChar(0x22EE));
       unicodeSymbol.insert("iddots", QChar(0x22F0));
       unicodeSymbol.insert("ddots", QChar(0x22F1));
@@ -2347,8 +2529,13 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
       unicodeSymbol.insert("subseteq", QChar(0x2286));
       unicodeSymbol.insert("in", QChar(0x2208));
       unicodeSymbol.insert("notin", QChar(0x2209));
-      unicodeSymbol.insert("angle", QChar(0x2221));
+      unicodeSymbol.insert("angle", QChar(0x2220));
+      unicodeSymbol.insert("measuredangle", QChar(0x2221));
+      unicodeSymbol.insert("sphericalangle", QChar(0x2222));
+      unicodeSymbol.insert("rightangle", QChar(0x221F));
       unicodeSymbol.insert("nabla", QChar(0x2207));
+      unicodeSymbol.insert("parallel", QChar(0x2225));
+      unicodeSymbol.insert("nparallel", QChar(0x2226));
       unicodeSymbol.insert("neg", QChar(0x00AC));
       unicodeSymbol.insert("wedge", QChar(0x2227));
       unicodeSymbol.insert("vee", QChar(0x2228));
@@ -2356,438 +2543,278 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
       unicodeSymbol.insert("rangle", QChar(0x232A));
       unicodeSymbol.insert("forall", QChar(0x2200));
       unicodeSymbol.insert("exists", QChar(0x2203));
-      unicodeSymbol.insert("cong", QChar(0x2245));
       unicodeSymbol.insert("bot", QChar(0x22A5));
+      unicodeSymbol.insert("geqq", QChar(0x2267));
+      unicodeSymbol.insert("leqq", QChar(0x2266));
+      unicodeSymbol.insert("prec", QChar(0x227A));
+      unicodeSymbol.insert("succ", QChar(0x227B));
+      unicodeSymbol.insert("vartriangleleft", QChar(0x22B2));
+      unicodeSymbol.insert("cong", QChar(0x2245));
+      unicodeSymbol.insert("simeq", QChar(0x2243));
+      unicodeSymbol.insert("therefore", QChar(0x2234));
+      unicodeSymbol.insert("because", QChar(0x2235));
+      unicodeSymbol.insert("lightning", QChar(0x21AF));
+      unicodeSymbol.insert("blacksquare", QChar(0x220E));
+      unicodeSymbol.insert("Box", QChar(0x25A1));
+      unicodeSymbol.insert("celsius", QChar(0x2103));
+      unicodeSymbol.insert("AC", QChar(0x223F));
+      unicodeSymbol.insert("frown", QChar(0x2322));
+      unicodeSymbol.insert("smile", QChar(0x2323));
+      unicodeSymbol.insert("smiley", QChar(0x233A));
+      unicodeSymbol.insert("blacksmiley", QChar(0x233B));
+      unicodeSymbol.insert("frownie", QChar(0x2639));
+      unicodeSymbol.insert("varhexagonlrbonds", QChar(0x232C));
+      unicodeSymbol.insert("hexagon", QChar(0x2394));
+      unicodeSymbol.insert("varcarriagereturn", QChar(0x23CE));
+      unicodeSymbol.insert("benzenr", QChar(0x23E3));
+      unicodeSymbol.insert("trapezium", QChar(0x23E2));
+      unicodeSymbol.insert("female", QChar(0x2640));
+      unicodeSymbol.insert("male", QChar(0x2642));
 
+      unicodeSymbol.insert("accurrent", QChar(0x23E6));
     }
 
-    static QHash<QString, QString> unicodeBaseSymbol;
-    if (unicodeBaseSymbol.isEmpty()) {
+    QHash<QString, QString>::iterator itsymbol = unicodeSymbol.find(n);
 
-        unicodeBaseSymbol.insert("diamond", QChar(0xE0));
-        unicodeBaseSymbol.insert("infty", QChar(0x221E));
-        unicodeBaseSymbol.insert("partial", QChar(0x2202));
-        unicodeBaseSymbol.insert("times", QChar(0x2A2F));
-        unicodeBaseSymbol.insert("bullet", QChar(0x2219));
-        unicodeBaseSymbol.insert("copyright", QChar(0x00A9));
-        unicodeBaseSymbol.insert("registered", QChar(0x00AE));
-        unicodeBaseSymbol.insert("trademark", QChar(0x2122));
-        unicodeBaseSymbol.insert("cdot", QChar(0x00B7));
-        unicodeBaseSymbol.insert("pm", QChar(0x00B1));
-        unicodeBaseSymbol.insert("leq", QChar(0x2264));
-        unicodeBaseSymbol.insert("geq", QChar(0x2265));
-        unicodeBaseSymbol.insert("hbar", QChar(0x210F));
-        unicodeBaseSymbol.insert("euro", QChar(0x20AC));
-        unicodeBaseSymbol.insert("circ", QChar(0x2218));
-        unicodeBaseSymbol.insert("cent", QChar(0x00A2));
-        unicodeBaseSymbol.insert("pound", QChar(0x00A3));
-        unicodeBaseSymbol.insert("yen", QChar(0x00A5));
-        unicodeBaseSymbol.insert("neq", QChar(0x2260));
-        unicodeBaseSymbol.insert("Angstrom", QChar(0x212B));
-        unicodeBaseSymbol.insert("cdots", QString(QChar(0x00B7)) + QString(QChar(0x00B7)) + QString(QChar(0x00B7)));
-        unicodeBaseSymbol.insert("dots", "...");
-        unicodeBaseSymbol.insert("ldots", "...");
-        unicodeBaseSymbol.insert("approx", QChar(0x2248));
+    if (itsymbol!=unicodeSymbol.end()) {
+      props.symbol = itsymbol.value();
+    }
+    else if (n == "sum") { props.symbol = QChar(0x2211); props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "prod") { props.symbol = QChar(0x220F); props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bbC") { props.symbol = QChar(0x2102); props.italic = -1; }
+    else if (n == "bbH") { props.symbol = QChar(0x210D); props.italic = -1; }
+    else if (n == "bbN") { props.symbol = QChar(0x2115); props.italic = -1; }
+    else if (n == "bbP") { props.symbol = QChar(0x2119); props.italic = -1; }
+    else if (n == "bbQ") { props.symbol = QChar(0x211A); props.italic = -1; }
+    else if (n == "bbR") { props.symbol = QChar(0x211D); props.italic = -1; }
+    else if (n == "bbZ") { props.symbol = QChar(0x2124); props.italic = -1; }
+    else if (n == "iint") { props.symbol = QChar(0x222C); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "iiint") { props.symbol = QChar(0x222D); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "oint") { props.symbol = QChar(0x222E); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "oiint") { props.symbol = QChar(0x222F); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "oiiint") { props.symbol = QChar(0x2230); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "coprod") { props.symbol = QChar(0x2210); props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bigcap") { props.symbol = QChar(0x22C2); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bigcup") { props.symbol = QChar(0x22C3); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bigvee") { props.symbol = QChar(0x22C1); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "bighat") { props.symbol = QChar(0x22C0); props.heightIsAscent = true; props.exactAscent = true; props.heightIsAscent = true; props.exactAscent = true; }
+    else if (n == "int") { props.symbol = QChar(0x222B); props.fontFactor = mathFontFactor; /*yfactor=+0.1;*/ props.heightIsAscent = true; props.exactAscent = true; }
+    else {return false;}
+    return true;
+}
 
+bool JKQTMathText::MTsymbolNode::getSymbolProp(JKQTMathText::MTsymbolNode::SymbolProps& props, const QString &n, const MTenvironment& currentEv, double mathFontFactor) const
+{
+    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Text);
+    auto fntGreek=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Greek);
+    auto fntSym=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Symbols);
+
+    //qDebug()<<"--- getSymbolProp("<<n<<"): "<<fnt.first<<", "<<fnt.second;
+
+    props.font = fnt.first;
+    if (fnt.second==MTFEunicode) {
+        props.font = fnt.first;
+        if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+            return false;
+        }
+    } else if (fnt.second==MTFEunicodeLimited) {
+        props.font = fnt.first;
+        if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+            if (fntSym.second==MTFEunicode) {
+                props.font = fntSym.first;
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+                    return false;
+                }
+            } else if (fntSym.second==MTFEunicodeLimited) {
+                props.font = fntSym.first;
+                if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                    return false;
+                }
+            } else if (fntSym.second==MTFEwinSymbol) {
+                props.font = fntSym.first;
+                if (!getWinSymbolProp(props, n, currentEv, mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+    } else if (fnt.second==MTFEwinSymbol) {
+        props.font = fnt.first;
+        if (!getWinSymbolProp(props, n, currentEv, mathFontFactor)) {
+            if (fntSym.second==MTFEunicode) {
+                props.font = fntSym.first;
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+                    return false;
+                }
+            } else if (fntSym.second==MTFEunicodeLimited) {
+                props.font = fntSym.first;
+                if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                    return false;
+                }
+            } else if (fntSym.second==MTFEwinSymbol) {
+                props.font = fntSym.first;
+                if (!getWinSymbolProp(props, n, currentEv, mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+    } else if (fnt.second==MTFEStandard) {
+        props.font = fnt.first;
+        if (!getStandardTextSymbolProp(props, n)) {
+            if (fntSym.second==MTFEunicode) {
+                props.font = fntSym.first;
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+                    return false;
+                }
+            } else if (fntSym.second==MTFEunicodeLimited) {
+                props.font = fntSym.first;
+                if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                    return false;
+                }
+            } else if (fntSym.second==MTFEwinSymbol) {
+                props.font = fntSym.first;
+                if (!getWinSymbolProp(props, n, currentEv, mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    } else {
+        return false;
     }
 
-    static QHash<QString, QString> latexSimpleSymbol;
-    if (latexSimpleSymbol.isEmpty()) {
-      latexSimpleSymbol.insert("_", "_");
-      latexSimpleSymbol.insert("}", "}");
-      latexSimpleSymbol.insert("{", "{");
-      latexSimpleSymbol.insert("$", "$");
-      latexSimpleSymbol.insert("%", "%");
-      latexSimpleSymbol.insert("&", "&");
-      latexSimpleSymbol.insert("#", "#");
-      latexSimpleSymbol.insert("ast", "*");
-      latexSimpleSymbol.insert("glq", QChar(0x27));
-      latexSimpleSymbol.insert("grq", QChar(0x60));
-      latexSimpleSymbol.insert("glqq", QChar(0x5C));
-      latexSimpleSymbol.insert("grqq", "\"");
+
+    return true;
+}
+
+JKQTMathText::MTsymbolNode::SymbolProps JKQTMathText::MTsymbolNode::getSymbolProp(const QString &symName, const MTenvironment& currentEv) const
+{
+
+    auto fnt=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Text);
+    auto fntSym=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Symbols);
+    auto fntGreek=parent->getFontData(currentEv.font, currentEv.insideMath, FontSubclass::Greek);
+
+    JKQTMathText::MTsymbolNode::SymbolProps props;
+    double mathFontFactor=1.8;
+    props.symbol="";
+    props.fontFactor=1.0;
+    props.bold=0;
+    props.italic=-1;
+    props.yfactor=0;
+    props.drawBar=false;
+    props.font=fnt.first;
+    props.heightIsAscent=false;
+    props.exactAscent=false;
+    props.extendWidthInMathmode=false;
+
+    QString n=symName;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // statische Lookup-Tabellen vorbereiten
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    static QStringList extendWInMM;
+    if (extendWInMM.isEmpty()) {
+        extendWInMM <<"ll"<<"gg"<<"leq"<<"geq"<<"leftrightarrow"<<"leftarrow"<<"rightarrow"<<"to"<<"uparrow"<<"downarrow"<<"updownarrow"<<"Leftrightarrow"
+                    <<"iff"<<"Leftarrow"<<"Rightarrow"<<"Uparrow"<<"Downarrow"<<"Updownarrow"<<"pm"<<"mp"<<"nexists"<<"ni"<<"notni"<<"circ"<<"sim"<<"emptyset"<<"odot"<<"ominus"
+                    <<"subsetnot"<<"bot"<<"leftharpoonup"<<"rightharpoonup"<<"upharpoonleft"<<"downharpoonleft"<<"leftrightharpoon"<<"rightleftharpoon"<<"coprod"<<"leftharpoondown"
+                    <<"rightharpoondown"<<"upharpoonright"<<"downharpoonright"<<"nwarrow"<<"nearrow"<<"searrow"<<"swarrow"<<"mapsto"<<"div"<<"multimap"<<"maporiginal"<<"mapimage"
+                    <<"times"<<"propto"<<"bullet"<<"neq"<<"ne"<<"equiv"<<"approx"<<"otimes"<<"oplus"<<"oslash"<<"cap"<<"land"<<"cup"<<"lor"<<"supset"<<"supseteq"<<"supsetnot"
+                    <<"subset"<<"subseteq"<<"in"<<"notin"<<"cdot"<<"wedge"<<"vee"<<"cong"<<"bot"<<"mid";
     }
 
-    static QHash<QString, QString> latexGreek;
-    if (latexGreek.isEmpty()) {
-      latexGreek.insert("alpha", QChar(0xAE));
-      latexGreek.insert("beta", QChar(0xAF));
-      latexGreek.insert("gamma", QChar(0xB0));
-      latexGreek.insert("delta", QChar(0xB1));
-      latexGreek.insert("epsilon", QChar(0x22));
-      latexGreek.insert("varepsilon", QChar(0xB2));
-      latexGreek.insert("zeta", QChar(0xB3));
-      latexGreek.insert("eta", QChar(0xB4));
-      latexGreek.insert("theta", QChar(0xB5));
-      latexGreek.insert("vartheta", QChar(0x23));
-      latexGreek.insert("iota", QChar(0xB6));
-      latexGreek.insert("kappa", QChar(0xB7));
-      latexGreek.insert("lambda", QChar(0xB8));
-      latexGreek.insert("mu", QChar(0xB9));
-      latexGreek.insert("nu", QChar(0xBA));
-      latexGreek.insert("xi", QChar(0xBB));
-      latexGreek.insert("pi", QChar(0xBC));
-      latexGreek.insert("varpi", QChar(0x24));
-      latexGreek.insert("rho", QChar(0xBD));
-      latexGreek.insert("varrho", QChar(0x25));
-      latexGreek.insert("sigma", QChar(0xBE));
-      latexGreek.insert("varsigma", QChar(0x26));
-      latexGreek.insert("tau", QChar(0xBF));
-      latexGreek.insert("upsilon", QChar(0xC0));
-      latexGreek.insert("phi", QChar(0xC1));
-      latexGreek.insert("varphi", QChar(0x27));
-      latexGreek.insert("chi", QChar(0xC2));
-      latexGreek.insert("psi", QChar(0xC3));
-      latexGreek.insert("omega", QChar(0x21));
-      latexGreek.insert("Gamma", QChar(0xA1));
-      latexGreek.insert("Delta", QChar(0xA2));
-      latexGreek.insert("Theta", QChar(0xA3));
-      latexGreek.insert("Lambda", QChar(0xA4));
-      latexGreek.insert("Xi", QChar(0xA5));
-      latexGreek.insert("Pi", QChar(0xA6));
-      latexGreek.insert("Sigma", QChar(0xA7));
-      latexGreek.insert("Upsilon", QChar(0xA8));
-      latexGreek.insert("Phi", QChar(0xA9));
-      latexGreek.insert("Psi", QChar(0xAA));
-      latexGreek.insert("leftharpoonup", QChar(0x28));
-      latexGreek.insert("rightharpoonup", QChar(0x2A));
-      latexGreek.insert("leftharpoondown", QChar(0x29));
-      latexGreek.insert("rightharpoondown", QChar(0x2B));
-      latexGreek.insert("neg", QChar(0xAC));
-      latexGreek.insert("star", QChar(0x3F));
+    if (extendWInMM.contains(n)) {
+        props.extendWidthInMathmode=true;
     }
 
-    static QHash<QString, QString> latexSymbol;
-    if (latexSymbol.isEmpty()) {
-      latexSymbol.insert("leftrightarrow", QChar(0x24));
-      latexSymbol.insert("leftarrow", QChar(0xc3));
-      latexSymbol.insert("rightarrow", QChar(0x21));
-      latexSymbol.insert("to", QChar(0x21));
-      latexSymbol.insert("uparrow", QChar(0x22));
-      latexSymbol.insert("downarrow", QChar(0x23));
-      latexSymbol.insert("updownarrow", QChar(0x6c));
-      latexSymbol.insert("Leftrightarrow", QChar(0x2c));
-      latexSymbol.insert("iff", QChar(0x2c));
-      latexSymbol.insert("Leftarrow", QChar(0x28));
-      latexSymbol.insert("Rightarrow", QChar(0x29));
-      latexSymbol.insert("Uparrow", QChar(0x2a));
-      latexSymbol.insert("Downarrow", QChar(0x2b));
-      latexSymbol.insert("Updownarrow", QChar(0x6d));
-      latexSymbol.insert("pm", QChar(0xa7));
-      latexSymbol.insert("mp", QChar(0xa8));
-      latexSymbol.insert("leq", QChar(0xb7));
-      latexSymbol.insert("geq", QChar(0xb8));
-      latexSymbol.insert("ll", QChar(0xbf));
-      latexSymbol.insert("gg", QChar(0xc0));
-      latexSymbol.insert("Alef", QChar(0x40));
-      latexSymbol.insert("alef", QChar(0x40));
-      latexSymbol.insert("ni", QChar(0x33));
-      latexSymbol.insert("circ", QChar(0xb1));
-      latexSymbol.insert("tilde", QChar(0xbb));
-      latexSymbol.insert("emptyset", QChar(0x3b));
-      latexSymbol.insert("odot", QChar(0xaf));
-      latexSymbol.insert("ominus", QChar(0xaa));
-      latexSymbol.insert("odiv", QChar(0xae));
-      latexSymbol.insert("oplus", QChar(0xa9));
-      latexSymbol.insert("lceil", QChar(0x64));
-      latexSymbol.insert("rceil", QChar(0x65));
-      latexSymbol.insert("lfloor", QChar(0x62));
-      latexSymbol.insert("rfloor", QChar(0x63));
-      latexSymbol.insert("bot", QChar(0x3f));
-      latexSymbol.insert("cdots", QString(3, QChar(0xA2)));
-      latexSymbol.insert("dots", "...");
-      latexSymbol.insert("nwarrow", QChar(0x2d));
-      latexSymbol.insert("nearrow", QChar(0x25));
-      latexSymbol.insert("searrow", QChar(0x26));
-      latexSymbol.insert("swarrow", QChar(0x2e));
-      latexSymbol.insert("div", QChar(0xa5));
-      latexSymbol.insert("times", QChar(0xa3));
-      latexSymbol.insert("propto", QChar(0x2f));
-      latexSymbol.insert("bullet", QChar(0x2b));
-      latexSymbol.insert("equiv", QChar(0xb4));
-      latexSymbol.insert("approx", QChar(0xbc));
-      latexSymbol.insert("ellipsis", "...");
-      latexSymbol.insert("Im", QChar(0x3D));
-      latexSymbol.insert("Re", QChar(0x3C));
-      latexSymbol.insert("oplus", QChar(0xa9));
-      latexSymbol.insert("oslash", QChar(0xae));
-      latexSymbol.insert("cap", QChar(0x5c));
-      latexSymbol.insert("cup", QChar(0x5b));
-      latexSymbol.insert("land", QChar(0x5c));
-      latexSymbol.insert("lor", QChar(0x5b));
-      latexSymbol.insert("supset", QChar(0xbe));
-      latexSymbol.insert("supseteq", QChar(0xb6));
-      latexSymbol.insert("subset", QChar(0xbd));
-      latexSymbol.insert("subseteq", QChar(0xb5));
-      latexSymbol.insert("in", QChar(0x32));
-      latexSymbol.insert("nabla", QChar(0x35));
-      latexSymbol.insert("cdot", QChar(0xa2));
-      latexSymbol.insert("wedge", QChar(0x5e));
-      latexSymbol.insert("vee", QChar(0x5f));
-      latexSymbol.insert("diamond", QChar(0xE0));
-      latexSymbol.insert("langle", QChar(0x68));
-      latexSymbol.insert("rangle", QChar(0x69));
-      latexSymbol.insert("infty", QChar(0x31));
-      latexSymbol.insert("forall", QChar(0x38));
-      latexSymbol.insert("exists", QChar(0x39));
-      latexSymbol.insert("cong", QChar(0xbb));
-      latexSymbol.insert("mid", "|");
 
+    static QHash<QString, QString> simpleTranslations;
+    if (simpleTranslations.isEmpty()) {
+      simpleTranslations.insert("", " ");
+      simpleTranslations.insert("sin", "sin");
+      simpleTranslations.insert("cos", "cos");
+      simpleTranslations.insert("tan", "tan");
+      simpleTranslations.insert("sinh", "sinh");
+      simpleTranslations.insert("cosh", "cosh");
+      simpleTranslations.insert("tanh", "tanh");
+      simpleTranslations.insert("atan", "atan");
+      simpleTranslations.insert("acos", "acos");
+      simpleTranslations.insert("asin", "asin");
+      simpleTranslations.insert("arcsin", "arcsin");
+      simpleTranslations.insert("arccos", "arccos");
+      simpleTranslations.insert("arctan", "arctan");
+      simpleTranslations.insert("degree", QLatin1String("\xB0"));
+      simpleTranslations.insert("textdegree ", QLatin1String("\xB0"));
+      simpleTranslations.insert("ii", "i");
+      simpleTranslations.insert("dd", "d");
+      simpleTranslations.insert("exp", "exp");
+      simpleTranslations.insert("log", "log");
+      simpleTranslations.insert("ln", "ln");
+      simpleTranslations.insert("ld", "ld");
+      simpleTranslations.insert("lb", "lb");
+      simpleTranslations.insert("argmin", "argmin");
+      simpleTranslations.insert("argmax", "argmax");
+      simpleTranslations.insert("max", "max");
+      simpleTranslations.insert("mod", "mod");
+      simpleTranslations.insert("min", "min");
+      simpleTranslations.insert("median", "median");
+      simpleTranslations.insert("sign", "sign");
+      simpleTranslations.insert("sgn", "sgn");
+      simpleTranslations.insert("sec", "sec");
+      simpleTranslations.insert("gcd", "gcd");
+      simpleTranslations.insert("hom", "hom");
+      simpleTranslations.insert("ker", "ker");
+      simpleTranslations.insert("dim", "dim");
+      simpleTranslations.insert("cot", "cot");
+      simpleTranslations.insert("arg", "arg");
+      simpleTranslations.insert("det", "det");
+      simpleTranslations.insert("deg", "deg");
+      simpleTranslations.insert("Pr", "Pr");
+      simpleTranslations.insert("coth", "coth");
     }
+
+
+    static QHash<QString, QString> simpleTranslations_heightIsAscent;
+    if (simpleTranslations_heightIsAscent.isEmpty()) {
+      simpleTranslations_heightIsAscent.insert("erf", "erf");
+      simpleTranslations_heightIsAscent.insert("median", "median");
+      simpleTranslations_heightIsAscent.insert("min", "min");
+      simpleTranslations_heightIsAscent.insert("max", "max");
+      simpleTranslations_heightIsAscent.insert("inf", "inf");
+      simpleTranslations_heightIsAscent.insert("sup", "sup");
+      simpleTranslations_heightIsAscent.insert("liminf", "liminf");
+      simpleTranslations_heightIsAscent.insert("limsup", "limsup");
+      simpleTranslations_heightIsAscent.insert("lim", "lim");
+    }
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    props.font=fnt.first;
+    QString errorExplanation="";
     QHash<QString, QString>::iterator itsimple = simpleTranslations.find(n);
-    if (itsimple!= simpleTranslations.end()) { 
-      symbol=itsimple.value(); 
+    if (itsimple!= simpleTranslations.end()) {
+      props.symbol=itsimple.value();
     } else {
       QHash<QString, QString>::iterator itsimplehia = simpleTranslations_heightIsAscent.find(n);
       if (itsimplehia != simpleTranslations_heightIsAscent.end()) {
-        symbol = itsimplehia.value();
-        heightIsAscent = true; 
-      } else {
-        if (parent->getFontEncoding() == MTFEwinSymbol) {
-          // first we start with greek characters
-          font = MTSFgreek;
-          italic = -1;
-          QHash<QString, QString>::iterator itgreek = winSymbolGreek.find(n);
-          if (itgreek!=winSymbolGreek.end()) {
-              symbol = itgreek.value();
-          } else if (n == "sum") { symbol = "S"; fontFactor = mathFontFactor; heightIsAscent = true; exactAscent = true; }
-          else if (n == "prod") { symbol = "P"; fontFactor = mathFontFactor; heightIsAscent = true; exactAscent = true; }
-          else {
-            // now we set the symbols from the Symbol font
-            font = MTSFsymbol;
-            QHash<QString, QString>::iterator itsymbol = winSymbolSymbol.find(n);
-            if (itsymbol!=winSymbolSymbol.end()) {
-              symbol = itsymbol.value();
-            } else if (n == "int") { symbol = QChar(0xF2); fontFactor = mathFontFactor; yfactor = +0.1; }
-            else if (n == "bbC") { symbol = "C"; bold = +1; italic = -1; }
-            else if (n == "bbH") { symbol = "H"; bold = +1; italic = -1; }
-            else if (n == "bbN") { symbol = "N"; bold = +1; italic = -1; }
-            else if (n == "bbP") { symbol = "P"; bold = +1; italic = -1; }
-            else if (n == "bbQ") { symbol = "Q"; bold = +1; italic = -1; }
-            else if (n == "bbR") { symbol = "R"; bold = +1; italic = -1; }
-            else if (n == "bbZ") { symbol = "Z"; bold = +1; italic = -1; }
-            else if (n == "iint") { symbol = QString(2, QChar(0xF2)); fontFactor = mathFontFactor; yfactor = +0.1; }
-            else if (n == "iiint") { symbol = QString(3, QChar(0xF2)); fontFactor = mathFontFactor; yfactor = +0.1; }
-            else if (n == "bigcap") { symbol = QChar(0xC7); fontFactor = 2; }
-            else if (n == "bigcup") { symbol = QChar(0xC8); fontFactor = 2; }
-            else if (n == "bigvee") { symbol = QChar(0xDA); fontFactor = 2; }
-            else if (n == "bighat") { symbol = QChar(0xD9); fontFactor = 2; }
-
-            else { // here are text mode symbols, i.e. bold and italic won't be touched
-              bold = -1;
-              italic = -1;
-              font = MTSFdefault;
-              if (n == "_") { symbol = "_"; bold = 0; italic = 0; }
-              else if (n == "}") { symbol = "}"; }
-              else if (n == "{") { symbol = "{"; }
-              else if (n == "hbar") { symbol = "h"; bold = 0; italic = 0; drawBar = true; }
-              else if (n == "euro") { symbol = ""; bold = 0; italic = 0; }
-              else if (n == "cent") { symbol = QChar(0xA2); bold = 0; italic = 0; }
-              else if (n == "pound") { symbol = QChar(0xA3); bold = 0; italic = 0; }
-              else if (n == "yen") { symbol = QChar(0xA5); bold = 0; italic = 0; }
-              else if (n == "div") { symbol = QChar(0xF7); bold = 0; italic = 0; }
-              else if (n == "backslash") { symbol = "\\"; bold = 0; italic = 0; }
-              //else if (n=="|") { symbol="||"; bold=0; italic=0; }
-              else if (n == "$") { symbol = "$"; bold = 0; italic = 0; }
-              else if (n == "%") { symbol = "%"; bold = 0; italic = 0; }
-              else if (n == "&") { symbol = "&"; bold = 0; italic = 0; }
-              else if (n == "#") { symbol = "#"; bold = 0; italic = 0; }
-              else if (n == "ast") { symbol = "*"; bold = 0; italic = 0; }
-              else if (n == "glq") { symbol = "'"; bold = 0; italic = 0; }
-              else if (n == "grq") { symbol = "'"; bold = 0; italic = 0; }
-              else if (n == "glqq") { symbol = "\""; bold = 0; italic = 0; }
-              else if (n == "grqq") { symbol = "\""; bold = 0; italic = 0; }
-              else if (n == "flq") { symbol = "<"; bold = 0; italic = 0; }
-              else if (n == "frq") { symbol = ">"; bold = 0; italic = 0; }
-              else if (n == "flqq") { symbol = ""; bold = 0; italic = 0; }
-              else if (n == "frqq") { symbol = ""; bold = 0; italic = 0; }
+        props.symbol = itsimplehia.value();
+        props.heightIsAscent = true;
+        } else {
+            props.font=fnt.first;
+            if (!getSymbolProp(props, n, currentEv, mathFontFactor)) {
+                errorExplanation="didn't find symbol given font def:"+fnt.first+"["+encoding2String(fnt.second)+"] / sym:"+fntSym.first+"["+encoding2String(fntSym.second)+"] / grk:"+fntGreek.first+"["+encoding2String(fntGreek.second)+"]";
             }
-            //else if (n=="") { symbol=QChar(); font=MTSFdefault; }
-            //else if (n=="") symbol=QChar(0x);
-          }
-        } else if (parent->getFontEncoding() == MTFEunicode) { // use UNICODE encoding for special characters
-         // first we start with greek characters
-          font = MTSFdefault; //MTSFgreek;
-          //std::cout<<"encoding unicode\n";
-          QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
-          if (itgreek!=unicodeGreek.end()) {
-              symbol = itgreek.value();
-          } else {
-            // now we set the symbols from the Symbol font
-            font = MTSFsymbol;
-            QHash<QString, QString>::iterator itsymbol = unicodeSymbol.find(n);
-            QHash<QString, QString>::iterator itbasesymbol = unicodeBaseSymbol.find(n);
-            if (itbasesymbol!=unicodeBaseSymbol.end()) {
-              symbol = itbasesymbol.value();
-            } else if (itsymbol!=unicodeSymbol.end()) {
-              symbol = itsymbol.value();
-            }
-            else if (n == "sum") { symbol = QChar(0x2211); heightIsAscent = true; exactAscent = true; }
-            else if (n == "prod") { symbol = QChar(0x220F); heightIsAscent = true; exactAscent = true; }
-            else if (n == "bbC") { symbol = QChar(0x2102); italic = -1; }
-            else if (n == "bbH") { symbol = QChar(0x210D); italic = -1; }
-            else if (n == "bbN") { symbol = QChar(0x2115); italic = -1; }
-            else if (n == "bbP") { symbol = QChar(0x2119); italic = -1; }
-            else if (n == "bbQ") { symbol = QChar(0x211A); italic = -1; }
-            else if (n == "bbR") { symbol = QChar(0x211D); italic = -1; }
-            else if (n == "bbZ") { symbol = QChar(0x2124); italic = -1; }
-            else if (n == "iint") { symbol = QChar(0x222C); fontFactor = mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent = true; exactAscent = true; }
-            else if (n == "iiint") { symbol = QChar(0x222D); fontFactor = mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent = true; exactAscent = true; }
-            else if (n == "oint") { symbol = QChar(0x222E); fontFactor = mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent = true; exactAscent = true; }
-            else if (n == "oiint") { symbol = QChar(0x222F); fontFactor = mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent = true; exactAscent = true; }
-            else if (n == "oiiint") { symbol = QChar(0x2230); fontFactor = mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent = true; exactAscent = true; }
-            else if (n == "coprod") { symbol = QChar(0x2210); heightIsAscent = true; exactAscent = true; }
-            else if (n == "bigcap") { symbol = QChar(0x22C2); heightIsAscent = true; exactAscent = true; heightIsAscent = true; exactAscent = true; }
-            else if (n == "bigcup") { symbol = QChar(0x22C3); heightIsAscent = true; exactAscent = true; heightIsAscent = true; exactAscent = true; }
-            else if (n == "bigvee") { symbol = QChar(0x22C1); heightIsAscent = true; exactAscent = true; heightIsAscent = true; exactAscent = true; }
-            else if (n == "bighat") { symbol = QChar(0x22C0); heightIsAscent = true; exactAscent = true; heightIsAscent = true; exactAscent = true; }
-            else if (n == "int") { symbol = QChar(0x222B); fontFactor = mathFontFactor; /*yfactor=+0.1;*/ heightIsAscent = true; exactAscent = true; }
-
-            else { // here are text mode symbols, i.e. bold and italic won't be touched
-              bold = -1;
-              italic = -1;
-              font = MTSFdefault;
-              if (n == "_") { symbol = "_"; }
-              else if (n == "}") { symbol = "}"; }
-              else if (n == "{") { symbol = "{"; }
-              else if (n == "backslash") { symbol = "\\"; bold = 0; italic = 0; }
-              //else if (n=="|") { symbol=QChar(0x2016); }
-              else if (n == "$") { symbol = "$"; }
-              else if (n == "%") { symbol = "%"; }
-              else if (n == "&") { symbol = "&"; }
-              else if (n == "#") { symbol = "#"; }
-              else if (n == "ast") { symbol = "*"; }
-              else if (n == "glq") { symbol = QChar(0x2018); bold = 0; italic = 0; }
-              else if (n == "grq") { symbol = QChar(0x2019); bold = 0; italic = 0; }
-              else if (n == "glqq") { symbol = QChar(0x201C); bold = 0; italic = 0; }
-              else if (n == "grqq") { symbol = QChar(0x201D); bold = 0; italic = 0; }
-              else if (n == "flq") { symbol = QChar(0x2039); bold = 0; italic = 0; }
-              else if (n == "frq") { symbol = QChar(0x203A); bold = 0; italic = 0; }
-              else if (n == "flqq") { symbol = ""; bold = 0; italic = 0; }
-              else if (n == "frqq") { symbol = ""; bold = 0; italic = 0; }
-            }
-            //else if (n=="") { symbol=QChar(); font=MTSFdefault; }
-            //else if (n=="") symbol=QChar(0x);
-          }
-        } else if (parent->getFontEncoding() == MTFEunicodeLimited) { // use UNICODE encoding for special characters
-
-          // now we set the symbols from the Symbol font
-          font = MTSFdefault;
-          QHash<QString, QString>::iterator itsymbol = unicodeBaseSymbol.find(n);
-          if (itsymbol!=unicodeBaseSymbol.end()) {
-            symbol = itsymbol.value();
-            //qDebug()<<"unicodeBaseSymbol: "<<symbol<<font;
-          } else {
-              font = MTSFsymbol;
-              italic = -1;
-              QHash<QString, QString>::iterator itgreek = winSymbolGreek.find(n);
-              if (itgreek!=winSymbolGreek.end()) {
-                  symbol = itgreek.value();
-                  //qDebug()<<"winSymbolGreek: "<<symbol<<font;
-              } else if (n == "sum") { symbol = "S"; fontFactor = mathFontFactor; heightIsAscent = true; exactAscent = true; }
-              else if (n == "prod") { symbol = "P"; fontFactor = mathFontFactor; heightIsAscent = true; exactAscent = true; }
-              else {
-                // now we set the symbols from the Symbol font
-                font = MTSFsymbol;
-                QHash<QString, QString>::iterator itsymbol = winSymbolSymbol.find(n);
-                if (itsymbol!=winSymbolSymbol.end()) {
-                  symbol = itsymbol.value();
-                  //qDebug()<<"winSymbolSymbol: "<<symbol<<font;
-                } else if (n == "int") { symbol = QChar(0xF2); fontFactor = mathFontFactor; yfactor = +0.1; }
-                else if (n == "bbC") { symbol = "C"; bold = +1; italic = -1; }
-                else if (n == "bbH") { symbol = "H"; bold = +1; italic = -1; }
-                else if (n == "bbN") { symbol = "N"; bold = +1; italic = -1; }
-                else if (n == "bbP") { symbol = "P"; bold = +1; italic = -1; }
-                else if (n == "bbQ") { symbol = "Q"; bold = +1; italic = -1; }
-                else if (n == "bbR") { symbol = "R"; bold = +1; italic = -1; }
-                else if (n == "bbZ") { symbol = "Z"; bold = +1; italic = -1; }
-                else if (n == "iint") { symbol = QString(2, QChar(0xF2)); fontFactor = mathFontFactor; yfactor = +0.1; }
-                else if (n == "iiint") { symbol = QString(3, QChar(0xF2)); fontFactor = mathFontFactor; yfactor = +0.1; }
-                else if (n == "bigcap") { symbol = QChar(0xC7); fontFactor = 2; }
-                else if (n == "bigcup") { symbol = QChar(0xC8); fontFactor = 2; }
-                else if (n == "bigvee") { symbol = QChar(0xDA); fontFactor = 2; }
-                else if (n == "bighat") { symbol = QChar(0xD9); fontFactor = 2; }
-
-                else { // here are text mode symbols, i.e. bold and italic won't be touched
-                  bold = -1;
-                  italic = -1;
-                  font = MTSFdefault;
-                  //qDebug()<<"else: "<<symbol<<font;
-                  if (n == "_") { symbol = "_"; bold = 0; italic = 0; }
-                  else if (n == "}") { symbol = "}"; }
-                  else if (n == "{") { symbol = "{"; }
-                  else if (n == "hbar") { symbol = "h"; bold = 0; italic = 0; drawBar = true; }
-                  else if (n == "euro") { symbol = ""; bold = 0; italic = 0; }
-                  else if (n == "cent") { symbol = QChar(0xA2); bold = 0; italic = 0; }
-                  else if (n == "pound") { symbol = QChar(0xA3); bold = 0; italic = 0; }
-                  else if (n == "yen") { symbol = QChar(0xA5); bold = 0; italic = 0; }
-                  else if (n == "div") { symbol = QChar(0xF7); bold = 0; italic = 0; }
-                  else if (n == "backslash") { symbol = "\\"; bold = 0; italic = 0; }
-                  //else if (n=="|") { symbol="||"; bold=0; italic=0; }
-                  else if (n == "$") { symbol = "$"; bold = 0; italic = 0; }
-                  else if (n == "%") { symbol = "%"; bold = 0; italic = 0; }
-                  else if (n == "&") { symbol = "&"; bold = 0; italic = 0; }
-                  else if (n == "#") { symbol = "#"; bold = 0; italic = 0; }
-                  else if (n == "ast") { symbol = "*"; bold = 0; italic = 0; }
-                  else if (n == "glq") { symbol = "'"; bold = 0; italic = 0; }
-                  else if (n == "grq") { symbol = "'"; bold = 0; italic = 0; }
-                  else if (n == "glqq") { symbol = "\""; bold = 0; italic = 0; }
-                  else if (n == "grqq") { symbol = "\""; bold = 0; italic = 0; }
-                  else if (n == "flq") { symbol = "<"; bold = 0; italic = 0; }
-                  else if (n == "frq") { symbol = ">"; bold = 0; italic = 0; }
-                  else if (n == "flqq") { symbol = ""; bold = 0; italic = 0; }
-                  else if (n == "frqq") { symbol = ""; bold = 0; italic = 0; }
-                }
-             }
-          }
-
-        } else if (parent->getFontEncoding() == MTFElatex) { // use UNICODE encoding for special characters
-         // first we start with greek characters
-          font = MTSFdefault; //MTSFgreek;
-          //std::cout<<"encoding unicode\n";
-          QHash<QString, QString>::iterator itssymbol = latexSimpleSymbol.find(n);
-          if (itssymbol!=latexSimpleSymbol.end()) {
-            symbol = itssymbol.value();
-          } else if (n == "backslash") { symbol = "\\"; bold = 0; italic = 0; }
-
-          else {
-            font = MTSFgreek;
-            QHash<QString, QString>::iterator itgreek = latexGreek.find(n);
-            if (itgreek!=latexGreek.end()) {
-              symbol = itgreek.value();
-            } else {
-              // now we set the symbols from the Symbol font
-              font = MTSFsymbol;
-              QHash<QString, QString>::iterator itsymbol = latexSymbol.find(n);
-              if (itsymbol!=latexSymbol.end()) {
-                symbol = itsymbol.value();
-              } else if (n == "int") { symbol = QChar(0x73); fontFactor = mathFontFactor; yfactor = +0.1; }
-
-              else { // here are text mode symbols, i.e. bold and italic won't be touched
-                font = MTSFbraces;
-                if (n == "bigcap") { symbol = QChar(0x5c); heightIsAscent = true; exactAscent = true; }
-                else if (n == "bigcup") { symbol = QChar(0x5b); heightIsAscent = true; exactAscent = true; }
-                else if (n == "bigvee") { symbol = QChar(0x5F); heightIsAscent = true; exactAscent = true; }
-                else if (n == "bighat") { symbol = QChar(0x5E); heightIsAscent = true; exactAscent = true; }
-                else if (n == "oint") { symbol = QChar(0x49); yfactor = +0.1; }
-                else if (n == "coprod") { symbol = QChar(0x61); heightIsAscent = true; exactAscent = true; }
-                else if (n == "iint") { symbol = QString(2, QChar(0x5A)); yfactor = +0.1; }
-                else if (n == "iiint") { symbol = QString(3, QChar(0x5A)); yfactor = +0.1; }
-                else if (n == "sum") { symbol = QChar(0x58); heightIsAscent = true; exactAscent = true; }
-                else if (n == "prod") { symbol = QChar(0x59); heightIsAscent = true; exactAscent = true; }
-
-
-
-              }
-            }
-          }
         }
-      }
     }
-    if (addWhitespace) symbol=symbol+" ";
+    if (addWhitespace) props.symbol+=" ";
 
     static QSet<QString> extraSymbolName = {
         "infty",
@@ -2797,44 +2824,26 @@ JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& na
         "longleftrightarrow", "Longleftrightarrow"
     };
 
-    if (symbol.simplified().isEmpty() && !extraSymbolName.contains(n)) {
-        parent->error_list.append(tr("unknown symbol '%1' found!").arg(n));
+    if (props.symbol.simplified().isEmpty() && !extraSymbolName.contains(n)) {
+        parent->error_list.append(tr("unknown symbol '%1' found (%2)!").arg(n).arg(errorExplanation));
     }
 
-    //std::cout<<"symbol node '"<<symbolName.toStdString()<<"': symbol='"<<symbol.toStdString()<<"'\n";
-}
+    //qDebug()<<n<<": '"<<props.symbol<<"' / "<<props.font<<"    {{{ def:"+fnt.first+"["+encoding2String(fnt.second)+"] / sym:"+fntSym.first+"["+encoding2String(fntSym.second)+"] / grk:"+fntGreek.first+"["+encoding2String(fntGreek.second)+"] }}}";
+    return props;
 
-JKQTMathText::MTsymbolNode::~MTsymbolNode() = default;
-
-QString JKQTMathText::MTsymbolNode::getTypeName() const
-{
-    return QLatin1String("MTsymbolNode(")+symbolName+QLatin1String(")");
-}
-
-QFont JKQTMathText::MTsymbolNode::getFontName(symbolFont f, QFont& fi) const {
-    QFont fr=fi;
-    switch(f) {
-        case MTSFgreek: fr.setFamily(parent->getFontGreek()); break;
-        case MTSFsymbol: fr.setFamily(parent->getFontSymbol()); break;
-        case MTSFbraces: fr.setFamily(parent->getFontBraces()); break;
-        case MTSFintegrals: fr.setFamily(parent->getFontIntegrals()); break;
-        case MTSFcaligraphic: fr.setFamily(parent->getFontCaligraphic()); break;
-        case MTSFblackboard: fr.setFamily(parent->getFontBlackboard()); break;
-        default: break;
-    }
-    return fr;
 }
 
 void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText::MTenvironment currentEv, double& width, double& baselineHeight, double& overallHeight, double& strikeoutPos, const MTnodeSize* /*prevNodeSize*/) {
     QFont f=currentEv.getFont(parent);
-    f=getFontName(font, f);
-    f.setPointSizeF(f.pointSizeF()*fontFactor);
-    if (italic<0) f.setItalic(false);
-    if (italic>0) f.setItalic(true);
-    if (bold<0) f.setBold(false);
-    if (bold>0) f.setBold(true);
+    auto props=getSymbolProp(symbolName, currentEv);
+    f.setFamily(props.font);
+    f.setPointSizeF(f.pointSizeF()*props.fontFactor);
+    if (props.italic<0) f.setItalic(false);
+    if (props.italic>0) f.setItalic(true);
+    if (props.bold<0) f.setBold(false);
+    if (props.bold>0) f.setBold(true);
     QFontMetricsF fm(f, painter.device());
-    QString symb=symbol;
+    QString symb=props.symbol;
     width=0;
     if (currentEv.insideMath) width=qMax(parent->getTightBoundingRect(f, symb, painter.device()).width(),parent->getTightBoundingRect(f, "i", painter.device()).width());//fm.width(symbol);
     else width=fm.boundingRect(symb).width();//fm.width(symbol);
@@ -2860,20 +2869,20 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
     QRectF tbr=parent->getTightBoundingRect(f, symb, painter.device());
     overallHeight=tbr.height();// fm.height();
     baselineHeight=tbr.height()-tbr.bottom();
-    if (exactAscent) {
+    if (props.exactAscent) {
         //baselineHeight=fm.ascent()*0.8;
     }
-    if (heightIsAscent) {
+    if (props.heightIsAscent) {
         overallHeight=baselineHeight*1.1;
     }
-    if (exactAscent && heightIsAscent) {
+    if (props.exactAscent && props.heightIsAscent) {
         //qDebug()<<symbolName<<symbol<<tbr.top()<<tbr.bottom()<<tbr.height();
         baselineHeight=tbr.height()-tbr.bottom();//fm.ascent()*0.8;
         overallHeight=tbr.height();//baselineHeight*1.1;
     }
     strikeoutPos=fm.strikeOutPos();
 
-    if (extendWidthInMathmode && currentEv.insideMath) width=width*parent->getMathoperatorWidthFactor();
+    if (props.extendWidthInMathmode && currentEv.insideMath) width=width*parent->getMathoperatorWidthFactor();
 
 }
 
@@ -2887,18 +2896,19 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     QFont fold=painter.font();
     QFont f=currentEv.getFont(parent);
     QFont f1=f;
-    f=getFontName(font, f);
-    f.setPointSizeF(f.pointSizeF()*fontFactor);
-    if (italic<0) f.setItalic(false);
-    if (italic>0) f.setItalic(true);
-    if (bold<0) f.setBold(false);
-    if (bold>0) f.setBold(true);
+    auto props=getSymbolProp(symbolName, currentEv);
+    f.setFamily(props.font);
+    f.setPointSizeF(f.pointSizeF()*props.fontFactor);
+    if (props.italic<0) f.setItalic(false);
+    if (props.italic>0) f.setItalic(true);
+    if (props.bold<0) f.setBold(false);
+    if (props.bold>0) f.setBold(true);
     QFontMetricsF fm(f, painter.device());
     QFontMetricsF fm1(f1, painter.device());
     painter.setFont(f);
 
     double shift=0;
-    if (extendWidthInMathmode && currentEv.insideMath) {
+    if (props.extendWidthInMathmode && currentEv.insideMath) {
         double origwidth=width/parent->getMathoperatorWidthFactor();
         shift=0.5*(width-origwidth);
         //width=width*parent->getMathoperatorWidthFactor();
@@ -2912,13 +2922,13 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     p.setStyle(Qt::SolidLine);
     painter.setPen(p);
     double xwi=fm.width("x");
-    if (!symbol.isEmpty()) {
+    if (!props.symbol.isEmpty()) {
         // if the symbol has been recognized in the constructor: draw the symbol
-        painter.drawText(QPointF(x+shift, y+yfactor*overallHeight), symbol);
+        painter.drawText(QPointF(x+shift, y+props.yfactor*overallHeight), props.symbol);
         double xx=x+shift;
         double yy=y-fm.xHeight()-(parent->getTightBoundingRect(f, "M", painter.device()).height()-fm.xHeight())/3.0;
         QLineF l(xx, yy, xx+xwi/3.0+((currentEv.italic)?(xwi/3.0):0), yy);
-        if (drawBar&&l.length()>0) painter.drawLine(l);
+        if (props.drawBar&&l.length()>0) painter.drawLine(l);
 
     // try to draw some often used special symbols, by synthesizing them from
     // standard characters in the current drawing font
@@ -3132,6 +3142,7 @@ bool JKQTMathText::MTsymbolNode::toHtml(QString &html, JKQTMathText::MTenvironme
       entitylut.insert("copyright",  "&copy;");
       entitylut.insert("registered",  "&reg;");
       entitylut.insert("trademark",  "&trade;");
+      entitylut.insert("textregistered",  "&trade;");
       entitylut.insert("cdot",  "&sdot;");
       entitylut.insert("neg",  "&not;");
       entitylut.insert("wedge",  "&and;");
@@ -3216,19 +3227,15 @@ QString JKQTMathText::MTsymbolNode::getSymbolName() const {
     return this->symbolName;
 }
 
-QString JKQTMathText::MTsymbolNode::getSymbolFontName() const {
-    QFont f;
-    switch(font) {
-        case MTSFsymbol: return "symbol["+getFontName(font, f).family()+"]";
-        case MTSFgreek: return "greek["+getFontName(font, f).family()+"]";
-        case MTSFbraces: return "braces["+getFontName(font, f).family()+"]";
-        case MTSFintegrals: return "integrals["+getFontName(font, f).family()+"]";
-        case MTSFcaligraphic: return "caligraphic["+getFontName(font, f).family()+"]";
-        case MTSFblackboard: return "blackboard["+getFontName(font, f).family()+"]";
-        default:
-        case MTSFdefault:
-            return "default["+getFontName(font, f).family()+"]";
-    }
+QString JKQTMathText::MTsymbolNode::getSymbolfontName() const {
+    MTenvironment currentEv;
+    auto props=getSymbolProp(symbolName, currentEv);
+    return props.font;
+}
+
+bool JKQTMathText::MTsymbolNode::getAddWhitespace() const
+{
+    return addWhitespace;
 }
 
 
@@ -3241,81 +3248,100 @@ JKQTMathText::JKQTMathText(QObject* parent):
     Q_INIT_RESOURCE(xits);
     QFontDatabase fontdb;
 
-    QString serifFont="Serif";
-    QString sansFont="Sans";
-    QString symbolFont="Symbol";
-    QString scriptFont="Script";
+    fontSize=10;
+    brace_factor=1.04;
+    subsuper_size_factor=0.7;
+    italic_correction_factor=0.4;
+    sub_shift_factor=0.4;
+    super_shift_factor=0.6;
+    brace_shrink_factor=0.6;
+    fontColor=QColor("black");
+
+    frac_factor=0.9;
+    frac_shift_factor=0.4;
+    underbrace_factor=0.75;
+    undersetFactor=0.7;
+    decoration_height_factor=0.2;
+    brace_y_shift_factor=0.7;//-1;
+    operatorsubsuper_size_factor=0.65;
+    mathoperator_width_factor=1.5;
+
+    expensiveRendering=true;
+    blackboardSimulated=true;
+
+
+    QString serifFont="serif";
+    QString sansFont="sans";
+    QString symbolFont="symbol";
+    QString scriptFont="script";
     QString typewriterFont="typewriter";
     QString decorativeFont="decorative";
+    QString blackboardFont="blackboard";
+    QString fracturFont="fraktur";
 
     QStringList fonts=fontdb.families();
     //qDebug()<<"fonts:\n"<<fonts;
 
-    if (fonts.contains("Times New Roman")) {
-        serifFont="Times New Roman";
-    } else if (fonts.contains("Times")) {
-        serifFont="Times";
-    } else if (fonts.contains("FreeSerif")) {
-        serifFont="FreeSerif";
-    }
-    if (fonts.contains("Arial")) {
-        sansFont="Arial";
-    } else if (fonts.contains("Helvetica")) {
-        sansFont="Helvetica";
-    } else if (fonts.contains("FreeSans")) {
-        sansFont="FreeSans";
-    }
-    if (fonts.contains("Symbol")) {
-        symbolFont="Symbol";
-    } else if (fonts.contains("Standard Symbols L")) {
-        symbolFont="Standard Symbols L";
-    }
-    if (fonts.contains("Courier")) {
-        typewriterFont="Courier";
-    } else if (fonts.contains("Courier New")) {
-        typewriterFont="Courier New";
-    } else if (fonts.contains("Courier Std")) {
-        typewriterFont="Courier Std";
-    } else if (fonts.contains("FreeMono")) {
-        typewriterFont="FreeMono";
+    for (const QString& f: fonts) {
+        if (typewriterFont=="typewriter" && QFontInfo(QFont(f)).styleHint()==QFont::TypeWriter) {
+            typewriterFont=f;
+        }
+        if (decorativeFont=="decorative" && QFontInfo(QFont(f)).styleHint()==QFont::Decorative) {
+            decorativeFont=f;
+        }
+        if (serifFont=="serif" && QFontInfo(QFont(f)).styleHint()==QFont::Serif) {
+            serifFont=f;
+        }
+        if (sansFont=="sans" && QFontInfo(QFont(f)).styleHint()==QFont::SansSerif) {
+            sansFont=f;
+        }
+        if (scriptFont=="script" && QFontInfo(QFont(f)).styleHint()==QFont::Cursive) {
+            scriptFont=f;
+        }
     }
 
+    auto checkForFonts=[&fonts](QString& targetfont, const QStringList& fontoptions) {
+        for (auto& f: fontoptions) {
+            if (fonts.contains(f)) {
+                targetfont=f;
+                break;
+            }
+        }
+    };
+
+    checkForFonts(serifFont, QStringList {"Times New Roman", "Times", "FreeSerif", "DejaVu Serif"});
+    checkForFonts(sansFont, QStringList {"Arial Unicode MS", "Arial Unicode", "Lucida Sans Unicode", "Arial", "Helvetica", "FreeSans", "DejaVu Sans", "Lucida Sans"});
+    checkForFonts(symbolFont, QStringList {"SymbolStandard", "Symbol"});
+    checkForFonts(typewriterFont, QStringList {"Courier New", "Courier", "Courier Std", "FreeMono", "CMU Typewriter Text", "UM Typewriter"});
+    checkForFonts(blackboardFont, QStringList {"Double Stroke", "CloisterOpenFace BT", "GoudyHandtooled BT", "Castellar", "MathJax_AMS", "Castellar Standard", "MathJax_AMS Standard", "Colonna MT"});
+    checkForFonts(decorativeFont, QStringList {"Lucida Calligraphy", "Cookie", "Segoe Print", "Comic Sans", "Comic Sans MS", "Gabriola", "Gabriola Standard", "Lucida Handwriting Kursiv", "Lucida Handwriting", "Pristina", "Pristina Standard", "MathJax_Caligraphics"});
+    checkForFonts(scriptFont, QStringList {"Lucida Handwriting", "Dancing Script", "Amazone BT", "ScriptS", "ScriptC", "ScriptC Standard", "Script", "Brush Script MT", "Brush Script MT Kursiv", "MathJax_Script"});
+    checkForFonts(fracturFont, QStringList {"Old English Text MT", "Old English Text MT Standard", "UnifrakturMaguntia Standard", "UnifrakturMaguntia", "MathJax_Fraktur", "UnifrakturCook Fett"});
 
 
-    default_fontSize=fontSize=10;
-    default_fontRoman=fontRoman=fontReplacements.value(serifFont, serifFont);
-    default_fontSans=fontSans=fontReplacements.value(sansFont, sansFont);
-    default_fontTypewriter=fontTypewriter=typewriterFont;
-    default_fontScript=fontScript=scriptFont;
-    default_fontGreek=fontGreek=symbolFont;
-    default_fontSymbol=fontSymbol=symbolFont;
-    default_fontCaligraphic=fontCaligraphic=decorativeFont;
-    default_fontBlackboard=fontBlackboard=serifFont;
-    default_fontBraces=fontBraces=fontRoman;
-    default_fontIntegrals=fontIntegrals=fontRoman;
-    default_fontEncoding=fontEncoding=MTFEwinSymbol;
-    default_fontLatexPostfix=fontLatexPostfix="10";
-    default_fontLatexPrefix=fontLatexPrefix="jlm_";
-    default_brace_factor=brace_factor=1.04;
-    default_subsuper_size_factor=subsuper_size_factor=0.7;
-    default_italic_correction_factor=italic_correction_factor=0.4;
-    default_sub_shift_factor=sub_shift_factor=0.4;
-    default_super_shift_factor=super_shift_factor=0.6;
-    default_brace_shrink_factor=brace_shrink_factor=0.6;
-    default_fontColor=fontColor=QColor("black");
-    default_useSTIXfonts=useSTIXfonts=false;
-    default_useXITSfonts=useXITSfonts=false;
-    default_useASANAfonts=useASANAfonts=false;
-    default_frac_factor=frac_factor=0.9;
-    default_frac_shift_factor=frac_shift_factor=0.4;
-    default_underbrace_factor=underbrace_factor=0.75;
-    default_undersetFactor=undersetFactor=0.7;
-    default_decoration_height_factor=decoration_height_factor=0.2;
-    default_brace_y_shift_factor=brace_y_shift_factor=0.7;//-1;
-    default_operatorsubsuper_size_factor=operatorsubsuper_size_factor=0.65;
-    default_mathoperator_width_factor=mathoperator_width_factor=1.5;
+    if (serifFont!="serif") addReplacementFont("serif", serifFont);
+    if (sansFont!="sans") addReplacementFont("sans", sansFont);
+    if (symbolFont!="symbol") addReplacementFont("symbol", symbolFont);
+    if (scriptFont!="script") addReplacementFont("script", scriptFont);
+    if (typewriterFont!="typewriter") addReplacementFont("typewriter", typewriterFont);
+    if (decorativeFont!="decorative") addReplacementFont("decorative", decorativeFont);
+    if (fracturFont!="fraktur") addReplacementFont("fraktur", fracturFont);
+    if (blackboardFont!="blackboard") {
+        addReplacementFont("blackboard", blackboardFont);
+    }
 
-    default_expensiveRendering=expensiveRendering=true;
+    setFontSans(sansFont, MTFEStandard);
+    setFontMathSans(sansFont, MTFEStandard);
+    setFontTypewriter(typewriterFont, MTFEStandard);
+    setFontRoman(serifFont, MTFEStandard);
+    setFontMathRoman(serifFont, MTFEStandard);
+    setFontCaligraphic(decorativeFont, MTFEStandard);
+    setFontBlackboard(blackboardFont, MTFEStandard);
+    setFontBlackboardSimulated(blackboardFont=="blackboard");
+    setFontScript(scriptFont, MTFEStandard);
+    setFontFraktur(fracturFont, MTFEStandard);
+    useXITS();
+
     useUnparsed=false;
 
     parsedNode=nullptr;
@@ -3338,16 +3364,6 @@ JKQTMathText::~JKQTMathText() {
 void JKQTMathText::loadSettings(const QSettings& settings, const QString& group){
     fontSize=settings.value(group+"font_size", fontSize).toDouble();
     fontColor=jkqtp_String2QColor(settings.value(group+"font_color", jkqtp_QColor2String(fontColor)).toString());
-    setFontRoman(settings.value(group+"font_roman", fontRoman).toString());
-    setFontSans(settings.value(group+"font_sans", fontSans).toString());
-    fontTypewriter=settings.value(group+"font_typewriter", fontTypewriter).toString();
-    fontScript=settings.value(group+"font_script", fontScript).toString();
-    fontGreek=settings.value(group+"font_greek", fontGreek).toString();
-    fontSymbol=settings.value(group+"font_symbol", fontSymbol).toString();
-    fontBraces=settings.value(group+"font_braces", fontBraces).toString();
-    fontIntegrals=settings.value(group+"font_integrals", fontSans).toString();
-    fontBlackboard=settings.value(group+"font_blackboard", fontSans).toString();
-    fontCaligraphic=settings.value(group+"font_caligraphics", fontSans).toString();
     brace_factor=settings.value(group+"brace_factor", brace_factor).toDouble();
     brace_shrink_factor=settings.value(group+"brace_shrink_factor", brace_shrink_factor).toDouble();
     subsuper_size_factor=settings.value(group+"subsuper_size_factor", subsuper_size_factor).toDouble();
@@ -3363,198 +3379,183 @@ void JKQTMathText::loadSettings(const QSettings& settings, const QString& group)
     operatorsubsuper_size_factor=settings.value(group+"operatorsubsuper_size_factor", operatorsubsuper_size_factor).toDouble();
     mathoperator_width_factor=settings.value(group+"mathoperator_width_factor", mathoperator_width_factor).toDouble();
 
-    QString v=settings.value(group+"font_encoding", "win_symbol").toString().toLower();
-    fontEncoding=MTFEwinSymbol;
-    if (v=="unicode") fontEncoding=MTFEunicode;
-    useSTIXfonts=settings.value(group+"use_stix_fonts", false).toBool();
-    useXITSfonts=settings.value(group+"use_xits_fonts", false).toBool();
-    useASANAfonts=settings.value(group+"use_asana_fonts", false).toBool();
 
-    if (useSTIXfonts) useSTIX();
-    if (useXITSfonts) useXITS();
-    if (useASANAfonts) useASANA();
+    if (settings.value(group+"use_stix_fonts", false).toBool()) useSTIX();
+    if (settings.value(group+"use_xits_fonts", false).toBool()) useXITS();
+    if (settings.value(group+"use_asana_fonts", false).toBool()) useASANA();
 }
 
 
 void JKQTMathText::saveSettings(QSettings& settings, const QString& group) const{
-    JKQTMTPROPERTYsave(settings, group, fontSize,"font_size");
-    if (fontColor!=default_fontColor) settings.setValue(group+"font_color", jkqtp_QColor2String(fontColor));
-    JKQTMTPROPERTYsave(settings, group, fontRoman, "font_roman");
-    JKQTMTPROPERTYsave(settings, group, fontSans, "font_sans");
-    JKQTMTPROPERTYsave(settings, group, fontTypewriter, "font_typewriter");
-    JKQTMTPROPERTYsave(settings, group, fontScript, "font_script");
-    JKQTMTPROPERTYsave(settings, group, fontGreek, "font_greek");
-    JKQTMTPROPERTYsave(settings, group, fontSymbol, "font_symbol");
-    JKQTMTPROPERTYsave(settings, group, fontBraces, "font_braces");
-    JKQTMTPROPERTYsave(settings, group, fontIntegrals, "font_integrals");
-    JKQTMTPROPERTYsave(settings, group, fontBlackboard, "font_blackboard");
-    JKQTMTPROPERTYsave(settings, group, fontCaligraphic, "font_caligraphic");
-    JKQTMTPROPERTYsave(settings, group, brace_factor, "brace_factor");
-    JKQTMTPROPERTYsave(settings, group, brace_shrink_factor, "brace_shrink_factor");
-    JKQTMTPROPERTYsave(settings, group, subsuper_size_factor, "subsuper_size_factor");
-    JKQTMTPROPERTYsave(settings, group, italic_correction_factor, "italic_correction_factor");
-    JKQTMTPROPERTYsave(settings, group, sub_shift_factor, "sub_shift_factor");
-    JKQTMTPROPERTYsave(settings, group, super_shift_factor, "super_shift_factor");
-    JKQTMTPROPERTYsave(settings, group, useSTIXfonts, "use_stix_fonts");
-    JKQTMTPROPERTYsave(settings, group, useXITSfonts, "use_xits_fonts");
-    JKQTMTPROPERTYsave(settings, group, useASANAfonts, "use_asana_fonts");
-    JKQTMTPROPERTYsave(settings, group, frac_factor, "frac_factor");
-    JKQTMTPROPERTYsave(settings, group, frac_shift_factor, "frac_shift_factor");
-    JKQTMTPROPERTYsave(settings, group, underbrace_factor, "underbrace_factor");
-    JKQTMTPROPERTYsave(settings, group, undersetFactor, "undersetFactor");
-    JKQTMTPROPERTYsave(settings, group, operatorsubsuper_size_factor, "operatorsubsuper_size_factor");
-    JKQTMTPROPERTYsave(settings, group, mathoperator_width_factor, "mathoperator_width_factor");
-    JKQTMTPROPERTYsave(settings, group, brace_y_shift_factor, "brace_y_shift_factor");
-    JKQTMTPROPERTYsave(settings, group, decoration_height_factor, "decoration_height_factor");
-    if (fontEncoding!=default_fontEncoding) {
-        if (fontEncoding==MTFEunicode) settings.setValue(group+"font_encoding", "unicode");
-        else if (fontEncoding==MTFEwinSymbol) settings.setValue(group+"font_encoding", "win_symbol");
-    }
+    settings.setValue(group+"font_size", fontSize);
+    settings.setValue(group+"font_color", jkqtp_QColor2String(fontColor));
+    settings.setValue(group+ "brace_factor", brace_factor);
+    settings.setValue(group+ "brace_shrink_factor", brace_shrink_factor);
+    settings.setValue(group+ "subsuper_size_factor", subsuper_size_factor);
+    settings.setValue(group+ "italic_correction_factor", italic_correction_factor);
+    settings.setValue(group+ "sub_shift_factor", sub_shift_factor);
+    settings.setValue(group+ "super_shift_factor", super_shift_factor);
+    settings.setValue(group+ "frac_factor", frac_factor);
+    settings.setValue(group+ "frac_shift_factor", frac_shift_factor);
+    settings.setValue(group+ "underbrace_factor", underbrace_factor);
+    settings.setValue(group+ "undersetFactor", undersetFactor);
+    settings.setValue(group+ "operatorsubsuper_size_factor", operatorsubsuper_size_factor);
+    settings.setValue(group+ "mathoperator_width_factor", mathoperator_width_factor);
+    settings.setValue(group+ "brace_y_shift_factor", brace_y_shift_factor);
+    settings.setValue(group+ "decoration_height_factor", decoration_height_factor);
 }
 
-void JKQTMathText::useSTIX() {
-    useSTIXfonts=true;
-    QString fontname="STIX Two Math Standard";
-    QString fontnametxt="STIX Two Text";
+bool JKQTMathText::useSTIX(bool mathModeOnly) {
     QFontDatabase fdb;
 
-    if (!fdb.families().contains(fontname)) {
-        fontname="STIX Math Standard";
-        fontnametxt="STIX Math Standard";
-        if (!fdb.families().contains(fontname)) {
-            fontname="STIX";
-            fontnametxt="Times New Roman";
-            if (!fdb.families().contains(fontname)) {
-                fontname="STIXGeneral";
-                fontnametxt="Times New Roman";
+    static QStringList mathNames{"STIX Two Math", "STIX Math", "STIX Two Math Standard", "STIX Math Standard"};
+    static QStringList textNames{"STIX", "STIXGeneral", "STIX General"};
+
+    QString textFamily;
+    QString mathFamily;
+    for (const QString& name:mathNames) {
+        for (int i=0; i<fdb.families().size(); i++) {
+            if (fdb.families().at(i).contains(name) ) {
+                mathFamily=fdb.families().at(i);
+            }
+            if (mathFamily.size()>0) {
+                break;
             }
         }
+        if (mathFamily.size()>0) {
+            break;
+        }
+    }
+    for (const QString& name:textNames) {
+        for (int i=0; i<fdb.families().size(); i++) {
+            if (fdb.families().at(i).contains(name) ) {
+                textFamily=fdb.families().at(i);
+            }
+            if (textFamily.size()>0) {
+                break;
+            }
+        }
+        if (textFamily.size()>0) {
+            break;
+        }
+    }
+    if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
+        mathFamily=textFamily;
+    } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
+        textFamily=mathFamily;
     }
 
-    fontGreek=fontname;
-    fontSymbol=fontname;
-    fontBraces=fontname;
-    fontIntegrals=fontname;
-    fontRoman=fontnametxt;
-    fontEncoding=MTFEunicode;
+    bool res=false;
+
+    if (!mathModeOnly && !textFamily.isEmpty()) {
+        setFontRoman(textFamily, MTFEunicode);
+        res=true;
+    }
+    if (!mathFamily.isEmpty()) {
+        setFontMathRoman(mathFamily, MTFEunicode);
+        res=true;
+    }
+
     brace_shrink_factor=0.6;
+    return res;
 }
 
-void JKQTMathText::useXITS()
+bool JKQTMathText::useXITS(bool mathModeOnly)
 {
-    //JKQTPAutoOutputTimer jkaaot(QString("JKQTMathText::useXITS():ALL"));
     QFontDatabase fdb;
-    //qDebug()<<"has XITS: "<<fdb.families().contains("XITS");
     if (!fdb.families().contains("XITS")) {
-        //JKQTPAutoOutputTimer jkaaot(QString("JKQTMathText::useXITS():addAutoXITS"));
-        int i=0;
-        if (QFile::exists(":/JKQTMathText/fonts/xits-bold.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-bold.otf"); }
-        //qDebug()<<QFontDatabase::applicationFontFamilies(i);
-        if (QFile::exists(":/JKQTMathText/fonts/xits-bolditalic.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-bolditalic.otf"); }
-        //qDebug()<<QFontDatabase::applicationFontFamilies(i);
-        if (QFile::exists(":/JKQTMathText/fonts/xits-italic.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-italic.otf"); }
-        //qDebug()<<QFontDatabase::applicationFontFamilies(i);
-        if (QFile::exists(":/JKQTMathText/fonts/xits-math.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-math.otf"); }
-        //qDebug()<<QFontDatabase::applicationFontFamilies(i);
-        if (QFile::exists(":/JKQTMathText/fonts/xits-mathbold.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-mathbold.otf"); }
-        //qDebug()<<QFontDatabase::applicationFontFamilies(i);
-        if (QFile::exists(":/JKQTMathText/fonts/xits-regular.otf")) { i=QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-regular.otf"); }
-        //qDebug()<<QFontDatabase::applicationFontFamilies(i);
-        (void)i;
+        if (QFile::exists(":/JKQTMathText/fonts/xits-bold.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-bold.otf"); }
+        if (QFile::exists(":/JKQTMathText/fonts/xits-bolditalic.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-bolditalic.otf"); }
+        if (QFile::exists(":/JKQTMathText/fonts/xits-italic.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-italic.otf"); }
+        if (QFile::exists(":/JKQTMathText/fonts/xits-math.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-math.otf"); }
+        if (QFile::exists(":/JKQTMathText/fonts/xits-mathbold.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-mathbold.otf"); }
+        if (QFile::exists(":/JKQTMathText/fonts/xits-regular.otf")) { QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/xits-regular.otf"); }
     }
-    //qDebug()<<"has XITS: "<<fdb.families().contains("XITS")<<"\n"<<fdb.families();
-    bool hasXITS=false;
-    if (defaultXITSMathFontName.size()==0/* || defaultXITSFontName.size()==0*/) {
-        {
-            //JKQTPAutoOutputTimer jkaaot(QString("JKQTMathText::useXITS():scanFamilies"));
-            for (int i=0; i<fdb.families().size(); i++) {
-                //::cout<<fdb.families().at(i).simplified().toStdString()<<"\n";
-                //qDebug()<<fdb.families().at(i).simplified();
-                if (fdb.families().at(i).contains("XITS Math")) {
-                    //hasXITSMath=true;
-                    defaultXITSMathFontName=fdb.families().at(i);
-                } else if (fdb.families().at(i).contains("XITS")) {
-                    hasXITS=true;
-                    defaultXITSFontName=fdb.families().at(i);
-                }
-            }
+
+
+    QString textFamily;
+    QString mathFamily;
+    for (int i=0; i<fdb.families().size(); i++) {
+        if (fdb.families().at(i).contains("XITS Math")) {
+            mathFamily=fdb.families().at(i);
+        } else if (fdb.families().at(i).contains("XITS")) {
+            textFamily=fdb.families().at(i);
         }
-    } else {
-        hasXITS=true;
+        if (mathFamily.size()>0 && textFamily.size()>0) {
+            break;
+        }
     }
-    QString fam="XITS";
-    if (hasXITS) fam=defaultXITSFontName;
-    //if (hasXITSMath) fam=defaultXITSMathFontName;
-    useXITSfonts=true;
-    fontRoman=fam;
-    //fontSans=fam;
-    //fontTypewriter=fam;
-    fontBlackboard=fam;
-    //fontCaligraphic=fam;
-    //fontScript=fam;
-    fontBraces=fam;
-    fontSymbol=fam;
-    fontGreek=fam;
-    fontEncoding=MTFEunicode;
+    if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
+        mathFamily=textFamily;
+    } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
+        textFamily=mathFamily;
+    }
+
+    bool res=false;
+
+    if (!mathModeOnly && !textFamily.isEmpty()) {
+        setFontRoman(textFamily, MTFEunicode);
+        res=true;
+    }
+    if (!mathFamily.isEmpty()) {
+        setFontMathRoman(mathFamily, MTFEunicode);
+        res=true;
+    }
+
     brace_shrink_factor=0.6;
+    return res;
+
 }
 
-void JKQTMathText::useASANA()
+bool JKQTMathText::useASANA(bool mathModeOnly)
 {
     QFontDatabase fdb;
-#ifdef AUTOLOAD_XITS_FONTS
-    //qDebug()<<"has XITS: "<<fdb.families().contains("XITS");
-    if (!fdb.families().contains("Asana")) {
-        //int i;//=-1;
+
+    if (!fdb.families().contains("Asana") && !fdb.families().contains("Asana Math")) {
         if (QFile::exists(":/JKQTMathText/fonts/asana-math.otf")) { /*i=*/QFontDatabase::addApplicationFont(":/JKQTMathText/fonts/asana-math.otf"); }
-        //qDebug()<<QFontDatabase::applicationFontFamilies(i);
     }
-#endif
-    //qDebug()<<"has ASANA: "<<fdb.families().contains("Asana Math");
-    bool hasXITS=false;
-    QString XITSfam;
-    //bool hasXITSMath=false;
-    QString XITSMathfam;
+
+
+    QString textFamily;
+    QString mathFamily;
     for (int i=0; i<fdb.families().size(); i++) {
         if (fdb.families().at(i).contains("Asana Math")) {
-            //hasXITSMath=true;
-            XITSMathfam=fdb.families().at(i);
+            mathFamily=fdb.families().at(i);
         } else if (fdb.families().at(i).contains("Asana")) {
-            hasXITS=true;
-            XITSfam=fdb.families().at(i);
+            textFamily=fdb.families().at(i);
+        }
+        if (mathFamily.size()>0 && textFamily.size()>0) {
+            break;
         }
     }
-    QString fam="Asana Math";
-    if (hasXITS) fam=XITSfam;
-    useXITSfonts=true;
-    fontRoman=fam;
-    //fontSans=fam;
-    fontTypewriter=fam;
-    fontBlackboard=fam;
-    fontCaligraphic=fam;
-    fontScript=fam;
-    fontBraces=fam;
-    fontSymbol=fam;
-    fontGreek=fam;
-    fontEncoding=MTFEunicode;
+    if (mathFamily.isEmpty() && !textFamily.isEmpty()) {
+        mathFamily=textFamily;
+    } else if (!mathFamily.isEmpty() && textFamily.isEmpty()) {
+        textFamily=mathFamily;
+    }
+
+    bool res=false;
+
+    if (!mathModeOnly && !textFamily.isEmpty()) {
+        setFontRoman(textFamily, MTFEunicode);
+        res=true;
+    }
+    if (!mathFamily.isEmpty()) {
+        setFontMathRoman(mathFamily, MTFEunicode);
+        res=true;
+    }
+
+    brace_shrink_factor=0.6;
+    return res;
+}
+
+void JKQTMathText::useAnyUnicode(QString timesFont, const QString &sansFont, JKQTMathText::MTfontEncoding encodingTimes, JKQTMathText::MTfontEncoding encodingSans)
+{
+    if (!timesFont.isEmpty()) { setFontRoman(timesFont, encodingTimes); }
+    if (!sansFont.isEmpty()) { setFontSans(sansFont, encodingSans); }
     brace_shrink_factor=0.6;
 }
 
-void JKQTMathText::useLatexFonts(QString prefix, const QString& postfix) {
-    fontLatexPostfix=postfix;
-    fontLatexPrefix=prefix;
-    fontRoman=prefix+"cmr"+postfix;
-    fontSans=prefix+"cmss"+postfix;
-    fontTypewriter=prefix+"cmtt"+postfix;
-    fontBlackboard=prefix+"dsrom"+postfix;
-    fontCaligraphic=prefix+"csmy"+postfix;
-    fontScript=prefix+"rsfs"+postfix;
-    fontBraces=prefix+"cmex"+postfix;
-    fontSymbol=prefix+"cmsy"+postfix;
-    fontGreek=prefix+"cmmi"+postfix;
-    fontEncoding=MTFElatex;
-    brace_shrink_factor=0.6;
-}
 
 QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
     QString s;
@@ -3573,9 +3574,70 @@ QString JKQTMathText::toHtml(bool *ok, double fontPointSize) {
     return s;
 }
 
+QString JKQTMathText::encoding2String(JKQTMathText::MTfontEncoding e)
+{
+    switch(e) {
+        case MTFEunicode: return "MTFEunicode";
+        case MTFEStandard: return "MTFEStandard";
+        case MTFEunicodeLimited: return "MTFEunicodeLimited";
+        case MTFEwinSymbol: return "MTFEwinSymbol";
+    }
+    return "???";
+}
+
+void JKQTMathText::setFontColor(const QColor &__value)
+{
+    this->fontColor = __value;
+}
+
+QColor JKQTMathText::getFontColor() const
+{
+    return this->fontColor;
+}
+
+void JKQTMathText::setFontSize(double __value)
+{
+    this->fontSize = __value;
+}
+
+double JKQTMathText::getFontSize() const
+{
+    return this->fontSize;
+}
+
+void JKQTMathText::addReplacementFont(const QString &nonUseFont, const QString &useFont, MTfontEncoding useFontEncoding) {
+    fontReplacements.insert(nonUseFont, useFont);
+    fontEncodingReplacements.insert(nonUseFont, useFontEncoding);
+}
+
 void JKQTMathText::addReplacementFont(const QString &nonUseFont, const QString &useFont) {
     fontReplacements.insert(nonUseFont, useFont);
+    auto it=fontEncodingReplacements.find(nonUseFont);
+    if (it!=fontEncodingReplacements.end()) fontEncodingReplacements.erase(it);
 }
+
+QPair<QString,JKQTMathText::MTfontEncoding> JKQTMathText::getReplacementFont(const QString &nonUseFont, const QString &defaultFont, JKQTMathText::MTfontEncoding defaultFontEncoding) const {
+    QPair<QString,MTfontEncoding> res(defaultFont, defaultFontEncoding);
+    bool foundFont=false;
+    for (auto it=fontReplacements.begin(); it!=fontReplacements.end(); ++it) {
+        if (it.key().toLower()==nonUseFont.toLower()) {
+            foundFont=true;
+            res.first=it.value();
+            res.second=fontEncodingReplacements.value(res.first, res.second);
+            return res;
+        }
+    }
+    return res;
+}
+
+QPair<QString, JKQTMathText::MTfontEncoding> JKQTMathText::getFontData(JKQTMathText::MTenvironmentFont font, bool /*in_math_environment*/, FontSubclass subclass) const
+{
+    auto fd=fontDefinitions.value(font);
+    if (subclass==FontSubclass::Greek) return QPair<QString, JKQTMathText::MTfontEncoding>(fd.symbolfontGreek, fd.symbolfontGreekEncoding);
+    if (subclass==FontSubclass::Symbols) return QPair<QString, JKQTMathText::MTfontEncoding>(fd.symbolfontSymbol, fd.symbolfontSymbolEncoding);
+    else return QPair<QString, JKQTMathText::MTfontEncoding>(fd.fontName, fd.fontEncoding);
+}
+
 
 void JKQTMathText::setFontRomanOrSpecial(const QString &__value)
 {
@@ -3601,24 +3663,382 @@ void JKQTMathText::setFontRomanOrSpecial(const QString &__value)
     }
 }
 
-
-void JKQTMathText::useAnyUnicode(QString timesFont, const QString& sansFont, bool fullMathUnicodeFont) {
-    if (!timesFont.isEmpty()) { setFontRoman(timesFont); }
-    if (!sansFont.isEmpty()) { setFontSans(sansFont); }
-    useSTIXfonts=false;
-    useXITSfonts=false;
-    useASANAfonts=false;
-    if (fullMathUnicodeFont) {
-        fontGreek=fontRoman;
-        fontSymbol=fontRoman;
-        fontIntegrals=fontRoman;
-        fontEncoding=MTFEunicode;
-    } else {
-        fontEncoding=MTFEunicodeLimited;
-    }
-    fontBraces=fontRoman;
-    brace_shrink_factor=0.6;
+void JKQTMathText::setFontRoman(const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[MTEroman].fontName = f.first;;
+    fontDefinitions[MTEroman].fontEncoding = f.second;;
 }
+
+QString JKQTMathText::getFontRoman() const
+{
+    return fontDefinitions[MTEroman].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingRoman() const
+{
+    return fontDefinitions[MTEroman].fontEncoding;
+}
+
+void JKQTMathText::setFontSans(const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[MTEsans].fontName = f.first;;
+    fontDefinitions[MTEsans].fontEncoding = f.second;;
+}
+
+QString JKQTMathText::getFontSans() const
+{
+    return fontDefinitions[MTEsans].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingSans() const
+{
+    return fontDefinitions[MTEsans].fontEncoding;
+}
+
+void JKQTMathText::setFontTypewriter(const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[MTEtypewriter].fontName = f.first;;
+    fontDefinitions[MTEtypewriter].fontEncoding = f.second;;
+}
+
+QString JKQTMathText::getFontTypewriter() const
+{
+    return fontDefinitions[MTEtypewriter].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingTypewriter() const
+{
+    return fontDefinitions[MTEtypewriter].fontEncoding;
+}
+
+void JKQTMathText::setFontScript(const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[MTEscript].fontName = f.first;;
+    fontDefinitions[MTEscript].fontEncoding = f.second;;
+}
+
+QString JKQTMathText::getFontScript() const
+{
+    return fontDefinitions[MTEscript].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingScript() const
+{
+    return fontDefinitions[MTEscript].fontEncoding;
+}
+
+void JKQTMathText::setFontFraktur(const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[MTEfraktur].fontName = f.first;;
+    fontDefinitions[MTEfraktur].fontEncoding = f.second;;
+}
+
+QString JKQTMathText::getFontFraktur() const
+{
+    return fontDefinitions[MTEfraktur].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingFraktur() const
+{
+    return fontDefinitions[MTEfraktur].fontEncoding;
+}
+void JKQTMathText::setSymbolfontGreek(MTenvironmentFont font, const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[font].symbolfontGreek = f.first;;
+    fontDefinitions[font].symbolfontGreekEncoding = f.second;;
+}
+
+void JKQTMathText::setSymbolfontGreek(const QString &fontName, JKQTMathText::MTfontEncoding encoding)
+{
+    for (int f=0; f<static_cast<int>(MTenvironmentFontCount); f++) {
+        setSymbolfontGreek(static_cast<MTenvironmentFont>(f), fontName, encoding);
+    }
+}
+
+QString JKQTMathText::getSymbolfontGreek(MTenvironmentFont font) const
+{
+    return fontDefinitions[font].symbolfontGreek;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getSymbolfontEncodingGreek(MTenvironmentFont font) const
+{
+    return fontDefinitions[font].symbolfontGreekEncoding;
+}
+
+void JKQTMathText::setSymbolfontSymbol(MTenvironmentFont font, const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[font].symbolfontSymbol = f.first;;
+    fontDefinitions[font].symbolfontSymbolEncoding = f.second;;
+}
+
+void JKQTMathText::setSymbolfontSymbol(const QString &fontName, JKQTMathText::MTfontEncoding encoding)
+{
+    for (int f=0; f<static_cast<int>(MTenvironmentFontCount); f++) {
+        setSymbolfontSymbol(static_cast<MTenvironmentFont>(f), fontName, encoding);
+    }
+}
+
+QString JKQTMathText::getSymbolfontSymbol(MTenvironmentFont font) const
+{
+    return fontDefinitions[font].symbolfontSymbol;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getSymbolfontEncodingSymbol(MTenvironmentFont font) const
+{
+    return fontDefinitions[font].symbolfontSymbolEncoding;
+}
+
+void JKQTMathText::setFontCaligraphic(const QString &__value, MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[MTEcaligraphic].fontName = f.first;;
+    fontDefinitions[MTEcaligraphic].fontEncoding = f.second;;
+}
+
+QString JKQTMathText::getFontCaligraphic() const
+{
+    return fontDefinitions[MTEcaligraphic].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingCaligraphic() const
+{
+    return fontDefinitions[MTEcaligraphic].fontEncoding;
+}
+
+void JKQTMathText::setFontMathRoman(const QString &fontName, JKQTMathText::MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(fontName, fontName, encoding);
+    fontDefinitions[MTEmathRoman].fontName = f.first;
+    fontDefinitions[MTEmathRoman].fontEncoding = f.second;
+}
+
+QString JKQTMathText::getFontMathRoman() const
+{
+    return fontDefinitions[MTEmathRoman].fontName;
+}
+
+void JKQTMathText::setFontMathSans(const QString &fontName, JKQTMathText::MTfontEncoding encoding)
+{
+    auto f=getReplacementFont(fontName, fontName, encoding);
+    fontDefinitions[MTEmathSans].fontName = f.first;
+    fontDefinitions[MTEmathSans].fontEncoding = f.second;
+}
+
+QString JKQTMathText::getFontMathSans() const
+{
+    return fontDefinitions[MTEmathSans].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingMathSans() const
+{
+    return fontDefinitions[MTEmathSans].fontEncoding;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingMathRoman() const
+{
+    return fontDefinitions[MTEmathRoman].fontEncoding;
+}
+
+void JKQTMathText::setFontBlackboard(const QString &__value, MTfontEncoding encoding)
+{
+    blackboardSimulated=false;
+    auto f=getReplacementFont(__value, __value, encoding);
+    fontDefinitions[MTEblackboard].fontName = f.first;;
+    fontDefinitions[MTEblackboard].fontEncoding = f.second;;
+}
+
+void JKQTMathText::setFontBlackboardSimulated(bool doSimulate)
+{
+    blackboardSimulated=doSimulate;
+}
+
+bool JKQTMathText::isFontBlackboardSimulated() const
+{
+    return blackboardSimulated;
+}
+
+QString JKQTMathText::getFontBlackboard() const
+{
+    return fontDefinitions[MTEblackboard].fontName;
+}
+
+JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingBlackboard() const
+{
+    return fontDefinitions[MTEblackboard].fontEncoding;
+}
+
+
+void JKQTMathText::setBraceFactor(double __value)
+{
+    this->brace_factor = __value;
+}
+
+double JKQTMathText::getBraceFactor() const
+{
+    return this->brace_factor;
+}
+
+void JKQTMathText::setSubsuperSizeFactor(double __value)
+{
+    this->subsuper_size_factor = __value;
+}
+
+double JKQTMathText::getSubsuperSizeFactor() const
+{
+    return this->subsuper_size_factor;
+}
+
+void JKQTMathText::setItalicCorrectionFactor(double __value)
+{
+    this->italic_correction_factor = __value;
+}
+
+double JKQTMathText::getItalicCorrectionFactor() const
+{
+    return this->italic_correction_factor;
+}
+
+void JKQTMathText::setOperatorsubsuperSizeFactor(double __value)
+{
+    this->operatorsubsuper_size_factor = __value;
+}
+
+double JKQTMathText::getOperatorsubsuperSizeFactor() const
+{
+    return this->operatorsubsuper_size_factor;
+}
+
+void JKQTMathText::setMathoperatorWidthFactor(double __value)
+{
+    this->mathoperator_width_factor = __value;
+}
+
+double JKQTMathText::getMathoperatorWidthFactor() const
+{
+    return this->mathoperator_width_factor;
+}
+
+void JKQTMathText::setSuperShiftFactor(double __value)
+{
+    this->super_shift_factor = __value;
+}
+
+double JKQTMathText::getSuperShiftFactor() const
+{
+    return this->super_shift_factor;
+}
+
+void JKQTMathText::setSubShiftFactor(double __value)
+{
+    this->sub_shift_factor = __value;
+}
+
+double JKQTMathText::getSubShiftFactor() const
+{
+    return this->sub_shift_factor;
+}
+
+void JKQTMathText::setBraceShrinkFactor(double __value)
+{
+    this->brace_shrink_factor = __value;
+}
+
+double JKQTMathText::getBraceShrinkFactor() const
+{
+    return this->brace_shrink_factor;
+}
+
+void JKQTMathText::setUnderbraceFactor(double __value)
+{
+    this->underbrace_factor = __value;
+}
+
+double JKQTMathText::getUnderbraceFactor() const
+{
+    return this->underbrace_factor;
+}
+
+void JKQTMathText::setUndersetFactor(double __value)
+{
+    this->undersetFactor = __value;
+}
+
+double JKQTMathText::getUndersetFactor() const
+{
+    return this->undersetFactor;
+}
+
+void JKQTMathText::setFracFactor(double __value)
+{
+    this->frac_factor = __value;
+}
+
+double JKQTMathText::getFracFactor() const
+{
+    return this->frac_factor;
+}
+
+void JKQTMathText::setFracShiftFactor(double __value)
+{
+    this->frac_shift_factor = __value;
+}
+
+double JKQTMathText::getFracShiftFactor() const
+{
+    return this->frac_shift_factor;
+}
+
+void JKQTMathText::setBraceYShiftFactor(double __value)
+{
+    this->brace_y_shift_factor = __value;
+}
+
+double JKQTMathText::getBraceYShiftFactor() const
+{
+    return this->brace_y_shift_factor;
+}
+
+void JKQTMathText::setDecorationHeightFactor(double __value)
+{
+    this->decoration_height_factor = __value;
+}
+
+double JKQTMathText::getDecorationHeightFactor() const
+{
+    return this->decoration_height_factor;
+}
+
+void JKQTMathText::setExpensiveRendering(bool __value)
+{
+    this->expensiveRendering = __value;
+}
+
+bool JKQTMathText::getExpensiveRendering() const
+{
+    return this->expensiveRendering;
+}
+
+void JKQTMathText::setUseUnparsed(bool __value)
+{
+    this->useUnparsed = __value;
+}
+
+bool JKQTMathText::isUsingUnparsed() const
+{
+    return this->useUnparsed;
+}
+
+QStringList JKQTMathText::getErrorList() const {
+    return this->error_list;
+}
+
 
 
 JKQTMathText::tokenType JKQTMathText::getToken() {
@@ -4129,6 +4549,10 @@ JKQTMathText::MTnode* JKQTMathText::parseLatexString(bool get, const QString& qu
     return nl;
 }
 
+JKQTMathText::MTnode *JKQTMathText::getParsedNode() const {
+    return this->parsedNode;
+}
+
 
 QList<JKQTMathText::tbrData> JKQTMathText::tbrs=QList<JKQTMathText::tbrData>();
 QHash<JKQTMathText::tbrDataH, QRectF> JKQTMathText::tbrh=QHash<JKQTMathText::tbrDataH, QRectF>();
@@ -4357,6 +4781,11 @@ QString JKQTMathText::decorationToString(JKQTMathText::MTdecoration mode)
     return "unknown";
 }
 
+JKQTMathText::MTnode *JKQTMathText::getTree() const {
+    if (useUnparsed) return unparsedNode;
+    return parsedNode;
+}
+
 JKQTMathTextLabel::JKQTMathTextLabel(QWidget *parent):
     QLabel(parent)
 {
@@ -4502,8 +4931,8 @@ JKQTMathText::MTplainTextNode::MTplainTextNode(JKQTMathText *parent, const QStri
 }
 
 QString JKQTMathText::MTplainTextNode::getTypeName() const
-{return QLatin1String("MTplainTextNode(")+text+")";
-
+{
+    return QLatin1String("MTplainTextNode(")+text+")";
 }
 
 
@@ -4517,4 +4946,16 @@ void initJKQTMathTextResources()
     Q_INIT_RESOURCE(xits);
 }
 
-JKQTMathText::MTnodeSize::MTnodeSize(): width(0), baselineHeight(0),overallHeight(0),strikeoutPos() {}
+JKQTMathText::MTnodeSize::MTnodeSize():
+    width(0), baselineHeight(0),overallHeight(0),strikeoutPos()
+{
+
+}
+
+JKQTMathText::FontDefinition::FontDefinition():
+    fontName("Times New Roman"), fontEncoding(MTFEStandard),
+    symbolfontGreek("Symbol"), symbolfontGreekEncoding(MTFEwinSymbol),
+    symbolfontSymbol("Symbol"), symbolfontSymbolEncoding(MTFEwinSymbol)
+{
+
+}

@@ -8,6 +8,8 @@ TestForm::TestForm(QWidget *parent) :
     ui(new Ui::TestForm)
 {
     ui->setupUi(this);
+    ui->cmbTestset->addItem("fonts", "rm: \\textrm{ABCabc123}, sf: \\textsf{ABCabc123}, tt: \\texttt{ABCabc123}, cal: \\textcal{ABCabc123}, scr: \\textscr{ABCabc123}, bb: \\textbb{ABCabc123}, frak: \\textfrak{ABCabc123}, ");
+    ui->cmbTestset->addItem("math-fonts", "rm: $\\mathrm{ABCabc123}$, sf: $\\mathsf{ABCabc123}$, tt: $\\mathtt{ABCabc123}$, cal: $\\mathcal{ABCabc123}$, scr: $\\mathscr{ABCabc123}$, bb: $\\mathbb{ABCabc123}$, frak: $\\mathfrak{ABCabc123}$, ");
     ui->cmbTestset->addItem("simple relations", "$a{\\leq}b$, $a{\\geq}b$, $a{\\equiv}b$, $a=b$, $a{\\neq}b$, $a<b$, $a>b$");
     ui->cmbTestset->addItem("simple relations in different modes", "math: $a{\\leq}b$, math/no braces: $a\\leq b$, no math: a{\\leq}b, no math/no braces: a\\leq b");
     ui->cmbTestset->addItem("named symbols 1", "ll: $\\ll$\\ gg: $\\gg$\\ leq: $\\leq$\\ geq: $\\geq$\\ pm: $\\pm$\\ mp: $\\mp$\\ ");
@@ -40,15 +42,19 @@ TestForm::TestForm(QWidget *parent) :
     ui->cmbTestset->addItem("math: blackboard", "$\\mathbb{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: bf", "$\\mathbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: it", "$\\mathit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math: frak", "$\\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: sf", "$\\mathsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: rm", "$\\mathrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: cal", "$\\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
+    ui->cmbTestset->addItem("math: script", "$\\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("math: tt", "$\\mathtt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}$");
     ui->cmbTestset->addItem("bf", "\\textbf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
     ui->cmbTestset->addItem("it", "\\textit{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("frak", "\\textfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
     ui->cmbTestset->addItem("sf", "\\textsf{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
     ui->cmbTestset->addItem("rm", "\\textrm{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
     ui->cmbTestset->addItem("cal", "\\textcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
+    ui->cmbTestset->addItem("script", "\\textscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
     ui->cmbTestset->addItem("tt", "\\texttt{ABCDEFGHIJKLMNOPQRSTUVWXYZ120}");
     ui->cmbTestset->addItem("subscript test", "$r_{123}\\ \\ r_{\\frac{1}{2}}$");
     ui->cmbTestset->addItem("subscript0 test", "$r_{123}$");
@@ -143,10 +149,74 @@ TestForm::TestForm(QWidget *parent) :
     //ui->cmbTestset->addItem("", "$$");
     //ui->cmbTestset->addItem("", "$$");
     //ui->cmbTestset->addItem("", "");
+
+    JKQTMathText mt(this);
+    ui->cmbUnicodeSerif->setCurrentFont(QFont(mt.getFontRoman()));
+    ui->cmbEncodingSerif->setCurrentIndex(static_cast<int>(mt.getFontEncodingRoman()));
+    ui->cmbUnicodeSans->setCurrentFont(QFont(mt.getFontSans()));
+    ui->cmbEncodingSans->setCurrentIndex(static_cast<int>(mt.getFontEncodingSans()));
+    ui->cmbUnicodeSerifMath->setCurrentFont(QFont(mt.getFontMathRoman()));
+    ui->cmbEncodingSerifMath->setCurrentIndex(static_cast<int>(mt.getFontEncodingMathRoman()));
+    ui->cmbUnicodeSansMath->setCurrentFont(QFont(mt.getFontMathSans()));
+    ui->cmbEncodingSansMath->setCurrentIndex(static_cast<int>(mt.getFontEncodingMathSans()));
+    ui->cmbUnicodeFixed->setCurrentFont(QFont(mt.getFontTypewriter()));
+    ui->cmbEncodingTypewriter->setCurrentIndex(static_cast<int>(mt.getFontEncodingTypewriter()));
+    ui->cmbCaligraphic->setCurrentFont(QFont(mt.getFontCaligraphic()));
+    ui->cmbEncodingCaligraphic->setCurrentIndex(static_cast<int>(mt.getFontEncodingCaligraphic()));
+    ui->cmbScript->setCurrentFont(QFont(mt.getFontScript()));
+    ui->cmbEncodingScript->setCurrentIndex(static_cast<int>(mt.getFontEncodingScript()));
+    ui->cmbUnicodeFraktur->setCurrentFont(QFont(mt.getFontFraktur()));
+    ui->cmbEncodingFraktur->setCurrentIndex(static_cast<int>(mt.getFontEncodingFraktur()));
+    ui->cmbUnicodeBlackboard->setCurrentFont(QFont(mt.getFontBlackboard()));
+    ui->cmbEncodingBlackboard->setCurrentIndex(static_cast<int>(mt.getFontEncodingBlackboard()));
+    ui->cmbUnicodeSymbol->setCurrentFont(QFont(mt.getSymbolfontSymbol(JKQTMathText::MTenvironmentFont::MTEroman)));
+    ui->cmbEncodingSymbol->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingSymbol(JKQTMathText::MTenvironmentFont::MTEroman)));
+    ui->cmbUnicodeGreek->setCurrentFont(QFont(mt.getSymbolfontGreek(JKQTMathText::MTenvironmentFont::MTEroman)));
+    ui->cmbEncodingGreek->setCurrentIndex(static_cast<int>(mt.getSymbolfontEncodingGreek(JKQTMathText::MTenvironmentFont::MTEroman)));
+    ui->chkSimulateBlackboard->setChecked(mt.isFontBlackboardSimulated());
+
+
+
+
     ui->cmbTestset->setCurrentIndex(0);
 
     ui->labMath->setMath("\\left(\\left[\\sqrt{2\\pi\\cdot\\int_{-\\infty}^\\infty f(x)\\;\\mathrm{d}x}\\right]\\right)");
     ui->cmbFont->setCurrentIndex(1);
+
+    connect(ui->chkBoxes, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->chkAntiAlias, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->chkAntiAliasHQ, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->chkAntiAliasText, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->chkSmoothTransform, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->chkSimulateBlackboard, SIGNAL(toggled(bool)), this, SLOT(updateMath()));
+    connect(ui->cmbFont, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbScript, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbTestset, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbCaligraphic, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeSans, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeSansMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingSans, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingSansMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeFixed, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeGreek, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeSerif, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeSerifMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingGreek, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingSerif, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingSerifMath, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeSymbol, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingScript, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingSymbol, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeFraktur, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingFraktur, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbUnicodeBlackboard, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingBlackboard, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingTypewriter, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->cmbEncodingCaligraphic, SIGNAL(currentIndexChanged(int)), this, SLOT(updateMath()));
+    connect(ui->edtSizes, SIGNAL(textChanged(QString)), this, SLOT(updateMath()));
+
+
+    updateMath();
 }
 
 TestForm::~TestForm()
@@ -266,7 +336,7 @@ QTreeWidgetItem *TestForm::createTree(JKQTMathText::MTnode *node, QTreeWidgetIte
             ti->addChild(createTree(list[i], ti));
         }
     } else if (symN)  {
-        name=QString("MTsymbolNode: \'%1\' (%2)").arg(symN->getSymbolName()).arg(symN->getSymbolFontName());
+        name=QString("MTsymbolNode: \'%1\' (addWhite: %2)").arg(symN->getSymbolName()).arg(symN->getAddWhitespace());
     } else if (spN)  {
         name=QString("MTwhitespaceNode :\'%1\'").arg(txtN->getText());
     } else if (txtN)  {
@@ -335,21 +405,22 @@ void TestForm::updateMath()
 
 
 
-    mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family());
-    mt.setFontSans(ui->cmbUnicodeSans->currentFont().family());
-    mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family());
-    mt.setFontSymbol(ui->cmbUnicodeSymbol->currentFont().family());
-    mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family());
+    mt.setFontRoman(ui->cmbUnicodeSerif->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSerif->currentIndex()));
+    mt.setFontSans(ui->cmbUnicodeSans->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSans->currentIndex()));
+    mt.setFontMathRoman(ui->cmbUnicodeSerifMath->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSerifMath->currentIndex()));
+    mt.setFontMathSans(ui->cmbUnicodeSansMath->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSansMath->currentIndex()));
+    mt.setFontTypewriter(ui->cmbUnicodeFixed->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingTypewriter->currentIndex()));
+    mt.setFontCaligraphic(ui->cmbCaligraphic->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingCaligraphic->currentIndex()));
+    mt.setFontScript(ui->cmbScript->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingScript->currentIndex()));
+    mt.setFontFraktur(ui->cmbUnicodeFraktur->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingFraktur->currentIndex()));
+    mt.setFontBlackboard(ui->cmbUnicodeBlackboard->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingBlackboard->currentIndex()));
+    mt.setSymbolfontSymbol(ui->cmbUnicodeSymbol->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingSymbol->currentIndex()));
+    mt.setSymbolfontGreek(ui->cmbUnicodeGreek->currentFont().family(), static_cast<JKQTMathText::MTfontEncoding>(ui->cmbEncodingGreek->currentIndex()));
+    mt.setFontBlackboardSimulated(ui->chkSimulateBlackboard->isChecked());
 
-    switch (ui->cmbFont->currentIndex()) {
-        case 1: mt.useXITS(); break;
-        case 2: mt.useSTIX(); break;
-        case 3: mt.useAnyUnicode(ui->cmbUnicodeSerif->currentFont().family(),ui->cmbUnicodeSans->currentFont().family(), false); break;
-        case 4: mt.useAnyUnicode(ui->cmbUnicodeSerif->currentFont().family(),ui->cmbUnicodeSans->currentFont().family(), true); break;
-        case 5: mt.useLatexFonts(ui->edtLatexPrefix->text(), ui->edtLatexPostfix->text()); break;
-        case 6: mt.useASANA(); break;
-
-    }
+    if (ui->cmbFont->currentIndex()==1) qDebug()<<"useXITS: "<<mt.useXITS();
+    else if (ui->cmbFont->currentIndex()==2) qDebug()<<"useSTIX: "<<mt.useSTIX();
+    else if (ui->cmbFont->currentIndex()==3) qDebug()<<"useASANA: "<<mt.useASANA();
 
     ui->tree->clear();
     ht.start();

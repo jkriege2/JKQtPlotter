@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1518</width>
+    <width>1523</width>
     <height>742</height>
    </rect>
   </property>
@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>745</width>
-        <height>616</height>
+        <width>748</width>
+        <height>538</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -89,37 +89,22 @@
        </property>
        <item>
         <property name="text">
-         <string>Symbol</string>
+         <string>Below</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>XITS</string>
+         <string>Below+Math: XITS</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>STIX</string>
+         <string>Below+Math: STIX</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Unicode, limited</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Unicode, full</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>LaTeX</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>ASANA</string>
+         <string>Below+Math: ASANA</string>
         </property>
        </item>
       </widget>
@@ -278,101 +263,15 @@
     </widget>
    </item>
    <item row="1" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>latex prefix/postfix:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtLatexPrefix"/>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="edtLatexPostfix"/>
-     </item>
-     <item>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Symbol/Unicode fonts: rm:</string>
+        <string>Symbol/Unicode fonts:</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QFontComboBox" name="cmbUnicodeSerif">
-       <property name="currentFont">
-        <font>
-         <family>Times New Roman</family>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_14">
-       <property name="text">
-        <string>sf:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFontComboBox" name="cmbUnicodeSans">
-       <property name="currentFont">
-        <font>
-         <family>Arial</family>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>tt:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFontComboBox" name="cmbUnicodeFixed">
-       <property name="currentFont">
-        <font>
-         <family>Courier New</family>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_16">
-       <property name="text">
-        <string>cal:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFontComboBox" name="cmbCaligraphic">
-       <property name="currentFont">
-        <font>
-         <family>Script</family>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>symbol font:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFontComboBox" name="cmbUnicodeSymbol">
-       <property name="currentFont">
-        <font>
-         <family>Symbol</family>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item>
+     <item row="0" column="12">
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -384,6 +283,480 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="label_18">
+       <property name="text">
+        <string>blackboard:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="7">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>symbol:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QFontComboBox" name="cmbUnicodeSerif">
+       <property name="currentFont">
+        <font>
+         <family>Times New Roman</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QFontComboBox" name="cmbUnicodeBlackboard">
+       <property name="currentFont">
+        <font>
+         <family>Times New Roman</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_17">
+       <property name="text">
+        <string> roman:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="8">
+      <widget class="QFontComboBox" name="cmbUnicodeSymbol">
+       <property name="currentFont">
+        <font>
+         <family>Symbol</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="9">
+      <widget class="QComboBox" name="cmbEncodingSymbol">
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_14">
+       <property name="text">
+        <string>sans:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="3">
+      <widget class="QComboBox" name="cmbEncodingBlackboard">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QComboBox" name="cmbEncodingSerif">
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QComboBox" name="cmbEncodingSans">
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QFontComboBox" name="cmbUnicodeGreek">
+       <property name="currentFont">
+        <font>
+         <family>Symbol</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QFontComboBox" name="cmbUnicodeSans">
+       <property name="currentFont">
+        <font>
+         <family>Arial</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="9">
+      <widget class="QComboBox" name="cmbEncodingGreek">
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="7">
+      <widget class="QLabel" name="label_19">
+       <property name="text">
+        <string>greek:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QCheckBox" name="chkSimulateBlackboard">
+       <property name="text">
+        <string>simulate blackboard</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLabel" name="label_21">
+       <property name="text">
+        <string>fraktur:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="5">
+      <widget class="QFontComboBox" name="cmbUnicodeFraktur">
+       <property name="currentFont">
+        <font>
+         <family>Times New Roman</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="6">
+      <widget class="QComboBox" name="cmbEncodingFraktur">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QLabel" name="label_16">
+       <property name="text">
+        <string>caligraphic:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="5">
+      <widget class="QFontComboBox" name="cmbCaligraphic">
+       <property name="currentFont">
+        <font>
+         <family>Script</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="6">
+      <widget class="QComboBox" name="cmbEncodingCaligraphic">
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="7">
+      <widget class="QLabel" name="label_20">
+       <property name="text">
+        <string>script:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="8">
+      <widget class="QFontComboBox" name="cmbScript">
+       <property name="currentFont">
+        <font>
+         <family>Script</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="9">
+      <widget class="QComboBox" name="cmbEncodingScript">
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="7">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>typewriter:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="8">
+      <widget class="QFontComboBox" name="cmbUnicodeFixed">
+       <property name="currentFont">
+        <font>
+         <family>Courier New</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="9">
+      <widget class="QComboBox" name="cmbEncodingTypewriter">
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_22">
+       <property name="text">
+        <string>math- roman:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QFontComboBox" name="cmbUnicodeSerifMath">
+       <property name="currentFont">
+        <font>
+         <family>Times New Roman</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QComboBox" name="cmbEncodingSerifMath">
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLabel" name="label_23">
+       <property name="text">
+        <string>math-sans:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="5">
+      <widget class="QFontComboBox" name="cmbUnicodeSansMath">
+       <property name="currentFont">
+        <font>
+         <family>Arial</family>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="6">
+      <widget class="QComboBox" name="cmbEncodingSansMath">
+       <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>WinSymbol</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Unicode Limited</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Standard</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
@@ -461,238 +834,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>cmbTestset</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>130</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>421</x>
-     <y>36</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cmbFont</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>328</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>423</x>
-     <y>89</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkBoxes</sender>
-   <signal>clicked()</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>790</x>
-     <y>27</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>424</x>
-     <y>187</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkAntiAlias</sender>
-   <signal>clicked()</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>868</x>
-     <y>27</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>422</x>
-     <y>220</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkAntiAliasHQ</sender>
-   <signal>clicked()</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>964</x>
-     <y>27</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>423</x>
-     <y>259</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkAntiAliasText</sender>
-   <signal>clicked()</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1067</x>
-     <y>27</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>424</x>
-     <y>302</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>edtSizes</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>679</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>422</x>
-     <y>160</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>edtLatexPrefix</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>141</x>
-     <y>48</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>520</x>
-     <y>140</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>edtLatexPostfix</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>200</x>
-     <y>49</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>519</x>
-     <y>118</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cmbUnicodeSerif</sender>
-   <signal>currentFontChanged(QFont)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>416</x>
-     <y>54</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>519</x>
-     <y>201</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cmbUnicodeSans</sender>
-   <signal>currentFontChanged(QFont)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>553</x>
-     <y>45</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>175</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cmbUnicodeFixed</sender>
-   <signal>currentFontChanged(QFont)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>949</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>518</x>
-     <y>236</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cmbUnicodeSymbol</sender>
-   <signal>currentFontChanged(QFont)</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1221</x>
-     <y>57</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>520</x>
-     <y>288</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>chkSmoothTransform</sender>
-   <signal>clicked()</signal>
-   <receiver>TestForm</receiver>
-   <slot>updateMath()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1181</x>
-     <y>27</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>519</x>
-     <y>317</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>btnRender</sender>
    <signal>clicked()</signal>
    <receiver>TestForm</receiver>
    <slot>updateMath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1187</x>
-     <y>83</y>
+     <x>1512</x>
+     <y>163</y>
     </hint>
     <hint type="destinationlabel">
      <x>617</x>
