@@ -796,6 +796,20 @@ size_t JKQTPDatastore::addCalculatedColumn(size_t rows, const std::function<doub
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
+size_t JKQTPDatastore::addCalculatedImageColumn(size_t cols, size_t rows, const std::function<double (size_t, size_t)> &f, const QString &name)
+{
+    size_t col=addImageColumn(cols, rows, name);
+    JKQTPColumn& colref = columns[col];
+    for (size_t y=0; y<rows; y++) {
+        for (size_t x=0; x<cols; x++) {
+            colref.setPixelValue(x, y, f(x,y));
+        }
+    }
+    return col;
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
 size_t JKQTPDatastore::addColumnCalculatedFromColumn(size_t otherColumn, const std::function<double (double)> &f, const QString &name)
 {
     const JKQTPColumn& oc=columns.value(otherColumn);

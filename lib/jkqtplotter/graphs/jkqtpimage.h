@@ -552,6 +552,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         /*! \copydoc palette */
         void setPalette(const JKQTPMathImageColorPalette & __value);
         /*! \copydoc palette */
+        void setPalette(int pal);
+        /*! \copydoc palette */
         JKQTPMathImageColorPalette getPalette() const;
         /*! \copydoc rangeMinFailAction */
         void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value);
@@ -654,7 +656,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase {
         /*! \copydoc modifierMax */
         double getModifierMax() const;
 
-        void setPalette(int pal);
+
 
         /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 

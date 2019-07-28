@@ -290,15 +290,15 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
             if (rgbMode==JKQTPRGBMathImageModeRGBMode) {
                 d.palette=JKQTPMathImageRED;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
+                JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
             } else if (rgbMode==JKQTPRGBMathImageModeCMYMode) {
                 d.palette=JKQTPMathImageINVERTED_CYANWHITE;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
+                JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
             } else if (rgbMode==JKQTPRGBMathImageModeHSVMode || rgbMode==JKQTPRGBMathImageModeHSLMode) {
                 d.palette=JKQTPMathImageHSV;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
+                JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
             }
 
             l<<d;
@@ -313,19 +313,19 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
             d.colorBarRightAxis=colorBarRightAxisG;
             d.colorBarTopAxis=colorBarTopAxisG;
             d.name=imageNameG;
-            JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, 199);
+            JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, 199);
             if (rgbMode==JKQTPRGBMathImageModeRGBMode) {
                 d.palette=JKQTPMathImageGREEN;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
+                JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
             } else if (rgbMode==JKQTPRGBMathImageModeCMYMode) {
                 d.palette=JKQTPMathImageINVERTED_MAGENTAWHITE;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
+                JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
             } else if (rgbMode==JKQTPRGBMathImageModeHSVMode) {
                 d.palette=JKQTPMathImageGRAY;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                //JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
+                //JKQTPImageTools::JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");
@@ -335,7 +335,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
             } else if (rgbMode==JKQTPRGBMathImageModeHSLMode) {
                 d.palette=JKQTPMathImageGRAY;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                //JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
+                //JKQTPImageTools::JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");
@@ -356,19 +356,19 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
             d.colorBarRightAxis=colorBarRightAxisB;
             d.colorBarTopAxis=colorBarTopAxisB;
             d.name=imageNameB;
-            JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, 199);
+            JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, 199);
             if (rgbMode==JKQTPRGBMathImageModeRGBMode) {
                 d.palette=JKQTPMathImageBLUE;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
+                JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
             } else if (rgbMode==JKQTPRGBMathImageModeCMYMode) {
                 d.palette=JKQTPMathImageINVERTED_YELLOWWHITE;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
+                JKQTPImageTools::array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, d.palette, 0, pd_size-1);
             } else if (rgbMode==JKQTPRGBMathImageModeHSVMode) {
                 d.palette=JKQTPMathImageGRAY;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                //JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
+                //JKQTPImageTools::JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");
@@ -378,7 +378,7 @@ void JKQTPRGBMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect /*leftS
             } else if (rgbMode==JKQTPRGBMathImageModeHSLMode) {
                 d.palette=JKQTPMathImageGRAY;
                 d.paletteImage=QImage(1, pd_size, QImage::Format_ARGB32);
-                //JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
+                //JKQTPImageTools::JKQTPImagePlot_array2image<uint8_t>(pd, 1, pd_size, d.paletteImage, l[li].palette, 0, pd_size-1);
                 QRgb* line=reinterpret_cast<QRgb *>(d.paletteImage.scanLine(0));
                 for (int i=0; i<pd_size; i++) {
                     QColor c=QColor("red");

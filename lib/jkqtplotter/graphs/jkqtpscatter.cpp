@@ -509,7 +509,7 @@ void JKQTPXYParametrizedScatterGraph::drawKeyMarker(JKQTPEnhancedPainter &painte
         } else {
             QImage img;
             double colorval[]={0,1};
-            JKQTPImagePlot_array2image<double>(colorval, 2, 1, img, getPalette(), double(0.0), double(1.0));
+            JKQTPImageTools::array2image<double>(colorval, 2, 1, img, getPalette(), double(0.0), double(1.0));
             color1=img.pixel(0,0);
             color2=img.pixel(1,0);
         }
@@ -852,7 +852,7 @@ QColor JKQTPXYParametrizedScatterGraph::getLocalColor(int i) const
             colMin=intColMin;
             colMax=intColMax;
         }
-        JKQTPImagePlot_array2image(&colorval, 1, 1, img, palette, colMin, colMax);
+        JKQTPImageTools::array2image(&colorval, 1, 1, img, palette, colMin, colMax);
         return img.pixel(0,0);
     }
 

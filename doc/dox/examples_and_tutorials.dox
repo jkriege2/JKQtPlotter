@@ -101,6 +101,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html imageplot_small.png
     <td> \subpage JKQTPlotterImagePlot
     <td> `JKQTPColumnMathImage` <br> image data copied from C-style row-major array into a single column of the internal datastore <br> Describes several options of the image plotting classes (different ways of color coding, what to do with data above/below the limits etc.) 
+<tr><td> \image html imageplot_userpal_program_small.png
+    <td> \subpage JKQTPlotterImagePlotUserPalette
+    <td> `JKQTPColumnMathImage` <br> user-defines palettes <br> palettes from files
 <tr><td> \image html imageplot_modifier_small.png
     <td> \subpage JKQTPlotterImagePlotModifier
     <td> `JKQTPColumnMathImage` <br> image data copied from C-style row-major array into a single column of the internal datastore <br> Image is modified by a second image to display two data dimensions at the same time 
@@ -146,6 +149,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html test_styling_small.png
     <td> \subpage JKQTPlotterStyling
     <td> Modifying different Aspects of the Styling of JKQTPlotter
+<tr><td> \image html imageplot_userpal_small.png
+    <td> \subpage JKQTPlotterImagePlotUserPalette
+    <td> `JKQTPColumnMathImage` <br> user-defines palettes <br> palettes from files
 </table>
 
 

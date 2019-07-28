@@ -31,10 +31,10 @@ JKQTPMathImageColorPaletteComboBox::JKQTPMathImageColorPaletteComboBox(QWidget *
     QComboBox(parent)
 {
     setIconSize(QSize(JKQTPImageTools::PALETTE_ICON_WIDTH,16));
-    QStringList pal=JKQTPImagePlot_getPredefinedPalettes();
+    QStringList pal=JKQTPImageTools::getPredefinedPalettes();
     clear();
     for (int i=0; i<pal.size(); i++) {
-        addItem(JKQTPMathImageGetPaletteIcon(i), pal[i]);
+        addItem(JKQTPImageTools::GetPaletteIcon(i), pal[i]);
     }
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(intIndexChanged(int)));
 }

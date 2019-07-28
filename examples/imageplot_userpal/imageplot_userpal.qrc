@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/usercolorpalettes">
+        <file>palettes/All_idl_cmaps.xml</file>
+        <file>palettes/All_mpl_cmaps.xml</file>
+        <file>palettes/CoolWarmUChar33.csv</file>
+        <file>palettes/CoolWarmUChar257.csv</file>
+        <file>palettes/NSW_Discrete_Z_ColorMap.xml</file>
+    </qresource>
+</RCC>

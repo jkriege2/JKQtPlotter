@@ -1225,7 +1225,7 @@ QImage JKQTPMathImage::drawOutsidePalette(uint8_t steps)
     }
 
     QImage b(h,200, QImage::Format_ARGB32);
-    JKQTPImagePlot_array2image<double>(d,h,steps, b, palette, 0, steps-1);
+    JKQTPImageTools::array2image<double>(d,h,steps, b, palette, 0, steps-1);
     //b.save("c:/temp/b1.png");
     if (modifierMode!=ModifyNone) {
         modifyImage(b, dd, DoubleArray, h,steps, 0, h-1);
@@ -1265,7 +1265,7 @@ void JKQTPMathImage::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
 }
 
 QStringList JKQTPMathImage::getPalettes()  {
-    return JKQTPImagePlot_getPredefinedPalettes();
+    return JKQTPImageTools::getPredefinedPalettes();
 }
 
 int JKQTPMathImage::getPalettesCount()
@@ -1297,7 +1297,7 @@ QImage JKQTPMathImage::getPaletteImage(int i, int width, int height)
     for (int j=0; j<width; j++) {
         pic[j]=j;
     }
-    JKQTPImagePlot_array2image<double>(pic, width, qMax(1,height), img, (JKQTPMathImageColorPalette)i, 0, width-1);
+    JKQTPImageTools::array2image<double>(pic, width, qMax(1,height), img, static_cast<JKQTPMathImageColorPalette>(i), 0, width-1);
     free(pic);
     return img;
 }
@@ -1346,7 +1346,7 @@ QImage JKQTPMathImage::getPaletteKeyImage(int i, int width, int height)
         pic[j]=exp(-0.5*(double((x-x01)*double(x-x01))/w1x+double((y-y01)*double(y-y01))/w1y))+0.7*exp(-0.5*(double((x-x02)*double(x-x02))/w2x+double((y-y02)*double(y-y02))/w2y));
         if (pic[j]>mmax) mmax=pic[j];
     }
-    JKQTPImagePlot_array2image<double>(pic, width, height, img, (JKQTPMathImageColorPalette)i, 0, mmax);
+    JKQTPImageTools::array2image<double>(pic, width, height, img, static_cast<JKQTPMathImageColorPalette>(i), 0, mmax);
     free(pic);
     return img;
 }
@@ -1616,16 +1616,16 @@ QImage JKQTPMathImage::drawImage() {
     QImage img(Nx, Ny, QImage::Format_ARGB32);
     getDataMinMax(internalDataMin, internalDataMax);
     switch(datatype) {
-        case JKQTPMathImageBase::DoubleArray: JKQTPImagePlot_array2image<double>(static_cast<double*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::FloatArray: JKQTPImagePlot_array2image<float>(static_cast<float*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::UInt8Array: JKQTPImagePlot_array2image<uint8_t>(static_cast<uint8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::UInt16Array: JKQTPImagePlot_array2image<uint16_t>(static_cast<uint16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::UInt32Array: JKQTPImagePlot_array2image<uint32_t>(static_cast<uint32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::UInt64Array: JKQTPImagePlot_array2image<uint64_t>(static_cast<uint64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::Int8Array: JKQTPImagePlot_array2image<int8_t>(static_cast<int8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::Int16Array: JKQTPImagePlot_array2image<int16_t>(static_cast<int16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::Int32Array: JKQTPImagePlot_array2image<int32_t>(static_cast<int32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageBase::Int64Array: JKQTPImagePlot_array2image<int64_t>(static_cast<int64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::DoubleArray: JKQTPImageTools::array2image<double>(static_cast<double*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::FloatArray: JKQTPImageTools::array2image<float>(static_cast<float*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::UInt8Array: JKQTPImageTools::array2image<uint8_t>(static_cast<uint8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::UInt16Array: JKQTPImageTools::array2image<uint16_t>(static_cast<uint16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::UInt32Array: JKQTPImageTools::array2image<uint32_t>(static_cast<uint32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::UInt64Array: JKQTPImageTools::array2image<uint64_t>(static_cast<uint64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::Int8Array: JKQTPImageTools::array2image<int8_t>(static_cast<int8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::Int16Array: JKQTPImageTools::array2image<int16_t>(static_cast<int16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::Int32Array: JKQTPImageTools::array2image<int32_t>(static_cast<int32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageBase::Int64Array: JKQTPImageTools::array2image<int64_t>(static_cast<int64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
     }
     modifyImage(img);
     return img;

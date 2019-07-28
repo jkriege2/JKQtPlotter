@@ -509,6 +509,9 @@ Examples:
 \defgroup jkqtplotter_imagelots_tools Tool Functions & Classes for Image Drawing
 \ingroup jkqtplotter_imagelots
 
+\defgroup jkqtplotter_imagelots_tools_LUTS Tool Functions to Build Lookup-Tables for Palettes
+\ingroup jkqtplotter_imagelots_tools
+
 \defgroup jkqtplotter_imagelots_contour Contour Graphs (based on Image Data)
 \ingroup jkqtplotter_imagelots
 

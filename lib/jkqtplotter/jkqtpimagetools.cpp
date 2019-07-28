@@ -131,7 +131,7 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter& pa
           }
          }
          QImage b(h, 200, QImage::Format_ARGB32);
-         JKQTPImagePlot_array2image<uint8_t>(d, h, 200, b, palette, 0, 199);
+         JKQTPImageTools::array2image<uint8_t>(d, h, 200, b, palette, 0, 199);
 
 
          QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
@@ -183,7 +183,7 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter& pa
           }
          }
          QImage b(h,200, QImage::Format_ARGB32);
-         JKQTPImagePlot_array2image<uint8_t>(d,h,200, b, palette, 0, 199);
+         JKQTPImageTools::array2image<uint8_t>(d,h,200, b, palette, 0, 199);
 
          QSizeF names=cbParent->getTextSizeSize(imageNameFontName, imageNameFontSize*cbParent->getFontSizeMultiplier(), imageName, painter);
 
@@ -229,7 +229,7 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter& pa
 
 
 QStringList JKQTPColorPaletteStyleAndToolsMixin::getPalettes()  {
-    return JKQTPImagePlot_getPredefinedPalettes();
+    return JKQTPImageTools::getPredefinedPalettes();
 }
 
 int JKQTPColorPaletteStyleAndToolsMixin::getPalettesCount()
@@ -261,7 +261,7 @@ QImage JKQTPColorPaletteStyleAndToolsMixin::getPaletteImage(int i, int width)
     for (int j=0; j<width; j++) {
      pic[j]=j;
     }
-    JKQTPImagePlot_array2image<double>(pic, width, 1, img, (JKQTPMathImageColorPalette)i, 0, width-1);
+    JKQTPImageTools::array2image<double>(pic, width, 1, img, static_cast<JKQTPMathImageColorPalette>(i), 0, width-1);
     free(pic);
     return img;
 }
@@ -310,7 +310,7 @@ QImage JKQTPColorPaletteStyleAndToolsMixin::getPaletteKeyImage(int i, int width,
      pic[j]=exp(-0.5*(double((x-x01)*double(x-x01))/w1x+double((y-y01)*double(y-y01))/w1y))+0.7*exp(-0.5*(double((x-x02)*double(x-x02))/w2x+double((y-y02)*double(y-y02))/w2y));
      if (pic[j]>mmax) mmax=pic[j];
     }
-    JKQTPImagePlot_array2image<double>(pic, width, height, img, (JKQTPMathImageColorPalette)i, 0, mmax);
+    JKQTPImageTools::array2image<double>(pic, width, height, img, static_cast<JKQTPMathImageColorPalette>(i), 0, mmax);
     free(pic);
     return img;
 }
@@ -322,7 +322,7 @@ QImage JKQTPColorPaletteStyleAndToolsMixin::getPaletteKeyImage(JKQTPMathImageCol
 
 
 void JKQTPColorPaletteStyleAndToolsMixin::setPalette(int pal) {
-    palette=(JKQTPMathImageColorPalette)pal;
+    palette=static_cast<JKQTPMathImageColorPalette>(pal);
 }
 
 void JKQTPColorPaletteStyleAndToolsMixin::cbSetParent(JKQTBasePlotter* parent) {

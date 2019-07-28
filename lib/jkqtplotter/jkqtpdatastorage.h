@@ -1229,6 +1229,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
          */
         size_t addCalculatedColumn(size_t rows, const std::function<double(size_t)>& f, const QString& name=QString(""));
+        /** \brief add an image column with width \a cols and height \a rows (i.e. \a rows * \a cols entries), that is calculated by calling \a f for each entry
+         *
+         * Pseudocode:
+         * \code
+         *   for (y=0; y<rows; y++) {
+         *     for (x=0; x<cols; x++) {
+         *       newColumn.push_back(f(x,y));
+         *     }
+         *   }
+         *   return newColumn;
+         * \endcode
+         *
+         *  \see addColumnCalculatedFromColumn(), \ref JKQTPlotterBasicJKQTPDatastore
+         */
+        size_t addCalculatedImageColumn(size_t cols, size_t rows, const std::function<double(size_t,size_t)>& f, const QString& name=QString(""));
         /** \brief add a column with the same number of entries, as in the other column \a otherColumn , that are calculated by calling \a f for each entry in \a otherColumn
          *
          * Pseudocode:
