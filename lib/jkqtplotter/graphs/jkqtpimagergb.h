@@ -34,11 +34,18 @@
 
 
 
-/*! \brief class to plot an image from an 2-dimensional array of values
+/*! \brief class to plot an image from an 2-dimensional array of RGB values
     \ingroup jkqtplotter_imagelots_elements
+
+    This class extends JKQTPMathImageBase and interprets the data array JKQTPMathImageBase::data as
+    the 1st (RED) color channel and adds two more channels for GREEN and BLUE.
+
+    Using setRgbMode() you can also use a different color system than RGB.
 
     \image html rgbimageplots.png
     \image html rgbimageplot_opencv.png
+
+    \see Examples: \ref JKQTPlotterRGBImagePlot and  \ref JKQTPlotterImagePlotRGBOpenCV
 */
 class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         Q_OBJECT
@@ -59,7 +66,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
          * \param parent parent plotter object
          *
          */
-        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPRGBMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor
          *
@@ -74,7 +81,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
          * \param parent parent plotter object
          *
          */
-        JKQTPRGBMathImage(double x, double y, double width, double height, DataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
+        JKQTPRGBMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
 
         /** \brief class constructor
          *
@@ -97,12 +104,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
         /** \brief set the plot-data to a given array \a data (red), \a dataG (green), \a dataB (blue) with size \a Nx * \a Ny in row-major ordering and with the given \a datatype */
-        virtual void setData(void* dataR, void* dataG, void* dataB, int Nx, int Ny, DataType datatype);
+        virtual void setData(void* dataR, void* dataG, void* dataB, int Nx, int Ny, JKQTPMathImageDataType datatype);
         /** \brief set the plot-data to a given array \a data (red), \a dataG (green), \a dataB (blue) with size \a Nx * \a Ny in row-major ordering  */
         virtual void setData(void* dataR, void* dataG, void* dataB,  int Nx, int Ny);
 
         /** \brief set the plot-data to a given array \a data (red) with size \a Nx * \a Ny in row-major ordering and with the given \a datatype  */
-        virtual void setData(void* dataR, int Nx, int Ny, DataType datatype) override;
+        virtual void setData(void* dataR, int Nx, int Ny, JKQTPMathImageDataType datatype) override;
         /** \brief set the plot-data to a given array \a data (red) with size \a Nx * \a Ny in row-major ordering  */
         virtual void setData(void* dataR,  int Nx, int Ny) override ;
 
@@ -116,26 +123,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         /*! \copydoc data */
         void* getDataR() const;
         /*! \copydoc datatype */
-        void setDatatypeR(DataType __value);
+        void setDatatypeR(JKQTPMathImageDataType __value);
         /*! \copydoc datatype */
-        DataType getDatatypeR() const;
+        JKQTPMathImageDataType getDatatypeR() const;
 
         /*! \copydoc dataG */
         virtual void setDataG(void* __value);
         /*! \copydoc dataG */
         void* getDataG() const;
         /*! \copydoc datatypeG */
-        void setDatatypeG(DataType __value);
+        void setDatatypeG(JKQTPMathImageDataType __value);
         /*! \copydoc datatypeG */
-        DataType getDatatypeG() const;
+        JKQTPMathImageDataType getDatatypeG() const;
         /*! \copydoc dataB */ 
         virtual void setDataB(void* __value);
         /*! \copydoc dataB */ 
         void* getDataB() const;
         /*! \copydoc datatypeB */ 
-        void setDatatypeB(DataType __value);
+        void setDatatypeB(JKQTPMathImageDataType __value);
         /*! \copydoc datatypeB */ 
-        DataType getDatatypeB() const;
+        JKQTPMathImageDataType getDatatypeB() const;
         /*! \copydoc showColorBar */ 
         void setShowColorBar(bool __value);
         /*! \copydoc showColorBar */ 
@@ -256,6 +263,35 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         void setRgbMode(JKQTPRGBMathImageRGBMode __value);
         /*! \copydoc rgbMode */ 
         JKQTPRGBMathImageRGBMode getRgbMode() const;
+        /*! \copydoc modifierMode */
+        void setModifierMode(const JKQTPMathImageModifierMode & __value);
+        /*! \copydoc modifierMode */
+        JKQTPMathImageModifierMode getModifierMode() const;
+
+        /*! \copydoc colorBarModifiedWidth */
+        void setColorBarModifiedWidth(double __value);
+        /*! \copydoc colorBarModifiedWidth */
+        double getColorBarModifiedWidth() const;
+        /*! \copydoc modifierColorBarTopAxis */
+        JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis();
+        /*! \copydoc modifierColorBarRightAxis */
+        JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis();
+        /*! \copydoc modifierColorBarTopAxis */
+        const JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const;
+        /*! \copydoc modifierColorBarRightAxis */
+        const JKQTPHorizontalIndependentAxis *getModifierColorBarRightAxis()  const;
+        /*! \copydoc autoModifierRange */
+        void setAutoModifierRange(bool __value);
+        /*! \copydoc autoModifierRange */
+        bool getAutoModifierRange() const;
+        /*! \copydoc modifierMin */
+        void setModifierMin(double __value);
+        /*! \copydoc modifierMin */
+        double getModifierMin() const;
+        /*! \copydoc modifierMax */
+        void setModifierMax(double __value);
+        /*! \copydoc modifierMax */
+        double getModifierMax() const;
 
         /** \brief return the data of the green channel used for plotting as a QVector<double> in row-major data-ordering */
         QVector<double> getDataGAsDoubleVector() const;
@@ -296,11 +332,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         /** \brief points to the data array, holding the image */
         void* dataG;
         /** \brief datatype of the data array data */
-        DataType datatypeG;
+        JKQTPMathImageDataType datatypeG;
         /** \brief points to the data array, holding the image */
         void* dataB;
         /** \brief datatype of the data array data */
-        DataType datatypeB;
+        JKQTPMathImageDataType datatypeB;
 
         /** \brief how to interpret the three data channels red, green and blue */
         JKQTPRGBMathImageRGBMode rgbMode;
@@ -376,7 +412,30 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
         JKQTPHorizontalIndependentAxis* colorBarTopAxisB;
+        /** \brief indicates whether to estimate min/max of the modifier automatically */
+        bool autoModifierRange;
+        /** \brief modifier value range minimum */
+        double modifierMin;
+        /** \brief modifier value range maximum */
+        double modifierMax;
+        /** \brief width of the color bar when modifier is on */
+        double colorBarModifiedWidth;
+        /** \brief how to apply the modifier column dataModifier
+         *  \see ModifierMode
+         */
+        JKQTPMathImageModifierMode modifierMode;
 
+
+        /** \brief object used for color bar axes (right border, modifier image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
+        JKQTPVerticalIndependentAxis* modifierColorBarTopAxis;
+        /** \brief object used for color bar axes (top border, modifier image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
+        JKQTPHorizontalIndependentAxis* modifierColorBarRightAxis;
 
         /** \brief internal storage for minimum of the green image value range
          *

@@ -550,29 +550,29 @@ void JKQTPSpecialLineTypeComboBox::addStep(JKQTPSpecialLineType step, const QStr
 
 JKQTPImageModifierModeComboBox::JKQTPImageModifierModeComboBox(QWidget * /*parent*/)
 {
-    addMode(JKQTPMathImageBase::ModifyNone, tr("none"));
-    addMode(JKQTPMathImageBase::ModifyValue, tr("value"));
-    addMode(JKQTPMathImageBase::ModifySaturation, tr("saturation"));
-    addMode(JKQTPMathImageBase::ModifyAlpha, tr("alpha/transparency"));
-    addMode(JKQTPMathImageBase::ModifyLuminance, tr("luminance"));
-    addMode(JKQTPMathImageBase::ModifyHue, tr("hue"));
+    addMode(JKQTPMathImageModifierMode::ModifyNone, tr("none"));
+    addMode(JKQTPMathImageModifierMode::ModifyValue, tr("value"));
+    addMode(JKQTPMathImageModifierMode::ModifySaturation, tr("saturation"));
+    addMode(JKQTPMathImageModifierMode::ModifyAlpha, tr("alpha/transparency"));
+    addMode(JKQTPMathImageModifierMode::ModifyLuminance, tr("luminance"));
+    addMode(JKQTPMathImageModifierMode::ModifyHue, tr("hue"));
 }
 
-JKQTPMathImageBase::ModifierMode JKQTPImageModifierModeComboBox::getModifierMode() const
+JKQTPMathImageModifierMode JKQTPImageModifierModeComboBox::getModifierMode() const
 {
     bool ok=false;
-    JKQTPMathImageBase::ModifierMode m=JKQTPMathImageBase::ModifyNone;
-    if (currentIndex()>=0) m=JKQTPMathImageBase::ModifierMode(itemData(currentIndex()).toInt(&ok));
-    if (!ok) m=JKQTPMathImageBase::ModifyNone;
+    JKQTPMathImageModifierMode m=JKQTPMathImageModifierMode::ModifyNone;
+    if (currentIndex()>=0) m=JKQTPMathImageModifierMode(itemData(currentIndex()).toInt(&ok));
+    if (!ok) m=JKQTPMathImageModifierMode::ModifyNone;
     return m;
 }
 
-void JKQTPImageModifierModeComboBox::setModifierMode(JKQTPMathImageBase::ModifierMode mode)
+void JKQTPImageModifierModeComboBox::setModifierMode(JKQTPMathImageModifierMode mode)
 {
     setCurrentIndex(findData(static_cast<int>(mode)));
 }
 
-void JKQTPImageModifierModeComboBox::addMode(JKQTPMathImageBase::ModifierMode mode, const QString &name, const QIcon &icon)
+void JKQTPImageModifierModeComboBox::addMode(JKQTPMathImageModifierMode mode, const QString &name, const QIcon &icon)
 {
     addItem(icon, name, static_cast<int>(mode));
 }

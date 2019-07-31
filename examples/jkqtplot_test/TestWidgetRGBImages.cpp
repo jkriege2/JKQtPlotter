@@ -50,7 +50,7 @@ TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
             rgb_aimg2[y*100+x]=double(x)/100.0;
         }
     }
-    rgbimg=new JKQTPRGBMathImage(0,0,10,10, JKQTPMathImageBase::DoubleArray, rgb_rimg2, 100, 100, plotImgRGB->getPlotter());
+    rgbimg=new JKQTPRGBMathImage(0,0,10,10, JKQTPMathImageDataType::DoubleArray, rgb_rimg2, 100, 100, plotImgRGB->getPlotter());
     rgbimg->setImageMin(-1);
     rgbimg->setImageMax(0.5);
     rgbimg->setImageMinB(-1);
@@ -58,9 +58,9 @@ TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
     rgbimg->setImageName("R image");
     rgbimg->setImageNameG("G image");
     rgbimg->setImageNameB("B image");
-    rgbimg->setData(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageBase::DoubleArray);
-    rgbimg->setDataModifier(rgb_aimg2, JKQTPMathImageBase::DoubleArray);
-    rgbimg->setModifierMode(JKQTPMathImageBase::ModifyNone);
+    rgbimg->setData(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageDataType::DoubleArray);
+    rgbimg->setDataModifier(rgb_aimg2, JKQTPMathImageDataType::DoubleArray);
+    rgbimg->setModifierMode(JKQTPMathImageModifierMode::ModifyNone);
     plotImgRGB->getPlotter()->addGraph(rgbimg);
     rgbimg->setAutoImageRange(false);
     rgbimg->setColorBarTopVisible(true);
@@ -80,8 +80,8 @@ TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
     rgbimg2->setImageGColumn(rgb_colg=plotImgRGB->getDatastore()->addCopiedColumn(rgb_gimg2, 100*100, "G"));
     rgbimg2->setImageBColumn(rgb_colb=plotImgRGB->getDatastore()->addCopiedColumn(rgb_rimg2, 100*100, "B"));
     rgbimg2->setModifierColumn(rgb_cola=plotImgRGB->getDatastore()->addCopiedColumn(rgb_aimg2, 100*100, "alpha"));
-    rgbimg2->setModifierMode(JKQTPMathImageBase::ModifyNone);
-    //rgbimg2->setData(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageBase::DoubleArray);
+    rgbimg2->setModifierMode(JKQTPMathImageModifierMode::ModifyNone);
+    //rgbimg2->setData(rgb_rimg2, rgb_gimg2, rgb_bimg2, 100, 100, JKQTPMathImageDataType::DoubleArray);
     plotImgRGB->getPlotter()->addGraph(rgbimg2);
     rgbimg2->setAutoImageRange(true);
     rgbimg2->setColorBarTopVisible(true);
@@ -195,8 +195,8 @@ void TestWidgetRGBImages::updateRGBChannels()
 
 void TestWidgetRGBImages::setRGBModifier(int item)
 {
-    rgbimg->setModifierMode(JKQTPMathImage::ModifierMode(item));
-    rgbimg2->setModifierMode(JKQTPMathImage::ModifierMode(item));
+    rgbimg->setModifierMode(static_cast<JKQTPMathImageModifierMode>(item));
+    rgbimg2->setModifierMode(static_cast<JKQTPMathImageModifierMode>(item));
     plotImgRGB->redrawPlot();
 }
 

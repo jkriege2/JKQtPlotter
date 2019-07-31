@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
     graph->setModifierColumn(cModifier);
     graph->setAutoModifierRange(true);
     // ... and specify which image property is modified (here the saturation, but ModifyAlpha for the transparency and ModifyValue from the HSV color-model are also possible):
-    graph->setModifierMode(JKQTPMathImageBase::ModifySaturation);
+    graph->setModifierMode(JKQTPMathImageModifierMode::ModifySaturation);
     // set size of the data (the datastore does not contain this info, as it only manages 1D columns of data and this is used to assume a row-major ordering
     graph->setNx(NX);
     graph->setNy(NY);

@@ -429,7 +429,7 @@ JKQTPColumnContourPlot::JKQTPColumnContourPlot(JKQTBasePlotter *parent):
     JKQTPContourPlot(parent)
 {
     this->imageColumn=imageColumn;
-    this->datatype=JKQTPMathImageBase::DoubleArray;
+    this->datatype=JKQTPMathImageDataType::DoubleArray;
 }
 
 JKQTPColumnContourPlot::JKQTPColumnContourPlot(JKQTPlotter *parent):
@@ -466,9 +466,9 @@ void JKQTPColumnContourPlot::ensureImageData()
     if (this->Nx==0 || imageColumn<0 || !parent->getDatastore()->getColumnPointer(imageColumn,0)) {
         this->Ny=0;
         this->data=nullptr;
-        this->datatype=JKQTPMathImageBase::DoubleArray;
+        this->datatype=JKQTPMathImageDataType::DoubleArray;
     } else {
-        this->datatype=JKQTPMathImageBase::DoubleArray;
+        this->datatype=JKQTPMathImageDataType::DoubleArray;
         this->data=parent->getDatastore()->getColumnPointer(imageColumn,0);
         this->Ny=static_cast<int>(parent->getDatastore()->getRows(imageColumn)/this->Nx);
     }

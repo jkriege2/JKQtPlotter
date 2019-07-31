@@ -31,6 +31,21 @@
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include "jkqtcommon/jkqtpmathtools.h"
 
+/** \brief possible datatypes of the data array, plotted by this class.
+    \ingroup jkqtplotter_imagelots_tools
+ */
+enum class JKQTPMathImageDataType {
+    FloatArray, /*!< Data is of type \c float */
+    DoubleArray, /*!< Data is of type \c double */
+    UInt8Array, /*!< Data is of type \c uint8_t */
+    UInt16Array, /*!< Data is of type \c uint16_t */
+    UInt32Array, /*!< Data is of type \c uint32_t */
+    UInt64Array, /*!< Data is of type \c uint8_t */
+    Int8Array, /*!< Data is of type \c int8_t */
+    Int16Array, /*!< Data is of type \c int16_t */
+    Int32Array, /*!< Data is of type \c int32_t */
+    Int64Array /*!< Data is of type \c int64_t */
+};
 
 /*! \brief retrieve an R/G/B/Alpha (\a ch == 0/1/2/3) value from the \c QRgb value \a rgb
     \ingroup jkqtplotter_imagelots_tools
@@ -1029,6 +1044,32 @@ JKQTPImageTools::LUTType JKQTCOMMON_LIB_EXPORT JKQTPBuildColorPaletteLUT(const Q
 
 
 
+/** \brief describes how to modify a rendered image with a second data array \see ModifierModeToString(), StringToModifierMode(), JKQTPImageModifierModeComboBox
+    \ingroup jkqtplotter_imagelots_tools*/
+enum class JKQTPMathImageModifierMode {
+    ModifyNone=0,  /*!< no modification \image html JKQTPMathImageBaseModifyNone.png */
+    ModifyValue=1,  /*!< modify the VALUE-channel from the HSV color space \image html JKQTPMathImageBaseModifyValue.png */
+    ModifySaturation=2,/*!< modify the SATURATION-channel from the HSV color space \image html JKQTPMathImageBaseModifySaturation.png */
+    ModifyAlpha=3,/*!< modify the ALPHA/TRANSPARENCY-channel from the RGBA color space \image html JKQTPMathImageBaseModifyAlpha.png */
+    ModifyTransparency=ModifyAlpha,/*!< \see ModifyAlpha */
+    ModifyLuminance=4,/*!< modify the LUMINANCE-channel from the HSL color space \image html JKQTPMathImageBaseModifyLuminance.png */
+    ModifyHue=5,/*!< modify the VALUE-channel from the HSV color space \image html JKQTPMathImageBaseModifyHue.png */
+};
+
+/** \brief convert a ModifierMode to a string
+    \ingroup jkqtplotter_imagelots_tools
+  \see ModifierModeToString(), ModifierMode */
+JKQTPMathImageModifierMode JKQTCOMMON_LIB_EXPORT StringToModifierMode(const QString& mode);
+
+/** \brief convert a string to a ModifierMode
+    \ingroup jkqtplotter_imagelots_tools
+  \see StringToModifierMode(), ModifierMode */
+QString JKQTCOMMON_LIB_EXPORT ModifierModeToString(const JKQTPMathImageModifierMode& mode);
+
+/** \brief modify the given image \a img, using  modifier image \a dataModifier (of type \a datatypeModifier and size \a Nx * \a Ny), using values in the range \a internalModifierMin ... \a internalModifierMax )
+    \ingroup jkqtplotter_imagelots_tools
+ */
+void JKQTCOMMON_LIB_EXPORT JKQTPModifyImage(QImage& img, JKQTPMathImageModifierMode modifierMode, void* dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
 
 
 

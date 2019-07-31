@@ -36,6 +36,7 @@ class JKQTPVerticalIndependentAxis; // forward
 class JKQTPHorizontalIndependentAxis; // forward
 class JKQTBasePlotter; // forward
 
+
 /*! \brief if a class is derived from this class, it may use color bars
     \ingroup jkqtplotter_imagelots_tools
  */
@@ -55,18 +56,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteIcon(JKQTPMathImageColorPalette palette) ;
         /*! \brief get QIcon representing the given palette */
-        static QImage getPaletteImage(int i, int width) ;
+        static QImage getPaletteImage(int i, size_t width) ;
         /*! \brief get QIcon representing the given palette */
-        static QImage getPaletteImage(JKQTPMathImageColorPalette palette, int width) ;
+        static QImage getPaletteImage(JKQTPMathImageColorPalette palette, size_t width) ;
 
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteKeyIcon(int i) ;
         /*! \brief get QIcon representing the given palette */
         static QIcon getPaletteKeyIcon(JKQTPMathImageColorPalette palette) ;
         /*! \brief get QIcon representing the given palette */
-        static QImage getPaletteKeyImage(int i, int width, int height) ;
+        static QImage getPaletteKeyImage(int i, size_t width, size_t height) ;
         /*! \brief get QIcon representing the given palette */
-        static QImage getPaletteKeyImage(JKQTPMathImageColorPalette palette, int width, int height) ;
+        static QImage getPaletteKeyImage(JKQTPMathImageColorPalette palette, size_t width, size_t height) ;
 
 
 
@@ -75,7 +76,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
 
             \note If you want to draw outside, then you'll also have to implement drawOutside()
          */
-        void cbGetOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace);
+        virtual void cbGetOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace);
 
         /*! \brief plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
 
@@ -83,11 +84,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
 
             The four value supplied tell the method where to draw (inside one of the rectangles).
          */
-        void cbDrawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
+        virtual void cbDrawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace);
 
 
         /** \brief set the parent class for internal objects (e.g. color bars) */
-        void cbSetParent(JKQTBasePlotter* parent);
+        virtual void cbSetParent(JKQTBasePlotter* parent);
 
 
         /** \brief determine min/max data value of the image */
@@ -228,16 +229,122 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
         QColor infColor;
 
 
-        /** \brief object used for color bar axes
+        /** \brief object used for color bar axes at the right
          *
          *  \note this axis has some kind of a special role. It is used to format color bar axes
          */
         JKQTPVerticalIndependentAxis* colorBarRightAxis;
+        /** \brief object used for color bar axes at the top
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
         JKQTPHorizontalIndependentAxis* colorBarTopAxis;
 
 
 
 };
+
+
+
+/*! \brief if a class is derived from this class, it may use color bars that have 2 axes (one "data"/color axis and one "modifier" axis)
+    \ingroup jkqtplotter_imagelots_tools
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteWithModifierStyleAndToolsMixin : public JKQTPColorPaletteStyleAndToolsMixin {
+        Q_GADGET
+    public:
+
+
+
+        JKQTPColorPaletteWithModifierStyleAndToolsMixin(JKQTBasePlotter *parent);
+        virtual ~JKQTPColorPaletteWithModifierStyleAndToolsMixin()=default;
+
+        /*! \brief if the graph plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
+
+            \note If you want to draw outside, then you'll also have to implement drawOutside()
+         */
+        virtual void cbGetOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace) override;
+
+        /*! \brief plots outside the actual plot field of view (e.g. color bars, scale bars, ...)
+
+            \note If you want to draw outside, then you'll also have to implement getOutsideSize(), so enough space is reserved
+
+            The four value supplied tell the method where to draw (inside one of the rectangles).
+         */
+        virtual void cbDrawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
+
+
+        /** \brief set the parent class for internal objects (e.g. color bars) */
+        virtual void cbSetParent(JKQTBasePlotter* parent) override;
+
+
+        /** \brief determine min/max data value of the modifier image */
+        virtual void cbGetModifierDataMinMax(double& imin, double& imax)=0;
+
+
+        /*! \copydoc modifierMode */
+        void setModifierMode(const JKQTPMathImageModifierMode & __value);
+        /*! \copydoc modifierMode */
+        JKQTPMathImageModifierMode getModifierMode() const;
+
+        /*! \copydoc colorBarModifiedWidth */
+        void setColorBarModifiedWidth(double __value);
+        /*! \copydoc colorBarModifiedWidth */
+        double getColorBarModifiedWidth() const;
+        /*! \copydoc modifierColorBarTopAxis */
+        JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis();
+        /*! \copydoc modifierColorBarRightAxis */
+        JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis();
+        /*! \copydoc modifierColorBarTopAxis */
+        const JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const;
+        /*! \copydoc modifierColorBarRightAxis */
+        const JKQTPHorizontalIndependentAxis *getModifierColorBarRightAxis()  const;
+        /*! \copydoc autoModifierRange */
+        void setAutoModifierRange(bool __value);
+        /*! \copydoc autoModifierRange */
+        bool getAutoModifierRange() const;
+        /*! \copydoc modifierMin */
+        void setModifierMin(double __value);
+        /*! \copydoc modifierMin */
+        double getModifierMin() const;
+        /*! \copydoc modifierMax */
+        void setModifierMax(double __value);
+        /*! \copydoc modifierMax */
+        double getModifierMax() const;
+
+
+        /** \brief modify the given image \a img, using  modifier image \a dataModifier (of type \a datatypeModifier and size \a Nx * \a Ny), using values in the range \a internalModifierMin ... \a internalModifierMax
+         */
+        void modifyImage(QImage& img, void* dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
+
+    protected:
+
+        /** \brief indicates whether to estimate min/max of the modifier automatically */
+        bool autoModifierRange;
+        /** \brief modifier value range minimum */
+        double modifierMin;
+        /** \brief modifier value range maximum */
+        double modifierMax;
+        /** \brief width of the color bar when modifier is on */
+        double colorBarModifiedWidth;
+        /** \brief how to apply the modifier column dataModifier
+         *  \see ModifierMode
+         */
+        JKQTPMathImageModifierMode modifierMode;
+
+
+        /** \brief object used for color bar axes (right border, modifier image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
+        JKQTPVerticalIndependentAxis* modifierColorBarTopAxis;
+        /** \brief object used for color bar axes (top border, modifier image data)
+         *
+         *  \note this axis has some kind of a special role. It is used to format color bar axes
+         */
+        JKQTPHorizontalIndependentAxis* modifierColorBarRightAxis;
+};
+
+
 
 
 #endif // JKQTPIMAGETOOLS_H

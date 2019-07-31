@@ -2546,6 +2546,7 @@ JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUTLinSegmentsSorted(const QList<
                     j1++; j2++;
                 }
             }
+            JKQTPSetColorChannel(lut[lut.size()-1], channel, jkqtp_bounded<int>(0, items.last().colval_endprevious, 255));
         }
     };
 
@@ -2584,6 +2585,7 @@ JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUTLinInterpolateSorted(const QLi
             j1++; j2++;
         }
     }
+    lut[lut_size-1]=items.last().second;
 
     return lut;
 }
@@ -2969,5 +2971,67 @@ JKQTPColorPaletteSingleColorLinSegment JKQTPColorPaletteSingleColorLinSegment::m
 JKQTPColorPaletteSingleColorLinSegment::JKQTPColorPaletteSingleColorLinSegment():
     position(0), colval_endprevious(0), colval_startnext(0)
 {
+
+}
+
+
+JKQTPMathImageModifierMode StringToModifierMode(const QString &mode) {
+    QString m=mode.toLower();
+    if (m=="value" ) return JKQTPMathImageModifierMode::ModifyValue;
+    if (m=="saturation" ) return JKQTPMathImageModifierMode::ModifySaturation;
+    if (m=="alpha" ) return JKQTPMathImageModifierMode::ModifyAlpha;
+    if (m=="luminance" ) return JKQTPMathImageModifierMode::ModifyLuminance;
+    if (m=="hue" ) return JKQTPMathImageModifierMode::ModifyHue;
+
+    return JKQTPMathImageModifierMode::ModifyNone;
+}
+
+QString ModifierModeToString(const JKQTPMathImageModifierMode &mode) {
+
+    if (mode==JKQTPMathImageModifierMode::ModifyValue) return "value";
+    if (mode==JKQTPMathImageModifierMode::ModifySaturation) return "saturation";
+    if (mode==JKQTPMathImageModifierMode::ModifyAlpha) return "alpha";
+    if (mode==JKQTPMathImageModifierMode::ModifyLuminance) return "luminance";
+    if (mode==JKQTPMathImageModifierMode::ModifyHue) return "hue";
+    return "none";
+}
+
+void JKQTPModifyImage(QImage &img, JKQTPMathImageModifierMode modifierMode, void *dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax)
+{
+    if (!dataModifier) return;
+    //getModifierMinMax(internalModifierMin, internalModifierMax);
+    if (modifierMode!=JKQTPMathImageModifierMode::ModifyNone) {
+        JKQTPRGBMathImageRGBMode rgbModMode=JKQTPRGBMathImageModeRGBMode;
+        int modChannel=3;
+        if (modifierMode==JKQTPMathImageModifierMode::ModifyValue) {
+            modChannel=2;
+            rgbModMode=JKQTPRGBMathImageModeHSVMode;
+        } else if (modifierMode==JKQTPMathImageModifierMode::ModifySaturation) {
+            modChannel=1;
+            rgbModMode=JKQTPRGBMathImageModeHSVMode;
+        } else if (modifierMode==JKQTPMathImageModifierMode::ModifyAlpha) {
+            modChannel=3;
+            rgbModMode=JKQTPRGBMathImageModeRGBMode;
+        } else if (modifierMode==JKQTPMathImageModifierMode::ModifyLuminance) {
+            modChannel=2;
+            rgbModMode=JKQTPRGBMathImageModeHSLMode;
+        } else if (modifierMode==JKQTPMathImageModifierMode::ModifyHue) {
+            modChannel=0;
+            rgbModMode=JKQTPRGBMathImageModeHSLMode;
+        }
+        //qDebug()<<"mod: "<<modifierMode<<"  ch:"<<modChannel<<"  rgb:"<<rgbModMode;
+        switch(datatypeModifier) {
+            case JKQTPMathImageDataType::DoubleArray: JKQTPImagePlot_array2RGBimage<double>(static_cast<double*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::FloatArray: JKQTPImagePlot_array2RGBimage<float>(static_cast<float*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt8Array: JKQTPImagePlot_array2RGBimage<uint8_t>(static_cast<uint8_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt16Array: JKQTPImagePlot_array2RGBimage<uint16_t>(static_cast<uint16_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt32Array: JKQTPImagePlot_array2RGBimage<uint32_t>(static_cast<uint32_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt64Array: JKQTPImagePlot_array2RGBimage<uint64_t>(static_cast<uint64_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int8Array: JKQTPImagePlot_array2RGBimage<int8_t>(static_cast<int8_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int16Array: JKQTPImagePlot_array2RGBimage<int16_t>(static_cast<int16_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int32Array: JKQTPImagePlot_array2RGBimage<int32_t>(static_cast<int32_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int64Array: JKQTPImagePlot_array2RGBimage<int64_t>(static_cast<int64_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+        }
+    }
 
 }

@@ -250,20 +250,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineTypeComboBox: public QComboBox {
 };
 
 
-/*! \brief a QComboBox which shows  JKQTPMathImageBase::ModifierMode
+/*! \brief a QComboBox which shows  JKQTPMathImageModifierMode
     \ingroup jkqtpcomboboxes
 
-    \see JKQTPMathImageBase::ModifierMode
+    \see JKQTPMathImageModifierMode
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPImageModifierModeComboBox: public QComboBox {
         Q_OBJECT
     public:
         JKQTPImageModifierModeComboBox(QWidget* parent=nullptr);
 
-        JKQTPMathImageBase::ModifierMode getModifierMode() const;
-        void setModifierMode(JKQTPMathImageBase::ModifierMode mode);
+        JKQTPMathImageModifierMode getModifierMode() const;
+        void setModifierMode(JKQTPMathImageModifierMode mode);
     protected:
-        void addMode(JKQTPMathImageBase::ModifierMode mode, const QString& name, const QIcon& icon=QIcon());
+        void addMode(JKQTPMathImageModifierMode mode, const QString& name, const QIcon& icon=QIcon());
 };
 
 #endif // JKQTPCOMBOBOXES_H

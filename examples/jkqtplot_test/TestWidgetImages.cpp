@@ -54,7 +54,7 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
             bimg2[y*100+x]=static_cast<double>(rand())/static_cast<double>(RAND_MAX)>0.9;
         }
     }
-    pimg2=new JKQTPMathImage(10,0,10,10, JKQTPMathImageBase::DoubleArray, img2, 100, 100, JKQTPMathImageGRAY, plotImg->getPlotter());
+    pimg2=new JKQTPMathImage(10,0,10,10, JKQTPMathImageDataType::DoubleArray, img2, 100, 100, JKQTPMathImageGRAY, plotImg->getPlotter());
     pimg2->setImageMin(-1);
     pimg2->setImageMax(0.5);
     pimg2->setImageName("left image");
@@ -63,7 +63,7 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     pimg2->setColorBarTopVisible(true);
     pimg2->setColorBarRightVisible(false);
     plotImg->getPlotter()->addGraph(pimg2);
-    pimg3=new JKQTPMathImage(20,0,10,10, JKQTPMathImageBase::DoubleArray, img2, 100, 100, JKQTPMathImageMATLAB, plotImg->getPlotter());
+    pimg3=new JKQTPMathImage(20,0,10,10, JKQTPMathImageDataType::DoubleArray, img2, 100, 100, JKQTPMathImageMATLAB, plotImg->getPlotter());
     pimg3->setColorBarTopVisible(true);
     pimg3->setColorBarRightVisible(true);
     pimg3->setImageMax(0.5);
@@ -73,8 +73,8 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     pimg3->setRangeMinFailAction(JKQTPMathImageTransparent);
     pimg3->setAutoImageRange(false);
     pimg3->setImageName("I(x,y)=\\sin\\left(\\frac{2\\pi\\cdot\\sqrt{1+x^2+y^2}}{20}\\right)");
-    pimg3->setDataModifier(img2M, JKQTPMathImageBase::Int32Array);
-    pimg3->setModifierMode(JKQTPMathImageBase::ModifyNone);
+    pimg3->setDataModifier(img2M, JKQTPMathImageDataType::Int32Array);
+    pimg3->setModifierMode(JKQTPMathImageModifierMode::ModifyNone);
     pimg3->setTitle("right image");
     plotImg->getPlotter()->addGraph(pimg3);
 
@@ -131,6 +131,6 @@ void TestWidgetImages::setImgPalette1(int index)
 
 void TestWidgetImages::setImgModifier(int index)
 {
-    pimg3->setModifierMode(JKQTPMathImage::ModifierMode(index));
+    pimg3->setModifierMode(static_cast<JKQTPMathImageModifierMode>(index));
     plotImg->redrawPlot();
 }

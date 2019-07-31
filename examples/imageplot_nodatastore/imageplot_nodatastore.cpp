@@ -56,8 +56,8 @@ int main(int argc, char* argv[])
     //    the converted range of data is determined automatically because setAutoImageRange(true)
     JKQTPMathImage* graph=new JKQTPMathImage(&plot);
     graph->setTitle("");
-    // set array as datasource, with correct size NX*NY and datatype JKQTPMathImageBase::DataType::DoubleArray
-    graph->setData(airydisk, NX, NY, JKQTPMathImageBase::DataType::DoubleArray);
+    // set array as datasource, with correct size NX*NY and datatype JKQTPMathImageDataType::DoubleArray
+    graph->setData(airydisk, NX, NY, JKQTPMathImageDataType::DoubleArray);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
     graph->setX(-w/2.0);
     graph->setY(-h/2.0);
