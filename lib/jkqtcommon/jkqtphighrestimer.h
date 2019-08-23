@@ -132,12 +132,11 @@ class JKQTCOMMON_LIB_EXPORT JKQTPHighResTimer {
     #ifdef __WINDOWS__
       /** \brief internal: time stamp of the last call of start() */
       LARGE_INTEGER last;
-
-      /** \brief internal: timer frequency */
-      double freq;
     #else
       struct timeval last;
     #endif
+      /** \brief internal: timer frequency */
+      double freq;
     public:
         /** \brief class constructor. */
         JKQTPHighResTimer();
