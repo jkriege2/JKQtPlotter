@@ -69,7 +69,7 @@ if (NOT CMAKE_INSTALL_INCLUDEDIR)
 endif()
 
 
-find_package(Qt5 5.0 REQUIRED Core Gui Widgets PrintSupport Svg Xml OpenGl)
+find_package(Qt5 5.0 REQUIRED Core Gui Widgets PrintSupport Svg Xml OpenGL)
 
 
 
