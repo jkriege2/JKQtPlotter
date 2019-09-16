@@ -121,7 +121,7 @@ There are several modification modes available (see also documentation of JKQTPM
   - modify the SATURATION-channel from the HSV color space `JKQTPMathImageBase::ModifierMode::ModifySaturation`: <br>![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPMathImageBaseModifySaturation.png)
   - modify the ALPHA/TRANSPARENCY-channel from the RGBA color space `JKQTPMathImageBase::ModifierMode::ModifyAlpha`: <br>![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPMathImageBaseModifyAlpha.png)
   - modify the LUMINANCE-channel from the HSL color space `JKQTPMathImageBase::ModifierMode::ModifyLuminance`: <br>![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPMathImageBaseModifyLuminance.png)
-  - modify the VALUE-channel from the HSV color space `JKQTPMathImageBase::ModifierMode::ModifyHue`: <br>![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPMathImageBaseModifyHue.png)
+  - modify the HUE-channel from the HSV color space `JKQTPMathImageBase::ModifierMode::ModifyHue`: <br>![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/doc/images/JKQTPMathImageBaseModifyHue.png)
 
 
 
