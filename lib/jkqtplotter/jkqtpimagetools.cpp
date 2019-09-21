@@ -615,25 +615,26 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbDrawOutside(JKQTPEnhance
         double internalModifierMin=0;
         double internalModifierMax=0;
         cbGetDataMinMax(internalDataMin, internalDataMax);
-        cbGetModifierDataMinMax(internalDataMin, internalDataMax);
+        cbGetModifierDataMinMax(internalModifierMin, internalModifierMax);
         uint8_t h=1;
-        static const uint8_t dSize = 200*h;
         if (modifierMode!=JKQTPMathImageModifierMode::ModifyNone) {
             h=50;
         }
+        const uint8_t steps=200;
+        const int dSize = steps*h;
         std::vector<double> d(dSize, 0.0);
         std::vector<double> dd(dSize, 0.0);
-        for (uint8_t i=0; i<dSize; i++) {
+        for (uint8_t i=0; i<steps; i++) {
             for (uint8_t j=0; j<h; j++) {
                 d[i*h+j]=i;
                 dd[i*h+j]=j;
             }
         }
 
-        QImage b(h,200, QImage::Format_ARGB32);
-        JKQTPImageTools::array2image<double>(d.data(),h,dSize/h, b, palette, 0, dSize/h-1);
+        QImage b(h, steps, QImage::Format_ARGB32);
+        JKQTPImageTools::array2image<double>(d.data(),h, steps, b, palette, 0, steps-1);
         if (modifierMode!=JKQTPMathImageModifierMode::ModifyNone) {
-            modifyImage(b, dd.data(), JKQTPMathImageDataType::DoubleArray, h,dSize/h, 0, h-1);
+            modifyImage(b, dd.data(), JKQTPMathImageDataType::DoubleArray, h, steps, 0, h-1);
         }
 
         if (colorBarRightVisible) {

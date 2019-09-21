@@ -1062,12 +1062,12 @@ JKQTPColumnMathImage::JKQTPColumnMathImage(double x, double y, double width, dou
 
 void JKQTPColumnMathImage::setImageColumn(size_t __value)
 {
-	setImageColumn(static_cast<int>(__value));
+    setImageColumn(static_cast<int>(__value));
 }
 
 void JKQTPColumnMathImage::setModifierColumn(size_t __value)
 {
-	setImageColumn(static_cast<int>(__value));
+    setModifierColumn(static_cast<int>(__value));
 }
 void JKQTPColumnMathImage::setImageColumn(int __value)
 {

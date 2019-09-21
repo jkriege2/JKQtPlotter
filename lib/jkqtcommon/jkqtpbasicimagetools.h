@@ -1053,7 +1053,7 @@ enum class JKQTPMathImageModifierMode {
     ModifyAlpha=3,/*!< modify the ALPHA/TRANSPARENCY-channel from the RGBA color space \image html JKQTPMathImageBaseModifyAlpha.png */
     ModifyTransparency=ModifyAlpha,/*!< \see ModifyAlpha */
     ModifyLuminance=4,/*!< modify the LUMINANCE-channel from the HSL color space \image html JKQTPMathImageBaseModifyLuminance.png */
-    ModifyHue=5,/*!< modify the VALUE-channel from the HSV color space \image html JKQTPMathImageBaseModifyHue.png */
+    ModifyHue=5,/*!< modify the HUE-channel from the HSV color space \image html JKQTPMathImageBaseModifyHue.png */
 };
 
 /** \brief convert a ModifierMode to a string
