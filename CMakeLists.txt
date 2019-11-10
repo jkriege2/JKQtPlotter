@@ -25,9 +25,6 @@ endif()
 if(NOT DEFINED BUILD_EXAMPLES)
     option(BUILD_EXAMPLES "Build examples" ON)
 endif()
-if(NOT DEFINED BUILD_HAS_OPENCV)
-    option(BUILD_HAS_OPENCV "OpenCV available? If yes, OpenCV examples are built when BUILD_EXAMPLES=ON" OFF)
-endif()
 if(NOT DEFINED LIB_INSTALL)
     option(LIB_INSTALL "Install library" ON)
 endif()
@@ -37,10 +34,10 @@ if(NOT DEFINED CMAKE_INSTALL_PREFIX)
 endif()
 
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-
-
-
+include(jkqtplotter_deployqt)
+include(jkqtplotter_deployopencv)
 include(CheckCXXCompilerFlag)
 if (NOT WIN32)
     include(GNUInstallDirs)

@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 
 
     // 2. now we open a BMP-file and load it into an OpenCV cv::Mat
-    cv::Mat picture = cv::imread("example.bmp");
+    cv::Mat picture = cv::imread("rgbimageplot_opencv_example.bmp");
     qDebug()<<picture.rows<<"x"<<picture.cols<<"x"<<picture.channels();
 
 
@@ -46,9 +46,6 @@ int main(int argc, char* argv[])
     // 4. create a graph (JKQTPColumnRGBMathImage) with the columns created above as data
     JKQTPColumnRGBMathImage* graph=new JKQTPColumnRGBMathImage(&plot);
     graph->setTitle("");
-    // set size of the data (the datastore does not contain this info, as it only manages 1D columns of data and this is used to assume a row-major ordering
-    graph->setNx(picture.cols);
-    graph->setNy(picture.rows);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
     graph->setX(0);
     graph->setY(0);
@@ -56,9 +53,9 @@ int main(int argc, char* argv[])
     graph->setWidth(picture.cols);
     graph->setHeight(picture.rows);
     // image column with the data
-    graph->setImageRColumn(cPictureR);
-    graph->setImageGColumn(cPictureG);
-    graph->setImageBColumn(cPictureB);
+    graph->setImageRColumn(static_cast<int>(cPictureR));
+    graph->setImageGColumn(static_cast<int>(cPictureG));
+    graph->setImageBColumn(static_cast<int>(cPictureB));
     // determine min/max of each channel manually
     graph->setImageMinR(0);
     graph->setImageMaxR(255);

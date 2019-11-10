@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
-if (BUILD_HAS_OPENCV)
-    find_package( OpenCV  )
-    if(OpenCV_FOUND)
+find_package( OpenCV  )
+if (OpenCV_FOUND)
 
         set(EXAMPLE_NAME rgbimageplot_opencv)
         set(EXENAME jkqtptest_${EXAMPLE_NAME})
@@ -21,7 +20,7 @@ if (BUILD_HAS_OPENCV)
         elseif(BUILD_SHARED_LIBS)
             target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
         endif()
-        include_directories( ${OpenCV_INCLUDE_DIRS} )
+        include_directories(${EXENAME} ${OpenCV_INCLUDE_DIRS} )
         target_link_libraries(${EXENAME} ${OpenCV_LIBS} )
 
 
@@ -29,5 +28,12 @@ if (BUILD_HAS_OPENCV)
         if(LIB_INSTALL)
             install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
         endif(LIB_INSTALL)
-    endif(OpenCV_FOUND)
-endif(BUILD_HAS_OPENCV)
+        #Installation of Qt DLLs on Windows
+        jkqtplotter_deployqt(${EXENAME})
+        #Installation of OpenCV DLLs on Windows
+        jkqtplotter_deployopencv(${EXENAME})
+        add_custom_command(TARGET ${EXENAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/rgbimageplot_opencv_example.bmp" $<TARGET_FILE_DIR:${EXENAME}>
+        )
+
+endif(OpenCV_FOUND)

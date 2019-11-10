@@ -24,3 +24,5 @@ endif()
 if(LIB_INSTALL)
     install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif(LIB_INSTALL)
+#Installation of Qt DLLs on Windows
+jkqtplotter_deployqt(${EXENAME})

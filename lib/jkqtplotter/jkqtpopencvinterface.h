@@ -77,7 +77,7 @@ inline size_t JKQTPCopyCvMatToColumn(JKQTPDatastore* datastore, const cv::Mat& m
     else if (CV_MAT_DEPTH(mat.type())==CV_8U) JKQTPDatastore_Helper::copyDataFromMat<uint8_t>(d, mat, channel);
     else throw std::runtime_error("datatype of cv::Mat not supported by JKQTPDatastore::copyImageToColumn()");
 
-    return datastore->addInternalColumn(d, N, name);
+    return datastore->addInternalImageColumn(d, mat.cols, mat.rows, name);
 }
 
 
