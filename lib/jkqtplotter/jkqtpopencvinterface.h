@@ -19,7 +19,6 @@
 
 
 
-#include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include <opencv2/core.hpp>
 
@@ -36,7 +35,7 @@
  *   \param channel to copy from \a mat
  *   \return the ID of the newly created column
  *
- *   \note You need to define the Macro JKQTPLOTTER_OPENCV_INTERFACE when compiling this lib to enabled this function.
+ *   \see \ref jkqtpopencvinterface, \ref JKQTPlotterImagePlotOpenCV or \ref JKQTPlotterImagePlotRGBOpenCV for details on how to use this function.
  */
 inline size_t JKQTPCopyCvMatToColumn(JKQTPDatastore* datastore, const cv::Mat& mat, const QString& name=QString(""), int channel=0);
 

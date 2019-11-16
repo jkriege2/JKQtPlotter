@@ -161,6 +161,11 @@ Examples:
   - \ref JKQTPlotterImagePlotRGBOpenCV 
 .
 
+The OpenCV-binding itself is header-only, and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
+
+The CMake-build system of JKQtPlotter (and its examples) is compatible with both OpenCV 3.4.x and 4.x and uses the standard `find_package(OpenCV)` facilities provided by OpenCV to compile and bind against that library. 
+If you want to build the OpenCV-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds OpenCV by itself (i.e. somewhere in the default search paths), or you can set the CMake variable `OpenCV_DIR` so it points to the OpenCV directory before configuring JKQtPlotter.
+
 \defgroup jkqtpplottersupprt Support Classes and Functions
 \ingroup jkqtplotter
 
