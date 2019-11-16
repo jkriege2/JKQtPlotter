@@ -145,7 +145,7 @@ QFont JKQTMathText::MTenvironment::getFont(JKQTMathText* parent) const {
                 f.setFamily(parent->getFontRoman());
             }
             break;
-    };
+    }
     f.setBold(bold);
     f.setItalic(italic);
     f.setUnderline(underlined);
@@ -239,8 +239,8 @@ void JKQTMathText::MTnode::doDrawBoxes(QPainter& painter, double x, double y, JK
 }
 
 
-JKQTMathText::MTtextNode::MTtextNode(JKQTMathText* parent, const QString& textIn, bool addWhitespace, bool stripInnerWhitepace):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTtextNode::MTtextNode(JKQTMathText* _parent, const QString& textIn, bool addWhitespace, bool stripInnerWhitepace):
+    JKQTMathText::MTnode(_parent)
 {
     QString text=textIn;
 
@@ -434,8 +434,8 @@ QString JKQTMathText::MTtextNode::textTransform(const QString &text, JKQTMathTex
 
 
 
-JKQTMathText::MTinstruction1Node::MTinstruction1Node(JKQTMathText* parent, const QString& name, MTnode* child, const QStringList& parameters):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTinstruction1Node::MTinstruction1Node(JKQTMathText* _parent, const QString& name, MTnode* child, const QStringList& parameters):
+    JKQTMathText::MTnode(_parent)
 {
     this->name=name;
     this->child=child;
@@ -564,8 +564,8 @@ bool JKQTMathText::MTinstruction1Node::setupMTenvironment(JKQTMathText::MTenviro
 
 
 
-JKQTMathText::MTsubscriptNode::MTsubscriptNode(JKQTMathText* parent, MTnode* child):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTsubscriptNode::MTsubscriptNode(JKQTMathText* _parent, MTnode* child):
+    JKQTMathText::MTnode(_parent)
 {
     this->child=child;
 }
@@ -647,8 +647,8 @@ void JKQTMathText::MTsubscriptNode::setDrawBoxes(bool draw)
 
 
 
-JKQTMathText::MTsqrtNode::MTsqrtNode(JKQTMathText* parent, MTnode* child, int degree):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTsqrtNode::MTsqrtNode(JKQTMathText* _parent, MTnode* child, int degree):
+    JKQTMathText::MTnode(_parent)
 {
     this->child=child;
     this->degree=degree;
@@ -741,8 +741,8 @@ int JKQTMathText::MTsqrtNode::getDegree() const {
 
 
 
-JKQTMathText::MTfracNode::MTfracNode(JKQTMathText* parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTfracNode::MTfracNode(JKQTMathText* _parent, MTnode* child_top, MTnode* child_bottom, MTfracMode mode):
+    JKQTMathText::MTnode(_parent)
 {
     this->child1=child_top;
     this->child2=child_bottom;
@@ -969,8 +969,8 @@ JKQTMathText::MTfracMode JKQTMathText::MTfracNode::getMode() const {
 
 
 
-JKQTMathText::MTmatrixNode::MTmatrixNode(JKQTMathText* parent, QVector<QVector<MTnode*> > children):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTmatrixNode::MTmatrixNode(JKQTMathText* _parent, QVector<QVector<MTnode*> > children):
+    JKQTMathText::MTnode(_parent)
 {
     this->lines=children.size();
     this->columns=0;
@@ -1132,8 +1132,8 @@ void JKQTMathText::MTmatrixNode::setDrawBoxes(bool draw)
 
 
 
-JKQTMathText::MTdecoratedNode::MTdecoratedNode(JKQTMathText* parent, MTdecoration decoration, MTnode* child):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTdecoratedNode::MTdecoratedNode(JKQTMathText* _parent, MTdecoration decoration, MTnode* child):
+    JKQTMathText::MTnode(_parent)
 {
     this->child=child;
     this->decoration=decoration;
@@ -1301,8 +1301,8 @@ JKQTMathText::MTdecoration JKQTMathText::MTdecoratedNode::getDecoration() const 
 
 
 
-JKQTMathText::MTsuperscriptNode::MTsuperscriptNode(JKQTMathText* parent, MTnode* child):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTsuperscriptNode::MTsuperscriptNode(JKQTMathText* _parent, MTnode* child):
+    JKQTMathText::MTnode(_parent)
 {
     this->child=child;
 }
@@ -1383,8 +1383,8 @@ void JKQTMathText::MTsuperscriptNode::setDrawBoxes(bool draw)
 
 
 
-JKQTMathText::MTbraceNode::MTbraceNode(JKQTMathText* parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTbraceNode::MTbraceNode(JKQTMathText* _parent, const QString& openbrace, const QString& closebrace, MTnode* child, bool showRightBrace):
+    JKQTMathText::MTnode(_parent)
 {
     this->child=child;
     this->openbrace=openbrace;
@@ -1646,8 +1646,8 @@ void JKQTMathText::MTbraceNode::getBraceWidth(QPainter &/*painter*/, JKQTMathTex
 
 
 
-JKQTMathText::MTlistNode::MTlistNode(JKQTMathText* parent):
-    JKQTMathText::MTnode(parent)
+JKQTMathText::MTlistNode::MTlistNode(JKQTMathText* _parent):
+    JKQTMathText::MTnode(_parent)
 {
     nodes.clear();
     // these operations cause sub/sup script to be typeset over/under the operator, not right besides!
@@ -2049,8 +2049,8 @@ QList<JKQTMathText::MTnode *> JKQTMathText::MTlistNode::getNodes() const {
 
 
 
-JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* parent, const QString& name, bool _addWhitespace):
-    JKQTMathText::MTnode(parent), symbolName(name), addWhitespace(_addWhitespace)
+JKQTMathText::MTsymbolNode::MTsymbolNode(JKQTMathText* _parent, const QString& name, bool _addWhitespace):
+    JKQTMathText::MTnode(_parent), symbolName(name), addWhitespace(_addWhitespace)
 {
 }
 
@@ -2292,18 +2292,23 @@ bool JKQTMathText::MTsymbolNode::getGreekSymbolProp(JKQTMathText::MTsymbolNode::
       unicodeGreek.insert("Lambda", QChar(0x39B));
       unicodeGreek.insert("Xi", QChar(0x39E));
       unicodeGreek.insert("Pi", QChar(0x3A0));
+      unicodeGreek.insert("prod", QChar(0x3A0));
       unicodeGreek.insert("Sigma", QChar(0x3A3));
+      unicodeGreek.insert("sum", QChar(0x3A3));
       unicodeGreek.insert("Upsilon", QChar(0x3A5));
       unicodeGreek.insert("Phi", QChar(0x3A6));
       unicodeGreek.insert("Psi", QChar(0x3A8));
     }
 
+    qDebug()<<"##SEARCHING "<<n;
     props.italic = -1;
-    if(fnt.second==MTFEunicodeLimited || fnt.second==MTFEunicode) {
+    if(fnt.second==MTFEunicodeLimited || fnt.second==MTFEunicode) {        
         props.font = fnt.first;
+        qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [unicode]";
         //std::cout<<"encoding unicode\n";
         QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
         if (itgreek!=unicodeGreek.end()) {
+            qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
             props.symbol = itgreek.value();
             return true;
         }
@@ -2311,25 +2316,30 @@ bool JKQTMathText::MTsymbolNode::getGreekSymbolProp(JKQTMathText::MTsymbolNode::
 
     if(fntGreek.second==MTFEunicodeLimited || fntGreek.second==MTFEunicode) {
         props.font = fntGreek.first;
+        qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [unicode]";
         //std::cout<<"encoding unicode\n";
         QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
         if (itgreek!=unicodeGreek.end()) {
+            qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
             props.symbol = itgreek.value();
             return true;
         }
     }
 
     props.font = fntGreek.first;
+    qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [winSym]";
     QHash<QString, QString>::iterator itgreek = winSymbolGreek.find(n);
     if (itgreek!=winSymbolGreek.end()) {
         props.symbol = itgreek.value();
+        qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
     } else if (n == "sum") { props.symbol = "S"; props.fontFactor = mathFontFactor; props.heightIsAscent = true; props.exactAscent = true; }
     else if (n == "prod") { props.symbol = "P"; props.fontFactor = mathFontFactor; props.heightIsAscent = true; props.exactAscent = true; }
     else {
+        qDebug()<<"##SEARCHING "<<n<<": DIDN'T FIND!";
         return false;
     }
 
-
+    qDebug()<<"##SEARCHING "<<n<<": FOUND!";
     return true;
 }
 
@@ -2400,13 +2410,13 @@ bool JKQTMathText::MTsymbolNode::getUnicodeBaseSymbolProp(JKQTMathText::MTsymbol
         unicodeBaseSymbol.insert("partial", QChar(0x2202));
         unicodeBaseSymbol.insert("cdots", QString(QChar(0x00B7)) + QString(QChar(0x00B7)) + QString(QChar(0x00B7)));
         unicodeBaseSymbol.insert("approx", QChar(0x2248));
-
         unicodeBaseSymbol.insert("Angstroem", QChar(0x212B));
     }
 
     QHash<QString, QString>::iterator itbasesymbol = unicodeBaseSymbol.find(n);
     if (itbasesymbol!=unicodeBaseSymbol.end()) {
       props.symbol = itbasesymbol.value();
+      //qDebug()<<"### found "<<n<<" in unicodeBaseSymbol";
     } else {
         props.bold = -1;
         props.italic = -1;
@@ -2420,8 +2430,9 @@ bool JKQTMathText::MTsymbolNode::getUnicodeBaseSymbolProp(JKQTMathText::MTsymbol
         else if (n == "frq") { props.symbol = QChar(0x203A); props.bold = 0; props.italic = 0; }
         else if (n == "flqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
         else if (n == "frqq") { props.symbol = ""; props.bold = 0; props.italic = 0; }
-        else {return false;}
+        else { return false; }
     }
+    //qDebug()<<"### found "<<n<<" in unicodeBaseSymbol";
     return true;
 }
 
@@ -2614,7 +2625,7 @@ bool JKQTMathText::MTsymbolNode::getSymbolProp(JKQTMathText::MTsymbolNode::Symbo
     props.font = fnt.first;
     if (fnt.second==MTFEunicode) {
         props.font = fnt.first;
-        if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+        if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
             return false;
         }
     } else if (fnt.second==MTFEunicodeLimited) {
@@ -2622,7 +2633,7 @@ bool JKQTMathText::MTsymbolNode::getSymbolProp(JKQTMathText::MTsymbolNode::Symbo
         if (!getUnicodeBaseSymbolProp(props, n) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
             if (fntSym.second==MTFEunicode) {
                 props.font = fntSym.first;
-                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
                     return false;
                 }
             } else if (fntSym.second==MTFEunicodeLimited) {
@@ -2645,7 +2656,7 @@ bool JKQTMathText::MTsymbolNode::getSymbolProp(JKQTMathText::MTsymbolNode::Symbo
         if (!getWinSymbolProp(props, n, currentEv, mathFontFactor)) {
             if (fntSym.second==MTFEunicode) {
                 props.font = fntSym.first;
-                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
                     return false;
                 }
             } else if (fntSym.second==MTFEunicodeLimited) {
@@ -2668,7 +2679,7 @@ bool JKQTMathText::MTsymbolNode::getSymbolProp(JKQTMathText::MTsymbolNode::Symbo
         if (!getStandardTextSymbolProp(props, n)) {
             if (fntSym.second==MTFEunicode) {
                 props.font = fntSym.first;
-                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor)) {
+                if (!getUnicodeBaseSymbolProp(props, n) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getUnicodeFullSymbolProp(props,n,mathFontFactor) && !getGreekSymbolProp(props, n, currentEv, mathFontFactor)) {
                     return false;
                 }
             } else if (fntSym.second==MTFEunicodeLimited) {
@@ -3504,14 +3515,19 @@ bool JKQTMathText::useXITS(bool mathModeOnly)
 
     if (!mathModeOnly && !textFamily.isEmpty()) {
         setFontRoman(textFamily, MTFEunicode);
+        setSymbolfontSymbol(textFamily, MTFEunicode);
+        setSymbolfontGreek(textFamily, MTFEunicode);
+        brace_shrink_factor=0.6;
         res=true;
     }
     if (!mathFamily.isEmpty()) {
         setFontMathRoman(mathFamily, MTFEunicode);
+        setSymbolfontSymbol(textFamily, MTFEunicode);
+        setSymbolfontGreek(textFamily, MTFEunicode);
+        brace_shrink_factor=0.6;
         res=true;
     }
 
-    brace_shrink_factor=0.6;
     return res;
 
 }
@@ -3676,8 +3692,8 @@ void JKQTMathText::setFontRomanOrSpecial(const QString &__value)
 void JKQTMathText::setFontRoman(const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[MTEroman].fontName = f.first;;
-    fontDefinitions[MTEroman].fontEncoding = f.second;;
+    fontDefinitions[MTEroman].fontName = f.first;
+    fontDefinitions[MTEroman].fontEncoding = f.second;
 }
 
 QString JKQTMathText::getFontRoman() const
@@ -3693,8 +3709,8 @@ JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingRoman() const
 void JKQTMathText::setFontSans(const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[MTEsans].fontName = f.first;;
-    fontDefinitions[MTEsans].fontEncoding = f.second;;
+    fontDefinitions[MTEsans].fontName = f.first;
+    fontDefinitions[MTEsans].fontEncoding = f.second;
 }
 
 QString JKQTMathText::getFontSans() const
@@ -3710,8 +3726,8 @@ JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingSans() const
 void JKQTMathText::setFontTypewriter(const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[MTEtypewriter].fontName = f.first;;
-    fontDefinitions[MTEtypewriter].fontEncoding = f.second;;
+    fontDefinitions[MTEtypewriter].fontName = f.first;
+    fontDefinitions[MTEtypewriter].fontEncoding = f.second;
 }
 
 QString JKQTMathText::getFontTypewriter() const
@@ -3727,8 +3743,8 @@ JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingTypewriter() const
 void JKQTMathText::setFontScript(const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[MTEscript].fontName = f.first;;
-    fontDefinitions[MTEscript].fontEncoding = f.second;;
+    fontDefinitions[MTEscript].fontName = f.first;
+    fontDefinitions[MTEscript].fontEncoding = f.second;
 }
 
 QString JKQTMathText::getFontScript() const
@@ -3744,8 +3760,8 @@ JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingScript() const
 void JKQTMathText::setFontFraktur(const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[MTEfraktur].fontName = f.first;;
-    fontDefinitions[MTEfraktur].fontEncoding = f.second;;
+    fontDefinitions[MTEfraktur].fontName = f.first;
+    fontDefinitions[MTEfraktur].fontEncoding = f.second;
 }
 
 QString JKQTMathText::getFontFraktur() const
@@ -3760,8 +3776,8 @@ JKQTMathText::MTfontEncoding JKQTMathText::getFontEncodingFraktur() const
 void JKQTMathText::setSymbolfontGreek(MTenvironmentFont font, const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[font].symbolfontGreek = f.first;;
-    fontDefinitions[font].symbolfontGreekEncoding = f.second;;
+    fontDefinitions[font].symbolfontGreek = f.first;
+    fontDefinitions[font].symbolfontGreekEncoding = f.second;
 }
 
 void JKQTMathText::setSymbolfontGreek(const QString &fontName, JKQTMathText::MTfontEncoding encoding)
@@ -3784,8 +3800,8 @@ JKQTMathText::MTfontEncoding JKQTMathText::getSymbolfontEncodingGreek(MTenvironm
 void JKQTMathText::setSymbolfontSymbol(MTenvironmentFont font, const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[font].symbolfontSymbol = f.first;;
-    fontDefinitions[font].symbolfontSymbolEncoding = f.second;;
+    fontDefinitions[font].symbolfontSymbol = f.first;
+    fontDefinitions[font].symbolfontSymbolEncoding = f.second;
 }
 
 void JKQTMathText::setSymbolfontSymbol(const QString &fontName, JKQTMathText::MTfontEncoding encoding)
@@ -3808,8 +3824,8 @@ JKQTMathText::MTfontEncoding JKQTMathText::getSymbolfontEncodingSymbol(MTenviron
 void JKQTMathText::setFontCaligraphic(const QString &__value, MTfontEncoding encoding)
 {
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[MTEcaligraphic].fontName = f.first;;
-    fontDefinitions[MTEcaligraphic].fontEncoding = f.second;;
+    fontDefinitions[MTEcaligraphic].fontName = f.first;
+    fontDefinitions[MTEcaligraphic].fontEncoding = f.second;
 }
 
 QString JKQTMathText::getFontCaligraphic() const
@@ -3860,8 +3876,8 @@ void JKQTMathText::setFontBlackboard(const QString &__value, MTfontEncoding enco
 {
     blackboardSimulated=false;
     auto f=getReplacementFont(__value, __value, encoding);
-    fontDefinitions[MTEblackboard].fontName = f.first;;
-    fontDefinitions[MTEblackboard].fontEncoding = f.second;;
+    fontDefinitions[MTEblackboard].fontName = f.first;
+    fontDefinitions[MTEblackboard].fontEncoding = f.second;
 }
 
 void JKQTMathText::setFontBlackboardSimulated(bool doSimulate)
@@ -4705,8 +4721,8 @@ void JKQTMathText::draw(QPainter& painter, unsigned int flags, QRectF rect, bool
     }
 }
 
-JKQTMathText::MTwhitespaceNode::MTwhitespaceNode(JKQTMathText *parent):
-    MTtextNode(parent, " ", false, false)
+JKQTMathText::MTwhitespaceNode::MTwhitespaceNode(JKQTMathText *_parent):
+    MTtextNode(_parent, " ", false, false)
 {
 
 }
@@ -4934,8 +4950,8 @@ bool JKQTMathText::tbrDataH::operator==(const JKQTMathText::tbrDataH &other) con
 }
 
 
-JKQTMathText::MTplainTextNode::MTplainTextNode(JKQTMathText *parent, const QString& text, bool addWhitespace, bool stripInnerWhitepace):
-    JKQTMathText::MTtextNode(parent, text, addWhitespace, stripInnerWhitepace)
+JKQTMathText::MTplainTextNode::MTplainTextNode(JKQTMathText *_parent, const QString& _text, bool addWhitespace, bool stripInnerWhitepace):
+    JKQTMathText::MTtextNode(_parent, _text, addWhitespace, stripInnerWhitepace)
 {
 
 }
@@ -4946,9 +4962,9 @@ QString JKQTMathText::MTplainTextNode::getTypeName() const
 }
 
 
-QString JKQTMathText::MTplainTextNode::textTransform(const QString &text, JKQTMathText::MTenvironment /*currentEv*/, bool /*forSize*/)
+QString JKQTMathText::MTplainTextNode::textTransform(const QString &_text, JKQTMathText::MTenvironment /*currentEv*/, bool /*forSize*/)
 {
-    return text;
+    return _text;
 }
 
 void initJKQTMathTextResources()
