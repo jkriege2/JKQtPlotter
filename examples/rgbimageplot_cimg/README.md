@@ -1,11 +1,12 @@
 # Example (JKQTPlotter): Simple math image plot, showing a 3-channel CImg image {#JKQTPlotterImagePlotRGBCImg}
-This project (see `./examples/rgbimageplot_cimg/`) simply creates a JKQTPlotter widget (as a new window) and shows an RGB image read from a BMP-file. The image is generated as an [cimg](https://cimg.org/) [`cimg_library::CImg<uint8_t>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
+
+This project (see `./examples/rgbimageplot_cimg/`) simply creates a JKQTPlotter widget (as a new window) and shows an RGB image read from a BMP-file. The image is generated as an [cimg](https://cimg.org/) [`cimg_library::CImg<uint8_t>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) image and then copied into a single column of the internal datastore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special cimg Interface function `JKQTPCopyCImgToColumn()` is used, that copies the data from a [CImg](https://cimg.eu/) [`cimg_library::CImg<uint8_t>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) directly into a column. 
 
 The function `JKQTPCopyCImgToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpinterfacecimg.h`. This header provides facilities to interface JKQTPlotter with cimg. The cimg-binding itself is header-only, and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
 
-The CMake-build system of JKQtPlotter (and its examples) is compatible with both cimg 3.4.x and 4.x and uses the standard `find_package(cimg)` facilities provided by cimg to compile and bind against that library. 
-If you want to build the cimg-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds cimg by itself (i.e. somewhere in the default search paths), or you can set the CMake variable `cimg_DIR` so it points to the cimg directory before configuring JKQtPlotter.
+The CMake-build system of JKQtPlotter (and its examples) provides facilities to allow for `find_package(CImg)` to compile against that library. 
+If you want to build the CImg-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds CImg by itself (i.e. somewhere in the default search paths, e.g. `CMAKE_INSTALL_PREFIX`), or you can set the CMake variable `CImg_DIR` so it points to the directory of the `CImg.h` file, or  before configuring JKQtPlotter.
 
 The source code of the main application is (see [`rgbimageplot_cimg.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/rgbimageplot_cimg/rgbimageplot_cimg.cpp):
 

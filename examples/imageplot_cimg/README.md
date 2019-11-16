@@ -1,11 +1,13 @@
 # Example (JKQTPlotter): Simple math image plot, showin a 1-channel CImg image {#JKQTPlotterImagePlotCImg}
-This project (see `./examples/imageplot_cimg/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as an OpenCV `cv::Mat` (see https://opencv.org/) image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
-To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` is used, that copies the data from a cv::Mat directly into a column. 
 
-The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpinterfaceopencv.h`. This header provides facilities to interface JKQTPlotter with OpenCV. The OpenCV-binding itself is header-only, and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
+This project (see `./examples/imageplot_cimg/`) simply creates a JKQTPlotter widget (as a new window) and adds a color-coded image plot of a mathematical function (here the Airy disk). The image is generated as a [CImg](https://cimg.org/) [`cimg_library::CImg<double>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) image and then copied into a single column of the internal datastore (JKQTPMathImage could be directly used without the internal datastore). 
 
-The CMake-build system of JKQtPlotter (and its examples) is compatible with both OpenCV 3.4.x and 4.x and uses the standard `find_package(OpenCV)` facilities provided by OpenCV to compile and bind against that library. 
-If you want to build the OpenCV-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds OpenCV by itself (i.e. somewhere in the default search paths), or you can set the CMake variable `OpenCV_DIR` so it points to the OpenCV directory before configuring JKQtPlotter.
+To copy the data a special CImg Interface function `JKQTPCopyCImgToColumn()` is used, that copies the data from a [`cimg_library::CImg<double>`](http://cimg.eu/reference/structcimg__library_1_1CImg.html) directly into a column. 
+
+The function `JKQTPCopyCImgToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpinterfacecimg.h`. This header provides facilities to interface JKQTPlotter with CImg. The CImg-binding itself is header-only, and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
+
+The CMake-build system of JKQtPlotter (and its examples) provides facilities to allow for `find_package(CImg)` to compile against that library. 
+If you want to build the CImg-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds CImg by itself (i.e. somewhere in the default search paths, e.g. `CMAKE_INSTALL_PREFIX`), or you can set the CMake variable `CImg_DIR` so it points to the directory of the `CImg.h` file, or  before configuring JKQtPlotter.
 
 
 The source code of the main application is (see [`imageplot_cimg.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/imageplot_cimg/imageplot_cimg.cpp):
@@ -13,9 +15,10 @@ The source code of the main application is (see [`imageplot_cimg.cpp`](https://g
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
-#include "jkqtplotter/jkqtpinterfaceopencv.h"
-#include <opencv/cv.h>
+#include "jkqtplotter/jkqtpinterfacecimg.h"
+#include "CImg.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -27,21 +30,21 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
 
     JKQTPlotter plot;
-    
-    
+
+
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
     plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
     plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
     JKQTPDatastore* ds=plot.getDatastore();
 
-    
+
     // 2. now we create data for the charts (taken from https://commons.wikimedia.org/wiki/File:Energiemix_Deutschland.svg)
-    cv::Mat airydisk(150, 150, CV_64FC1); // OpenCV-Image for the data
+    cimg_library::CImg<double> airydisk(150, 150); // CImg<T>-Image for the data
     const double dx=1e-2; // size of a pixel in x-direction [micrometers]
     const double dy=1e-2; // size of a pixel in x-direction [micrometers]
-    const double w=static_cast<double>(airydisk.cols)*dx;
-    const double h=static_cast<double>(airydisk.rows)*dy;
+    const double w=static_cast<double>(airydisk.width())*dx;
+    const double h=static_cast<double>(airydisk.height())*dy;
 
     // 2.1 Parameters for airy disk plot (see https://en.wikipedia.org/wiki/Airy_disk)
     double NA=1.1; // numerical aperture of lens
@@ -49,12 +52,12 @@ int main(int argc, char* argv[])
 
     // 2.2 calculate image of airy disk in a row-major array
     double x, y=-h/2.0;
-    for (int iy=0; iy<airydisk.rows; iy++ ) {
+    for (int iy=0; iy<airydisk.height(); iy++ ) {
         x=-w/2.0;
-        for (int ix=0; ix<airydisk.cols; ix++ ) {
+        for (int ix=0; ix<airydisk.width(); ix++ ) {
             const double r=sqrt(x*x+y*y);
             const double v=2.0*M_PI*NA*r/wavelength;
-            airydisk.at<double>(iy,ix) = pow(2.0*j1(v)/v, 2);
+            airydisk(iy,ix) = pow(2.0*j1(v)/v, 2);
             x+=dx;
         }
         y+=dy;
@@ -62,11 +65,11 @@ int main(int argc, char* argv[])
 
 
     // 3. make data available to JKQTPlotter by adding it to the internal datastore.
-    //    In this step the contents of one channel of the openCV cv::Mat is copied into a column
+    //    In this step the contents of one channel of the CImg cimg_library::CImg<double> is copied into a column
     //    of the datastore in row-major order
-    size_t cAiryDisk=JKQTPCopyCvMatToColumn(ds, airydisk, "imagedata");
+    size_t cAiryDisk=JKQTPCopyCImgToColumn(ds, airydisk, "imagedata");
 
-    
+
     // 4. create a graph (JKQTPColumnMathImage) with the column created above as data
     //    The data is color-coded with the color-palette JKQTPMathImageMATLAB
     //    the converted range of data is determined automatically because setAutoImageRange(true)
@@ -75,8 +78,6 @@ int main(int argc, char* argv[])
     // image column with the data
     graph->setImageColumn(cAiryDisk);
     // set size of the data (the datastore does not contain this info, as it only manages 1D columns of data and this is used to assume a row-major ordering
-    graph->setNx(airydisk.cols);
-    graph->setNy(airydisk.rows);
     // where does the image start in the plot, given in plot-axis-coordinates (bottom-left corner)
     graph->setX(-w/2.0);
     graph->setY(-h/2.0);
@@ -94,7 +95,7 @@ int main(int argc, char* argv[])
     //   graph->setImageMin(0);
     //   graph->setImageMax(10);
 
-    
+
     // 5. add the graphs to the plot, so it is actually displayed
     plot.addGraph(graph);
 
