@@ -1,7 +1,7 @@
-/** \example rgbimageplot_opencv.cpp
- * JKQTPlotter: Examples: Simple RGB image plot, showing a 3-channel OpenCV cv::Mat
+/** \example rgbimageplot_cimg.cpp
+ * Simple math image plot, showin a 3-channel CImg image
  *
- * \ref JKQTPlotterImagePlotRGBOpenCV
+ * \ref JKQTPlotterImagePlotRGBCImg
  */
 
 #include <QApplication>
@@ -9,11 +9,8 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/graphs/jkqtpimagergb.h"
-#include "jkqtplotter/jkqtpinterfaceopencv.h"
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgcodecs.hpp>
-
-
+#include "jkqtplotter/jkqtpinterfacecimg.h"
+#include "CImg.h"
 
 int main(int argc, char* argv[])
 {
@@ -30,17 +27,18 @@ int main(int argc, char* argv[])
 
 
     // 2. now we open a BMP-file and load it into an OpenCV cv::Mat
-    cv::Mat picture = cv::imread("rgbimageplot_opencv_example.bmp");
-    qDebug()<<picture.rows<<"x"<<picture.cols<<"x"<<picture.channels();
+    cimg_library::CImg<uint8_t> picture; // CImg<T>-Image for the data
+    picture.load_bmp("rgbimageplot_opencv_example.bmp");
+    qDebug()<<picture.width()<<"x"<<picture.height()<<"x"<<picture.spectrum();
 
 
 
     // 3. make data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of each channel of the openCV cv::Mat is copied into a column
     //    of the datastore in row-major order
-    size_t cPictureR=JKQTPCopyCvMatToColumn(ds, picture, "R-channel", 2);
-    size_t cPictureG=JKQTPCopyCvMatToColumn(ds, picture, "G-channel", 1);
-    size_t cPictureB=JKQTPCopyCvMatToColumn(ds, picture, "B-channel", 0);
+    size_t cPictureR=JKQTPCopyCImgToColumn(ds, picture, "R-channel", 0);
+    size_t cPictureG=JKQTPCopyCImgToColumn(ds, picture, "G-channel", 1);
+    size_t cPictureB=JKQTPCopyCImgToColumn(ds, picture, "B-channel", 2);
 
 
     // 4. create a graph (JKQTPColumnRGBMathImage) with the columns created above as data
@@ -50,8 +48,8 @@ int main(int argc, char* argv[])
     graph->setX(0);
     graph->setY(0);
     // width and height of the image in plot-axis-coordinates
-    graph->setWidth(picture.cols);
-    graph->setHeight(picture.rows);
+    graph->setWidth(picture.width());
+    graph->setHeight(picture.height());
     // image column with the data
     graph->setImageRColumn(static_cast<int>(cPictureR));
     graph->setImageGColumn(static_cast<int>(cPictureG));
@@ -77,7 +75,7 @@ int main(int argc, char* argv[])
 
     // 7. fix axis aspect ratio to width/height, so pixels are square
     plot.getPlotter()->setMaintainAspectRatio(true);
-    plot.getPlotter()->setAspectRatio(double(picture.cols)/double(picture.rows));
+    plot.getPlotter()->setAspectRatio(double(picture.width())/double(picture.height()));
 
     // 8. autoscale the plot so the graph is contained
     plot.zoomToFit();
@@ -86,6 +84,7 @@ int main(int argc, char* argv[])
     plot.show();
     plot.resize(800,600);
     plot.setWindowTitle("JKQTPColumnRGBMathImage");
+
 
 
     return app.exec();

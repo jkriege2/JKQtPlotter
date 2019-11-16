@@ -1,7 +1,7 @@
 # Example (JKQTPlotter): Simple Math RGB/CMY Image Plot {#JKQTPlotterRGBImagePlot}
-This project (see `./examples/imageplot/`) simply creates a JKQTPlotter widget (as a new window) and adds an image plot of a mathematical function (here the Airy disk). The function is calculated with different parameters and then the result for each parameter is mapped onto a separate color channel in the output. The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
+This project (see `./examples/rgbimageplot/`) simply creates a JKQTPlotter widget (as a new window) and adds an image plot of a mathematical function (here the Airy disk). The function is calculated with different parameters and then the result for each parameter is mapped onto a separate color channel in the output. The image is stored as a simple C-array in row-major ordering and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). This very simple interface can also be used to interface with many common image processing libraries, like CImg or OpenCV.
 
-The source code of the main application is (see [`rgbimageplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/imageplot/rgbimageplot.cpp):
+The source code of the main application is (see [`rgbimageplot.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/rgbimageplot/rgbimageplot.cpp):
 ```.cpp
 #include <QApplication>
 #include <cmath>

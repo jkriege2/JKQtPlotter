@@ -22,12 +22,12 @@
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include <opencv2/core.hpp>
 
-#ifndef JKQTPOPENCVINTERFACE_H
-#define JKQTPOPENCVINTERFACE_H
+#ifndef JKQTPINTERFACEOPENCV_H
+#define JKQTPINTERFACEOPENCV_H
 
 
-/** \brief add one external column to the datastore. It will be filled with the contents of vector \a data.
- * \ingroup jkqtpopencvinterface
+/** \brief add one external column to the datastore. It will be filled with the contents of CImg matrix cv::Mat
+ * \ingroup jkqtpinterfaceopencv
  *
  *   \param datastore the datastore to which the <a href="https://opencv.org/">OpenCV</a> matrix shuld be added (as column)
  *   \param mat <a href="https://docs.opencv.org/master/d3/d63/classcv_1_1Mat.html">OpenCV-matrix</a> to store here
@@ -35,7 +35,7 @@
  *   \param channel to copy from \a mat
  *   \return the ID of the newly created column
  *
- *   \see \ref jkqtpopencvinterface, \ref JKQTPlotterImagePlotOpenCV or \ref JKQTPlotterImagePlotRGBOpenCV for details on how to use this function.
+ *   \see \ref jkqtpinterfaceopencv, \ref JKQTPlotterImagePlotOpenCV or \ref JKQTPlotterImagePlotRGBOpenCV for details on how to use this function.
  */
 inline size_t JKQTPCopyCvMatToColumn(JKQTPDatastore* datastore, const cv::Mat& mat, const QString& name=QString(""), int channel=0);
 
@@ -46,7 +46,7 @@ inline size_t JKQTPCopyCvMatToColumn(JKQTPDatastore* datastore, const cv::Mat& m
 ////////////////////////////////////////////////////////////////////////////////////////
 namespace JKQTPDatastore_Helper {
 	/** \brief internal helper function for JKQTPCopyCvMatToColumn()
-	 * \ingroup jkqtpopencvinterface
+	 * \ingroup jkqtpinterfaceopencv
 	 * \internal */
     template <typename TPixel>
     inline void copyDataFromMat(double* data, const cv::Mat& mat, int channel) {
@@ -81,4 +81,4 @@ inline size_t JKQTPCopyCvMatToColumn(JKQTPDatastore* datastore, const cv::Mat& m
 
 
 
-#endif // JKQTPOPENCVINTERFACE_H
+#endif // JKQTPINTERFACEOPENCV_H

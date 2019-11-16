@@ -119,6 +119,12 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html rgbimageplot_opencv_small.png
     <td> \subpage JKQTPlotterImagePlotRGBOpenCV
     <td> `JKQTPColumnRGBMathImage` <br> image data copied from OpenCV cv::Mat-structure into three columns of the internal datastore <br> inverted coordinate axes
+<tr><td> \image html imageplot_cimg_small.png
+    <td> \subpage JKQTPlotterImagePlotcimg
+    <td> `JKQTPColumnMathImage` <br> image data copied from CImg datastructure into a single column of the internal datastore 
+<tr><td> \image html rgbimageplot_cimg_small.png
+    <td> \subpage JKQTPlotterImagePlotRGBcimg
+    <td> `JKQTPColumnRGBMathImage` <br> image data copied from CImg datastructure into three columns of the internal datastore <br> inverted coordinate axes
 <tr><td> \image html contourplot_small.png
     <td> \subpage JKQTPlotterContourPlot
     <td> `JKQTPColumnContourPlot` <br> image data edited inside JKQTPDatastore 

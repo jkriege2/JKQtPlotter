@@ -36,7 +36,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - contour plots
   - geometric forms/annotations
   - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPPlotObject
-- optional: OpenCV interface
+- optional: OpenCV, CImg interfaces
 - CMake-based build system
 - extensive set of [Examples/Tutorials](./examples/README.md)
 - extensive doxygen-generated [Documentation](http://jkriege2.github.io/JKQtPlotter/index.html)

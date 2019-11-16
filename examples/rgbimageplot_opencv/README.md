@@ -1,19 +1,19 @@
 # Example (JKQTPlotter): Simple RGB image plot, showing a 3-channel OpenCV cv::Mat {#JKQTPlotterImagePlotRGBOpenCV}
-This project (see `./examples/imageplot_opencv/`) simply creates a JKQTPlotter widget (as a new window) and shows an RGB image read from a BMP-file. The image is generated as an [OpenCV](https://opencv.org/) [`cv::Mat`](https://docs.opencv.org/4.0.0/d3/d63/classcv_1_1Mat.html) image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
+This project (see `./examples/rgbimageplot_opencv/`) simply creates a JKQTPlotter widget (as a new window) and shows an RGB image read from a BMP-file. The image is generated as an [OpenCV](https://opencv.org/) [`cv::Mat`](https://docs.opencv.org/4.0.0/d3/d63/classcv_1_1Mat.html) image and then copied into a single column of the internal datasdtore (JKQTPMathImage could be directly used without the internal datastore). 
 To copy the data a special OpenCV Interface function `JKQTPCopyCvMatToColumn()` is used, that copies the data from a (https://opencv.org/) [`cv::Mat`](https://docs.opencv.org/4.0.0/d3/d63/classcv_1_1Mat.html) directly into a column. 
 
-The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpopencvinterface.h`. This header provides facilities to interface JKQTPlotter with OpenCV.The OpenCV-binding itself is header-only, and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
+The function `JKQTPCopyCvMatToColumn()` is available from the (non-default) header-only extension from `jkqtplotter/jkqtpinterfaceopencv.h`. This header provides facilities to interface JKQTPlotter with OpenCV.The OpenCV-binding itself is header-only, and NOT compiled into the JKQtPlotter libraries. Therefore you can simply include the header and use the facilities provided by it.
 
-The CMake-build system of JKQtPlotter (and its examples) is compatible with both OpenCV 3.4.x and 4.x and uses the standard `find_package(OpenCV)` facilities provided by OpenCV to compile and bind against that library. 
-If you want to build the OpenCV-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds OpenCV by itself (i.e. somewhere in the default search paths), or you can set the CMake variable `OpenCV_DIR` so it points to the OpenCV directory before configuring JKQtPlotter.
+The CMake-build system of JKQtPlotter (and its examples) provides facilities to allow for `find_package(CImg)` to compile against that library. 
+If you want to build the CImg-based JKQtPlotter examples (see list above), you either have to ensure that CMake finds CImg by itself (i.e. somewhere in the default search paths, e.g. `CMAKE_INSTALL_PREFIX`), or you can set the CMake variable `CImg_DIR` so it points to the directory of the `CImg.h` file, or  before configuring JKQtPlotter.
 
-The source code of the main application is (see [`imageplot_opencv.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/imageplot_opencv/imageplot_opencv.cpp):
+The source code of the main application is (see [`rgbimageplot_cimg.cpp`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/rgbimageplot_opencv/rgbimageplot_cimg.cpp):
 ```.cpp
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
-#include "jkqtplotter/jkqtpopencvinterface.h"
+#include "jkqtplotter/jkqtpinterfaceopencv.h"
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
 
@@ -111,4 +111,5 @@ This will reorient the y-axis to point from top to bottom (for increasing positi
 
 
 
+See [`examples/rgbimageplot`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/rgbimageplot) for a detailed description of the other possibilities that the class JKQTPColumnRGBMathImage  offer with respect to determining how an image is plotted.
 

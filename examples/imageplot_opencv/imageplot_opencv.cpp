@@ -9,7 +9,7 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
-#include "jkqtplotter/jkqtpopencvinterface.h"
+#include "jkqtplotter/jkqtpinterfaceopencv.h"
 #include <opencv2/opencv.hpp>
 
 #ifndef M_PI

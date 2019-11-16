@@ -43,7 +43,9 @@
   - \ref jkqtplotter_imagelots_contour "contour plots"
   - \ref jkqtplotter_geoplots "geometric forms/annotations"
   - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPPlotObject
-- <b>\ref jkqtpopencvinterface  "optional: OpenCV interface"</b>
+- <b>OPTIONAL: Interfaces to external libraries</b>
+  - \ref jkqtpinterfaceopencv  "OpenCV interface"
+  - \ref jkqtpinterfacecimg  "CImg interface"
 - <b>integrated LaTeX parser/renderer JKQTMathText :</b>
   - pure C++ 
   - no dependencies in particular no installed LaTeX required
