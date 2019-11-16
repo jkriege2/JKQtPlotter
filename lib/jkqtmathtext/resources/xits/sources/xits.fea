@@ -1,7 +1,15 @@
-languagesystem DFLT dflt;
-languagesystem latn dflt;
-languagesystem cyrl dflt;
-languagesystem grek dflt;
+feature sups {
+    sub zero  by zero.sups;
+    sub one   by one.sups;
+    sub two   by two.sups;
+    sub three by three.sups;
+    sub four  by four.sups;
+    sub five  by five.sups;
+    sub six   by six.sups;
+    sub seven by seven.sups;
+    sub eight by eight.sups;
+    sub nine  by nine.sups;
+} sups;
 
 feature onum {
     sub zero  by zero.onum;
@@ -23,6 +31,7 @@ feature liga {
     sub f f i  by ffi;
     sub f f l  by ffl;
     sub f j  by f_j;
+    sub f f j by f_f_j;
 } liga;
 
 feature liga {
@@ -31,9 +40,3 @@ feature liga {
     sub I J  by uni0132;
     sub i j  by uni0133;
 } liga;
-
-feature locl {
-  script latn;
-   language TRK exclude_dflt;
-    sub i by i.TRK;
-} locl;

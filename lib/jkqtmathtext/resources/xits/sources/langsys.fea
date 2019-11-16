@@ -1,0 +1,5 @@
+languagesystem DFLT dflt;
+languagesystem latn dflt;
+languagesystem latn TRK;
+languagesystem cyrl dflt;
+languagesystem grek dflt;

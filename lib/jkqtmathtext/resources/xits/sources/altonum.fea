@@ -1,0 +1,13 @@
+feature ss11 {
+    sub zero.onum  by zero.onum.ss11;
+    sub one.onum   by one.onum.ss11;
+    sub two.onum   by two.onum.ss11;
+    sub three.onum by three.onum.ss11;
+    sub four.onum  by four.onum.ss11;
+    sub five.onum  by five.onum.ss11;
+    sub six.onum   by six.onum.ss11;
+    sub seven.onum by seven.onum.ss11;
+    sub eight.onum by eight.onum.ss11;
+    sub nine.onum  by nine.onum.ss11;
+} ss11;
+

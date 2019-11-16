@@ -1,0 +1,1 @@
+fonttools[ufo,lxml]==3.44.0
