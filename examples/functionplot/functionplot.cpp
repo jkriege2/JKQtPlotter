@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    // 1. create a window that conatins a line-edit to edit a function
+    // 1. create a window that contains a line-edit to edit a function
     //    and a JKQTPlotter to display the function, combine everything in a layout
     QWidget mainWin;
     JKQTPlotter* plot=new JKQTPlotter(&mainWin);
