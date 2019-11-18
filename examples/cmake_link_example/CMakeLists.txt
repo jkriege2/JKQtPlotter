@@ -1,5 +1,5 @@
 # set minimum required CMake-Version
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 
 # set Project name
 set(EXAMPLE_NAME simpletest)
@@ -8,19 +8,17 @@ project(${EXAMPLE_NAME} LANGUAGES CXX)
 
 # some basic configurations
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Configure project for usage of Qt5
-find_package(Qt5 5.12 REQUIRED Core Gui Widgets PrintSupport Svg Xml OpenGl)
+find_package(Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
 
 # include JKQTPlotter
-find_package(JKQTCommonLib)
-find_package(JKQTMathTextLib)
-find_package(JKQTPlotterLib)
+find_package(JKQTCommonLib REQUIRED)
+find_package(JKQTMathTextLib REQUIRED)
+find_package(JKQTPlotterLib REQUIRED)
 
 # For Visual Studio, we need to set some additional compiler options
 if(MSVC)
@@ -36,7 +34,14 @@ endif()
 
 # add the example executable 
 add_executable(${EXENAME} WIN32 simpletest.cpp)
-# ... and link against JKQTPlotterLib 
+# ... link against Qt5 and JKQTPlotterLib
 #    (you could use JKQTPlotterSharedLib if you don't want to link againast the 
 #     static version, but against the shared/DLL version).
-target_link_libraries(${EXENAME} JKQTPlotterLib)
+target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTPlotterLib)
+
+# Installation
+install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+#Installation of Qt DLLs on Windows
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/jkqtplotter_deployqt.cmake)
+jkqtplotter_deployqt(${EXENAME})

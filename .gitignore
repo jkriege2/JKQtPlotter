@@ -95,3 +95,4 @@ Sicherungskopie_*
 /examples/simpletest_rgbimageplot_opencv/opencv
 /build
 /*.10-pre1
+/install

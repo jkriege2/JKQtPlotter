@@ -48,14 +48,11 @@ Afterwards you can install the library by
 
 The CMake build system offers several configuration variables that you may set/change to modify the outcome of the build:
   - \c CMAKE_PREFIX_PATH : add the path to your Qt installatrion to this variable, so the \c find_package(Qt5...) commands find the libraries you want to use
-  - \c BUILD_SHARED_LIBS : Build as shared library (default: \c ON )
-  - \c BUILD_STATIC_LIBS : Build as static library (default: \c ON )
-  - \c BUILD_INCLUDE_XITS_FONTS : Include XITS fonts as resources in library (default: \c ON )
-  - \c BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE : If set, the build-type is appended to the library name (default: \c ON )
-  - \c BUILD_HIGH_COMPILE_WARNING_LEVEL : Set Compiler Warning level to high (default: \c OFF )
-  - \c BUILD_EXAMPLES : Build examples (default: \c ON )
-  - \c BUILD_HAS_OPENCV : OpenCV available? If yes, OpenCV examples are built when BUILD_EXAMPLES=ON (default: \c OFF )
-  - \c LIB_INSTALL : Install library (default: \c ON )
+  - \c JKQtPlotter_BUILD_SHARED_LIBS : Build as shared library (default: \c ON )
+  - \c JKQtPlotter_BUILD_STATIC_LIBS : Build as static library (default: \c ON )
+  - \c JKQtPlotter_BUILD_INCLUDE_XITS_FONTS : Include XITS fonts as resources in library (default: \c ON )
+  - \c JKQtPlotter_BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE : If set, the build-type is appended to the library name (default: \c ON )
+  - \c JKQtPlotter_BUILD_EXAMPLES : Build examples (default: \c ON )
   - \c CMAKE_INSTALL_PREFIX : Install directory for the library
 .
 
@@ -76,48 +73,49 @@ You can find an example project that uses a complete cmake-build here: \ref JKQT
 Here is the \c CMakeLists.txt from that directory:
 
 \code
-    # set minimum required CMake-Version
-    cmake_minimum_required(VERSION 3.0)
+	# set minimum required CMake-Version
+	cmake_minimum_required(VERSION 3.10)
 
-    # set Project name
-    set(EXAMPLE_NAME simpletest)
-    set(EXENAME jkqtptest_${EXAMPLE_NAME})
-    project(${EXAMPLE_NAME} LANGUAGES CXX)
+	# set Project name
+	set(EXAMPLE_NAME simpletest)
+	set(EXENAME jkqtptest_${EXAMPLE_NAME})
+	project(${EXAMPLE_NAME} LANGUAGES CXX)
 
-    # some basic configurations
-    set(CMAKE_AUTOMOC ON)
-    set(CMAKE_AUTORCC ON)
-    set(CMAKE_AUTOUIC ON)
-    set(CMAKE_INCLUDE_CURRENT_DIR ON)
-    set(CMAKE_CXX_STANDARD 11)
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+	# some basic configurations
+	set(CMAKE_AUTOMOC ON)
+	set(CMAKE_INCLUDE_CURRENT_DIR ON)
+	set(CMAKE_CXX_STANDARD 11)
+	#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-    # Configure project for usage of Qt5
-    find_package(Qt5 5.12 REQUIRED Core Gui Widgets PrintSupport Svg Xml OpenGl)
+	# Configure project for usage of Qt5
+	find_package(Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
 
-    # include JKQTPlotter
-    find_package(JKQTCommonLib)
-    find_package(JKQTMathTextLib)
-    find_package(JKQTPlotterLib)
+	# include JKQTPlotter
+	find_package(JKQTCommonLib REQUIRED)
+	find_package(JKQTMathTextLib REQUIRED)
+	find_package(JKQTPlotterLib REQUIRED)
 
-    # For Visual Studio, we need to set some additional compiler options
-    if(MSVC)
-        add_compile_options(/EHsc)
-        # To enable M_PI, M_E,...
-        add_definitions(/D_USE_MATH_DEFINES)
-        # To Prevent Errors with min() and max()
-        add_definitions(/DNOMINMAX)
-        # To fix error: C2338: va_start argument must not
-        # have reference type and must not be parenthesized
-        add_definitions(/D_CRT_NO_VA_START_VALIDATION)
-    endif()
+	# For Visual Studio, we need to set some additional compiler options
+	if(MSVC)
+		add_compile_options(/EHsc)
+		# To enable M_PI, M_E,...
+		add_definitions(/D_USE_MATH_DEFINES)
+		# To Prevent Errors with min() and max()
+		add_definitions(/DNOMINMAX)
+		# To fix error: C2338: va_start argument must not
+		# have reference type and must not be parenthesized
+		add_definitions(/D_CRT_NO_VA_START_VALIDATION)
+	endif()
 
-    # add the example executable 
-    add_executable(${EXENAME} WIN32 simpletest.cpp)
-    # ... and link against JKQTPlotterLib 
-    #    (you could use JKQTPlotterSharedLib if you don't want to link againast the 
-    #     static version, but against the shared/DLL version).
-    target_link_libraries(${EXENAME} JKQTPlotterLib)
+	# add the example executable 
+	add_executable(${EXENAME} WIN32 simpletest.cpp)
+	# ... link against Qt5 and JKQTPlotterLib
+	#    (you could use JKQTPlotterSharedLib if you don't want to link againast the 
+	#     static version, but against the shared/DLL version).
+	target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTPlotterLib)
+
+	# Installation
+	install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 \endcode
 
 

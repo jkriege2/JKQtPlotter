@@ -15,18 +15,16 @@ if(CImg_FOUND)
 
     add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
     target_include_directories(${EXENAME} PRIVATE ../../lib)
-    if(BUILD_STATIC_LIBS)
+    if(JKQtPlotter_BUILD_STATIC_LIBS)
         target_link_libraries(${EXENAME} JKQTPlotterLib)
-    elseif(BUILD_SHARED_LIBS)
+    elseif(JKQtPlotter_BUILD_SHARED_LIBS)
         target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
     endif()
     include_directories(${EXENAME}  ${CIMG_INCLUDE_DIR} )
 
     # Installation
-    if(LIB_INSTALL)
-        install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-    endif(LIB_INSTALL)
-
+    install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+ 
     #Installation of Qt DLLs on Windows
     jkqtplotter_deployqt(${EXENAME})
         add_custom_command(TARGET ${EXENAME} POST_BUILD
