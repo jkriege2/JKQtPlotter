@@ -58,8 +58,16 @@ matrix:
       os: osx
     - compiler: clang
       os: linux
+      addons:
+        apt:
+          packages:
+            - libglu1-mesa-dev
     - compiler: gcc
       os: linux
+      addons:
+        apt:
+          packages:
+            - libglu1-mesa-dev
 
 install:
   - source ci/install_travis.sh
