@@ -2300,15 +2300,15 @@ bool JKQTMathText::MTsymbolNode::getGreekSymbolProp(JKQTMathText::MTsymbolNode::
       unicodeGreek.insert("Psi", QChar(0x3A8));
     }
 
-    qDebug()<<"##SEARCHING "<<n;
+    //qDebug()<<"##SEARCHING "<<n;
     props.italic = -1;
     if(fnt.second==MTFEunicodeLimited || fnt.second==MTFEunicode) {        
         props.font = fnt.first;
-        qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [unicode]";
+        //qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [unicode]";
         //std::cout<<"encoding unicode\n";
         QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
         if (itgreek!=unicodeGreek.end()) {
-            qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
+            //qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
             props.symbol = itgreek.value();
             return true;
         }
@@ -2316,30 +2316,30 @@ bool JKQTMathText::MTsymbolNode::getGreekSymbolProp(JKQTMathText::MTsymbolNode::
 
     if(fntGreek.second==MTFEunicodeLimited || fntGreek.second==MTFEunicode) {
         props.font = fntGreek.first;
-        qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [unicode]";
+        //qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [unicode]";
         //std::cout<<"encoding unicode\n";
         QHash<QString, QString>::iterator itgreek = unicodeGreek.find(n);
         if (itgreek!=unicodeGreek.end()) {
-            qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
+            //qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
             props.symbol = itgreek.value();
             return true;
         }
     }
 
     props.font = fntGreek.first;
-    qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [winSym]";
+    //qDebug()<<"##SEARCHING "<<n<<": SEARCHING IN "<<props.font<<" [winSym]";
     QHash<QString, QString>::iterator itgreek = winSymbolGreek.find(n);
     if (itgreek!=winSymbolGreek.end()) {
         props.symbol = itgreek.value();
-        qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
+        //qDebug()<<"##SEARCHING "<<n<<": FOUND IN "<<props.font<<" [unicode]";
     } else if (n == "sum") { props.symbol = "S"; props.fontFactor = mathFontFactor; props.heightIsAscent = true; props.exactAscent = true; }
     else if (n == "prod") { props.symbol = "P"; props.fontFactor = mathFontFactor; props.heightIsAscent = true; props.exactAscent = true; }
     else {
-        qDebug()<<"##SEARCHING "<<n<<": DIDN'T FIND!";
+        //qDebug()<<"##SEARCHING "<<n<<": DIDN'T FIND!";
         return false;
     }
 
-    qDebug()<<"##SEARCHING "<<n<<": FOUND!";
+    //qDebug()<<"##SEARCHING "<<n<<": FOUND!";
     return true;
 }
 

@@ -342,23 +342,23 @@ JKQTPUserActionMarkerType JKQTPlotter::getUserActionMarkerType() const
 
 void JKQTPlotter::registerMouseWheelAction(Qt::KeyboardModifiers modifier, JKQTPMouseWheelActions action)
 {
-    qDebug()<<"registerMouseWheelAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseWheelActions;
+    //qDebug()<<"registerMouseWheelAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseWheelActions;
     plotterStyle.registeredMouseWheelActions[modifier]=action;
-    qDebug()<<"registerMouseWheelAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseWheelActions;
+    //qDebug()<<"registerMouseWheelAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseWheelActions;
 }
 
 void JKQTPlotter::deregisterMouseWheelAction(Qt::KeyboardModifiers modifier)
 {
-    qDebug()<<"deregisterMouseWheelAction("<<modifier<<"): "<<plotterStyle.registeredMouseWheelActions;
+    //qDebug()<<"deregisterMouseWheelAction("<<modifier<<"): "<<plotterStyle.registeredMouseWheelActions;
     plotterStyle.registeredMouseWheelActions.remove(modifier);
-    qDebug()<<"deregisterMouseWheelAction("<<modifier<<"): "<<plotterStyle.registeredMouseWheelActions;
+    //qDebug()<<"deregisterMouseWheelAction("<<modifier<<"): "<<plotterStyle.registeredMouseWheelActions;
 }
 
 void JKQTPlotter::clearAllMouseWheelActions()
 {
-    qDebug()<<"clearAllMouseWheelActions(): "<<plotterStyle.registeredMouseWheelActions;
+    //qDebug()<<"clearAllMouseWheelActions(): "<<plotterStyle.registeredMouseWheelActions;
     plotterStyle.registeredMouseWheelActions.clear();
-    qDebug()<<"clearAllMouseWheelActions(): "<<plotterStyle.registeredMouseWheelActions;
+    //qDebug()<<"clearAllMouseWheelActions(): "<<plotterStyle.registeredMouseWheelActions;
 }
 
 
