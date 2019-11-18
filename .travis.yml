@@ -62,13 +62,10 @@ matrix:
       os: linux
 
 install:
-  - cmake --version
+  - source ci/install_travis.sh
 
 script:
-  - mkdir build
-  - cd build
-  - cmake -DCMAKE_INSTALL_PREFIX=$HOME/ext ..
-  - cmake --build . --target install
+  - ci/test_travis.sh
 
 notifications:
   email: false
