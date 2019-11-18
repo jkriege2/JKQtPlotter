@@ -54,6 +54,30 @@ SpeedTestPlot::SpeedTestPlot():
     setX(X[0], X[NDATA-1]);
     setY(-2,2);
 
+    actAntiAliase=new QAction("Anti-Aliase");
+    actAntiAliase->setCheckable(true);
+    actAntiAliase->setChecked(false);
+    connect(actAntiAliase, &QAction::triggered, std::bind([](SpeedTestPlot* p){
+                p->getPlotter()->setUseAntiAliasingForGraphs(p->actAntiAliase->isChecked());
+                p->getPlotter()->setUseAntiAliasingForSystem(p->actAntiAliase->isChecked());
+                p->getPlotter()->setUseAntiAliasingForText(p->actAntiAliase->isChecked());
+            }, this));
+
+    actTwoGraphs=new QAction("2 Graphs");
+    actTwoGraphs->setCheckable(true);
+    actTwoGraphs->setChecked(true);
+    connect(actTwoGraphs, &QAction::triggered, std::bind([](SpeedTestPlot* p, JKQTPXYLineGraph* g){
+                g->setVisible(p->actTwoGraphs->isChecked());
+            }, this, graph2));
+
+    actFixedXAxis=new QAction("Fixed X-Axis");
+    actFixedXAxis->setCheckable(true);
+    actFixedXAxis->setChecked(false);
+
+    addAction(actAntiAliase);
+    addAction(actTwoGraphs);
+    addAction(actFixedXAxis);
+
     // show plotter and make it a decent size
     show();
     resize(1000,500);
@@ -66,28 +90,29 @@ SpeedTestPlot::~SpeedTestPlot()
 
 void SpeedTestPlot::plotNewData()
 {
-    // move old data to the left
-    for (size_t i=0; i<NDATA-1; i++) {
-        X[i]=X[i+1];
-        Y[i]=Y[i+1];
-        Y2[i]=Y2[i+1];
-    }
-    // add one new data point
-    X[NDATA-1]=X[NDATA-2]+dx;
-    Y[NDATA-1]=sin(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-    Y2[NDATA-1]=cos(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
+    if (actFixedXAxis->isChecked()) {
+        // ALTERNATIVE: MOVE data, but keep x-axis range
+        x0+=dx;
+        for (size_t i=0; i<NDATA-1; i++) {
+            Y[i]=Y[i+1];
+            Y2[i]=Y2[i+1];
+        }
+        // add one new data point
+        Y[NDATA-1]=sin(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
+        Y2[NDATA-1]=cos(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
+    } else {
+        // move old data to the left
+        for (size_t i=0; i<NDATA-1; i++) {
+            X[i]=X[i+1];
+            Y[i]=Y[i+1];
+            Y2[i]=Y2[i+1];
+        }
+        // add one new data point
+        X[NDATA-1]=X[NDATA-2]+dx;
+        Y[NDATA-1]=sin(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
+        Y2[NDATA-1]=cos(X[NDATA-1])+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
 
-    /*
-    // ALTERNATIVE: MOVE data, but keep x-axis range
-    x0+=dx;
-    for (size_t i=0; i<NDATA-1; i++) {
-        Y[i]=Y[i+1];
-        Y2[i]=Y2[i+1];
     }
-    // add one new data point
-    Y[NDATA-1]=sin(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-    Y2[NDATA-1]=cos(X[NDATA-1]+x0)+static_cast<double>(std::rand())/static_cast<double>(RAND_MAX + 1u)-0.5;
-    */
 
 
     // set new x-range and replot

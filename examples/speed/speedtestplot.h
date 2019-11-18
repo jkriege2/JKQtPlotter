@@ -15,10 +15,14 @@ class SpeedTestPlot: public JKQTPlotter {
         const double dx;
         double x0;
         std::chrono::system_clock::time_point t_lastplot;
+        QAction* actAntiAliase;
+        QAction* actTwoGraphs;
+        QAction* actFixedXAxis;
     public:
         SpeedTestPlot();
 
         virtual ~SpeedTestPlot();
     public slots:
         void plotNewData();
+
 };

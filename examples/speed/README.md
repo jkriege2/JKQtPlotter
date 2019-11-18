@@ -65,7 +65,7 @@ There are different facor affecting the replot speed:
 3. *Axis Scales and Plot Appearance:* Replotting is done in two steps: First the plot with the axes, labels etc. is drawn. Then the graphs are draw on top. Therefore a replot is faster, if only the graphs change, because the background (plot) does not have to be replotted.
 
 
-the next table summarizes some results for plotting speed under different conditions, obatined with the test program in this directory (conditions: Qt 5.11, 32-bit, MinGW, Release, Phenom II X4 765, 500 data points):
+The next table summarizes some results for plotting speed under different conditions, obatined with the test program in this directory (conditions: Qt 5.11, 32-bit, MinGW, Release, Win7, Phenom II X4 765, 500 data points):
 
 | Anti-Aliasing    | X-Axis Redraw   | # Graphs      | frame rate [fps] |
 | ---------------- | --------------- | ------------- | ---------------- |
@@ -77,6 +77,21 @@ the next table summarizes some results for plotting speed under different condit
 | no               | yes             | 1             | 24               |
 | no               | no              | 2             | 32               |
 | no               | no              | 1             | 48               |
+
+
+
+Rerunning this test on a modern AMD Ryzen 3600 (conditions: Qt 5.13.1, 64-bit, MinGW, Release, AMD Ryzen 3600, Win10, 500 data points):
+
+| Anti-Aliasing    | X-Axis Redraw   | # Graphs      | frame rate [fps] |
+| ---------------- | --------------- | ------------- | ---------------- |
+| yes              | yes             | 2             |  7               |
+| yes              | yes             | 1             | 14               |
+| yes              | no              | 2             | 14               |
+| yes              | no              | 1             | 28               |
+| no               | yes             | 2             | 30               |
+| no               | yes             | 1             | 52               |
+| no               | no              | 2             | 59               |
+| no               | no              | 1             | 100              |
 
 
 
