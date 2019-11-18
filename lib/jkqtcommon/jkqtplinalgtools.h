@@ -702,7 +702,7 @@ inline bool jkqtplinalgLinSolve(const T* A, const T* B, long N, long C, T* resul
     //  v ... ... ...  | .....
     //
     const long msize=N*(N+C);
-    JKQTPArrayScopedPointer<T> m(static_cast<T*>(jkqtpArrayMalloc(msize*sizeof(T)))); // use scoped pointer to ensure, that m is free'd, when the function is ending
+    JKQTPArrayScopedPointer<T> m(static_cast<T*>(malloc(msize*sizeof(T)))); // use scoped pointer to ensure, that m is free'd, when the function is ending
     for (long l=0; l<N; l++) {
         for (long c=0; c<N; c++) { // init left half with matrix A
             m[jkqtplinalgMatIndex(l,c,N+C)]=A[jkqtplinalgMatIndex(l,c,N)];
@@ -837,7 +837,7 @@ inline T jkqtplinalgMatrixDeterminant(const T* a, long N) {
     } else {
         det = 0;
         for (j1=0;j1<N;j1++) {
-            JKQTPArrayScopedPointer<T> m(static_cast<T*>(jkqtpArrayCalloc((N-1)*(N-1),sizeof(T *))));
+            JKQTPArrayScopedPointer<T> m(static_cast<T*>(calloc((N-1)*(N-1),sizeof(T *))));
 
             for (i=1;i<N;i++) {
                 j2 = 0;
