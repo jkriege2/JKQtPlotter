@@ -54,8 +54,6 @@ matrix:
         - echo "" > html/.nojekyll
     - compiler: clang
       os: osx
-    - compiler: gcc
-      os: osx
     - compiler: clang
       os: linux
       addons:
