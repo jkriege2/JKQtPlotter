@@ -6,6 +6,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # Find includes in the build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+project(JKQtPlotter VERSION 1.0.0)
+
 # Common Includes for JKQtPlotter
 include(jkqtplotter_common_include)
 
