@@ -10,7 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(jkqtplotter_common_include)
 
 # Project Name and Version
-include(JKQtPlotter_LIB_properties)
+include(jkqtplotter_lib_properties)
 
 # CMake options with default values and description texts
 include(jkqtplotter_cmake_options)
