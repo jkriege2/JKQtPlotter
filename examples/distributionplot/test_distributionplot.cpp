@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
         hi.second=hi.second/static_cast<double>(NDATA);
     }
     // sort random data in order to calculate the statistical properties:
-    qSort(RANDVAL);
+    std::sort(RANDVAL.begin(), RANDVAL.end());
     const double rndMean=sum/static_cast<double>(NDATA);
     const double rndMin=RANDVAL.first();
     const double rndMax=RANDVAL.last();

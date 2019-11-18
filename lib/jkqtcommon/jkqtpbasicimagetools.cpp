@@ -2495,22 +2495,22 @@ bool JKQTPBuildColorPaletteLUTLinSegLessThan(const JKQTPColorPaletteSingleColorL
 }
 
 JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUTLinInterpolate(QList<QPair<double, QRgb> > items, int lut_size) {
-    qSort(items.begin(), items.end(), JKQTPBuildColorPaletteLUTLessThan);
+    std::sort(items.begin(), items.end(), JKQTPBuildColorPaletteLUTLessThan);
     return JKQTPBuildColorPaletteLUTLinInterpolateSorted(items, lut_size);
 }
 
 
 
 JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUT(QList<QPair<double, QRgb> > items, int lut_size)  {
-    qSort(items.begin(), items.end(), JKQTPBuildColorPaletteLUTLessThan);
+    std::sort(items.begin(), items.end(), JKQTPBuildColorPaletteLUTLessThan);
     return JKQTPBuildColorPaletteLUTSorted(items, lut_size);
 }
 
 JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUTLinSegments( QList<JKQTPColorPaletteSingleColorLinSegment> itemsR,  QList<JKQTPColorPaletteSingleColorLinSegment> itemsG,  QList<JKQTPColorPaletteSingleColorLinSegment> itemsB, int lut_size)
 {
-    qSort(itemsR.begin(), itemsR.end(), JKQTPBuildColorPaletteLUTLinSegLessThan);
-    qSort(itemsG.begin(), itemsG.end(), JKQTPBuildColorPaletteLUTLinSegLessThan);
-    qSort(itemsB.begin(), itemsB.end(), JKQTPBuildColorPaletteLUTLinSegLessThan);
+    std::sort(itemsR.begin(), itemsR.end(), JKQTPBuildColorPaletteLUTLinSegLessThan);
+    std::sort(itemsG.begin(), itemsG.end(), JKQTPBuildColorPaletteLUTLinSegLessThan);
+    std::sort(itemsB.begin(), itemsB.end(), JKQTPBuildColorPaletteLUTLinSegLessThan);
     return JKQTPBuildColorPaletteLUTLinSegmentsSorted(itemsR, itemsG, itemsB, lut_size);
 }
 

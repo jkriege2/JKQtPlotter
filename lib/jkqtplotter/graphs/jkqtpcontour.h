@@ -304,7 +304,7 @@ void JKQTPContourPlot::setContourLevels(const TContainer &levels, const TColorCo
         contourOverrideColor[v]=*itc;
         ++itc;
     }
-    qSort(contourLevels);
+    std::sort(contourLevels.begin(), contourLevels.end());
     clearCachedContours();
 
 }
@@ -318,7 +318,7 @@ void JKQTPContourPlot::setContourLevels(const TContainer &levels)
     for (auto it=levels.begin(); it!=levels.end(); ++it) {
         contourLevels<<jkqtp_todouble(*it);
     }
-    qSort(contourLevels);
+    std::sort(contourLevels.begin(), contourLevels.end());
     clearCachedContours();
 
 }

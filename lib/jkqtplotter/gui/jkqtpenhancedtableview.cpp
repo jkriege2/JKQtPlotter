@@ -166,9 +166,9 @@ void JKQTPEnhancedTableView::copySelectionToExcel(int copyrole, bool storeHead)
             }
         }
         QList<int> rowlist=QList<int>::fromSet(rows);
-        qSort(rowlist.begin(), rowlist.end());
+        std::sort(rowlist.begin(), rowlist.end());
         QList<int> collist=QList<int>::fromSet(cols);
-        qSort(collist.begin(), collist.end());
+        std::sort(collist.begin(), collist.end());
         int rowcnt=rowlist.size();
         int colcnt=collist.size();
         QList<QStringList> data;
@@ -285,9 +285,9 @@ void JKQTPEnhancedTableView::copySelectionToCSV(int copyrole, bool storeHead, co
             }
         }
         QList<int> rowlist=QList<int>::fromSet(rows);
-        qSort(rowlist.begin(), rowlist.end());
+        std::sort(rowlist.begin(), rowlist.end());
         QList<int> collist=QList<int>::fromSet(cols);
-        qSort(collist.begin(), collist.end());
+        std::sort(collist.begin(), collist.end());
         int rowcnt=rowlist.size();
         int colcnt=collist.size();
         QList<QStringList> data;

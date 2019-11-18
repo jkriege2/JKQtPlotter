@@ -231,7 +231,7 @@ bool JKQTPContourPlot::getRelativeLevels() const
 void JKQTPContourPlot::addContourLevel(double level)
 {
     contourLevels.append(level);
-    qSort(contourLevels);
+    std::sort(contourLevels.begin(), contourLevels.end());
     clearCachedContours();
 }
 
