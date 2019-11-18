@@ -26,10 +26,12 @@ conda info -a
 conda_pkgs="qt cmake"
 
 conda create -q -p $our_install_dir ${conda_pkgs}
-source activate $our_install_dir
-
-cd $SOURCE_DIR;
 
 # Since this script is getting sourced, remove error on exit
 set +e
 set +x
+
+source activate $our_install_dir
+
+cd $SOURCE_DIR;
+
