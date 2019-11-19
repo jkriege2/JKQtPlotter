@@ -60,12 +60,14 @@ matrix:
         apt:
           packages:
             - libglu1-mesa-dev
+            - grep
     - compiler: gcc
       os: linux
       addons:
         apt:
           packages:
             - libglu1-mesa-dev
+            - grep
 
 install:
   - source ci/install_travis.sh
