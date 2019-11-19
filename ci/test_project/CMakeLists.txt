@@ -14,5 +14,5 @@ find_package(JKQTCommonSharedLib REQUIRED)
 find_package(JKQTMathTextSharedLib REQUIRED)
 find_package(JKQTPlotterSharedLib REQUIRED)
 
-add_executable(test_project main.cpp)
+add_executable(test_project ui.cpp formwithjkqtplotter.cpp formwithjkqtplotter.ui)
 target_link_libraries(test_project JKQTPlotterSharedLib)

@@ -1,12 +1,14 @@
 #include <QApplication>
+#include "formwithjkqtplotter.h"
 
-#include "jkqtplotter/graphs/jkqtpscatter.h"
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    JKQTPXYLineGraph* graph;
+    FormWithJKQTPlotter plot;
+    plot.show();
+    plot.resize(600,400);
 
     return app.exec();
 }
