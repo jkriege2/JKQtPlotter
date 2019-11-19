@@ -14,5 +14,7 @@ if [[ "${TRAVIS_OS_NAME}" != "osx" ]]; then
     cd ../ci/test_project
     cmake -DCMAKE_PREFIX_PATH=$CONDA_PREFIX .
     cmake --build .
+    ls -l
+    ldd test_project
     ldd test_project | grep "not found"
 fi
