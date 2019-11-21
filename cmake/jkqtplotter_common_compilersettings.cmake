@@ -16,3 +16,7 @@ elseif(MSVC)
   # have reference type and must not be parenthesized
   add_definitions(/D_CRT_NO_VA_START_VALIDATION)
 endif()
+
+if(NOT APPLE)
+    set(CMAKE_INSTALL_RPATH $ORIGIN)
+endif()
