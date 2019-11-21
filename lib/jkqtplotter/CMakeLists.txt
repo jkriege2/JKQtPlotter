@@ -167,53 +167,53 @@ endif()
 
 # Installation
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-        install(TARGETS ${libsh_name} EXPORT ${libsh_name}_TARGETS
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-        )
-        install(EXPORT ${libsh_name}_TARGETS
-            FILE ${libsh_name}Config.cmake 
-            DESTINATION lib/cmake/${libsh_name}
-        )
-        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake" 
-		        DESTINATION lib/cmake/${libsh_name}  )
-    endif(JKQtPlotter_BUILD_SHARED_LIBS)
+	install(TARGETS ${libsh_name} EXPORT ${libsh_name}_TARGETS
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+		INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+	)
+	install(EXPORT ${libsh_name}_TARGETS
+		FILE ${libsh_name}Config.cmake 
+		DESTINATION lib/cmake/${libsh_name}
+	)
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake" 
+			DESTINATION lib/cmake/${libsh_name}  )
+endif(JKQtPlotter_BUILD_SHARED_LIBS)
 
-    if(JKQtPlotter_BUILD_STATIC_LIBS)
-        install(TARGETS ${lib_name} EXPORT ${lib_name}_TARGETS
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-        )
-        install(EXPORT ${lib_name}_TARGETS
-            FILE ${lib_name}Config.cmake 
-            DESTINATION lib/cmake/${lib_name}
-        )
-        install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake" 
-		        DESTINATION lib/cmake/${lib_name}  )
-    endif(JKQtPlotter_BUILD_STATIC_LIBS)
+if(JKQtPlotter_BUILD_STATIC_LIBS)
+	install(TARGETS ${lib_name} EXPORT ${lib_name}_TARGETS
+		RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+		INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+	)
+	install(EXPORT ${lib_name}_TARGETS
+		FILE ${lib_name}Config.cmake 
+		DESTINATION lib/cmake/${lib_name}
+	)
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake" 
+			DESTINATION lib/cmake/${lib_name}  )
+endif(JKQtPlotter_BUILD_STATIC_LIBS)
 
-    install(FILES ${HEADERS}
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
-            COMPONENT Headers)
+install(FILES ${HEADERS}
+		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
+		COMPONENT Headers)
 
-    install(FILES ${HEADERS_GRAPHS}
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/graphs
-            COMPONENT Headers)
+install(FILES ${HEADERS_GRAPHS}
+		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/graphs
+		COMPONENT Headers)
 
-    install(FILES ${HEADERS_GUI}
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/gui
-            COMPONENT Headers)
+install(FILES ${HEADERS_GUI}
+		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/gui
+		COMPONENT Headers)
 
-    install(FILES ${HEADERS_OVERLAY}
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/overlays
-            COMPONENT Headers)
+install(FILES ${HEADERS_OVERLAY}
+		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}/overlays
+		COMPONENT Headers)
 
-    configure_file(${CMAKE_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION doc/ )
-    install(FILES "${CMAKE_SOURCE_DIR}/LICENSE" DESTINATION doc/ RENAME "${lib_name}_LICENSE.txt" )
+configure_file(${CMAKE_SOURCE_DIR}/readme.txt.in ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION doc/ )
+install(FILES "${CMAKE_SOURCE_DIR}/LICENSE" DESTINATION doc/ RENAME "${lib_name}_LICENSE.txt" )
 
 
