@@ -681,7 +681,7 @@ double JKQTMathText::MTsqrtNode::draw(QPainter& painter, double x, double y, JKQ
     //painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=painter.pen();
     p.setColor(currentEv.color);
-    p.setWidthF(qMax(JKQTMathText::ABS_MIN_LINEWIDTH,ceil(currentEv.fontSize/16.0)));
+    p.setWidthF(fm.lineWidth());
     //painter.setPen(p);
     QPainterPath path;
     if (w>0) {
@@ -1434,7 +1434,7 @@ double JKQTMathText::MTbraceNode::draw(QPainter& painter, double x, double y, JK
 
     getSize(painter, currentEv, cWidth, cBaselineHeight, cOverallHeight, cstrikeoutPos);
 
-    double lw=qMax(0.25,ceil(currentEv.fontSize/12.0));//fm.lineWidth();
+    double lw=qMax(0.25,ceil(currentEv.fontSize/16.0));//fm.lineWidth();
 
     double xnew=x+lw;
 
@@ -2929,7 +2929,7 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
 
     QPen p=painter.pen();
     p.setColor(currentEv.color);
-    p.setWidthF(qMax(JKQTMathText::ABS_MIN_LINEWIDTH, fm.lineWidth()));
+    p.setWidthF(fm.lineWidth());
     p.setStyle(Qt::SolidLine);
     painter.setPen(p);
     double xwi=fm.width("x");
