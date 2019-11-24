@@ -55,7 +55,7 @@ build:
 
 configuration:
   - release
-  - debug
+#  - debug
 
 
 install:
