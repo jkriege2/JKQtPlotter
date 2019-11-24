@@ -112,7 +112,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
 
     spinBarLabelAngel=new QSpinBox(this);
     spinBarLabelAngel->setPrefix(tr("rotation angel:  "));
-    spinBarLabelAngel->setSuffix(QLatin1String("°"));
+    spinBarLabelAngel->setSuffix(QLatin1String("\xB0"));
     spinBarLabelAngel->setRange(-180,180);
     spinBarLabelAngel->setValue(0);
     spinBarLabelAngel->setSingleStep(15);
@@ -121,7 +121,7 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
 
     spinBarLabelAngel2=new QSpinBox(this);
     spinBarLabelAngel2->setPrefix(tr("rotation angel:  "));
-    spinBarLabelAngel2->setSuffix(QLatin1String("°"));
+    spinBarLabelAngel2->setSuffix(QLatin1String("\xB0"));
     spinBarLabelAngel2->setRange(-180,180);
     spinBarLabelAngel2->setValue(0);
     spinBarLabelAngel2->setSingleStep(15);

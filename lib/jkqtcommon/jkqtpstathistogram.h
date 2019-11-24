@@ -223,7 +223,7 @@ inline void jkqtpstatHistogram1D(InputIt first, InputIt last, BinsInputIt binsFi
         const double v=jkqtp_todouble(*it);
         if (JKQTPIsOKFloat(v)) {
             auto itb=std::lower_bound(histX.begin(), histX.end(), v);
-            size_t bin=jkqtp_bounded<size_t>(0,static_cast<size_t>(abs(std::distance(histX.begin(), itb))), histY.size()-1);
+            size_t bin=jkqtp_bounded<size_t>(0,static_cast<size_t>(std::abs(std::distance(histX.begin(), itb))), histY.size()-1);
             histY[bin]++;
         }
     }

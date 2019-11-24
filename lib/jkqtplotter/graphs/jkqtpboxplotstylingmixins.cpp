@@ -754,7 +754,7 @@ void JKQTPGraphBoxplotStyleMixin::plotVerticalKeyMarker(JKQTBasePlotter *parent,
     const double min=rect.bottom();
     const double max=rect.top();
     const double median=max+rect.height()/2.0;
-    const double w=abs(xma-xmi);
+    const double w=fabs(xma-xmi);
     const double p25=max+0.75*rect.height();
     const double p75=max+0.25*rect.height();
 

@@ -428,7 +428,6 @@ void JKQTPContourPlot::calcContourLines(QList<QVector<QLineF> > &ContourLines)
 JKQTPColumnContourPlot::JKQTPColumnContourPlot(JKQTBasePlotter *parent):
     JKQTPContourPlot(parent)
 {
-    this->imageColumn=imageColumn;
     this->datatype=JKQTPMathImageDataType::DoubleArray;
 }
 

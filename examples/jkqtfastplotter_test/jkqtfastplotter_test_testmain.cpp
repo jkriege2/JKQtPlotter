@@ -120,8 +120,8 @@ TestMain::TestMain(QWidget *parent) :
     gl->addWidget(p21, 0, 0, 1, 3);
     for (int x=0; x<IMAGE_N; x++) {
         for (int y=0; y<IMAGE_N; y++) {
-            imageRed[y*IMAGE_N+x]=(fabs(x)+fabs(y))/2.0;
-            imageGreen[y*IMAGE_N+x]=(fabs(double(IMAGE_N)-x)+fabs(y))/2.0;
+            imageRed[y*IMAGE_N+x]=static_cast<double>(std::abs(x)+std::abs(y))/2.0;
+            imageGreen[y*IMAGE_N+x]=(fabs(double(IMAGE_N)-x)+static_cast<double>(std::abs(y)))/2.0;
             imageBlue[y*IMAGE_N+x]=sqrt(x*x+y*y);
         }
     }
