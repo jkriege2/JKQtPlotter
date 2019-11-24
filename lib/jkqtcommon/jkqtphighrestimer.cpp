@@ -43,7 +43,7 @@ void JKQTPHighResTimer::start(){
       freq=static_cast<double>(fr.QuadPart);
       QueryPerformanceCounter(&last);
   #else
-      gettimeofday(&last,0);
+      last=std::chrono::system_clock::now();
   #endif
 };
 
@@ -55,13 +55,8 @@ double JKQTPHighResTimer::getTime(){
       QueryPerformanceCounter(&now);
       return (static_cast<double>(now.QuadPart-last.QuadPart)/freq)*1e6;
   #else
-    struct timeval tv;
-    gettimeofday(&tv,0);
-
-    int t1, t2;
-    t1 = last.tv_sec * 1000000 + last.tv_usec;
-    t2 = tv.tv_sec * 1000000 + tv.tv_usec;
-    return abs(t2 - t1);
+    auto no=std::chrono::system_clock::now();
+    return std::chrono::duration_cast<std::chrono::microseconds>(no-last).count();
 
 
   #endif

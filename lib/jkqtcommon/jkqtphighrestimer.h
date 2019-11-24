@@ -22,6 +22,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <chrono>
 
 #include "jkqtcommon_imexport.h"
 
@@ -37,18 +38,11 @@
 # endif
 #endif
 
-#ifndef __WINDOWS__
-# ifndef __LINUX__
-#  warning("these methods are ment to be used under windows or linux ... no other system were tested")
-# endif
-#endif
-
 #if defined(__WINDOWS__)
   #include<windows.h>
 #elif defined(__LINUX__)
   #include <sys/time.h>
 #else
-  #warning("your operating system is not supported: you will have to implement this on your systems")
   #include <sys/time.h>
 #endif
 
@@ -133,7 +127,7 @@ class JKQTCOMMON_LIB_EXPORT JKQTPHighResTimer {
       /** \brief internal: time stamp of the last call of start() */
       LARGE_INTEGER last;
     #else
-      struct timeval last;
+      std::chrono::system_clock::timepoint last;
     #endif
       /** \brief internal: timer frequency */
       double freq;
