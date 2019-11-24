@@ -4,7 +4,8 @@ This is an extensive library of function/data plotter classes for Qt (>= 4.7, te
 This software is licensed under the term of the [GNU Lesser General Public License 2.1 
 (LGPL 2.1)](./LICENSE) or above. 
 
-[![License](https://img.shields.io/github/license/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/blob/master/LICENSE)
+[![Lates Release](https://img.shields.io/github/v/release/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/releases)
+
 ![Language](https://img.shields.io/github/languages/top/jkriege2/JKQtPlotter)
 [![Qt 4&5](https://img.shields.io/badge/Qt-4%20%26%205-brightgreen)](https://doc.qt.io/qt-5/)
 [![Documentation](https://img.shields.io/badge/documentation-online-blue)](http://jkriege2.github.io/JKQtPlotter/index.html)
@@ -65,8 +66,6 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 A Documentation (auto-)generated with [doxygen](http://www.doxygen.nl/) from the trunk source code can be found here: 
 **[http://jkriege2.github.io/JKQTPlotter/index.html](http://jkriege2.github.io/JKQtPlotter/index.html)**
 
-Documentation is auto-generated after pushes by [Travis](https://travis-ci.org/jkriege2/JKQtPlotter): [![Build Status](https://travis-ci.org/jkriege2/JKQtPlotter.svg?branch=master)](https://travis-ci.org/jkriege2/JKQtPlotter)
-
 ## [Examples](./examples/)
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
@@ -76,8 +75,9 @@ The [Screenshots-page](./screenshots/) contains several screenshots, partly take
 
 [![EXAMPLES-Page](./screenshots/screenshotsbanner.png)](./screenshots/README.md)
 
-
 ## Building
+
+[![Lates Release](https://img.shields.io/github/v/release/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/releases)
 
 JKQTPlotter contains two different build systems: A modern [CMake](https://cmake.org/)-based build and an older (and deprecated!) QMake-based build (which works out of the box with Qt 5.x). Both systems are explained in detail in http://jkriege2.github.io/JKQtPlotter/page_buildinstructions.html.
 
