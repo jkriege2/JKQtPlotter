@@ -12,8 +12,29 @@ This page lists release notes for the diferent version of JKQTPlotter
 \section page_whatsnew_TRUNK trunk: Major Update/Refactoring
 
 \subsection page_whatsnew_TRUNK_OVERVIEW trunk: Overview
+Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
+  -
+.
+
+\subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
+
+This release is available from:
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
+  - Source Code download (ZIP): <a href="https://github.com/jkriege2/JKQtPlotter/archive/master.zip">https://github.com/jkriege2/JKQtPlotter/archive/master.zip</a>
+  - Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
+.
+
+
+
+
+
+
+
+
+\section page_whatsnew_V2019_11 v2019.11: Major rework of the library
 Starting in summer 2018, JKQTPlotter received some major workover. During this, it lost compatibility to the <a href="https://github.com/jkriege2/QuickFit3">QuickFit 3.0</a> code base. 
 
+\subsection page_whatsnew_V2019_11_OVERVIEW v2019.11: Overview
 Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 <ul>
   <li> new: CMake-base build, which deprecated the QMake-build</li>
@@ -68,16 +89,13 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 	  <li> update: improved documentation</li>
 	</ul></li>
  </ul>
-
-\subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
+ 
+\subsection page_whatsnew_V2019_11_DOWNLOAD v2019.11: Download
 
 This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
-  - Source Code download (ZIP): <a href="https://github.com/jkriege2/JKQtPlotter/archive/master.zip">https://github.com/jkriege2/JKQtPlotter/archive/master.zip</a>
-  - Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2019.11">https://github.com/jkriege2/JKQtPlotter/tree/v2019.11</a>
+  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11</a> (2019-Nov-24)
 .
-
-
 
 
 
