@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
+# Project Name and Version
+project(JKQTPlotter LANGUAGES CXX VERSION 2019.11)
+
+
 # set search path for CMake files
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)

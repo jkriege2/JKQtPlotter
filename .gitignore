@@ -96,3 +96,6 @@ Sicherungskopie_*
 /build
 /*.10-pre1
 /install
+/.vs
+/CMakeSettings.json
+/out

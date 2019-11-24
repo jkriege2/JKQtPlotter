@@ -136,8 +136,8 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
-    target_compile_definitions(${libsh_name} PUBLIC JKQtPlotter_LIB_IN_DLL)
-    target_compile_definitions(${libsh_name} PRIVATE JKQtPlotter_LIB_EXPORT_LIBRARY)
+    target_compile_definitions(${libsh_name} PUBLIC JKQTPLOTTER_LIB_IN_DLL)
+    target_compile_definitions(${libsh_name} PRIVATE JKQTPLOTTER_LIB_EXPORT_LIBRARY)
 	target_include_directories(${libsh_name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
