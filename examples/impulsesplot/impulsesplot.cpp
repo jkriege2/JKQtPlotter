@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     // 2. now we create data for a simple plot (a sine curve with lin. increasing errors)
     QVector<double> X, Y;
     for (int i=0; i<Ndata; i++) {
-        const double xx=double(i)/double(Ndata)*6.0*M_PI;
+        const double xx=double(i)/double(Ndata)*6.0*JKQTPSTATISTICS_PI;
         X << xx;
         Y << cos(xx)*exp(-xx/10.0);
     }

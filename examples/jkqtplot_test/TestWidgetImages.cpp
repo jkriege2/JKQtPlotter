@@ -49,7 +49,7 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
     bool* bimg2=(bool*)calloc(100*100,sizeof(bool));
     for (int x=0; x<100; x++) {
         for (int y=0; y<100; y++) {
-            img2[y*100+x]=sin(2*M_PI*sqrt(1.0+x*x+y*y)/20);
+            img2[y*100+x]=sin(2*JKQTPSTATISTICS_PI*sqrt(1.0+x*x+y*y)/20);
             img2M[y*100+x]=abs(y-x);
             bimg2[y*100+x]=static_cast<double>(rand())/static_cast<double>(RAND_MAX)>0.9;
         }

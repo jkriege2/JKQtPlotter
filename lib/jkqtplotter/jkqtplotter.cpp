@@ -516,7 +516,7 @@ void JKQTPlotter::paintUserAction() {
                     painter.drawLine(QPointF(x2,y1), QPointF(x2,y2));
                     painter.drawLine(QPointF(x1,y1), QPointF(x2,y2));
                     const double dxy=sqrt(jkqtp_sqr(mouseDragRectXEnd-mouseDragRectXStart)+jkqtp_sqr(mouseDragRectYEnd-mouseDragRectYStart));
-                    const double alpha=atan2((mouseDragRectYEnd-mouseDragRectYStart), (mouseDragRectXEnd-mouseDragRectXStart))/M_PI*180.0;
+                    const double alpha=atan2((mouseDragRectYEnd-mouseDragRectYStart), (mouseDragRectXEnd-mouseDragRectXStart))/JKQTPSTATISTICS_PI*180.0;
                     const double dx=fabs(mouseDragRectXEnd-mouseDragRectXStart);
                     const double dy=fabs(mouseDragRectYEnd-mouseDragRectYStart);
 

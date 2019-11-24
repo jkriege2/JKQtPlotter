@@ -129,7 +129,7 @@ void TestStyling::initPlot()
     QVector<double> X, Y1, Y2, img, X3, Y3, Y3err, Xbar, Ybar, Ybar2;
     const int Ndata=100;
     for (int i=0; i<Ndata; i++) {
-        const double x=double(i)/double(Ndata)*8.0*M_PI;
+        const double x=double(i)/double(Ndata)*8.0*JKQTPSTATISTICS_PI;
         X<<x;
         Y1<<1.1+sin(x);
         Y2<<1.1+sin(x)*exp(-0.2*x);

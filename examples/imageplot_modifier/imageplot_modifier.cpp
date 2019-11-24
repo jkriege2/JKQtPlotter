@@ -9,11 +9,6 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
@@ -37,7 +32,7 @@ int main(int argc, char* argv[])
         x=-static_cast<double>(NX)/2.0;
         for (int ix=0; ix<NX; ix++ ) {
             const double r=sqrt(x*x+y*y);
-            image[iy*NX+ix] = cos(M_PI*r/20.0);
+            image[iy*NX+ix] = cos(JKQTPSTATISTICS_PI*r/20.0);
             modifier[iy*NX+ix] = 1.0-r/sqrt(NX*NX/4.0+NY*NY/4.0);
             x+=1;
         }
@@ -46,7 +41,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
+    // 3. make data availJKQTPSTATISTICS_PI to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cImage=ds->addCopiedImageAsColumn(image, NX, NY, "imagedata");

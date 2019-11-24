@@ -23,11 +23,11 @@ int main(int argc, char* argv[])
     QVector<double> X, Yline, Yfilled, Yfilled2, Ybarsempty, Ybarsfilled;
     const int Ndata=20; // number of plot points in each curve
     for (int i=0; i<Ndata; i++) {
-        const double x=double(i)/double(Ndata)*4.0*M_PI;
+        const double x=double(i)/double(Ndata)*4.0*JKQTPSTATISTICS_PI;
         X<<x;
-        Yfilled<<(2.5-0.7*x/4.0/M_PI+sin(x*1.5));
-        Yfilled2<<0.75*(1.5-0.7*x/4.0/M_PI+sin(x*1.5));
-        double bar=(1.0+0.65*x/4.0/M_PI+sin(x/2.0));
+        Yfilled<<(2.5-0.7*x/4.0/JKQTPSTATISTICS_PI+sin(x*1.5));
+        Yfilled2<<0.75*(1.5-0.7*x/4.0/JKQTPSTATISTICS_PI+sin(x*1.5));
+        double bar=(1.0+0.65*x/4.0/JKQTPSTATISTICS_PI+sin(x/2.0));
         Ybarsempty<<(-bar);
         Ybarsfilled<<(-bar)*(cos(x)+1.2)/3.0;
     }

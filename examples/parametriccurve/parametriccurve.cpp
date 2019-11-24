@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     //    in addition the radius is stored in column R
     QVector<double> X, Y, R;
     const int Ndata=500; // number of plot points in each curve
-    const double phiMax=4.0*M_PI;
+    const double phiMax=4.0*JKQTPSTATISTICS_PI;
     const double a=1;
     const double k=0.2;
     for (double phi=-phiMax; phi<=phiMax; phi+=phiMax/double(Ndata)) {

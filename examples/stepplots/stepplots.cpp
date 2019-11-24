@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
     QVector<double> X, Y1, Y2, Y3, Y4, Y5;
     const int Ndata=7; // number of plot points in each curve
     for (int i=0; i<=Ndata; i++) {
-        const double x=0.0+double(i)*0.6*M_PI;
+        const double x=0.0+double(i)*0.6*JKQTPSTATISTICS_PI;
         X<<x;
         Y1<<sin(x)+1.0*1.5;
         Y2<<sin(x)+3.0*1.5;

@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     JKQTPXFunctionLineGraph* func2=new JKQTPXFunctionLineGraph(plot);
     func2->setPlotFunctionFunctor([](double x, void* params) {
         QVector<double>* p=static_cast<QVector<double>*>(params);
-        return p->at(0)*sin(2.0*M_PI*x*p->at(1));
+        return p->at(0)*sin(2.0*JKQTPSTATISTICS_PI*x*p->at(1));
     });
     // here we set the parameters p0, p1
     func2->setParamsV(5, 0.2);
@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
     JKQTPXFunctionLineGraph* func3=new JKQTPXFunctionLineGraph(plot);
     func3->setPlotFunctionFunctor([](double x, void* params) {
         QMap<QString,double>* p=static_cast<QMap<QString,double>*>(params);
-        return p->value("amplitude")*sin(2.0*M_PI*x*p->value("frequency"));
+        return p->value("amplitude")*sin(2.0*JKQTPSTATISTICS_PI*x*p->value("frequency"));
     });
     // here we set the parameters p0, p1
     QMap<QString,double> params3;

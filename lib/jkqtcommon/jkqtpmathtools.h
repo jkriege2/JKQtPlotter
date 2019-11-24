@@ -33,6 +33,17 @@
 
 
 
+/*! \brief \f$ \pi=3.14159... \f$
+    \ingroup jkqtptools_math_basic
+
+*/
+#ifdef M_PI
+#  define JKQTPSTATISTICS_PI M_PI
+#else
+#  define JKQTPSTATISTICS_PI 3.14159265358979323846
+#endif
+
+
 /*! \brief \f$ \sqrt{2\pi}=2.50662827463 \f$
     \ingroup jkqtptools_math_basic
 
@@ -316,6 +327,77 @@ inline T jkqtp_inversePropSaveDefault(const T& v) {
     return jkqtp_inversePropSave<T>(v, std::numeric_limits<T>::epsilon()*100.0);
 }
 
+/*! \brief j0() function (without compiler issues)
+    \ingroup jkqtptools_math_basic
+
+*/
+inline double jkqtp_j0(double x) {
+#if Q_CC_MSVC
+    return _j0(x);
+#else
+    return j0(x);
+#endif
+}
+
+/*! \brief j1() function (without compiler issues)
+    \ingroup jkqtptools_math_basic
+
+*/
+inline double jkqtp_j1(double x) {
+#if Q_CC_MSVC
+    return _j1(x);
+#else
+    return j1(x);
+#endif
+}
+
+/*! \brief y0() function (without compiler issues)
+    \ingroup jkqtptools_math_basic
+
+*/
+inline double jkqtp_y0(double x) {
+#if Q_CC_MSVC
+    return _y0(x);
+#else
+    return y0(x);
+#endif
+}
+
+/*! \brief y1() function (without compiler issues)
+    \ingroup jkqtptools_math_basic
+
+*/
+inline double jkqtp_y1(double x) {
+#if Q_CC_MSVC
+    return _y1(x);
+#else
+    return y1(x);
+#endif
+}
+
+/*! \brief jn() function (without compiler issues)
+    \ingroup jkqtptools_math_basic
+
+*/
+inline double jkqtp_jn(int n, double x) {
+#if Q_CC_MSVC
+    return _jn(n,x);
+#else
+    return jn(n,x);
+#endif
+}
+
+/*! \brief yn() function (without compiler issues)
+    \ingroup jkqtptools_math_basic
+
+*/
+inline double jkqtp_yn(int n, double x) {
+#if Q_CC_MSVC
+    return _yn(n,x);
+#else
+    return yn(n,x);
+#endif
+}
 
 /** \brief calculate the distance between two QPointF points
  *  \ingroup jkqtptools_math_basic
@@ -344,10 +426,10 @@ inline bool JKQTPIsOKFloat(T v) {
 /** \brief evaluates a gaussian propability density function
  * \ingroup jkqtptools_math_basic
  *
- * \f[ f(x,\mu, \sigma)=\frac{1}{\sqrt{2\pi\sigma^2}}\cdot\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+ * \f[ f(x,\mu, \sigma)=\frac{1}{\sqrt{2\pi\sigma^2}}\cdot\eJKQTPSTATISTICS_PIeft(-\frac{(x-\mu)^2}{2\sigma^2}\right)
  */
 inline double jkqtp_gaussdist(double x, double mu=0.0, double sigma=1.0) {
-    return exp(-0.5*jkqtp_sqr(x-mu)/jkqtp_sqr(sigma))/sqrt(2.0*M_PI*sigma*sigma);
+    return exp(-0.5*jkqtp_sqr(x-mu)/jkqtp_sqr(sigma))/sqrt(2.0*JKQTPSTATISTICS_PI*sigma*sigma);
 }
 
 /*! \brief evaluate a polynomial \f$ f(x)=\sum\limits_{i=0}^Pp_ix^i \f$ with \f$ p_i \f$ taken from the range \a firstP ... \a lastP

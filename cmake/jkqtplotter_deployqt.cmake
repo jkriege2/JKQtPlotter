@@ -22,6 +22,8 @@ function(jkqtplotter_deployqt TARGET_NAME)
             COMMAND "${CMAKE_COMMAND}" -E
                 env PATH="${CMAKE_CXX_COMPILER_BINPATH}\;${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
                     --compiler-runtime
+					-xml
+					-printsupport
                     ${WINDEPLOYQTOPTION}
                     \"$<TARGET_FILE:${TARGET_NAME}>\"
             COMMENT "Running windeployqt ... "

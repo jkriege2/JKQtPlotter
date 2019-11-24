@@ -35,7 +35,7 @@
 #include <iostream>
 #include <QMutex>
 #include <QGLWidget>
-
+#include "jkqtcommon/jkqtpmathtools.h"
 #ifdef DEBUG_TIMING
 #  include "jkqtcommon/jkqtphighrestimer.h"
 #endif
@@ -2067,7 +2067,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                         else if (r < 0.0)
                             r = 0.0;
 
-                        double g = 255.0 * std::sin(M_PI*v);
+                        double g = 255.0 * std::sin(JKQTPSTATISTICS_PI*v);
 
                         double b = 255.0 - 765.0 * v;
                         if (b < 0.0)
@@ -2144,9 +2144,9 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                         if (r > 255.0)
                             r = 255.0;
 
-                        double g = 255.0*sin(M_PI*v);
+                        double g = 255.0*sin(JKQTPSTATISTICS_PI*v);
 
-                        double b = 255.0*cos(0.5*M_PI*v);
+                        double b = 255.0*cos(0.5*JKQTPSTATISTICS_PI*v);
 
                         lut_rainbow[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
                     }
@@ -2243,11 +2243,11 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                         if (r < 0.0) r = 0.0;
                         if (r > 1.0) r = 1.0;
 
-                        double g = sin(M_PI/2.0*v);
+                        double g = sin(JKQTPSTATISTICS_PI/2.0*v);
                         if (g < 0.0) g = 0.0;
                         if (g > 1.0) g = 1.0;
 
-                        double b = cos(M_PI/2.0*v);
+                        double b = cos(JKQTPSTATISTICS_PI/2.0*v);
                         if (b < 0.0) b = 0.0;
                         if (b > 1.0) b = 1.0;
 
@@ -2292,7 +2292,7 @@ inline void JKQTFPimagePlot_array2image(T* dbl, int width, int height, QImage &i
                 if ((*plut)!=nullptr) {
                     for (size_t l=0; l<=JKQTFastPlotter::LUTSIZE; l++) {
                         double v=l/static_cast<double>(JKQTFastPlotter::LUTSIZE);
-                        double r = (v < 0.5) ? 128.0*sin(M_PI*(2.0*v-0.5))+128.0 : 255.0;
+                        double r = (v < 0.5) ? 128.0*sin(JKQTPSTATISTICS_PI*(2.0*v-0.5))+128.0 : 255.0;
                         if (r > 255.0)
                             r = 255.0;
 

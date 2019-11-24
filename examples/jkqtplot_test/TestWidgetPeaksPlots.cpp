@@ -37,7 +37,7 @@ TestWidgetPeaksPlots::TestWidgetPeaksPlots(QWidget *parent) :
     QVector<double> photons1, photons2;
     for (int i=0; i<1000; i++) {
         double x=double(i)/1000.0;
-        const double p=0.33*fabs(sin(x*4.0*M_PI))*fabs(sin(x*4.0*M_PI));
+        const double p=0.33*fabs(sin(x*4.0*JKQTPSTATISTICS_PI))*fabs(sin(x*4.0*JKQTPSTATISTICS_PI));
         if (static_cast<double>(rand())/static_cast<double>(RAND_MAX)<=p) photons1<<x;
         if (static_cast<double>(rand())/static_cast<double>(RAND_MAX)<=p) photons2<<x;
     }

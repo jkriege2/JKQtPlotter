@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 
     // 2. now we create a cos-curve plot with the standard means of JKQTPDatastore::addColumn(NRows, "name")
     //    and JKQTPDatastore::set() to actually set the values:
-    //size_t XCol=datastore->addLinearColumn(50, 0, 4.0*M_PI, "cos curve: x-data");
+    //size_t XCol=datastore->addLinearColumn(50, 0, 4.0*JKQTPSTATISTICS_PI, "cos curve: x-data");
     //size_t YCol=datastore->addColumn(datastore->getRows(XCol), "cos curve: y-data");
     //for (size_t i=0; i<datastore->getRows(XCol); i++) {
     //    datastore->set(YCol, i, cos(datastore->get(XCol, i)));
@@ -39,14 +39,14 @@ int main(int argc, char* argv[])
     size_t YCol=datastore->addColumn("cos curve: y-data");
     auto biXCol=datastore->backInserter(XCol);
     auto biYCol=datastore->backInserter(YCol);
-    for (double x=0; x<4.0*M_PI; x+=4.0*M_PI/50.0) {
+    for (double x=0; x<4.0*JKQTPSTATISTICS_PI; x+=4.0*JKQTPSTATISTICS_PI/50.0) {
         *biXCol=x;
         *biYCol=cos(x);
         ++biXCol;
         ++biYCol;
     }
     // 2.3 combining with addLinearColumn() you can also use C++ STL algorithms:
-    //size_t XCol=datastore->addLinearColumn(50, 0, 4.0*M_PI, "cos curve: x-data");
+    //size_t XCol=datastore->addLinearColumn(50, 0, 4.0*JKQTPSTATISTICS_PI, "cos curve: x-data");
     //size_t YCol=datastore->addColumn("cos curve: y-data");
     //std::transform(datastore->begin(XCol), datastore->end(XCol), datastore->backInserter(YCol), cos);
     // 2.4. Just for fun we can now sort the data:

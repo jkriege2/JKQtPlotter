@@ -37,7 +37,7 @@ void ContourPlotAnimator::step() {
             const double r2=sqrt((x-Q2_x0)*(x-Q2_x0)+(y-Q2_y0)*(y-Q2_y0));
             const double r3=sqrt((x-Q3_x0)*(x-Q3_x0)+(y-Q3_y0)*(y-Q3_y0));
             const double r4=sqrt((x-Q4_x0)*(x-Q4_x0)+(y-Q4_y0)*(y-Q4_y0));
-            ds->setPixel(cPotential, ix, iy, Q1/(4.0*M_PI*eps0)/r1+Q2/(4.0*M_PI*eps0)/r2+Q3/(4.0*M_PI*eps0)/r3+Q4/(4.0*M_PI*eps0)/r4);
+            ds->setPixel(cPotential, ix, iy, Q1/(4.0*JKQTPSTATISTICS_PI*eps0)/r1+Q2/(4.0*JKQTPSTATISTICS_PI*eps0)/r2+Q3/(4.0*JKQTPSTATISTICS_PI*eps0)/r3+Q4/(4.0*JKQTPSTATISTICS_PI*eps0)/r4);
             x+=dx;
         }
         y+=dx;
@@ -45,7 +45,7 @@ void ContourPlotAnimator::step() {
     pplot->redrawPlot();
     qDebug()<<"animation step: angle="<<angle<<", framerate="<<1.0/(timerFR.elapsed()/1000.0)<<"fps <==> "<<timerFR.elapsed()<<"ms/frame";
     pplot->setWindowTitle("JKQTPColumnContourPlot ["+QString::number(1.0/(timerFR.elapsed()/1000.0))+"fps]");
-    angle+=(2.0/180.0*M_PI);
+    angle+=(2.0/180.0*JKQTPSTATISTICS_PI);
     timerFR.start();
     QTimer::singleShot(1, this,SLOT(step()));
 }

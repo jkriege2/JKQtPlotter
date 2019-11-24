@@ -44,9 +44,9 @@ TestWidgetRGBImages::TestWidgetRGBImages(QWidget *parent) :
     rgb_aimg2=(double*)calloc(100*100,sizeof(double));
     for (int x=0; x<100; x++) {
         for (int y=0; y<100; y++) {
-            rgb_rimg2[y*100+x]=sin(2*M_PI*sqrt(1.0+x*x+y*y)/20);
-            rgb_bimg2[y*100+x]=sin(2*M_PI*sqrt(1.0+x*x+y*y)/30);
-            rgb_gimg2[y*100+x]=cos(2*M_PI*sqrt(1.0+x*x+y*y)/30);
+            rgb_rimg2[y*100+x]=sin(2*JKQTPSTATISTICS_PI*sqrt(1.0+x*x+y*y)/20);
+            rgb_bimg2[y*100+x]=sin(2*JKQTPSTATISTICS_PI*sqrt(1.0+x*x+y*y)/30);
+            rgb_gimg2[y*100+x]=cos(2*JKQTPSTATISTICS_PI*sqrt(1.0+x*x+y*y)/30);
             rgb_aimg2[y*100+x]=double(x)/100.0;
         }
     }

@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     // 2. now we create data for a simple plot (a sine curve with lin. increasing errors)
     double X[Ndata], Y[Ndata], YERROR[Ndata];
     for (int i=0; i<Ndata; i++) {
-        X[i]=double(i)/double(Ndata)*2.0*M_PI;
+        X[i]=double(i)/double(Ndata)*2.0*JKQTPSTATISTICS_PI;
         Y[i]=sin(X[i]);
         YERROR[i]=0.2+double(i)/double(Ndata)*0.25;
     }

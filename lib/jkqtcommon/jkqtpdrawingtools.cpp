@@ -261,12 +261,12 @@ QPolygonF jkqtpRotateRect(QRectF r, double angle) {
 
 QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start, double angle_end, double alpha, int controlPoints, QPointF* x_start, QPointF* x_end) {
     QVector<QPointF> result;
-    double start=angle_start*M_PI/180.0;
-    double stop=angle_end*M_PI/180.0;
+    double start=angle_start*JKQTPSTATISTICS_PI/180.0;
+    double stop=angle_end*JKQTPSTATISTICS_PI/180.0;
     double step=(stop-start)/static_cast<double>(controlPoints);
     while (fabs(stop-start)/step<10) step=step/2.0;
-    double sina=sin(1.0*alpha/180.0*M_PI);
-    double cosa=cos(1.0*alpha/180.0*M_PI);
+    double sina=sin(1.0*alpha/180.0*JKQTPSTATISTICS_PI);
+    double cosa=cos(1.0*alpha/180.0*JKQTPSTATISTICS_PI);
     QPointF xp(x+a*cos(start)*cosa-b*sin(start)*sina, y+a*cos(start)*sina+b*sin(start)*cosa);
     result.append(xp);
     if (x_start) *x_start = xp;
@@ -276,7 +276,7 @@ QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double
         double sint=sin(t);
         xp=QPointF( x+a*cost*cosa-b*sint*sina,  y+a*cost*sina+b*sint*cosa);
         result.append(xp);
-        //std::cout<<"t="<<t/M_PI*180.0<<":  sin(al)="<<sina<<" cos(al)="<<cosa<<" sin(t)="<<sint<<" cos(t)="<<cost<<" a="<<a<<" b="<<b<<": ("<<x+a*cost*cosa-b*sint*sina<<", "<<y+a*cost*sina+b*sint*cosa<<") = ("<<xp.x()<<", "<<xp.y()<<") \n";
+        //std::cout<<"t="<<t/JKQTPSTATISTICS_PI*180.0<<":  sin(al)="<<sina<<" cos(al)="<<cosa<<" sin(t)="<<sint<<" cos(t)="<<cost<<" a="<<a<<" b="<<b<<": ("<<x+a*cost*cosa-b*sint*sina<<", "<<y+a*cost*sina+b*sint*cosa<<") = ("<<xp.x()<<", "<<xp.y()<<") \n";
         t=t+step;
     }
     if (x_end) *x_end=xp;

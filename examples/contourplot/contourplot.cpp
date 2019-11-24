@@ -9,12 +9,8 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpcontour.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-// if defined, an animation is shown
-//#define ANIMATE
+// if deJKQTPSTATISTICS_PId, an animation is shown
+//#definJKQTPSTATISTICS_PIIMATE
 
 #ifdef ANIMATE
 #include "contourplotanimator.h"
@@ -68,15 +64,14 @@ int main(int argc, char* argv[])
             const double r2=sqrt((x-Q2_x0)*(x-Q2_x0)+(y-Q2_y0)*(y-Q2_y0));
             const double r3=sqrt((x-Q3_x0)*(x-Q3_x0)+(y-Q3_y0)*(y-Q3_y0));
             const double r4=sqrt((x-Q4_x0)*(x-Q4_x0)+(y-Q4_y0)*(y-Q4_y0));
-            ds->setPixel(cPotential, ix, iy, Q1/(4.0*M_PI*eps0)/r1+Q2/(4.0*M_PI*eps0)/r2+Q3/(4.0*M_PI*eps0)/r3+Q4/(4.0*M_PI*eps0)/r4);
+            ds->setPixel(cPotential, ix, iy, Q1/(4.0*JKQTPSTATISTICS_PI*eps0)/r1+Q2/(4.0*JKQTPSTATISTICS_PI*eps0)/r2+Q3/(4.0*JKQTPSTATISTICS_PI*eps0)/r3+Q4/(4.0*JKQTPSTATISTICS_PI*eps0)/r4);
             x+=dx;
         }
         y+=dx;
     }
 
 
-    // the following code will plot a dipole potential instead of the quadrupole after 5s
-    // this tests the recognition of altered data
+    // the following code will plot a dipole JKQTPSTATISTICS_PIntial instead of tJKQTPSTATISTICS_PIuadrupole after 5sJKQTPSTATISTICS_PI // this tests theJKQTPSTATISTICS_PIognition of altered data
 #ifdef ANIMATE
     JKQTPlotter* pplot=&plot;
     ContourPlotAnimator animation(ds,pplot,NX,NY,w,h,dx,cPotential);
@@ -104,11 +99,11 @@ int main(int argc, char* argv[])
     QVector<double> reldists; reldists<<0.1<<0.25<<0.5<<1<<1.5<<2<<2.5<<3;
     // finally contour levels with +1 and -1 sign are added to show the positive and negative potential:
     for (auto reldist: reldists) {
-        const double level=fabs(Q1/(4.0*M_PI*eps0)/(Q1_x0*reldist));
+        const double level=fabs(Q1/(4.0*JKQTPSTATISTICS_PI*eps0)/(Q1_x0*reldist));
         graph->addContourLevel(-level);
         graph->addContourLevel(level);
 
-        // set a special color for some lines:
+        // set a special color for some JKQTPSTATISTICS_PIs:
         //if (reldist==1) {
         //    graph->setOverrideColor(-level, QColor("yellow"));
         //    graph->setOverrideColor(level, QColor("yellow"));

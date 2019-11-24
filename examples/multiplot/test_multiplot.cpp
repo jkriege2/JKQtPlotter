@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     std::map<double, int> histogram;
     const int Ndata=60;
     for(int n=0; n<Ndata; ++n) {
-        const double x=3.0*M_PI/static_cast<double>(Ndata)*static_cast<double>(n)-0.5;
+        const double x=3.0*JKQTPSTATISTICS_PI/static_cast<double>(Ndata)*static_cast<double>(n)-0.5;
         const double y=2.0*(1.0+cos(x));
         const double yd=y+d(gen);
         dataX.push_back(x);

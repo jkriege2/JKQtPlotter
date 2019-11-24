@@ -53,7 +53,7 @@ TestWidgetGeometry::TestWidgetGeometry(QWidget *parent) :
     p.append(QPointF(-11,5));
     p.append(QPointF(1,11));
     p.append(QPointF(0,-2));
-    p.append(QPointF(M_PI,5.5));
+    p.append(QPointF(JKQTPSTATISTICS_PI,5.5));
 
 //    JKQTPGeoPolygon* poly=new JKQTPGeoPolygon(plotGeo->getPlotter(), p, QColor("black"), 1.5, Qt::SolidLine, QColor(128,128,0,128));
     //plotGeo->getPlotter()->addGraph(poly);

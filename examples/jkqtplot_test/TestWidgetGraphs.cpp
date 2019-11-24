@@ -67,7 +67,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
 
     for (unsigned int i=0; i<N1; i++) {
-        x1[i]=(double)(i+1)/(double)N1*8*M_PI;
+        x1[i]=(double)(i+1)/(double)N1*8*JKQTPSTATISTICS_PI;
         y11[i]=sin(x1[i]);
         y12[i]=cos(x1[i]);
         y13[i]=y12[i]/4.0;
@@ -87,7 +87,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     //plot->addGraphWithXError(cy12, cx1, cy13, "$\\cos(x)$ with errors", JKQTPFilledCurveY, JKQTPErrorPolygons);
 
     for (unsigned int i=0; i<N2; i++) {
-        x2[i]=(double)(i+1)/(double)N2*8*M_PI;
+        x2[i]=(double)(i+1)/(double)N2*8*JKQTPSTATISTICS_PI;
         y21[i]=5*sin(x2[i]);
         y22[i]=1;//1+sin(x2[i]*4);
         y23[i]=pow(5,x2[i]/5.0);
@@ -153,7 +153,7 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
         yp75[i]=ymed[i]+(i+1);
 
         b1[i]=1.5+cos(i);
-        b2[i]=1.5+cos(i+M_PI/8.0);
+        b2[i]=1.5+cos(i+JKQTPSTATISTICS_PI/8.0);
         b3[i]=1.5+sin(i);
 
         //plot->getXAxis()->addAxisTickLabel(i+1, QString("$\\pi_{%1}\\cdot 10^{%2}$").arg(i+1).arg(i+1-N3));

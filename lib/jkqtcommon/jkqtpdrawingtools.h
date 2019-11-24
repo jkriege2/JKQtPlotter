@@ -264,7 +264,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
     b.setStyle(Qt::SolidPattern);
     const double w=symbolSize;
     const double w2=w/2.0;
-    const double w45=fabs(w*cos(45.0/180.0*M_PI));
+    const double w45=fabs(w*cos(45.0/180.0*JKQTPSTATISTICS_PI));
     const double w3=w/3.0;
 
     // calculate star cordinates as static values
@@ -273,7 +273,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
     static double star5cordsy[10];
     if (star5_items==0) {
         star5_items=5;
-        double angle=360.0/double(star5_items)/180.0*M_PI;
+        double angle=360.0/double(star5_items)/180.0*JKQTPSTATISTICS_PI;
         for (int i=0; i<star5_items; i++) {
             double a=(static_cast<double>(i)+0.5)*angle;
             star5cordsx[i*2]=sin(a);
@@ -287,7 +287,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
     static double star6cordsy[12];
     if (star6_items==0) {
         star6_items=6;
-        double angle=360.0/double(star6_items)/180.0*M_PI;
+        double angle=360.0/double(star6_items)/180.0*JKQTPSTATISTICS_PI;
         for (int i=0; i<star6_items; i++) {
             double a=(static_cast<double>(i)+0.5)*angle;
             star6cordsx[i*2]=sin(a);
@@ -301,7 +301,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
     static double star8cordsy[16];
     if (star8_items==0) {
         star8_items=8;
-        double angle=360.0/double(star8_items)/180.0*M_PI;
+        double angle=360.0/double(star8_items)/180.0*JKQTPSTATISTICS_PI;
         for (int i=0; i<star8_items; i++) {
             double a=(static_cast<double>(i)+0.5)*angle;
             star8cordsx[i*2]=sin(a);
@@ -398,7 +398,7 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
                 QPainterPath path;
                 QRectF rectangle3(x-w2/2.0, y-w2/2.0, w2, w2);
                 path.addEllipse(rectangle3);
-                path.moveTo(QPointF(x+w2/2.0*cos(45.0/180.0*M_PI),y-w2/2.0*cos(45.0/180.0*M_PI)));
+                path.moveTo(QPointF(x+w2/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI),y-w2/2.0*cos(45.0/180.0*JKQTPSTATISTICS_PI)));
                 path.lineTo(QPointF(x+w2,y-w2));
                 path.moveTo(QPointF(x+w2-w2/2.0,y-w2));
                 path.lineTo(QPointF(x+w2,y-w2));

@@ -20,6 +20,8 @@
 
 
 #define COMPILING_THIS_JKMATHPARSER
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "jkqtcommon/jkqtpmathparser.h" // class's header file
 #include <iostream>
 #include <float.h>
@@ -122,7 +124,7 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
         time_t rawtime;
         struct tm* timeinfo;
         time(&rawtime);
-        timeinfo=localtime(&rawtime);
+        localtime_s(timeinfo, &rawtime);
         strftime(re, 1024, f.c_str(), timeinfo);
         r.str=re;
 
@@ -403,7 +405,11 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("j0 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j0 needs double argument");
-      r.num=j0(params[0].num);
+#if Q_CC_MSVC
+	  r.num = _j0(params[0].num);
+#else
+	  r.num = j0(params[0].num);
+#endif
       return r;
     }
 
@@ -412,7 +418,11 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("j1 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("j1 needs double argument");
-      r.num=j1(params[0].num);
+#if Q_CC_MSVC
+	  r.num=_j1(params[0].num);
+#else
+	  r.num=j1(params[0].num);
+#endif
       return r;
     }
 
@@ -421,7 +431,11 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("y0 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y0 needs double argument");
-      r.num=y0(params[0].num);
+#if Q_CC_MSVC
+	  r.num=_y0(params[0].num);
+#else
+	  r.num=y0(params[0].num);
+#endif
       return r;
     }
 
@@ -430,7 +444,11 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=1) p->jkmpError("y1 accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpDouble) p->jkmpError("y1 needs double argument");
-      r.num=y1(params[0].num);
+#if Q_CC_MSVC
+	  r.num=_y1(params[0].num);
+#else
+	  r.num=y1(params[0].num);
+#endif
       return r;
     }
 
@@ -439,7 +457,11 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("yn accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("yn needs double argument");
-      r.num=yn(static_cast<int>(params[0].num), params[1].num);
+#if Q_CC_MSVC
+	  r.num=_yn(static_cast<int>(params[0].num), params[1].num);
+#else
+	  r.num=yn(static_cast<int>(params[0].num), params[1].num);
+#endif
       return r;
     }
 
@@ -448,7 +470,11 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       r.type=JKQTPMathParser::jkmpDouble;
       if (n!=2) p->jkmpError("jn accepts 2 argument");
       if ((params[0].type!=JKQTPMathParser::jkmpDouble)||(params[1].type!=JKQTPMathParser::jkmpDouble)) p->jkmpError("jn needs double argument");
-      r.num=jn(static_cast<int>(params[0].num), params[1].num);
+#if Q_CC_MSVC
+      r.num=_jn(static_cast<int>(params[0].num), params[1].num);
+#else
+	  r.num=jn(static_cast<int>(params[0].num), params[1].num);
+#endif
       return r;
     }
 

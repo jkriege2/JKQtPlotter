@@ -9,7 +9,7 @@
 
 
 SpeedTestPlot::SpeedTestPlot():
-    JKQTPlotter(), dx(1.0/double(NDATA)*4.0*M_PI), x0(0)
+    JKQTPlotter(), dx(1.0/double(NDATA)*4.0*JKQTPSTATISTICS_PI), x0(0)
 
 {
     // 1. optimize JKQTPlotter for speed (by switching off anti-aliasing)

@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
     JKQTPXFunctionLineGraph* graphTheoDist=new JKQTPXFunctionLineGraph(&plot);
     // define the gaussian function used for the random number generator
     graphTheoDist->setPlotFunctionFunctor([&th_mean,&th_std](double x) -> double {
-        return 1.0/(th_std*sqrt(2.0*M_PI))*exp(-0.5*(x-th_mean)*(x-th_mean)/th_std/th_std);
+        return 1.0/(th_std*sqrt(2.0*JKQTPSTATISTICS_PI))*exp(-0.5*(x-th_mean)*(x-th_mean)/th_std/th_std);
     });
     // set title:
     graphTheoDist->setTitle(QString("Theoretical Distribution $\\mu=%1, \\sigma=%2$").arg(th_mean,0, 'f', 1).arg(th_std,0, 'f', 1));

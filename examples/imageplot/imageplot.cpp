@@ -9,10 +9,6 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 
 int main(int argc, char* argv[])
 {
@@ -44,8 +40,8 @@ int main(int argc, char* argv[])
         x=-w/2.0;
         for (int ix=0; ix<NX; ix++ ) {
             const double r=sqrt(x*x+y*y);
-            const double v=2.0*M_PI*NA*r/wavelength;
-            airydisk[iy*NX+ix] = pow(2.0*j1(v)/v, 2);
+            const double v=2.0*JKQTPSTATISTICS_PI*NA*r/wavelength;
+            airydisk[iy*NX+ix] = pow(2.0*jkqtp_j1(v)/v, 2);
             x+=dx;
         }
         y+=dy;
@@ -53,7 +49,7 @@ int main(int argc, char* argv[])
 
 
 
-    // 3. make data available to JKQTPlotter by adding it to the internal datastore.
+    // JKQTPSTATISTICS_PIake data available to JKQTPlotter by adding it to the internal datastore.
     //    In this step the contents of C-array airydisk is copied into a column
     //    of the datastore in row-major order
     size_t cAiryDisk=ds->addCopiedImageAsColumn(airydisk, NX, NY, "imagedata");

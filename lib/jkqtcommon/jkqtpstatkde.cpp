@@ -28,7 +28,7 @@ double jkqtpstatKernel1DGaussian(double t) {
 
 
 double jkqtpstatKernel1DCauchy(double t) {
-    return 1.0/(M_PI*(1.0+t*t));
+    return 1.0/(JKQTPSTATISTICS_PI*(1.0+t*t));
 }
 
 
@@ -71,13 +71,13 @@ double jkqtpstatKernel1DTricube(double t) {
 
 
 double jkqtpstatKernel1DCosine(double t) {
-    return (fabs(t)<1.0)?(M_PI/4.0*cos(t*M_PI/2.0)):0.0;
+    return (fabs(t)<1.0)?(JKQTPSTATISTICS_PI/4.0*cos(t*JKQTPSTATISTICS_PI/2.0)):0.0;
 }
 
 
 double jkqtpstatKernel2DGaussian(double tx, double ty)
 {
-    return exp(-0.5*(tx*tx+ty*ty))/(2.0*M_PI);
+    return exp(-0.5*(tx*tx+ty*ty))/(2.0*JKQTPSTATISTICS_PI);
 }
 
 double jkqtpstatKernel2DUniform(double tx, double ty) {

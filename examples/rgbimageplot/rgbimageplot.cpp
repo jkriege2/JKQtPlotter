@@ -9,9 +9,6 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpimagergb.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
 
 
 int main(int argc, char* argv[])
@@ -46,10 +43,10 @@ int main(int argc, char* argv[])
         x=-w/2.0;
         for (int ix=0; ix<NX; ix++ ) {
             const double r=sqrt(x*x+y*y);
-            const double v1=2.0*M_PI*NA*r/wavelength1;
-            airydisk1[iy*NX+ix] = sqrt(pow(2.0*j1(v1)/v1, 2));
-            const double v2=2.0*M_PI*NA*r/wavelength2;
-            airydisk2[iy*NX+ix] = sqrt(pow(2.0*j1(v2)/v2, 2));
+            const double v1=2.0*JKQTPSTATISTICS_PI*NA*r/wavelength1;
+            airydisk1[iy*NX+ix] = sqrt(pow(2.0*jkqtp_j1(v1)/v1, 2));
+            const double v2=2.0*JKQTPSTATISTICS_PI*NA*r/wavelength2;
+            airydisk2[iy*NX+ix] = sqrt(pow(2.0*jkqtp_j1(v2)/v2, 2));
             x+=dx;
         }
         y+=dy;

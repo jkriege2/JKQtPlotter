@@ -54,7 +54,7 @@ TestMain::TestMain(QWidget *parent) :
     for (int i=0; i<N1; i++) {
         x[i]=(i+1)*XMAX/(double)N1;
         xx.push_back(x[i]);
-        yy.push_back(sin(0.5*M_PI*x[i])+2.0);
+        yy.push_back(sin(0.5*JKQTPSTATISTICS_PI*x[i])+2.0);
         std::cout<<xx[i]<<", "<<yy[i]<<std::endl;
         y1[i]=i*XMAX/(double)N1;
         y2[i]=log(x[i]);

@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     QVector<double> X1, X2;
     const int Ndata=10; // number of plot points in each curve
     for (int i=0; i<Ndata; i++) {
-        const double x=double(i)/double(Ndata)*2.0*M_PI;
+        const double x=double(i)/double(Ndata)*2.0*JKQTPSTATISTICS_PI;
         if (i<Ndata/2) X1<<x;
         if (i>Ndata/2) X2<<x;
     }

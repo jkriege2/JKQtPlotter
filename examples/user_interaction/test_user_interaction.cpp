@@ -530,7 +530,7 @@ void TestUserInteraction::initPlot()
     QVector<double> X, Y1, Y2, EY2;
     const int Ndata=100;
     for (int i=0; i<Ndata; i++) {
-        const double x=double(i)/double(Ndata)*8.0*M_PI;
+        const double x=double(i)/double(Ndata)*8.0*JKQTPSTATISTICS_PI;
         X<<x;
         Y1<<sin(x);
         Y2<<sin(x)*exp(-0.2*x);

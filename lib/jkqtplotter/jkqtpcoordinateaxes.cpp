@@ -1239,10 +1239,10 @@ void JKQTPVerticalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double xx,
         } else if (axisStyle.tickLabelAngle!=0) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             if (axisStyle.tickLabelAngle>0) {
-                painter.translate(lx-strikeoutPos+(width)*(1.0-cos(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)), yy+strikeoutPos-width*sin(fabs(axisStyle.tickLabelAngle)/180.0*M_PI));
+                painter.translate(lx-strikeoutPos+(width)*(1.0-cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), yy+strikeoutPos-width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI));
                 painter.rotate(axisStyle.tickLabelAngle);
             } else {
-                painter.translate(lx+strikeoutPos+(width-strikeoutPos)*(1.0-cos(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)), yy+strikeoutPos+width*sin(fabs(axisStyle.tickLabelAngle)/180.0*M_PI));
+                painter.translate(lx+strikeoutPos+(width-strikeoutPos)*(1.0-cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), yy+strikeoutPos+width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI));
                 painter.rotate(axisStyle.tickLabelAngle);
             }
             getParentMathText()->draw(painter, 0,0);
@@ -1281,7 +1281,7 @@ void JKQTPVerticalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double xx,
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             double shiftx=0;
             if (axisStyle.tickLabelAngle>0) {
-                shiftx=strikeoutPos*sin(fabs(axisStyle.tickLabelAngle)/180.0*M_PI);
+                shiftx=strikeoutPos*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI);
             } else {
 
             }
@@ -1832,10 +1832,10 @@ void JKQTPHorizontalAxis::drawTickLabel1(JKQTPEnhancedPainter &painter, double x
         if (axisStyle.tickLabelAngle!=0) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             if (axisStyle.tickLabelAngle>0) {
-                painter.translate(xx-fabs(ascent*sin(axisStyle.tickLabelAngle/180.0*M_PI)/2.0), lx0+fabs(ascent*cos(axisStyle.tickLabelAngle/180.0*M_PI)));
+                painter.translate(xx-fabs(ascent*sin(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)/2.0), lx0+fabs(ascent*cos(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(axisStyle.tickLabelAngle);
             } else {
-                painter.translate(xx+fabs(ascent*sin(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)), lx0+ascent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*M_PI))+fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)));
+                painter.translate(xx+fabs(ascent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), lx0+ascent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))+fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(axisStyle.tickLabelAngle);
             }
             getParentMathText()->draw(painter, 0,0);
@@ -1862,10 +1862,10 @@ void JKQTPHorizontalAxis::drawTickLabel2(JKQTPEnhancedPainter &painter, double x
         if (axisStyle.tickLabelAngle!=0) {
             painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
             if (axisStyle.tickLabelAngle>0) {
-                painter.translate(xx+fabs(descent*sin(axisStyle.tickLabelAngle/180.0*M_PI)/2.0), lx0-fabs(descent*cos(axisStyle.tickLabelAngle/180.0*M_PI)));
+                painter.translate(xx+fabs(descent*sin(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)/2.0), lx0-fabs(descent*cos(axisStyle.tickLabelAngle/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(-axisStyle.tickLabelAngle);
             } else {
-                painter.translate(xx-fabs(descent*sin(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)), lx0-descent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*M_PI))-fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*M_PI)));
+                painter.translate(xx-fabs(descent*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)/2.0)-width*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)), lx0-descent*fabs(cos(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI))-fabs(width*sin(fabs(axisStyle.tickLabelAngle)/180.0*JKQTPSTATISTICS_PI)));
                 painter.rotate(-axisStyle.tickLabelAngle);
             }
             getParentMathText()->draw(painter, 0,0);

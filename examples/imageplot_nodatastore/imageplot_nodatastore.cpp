@@ -9,11 +9,6 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
-
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
@@ -43,15 +38,15 @@ int main(int argc, char* argv[])
         x=-w/2.0;
         for (int ix=0; ix<NX; ix++ ) {
             const double r=sqrt(x*x+y*y);
-            const double v=2.0*M_PI*NA*r/wavelength;
-            airydisk[iy*NX+ix] = pow(2.0*j1(v)/v, 2);
+            const double v=2.0*JKQTPSTATISTICS_PI*NA*r/wavelength;
+            airydisk[iy*NX+ix] = pow(2.0*jkqtp_j1(v)/v, 2);
             x+=dx;
         }
         y+=dy;
     }
 
 
-    // 3. create a graph (JKQTPMathImage) with referencing the data created above as data
+    // 3. create a grapJKQTPSTATISTICS_PIKQTPMathImage) with referencing the data created above as data
     //    The data is color-coded with the color-palette JKQTPMathImageBLUEYELLOW
     //    the converted range of data is determined automatically because setAutoImageRange(true)
     JKQTPMathImage* graph=new JKQTPMathImage(&plot);

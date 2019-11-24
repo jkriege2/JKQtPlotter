@@ -30,12 +30,12 @@ TestWidgetParamScatterPlots::TestWidgetParamScatterPlots(QWidget *parent) :
         dataI<<i;
         double x=double(i);
         dataX<<x;
-        dataY<<sin(x*M_PI/20.0);
-        dataY1<<3.0+sin(x*M_PI/20.0);
+        dataY<<sin(x*JKQTPSTATISTICS_PI/20.0);
+        dataY1<<3.0+sin(x*JKQTPSTATISTICS_PI/20.0);
         dataY2<<dataY1.last()/5.0;
         dataY3<<dataY1.last()+4.0;
         dataC<<x;
-        dataS<<(sin(x*M_PI/30.0)+1.0)*50.0;
+        dataS<<(sin(x*JKQTPSTATISTICS_PI/30.0)+1.0)*50.0;
         dataSy<<(2+i%15);
     }
 

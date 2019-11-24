@@ -35,8 +35,8 @@ TestWidgetBarcharts::TestWidgetBarcharts(QWidget *parent) :
         dt.setDate(QDate(2012,1+i,1));
         //qDebug()<<dt<<dt.toMSecsSinceEpoch();
         dataBCXD<<double(dt.toMSecsSinceEpoch());
-        dataBCY1<<1.0+sin(x*M_PI/6.0);
-        dataBCY2<<2.0+cos(x*M_PI/3.0);
+		dataBCY1 << 1.0 + sin(x * JKQTPSTATISTICS_PI / 6.0);
+		dataBCY2 << 2.0 + cos(x * JKQTPSTATISTICS_PI / 3.0);
         dataBCYE1<<dataBCY1.last()*0.1;
         dataBCYE2<<dataBCY2.last()*0.05;
     }

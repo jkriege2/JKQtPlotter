@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     QVector<double> X, Y;
     const int Ndata=100;
     for (int i=0; i<Ndata; i++) {
-        const double x=double(i)/double(Ndata)*8.0*M_PI;
+        const double x=double(i)/double(Ndata)*8.0*JKQTPSTATISTICS_PI;
         X<<x;
         Y<<sin(x);
     }

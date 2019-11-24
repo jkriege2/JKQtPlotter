@@ -14,10 +14,6 @@
 #include "jkqtplotter/gui/jkqtpcomboboxes.h"
 #include "jkqtcommon/jkqtpbasicimagetools.h"
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 
 int main(int argc, char* argv[])
 {
@@ -105,15 +101,15 @@ int main(int argc, char* argv[])
         double x=static_cast<double>(static_cast<int>(ix)-NX/2)*dx;
         double y=static_cast<double>(static_cast<int>(iy)-NY/2)*dy;
         const double r=sqrt(x*x+y*y);
-        const double v=2.0*M_PI*NA*r/wavelength;
+        const double v=2.0*JKQTPSTATISTICS_PI*NA*r/wavelength;
         if (ix==NX/2 && iy==NY/2) return 1.0;
-        else return pow(2.0*j1(v)/v, 2);
+        else return pow(2.0*jkqtp_j1(v)/v, 2);
     }, "imagedata");
 
 
 
 	
-    // 3. create a graph (JKQTPColumnMathImage) with the column created above as data
+    // 3. create a grapJKQTPSTATISTICS_PIKQTPColumnMathImage) with the column created above as data
     //    The data is color-coded with the color-palette JKQTPMathImageMATLAB
     //    the converted range of data is determined automatically because setAutoImageRange(true)
     JKQTPColumnMathImage* graph=new JKQTPColumnMathImage(plot);

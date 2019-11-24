@@ -37,7 +37,6 @@
 */
 
 #include <iostream>
-#include <cmath>
 #include <string>
 #include <cstdio>
 #include <vector>

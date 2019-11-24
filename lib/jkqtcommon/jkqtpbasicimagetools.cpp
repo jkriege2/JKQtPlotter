@@ -293,7 +293,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 else if (r < 0.0)
                     r = 0.0;
 
-                double g = 255.0 * std::sin(M_PI*v);
+                double g = 255.0 * std::sin(JKQTPSTATISTICS_PI*v);
 
                 double b = 255.0 - 765.0 * v;
                 if (b < 0.0)
@@ -318,7 +318,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 else if (r < 0.0)
                     r = 0.0;
 
-                double g = 255.0 * std::sin(M_PI*v);
+                double g = 255.0 * std::sin(JKQTPSTATISTICS_PI*v);
 
                 double b = 255.0 - 765.0 * v;
                 if (b < 0.0)
@@ -396,9 +396,9 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 if (r > 255.0)
                     r = 255.0;
 
-                double g = 255.0*sin(M_PI*v);
+                double g = 255.0*sin(JKQTPSTATISTICS_PI*v);
 
-                double b = 255.0*cos(0.5*M_PI*v);
+                double b = 255.0*cos(0.5*JKQTPSTATISTICS_PI*v);
 
                 plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
             }
@@ -419,9 +419,9 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 if (r > 255.0)
                     r = 255.0;
 
-                double g = 255.0*sin(M_PI*v);
+                double g = 255.0*sin(JKQTPSTATISTICS_PI*v);
 
-                double b = 255.0*cos(0.5*M_PI*v);
+                double b = 255.0*cos(0.5*JKQTPSTATISTICS_PI*v);
 
                 plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
             }
@@ -601,11 +601,11 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 if (r < 0.0) r = 0.0;
                 if (r > 1.0) r = 1.0;
 
-                double g = sin(M_PI/2.0*v);
+                double g = sin(JKQTPSTATISTICS_PI/2.0*v);
                 if (g < 0.0) g = 0.0;
                 if (g > 1.0) g = 1.0;
 
-                double b = cos(M_PI/2.0*v);
+                double b = cos(JKQTPSTATISTICS_PI/2.0*v);
                 if (b < 0.0) b = 0.0;
                 if (b > 1.0) b = 1.0;
 
@@ -628,11 +628,11 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 if (r < 0.0) r = 0.0;
                 if (r > 1.0) r = 1.0;
 
-                double g = sin(M_PI/2.0*v);
+                double g = sin(JKQTPSTATISTICS_PI/2.0*v);
                 if (g < 0.0) g = 0.0;
                 if (g > 1.0) g = 1.0;
 
-                double b = cos(M_PI/2.0*v);
+                double b = cos(JKQTPSTATISTICS_PI/2.0*v);
                 if (b < 0.0) b = 0.0;
                 if (b > 1.0) b = 1.0;
 
@@ -703,7 +703,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         if (plut!=nullptr) {
             for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
                 double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = (v < 0.5) ? 128.0*sin(M_PI*(2.0*v-0.5))+128.0 : 255.0;
+                double r = (v < 0.5) ? 128.0*sin(JKQTPSTATISTICS_PI*(2.0*v-0.5))+128.0 : 255.0;
                 if (r > 255.0)
                     r = 255.0;
 
@@ -725,7 +725,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
         if (plut!=nullptr) {
             for (int l=0; l<=JKQTPImageTools::LUTSIZE; l++) {
                 double v=(JKQTPImageTools::LUTSIZE-l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
-                double r = (v < 0.5) ? 128.0*sin(M_PI*(2.0*v-0.5))+128.0 : 255.0;
+                double r = (v < 0.5) ? 128.0*sin(JKQTPSTATISTICS_PI*(2.0*v-0.5))+128.0 : 255.0;
                 if (r > 255.0)
                     r = 255.0;
 
@@ -789,7 +789,7 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 double v=(l)/static_cast<double>(JKQTPImageTools::LUTSIZE);
                 double r = 255.0*qBound(0.0,sqrt(v),1.0);
                 double g = 255.0*qBound(0.0,v*v*v,1.0);
-                double b = 255.0*qBound(0.0,sin(2.0*M_PI*v),1.0);
+                double b = 255.0*qBound(0.0,sin(2.0*JKQTPSTATISTICS_PI*v),1.0);
 
                 plut[l]=qRgb(static_cast<int>(r), static_cast<int>(g), static_cast<int>(b));
             }
