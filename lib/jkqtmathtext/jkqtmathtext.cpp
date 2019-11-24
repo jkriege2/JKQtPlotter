@@ -591,7 +591,7 @@ void JKQTMathText::MTsubscriptNode::getSizeInternal(QPainter& painter, JKQTMathT
     double yshift=baselineHeight-shift;
     baselineHeight=shift;
     strikeoutPos=fm.strikeOutPos()+yshift;
-    if (currentEv.italic && prevNodeSize==nullptr) width=width-double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    if (currentEv.italic && prevNodeSize==nullptr) width=width-double(fm.boundingRect(' ').width())*parent->getItalicCorrectionFactor();
 }
 
 double JKQTMathText::MTsubscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
@@ -615,7 +615,7 @@ double JKQTMathText::MTsubscriptNode::draw(QPainter& painter, double x, double y
     //qDebug()<<"baselineHeight="<<baselineHeight<<", overallHeight="<<overallHeight<<", strikeoutPos="<<strikeoutPos;
     //qDebug()<<"shift="<<shift<<", yshift="<<yshift;
     double xx=x;
-    if (currentEv.italic && prevNodeSize==nullptr) xx=xx-double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    if (currentEv.italic && prevNodeSize==nullptr) xx=xx-double(fm.boundingRect(' ').width())*parent->getItalicCorrectionFactor();
     return child->draw(painter, xx, y+yshift, ev);//+0.5*fm.boundingRect("A").width();
 }
 
@@ -1326,7 +1326,7 @@ void JKQTMathText::MTsuperscriptNode::getSizeInternal(QPainter& painter, JKQTMat
     double yshift=shift+overallHeight-baselineHeight;
     baselineHeight=overallHeight=overallHeight+shift;
     strikeoutPos=strikeoutPos-yshift;
-    if (currentEv.italic && prevNodeSize==nullptr) width=width+double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    if (currentEv.italic && prevNodeSize==nullptr) width=width+double(fm.boundingRect(' ').width())*parent->getItalicCorrectionFactor();
 }
 
 double JKQTMathText::MTsuperscriptNode::draw(QPainter& painter, double x, double y, JKQTMathText::MTenvironment currentEv, const MTnodeSize* prevNodeSize) {
@@ -1347,7 +1347,7 @@ double JKQTMathText::MTsuperscriptNode::draw(QPainter& painter, double x, double
 
     double yshift=shift+cOverallHeight-cBaselineHeight;
     double xx=x;
-    if (currentEv.italic && prevNodeSize==nullptr) xx=xx+double(fm.width(' '))*parent->getItalicCorrectionFactor();
+    if (currentEv.italic && prevNodeSize==nullptr) xx=xx+double(fm.boundingRect(' ').width())*parent->getItalicCorrectionFactor();
 
     return child->draw(painter, xx, y-yshift, ev);//+0.5*fm.boundingRect("A").width();
 }
@@ -1723,7 +1723,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                         overallHeight=baselineHeight+oh-bh;
                         strikeoutPos=sp;
                     }
-                    xnew+=qMax(w1+fm.width(" "), w2);
+                    xnew+=qMax(w1+fm.boundingRect(' ').width(), w2);
 
                     doDraw=false;
                     //qDebug()<<"### super+sub";
@@ -1756,7 +1756,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                         overallHeight=baselineHeight+oh-bh;
                         strikeoutPos=sp;
                     }
-                    xnew+=qMax(w1, w2+fm.width(" "));
+                    xnew+=qMax(w1, w2+fm.boundingRect(' ').width());
 
 
                     doDraw=false;
@@ -1788,7 +1788,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                     //double d1=oh1-bh1;
                     //double d2=oh2-bh2;
                     //double d3=oh3-bh3;
-                    double w=qMax(qMax(w1, w2), w3)+fm.width(" ");
+                    double w=qMax(qMax(w1, w2), w3)+fm.boundingRect(' ').width();
 
                     double oh=oh1+oh2+oh3;
                     double bh=bh1+oh3;
@@ -1815,7 +1815,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                     //double d1=oh1-bh1;
                     //double d2=oh2-bh2;
                     //double d3=oh3-bh3;
-                    double w=qMax(w1, w3)+fm.width(" ");
+                    double w=qMax(w1, w3)+fm.boundingRect(' ').width();
 
                     double oh=oh1+oh3;
                     double bh=bh1+oh3;
@@ -1849,7 +1849,7 @@ void JKQTMathText::MTlistNode::getSizeInternal(QPainter& painter, JKQTMathText::
                     if (sh>overallHeight-baselineHeight) {
                         overallHeight=baselineHeight+sh;
                     }
-                    double w=qMax(w1, w2)+fm.width(" ");
+                    double w=qMax(w1, w2)+fm.boundingRect(' ').width();
                     i++;
                     doDraw=false;
                     xnew+=w;
@@ -1969,7 +1969,7 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                         //double xnew3=
                         double xn3=supn->getChild()->draw(painter, xnew+(w-w3)/2.0, ynew-bh1-d3-fm.xHeight()/4.0, ev);
                         doDraw=false;
-                        xnew=qMax(qMax(xn1, xn2), xn3)+fm.width(" ");
+                        xnew=qMax(qMax(xn1, xn2), xn3)+fm.boundingRect(' ').width();
                     } else if (subn) { // is this subscript and not superscript?
                         MTenvironment ev=currentEv;
                         ev.fontSize=ev.fontSize*parent->getOperatorsubsuperSizeFactor();
@@ -1986,7 +1986,7 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                         double xn2=nodes[i]->draw(painter, xnew+(w-w1)/2.0, ynew, currentEv);
                         i++;
                         //double xnew2=
-                        double xn1=subn->getChild()->draw(painter, xnew+(w-w2)/2.0, ynew+bh2+d1, ev)+fm.width(" ");
+                        double xn1=subn->getChild()->draw(painter, xnew+(w-w2)/2.0, ynew+bh2+d1, ev)+fm.boundingRect(' ').width();
                         doDraw=false;
                         //xnew+=w;
                         xnew=qMax(xn1, xn2);
@@ -2009,7 +2009,7 @@ double JKQTMathText::MTlistNode::draw(QPainter& painter, double x, double y, JKQ
                         //double xnew3=
                         double xn3=supn->getChild()->draw(painter, xnew+(w-w3)/2.0, ynew-bh1-d3-fm.xHeight()/4.0, ev);
                         doDraw=false;
-                        xnew=qMax(xn1, xn3)+fm.width(" ");
+                        xnew=qMax(xn1, xn3)+fm.boundingRect(' ').width();
                     }
                 }
             }
@@ -3256,8 +3256,11 @@ bool JKQTMathText::MTsymbolNode::getAddWhitespace() const
 JKQTMathText::JKQTMathText(QObject* parent):
     QObject(parent)
 {
+    //std::chrono::high_resolution_clock::time_point t0=std::chrono::high_resolution_clock::now();
     Q_INIT_RESOURCE(xits);
+    //qDebug()<<"init_resoucre: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     QFontDatabase fontdb;
+    //qDebug()<<"init_fontDB: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
 
     fontSize=10;
     brace_factor=1.04;
@@ -3292,29 +3295,35 @@ JKQTMathText::JKQTMathText(QObject* parent):
     static bool firstStart=true;
 
     if (firstStart) {
+        //t0=std::chrono::high_resolution_clock::now();
+
         firstStart=false;
         QStringList fonts=fontdb.families();
         //qDebug()<<"fonts:\n"<<fonts;
 
-        for (const QString& f: fonts) {
-            QFont fnt(f);
-            QFontInfo fi(fnt);
-            if (typewriterFont=="typewriter" && fi.styleHint()==QFont::TypeWriter) {
-                typewriterFont=f;
+        /*if (SCAN_FONTS_ON_STARTUP) {
+            for (const QString& f: fonts) {
+                QFont fnt(f);
+                QFontInfo fi(fnt);
+                if (typewriterFont=="typewriter" && fi.styleHint()==QFont::TypeWriter) {
+                    typewriterFont=f;
+                }
+                if (decorativeFont=="decorative" && fi.styleHint()==QFont::Decorative) {
+                    decorativeFont=f;
+                }
+                if (serifFont=="serif" && fi.styleHint()==QFont::Serif) {
+                    serifFont=f;
+                }
+                if (sansFont=="sans" && fi.styleHint()==QFont::SansSerif) {
+                    sansFont=f;
+                }
+                if (scriptFont=="script" && fi.styleHint()==QFont::Cursive) {
+                    scriptFont=f;
+                }
             }
-            if (decorativeFont=="decorative" && fi.styleHint()==QFont::Decorative) {
-                decorativeFont=f;
-            }
-            if (serifFont=="serif" && fi.styleHint()==QFont::Serif) {
-                serifFont=f;
-            }
-            if (sansFont=="sans" && fi.styleHint()==QFont::SansSerif) {
-                sansFont=f;
-            }
-            if (scriptFont=="script" && fi.styleHint()==QFont::Cursive) {
-                scriptFont=f;
-            }
-        }
+        }*/
+        //qDebug()<<"iterate "<<fonts.size()<<" fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
+
 
         auto checkForFonts=[&fonts](QString& targetfont, const QStringList& fontoptions) {
             for (auto& f: fontoptions) {
@@ -3326,6 +3335,8 @@ JKQTMathText::JKQTMathText(QObject* parent):
         };
 
         checkForFonts(serifFont, QStringList {"Times New Roman", "Times", "FreeSerif", "DejaVu Serif"});
+        //qDebug()<<"check 1st font: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms";
+
         checkForFonts(sansFont, QStringList {"Arial Unicode MS", "Arial Unicode", "Lucida Sans Unicode", "Arial", "Helvetica", "FreeSans", "DejaVu Sans", "Lucida Sans"});
         checkForFonts(symbolFont, QStringList {"SymbolStandard", "Symbol"});
         checkForFonts(typewriterFont, QStringList {"Courier New", "Courier", "Courier Std", "FreeMono", "CMU Typewriter Text", "UM Typewriter"});
@@ -3333,8 +3344,10 @@ JKQTMathText::JKQTMathText(QObject* parent):
         checkForFonts(decorativeFont, QStringList {"Lucida Calligraphy", "Cookie", "Segoe Print", "Comic Sans", "Comic Sans MS", "Gabriola", "Gabriola Standard", "Lucida Handwriting Kursiv", "Lucida Handwriting", "Pristina", "Pristina Standard", "MathJax_Caligraphics"});
         checkForFonts(scriptFont, QStringList {"Lucida Handwriting", "Dancing Script", "Amazone BT", "ScriptS", "ScriptC", "ScriptC Standard", "Script", "Brush Script MT", "Brush Script MT Kursiv", "MathJax_Script"});
         checkForFonts(fracturFont, QStringList {"Old English Text MT", "Old English Text MT Standard", "UnifrakturMaguntia Standard", "UnifrakturMaguntia", "MathJax_Fraktur", "UnifrakturCook Fett"});
+        //qDebug()<<"check all font: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms";
     }
 
+    //t0=std::chrono::high_resolution_clock::now();
     if (serifFont!="serif") addReplacementFont("serif", serifFont);
     if (sansFont!="sans") addReplacementFont("sans", sansFont);
     if (symbolFont!="symbol") addReplacementFont("symbol", symbolFont);
@@ -3345,7 +3358,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     if (blackboardFont!="blackboard") {
         addReplacementFont("blackboard", blackboardFont);
     }
-
+    //qDebug()<<"add replacement fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     setFontSans(sansFont, MTFEStandard);
     setFontMathSans(sansFont, MTFEStandard);
     setFontTypewriter(typewriterFont, MTFEStandard);
@@ -3356,8 +3369,9 @@ JKQTMathText::JKQTMathText(QObject* parent):
     setFontBlackboardSimulated(blackboardFont=="blackboard");
     setFontScript(scriptFont, MTFEStandard);
     setFontFraktur(fracturFont, MTFEStandard);
+    //qDebug()<<"set fonts: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     useXITS();
-
+    //qDebug()<<"useXITS: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     useUnparsed=false;
 
     parsedNode=nullptr;
