@@ -22,6 +22,8 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![Open PRs](https://img.shields.io/github/issues-pr/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls)
 [![Closed PRs](https://img.shields.io/github/issues-pr-closed/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls?q=is%3Apr+is%3Aclosed)
 
+![EXAMPLES-Page](./screenshots/examplesbanner.png)
+
 ## Main Features
 - 2D Plotter class (JKQTPlotter)
   - high-quality plotting
@@ -68,8 +70,6 @@ Documentation is auto-generated after pushes by [Travis](https://travis-ci.org/j
 ## [Examples](./examples/)
 There is a [large set of usage examples (with explanations for each) and tutorials](./examples/) in the folder [`./examples/`](./examples).
 All test-projects are Qt-projects that use qmake to build. You can load them into QtCreator easily.
-
-[![EXAMPLES-Page](./screenshots/examplesbanner.png)](./examples/README.md)
 
 ## [Screenshots](./screenshots/)
 The [Screenshots-page](./screenshots/) contains several screenshots, partly taken from the provided examples, but also from other software using this libarary (e.g. [QuickFit 3.0](https://github.com/jkriege2/QuickFit3))
