@@ -127,7 +127,7 @@ class JKQTCOMMON_LIB_EXPORT JKQTPHighResTimer {
       /** \brief internal: time stamp of the last call of start() */
       LARGE_INTEGER last;
     #else
-      std::chrono::system_clock::timepoint last;
+      std::chrono::system_clock::time_point last;
     #endif
       /** \brief internal: timer frequency */
       double freq;
