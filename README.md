@@ -12,14 +12,15 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![CI: Windows Build](https://img.shields.io/appveyor/ci/jkriege2/JKQtPlotter/master?label=CI%20Windows%20Build)](https://ci.appveyor.com/project/jkriege2/jkqtplotter/branch/master) 
 [![CI: Documentation/Linux/MacOX Build](https://img.shields.io/travis/jkriege2/JKQtPlotter/master?label=CI%3A%20Documentation%2FLinux%2FMacOX%20Build)](https://travis-ci.org/jkriege2/JKQtPlotter)
 
-[![Commit Activity](https://img.shields.io/github/commit-activity/y/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
-[![Open Issues](https://img.shields.io/github/issues/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/issues)
-[![Closed Issues](https://img.shields.io/github/issues-closed/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/issues?q=is%3Aissue+is%3Aclosed)
-[![Open PRs](https://img.shields.io/github/issues-pr/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls)
-[![Closed PRs](https://img.shields.io/github/issues-pr-closed/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls?q=is%3Apr+is%3Aclosed)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
 [![Last Commit](https://img.shields.io/github/last-commit/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
 [![Contributors](https://img.shields.io/github/contributors/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/graphs/contributors)
 
+[![Open Issues](https://img.shields.io/github/issues/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/issues)
+[![Closed Issues](https://img.shields.io/github/issues-closed/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/issues?q=is%3Aissue+is%3Aclosed)
+
+[![Open PRs](https://img.shields.io/github/issues-pr/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls)
+[![Closed PRs](https://img.shields.io/github/issues-pr-closed/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls?q=is%3Apr+is%3Aclosed)
 
 ## Main Features
 - 2D Plotter class (JKQTPlotter)
