@@ -28,22 +28,6 @@
 #include <ctime>
 #include "jkqtcommon/jkqtpstringtools.h"
 
-/* This just distinguishes between the different path formats on Windows and Unix:
- *   - on Windows you use a backslash '\' do separate directories
- *   - in Unix you use a slash '/' to separate directories
- */
-#ifdef __WINDOWS__
-  /** \brief a separator between two directories in a path between \c " quotes */
-  #define JKQTPPATHSEPARATOR_STRING "\\"
-  /** \brief a separator between two directories in a path between \c ' quotes */
-  #define JKQTPPATHSEPARATOR_CHAR '\\'
-#else
-  /** \brief a separator between two directories in a path between \c " quotes */
-  #define JKQTPPATHSEPARATOR_STRING "/"
-  /** \brief a separator between two directories in a path between \c ' quotes */
-  #define JKQTPPATHSEPARATOR_CHAR '/'
-#endif
-
 
 /******************************************************************************************
  * default-function implementations for math parser
@@ -79,68 +63,6 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
       if (n!=1) p->jkmpError("booltostr accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpBool) p->jkmpError("floattostr needs bool argument");
       r.str=(r.boolean)?"true":"false";
-      return r;
-    }
-
-
-    JKQTPMathParser::jkmpResult fToSystemPathSeparator(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-      JKQTPMathParser::jkmpResult r;
-      r.type=JKQTPMathParser::jkmpString;
-      if (n!=1) p->jkmpError("tosystempathseparator accepts 1 argument");
-      if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("tosystempathseparator needs string argument");
-      r.str="";
-      for (size_t i=0; i<params[0].str.size(); i++) {
-          char ch=params[0].str[i];
-          if (ch=='/' || ch=='\\') ch=JKQTPPATHSEPARATOR_CHAR;
-          r.str+=ch;
-      }
-
-      return r;
-    }
-
-
-    JKQTPMathParser::jkmpResult fSetDefault(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-      JKQTPMathParser::jkmpResult r;
-      r.type=JKQTPMathParser::jkmpString;
-      if (n!=2) p->jkmpError("setdefault accepts 2 argument");
-      if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("setdefault needs a string as first argument");
-      r=params[1];
-      if (p->variableExists(params[0].str)) {
-        r=p->getVariable(params[0].str);
-      }
-
-      return r;
-    }
-
-
-    JKQTPMathParser::jkmpResult fStrDate(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-        JKQTPMathParser::jkmpResult r;
-        r.type=JKQTPMathParser::jkmpString;
-        std::string f="%Y-%m-%d";
-        if (n>1) p->jkmpError("strdate accepts 0 or 1 argumentment");
-        if (n>0 && params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("strdate needs a string as first argument");
-        if (n>0) f=params[0].str;
-        char re[1024];
-        time_t rawtime;
-        struct tm* timeinfo;
-        time(&rawtime);
-        localtime_s(timeinfo, &rawtime);
-        strftime(re, 1024, f.c_str(), timeinfo);
-        r.str=re;
-
-        return r;
-    }
-
-    JKQTPMathParser::jkmpResult fCMDParam(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
-      JKQTPMathParser::jkmpResult r;
-      r.type=JKQTPMathParser::jkmpString;
-      std::string def="";
-      if (n<1 || n>2) p->jkmpError("cmdparam(name, default) accepts 1 or 2 argument");
-      if (params[0].type!=JKQTPMathParser::jkmpString) p->jkmpError("cmdparam needs a string as first argument");
-      if (n>1 && params[1].type!=JKQTPMathParser::jkmpString) p->jkmpError("cmdparam needs a string as second argument");
-      if (n>1) def=params[1].str;
-
-      r.str=p->getArgCVParam(params[0].str, def);
       return r;
     }
 
@@ -803,11 +725,6 @@ void JKQTPMathParser::addStandardFunctions(){
     addFunction("tanc", fTanc);
     addFunction("sigmoid", fSigmoid);
     addFunction("sign", fSign);
-    addFunction("tosystempathseparator", fToSystemPathSeparator);
-    addFunction("setdefault", fSetDefault);
-    addFunction("strdate", fStrDate);
-    addFunction("cmdparam", fCMDParam);
-    addFunction("argv", fCMDParam);
 }
 
 // class destructor
