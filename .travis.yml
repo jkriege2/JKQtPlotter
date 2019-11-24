@@ -1,45 +1,80 @@
+language: cpp
 sudo: false
+compiler:
+  - gcc
+  - clang
+os:
+  - linux
+  - osx
 dist: xenial
+osx_image: xcode8.3
 
-branches:
-  only:
-    - master
+matrix:
+  exclude:
+    # Disable all automatic entries in the test matrix
+    - compiler: clang
+    - compiler: gcc
+    - os: osx
+    - os: linux
+  include:
+    # Explicitly add tests that we want to run
+    - env: BUILD_DOXYGEN="yes"
+      compiler: gcc
+      os: linux
+      addons:
+        apt:
+          packages:
+            - doxygen
+            - doxygen-doc
+            - doxygen-latex
+            - doxygen-gui
+            - graphviz
+      install:
+        - pwd
+        - doxygen --version
+        ############################################################################
+        # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
+        ############################################################################
+        - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+        - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
+        ############################################################################
+        # Install a recent Doxygen
+        ############################################################################
+        - DOXYGEN_URL="http://doxygen.nl/files/doxygen-1.8.16.linux.bin.tar.gz"
+        - mkdir doxygen
+        - travis_retry wget -O - ${DOXYGEN_URL} | tar --strip-components=1 -xz -C doxygen
+        - export PATH=${DEPS_DIR}/doxygen/bin:${PATH}
+        - doxygen --version
+      script:
+        - pwd
+        - cd ${TRAVIS_BUILD_DIR}
+        - cd doc
+        - doxygen --version
+        - doxygen Doxyfile
+        - echo "" > html/.nojekyll
+    - compiler: clang
+      os: osx
+    - compiler: clang
+      os: linux
+      addons:
+        apt:
+          packages:
+            - libglu1-mesa-dev
+    - compiler: gcc
+      os: linux
+      addons:
+        apt:
+          packages:
+            - libglu1-mesa-dev
 
-# Install dependencies
-addons:
-  apt:
-    packages:
-      - doxygen
-      - doxygen-doc
-      - doxygen-latex
-      - doxygen-gui
-      - graphviz
- 
-    
 install:
-  - pwd
-  - doxygen --version
-  ############################################################################
-  # All the dependencies are installed in ${TRAVIS_BUILD_DIR}/deps/
-  ############################################################################
-  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-  - mkdir -p ${DEPS_DIR} && cd ${DEPS_DIR}
-  ############################################################################
-  # Install a recent Doxygen
-  ############################################################################
-  - DOXYGEN_URL="http://doxygen.nl/files/doxygen-1.8.16.linux.bin.tar.gz"
-  - mkdir doxygen 
-  - travis_retry wget -O - ${DOXYGEN_URL} | tar --strip-components=1 -xz -C doxygen
-  - export PATH=${DEPS_DIR}/doxygen/bin:${PATH}
-  - doxygen --version
+  - source ci/install_travis.sh
 
 script:
-  - pwd
-  - cd ${TRAVIS_BUILD_DIR}
-  - cd doc
-  - doxygen --version
-  - doxygen Doxyfile
-  - echo "" > html/.nojekyll
+  - ci/test_travis.sh
+
+notifications:
+  email: false
 
 deploy:
   provider: pages
@@ -50,3 +85,4 @@ deploy:
   github_token: $GH_REPO_TOKEN
   on:
     branch: master
+    condition: $BUILD_DOXYGEN = yes
