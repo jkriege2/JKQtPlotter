@@ -104,7 +104,7 @@ In addition to the graph background properties, also the plot/widget/key backgro
 
 The result looks like this:
 
-![advplotstyling](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/advplotstyling.png)
+![advancedlineandfillstyling](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/advancedlineandfillstyling.png)
 
 
 
