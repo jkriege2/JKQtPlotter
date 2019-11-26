@@ -22,6 +22,7 @@
 #ifndef JKQTFASTPLOTTER_H
 #define JKQTFASTPLOTTER_H
 
+#include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtfastplotter_imexport.h"
 #include <QWidget>
 #include <QVector>
@@ -397,7 +398,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief return x-pixel coordinate from x coordinate */
         inline double x2p(double x) {
             if (xAxisLog) {
-                if (x<0) return xOffset+log(xMin/10.0)/log(10.0)*xScale;
+                if (x<0) return JKQTP_NAN;
                 return xOffset+log(x)/log(10.0)*xScale;
             } else {
                 return xOffset+x*xScale;

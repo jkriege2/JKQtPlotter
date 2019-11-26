@@ -175,7 +175,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline double x2p(double x) const {
             double r=0;
             if (logAxis) {
-                if (x<=0) r= offset+scaleSign*log(axismin)/log(logAxisBase)*scale;
+                if (x<=0) r= JKQTP_NAN;
                 else r= offset+scaleSign*log(x)/log(logAxisBase)*scale;
             } else {
                 r= offset+scaleSign*x*scale;
