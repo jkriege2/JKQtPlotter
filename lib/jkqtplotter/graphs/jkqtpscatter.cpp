@@ -94,7 +94,8 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         //double yold=-1;
         //bool first=false;
         //QVector<QLineF> lines;
-        QPolygonF linesP;
+        std::vector<QPolygonF> vec_linesP;
+        vec_linesP.push_back(QPolygonF());
         intSortData();
         for (int iii=imin; iii<imax; iii++) {
             int i=qBound(imin, getDataIndex(iii), imax);
@@ -110,24 +111,27 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 }
                 if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
                     plotStyledSymbol(parent, painter, x, y);
-                }
-                if (drawLine) {
-                    linesP<<QPointF(x,y);
-
+                    if (drawLine) {
+                        vec_linesP[vec_linesP.size()-1] << QPointF(x,y);
+                    }
+                } else {
+                    vec_linesP.push_back(QPolygonF());
                 }
             }
         }
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<4<<" lines="<<lines.size();
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<5<<"  p="<<painter.pen();
-        if (linesP.size()>0) {
-            if (isHighlighted()) {
-                painter.setPen(penSelection);
+        for (auto &linesP : vec_linesP) {
+            if (linesP.size()>0) {
+                if (isHighlighted()) {
+                    painter.setPen(penSelection);
+                    //painter.drawLines(lines);
+                    painter.drawPolyline(linesP);
+                }
+                painter.setPen(p);
                 //painter.drawLines(lines);
                 painter.drawPolyline(linesP);
             }
-            painter.setPen(p);
-            //painter.drawLines(lines);
-            painter.drawPolyline(linesP);
         }
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<6;
     }
