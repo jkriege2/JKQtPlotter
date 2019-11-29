@@ -34,11 +34,7 @@
 
 
 
-template<typename T, typename... Args>
-std::unique_ptr<T> make_unique(Args&&... args)
-{
-    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-}
+
 
 
 
@@ -98,8 +94,8 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         //double yold=-1;
         //bool first=false;
         //QVector<QLineF> lines;
-        std::vector<std::unique_ptr<QPolygonF>> linesP;
-        linesP.push_back(make_unique<QPolygonF>());
+        std::vector<QPolygonF> linesP;
+        linesP.push_back(QPolygonF());
         intSortData();
         for (int iii=imin; iii<imax; iii++) {
             int i=qBound(imin, getDataIndex(iii), imax);
@@ -116,25 +112,25 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 if ((!parent->getXAxis()->isLogAxis() || xv>0.0) && (!parent->getYAxis()->isLogAxis() || yv>0.0) ) {
                     plotStyledSymbol(parent, painter, x, y);
                     if (drawLine) {
-                        (*linesP[linesP.size()-1])<<QPointF(x,y);
+                        linesP[linesP.size()-1] << QPointF(x,y);
                     }
                 } else {
-                    linesP.push_back(make_unique<QPolygonF>());
+                    linesP.push_back(QPolygonF());
                 }
             }
         }
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<4<<" lines="<<lines.size();
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<5<<"  p="<<painter.pen();
         for (auto &lines : linesP) {
-            if (lines->size()>0) {
+            if (lines.size()>0) {
                 if (isHighlighted()) {
                     painter.setPen(penSelection);
                     //painter.drawLines(lines);
-                    painter.drawPolyline(*lines);
+                    painter.drawPolyline(lines);
                 }
                 painter.setPen(p);
                 //painter.drawLines(lines);
-                painter.drawPolyline(*lines);
+                painter.drawPolyline(lines);
             }
         }
         //qDebug()<<"JKQTPXYLineGraph::draw(): "<<6;
