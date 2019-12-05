@@ -92,7 +92,7 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
  
 \subsection page_whatsnew_V2019_11_1 v2019.11.1
 <ul>
-  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/34">#34: Skip drawing the line for negative values in log plots, thanks to <a href="https://github.com/certik">user:certik</a></a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/34">#34: Skip drawing the line for negative values in log plots</a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
 </ul>
  
  
