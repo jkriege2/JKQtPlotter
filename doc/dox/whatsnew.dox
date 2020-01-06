@@ -13,8 +13,9 @@ This page lists release notes for the diferent version of JKQTPlotter
 
 \subsection page_whatsnew_TRUNK_OVERVIEW trunk: Overview
 Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
-  -
-.
+<ul>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/34">#34: Skip drawing the line for negative values in log plots</a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
+</ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
 
@@ -97,7 +98,7 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 
 This release is available from:
   - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v2019.11">https://github.com/jkriege2/JKQtPlotter/tree/v2019.11</a>
-  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11</a> (2019-Nov-24)
+  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11.1">https://github.com/jkriege2/JKQtPlotter/releases/tag/v2019.11.1</a> (2019-Dec-05)
 .
 
 
