@@ -24,7 +24,10 @@ This release is available from:
   - Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
 .
 
-
+<ul>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/34">#34: Skip drawing the line for negative values in log plots</a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/38">#38: Buffer overflow</a>, thanks to <a href="https://github.com/zertyz">user:zertyz</a></li>
+</ul>
 
 
 
