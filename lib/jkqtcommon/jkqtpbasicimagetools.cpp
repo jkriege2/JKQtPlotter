@@ -58,7 +58,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
                 plut[l]=qRgb(static_cast<int>(255.0*v), 0, 0);
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -74,7 +73,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
                 plut[l]=qRgb(0, static_cast<int>(255.0*v), 0);
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -90,7 +88,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
                 plut[l]=qRgb(0, 0, static_cast<int>(255.0*v));
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -108,7 +105,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                              static_cast<int>(255.0*v),
                              static_cast<int>(255.0*v));
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -125,7 +121,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 plut[l]=qRgba(255,255,255,
                               static_cast<int>(255.0*v));
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -142,7 +137,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 plut[l]=qRgba(255,255,255,
                               static_cast<int>(255.0*v));
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -158,7 +152,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
                 plut[l]=qRgb(static_cast<int>(255.0*(1.0-v)), 0, 0);
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -174,7 +167,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
                 plut[l]=qRgb(0, static_cast<int>(255.0*(1.0-v)), 0);
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -190,7 +182,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                 double v=l/static_cast<double>(JKQTPImageTools::LUTSIZE);
                 plut[l]=qRgb(0, 0, static_cast<int>(255.0*(1.0-v)));
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
@@ -208,7 +199,6 @@ QMap<int, JKQTPImageTools::LUTData > JKQTPImageTools::getDefaultLUTs() {
                              static_cast<int>(255.0*v),
                              static_cast<int>(255.0*v));
             }
-            plut[JKQTPImageTools::LUTSIZE+1]=plut[JKQTPImageTools::LUTSIZE];
         }
     }
 
