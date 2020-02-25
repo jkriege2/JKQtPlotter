@@ -84,7 +84,7 @@ void JKQTPlotterStyle::loadSettings(const QSettings &settings, const QString &gr
             QString kk=k;
             kk.remove(0, start.size());
             QString num="";
-            while (kk.at(0).isDigit()) {
+            while (!kk.isEmpty() && kk.at(0).isDigit()) {
                 num+=kk.at(0);
                 kk.remove(0, 1);
             }
