@@ -81,19 +81,10 @@ std::string jkqtp_tolower(const std::string& s){
   return d;
 };
 
- std::string jkqtp_format(const std::string& templ, ...){
-  va_list ap;
-  char buffer[4096];
-  va_start (ap, templ);
-  vsnprintf(buffer, 4096, templ.c_str(), ap);
-  va_end (ap);
-  std::string ret(buffer);
-  return ret;
-};
 
 
  std::string jkqtp_bytestostr(double bytes){
-    double data=bytes;
+  double data=bytes;
   std::string form="%.0lf";
   std::string res=jkqtp_format(form,data);
   form="%.3lf";
