@@ -89,7 +89,42 @@ JKQTCOMMON_LIB_EXPORT std::string jkqtp_toupper(const std::string& s);
 /** \brief std::string wrapper around sprintf()
  * \ingroup jkqtptools_string
  */
-JKQTCOMMON_LIB_EXPORT std::string jkqtp_format(const std::string& templ, ...);
+template <class T1>
+inline std::string jkqtp_format(const std::string& templ, T1 d1) {
+    char buffer[4096];
+    snprintf(buffer, 4096, templ.c_str(), d1);
+    return std::string(buffer);
+};
+
+/** \brief std::string wrapper around sprintf()
+ * \ingroup jkqtptools_string
+ */
+template <class T1, class T2>
+inline std::string jkqtp_format(const std::string& templ, T1 d1, T2 d2) {
+    char buffer[4096];
+    snprintf(buffer, 4096, templ.c_str(), d1, d2);
+    return std::string(buffer);
+};
+
+/** \brief std::string wrapper around sprintf()
+ * \ingroup jkqtptools_string
+ */
+template <class T1, class T2, class T3>
+inline std::string jkqtp_format(const std::string& templ, T1 d1, T2 d2, T3 d3) {
+    char buffer[4096];
+    snprintf(buffer, 4096, templ.c_str(), d1, d2, d3);
+    return std::string(buffer);
+};
+
+/** \brief std::string wrapper around sprintf()
+ * \ingroup jkqtptools_string
+ */
+template <class T1, class T2, class T3, class T4>
+inline std::string jkqtp_format(const std::string& templ, T1 d1, T2 d2, T3 d3, T4 d4) {
+    char buffer[4096];
+    snprintf(buffer, 4096, templ.c_str(), d1, d2, d3, d4);
+    return std::string(buffer);
+};
 
 /** \brief convert a number of bytes to a string, formatting e.g. 1024 as 1kB, ...
  * \ingroup jkqtptools_string
