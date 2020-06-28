@@ -100,6 +100,13 @@ Changes, compared to  \ref page_whatsnew_V2018_08 "v2018.08" include:
 <ul>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/38">#38: Buffer overflow</a>, thanks to <a href="https://github.com/zertyz">user:zertyz</a></li>
 </ul>
+
+\subsection page_whatsnew_V2019_11_2 v2019.11.3
+<ul>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/43">#43: jkqtp_format() had undefined behaviour</a>, thanks to <a href="https://github.com/Makis42">user:Makis42</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/41">#41: Build error when JKQtPlotter_BUILD_INCLUDE_XITS_FONTS set to OFF </a>, thanks to <a href="https://github.com/smistad">user:smistad</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/*.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
+</ul>
  
 \subsection page_whatsnew_V2019_11_DOWNLOAD v2019.11: Download
 
