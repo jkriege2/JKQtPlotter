@@ -26,7 +26,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ![EXAMPLES-Page](./screenshots/examplesbanner.png)
 
 ## Main Features
-- 2D Plotter class (JKQTPlotter)
+- 2D Plotter widget class (JKQTPlotter)
   - high-quality plotting
   - no other dependencies than Qt >= 5.0
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
