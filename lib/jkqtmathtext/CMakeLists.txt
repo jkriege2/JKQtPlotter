@@ -50,6 +50,9 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
+    if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
+        target_compile_definitions(${libsh_name} PRIVATE JKQTMATHTEXT_COMPILED_WITH_XITS)
+    endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
     set_target_properties(${libsh_name} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS "ON")
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake 
                                      VERSION ${PROJECT_VERSION} 
@@ -61,6 +64,9 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
 	target_compile_features(${lib_name} PUBLIC cxx_std_11)
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
+    if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
+        target_compile_definitions(${lib_name} PRIVATE JKQTMATHTEXT_COMPILED_WITH_XITS)
+    endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
     target_link_libraries(${lib_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport JKQTCommonLib)
 	target_include_directories(${lib_name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>

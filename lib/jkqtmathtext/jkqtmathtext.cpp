@@ -3257,7 +3257,7 @@ JKQTMathText::JKQTMathText(QObject* parent):
     QObject(parent)
 {
     //std::chrono::high_resolution_clock::time_point t0=std::chrono::high_resolution_clock::now();
-    Q_INIT_RESOURCE(xits);
+    initJKQTMathTextResources();
     //qDebug()<<"init_resoucre: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
     QFontDatabase fontdb;
     //qDebug()<<"init_fontDB: "<<std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now()-t0).count()/1000.0<<"ms"; t0=std::chrono::high_resolution_clock::now();
@@ -4983,7 +4983,13 @@ QString JKQTMathText::MTplainTextNode::textTransform(const QString &_text, JKQTM
 
 void initJKQTMathTextResources()
 {
-    Q_INIT_RESOURCE(xits);
+    static bool initialized=false;
+    if (!initialized) {
+#ifdef JKQTMATHTEXT_COMPILED_WITH_XITS
+        Q_INIT_RESOURCE(xits);
+#endif
+        initialized=true;
+    }
 }
 
 JKQTMathText::MTnodeSize::MTnodeSize():

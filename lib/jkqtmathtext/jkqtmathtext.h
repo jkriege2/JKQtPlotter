@@ -421,6 +421,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
          * These are included by default in this library and also activated by default.
          *
          * \image html jkqtmathparser_xits.png
+         *
+         * \note The XITS fonts can be compiled into JKQTPlotter, when the CMake-option \c is set to ON (default: ON).
+         *       Then the XITS fonts are added as Qt-Ressources to the library binary.
+         *       If this is not the case, you have to provide the XITS fonts on the target system by other means, if you want
+         *       to use them.
          */
         bool useXITS(bool mathModeOnly=true);
 
