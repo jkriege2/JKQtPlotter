@@ -1,7 +1,16 @@
 cmake_minimum_required(VERSION 3.0)
 
 # Project Name and Version
-project(JKQTPlotter LANGUAGES CXX VERSION 2020.01.1)
+# starting from 2020: using semantic version number <major>.<minor>.<patch>
+#   - bugfixes which do not change the API/ABI lead to an increase in <patch>
+#   - backward-compatible API/ABI-changes mean an increasing <minor> version
+#   - NON backward-compatible API/ABI-changes mean an increasing <major> version
+# relation to older versioning scheme:
+#   - v2015.10  <--> 1.0.0
+#   - v2018.08  <--> 2.0.0
+#   - v2019.11  <--> 3.x.y
+#   ==> sematic versioning starts with 4.0.0
+project(JKQTPlotter LANGUAGES CXX VERSION 4.0.0)
 
 
 # set search path for CMake files

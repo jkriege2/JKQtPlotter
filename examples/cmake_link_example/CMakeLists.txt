@@ -16,8 +16,6 @@ set(CMAKE_CXX_STANDARD 11)
 find_package(Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
 
 # include JKQTPlotter
-find_package(JKQTCommonLib REQUIRED)
-find_package(JKQTMathTextLib REQUIRED)
 find_package(JKQTPlotterLib REQUIRED)
 
 # For Visual Studio, we need to set some additional compiler options
