@@ -1,5 +1,5 @@
 # JKQTPlotter - A Qt Plotting Library
-This is an extensive library of function/data plotter classes for Qt (>= 4.7, tested with Qt up to 5.11).
+This is an extensive library of function/data plotter classes for Qt (>= 5.0, tested with Qt up to 5.12).
 
 This software is licensed under the term of the [GNU Lesser General Public License 2.1 
 (LGPL 2.1)](./LICENSE) or above. 
@@ -28,7 +28,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ## Main Features
 - 2D Plotter class (JKQTPlotter)
   - high-quality plotting
-  - no other dependencies than Qt >=4.7 (compatible with Qt 5.xx)
+  - no other dependencies than Qt >= 5.0
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
   - integrated LaTeX parser (pure C++, no dependencies) to render mathematical equations in axis labels, ticks, ...
   - extensive user-interactions pre-programmed (several zooming modes, selecting regions, custom context menus, switch graph visibility, ...)
