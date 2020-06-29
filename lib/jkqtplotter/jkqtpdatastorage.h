@@ -1261,7 +1261,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastore{
          *
          * Pseudocode:
          * \code
-         *   for (i=0; i<min(rows(otherColumnX), rows(otherColumnY)); i++) {
+         *   for (i=0; i<std::min(rows(otherColumnX), rows(otherColumnY)); i++) {
          *     newColumn.push_back(f(getValue(otherColumnX, i), getValue(otherColumnY, i));
          *   }
          *   return newColumn;
