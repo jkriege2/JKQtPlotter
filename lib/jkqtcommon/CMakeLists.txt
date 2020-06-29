@@ -85,7 +85,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     elseif(MSVC)
       # COMPILER-SETTINGS FOR MS VISUAL C++
       target_compile_options(${libsh_name} PUBLIC /EHsc)
-      target_compile_definitions(${libsh_name} PUBLIC /DNOMINMAX)
+      target_compile_definitions(${libsh_name} PUBLIC NOMINMAX)
     endif()
     target_include_directories(${libsh_name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
@@ -110,7 +110,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     elseif(MSVC)
       # COMPILER-SETTINGS FOR MS VISUAL C++
       target_compile_options(${lib_name} PUBLIC /EHsc)
-      target_compile_definitions(${lib_name} PUBLIC /DNOMINMAX)
+      target_compile_definitions(${lib_name} PUBLIC NOMINMAX)
     endif()
     target_include_directories(${lib_name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>

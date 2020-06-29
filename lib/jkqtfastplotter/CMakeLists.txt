@@ -48,7 +48,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     elseif(MSVC)
       # COMPILER-SETTINGS FOR MS VISUAL C++
       target_compile_options(${libsh_name} PUBLIC /EHsc)
-      target_compile_definitions(${libsh_name} PUBLIC /DNOMINMAX)
+      target_compile_definitions(${libsh_name} PUBLIC NOMINMAX)
     endif()
     target_compile_definitions(${libsh_name} PRIVATE JKQTFASTPLOTTER_LIB_EXPORT_LIBRARY)
 	target_include_directories(${libsh_name} PUBLIC
@@ -73,7 +73,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     elseif(MSVC)
       # COMPILER-SETTINGS FOR MS VISUAL C++
       target_compile_options(${lib_name} PUBLIC /EHsc)
-      target_compile_definitions(${lib_name} PUBLIC /DNOMINMAX)
+      target_compile_definitions(${lib_name} PUBLIC NOMINMAX)
     endif()
     target_compile_features(${lib_name} PUBLIC cxx_std_11)
     target_link_libraries(${lib_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL JKQTCommonLib)
