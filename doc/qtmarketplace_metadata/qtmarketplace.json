@@ -1,0 +1,40 @@
+{
+    "$schema": "http://qt.io/schema/extension-schema-v1#",
+    "title": "JKQtPlotter",
+    "extensionType": [
+        "library"
+    ],
+    "version": "2019.11.3",
+    "vendor": {
+        "name": "Jan Krieger",
+        "url": "http://www.jkrieger.de"
+    },
+    "contact": "Jan Krieger <jan@jkrieger.de>",
+    "copyright": [ "Jan Krieger" ],
+    "author": "Jan Krieger",
+    "icon": "https://github.com/jkriege2/JKQtPlotter/raw/master/doc/images/logo.png",
+    "licenses": [
+      { "licenseType": "LGPLv2.1+",
+        "licenseUrl": "https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/LICENSE" }
+    ],
+    "created": "2008",
+    "lastUpdate": "2020-06-28",
+    "platforms": [
+        "Windows", "macOS", "Linux"
+    ],
+    "qtVersions": [
+        "5.0-or-later"
+    ],
+    "tags": [
+        "WIDGET", "SCIENTIFIC COMPUTING", "CHART", "GUI", "GRAPHICS", "DATA", "MATH", "LATEX" ],
+    "price": {
+        "listprice": 0
+    },
+    "support": "https://github.com/jkriege2/JKQtPlotter/issues",
+    "bugUrl": "https://github.com/jkriege2/JKQtPlotter/issues",
+    "sourceRepoUrl": "https://github.com/jkriege2/JKQtPlotter",
+	"userManuals": "http://jkriege2.github.io/JKQtPlotter/index.html",
+    "dependencies": [
+        "Core", "GUI", "Widgets"
+    ]
+}
