@@ -199,7 +199,7 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbDrawOutside(JKQTPEnhancedPainter& pa
 
          QRect cb(topSpace.x()+(topSpace.width()-barWidth)/2, static_cast<int>(topSpace.bottom()-cbParent->pt2px(painter, colorBarOffset+(colorBarWidth))), barWidth, static_cast<int>(cbParent->pt2px(painter, colorBarWidth)));
          //qDebug()<<"t: "<<imageName<<topSpace<<topSpace.bottom()<<colorBarOffset<<"\n     "<<cb;
-         QMatrix rm;
+         QTransform rm;
          rm.rotate(90);
          painter.drawImage(cb, b.transformed(rm));
          QPen p=painter.pen();
@@ -699,7 +699,7 @@ void JKQTPColorPaletteWithModifierStyleAndToolsMixin::cbDrawOutside(JKQTPEnhance
 
             QRect cb(topSpace.x()+(topSpace.width()-barWidth)/2, topSpace.bottom()-cbParent->pt2px(painter, colorBarOffset+((modifierMode==JKQTPMathImageModifierMode::ModifyNone)?colorBarWidth:colorBarModifiedWidth)), barWidth, cbParent->pt2px(painter, (modifierMode==JKQTPMathImageModifierMode::ModifyNone)?colorBarWidth:colorBarModifiedWidth));
             //qDebug()<<"t: "<<imageName<<topSpace<<topSpace.bottom()<<colorBarOffset<<"\n     "<<cb;
-            QMatrix rm;
+            QTransform rm;
             rm.rotate(90);
             painter.drawImage(cb, b.transformed(rm));
             QPen p=painter.pen();

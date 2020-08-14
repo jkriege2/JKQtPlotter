@@ -679,7 +679,7 @@ protected:
         /** \brief rotation angle of rectangle [degrees] around (x,y) */
         double angle;
         /** \brief returns the transformation matrix used for this rectangle */
-        QMatrix getMatrix();
+        QTransform getTransform();
         /** \brief returns a QPolygonF which represents the rectangle after rotation, but still in the world coordinate system, not in the screen/widget system */
         QPolygonF getPolygon();
 };
@@ -974,7 +974,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
 
         /** \brief closing mode for arcs: secand or pie */
         /** \brief returns the transformation matrix used for this rectangle */
-        QMatrix getMatrix();
+        QTransform getTransform();
         /** \brief returns a QPolygonF which represents the rectangle after rotation, but still in the world coordinate system, not in the screen/widget system */
         QPolygonF getPolygon();
 

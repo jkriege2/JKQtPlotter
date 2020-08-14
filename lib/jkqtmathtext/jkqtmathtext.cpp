@@ -28,6 +28,7 @@
 #include <QFontDatabase>
 #include <typeinfo>
 #include <QApplication>
+#include <QPainterPath>
 
 const double JKQTMathText::ABS_MIN_LINEWIDTH=0.02;
 

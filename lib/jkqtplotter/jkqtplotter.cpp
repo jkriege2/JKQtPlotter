@@ -936,7 +936,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
         if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
         //if (act==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
             //qDebug()<<"wheelEvent("<<event->modifiers()<<"):ZoomByWheel";
-            double factor=pow(2.0, 1.0*static_cast<double>(event->delta())/120.0)*2.0;
+            const double factor=pow(2.0, 1.0*static_cast<double>(event->angleDelta().y())/120.0)*2.0;
             double xmin=plotter->p2x(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
             double xmax=plotter->p2x(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
             double ymin=plotter->p2y(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor);

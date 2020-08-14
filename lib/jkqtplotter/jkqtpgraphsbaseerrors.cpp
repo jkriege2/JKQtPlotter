@@ -254,11 +254,6 @@ void JKQTPGraphErrorStyleMixin::setErrorFillBrush(const QBrush &b)
     m_errorFillColor=b.color();
 }
 
-void JKQTPGraphErrorStyleMixin::setErrorFillTransform(const QMatrix &b)
-{
-    m_errorFillBrush.setMatrix(b);
-}
-
 void JKQTPGraphErrorStyleMixin::setErrorFillTransform(const QTransform &b)
 {
     m_errorFillBrush.setTransform(b);

@@ -29,7 +29,7 @@
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
-
+#include <QPainterPath>
 
 /**
  * \brief saves the given property (for which also a default_property exists) into the given settings object
@@ -1447,7 +1447,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1+3*lineWidth+fm.ascent()), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.horizontalAdvance(s)/2), static_cast<int>(yy1+3*lineWidth+fm.ascent()), s);
     } else if (position==JKQTFPQScaleBarXPlot::TopLeft) {
         yy1=parent->getInternalPlotBorderTop()+yDistance;
         yy2=yy1;
@@ -1458,7 +1458,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1+3*lineWidth+fm.ascent()), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.horizontalAdvance(s)/2), static_cast<int>(yy1+3*lineWidth+fm.ascent()), s);
     } else if (position==JKQTFPQScaleBarXPlot::BottomLeft) {
         yy1=parent->getInternalPlotBorderTop()+parent->getPlotHeight()-yDistance;
         yy2=yy1;
@@ -1469,7 +1469,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1-3*lineWidth-fm.descent()), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.horizontalAdvance(s)/2), static_cast<int>(yy1-3*lineWidth-fm.descent()), s);
     } else if (position==JKQTFPQScaleBarXPlot::BottomRight) {
         yy1=parent->getInternalPlotBorderTop()+parent->getPlotHeight()-yDistance;
         yy2=yy1;
@@ -1480,7 +1480,7 @@ void JKQTFPQScaleBarXPlot::drawGraph(QPainter& painter) {
         painter.drawLine(QLineF(xx1, yy1, xx2, yy2));
         painter.setFont(font);
         QFontMetrics fm=painter.fontMetrics();
-        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.width(s)/2), static_cast<int>(yy1-3*lineWidth-fm.descent()), s);
+        painter.drawText(static_cast<int>(xx1+(xx2-xx1)/2-fm.horizontalAdvance(s)/2), static_cast<int>(yy1-3*lineWidth-fm.descent()), s);
     }
 
 

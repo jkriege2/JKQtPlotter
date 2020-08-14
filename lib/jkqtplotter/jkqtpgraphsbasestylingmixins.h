@@ -313,8 +313,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
 
         /** \brief sets a fill brush (overwrites all internal properties!) */
         void setFillBrush(const QBrush& b);
-        /** \brief sets a fill transformation matrix*/
-        void setFillTransform(const QMatrix& b);
         /** \brief sets a fill transformation */
         void setFillTransform(const QTransform& b);
 

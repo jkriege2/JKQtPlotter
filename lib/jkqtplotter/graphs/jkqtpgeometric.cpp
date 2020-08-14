@@ -733,8 +733,8 @@ JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, QPointF bottomleft, QP
     this->y=bottomleft.y()+this->height/2.0;
 }
 
-QMatrix JKQTPGeoRectangle::getMatrix() {
-    QMatrix trans;
+QTransform JKQTPGeoRectangle::getTransform() {
+    QTransform trans;
     trans.rotate(angle);
     return trans;
 }
@@ -765,7 +765,7 @@ bool JKQTPGeoRectangle::getYMinMax(double& miny, double& maxy, double& smallestG
 }
 
 QPolygonF JKQTPGeoRectangle::getPolygon() {
-    QMatrix m=getMatrix();
+    QTransform m=getTransform();
     QPolygonF rect;
     rect.append(m.map(QPointF(0-width/2.0, 0-height/2.0)));
     rect.append(m.map(QPointF(0-width/2.0, 0+height/2.0)));

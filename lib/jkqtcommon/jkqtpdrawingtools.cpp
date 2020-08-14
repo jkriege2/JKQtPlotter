@@ -244,7 +244,7 @@ JKQTPGraphSymbols String2JKQTPGraphSymbols(const QString& pos)  {
 
 QPolygonF jkqtpRotateRect(QRectF r, double angle) {
     QPolygonF p;
-    QMatrix m;
+    QTransform m;
     m.rotate(angle);
     p.append(m.map(r.bottomLeft()));
     p.append(m.map(r.bottomRight()));

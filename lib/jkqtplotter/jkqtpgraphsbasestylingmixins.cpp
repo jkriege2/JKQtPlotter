@@ -364,10 +364,6 @@ void JKQTPGraphFillStyleMixin::setFillBrush(const QBrush &b)
     m_fillColor=b.color();
 }
 
-void JKQTPGraphFillStyleMixin::setFillTransform(const QMatrix &b)
-{
-    m_fillBrush.setMatrix(b);
-}
 
 void JKQTPGraphFillStyleMixin::setFillTransform(const QTransform &b)
 {

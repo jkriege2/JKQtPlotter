@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
     graphF->setSpecialLineType(JKQTPDirectLine);
     graphF->setDrawLine(true);
     graphF->setFillTexture(QPixmap(":/example.bmp"));
-    graphF->setFillTransform(QMatrix(0.5,0,0,0.5,0,0).rotate(45));
+    graphF->setFillTransform(QTransform(0.5,0,0,0.5,0,0).rotate(45));
     graphF->setFillCurve(true);
     graphF->setLineWidth(0.5);
 
