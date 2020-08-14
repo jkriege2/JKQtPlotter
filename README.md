@@ -23,6 +23,8 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![Open PRs](https://img.shields.io/github/issues-pr/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls)
 [![Closed PRs](https://img.shields.io/github/issues-pr-closed/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulls?q=is%3Apr+is%3Aclosed)
 
+[![Code Quality](https://www.code-inspector.com/project/12216/score/svg) ![Code Grade](https://www.code-inspector.com/project/12216/status/svg)](https://www.code-inspector.com/project/12216/status/svg)
+
 ![EXAMPLES-Page](./screenshots/examplesbanner.png)
 
 ## Main Features
