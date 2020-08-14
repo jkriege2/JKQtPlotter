@@ -72,6 +72,8 @@ install:
   - echo "BUILD ID Qt%QTVER%_%QTABI%_%APPVEYOR_BUILD_VERSION%_%CONFIGURATION%"
   # Rename sh.exe as sh.exe in PATH interferes with MinGW
   - rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
+  - cmd: choco install OpenCV
+  - cmd: set OPENCV_DIR=C:\tools\opencv\build
 
 build_script:
 #  - dir "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"
