@@ -7,7 +7,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 * SourceRepositpry: https://github.com/jkriege2/JKQtPlotter
 * Latest Release: https://github.com/jkriege2/JKQtPlotter/releases
 * Documentation: https://jkriege2.github.io/JKQtPlotter/index.html
-* Examples: https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html
+* Examples: [https://jkriege2.github.io/JKQtPlotter/example\_tutorial\_projects.html](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html)
 * Screenshots: https://github.com/jkriege2/JKQtPlotter/tree/master/screenshots
 
 ![EXAMPLES-Page](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/examplesbanner.png)
@@ -15,7 +15,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ## Main Features
 - 2D Plotter widget class (JKQTPlotter)
   - high-quality plotting
-  - no other dependencies than Qt >= 5.0
+  - no other dependencies than Qt >= 5.0 (tested up until 5.15)
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
   - integrated LaTeX parser (pure C++, no dependencies) to render mathematical equations in axis labels, ticks, ...
   - extensive user-interactions pre-programmed (several zooming modes, selecting regions, custom context menus, switch graph visibility, ...)
@@ -46,14 +46,14 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPPlotObject
 - optional: OpenCV, CImg interfaces
 - CMake-based build system
-- extensive set of Examples/Tutorials: https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html
+- extensive set of Examples/Tutorials: [https://jkriege2.github.io/JKQtPlotter/example\_tutorial\_projects.html](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html)
 - extensive doxygen-generated Documentation: http://jkriege2.github.io/JKQtPlotter/index.html
 
 ## Building
 
 * Latest Release: [![Lates Release](https://img.shields.io/github/v/release/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/releases)
 
-JKQTPlotter contains two different build systems: A modern [CMake](https://cmake.org/)-based build and an older (and deprecated!) QMake-based build (which works out of the box with Qt 5.x). Both systems are explained in detail in http://jkriege2.github.io/JKQtPlotter/page_buildinstructions.html.
+JKQTPlotter contains two different build systems: A modern [CMake](https://cmake.org/)-based build and an older (and deprecated!) QMake-based build (which works out of the box with Qt 5.x). Both systems are explained in detail in [http://jkriege2.github.io/JKQtPlotter/page\_buildinstructions.html](http://jkriege2.github.io/JKQtPlotter/page_buildinstructions.html).
 
 
 With [CMake](https://cmake.org/) you can easily build JKQTPlotter and all its examples, by calling something like:
