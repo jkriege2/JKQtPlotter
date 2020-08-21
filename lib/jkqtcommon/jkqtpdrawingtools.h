@@ -1047,7 +1047,9 @@ inline void JKQTPPlotLineDecorator(TPainter& painter, double x, double y, double
             painter.setPen(pinit);
             painter.drawPolyline(poly, 4);
         } break;
-        case JKQTPNoDecorator: break;
+        case JKQTPLineDecoratorCount:
+        case JKQTPNoDecorator:
+            break;
         }
 
     }
