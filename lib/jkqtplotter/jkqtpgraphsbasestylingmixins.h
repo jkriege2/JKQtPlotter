@@ -145,6 +145,59 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
 
 
 
+/*! \brief This Mix-In class provides setter/getter methods, storage and other facilities for the graph line style of lines
+           with decorators (i.e. arrows) at their ends. It extends JKQTPGraphLineStyleMixin
+    \ingroup jkqtplotter_basegraphs_stylemixins
+
+    supported properties:
+        - head/tail arrow style
+    .
+*/
+class JKQTPLOTTER_LIB_EXPORT JKQTPGraphDecoratedLineStyleMixin: public JKQTPGraphLineStyleMixin {
+    Q_GADGET
+public:
+    /** \brief class constructor */
+    JKQTPGraphDecoratedLineStyleMixin();
+    /** \brief initiaize the line style (from the parent plotter) */
+    void initDecoratedLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle);
+
+    virtual ~JKQTPGraphDecoratedLineStyleMixin();
+
+    /** \brief set the head decorator style */
+    void setHeadDecoratorStyle(const JKQTPLineDecoratorStyle & __value);
+    /** \brief get the head decorator style */
+    JKQTPLineDecoratorStyle getHeadDecoratorStyle() const;
+    /** \brief set the tail decorator style */
+    void setTailDecoratorStyle(const JKQTPLineDecoratorStyle & __value);
+    /** \brief get the tail decorator style */
+    JKQTPLineDecoratorStyle getTailDecoratorStyle() const;
+
+    /** \copydoc m_headDecoratorSizeFactor */
+    void setHeadDecoratorSizeFactor(const double & __value);
+    /** \copydoc m_headDecoratorSizeFactor */
+    double getHeadDecoratorSizeFactor() const;
+    /** \copydoc m_tailDecoratorSizeFactor */
+    void setTailDecoratorSizeFactor(const double & __value);
+    /** \copydoc m_tailDecoratorSizeFactor */
+    double getTailDecoratorSizeFactor() const;
+
+
+
+    Q_PROPERTY(JKQTPLineDecoratorStyle headDecoratorStyle MEMBER m_headDecoratorStyle READ getHeadDecoratorStyle WRITE setHeadDecoratorStyle)
+    Q_PROPERTY(JKQTPLineDecoratorStyle tailDecoratorStyle MEMBER m_tailDecoratorStyle READ getTailDecoratorStyle WRITE setTailDecoratorStyle)
+    Q_PROPERTY(double headDecoratorSizeFactor MEMBER m_headDecoratorSizeFactor READ getHeadDecoratorSizeFactor WRITE setHeadDecoratorSizeFactor)
+    Q_PROPERTY(double tailDecoratorSizeFactor MEMBER m_tailDecoratorSizeFactor READ getTailDecoratorSizeFactor WRITE setTailDecoratorSizeFactor)
+private:
+    /** \brief head decorator style */
+    JKQTPLineDecoratorStyle m_headDecoratorStyle;
+    /** \brief tail decorator style */
+    JKQTPLineDecoratorStyle m_tailDecoratorStyle;
+    /** \brief head decorator size-factor, used to calculate the size of the arrow from the line width */
+    double m_headDecoratorSizeFactor;
+    /** \brief tail decorator size-factor, used to calculate the size of the arrow from the line width */
+    double m_tailDecoratorSizeFactor;
+};
+
 
 
 

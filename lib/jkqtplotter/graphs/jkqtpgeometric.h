@@ -35,48 +35,100 @@
            elements that only consist of lines (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
 
- */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGraphLineStyleMixin {
-        Q_OBJECT
-    public:
-        /*! \brief class contructor
+*/
+    class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGraphLineStyleMixin {
+    Q_OBJECT
+public:
+    /*! \brief class contructor
 
-            \param color color of drawing
-            \param style line style of drawing
-            \param lineWidth lineWidth of drawing
-            \param parent the parent plotter object
-         */
-        explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
-        /*! \brief class contructor
+        \param color color of drawing
+        \param style line style of drawing
+        \param lineWidth lineWidth of drawing
+        \param parent the parent plotter object
+        */
+    explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
+    /*! \brief class contructor
 
-            \param color color of drawing
-            \param style line style of drawing
-            \param lineWidth lineWidth of drawing
-            \param parent the parent plotter object
-         */
-        explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
-        /*! \brief class contructor
+        \param color color of drawing
+        \param style line style of drawing
+        \param lineWidth lineWidth of drawing
+        \param parent the parent plotter object
+        */
+    explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
+    /*! \brief class contructor
 
-         */
-        explicit JKQTPGeoBaseLine(JKQTBasePlotter* parent);
-        /*! \brief class contructor
+    */
+    explicit JKQTPGeoBaseLine(JKQTBasePlotter* parent);
+    /*! \brief class contructor
 
-         */
-        explicit JKQTPGeoBaseLine(JKQTPlotter* parent);
+    */
+    explicit JKQTPGeoBaseLine(JKQTPlotter* parent);
 
 
 
-        /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
-        virtual void setAlpha(float alpha);
-        /** \brief set line color */
-        virtual void setColor(QColor c);
+    /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
+    virtual void setAlpha(float alpha);
+    /** \brief set line color */
+    virtual void setColor(QColor c);
 
-        /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
 
-    protected:
+protected:
+
+};
+/*! \brief This JKQTPPlotObject is used as base class for geometric drawing
+           elements that consist of lines with decorated ends (i.e. no filling of any kind is done)
+    \ingroup jkqtplotter_geoplots
+
+*/
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedLine: public JKQTPPlotObject, public JKQTPGraphDecoratedLineStyleMixin {
+    Q_OBJECT
+public:
+    /*! \brief class contructor
+
+        \param color color of drawing
+        \param lineWidth lineWidth of drawing
+        \param headStyle style of the head decoration
+        \param tailStyle style of the tail decoration
+        \param style line style of drawing
+        \param parent the parent plotter object
+        */
+    explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
+    /*! \brief class contructor
+
+        \param color color of drawing
+        \param lineWidth lineWidth of drawing
+        \param headStyle style of the head decoration
+        \param tailStyle style of the tail decoration
+        \param style line style of drawing
+        \param parent the parent plotter object
+        */
+    explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTPlotter* parent);
+    /*! \brief class contructor
+
+    */
+    explicit JKQTPGeoBaseDecoratedLine(JKQTBasePlotter* parent);
+    /*! \brief class contructor
+
+    */
+    explicit JKQTPGeoBaseDecoratedLine(JKQTPlotter* parent);
+
+
+
+    /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
+    virtual void setAlpha(float alpha);
+    /** \brief set line color */
+    virtual void setColor(QColor c);
+
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
+
+protected:
 
 };
 
@@ -153,6 +205,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public
 /*! \brief This virtual JKQTPGraph descendent may be used to display a single symbol (marker).
     \ingroup jkqtplotter_geoplots
 
+    \see \ref JKQTPlotterGeometricGraphs
+
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
@@ -218,6 +272,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQT
            class in order to display LaTeX formulas.
     \ingroup jkqtplotter_geoplots
 
+    \see \ref JKQTPlotterGeometricGraphs
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
@@ -304,6 +359,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPG
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geoline.png
+
+    \see \ref JKQTPlotterGeometricGraphs
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
@@ -394,6 +451,80 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
 };
 
 
+/*! \brief This JKQTPPlotObject is used to draw a line with decorations (e.g. arrows)
+    \ingroup jkqtplotter_geoplots
+
+    \image html plot_geoarrows.png
+
+    \see \ref JKQTPlotterGeometricGraphs
+
+    */
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArrow: public JKQTPGeoBaseDecoratedLine {
+    Q_OBJECT
+public:
+    /*! \brief class constructor
+
+        \param parent the parent plotter object
+        \param x1 x-coordinate of first point of line
+        \param y1 y-coordinate of first point of line
+        \param x2 x-coordinate of second point of line
+        \param y2 y-coordinate of second point of line
+        \param color color of line
+        \param lineWidth width of line
+        \param style line style
+        \param parent the parent plotter object
+    */
+    JKQTPGeoArrow(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator, double lineWidth=1.0, Qt::PenStyle style=Qt::SolidLine);
+    /*! \brief class constructor
+
+        \param parent the parent plotter object
+        \param x1 x-coordinate of first point of line
+        \param y1 y-coordinate of first point of line
+        \param x2 x-coordinate of second point of line
+        \param y2 y-coordinate of second point of line
+        \param color color of line
+        \param lineWidth width of line
+        \param style line style
+        \param parent the parent plotter object
+      */
+    JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator, double lineWidth=1.0, Qt::PenStyle style=Qt::SolidLine);
+
+
+    /** \copydoc JKQTPPlotObject::getXMinMax()        */
+    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+    /** \copydoc JKQTPPlotObject::getYMinMax()        */
+    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+
+    /** \brief plots the graph to the plotter object specified as parent */
+    virtual void draw(JKQTPEnhancedPainter& painter) override;
+
+    /*! \copydoc x1 */
+    void setX1(double __value);
+    /*! \copydoc x1 */
+    double getX1() const;
+    /*! \copydoc y1 */
+    void setY1(double __value);
+    /*! \copydoc y1 */
+    double getY1() const;
+    /*! \copydoc x2 */
+    void setX2(double __value);
+    /*! \copydoc x2 */
+    double getX2() const;
+    /*! \copydoc y2 */
+    void setY2(double __value);
+    /*! \copydoc y2 */
+    double getY2() const;
+protected:
+    /** \brief x-coordinate of first point of line */
+    double x1;
+    /** \brief y-coordinate of first point of line */
+    double y1;
+    /** \brief x-coordinate of second point of line */
+    double x2;
+    /** \brief y-coordinate of second point of line */
+    double y2;
+
+};
 
 /*! \brief This JKQTPPlotObject is used to draw an infinite line
     \ingroup jkqtplotter_geoplots
@@ -402,6 +533,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
     until the end of the plotting range.
 
     \image html plot_geoinfiniteline.png
+
+    \see \ref JKQTPlotterGeometricGraphs
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
@@ -481,6 +614,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
 
     \image html plot_geolines.png
 
+    \see \ref JKQTPlotterGeometricGraphs
+
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
         Q_OBJECT
@@ -548,6 +683,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
     \ingroup jkqtplotter_geoplots
 
     \image html plot_georectangle.png
+
+    \see \ref JKQTPlotterGeometricGraphs
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         Q_OBJECT
@@ -690,6 +827,8 @@ protected:
 
     \image html plot_geopolygon.png
 
+    \see \ref JKQTPlotterGeometricGraphs
+
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         Q_OBJECT
@@ -772,6 +911,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
 
     \see <a href="http://www.codeguru.com/cpp/g-m/gdi/article.php/c131">http://www.codeguru.com/cpp/g-m/gdi/article.php/c131</a> and
          <a href="http://en.wikipedia.org/wiki/Ellipse#General_parametric_form">http://en.wikipedia.org/wiki/Ellipse#General_parametric_form</a>
+
+    \see \ref JKQTPlotterGeometricGraphs
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         Q_OBJECT
@@ -878,6 +1019,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geoarc.png
+
+    \see \ref JKQTPlotterGeometricGraphs
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
         Q_OBJECT
@@ -987,6 +1130,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geopie.png
+
+    \see \ref JKQTPlotterGeometricGraphs
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         Q_OBJECT
@@ -1056,6 +1201,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
     \ingroup jkqtplotter_geoplots
 
     \image html plot_geochord.png
+
+    \see \ref JKQTPlotterGeometricGraphs
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
         Q_OBJECT

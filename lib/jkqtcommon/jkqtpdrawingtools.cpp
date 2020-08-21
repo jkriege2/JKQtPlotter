@@ -404,3 +404,77 @@ void JKQTPPlotSymbol(QPaintDevice &paintDevice, double x, double y, JKQTPGraphSy
     JKQTPEnhancedPainter p(&paintDevice);
     JKQTPPlotSymbol(p, x, y, symbol, size, symbolLineWidth, color, fillColor);
 }
+
+QString JKQTPLineDecoratorStyle2String(JKQTPLineDecoratorStyle pos)
+{
+    switch(pos) {
+    case JKQTPNoDecorator: return "none";
+    case JKQTPArrow: return "arrow";
+    case JKQTPFilledArrow: return "filled_arrow";
+    case JKQTPTriangleDecorator: return "triangle";
+    case JKQTPFilledTriangleDecorator: return "filled_triangle";
+    case JKQTPTriangleDecoratorAndStop: return "triangle_stop";
+    case JKQTPFilledTriangleDecoratorAndStop: return "filled_triangle_stop";
+    case JKQTPDoubleArrow: return "double_arrow";
+    case JKQTPFilledDoubleArrow: return "filled_double_arrow";
+    case JKQTPCircleDecorator: return "circle";
+    case JKQTPFilledCircleDecorator: return "filled_circle";
+    case JKQTPRectangleDecorator: return "rectangle";
+    case JKQTPFilledRectangleDecorator: return "filled_rectangle";
+    case JKQTPArrowAndStop: return "arrow_stop";
+    case JKQTPDoubleArrowAndStop: return "double_arrow_stop";
+    case JKQTPVerticalDecorator: return "vertical_line";
+    case JKQTPBracketDecorator: return "bracket";
+    case JKQTPLineDecoratorCount: JKQTPLineDecoratorStyle2String(JKQTPMaxLineDecoratorID);
+    }
+    return "";
+}
+
+QString JKQTPLineDecoratorStyle2NameString(JKQTPLineDecoratorStyle pos)
+{
+    switch(pos) {
+    case JKQTPNoDecorator: return QObject::tr("no decorator");
+    case JKQTPArrow: return QObject::tr("arrow");
+    case JKQTPFilledArrow: return QObject::tr("filled arrow");
+    case JKQTPTriangleDecorator: return QObject::tr("triangle");
+    case JKQTPFilledTriangleDecorator: return QObject::tr("filled triangle");
+    case JKQTPTriangleDecoratorAndStop: return QObject::tr("triangle with stop");
+    case JKQTPFilledTriangleDecoratorAndStop: return QObject::tr("filled triangle with stop");
+    case JKQTPDoubleArrow: return QObject::tr("double arrow");
+    case JKQTPFilledDoubleArrow: return QObject::tr("filled double arrow");
+    case JKQTPCircleDecorator: return QObject::tr("circle");
+    case JKQTPFilledCircleDecorator: return QObject::tr("filled circle");
+    case JKQTPRectangleDecorator: return QObject::tr("rectangle");
+    case JKQTPFilledRectangleDecorator: return QObject::tr("filled rectangle");
+    case JKQTPArrowAndStop: return QObject::tr("arrow with stop");
+    case JKQTPDoubleArrowAndStop: return QObject::tr("double arrow with stop");
+    case JKQTPVerticalDecorator: return QObject::tr("vertical line");
+    case JKQTPBracketDecorator: return QObject::tr("bracket");
+    case JKQTPLineDecoratorCount: JKQTPLineDecoratorStyle2NameString(JKQTPMaxLineDecoratorID);
+    }
+    return "";
+}
+
+JKQTPLineDecoratorStyle String2JKQTPLineDecoratorStyle(const QString &pos)
+{
+    QString s=pos.trimmed().toLower();
+    if (s=="line_decorator_none"||s=="decorator_none"||s=="no_line_decorator"||s=="no_decorator"||s=="none"||s=="-") return JKQTPNoDecorator;
+    if (s=="arrow"||s=="simple_arrow"||s=="arr"||s=="->"||s=="<-"||s==">"||s=="<") return JKQTPArrow;
+    if (s=="filled_arrow") return JKQTPFilledArrow;
+    if (s=="triangle") return JKQTPTriangleDecorator;
+    if (s=="filled_triangle") return JKQTPFilledTriangleDecorator;
+    if (s=="triangle_stop") return JKQTPTriangleDecoratorAndStop;
+    if (s=="filled_triangle_stop") return JKQTPFilledTriangleDecoratorAndStop;
+    if (s=="double_arrow") return JKQTPDoubleArrow;
+    if (s=="filled_double_arrow") return JKQTPFilledDoubleArrow;
+    if (s=="circle") return JKQTPCircleDecorator;
+    if (s=="filled_circle") return JKQTPFilledCircleDecorator;
+    if (s=="rectangle") return JKQTPRectangleDecorator;
+    if (s=="filled_rectangle") return JKQTPFilledRectangleDecorator;
+    if (s=="arrow_stop") return JKQTPArrowAndStop;
+    if (s=="double_arrow_stop") return JKQTPDoubleArrowAndStop;
+    if (s=="vertical_line") return JKQTPVerticalDecorator;
+    if (s=="bracket") return JKQTPBracketDecorator;
+
+    return JKQTPNoDecorator;
+}

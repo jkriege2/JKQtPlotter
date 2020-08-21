@@ -450,3 +450,61 @@ QColor JKQTPGraphTextStyleMixin::getTextColor() const
 {
     return m_textColor;
 }
+
+JKQTPGraphDecoratedLineStyleMixin::JKQTPGraphDecoratedLineStyleMixin():
+    JKQTPGraphLineStyleMixin()
+{
+    m_headDecoratorStyle=JKQTPLineDecoratorStyle::JKQTPDefaultLineDecorator;
+    m_tailDecoratorStyle=JKQTPLineDecoratorStyle::JKQTPNoDecorator;
+    m_tailDecoratorSizeFactor=m_headDecoratorSizeFactor=9.0;
+}
+
+void JKQTPGraphDecoratedLineStyleMixin::initDecoratedLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+{
+    initLineStyle(parent, parentPlotStyle);
+}
+
+JKQTPGraphDecoratedLineStyleMixin::~JKQTPGraphDecoratedLineStyleMixin()
+{
+
+}
+
+void JKQTPGraphDecoratedLineStyleMixin::setHeadDecoratorStyle(const JKQTPLineDecoratorStyle &__value)
+{
+    m_headDecoratorStyle=__value;
+}
+
+JKQTPLineDecoratorStyle JKQTPGraphDecoratedLineStyleMixin::getHeadDecoratorStyle() const
+{
+    return m_headDecoratorStyle;
+}
+
+void JKQTPGraphDecoratedLineStyleMixin::setTailDecoratorStyle(const JKQTPLineDecoratorStyle &__value)
+{
+    m_tailDecoratorStyle=__value;
+}
+
+JKQTPLineDecoratorStyle JKQTPGraphDecoratedLineStyleMixin::getTailDecoratorStyle() const
+{
+    return m_tailDecoratorStyle;
+}
+
+void JKQTPGraphDecoratedLineStyleMixin::setHeadDecoratorSizeFactor(const double &__value)
+{
+    m_headDecoratorSizeFactor=__value;
+}
+
+double JKQTPGraphDecoratedLineStyleMixin::getHeadDecoratorSizeFactor() const
+{
+    return m_headDecoratorSizeFactor;
+}
+
+void JKQTPGraphDecoratedLineStyleMixin::setTailDecoratorSizeFactor(const double &__value)
+{
+    m_tailDecoratorSizeFactor=__value;
+}
+
+double JKQTPGraphDecoratedLineStyleMixin::getTailDecoratorSizeFactor() const
+{
+    return m_tailDecoratorSizeFactor;
+}

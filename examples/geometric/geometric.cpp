@@ -56,8 +56,86 @@ int main(int argc, char* argv[])
     infLine->setAlpha(0.5);
     plot.addGraph(infLine);
 
+    // 3.3 some arrows
+    plot.addGraph(new JKQTPGeoText(&plot, 0.1,2.95, "\\textbf{Arrows:}", 14, QColor("red")));
 
-    // 3.3 some rectangles (you give the center and width/height of the rectangle in the contructor)
+    JKQTPGeoArrow* a;
+    double arr_y=2.9;
+    double arr_deltay=0.9/static_cast<double>(JKQTPLineDecoratorCount);
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPArrow, JKQTPNoDecorator, 2));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPArrow", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPFilledArrow, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPFilledArrow", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPTriangleDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPTriangleArrow", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPFilledTriangleDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPTriangleFilledArrow", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPTriangleDecoratorAndStop, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPTriangleArrowAndStop", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPFilledTriangleDecoratorAndStop, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPTriangleFilledArrowAndStop", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPDoubleArrow, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPDoubleArrow", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPFilledDoubleArrow, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPFilledDoubleArrow", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPCircleDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPCircleDecorator", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPFilledCircleDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPFilledCircleDecorator", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPRectangleDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPRectangleDecorator", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPFilledRectangleDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPFilledRectangleDecorator", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPArrowAndStop, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPArrowAndStop", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPDoubleArrowAndStop, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPDoubleArrowAndStop", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPVerticalDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPVerticalDecorator", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+    plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.9, arr_y, QColor("red"), JKQTPBracketDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.02, a->getY2(), "JKQTPBracketDecorator", 6, a->getLineColor()));
+    arr_y-=arr_deltay;
+
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.1,  2.05, 0.9, 2.05, QColor("blue"), JKQTPNoDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.1,  2.9, 0.75, 2.9, QColor("blue"), JKQTPNoDecorator, JKQTPNoDecorator, 1));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.3,  2.1, 0.1, 2.45, QColor("green"), JKQTPTriangleDecoratorAndStop, JKQTPTriangleDecoratorAndStop, 1));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.2,  2.1, 0.2, 2.45, QColor("blue"), JKQTPNoDecorator, JKQTPFilledTriangleDecoratorAndStop, 3));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.1,  2.1, 0.3, 2.45, QColor("orange"), JKQTPFilledTriangleDecoratorAndStop, JKQTPNoDecorator, 5));
+
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.6,  2.1, 0.4, 2.45, QColor("green"), JKQTPTriangleDecorator, JKQTPTriangleDecorator, 0.5));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.5,  2.1, 0.5, 2.45, QColor("blue"), JKQTPNoDecorator, JKQTPArrowAndStop, 2));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.4,  2.1, 0.6, 2.45, QColor("orange"), JKQTPArrowAndStop, JKQTPNoDecorator, 4));
+
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.4,  2.5, 0.4, 2.65, QColor("green"), JKQTPArrowAndStop, JKQTPFilledArrow, 0.5));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.45,  2.5, 0.45, 2.65, QColor("blue"), JKQTPArrowAndStop, JKQTPFilledArrow, 1));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.5,  2.5, 0.5, 2.65, QColor("orange"), JKQTPArrowAndStop, JKQTPFilledArrow, 1.5));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.55,  2.5, 0.55, 2.65, QColor("blue"), JKQTPArrowAndStop, JKQTPFilledArrow, 2));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.6,  2.5, 0.6, 2.65, QColor("orange"), JKQTPArrowAndStop, JKQTPFilledArrow, 2.5));
+
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.4,  2.7, 0.4, 2.9, QColor("green"), JKQTPTriangleDecoratorAndStop, JKQTPFilledCircleDecorator, 0.5));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.45,  2.7, 0.45, 2.9, QColor("blue"), JKQTPTriangleDecoratorAndStop, JKQTPFilledCircleDecorator, 1));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.5,  2.7, 0.5, 2.9, QColor("orange"), JKQTPTriangleDecoratorAndStop, JKQTPFilledCircleDecorator, 1.5));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.55,  2.7, 0.55, 2.9, QColor("blue"), JKQTPTriangleDecoratorAndStop, JKQTPFilledCircleDecorator, 2));
+    plot.addGraph(new JKQTPGeoArrow(&plot, 0.6,  2.7, 0.6, 2.9, QColor("orange"), JKQTPTriangleDecoratorAndStop, JKQTPFilledCircleDecorator, 2.5));
+
+
+
+    // 3.4 some rectangles (you give the center and width/height of the rectangle in the contructor)
     plot.addGraph(new JKQTPGeoText(&plot, 0.1,1.95, "\\textbf{Rectangles:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoRectangle(&plot, 0.5,1.5,0.8,0.8, QColor("blue"), 1, Qt::SolidLine, QColor("lightblue")));
     QColor rfill("lightblue"); rfill.setAlphaF(0.5);
@@ -69,7 +147,7 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoSymbol(&plot, 0.9,1.6, JKQTPCircle, 5, QColor("grey")));
 
 
-    // 3.4 some circles and elllipses
+    // 3.5 some circles and elllipses
     plot.addGraph(new JKQTPGeoText(&plot, 1.1,1.95, "\\textbf{Circles/Ellipses:}", 14, QColor("red")));
     QColor col=QColor("blue"); col.setAlphaF(0.2);
     plot.addGraph(new JKQTPGeoRectangle(&plot, 1.5,1.5,0.8,0.8, col, 0.5, Qt::SolidLine));
@@ -92,7 +170,7 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoSymbol(&plot, 1.9,1.6, JKQTPCircle, 5, QColor("grey")));
 
 
-    // 3.5 some polygon elements
+    // 3.6 some polygon elements
     plot.addGraph(new JKQTPGeoText(&plot, 2.1,0.95, "\\textbf{PolyLines/Polygons:}", 14, QColor("red")));
     QVector<QPointF> polygon;
     polygon<<QPointF(2, 0.1)<<QPointF(2.3, 0.9)<<QPointF(2.6, 0.3)<<QPointF(2, 0.8);
@@ -109,7 +187,7 @@ int main(int argc, char* argv[])
     plot.addGraph(polygraph);
 
 
-    // 3.6 some arcs
+    // 3.7 some arcs
     plot.addGraph(new JKQTPGeoText(&plot, 2.1,1.95, "\\textbf{Arcs:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoRectangle(&plot, 2.5,1.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
     plot.addGraph(new JKQTPGeoArc(&plot,2.5,1.5,0.9,0.9, 0, 90 , QColor("blue"), 4, Qt::PenStyle::SolidLine));
@@ -121,7 +199,7 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoSymbol(&plot, 2.5,1.5, JKQTPCircle, 5, QColor("grey")));
 
 
-    // 3.7 some pies
+    // 3.8 some pies
     plot.addGraph(new JKQTPGeoText(&plot, 2.1,2.95, "\\textbf{Pies:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoRectangle(&plot, 2.5,2.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
     JKQTPGeoPie* pie;
@@ -135,7 +213,7 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoSymbol(&plot, 2.5,2.5, JKQTPCircle, 5, QColor("grey")));
 
 
-    // 3.8 some chords
+    // 3.9 some chords
     plot.addGraph(new JKQTPGeoText(&plot, 1.1,2.95, "\\textbf{Chords:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoRectangle(&plot, 1.5,2.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
     JKQTPGeoChord* chord;
