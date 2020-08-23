@@ -146,12 +146,65 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
 
 
 /*! \brief This Mix-In class provides setter/getter methods, storage and other facilities for the graph line style of lines
+           with a decorator (i.e. an arrow) at their head. It extends JKQTPGraphLineStyleMixin
+    \ingroup jkqtplotter_basegraphs_stylemixins
+
+    supported properties:
+        - head/ arrow style
+    .
+
+    \see JKQTPGraphDecoratedLineStyleMixin for a Mix-In for both ends
+*/
+class JKQTPLOTTER_LIB_EXPORT JKQTPGraphDecoratedHeadLineStyleMixin: public JKQTPGraphLineStyleMixin {
+    Q_GADGET
+public:
+    /** \brief class constructor */
+    JKQTPGraphDecoratedHeadLineStyleMixin();
+    /** \brief initiaize the line style (from the parent plotter) */
+    void initDecoratedHeadLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle);
+
+    virtual ~JKQTPGraphDecoratedHeadLineStyleMixin();
+
+    /** \brief set the head decorator style */
+    void setHeadDecoratorStyle(const JKQTPLineDecoratorStyle & __value);
+    /** \brief get the head decorator style */
+    JKQTPLineDecoratorStyle getHeadDecoratorStyle() const;
+
+    /** \copydoc m_headDecoratorSizeFactor */
+    void setHeadDecoratorSizeFactor(const double & __value);
+    /** \copydoc m_headDecoratorSizeFactor */
+    double getHeadDecoratorSizeFactor() const;
+
+    /** \brief calculates the tail decorator size from the line width \a line_width, using m_headDecoratorSizeFactor and a non-linear scaling function
+     *
+     *  \see JKQTPLineDecoratorStyleCalcDecoratorSize()
+     */
+    double calcHeadDecoratorSize(double line_width) const;
+
+
+
+    Q_PROPERTY(JKQTPLineDecoratorStyle headDecoratorStyle MEMBER m_headDecoratorStyle READ getHeadDecoratorStyle WRITE setHeadDecoratorStyle)
+    Q_PROPERTY(double headDecoratorSizeFactor MEMBER m_headDecoratorSizeFactor READ getHeadDecoratorSizeFactor WRITE setHeadDecoratorSizeFactor)
+private:
+    /** \brief head decorator style */
+    JKQTPLineDecoratorStyle m_headDecoratorStyle;
+    /** \brief head decorator size-factor, used to calculate the size of the arrow from the line width */
+    double m_headDecoratorSizeFactor;
+};
+
+
+
+
+
+/*! \brief This Mix-In class provides setter/getter methods, storage and other facilities for the graph line style of lines
            with decorators (i.e. arrows) at their ends. It extends JKQTPGraphLineStyleMixin
     \ingroup jkqtplotter_basegraphs_stylemixins
 
     supported properties:
         - head/tail arrow style
     .
+
+    \see JKQTPGraphDecoratedHeadLineStyleMixin for a Mix-In for one end (head) only
 */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGraphDecoratedLineStyleMixin: public JKQTPGraphLineStyleMixin {
     Q_GADGET
@@ -181,6 +234,17 @@ public:
     /** \copydoc m_tailDecoratorSizeFactor */
     double getTailDecoratorSizeFactor() const;
 
+    /** \brief calculates the tail decorator size from the line width \a line_width, using m_tailDecoratorSizeFactor and a non-linear scaling function
+     *
+     *  \see JKQTPLineDecoratorStyleCalcDecoratorSize()
+     */
+    double calcTailDecoratorSize(double line_width) const;
+    /** \brief calculates the tail decorator size from the line width \a line_width, using m_headDecoratorSizeFactor and a non-linear scaling function
+     *
+     *  \see JKQTPLineDecoratorStyleCalcDecoratorSize()
+     */
+    double calcHeadDecoratorSize(double line_width) const;
+
 
 
     Q_PROPERTY(JKQTPLineDecoratorStyle headDecoratorStyle MEMBER m_headDecoratorStyle READ getHeadDecoratorStyle WRITE setHeadDecoratorStyle)
@@ -197,7 +261,6 @@ private:
     /** \brief tail decorator size-factor, used to calculate the size of the arrow from the line width */
     double m_tailDecoratorSizeFactor;
 };
-
 
 
 

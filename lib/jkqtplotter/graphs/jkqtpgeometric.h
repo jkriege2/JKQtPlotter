@@ -79,6 +79,64 @@ public:
 protected:
 
 };
+
+
+
+
+/*! \brief This JKQTPPlotObject is used as base class for geometric drawing
+           elements that consist of lines with one decorated end (i.e. no filling of any kind is done)
+    \ingroup jkqtplotter_geoplots
+
+*/
+    class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedHeadLine: public JKQTPPlotObject, public JKQTPGraphDecoratedHeadLineStyleMixin {
+    Q_OBJECT
+public:
+    /*! \brief class contructor
+
+        \param color color of drawing
+        \param lineWidth lineWidth of drawing
+        \param headStyle style of the head decoration
+        \param style line style of drawing
+        \param parent the parent plotter object
+    */
+    explicit JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
+    /*! \brief class contructor
+
+        \param color color of drawing
+        \param lineWidth lineWidth of drawing
+        \param headStyle style of the head decoration
+        \param style line style of drawing
+        \param parent the parent plotter object
+    */
+    explicit JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTPlotter* parent);
+    /*! \brief class contructor
+
+    */
+    explicit JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter* parent);
+    /*! \brief class contructor
+
+    */
+    explicit JKQTPGeoBaseDecoratedHeadLine(JKQTPlotter* parent);
+
+
+
+    /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
+    virtual void setAlpha(float alpha);
+    /** \brief set line color */
+    virtual void setColor(QColor c);
+
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
+
+protected:
+
+};
+
+
+
+
 /*! \brief This JKQTPPlotObject is used as base class for geometric drawing
            elements that consist of lines with decorated ends (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
@@ -95,7 +153,7 @@ public:
         \param tailStyle style of the tail decoration
         \param style line style of drawing
         \param parent the parent plotter object
-        */
+    */
     explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
     /*! \brief class contructor
 
@@ -105,15 +163,11 @@ public:
         \param tailStyle style of the tail decoration
         \param style line style of drawing
         \param parent the parent plotter object
-        */
+            */
     explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTPlotter* parent);
-    /*! \brief class contructor
-
-    */
+    /*! \brief class contructor */
     explicit JKQTPGeoBaseDecoratedLine(JKQTBasePlotter* parent);
-    /*! \brief class contructor
-
-    */
+    /*! \brief class contructor */
     explicit JKQTPGeoBaseDecoratedLine(JKQTPlotter* parent);
 
 
@@ -355,15 +409,30 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPG
         QPen getPen(JKQTPEnhancedPainter& painter);
 };
 
-/*! \brief This JKQTPPlotObject is used to draw a line
+/*! \brief This JKQTPPlotObject is used to draw a line, optionally line-end decorations (aka arrows) are pssible, but switched off by default.
     \ingroup jkqtplotter_geoplots
+
+    \image html JKQTPGeoLine_HeadTail.png
+
 
     \image html plot_geoline.png
 
-    \see \ref JKQTPlotterGeometricGraphs
+
+    You can also activate line-end decorators (aka arrows) for this poly-line, by using code like this:
+    \code
+        line->setHeadDecoratorStyle(JKQTPFilledDoubleArrow);
+        line->setTailDecoratorStyle(JKQTPCircleDecorator);
+    \endcode
+
+    This results in arrows drawn at the start (aka x1/y1, =tail) and end (aka x2/y2, =head) of the line.
+
+
+    \note The convenience class JKQTPGeoArrow activates line-end decorations (aka arows) by default and allows to select them in the constructor.
+
+    \see JKQTPGeoArrow, \ref JKQTPlotterGeometricGraphs and \ref JKQTPlotterGeometricArrows
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseDecoratedLine {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -451,15 +520,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseLine {
 };
 
 
-/*! \brief This JKQTPPlotObject is used to draw a line with decorations (e.g. arrows)
+/*! \brief This convenience specialisation of JKQTPGeoLine is used to draw a line with decorations (e.g. arrows)
     \ingroup jkqtplotter_geoplots
+
+    This class does not add any functionality on top of JKQTPGeoLine, just activates line-end markers by default!
+
+    \image html JKQTPGeoLine_HeadTail.png
 
     \image html plot_geoarrows.png
 
-    \see \ref JKQTPlotterGeometricGraphs
+    \see JKQTPLineDecoratorStyle, JKQTPGeoLine, \ref JKQTPlotterGeometricArrows and \ref JKQTPlotterGeometricGraphs
 
     */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArrow: public JKQTPGeoBaseDecoratedLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArrow: public JKQTPGeoLine {
     Q_OBJECT
 public:
     /*! \brief class constructor
@@ -489,42 +562,11 @@ public:
       */
     JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator, double lineWidth=1.0, Qt::PenStyle style=Qt::SolidLine);
 
-
-    /** \copydoc JKQTPPlotObject::getXMinMax()        */
-    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-    /** \copydoc JKQTPPlotObject::getYMinMax()        */
-    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-
-    /** \brief plots the graph to the plotter object specified as parent */
-    virtual void draw(JKQTPEnhancedPainter& painter) override;
-
-    /*! \copydoc x1 */
-    void setX1(double __value);
-    /*! \copydoc x1 */
-    double getX1() const;
-    /*! \copydoc y1 */
-    void setY1(double __value);
-    /*! \copydoc y1 */
-    double getY1() const;
-    /*! \copydoc x2 */
-    void setX2(double __value);
-    /*! \copydoc x2 */
-    double getX2() const;
-    /*! \copydoc y2 */
-    void setY2(double __value);
-    /*! \copydoc y2 */
-    double getY2() const;
-protected:
-    /** \brief x-coordinate of first point of line */
-    double x1;
-    /** \brief y-coordinate of first point of line */
-    double y1;
-    /** \brief x-coordinate of second point of line */
-    double x2;
-    /** \brief y-coordinate of second point of line */
-    double y2;
-
 };
+
+
+
+
 
 /*! \brief This JKQTPPlotObject is used to draw an infinite line
     \ingroup jkqtplotter_geoplots
@@ -534,10 +576,12 @@ protected:
 
     \image html plot_geoinfiniteline.png
 
-    \see \ref JKQTPlotterGeometricGraphs
+    You can add a decorator to the head of the line (i.e. the given start point (x,y) ) iff this line is one-sided, i.e. two_sided \c ==false .
+
+    \see \ref JKQTPlotterGeometricGraphs and \ref JKQTPlotterGeometricArrows
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedHeadLine {
         Q_OBJECT
     public:
         /*! \brief class constructor
@@ -614,10 +658,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseLine {
 
     \image html plot_geolines.png
 
-    \see \ref JKQTPlotterGeometricGraphs
+    You can also activate line-end decorators (aka arrows) for this poly-line, by using code like this:
+    \code
+        polyLine->setHeadDecoratorStyle(JKQTPFilledDoubleArrow);
+        polyLine->setTailDecoratorStyle(JKQTPCircleDecorator);
+    \endcode
+
+    This results in arrows drawn at the start (=tail) and end (=head) of the poly-line:
+    \image html geo_arrow_polylines.png
+
+    \see \ref JKQTPlotterGeometricGraphs and \ref JKQTPlotterGeometricArrows
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseLine {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine {
         Q_OBJECT
     public:
         /*! \brief class constructor

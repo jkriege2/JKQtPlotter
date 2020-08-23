@@ -56,9 +56,6 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html parsedfunctionplot_small.png
     <td> \subpage JKQTPlotterParsedFunctionPlot
     <td> `JKQTPXParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator 
-<tr><td> \image html geometric_small.png
-    <td> \subpage JKQTPlotterGeometricGraphs
-    <td> `JKQTPPlotObject`, `JKQTPGeoArc`, `JKQTPGeoLine`, `JKQTPGeoRectangle`, ...
 <tr><td> \image html boxplot_small.png
     <td> \subpage JKQTPlotterBoxplotsGraphs
     <td> `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph`, ...
@@ -67,6 +64,18 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> `JKQTPViolinplotVerticalElement`, `JKQTPViolinplotHorizontalElement`, ...
 </table>
 
+
+\subsection jkqtp_extut_geometric Geometric Forms, Arrows, Annotaions ...
+
+<table>
+<tr><th> Screenshot    <th> Description   <th> Notes         
+<tr><td> \image html geometric_small.png
+    <td> \subpage JKQTPlotterGeometricGraphs
+    <td> `JKQTPPlotObject`, `JKQTPGeoArc`, `JKQTPGeoLine`, `JKQTPGeoRectangle`, ...
+<tr><td> \image html geo_arrows_small.png
+    <td> \subpage JKQTPlotterGeometricArrows
+    <td> `JKQTPGeoArrow`, ...
+</table>
 
 \subsection jkqtp_extut_keyaxesstyles  Styling the Plot, Keys, Axes, ...
 

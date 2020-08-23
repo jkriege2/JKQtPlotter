@@ -429,7 +429,7 @@ This group assembles graphs that show their data with symbols and optionally wit
       <td>\image html geo_line_small.png
       <td> JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines
     <tr>
-      <td>\image html geo_arrow_small.png
+      <td>\image html geo_arrows_small.png
       <td> JKQTPGeoArrow
     <tr>
       <td>\image html geo_rect_small.png

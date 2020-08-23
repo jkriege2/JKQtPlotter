@@ -456,7 +456,7 @@ JKQTPGraphDecoratedLineStyleMixin::JKQTPGraphDecoratedLineStyleMixin():
 {
     m_headDecoratorStyle=JKQTPLineDecoratorStyle::JKQTPDefaultLineDecorator;
     m_tailDecoratorStyle=JKQTPLineDecoratorStyle::JKQTPNoDecorator;
-    m_tailDecoratorSizeFactor=m_headDecoratorSizeFactor=9.0;
+    m_tailDecoratorSizeFactor=m_headDecoratorSizeFactor=8.0;
 }
 
 void JKQTPGraphDecoratedLineStyleMixin::initDecoratedLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
@@ -508,3 +508,60 @@ double JKQTPGraphDecoratedLineStyleMixin::getTailDecoratorSizeFactor() const
 {
     return m_tailDecoratorSizeFactor;
 }
+
+double JKQTPGraphDecoratedLineStyleMixin::calcTailDecoratorSize(double line_width) const
+{
+    return JKQTPLineDecoratorStyleCalcDecoratorSize(line_width, m_tailDecoratorSizeFactor);
+}
+
+double JKQTPGraphDecoratedLineStyleMixin::calcHeadDecoratorSize(double line_width) const
+{
+    return JKQTPLineDecoratorStyleCalcDecoratorSize(line_width, m_headDecoratorSizeFactor);
+}
+
+
+
+JKQTPGraphDecoratedHeadLineStyleMixin::JKQTPGraphDecoratedHeadLineStyleMixin():
+    JKQTPGraphLineStyleMixin()
+{
+    m_headDecoratorStyle=JKQTPLineDecoratorStyle::JKQTPDefaultLineDecorator;
+    m_headDecoratorSizeFactor=8.0;
+}
+
+void JKQTPGraphDecoratedHeadLineStyleMixin::initDecoratedHeadLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+{
+    initLineStyle(parent, parentPlotStyle);
+}
+
+JKQTPGraphDecoratedHeadLineStyleMixin::~JKQTPGraphDecoratedHeadLineStyleMixin()
+{
+
+}
+
+void JKQTPGraphDecoratedHeadLineStyleMixin::setHeadDecoratorStyle(const JKQTPLineDecoratorStyle &__value)
+{
+    m_headDecoratorStyle=__value;
+}
+
+JKQTPLineDecoratorStyle JKQTPGraphDecoratedHeadLineStyleMixin::getHeadDecoratorStyle() const
+{
+    return m_headDecoratorStyle;
+}
+
+
+void JKQTPGraphDecoratedHeadLineStyleMixin::setHeadDecoratorSizeFactor(const double &__value)
+{
+    m_headDecoratorSizeFactor=__value;
+}
+
+double JKQTPGraphDecoratedHeadLineStyleMixin::getHeadDecoratorSizeFactor() const
+{
+    return m_headDecoratorSizeFactor;
+}
+
+double JKQTPGraphDecoratedHeadLineStyleMixin::calcHeadDecoratorSize(double line_width) const
+{
+    return JKQTPLineDecoratorStyleCalcDecoratorSize(line_width, m_headDecoratorSizeFactor);
+}
+
+

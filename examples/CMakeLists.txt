@@ -12,6 +12,7 @@ add_subdirectory(jkqtmathtext_test)
 
 add_subdirectory(jkqtplot_test)
 
+add_subdirectory(geo_arrows)
 add_subdirectory(advplotstyling)
 add_subdirectory(barchart)
 add_subdirectory(boxplot)

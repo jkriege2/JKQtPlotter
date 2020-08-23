@@ -413,18 +413,26 @@ QString JKQTPLineDecoratorStyle2String(JKQTPLineDecoratorStyle pos)
     case JKQTPFilledArrow: return "filled_arrow";
     case JKQTPTriangleDecorator: return "triangle";
     case JKQTPFilledTriangleDecorator: return "filled_triangle";
-    case JKQTPTriangleDecoratorAndStop: return "triangle_stop";
-    case JKQTPFilledTriangleDecoratorAndStop: return "filled_triangle_stop";
+    case JKQTPTriangleDecoratorAndBar: return "triangle_bar";
+    case JKQTPFilledTriangleDecoratorAndBar: return "filled_triangle_bar";
     case JKQTPDoubleArrow: return "double_arrow";
     case JKQTPFilledDoubleArrow: return "filled_double_arrow";
     case JKQTPCircleDecorator: return "circle";
     case JKQTPFilledCircleDecorator: return "filled_circle";
     case JKQTPRectangleDecorator: return "rectangle";
     case JKQTPFilledRectangleDecorator: return "filled_rectangle";
-    case JKQTPArrowAndStop: return "arrow_stop";
-    case JKQTPDoubleArrowAndStop: return "double_arrow_stop";
-    case JKQTPVerticalDecorator: return "vertical_line";
+    case JKQTPArrowAndBar: return "arrow_bar";
+    case JKQTPDoubleArrowAndBar: return "double_arrow_bar";
+    case JKQTPBarDecorator: return "bar";
     case JKQTPBracketDecorator: return "bracket";
+    case JKQTPHalfBarDecorator: return "half_bar";
+    case JKQTPSkewedBarDecorator: return "skewed_bar";
+    case JKQTPHarpoonDecorator: return "harpoon";
+    case JKQTPHarpoonDecoratorAndBar: return "harpoon_bar";
+    case JKQTPDiamondDecorator: return "diamond";
+    case JKQTPFilledDiamondDecorator: return "filled_diamond";
+    case JKQTPDiamondDecoratorAndBar: return "diamond_bar";
+    case JKQTPFilledDiamondDecoratorAndBar: return "filled_diamond_bar";
     case JKQTPLineDecoratorCount: JKQTPLineDecoratorStyle2String(JKQTPMaxLineDecoratorID);
     }
     return "";
@@ -438,17 +446,25 @@ QString JKQTPLineDecoratorStyle2NameString(JKQTPLineDecoratorStyle pos)
     case JKQTPFilledArrow: return QObject::tr("filled arrow");
     case JKQTPTriangleDecorator: return QObject::tr("triangle");
     case JKQTPFilledTriangleDecorator: return QObject::tr("filled triangle");
-    case JKQTPTriangleDecoratorAndStop: return QObject::tr("triangle with stop");
-    case JKQTPFilledTriangleDecoratorAndStop: return QObject::tr("filled triangle with stop");
+    case JKQTPTriangleDecoratorAndBar: return QObject::tr("triangle, with bar");
+    case JKQTPFilledTriangleDecoratorAndBar: return QObject::tr("filled triangle, with bar");
     case JKQTPDoubleArrow: return QObject::tr("double arrow");
     case JKQTPFilledDoubleArrow: return QObject::tr("filled double arrow");
     case JKQTPCircleDecorator: return QObject::tr("circle");
     case JKQTPFilledCircleDecorator: return QObject::tr("filled circle");
     case JKQTPRectangleDecorator: return QObject::tr("rectangle");
     case JKQTPFilledRectangleDecorator: return QObject::tr("filled rectangle");
-    case JKQTPArrowAndStop: return QObject::tr("arrow with stop");
-    case JKQTPDoubleArrowAndStop: return QObject::tr("double arrow with stop");
-    case JKQTPVerticalDecorator: return QObject::tr("vertical line");
+    case JKQTPArrowAndBar: return QObject::tr("arrow, with bar");
+    case JKQTPDoubleArrowAndBar: return QObject::tr("double arrow, with bar");
+    case JKQTPBarDecorator: return QObject::tr("full bar");
+    case JKQTPHalfBarDecorator: return QObject::tr("half bar");
+    case JKQTPSkewedBarDecorator: return QObject::tr("skewed bar");
+    case JKQTPHarpoonDecorator: return QObject::tr("harpoon");
+    case JKQTPHarpoonDecoratorAndBar: return QObject::tr("harpoon, with bar");
+    case JKQTPDiamondDecorator: return QObject::tr("diamond");
+    case JKQTPFilledDiamondDecorator: return QObject::tr("filled diamond");
+    case JKQTPDiamondDecoratorAndBar: return QObject::tr("diamond, with bar");
+    case JKQTPFilledDiamondDecoratorAndBar: return QObject::tr("filled diamond, with bar");
     case JKQTPBracketDecorator: return QObject::tr("bracket");
     case JKQTPLineDecoratorCount: JKQTPLineDecoratorStyle2NameString(JKQTPMaxLineDecoratorID);
     }
@@ -463,18 +479,32 @@ JKQTPLineDecoratorStyle String2JKQTPLineDecoratorStyle(const QString &pos)
     if (s=="filled_arrow") return JKQTPFilledArrow;
     if (s=="triangle") return JKQTPTriangleDecorator;
     if (s=="filled_triangle") return JKQTPFilledTriangleDecorator;
-    if (s=="triangle_stop") return JKQTPTriangleDecoratorAndStop;
-    if (s=="filled_triangle_stop") return JKQTPFilledTriangleDecoratorAndStop;
+    if (s=="triangle_bar") return JKQTPTriangleDecoratorAndBar;
+    if (s=="filled_triangle_bar") return JKQTPFilledTriangleDecoratorAndBar;
     if (s=="double_arrow") return JKQTPDoubleArrow;
     if (s=="filled_double_arrow") return JKQTPFilledDoubleArrow;
     if (s=="circle") return JKQTPCircleDecorator;
     if (s=="filled_circle") return JKQTPFilledCircleDecorator;
     if (s=="rectangle") return JKQTPRectangleDecorator;
     if (s=="filled_rectangle") return JKQTPFilledRectangleDecorator;
-    if (s=="arrow_stop") return JKQTPArrowAndStop;
-    if (s=="double_arrow_stop") return JKQTPDoubleArrowAndStop;
-    if (s=="vertical_line") return JKQTPVerticalDecorator;
+    if (s=="arrow_bar") return JKQTPArrowAndBar;
+    if (s=="double_arrow_bar") return JKQTPDoubleArrowAndBar;
+    if (s=="bar" || s=="vertical_line") return JKQTPBarDecorator;
+    if (s=="half_bar") return JKQTPHalfBarDecorator;
+    if (s=="skewed_bar") return JKQTPSkewedBarDecorator;
+    if (s=="harpoon") return JKQTPHarpoonDecorator;
+    if (s=="harpoon_bar") return JKQTPHarpoonDecoratorAndBar;
+    if (s=="diamond") return JKQTPDiamondDecorator;
+    if (s=="filled_diamond") return JKQTPFilledDiamondDecorator;
+    if (s=="diamond_bar") return JKQTPDiamondDecoratorAndBar;
+    if (s=="filled_diamond_bar") return JKQTPFilledDiamondDecoratorAndBar;
     if (s=="bracket") return JKQTPBracketDecorator;
-
     return JKQTPNoDecorator;
+}
+
+double JKQTPLineDecoratorStyleCalcDecoratorSize(double line_width, double decoratorSizeFactor)
+{
+    if (line_width<=0.75) return 3.0+(decoratorSizeFactor*0.75-3.0)/(0.75*0.75)*line_width*line_width;
+    if (line_width<=1.0) return decoratorSizeFactor*line_width;
+    return decoratorSizeFactor*pow(line_width, 0.7);
 }

@@ -22,9 +22,15 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/parametriccurve_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/parametriccurve) | [Plotting Parametric Curves](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/parametriccurve) | `JKQTPXYLineGraph` and `JKQTPXYParametrizedScatterGraph` <br> C++-style QVector as plot data <br> parametric curve plotting |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/functionplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/functionplot) | [Plotting Mathematical Functions as Line Graphs](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/functionplot) | `JKQTPXFunctionLineGraph`  <br> diretly plotting C/C++-functions |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/parsedfunctionplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/parsedfunctionplot) | [Plotting Parsed Mathematical Functions as Line Graphs](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/parsedfunctionplot) | `JKQTPXParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geometric_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) | [Plotting Geometric Objects](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) |  |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/boxplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/boxplot) | [Plotting Box Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/boxplot) | `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph` |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/violinplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/violinplot) | [Plotting Violin Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/violinplot) | `JKQTPViolinplotVerticalElement`, `JKQTPViolinplotHorizontalElement` |
+
+## Styling the Plot, Keys, Axes, ...
+
+| Screenshot    | Description   | Notes         |
+|:-------------:| ------------- | ------------- |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geometric_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) | [Plotting Geometric Objects](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) |  |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geo_arrows_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_arrows) | [Plotting Arrows](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_arrows) |  |
 
 ## Styling the Plot, Keys, Axes, ...
 

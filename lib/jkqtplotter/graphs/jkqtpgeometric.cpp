@@ -253,7 +253,7 @@ QColor JKQTPGeoText::getKeyLabelColor() const {
 
 
 JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+    JKQTPGeoBaseDecoratedLine(color, lineWidth, JKQTPNoDecorator, JKQTPNoDecorator, style, parent)
 {
     this->x1=x1;
     this->y1=y1;
@@ -267,12 +267,14 @@ JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2,
 }
 
 JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, double x1, double y1, double x2, double y2):
-    JKQTPGeoBaseLine(parent)
+    JKQTPGeoBaseDecoratedLine(parent)
 {
     this->x1=x1;
     this->y1=y1;
     this->x2=x2;
     this->y2=y2;
+    setHeadDecoratorStyle(JKQTPNoDecorator);
+    setTailDecoratorStyle(JKQTPNoDecorator);
 }
 
 JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, double x1, double y1, double x2, double y2):
@@ -305,13 +307,20 @@ void JKQTPGeoLine::draw(JKQTPEnhancedPainter& painter) {
     reserveHitTestData(2);
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
-    QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
-    if (l.length()>0) {
-        painter.drawLine(l);
+    painter.setBrush(getLineColor());
+    QPointF xx1(transformX(x1),transformY(y1));
+    QPointF xx2(transformX(x2), transformY(y2));
+    const double angle1=atan2(xx2.y()-xx1.y(), xx2.x()-xx1.x());
+    const double angle2=atan2(xx1.y()-xx2.y(), xx1.x()-xx2.x());
+    if ( QLineF(xx1, xx2).length()>0) {
+        QPointF lx1=xx1, lx2=xx2;
+        JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx1);
+        JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx2);
+        // draw corrected line
+        painter.drawLine(QLineF(lx1, lx2));
         addHitTestData(x1, y1);
         addHitTestData(x2, y2);
     }
-
 }
 
 void JKQTPGeoLine::setX1(double __value)
@@ -362,12 +371,10 @@ double JKQTPGeoLine::getY2() const
 
 
 JKQTPGeoArrow::JKQTPGeoArrow(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseDecoratedLine(color, lineWidth, headStyle, tailStyle, style, parent)
+    JKQTPGeoLine(parent, x1,y1,x2,y2,color, lineWidth, style)
 {
-    this->x1=x1;
-    this->y1=y1;
-    this->x2=x2;
-    this->y2=y2;
+    setHeadDecoratorStyle(headStyle);
+    setTailDecoratorStyle(tailStyle);
 }
 
 JKQTPGeoArrow::JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, double lineWidth, Qt::PenStyle style):
@@ -376,94 +383,10 @@ JKQTPGeoArrow::JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x
 }
 
 
-bool JKQTPGeoArrow::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
-    minx=qMin(x1, x2);
-    maxx=qMax(x1, x2);
-    smallestGreaterZero=0;
-    double xvsgz;
-    xvsgz=x1; SmallestGreaterZeroCompare_xvsgz();
-    xvsgz=x2; SmallestGreaterZeroCompare_xvsgz();
-    return true;
-}
-
-bool JKQTPGeoArrow::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
-    miny=qMin(y1, y2);
-    maxy=qMax(y1, y2);
-    smallestGreaterZero=0;
-    double xvsgz;
-    xvsgz=y1; SmallestGreaterZeroCompare_xvsgz();
-    xvsgz=y2; SmallestGreaterZeroCompare_xvsgz();
-    return true;
-}
-
-void JKQTPGeoArrow::draw(JKQTPEnhancedPainter& painter) {
-    clearHitTestData();
-    reserveHitTestData(2);
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getLinePen(painter, parent));
-    painter.setBrush(getLineColor());
-    QPointF xx1(transformX(x1),transformY(y1));
-    QPointF xx2(transformX(x2), transformY(y2));
-    const double angle1=atan2(xx2.y()-xx1.y(), xx2.x()-xx1.x());
-    const double angle2=atan2(xx1.y()-xx2.y(), xx1.x()-xx2.x());
-    if ( QLineF(xx1, xx2).length()>0) {
-        QPointF lx1=xx1, lx2=xx2;
-        JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), getTailDecoratorSizeFactor()*getLinePen(painter, getParent()).widthF(), &lx1);
-        JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), getHeadDecoratorSizeFactor()*getLinePen(painter, getParent()).widthF(), &lx2);
-        // draw corrected line
-        painter.drawLine(QLineF(lx1, lx2));
-        addHitTestData(x1, y1);
-        addHitTestData(x2, y2);
-    }
-
-}
-
-void JKQTPGeoArrow::setX1(double __value)
-{
-    this->x1 = __value;
-}
-
-double JKQTPGeoArrow::getX1() const
-{
-    return this->x1;
-}
-
-void JKQTPGeoArrow::setY1(double __value)
-{
-    this->y1 = __value;
-}
-
-double JKQTPGeoArrow::getY1() const
-{
-    return this->y1;
-}
-
-void JKQTPGeoArrow::setX2(double __value)
-{
-    this->x2 = __value;
-}
-
-double JKQTPGeoArrow::getX2() const
-{
-    return this->x2;
-}
-
-void JKQTPGeoArrow::setY2(double __value)
-{
-    this->y2 = __value;
-}
-
-double JKQTPGeoArrow::getY2() const
-{
-    return this->y2;
-}
-
-
-
 
 
 JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, double y, double dx, double dy, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+    JKQTPGeoBaseDecoratedHeadLine(color, lineWidth, JKQTPNoDecorator, style, parent)
 {
     this->x=x;
     this->y=y;
@@ -621,8 +544,16 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
                                  QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(jkqtp_floattolatexqstr(dy, 3)).arg(jkqtp_floattolatexqstr(dx, 3)).arg(jkqtp_floattolatexqstr(dy/dx, 3)).arg(jkqtp_floattolatexqstr(atan2(dy,dx), 1)));
             addHitTestData(x1, y1);
             addHitTestData(x2, y2);
-        }
 
+            if (two_sided==false && x>=xmin && x<=xmax && y>=ymin && y<=ymax) {
+                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.setPen(getLinePen(painter, parent));
+                painter.setBrush(getLineColor());
+                QPointF xx1(transformX(x),transformY(y));
+                const double angle1=atan2(l.dy(), l.dx());
+                JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()));
+            }
+        }
 
     }
 
@@ -682,23 +613,24 @@ bool JKQTPGeoInfiniteLine::getTwoSided() const
 
 
 JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+    JKQTPGeoBaseDecoratedLine(color, lineWidth, JKQTPNoDecorator, JKQTPNoDecorator, style, parent)
 {
     this->points=points;
 }
+
 JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+    JKQTPGeoPolyLines(parent->getPlotter(), points, color, lineWidth, style)
 {
-    this->points=points;
 }
+
 JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+    JKQTPGeoBaseDecoratedLine(color, lineWidth, JKQTPNoDecorator, JKQTPNoDecorator, style, parent)
 {
 
 }
 
 JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+    JKQTPGeoPolyLines(parent->getPlotter(), color, lineWidth, style)
 {
 
 }
@@ -745,16 +677,31 @@ bool JKQTPGeoPolyLines::getYMinMax(double& miny, double& maxy, double& smallestG
 
 void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
     clearHitTestData();
-    reserveHitTestData(points.size());
+    if (points.size()>=2) {
+        reserveHitTestData(points.size());
 
-    QPainterPath path=transformToLinePath(points);
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.setPen(getLinePen(painter, parent));
-    painter.drawPath(path);
-    for (const auto& p:points) {
-        addHitTestData(p.x(), p.y());
+        QVector<QPointF> path=transform(points);
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.setPen(getLinePen(painter, parent));
+        painter.setBrush(getLineColor());
+
+        // potentially draw line-end decorators/arrows
+        const double angle1=atan2(path[1].y()-path[0].y(), path[1].x()-path[0].x());
+        const double angle2=atan2(path[path.size()-2].y()-path[path.size()-1].y(), path[path.size()-2].x()-path[path.size()-1].x());
+        QPointF xx1=path[0], xx2=path[path.size()-1];
+        QPointF lx1=xx1, lx2=xx2;
+        JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx1);
+        JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx2);
+        path[0]=lx1;
+        path[path.size()-1]=lx2;
+
+        // draw corrected line
+        painter.drawPolyline(path.data(), path.size());
+        for (const auto& p:points) {
+            addHitTestData(p.x(), p.y());
+        }
+
     }
-
 }
 
 void JKQTPGeoPolyLines::setPoints(const QVector<QPointF> &__value)
@@ -1477,6 +1424,60 @@ QColor JKQTPGeoSymbol::getKeyLabelColor() const
 {
     return getSymbolColor();
 }
+
+JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTBasePlotter *parent):
+    JKQTPPlotObject(parent)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setLineStyle(style);
+    setHeadDecoratorStyle(headStyle);
+}
+
+JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTPlotter *parent):
+    JKQTPGeoBaseDecoratedHeadLine(color, lineWidth, headStyle, style, parent->getPlotter())
+{
+
+}
+
+JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter *parent):
+    JKQTPPlotObject(parent)
+{
+
+}
+
+JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTPlotter *parent):
+    JKQTPPlotObject(parent->getPlotter())
+{
+
+}
+
+void JKQTPGeoBaseDecoratedHeadLine::setAlpha(float alpha)
+{
+    auto color=getLineColor();
+    color.setAlphaF(alpha);
+    setLineColor(color);
+}
+
+void JKQTPGeoBaseDecoratedHeadLine::setColor(QColor c)
+{
+    setLineColor(c);
+}
+
+void JKQTPGeoBaseDecoratedHeadLine::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+{
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    painter.setPen(getLinePen(painter, parent));
+    double y=rect.top()+rect.height()/2.0;
+    if (rect.width()>0) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+}
+
+QColor JKQTPGeoBaseDecoratedHeadLine::getKeyLabelColor() const
+{
+    return getLineColor();
+}
+
+
 
 JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTBasePlotter *parent):
     JKQTPPlotObject(parent)
