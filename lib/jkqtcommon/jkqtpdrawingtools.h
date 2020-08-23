@@ -292,6 +292,8 @@ JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, doub
     \param x x-coordinate of position the tooltip points to
     \param y y-coordinate of position the tooltip points to
     \param rect rectangle of the main tooltip area
+
+    \image html tooltiptool_example.png
 */
 template <class TPainter>
 inline void JKQTPDrawTooltip(TPainter& painter, double x, double y, const QRectF& rect);

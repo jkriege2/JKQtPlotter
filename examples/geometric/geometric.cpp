@@ -40,13 +40,10 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoSymbol(&plot, 0.1,0.6, JKQTPCircle, 5, QColor("grey")));
 
 
-    // 3.2 some lines elements (single lines and polylines)
+    // 3.2 some lines elements (single lines)
     plot.addGraph(new JKQTPGeoText(&plot, 1.1,0.95, "\\textbf{Lines:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoLine(&plot, 1,  0.05, 1.9, 0.9, QColor("red"), 2));
     plot.addGraph(new JKQTPGeoLine(&plot, 1,  0.1, 1.9, 0.8, QColor("blue"), 1, Qt::PenStyle::DashLine));
-    QVector<QPointF> p;
-    p<<QPointF(1, 0.1)<<QPointF(1.3, 0.9)<<QPointF(1.6, 0.3)<<QPointF(1.9, 0.8);
-    plot.addGraph(new JKQTPGeoPolyLines(&plot, p, QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine));
     JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(&plot, 1.7,  0.2, 0.2, 0.25, QColor("green"), 1.5, Qt::PenStyle::DashLine);
     infLine->setTwoSided(false);
     infLine->setAlpha(0.5);
@@ -129,7 +126,13 @@ int main(int argc, char* argv[])
     plot.addGraph(polygraph);
 
 
-    // 3.7 some arcs
+    // 3.7 a poly-line element
+    QVector<QPointF> p;
+    p<<QPointF(2.1, 0.0)<<QPointF(2.2, 0.92)<<QPointF(2.6, 0.3)<<QPointF(2.9, 0.9);
+    plot.addGraph(new JKQTPGeoPolyLines(&plot, p, QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine));
+
+
+    // 3.8 some arcs
     plot.addGraph(new JKQTPGeoText(&plot, 2.1,1.95, "\\textbf{Arcs:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoRectangle(&plot, 2.5,1.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
     plot.addGraph(new JKQTPGeoArc(&plot,2.5,1.5,0.9,0.9, 0, 90 , QColor("blue"), 4, Qt::PenStyle::SolidLine));
@@ -141,7 +144,7 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoSymbol(&plot, 2.5,1.5, JKQTPCircle, 5, QColor("grey")));
 
 
-    // 3.8 some pies
+    // 3.9 some pies
     plot.addGraph(new JKQTPGeoText(&plot, 2.1,2.95, "\\textbf{Pies:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoRectangle(&plot, 2.5,2.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
     JKQTPGeoPie* pie;
@@ -155,7 +158,7 @@ int main(int argc, char* argv[])
     plot.addGraph(new JKQTPGeoSymbol(&plot, 2.5,2.5, JKQTPCircle, 5, QColor("grey")));
 
 
-    // 3.9 some chords
+    // 3.10 some chords
     plot.addGraph(new JKQTPGeoText(&plot, 1.1,2.95, "\\textbf{Chords:}", 14, QColor("red")));
     plot.addGraph(new JKQTPGeoRectangle(&plot, 1.5,2.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
     JKQTPGeoChord* chord;

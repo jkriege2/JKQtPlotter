@@ -21,7 +21,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/*.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/45">#45: Build error on mac jkqtfastplotter.cpp:342:28: Variable has incomplete type 'QPainterPath'</a>, thanks to <a href="https://github.com/abdedixit">user:abdedixit</a></li>
   <li>removed the usage of some deprecated functions and objects (e.g. QMatrix)</li>
-  <li> new: added geometric plot object JKQTPGeoArrow to draw (double-ended) arrows</li>
+  <li> new: added geometric plot objects JKQTPGeoArrow to draw arrows (aka lines with added line-end decorators, also extended JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines to draw line-end decorator (aka arrows)</li>
 </ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download

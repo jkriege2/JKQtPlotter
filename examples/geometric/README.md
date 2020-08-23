@@ -29,7 +29,7 @@ The source code of the main application can be found in  [`geometric.cpp`](https
     
     // a polyline
     QVector<QPointF> p;
-    p<<QPointF(1, 0.1)<<QPointF(1.3, 0.9)<<QPointF(1.6, 0.3)<<QPointF(1.9, 0.8);
+    p<<QPointF(2.1, 0.0)<<QPointF(2.2, 0.92)<<QPointF(2.6, 0.3)<<QPointF(2.9, 0.9);
     plot.addGraph(new JKQTPGeoPolyLines(&plot, p, QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine));
 
     
@@ -44,16 +44,18 @@ The source code of the main application can be found in  [`geometric.cpp`](https
     // a rotated ellipse (rotated by 35 degrees):
     plot.addGraph(new JKQTPGeoEllipse(&plot, 0.5,1.5,0.8,0.5, 35, QColor("darkblue"), 2, Qt::DashLine));
 
+
     
     // a polygon
-    JKQTPGeoPolygon* polygraph=new JKQTPGeoPolygon(&plot, QColor("red"), 2, Qt::PenStyle::DashLine, QColor("salmon"));
-    polygraph->appendPoint(2.1, 0.5);
-    polygraph->appendPoint(2.9, 0.9);
-    polygraph->appendPoint(2.2, 0.8);
-    polygraph->appendPoint(2.8, 0.25);
-    polygraph->appendPoint(2.6, 0.6);
-    polygraph->setAlpha(0.75);
-    plot.addGraph(polygraph);
+    JKQTPGeoPolygon* polygongraph=new JKQTPGeoPolygon(&plot, QColor("red"), 2, Qt::PenStyle::DashLine, QColor("salmon"));
+    polygongraph->appendPoint(2.1, 0.5);
+    polygongraph->appendPoint(2.9, 0.9);
+    polygongraph->appendPoint(2.2, 0.8);
+    polygongraph->appendPoint(2.8, 0.25);
+    polygongraph->appendPoint(2.6, 0.6);
+    polygongraph->setAlpha(0.75);
+    plot.addGraph(polygongraph);
+	
 
     
     // an arc from an ellipse from -10 degrees to 117 degrees, centered at 2.5,1.5 and full axes of 0.5 and 0.5

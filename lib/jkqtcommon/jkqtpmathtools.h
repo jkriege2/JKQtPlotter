@@ -426,7 +426,7 @@ inline bool JKQTPIsOKFloat(T v) {
 /** \brief evaluates a gaussian propability density function
  * \ingroup jkqtptools_math_basic
  *
- * \f[ f(x,\mu, \sigma)=\frac{1}{\sqrt{2\pi\sigma^2}}\cdot\eJKQTPSTATISTICS_PIeft(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+ * \f[ f(x,\mu, \sigma)=\frac{1}{\sqrt{2\pi\sigma^2}}\cdot\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) \f]
  */
 inline double jkqtp_gaussdist(double x, double mu=0.0, double sigma=1.0) {
     return exp(-0.5*jkqtp_sqr(x-mu)/jkqtp_sqr(sigma))/sqrt(2.0*JKQTPSTATISTICS_PI*sigma*sigma);
