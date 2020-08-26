@@ -397,8 +397,8 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief return x-pixel coordinate from x coordinate */
         inline double x2p(double x) {
             if (xAxisLog) {
-                if (x<0) return xOffset+log(xMin/10.0)/log(10.0)*xScale;
-                return xOffset+log(x)/log(10.0)*xScale;
+                if (x<0) return xOffset+log(xMin/10.0)/JKQTPSTATISTICS_LN10*xScale;
+                return xOffset+log(x)/JKQTPSTATISTICS_LN10*xScale;
             } else {
                 return xOffset+x*xScale;
             }
@@ -407,7 +407,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief return x coordinate coordinate from x-pixel */
         inline double p2x(long x) {
             if (xAxisLog) {
-                return exp(log(10.0)*(static_cast<double>(x)-xOffset)/(xScale));
+                return exp(JKQTPSTATISTICS_LN10*(static_cast<double>(x)-xOffset)/(xScale));
             } else {
                 return (static_cast<double>(x)-xOffset)/(xScale);
             }
@@ -416,8 +416,8 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief return y-pixel coordinate from y coordinate */
         inline double y2p(double y) {
             if (yAxisLog) {
-                if (y<0) return yOffset-log(yMin/10.0)/log(10.0)*yScale;
-                return yOffset-log(y)/log(10.0)*yScale;
+                if (y<0) return yOffset-log(yMin/10.0)/JKQTPSTATISTICS_LN10*yScale;
+                return yOffset-log(y)/JKQTPSTATISTICS_LN10*yScale;
             } else {
                 return yOffset-y*yScale;
             }
@@ -426,7 +426,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief return y coordinate coordinate from y-pixel */
         inline double p2y(long y) {
             if (yAxisLog) {
-                return exp(log(10.0)*(static_cast<double>(y)-yOffset)/(-1.0*yScale));
+                return exp(JKQTPSTATISTICS_LN10*(static_cast<double>(y)-yOffset)/(-1.0*yScale));
             } else {
                 return (static_cast<double>(y)-yOffset)/(-1.0*yScale);
             }

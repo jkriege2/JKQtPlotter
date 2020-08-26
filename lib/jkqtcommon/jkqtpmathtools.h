@@ -51,6 +51,17 @@
 #define JKQTPSTATISTICS_SQRT_2PI 2.50662827463
 
 
+/*! \brief \f$ \mbox{ln}(10)=2.30258509299404568402... \f$
+    \ingroup jkqtptools_math_basic
+
+*/
+#ifdef M_LN10
+#  define JKQTPSTATISTICS_LN10 M_LN10
+#else
+#  define JKQTPSTATISTICS_LN10 2.30258509299404568402
+#endif
+
+
 /** \brief double-value NotANumber
  * \ingroup jkqtptools_math_basic
  */

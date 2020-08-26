@@ -676,8 +676,8 @@ void JKQTPCoordinateAxis::setLogAxis(bool __value)
     this->logAxis = __value;
     this->paramsChanged=true;
     if (this->isLogAxis()) {
-        if (axismin<0) axismin=pow(10.0, floor(log(axismax-axismin)/log(10.0)-1.0));
-        if (axismax<0) axismax=pow(10.0, floor(log(axismax-axismin)/log(10.0)+1.0));
+        if (axismin<0) axismin=pow(10.0, floor(log(axismax-axismin)/JKQTPSTATISTICS_LN10-1.0));
+        if (axismax<0) axismax=pow(10.0, floor(log(axismax-axismin)/JKQTPSTATISTICS_LN10+1.0));
     }
     redrawPlot();
 }

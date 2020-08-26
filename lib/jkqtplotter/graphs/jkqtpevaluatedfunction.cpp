@@ -479,7 +479,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
             d=d->next;
         }
         if (drawErrorPolygons) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpainterrpoly=JKQTPFinally([&painter]() {painter.restore();});
             painter.setBrush(eb);
             painter.setPen(np);
             QPolygonF poly;
@@ -494,21 +494,21 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
         }
         if (fillCurve) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintfillc=JKQTPFinally([&painter]() {painter.restore();});
             painter.setBrush(b);
             painter.setPen(np);
             painter.drawPolygon(filledPolygon, Qt::OddEvenFill);
 
         }
         if (drawLine) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
             painter.drawPolyline(linePolygon);
 
         }
 
         if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpainterrline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(ep);
             painter.drawPolyline(errorLineTop);
             painter.drawPolyline(errorLineBottom);
@@ -521,7 +521,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
         d=data;
         if (displaySamplePoints) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintsamplepoints=JKQTPFinally([&painter]() {painter.restore();});
             while (d!=nullptr) {
                 double xv=d->x;
                 double yv=d->f;
@@ -554,19 +554,43 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(parent) {}
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTBasePlotter *parent):
+    JKQTPXFunctionLineGraph(parent)
+{
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPlotter *parent):JKQTPYFunctionLineGraph(parent->getPlotter()) {}
+}
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title, JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(f, title, parent) {}
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPlotter *parent):
+    JKQTPYFunctionLineGraph(parent->getPlotter())
+{
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title, JKQTPlotter *parent):JKQTPXFunctionLineGraph(f, title, parent) {}
+}
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title, JKQTBasePlotter *parent):
+    JKQTPXFunctionLineGraph(f, title, parent)
+{
+
+}
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title, JKQTPlotter *parent):
+    JKQTPXFunctionLineGraph(f, title, parent)
+{
+
+}
 
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title, JKQTBasePlotter *parent):JKQTPXFunctionLineGraph(std::move(f), title, parent) {}
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title, JKQTBasePlotter *parent):
+    JKQTPXFunctionLineGraph(std::move(f), title, parent)
+{
+
+}
 
 
-JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title, JKQTPlotter *parent):JKQTPXFunctionLineGraph(std::move(f), title, parent) {}
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title, JKQTPlotter *parent):
+    JKQTPXFunctionLineGraph(std::move(f), title, parent)
+{
+
+}
 
 void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
@@ -633,7 +657,7 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     double yl2=y;
 
                     if (fillCurve) {
-                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.save(); auto __finalpaintfillcurve=JKQTPFinally([&painter]() {painter.restore();});
                         painter.setBrush(b);
                         painter.setPen(np);
                         QPolygonF poly;
@@ -647,7 +671,7 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     }
 
                     if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
-                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.save(); auto __finalpainterrorpoly=JKQTPFinally([&painter]() {painter.restore();});
                         painter.setBrush(eb);
                         painter.setPen(np);
                         QPolygonF poly;

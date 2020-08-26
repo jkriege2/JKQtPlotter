@@ -391,7 +391,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
     double specSymbSize=0;
     bool hasSpecSymbSize=false;
     {
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
         for (int iii=imin; iii<imax; iii++) {
             int i=qBound(imin, getDataIndex(iii), imax);
             double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
@@ -451,7 +451,7 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
 
 
     if (lines.size()>0) {
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
         if (isHighlighted()) {
             QPen pp=penSelection;
             if (colorColumn>=0) {

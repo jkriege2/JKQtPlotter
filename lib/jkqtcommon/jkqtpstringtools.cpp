@@ -22,6 +22,7 @@ Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 #include "jkqtcommon/jkqtpstringtools.h"
+#include "jkqtcommon/jkqtpmathtools.h"
 #include <cmath>
 #include <QDebug>
 #include <QSet>
@@ -216,7 +217,7 @@ std::string jkqtp_tolower(const std::string& s){
    double adata=fabs(data);
    std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
 
-   long exp=static_cast<long>(floor(log(adata)/log(10.0)));
+   long exp=static_cast<long>(floor(log(adata)/JKQTPSTATISTICS_LN10));
    if ((minNoExponent>fabs(data)) || (fabs(data)>maxNoExponent)) {
        std::string v=jkqtp_floattostr(data/pow(10.0, static_cast<double>(exp)), past_comma, remove_trail0);
        if (v!="1" && v!="10")  {
@@ -242,7 +243,7 @@ std::string jkqtp_tolower(const std::string& s){
    double adata=fabs(data);
    std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
 
-   long exp=static_cast<long>(floor(log(adata)/log(10.0)));
+   long exp=static_cast<long>(floor(log(adata)/JKQTPSTATISTICS_LN10));
    if ((minNoExponent<=fabs(data)) && (fabs(data)<maxNoExponent)) return res;
    //if ((-past_comma<exp) && (exp<past_comma)) result= res;
    else {

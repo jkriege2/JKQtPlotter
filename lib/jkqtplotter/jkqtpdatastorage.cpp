@@ -729,8 +729,8 @@ size_t JKQTPDatastore::addLinearColumn(size_t rows, double start, double end, co
 size_t JKQTPDatastore::addLogColumn(size_t rows, double start, double end, const QString &name)
 {
     JKQTPDatastoreItem* it=new JKQTPDatastoreItem(1, rows);
-    const double x0=log(start)/log(10.0);
-    const double x1=log(end)/log(10.0);
+    const double x0=log(start)/JKQTPSTATISTICS_LN10;
+    const double x1=log(end)/JKQTPSTATISTICS_LN10;
     for (size_t i=0; i<rows; i++) {
         it->set(0, i, pow(10.0, x0+static_cast<double>(i)/static_cast<double>(rows-1)*(x1-x0)));
     }

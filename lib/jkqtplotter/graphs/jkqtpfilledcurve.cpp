@@ -246,7 +246,7 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
 
 
         if (drawLine) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
 
             if (isHighlighted()) {
 

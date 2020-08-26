@@ -590,7 +590,7 @@ void JKQTPGraphViolinplotStyleMixin::plotVerticalViolinplot(JKQTBasePlotter *par
             const double freqFactorl=1.0/fmax*fabs(xpleft-xp);
 
             if (m_violinStyle==ViolinStyle::BoxViolin && NViol>1) {
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintboxvio=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getFillBrush(painter, parent));
 
@@ -639,7 +639,7 @@ void JKQTPGraphViolinplotStyleMixin::plotVerticalViolinplot(JKQTBasePlotter *par
                 pright<<QPointF(xp, violin_cat.first());
 
 
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintsmoothvio=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getFillBrush(painter, parent));
                 if (m_violinPositionMode==ViolinBoth) {
@@ -686,7 +686,7 @@ void JKQTPGraphViolinplotStyleMixin::plotVerticalViolinplot(JKQTBasePlotter *par
                     }
                 }
 
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintstepvio=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getFillBrush(painter, parent));
                 if (m_violinPositionMode==ViolinBoth) {
@@ -773,7 +773,7 @@ void JKQTPGraphViolinplotStyleMixin::plotHorizontalViolinplot(JKQTBasePlotter *p
             const double freqFactorl=1.0/fmax*fabs(ypbottom-yp);
 
             if (m_violinStyle==ViolinStyle::BoxViolin && NViol>1) {
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintboxvio=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getFillBrush(painter, parent));
 
@@ -822,7 +822,7 @@ void JKQTPGraphViolinplotStyleMixin::plotHorizontalViolinplot(JKQTBasePlotter *p
                 pright<<QPointF(violin_cat.first(), yp);
 
 
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintsmoothvio=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getFillBrush(painter, parent));
                 if (m_violinPositionMode==ViolinBoth) {
@@ -869,7 +869,7 @@ void JKQTPGraphViolinplotStyleMixin::plotHorizontalViolinplot(JKQTBasePlotter *p
                     }
                 }
 
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintstepvio=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getFillBrush(painter, parent));
                 if (m_violinPositionMode==ViolinBoth) {
@@ -955,7 +955,7 @@ void JKQTPGraphViolinplotStyleMixin::plotVerticalKeyMarker(JKQTBasePlotter *pare
 
     painter.setPen(p);
     {
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
         painter.setBrush(b);
         painter.drawPath(path);
     }
