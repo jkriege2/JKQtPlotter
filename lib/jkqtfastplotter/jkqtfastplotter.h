@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>) (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>) (DKFZ) & IWR, University of Heidelberg
 
     
 
@@ -896,7 +896,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
             return this->yAxisLabelVisible; 
         }
         /*! \copydoc synchronizeX */ 
-        inline void setSynchronizeX(JKQTFastPlotter* & __value)
+        inline void setSynchronizeX(JKQTFastPlotter*  __value)
         {
             if (this->synchronizeX != __value) {
                 this->synchronizeX = __value; 
@@ -909,7 +909,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
             return this->synchronizeX; 
         }
         /*! \copydoc synchronizeY */ 
-        inline void setSynchronizeY(JKQTFastPlotter* & __value)
+        inline void setSynchronizeY(JKQTFastPlotter*  __value)
         {
             if (this->synchronizeY != __value) {
                 this->synchronizeY = __value; 
@@ -3283,7 +3283,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         /*! \brief class constructor
 
          */
-        JKQTFPQScaleBarXPlot(JKQTFastPlotter* parent, double width=1, const QString& label=QString("%1"), QColor color=QColor("grey"), double lineWidth=2) ;
+        explicit JKQTFPQScaleBarXPlot(JKQTFastPlotter* parent, double width=1, const QString& label=QString("%1"), QColor color=QColor("grey"), double lineWidth=2) ;
 
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
@@ -3396,7 +3396,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot
         /*! \brief class constructor
 
          */
-        JKQTFPQOverlayLinearGridPlot(JKQTFastPlotter* parent, double width=1, QColor color=QColor("grey"), double lineWidth=1, Qt::PenStyle style=Qt::DashLine) ;
+        explicit JKQTFPQOverlayLinearGridPlot(JKQTFastPlotter* parent, double width=1, QColor color=QColor("grey"), double lineWidth=1, Qt::PenStyle style=Qt::DashLine) ;
 
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;

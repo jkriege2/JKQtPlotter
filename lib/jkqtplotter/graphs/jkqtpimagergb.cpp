@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2019 Jan W. Krieger
+    Copyright (c) 2008-2020 Jan W. Krieger
 
     
 

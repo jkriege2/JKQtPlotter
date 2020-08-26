@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
+    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -1674,7 +1674,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     layout->addWidget(spinSizeY, 0,layout->columnCount());
     layout->addWidget(chkAspect, 0,layout->columnCount());
     if (!setAbsolutePaperSize && printer && !svg) {
-        if (printer) layout->addWidget(new QLabel(tr("%1x%2 mm^2").arg(printer->pageRect(QPrinter::Millimeter).width()).arg(printer->pageRect(QPrinter::Millimeter).height())), 1,layout->columnCount()-4, 1, 4);
+        layout->addWidget(new QLabel(tr("%1x%2 mm^2").arg(printer->pageRect(QPrinter::Millimeter).width()).arg(printer->pageRect(QPrinter::Millimeter).height())), 1,layout->columnCount()-4, 1, 4);
 
         QCheckBox* chkSetMagnification=new QCheckBox(tr("set by magnification: "), dlg);
         chkSetMagnification->setChecked(false);
@@ -1756,11 +1756,7 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
             if (svg) {
                 printpreviewPaintRequestedNew(svg);
             } else if (printer && !delPrinter) {
-                if (delPrinter) {
-                    printpreviewPaintRequestedNew(paintDevice);
-                } else {
-                    printpreviewPaintRequestedNew(printer);
-                }
+                printpreviewPaintRequestedNew(printer);
             } else {
                 printpreviewPaintRequestedNew(paintDevice);
             }

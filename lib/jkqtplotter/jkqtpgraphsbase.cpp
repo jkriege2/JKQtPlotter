@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
+    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -509,10 +509,8 @@ double JKQTPXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSyste
 
 
 JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTBasePlotter *parent):
-    JKQTPGraph(parent)
+    JKQTPGraph(parent), dataColumn(-1), dataDirection(DataDirection::Y), sortData(Unsorted)
 {
-    sortData=Unsorted;
-    dataColumn=-1;
 }
 
 

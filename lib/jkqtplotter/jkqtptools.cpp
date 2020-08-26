@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>)
+Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 
     
 
@@ -56,7 +56,7 @@ QString JKQTPCADrawMode2String(JKQTPCADrawMode pos) {
         case JKQTPCADMTicksTickLabels: return "ticks+labels";
         case JKQTPCADMTicks: return "ticks";
         case JKQTPCADMLineTicksTickLabels: return "line+ticks+labels";
-        case JKQTPCADMTickLabelsAxisLabel: return "ticks+labels";
+        case JKQTPCADMTickLabelsAxisLabel: return "ticks+axislabel";
         case JKQTPCADMTickLabels: return "labels";
         case JKQTPCADMLineTicks: return "line+ticks";
         case JKQTPCADMLine: return "line";
@@ -70,7 +70,6 @@ QString JKQTPCADrawMode2String(JKQTPCADrawMode pos) {
 JKQTPCADrawMode String2JKQTPCADrawMode(const QString& pos) {
     QString s=pos.trimmed().toLower();
     if (s=="all" || s=="complete" || s=="line+ticks+labels+axislabel") return JKQTPCADMcomplete;
-    if (s=="ticks+labels") return JKQTPCADMLineTicksTickLabels;
     if (s=="ticks+labels+axislabel") return JKQTPCADMTicksTickLabelsAxisLabel;
     if (s=="labels+axislabel") return JKQTPCADMTickLabelsAxisLabel;
     if (s=="ticks+labels") return JKQTPCADMTicksTickLabels;

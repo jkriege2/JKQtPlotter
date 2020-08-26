@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>)
+    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 
 
 
@@ -58,7 +58,6 @@ namespace { // anonymous namespace to limit availability to this module (CPP-fil
 
     JKQTPMathParser::jkmpResult fBoolToStr(JKQTPMathParser::jkmpResult* params, unsigned char n, JKQTPMathParser* p){
       JKQTPMathParser::jkmpResult r;
-      std::ostringstream ost;
       r.type=JKQTPMathParser::jkmpString;
       if (n!=1) p->jkmpError("booltostr accepts 1 argument");
       if (params[0].type!=JKQTPMathParser::jkmpBool) p->jkmpError("floattostr needs bool argument");

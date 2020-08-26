@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2008-2019 Jan W. Krieger (<jan@jkrieger.de>, <j.krieger@dkfz.de>) (DKFZ) & IWR, University of Heidelberg
+    Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>) (DKFZ) & IWR, University of Heidelberg
 
     last modification: $LastChangedDate: 2015-06-10 19:19:10 +0200 (Mi, 10 Jun 2015) $  (revision $Rev: 3976 $)
 
@@ -71,12 +71,7 @@
  *   - then you can query the time difference to the last call of start() by using getTime().
  * .
  *
- * There is also a test method test() which will try to give you a feel for the performance of the timer in
- * a simple application on your computer.
- * It simply does some thousand iterations and records the time needed for each single iteration. Then it may
- * calculate a histogram, a mean value and a standard deviation from these times.
- *
- * This is the result of test() on a WinXP system, Athlon64 X2 3800+ (2GHz):
+ * This is the result of a test on a WinXP system, Athlon64 X2 3800+ (2GHz):
  * \image html highrestimer.png
  * Note that this histogram tells you more about how your system works than about the timer itself.
  * What we can find out about the timer is that it really provides a resolution in the microsecond region. This can
@@ -123,14 +118,14 @@
  */
 class JKQTCOMMON_LIB_EXPORT JKQTPHighResTimer {
   protected:
-    #ifdef __WINDOWS__
-      /** \brief internal: time stamp of the last call of start() */
-      LARGE_INTEGER last;
-    #else
-      std::chrono::system_clock::time_point last;
-    #endif
-      /** \brief internal: timer frequency */
-      double freq;
+#ifdef __WINDOWS__
+        /** \brief internal: time stamp of the last call of start() */
+        LARGE_INTEGER last;
+#else
+        std::chrono::system_clock::time_point last;
+#endif
+        /** \brief internal: timer frequency */
+        double freq;
     public:
         /** \brief class constructor. */
         JKQTPHighResTimer();
@@ -140,26 +135,6 @@ class JKQTCOMMON_LIB_EXPORT JKQTPHighResTimer {
         void start();
         /** \brief get the time since the last call of start() in microseconds */
         double getTime();
-        /** \brief test the resolution
-     *
-     * mean value and standard deviation of 1000000 timer polls will be evaluated and returned in \c mean
-     * and \c stddev. If you supply \c histogram with a pointer to a memory array with \c histogram_size
-     * items this will hold afterwards a histogram of the data. \c histogram_x wil contain the time interval
-     * values of the histogram bins in \c histogram.
-     *
-     * To measure the resolution this method uses this code:
-     * \code
-double l=getTime(), n;
-for (unsigned long i=0; i<runs; i++) {
-  n=getTime();
-  h[i]=n-l;
-  l=n;
-}
-\endcode
-     *
-     */
-        void test(double* mean, double* stddev, unsigned long* histogram=nullptr, double* histogram_x=nullptr, unsigned long histogram_size=0);
-
 };
 
 

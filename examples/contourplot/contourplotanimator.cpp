@@ -13,7 +13,6 @@ void ContourPlotAnimator::start(int delayMS) {
 }
 
 void ContourPlotAnimator::step() {
-    double x;
     double y=-h/2.0;
     const double eps0=8.854187e-12;
     double r=1e-6*(5.0+cos(angle/4.0))/6.0;
@@ -31,13 +30,13 @@ void ContourPlotAnimator::step() {
     const double Q4_x0=r2*cos(angle);         // x-position of charged particle 4
     const double Q4_y0=-r2*sin(angle);        // y-position of charged particle 4
     for (size_t iy=0; iy<static_cast<size_t>(NY); iy++ ) {
-        x=-w/2.0;
+        double x=-w/2.0;
         for (size_t ix=0; ix<static_cast<size_t>(NX); ix++ ) {
-            const double r1=sqrt((x-Q1_x0)*(x-Q1_x0)+(y-Q1_y0)*(y-Q1_y0));
-            const double r2=sqrt((x-Q2_x0)*(x-Q2_x0)+(y-Q2_y0)*(y-Q2_y0));
-            const double r3=sqrt((x-Q3_x0)*(x-Q3_x0)+(y-Q3_y0)*(y-Q3_y0));
-            const double r4=sqrt((x-Q4_x0)*(x-Q4_x0)+(y-Q4_y0)*(y-Q4_y0));
-            ds->setPixel(cPotential, ix, iy, Q1/(4.0*JKQTPSTATISTICS_PI*eps0)/r1+Q2/(4.0*JKQTPSTATISTICS_PI*eps0)/r2+Q3/(4.0*JKQTPSTATISTICS_PI*eps0)/r3+Q4/(4.0*JKQTPSTATISTICS_PI*eps0)/r4);
+            const double xy_r1=sqrt((x-Q1_x0)*(x-Q1_x0)+(y-Q1_y0)*(y-Q1_y0));
+            const double xy_r2=sqrt((x-Q2_x0)*(x-Q2_x0)+(y-Q2_y0)*(y-Q2_y0));
+            const double xy_r3=sqrt((x-Q3_x0)*(x-Q3_x0)+(y-Q3_y0)*(y-Q3_y0));
+            const double xy_r4=sqrt((x-Q4_x0)*(x-Q4_x0)+(y-Q4_y0)*(y-Q4_y0));
+            ds->setPixel(cPotential, ix, iy, Q1/(4.0*JKQTPSTATISTICS_PI*eps0)/xy_r1+Q2/(4.0*JKQTPSTATISTICS_PI*eps0)/xy_r2+Q3/(4.0*JKQTPSTATISTICS_PI*eps0)/xy_r3+Q4/(4.0*JKQTPSTATISTICS_PI*eps0)/xy_r4);
             x+=dx;
         }
         y+=dx;
