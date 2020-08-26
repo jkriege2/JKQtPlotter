@@ -307,7 +307,7 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     if (m_drawSymbols) {
         painter.save();
-        auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
         for (auto& p: ps) {
             plotStyledSymbol(parent, painter, p.x(), p.y());
         }

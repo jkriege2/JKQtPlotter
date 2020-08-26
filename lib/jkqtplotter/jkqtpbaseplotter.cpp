@@ -1422,7 +1422,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
 
         {
             // plot this plotter
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
             int t_x=0;
             int t_y=0;
             //std::cout<<"printing this ...\n";
@@ -1437,7 +1437,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
             // plot all the other plotters
             for (int i=0; i< gridPrintingList.size(); i++) {
                 //std::cout<<"printing "<<i<<" ...\n";
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintinnerloop=JKQTPFinally([&painter]() {painter.restore();});
                 int t_x=0;
                 int t_y=0;
                 //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
@@ -1489,7 +1489,7 @@ void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pa
 
         {
             // plot this plotter
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
             size_t t_x=0;
             size_t t_y=0;
             //std::cout<<"printing this ...\n";
@@ -1504,7 +1504,7 @@ void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pa
             // plot all the other plotters
             for (int i=0; i< gridPrintingList.size(); i++) {
                 //std::cout<<"printing "<<i<<" ...\n";
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpaintinnerloop=JKQTPFinally([&painter]() {painter.restore();});
                 int t_x=0;
                 int t_y=0;
                 //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
@@ -2430,7 +2430,7 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& p
         if ((scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(rect.width())) || (scale*static_cast<double>(widgetHeight)/paintMagnification>static_cast<double>(rect.height()))) {
             scale=static_cast<double>(rect.height())/static_cast<double>(widgetHeight)*paintMagnification;
         }
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
         // scale the plot so it fits on the page
         painter.scale(scale, scale);
     #ifdef JKQTBP_DEBUGTIMING
@@ -2461,7 +2461,7 @@ void JKQTBasePlotter::drawNonGridOverlays(JKQTPEnhancedPainter& painter, const Q
         scale=static_cast<double>(rect.height())/static_cast<double>(widgetHeight)*paintMagnification;
     }
     {
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
         // scale the plot so it fits on the page
         painter.scale(scale, scale);
         drawOverlaysWithHints(painter);
@@ -2480,15 +2480,25 @@ bool JKQTBasePlotter::isEmittingPlotSignalsEnabled() const
     return this->emitPlotSignals;
 }
 
-int JKQTBasePlotter::getPlotBorderTop() const { return this->plotterStyle.plotBorderTop; }
+int JKQTBasePlotter::getPlotBorderTop() const {
+    return this->plotterStyle.plotBorderTop;
+}
 
-int JKQTBasePlotter::getPlotBorderLeft() const { return this->plotterStyle.plotBorderLeft; }
+int JKQTBasePlotter::getPlotBorderLeft() const {
+    return this->plotterStyle.plotBorderLeft;
+}
 
-int JKQTBasePlotter::getPlotBorderBottom() const { return this->plotterStyle.plotBorderBottom; }
+int JKQTBasePlotter::getPlotBorderBottom() const {
+    return this->plotterStyle.plotBorderBottom;
+}
 
-int JKQTBasePlotter::getPlotBorderRight() const { return this->plotterStyle.plotBorderRight; }
+int JKQTBasePlotter::getPlotBorderRight() const {
+    return this->plotterStyle.plotBorderRight;
+}
 
-bool JKQTBasePlotter::doesMaintainAspectRatio() const { return this->maintainAspectRatio; }
+bool JKQTBasePlotter::doesMaintainAspectRatio() const {
+    return this->maintainAspectRatio;
+}
 
 void JKQTBasePlotter::setAspectRatio(double __value)
 {
@@ -2503,7 +2513,9 @@ double JKQTBasePlotter::getAspectRatio() const
     return this->aspectRatio;
 }
 
-bool JKQTBasePlotter::doesMaintainAxisAspectRatio() const { return this->maintainAxisAspectRatio; }
+bool JKQTBasePlotter::doesMaintainAxisAspectRatio() const {
+    return this->maintainAxisAspectRatio;
+}
 
 double JKQTBasePlotter::getAxisAspectRatio() const
 {
@@ -4304,7 +4316,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 //y=y+itheight+(plotterStyle.keyStyle.ySeparation)*kfm.height();
                 y=y+key_text_height+(plotterStyle.keyStyle.ySeparation)*kfm.width('X');
                 if (plotterStyle.debugShowRegionBoxes) {
-                    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                    painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
                     QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
                     p.setWidthF(plotterStyle.debugRegionLineWidth/2.0);
@@ -4338,7 +4350,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*kfm.width('X'),y, fs.width(), itheight);
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
                 if (plotterStyle.debugShowRegionBoxes) {
-                    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                    painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
                     QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
                     p.setWidthF(plotterStyle.debugRegionLineWidth/2.0);
@@ -4386,7 +4398,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
 
                 if (plotterStyle.debugShowRegionBoxes) {
-                    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                    painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
                     QColor col=p.color(); col.setAlphaF(0.8); p.setColor(col);
                     p.setWidthF(plotterStyle.debugRegionLineWidth/2.0);

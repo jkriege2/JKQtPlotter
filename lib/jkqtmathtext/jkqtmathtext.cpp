@@ -916,7 +916,7 @@ double JKQTMathText::MTfracNode::draw(QPainter& painter, double x, double y, JKQ
         double ybrace=y-ascent1-bw/2.0;
 
         {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
             painter.translate(x+xw/2.0+(width1)/2.0, ybrace);
             painter.rotate(180);
             QPainterPath path=makeHBracePath(0,0, width, bw);

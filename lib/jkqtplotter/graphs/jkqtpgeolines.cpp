@@ -326,7 +326,7 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
             addHitTestData(x2, y2);
 
             if (two_sided==false && x>=xmin && x<=xmax && y>=ymin && y<=ymax) {
-                painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                painter.save(); auto __finalpainttwosided=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getLineColor());
                 QPointF xx1(transformX(x),transformY(y));

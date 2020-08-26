@@ -110,7 +110,7 @@ void JKQTPImpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         painter.setPen(p);
         if (lines.size()>0) painter.drawLines(lines);
         if (drawSymbols && points.size()>0) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
             for (auto& p: points) {
                 plotStyledSymbol(parent, painter, p.x(), p.y());
             }
@@ -247,7 +247,7 @@ void JKQTPImpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         painter.setPen(p);
         if (lines.size()>0) painter.drawLines(lines);
         if (drawSymbols && points.size()>0) {
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            painter.save(); auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
             for (auto& p: points) {
                 plotStyledSymbol(parent, painter, p.x(), p.y());
             }

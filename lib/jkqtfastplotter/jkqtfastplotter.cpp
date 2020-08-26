@@ -456,7 +456,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
         painter.drawText(QPointF(internalPlotBorderLeft+plotWidth-fmLabels.width(xAxisLabel), internalPlotBorderTop+plotHeight+fmTicks.height()+fmTicks.width("x")/2.0+fmLabels.ascent()+tickLength), xAxisLabel);
     }
     if (yAxisLabelVisible) {
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(fmLabels.ascent(), internalPlotBorderTop+fmLabels.width(yAxisLabel));
         painter.rotate(-90);
         painter.drawText(QPointF(0, 0), yAxisLabel);

@@ -171,7 +171,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                     if (positionScatterStyle!=RugPlot) {
                         plotStyledSymbol(parent, painter, x, y);
                     } else {
-                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                         painter.setPen(p);
                         painter.drawLine(QLineF(x, y-symSize,x,y+symSize));
                     }
@@ -203,7 +203,7 @@ void JKQTPSingleColumnSymbolsGraph::draw(JKQTPEnhancedPainter &painter)
                     if (positionScatterStyle!=RugPlot) {
                         plotStyledSymbol(parent, painter, x, y);
                     } else {
-                        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+                        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                         painter.setPen(p);
                         painter.drawLine(QLineF(x-symSize, y,x+symSize,y));
                     }
