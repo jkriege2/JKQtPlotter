@@ -47,7 +47,11 @@ set(SOURCES_GRAPHS
     graphs/jkqtpevaluatedfunction.cpp 
     graphs/jkqtpfilledcurve.cpp 
     graphs/jkqtpgeometric.cpp 
-    graphs/jkqtpimage.cpp 
+    graphs/jkqtpgeoannotations.cpp
+    graphs/jkqtpgeobase.cpp
+    graphs/jkqtpgeolines.cpp
+    graphs/jkqtpgeoshapes.cpp    
+	graphs/jkqtpimage.cpp 
     graphs/jkqtpimpulses.cpp 
     graphs/jkqtpparsedfunction.cpp 
     graphs/jkqtppeakstream.cpp 
@@ -95,6 +99,10 @@ set(HEADERS_GRAPHS
     graphs/jkqtpevaluatedfunction.h
     graphs/jkqtpfilledcurve.h
     graphs/jkqtpgeometric.h
+    graphs/jkqtpgeoannotations.h
+    graphs/jkqtpgeobase.h
+    graphs/jkqtpgeolines.h
+    graphs/jkqtpgeoshapes.h
     graphs/jkqtpimage.h
     graphs/jkqtpimpulses.h
     graphs/jkqtpparsedfunction.h

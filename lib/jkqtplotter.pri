@@ -30,6 +30,10 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunction.h \
                $$PWD/jkqtplotter/graphs/jkqtpfilledcurve.h \
                $$PWD/jkqtplotter/graphs/jkqtpgeometric.h \
+               $$PWD/jkqtplotter/graphs/jkqtpgeoannotations.h \
+               $$PWD/jkqtplotter/graphs/jkqtpgeobase.h \
+               $$PWD/jkqtplotter/graphs/jkqtpgeolines.h \
+               $$PWD/jkqtplotter/graphs/jkqtpgeoshapes.h \
                $$PWD/jkqtplotter/graphs/jkqtpimage.h \
                $$PWD/jkqtplotter/graphs/jkqtpimpulses.h \
                $$PWD/jkqtplotter/graphs/jkqtpparsedfunction.h \
@@ -75,6 +79,10 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunction.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpfilledcurve.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpgeometric.cpp  \
+               $$PWD/jkqtplotter/graphs/jkqtpgeoannotations.cpp \
+               $$PWD/jkqtplotter/graphs/jkqtpgeobase.cpp \
+               $$PWD/jkqtplotter/graphs/jkqtpgeolines.cpp \
+               $$PWD/jkqtplotter/graphs/jkqtpgeoshapes.cpp \
                $$PWD/jkqtplotter/graphs/jkqtpimage.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpimpulses.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpparsedfunction.cpp  \
