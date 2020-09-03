@@ -365,6 +365,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \brief returns whether this axis uses logarithmic scaling */
         bool isLogAxis() const;
 
+        /** \brief returns whether this axis uses linear scaling (is false e.g. for isLogAxis()==true) */
+        bool isLinearAxis() const;
+
 
         /** \brief current style properties for this JKQTBasePlotter
          *

@@ -20,6 +20,7 @@
 #include "jkqtplotter/jkqtpcoordinateaxes.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
+#include "jkqtcommon/jkqtpgeometrytools.h"
 #include <QDebug>
 #include <QDateTime>
 #include <cfloat>
@@ -573,7 +574,12 @@ void JKQTPCoordinateAxis::calcPlotScaling(bool force) {
 }
 
 bool JKQTPCoordinateAxis::isLogAxis() const {
-    return logAxis || (axisStyle.tickMode==JKQTPLTMPower);
+    return logAxis;// || (axisStyle.tickMode==JKQTPLTMPower);
+}
+
+bool JKQTPCoordinateAxis::isLinearAxis() const
+{
+    return !logAxis;
 }
 
 const JKQTPCoordinateAxisStyle &JKQTPCoordinateAxis::getCurrentAxisStyle() const
