@@ -24,6 +24,7 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtplinalgtools.h \
                $$PWD/jkqtcommon/jkqtpcodestructuring.h \
                $$PWD/jkqtcommon/jkqtpbasicimagetools.h \
+               $$PWD/jkqtcommon/jkqtpgeometrytools.h \
                $$PWD/jkqtcommon/jkqtpdrawingtools.h \
                $$PWD/jkqtcommon/jkqtpenhancedpainter.h \
                $$PWD/jkqtcommon/jkqtphighrestimer.h \
@@ -47,6 +48,7 @@ isEmpty(JKQTP_COMMON_PRI_INCLUDED) {
                $$PWD/jkqtcommon/jkqtplinalgtools.cpp \
                $$PWD/jkqtcommon/jkqtpcodestructuring.cpp \
                $$PWD/jkqtcommon/jkqtpbasicimagetools.cpp \
+               $$PWD/jkqtcommon/jkqtpgeometrytools.cpp \
                $$PWD/jkqtcommon/jkqtpdrawingtools.cpp \
                $$PWD/jkqtcommon/jkqtpenhancedpainter.cpp \
                $$PWD/jkqtcommon/jkqtphighrestimer.cpp \

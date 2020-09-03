@@ -33,98 +33,154 @@
 
 
 
-/*! \brief This JKQTPPlotObject is used to draw a rectangle
-    \ingroup jkqtplotter_geoplots
-
-    \image html plot_georectangle.png
-
-    \see \ref JKQTPlotterGeometricGraphs
+/** \brief This JKQTPPlotObject is used to draw a rectangle
+ *  \ingroup jkqtplotter_geoplots
+ *
+ *  \image html plot_georectangle.png
+ *
+ *  \note This class support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+ *        and non-linear axes are chosen, the corner points of the rectangle will be possibly
+ *        connected by curves, instead of straight lines. In the mode
+ *        JKQTPPlotObject::DrawMode::DrawAsGraphicElement the corners are connected by straight
+ *        lines, independent of the linearity or non-linearity of the coordinate axes.
+ *
+ *  \see \ref JKQTPlotterGeometricGraphs
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         Q_OBJECT
     public:
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of rectangle
-            \param y y-coordinate of center of rectangle
-            \param width width of rectangle
-            \param height of rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of rectangle
+         *  \param y y-coordinate of center of rectangle
+         *  \param width width of rectangle
+         *  \param height of rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTBasePlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of rectangle
-            \param y y-coordinate of center of rectangle
-            \param width width of rectangle
-            \param height of rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoRectangle(JKQTBasePlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of rectangle
+         *  \param y y-coordinate of center of rectangle
+         *  \param width width of rectangle
+         *  \param height of rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of rectangle
-            \param y y-coordinate of center of rectangle
-            \param width width of rectangle
-            \param height of rectangle
-            \param angle rotation angle of the rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of rectangle
+         *  \param y y-coordinate of center of rectangle
+         *  \param width width of rectangle
+         *  \param height of rectangle
+         *  \param angle rotation angle of the rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of rectangle
-            \param y y-coordinate of center of rectangle
-            \param width width of rectangle
-            \param height of rectangle
-            \param angle rotation angle of the rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoRectangle(JKQTBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of rectangle
+         *  \param y y-coordinate of center of rectangle
+         *  \param width width of rectangle
+         *  \param height of rectangle
+         *  \param angle rotation angle of the rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param bottomleft bottom left corner of rectangle
-            \param topright top right corner of rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoRectangle(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param bottomleft bottom left corner of rectangle
+         *  \param topright top right corner of rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param bottomleft bottom left corner of rectangle
-            \param topright top right corner of rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoRectangle(JKQTBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param bottomleft bottom left corner of rectangle
+         *  \param topright top right corner of rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
          */
-        JKQTPGeoRectangle(JKQTPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoRectangle(JKQTPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param center center of rectangle
+         *  \param size width and heigt of rectangle
+         *  \param angle rotation angle of the rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
+         */
+        JKQTPGeoRectangle(JKQTBasePlotter* parent, const QPointF& center, const QSizeF& size, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param center center of rectangle
+         *  \param size width and heigt of rectangle
+         *  \param angle rotation angle of the rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
+         */
+        JKQTPGeoRectangle(JKQTPlotter* parent, const QPointF& center, const QSizeF& size, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param center center of rectangle
+         *  \param size width and heigt of rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
+         */
+        JKQTPGeoRectangle(JKQTBasePlotter* parent, const QPointF& center, const QSizeF& size, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param center center of rectangle
+         *  \param size width and heigt of rectangle
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of rectangle
+         *  \param fillStyle filling style of rectangle
+         */
+        JKQTPGeoRectangle(JKQTPlotter* parent, const QPointF& center, const QSizeF& size, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
 
 
@@ -133,7 +189,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         /** \copydoc JKQTPPlotObject::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \brief plots the graph to the plotter object specified as parent */
+        /** \brief plots the graph to the plotter object specified as parent
+         *
+         * \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+         *       and non-linear axes are chosen, the corner points of the rectangle will be possibly
+         *       connected by curves, instead of straight lines.
+         */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /*! \copydoc x */ 
@@ -144,6 +205,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         void setY(double __value);
         /*! \copydoc y */ 
         double getY() const;
+        /** \brief returns the center point of the rectangle */
+        QPointF getCenter() const;
+        /** \brief sets the center point of the rectangle */
+        void setCenter(const QPointF& center);
         /*! \copydoc width */ 
         void setWidth(double __value);
         /*! \copydoc width */ 
@@ -152,13 +217,28 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
         void setHeight(double __value);
         /*! \copydoc height */ 
         double getHeight() const;
-        /*! \copydoc angle */ 
+        /** \brief returns the size (width and height) of the rectangle */
+        QSizeF getSize() const;
+        /** \brief sets the size (width and height) of the rectangle */
+        void setSize(const QSizeF& size);
+        /*! \copydoc angle */
         void setAngle(double __value);
         /*! \copydoc angle */ 
         double getAngle() const;
         /** \brief set the rectangle using the bottom-left corner, as well as its width and height */
-        void setBottomleftrectangle(double x, double y, double width, double height);
-protected:
+        void setBottomLeftRectangle(double x, double y, double width, double height);
+        /** \brief set the rectangle using the bottom-left corner, as well as its width and height */
+        void setBottomLeftRectangle(const QRectF& rect);
+        /** \brief returns the rectangle using the bottom-left corner, as well as its width and height, ignoring the rotation angle!!!
+         *
+         * This is equivalent to
+         * \code
+         *   QRectF result(x-width/2.0, y-height/2.0, width, height);
+         * \endcode
+         */
+        QRectF getBottomLeftRectangle() const;
+
+    protected:
         /** \brief x-coordinate of a center of the rectangle */
         double x;
         /** \brief y-coordinate of a center of the rectangle */
@@ -176,62 +256,64 @@ protected:
 };
 
 
-/*! \brief This JKQTPPlotObject is used to draw a polygon
-    \ingroup jkqtplotter_geoplots
-
-    \image html plot_geopolygon.png
-
-    \see \ref JKQTPlotterGeometricGraphs
-
+/** \brief This JKQTPPlotObject is used to draw a polygon
+ *  \ingroup jkqtplotter_geoplots
+ *
+ *  \image html plot_geopolygon.png
+ *
+ *  \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+ *        and non-linear axes are chosen, the points of the polygon will be possibly
+ *        connected by curves, instead of straight lines.
+ *
+ *  \see \ref JKQTPlotterGeometricGraphs
+ *
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         Q_OBJECT
     public:
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param points points on the polygon
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor color of the filling
-            \param fillStyle style of the filling
-
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param points points on the polygon
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor color of the filling
+         *  \param fillStyle style of the filling
          */
-        JKQTPGeoPolygon(JKQTBasePlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param points points on the polygon
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor color of the filling
-            \param fillStyle style of the filling
+        JKQTPGeoPolygon(JKQTBasePlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param points points on the polygon
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor color of the filling
+         *  \param fillStyle style of the filling
          */
-        JKQTPGeoPolygon(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoPolygon(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor color of the filling
-            \param fillStyle style of the filling
-
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor color of the filling
+         *  \param fillStyle style of the filling
          */
-        JKQTPGeoPolygon(JKQTBasePlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor color of the filling
-            \param fillStyle style of the filling
+        JKQTPGeoPolygon(JKQTBasePlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor color of the filling
+         *  \param fillStyle style of the filling
          */
-        JKQTPGeoPolygon(JKQTPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoPolygon(JKQTPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -239,7 +321,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         /** \copydoc JKQTPPlotObject::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \brief plots the graph to the plotter object specified as parent */
+        /** \brief plots the graph to the plotter object specified as parent
+         *
+         * \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+         *       and non-linear axes are chosen, the points of the polygon will be possibly
+         *       connected by curves, instead of straight lines.
+         */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /*! \copydoc points */ 
@@ -247,172 +334,225 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         /*! \copydoc points */ 
         QVector<QPointF> getPoints() const;
 
-        /** \brief append a point to the polygon */
+        /** \brief append a point to the polygon \see points */
         void appendPoint(const QPointF& p);
 
-        /** \brief append a point to the polygon */
+        /** \brief append a point to the polygon \see points */
         void appendPoint(const double x, const double y);
+
+        /** \brief returns the number of points \see points */
+        int getPointCount() const;
+        /** \brief returns the i-th of point \see points */
+        const QPointF& getPoint(int i) const;
+        /** \brief returns the i-th of point \see points */
+        QPointF& getPoint(int i);
+        /** \brief overwrites the i-th point \see points */
+        void setPoint(int i, const QPointF& point);
+        /** \brief deletes the i-the point \see points */
+        void removePoint(int i);
+        /** \brief returns an iterator to the first point \see points */
+        QVector<QPointF>::iterator pointsBegin();
+        /** \brief returns an iterator after the last point \see points */
+        QVector<QPointF>::iterator pointsEnd();
+        /** \brief returns a constant iterator to the first point \see points */
+        QVector<QPointF>::const_iterator pointsCBegin() const;
+        /** \brief returns a constant iterator after the last point  \see points*/
+        QVector<QPointF>::const_iterator pointsCEnd() const;
 
     protected:
         /** \brief list with all points on the polygon */
         QVector<QPointF> points;
 };
 
-/*! \brief This JKQTPPlotObject is used to draw an ellipse
-    \ingroup jkqtplotter_geoplots
-
-    \image html plot_geoellipse.png
-
-    \see <a href="http://www.codeguru.com/cpp/g-m/gdi/article.php/c131">http://www.codeguru.com/cpp/g-m/gdi/article.php/c131</a> and
-         <a href="http://en.wikipedia.org/wiki/Ellipse#General_parametric_form">http://en.wikipedia.org/wiki/Ellipse#General_parametric_form</a>
-
-    \see \ref JKQTPlotterGeometricGraphs
+/** \brief This JKQTPPlotObject is used to draw an ellipse
+ *  \ingroup jkqtplotter_geoplots
+ *
+ *  \image html plot_geoellipse.png
+ *
+ *  \image html plot_geoellipse_rotated.png
+ *
+ *  \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+ *        This means that ellipses are always treated as mathematical curves, as no meaningful
+ *        parametrization for ellipses on non-linear axes could be found! In the mode
+ *        JKQTPPlotObject::DrawMode::DrawAsGraphicElement the points are connected by straight
+ *        lines, independent of the linearity or non-linearity of the coordinate axes.
+ *
+ *  \see <a href="http://www.codeguru.com/cpp/g-m/gdi/article.php/c131">http://www.codeguru.com/cpp/g-m/gdi/article.php/c131</a> and
+ *       <a href="http://en.wikipedia.org/wiki/Ellipse#General_parametric_form">http://en.wikipedia.org/wiki/Ellipse#General_parametric_form</a>
+ *
+ *  \see \ref JKQTPlotterGeometricGraphs, JKQTPGeoPie, JKQTPGeoChord, JKQTPGeoArc
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
         Q_OBJECT
     public:
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of ellipse
-            \param y y-coordinate of center of ellipse
-            \param width width of ellipse (2 * half axis)
-            \param height of ellipse (2 * half axis)
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of ellipse
-            \param fillStyle filling style of ellipse
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of ellipse (2 * half axis)
+         *  \param height of ellipse (2 * half axis)
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoEllipse(JKQTBasePlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoEllipse(JKQTBasePlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of ellipse
-            \param y y-coordinate of center of ellipse
-            \param width width of ellipse (2 * half axis)
-            \param height of ellipse (2 * half axis)
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of ellipse
-            \param fillStyle filling style of ellipse
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of ellipse (2 * half axis)
+         *  \param height of ellipse (2 * half axis)
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of rectangle
-            \param y y-coordinate of center of rectangle
-            \param width width of rectangle
-            \param height of rectangle
-            \param angle rotation angle of the rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of rectangle
+         *  \param height of rectangle
+         *  \param angle rotation angle of the ellipse
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoEllipse(JKQTBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of rectangle
-            \param y y-coordinate of center of rectangle
-            \param width width of rectangle
-            \param height of rectangle
-            \param angle rotation angle of the rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoEllipse(JKQTBasePlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of rectangle
+         *  \param height of rectangle
+         *  \param angle rotation angle of the ellipse
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param bottomleft bottom left corner of rectangle
-            \param topright top right corner of rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoEllipse(JKQTPlotter* parent, double x, double y, double width, double height, double angle, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param bottomleft bottom left corner of ellipse
+         *  \param topright top right corner of ellipse
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoEllipse(JKQTBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param bottomleft bottom left corner of rectangle
-            \param topright top right corner of rectangle
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of rectangle
-            \param fillStyle filling style of rectangle
+        JKQTPGeoEllipse(JKQTBasePlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param bottomleft bottom left corner of ellipse
+         *  \param topright top right corner of ellipse
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoEllipse(JKQTPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoEllipse(JKQTPlotter* parent, QPointF bottomleft, QPointF topright, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
 
-        /** \brief plots the graph to the plotter object specified as parent */
+        /** \brief plots the graph to the plotter object specified as parent
+         *
+         * \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+         *       This means that ellipses are always treated as mathematical curves, as no meaningful
+         *       parametrization for ellipses on non-linear axes could be found!*/
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc controlPoints */ 
-        void setControlPoints(const unsigned int & __value);
-        /*! \copydoc controlPoints */ 
-        unsigned int getControlPoints() const;
     protected:
-        /** \brief number of steps/control points to draw the ellipse */
-        unsigned int controlPoints;
+
+        /** \brief drawing modes for drawInternal() */
+        enum class InternalDrawMode {
+            Ellipse,
+            Pie,
+            Chord
+        };
+
+        /** \brief inertnal draw function, can draw an ellipse, a pie or a chord! */
+        void drawInternal(JKQTPEnhancedPainter& painter, double angleStart=0, double angleStop=0, InternalDrawMode mode=InternalDrawMode::Ellipse);
 };
 
 
 
 
-/*! \brief This JKQTPPlotObject is used to draw a pie
-    \ingroup jkqtplotter_geoplots
-
-    \image html plot_geopie.png
-
-    \see \ref JKQTPlotterGeometricGraphs
+/** \brief This JKQTPPlotObject is used to draw a pie
+ *  \ingroup jkqtplotter_geoplots
+ *
+ *
+ *  A pie on linear and log-log axes (start angle: 10deg and end-angle 110deg):
+ *  \image html plot_geopie.png
+ *
+ *  Here is the code to generate the plots above:
+ *  \code
+ *      plot->addGraph(new JKQTPGeoRectangle(plot,3.5,0.5,0.9,0.9, QColor("silver"), 1, Qt::PenStyle::DashLine));
+ *      plot->addGraph(new JKQTPGeoEllipse(plot,3.5,0.5,0.9,0.9, QColor("silver"), 1, Qt::PenStyle::DashLine));
+ *      plot->addGraph(new JKQTPGeoPie(plot,3.5,0.5,0.9,0.9, 10, 110 , QColor("blue"), 4, Qt::PenStyle::SolidLine,QColor("lightblue")));
+ *      plot->addGraph(new JKQTPGeoSymbol(plot, 3.5,0.5, JKQTPCircle, 5, QColor("grey")));
+ *      plot->addGraph(new JKQTPGeoLine(plot, 3.5,0.5,3.5+0.5*cos(10.0/180.0*JKQTPSTATISTICS_PI),0.5+0.5*sin(10.0/180.0*JKQTPSTATISTICS_PI), QColor("grey")));
+ *      plot->addGraph(new JKQTPGeoText(plot, 3.5+0.55*cos(10.0/180.0*JKQTPSTATISTICS_PI),0.5+0.55*sin(10.0/180.0*JKQTPSTATISTICS_PI), "10\\degree", 10, QColor("grey")));
+ *      plot->addGraph(new JKQTPGeoLine(plot, 3.5,0.5,3.5+0.5*cos(110.0/180.0*JKQTPSTATISTICS_PI),0.5+0.5*sin(110.0/180.0*JKQTPSTATISTICS_PI), QColor("grey")));
+ *      plot->addGraph(new JKQTPGeoText(plot, 3.5+0.55*cos(110.0/180.0*JKQTPSTATISTICS_PI),0.5+0.55*sin(110.0/180.0*JKQTPSTATISTICS_PI), "110\\degree", 10, QColor("grey")));
+ *  \endcode
+ *
+ *  \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+ *        This means that pies are always treated as mathematical curves, as no meaningful
+ *        parametrization for pies on non-linear axes could be found!
+ *
+ *  \see \ref JKQTPlotterGeometricGraphs, JKQTPGeoEllipse, JKQTPGeoChord, JKQTPGeoArc
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         Q_OBJECT
     public:
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of ellipse
-            \param y y-coordinate of center of ellipse
-            \param width width of ellipse (2 * half axis)
-            \param height of ellipse (2 * half axis)
-            \param angleStart if we only draw an arc, this is the starting angle in degrees
-            \param angleStop if we only draw an arc, this is the ending angle in degrees
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of ellipse
-            \param fillStyle filling style of ellipse
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of ellipse (2 * half axis)
+         *  \param height of ellipse (2 * half axis)
+         *  \param angleStart if we only draw an arc, this is the starting angle in degrees
+         *  \param angleStop if we only draw an arc, this is the ending angle in degrees
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoPie(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of ellipse
-            \param y y-coordinate of center of ellipse
-            \param width width of ellipse (2 * half axis)
-            \param height of ellipse (2 * half axis)
-            \param angleStart if we only draw an arc, this is the starting angle in degrees
-            \param angleStop if we only draw an arc, this is the ending angle in degrees
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of ellipse
-            \param fillStyle filling style of ellipse
+        JKQTPGeoPie(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of ellipse (2 * half axis)
+         *  \param height of ellipse (2 * half axis)
+         *  \param angleStart if we only draw an arc, this is the starting angle in degrees
+         *  \param angleStop if we only draw an arc, this is the ending angle in degrees
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoPie(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoPie(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
@@ -421,7 +561,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
-        /** \brief plots the graph to the plotter object specified as parent */
+        /** \brief plots the graph to the plotter object specified as parent
+         *
+         * \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+         *       This means that pies are always treated as mathematical curves, as no meaningful
+         *       parametrization for pies on non-linear axes could be found!*/
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
         /*! \copydoc angleStart */ 
@@ -442,55 +586,66 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
 
 
 
-/*! \brief This JKQTPPlotObject is used to draw a chord
-    \ingroup jkqtplotter_geoplots
-
-    \image html plot_geochord.png
-
-    \see \ref JKQTPlotterGeometricGraphs
+/** \brief This JKQTPPlotObject is used to draw a chord
+ *  \ingroup jkqtplotter_geoplots
+ *
+ *  A chord on linear and log-log axes (start angle: 10deg and end-angle 110deg):
+ *
+ *  \image html plot_geochord.png
+ *
+ *  \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+ *        This means that chords are always treated as mathematical curves, as no meaningful
+ *        parametrization for chords on non-linear axes could be found!
+ *
+ *  \see \ref JKQTPlotterGeometricGraphs, JKQTPGeoPie, JKQTPGeoEllipse, JKQTPGeoArc
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
         Q_OBJECT
     public:
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of ellipse
-            \param y y-coordinate of center of ellipse
-            \param width width of ellipse (2 * half axis)
-            \param height of ellipse (2 * half axis)
-            \param angleStart if we only draw an arc, this is the starting angle in degrees
-            \param angleStop if we only draw an arc, this is the ending angle in degrees
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of ellipse
-            \param fillStyle filling style of ellipse
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of ellipse (2 * half axis)
+         *  \param height of ellipse (2 * half axis)
+         *  \param angleStart if we only draw an arc, this is the starting angle in degrees
+         *  \param angleStop if we only draw an arc, this is the ending angle in degrees
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoChord(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
-        /*! \brief class constructor
-
-            \param parent the parent plotter object
-            \param x x-coordinate of center of ellipse
-            \param y y-coordinate of center of ellipse
-            \param width width of ellipse (2 * half axis)
-            \param height of ellipse (2 * half axis)
-            \param angleStart if we only draw an arc, this is the starting angle in degrees
-            \param angleStop if we only draw an arc, this is the ending angle in degrees
-            \param color color of line
-            \param lineWidth width of line
-            \param style line style
-            \param fillColor filling color of ellipse
-            \param fillStyle filling style of ellipse
+        JKQTPGeoChord(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
+        /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param x x-coordinate of center of ellipse
+         *  \param y y-coordinate of center of ellipse
+         *  \param width width of ellipse (2 * half axis)
+         *  \param height of ellipse (2 * half axis)
+         *  \param angleStart if we only draw an arc, this is the starting angle in degrees
+         *  \param angleStop if we only draw an arc, this is the ending angle in degrees
+         *  \param color color of line
+         *  \param lineWidth width of line
+         *  \param style line style
+         *  \param fillColor filling color of ellipse
+         *  \param fillStyle filling style of ellipse
          */
-        JKQTPGeoChord(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern);
+        JKQTPGeoChord(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
         /** \copydoc JKQTPPlotObject::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
         /** \copydoc JKQTPPlotObject::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \brief plots the graph to the plotter object specified as parent */
+        /** \brief plots the graph to the plotter object specified as parent
+         *
+         * \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+         *       This means that chords are always treated as mathematical curves, as no meaningful
+         *       parametrization for chords on non-linear axes could be found!
+         */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 };
 

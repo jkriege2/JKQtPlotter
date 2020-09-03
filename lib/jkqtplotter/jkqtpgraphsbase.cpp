@@ -43,21 +43,12 @@ JKQTPPlotElement::JKQTPPlotElement(JKQTBasePlotter* parent):
     setParent(parent);
 }
 
-JKQTPPlotElement::JKQTPPlotElement(JKQTPlotter *parent):
-    JKQTPPlotElement(parent->getPlotter())
-{
-}
 
 JKQTPGraph::JKQTPGraph(JKQTBasePlotter* parent):
     JKQTPPlotElement(parent)
 {
 }
 
-JKQTPGraph::JKQTPGraph(JKQTPlotter *parent):
-    JKQTPPlotElement(parent)
-{
-
-}
 
 QImage JKQTPPlotElement::generateKeyMarker(QSize size)
 {
@@ -305,23 +296,11 @@ QPainterPath JKQTPPlotElement::transformToLinePath(const QVector<QPointF> &x) co
 
 
 JKQTPXYGraph::JKQTPXYGraph(JKQTBasePlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPGraph(parent), xColumn(-1), yColumn(-1), sortData(Unsorted)
 {
-    sortData=Unsorted;
-    xColumn=-1;
-    yColumn=-1;
-
 
 }
 
-JKQTPXYGraph::JKQTPXYGraph(JKQTPlotter *parent):
-    JKQTPGraph(parent)
-{
-    sortData=Unsorted;
-    xColumn=-1;
-    yColumn=-1;
-
-}
 
 bool JKQTPXYGraph::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     bool start=true;
@@ -514,12 +493,6 @@ JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTBasePlotter *parent):
 }
 
 
-JKQTPSingleColumnGraph::JKQTPSingleColumnGraph(JKQTPlotter *parent):
-    JKQTPSingleColumnGraph(parent->getPlotter())
-{
-}
-
-
 void JKQTPSingleColumnGraph::setDataColumn(int __value)
 {
     this->dataColumn = __value;
@@ -686,16 +659,21 @@ bool JKQTPXYGraph::getIndexRange(int& imin, int& imax) const
 
 
 
-JKQTPPlotObject::JKQTPPlotObject(JKQTBasePlotter *parent):
-    JKQTPPlotElement(parent)
+JKQTPPlotObject::JKQTPPlotObject(DrawMode drawMode, JKQTBasePlotter *parent):
+    JKQTPPlotElement(parent), m_drawMode(drawMode)
 {
 
 }
 
-JKQTPPlotObject::JKQTPPlotObject(JKQTPlotter *parent):
-    JKQTPPlotElement(parent)
-{
 
+void JKQTPPlotObject::setDrawMode(JKQTPPlotObject::DrawMode mode)
+{
+    m_drawMode=mode;
+}
+
+JKQTPPlotObject::DrawMode JKQTPPlotObject::getDrawMode() const
+{
+    return m_drawMode;
 }
 
 JKQTPPlotObject::~JKQTPPlotObject()

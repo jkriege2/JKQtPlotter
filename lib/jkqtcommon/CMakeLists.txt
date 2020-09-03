@@ -28,6 +28,7 @@ set(SOURCES
   jkqtplinalgtools.cpp
   jkqtpcodestructuring.cpp
   jkqtpbasicimagetools.cpp
+  jkqtpgeometrytools.cpp
   jkqtpdrawingtools.cpp
   jkqtpenhancedpainter.cpp
   jkqtphighrestimer.cpp
@@ -51,6 +52,7 @@ set(HEADERS
   jkqtplinalgtools.h
   jkqtpcodestructuring.h
   jkqtpbasicimagetools.h
+  jkqtpgeometrytools.h
   jkqtpdrawingtools.h
   jkqtpenhancedpainter.h
   jkqtphighrestimer.h

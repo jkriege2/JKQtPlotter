@@ -27,27 +27,16 @@
 #include <QApplication>
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
-JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent):
-    JKQTPPlotObject(parent)
+JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent, DrawMode drawMode):
+    JKQTPPlotObject(drawMode, parent)
 {
     setLineColor(color);
     setLineWidth(lineWidth);
     setLineStyle(style);
 }
 
-JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent->getPlotter())
-{
-}
-
-JKQTPGeoBaseLine::JKQTPGeoBaseLine(JKQTBasePlotter *parent):
-    JKQTPPlotObject(parent)
-{
-
-}
-
-JKQTPGeoBaseLine::JKQTPGeoBaseLine(JKQTPlotter *parent):
-    JKQTPGeoBaseLine(parent->getPlotter())
+JKQTPGeoBaseLine::JKQTPGeoBaseLine(JKQTBasePlotter *parent, DrawMode drawMode):
+    JKQTPPlotObject(drawMode, parent)
 {
 
 }
@@ -78,38 +67,28 @@ QColor JKQTPGeoBaseLine::getKeyLabelColor() const {
 }
 
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTBasePlotter* parent):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTBasePlotter* parent, DrawMode drawMode):
+    JKQTPGeoBaseLine(color, lineWidth, style, parent, drawMode)
 {
     setFillColor(fillColor);
     setFillStyle(fillStyle);
 }
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPlotter* parent):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent, DrawMode drawMode):
+    JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, Qt::SolidPattern, parent, drawMode)
 {
-    setFillColor(fillColor);
-    setFillStyle(fillStyle);
+
 }
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTBasePlotter* parent, DrawMode drawMode):
+    JKQTPGeoBaseFilled(color, fillColor, lineWidth, Qt::SolidLine, Qt::SolidPattern, parent, drawMode)
 {
-    setFillColor(fillColor);
-    setFillStyle(Qt::SolidPattern);
+
 }
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPlotter* parent):
-    JKQTPGeoBaseLine(color, lineWidth, Qt::SolidLine, parent)
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTBasePlotter* parent, DrawMode drawMode):
+    JKQTPGeoBaseFilled(color, fillColor, 2.0, Qt::SolidLine, Qt::SolidPattern, parent, drawMode)
 {
-    setFillColor(fillColor);
-    setFillStyle(Qt::SolidPattern);
-}
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPlotter* parent):
-    JKQTPGeoBaseLine(color, 2.0, Qt::SolidLine, parent)
-{
-    setFillColor(fillColor);
-    setFillStyle(Qt::SolidPattern);
 }
 
 void JKQTPGeoBaseFilled::setAlpha(float alpha)
@@ -144,8 +123,8 @@ void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& re
 }
 
 
-JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTBasePlotter *parent):
-    JKQTPPlotObject(parent)
+JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTBasePlotter *parent, DrawMode drawMode):
+    JKQTPPlotObject(drawMode, parent)
 {
     setLineColor(color);
     setLineWidth(lineWidth);
@@ -153,20 +132,8 @@ JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, doubl
     setHeadDecoratorStyle(headStyle);
 }
 
-JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTPlotter *parent):
-    JKQTPGeoBaseDecoratedHeadLine(color, lineWidth, headStyle, style, parent->getPlotter())
-{
-
-}
-
-JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter *parent):
-    JKQTPPlotObject(parent)
-{
-
-}
-
-JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTPlotter *parent):
-    JKQTPPlotObject(parent->getPlotter())
+JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter *parent, DrawMode drawMode):
+    JKQTPPlotObject(drawMode, parent)
 {
 
 }
@@ -197,9 +164,8 @@ QColor JKQTPGeoBaseDecoratedHeadLine::getKeyLabelColor() const
 }
 
 
-
-JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTBasePlotter *parent):
-    JKQTPPlotObject(parent)
+JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTBasePlotter *parent, DrawMode drawMode):
+    JKQTPPlotObject(drawMode, parent)
 {
     setLineColor(color);
     setLineWidth(lineWidth);
@@ -208,20 +174,8 @@ JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWi
     setHeadDecoratorStyle(headStyle);
 }
 
-JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTPlotter *parent):
-    JKQTPGeoBaseDecoratedLine(color, lineWidth, headStyle, tailStyle, style, parent->getPlotter())
-{
-
-}
-
-JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(JKQTBasePlotter *parent):
-    JKQTPPlotObject(parent)
-{
-
-}
-
-JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(JKQTPlotter *parent):
-    JKQTPPlotObject(parent->getPlotter())
+JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(JKQTBasePlotter *parent, DrawMode drawMode):
+    JKQTPPlotObject(drawMode, parent)
 {
 
 }

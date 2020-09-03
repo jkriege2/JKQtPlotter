@@ -53,23 +53,13 @@ JKQTPImageBase::JKQTPImageBase(JKQTBasePlotter *parent):
 }
 
 JKQTPImageBase::JKQTPImageBase(double x, double y, double width, double height, JKQTPlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPImageBase(x, y, width, height, parent->getPlotter())
 {
-    title="";
-    this->width=width;
-    this->height=height;
-    this->x=x;
-    this->y=y;
 }
 
 JKQTPImageBase::JKQTPImageBase(JKQTPlotter *parent):
-    JKQTPGraph(parent)
+    JKQTPImageBase(parent->getPlotter())
 {
-    title="";
-    this->width=0;
-    this->height=0;
-    this->x=0;
-    this->y=0;
 }
 
 void JKQTPImageBase::drawKeyMarker(JKQTPEnhancedPainter& /*painter*/, QRectF& /*rect*/) {

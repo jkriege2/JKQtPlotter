@@ -24,6 +24,7 @@
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtcommon/jkqtpgeometrytools.h"
 #include <QDebug>
 #include <QImageWriter>
 #include <QFileDialog>

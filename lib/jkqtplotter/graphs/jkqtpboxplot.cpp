@@ -730,7 +730,7 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent):
-    JKQTPPlotObject(parent)
+    JKQTPPlotObject(DrawAsGraphicElement, parent)
 {
     pos=JKQTP_NAN;
     median=JKQTP_NAN;

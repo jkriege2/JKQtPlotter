@@ -22,6 +22,7 @@
 #include "jkqtplotter/graphs/jkqtpgeolines.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/jkqtplotter.h"
+#include "jkqtcommon/jkqtpgeometrytools.h"
 #include <stdlib.h>
 #include <QDebug>
 #include <QApplication>
@@ -46,13 +47,9 @@ JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2,
 {
 }
 
-JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, double x1, double y1, double x2, double y2):
-    JKQTPGeoBaseDecoratedLine(parent)
+JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, double x1_, double y1_, double x2_, double y2_):
+    JKQTPGeoBaseDecoratedLine(parent), x1(x1_), y1(y1_), x2(x2_), y2(y2_)
 {
-    this->x1=x1;
-    this->y1=y1;
-    this->x2=x2;
-    this->y2=y2;
     setHeadDecoratorStyle(JKQTPNoDecorator);
     setTailDecoratorStyle(JKQTPNoDecorator);
 }
@@ -60,6 +57,54 @@ JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, double x1, double y1, double
 JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, double x1, double y1, double x2, double y2):
     JKQTPGeoLine(parent->getPlotter(), x1,y1,x2,y2)
 {
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QPointF &p1, const QPointF &p2, QColor color, double lineWidth, Qt::PenStyle style):
+    JKQTPGeoLine(parent, p1.x(), p1.y(), p2.x(), p2.y(), color, lineWidth, style)
+{
+
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, const QPointF &p1, const QPointF &p2, QColor color, double lineWidth, Qt::PenStyle style):
+    JKQTPGeoLine(parent, p1.x(), p1.y(), p2.x(), p2.y(), color, lineWidth, style)
+{
+
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QPointF &p1, const QPointF &p2):
+    JKQTPGeoLine(parent, p1.x(), p1.y(), p2.x(), p2.y())
+{
+
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, const QPointF &p1, const QPointF &p2):
+    JKQTPGeoLine(parent, p1.x(), p1.y(), p2.x(), p2.y())
+{
+
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QLineF &line, QColor color, double lineWidth, Qt::PenStyle style):
+    JKQTPGeoLine(parent, line.x1(), line.y1(), line.x2(), line.y2(), color, lineWidth, style)
+{
+
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, const QLineF &line, QColor color, double lineWidth, Qt::PenStyle style):
+    JKQTPGeoLine(parent, line.x1(), line.y1(), line.x2(), line.y2(), color, lineWidth, style)
+{
+
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QLineF &line):
+    JKQTPGeoLine(parent, line.x1(), line.y1(), line.x2(), line.y2())
+{
+
+}
+
+JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, const QLineF &line):
+    JKQTPGeoLine(parent, line.x1(), line.y1(), line.x2(), line.y2())
+{
+
 }
 
 bool JKQTPGeoLine::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
@@ -90,14 +135,53 @@ void JKQTPGeoLine::draw(JKQTPEnhancedPainter& painter) {
     painter.setBrush(getLineColor());
     QPointF xx1(transformX(x1),transformY(y1));
     QPointF xx2(transformX(x2), transformY(y2));
-    const double angle1=atan2(xx2.y()-xx1.y(), xx2.x()-xx1.x());
-    const double angle2=atan2(xx1.y()-xx2.y(), xx1.x()-xx2.x());
     if ( QLineF(xx1, xx2).length()>0) {
-        QPointF lx1=xx1, lx2=xx2;
-        JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx1);
-        JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx2);
-        // draw corrected line
-        painter.drawLine(QLineF(lx1, lx2));
+
+        if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
+            // for linear axes, we can simply draw a line
+            const double angle1=atan2(xx2.y()-xx1.y(), xx2.x()-xx1.x());
+            const double angle2=atan2(xx1.y()-xx2.y(), xx1.x()-xx2.x());
+            QPointF lx1=xx1, lx2=xx2;
+            JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx1);
+            JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx2);
+            // draw corrected line
+            painter.drawLine(QLineF(lx1, lx2));
+        } else {
+            QLineF line(QPointF(x1,y1), QPointF(x2,y2));
+            const double xmin=parent->getXAxis()->getMin();
+            const double xmax=parent->getXAxis()->getMax();
+            const double ymin=parent->getYAxis()->getMin();
+            const double ymax=parent->getYAxis()->getMax();
+            const QRectF bbox(QPointF(xmin, ymin), QPointF(xmax, ymax));
+            bool drawHead=bbox.contains(line.p2());
+            bool drawTail=bbox.contains(line.p1());
+
+            if (JKQTPClipLine(line, bbox)) {
+
+                // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
+                // and transform each node to draw the corresponding non-linear curve in pixel-space!
+                auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+                QVector<QPointF> points=JKQTPSplitLineIntoPoints(line, fTransform);
+                points=JKQTPSimplyfyLineSegemnts(points);
+                if (points.size()>1) {
+                    xx1=points[0];
+                    QPointF xx1p=points[1];
+                    xx2=points[points.size()-1];
+                    QPointF xx2p=points[points.size()-2];
+                    //QPointF lx1=xx1, lx2=xx2;
+                    const double angle1=atan2(xx1p.y()-xx1.y(), xx1p.x()-xx1.x());
+                    const double angle2=atan2(xx2p.y()-xx2.y(), xx2p.x()-xx2.x());
+                    if (drawTail) JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()));//, &lx1);
+                    if (drawHead) JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()));//, &lx2);
+                    //points[0]=lx1;
+                    //points[points.size()-1]=lx2;
+                    painter.drawPolyline(points.data(), points.size());
+                    /*for (auto& p: points) {
+                        JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
+                    }*/
+                }
+            }
+        }
         addHitTestData(x1, y1);
         addHitTestData(x2, y2);
     }
@@ -141,6 +225,41 @@ void JKQTPGeoLine::setY2(double __value)
 double JKQTPGeoLine::getY2() const
 {
     return this->y2;
+}
+
+QPointF JKQTPGeoLine::getP1() const
+{
+    return QPointF(x1,y1);
+}
+
+void JKQTPGeoLine::setP1(const QPointF &p)
+{
+    x1=p.x();
+    y1=p.y();
+}
+
+QPointF JKQTPGeoLine::getP2() const
+{
+    return QPointF(x2,y2);
+}
+
+void JKQTPGeoLine::setP2(const QPointF &p)
+{
+    x2=p.x();
+    y2=p.y();
+}
+
+QLineF JKQTPGeoLine::getLine() const
+{
+    return QLineF(getP1(), getP2());
+}
+
+void JKQTPGeoLine::setLine(const QLineF &line)
+{
+    x1=line.p1().x();
+    x2=line.p2().x();
+    y1=line.p1().y();
+    y2=line.p2().y();
 }
 
 
@@ -317,22 +436,44 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
     if (doDraw) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setPen(getLinePen(painter, parent));
-        QLineF l(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
-        if (l.length()>0) {
-            painter.drawLine(l);
-            addHitTestData(x, y, formatHitTestDefaultLabel(x,y)+
-                                 QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(jkqtp_floattolatexqstr(dy, 3)).arg(jkqtp_floattolatexqstr(dx, 3)).arg(jkqtp_floattolatexqstr(dy/dx, 3)).arg(jkqtp_floattolatexqstr(atan2(dy,dx), 1)));
-            addHitTestData(x1, y1);
-            addHitTestData(x2, y2);
+        QLineF line(QPointF(transformX(x1), transformY(y1)), QPointF(transformX(x2), transformY(y2)));
+        if (line.length()>0) {
+            QPointF xx1;
+            double angle1;
+            if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
+                painter.drawLine(line);
+                xx1=QPointF(transformX(x),transformY(y));
+                angle1=atan2(line.dy(), line.dx());
+            } else {
+                // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
+                // and transform each node to draw the corresponding non-linear curve in pixel-space!
+                auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+                QVector<QPointF> points=JKQTPSplitLineIntoPoints(QLineF(x1,y1,x2,y2), fTransform);
+                points=JKQTPSimplyfyLineSegemnts(points);
+                if (points.size()>1) {
+                    xx1=points[0];
+                    const QPointF xx1p=points[1];
+                    angle1=atan2(xx1p.y()-xx1.y(), xx1p.x()-xx1.x());
+                    painter.drawPolyline(points.data(), points.size());
+                    /*for (auto& p: points) {
+                        JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
+                    }*/
+                }
+            }
 
+            // draw line-end decorator
             if (two_sided==false && x>=xmin && x<=xmax && y>=ymin && y<=ymax) {
                 painter.save(); auto __finalpainttwosided=JKQTPFinally([&painter]() {painter.restore();});
                 painter.setPen(getLinePen(painter, parent));
                 painter.setBrush(getLineColor());
-                QPointF xx1(transformX(x),transformY(y));
-                const double angle1=atan2(l.dy(), l.dx());
                 JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()));
             }
+
+
+            addHitTestData(x, y, formatHitTestDefaultLabel(x,y)+
+                                     QString(", \\ensuremath{\\mathrm{\\mathbf{d}}y/\\mathrm{\\mathbf{d}}x\\;=\\;%1/%2\\;=\\;%3\\;=\\;%4\\degree}").arg(jkqtp_floattolatexqstr(dy, 3)).arg(jkqtp_floattolatexqstr(dx, 3)).arg(jkqtp_floattolatexqstr(dy/dx, 3)).arg(jkqtp_floattolatexqstr(atan2(dy,dx), 1)));
+            addHitTestData(x1, y1);
+            addHitTestData(x2, y2);
         }
 
     }
@@ -387,6 +528,17 @@ void JKQTPGeoInfiniteLine::setTwoSided(bool __value)
 bool JKQTPGeoInfiniteLine::getTwoSided() const
 {
     return this->two_sided;
+}
+
+QPointF JKQTPGeoInfiniteLine::getP() const
+{
+    return QPointF(x,y);
+}
+
+void JKQTPGeoInfiniteLine::setP(const QPointF &p)
+{
+    x=p.x();
+    y=p.y();
 }
 
 
@@ -460,23 +612,51 @@ void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
     if (points.size()>=2) {
         reserveHitTestData(points.size());
 
-        QVector<QPointF> path=transform(points);
+        double angle1, angle2;
+        QPointF xx1, xx2;
+        bool doDrawDecorator=false;
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.setPen(getLinePen(painter, parent));
         painter.setBrush(getLineColor());
+        if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
+            QVector<QPointF> path=transform(points);
+            angle1=atan2(path[1].y()-path[0].y(), path[1].x()-path[0].x());
+            angle2=atan2(path[path.size()-2].y()-path[path.size()-1].y(), path[path.size()-2].x()-path[path.size()-1].x());
+            xx1=path[0];
+            xx2=path[path.size()-1];
+            // draw corrected line
+            painter.drawPolyline(path.data(), path.size());
+            doDrawDecorator=true;
+        } else {
+            // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
+            // and transform each node to draw the corresponding non-linear curve in pixel-space!
+            auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+            QVector<QPointF> points_poly=JKQTPSplitPolylineIntoPoints(points, fTransform);
+            points_poly=JKQTPSimplyfyLineSegemnts(points_poly);
+            if (points_poly.size()>1) {
+                xx1=points_poly[0];
+                const QPointF xx1p=points_poly[1];
+                angle1=atan2(xx1p.y()-xx1.y(), xx1p.x()-xx1.x());
+                xx2=points_poly[points_poly.size()-1];
+                const QPointF xx2p=points_poly[points_poly.size()-2];
+                angle2=atan2(xx2p.y()-xx2.y(), xx2p.x()-xx2.x());
+                painter.drawPolyline(points_poly.data(), points_poly.size());
+                doDrawDecorator=true;
+                /*for (auto& p: points_poly) {
+                    JKQTPPlotSymbol(painter, p.x(), p.y(), JKQTPPlus, 5, 1, QColor("green"), QColor("darkgreen"));
+                }*/
+            }
+
+        }
+
 
         // potentially draw line-end decorators/arrows
-        const double angle1=atan2(path[1].y()-path[0].y(), path[1].x()-path[0].x());
-        const double angle2=atan2(path[path.size()-2].y()-path[path.size()-1].y(), path[path.size()-2].x()-path[path.size()-1].x());
-        QPointF xx1=path[0], xx2=path[path.size()-1];
-        QPointF lx1=xx1, lx2=xx2;
-        JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx1);
-        JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()), &lx2);
-        path[0]=lx1;
-        path[path.size()-1]=lx2;
+        if (doDrawDecorator) {
+            JKQTPPlotLineDecorator(painter, xx1.x(), xx1.y(), angle1, getTailDecoratorStyle(), calcTailDecoratorSize(getLinePen(painter, getParent()).widthF()));
+            JKQTPPlotLineDecorator(painter, xx2.x(), xx2.y(), angle2, getHeadDecoratorStyle(), calcHeadDecoratorSize(getLinePen(painter, getParent()).widthF()));
+        }
 
-        // draw corrected line
-        painter.drawPolyline(path.data(), path.size());
+
         for (const auto& p:points) {
             addHitTestData(p.x(), p.y());
         }
@@ -502,6 +682,50 @@ void JKQTPGeoPolyLines::appendPoint(const double x, const double y) {
     points.append(QPointF(x, y));
 }
 
+int JKQTPGeoPolyLines::getPointCount() const
+{
+    return points.size();
+}
+
+const QPointF &JKQTPGeoPolyLines::getPoint(int i) const
+{
+    return points[i];
+}
+
+QPointF &JKQTPGeoPolyLines::getPoint(int i)
+{
+    return points[i];
+}
+
+void JKQTPGeoPolyLines::setPoint(int i, const QPointF &point)
+{
+    points[i]=point;
+}
+
+void JKQTPGeoPolyLines::removePoint(int i)
+{
+    points.remove(i);
+}
+
+QVector<QPointF>::iterator JKQTPGeoPolyLines::pointsBegin()
+{
+    return points.begin();
+}
+
+QVector<QPointF>::iterator JKQTPGeoPolyLines::pointsEnd()
+{
+    return points.end();
+}
+
+QVector<QPointF>::const_iterator JKQTPGeoPolyLines::pointsCBegin() const
+{
+    return points.cbegin();
+}
+
+QVector<QPointF>::const_iterator JKQTPGeoPolyLines::pointsCEnd() const
+{
+    return points.cend();
+}
 
 
 JKQTPGeoArc::JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style):
@@ -514,7 +738,6 @@ JKQTPGeoArc::JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double wid
     this->width=width;
     this->height=height;
     this->angle=0;
-    this->controlPoints=180;
 }
 
 JKQTPGeoArc::JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style):
@@ -524,23 +747,12 @@ JKQTPGeoArc::JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, 
 
 
 void JKQTPGeoArc::draw(JKQTPEnhancedPainter& painter) {
-    QPainterPath rect;
-    rect=transformToLinePath(JKQTPDrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
+    auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+    const QPolygonF rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,angleStart,angleStop, angle);
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     painter.setPen(getLinePen(painter, parent));
-    painter.drawPath(rect);
-
-}
-
-void JKQTPGeoArc::setControlPoints(const unsigned int &__value)
-{
-    this->controlPoints = __value;
-}
-
-unsigned int JKQTPGeoArc::getControlPoints() const
-{
-    return this->controlPoints;
+    painter.drawPolyline(rect);
 }
 
 void JKQTPGeoArc::setAngleStart(double __value)
@@ -583,6 +795,16 @@ double JKQTPGeoArc::getY() const
     return this->y;
 }
 
+QPointF JKQTPGeoArc::getCenter() const
+{
+    return QPointF(x, y);
+}
+
+void JKQTPGeoArc::setCenter(const QPointF &center)
+{
+    x=center.x();
+    y=center.y();
+}
 void JKQTPGeoArc::setWidth(double __value)
 {
     this->width = __value;
@@ -603,6 +825,16 @@ double JKQTPGeoArc::getHeight() const
     return this->height;
 }
 
+QSizeF JKQTPGeoArc::getSize() const
+{
+    return QSizeF(width,height);
+}
+
+void JKQTPGeoArc::setSize(const QSizeF &size)
+{
+    width=size.width();
+    height=size.height();
+}
 void JKQTPGeoArc::setAngle(double __value)
 {
     this->angle = __value;
@@ -616,7 +848,7 @@ double JKQTPGeoArc::getAngle() const
 
 bool JKQTPGeoArc::getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPDrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
+    rect=QPolygonF(JKQTPSplitEllipseIntoPoints(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, 180));
     minx=rect.boundingRect().left();
     maxx=rect.boundingRect().right();
     if (minx>maxx) std::swap(minx, maxx);
@@ -629,7 +861,7 @@ bool JKQTPGeoArc::getXMinMax(double& minx, double& maxx, double& smallestGreater
 
 bool JKQTPGeoArc::getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) {
     QPolygonF rect;
-    rect=QPolygonF(JKQTPDrawEllipse(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, controlPoints));
+    rect=QPolygonF(JKQTPSplitEllipseIntoPoints(x,y,width/2.0, height/2.0,angleStart,angleStop,angle, 180));
     miny=rect.boundingRect().bottom();
     maxy=rect.boundingRect().top();
     if (miny>maxy) std::swap(miny, maxy);

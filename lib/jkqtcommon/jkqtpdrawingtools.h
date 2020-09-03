@@ -33,7 +33,9 @@
 #include <QColor>
 #include <QVector>
 #include <vector>
+#include <forward_list>
 #include <cmath>
+#include <utility>
 #include <QDebug>
 #include "jkqtcommon/jkqtpmathtools.h"
 #include "jkqtcommon/jkqtpcodestructuring.h"
@@ -226,13 +228,7 @@ template <class TPainter>
 inline void JKQTPPlotLineDecorator(TPainter& painter, double x, double y, double angle_rad, JKQTPLineDecoratorStyle style, double size, QPointF* line_start=nullptr);
 
 /** \brief calculates the tail decorator size from the line width \a line_width, using decoratorSizeFactor and a non-linear scaling function that levels off towards small \a line_width and increases sub-linearly for large ones, so the arrow heads to not grow too much */
-JKQTCOMMON_LIB_EXPORT double JKQTPLineDecoratorStyleCalcDecoratorSize(double line_width, double decoratorSizeFactor)
-;
-
-/** \brief rotate a rectangle by  given angle (rotates all points around the center of the rectangle and returns it as a QPolygonF)
- * \ingroup jkqtptools_drawing
- */
-JKQTCOMMON_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
+JKQTCOMMON_LIB_EXPORT double JKQTPLineDecoratorStyleCalcDecoratorSize(double line_width, double decoratorSizeFactor);
 
 /*! \brief plot the specified symbol at pixel position x,y
    \ingroup jkqtptools_drawing
@@ -265,25 +261,6 @@ inline void JKQTPPlotSymbol(TPainter& painter, double x, double y, JKQTPGraphSym
 JKQTCOMMON_LIB_EXPORT void JKQTPPlotSymbol(QPaintDevice& paintDevice, double x, double y, JKQTPGraphSymbols symbol, double size, double symbolLineWidth, QColor color, QColor fillColor);
 
 
-/*! \brief draw an ellipse without setting pen or brush, or saving the painter!
-    \ingroup jkqtptools_drawing
-
-    \return a QVector<QPointF> with points that may be used for drawing
-    \param x center of ellipse (x-coordinate)
-    \param y center of ellipse (y-coordinate)
-    \param a half axis in x-direction
-    \param b half axis in y-direction
-    \param angle_start starting angle of ellipse section
-    \param angle_end ending angle of ellipse section
-    \param alpha rotation angle of ellipse
-    \param controlPoints the number of points to use for drawing
-    \param[out] x_start first point of ellipse
-    \param[out] x_end last point of ellipse
-
-    \note all angles are given in degrees [0..360]
-*/
-JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, int controlPoints=180, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
-
 /*! \brief draw a tooltip, using the current brush and pen of the provided painter
     \ingroup jkqtptools_drawing
 
@@ -297,29 +274,6 @@ JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPDrawEllipse(double x, double y, doub
 */
 template <class TPainter>
 inline void JKQTPDrawTooltip(TPainter& painter, double x, double y, const QRectF& rect);
-
-
-/** \brief cleans a polygon by uniting all consecutive points that were closer than distanceThreshold are united
- *  \ingroup jkqtptools_drawing
- *
- *  \param poly polygon to clean
- *  \param distanceThreshold if two end-points are closer together as this value, they are united to a single point
- *  \return a cleaned polygon, where all consecutive points that were closer than distanceThreshold are united
- */
-JKQTCOMMON_LIB_EXPORT QPolygonF JKQTPCleanPolygon(const QPolygonF& poly, double distanceThreshold=0.3);
-
-/** \brief takes a list of QLineF objesct \a lines and tries to combine as many of them as possible to QPolygonF objects.
- *         <b>Note: This method implements an incomplete algorithm with \a searchMaxSurroundingElements>0, as solving
- *         the complete problem is very time-consuming (cubic runtime)</b>
- *  \ingroup jkqtptools_drawing
- *
- *  \param lines line segments to unify
- *  \param distanceThreshold if two end-points are closer together as this value, they are united to a single point
- *  \param searchMaxSurroundingElements limits the search for a connected polygon to at most this number of neighbors
- *  \return a vector of QPolygonF objects, which contain longer line-segments formed from \a lines
- */
-JKQTCOMMON_LIB_EXPORT QVector<QPolygonF> JKQTPUnifyLinesToPolygons(const QVector<QLineF>& lines, double distanceThreshold=0.3, int searchMaxSurroundingElements=10);
-
 
 
 

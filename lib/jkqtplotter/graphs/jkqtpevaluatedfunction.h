@@ -250,56 +250,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         /*! \copydoc errorParameterColumn */ 
         void setErrorParameterColumn (size_t __value);
 
+        /*! \copydoc errorColor */
+        virtual void setErrorLineColor(const QColor & __value);
         /*! \copydoc errorColor */ 
-        inline virtual void setErrorLineColor(const QColor & __value)  
-        {
-            this->errorColor = __value;
-        } 
-        /*! \copydoc errorColor */ 
-        inline virtual QColor getErrorLineColor() const  
-        {
-            return this->errorColor; 
-        }
+        virtual QColor getErrorLineColor() const;
         /*! \copydoc errorFillColor */ 
-        inline virtual void setErrorFillColor(const QColor & __value)  
-        {
-            this->errorFillColor = __value;
-        } 
+        virtual void setErrorFillColor(const QColor & __value);
         /*! \copydoc errorFillColor */ 
-        inline virtual QColor getErrorFillColor() const  
-        {
-            return this->errorFillColor; 
-        }
+        virtual QColor getErrorFillColor() const;
         /*! \copydoc errorFillStyle */ 
-        inline virtual void setErrorFillStyle(Qt::BrushStyle  __value)  
-        {
-            this->errorFillStyle = __value;
-        } 
+        virtual void setErrorFillStyle(Qt::BrushStyle  __value);
         /*! \copydoc errorFillStyle */ 
-        inline virtual Qt::BrushStyle getErrorFillStyle() const  
-        {
-            return this->errorFillStyle; 
-        }
+        virtual Qt::BrushStyle getErrorFillStyle() const;
         /*! \copydoc errorStyle */ 
-        inline virtual void setErrorLineStyle(Qt::PenStyle  __value)  
-        {
-            this->errorStyle = __value;
-        } 
+        virtual void setErrorLineStyle(Qt::PenStyle  __value);
         /*! \copydoc errorStyle */ 
-        inline virtual Qt::PenStyle getErrorLineStyle() const  
-        {
-            return this->errorStyle; 
-        }
+        virtual Qt::PenStyle getErrorLineStyle() const;
         /*! \copydoc errorLineWidth */ 
-        inline virtual void setErrorLineWidth(double __value)
-        {
-            this->errorLineWidth = __value;
-        } 
+        virtual void setErrorLineWidth(double __value);
         /*! \copydoc errorLineWidth */ 
-        inline virtual double getErrorLineWidth() const  
-        {
-            return this->errorLineWidth; 
-        }
+        virtual double getErrorLineWidth() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;

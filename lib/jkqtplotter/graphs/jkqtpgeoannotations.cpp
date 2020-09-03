@@ -30,12 +30,9 @@
 
 
 
-JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QString& text, double fontSize, QColor color):
-    JKQTPPlotObject(parent), JKQTPGraphTextStyleMixin(parent)
+JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x_, double y_, const QString& text_, double fontSize, QColor color):
+    JKQTPGeoText(parent, x_, y_, text_)
 {
-    this->x=x;
-    this->y=y;
-    this->text=text;
     setTextFontSize(fontSize);
     setTextColor(color);
 }
@@ -45,12 +42,10 @@ JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QStrin
 {
 }
 
-JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter *parent, double x, double y, const QString &text):
-    JKQTPPlotObject(parent), JKQTPGraphTextStyleMixin(parent)
+JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter *parent, double x_, double y_, const QString& text_):
+    JKQTPPlotObject(DrawAsGraphicElement, parent), JKQTPGraphTextStyleMixin(parent), x(x_),y(y_),text(text_)
 {
-    this->x=x;
-    this->y=y;
-    this->text=text;
+
 }
 
 JKQTPGeoText::JKQTPGeoText(JKQTPlotter *parent, double x, double y, const QString &text):
@@ -136,7 +131,7 @@ QColor JKQTPGeoText::getKeyLabelColor() const {
 
 
 JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
-    JKQTPPlotObject(parent)
+    JKQTPPlotObject(DrawAsGraphicElement, parent)
 {
     this->x=x;
     this->y=y;
@@ -148,15 +143,9 @@ JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQT
 }
 
 JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
-    JKQTPPlotObject(parent)
+    JKQTPGeoSymbol(parent->getPlotter(), x, y, symbol, symbolSize, color, fillColor)
 {
-    this->x=x;
-    this->y=y;
-    setSymbolType(symbol);
-    setSymbolSize(symbolSize);
-    setSymbolColor(color);
-    setSymbolFillColor(fillColor);
-    setSymbolLineWidth(1);
+
 }
 
 void JKQTPGeoSymbol::setColor(QColor c)

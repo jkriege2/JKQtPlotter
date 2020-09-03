@@ -46,23 +46,13 @@ public:
         \param lineWidth lineWidth of drawing
         \param parent the parent plotter object
         */
-    explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
-    /*! \brief class contructor
+    explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
 
-        \param color color of drawing
-        \param style line style of drawing
-        \param lineWidth lineWidth of drawing
-        \param parent the parent plotter object
-        */
-    explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
     /*! \brief class contructor
 
     */
-    explicit JKQTPGeoBaseLine(JKQTBasePlotter* parent);
-    /*! \brief class contructor
+    explicit JKQTPGeoBaseLine(JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
 
-    */
-    explicit JKQTPGeoBaseLine(JKQTPlotter* parent);
 
 
 
@@ -99,24 +89,13 @@ public:
         \param style line style of drawing
         \param parent the parent plotter object
     */
-    explicit JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
-    /*! \brief class contructor
+    explicit JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
 
-        \param color color of drawing
-        \param lineWidth lineWidth of drawing
-        \param headStyle style of the head decoration
-        \param style line style of drawing
-        \param parent the parent plotter object
-    */
-    explicit JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTPlotter* parent);
     /*! \brief class contructor
 
     */
-    explicit JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter* parent);
-    /*! \brief class contructor
+    explicit JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
 
-    */
-    explicit JKQTPGeoBaseDecoratedHeadLine(JKQTPlotter* parent);
 
 
 
@@ -154,21 +133,9 @@ public:
         \param style line style of drawing
         \param parent the parent plotter object
     */
-    explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr);
-    /*! \brief class contructor
-
-        \param color color of drawing
-        \param lineWidth lineWidth of drawing
-        \param headStyle style of the head decoration
-        \param tailStyle style of the tail decoration
-        \param style line style of drawing
-        \param parent the parent plotter object
-            */
-    explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTPlotter* parent);
+    explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
     /*! \brief class contructor */
-    explicit JKQTPGeoBaseDecoratedLine(JKQTBasePlotter* parent);
-    /*! \brief class contructor */
-    explicit JKQTPGeoBaseDecoratedLine(JKQTPlotter* parent);
+    explicit JKQTPGeoBaseDecoratedLine(JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
 
 
 
@@ -204,17 +171,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public
             \param lineWidth lineWidth of drawing
             \param parent the parent plotter object
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style=Qt::SolidLine, Qt::BrushStyle fillStyle=Qt::SolidPattern, JKQTBasePlotter* parent=nullptr);
-        /*! \brief class contructor
-
-            \param color color of drawing
-            \param fillColor color of the filling in the drawing
-            \param style line style of drawing
-            \param fillStyle filling style of the graph
-            \param lineWidth lineWidth of drawing
-            \param parent the parent plotter object
-         */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTPlotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style=Qt::SolidLine, Qt::BrushStyle fillStyle=Qt::SolidPattern, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
         /*! \brief class contructor
 
             \param color color of drawing
@@ -223,7 +180,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public
             \param lineWidth lineWidth of drawing
             \param parent the parent plotter object
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTPlotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
         /*! \brief class contructor
 
             \param color color of drawing
@@ -231,14 +188,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public
             \param lineWidth lineWidth of drawing
             \param parent the parent plotter object
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTPlotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
         /*! \brief class contructor
 
             \param color color of drawing
             \param fillColor color of the filling in the drawing
             \param parent the parent plotter object
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTPlotter* parent);
+        JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTBasePlotter *parent, DrawMode drawMode=DrawAsGraphicElement);
 
         /** \brief sets the alpha-channel of the \a color and \a fillColor (i.e. its transparency) to the same value */
         virtual void setAlpha(float alpha) override;

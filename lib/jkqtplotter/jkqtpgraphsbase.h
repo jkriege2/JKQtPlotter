@@ -65,8 +65,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
 
         /** \brief class constructor */
         explicit JKQTPPlotElement(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
-        explicit JKQTPPlotElement(JKQTPlotter* parent);
 
         /** \brief default wirtual destructor */
         virtual ~JKQTPPlotElement() = default;
@@ -196,8 +194,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
             QString label;
         };
 
-    protected:
-
 
 
         /** \brief tool routine that transforms an x-coordinate (plot coordinate --> pixels) for this plot element */
@@ -218,6 +214,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
             return QPointF(transformX(x.x()), transformY(x.y()));
         }
 
+
         /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules (pixels --> plot coordinate) */
         inline QPointF backTransform(const QPointF& x) const {
             return QPointF(backtransformX(x.x()), backtransformY(x.y()));
@@ -227,6 +224,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         inline QPointF transform(double x, double y) const {
             return transform(QPointF(x,y));
         }
+
         /** \brief tool routine that back-transforms a QPointF according to the parent's transformation rules (pixels --> plot coordinate) */
         inline QPointF backTransform(double x, double y) const {
             return backTransform(QPointF(x,y));
@@ -249,6 +247,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         /** \brief transform all y-coordinates in a vector \a x */
         QVector<double> transformY(const QVector<double>& x) const;
 
+
+    protected:
 
         /** \brief clear the internal datastore for hitTest()
          *
@@ -382,8 +382,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
     public:
         /** \brief class constructor */
         explicit JKQTPGraph(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
-        explicit JKQTPGraph(JKQTPlotter* parent);
 
         /** \brief default wirtual destructor */
         virtual ~JKQTPGraph() = default ;
@@ -428,28 +426,66 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
 
 
 /** \brief this is the virtual base class of all JKQTPPlotElement's in a JKQTPlotter plot that
- *         represent geometric forms or annotations. They have extended coordinate transform capabilities, because
- *         in addition to using the plot coordinates, you can also choose to use different other
- *         coordinate systems
- * \ingroup jkqtplotter_basegraphs
+ *         represent geometric forms or annotations.
+ *  \ingroup jkqtplotter_basegraphs
  *
- * \see \ref jkqtplotter_graphsgroup_classstructure
+ *  \see \ref jkqtplotter_graphsgroup_classstructure, \ref JKQTPlotterGeometricGraphs
  *
+ *  \section JKQTPPlotObject_coordinates Coordinate Systems
+ *  JKQTPPlotObject's have extended coordinate transform capabilities, because in addition to using
+ *  the plot coordinates, you can also choose to use different other coordinate systems.
+ *
+ *  \section JKQTPPlotObject_DrawMode Draw Modes
+ *
+ *  \copydetails m_drawMode
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
         Q_OBJECT
     public:
+
+        /** \brief indicates how to draw the geometric object */
+        enum DrawMode {
+            DrawAsGraphicElement,     /*!< \brief draw lines as lines (i.e. graphic elements)  \image html JKQTPPlotObject_DrawAsGraphicElement.png */
+            DrawAsMathematicalCurve   /*!< \brief draw lines as the mathematically correct curve \image html JKQTPPlotObject_DrawAsMathematicalCurve.png */
+        };
+        Q_ENUM(DrawMode)
+
         /** \brief class constructor */
-        explicit JKQTPPlotObject(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
-        explicit JKQTPPlotObject(JKQTPlotter* parent);
+        explicit JKQTPPlotObject(DrawMode drawMode=DrawAsGraphicElement, JKQTBasePlotter* parent=nullptr);
 
         /** \brief default wirtual destructor */
         virtual ~JKQTPPlotObject() ;
-
-
+        /** \copybrief m_drawMode
+         *
+         *  \return the currently set DrawMode
+         *  \see m_drawMode, DrawMode
+         */
+        DrawMode getDrawMode() const;
+    public slots:
+        /** \copybrief m_drawMode
+         *
+         *  \param mode the DrawMode to use from now on
+         *  \see m_drawMode, DrawMode
+         */
+        void setDrawMode(DrawMode mode);
     protected:
-
+        /** \brief indicated whether to draw lines as graphic elements (even on non-linear coordinate systems),
+         *         or as mathematically correct curves
+         *
+         * It is possible to define in which ways the forms shall be treated/drawn into non-linear
+         * coordinate systems (e.g. semi-log or log-log plots). Imagine drawing a line from (x1,y1) to (x2,y2)
+         * In a linear coordinate system, this is always a line, but in a non-linear system, the line might
+         * have to be represented by a curve instead. Depending on how you want to use the JKQTPPlotObject you
+         * can choose to still draw it as a line connecting the points (x1,y1) and (x2,y2), or as the -
+         * mathematically correct - curve connecting these two points:
+         *
+         * \image html JKQTPPlotObject_DrawAsMathematicalCurve.png
+         *
+         * \image html JKQTPPlotObject_DrawAsGraphicElement.png
+         *
+         * \see DrawMode, setDrawMode(), getDrawMode()
+         */
+        DrawMode m_drawMode;
 
 };
 
@@ -490,8 +526,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
 
         /** \brief class constructor */
         JKQTPXYGraph(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
-        JKQTPXYGraph(JKQTPlotter* parent);
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -615,7 +649,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
 
         /** \brief class constructor */
         JKQTPSingleColumnGraph(JKQTBasePlotter* parent=nullptr);
-        JKQTPSingleColumnGraph(JKQTPlotter* parent);
 
         /*! \copydoc dataColumn */ 
         void setDataColumn(int __value);

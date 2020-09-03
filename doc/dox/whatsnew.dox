@@ -21,7 +21,10 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/*.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/45">#45: Build error on mac jkqtfastplotter.cpp:342:28: Variable has incomplete type 'QPainterPath'</a>, thanks to <a href="https://github.com/abdedixit">user:abdedixit</a></li>
   <li>removed the usage of some deprecated functions and objects (e.g. QMatrix)</li>
-  <li> new: added geometric plot objects JKQTPGeoArrow to draw arrows (aka lines with added line-end decorators, also extended JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines to draw line-end decorator (aka arrows)</li>
+  <li>improved: geometric objects now use an adaptive drawing algorithm to represent curves (before e.g. ellipses were always separated into a fixed number of line-segments)</li>
+  <li>improved: constructors and access functions for several geometric objects (e.g. more constructors, additional functions to retrieve parameters in diferent forms, iterators for polygons, ...)</li>
+  <li>new: added geometric plot objects JKQTPGeoArrow to draw arrows (aka lines with added line-end decorators, also extended JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines to draw line-end decorator (aka arrows)</li>
+  <li>new: all geometric objects can either be drawn as graphic element (i.e. lines are straight line, even on non-linear axes), or as mathematical curve (i.e. on non-linear axes, lines become the appropriate curve representing the linear function, connecting the given start/end-points). The only exceptions are ellipses (and the derived arcs,pies,chords), which are always drawn as mathematical curves</li>
 </ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download

@@ -358,13 +358,13 @@ void JKQTPXFunctionLineGraph::refine(doublePair* a, doublePair* b, unsigned int 
     } else {*/
         xmid=xmid+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta/5.0; // shake by 10%
     //}
-    double realxmid=parent->p2x(xmid);
+    const double realxmid=parent->p2x(xmid);
     double realfmid = 0.0;
     if (plotFunction) realfmid=plotFunction(realxmid, params);
     else if (simplePlotFunction) realfmid=simplePlotFunction(realxmid);
-    double fmid=transformY(realfmid);
-    double a1=(fmid - af)/(xmid - ax);
-    double a2=(bf - fmid)/(bx - xmid);
+    const double fmid=transformY(realfmid);
+    const double a1=(fmid - af)/(xmid - ax);
+    const double a2=(bf - fmid)/(bx - xmid);
     //std::cout<<std::string(degree*2, ' ')<<"refine( ["<<a->x<<", "<<a->f<<"], ["<<xmid<<", "<<fmid<<"],   ["<<b->x<<", "<<b->f<<"] ): a1="<<a1<<",  a2="<<a2<<"  acrit="<<abs(a2/a1)-1.0<<"\n";
     //std::cout<<std::string(degree*2, ' ')<<"refine(): a1="<<a1<<",  a2="<<a2<<"  acrit="<<fabs(a2-a1)<<"\n";
     if (fabs(a2-a1)>slopeTolerance || delta>minPixelPerSample) {
@@ -864,7 +864,9 @@ int JKQTPXFunctionLineGraph::getParameterColumn() const
     return this->parameterColumn;
 }
 
-void JKQTPXFunctionLineGraph::setParameterColumn(size_t __value) { this->parameterColumn = static_cast<int>(__value); }
+void JKQTPXFunctionLineGraph::setParameterColumn(size_t __value) {
+    this->parameterColumn = static_cast<int>(__value);
+}
 
 void JKQTPXFunctionLineGraph::setErrorParameterColumn(int __value)
 {
@@ -876,7 +878,59 @@ int JKQTPXFunctionLineGraph::getErrorParameterColumn() const
     return this->errorParameterColumn;
 }
 
-void JKQTPXFunctionLineGraph::setErrorParameterColumn(size_t __value) { this->errorParameterColumn = static_cast<int>(__value); }
+void JKQTPXFunctionLineGraph::setErrorParameterColumn(size_t __value) {
+    this->errorParameterColumn = static_cast<int>(__value);
+}
+
+void JKQTPXFunctionLineGraph::setErrorLineColor(const QColor &__value)
+{
+    this->errorColor = __value;
+}
+
+QColor JKQTPXFunctionLineGraph::getErrorLineColor() const
+{
+    return this->errorColor;
+}
+
+void JKQTPXFunctionLineGraph::setErrorFillColor(const QColor &__value)
+{
+    this->errorFillColor = __value;
+}
+
+QColor JKQTPXFunctionLineGraph::getErrorFillColor() const
+{
+    return this->errorFillColor;
+}
+
+void JKQTPXFunctionLineGraph::setErrorFillStyle(Qt::BrushStyle __value)
+{
+    this->errorFillStyle = __value;
+}
+
+Qt::BrushStyle JKQTPXFunctionLineGraph::getErrorFillStyle() const
+{
+    return this->errorFillStyle;
+}
+
+void JKQTPXFunctionLineGraph::setErrorLineStyle(Qt::PenStyle __value)
+{
+    this->errorStyle = __value;
+}
+
+Qt::PenStyle JKQTPXFunctionLineGraph::getErrorLineStyle() const
+{
+    return this->errorStyle;
+}
+
+void JKQTPXFunctionLineGraph::setErrorLineWidth(double __value)
+{
+    this->errorLineWidth = __value;
+}
+
+double JKQTPXFunctionLineGraph::getErrorLineWidth() const
+{
+    return this->errorLineWidth;
+}
 
 void JKQTPXFunctionLineGraph::setSpecialFunction(JKQTPXFunctionLineGraph::SpecialFunction function)
 {
@@ -897,32 +951,32 @@ void JKQTPXFunctionLineGraph::setSpecialFunction(JKQTPXFunctionLineGraph::Specia
         });
     }
     else if (function==JKQTPXFunctionLineGraph::Exponential) setPlotFunctionFunctor([](double x, void* param) {
-        double res=0;
-        QVector<double>* d=static_cast<QVector<double>*>(param);
-        if (d) {
-            if (d->size()>=3) {
-                res=d->value(0,0)+d->value(1,0)*exp(x/d->value(2,0));
-            } else if (d->size()>=2) {
-                res=d->value(0,0)*exp(x/d->value(1,0));
+            double res=0;
+            QVector<double>* d=static_cast<QVector<double>*>(param);
+            if (d) {
+                if (d->size()>=3) {
+                    res=d->value(0,0)+d->value(1,0)*exp(x/d->value(2,0));
+                } else if (d->size()>=2) {
+                    res=d->value(0,0)*exp(x/d->value(1,0));
+                }
             }
-        }
-        return res;
-    });
+            return res;
+        });
     else if (function==JKQTPXFunctionLineGraph::PowerLaw) setPlotFunctionFunctor([](double x, void* param) {
-        double res=0;
-        QVector<double>* d=static_cast<QVector<double>*>(param);
-        if (d) {
-            if (d->size()>=3) {
-                res=d->value(0,0)+d->value(1,0)*pow(x, d->value(2,1));
-            } else if (d->size()>=2) {
-                res=d->value(0,0)*pow(x, d->value(1,1));
-            } else if (d->size()>=1) {
-                res=pow(x, d->value(0,1));
-            }
+            double res=0;
+            QVector<double>* d=static_cast<QVector<double>*>(param);
+            if (d) {
+                if (d->size()>=3) {
+                    res=d->value(0,0)+d->value(1,0)*pow(x, d->value(2,1));
+                } else if (d->size()>=2) {
+                    res=d->value(0,0)*pow(x, d->value(1,1));
+                } else if (d->size()>=1) {
+                    res=pow(x, d->value(0,1));
+                }
 
-        }
-        return res;
-    });
+            }
+            return res;
+        });
     else throw std::runtime_error("unknown special function type");
 }
 
