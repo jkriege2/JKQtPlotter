@@ -25,12 +25,13 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/boxplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/boxplot) | [Plotting Box Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/boxplot) | `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph` |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/violinplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/violinplot) | [Plotting Violin Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/violinplot) | `JKQTPViolinplotVerticalElement`, `JKQTPViolinplotHorizontalElement` |
 
-## Styling the Plot, Keys, Axes, ...
+## Geometric Plot Objects and Annotations
 
 | Screenshot    | Description   | Notes         |
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geometric_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) | [Plotting Geometric Objects](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) |  |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geo_arrows_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_arrows) | [Plotting Arrows](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_arrows) |  |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geo_simple_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_simple) | [Plotting Arrows](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_simple) |  |
 
 ## Styling the Plot, Keys, Axes, ...
 

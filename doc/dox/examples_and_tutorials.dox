@@ -75,6 +75,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html geo_arrows_small.png
     <td> \subpage JKQTPlotterGeometricArrows
     <td> `JKQTPGeoArrow`, ...
+<tr><td> \image html geo_simple_small.png
+    <td> \subpage JKQTPlotterGeometricGraphsSimple
+    <td> `JKQTPGeoEllipse`, `JKQTPGeoArc`, `JKQTPGeoChord`, `JKQTPGeoPie`
 </table>
 
 \subsection jkqtp_extut_keyaxesstyles  Styling the Plot, Keys, Axes, ...
