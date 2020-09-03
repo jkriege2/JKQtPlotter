@@ -31,7 +31,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geometric_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) | [Plotting Geometric Objects](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geometric) |  |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geo_arrows_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_arrows) | [Plotting Arrows](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_arrows) |  |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geo_simple_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_simple) | [Plotting Arrows](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_simple) |  |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geo_simple_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_simple) | [Demo-Plots of Geometric Objects for Documentation](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/geo_simple) |  |
 
 ## Styling the Plot, Keys, Axes, ...
 

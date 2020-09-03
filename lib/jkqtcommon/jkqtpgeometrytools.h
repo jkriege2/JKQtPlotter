@@ -125,12 +125,14 @@ JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPSplitEllipseIntoPoints(double x, dou
     \param angle_start starting angle of ellipse section
     \param angle_end ending angle of ellipse section
     \param alpha rotation angle of ellipse
-    \param[out] x_start first point of ellipse
-    \param[out] x_end last point of ellipse
+    \param[out] x_start first point of ellipse, with fTransform applied
+    \param[out] x_end last point of ellipse, with fTransform applied
+    \param[out] x_start_notrafo first point of ellipse, without fTransform applied
+    \param[out] x_end_notrafo last point of ellipse, without fTransform applied
 
     \note all angles are given in degrees [0..360]
 */
-JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPSplitEllipseIntoPoints(std::function<QPointF(QPointF)> fTransform, double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, QPointF* x_start=nullptr, QPointF* x_end=nullptr);
+JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPSplitEllipseIntoPoints(std::function<QPointF(QPointF)> fTransform, double x, double y, double a, double b, double angle_start=0, double angle_end=360, double alpha=0, QPointF* x_start=nullptr, QPointF* x_end=nullptr, QPointF* x_start_notrafo=nullptr, QPointF* x_end_notrafo=nullptr);
 
 
 

@@ -467,10 +467,15 @@ void JKQTPGeoEllipse::drawInternal(JKQTPEnhancedPainter& painter, double angleSt
     if(mode==InternalDrawMode::Ellipse) {
         rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,0,360, angle);
     } else if (mode==InternalDrawMode::Pie) {
-        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,angleStart,angleStop, angle);
-        rect.append(transform(x,y));
+        QPointF first, last;
+        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,angleStart,angleStop, angle, nullptr, nullptr, &first, &last);
+        QVector<QPointF> pie;
+        pie<<last<<QPointF(x,y)<<first;
+        rect.append(JKQTPSimplyfyLineSegemnts(JKQTPSplitPolylineIntoPoints(pie, fTransform)));
     } else if (mode==InternalDrawMode::Chord) {
-        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,angleStart,angleStop, angle);
+        QPointF first, last;
+        rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,angleStart,angleStop, angle, nullptr, nullptr, &first, &last);
+        rect.append(JKQTPSimplyfyLineSegemnts(JKQTPSplitLineIntoPoints(QLineF(last, first), fTransform)));
     }
     painter.drawPolygon(rect);
 

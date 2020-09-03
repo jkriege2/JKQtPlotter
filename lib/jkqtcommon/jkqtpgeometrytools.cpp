@@ -62,15 +62,18 @@ QVector<QPointF> JKQTPSplitEllipseIntoPoints(double x, double y, double a, doubl
     return result;
 }
 
-QVector<QPointF> JKQTPSplitEllipseIntoPoints(std::function<QPointF (QPointF)> fTransform, double x, double y, double a, double b, double angle_start, double angle_end, double alpha, QPointF *x_start, QPointF *x_end)
+QVector<QPointF> JKQTPSplitEllipseIntoPoints(std::function<QPointF (QPointF)> fTransform, double x, double y, double a, double b, double angle_start, double angle_end, double alpha, QPointF *x_start, QPointF *x_end, QPointF *x_start_notrafo, QPointF *x_end_notrafo)
 {
     const double sina=sin(1.0*alpha/180.0*JKQTPSTATISTICS_PI);
     const double cosa=cos(1.0*alpha/180.0*JKQTPSTATISTICS_PI);
+    std::function<QPointF(double)> fell=[&](double t)->QPointF {
+        return QPointF(x+a*cos(t)*cosa-b*sin(t)*sina, y+a*cos(t)*sina+b*sin(t)*cosa);
+    };
     std::function<double(double)> fx = [&](double t) ->double {
-        return fTransform(QPointF(x+a*cos(t)*cosa-b*sin(t)*sina, y+a*cos(t)*sina+b*sin(t)*cosa)).x();
+        return fTransform(fell(t)).x();
     };
     std::function<double(double)> fy = [&](double t) ->double {
-        return fTransform(QPointF(x+a*cos(t)*cosa-b*sin(t)*sina, y+a*cos(t)*sina+b*sin(t)*cosa)).y();
+        return fTransform(fell(t)).y();
     };
     JKQTPAdaptiveFunctionGraphEvaluator eval(fx, fy);
 
@@ -78,6 +81,8 @@ QVector<QPointF> JKQTPSplitEllipseIntoPoints(std::function<QPointF (QPointF)> fT
     if (points.size()>0) {
         if (x_start) *x_start=points.first();
         if (x_end) *x_end=points.last();
+        if (x_start_notrafo) *x_start_notrafo=fell(angle_start*JKQTPSTATISTICS_PI/180.0);
+        if (x_end_notrafo) *x_end_notrafo=fell(angle_end*JKQTPSTATISTICS_PI/180.0);
     }
     return points;
 }
