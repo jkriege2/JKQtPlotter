@@ -33,7 +33,7 @@
 
 
 
-/*! \brief type of functions that may be plottet
+/*! \brief type of functions that may be plotted by JKQTPXFunctionLineGraph and JKQTPYFunctionLineGraph
     \ingroup jkqtplotter_functiongraphs
 
     This is the type of functions \f$ y=f(x, \vec{p}) \f$ that may be plottet by JKQTPXFunctionLineGraph
@@ -43,7 +43,7 @@
 */
 typedef std::function<double(double, void*)> jkqtpPlotFunctionType;
 
-/*! \brief simplified type of functions (without parameters) that may be plottet
+/*! \brief simplified type of functions (without parameters) that may be plotted by JKQTPXFunctionLineGraph and JKQTPYFunctionLineGraph
     \ingroup jkqtplotter_functiongraphs
 
     This is the type of functions \f$ y=f(x) \f$ that may be plottet by JKQTPXFunctionLineGraph
@@ -63,10 +63,11 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
     In addition all sampling points except minimum and maximum are beeing shifted by a random fraction their
     distance to the other points. This helps to prevent beats when sampling periodic functions.
 
-    the following image
+    The following image shows some example graphs:
+
     \image html plot_functionplots.png
 
-    \see \ref JKQTPlotterFunctionPlots, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
+    \see \ref JKQTPlotterFunctionPlots, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
@@ -94,6 +95,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTBasePlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTPlotter* parent);
 
         /** \brief class destructor */
         virtual ~JKQTPXFunctionLineGraph() override;
@@ -292,7 +297,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
 
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData( bool collectParams=true);
-
+        /** \brief ensure that current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) are stored in iparams and ierrorparams */
         virtual void collectParameters();
         /** \brief refine datapoints on the function graph between two evaluations \a a and \a b */
         void refine(doublePair* a, doublePair* b, unsigned int degree=0);
@@ -357,14 +362,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
 
         QBrush getErrorBrush(JKQTPEnhancedPainter& painter) const;
         QPen getErrorLinePen(JKQTPEnhancedPainter &painter) const;
-
-        QVector<double> iparams, ierrorparams;
+        /** \brief internal storage for the current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) */
+        QVector<double> iparams;
+        /** \brief internal storage for the current error function parameters for errorPlotFunction (which may stem from different sources, as direct data, a datastore column ...) */
+        QVector<double> ierrorparams;
 };
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$
     \ingroup jkqtplotter_functiongraphs
 
-    \see \ref JKQTPlotterFunctionPlots
+    The following image shows some example graphs:
+
+    \image html functionplot_fy.png
+
+    \see \ref JKQTPlotterFunctionPlots , JKQTPXFunctionLineGraph, JKQTPXYFunctionLineGraph
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
         Q_OBJECT
@@ -381,6 +392,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineG
         JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTBasePlotter* parent);
+        /** \brief class constructor */
+        JKQTPYFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;

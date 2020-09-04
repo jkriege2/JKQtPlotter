@@ -51,7 +51,7 @@ set(SOURCES_GRAPHS
     graphs/jkqtpgeobase.cpp
     graphs/jkqtpgeolines.cpp
     graphs/jkqtpgeoshapes.cpp    
-	graphs/jkqtpimage.cpp 
+    graphs/jkqtpimage.cpp
     graphs/jkqtpimpulses.cpp 
     graphs/jkqtpparsedfunction.cpp 
     graphs/jkqtppeakstream.cpp 
@@ -62,6 +62,7 @@ set(SOURCES_GRAPHS
     graphs/jkqtpviolinplot.cpp
     graphs/jkqtpviolinplotstylingmixins.cpp
     graphs/jkqtpstatisticsadaptors.cpp 
+    graphs/jkqtpevaluatedparametriccurve.cpp 
     )
 set(SOURCES_OVERLAYS
     overlays/jkqtpbasicoverlays.cpp
@@ -118,6 +119,7 @@ set(HEADERS_GRAPHS
     graphs/jkqtprange.h
     graphs/jkqtpspecialline.h
     graphs/jkqtpbarchart.h
+    graphs/jkqtpevaluatedparametriccurve.h
 )
 set(HEADERS_OVERLAY
     overlays/jkqtpbasicoverlays.h

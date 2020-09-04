@@ -86,6 +86,7 @@ addSimpleTest(datastore_regression)
 addSimpleTest(datastore_groupedstat)
 addSimpleTest(contourplot)
 addSimpleTest(violinplot)
+addSimpleTest(evalcurve)
 #addSimpleTest(rgbimageplot_opencv)
 #addSimpleTest(imageplot_opencv)
 

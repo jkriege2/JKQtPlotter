@@ -56,6 +56,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html parsedfunctionplot_small.png
     <td> \subpage JKQTPlotterParsedFunctionPlot
     <td> `JKQTPXParsedFunctionLineGraph`  <br> plotting functions with the internal math equation parser/evaluator 
+<tr><td> \image html evalcurve_small.png
+    <td> \subpage JKQTPlotterEvalCurves
+    <td> `JKQTPXYFunctionLineGraph`
 <tr><td> \image html boxplot_small.png
     <td> \subpage JKQTPlotterBoxplotsGraphs
     <td> `JKQTPBoxplotVerticalGraph`, `JKQTPBoxplotHorizontalGraph`, ...

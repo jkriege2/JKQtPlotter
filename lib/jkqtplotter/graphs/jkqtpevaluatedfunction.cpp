@@ -92,13 +92,8 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionTy
 }
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title_, JKQTPlotter *parent):
-    JKQTPXFunctionLineGraph(parent)
+    JKQTPXFunctionLineGraph(f, title_, parent->getPlotter())
 {
-    title=title_;
-    plotFunction=jkqtpPlotFunctionType();
-    simplePlotFunction=f;
-    functionType=SpecialFunction::UserFunction;
-    clearData();
 }
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title_, JKQTBasePlotter *parent):
@@ -112,13 +107,24 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType &&f
 }
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title_, JKQTPlotter *parent):
+    JKQTPXFunctionLineGraph(std::move(f), title_, parent->getPlotter())
+{
+
+}
+
+JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPXFunctionLineGraph::SpecialFunction type, const QVector<double> &params, const QString &title_, JKQTBasePlotter *parent):
     JKQTPXFunctionLineGraph(parent)
 {
     title=title_;
-    plotFunction=jkqtpPlotFunctionType();
-    simplePlotFunction=std::move(f);
-    functionType=SpecialFunction::UserFunction;
+    functionType=type;
+    setParams(params);
     clearData();
+}
+
+JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPXFunctionLineGraph::SpecialFunction type, const QVector<double> &params, const QString &title, JKQTPlotter *parent):
+    JKQTPXFunctionLineGraph(type, params, title, parent->getPlotter())
+{
+
 }
 
 
@@ -588,6 +594,18 @@ JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f
 
 JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title, JKQTPlotter *parent):
     JKQTPXFunctionLineGraph(std::move(f), title, parent)
+{
+
+}
+
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPYFunctionLineGraph::SpecialFunction type, const QVector<double> &params, const QString &title_, JKQTBasePlotter *parent):
+    JKQTPXFunctionLineGraph(type, params, title_, parent)
+{
+}
+
+JKQTPYFunctionLineGraph::JKQTPYFunctionLineGraph(JKQTPYFunctionLineGraph::SpecialFunction type, const QVector<double> &params, const QString &title_, JKQTPlotter *parent):
+    JKQTPXFunctionLineGraph(type, params, title_, parent->getPlotter())
 {
 
 }

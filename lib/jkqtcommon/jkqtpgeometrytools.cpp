@@ -69,13 +69,10 @@ QVector<QPointF> JKQTPSplitEllipseIntoPoints(std::function<QPointF (QPointF)> fT
     std::function<QPointF(double)> fell=[&](double t)->QPointF {
         return QPointF(x+a*cos(t)*cosa-b*sin(t)*sina, y+a*cos(t)*sina+b*sin(t)*cosa);
     };
-    std::function<double(double)> fx = [&](double t) ->double {
-        return fTransform(fell(t)).x();
+    std::function<QPointF(double)> fxy = [&](double t) ->QPointF {
+        return fTransform(fell(t));
     };
-    std::function<double(double)> fy = [&](double t) ->double {
-        return fTransform(fell(t)).y();
-    };
-    JKQTPAdaptiveFunctionGraphEvaluator eval(fx, fy);
+    JKQTPAdaptiveFunctionGraphEvaluator eval(fxy);
 
     const QVector<QPointF> points=eval.evaluate(angle_start*JKQTPSTATISTICS_PI/180.0, angle_end*JKQTPSTATISTICS_PI/180.0);
     if (points.size()>0) {
@@ -238,6 +235,17 @@ QVector<QPointF> JKQTPSimplyfyLineSegemnts(const QVector<QPointF> &points, doubl
 JKQTPAdaptiveFunctionGraphEvaluator::JKQTPAdaptiveFunctionGraphEvaluator(const std::function<double (double)> &fx_, const std::function<double (double)> &fy_, unsigned int minSamples_, unsigned int maxRefinementDegree_, double slopeTolerance_, double minPixelPerSample_):
     fx(fx_),
     fy(fy_),
+    fxy([&](double t)->QPointF { return QPointF(fx(t), fy(t)); }),
+    minSamples(minSamples_),
+    maxRefinementDegree(maxRefinementDegree_),
+    slopeTolerance(slopeTolerance_),
+    minPixelPerSample(minPixelPerSample_)
+{
+
+}
+
+JKQTPAdaptiveFunctionGraphEvaluator::JKQTPAdaptiveFunctionGraphEvaluator(const std::function<QPointF (double)> &fxy_, unsigned int minSamples_, unsigned int maxRefinementDegree_, double slopeTolerance_, double minPixelPerSample_):
+    fxy(fxy_),
     minSamples(minSamples_),
     maxRefinementDegree(maxRefinementDegree_),
     slopeTolerance(slopeTolerance_),
@@ -252,19 +260,19 @@ QVector<QPointF> JKQTPAdaptiveFunctionGraphEvaluator::evaluate(double tmin, doub
 
     double delta_t0=(tmax-tmin)/static_cast<double>(minSamples);
 
-    intData.push_front(std::pair<double, QPointF>(tmin, QPointF(fx(tmin), fy(tmin))));
+    intData.push_front(std::pair<double, QPointF>(tmin, fxy(tmin)));
     InternalList::iterator a=intData.begin();
     //qDebug()<<"**************************************************";
     for (double t=tmin+delta_t0; t<tmax; t=t+delta_t0) {
         const double treal=t;
-        intData.insert_after(a, std::pair<double, QPointF>(treal, QPointF(fx(treal), fy(treal))));
+        intData.insert_after(a, std::pair<double, QPointF>(treal, fxy(treal)));
         InternalList::iterator b=a; b++;
         //qDebug()<<"t="<<t<<", dist(a,b)="<<std::distance(a,b);
         refine(intData, a, b, 0);
         //qDebug()<<"       after refine: dist(a,b)="<<std::distance(a,b);
         a=b;
     }
-    intData.insert_after(a, std::pair<double, QPointF>(tmax, QPointF(fx(tmax), fy(tmax))));
+    intData.insert_after(a, std::pair<double, QPointF>(tmax, fxy(tmax)));
     auto b=a; b++;
     refine(intData, a, b, 0);
     // copy data to output data structure
@@ -284,7 +292,7 @@ void JKQTPAdaptiveFunctionGraphEvaluator::refine(JKQTPAdaptiveFunctionGraphEvalu
     const double tmid=ta+(tb-ta)/2.0;
     const QPointF pa=a->second;
     const QPointF pb=b->second;
-    const QPointF pmid(fx(tmid), fy(tmid));
+    const QPointF pmid(fxy(tmid));
     const double delta=QLineF(pa, pb).length();
 
     const double slope_a_mid=(pmid.y()-pa.y())/(pmid.x()-pa.x());
@@ -299,13 +307,10 @@ void JKQTPAdaptiveFunctionGraphEvaluator::refine(JKQTPAdaptiveFunctionGraphEvalu
 
 QVector<QPointF> JKQTPSplitLineIntoPoints(const QLineF &line, std::function<QPointF (QPointF)> fTransform)
 {
-    std::function<double(double)> fx = [&line, &fTransform](double t) ->double {
-        return fTransform(line.p1()+t*(line.p2()-line.p1())).x();
+    std::function<QPointF(double)> fxy = [&line, &fTransform] (double t) ->QPointF {
+        return fTransform(line.p1()+t*(line.p2()-line.p1()));
     };
-    std::function<double(double)> fy = [&line, &fTransform](double t) ->double {
-        return fTransform(line.p1()+t*(line.p2()-line.p1())).y();
-    };
-    JKQTPAdaptiveFunctionGraphEvaluator eval(fx, fy);
+    JKQTPAdaptiveFunctionGraphEvaluator eval(fxy);
 
     return eval.evaluate(0.0,1.0);
 }

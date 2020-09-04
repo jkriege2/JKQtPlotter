@@ -62,6 +62,19 @@ public:
      */
     JKQTPAdaptiveFunctionGraphEvaluator(const std::function<double(double)>& fx_, const std::function<double(double)>& fy_, unsigned int minSamples_=10, unsigned int maxRefinementDegree_=5, double slopeTolerance_=0.005, double minPixelPerSample_=32);
 
+    /** \brief class constructor
+     *
+     *  \param fxy function \f$ [x,y]=f_{xy}(t) \f$
+     *  \param minSamples the minimum number of points to evaluate the function at
+     *  \param maxRefinementDegree the maximum number of recursive refinement steps
+     *                             each step bisects the interval \f$ [a, b] \f$ into two halfes. So the maximum number
+     *                             of points plotted at all are thus:
+     *                               \f[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \f]
+     *  \param slopeTolerance the tolerance for the difference of two subsequent slopes
+     *  \param minPixelPerSample create one sample at least every \a minPixelPerSample pixels
+     */
+    JKQTPAdaptiveFunctionGraphEvaluator(const std::function<QPointF(double)>& fxy_, unsigned int minSamples_=10, unsigned int maxRefinementDegree_=5, double slopeTolerance_=0.005, double minPixelPerSample_=32);
+
     /** \brief evaluate the function specified in the constructor over the given parameter range \a tmin ... \a tmax
      *
      *  \param tmin lower parameter range limit \f$ t_\text{min} \f$
@@ -77,6 +90,8 @@ protected:
     std::function<double(double)> fx;
     /** \brief function \f$ f_y(t) \f$ */
     std::function<double(double)> fy;
+    /** \brief function \f$ [x,y]=f_{xy}(t) \f$ */
+    std::function<QPointF(double)> fxy;
     /** \brief the minimum number of points to evaluate the function at */
     unsigned int minSamples;
     /** \brief the maximum number of recursive refinement steps

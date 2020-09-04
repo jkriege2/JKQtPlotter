@@ -58,5 +58,6 @@ add_subdirectory(symbols_and_styles)
 add_subdirectory(ui)
 add_subdirectory(user_interaction)
 add_subdirectory(violinplot)
+add_subdirectory(evalcurve)
 
 
