@@ -289,7 +289,7 @@ void JKQTPAdaptiveFunctionGraphEvaluator::refine(JKQTPAdaptiveFunctionGraphEvalu
     if (degree>=maxRefinementDegree) return;
     const double ta=a->first;
     const double tb=b->first;
-    const double tmid=ta+(tb-ta)/2.0;
+    const double tmid=ta+(tb-ta)*(0.5 +(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)/5.0);
     const QPointF pa=a->second;
     const QPointF pb=b->second;
     const QPointF pmid(fxy(tmid));

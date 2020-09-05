@@ -40,13 +40,13 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
     drawLine=true;
     fillCurve=false;
     params=nullptr;
-    minSamples=10;
-    maxRefinementDegree=7;
+    minSamples=50;
+    maxRefinementDegree=5;
     slopeTolerance=0.005;
     minPixelPerSample=32;
     plotRefinement=true;
     displaySamplePoints=false;
-    data=nullptr;
+    data.clear();
 
     initLineStyle(parent, parentPlotStyle);
     initFillStyle(parent, parentPlotStyle);
@@ -88,7 +88,7 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionTy
     plotFunction=jkqtpPlotFunctionType();
     simplePlotFunction=f;
     functionType=SpecialFunction::UserFunction;
-    clearData();
+    data.clear();
 }
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType &f, const QString &title_, JKQTPlotter *parent):
@@ -103,7 +103,7 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType &&f
     plotFunction=jkqtpPlotFunctionType();
     simplePlotFunction=std::move(f);
     functionType=SpecialFunction::UserFunction;
-    clearData();
+    data.clear();
 }
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType &&f, const QString &title_, JKQTPlotter *parent):
@@ -118,7 +118,7 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPXFunctionLineGraph::Specia
     title=title_;
     functionType=type;
     setParams(params);
-    clearData();
+    data.clear();
 }
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPXFunctionLineGraph::SpecialFunction type, const QVector<double> &params, const QString &title, JKQTPlotter *parent):
@@ -129,17 +129,9 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTPXFunctionLineGraph::Specia
 
 
 JKQTPXFunctionLineGraph::~JKQTPXFunctionLineGraph() {
-    clearData();
+    data.clear();
 }
 
-void JKQTPXFunctionLineGraph::clearData() {
-    while (data!=nullptr) {
-        doublePair* d=data;
-        data=data->next;
-        delete d;
-    }
-    data=nullptr;
-}
 
 void JKQTPXFunctionLineGraph::setDrawLine(bool __value)
 {
@@ -157,7 +149,7 @@ void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(const jkqtpPlotFunctionType
     plotFunction = __value;
     functionType=SpecialFunction::UserFunction;
 
-    clearData();
+    data.clear();
 }
 
 void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(const jkqtpSimplePlotFunctionType &__value)
@@ -166,7 +158,7 @@ void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(const jkqtpSimplePlotFuncti
     simplePlotFunction=__value;
     functionType=SpecialFunction::UserFunction;
 
-    clearData();
+    data.clear();
 }
 
 void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(jkqtpPlotFunctionType &&__value)
@@ -174,7 +166,7 @@ void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(jkqtpPlotFunctionType &&__v
     simplePlotFunction=jkqtpSimplePlotFunctionType();
     plotFunction = std::move(__value);
     functionType=SpecialFunction::UserFunction;
-    clearData();
+    data.clear();
 }
 
 void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(jkqtpSimplePlotFunctionType &&__value)
@@ -183,7 +175,7 @@ void JKQTPXFunctionLineGraph::setPlotFunctionFunctor(jkqtpSimplePlotFunctionType
     simplePlotFunction=std::move(__value);
     functionType=SpecialFunction::UserFunction;
 
-    clearData();
+    data.clear();
 }
 
 jkqtpPlotFunctionType JKQTPXFunctionLineGraph::getPlotFunctionFunctor() const
@@ -200,7 +192,7 @@ void JKQTPXFunctionLineGraph::setParams(void *__value)
 {
     if (this->params != __value) {
         this->params = __value;
-        clearData();
+        data.clear();
     }
 }
 
@@ -244,7 +236,7 @@ void JKQTPXFunctionLineGraph::createPlotData(bool collectParams) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaat(QString("JKQTPXFunctionLineGraph[%1]::createPlotData()").arg(title));
 #endif
-    clearData();
+    data.clear();
     if (collectParams) collectParameters();
 
     if (parent==nullptr) return;
@@ -254,52 +246,14 @@ void JKQTPXFunctionLineGraph::createPlotData(bool collectParams) {
     if (plotFunction) func=std::bind(plotFunction, std::placeholders::_1, params);
     else if (simplePlotFunction) func=simplePlotFunction;
 
-    double xmin=parent->getXMin();
-    double xmax=parent->getXMax();
-    double pxmin=transformX(xmin);
-    double pxmax=transformX(xmax);
-    double delta0=(pxmax-pxmin)/static_cast<double>(minSamples);
-    //double logdelta0=(log(xmax)-log(xmin))/static_cast<double>(minSamples);
+    const double xmin=parent->getXMin();
+    const double xmax=parent->getXMax();
 
-    // initially sample function
-    doublePair* d=new doublePair;
-    d->x=xmin;
-    d->f=func(xmin);
-    d->next=nullptr;
-    data=d;
-    /*if (parent && parent->getXAxis()->isLogAxis()) {
-        for (double x=log(xmin)+logdelta0; x<log(xmax); x=x+logdelta0) {
-            d->next = new doublePair;
-            d->next->x=exp(x+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta0/2.0);
-            d->next->f=func(d->next->x,);
-            d->next->next=nullptr;
-            doublePair* dd=d;
-            d=d->next;
-            refine(dd, d);
-        }
-    } else {*/
-    QVector<double>* dv=static_cast<QVector<double>*>(params);
-    if (functionType==Polynomial && dv && dv->size()<=2) {
-           // we only need the first and last datapoint
-    } else {
-       for (double x=pxmin+delta0; x<pxmax; x=x+delta0) {
-           d->next = new doublePair;
-           d->next->x=parent->p2x(x+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta0/2.0);
-           d->next->f=func(d->next->x);
-           d->next->next=nullptr;
-           doublePair* dd=d;
-           d=d->next;
-           refine(dd, d);
-       }
-    }
+    std::function<QPointF(double)> fTransformedFunc= std::bind([&](const JKQTPPlotElement* plot, double x) -> QPointF { return plot->transform(x, func(x)); }, this, std::placeholders::_1);
 
-    //}
-    d->next = new doublePair;
-    d->next->x=xmax;
-    d->next->f=func(xmax);
-    d->next->next=nullptr;
-    refine(d, d->next);
-
+    JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
+    data=evaluator.evaluate(xmin, xmax);
+    data=JKQTPSimplyfyLineSegemnts(data);
 }
 
 void JKQTPXFunctionLineGraph::collectParameters()
@@ -347,40 +301,14 @@ void JKQTPXFunctionLineGraph::collectParameters()
     }
 }
 
-void JKQTPXFunctionLineGraph::refine(doublePair* a, doublePair* b, unsigned int degree) {
-    if (degree>=maxRefinementDegree) return;
-    double ax=transformX(a->x);
-    double af=transformX(a->f);
-    double bx=transformX(b->x);
-    double bf=transformX(b->f);
-
-    double delta=bx - ax;
-    //double logdelta=log(bx) - log(ax);
-    double xmid=ax+(delta)/2.0;
-    /*if (parent && parent->getXAxis()->isLogAxis()) {
-        xmid=log(a->x)+(logdelta)/2.0;
-        xmid=xmid+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta/5.0;
-        xmid=exp(xmid);
-    } else {*/
-        xmid=xmid+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta/5.0; // shake by 10%
-    //}
-    const double realxmid=parent->p2x(xmid);
-    double realfmid = 0.0;
-    if (plotFunction) realfmid=plotFunction(realxmid, params);
-    else if (simplePlotFunction) realfmid=simplePlotFunction(realxmid);
-    const double fmid=transformY(realfmid);
-    const double a1=(fmid - af)/(xmid - ax);
-    const double a2=(bf - fmid)/(bx - xmid);
-    //std::cout<<std::string(degree*2, ' ')<<"refine( ["<<a->x<<", "<<a->f<<"], ["<<xmid<<", "<<fmid<<"],   ["<<b->x<<", "<<b->f<<"] ): a1="<<a1<<",  a2="<<a2<<"  acrit="<<abs(a2/a1)-1.0<<"\n";
-    //std::cout<<std::string(degree*2, ' ')<<"refine(): a1="<<a1<<",  a2="<<a2<<"  acrit="<<fabs(a2-a1)<<"\n";
-    if (fabs(a2-a1)>slopeTolerance || delta>minPixelPerSample) {
-        doublePair* dmid = new doublePair;
-        dmid->x=realxmid;
-        dmid->f=realfmid;
-        a->next=dmid;
-        dmid->next=b;
-        refine(a, dmid, degree+1);
-        refine(dmid, b, degree+1);
+void JKQTPXFunctionLineGraph::drawSamplePoints(JKQTPEnhancedPainter& painter) {
+    QColor c=getLineColor();
+    c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
+    painter.save(); auto __finalpaintsamplepoints=JKQTPFinally([&painter]() {painter.restore();});
+    for (const auto& d: data) {
+        if (JKQTPIsOKFloat(d.x()) && JKQTPIsOKFloat(d.y())) {
+            JKQTPPlotSymbol(painter, d.x(), d.y(), JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
+        }
     }
 }
 
@@ -417,34 +345,25 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         eb.setStyle(errorFillStyle);
 
 
-    //    double xold=-1;
-    //    double yold=-1;
-    //    double ypeold=-1;
-    //    double ymeold=-1;
-
-    //    double x0=transformX(0);
-    //    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
         double y0=transformY(0);
         if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
         bool first=false;
-        doublePair* d=data;
-        //QPainterPath pa, pfill;
-        //QPainterPath pel, pef;
         QPolygonF filledPolygon, linePolygon, errorLineTop, errorLineBottom;
         QList<QPointF> epTop, epBottom;
         double yami=qMin(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
         double yama=qMax(transformY(parent->getYAxis()->getMin()),transformY(parent->getYAxis()->getMax()));
         double dypix=fabs(yama-yami);
-        yami=yami-2*dypix;
-        yama=yama+2*dypix;
-        while (d!=nullptr) {
+        yami=yami-2.0*dypix;
+        yama=yama+2.0*dypix;
+        for (auto it=data.begin(); it!=data.end(); ++it) {
+            const QPointF& d=*it;
+            double x=d.x();
+            double y=d.y();
 
-            double xv=d->x;
-            double yv=d->f;
             //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                double x=transformX(xv);
-                double y=transformY(yv);
+            if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                double xv=backtransformX(x);
+                double yv=backtransformY(y);
                 double ype=0, yme=0;
                 if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
                     double e=errorPlotFunction(xv, errorParams);
@@ -459,7 +378,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                 if (fillCurve) {
                     if (!first) filledPolygon<<QPointF(x, y0);
                     filledPolygon<<QPointF(x, y);
-                    if (!d->next) filledPolygon<<QPointF(x, y0);
+                    if (it+1==data.end()) filledPolygon<<QPointF(x, y0);
                 }
 
                 if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
@@ -476,20 +395,14 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
                     errorLineBottom<<QPointF(x, yme);
                 }
 
-    //            xold=x;
-    //            yold=y;
-    //            ypeold=ype;
-    //            ymeold=yme;
                 first=true;
             }
-            d=d->next;
         }
         if (drawErrorPolygons) {
             painter.save(); auto __finalpainterrpoly=JKQTPFinally([&painter]() {painter.restore();});
             painter.setBrush(eb);
             painter.setPen(np);
             QPolygonF poly;
-            //poly << QPointF(xold, ypeold) << QPointF(x, ype)<< QPointF(x, yme) << QPointF(xold, ymeold) ;
             for (int i=0; i<epTop.size(); i++) {
                 poly<<epTop[i];
             }
@@ -504,13 +417,11 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setBrush(b);
             painter.setPen(np);
             painter.drawPolygon(filledPolygon, Qt::OddEvenFill);
-
         }
         if (drawLine) {
             painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
             painter.drawPolyline(linePolygon);
-
         }
 
         if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
@@ -518,29 +429,10 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
             painter.setPen(ep);
             painter.drawPolyline(errorLineTop);
             painter.drawPolyline(errorLineBottom);
-
-
         }
 
 
-        QColor c=getLineColor();
-        c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
-        d=data;
-        if (displaySamplePoints) {
-            painter.save(); auto __finalpaintsamplepoints=JKQTPFinally([&painter]() {painter.restore();});
-            while (d!=nullptr) {
-                double xv=d->x;
-                double yv=d->f;
-                //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                    double x=transformX(xv);
-                    double y=transformY(yv);
-                    JKQTPPlotSymbol(painter, x, y, JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
-                }
-                d=d->next;
-            }
-
-        }
+        if (displaySamplePoints) drawSamplePoints(painter);
     }
     drawErrorsAfter(painter);
     //std::cout<<"plot done\n";
@@ -642,121 +534,93 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         eb.setStyle(errorFillStyle);
 
 
-        double xold=-1;
-        double yold=-1;
-        double xpeold=-1;
-        double xmeold=-1;
-
         double x0=transformX(0);
         if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
-    //    double y0=transformY(0);
-    //    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
         bool first=false;
-        doublePair* d=data;
+        QPolygonF filledPolygon, linePolygon, errorLineTop, errorLineBottom;
+        QList<QPointF> epTop, epBottom;
+        double xami=qMin(transformY(parent->getXAxis()->getMin()),transformY(parent->getXAxis()->getMax()));
+        double xama=qMax(transformY(parent->getXAxis()->getMin()),transformY(parent->getXAxis()->getMax()));
+        double dxpix=fabs(xama-xami);
+        xami=xami-2.0*dxpix;
+        xama=xama+2.0*dxpix;
+        for (auto it=data.begin(); it!=data.end(); ++it) {
+            const QPointF& d=*it;
+            double x=d.x();
+            double y=d.y();
 
-        while (d!=nullptr) {
-            double yv=d->x;
-            double xv=d->f;
             //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                double x=transformX(xv);
-                double y=transformY(yv);
+            if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                double xv=backtransformX(x);
+                double yv=backtransformY(y);
                 double xpe=0, xme=0;
                 if ((drawErrorLines || drawErrorPolygons) && (static_cast<bool>(errorPlotFunction))) {
-                    double e=errorPlotFunction(xv, errorParams);
+                    double e=errorPlotFunction(yv, errorParams);
                     xpe=transformX(xv+e);
                     xme=transformX(xv-e);
+                    xpe=qBound(xami, xpe, xama);
+                    xme=qBound(xami, xme, xama);
                 }
 
-                if (first) {
-                    double xl1=xold;
-                    double yl1=yold;
-                    double xl2=x;
-                    double yl2=y;
+                x=qBound(xami, x, xama);
 
-                    if (fillCurve) {
-                        painter.save(); auto __finalpaintfillcurve=JKQTPFinally([&painter]() {painter.restore();});
-                        painter.setBrush(b);
-                        painter.setPen(np);
-                        QPolygonF poly;
-                        poly << QPointF(xl1, yl1) << QPointF(xl2, yl2) << QPointF(x0, yl2) << QPointF(x0, yl1);
-                        painter.drawConvexPolygon(poly);
+                if (fillCurve) {
+                    if (!first) filledPolygon<<QPointF(x0, y);
+                    filledPolygon<<QPointF(x, y);
+                    if (it+1==data.end()) filledPolygon<<QPointF(x0, y);
+                }
 
-                        /*pfill.lineTo(x, y);
-                        if (d->next==nullptr) { // last datapoint
-                            pfill.lineTo(x, y0);
-                        }*/
-                    }
+                if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
+                    epTop<<QPointF(xpe, y);
+                    epBottom<<QPointF(xme, y);
+                }
 
-                    if (drawErrorPolygons && (static_cast<bool>(errorPlotFunction))) {
-                        painter.save(); auto __finalpainterrorpoly=JKQTPFinally([&painter]() {painter.restore();});
-                        painter.setBrush(eb);
-                        painter.setPen(np);
-                        QPolygonF poly;
-                        poly << QPointF(xpeold, yold) << QPointF(xpe, y)<< QPointF(xme, y) << QPointF(xmeold, yold) ;
-                        painter.drawConvexPolygon(poly);
+                if (drawLine) {
+                    linePolygon<<QPointF(x, y);
+                }
 
-                    }
+                if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
+                    errorLineTop<<QPointF(xpe, y);
+                    errorLineBottom<<QPointF(xme, y);
+                }
 
-                    if (drawLine) {
-                        painter.setPen(p);
-                        //pa.lineTo(x, y);
-                        painter.drawLine(QLineF(xl1, yl1, xl2, yl2));
-                    }
-
-                    if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
-                        painter.setPen(ep);
-                        painter.drawLine(QLineF(xpeold, yold, xpe, y));
-                        painter.drawLine(QLineF(xmeold, yold, xme, y));
-                    }
-
-                    //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
-                } /*else {
-                    if (drawLine) {
-                        pa.moveTo(x, y);
-                    }
-                    if (fillCurve) {
-                        pfill.moveTo(x, y0);
-                        pfill.lineTo(x, y);
-                    }
-                }*/
-                xold=x;
-                yold=y;
-                xpeold=xpe;
-                xmeold=xme;
                 first=true;
             }
-            d=d->next;
         }
-        /*if (fillCurve) {
-            pfill.closeSubpath();
-            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        if (drawErrorPolygons) {
+            painter.save(); auto __finalpainterrpoly=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setBrush(eb);
+            painter.setPen(np);
+            QPolygonF poly;
+            for (int i=0; i<epTop.size(); i++) {
+                poly<<epTop[i];
+            }
+            for (int i=epBottom.size()-1; i>=0; i--) {
+                poly<<epBottom[i];
+            }
+            painter.drawPolygon(poly, Qt::OddEvenFill);
+        }
+        if (fillCurve) {
+            painter.save(); auto __finalpaintfillc=JKQTPFinally([&painter]() {painter.restore();});
             painter.setBrush(b);
             painter.setPen(np);
-            painter.drawPath(pfill);
-
+            painter.drawPolygon(filledPolygon, Qt::OddEvenFill);
         }
-
         if (drawLine) {
+            painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
             painter.setPen(p);
-            painter.drawPath(pa);
-
-        }*/
-
-        QColor c=getLineColor();
-        c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
-        d=data;
-        if (displaySamplePoints) while (d!=nullptr) {
-            double yv=d->x;
-            double xv=d->f;
-            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                double x=transformX(xv);
-                double y=transformY(yv);
-                JKQTPPlotSymbol(painter, x, y, JKQTPCross, 6, 1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
-            }
-            d=d->next;
+            painter.drawPolyline(linePolygon);
         }
+
+        if (drawErrorLines && (static_cast<bool>(errorPlotFunction))) {
+            painter.save(); auto __finalpainterrline=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setPen(ep);
+            painter.drawPolyline(errorLineTop);
+            painter.drawPolyline(errorLineBottom);
+        }
+
+
+        if (displaySamplePoints) drawSamplePoints(painter);
     }
     drawErrorsAfter(painter);
     //std::cout<<"plot done\n";
@@ -764,7 +628,7 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 void JKQTPYFunctionLineGraph::createPlotData(bool collectParams) {
-    clearData();
+    data.clear();
     if (collectParams) collectParameters();
 
     if (parent==nullptr) return;
@@ -774,30 +638,14 @@ void JKQTPYFunctionLineGraph::createPlotData(bool collectParams) {
     if (plotFunction) func=std::bind(plotFunction, std::placeholders::_1, params);
     else if (simplePlotFunction) func=simplePlotFunction;
 
-    double ymin=parent->getYMin();
-    double ymax=parent->getYMax();
-    double delta0=(ymax-ymin)/static_cast<double>(minSamples);
+    const double ymin=parent->getYMin();
+    const double ymax=parent->getYMax();
 
-    // initially sample function
-    doublePair* d=new doublePair;
-    d->x=ymin;
-    d->f=func(ymin);
-    d->next=nullptr;
-    data=d;
-    for (double y=ymin+delta0; y<ymax; y=y+delta0) {
-        d->next = new doublePair;
-        d->next->x=y+(static_cast<double>(rand())/static_cast<double>(RAND_MAX)-0.5)*delta0/2.0;
-        d->next->f=func(d->next->x);
-        d->next->next=nullptr;
-        doublePair* dd=d;
-        d=d->next;
-        refine(dd, d);
-    }
-    d->next = new doublePair;
-    d->next->x=ymax;
-    d->next->f=func(ymax);
-    d->next->next=nullptr;
-    refine(d, d->next);
+    std::function<QPointF(double)> fTransformedFunc= std::bind([&](const JKQTPPlotElement* plot, double y) -> QPointF { return plot->transform(func(y), y); }, this, std::placeholders::_1);
+
+    JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
+    data=evaluator.evaluate(ymin, ymax);
+    data=JKQTPSimplyfyLineSegemnts(data);
 
 }
 
@@ -1094,14 +942,14 @@ void JKQTPXFunctionLineGraph::setErrorPlotFunction(const jkqtpPlotFunctionType &
 {
     errorSimplePlotFunction=jkqtpSimplePlotFunctionType();
     errorPlotFunction=__value;
-    clearData();
+    data.clear();
 }
 
 void JKQTPXFunctionLineGraph::setErrorPlotFunction(jkqtpPlotFunctionType &&__value)
 {
     errorSimplePlotFunction=jkqtpSimplePlotFunctionType();
     errorPlotFunction = std::move(__value);
-    clearData();
+    data.clear();
 }
 jkqtpPlotFunctionType JKQTPXFunctionLineGraph::getErrorPlotFunction() const
 {
@@ -1112,14 +960,14 @@ void JKQTPXFunctionLineGraph::setErrorPlotFunction(const jkqtpSimplePlotFunction
 {
     errorPlotFunction=jkqtpPlotFunctionType();
     errorSimplePlotFunction=__value;
-    clearData();
+    data.clear();
 }
 
 void JKQTPXFunctionLineGraph::setErrorPlotFunction(jkqtpSimplePlotFunctionType &&__value)
 {
     errorPlotFunction=jkqtpPlotFunctionType();
     errorSimplePlotFunction = std::move(__value);
-    clearData();
+    data.clear();
 }
 jkqtpSimplePlotFunctionType JKQTPXFunctionLineGraph::getErrorSimplePlotFunction() const
 {

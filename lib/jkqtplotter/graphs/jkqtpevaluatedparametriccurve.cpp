@@ -264,7 +264,7 @@ void JKQTPXYFunctionLineGraph::createPlotData(bool collectParams) {
     if (plotFunction) func=std::bind(plotFunction, std::placeholders::_1, params);
     else if (simplePlotFunction) func=simplePlotFunction;
 
-    jkqtpSimpleParametricCurveFunctionType fTransformedFunc= std::bind([&](const JKQTPXYFunctionLineGraph* plot, double t) -> QPointF { return plot->transform(func(t)); }, this, std::placeholders::_1);
+    jkqtpSimpleParametricCurveFunctionType fTransformedFunc= std::bind([&](const JKQTPPlotElement* plot, double t) -> QPointF { return plot->transform(func(t)); }, this, std::placeholders::_1);
 
     JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
     data=evaluator.evaluate(tmin, tmax);

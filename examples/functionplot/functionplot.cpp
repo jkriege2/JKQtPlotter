@@ -24,21 +24,20 @@ private:
     double a;
 };
 
-int main(int argc, char* argv[])
-{
-    QApplication app(argc, argv);
-
+template <class TFUNCGRAPH>
+void drawExample(QApplication& app, const QString& name) {
     // 1. create a window that contains a line-edit to edit a function
     //    and a JKQTPlotter to display the function, combine everything in a layout
-    QWidget mainWin;
-    JKQTPlotter* plot=new JKQTPlotter(&mainWin);
+    QWidget* mainWin=new QWidget();
+    mainWin->setWindowTitle(name);
+    JKQTPlotter* plot=new JKQTPlotter(mainWin);
     QVBoxLayout* layout=new QVBoxLayout;
-    mainWin.setLayout(layout);
+    mainWin->setLayout(layout);
     layout->addWidget(plot);
 
     // 2. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
     //    the function is defined as C++ inline function
-    JKQTPXFunctionLineGraph* func1=new JKQTPXFunctionLineGraph(plot);
+    TFUNCGRAPH* func1=new TFUNCGRAPH(plot);
     func1->setPlotFunctionFunctor([](double x) { return 0.2*x*x-0.015*x*x*x; });
     func1->setTitle("C++-inline function $0.2x^2-0.015x^3$");
     plot->addGraph(func1);
@@ -46,7 +45,7 @@ int main(int argc, char* argv[])
     // 3. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
     //    the function is again defined as C++ inline function, but now uses internal
     //    parameters (handed over to the function as a pointer to QVector<double>
-    JKQTPXFunctionLineGraph* func2=new JKQTPXFunctionLineGraph(plot);
+    TFUNCGRAPH* func2=new TFUNCGRAPH(plot);
     func2->setPlotFunctionFunctor([](double x, void* params) {
         QVector<double>* p=static_cast<QVector<double>*>(params);
         return p->at(0)*sin(2.0*JKQTPSTATISTICS_PI*x*p->at(1));
@@ -59,7 +58,7 @@ int main(int argc, char* argv[])
     // 4. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
     //    the function is again defined as C++ inline function, but now uses external
     //    parameters, which may have any type (here QMap<QString,double)
-    JKQTPXFunctionLineGraph* func3=new JKQTPXFunctionLineGraph(plot);
+    /*TFUNCGRAPH* func3=new TFUNCGRAPH(plot);
     func3->setPlotFunctionFunctor([](double x, void* params) {
         QMap<QString,double>* p=static_cast<QMap<QString,double>*>(params);
         return p->value("amplitude")*sin(2.0*JKQTPSTATISTICS_PI*x*p->value("frequency"));
@@ -70,32 +69,32 @@ int main(int argc, char* argv[])
     params3["frequency"]=0.3;
     func3->setParams(&params3);
     func3->setTitle("C++-inline function with ext. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
-    plot->addGraph(func3);
+    plot->addGraph(func3);*/
 
     // 5. of course the function may also be any C+ funtor object:
-    JKQTPXFunctionLineGraph* func4=new JKQTPXFunctionLineGraph(plot);
+    TFUNCGRAPH* func4=new TFUNCGRAPH(plot);
     func4->setPlotFunctionFunctor(SincSqr(-8));
     func4->setTitle("C++ functor $-8*\\sin^2(x)/x^2$");
     plot->addGraph(func4);
 
 
     // 6. now we use a JKQTPXFunctionLineGraph to draw a static C function
-    JKQTPXFunctionLineGraph* func5=new JKQTPXFunctionLineGraph(plot);
+    TFUNCGRAPH* func5=new TFUNCGRAPH(plot);
     func5->setPlotFunctionFunctor(&sinc);
     func5->setTitle("static C function $10*\\sin(x)/x$");
     plot->addGraph(func5);
 
     // 7. finally JKQTPXFunctionLineGraph defines a small set of common functions
-    JKQTPXFunctionLineGraph* func6=new JKQTPXFunctionLineGraph(plot);
-    func6->setSpecialFunction(JKQTPXFunctionLineGraph::Line);
+    TFUNCGRAPH* func6=new TFUNCGRAPH(plot);
+    func6->setSpecialFunction(TFUNCGRAPH::Line);
     // here we set offset p0=-1 and slope p1=1.5 of the line p0+p1*x
     func6->setParamsV(-1,1.5);
     func6->setTitle("special function: linear p_0=-1, p_1=1.5");
     plot->addGraph(func6);
 
     // 7. finally JKQTPXFunctionLineGraph defines a small set of common functions
-    JKQTPXFunctionLineGraph* func7=new JKQTPXFunctionLineGraph(plot);
-    func7->setSpecialFunction(JKQTPXFunctionLineGraph::Line);
+    TFUNCGRAPH* func7=new TFUNCGRAPH(plot);
+    func7->setSpecialFunction(TFUNCGRAPH::Line);
     // here we set offset p0=1 and slope p1=-1.5 of the line p0+p1*x by adding these into a column
     // in the internal datastore and then set that column as parameterColumn for the function graph
     QVector<double> params;
@@ -114,10 +113,20 @@ int main(int argc, char* argv[])
 
     // 4. scale the plot so the graph is contained
     plot->setXY(-10,10,-10,10);
+    plot->redrawPlot();
 
     // show window and make it a decent size
-    mainWin.show();
-    mainWin.resize(800,800);
+    mainWin->show();
+    mainWin->resize(800,800);
+}
+
+int main(int argc, char* argv[])
+{
+    QApplication app(argc, argv);
+
+    drawExample<JKQTPXFunctionLineGraph>(app, "functionplot: JKQTPXFunctionLineGraph");
+    drawExample<JKQTPYFunctionLineGraph>(app, "functionplot: JKQTPYFunctionLineGraph");
+
 
     return app.exec();
 }

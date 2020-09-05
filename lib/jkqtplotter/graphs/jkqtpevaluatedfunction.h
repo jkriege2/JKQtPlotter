@@ -25,6 +25,7 @@
 #include "jkqtplotter/graphs/jkqtpscatter.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
+#include "jkqtcommon/jkqtpgeometrytools.h"
 #include <functional>
 
 #ifndef jkqtpgraphsevaluatedfunction_H
@@ -67,7 +68,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
     \image html plot_functionplots.png
 
-    \see \ref JKQTPlotterFunctionPlots, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
+    \see \ref JKQTPlotterFunctionPlots, JKQTPAdaptiveFunctionGraphEvaluator, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
@@ -119,9 +120,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         /** \brief get the maximum and minimum y-value of the graph
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-
-        /** \brief clear the data sampled from the function. */
-        void clearData();
 
         /*! \brief set color, fill color and error color at the same time */
         void setColor(QColor c);
@@ -287,20 +285,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
     protected:
 
 
-        struct doublePair {
-            double x;
-            double f;
-            doublePair* next;
-        };
-        /** \brief a linked list holding the datapoints \f$ \left(x, y=f(x, \vec{p})\right) \f$ to be plotted */
-        doublePair* data;
+        /** \brief plot data calculated by createPlotData(), i.e. the datapoints \f$ \mbox{transform}\left(x, y=f(x, \vec{p})\right) \f$ to be plotted */
+        QVector<QPointF> data;
 
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData( bool collectParams=true);
         /** \brief ensure that current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) are stored in iparams and ierrorparams */
         virtual void collectParameters();
-        /** \brief refine datapoints on the function graph between two evaluations \a a and \a b */
-        void refine(doublePair* a, doublePair* b, unsigned int degree=0);
+
 
         /** \brief if set, the values from this datatsore column are used for the parameters \c p1 , \c p2 , \c p3 , ...  of the plot function */
         int parameterColumn;
@@ -366,6 +358,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         QVector<double> iparams;
         /** \brief internal storage for the current error function parameters for errorPlotFunction (which may stem from different sources, as direct data, a datastore column ...) */
         QVector<double> ierrorparams;
+        /** \brief draw all the sample points in data as small symbols */
+        void drawSamplePoints(JKQTPEnhancedPainter &painter);
 };
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$

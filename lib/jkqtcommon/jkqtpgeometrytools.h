@@ -193,7 +193,7 @@ JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPSplitPolylineIntoPoints(const QVecto
     \note this implements an incomplete algorithm
 
 */
-JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPSimplyfyLineSegemnts(const QVector<QPointF>& points, double maxConsecutiveAngleDegree=1.0);
+JKQTCOMMON_LIB_EXPORT QVector<QPointF> JKQTPSimplyfyLineSegemnts(const QVector<QPointF>& points, double maxConsecutiveAngleDegree=0.2);
 
 
 /** \brief cleans a polygon by uniting all consecutive points that were closer than distanceThreshold are united
