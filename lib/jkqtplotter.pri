@@ -27,6 +27,7 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpoverlaysbase.h \
                $$PWD/jkqtplotter/graphs/jkqtpboxplot.h \
                $$PWD/jkqtplotter/graphs/jkqtpboxplotstylingmixins.h \
+               $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunctionbase.h \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunction.h \
                $$PWD/jkqtplotter/graphs/jkqtpfilledcurve.h \
                $$PWD/jkqtplotter/graphs/jkqtpgeometric.h \
@@ -77,6 +78,7 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpoverlaysbase.cpp \
                $$PWD/jkqtplotter/graphs/jkqtpboxplot.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpboxplotstylingmixins.cpp  \
+               $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunctionbase.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunction.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpfilledcurve.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpgeometric.cpp  \

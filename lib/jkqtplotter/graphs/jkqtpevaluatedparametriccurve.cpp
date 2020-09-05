@@ -35,17 +35,11 @@
 
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(JKQTBasePlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPFunctionLineGraphBase(parent)
 {
     tmin=0.0;
     tmax=1.0;
     params=nullptr;
-    minSamples=100;
-    maxRefinementDegree=7;
-    slopeTolerance=0.005;
-    minPixelPerSample=32;
-    plotRefinement=true;
-    displaySamplePoints=false;
 
     initLineStyle(parent, parentPlotStyle);
 
@@ -268,7 +262,7 @@ void JKQTPXYFunctionLineGraph::createPlotData(bool collectParams) {
 
     JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
     data=evaluator.evaluate(tmin, tmax);
-
+    data=JKQTPSimplyfyLineSegemnts(data, dataCleanupMaxAllowedAngleDegree);
 }
 
 void JKQTPXYFunctionLineGraph::collectParameters()
@@ -326,17 +320,7 @@ void JKQTPXYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         }
 
 
-        QColor c=getLineColor();
-        c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
-        if (displaySamplePoints) {
-            painter.save(); auto __finalpaintsamplepoints=JKQTPFinally([&painter]() {painter.restore();});
-            for (const auto& d: data) {
-                if (JKQTPIsOKFloat(d.x()) && JKQTPIsOKFloat(d.x())) {
-                    JKQTPPlotSymbol(painter, d.x(), d.y(), JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
-                }
-            }
-
-        }
+        if (displaySamplePoints) drawSamplePoints(painter, getLineColor());
     }
     drawErrorsAfter(painter);
     //std::cout<<"plot done\n";
@@ -407,66 +391,6 @@ void JKQTPXYFunctionLineGraph::setParameterColumn(size_t __value) {
 
 QVector<double> JKQTPXYFunctionLineGraph::getInternalParams() const {
     return iparams;
-}
-
-void JKQTPXYFunctionLineGraph::setMinSamples(const unsigned int &__value)
-{
-    this->minSamples = __value;
-}
-
-unsigned int JKQTPXYFunctionLineGraph::getMinSamples() const
-{
-    return this->minSamples;
-}
-
-void JKQTPXYFunctionLineGraph::setMaxRefinementDegree(const unsigned int &__value)
-{
-    this->maxRefinementDegree = __value;
-}
-
-unsigned int JKQTPXYFunctionLineGraph::getMaxRefinementDegree() const
-{
-    return this->maxRefinementDegree;
-}
-
-void JKQTPXYFunctionLineGraph::setSlopeTolerance(double __value)
-{
-    this->slopeTolerance = __value;
-}
-
-double JKQTPXYFunctionLineGraph::getSlopeTolerance() const
-{
-    return this->slopeTolerance;
-}
-
-void JKQTPXYFunctionLineGraph::setMinPixelPerSample(double __value)
-{
-    this->minPixelPerSample = __value;
-}
-
-double JKQTPXYFunctionLineGraph::getMinPixelPerSample() const
-{
-    return this->minPixelPerSample;
-}
-
-void JKQTPXYFunctionLineGraph::setPlotRefinement(bool __value)
-{
-    this->plotRefinement = __value;
-}
-
-bool JKQTPXYFunctionLineGraph::getPlotRefinement() const
-{
-    return this->plotRefinement;
-}
-
-void JKQTPXYFunctionLineGraph::setDisplaySamplePoints(bool __value)
-{
-    this->displaySamplePoints = __value;
-}
-
-bool JKQTPXYFunctionLineGraph::getDisplaySamplePoints() const
-{
-    return this->displaySamplePoints;
 }
 
 

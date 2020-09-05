@@ -26,6 +26,7 @@
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpgeometrytools.h"
+#include "jkqtplotter/graphs/jkqtpevaluatedfunctionbase.h"
 #include <functional>
 
 #ifndef jkqtpgraphsevaluatedfunction_H
@@ -73,7 +74,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
     \see \ref JKQTPlotterFunctionPlots, JKQTPAdaptiveFunctionGraphEvaluator, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPFunctionLineGraphBase, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
 
@@ -180,30 +181,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         QVector<double> getInternalParams() const;
         /** \brief returns the currently set internal parameter vector */
         QVector<double> getInternalErrorParams() const;
-        /*! \copydoc minSamples */ 
-        void setMinSamples(const unsigned int & __value);
-        /*! \copydoc minSamples */ 
-        unsigned int getMinSamples() const;
-        /*! \copydoc maxRefinementDegree */ 
-        void setMaxRefinementDegree(const unsigned int & __value);
-        /*! \copydoc maxRefinementDegree */ 
-        unsigned int getMaxRefinementDegree() const;
-        /*! \copydoc slopeTolerance */ 
-        void setSlopeTolerance(double __value);
-        /*! \copydoc slopeTolerance */ 
-        double getSlopeTolerance() const;
-        /*! \copydoc minPixelPerSample */ 
-        void setMinPixelPerSample(double __value);
-        /*! \copydoc minPixelPerSample */ 
-        double getMinPixelPerSample() const;
-        /*! \copydoc dataCleanupMaxAllowedAngleDegree */
-        void setDataCleanupMaxAllowedAngleDegree(double __value);
-        /*! \copydoc dataCleanupMaxAllowedAngleDegree */
-        double getDataCleanupMaxAllowedAngleDegree() const;
-        /*! \copydoc displaySamplePoints */ 
-        void setDisplaySamplePoints(bool __value);
-        /*! \copydoc displaySamplePoints */ 
-        bool getDisplaySamplePoints() const;
+
         /*! \copydoc drawErrorPolygons */ 
         void setDrawErrorPolygons(bool __value);
         /*! \copydoc drawErrorPolygons */ 
@@ -288,11 +266,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
     protected:
 
 
-        /** \brief plot data calculated by createPlotData(), i.e. the datapoints \f$ \mbox{transform}\left(x, y=f(x, \vec{p})\right) \f$ to be plotted */
-        QVector<QPointF> data;
-
         /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData( bool collectParams=true);
+        virtual void createPlotData( bool collectParams=true) override;
         /** \brief ensure that current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) are stored in iparams and ierrorparams */
         virtual void collectParameters();
 
@@ -314,24 +289,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         SpecialFunction functionType;
         /** \brief pointer to the parameters supplied to the plotting funtion */
         void* params;
-        /** \brief the minimum number of points to evaluate the function at */
-        unsigned int minSamples;
-        /** \brief the maximum number of recursive refinement steps
-         *
-         * each step bisects the interval \f$ [a, b] \f$ into two halfes. So the maximum number
-         * of points plotted at all are thus:
-         *  \f[ \mbox{minSamples} \cdot 2^{\mbox{maxRefinementDegree}} \f]
-         */
-        unsigned int maxRefinementDegree;
-        /** \brief the tolerance for the difference of two subsequent slopes */
-        double slopeTolerance;
-        /** \brief create one sample at least every \a minPixelPerSample pixels */
-        double minPixelPerSample;
-        /** \brief in the clean-up step of plot-data creation, a point is removed from the data, if
-         *         it caused its neighboring line-segments to form an angle less than this value, given in degrees. */
-        double dataCleanupMaxAllowedAngleDegree;
-        /** \brief if true [default: off] display the points where the function has been sampled */
-        bool displaySamplePoints;
+
+
         /** \brief indicates whether an error polygon should be drawn */
         bool drawErrorPolygons;
         /** \brief indicates whether error lines should be drawn */
@@ -362,8 +321,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         QVector<double> iparams;
         /** \brief internal storage for the current error function parameters for errorPlotFunction (which may stem from different sources, as direct data, a datastore column ...) */
         QVector<double> ierrorparams;
-        /** \brief draw all the sample points in data as small symbols */
-        void drawSamplePoints(JKQTPEnhancedPainter &painter);
 };
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$

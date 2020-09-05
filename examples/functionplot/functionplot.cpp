@@ -5,6 +5,7 @@
  */
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QVector>
 #include <QMap>
 #include "jkqtplotter/jkqtplotter.h"
@@ -26,7 +27,7 @@ private:
 
 template <class TFUNCGRAPH>
 void drawExample(QApplication& app, const QString& name) {
-    // 1. create a window that contains a line-edit to edit a function
+    // 1.1 create a window that contains a line-edit to edit a function
     //    and a JKQTPlotter to display the function, combine everything in a layout
     QWidget* mainWin=new QWidget();
     mainWin->setWindowTitle(name);
@@ -34,12 +35,20 @@ void drawExample(QApplication& app, const QString& name) {
     QVBoxLayout* layout=new QVBoxLayout;
     mainWin->setLayout(layout);
     layout->addWidget(plot);
+    // 1.2 add checkbox that allows to switch the display of sample points
+    QCheckBox* chkShowSamples=new QCheckBox(app.tr("display sample points"));
+    chkShowSamples->setChecked(false);
+    layout->addWidget(chkShowSamples);
 
     // 2. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
     //    the function is defined as C++ inline function
     TFUNCGRAPH* func1=new TFUNCGRAPH(plot);
     func1->setPlotFunctionFunctor([](double x) { return 0.2*x*x-0.015*x*x*x; });
     func1->setTitle("C++-inline function $0.2x^2-0.015x^3$");
+    QObject::connect(chkShowSamples, &QCheckBox::toggled, [=](bool en) {
+        func1->setDisplaySamplePoints(en);
+        plot->redrawPlot();
+    });
     plot->addGraph(func1);
 
     // 3. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
@@ -53,6 +62,10 @@ void drawExample(QApplication& app, const QString& name) {
     // here we set the parameters p0, p1
     func2->setParamsV(5, 0.2);
     func2->setTitle("C++-inline function with int. params $p_0\\cdot\\sin(x*2.0*\\pi\\cdot p_1)$");
+    QObject::connect(chkShowSamples, &QCheckBox::toggled, [=](bool en) {
+        func2->setDisplaySamplePoints(en);
+        plot->redrawPlot();
+    });
     plot->addGraph(func2);
 
     // 4. now we add a JKQTPXFunctionLineGraph object, which will draw a simple function
@@ -75,6 +88,10 @@ void drawExample(QApplication& app, const QString& name) {
     TFUNCGRAPH* func4=new TFUNCGRAPH(plot);
     func4->setPlotFunctionFunctor(SincSqr(-8));
     func4->setTitle("C++ functor $-8*\\sin^2(x)/x^2$");
+    QObject::connect(chkShowSamples, &QCheckBox::toggled, [=](bool en) {
+        func4->setDisplaySamplePoints(en);
+        plot->redrawPlot();
+    });
     plot->addGraph(func4);
 
 
@@ -82,6 +99,10 @@ void drawExample(QApplication& app, const QString& name) {
     TFUNCGRAPH* func5=new TFUNCGRAPH(plot);
     func5->setPlotFunctionFunctor(&sinc);
     func5->setTitle("static C function $10*\\sin(x)/x$");
+    QObject::connect(chkShowSamples, &QCheckBox::toggled, [=](bool en) {
+        func5->setDisplaySamplePoints(en);
+        plot->redrawPlot();
+    });
     plot->addGraph(func5);
 
     // 7. finally JKQTPXFunctionLineGraph defines a small set of common functions
@@ -90,6 +111,10 @@ void drawExample(QApplication& app, const QString& name) {
     // here we set offset p0=-1 and slope p1=1.5 of the line p0+p1*x
     func6->setParamsV(-1,1.5);
     func6->setTitle("special function: linear p_0=-1, p_1=1.5");
+    QObject::connect(chkShowSamples, &QCheckBox::toggled, [=](bool en) {
+        func6->setDisplaySamplePoints(en);
+        plot->redrawPlot();
+    });
     plot->addGraph(func6);
 
     // 7. finally JKQTPXFunctionLineGraph defines a small set of common functions
@@ -102,6 +127,10 @@ void drawExample(QApplication& app, const QString& name) {
     size_t paramCol=plot->getDatastore()->addCopiedColumn(params);
     func7->setParameterColumn(paramCol);
     func7->setTitle("special function: linear p_0=1, p_1=-1.5");
+    QObject::connect(chkShowSamples, &QCheckBox::toggled, [=](bool en) {
+        func7->setDisplaySamplePoints(en);
+        plot->redrawPlot();
+    });
     plot->addGraph(func7);
 
 

@@ -34,19 +34,12 @@
 
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPFunctionLineGraphBase(parent)
 {
     functionType=SpecialFunction::UserFunction;
     drawLine=true;
     fillCurve=false;
     params=nullptr;
-    minSamples=50;
-    maxRefinementDegree=5;
-    slopeTolerance=0.005;
-    minPixelPerSample=32;
-    dataCleanupMaxAllowedAngleDegree=0.2;
-    displaySamplePoints=false;
-    data.clear();
 
     initLineStyle(parent, parentPlotStyle);
     initFillStyle(parent, parentPlotStyle);
@@ -301,16 +294,6 @@ void JKQTPXFunctionLineGraph::collectParameters()
     }
 }
 
-void JKQTPXFunctionLineGraph::drawSamplePoints(JKQTPEnhancedPainter& painter) {
-    QColor c=getLineColor();
-    c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
-    painter.save(); auto __finalpaintsamplepoints=JKQTPFinally([&painter]() {painter.restore();});
-    for (const auto& d: data) {
-        if (JKQTPIsOKFloat(d.x()) && JKQTPIsOKFloat(d.y())) {
-            JKQTPPlotSymbol(painter, d.x(), d.y(), JKQTPCross, 6,1*parent->getLineWidthMultiplier(), c, QColor(Qt::transparent));
-        }
-    }
-}
 
 
 void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
@@ -432,7 +415,7 @@ void JKQTPXFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         }
 
 
-        if (displaySamplePoints) drawSamplePoints(painter);
+        if (displaySamplePoints) drawSamplePoints(painter, getLineColor());
     }
     drawErrorsAfter(painter);
     //std::cout<<"plot done\n";
@@ -620,7 +603,7 @@ void JKQTPYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
         }
 
 
-        if (displaySamplePoints) drawSamplePoints(painter);
+        if (displaySamplePoints) drawSamplePoints(painter, getLineColor());
     }
     drawErrorsAfter(painter);
     //std::cout<<"plot done\n";
@@ -856,66 +839,6 @@ QVector<double> JKQTPXFunctionLineGraph::getInternalParams() const {
 }
 QVector<double> JKQTPXFunctionLineGraph::getInternalErrorParams() const {
     return ierrorparams;
-}
-
-void JKQTPXFunctionLineGraph::setMinSamples(const unsigned int &__value)
-{
-    this->minSamples = __value;
-}
-
-unsigned int JKQTPXFunctionLineGraph::getMinSamples() const
-{
-    return this->minSamples;
-}
-
-void JKQTPXFunctionLineGraph::setMaxRefinementDegree(const unsigned int &__value)
-{
-    this->maxRefinementDegree = __value;
-}
-
-unsigned int JKQTPXFunctionLineGraph::getMaxRefinementDegree() const
-{
-    return this->maxRefinementDegree;
-}
-
-void JKQTPXFunctionLineGraph::setSlopeTolerance(double __value)
-{
-    this->slopeTolerance = __value;
-}
-
-double JKQTPXFunctionLineGraph::getSlopeTolerance() const
-{
-    return this->slopeTolerance;
-}
-
-void JKQTPXFunctionLineGraph::setMinPixelPerSample(double __value)
-{
-    this->minPixelPerSample = __value;
-}
-
-double JKQTPXFunctionLineGraph::getMinPixelPerSample() const
-{
-    return this->minPixelPerSample;
-}
-
-void JKQTPXFunctionLineGraph::setDataCleanupMaxAllowedAngleDegree(double __value)
-{
-    dataCleanupMaxAllowedAngleDegree=__value;
-}
-
-double JKQTPXFunctionLineGraph::getDataCleanupMaxAllowedAngleDegree() const
-{
-    return dataCleanupMaxAllowedAngleDegree;
-}
-
-void JKQTPXFunctionLineGraph::setDisplaySamplePoints(bool __value)
-{
-    this->displaySamplePoints = __value;
-}
-
-bool JKQTPXFunctionLineGraph::getDisplaySamplePoints() const
-{
-    return this->displaySamplePoints;
 }
 
 void JKQTPXFunctionLineGraph::setDrawErrorPolygons(bool __value)
