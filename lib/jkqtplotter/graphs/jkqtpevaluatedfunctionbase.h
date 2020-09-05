@@ -52,18 +52,18 @@
 
     \see JKQTPAdaptiveFunctionGraphEvaluator, JKQTPXFunctionLineGraph, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPFunctionLineGraphBase: public JKQTPGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionGraphBase: public JKQTPGraph {
         Q_OBJECT
     public:
 
         /** \brief class constructor */
-        JKQTPFunctionLineGraphBase(JKQTBasePlotter* parent=nullptr);
+        JKQTPEvaluatedFunctionGraphBase(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPFunctionLineGraphBase(JKQTPlotter* parent);
+        JKQTPEvaluatedFunctionGraphBase(JKQTPlotter* parent);
         
         /** \brief class destructor */
-        virtual ~JKQTPFunctionLineGraphBase() ;
+        virtual ~JKQTPEvaluatedFunctionGraphBase() ;
 
 
         /*! \copydoc minSamples */ 

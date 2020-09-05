@@ -88,7 +88,7 @@ typedef std::function<QPointF(double)> jkqtpSimpleParametricCurveFunctionType;
 
     \see \ref JKQTPlotterEvalCurves , JKQTPAdaptiveFunctionGraphEvaluator, JKQTPXFunctionLineGraph, JKQTPYFunctionLineGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXYFunctionLineGraph: public JKQTPFunctionLineGraphBase, public JKQTPGraphLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYFunctionLineGraph: public JKQTPEvaluatedFunctionGraphBase, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
 

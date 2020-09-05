@@ -35,7 +35,7 @@
 
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(JKQTBasePlotter* parent):
-    JKQTPFunctionLineGraphBase(parent)
+    JKQTPEvaluatedFunctionGraphBase(parent)
 {
     tmin=0.0;
     tmax=1.0;

@@ -34,7 +34,7 @@
 
 
 JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
-    JKQTPFunctionLineGraphBase(parent)
+    JKQTPEvaluatedFunctionGraphBase(parent)
 {
     functionType=SpecialFunction::UserFunction;
     drawLine=true;

@@ -33,7 +33,7 @@
 
 
 
-JKQTPFunctionLineGraphBase::JKQTPFunctionLineGraphBase(JKQTBasePlotter* parent):
+JKQTPEvaluatedFunctionGraphBase::JKQTPEvaluatedFunctionGraphBase(JKQTBasePlotter* parent):
     JKQTPGraph(parent)
 {
     minSamples=50;
@@ -46,19 +46,19 @@ JKQTPFunctionLineGraphBase::JKQTPFunctionLineGraphBase(JKQTBasePlotter* parent):
 
 }
 
-JKQTPFunctionLineGraphBase::JKQTPFunctionLineGraphBase(JKQTPlotter* parent):
-    JKQTPFunctionLineGraphBase(parent->getPlotter())
+JKQTPEvaluatedFunctionGraphBase::JKQTPEvaluatedFunctionGraphBase(JKQTPlotter* parent):
+    JKQTPEvaluatedFunctionGraphBase(parent->getPlotter())
 {
 
 }
 
-JKQTPFunctionLineGraphBase::~JKQTPFunctionLineGraphBase()
+JKQTPEvaluatedFunctionGraphBase::~JKQTPEvaluatedFunctionGraphBase()
 {
     data.clear();
 }
 
 
-void JKQTPFunctionLineGraphBase::drawSamplePoints(JKQTPEnhancedPainter& painter, QColor graphColor) {
+void JKQTPEvaluatedFunctionGraphBase::drawSamplePoints(JKQTPEnhancedPainter& painter, QColor graphColor) {
     QColor c=graphColor;
     c.setHsv(fmod(c.hue()+90, 360), c.saturation(), c.value());
     painter.save(); auto __finalpaintsamplepoints=JKQTPFinally([&painter]() {painter.restore();});
@@ -71,62 +71,62 @@ void JKQTPFunctionLineGraphBase::drawSamplePoints(JKQTPEnhancedPainter& painter,
 
 
 
-void JKQTPFunctionLineGraphBase::setMinSamples(const unsigned int &__value)
+void JKQTPEvaluatedFunctionGraphBase::setMinSamples(const unsigned int &__value)
 {
     this->minSamples = __value;
 }
 
-unsigned int JKQTPFunctionLineGraphBase::getMinSamples() const
+unsigned int JKQTPEvaluatedFunctionGraphBase::getMinSamples() const
 {
     return this->minSamples;
 }
 
-void JKQTPFunctionLineGraphBase::setMaxRefinementDegree(const unsigned int &__value)
+void JKQTPEvaluatedFunctionGraphBase::setMaxRefinementDegree(const unsigned int &__value)
 {
     this->maxRefinementDegree = __value;
 }
 
-unsigned int JKQTPFunctionLineGraphBase::getMaxRefinementDegree() const
+unsigned int JKQTPEvaluatedFunctionGraphBase::getMaxRefinementDegree() const
 {
     return this->maxRefinementDegree;
 }
 
-void JKQTPFunctionLineGraphBase::setSlopeTolerance(double __value)
+void JKQTPEvaluatedFunctionGraphBase::setSlopeTolerance(double __value)
 {
     this->slopeTolerance = __value;
 }
 
-double JKQTPFunctionLineGraphBase::getSlopeTolerance() const
+double JKQTPEvaluatedFunctionGraphBase::getSlopeTolerance() const
 {
     return this->slopeTolerance;
 }
 
-void JKQTPFunctionLineGraphBase::setMinPixelPerSample(double __value)
+void JKQTPEvaluatedFunctionGraphBase::setMinPixelPerSample(double __value)
 {
     this->minPixelPerSample = __value;
 }
 
-double JKQTPFunctionLineGraphBase::getMinPixelPerSample() const
+double JKQTPEvaluatedFunctionGraphBase::getMinPixelPerSample() const
 {
     return this->minPixelPerSample;
 }
 
-void JKQTPFunctionLineGraphBase::setDataCleanupMaxAllowedAngleDegree(double __value)
+void JKQTPEvaluatedFunctionGraphBase::setDataCleanupMaxAllowedAngleDegree(double __value)
 {
     dataCleanupMaxAllowedAngleDegree=__value;
 }
 
-double JKQTPFunctionLineGraphBase::getDataCleanupMaxAllowedAngleDegree() const
+double JKQTPEvaluatedFunctionGraphBase::getDataCleanupMaxAllowedAngleDegree() const
 {
     return dataCleanupMaxAllowedAngleDegree;
 }
 
-void JKQTPFunctionLineGraphBase::setDisplaySamplePoints(bool __value)
+void JKQTPEvaluatedFunctionGraphBase::setDisplaySamplePoints(bool __value)
 {
     this->displaySamplePoints = __value;
 }
 
-bool JKQTPFunctionLineGraphBase::getDisplaySamplePoints() const
+bool JKQTPEvaluatedFunctionGraphBase::getDisplaySamplePoints() const
 {
     return this->displaySamplePoints;
 }
