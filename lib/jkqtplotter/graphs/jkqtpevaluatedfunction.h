@@ -56,13 +56,16 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$
     \ingroup jkqtplotter_functiongraphs
 
-    This class implements an intelligent plotting algorithm for functions. It starts by sampling
-    the function at minSamples positions. Then each function interval is bisected recursively if
+    This class uses the intelligent plotting algorithm for functions, implemented in JKQTPAdaptiveFunctionGraphEvaluator.
+    It starts by sampling the function at minSamples positions. Then each function interval is bisected recursively if
     necessary. To do so the function is evaluated at the mid point and the slopes \f$ \alpha_{\mbox{left}} \f$
     and \f$ \alpha_{\mbox{right}} \f$ of the two linear segments are compared. the midpoint is added
     to the graph if \f[ \left|\alpha_{\mbox{right}}-\alpha_{\mbox{left}}\right|>\mbox{slopeTolerance} \f]
     In addition all sampling points except minimum and maximum are beeing shifted by a random fraction their
     distance to the other points. This helps to prevent beats when sampling periodic functions.
+
+    Finally the obtained data is cleaned up to reduce the amount of points, by deleting a point, when it leads to an
+    angle between consecutive line-segments of less than dataCleanupMaxAllowedAngleDegree.
 
     The following image shows some example graphs:
 
@@ -193,10 +196,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         void setMinPixelPerSample(double __value);
         /*! \copydoc minPixelPerSample */ 
         double getMinPixelPerSample() const;
-        /*! \copydoc plotRefinement */ 
-        void setPlotRefinement(bool __value);
-        /*! \copydoc plotRefinement */ 
-        bool getPlotRefinement() const;
+        /*! \copydoc dataCleanupMaxAllowedAngleDegree */
+        void setDataCleanupMaxAllowedAngleDegree(double __value);
+        /*! \copydoc dataCleanupMaxAllowedAngleDegree */
+        double getDataCleanupMaxAllowedAngleDegree() const;
         /*! \copydoc displaySamplePoints */ 
         void setDisplaySamplePoints(bool __value);
         /*! \copydoc displaySamplePoints */ 
@@ -324,8 +327,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPGraph, public 
         double slopeTolerance;
         /** \brief create one sample at least every \a minPixelPerSample pixels */
         double minPixelPerSample;
-        /** \brief switch on or off [default: on] the plot refinement algorithm */
-        bool plotRefinement;
+        /** \brief in the clean-up step of plot-data creation, a point is removed from the data, if
+         *         it caused its neighboring line-segments to form an angle less than this value, given in degrees. */
+        double dataCleanupMaxAllowedAngleDegree;
         /** \brief if true [default: off] display the points where the function has been sampled */
         bool displaySamplePoints;
         /** \brief indicates whether an error polygon should be drawn */

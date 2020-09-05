@@ -44,7 +44,7 @@ JKQTPXFunctionLineGraph::JKQTPXFunctionLineGraph(JKQTBasePlotter* parent):
     maxRefinementDegree=5;
     slopeTolerance=0.005;
     minPixelPerSample=32;
-    plotRefinement=true;
+    dataCleanupMaxAllowedAngleDegree=0.2;
     displaySamplePoints=false;
     data.clear();
 
@@ -253,7 +253,7 @@ void JKQTPXFunctionLineGraph::createPlotData(bool collectParams) {
 
     JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
     data=evaluator.evaluate(xmin, xmax);
-    data=JKQTPSimplyfyLineSegemnts(data);
+    data=JKQTPSimplyfyLineSegemnts(data, dataCleanupMaxAllowedAngleDegree);
 }
 
 void JKQTPXFunctionLineGraph::collectParameters()
@@ -645,7 +645,7 @@ void JKQTPYFunctionLineGraph::createPlotData(bool collectParams) {
 
     JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
     data=evaluator.evaluate(ymin, ymax);
-    data=JKQTPSimplyfyLineSegemnts(data);
+    data=JKQTPSimplyfyLineSegemnts(data, dataCleanupMaxAllowedAngleDegree);
 
 }
 
@@ -898,14 +898,14 @@ double JKQTPXFunctionLineGraph::getMinPixelPerSample() const
     return this->minPixelPerSample;
 }
 
-void JKQTPXFunctionLineGraph::setPlotRefinement(bool __value)
+void JKQTPXFunctionLineGraph::setDataCleanupMaxAllowedAngleDegree(double __value)
 {
-    this->plotRefinement = __value;
+    dataCleanupMaxAllowedAngleDegree=__value;
 }
 
-bool JKQTPXFunctionLineGraph::getPlotRefinement() const
+double JKQTPXFunctionLineGraph::getDataCleanupMaxAllowedAngleDegree() const
 {
-    return this->plotRefinement;
+    return dataCleanupMaxAllowedAngleDegree;
 }
 
 void JKQTPXFunctionLineGraph::setDisplaySamplePoints(bool __value)
