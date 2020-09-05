@@ -29,21 +29,17 @@
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/jkqtplotter.h"
 
-#define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
 
 
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(JKQTBasePlotter* parent):
-    JKQTPEvaluatedFunctionGraphBase(parent)
+    JKQTPEvaluatedFunctionWithParamsGraphBase(parent)
 {
     tmin=0.0;
     tmax=1.0;
-    params=nullptr;
 
     initLineStyle(parent, parentPlotStyle);
-
-    parameterColumn=-1;
 
 }
 
@@ -166,19 +162,6 @@ jkqtpSimpleParametricCurveFunctionType JKQTPXYFunctionLineGraph::getSimplePlotFu
     return simplePlotFunction;
 }
 
-void JKQTPXYFunctionLineGraph::setParams(void *__value)
-{
-    if (this->params != __value) {
-        this->params = __value;
-        data.clear();
-    }
-}
-
-void *JKQTPXYFunctionLineGraph::getParams() const
-{
-    return this->params;
-}
-
 
 void JKQTPXYFunctionLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -196,53 +179,6 @@ QColor JKQTPXYFunctionLineGraph::getKeyLabelColor() const {
     return getLineColor();
 }
 
-bool JKQTPXYFunctionLineGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
-{
-    if (data.size()==0) createPlotData();
-    if (data.size()>0){
-        bool start=true;
-        minx=0;
-        maxx=0;
-        smallestGreaterZero=0;
-
-        for (auto const& d: data) {
-            if (JKQTPIsOKFloat(d.x())) {
-                if (start || d.x()>maxx) maxx=d.x();
-                if (start || d.x()<minx) minx=d.x();
-                double xvsgz;
-                xvsgz=d.x(); SmallestGreaterZeroCompare_xvsgz();
-                start=false;
-            }
-        }
-        return !start;
-    } else {
-        smallestGreaterZero=minx=maxx=0; return false;
-    }
-}
-
-bool JKQTPXYFunctionLineGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
-{
-    if (data.size()==0) createPlotData();
-    if (data.size()>0){
-        bool start=true;
-        miny=0;
-        maxy=0;
-        smallestGreaterZero=0;
-
-        for (auto const& d: data) {
-            if (JKQTPIsOKFloat(d.y())) {
-                if (start || d.y()>maxy) maxy=d.y();
-                if (start || d.y()<miny) miny=d.y();
-                double xvsgz;
-                xvsgz=d.x(); SmallestGreaterZeroCompare_xvsgz();
-                start=false;
-            }
-        }
-        return !start;
-    } else {
-        smallestGreaterZero=miny=maxy=0; return false;
-    }
-}
 
 void JKQTPXYFunctionLineGraph::createPlotData(bool collectParams) {
 #ifdef JKQTBP_AUTOTIMER
@@ -255,7 +191,7 @@ void JKQTPXYFunctionLineGraph::createPlotData(bool collectParams) {
     if (!plotFunction && !simplePlotFunction) return;
 
     jkqtpSimpleParametricCurveFunctionType func;
-    if (plotFunction) func=std::bind(plotFunction, std::placeholders::_1, params);
+    if (plotFunction) func=std::bind(plotFunction, std::placeholders::_1, getInternalParams());
     else if (simplePlotFunction) func=simplePlotFunction;
 
     jkqtpSimpleParametricCurveFunctionType fTransformedFunc= std::bind([&](const JKQTPPlotElement* plot, double t) -> QPointF { return plot->transform(func(t)); }, this, std::placeholders::_1);
@@ -263,33 +199,6 @@ void JKQTPXYFunctionLineGraph::createPlotData(bool collectParams) {
     JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
     data=evaluator.evaluate(tmin, tmax);
     data=JKQTPSimplyfyLineSegemnts(data, dataCleanupMaxAllowedAngleDegree);
-}
-
-void JKQTPXYFunctionLineGraph::collectParameters()
-{
-    if (parent && parameterColumn>=0) {
-        iparams.clear();
-        JKQTPDatastore* datastore=parent->getDatastore();
-        int imin=0;
-        int imax=static_cast<int>(datastore->getRows(parameterColumn));
-
-        for (int i=imin; i<imax; i++) {
-            double xv=datastore->get(parameterColumn,i);
-            iparams<<xv;
-        }
-        //qDebug()<<"iparams_beforeclean:";
-        //for (int i=0; i<iparams.size(); i++) qDebug()<<iparams[i];
-        int i=iparams.size()-1;
-        while (i>=0 && !JKQTPIsOKFloat(iparams[i])) {
-            iparams.remove(i,1);
-            i--;
-        }
-
-        //qDebug()<<"iparams:";
-        //for (i=0; i<iparams.size(); i++) qDebug()<<iparams[i];
-
-        params=&iparams;
-    }
 }
 
 
@@ -327,77 +236,6 @@ void JKQTPXYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
 }
 
 
-
-
-
-void JKQTPXYFunctionLineGraph::setParams(const QVector<double> &params)
-{
-    iparams=params;
-    setParams(&iparams);
-}
-
-void JKQTPXYFunctionLineGraph::setCopiedParams(const double *params, int N)
-{
-    QVector<double> v;
-    for (int i=0; i<N; i++) { v<<params[i]; }
-    setParams(v);
-}
-
-void JKQTPXYFunctionLineGraph::setParamsV(double p1) {
-    QVector<double> p;
-    p<<p1;
-    setParams(p);
-}
-
-void JKQTPXYFunctionLineGraph::setParamsV(double p1, double p2) {
-    QVector<double> p;
-    p<<p1<<p2;
-    setParams(p);
-}
-
-void JKQTPXYFunctionLineGraph::setParamsV(double p1, double p2, double p3) {
-    QVector<double> p;
-    p<<p1<<p2<<p3;
-    setParams(p);
-}
-
-void JKQTPXYFunctionLineGraph::setParamsV(double p1, double p2, double p3, double p4) {
-    QVector<double> p;
-    p<<p1<<p2<<p3<<p4;
-    setParams(p);
-}
-
-void JKQTPXYFunctionLineGraph::setParamsV(double p1, double p2, double p3, double p4, double p5) {
-    QVector<double> p;
-    p<<p1<<p2<<p3<<p4<<p5;
-    setParams(p);
-}
-
-
-void JKQTPXYFunctionLineGraph::setParameterColumn(int __value)
-{
-    this->parameterColumn = __value;
-}
-
-int JKQTPXYFunctionLineGraph::getParameterColumn() const
-{
-    return this->parameterColumn;
-}
-
-void JKQTPXYFunctionLineGraph::setParameterColumn(size_t __value) {
-    this->parameterColumn = static_cast<int>(__value);
-}
-
-
-QVector<double> JKQTPXYFunctionLineGraph::getInternalParams() const {
-    return iparams;
-}
-
-
-bool JKQTPXYFunctionLineGraph::usesColumn(int c) const
-{
-    return (c==parameterColumn);
-}
 
 double JKQTPXYFunctionLineGraph::getTMin() const
 {

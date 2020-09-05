@@ -43,7 +43,7 @@
     influence its result. Parameters are given as a pointer to some memory location. The function has to
     know on its own how to interpret these.
 */
-typedef std::function<QPointF(double, void*)> jkqtpParametricCurveFunctionType;
+typedef std::function<QPointF(double, const QVector<double>)> jkqtpParametricCurveFunctionType;
 
 /*! \brief simplified type of functions (without parameters) that may be plotted by JKQTPXYFunctionLineGraph
     \ingroup jkqtplotter_functiongraphs
@@ -88,7 +88,7 @@ typedef std::function<QPointF(double)> jkqtpSimpleParametricCurveFunctionType;
 
     \see \ref JKQTPlotterEvalCurves , JKQTPAdaptiveFunctionGraphEvaluator, JKQTPXFunctionLineGraph, JKQTPYFunctionLineGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXYFunctionLineGraph: public JKQTPEvaluatedFunctionGraphBase, public JKQTPGraphLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYFunctionLineGraph: public JKQTPEvaluatedFunctionWithParamsGraphBase, public JKQTPGraphLineStyleMixin {
         Q_OBJECT
     public:
 
@@ -124,16 +124,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYFunctionLineGraph: public JKQTPEvaluatedFunc
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * This functions returns 0 for both parameters, so that the plotter uses the predefined
-         * min and max values.
-         */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-
         /** \brief sets a functor to be plotted
          *
          * \see plotFunction
@@ -159,41 +149,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYFunctionLineGraph: public JKQTPEvaluatedFunc
         /*! \copydoc simplePlotFunction */ \
         virtual jkqtpSimpleParametricCurveFunctionType getSimplePlotFunction () const;
 
-        /*! \copydoc params */ 
-        virtual void setParams(void* __value);
-        /*! \copydoc params */ 
-        void* getParams() const;
-        /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
-        virtual void setParams(const QVector<double>& params);
-        /** \brief sets the params from a copy of the given array of length \a N */
-        void setCopiedParams(const double* params, int N);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1} */
-        void setParamsV(double p1);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2} */
-        void setParamsV(double p1, double p2);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3} */
-        void setParamsV(double p1, double p2, double p3);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3,p4} */
-        void setParamsV(double p1, double p2, double p3, double p4);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3,p4,p5} */
-        void setParamsV(double p1, double p2, double p3, double p4, double p5);
-
-        /** \brief returns the currently set internal parameter vector */
-        QVector<double> getInternalParams() const;
-
-
-
-        /*! \copydoc parameterColumn */ 
-        void setParameterColumn(int __value);
-        /*! \copydoc parameterColumn */ 
-        int getParameterColumn() const;
-        /*! \copydoc parameterColumn */ 
-        void setParameterColumn (size_t __value);
-
-
-        /** \copydoc JKQTPGraph::usesColumn() */
-        virtual bool usesColumn(int c) const override;
-
 
         /*! \copydoc tmin */
         double getTMin() const;
@@ -216,21 +171,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYFunctionLineGraph: public JKQTPEvaluatedFunc
         double tmax;
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData( bool collectParams=true) override;
-        /** \brief ensure that current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) are stored in iparams */
-        virtual void collectParameters() ;
 
-        /** \brief if set, the values from this datatsore column are used for the parameters \c p1 , \c p2 , \c p3 , ...  of the plot function */
-        int parameterColumn;
 
         /** \brief the function to be plotted */
         jkqtpParametricCurveFunctionType plotFunction;
         /** \brief a simple function to be plotted, simplified form without parameters */
         jkqtpSimpleParametricCurveFunctionType simplePlotFunction;
-        /** \brief pointer to the parameters supplied to the plotting funtion */
-        void* params;
 
-        /** \brief internal storage for the current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) */
-        QVector<double> iparams;
 };
 
 #endif // jkqtpevaluatedparametriccurve_H

@@ -43,7 +43,7 @@
     influence its result. Parameters are given as a pointer to some memory location. The function has to
     know on its own how to interpret these.
 */
-typedef std::function<double(double, void*)> jkqtpPlotFunctionType;
+typedef std::function<double(double, const QVector<double>&)> jkqtpPlotFunctionType;
 
 /*! \brief simplified type of functions (without parameters) that may be plotted by JKQTPXFunctionLineGraph and JKQTPYFunctionLineGraph
     \ingroup jkqtplotter_functiongraphs
@@ -74,7 +74,7 @@ typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
     \see \ref JKQTPlotterFunctionPlots, JKQTPAdaptiveFunctionGraphEvaluator, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunctionGraphBase, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunctionWithParamsGraphBase, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
 
@@ -158,27 +158,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
         /*! \copydoc simplePlotFunction */ \
         virtual jkqtpSimplePlotFunctionType getSimplePlotFunction () const;
 
-        /*! \copydoc params */ 
-        virtual void setParams(void* __value);
-        /*! \copydoc params */ 
-        void* getParams() const;
-        /** \brief sets the params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
-        virtual void setParams(const QVector<double>& params);
-        /** \brief sets the params from a copy of the given array of length \a N */
-        void setCopiedParams(const double* params, int N);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1} */
-        void setParamsV(double p1);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2} */
-        void setParamsV(double p1, double p2);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3} */
-        void setParamsV(double p1, double p2, double p3);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3,p4} */
-        void setParamsV(double p1, double p2, double p3, double p4);
-        /** \brief set an internal parameter vector as function parameters, initialized with {p1,p2,p3,p4,p5} */
-        void setParamsV(double p1, double p2, double p3, double p4, double p5);
 
-        /** \brief returns the currently set internal parameter vector */
-        QVector<double> getInternalParams() const;
         /** \brief returns the currently set internal parameter vector */
         QVector<double> getInternalErrorParams() const;
 
@@ -220,13 +200,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
         void *getErrorParams() const;
         /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
         void setErrorParams(const QVector<double>& errorParams);
-
-        /*! \copydoc parameterColumn */ 
-        void setParameterColumn(int __value);
-        /*! \copydoc parameterColumn */ 
-        int getParameterColumn() const;
-        /*! \copydoc parameterColumn */ 
-        void setParameterColumn (size_t __value);
         /*! \copydoc errorParameterColumn */ 
         void setErrorParameterColumn(int __value);
         /*! \copydoc errorParameterColumn */ 
@@ -264,16 +237,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
         /** \brief returns, which special function is set (or if any is set) */
         SpecialFunction getFunctionType() const;
     protected:
+        /** \brief ensure that current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) are stored in iparams and ierrorparams */
+        virtual void collectParameters() override;
 
 
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData( bool collectParams=true) override;
-        /** \brief ensure that current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) are stored in iparams and ierrorparams */
-        virtual void collectParameters();
 
 
-        /** \brief if set, the values from this datatsore column are used for the parameters \c p1 , \c p2 , \c p3 , ...  of the plot function */
-        int parameterColumn;
         /** \brief if set, the values from this datatsore column are used for the parameters \c p1 , \c p2 , \c p3 , ...  of the error plot function */
         int errorParameterColumn;
 
@@ -287,8 +258,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
         jkqtpSimplePlotFunctionType simplePlotFunction;
         /** \brief indicates whether a special function is set (and if so, which one), or a user-supplied function */
         SpecialFunction functionType;
-        /** \brief pointer to the parameters supplied to the plotting funtion */
-        void* params;
 
 
         /** \brief indicates whether an error polygon should be drawn */
@@ -317,8 +286,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
 
         QBrush getErrorBrush(JKQTPEnhancedPainter& painter) const;
         QPen getErrorLinePen(JKQTPEnhancedPainter &painter) const;
-        /** \brief internal storage for the current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) */
-        QVector<double> iparams;
         /** \brief internal storage for the current error function parameters for errorPlotFunction (which may stem from different sources, as direct data, a datastore column ...) */
         QVector<double> ierrorparams;
 };

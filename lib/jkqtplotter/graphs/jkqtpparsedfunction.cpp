@@ -91,12 +91,9 @@ void JKQTPXParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     }
     fdata.varcount=0;
     try {
-        QVector<double>* parameters=static_cast<QVector<double>*>(params);
-        if (parameters) {
-            for (int i=0; i<parameters->size(); i++) {
-                fdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(fdata.varcount+1), parameters->at(i));
-                fdata.varcount=fdata.varcount+1;
-            }
+        for (const auto& p: getInternalParams()) {
+            fdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(fdata.varcount+1), p);
+            fdata.varcount=fdata.varcount+1;
         }
         fdata.parser->addVariableDouble(std::string("x"), 0.0);
         if (fdata.node) delete fdata.node;
@@ -150,7 +147,7 @@ void JKQTPXParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
 }
 
 
-double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(double x, void* /*data*/, JKQTPXParsedFunctionLineGraphFunctionData *fdata) {
+double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(double x, const QVector<double>& /*data*/, JKQTPXParsedFunctionLineGraphFunctionData *fdata) {
     JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData* d=fdata;//static_cast<JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData*>(data);
     if (d && d->parser && d->node) {
         try {
@@ -267,12 +264,9 @@ void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     }
     fdata.varcount=0;
     try {
-        QVector<double>* parameters=static_cast<QVector<double>*>(params);
-        if (parameters) {
-            for (int i=0; i<parameters->size(); i++) {
-                fdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(fdata.varcount+1), parameters->at(i));
-                fdata.varcount=fdata.varcount+1;
-            }
+        for (const auto& p: getInternalParams()) {
+            fdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(fdata.varcount+1), p);
+            fdata.varcount=fdata.varcount+1;
         }
         fdata.parser->addVariableDouble(std::string("x"), 0.0);
         fdata.parser->addVariableDouble(std::string("y"), 0.0);
@@ -327,7 +321,7 @@ void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
     qDebug()<<"refined to "<<count<<" daatapoints";*/
 }
 
-double JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction(double x, void* /*data*/, JKQTPYParsedFunctionLineGraphFunctionData *fdata) {
+double JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction(double x, const QVector<double> & /*data*/, JKQTPYParsedFunctionLineGraphFunctionData *fdata) {
     JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData* d=fdata;//static_cast<JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData*>(data);
     if (d && d->parser && d->node) {
         try {

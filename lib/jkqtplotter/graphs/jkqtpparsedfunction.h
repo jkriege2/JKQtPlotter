@@ -97,7 +97,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctio
         virtual void createPlotData(bool collectParams=true) override;
 
         /** \brief implements the actual plot function */
-        static double JKQTPXParsedFunctionLineGraphFunction(double x, void *data, JKQTPXParsedFunctionLineGraphFunctionData* fdata) ;
+        static double JKQTPXParsedFunctionLineGraphFunction(double x, const QVector<double> &data, JKQTPXParsedFunctionLineGraphFunctionData* fdata) ;
 };
 
 
@@ -165,6 +165,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctio
         /** \brief fill the data array with data from the function plotFunction */
         virtual void createPlotData(bool collectParams=true) override;
         /** \brief implements the actual plot function */
-        static double JKQTPYParsedFunctionLineGraphFunction(double x, void *data, JKQTPYParsedFunctionLineGraphFunctionData* fdata);
+        static double JKQTPYParsedFunctionLineGraphFunction(double x, const QVector<double>& data, JKQTPYParsedFunctionLineGraphFunctionData* fdata);
 };
 #endif // jkqtpgraphsparsedfunction_H
