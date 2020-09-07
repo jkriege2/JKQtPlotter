@@ -27,131 +27,73 @@
 #include <QElapsedTimer>
 #include <utility>
 
-
-JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *parent):
-    JKQTPXFunctionLineGraph(parent)
+JKQTPParsedFunctionLineGraphBase::JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName_, const QString& function_, JKQTBasePlotter *parent):
+    JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase(parent),
+    dependentVariableName(dependentVariableName_),
+    function(function_)
 {
-    fdata.parser=new JKQTPMathParser();
+    fdata.parser=std::make_shared<JKQTPMathParser>();
     fdata.node=nullptr;
     fdata.varcount=0;
-    function="";
-    parameterColumn=-1;
-    setPlotFunctionFunctor(jkqtpPlotFunctionType(std::bind(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &fdata)));
 
-    efdata.parser=new JKQTPMathParser();
+
+    efdata.parser=std::make_shared<JKQTPMathParser>();
     efdata.node=nullptr;
     efdata.varcount=0;
-    errorFunction="";
-    errorParameterColumn=-1;
-    setErrorPlotFunction(jkqtpPlotFunctionType(std::bind(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &efdata)));
 }
 
-JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent):
-    JKQTPXParsedFunctionLineGraph(parent->getPlotter())
+JKQTPParsedFunctionLineGraphBase::JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName, const QString& function, JKQTPlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(dependentVariableName, function, parent->getPlotter())
 {
 }
 
-JKQTPXParsedFunctionLineGraph::~JKQTPXParsedFunctionLineGraph()
+JKQTPParsedFunctionLineGraphBase::JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName, JKQTBasePlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(dependentVariableName, QString(), parent)
 {
-    if (fdata.node) delete fdata.node;
-    delete fdata.parser;
-    if (efdata.node) delete efdata.node;
-    delete efdata.parser;
 }
 
-void JKQTPXParsedFunctionLineGraph::setFunction(const QString &__value)
+JKQTPParsedFunctionLineGraphBase::JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName, JKQTPlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(dependentVariableName, QString(), parent)
+{
+}
+
+
+JKQTPParsedFunctionLineGraphBase::~JKQTPParsedFunctionLineGraphBase()
+{
+}
+
+void JKQTPParsedFunctionLineGraphBase::setFunction(const QString &__value)
 {
     this->function = __value;
 }
 
-QString JKQTPXParsedFunctionLineGraph::getFunction() const
+QString JKQTPParsedFunctionLineGraphBase::getFunction() const
 {
     return this->function;
 }
 
-void JKQTPXParsedFunctionLineGraph::setErrorFunction(const QString &__value)
+void JKQTPParsedFunctionLineGraphBase::setErrorFunction(const QString &__value)
 {
     this->errorFunction = __value;
 }
 
-QString JKQTPXParsedFunctionLineGraph::getErrorFunction() const
+QString JKQTPParsedFunctionLineGraphBase::getErrorFunction() const
 {
     return this->errorFunction;
 }
 
 
-void JKQTPXParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
+QString JKQTPParsedFunctionLineGraphBase::getDependentVariableName() const
 {
-    collectParameters();
-
-    //QElapsedTimer timer;
-    //timer.start();
-    for (int i=0; i<fdata.varcount; i++) {
-        fdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
-    }
-    fdata.varcount=0;
-    try {
-        for (const auto& p: getInternalParams()) {
-            fdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(fdata.varcount+1), p);
-            fdata.varcount=fdata.varcount+1;
-        }
-        fdata.parser->addVariableDouble(std::string("x"), 0.0);
-        if (fdata.node) delete fdata.node;
-        //qint64 t=timer.elapsed();
-
-
-        //qDebug()<<"createPlotData():   adding variables: "<<t<<"ms";
-        fdata.node=fdata.parser->parse(function.toStdString());
-        //qDebug()<<"createPlotData():   parsing: "<<timer.elapsed()-t<<"ms";
-    } catch(std::exception& E) {
-        qDebug()<<QString("parser error: %1").arg(E.what());
-    }
-
-    //qint64 t0=timer.elapsed();
-    for (int i=0; i<efdata.varcount; i++) {
-        efdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
-    }
-    efdata.varcount=0;
-    try {
-        QVector<double>* errorParameters=static_cast<QVector<double>*>(errorParams);
-        if (errorParameters) {
-            for (int i=0; i<errorParameters->size(); i++) {
-                efdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(efdata.varcount+1), errorParameters->at(i));
-                efdata.varcount=efdata.varcount+1;
-            }
-        }
-        efdata.parser->addVariableDouble(std::string("x"), 0.0);
-        if (efdata.node) delete efdata.node;
-        //qint64 t=timer.elapsed();
-        //qDebug()<<"createPlotData():   adding variables: "<<t-t0<<"ms";
-        efdata.node=efdata.parser->parse(errorFunction.toStdString());
-        //qDebug()<<"createPlotData():   parsing: "<<timer.elapsed()-t<<"ms";
-    } catch(std::exception& /*E*/) {
-        //qDebug()<<QString("parser error: %1").arg(E.what());
-    }
-
-    setPlotFunctionFunctor(jkqtpPlotFunctionType(std::bind(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &fdata)));
-    setErrorPlotFunction(jkqtpPlotFunctionType(std::bind(&JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &efdata)));
-
-    //qint64 t=timer.elapsed();
-    JKQTPXFunctionLineGraph::createPlotData(false);
-    //qDebug()<<"createPlotData():   JKQTPXFunctionLineGraph::createPlotData():   "<<timer.elapsed()-t<<"ms";
-
-    /*int count=0;
-    doublePair* d=data;
-    while (d!=nullptr) {
-        count++;
-        d=d->next;
-    }
-    qDebug()<<"refined to "<<count<<" daatapoints";*/
+    return dependentVariableName;
 }
 
 
-double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(double x, const QVector<double>& /*data*/, JKQTPXParsedFunctionLineGraphFunctionData *fdata) {
-    JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData* d=fdata;//static_cast<JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData*>(data);
+double JKQTPParsedFunctionLineGraphBase::evaluateParsedFunction(double t, ParsedFunctionLineGraphFunctionData *fdata) {
+    JKQTPParsedFunctionLineGraphBase::ParsedFunctionLineGraphFunctionData* d=fdata;//static_cast<JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunctionData*>(data);
     if (d && d->parser && d->node) {
         try {
-            d->parser->addVariableDouble("x", x);
+            d->parser->addVariableDouble(d->dependentVariableName.toStdString(), t);
             JKQTPMathParser::jkmpResult r=d->node->evaluate();
 
             if (r.isValid) {
@@ -162,8 +104,8 @@ double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(doub
                 }
             }
         } catch(std::exception& E) {
-           qDebug()<<QString("parser error: %1").arg(E.what());
-           /*ok= QMessageBox::critical(this, tr("QuickFit-table"),
+            qDebug()<<QString("parser error: %1").arg(E.what());
+            /*ok= QMessageBox::critical(this, tr("QuickFit-table"),
                                      tr("An error occured while parsing the expression '%1' in cell (row, column)=(%3, %4):\n%2\n\n\"OK\" will still go on evaluating\n\"Cancel\" will cancel evaluation for the rest of the cells.").arg(dlgMathExpression->getExpression()).arg(E.what()).arg(row).arg(column),
                                         QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok)==QMessageBox::Ok;*/
 
@@ -172,6 +114,113 @@ double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(doub
     return NAN;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTBasePlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(QString("x"), parent)
+{
+}
+
+JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(JKQTPlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(QString("x"), parent)
+{
+}
+
+JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(const QString& function, JKQTBasePlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(QString("x"), function, parent)
+{
+}
+
+JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraph(const QString& function, JKQTPlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(QString("x"), function, parent)
+{
+}
+
+JKQTPXParsedFunctionLineGraph::~JKQTPXParsedFunctionLineGraph()
+{
+}
+
+void JKQTPXParsedFunctionLineGraph::draw(JKQTPEnhancedPainter &painter)
+{
+    drawXGraph(painter);
+}
+
+
+JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec JKQTPXParsedFunctionLineGraph::buildPlotFunctorSpec()
+{
+    JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec spec;
+
+    if (parent==nullptr) return spec; // return an invalid PlotFunctorSpec
+
+    for (int i=0; i<fdata.varcount; i++) {
+        fdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
+    }
+    fdata.varcount=0;
+    try {
+        for (const auto& p: getInternalParams()) {
+            fdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(fdata.varcount+1), p);
+            fdata.varcount=fdata.varcount+1;
+        }
+        fdata.dependentVariableName=getDependentVariableName();
+        fdata.parser->addVariableDouble(getDependentVariableName().toStdString(), 0.0);
+        fdata.node=std::shared_ptr<JKQTPMathParser::jkmpNode>(fdata.parser->parse(function.toStdString()));
+    } catch(std::exception& E) {
+        qDebug()<<QString("parser error: %1").arg(E.what());
+    }
+
+    jkqtpSimplePlotFunctionType plotFunction=std::bind(&JKQTPXParsedFunctionLineGraph::evaluateParsedFunction, std::placeholders::_1, &fdata);
+    // the actual function to use
+    spec.func=std::bind([=](double x) -> QPointF { return QPointF(0, plotFunction(x)); }, std::placeholders::_1);
+
+    return spec;
+}
+
+std::function<QPointF (double)> JKQTPXParsedFunctionLineGraph::buildErrorFunctorSpec()
+{
+    std::function<QPointF (double)> spec;
+
+    for (int i=0; i<efdata.varcount; i++) {
+        efdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
+    }
+    efdata.varcount=0;
+    try {
+        for (const auto& p: getInternalErrorParams()) {
+            efdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(efdata.varcount+1), p);
+            efdata.varcount=efdata.varcount+1;
+        }
+        efdata.dependentVariableName=getDependentVariableName();
+        efdata.parser->addVariableDouble(getDependentVariableName().toStdString(), 0.0);
+        efdata.node=std::shared_ptr<JKQTPMathParser::jkmpNode>(efdata.parser->parse(errorFunction.toStdString()));
+    } catch(std::exception& /*E*/) {
+        //qDebug()<<QString("parser error: %1").arg(E.what());
+    }
+
+    jkqtpSimplePlotFunctionType errorPlotFunction=std::bind(&JKQTPXParsedFunctionLineGraph::evaluateParsedFunction, std::placeholders::_1, &efdata);
+    // the actual function to use
+    spec=std::bind([=](double x) -> QPointF { return QPointF(0, errorPlotFunction(x)); }, std::placeholders::_1);
+
+    return spec;
+}
+
+
+
+
+
+
 
 
 
@@ -190,75 +239,41 @@ double JKQTPXParsedFunctionLineGraph::JKQTPXParsedFunctionLineGraphFunction(doub
 
 
 JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTBasePlotter *parent):
-    JKQTPYFunctionLineGraph(parent)
+    JKQTPParsedFunctionLineGraphBase(QString("y"), parent)
 {
-    fdata.parser=new JKQTPMathParser();
-    fdata.node=nullptr;
-    fdata.varcount=0;
-    function="";
-    parameterColumn=-1;
-    setPlotFunctionFunctor(jkqtpPlotFunctionType(std::bind(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &fdata)));
-
-    efdata.parser=new JKQTPMathParser();
-    efdata.node=nullptr;
-    efdata.varcount=0;
-    errorFunction="";
-    errorParameterColumn=-1;
-    setErrorPlotFunction(jkqtpPlotFunctionType(std::bind(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &efdata)));
 }
 
 JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(JKQTPlotter *parent):
-    JKQTPYFunctionLineGraph(parent)
+    JKQTPParsedFunctionLineGraphBase(QString("y"), parent)
 {
-    fdata.parser=new JKQTPMathParser();
-    fdata.node=nullptr;
-    fdata.varcount=0;
-    function="";
-    parameterColumn=-1;
-    setPlotFunctionFunctor(jkqtpPlotFunctionType(std::bind(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &fdata)));
+}
 
-    efdata.parser=new JKQTPMathParser();
-    efdata.node=nullptr;
-    efdata.varcount=0;
-    errorFunction="";
-    errorParameterColumn=-1;
-    setErrorPlotFunction(jkqtpPlotFunctionType(std::bind(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &efdata)));
+JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(const QString& function, JKQTBasePlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(QString("y"), function, parent)
+{
+}
+
+JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraph(const QString& function, JKQTPlotter *parent):
+    JKQTPParsedFunctionLineGraphBase(QString("y"), function, parent)
+{
 }
 
 JKQTPYParsedFunctionLineGraph::~JKQTPYParsedFunctionLineGraph()
 {
-    if (fdata.node) delete fdata.node;
-    delete fdata.parser;
-    if (efdata.node) delete efdata.node;
-    delete efdata.parser;
 }
 
-void JKQTPYParsedFunctionLineGraph::setFunction(const QString &__value)
+void JKQTPYParsedFunctionLineGraph::draw(JKQTPEnhancedPainter &painter)
 {
-    this->function = __value;
+    drawYGraph(painter);
 }
 
-QString JKQTPYParsedFunctionLineGraph::getFunction() const
-{
-    return this->function;
-}
 
-void JKQTPYParsedFunctionLineGraph::setErrorFunction(const QString &__value)
+JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec JKQTPYParsedFunctionLineGraph::buildPlotFunctorSpec()
 {
-    this->errorFunction = __value;
-}
+    JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec spec;
 
-QString JKQTPYParsedFunctionLineGraph::getErrorFunction() const
-{
-    return this->errorFunction;
-}
+    if (parent==nullptr) return spec; // return an invalid PlotFunctorSpec
 
-void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
-{
-    collectParameters();
-
-    //QElapsedTimer timer;
-    //timer.start();
     for (int i=0; i<fdata.varcount; i++) {
         fdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
     }
@@ -268,82 +283,47 @@ void JKQTPYParsedFunctionLineGraph::createPlotData(bool /*collectParams*/)
             fdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(fdata.varcount+1), p);
             fdata.varcount=fdata.varcount+1;
         }
-        fdata.parser->addVariableDouble(std::string("x"), 0.0);
-        fdata.parser->addVariableDouble(std::string("y"), 0.0);
-        if (fdata.node) delete fdata.node;
-        //qint64 t=timer.elapsed();
-
-
-        //qDebug()<<"createPlotData():   adding variables: "<<t<<"ms";
-        fdata.node=fdata.parser->parse(function.toStdString());
-        //qDebug()<<"createPlotData():   parsing: "<<timer.elapsed()-t<<"ms";
+        fdata.dependentVariableName=getDependentVariableName();
+        fdata.parser->addVariableDouble(getDependentVariableName().toStdString(), 0.0);
+        fdata.node=std::shared_ptr<JKQTPMathParser::jkmpNode>(fdata.parser->parse(function.toStdString()));
     } catch(std::exception& E) {
         qDebug()<<QString("parser error: %1").arg(E.what());
     }
 
-    //qint64 t0=timer.elapsed();
+    jkqtpSimplePlotFunctionType plotFunction=std::bind(&JKQTPXParsedFunctionLineGraph::evaluateParsedFunction, std::placeholders::_1, &fdata);
+    // the actual function to use
+    spec.func=std::bind([=](double y) -> QPointF { return QPointF(plotFunction(y), 0); }, std::placeholders::_1);
+
+    // range over which to evaluate func
+    spec.range_start=parent->getXMin();
+    spec.range_end=parent->getXMax();
+
+    return spec;
+}
+
+std::function<QPointF (double)> JKQTPYParsedFunctionLineGraph::buildErrorFunctorSpec()
+{
+    std::function<QPointF (double)> spec;
+
     for (int i=0; i<efdata.varcount; i++) {
         efdata.parser->deleteVariable(std::string("p")+jkqtp_inttostr(i+1));
     }
     efdata.varcount=0;
     try {
-        QVector<double>* errorParameters=static_cast<QVector<double>*>(errorParams);
-        if (errorParameters) {
-            for (int i=0; i<errorParameters->size(); i++) {
-                efdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(efdata.varcount+1), errorParameters->at(i));
-                efdata.varcount=efdata.varcount+1;
-            }
+        for (const auto& p: getInternalErrorParams()) {
+            efdata.parser->addVariableDouble(std::string("p")+jkqtp_inttostr(efdata.varcount+1), p);
+            efdata.varcount=efdata.varcount+1;
         }
-        efdata.parser->addVariableDouble(std::string("x"), 0.0);
-        efdata.parser->addVariableDouble(std::string("y"), 0.0);
-        if (efdata.node) delete efdata.node;
-        //qint64 t=timer.elapsed();
-        //qDebug()<<"createPlotData():   adding variables: "<<t-t0<<"ms";
-        efdata.node=efdata.parser->parse(errorFunction.toStdString());
-        //qDebug()<<"createPlotData():   parsing: "<<timer.elapsed()-t<<"ms";
-    } catch(std::exception& E) {
-        qDebug()<<QString("parser error: %1").arg(E.what());
+        efdata.dependentVariableName=getDependentVariableName();
+        efdata.parser->addVariableDouble(getDependentVariableName().toStdString(), 0.0);
+        efdata.node=std::shared_ptr<JKQTPMathParser::jkmpNode>(efdata.parser->parse(errorFunction.toStdString()));
+    } catch(std::exception& /*E*/) {
+        //qDebug()<<QString("parser error: %1").arg(E.what());
     }
 
-    setPlotFunctionFunctor(jkqtpPlotFunctionType(std::bind(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &fdata)));
-    setErrorPlotFunction(jkqtpPlotFunctionType(std::bind(&JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction, std::placeholders::_1, std::placeholders::_2, &efdata)));
+    jkqtpSimplePlotFunctionType errorPlotFunction=std::bind(&JKQTPXParsedFunctionLineGraph::evaluateParsedFunction, std::placeholders::_1, &efdata);
+    // the actual function to use
+    spec=std::bind([=](double y) -> QPointF { return QPointF(errorPlotFunction(y), 0); }, std::placeholders::_1);
 
-    //qint64 t=timer.elapsed();
-    JKQTPYFunctionLineGraph::createPlotData(false);
-    //qDebug()<<"createPlotData():   JKQTPYFunctionLineGraph::createPlotData():   "<<timer.elapsed()-t<<"ms";
-
-    /*int count=0;
-    doublePair* d=data;
-    while (d!=nullptr) {
-        count++;
-        d=d->next;
-    }
-    qDebug()<<"refined to "<<count<<" daatapoints";*/
-}
-
-double JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunction(double x, const QVector<double> & /*data*/, JKQTPYParsedFunctionLineGraphFunctionData *fdata) {
-    JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData* d=fdata;//static_cast<JKQTPYParsedFunctionLineGraph::JKQTPYParsedFunctionLineGraphFunctionData*>(data);
-    if (d && d->parser && d->node) {
-        try {
-            d->parser->addVariableDouble("x", x);
-            d->parser->addVariableDouble("y", x);
-            JKQTPMathParser::jkmpResult r=d->node->evaluate();
-
-            if (r.isValid) {
-                if (r.type==JKQTPMathParser::jkmpBool) {
-                    return r.boolean?1.0:0.0;
-                } else if (r.type==JKQTPMathParser::jkmpDouble) {
-                    return r.num;
-                }
-            }
-        } catch(std::exception& /*E*/) {
-            //qDebug()<<QString("parser error: %1").arg(E.what());
-           /*ok= QMessageBox::critical(this, tr("QuickFit-table"),
-                                     tr("An error occured while parsing the expression '%1' in cell (row, column)=(%3, %4):\n%2\n\n\"OK\" will still go on evaluating\n\"Cancel\" will cancel evaluation for the rest of the cells.").arg(dlgMathExpression->getExpression()).arg(E.what()).arg(row).arg(column),
-                                        QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok)==QMessageBox::Ok;*/
-
-        }
-    }
-    return NAN;
-
+    return spec;
 }

@@ -33,14 +33,125 @@
 
 
 
-JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(JKQTBasePlotter* parent):
-    JKQTPEvaluatedFunctionWithParamsGraphBase(parent)
+JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(JKQTBasePlotter* parent):
+    JKQTPEvaluatedFunctionGraphBase(parent),
+    tmin(0.0),
+    tmax(1.0)
 {
-    tmin=0.0;
-    tmax=1.0;
-
     initLineStyle(parent, parentPlotStyle);
+    setMaxRefinementDegree(8);
+}
 
+JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(JKQTPlotter* parent):
+    JKQTPXYFunctionLineGraphBase(parent->getPlotter())
+{
+
+}
+
+JKQTPXYFunctionLineGraphBase::~JKQTPXYFunctionLineGraphBase()
+{
+
+}
+
+
+
+void JKQTPXYFunctionLineGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    QPen p=getLinePen(painter, parent);
+    p.setJoinStyle(Qt::RoundJoin);
+    p.setCapStyle(Qt::RoundCap);
+    QPen np(Qt::NoPen);
+    const double y=rect.top()+rect.height()/2.0;
+    painter.setPen(np);
+    painter.setPen(p);
+    painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+}
+
+QColor JKQTPXYFunctionLineGraphBase::getKeyLabelColor() const {
+    return getLineColor();
+}
+
+
+void JKQTPXYFunctionLineGraphBase::draw(JKQTPEnhancedPainter& painter) {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaaot("JKQTPXYFunctionLineGraph::draw");
+#endif
+    if (parent==nullptr) return;
+    JKQTPDatastore* datastore=parent->getDatastore();
+    if (datastore==nullptr) return;
+
+    //qDebug()<<"start plot\n";
+    createPlotData();
+    //qDebug()<<"plot data created\n";
+
+    drawErrorsBefore(painter);
+    {
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+
+        QPen p=getLinePen(painter, parent);
+        QPen np(Qt::NoPen);
+
+
+        {
+            painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
+            painter.setPen(p);
+            painter.drawPolyline(data);
+        }
+
+
+        if (displaySamplePoints) drawSamplePoints(painter, getLineColor());
+    }
+    drawErrorsAfter(painter);
+    //std::cout<<"plot done\n";
+}
+
+
+
+double JKQTPXYFunctionLineGraphBase::getTMin() const
+{
+    return tmin;
+}
+
+double JKQTPXYFunctionLineGraphBase::getTMax() const
+{
+    return tmax;
+}
+
+void JKQTPXYFunctionLineGraphBase::setTMin(double val)
+{
+    tmin=val;
+}
+
+void JKQTPXYFunctionLineGraphBase::setTMax(double val)
+{
+    tmax=val;
+}
+
+QPair<double, double> JKQTPXYFunctionLineGraphBase::getTRange() const
+{
+    return QPair<double, double>(tmin,tmax);
+}
+
+void JKQTPXYFunctionLineGraphBase::setTRange(double tmin_, double tmax_)
+{
+    tmin=tmin_;
+    tmax=tmax_;
+}
+
+void JKQTPXYFunctionLineGraphBase::setTRange(const QPair<double, double> &range)
+{
+    tmin=range.first;
+    tmax=range.second;
+}
+
+
+
+
+
+
+JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(JKQTBasePlotter* parent):
+    JKQTPXYFunctionLineGraphBase(parent)
+{
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(JKQTPlotter* parent):
@@ -54,10 +165,9 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpSimpleParametricCu
 {
     tmin=tmin_;
     tmax=tmax_;
-    title=title_;
+    setTitle(title_);
     plotFunction=jkqtpParametricCurveFunctionType();
     simplePlotFunction=f;
-    data.clear();
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpSimpleParametricCurveFunctionType &f, const QString &title_, double tmin_, double tmax_, JKQTPlotter *parent):
@@ -72,7 +182,7 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpSimpleParametricCurveFun
 {
     tmin=tmin_;
     tmax=tmax_;
-    title=title_;
+    setTitle(title_);
     plotFunction=jkqtpParametricCurveFunctionType();
     simplePlotFunction=std::move(f);
     data.clear();
@@ -89,7 +199,7 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpParametricCurveFunctionT
 {
     tmin=tmin_;
     tmax=tmax_;
-    title=title_;
+    setTitle(title_);
     simplePlotFunction=jkqtpSimpleParametricCurveFunctionType();
     plotFunction=std::move(f);
     data.clear();
@@ -106,7 +216,7 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpParametricCurveFun
 {
     tmin=tmin_;
     tmax=tmax_;
-    title=title_;
+    setTitle(title_);
     simplePlotFunction=jkqtpSimpleParametricCurveFunctionType();
     plotFunction=std::move(f);
     data.clear();
@@ -119,7 +229,7 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpParametricCurveFun
 }
 
 JKQTPXYFunctionLineGraph::~JKQTPXYFunctionLineGraph() {
-    data.clear();
+
 }
 
 
@@ -162,115 +272,26 @@ jkqtpSimpleParametricCurveFunctionType JKQTPXYFunctionLineGraph::getSimplePlotFu
     return simplePlotFunction;
 }
 
-
-void JKQTPXYFunctionLineGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QPen p=getLinePen(painter, parent);
-    p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
-    QPen np(Qt::NoPen);
-    const double y=rect.top()+rect.height()/2.0;
-    painter.setPen(np);
-    painter.setPen(p);
-    painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
-}
-
-QColor JKQTPXYFunctionLineGraph::getKeyLabelColor() const {
-    return getLineColor();
-}
-
-
-void JKQTPXYFunctionLineGraph::createPlotData(bool collectParams) {
-#ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaat(QString("JKQTPXYFunctionLineGraph[%1]::createPlotData()").arg(title));
-#endif
-    data.clear();
-    if (collectParams) collectParameters();
-
-    if (parent==nullptr) return;
-    if (!plotFunction && !simplePlotFunction) return;
-
-    jkqtpSimpleParametricCurveFunctionType func;
-    if (plotFunction) func=std::bind(plotFunction, std::placeholders::_1, getInternalParams());
-    else if (simplePlotFunction) func=simplePlotFunction;
-
-    jkqtpSimpleParametricCurveFunctionType fTransformedFunc= std::bind([&](const JKQTPPlotElement* plot, double t) -> QPointF { return plot->transform(func(t)); }, this, std::placeholders::_1);
-
-    JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
-    data=evaluator.evaluate(tmin, tmax);
-    data=JKQTPSimplyfyLineSegemnts(data, dataCleanupMaxAllowedAngleDegree);
-}
-
-
-void JKQTPXYFunctionLineGraph::draw(JKQTPEnhancedPainter& painter) {
-#ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTPXYFunctionLineGraph::draw");
-#endif
-    if (parent==nullptr) return;
-    JKQTPDatastore* datastore=parent->getDatastore();
-    if (datastore==nullptr) return;
-
-    //qDebug()<<"start plot\n";
-    createPlotData();
-    //qDebug()<<"plot data created\n";
-
-    drawErrorsBefore(painter);
-    {
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-
-        QPen p=getLinePen(painter, parent);
-        QPen np(Qt::NoPen);
-
-
-        {
-            painter.save(); auto __finalpaintline=JKQTPFinally([&painter]() {painter.restore();});
-            painter.setPen(p);
-            painter.drawPolyline(data);
-        }
-
-
-        if (displaySamplePoints) drawSamplePoints(painter, getLineColor());
-    }
-    drawErrorsAfter(painter);
-    //std::cout<<"plot done\n";
-}
-
-
-
-double JKQTPXYFunctionLineGraph::getTMin() const
+bool JKQTPXYFunctionLineGraph::isSimplePlotFunction() const
 {
-    return tmin;
+    return !static_cast<bool>(plotFunction) && static_cast<bool>(simplePlotFunction);
 }
 
-double JKQTPXYFunctionLineGraph::getTMax() const
-{
-    return tmax;
-}
 
-void JKQTPXYFunctionLineGraph::setTMin(double val)
+JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec JKQTPXYFunctionLineGraph::buildPlotFunctorSpec()
 {
-    tmin=val;
-}
+    JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec spec;
 
-void JKQTPXYFunctionLineGraph::setTMax(double val)
-{
-    tmax=val;
-}
+    if (!plotFunction && !simplePlotFunction) return spec; // return invalid spec!
 
-QPair<double, double> JKQTPXYFunctionLineGraph::getTRange() const
-{
-    return QPair<double, double>(tmin,tmax);
-}
+    // range over which to evaluate func
+    spec.range_start=tmin;
+    spec.range_end=tmax;
 
-void JKQTPXYFunctionLineGraph::setTRange(double tmin_, double tmax_)
-{
-    tmin=tmin_;
-    tmax=tmax_;
-}
+    // the actual function to use
+    if (plotFunction) spec.func=std::bind(plotFunction, std::placeholders::_1, getInternalParams());
+    else if (simplePlotFunction) spec.func=simplePlotFunction;
 
-void JKQTPXYFunctionLineGraph::setTRange(const QPair<double, double> &range)
-{
-    tmin=range.first;
-    tmax=range.second;
+    return spec;
 }
 

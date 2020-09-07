@@ -1,6 +1,8 @@
 # Example (JKQTPlotter): Plotting Parametric Mathematical Curves as Line Graphs {#JKQTPlotterEvalCurves}
 ## Basics
-This project (see `./examples/evalcurve/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. 
+This project (see `./examples/evalcurve/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. The functions may simply depend on the parameter `t`, or on `t` and a vector of parameters.
+
+The class uses an adaptive algorithm, which determines by the local slope, at how many points (or how close points) the functor has to be evaluated. 
 
 [TOC]
 
@@ -9,24 +11,55 @@ The example shows how to plot a simple C++ inline function:
 
 ```.cpp
     JKQTPXYFunctionLineGraph* func1=new JKQTPXYFunctionLineGraph(plot);
-    func1->setPlotFunctionFunctor([](double t) -> QPointF {
-        const double a=5;
-        const double b=4;
-        const double delta=JKQTPSTATISTICS_PI/4.0;
-        return QPointF(sin(a*t+delta), sin(b*t));
+    func1->setPlotFunctionFunctor([](double t) ->QPointF {
+        return QPointF(
+              sin(t)*(exp(cos(t))-2.0*cos(4.0*t)-jkqtp_pow5(sin(t/12.0))),
+              cos(t)*(exp(cos(t))-2.0*cos(4.0*t)-jkqtp_pow5(sin(t/12.0)))
+            );
     });
-    func1->setTRange(0, 2.0*JKQTPSTATISTICS_PI);
-    func1->setTitle("C++-inline function $[ sin(5{\\cdot}t+\\pi/4), sin(4{\\cdot}t) ]$");
+    func1->setTRange(0, 12.0*JKQTPSTATISTICS_PI);
+    func1->setTitle("C++-inline function: \"Butterfly Curve\"");
     plot->addGraph(func1);
 ```
 
-Note that here a functor is defined, which calculates the points on a [Lissajous Curve](https://en.wikipedia.org/wiki/Lissajous_curve), i.e. a function mapping a parameter `t` to a two-dimensional point `QPointF` with `x=sin(a*t+delta)`and `y=sin(b*t)`. This function is evaluated on a range of values for `t`, set by 
+Note that here a functor is defined, which calculates the points on a [Butterfly Curve](https://en.wikipedia.org/wiki/Butterfly_curve_(transcendental)), i.e. a function mapping a parameter `t` to a two-dimensional point `QPointF` with complex functions for x and y. This function is evaluated on a range of values for `t`, set by 
 
 ```.cpp
     func1->setTRange(0, 2.0*JKQTPSTATISTICS_PI);
 ```
 
-The class uses an adaptive algorithm, which determines by the local slope, at how many points (or how close points) the functor has to be evaluated. 
+# Simple C++ inline function with Parameters
+`JKQTPXYFunctionLineGraph` allows to use more complex functors alternatively: These depend on the variable `t`and a vector of parameters. Here is an example:
+
+```.cpp
+    func2->setPlotFunctionFunctor([](double t, const QVector<double>& params) ->QPointF {
+        return QPointF(
+              3.0*sin(params[0]*t+params[2])+8.0,
+              3.0*sin(params[1]*t)
+            );
+    });
+    // now we define the 3 parameters of the function
+    func2->setParamsV(5, 4, JKQTPSTATISTICS_PI/4.0);
+    // and define the range over which to evaluate
+    func2->setTRange(0, 2.0*JKQTPSTATISTICS_PI);
+    func1->setTitle("C++-inline function $[ sin(5{\\cdot}t+\\pi/4), sin(4{\\cdot}t) ]$");
+    plot->addGraph(func1);
+```
+
+In the functor we can use the entries in the vector `param` as function parameters. The values in this vector are defined by 
+
+```.cpp
+    // now we define the 3 parameters of the function
+    func2->setParamsV(5, 4, JKQTPSTATISTICS_PI/4.0);
+```
+
+Alternatively they can also be taken from a column in the internal datastore. Then you have to call:
+
+```.cpp
+    func2->setParameterColumn(ColumnID);
+```
+
+instead, where `ColumnID` is the ID of the column with the parameter values.
 
 # Screenshot
 
@@ -36,7 +69,6 @@ This code snippets above result in a plot like this:
 
 # Notes
 
-Just as shown in [examples/functionplot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/functionplot) for JKQTPXFunctionLineGraph and JKQTPYFunctionLineGraph, different types of functions can be used to plot. Either simple C++ inline functions, that take a `double t` and return a `QPointF`, or functions that additionally take a parameter vector `void* params`. In that case, the parameters may be provided from different sources, as described in [examples/functionplot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/functionplot) . 
-
+This example describes how to draw 2D parametric curves. For (simpler) 1D-functions f(x) or f(y), see [examples/functionplot](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/functionplot) .
 
 

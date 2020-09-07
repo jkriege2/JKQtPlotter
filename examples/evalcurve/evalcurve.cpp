@@ -27,14 +27,34 @@ int main(int argc, char* argv[])
     //    the function is defined as C++ inline function
     JKQTPXYFunctionLineGraph* func1=new JKQTPXYFunctionLineGraph(plot);
     func1->setPlotFunctionFunctor([](double t) ->QPointF {
-        const double a=5;
-        const double b=4;
-        const double delta=JKQTPSTATISTICS_PI/4.0;
-        return QPointF(sin(a*t+delta), sin(b*t));
+        return QPointF(
+              sin(t)*(exp(cos(t))-2.0*cos(4.0*t)-jkqtp_pow5(sin(t/12.0))),
+              cos(t)*(exp(cos(t))-2.0*cos(4.0*t)-jkqtp_pow5(sin(t/12.0)))
+            );
     });
-    func1->setTRange(0, 2.0*JKQTPSTATISTICS_PI);
-    func1->setTitle("C++-inline function $[ sin(5{\\cdot}t+\\pi/4), sin(4{\\cdot}t) ]$");
+    func1->setTRange(0, 12.0*JKQTPSTATISTICS_PI);
+    func1->setTitle("C++-inline function: \"Butterfly Curve\"");
     plot->addGraph(func1);
+
+
+
+    // 3. a second JKQTPXYFunctionLineGraph object shows how to use functions that
+    //    also take a parameter vector, in addition to the dependent variable t
+    JKQTPXYFunctionLineGraph* func2=new JKQTPXYFunctionLineGraph(plot);
+    func2->setPlotFunctionFunctor([](double t, const QVector<double>& params) ->QPointF {
+        return QPointF(
+              3.0*sin(params[0]*t+params[2])+8.0,
+              3.0*sin(params[1]*t)
+            );
+    });
+    // now we define the 3 parameters of the function
+    func2->setParamsV(5, 4, JKQTPSTATISTICS_PI/4.0);
+    // and define the range over which to evaluate
+    func2->setTRange(0, 2.0*JKQTPSTATISTICS_PI);
+    func2->setTitle("C++-inline function $[ sin(5{\\cdot}t+\\pi/4), sin(4{\\cdot}t) ]$");
+    plot->addGraph(func2);
+
+
     // 8. set some axis properties (we use LaTeX for nice equation rendering)
     plot->getXAxis()->setAxisLabel(QObject::tr("x-axis"));
     plot->getYAxis()->setAxisLabel(QObject::tr("y-axis"));
@@ -42,7 +62,7 @@ int main(int argc, char* argv[])
 
 
     // 4. scale the plot so the graph is contained
-    plot->setXY(-1.1,1.1,-1.1,1.1);
+    plot->setXY(-3,12,-3.2,3.2);
 
     // show window and make it a decent size
     mainWin.show();

@@ -35,16 +35,17 @@
 
 
 JKQTPEvaluatedFunctionGraphBase::JKQTPEvaluatedFunctionGraphBase(JKQTBasePlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPGraph(parent),
+    parameterColumn(-1),
+    minSamples(50),
+    maxRefinementDegree(5),
+    slopeTolerance(0.005),
+    minPixelPerSample(32),
+    dataCleanupMaxAllowedAngleDegree(0.2),
+    displaySamplePoints(false)
 {
-    minSamples=50;
-    maxRefinementDegree=5;
-    slopeTolerance=0.005;
-    minPixelPerSample=32;
-    dataCleanupMaxAllowedAngleDegree=0.2;
-    displaySamplePoints=false;
     data.clear();
-
+    iparams.clear();
 }
 
 JKQTPEvaluatedFunctionGraphBase::JKQTPEvaluatedFunctionGraphBase(JKQTPlotter* parent):
@@ -127,6 +128,24 @@ void JKQTPEvaluatedFunctionGraphBase::setDisplaySamplePoints(bool __value)
     this->displaySamplePoints = __value;
 }
 
+void JKQTPEvaluatedFunctionGraphBase::createPlotData(bool collectParams)
+{
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaat(QString("JKQTPEvaluatedFunctionWithErrorsGraphBase[%1]::createPlotData()").arg(title));
+#endif
+    data.clear();
+    if (collectParams) collectParameters();
+    PlotFunctorSpec plotfunc= buildPlotFunctorSpec();
+
+    if (plotfunc.isValid()) {
+        std::function<QPointF(double)> fTransformedFunc= std::bind([plotfunc](const JKQTPPlotElement* plot, double t) -> QPointF { return plot->transform(plotfunc.func(t)); }, this, std::placeholders::_1);
+
+        JKQTPAdaptiveFunctionGraphEvaluator evaluator(fTransformedFunc, minSamples, maxRefinementDegree, slopeTolerance, minPixelPerSample);
+        data=evaluator.evaluate(plotfunc.range_start, plotfunc.range_end);
+        data=JKQTPSimplyfyLineSegemnts(data, dataCleanupMaxAllowedAngleDegree);
+    }
+}
+
 bool JKQTPEvaluatedFunctionGraphBase::getDisplaySamplePoints() const
 {
     return this->displaySamplePoints;
@@ -181,25 +200,7 @@ bool JKQTPEvaluatedFunctionGraphBase::getYMinMax(double &miny, double &maxy, dou
 }
 
 
-
-JKQTPEvaluatedFunctionWithParamsGraphBase::JKQTPEvaluatedFunctionWithParamsGraphBase(JKQTBasePlotter *parent):
-    parameterColumn(-1)
-{
-
-}
-
-JKQTPEvaluatedFunctionWithParamsGraphBase::JKQTPEvaluatedFunctionWithParamsGraphBase(JKQTPlotter *parent):
-    JKQTPEvaluatedFunctionWithParamsGraphBase(parent->getPlotter())
-{
-
-}
-
-JKQTPEvaluatedFunctionWithParamsGraphBase::~JKQTPEvaluatedFunctionWithParamsGraphBase()
-{
-
-}
-
-void JKQTPEvaluatedFunctionWithParamsGraphBase::collectParameters()
+void JKQTPEvaluatedFunctionGraphBase::collectParameters()
 {
     if (parent && parameterColumn>=0) {
         iparams.clear();
@@ -221,67 +222,195 @@ void JKQTPEvaluatedFunctionWithParamsGraphBase::collectParameters()
 }
 
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParams(const QVector<double> &params)
+void JKQTPEvaluatedFunctionGraphBase::setParams(const QVector<double> &params)
 {
     iparams=params;
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setCopiedParams(const double *params, int N)
+void JKQTPEvaluatedFunctionGraphBase::setCopiedParams(const double *params, int N)
 {
     QVector<double> v;
     for (int i=0; i<N; i++) { v<<params[i]; }
     setParams(v);
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParamsV(double p1) {
+void JKQTPEvaluatedFunctionGraphBase::setParamsV(double p1) {
     QVector<double> p;
     p<<p1;
     setParams(p);
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParamsV(double p1, double p2) {
+void JKQTPEvaluatedFunctionGraphBase::setParamsV(double p1, double p2) {
     QVector<double> p;
     p<<p1<<p2;
     setParams(p);
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParamsV(double p1, double p2, double p3) {
+void JKQTPEvaluatedFunctionGraphBase::setParamsV(double p1, double p2, double p3) {
     QVector<double> p;
     p<<p1<<p2<<p3;
     setParams(p);
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParamsV(double p1, double p2, double p3, double p4) {
+void JKQTPEvaluatedFunctionGraphBase::setParamsV(double p1, double p2, double p3, double p4) {
     QVector<double> p;
     p<<p1<<p2<<p3<<p4;
     setParams(p);
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParamsV(double p1, double p2, double p3, double p4, double p5) {
+void JKQTPEvaluatedFunctionGraphBase::setParamsV(double p1, double p2, double p3, double p4, double p5) {
     QVector<double> p;
     p<<p1<<p2<<p3<<p4<<p5;
     setParams(p);
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParameterColumn(int __value)
+void JKQTPEvaluatedFunctionGraphBase::setParameterColumn(int __value)
 {
     this->parameterColumn = __value;
 }
 
-int JKQTPEvaluatedFunctionWithParamsGraphBase::getParameterColumn() const
+int JKQTPEvaluatedFunctionGraphBase::getParameterColumn() const
 {
     return this->parameterColumn;
 }
 
-void JKQTPEvaluatedFunctionWithParamsGraphBase::setParameterColumn(size_t __value) {
+void JKQTPEvaluatedFunctionGraphBase::setParameterColumn(size_t __value) {
     this->parameterColumn = static_cast<int>(__value);
 }
 
-QVector<double> JKQTPEvaluatedFunctionWithParamsGraphBase::getInternalParams() const {
+const QVector<double>& JKQTPEvaluatedFunctionGraphBase::getInternalParams() const {
     return iparams;
 }
 
-bool JKQTPEvaluatedFunctionWithParamsGraphBase::usesColumn(int c) const
+QVector<double> &JKQTPEvaluatedFunctionGraphBase::getInternalParams()
+{
+    return iparams;
+}
+
+bool JKQTPEvaluatedFunctionGraphBase::usesColumn(int c) const
 {
     return (c==parameterColumn);
+}
+
+JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec::PlotFunctorSpec():
+    func(),
+    range_start(0),
+    range_end(0)
+{
+
+}
+
+bool JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec::isValid() const
+{
+    return static_cast<bool>(func) && (fabs(range_end-range_start)>0);
+}
+
+
+
+
+JKQTPEvaluatedFunctionWithErrorsGraphBase::JKQTPEvaluatedFunctionWithErrorsGraphBase(JKQTBasePlotter *parent):
+    JKQTPEvaluatedFunctionGraphBase(parent),
+    errorParameterColumn(-1)
+{
+
+}
+
+JKQTPEvaluatedFunctionWithErrorsGraphBase::JKQTPEvaluatedFunctionWithErrorsGraphBase(JKQTPlotter *parent):
+    JKQTPEvaluatedFunctionWithErrorsGraphBase(parent->getPlotter())
+{
+
+}
+
+JKQTPEvaluatedFunctionWithErrorsGraphBase::~JKQTPEvaluatedFunctionWithErrorsGraphBase()
+{
+
+}
+
+const QVector<double>& JKQTPEvaluatedFunctionWithErrorsGraphBase::getInternalErrorParams() const {
+    return ierrorparams;
+}
+
+QVector<double>& JKQTPEvaluatedFunctionWithErrorsGraphBase::getInternalErrorParams() {
+    return ierrorparams;
+}
+
+bool JKQTPEvaluatedFunctionWithErrorsGraphBase::usesColumn(int c) const
+{
+    return JKQTPEvaluatedFunctionGraphBase::usesColumn(c)||(c==errorParameterColumn);
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParams(const QVector<double> &errorParams)
+{
+    ierrorparams=errorParams;
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParameterColumn(int __value)
+{
+    this->errorParameterColumn = __value;
+}
+
+int JKQTPEvaluatedFunctionWithErrorsGraphBase::getErrorParameterColumn() const
+{
+    return this->errorParameterColumn;
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParameterColumn(size_t __value) {
+    this->errorParameterColumn = static_cast<int>(__value);
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParamsV(double p1)
+{
+    QVector<double> p;
+    p<<p1;
+    setErrorParams(p);
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParamsV(double p1, double p2)
+{
+    QVector<double> p;
+    p<<p1<<p2;
+    setErrorParams(p);
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParamsV(double p1, double p2, double p3)
+{
+    QVector<double> p;
+    p<<p1<<p2<<p3;
+    setErrorParams(p);
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParamsV(double p1, double p2, double p3, double p4)
+{
+    QVector<double> p;
+    p<<p1<<p2<<p3<<p4;
+    setErrorParams(p);
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::setErrorParamsV(double p1, double p2, double p3, double p4, double p5)
+{
+    QVector<double> p;
+    p<<p1<<p2<<p3<<p4<<p5;
+    setErrorParams(p);
+}
+
+void JKQTPEvaluatedFunctionWithErrorsGraphBase::collectParameters()
+{
+    JKQTPEvaluatedFunctionGraphBase::collectParameters();
+
+    if (parent && errorParameterColumn>=0) {
+        ierrorparams.clear();
+        JKQTPDatastore* datastore=parent->getDatastore();
+        int imin=0;
+        int imax= static_cast<int>(datastore->getRows(errorParameterColumn));
+
+        for (int i=imin; i<imax; i++) {
+            double xv=datastore->get(errorParameterColumn,i);
+            ierrorparams<<xv;
+        }
+        int i=ierrorparams.size()-1;
+        while (i>=0 && !JKQTPIsOKFloat(ierrorparams[i])) {
+            ierrorparams.remove(i,1);
+            i--;
+        }
+    }
 }

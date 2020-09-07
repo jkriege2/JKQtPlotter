@@ -34,6 +34,74 @@ class JKQTBasePlotter;
 class JKQTPlotter;
 
 
+/** \brief extends JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase with the capabilities to define functions from strings
+ *         that are parsed by JKQTPMathParser
+ *  \ingroup jkqtplotter_functiongraphs
+ *
+ *  \see JKQTPXParsedFunctionLineGraph and JKQTPYParsedFunctionLineGraph for a concrete implementation, see also JKQTPMathParser
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPParsedFunctionLineGraphBase: public JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase {
+    Q_OBJECT
+public:
+
+
+    /** \brief class constructor */
+    JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName, JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName, JKQTPlotter* parent);
+
+    /** \brief class constructor */
+    JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName, const QString& function, JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPParsedFunctionLineGraphBase(const QString& dependentVariableName, const QString& function, JKQTPlotter* parent);
+
+
+    /** \brief class destructor */
+    virtual ~JKQTPParsedFunctionLineGraphBase() override;
+
+    /** \copydoc function */
+    QString getFunction() const;
+
+    /** \copydoc errorFunction */
+    QString getErrorFunction() const;
+    /** \copydoc dependentVariableName */
+    QString getDependentVariableName() const;
+
+public slots:
+    /** \copydoc errorFunction */
+    void setErrorFunction(const QString & __value);
+    /** \copydoc function */
+    void setFunction(const QString & __value);
+
+protected:
+
+    /** \brief INTERNAL data structure combining a JKQTPMathParser and a JKQTPMathParser::jkmpNode
+      */
+    struct ParsedFunctionLineGraphFunctionData {
+        std::shared_ptr<JKQTPMathParser> parser;
+        std::shared_ptr<JKQTPMathParser::jkmpNode> node;
+        int varcount;
+        QString dependentVariableName;
+    };
+
+    /** \brief nache of the dependent variable (e.g. x for a function f(x) ) */
+    QString dependentVariableName;
+
+    /** \brief the function to be evaluated for the plot.  Use \c x as the free variable, e.g. \c "x^2+2" */
+    QString function;
+    /** \brief parser data structure for function */
+    ParsedFunctionLineGraphFunctionData fdata;
+
+    /** \brief the function to be evaluated to add error indicators to the graph. This function is evaluated to an error for every x. Use \c x as the free variable, e.g. \c "x^2+2". */
+    QString errorFunction;
+    /** \brief parser data structure for errorFunction */
+    ParsedFunctionLineGraphFunctionData efdata;
+
+    /** \brief implements the actual plot function */
+    static double evaluateParsedFunction(double x, ParsedFunctionLineGraphFunctionData* fdata) ;
+};
+
+
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$ The function is defined as a string and parsed by JKMathParser
     \ingroup jkqtplotter_parsedFgraphs
@@ -45,7 +113,7 @@ class JKQTPlotter;
 
     \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctionLineGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPParsedFunctionLineGraphBase {
     Q_OBJECT
     public:
 
@@ -55,49 +123,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctio
         /** \brief class constructor */
         JKQTPXParsedFunctionLineGraph(JKQTPlotter* parent);
 
+        /** \brief class constructor */
+        JKQTPXParsedFunctionLineGraph(const QString& function, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXParsedFunctionLineGraph(const QString& function, JKQTPlotter* parent);
+
 
         /** \brief class destructor */
         virtual ~JKQTPXParsedFunctionLineGraph() override;
 
-        /*! \copydoc function */ 
-        void setFunction(const QString & __value);
-        /*! \copydoc function */ 
-        QString getFunction() const;
-
-        /*! \copydoc errorFunction */ 
-        void setErrorFunction(const QString & __value);
-        /*! \copydoc errorFunction */ 
-        QString getErrorFunction() const;
-
-        /** \brief INTERNAL data structure
-         *  \internal
-         */
-        struct JKQTPXParsedFunctionLineGraphFunctionData {
-            JKQTPMathParser* parser;
-            JKQTPMathParser::jkmpNode* node;
-            int varcount;
-        };
+        /** \brief plots the graph to the plotter object specified as parent */
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
     protected:
-        /** \brief the function to be evaluated for the plot.  Use \c x as the free variable, e.g. \c "x^2+2" */
-        QString function;
-        JKQTPXParsedFunctionLineGraphFunctionData fdata;
 
-        /** \brief the function to be evaluated to add error indicators to the graph. This function is evaluated to an error for every x. Use \c x as the free variable, e.g. \c "x^2+2". */
-        QString errorFunction;
-        JKQTPXParsedFunctionLineGraphFunctionData efdata;
 
-        // hide functions that should not be used in this class!
-        using JKQTPXFunctionLineGraph::setPlotFunctionFunctor;
-        using JKQTPXFunctionLineGraph::setParams;
-        using JKQTPXFunctionLineGraph::setErrorPlotFunction;
-        using JKQTPXFunctionLineGraph::setErrorParams;
+        /** \copydoc JKQTPEvaluatedFunctionGraphBase::buildPlotFunctorSpec() */
+        virtual PlotFunctorSpec buildPlotFunctorSpec() override;
 
-        /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData(bool collectParams=true) override;
-
-        /** \brief implements the actual plot function */
-        static double JKQTPXParsedFunctionLineGraphFunction(double x, const QVector<double> &data, JKQTPXParsedFunctionLineGraphFunctionData* fdata) ;
+        /** \copydoc JKQTPEvaluatedFunctionWithErrorsGraphBase::buildPlotFunctorSpec() */
+        virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
 };
 
 
@@ -114,7 +159,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXParsedFunctionLineGraph: public JKQTPXFunctio
     \see \ref JKQTPlotterParsedFunctionPlot, JKQTPMathParser
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctionLineGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPParsedFunctionLineGraphBase {
         Q_OBJECT
     public:
 
@@ -124,47 +169,25 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYParsedFunctionLineGraph: public JKQTPYFunctio
         /** \brief class constructor */
         JKQTPYParsedFunctionLineGraph(JKQTPlotter* parent);
 
+        /** \brief class constructor */
+        JKQTPYParsedFunctionLineGraph(const QString& function, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPYParsedFunctionLineGraph(const QString& function, JKQTPlotter* parent);
+
 
         /** \brief class destructor */
         virtual ~JKQTPYParsedFunctionLineGraph() override;
 
-        /*! \copydoc function */ 
-        void setFunction(const QString & __value);
-        /*! \copydoc function */ 
-        QString getFunction() const;
+        /** \brief plots the graph to the plotter object specified as parent */
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc errorFunction */ 
-        void setErrorFunction(const QString & __value);
-        /*! \copydoc errorFunction */ 
-        QString getErrorFunction() const;
-
-        /** \brief INTERNAL data structure
-         *  \internal
-         */
-        struct JKQTPYParsedFunctionLineGraphFunctionData {
-            JKQTPMathParser* parser;
-            JKQTPMathParser::jkmpNode* node;
-            int varcount;
-        };
 
     protected:
-        /** \brief the function to be evaluated for the plot.  Use \c x as the free variable, e.g. \c "x^2+2" */
-        QString function;
-        JKQTPYParsedFunctionLineGraphFunctionData fdata;
 
-        /** \brief the function to be evaluated to add error indicators to the graph. This function is evaluated to an error for every x. Use \c x as the free variable, e.g. \c "x^2+2". */
-        QString errorFunction;
-        JKQTPYParsedFunctionLineGraphFunctionData efdata;
+        /** \copydoc JKQTPEvaluatedFunctionGraphBase::buildPlotFunctorSpec() */
+        virtual PlotFunctorSpec buildPlotFunctorSpec() override;
 
-        // hide functions that should not be used in this class!
-        using JKQTPXFunctionLineGraph::setPlotFunctionFunctor;
-        using JKQTPXFunctionLineGraph::setParams;
-        using JKQTPXFunctionLineGraph::setErrorPlotFunction;
-        using JKQTPXFunctionLineGraph::setErrorParams;
-
-        /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData(bool collectParams=true) override;
-        /** \brief implements the actual plot function */
-        static double JKQTPYParsedFunctionLineGraphFunction(double x, const QVector<double>& data, JKQTPYParsedFunctionLineGraphFunctionData* fdata);
+        /** \copydoc JKQTPEvaluatedFunctionWithErrorsGraphBase::buildPlotFunctorSpec() */
+        virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
 };
 #endif // jkqtpgraphsparsedfunction_H

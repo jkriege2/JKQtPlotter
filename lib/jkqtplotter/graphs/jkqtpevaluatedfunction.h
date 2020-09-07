@@ -33,6 +33,118 @@
 #define jkqtpgraphsevaluatedfunction_H
 
 
+/** \brief This class extends JKQTPEvaluatedFunctionWithErrorsGraphBase with functions to draw the graphs and
+ *         set the drawing style
+ *  \ingroup jkqtplotter_functiongraphs
+ *
+ *  \note Since this class is meant as a base for both f(x)- and f(y)-functions, it cannot
+ *        implememt JKQTPGraph::draw(). Therefore it provides two implementations drawXGraph()
+ *        and drawYGraph() and the user has to decide in the concrete graph class, which one to call
+ *        (or whether to do the drawing completely different).
+ *
+ *  \see e.g. JKQTPXFunctionLineGraph for a concrete implementation
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: public JKQTPEvaluatedFunctionWithErrorsGraphBase, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+        Q_OBJECT
+    public:
+
+        /** \brief class constructor */
+        JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase(JKQTBasePlotter* parent=nullptr);
+
+        /** \brief class constructor */
+        JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase(JKQTPlotter* parent);
+
+        /** \brief class destructor */
+        virtual ~JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase() override;
+
+        /** \brief plots a key marker inside the specified rectangle \a rect */
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+        /** \brief returns the color to be used for the key label */
+        virtual QColor getKeyLabelColor() const override;
+
+        /*! \copydoc drawLine */
+        bool getDrawLine() const;
+
+
+        /*! \copydoc drawErrorPolygons */
+        bool getDrawErrorPolygons() const;
+        /*! \copydoc drawErrorLines */
+        bool getDrawErrorLines() const;
+        /*! \copydoc errorColor */
+        virtual QColor getErrorLineColor() const;
+        /*! \copydoc errorFillColor */
+        virtual QColor getErrorFillColor() const;
+        /*! \copydoc errorFillStyle */
+        virtual Qt::BrushStyle getErrorFillStyle() const;
+        /*! \copydoc errorStyle */
+        virtual Qt::PenStyle getErrorLineStyle() const;
+        /*! \copydoc errorLineWidth */
+        virtual double getErrorLineWidth() const;
+
+
+
+
+
+    public slots:
+        /*! \brief set color, fill color and error color at the same time */
+        void setColor(QColor c);
+
+        /*! \copydoc drawLine */
+        void setDrawLine(bool __value);
+        /*! \copydoc drawErrorPolygons */
+        void setDrawErrorPolygons(bool __value);
+        /*! \copydoc drawErrorLines */
+        void setDrawErrorLines(bool __value);
+        /*! \copydoc errorColor */
+        virtual void setErrorLineColor(const QColor & __value);
+        /*! \copydoc errorFillColor */
+        virtual void setErrorFillColor(const QColor & __value);
+        /*! \copydoc errorFillStyle */
+        virtual void setErrorFillStyle(Qt::BrushStyle  __value);
+        /*! \copydoc errorStyle */
+        virtual void setErrorLineStyle(Qt::PenStyle  __value);
+        /*! \copydoc errorLineWidth */
+        virtual void setErrorLineWidth(double __value);
+
+    protected:
+        /** \brief plots the graph to the plotter object specified as parent */
+        void drawXGraph(JKQTPEnhancedPainter& painter);
+        /** \brief plots the graph to the plotter object specified as parent */
+        void drawYGraph(JKQTPEnhancedPainter& painter);
+
+
+
+
+        /** \brief indicates whether to draw a line or not */
+        bool drawLine;
+        /** \brief indicates whether to fill the space between the curve and the x-axis */
+        bool fillCurve;
+
+
+        /** \brief indicates whether an error polygon should be drawn */
+        bool drawErrorPolygons;
+        /** \brief indicates whether error lines should be drawn */
+        bool drawErrorLines;
+
+
+
+        /** \brief color of the error graph */
+        QColor errorColor;
+        /** \brief color of the error graph fill */
+        QColor errorFillColor;
+        /** \brief linestyle of the error graph lines */
+        Qt::PenStyle errorStyle;
+        /** \brief width (pixels) of the error graph */
+        double errorLineWidth;
+        /** \brief fill style, if the error curve should be filled */
+        Qt::BrushStyle errorFillStyle;
+
+
+        QBrush getErrorBrush(JKQTPEnhancedPainter& painter) const;
+        QPen getErrorLinePen(JKQTPEnhancedPainter &painter) const;
+
+};
+
 
 
 /*! \brief type of functions that may be plotted by JKQTPXFunctionLineGraph and JKQTPYFunctionLineGraph
@@ -54,84 +166,43 @@ typedef std::function<double(double, const QVector<double>&)> jkqtpPlotFunctionT
 typedef std::function<double(double)> jkqtpSimplePlotFunctionType;
 
 
-/*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$
-    \ingroup jkqtplotter_functiongraphs
 
-    This class uses the intelligent plotting algorithm for functions, implemented in JKQTPAdaptiveFunctionGraphEvaluator.
-    It starts by sampling the function at minSamples positions. Then each function interval is bisected recursively if
-    necessary. To do so the function is evaluated at the mid point and the slopes \f$ \alpha_{\mbox{left}} \f$
-    and \f$ \alpha_{\mbox{right}} \f$ of the two linear segments are compared. the midpoint is added
-    to the graph if \f[ \left|\alpha_{\mbox{right}}-\alpha_{\mbox{left}}\right|>\mbox{slopeTolerance} \f]
-    In addition all sampling points except minimum and maximum are beeing shifted by a random fraction their
-    distance to the other points. This helps to prevent beats when sampling periodic functions.
-
-    Finally the obtained data is cleaned up to reduce the amount of points, by deleting a point, when it leads to an
-    angle between consecutive line-segments of less than dataCleanupMaxAllowedAngleDegree.
-
-    The following image shows some example graphs:
-
-    \image html plot_functionplots.png
-
-    \see \ref JKQTPlotterFunctionPlots, JKQTPAdaptiveFunctionGraphEvaluator, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
+/** \brief extends JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase with the capabilities to define functions from C++-functors
+ *         of type jkqtpSimplePlotFunctionType or jkqtpPlotFunctionType
+ *  \ingroup jkqtplotter_functiongraphs
+ *
+ *  \see JKQTPXFunctionLineGraph and JKQTPYFunctionLineGraph for a concrete implementation
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunctionWithParamsGraphBase, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFunctorLineGraphBase: public JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase {
         Q_OBJECT
     public:
-
         enum SpecialFunction {
             Polynomial, /*!< \brief a polynomial \f$ f(x)=p_0+p_1x+p_2x^2+p_3x^3+... \f$ The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
             Line=Polynomial, /*!< \brief a polynomial \f$ f(x)=p_0+p_1x \f$ The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
             Exponential,  /*!< \brief an exponential function \f$ f(x)=p_0+p_1\cdot\exp(x/p_2) \f$ or \f$ f(x)=p_0\cdot\exp(x/p_1) \f$ (depending on the number of parameters). The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
             PowerLaw,  /*!< \brief an exponential function \f$ f(x)=p_0+p_1\cdot x^{p_3} \f$ or \f$ f(x)=p_0\cdot x^{p_1} \f$ or \f$ f(x)= x^{p_0} \f$ (depending on the number of parameters) The parameters \a params have to be point to a QVector<double> and contain the parameters \f$ p_0, p_1, ... \f$ */
-
-            UserFunction,  /*!< \brief no special function but the function is provided by the user */
         };
 
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
+        JKQTPFunctorLineGraphBase(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(JKQTPlotter* parent);
+        JKQTPFunctorLineGraphBase(JKQTPlotter* parent);
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        JKQTPFunctorLineGraphBase(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTPlotter* parent);
+        JKQTPFunctorLineGraphBase(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTPlotter* parent);
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        JKQTPFunctorLineGraphBase(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
+        JKQTPFunctorLineGraphBase(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTBasePlotter* parent);
+        JKQTPFunctorLineGraphBase(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTBasePlotter* parent);
         /** \brief class constructor */
-        JKQTPXFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTPlotter* parent);
+        JKQTPFunctorLineGraphBase(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTPlotter* parent);
 
         /** \brief class destructor */
-        virtual ~JKQTPXFunctionLineGraph() override;
-
-        /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter) override;
-        /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
-
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * This functions returns 0 for both parameters, so that the plotter uses the predefined
-         * min and max values.
-         */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-
-        /*! \brief set color, fill color and error color at the same time */
-        void setColor(QColor c);
-
-        /*! \copydoc drawLine */ 
-        void setDrawLine(bool __value);
-        /*! \copydoc drawLine */ 
-        bool getDrawLine() const;
+        virtual ~JKQTPFunctorLineGraphBase() override;
 
         /** \brief sets a functor to be plotted
          *
@@ -153,23 +224,20 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
          * \see simplePlotFunction
          */
         virtual void setPlotFunctionFunctor (const jkqtpSimplePlotFunctionType & __value);
-        /*! \copydoc plotFunction */ \
+        /*! \copydoc plotFunction
+         *
+         * \see isSimplePlotFunction() */ \
         virtual jkqtpPlotFunctionType getPlotFunctionFunctor () const;
-        /*! \copydoc simplePlotFunction */ \
+        /*! \copydoc simplePlotFunction
+         *
+         * \see isSimplePlotFunction() */ \
         virtual jkqtpSimplePlotFunctionType getSimplePlotFunction () const;
 
+        /** \brief returns whether the plot function was defined as a jkqtpSimpleParametricCurveFunctionType (\c true ) or
+         *         a jkqtpParametricCurveFunctionType (\c false ) */
+        bool isSimplePlotFunction() const;
 
-        /** \brief returns the currently set internal parameter vector */
-        QVector<double> getInternalErrorParams() const;
 
-        /*! \copydoc drawErrorPolygons */ 
-        void setDrawErrorPolygons(bool __value);
-        /*! \copydoc drawErrorPolygons */ 
-        bool getDrawErrorPolygons() const;
-        /*! \copydoc drawErrorLines */ 
-        void setDrawErrorLines(bool __value);
-        /*! \copydoc drawErrorLines */ 
-        bool getDrawErrorLines() const;
         /** \brief sets a functor to be used for calculating errors
          *
          * \see errorPlotFunction
@@ -194,100 +262,73 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
         virtual void setErrorPlotFunction (const jkqtpSimplePlotFunctionType & __value);
         /*! \copydoc errorSimplePlotFunction */ \
         virtual jkqtpSimplePlotFunctionType getErrorSimplePlotFunction () const;
-        /*! \copydoc errorParams */ 
-        virtual void setErrorParams(void* __value);
-        /*! \copydoc errorParams */ 
-        void *getErrorParams() const;
-        /** \brief sets the error params as a pointer to an internal COPY of the given vector (not the data of the vector, as then the size would be unknown!!!) */
-        void setErrorParams(const QVector<double>& errorParams);
-        /*! \copydoc errorParameterColumn */ 
-        void setErrorParameterColumn(int __value);
-        /*! \copydoc errorParameterColumn */ 
-        int getErrorParameterColumn() const;
-        /*! \copydoc errorParameterColumn */ 
-        void setErrorParameterColumn (size_t __value);
 
-        /*! \copydoc errorColor */
-        virtual void setErrorLineColor(const QColor & __value);
-        /*! \copydoc errorColor */ 
-        virtual QColor getErrorLineColor() const;
-        /*! \copydoc errorFillColor */ 
-        virtual void setErrorFillColor(const QColor & __value);
-        /*! \copydoc errorFillColor */ 
-        virtual QColor getErrorFillColor() const;
-        /*! \copydoc errorFillStyle */ 
-        virtual void setErrorFillStyle(Qt::BrushStyle  __value);
-        /*! \copydoc errorFillStyle */ 
-        virtual Qt::BrushStyle getErrorFillStyle() const;
-        /*! \copydoc errorStyle */ 
-        virtual void setErrorLineStyle(Qt::PenStyle  __value);
-        /*! \copydoc errorStyle */ 
-        virtual Qt::PenStyle getErrorLineStyle() const;
-        /*! \copydoc errorLineWidth */ 
-        virtual void setErrorLineWidth(double __value);
-        /*! \copydoc errorLineWidth */ 
-        virtual double getErrorLineWidth() const;
-
-        /** \copydoc JKQTPGraph::usesColumn() */
-        virtual bool usesColumn(int c) const override;
 
 
         /** \brief sets function to the given special function */
         void setSpecialFunction(SpecialFunction function);
-        /** \brief returns, which special function is set (or if any is set) */
-        SpecialFunction getFunctionType() const;
     protected:
-        /** \brief ensure that current function parameters for plotFunction (which may stem from different sources, as direct data, a datastore column ...) are stored in iparams and ierrorparams */
-        virtual void collectParameters() override;
-
-
-        /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData( bool collectParams=true) override;
-
-
-        /** \brief if set, the values from this datatsore column are used for the parameters \c p1 , \c p2 , \c p3 , ...  of the error plot function */
-        int errorParameterColumn;
-
-        /** \brief indicates whether to draw a line or not */
-        bool drawLine;
-        /** \brief indicates whether to fill the space between the curve and the x-axis */
-        bool fillCurve;
         /** \brief the function to be plotted */
         jkqtpPlotFunctionType plotFunction;
         /** \brief a simple function to be plotted, simplified form without parameters */
         jkqtpSimplePlotFunctionType simplePlotFunction;
-        /** \brief indicates whether a special function is set (and if so, which one), or a user-supplied function */
-        SpecialFunction functionType;
 
 
-        /** \brief indicates whether an error polygon should be drawn */
-        bool drawErrorPolygons;
-        /** \brief indicates whether error lines should be drawn */
-        bool drawErrorLines;
         /** \brief this function calculates the error at a given position */
         jkqtpPlotFunctionType errorPlotFunction;
         /** \brief this function calculates the error at a given position, simplified form without parameters */
         jkqtpSimplePlotFunctionType errorSimplePlotFunction;
-        /** \brief parameters for errorFunction */
-        void* errorParams;
+};
 
 
-        /** \brief color of the error graph */
-        QColor errorColor;
-        /** \brief color of the error graph fill */
-        QColor errorFillColor;
-        /** \brief linestyle of the error graph lines */
-        Qt::PenStyle errorStyle;
-        /** \brief width (pixels) of the error graph */
-        double errorLineWidth;
-        /** \brief fill style, if the error curve should be filled */
-        Qt::BrushStyle errorFillStyle;
+/*! \brief This implements line plots where the data is taken from a user supplied function \f$ y=f(x) \f$
+    \ingroup jkqtplotter_functiongraphs
+
+    This class uses the intelligent plotting algorithm for functions, implemented in JKQTPAdaptiveFunctionGraphEvaluator.
+
+    The following image shows some example graphs:
+
+    \image html plot_functionplots.png
+
+    \see \ref JKQTPlotterFunctionPlots, JKQTPAdaptiveFunctionGraphEvaluator, JKQTPYFunctionLineGraph, JKQTPXYFunctionLineGraph, jkqtpstatAddPolyFit(), jkqtpstatAddWeightedRegression(), jkqtpstatAddRobustIRLSRegression(), jkqtpstatAddRegression(), jkqtpstatAddLinearWeightedRegression(), jkqtpstatAddRobustIRLSLinearRegression(), jkqtpstatAddLinearRegression()
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPFunctorLineGraphBase {
+        Q_OBJECT
+    public:
 
 
-        QBrush getErrorBrush(JKQTPEnhancedPainter& painter) const;
-        QPen getErrorLinePen(JKQTPEnhancedPainter &painter) const;
-        /** \brief internal storage for the current error function parameters for errorPlotFunction (which may stem from different sources, as direct data, a datastore column ...) */
-        QVector<double> ierrorparams;
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(JKQTBasePlotter* parent=nullptr);
+
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(const jkqtpSimplePlotFunctionType & f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTBasePlotter* parent=nullptr);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(jkqtpSimplePlotFunctionType && f, const QString& title, JKQTPlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTBasePlotter* parent);
+        /** \brief class constructor */
+        JKQTPXFunctionLineGraph(SpecialFunction type, const QVector<double>& params, const QString& title, JKQTPlotter* parent);
+
+        /** \brief class destructor */
+        virtual ~JKQTPXFunctionLineGraph() override;
+
+        /** \brief plots the graph to the plotter object specified as parent */
+        virtual void draw(JKQTPEnhancedPainter& painter) override;
+
+    protected:
+
+        /** \copydoc JKQTPEvaluatedFunctionGraphBase::buildPlotFunctorSpec() */
+        virtual PlotFunctorSpec buildPlotFunctorSpec() override;
+
+        /** \copydoc JKQTPEvaluatedFunctionWithErrorsGraphBase::buildPlotFunctorSpec() */
+        virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
+
 };
 
 /*! \brief This implements line plots where the data is taken from a user supplied function \f$ x=f(y) \f$
@@ -299,7 +340,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXFunctionLineGraph: public JKQTPEvaluatedFunct
 
     \see \ref JKQTPlotterFunctionPlots , JKQTPXFunctionLineGraph, JKQTPXYFunctionLineGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPFunctorLineGraphBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -323,8 +364,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYFunctionLineGraph: public JKQTPXFunctionLineG
         virtual void draw(JKQTPEnhancedPainter& painter) override;
     protected:
 
-        /** \brief fill the data array with data from the function plotFunction */
-        virtual void createPlotData( bool collectParams=true) override;
+        /** \copydoc JKQTPEvaluatedFunctionGraphBase::buildPlotFunctorSpec() */
+        virtual PlotFunctorSpec buildPlotFunctorSpec() override;
+
+        /** \copydoc JKQTPEvaluatedFunctionWithErrorsGraphBase::buildPlotFunctorSpec() */
+        virtual std::function<QPointF(double)> buildErrorFunctorSpec() override;
 
 };
 

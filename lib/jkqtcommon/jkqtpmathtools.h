@@ -290,10 +290,20 @@ inline T jkqtp_sqr(const T& v) {
     \ingroup jkqtptools_math_basic
 
 */
-template <class T>
-inline T jkqtp_pow4(T x) {
+    template <class T>
+    inline T jkqtp_pow4(T x) {
     const T xx=x*x;
     return xx*xx;
+}
+
+/*! \brief 5-th power of a number
+    \ingroup jkqtptools_math_basic
+
+*/
+template <class T>
+inline T jkqtp_pow5(T x) {
+    const T xx=x*x;
+    return xx*xx*x;
 }
 
 /*! \brief cube of a number

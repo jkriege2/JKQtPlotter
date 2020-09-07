@@ -108,3 +108,6 @@ All examples above use the graph class `JKQTPXFunctionLineGraph`, which plots a 
 ![functionplot_fy](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/functionplot_fy.png)
 
 
+This example describes how to draw 1D functions. For an example of how to draw 2D parametric curves `[x,y]=f(t)`, see [examples/evalcurve](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/evalcurve) .
+
+
