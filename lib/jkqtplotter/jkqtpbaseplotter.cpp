@@ -239,11 +239,6 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     actSavePDF=new QAction(QIcon(":/JKQTPlotter/jkqtp_savepdf.png"), tr("Save P&DF"), this);
     actSavePDF->setToolTip(tr("Save as PDF"));
     //toolbar->addAction(actSavePDF);
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    actSavePS=new QAction(QIcon(":/JKQTPlotter/jkqtp_saveps.png"), "Save P&S", this);
-    actSavePS->setToolTip("Save as PostScript");
-    //toolbar->addAction(actSavePS);
-#endif
     actSaveSVG=new QAction(QIcon(":/JKQTPlotter/jkqtp_savesvg.png"), tr("Save S&VG"), this);
     actSaveSVG->setToolTip(tr("Save as Scalable Vector Graphics (SVG)"));
     //toolbar->addAction(actSaveSVG);
@@ -278,9 +273,6 @@ JKQTBasePlotter::JKQTBasePlotter(bool datastore_internal, QObject* parent, JKQTP
     connect(actShowPlotData,   SIGNAL(triggered()), this, SLOT(showPlotData()));
 
     connect(actSavePDF,    SIGNAL(triggered()), this, SLOT(saveAsPDF()));
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    connect(actSavePS,     SIGNAL(triggered()), this, SLOT(saveAsPS()));
-#endif
     connect(actSaveSVG,    SIGNAL(triggered()), this, SLOT(saveAsSVG()));
     connect(actSavePix,    SIGNAL(triggered()), this, SLOT(saveAsPixelImage()));
 
@@ -700,9 +692,15 @@ void JKQTBasePlotter::setXY(double xminn, double xmaxx, double yminn, double yma
     xAxis->setRange(xminn, xmaxx);
     yAxis->setRange(yminn, ymaxx);
     if (maintainAxisAspectRatio) {
-        double mid=(yAxis->getMax()+yAxis->getMin())/2.0;
-        double w=fabs(xmaxx-xminn)/axisAspectRatio;
-        yAxis->setRange(mid-w/2.0, mid+w/2.0);
+        if (xAxis->isLinearAxis() && yAxis->isLinearAxis()) {
+            const double mid=(yAxis->getMax()+yAxis->getMin())/2.0;
+            const double w=fabs(xmaxx-xminn)/axisAspectRatio;
+            yAxis->setRange(mid-w/2.0, mid+w/2.0);
+        } else if (xAxis->isLogAxis() && yAxis->isLogAxis()) {
+            const double mid=(log(yAxis->getMax())+log(yAxis->getMin()))/2.0;
+            const double w=fabs(log(xmaxx)-log(xminn))/axisAspectRatio;
+            yAxis->setRange(exp(mid-w/2.0), exp(mid+w/2.0));
+        }
     }
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
@@ -710,19 +708,31 @@ void JKQTBasePlotter::setXY(double xminn, double xmaxx, double yminn, double yma
 void JKQTBasePlotter::setX(double xminn, double xmaxx){
     xAxis->setRange(xminn, xmaxx);
     if (maintainAxisAspectRatio) {
-        double mid=(yAxis->getMax()+yAxis->getMin())/2.0;
-        double w=fabs(xmaxx-xminn)/axisAspectRatio;
-        yAxis->setRange(mid-w/2.0, mid+w/2.0);
+        if (xAxis->isLinearAxis() && yAxis->isLinearAxis()) {
+            const double mid=(yAxis->getMax()+yAxis->getMin())/2.0;
+            const double w=fabs(xmaxx-xminn)/axisAspectRatio;
+            yAxis->setRange(mid-w/2.0, mid+w/2.0);
+        } else if (xAxis->isLogAxis() && yAxis->isLogAxis()) {
+            const double mid=(log(yAxis->getMax())+log(yAxis->getMin()))/2.0;
+            const double w=fabs(log(xmaxx)-log(xminn))/axisAspectRatio;
+            yAxis->setRange(exp(mid-w/2.0), exp(mid+w/2.0));
+        }
     }
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
 
-void JKQTBasePlotter::setY(double yminn, double ymaxx){
+void JKQTBasePlotter::setY(double yminn, double ymaxx) {
     yAxis->setRange(yminn, ymaxx);
     if (maintainAxisAspectRatio) {
-        double mid=(xAxis->getMax()+xAxis->getMin())/2.0;
-        double w=fabs(ymaxx-yminn)*axisAspectRatio;
-        xAxis->setRange(mid-w/2.0, mid+w/2.0);
+        if (xAxis->isLinearAxis() && yAxis->isLinearAxis()) {
+            const double mid=(xAxis->getMax()+xAxis->getMin())/2.0;
+            const double w=fabs(ymaxx-yminn)*axisAspectRatio;
+            xAxis->setRange(mid-w/2.0, mid+w/2.0);
+        } else if (xAxis->isLogAxis() && yAxis->isLogAxis()) {
+            const double mid=(log(xAxis->getMax())+log(xAxis->getMin()))/2.0;
+            const double w=fabs(log(ymaxx)-log(yminn))/axisAspectRatio;
+            xAxis->setRange(exp(mid-w/2.0), exp(mid+w/2.0));
+        }
     }
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
@@ -1438,14 +1448,14 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
             for (int i=0; i< gridPrintingList.size(); i++) {
                 //std::cout<<"printing "<<i<<" ...\n";
                 painter.save(); auto __finalpaintinnerloop=JKQTPFinally([&painter]() {painter.restore();});
-                int t_x=0;
-                int t_y=0;
+                int gt_x=0;
+                int gt_y=0;
                 //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
                 //std::cout<<"colrowlistsizes     "<<gridPrintingColumns.size()<<", "<<gridPrintingRows.size()<<" ...\n";
-                for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(j)]);  }
-                for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
+                for (size_t j=0; j<gridPrintingList[i].x; j++) {  gt_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(j)]);  }
+                for (size_t j=0; j<gridPrintingList[i].y; j++) {  gt_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
                 //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
-                painter.translate(t_x, t_y);
+                painter.translate(gt_x, gt_y);
                 gridPrintingList[i].plotter->drawPlot(painter, showOverlays);
 
             }
@@ -1505,14 +1515,14 @@ void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pa
             for (int i=0; i< gridPrintingList.size(); i++) {
                 //std::cout<<"printing "<<i<<" ...\n";
                 painter.save(); auto __finalpaintinnerloop=JKQTPFinally([&painter]() {painter.restore();});
-                int t_x=0;
-                int t_y=0;
+                int gt_x=0;
+                int gt_y=0;
                 //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
                 //std::cout<<"colrowlistsizes     "<<gridPrintingColumns.size()<<", "<<gridPrintingRows.size()<<" ...\n";
-                for (size_t j=0; j<gridPrintingList[i].x; j++) {  t_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(j)]);  }
-                for (size_t j=0; j<gridPrintingList[i].y; j++) {  t_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
+                for (size_t j=0; j<gridPrintingList[i].x; j++) {  gt_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(j)]);  }
+                for (size_t j=0; j<gridPrintingList[i].y; j++) {  gt_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
                 //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
-                painter.translate(t_x, t_y);
+                painter.translate(gt_x, gt_y);
                 gridPrintingList[i].plotter->drawOverlaysWithHints(painter);
 
             }
@@ -1752,10 +1762,10 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
     bool res=false;
     if (printer) {
         if (!displayPreview || dlg->exec()==QDialog::Accepted) {
-            qDebug()<<svg<<printer<<delPrinter;
+            //qDebug()<<svg<<printer<<delPrinter;
             if (svg) {
                 printpreviewPaintRequestedNew(svg);
-            } else if (printer && !delPrinter) {
+            } else if (!delPrinter) {
                 printpreviewPaintRequestedNew(printer);
             } else {
                 printpreviewPaintRequestedNew(paintDevice);
@@ -2377,7 +2387,7 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& re
         if ((scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(rect.width())) || (scale*static_cast<double>(widgetHeight)/paintMagnification>static_cast<double>(rect.height()))) {
             scale=static_cast<double>(rect.height())/static_cast<double>(widgetHeight)*paintMagnification;
         }
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
         // scale the plot so it fits on the page
         painter.scale(scale, scale);
     #ifdef JKQTBP_DEBUGTIMING
@@ -3293,12 +3303,6 @@ QAction *JKQTBasePlotter::getActionSavePDF() const {
     return this->actSavePDF;
 }
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-QAction *JKQTBasePlotter::getActionSavePS() const {
-    return this->actSavePS;
-}
-#endif
-
 QAction *JKQTBasePlotter::getActionSavePix() const {
     return this->actSavePix;
 }
@@ -3704,51 +3708,12 @@ void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
     saveUserSettings();
 }
 
-void JKQTBasePlotter::saveAsPS(const QString& filename, bool displayPreview) {
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    loadUserSettings();
-    QString fn=filename;
-    if (fn.isEmpty()) {
-        fn = QFileDialog::getSaveFileName(nullptr, tr("Save Plot"),
-                                    currentSaveDirectory,
-                                    tr("PostScript File (*.ps)"));
-        if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
-    }
-
-    if (!fn.isEmpty()) {
-        QPrinter* printer=new QPrinter;
-        bool doLandscape=widgetWidth>widgetHeight;
-        if (gridPrinting) {
-            gridPrintingCalc();
-            doLandscape=gridPrintingSize.width()>gridPrintingSize.height();
-        }
-        if (doLandscape) {
-            printer->setOrientation(QPrinter::Landscape);
-        } else {
-            printer->setOrientation(QPrinter::Portrait);
-        }
-        printer->setOutputFormat(QPrinter::PostScriptFormat);
-        printer->setColorMode(QPrinter::Color);
-        printer->setOutputFileName(fn);
-        printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
-        printpreviewNew(printer, true, -1.0, -1.0, displayPreview);
-        delete printer;
-    }
-    saveUserSettings();
-#else
-    saveAsPDF(filename+".pdf", displayPreview);
-#endif
-}
-
 
 void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     loadUserSettings();
     QString fn=filename;
     QStringList filt;
     filt<<tr("Portable Document Format PDF [Qt] (*.pdf)");
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    filt<<tr("PostScript [Qt] (*.ps)");
-#endif
     filt<<tr("Scalable Vector Graphics [Qt] (*.svg)");
     filt<<tr("PNG Image [Qt] (*.png)");
     filt<<tr("BMP Image [Qt] (*.bmp)");
@@ -3763,8 +3728,6 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
     for (int i=0; i<writerformats.size(); i++) {
         filt<<QString("%1 Image (*.%2)").arg(QString(writerformats[i]).toUpper()).arg(QString(writerformats[i].toLower()));
     }
-    /*filt<<tr("X11 Bitmap [Qt] (*.xbm)");
-    filt<<tr("X11 Pixmap [Qt] (*.xpm)");*/
     QString selFormat="";
     if (fn.isEmpty()) {
         selFormat=currentFileFormat;
@@ -3795,14 +3758,9 @@ void JKQTBasePlotter::saveImage(const QString& filename, bool displayPreview) {
             }
         }
         //qDebug()<<"filtID="<<filtID<<"   isWithSpecialDeviceAdapter="<<isWithSpecialDeviceAdapter<<"   adapterID="<<adapterID;
-        int ids=0;
-        if (filtID==ids++) {
+        if (filtID==0) {
             saveAsPDF(fn, displayPreview);
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        } else if (filtID==ids++) {
-            saveAsPS(fn, displayPreview);
-#endif
-        } else if (filtID==ids++) {
+        } else if (filtID==1) {
             saveAsSVG(fn, displayPreview);
         } else if (isWithSpecialDeviceAdapter && adapterID>=0 && adapterID<jkqtpPaintDeviceAdapters.size()) {
             QString tempFM="";
@@ -4222,9 +4180,7 @@ void JKQTBasePlotter::drawGraphs(JKQTPEnhancedPainter& painter){
 
 
     for (int j=0; j<graphs.size(); j++) {
-        //int leftSpace, rightSpace, topSpace, bottomSpace;
         JKQTPPlotElement* g=graphs[j];
-        //qDebug()<<"  drawing JKQTPPlotElement"<<j<<g->getTitle()<<g->metaObject()->className();
         if (g->isVisible()) g->draw(painter);
     }
 
@@ -4233,9 +4189,9 @@ void JKQTBasePlotter::drawGraphs(JKQTPEnhancedPainter& painter){
     }
 
     for (int j=0; j<graphs.size(); j++) {
-        int leftSpace, rightSpace, topSpace, bottomSpace;
         JKQTPPlotElement* g=graphs[j];
         if (g->isVisible()) {
+            int leftSpace, rightSpace, topSpace, bottomSpace;
             g->getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
             ibTop+=topSpace;
             ibLeft+=leftSpace;
@@ -4518,10 +4474,10 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         double keyHeight=graphs.size();
         double w=0;
         double txtH=0;
-        QFont f=painter.font();
-        f.setFamily(plotterStyle.defaultFontName);
-        f.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
-        painter.setFont(f);
+        QFont floc=painter.font();
+        floc.setFamily(plotterStyle.defaultFontName);
+        floc.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
+        painter.setFont(floc);
 
 
         for (int i=0; i<graphs.size(); i++) {
@@ -4662,11 +4618,11 @@ void JKQTBasePlotter::getGraphsYMinMax(double& miny, double& maxy, double& small
 
 void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool includeY0, double scaleX, double scaleY) {
    // std::cout<<"JKQTBasePlotter::zoomToFit():\n";
-    double xxmin=0;
-    double xxmax=0;
-    double xsmallestGreaterZero=0;
     if (graphs.size()<=0) return;
     if (zoomX) {
+        double xxmin=0;
+        double xxmax=0;
+        double xsmallestGreaterZero=0;
         getGraphsXMinMax(xxmin, xxmax, xsmallestGreaterZero);
         //std::cout<<"   xxmin="<<xxmin<<"   xxmax="<<xxmax<<std::endl;
         if (JKQTPIsOKFloat(xxmin) && JKQTPIsOKFloat(xxmax)) {
@@ -4708,11 +4664,11 @@ void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool inc
             }
         }
     }
-    double yymin=0;
-    double yymax=0;
-    double ysmallestGreaterZero=0;
 
     if (zoomY) {
+        double yymin=0;
+        double yymax=0;
+        double ysmallestGreaterZero=0;
         getGraphsYMinMax(yymin, yymax, ysmallestGreaterZero);
         //std::cout<<"   yymin="<<yymin<<"   yymax="<<yymax<<std::endl;
         bool doScale=true;

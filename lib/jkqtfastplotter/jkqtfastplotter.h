@@ -397,7 +397,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief return x-pixel coordinate from x coordinate */
         inline double x2p(double x) {
             if (xAxisLog) {
-                if (x<0) return xOffset+log(xMin/10.0)/JKQTPSTATISTICS_LN10*xScale;
+                if (x<=0) return xOffset+log(xMin/10.0)/JKQTPSTATISTICS_LN10*xScale;
                 return xOffset+log(x)/JKQTPSTATISTICS_LN10*xScale;
             } else {
                 return xOffset+x*xScale;
@@ -416,7 +416,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
         /** \brief return y-pixel coordinate from y coordinate */
         inline double y2p(double y) {
             if (yAxisLog) {
-                if (y<0) return yOffset-log(yMin/10.0)/JKQTPSTATISTICS_LN10*yScale;
+                if (y<=0) return yOffset-log(yMin/10.0)/JKQTPSTATISTICS_LN10*yScale;
                 return yOffset-log(y)/JKQTPSTATISTICS_LN10*yScale;
             } else {
                 return yOffset-y*yScale;

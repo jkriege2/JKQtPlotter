@@ -119,13 +119,13 @@ void JKQTPContourPlot::draw(JKQTPEnhancedPainter &painter)
             // transform into plot coordinates
             for(auto polygon =contourLinesCache.at(i).begin(); polygon!=contourLinesCache.at(i).end();++polygon ) {
                 contourLinesTransformedSingleLevel.push_back(QPolygonF());
-                for (auto& p: *polygon) {
-                    contourLinesTransformedSingleLevel.last().append(transform(x+p.x()/double(Nx-1)*width, y+p.y()/double(Ny-1)*height));
+                for (auto& poly: *polygon) {
+                    contourLinesTransformedSingleLevel.last().append(transform(x+poly.x()/double(Nx-1)*width, y+poly.y()/double(Ny-1)*height));
                 }
                 //qDebug()<<lineTranformed;
             }
-            for (const QPolygonF& p: contourLinesTransformedSingleLevel) {
-                painter.drawPolyline(p);
+            for (const QPolygonF& poly: contourLinesTransformedSingleLevel) {
+                painter.drawPolyline(poly);
             }
         }
     }

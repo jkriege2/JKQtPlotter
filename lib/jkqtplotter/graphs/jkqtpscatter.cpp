@@ -89,11 +89,6 @@ void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
         if (imin<0) imin=0;
         if (imax<0) imax=0;
 
-        //qDebug()<<"JKQTPXYLineGraph::draw(): "<<3<<" imin="<<imin<<" imax="<<imax;
-        //double xold=-1;
-        //double yold=-1;
-        //bool first=false;
-        //QVector<QLineF> lines;
         std::vector<QPolygonF> vec_linesP;
         vec_linesP.push_back(QPolygonF());
         intSortData();
@@ -223,17 +218,18 @@ bool JKQTPXYLineErrorGraph::getXMinMax(double &minx, double &maxx, double &small
         if (imax<0) imax=0;
 
         for (int i=imin; i<imax; i++) {
-            double xvsgz;
             double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
             if (JKQTPIsOKFloat(xv)) {
                 if (start || xv>maxx) maxx=xv;
                 if (start || xv<minx) minx=xv;
-                xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
-                xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
+            }
+            xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
+            if (JKQTPIsOKFloat(xv)) {
                 if (start || xv>maxx) maxx=xv;
                 if (start || xv<minx) minx=xv;
-                xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
             }
         }
@@ -269,13 +265,14 @@ bool JKQTPXYLineErrorGraph::getYMinMax(double &miny, double &maxy, double &small
             if (JKQTPIsOKFloat(yv)) {
                 if (start || yv>maxy) maxy=yv;
                 if (start || yv<miny) miny=yv;
-                double xvsgz;
-                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
-                yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
+            }
+            yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
+            if (JKQTPIsOKFloat(yv)) {
                 if (start || yv>maxy) maxy=yv;
                 if (start || yv<miny) miny=yv;
-                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
             }
         }
@@ -378,20 +375,21 @@ void JKQTPXYParametrizedScatterGraph::draw(JKQTPEnhancedPainter &painter)
     if (imin<0) imin=0;
     if (imax<0) imax=0;
 
-    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<3<<" imin="<<imin<<" imax="<<imax;
-    double xold=-1;
-    double yold=-1;
-    bool first=false;
     QVector<QLineF> lines;
     QPolygonF linesP;
     QVector<QColor> linecols;
     QVector<QColor> linecolss;
     QVector<double> linewidths;
-    intSortData();
-    double specSymbSize=0;
-    bool hasSpecSymbSize=false;
+    //qDebug()<<"JKQTPXYLineGraph::draw(): "<<3<<" imin="<<imin<<" imax="<<imax;
     {
         painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
+        double xold=-1;
+        double yold=-1;
+        bool first=false;
+
+        intSortData();
+        double specSymbSize=0;
+        bool hasSpecSymbSize=false;
         for (int iii=imin; iii<imax; iii++) {
             int i=qBound(imin, getDataIndex(iii), imax);
             double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
@@ -912,17 +910,18 @@ bool JKQTPXYParametrizedErrorScatterGraph::getXMinMax(double &minx, double &maxx
         if (imax<0) imax=0;
 
         for (int i=imin; i<imax; i++) {
-            double xvsgz;
-            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
-            double xvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xvv) ) {
+            const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
+            if (JKQTPIsOKFloat(xv)  ) {
                 if (start || xv>maxx) maxx=xv;
                 if (start || xv<minx) minx=xv;
-                xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+            }
+            const double xvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
+            if (JKQTPIsOKFloat(xvv)) {
                 start=false;
                 if (start || xvv>maxx) maxx=xvv;
                 if (start || xvv<minx) minx=xvv;
-                xvsgz=xvv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=xvv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
             }
         }
@@ -955,17 +954,18 @@ bool JKQTPXYParametrizedErrorScatterGraph::getYMinMax(double &miny, double &maxy
         if (imax<0) imax=0;
 
         for (int i=imin; i<imax; i++) {
-            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+getYErrorU(i, datastore);
-            double yvv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
-            if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(yvv) ) {
+            const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+getYErrorU(i, datastore);
+            if (JKQTPIsOKFloat(yv)) {
                 if (start || yv>maxy) maxy=yv;
                 if (start || yv<miny) miny=yv;
-                double xvsgz;
-                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
+            }
+            const double yvv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
+            if (JKQTPIsOKFloat(yvv) ) {
                 if (start || yvv>maxy) maxy=yvv;
                 if (start || yvv<miny) miny=yvv;
-                xvsgz=yvv; SmallestGreaterZeroCompare_xvsgz();
+                const double xvsgz=yvv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
             }
         }

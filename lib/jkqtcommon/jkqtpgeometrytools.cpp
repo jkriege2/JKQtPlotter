@@ -103,9 +103,7 @@ QVector<QPolygonF> JKQTPUnifyLinesToPolygons(const QVector<QLineF> &lines, doubl
     }
     //return res.toVector();
     // clean the resulting polygon
-    for (QPolygonF& p: res) {
-        p=JKQTPCleanPolygon(p, distanceThreshold);
-    }
+    std::transform(res.begin(), res.end(), res.begin(), std::bind(&JKQTPCleanPolygon, std::placeholders::_1, distanceThreshold));
 
     int maxIterations=100;
     int iter=0;
@@ -266,7 +264,7 @@ QVector<QPointF> JKQTPAdaptiveFunctionGraphEvaluator::evaluate(double tmin, doub
     for (double t=tmin+delta_t0; t<tmax; t=t+delta_t0) {
         const double treal=t;
         intData.insert_after(a, std::pair<double, QPointF>(treal, fxy(treal)));
-        InternalList::iterator b=a; b++;
+        InternalList::iterator b=a; ++b;
         //qDebug()<<"t="<<t<<", dist(a,b)="<<std::distance(a,b);
         refine(intData, a, b, 0);
         //qDebug()<<"       after refine: dist(a,b)="<<std::distance(a,b);
@@ -299,7 +297,7 @@ void JKQTPAdaptiveFunctionGraphEvaluator::refine(JKQTPAdaptiveFunctionGraphEvalu
     const double slope_mid_b=(pb.y()-pmid.y())/(pb.x()-pmid.x());
     if (fabs(slope_mid_b-slope_a_mid)>slopeTolerance || delta>minPixelPerSample) {
         intData.insert_after(a, std::pair<double, QPointF>(tmid, pmid));
-        InternalList::iterator abmid=a; abmid++;
+        InternalList::iterator abmid=a; ++abmid;
         refine(intData, a, abmid, degree+1);
         refine(intData, abmid, b, degree+1);
     }
@@ -324,9 +322,7 @@ QVector<QPointF> JKQTPSplitPolylineIntoPoints(const QVector<QPointF> &line, std:
         for (int i=1; i<line.size(); i++) {
             const QVector<QPointF> ps=JKQTPSplitLineIntoPoints(QLineF(line[i-1], line[i]), fTransform);
             result.reserve(result.size()+ps.size());
-            for (auto& p: ps) {
-                if (result.size()==0 || result.last()!=p) result.push_back(p);
-            }
+            std::copy_if(ps.begin(), ps.end(), std::back_inserter(result), [&](const QPointF&p) { return result.size()==0 || result.last()!=p; });
             //qDebug()<<"line: "<<QLineF(line[i-1], line[i])<<"  --> ps.size()="<<ps.size()<<", result.size()="<<result.size();
         }
     }

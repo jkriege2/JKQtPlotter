@@ -93,7 +93,7 @@ void JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase::drawKeyMarker(JKQTPEnhanc
     if (drawLine) painter.setPen(p);
     painter.setBrush(b);
     if (fillCurve) painter.drawRect(rect);
-    if (!fillCurve & drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+    if (!fillCurve && drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
 
 }
 

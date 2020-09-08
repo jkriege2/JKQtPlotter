@@ -208,7 +208,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *   - print() prints the graph on a QPrinter object
  *   - saveAsPixelImage() saves the plot into a pixel image file (PNG, TIFF, ... formats, as supported by Qt)
  *   - saveAsPDF() saves the graph as a PDF file (using the Qt printing engine)
- *   - saveAsPS() saves the graph as a PDF file (using the Qt printing engine)
  *   - saveAsSVG() saves the graph as a SVG file (using the Qt SVG library)
  *   - saveImage() saves the graph
  * .
@@ -841,11 +840,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QAction* getActionCopyMatlab() const;
         /*! \copydoc actSavePDF */ 
         QAction* getActionSavePDF() const;
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        /*! \copydoc actSavePS */
-        QAction* getActionSavePS() const;
-#endif
-        /*! \copydoc actSavePix */ 
+        /*! \copydoc actSavePix */
         QAction* getActionSavePix() const;
         /*! \copydoc actSaveSVG */ 
         QAction* getActionSaveSVG() const;
@@ -1353,9 +1348,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief save the current plot as a PDF file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed  */
         void saveAsPDF(const QString& filename=QString(""), bool displayPreview=true);
-
-        /** \brief save the current plot as a PS file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed */
-        void saveAsPS(const QString& filename=QString(""), bool displayPreview=true);
 
         /** \brief save the current plot as an image file, with the current widget aspect ratio, if filename is empty a file selection dialog is displayed.
         *          The image format is extracted from the file extension (jpeg, tiff, png, pdf, ...) */
@@ -2019,9 +2011,23 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true */
         double aspectRatio;
 
-        /** \brief indicates whether the axes should maintain an aspect ratio */
+        /** \brief indicates whether the axes should maintain an aspect ratio
+         *
+         *  \note An axis aspect ration is only well defined for linear axes (if both axes are linear).
+         *        If both axes a logarithmic, the axis ration is defined for log(axismax)-log(axismin).
+         *        For other combinations of axes, this function is deactivated
+         *
+         *  \see axisAspectRatio
+         */
         bool maintainAxisAspectRatio;
-        /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true */
+        /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true
+         *
+         *  \note An axis aspect ration is only well defined for linear axes (if both axes are linear).
+         *        If both axes a logarithmic, the axis ration is defined for log(axismax)-log(axismin).
+         *        For other combinations of axes, this function is deactivated
+         *
+         *  \see maintainAxisAspectRatio
+         */
         double axisAspectRatio;
 
 
@@ -2082,10 +2088,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QAction* actCopyMatlab;
         /** \brief QAction which triggers the saving as PDF */
         QAction* actSavePDF;
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        /** \brief QAction which triggers the saving as PostScript */
-        QAction* actSavePS;
-#endif
         /** \brief QAction which triggers the saving as pixel image */
         QAction* actSavePix;
         /** \brief QAction which triggers the saving as Scalable Vector Graphics (SVG) */

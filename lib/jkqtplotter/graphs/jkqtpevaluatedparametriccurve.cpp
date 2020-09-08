@@ -33,13 +33,24 @@
 
 
 
-JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(JKQTBasePlotter* parent):
+JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(double tmin_, double tmax_, JKQTBasePlotter *parent):
     JKQTPEvaluatedFunctionGraphBase(parent),
-    tmin(0.0),
-    tmax(1.0)
+    tmin(tmin_),
+    tmax(tmax_)
 {
     initLineStyle(parent, parentPlotStyle);
     setMaxRefinementDegree(8);
+}
+
+JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(double tmin_, double tmax_, JKQTPlotter *parent):
+    JKQTPXYFunctionLineGraphBase(tmin_,tmax_,parent->getPlotter())
+{
+
+}
+
+JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(JKQTBasePlotter* parent):
+    JKQTPXYFunctionLineGraphBase(0,1,parent)
+{
 }
 
 JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(JKQTPlotter* parent):
@@ -47,6 +58,7 @@ JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(JKQTPlotter* parent):
 {
 
 }
+
 
 JKQTPXYFunctionLineGraphBase::~JKQTPXYFunctionLineGraphBase()
 {
@@ -161,13 +173,9 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(JKQTPlotter* parent):
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpSimpleParametricCurveFunctionType &f, const QString &title_, double tmin_, double tmax_, JKQTBasePlotter *parent):
-    JKQTPXYFunctionLineGraph(parent)
+    JKQTPXYFunctionLineGraphBase(tmin_, tmax_, parent), plotFunction(), simplePlotFunction(f)
 {
-    tmin=tmin_;
-    tmax=tmax_;
     setTitle(title_);
-    plotFunction=jkqtpParametricCurveFunctionType();
-    simplePlotFunction=f;
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpSimpleParametricCurveFunctionType &f, const QString &title_, double tmin_, double tmax_, JKQTPlotter *parent):
@@ -178,14 +186,9 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpSimpleParametricCu
 
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpSimpleParametricCurveFunctionType &&f, const QString &title_, double tmin_, double tmax_, JKQTBasePlotter *parent):
-    JKQTPXYFunctionLineGraph(parent)
+    JKQTPXYFunctionLineGraphBase(tmin_, tmax_, parent), plotFunction(), simplePlotFunction(std::move(f))
 {
-    tmin=tmin_;
-    tmax=tmax_;
     setTitle(title_);
-    plotFunction=jkqtpParametricCurveFunctionType();
-    simplePlotFunction=std::move(f);
-    data.clear();
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpSimpleParametricCurveFunctionType &&f, const QString &title_, double tmin_, double tmax_, JKQTPlotter *parent):
@@ -195,14 +198,9 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpSimpleParametricCurveFun
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpParametricCurveFunctionType &&f, const QString &title_, double tmin_, double tmax_, JKQTBasePlotter *parent):
-    JKQTPXYFunctionLineGraph(parent)
+    JKQTPXYFunctionLineGraphBase(tmin_, tmax_, parent), plotFunction(std::move(f)), simplePlotFunction()
 {
-    tmin=tmin_;
-    tmax=tmax_;
     setTitle(title_);
-    simplePlotFunction=jkqtpSimpleParametricCurveFunctionType();
-    plotFunction=std::move(f);
-    data.clear();
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpParametricCurveFunctionType &&f, const QString &title_, double tmin_, double tmax_, JKQTPlotter *parent):
@@ -212,14 +210,9 @@ JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(jkqtpParametricCurveFunctionT
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpParametricCurveFunctionType &f, const QString &title_, double tmin_, double tmax_, JKQTBasePlotter *parent):
-    JKQTPXYFunctionLineGraph(parent)
+    JKQTPXYFunctionLineGraphBase(tmin_, tmax_, parent), plotFunction(f), simplePlotFunction()
 {
-    tmin=tmin_;
-    tmax=tmax_;
     setTitle(title_);
-    simplePlotFunction=jkqtpSimpleParametricCurveFunctionType();
-    plotFunction=std::move(f);
-    data.clear();
 }
 
 JKQTPXYFunctionLineGraph::JKQTPXYFunctionLineGraph(const jkqtpParametricCurveFunctionType &f, const QString &title_, double tmin_, double tmax_, JKQTPlotter *parent):

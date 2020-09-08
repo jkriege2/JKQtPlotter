@@ -68,7 +68,7 @@ void JKQTPSpecialLineHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painte
     if (m_drawLine) painter.setPen(p);
     painter.setBrush(b);
     if (m_fillCurve) painter.drawRect(rect);
-    if (!m_fillCurve & m_drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+    if (!m_fillCurve && m_drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     if (m_drawSymbols) {
         plotStyledSymbol(parent, painter, rect.center().x(), rect.center().y(), rect.width()*0.5);
     }
@@ -308,8 +308,8 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (m_drawSymbols) {
         painter.save();
         auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
-        for (auto& p: ps) {
-            plotStyledSymbol(parent, painter, p.x(), p.y());
+        for (auto& ppoint: ps) {
+            plotStyledSymbol(parent, painter, ppoint.x(), ppoint.y());
         }
     }
 
@@ -480,9 +480,9 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
     if (m_drawSymbols) {
         painter.save();
-        auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        for (auto& p: ps) {
-            plotStyledSymbol(parent, painter, p.x(), p.y());
+        auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
+        for (auto& point: ps) {
+            plotStyledSymbol(parent, painter, point.x(), point.y());
         }
     }
 

@@ -57,7 +57,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
         Q_OBJECT
     public:
         /** \brief class constructor */
-        JKQTPXYLineGraph(JKQTBasePlotter* parent=nullptr);
+        explicit JKQTPXYLineGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPXYLineGraph(JKQTPlotter* parent);
 

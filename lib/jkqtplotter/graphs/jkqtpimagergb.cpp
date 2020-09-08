@@ -190,22 +190,22 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
         getDataMinMax(internalDataMin, internalDataMax);
         if (data) {
             if (colorBarRightVisible) {
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarRightAxis->setRange(internalDataMin, internalDataMax);
                 colorBarRightAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
                 colorBarRightAxisB->setAxisLabel(imageNameR);
                 QSizeF s2=colorBarRightAxis->getSize2(painter);
                 QSizeF s1=colorBarRightAxis->getSize1(painter);
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
             }
             if (colorBarTopVisible) {
-                //if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
+                //if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxis->setRange(internalDataMin, internalDataMax);
                 colorBarTopAxis->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
                 colorBarTopAxisB->setAxisLabel(imageNameR);
                 QSizeF s2=colorBarTopAxisB->getSize2(painter);
                 QSizeF s1=colorBarTopAxisB->getSize2(painter);
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
+                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
             }
             firstC=true;
         }
@@ -213,22 +213,22 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
         getDataMinMaxG(internalDataMinG, internalDataMaxG);
         if (dataG) {
             if (colorBarRightVisible) {
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarRightAxisG->setRange(internalDataMinG, internalDataMaxG);
                 colorBarRightAxisG->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
                 colorBarRightAxisB->setAxisLabel(imageNameG);
                 QSizeF s2=colorBarRightAxis->getSize2(painter);
                 QSizeF s1=colorBarRightAxis->getSize1(painter);
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
             }
             if (colorBarTopVisible) {
-                //if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
+                //if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxisG->setRange(internalDataMinG, internalDataMaxG);
                 colorBarTopAxisG->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
                 colorBarTopAxisB->setAxisLabel(imageNameG);
                 QSizeF s2=colorBarTopAxisB->getSize2(painter);
                 QSizeF s1=colorBarTopAxisB->getSize1(painter);
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
+                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
              }
             firstC=true;
         }
@@ -236,22 +236,22 @@ void JKQTPRGBMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftS
         getDataMinMaxB(internalDataMinB, internalDataMaxB);
         if (dataB) {
             if (colorBarRightVisible) {
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarRightAxisB->setRange(internalDataMinB, internalDataMaxB);
                 colorBarRightAxisB->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotHeight());
                 colorBarRightAxisB->setAxisLabel(imageNameB);
                 QSizeF s2=colorBarRightAxis->getSize2(painter);
                 QSizeF s1=colorBarRightAxis->getSize1(painter);
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
+                if (!colorbarsSideBySide || !firstC) rightSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.width()+s1.width());
             }
             if (colorBarTopVisible) {
-                //if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
+                //if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset);
                 colorBarTopAxisB->setRange(internalDataMinB, internalDataMaxB);
                 colorBarTopAxisB->setAxisWidth(sizeFactor*colorBarRelativeHeight*parent->getPlotWidth());
                 colorBarTopAxisB->setAxisLabel(imageNameB);
                 QSizeF s2=colorBarTopAxisB->getSize2(painter);
                 QSizeF s1=colorBarTopAxisB->getSize1(painter);
-                if (!colorbarsSideBySide || (colorbarsSideBySide && !firstC)) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
+                if (!colorbarsSideBySide || !firstC) topSpace+=parent->pt2px(painter, colorBarWidth+colorBarOffset)+static_cast<double>(s2.height()+s1.height());
             }
             firstC=true;
         }

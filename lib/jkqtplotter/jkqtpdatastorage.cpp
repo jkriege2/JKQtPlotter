@@ -80,13 +80,11 @@ size_t JKQTPColumn::getRows() const {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 void JKQTPColumn::copyData(QVector<double> &copyTo) const
 {
-    const double* d=getPointer(0);
-    copyTo.clear();
-    size_t i, cnt=getRows();
+    const size_t cnt=getRows();
     if (cnt>0) {
         copyTo.resize(static_cast<int>(cnt));
-        for (i=0; i<cnt; i++) {
-            copyTo[static_cast<int>(i)]=d[i];
+        for (size_t i=0; i<cnt; i++) {
+            copyTo[static_cast<int>(i)]=getValue(i);
         }
     }
 }
@@ -143,7 +141,7 @@ void JKQTPColumn::subtract(double value)
 {
     if (!datastore) return ;
     double* data=getPointer();
-    size_t N=getRows();
+    const size_t N=getRows();
     if (data){
         for (size_t i=0; i<N; i++) {
             data[i]=data[i]-value;
@@ -202,7 +200,7 @@ JKQTPDatastoreItem::JKQTPDatastoreItem(size_t columns, size_t rows){
         this->dataformat=JKQTPDatastoreItemFormat::SingleColumn;
         this->storageType=StorageType::Vector;
         datavec.resize(static_cast<int>(columns*rows));
-        for( double& d: datavec) { d=0.0; }
+        std::fill(datavec.begin(), datavec.end(), 0.0);
         this->data=datavec.data();
     }
     this->columns=columns;
@@ -562,7 +560,7 @@ size_t JKQTPDatastore::addCopiedItem(JKQTPDatastoreItemFormat dataformat, double
                 it->set(c, r, data[c*rows+r]);
             }
         }
-    } else if (dataformat==JKQTPDatastoreItemFormat::MatrixColumn) {
+    } else if (dataformat==JKQTPDatastoreItemFormat::MatrixRow) {
         it=new JKQTPDatastoreItem(columnsnum, rows);
         for (size_t r=0; r<rows; r++) {
             for (size_t c=0; c<columnsnum; c++) {
@@ -1033,8 +1031,8 @@ void JKQTPDatastore::saveMatlab(QTextStream &txt, const QSet<int>& userColumns) 
             varnames.insert(newvar);
             txt<<QString("% data from columne %1 ('%2')\n").arg(col+1).arg(it.value().getName());
             txt<<QString("%1 = [ ").arg(newvar);
-            for (size_t i=0; i<it.value().getRows(); i++) {
-                txt<<loc.toString(get(it.key(), i))<<" ";
+            for (size_t rr=0; rr<it.value().getRows(); rr++) {
+                txt<<loc.toString(get(it.key(), rr))<<" ";
 
             }
             txt<<"];\n\n";
@@ -1072,8 +1070,7 @@ void JKQTPDatastore::saveCSV(QTextStream& txt, const QSet<int>& userColumns, con
         }
         txt<<"\n";
     }
-    size_t rows=getMaxRows();
-    for (size_t i=0; i<rows; i++) {
+    for (size_t i=0; i<getMaxRows(); i++) {
         bool first=true;
         QMapIterator<size_t, JKQTPColumn> it(columns);
         int j=0;
@@ -1127,15 +1124,14 @@ void JKQTPDatastore::saveSYLK(const QString& filename, const QSet<int>& userColu
 
 
 
-    size_t rows=getMaxRows();
-    for (size_t i=0; i<rows; i++) {
+    for (size_t rr=0; rr<getMaxRows(); rr++) {
         QMapIterator<size_t, JKQTPColumn> it(columns);
         c=1;
         while (it.hasNext()) {
             it.next();
-            if (userColumns.isEmpty() || userColumns.contains(static_cast<int>(i))) {
-                if (it.value().getRows()>i) {
-                    txt<<QString("C;X%1;Y%2;N;K%3\n").arg(c).arg(i+2).arg(get(it.key(), i));
+            if (userColumns.isEmpty() || userColumns.contains(static_cast<int>(rr))) {
+                if (it.value().getRows()>rr) {
+                    txt<<QString("C;X%1;Y%2;N;K%3\n").arg(c).arg(rr+2).arg(get(it.key(), rr));
                 }
                 c++;
             }
@@ -1202,7 +1198,7 @@ void JKQTPDatastore::saveDIF(const QString& filename, const QSet<int>& userColum
     if (!f.open(QIODevice::WriteOnly|QIODevice::Text)) return;
     QTextStream txt(&f);
     txt.setLocale(loc);
-    size_t rows=getMaxRows();
+    const size_t rows=getMaxRows();
 
     // write DIF header
     txt<<QString("TABLE\n0,1\n\"\"\n");

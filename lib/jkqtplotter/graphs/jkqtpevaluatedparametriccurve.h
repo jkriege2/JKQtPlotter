@@ -61,6 +61,13 @@ public:
     /** \brief class constructor */
     JKQTPXYFunctionLineGraphBase(JKQTPlotter* parent);
 
+
+    /** \brief class constructor */
+    JKQTPXYFunctionLineGraphBase(double tmin_, double tmax_, JKQTBasePlotter* parent);
+
+    /** \brief class constructor */
+    JKQTPXYFunctionLineGraphBase(double tmin_, double tmax_, JKQTPlotter* parent);
+
     /** \brief class destructor */
     virtual ~JKQTPXYFunctionLineGraphBase() override;
 

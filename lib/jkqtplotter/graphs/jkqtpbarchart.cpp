@@ -342,13 +342,13 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
 //    double y0=transformY(0);
 //    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
-    double delta=1;
-    double deltap=0;
-    double deltam=0;
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         intSortData();
         const bool hasStackPar=hasStackParent();
+        double delta=1;
+        double deltap=0;
+        double deltam=0;
         for (int iii=imin; iii<imax; iii++) {
             int i=qBound(imin, getDataIndex(iii), imax);
             double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
@@ -625,8 +625,8 @@ bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
                 if (start || xv<minx) minx=xv;
                 xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
-                if (start || xvv>maxx) maxx=xvv;
-                if (start || xvv<minx) minx=xvv;
+                if (xvv>maxx) maxx=xvv;
+                if (xvv<minx) minx=xvv;
                 xvsgz=xvv; SmallestGreaterZeroCompare_xvsgz();
                 start=false;
             }

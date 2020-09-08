@@ -359,7 +359,7 @@ double JKQTPCoordinateAxis::calcLogTickSpacing() {
 
 QString JKQTPCoordinateAxis::floattolabel(double data) {
     int past_comma=axisStyle.labelDigits;
-    bool remove_trail0=true;
+    const bool remove_trail0=true;
     QLocale loc=QLocale::system();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);
 
@@ -607,10 +607,10 @@ void JKQTPCoordinateAxis::saveCurrentAxisStyle(QSettings &settings, const QStrin
 }
 
 void JKQTPCoordinateAxis::setRange(double aamin, double aamax) {
-    double oldamin=axismin;
-    double oldamax=axismax;
-    double amin=aamin;
-    double amax=aamax;
+    const double oldamin=axismin;
+    const double oldamax=axismax;
+    double amin=std::min(aamin, aamax);
+    double amax=std::max(aamin, aamax);
     if (axisMinWidth>0 && fabs(amax-amin)<axisMinWidth) {
         amax=amin+axisMinWidth;
     }
@@ -621,10 +621,7 @@ void JKQTPCoordinateAxis::setRange(double aamin, double aamax) {
     if (amin<axisabsoultemin) axismin=axisabsoultemin;
     if (amax>axisabsoultemax) axismax=axisabsoultemax;
 
-    if (axismin>axismax) {
-        axismin=amax;
-        axismax=amin;
-    }
+
     if (isLogAxis()) {
         if (axismin<=0) axismin=1e-306;
         if (axismax<=0) axismax=1e-306;
@@ -950,21 +947,15 @@ void JKQTPCoordinateAxis::setTickLabelAngle(double __value) {
 
 
 void JKQTPCoordinateAxis::setAbsoluteRange(double amin, double amax) {
-    axisabsoultemin=amin;
-    axisabsoultemax=amax;
-
-    if (axisabsoultemin>axisabsoultemax) {
-        axisabsoultemin=amax;
-        axisabsoultemax=amin;
-    }
+    axisabsoultemin=std::min(amin, amax);
+    axisabsoultemax=std::max(amin, amax);
 
     if (axisabsoultemin==axisabsoultemax) {
         axisabsoultemax=axisabsoultemin+1;
     }
+
+    // ensure that the actual axis range is within the absolute range
     setRange(axismin, axismax);
-    /*paramsChanged=true;
-    calcPlotScaling();
-    redrawPlot();*/
 }
 
 double JKQTPCoordinateAxis::getNextLabelDistance(double x) {
@@ -1363,7 +1354,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     // plot thick axis at y==0
     if (axisStyle.showZeroAxis && (0>axismin) && (0<axismax)) {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPEnhancedPainter[%1]::drawAxes(): 0Axis").arg(objectName()));
+            JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): 0Axis").arg(objectName()));
         #endif
         QPen pmain1=pmain;
         pmain1.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.lineWidthZeroAxis*parent->getLineWidthMultiplier())));
@@ -1399,7 +1390,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPEnhancedPainter[%1]::drawAxes(): calcLabels").arg(objectName()));
+            JKQTPAutoOutputTimer jkaatii(QString("JKQTPEnhancedPainter[%1]::drawAxes(): calcLabels").arg(objectName()));
         #endif
         while (getNextLabel(x, label, first) && cnt<200) {
             double mtdist=getNextLabelDistance(x)/static_cast<double>(axisStyle.minorTicks+1);
@@ -1498,7 +1489,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     }
     {
     #ifdef JKQTBP_AUTOTIMER
-        JKQTPAutoOutputTimer jkaat(QString("JKQTPEnhancedPainter[%1]::drawAxes(): drawLines").arg(objectName()));
+        JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): drawLines").arg(objectName()));
     #endif
         painter.setPen(ptick);
         painter.drawLines(lines_ptick);
@@ -1511,7 +1502,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     // plot axis label
     if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode1)) {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel1").arg(objectName()));
+            JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel1").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
         getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
@@ -1553,7 +1544,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     }
     if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode2)) {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel2").arg(objectName()));
+            JKQTPAutoOutputTimer jkaati(QString("JKQTPEnhancedPainter[%1]::drawAxes(): axisLabel2").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
         getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
@@ -1992,7 +1983,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
     {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPHorizontalAxis[%1]::drawAxes(): calcLabels").arg(objectName()));
+            JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): calcLabels").arg(objectName()));
         #endif
 
         while (getNextLabel(x, label, first) && cnt<200) {
@@ -2094,7 +2085,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     }
     {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPHorizontalAxis[%1]::drawAxes(): drawLines").arg(objectName()));
+            JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): drawLines").arg(objectName()));
         #endif
 
         painter.setPen(ptick);
@@ -2108,7 +2099,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     // plot axis label
     if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode1)) {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel1").arg(objectName()));
+            JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel1").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
         getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
@@ -2149,7 +2140,7 @@ void JKQTPHorizontalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     }
     if (!axisLabel.isEmpty() && JKQTPCADrawModeHasAxisLabel(axisStyle.drawMode2)) {
         #ifdef JKQTBP_AUTOTIMER
-            JKQTPAutoOutputTimer jkaat(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel2").arg(objectName()));
+            JKQTPAutoOutputTimer jkaati(QString("JKQTPHorizontalAxis[%1]::drawAxes(): axisLabel2").arg(objectName()));
         #endif
         getParentMathText()->setFontSize(axisStyle.labelFontSize*parent->getFontSizeMultiplier());
         getParentMathText()->setFontRomanOrSpecial(getParent()->getCurrentPlotterStyle().defaultFontName);
