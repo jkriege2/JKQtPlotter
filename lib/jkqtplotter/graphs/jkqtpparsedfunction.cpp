@@ -184,7 +184,11 @@ JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec JKQTPXParsedFunctionLineGraph::
 
     jkqtpSimplePlotFunctionType plotFunction=std::bind(&JKQTPXParsedFunctionLineGraph::evaluateParsedFunction, std::placeholders::_1, &fdata);
     // the actual function to use
-    spec.func=std::bind([=](double x) -> QPointF { return QPointF(0, plotFunction(x)); }, std::placeholders::_1);
+    spec.func=std::bind([=](double x) -> QPointF { return QPointF(x, plotFunction(x)); }, std::placeholders::_1);
+
+    // range over which to evaluate func
+    spec.range_start=parent->getXMin();
+    spec.range_end=parent->getXMax();
 
     return spec;
 }
@@ -292,11 +296,11 @@ JKQTPEvaluatedFunctionGraphBase::PlotFunctorSpec JKQTPYParsedFunctionLineGraph::
 
     jkqtpSimplePlotFunctionType plotFunction=std::bind(&JKQTPXParsedFunctionLineGraph::evaluateParsedFunction, std::placeholders::_1, &fdata);
     // the actual function to use
-    spec.func=std::bind([=](double y) -> QPointF { return QPointF(plotFunction(y), 0); }, std::placeholders::_1);
+    spec.func=std::bind([=](double y) -> QPointF { return QPointF(plotFunction(y), y); }, std::placeholders::_1);
 
     // range over which to evaluate func
-    spec.range_start=parent->getXMin();
-    spec.range_end=parent->getXMax();
+    spec.range_start=parent->getYMin();
+    spec.range_end=parent->getYMax();
 
     return spec;
 }
