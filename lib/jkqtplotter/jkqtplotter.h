@@ -1034,14 +1034,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief update the plot and the overlays */
         void redrawPlot();
 
-        /** \brief replot overlays only (use redrawPlot() to replot the plot and the overlays)
-         *
-         * You can use this function, if you only changed the overlays but not the graphs in this plotter.
-         * Then only the overlas are redrawn and the old (saved) image of the graphs and the coordinate syste,
-         * is used as a base. This is significantly faster than redrawing the whole plot.
-         */
-        void redrawOverlays();
-
         /** \brief allows to activate/deactivate toolbar buttons that can activate certain mouse drag actions
          *
          *  \see getActMouseLeftAsDefault(), getActMouseLeftAsRuler(), getActMouseLeftAsToolTip()
@@ -1497,9 +1489,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
 
         /** \brief this stores the currently displayed plot */
         QImage image;
-
-        /** \brief this stores the currently displayed plot */
-        QImage imageNoOverlays;
 
         /** \brief this can be used when drawing a zoom rectangle to store an unchanged
          *         copy of the currently displayed image.

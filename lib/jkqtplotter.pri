@@ -24,7 +24,6 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpcoordinateaxes.h \
                $$PWD/jkqtplotter/jkqtpcoordinateaxesstyle.h \
                $$PWD/jkqtplotter/jkqtpimagetools.h \
-               $$PWD/jkqtplotter/jkqtpoverlaysbase.h \
                $$PWD/jkqtplotter/graphs/jkqtpboxplot.h \
                $$PWD/jkqtplotter/graphs/jkqtpboxplotstylingmixins.h \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunctionbase.h \
@@ -51,7 +50,6 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtpspecialline.h \
                $$PWD/jkqtplotter/graphs/jkqtpbarchart.h \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedparametriccurve.h \
-               $$PWD/jkqtplotter/overlays/jkqtpbasicoverlays.h \
                $$PWD/jkqtplotter/gui/jkqtpcomboboxes.h \
                $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.h \
                $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.h \
@@ -75,7 +73,6 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/jkqtpbaseplotterstyle.cpp \
                $$PWD/jkqtplotter/jkqtpcoordinateaxes.cpp \
                $$PWD/jkqtplotter/jkqtpcoordinateaxesstyle.cpp \
-               $$PWD/jkqtplotter/jkqtpoverlaysbase.cpp \
                $$PWD/jkqtplotter/graphs/jkqtpboxplot.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpboxplotstylingmixins.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedfunctionbase.cpp  \
@@ -102,7 +99,6 @@ isEmpty(JKQTP_PLOTTER_PRI_INCLUDED) {
                $$PWD/jkqtplotter/graphs/jkqtpspecialline.cpp \
                $$PWD/jkqtplotter/graphs/jkqtpbarchart.cpp  \
                $$PWD/jkqtplotter/graphs/jkqtpevaluatedparametriccurve.cpp  \
-               $$PWD/jkqtplotter/overlays/jkqtpbasicoverlays.cpp  \
                $$PWD/jkqtplotter/gui/jkqtpcomboboxes.cpp \
                $$PWD/jkqtplotter/gui/jkqtpenhancedspinboxes.cpp \
                $$PWD/jkqtplotter/gui/jkqtpenhancedtableview.cpp \

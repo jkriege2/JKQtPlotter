@@ -1205,7 +1205,7 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
 
 
 
-void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays) {
+void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::paintPlot");
 #endif
@@ -1283,7 +1283,6 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays)
     painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, plotterStyle.useAntiAliasingForText);
     if (plotterStyle.keyStyle.visible) drawKey(painter);
     painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, plotterStyle.useAntiAliasingForText);
-    if (showOverlays) drawOverlaysWithHints(painter);
 
     if (plotterStyle.debugShowRegionBoxes) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -1312,31 +1311,6 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays)
     //qDebug()<<"  end JKQTBasePlotter::paintPlot";
 }
 
-void JKQTBasePlotter::drawOverlaysWithHints(JKQTPEnhancedPainter &painter) {
-    painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
-    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, plotterStyle.useAntiAliasingForGraphs);
-    painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, plotterStyle.useAntiAliasingForText);
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-#ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::drawOverlaysWithHints");
-#endif
-    if (overlays.isEmpty()) return;
-    if (useClipping) {
-        QRegion cregion(static_cast<int>(internalPlotBorderLeft), static_cast<int>(internalPlotBorderTop), static_cast<int>(internalPlotWidth), static_cast<int>(internalPlotHeight));
-        painter.setClipping(true);
-        painter.setClipRegion(cregion);
-    }
-
-    for (int j=0; j<overlays.size(); j++) {
-        JKQTPOverlayElement* g=overlays[j];
-        if (g->isVisible()) g->draw(painter);
-    }
-
-    if (useClipping) {
-        painter.setClipping(false);
-    }
-
-}
 
 void JKQTBasePlotter::gridPrintingCalc() {
     gridPrintingRows.clear();
@@ -1380,7 +1354,7 @@ void JKQTBasePlotter::gridPrintingCalc() {
     }
 }
 
-void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, bool showOverlays, bool scaleIfTooLarge, bool scaleIfTooSmall) {
+void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, bool scaleIfTooLarge, bool scaleIfTooSmall) {
 #ifdef JKQTBP_AUTOTIMER
     JKQTPAutoOutputTimer jkaaot("JKQTBasePlotter::gridPaint");
 #endif
@@ -1399,7 +1373,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         // scale the plot so it fits on the page
         painter.scale(scale, scale);
-        drawPlot(painter, showOverlays);
+        drawPlot(painter);
 
     } else {
 
@@ -1440,7 +1414,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
             for (size_t i=0; i<gridPrintingCurrentY; i++) { t_y+= static_cast<int>(gridPrintingRows[static_cast<int>(i)]); }
             //std::cout<<"printing this @ "<<t_x<<", "<<t_y<<" ...\n";
             painter.translate(t_x, t_y);
-            drawPlot(painter, showOverlays);
+            drawPlot(painter);
 
             //std::cout<<"this printed ...\n";
 
@@ -1456,7 +1430,7 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
                 for (size_t j=0; j<gridPrintingList[i].y; j++) {  gt_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
                 //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
                 painter.translate(gt_x, gt_y);
-                gridPrintingList[i].plotter->drawPlot(painter, showOverlays);
+                gridPrintingList[i].plotter->drawPlot(painter);
 
             }
 
@@ -1474,64 +1448,6 @@ void JKQTBasePlotter::gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, 
     }
 }
 
-
-void JKQTBasePlotter::gridPaintOverlays(JKQTPEnhancedPainter &painter, QSizeF pageRect)
-{
-    if (!gridPrinting) {
-        double scale=static_cast<double>(pageRect.width())/static_cast<double>(widgetWidth)*paintMagnification;
-        if (/*(scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(pageRect.width())) ||*/ (scale*static_cast<double>(widgetHeight)>static_cast<double>(pageRect.height()))) {
-            scale=static_cast<double>(pageRect.height())/static_cast<double>(widgetHeight);
-        }
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        // scale the plot so it fits on the page
-        painter.scale(scale, scale);
-        drawOverlaysWithHints(painter);
-
-    } else {
-        gridPrintingCalc(); // ensure the grid plot has been calculated
-        // scale the plot so it fits on the page
-        double scale=static_cast<double>(pageRect.width())/static_cast<double>(gridPrintingSize.width());
-        if (/*(scale*static_cast<double>(gridPrintingSize.width())>static_cast<double>(pageRect.width())) ||*/ (scale*static_cast<double>(gridPrintingSize.height())>static_cast<double>(pageRect.height()))) {
-            scale=static_cast<double>(pageRect.height())/static_cast<double>(gridPrintingSize.height());
-        }
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        painter.scale(scale, scale);
-
-        {
-            // plot this plotter
-            painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
-            size_t t_x=0;
-            size_t t_y=0;
-            //std::cout<<"printing this ...\n";
-            for (size_t i=0; i<gridPrintingCurrentX; i++) { t_x+=gridPrintingColumns[static_cast<int>(i)]; }
-            for (size_t i=0; i<gridPrintingCurrentY; i++) { t_y+=gridPrintingRows[static_cast<int>(i)]; }
-            //std::cout<<"printing this @ "<<t_x<<", "<<t_y<<" ...\n";
-            painter.translate(t_x, t_y);
-            drawOverlaysWithHints(painter);
-
-            //std::cout<<"this printed ...\n";
-
-            // plot all the other plotters
-            for (int i=0; i< gridPrintingList.size(); i++) {
-                //std::cout<<"printing "<<i<<" ...\n";
-                painter.save(); auto __finalpaintinnerloop=JKQTPFinally([&painter]() {painter.restore();});
-                int gt_x=0;
-                int gt_y=0;
-                //std::cout<<"printing "<<i<<" @g "<<gridPrintingList[i].x<<", "<<gridPrintingList[i].y<<" ...\n";
-                //std::cout<<"colrowlistsizes     "<<gridPrintingColumns.size()<<", "<<gridPrintingRows.size()<<" ...\n";
-                for (size_t j=0; j<gridPrintingList[i].x; j++) {  gt_x+= static_cast<int>(gridPrintingColumns[static_cast<int>(j)]);  }
-                for (size_t j=0; j<gridPrintingList[i].y; j++) {  gt_y+= static_cast<int>(gridPrintingRows[static_cast<int>(j)]); }
-                //std::cout<<"printing "<<i<<" @ "<<t_x<<", "<<t_y<<" ...\n";
-                painter.translate(gt_x, gt_y);
-                gridPrintingList[i].plotter->drawOverlaysWithHints(painter);
-
-            }
-
-        }
-
-
-    }
-}
 
 
 void JKQTBasePlotter::print(QPrinter* printer, bool displayPreview) {
@@ -2041,7 +1957,7 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     qDebug()<<"x-axis label fontsize = "<<xAxis->getLabelFontSize()<<" pt";
     qDebug()<<"y-axis label fontsize = "<<yAxis->getLabelFontSize()<<" pt";
 #endif
-    gridPaint(painter, printer->pageRect().size(), true, printScaleToPagesize, printScaleToPagesize);
+    gridPaint(painter, printer->pageRect().size(), printScaleToPagesize, printScaleToPagesize);
     painter.end();
     widgetWidth=oldWidgetWidth;
     widgetHeight=oldWidgetHeight;
@@ -2141,9 +2057,9 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
     qDebug()<<"x-axis label fontsize = "<<xAxis->getLabelFontSize()<<" pt";
     qDebug()<<"y-axis label fontsize = "<<yAxis->getLabelFontSize()<<" pt";
 #endif
-    if (printer) gridPaint(painter, printer->pageRect().size(), true, printScaleToPagesize, printScaleToPagesize);
-    else if (svg) gridPaint(painter, svg->size(), true, printScaleToPagesize, printScaleToPagesize);
-    else gridPaint(painter, QSizeF(paintDevice->width(), paintDevice->height()), true, printScaleToPagesize, printScaleToPagesize);
+    if (printer) gridPaint(painter, printer->pageRect().size(), printScaleToPagesize, printScaleToPagesize);
+    else if (svg) gridPaint(painter, svg->size(), printScaleToPagesize, printScaleToPagesize);
+    else gridPaint(painter, QSizeF(paintDevice->width(), paintDevice->height()), printScaleToPagesize, printScaleToPagesize);
     painter.end();
     widgetWidth=oldWidgetWidth;
     widgetHeight=oldWidgetHeight;
@@ -2289,9 +2205,9 @@ void JKQTBasePlotter::printpreviewUpdate()
     }
 }
 
-void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays) {
+void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QRect& rect) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::draw(rect, %1)").arg(showOverlays));
+    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::draw(rect, %1)"));
 #endif
     bool oldEmitPlotSignals=emitPlotSignals;
     emitPlotSignals=false;
@@ -2310,7 +2226,7 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QRect& rect, boo
         QElapsedTimer time;
         time.start();
     #endif
-        gridPaint(painter, rect.size(), showOverlays);
+        gridPaint(painter, rect.size());
     #ifdef JKQTBP_DEBUGTIMING
         qDebug()<<on<<"::draw ... gridPaint       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
     #endif
@@ -2318,21 +2234,10 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QRect& rect, boo
     emitPlotSignals=oldEmitPlotSignals;
 }
 
-void JKQTBasePlotter::drawOverlays(JKQTPEnhancedPainter &painter, const QRect& rect)
-{
 
-    //resize(rect.width(), rect.height());
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.translate(rect.topLeft());
-
-    gridPaintOverlays(painter, rect.size());
-
-
-}
-
-void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QPoint& pos, bool showOverlays) {
+void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QPoint& pos) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::draw(pos, %1)").arg(showOverlays));
+    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::draw(pos, %1)"));
 #endif
     bool oldEmitPlotSignals=emitPlotSignals;
     emitPlotSignals=false;
@@ -2351,7 +2256,7 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QPoint& pos, boo
         QElapsedTimer time;
         time.start();
     #endif
-        gridPaint(painter, rect.size(), showOverlays);
+        gridPaint(painter, rect.size());
     #ifdef JKQTBP_DEBUGTIMING
         qDebug()<<on<<"::draw ... gridPaint       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
     #endif
@@ -2359,9 +2264,9 @@ void JKQTBasePlotter::draw(JKQTPEnhancedPainter& painter, const QPoint& pos, boo
     emitPlotSignals=oldEmitPlotSignals;
 }
 
-void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays) {
+void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGrid(rect, %1)").arg(showOverlays));
+    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGrid(rect, %1)"));
 #endif
     bool oldEmitPlotSignals=emitPlotSignals;
     emitPlotSignals=false;
@@ -2393,7 +2298,7 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& re
     #ifdef JKQTBP_DEBUGTIMING
         time.start();
     #endif
-        drawPlot(painter, showOverlays);
+        drawPlot(painter);
     #ifdef JKQTBP_DEBUGTIMING
         qDebug()<<on<<"::drawNonGrid ... paintPlot       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
     #endif
@@ -2407,9 +2312,9 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& re
 }
 
 
-void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos, bool showOverlays) {
+void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos) {
 #ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGrid(pos, %1)").arg(showOverlays));
+    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGrid(pos)"));
 #endif
     bool oldEmitPlotSignals=emitPlotSignals;
     emitPlotSignals=false;
@@ -2442,7 +2347,7 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& p
     #ifdef JKQTBP_DEBUGTIMING
         time.start();
     #endif
-        drawPlot(painter, showOverlays);
+        drawPlot(painter);
     #ifdef JKQTBP_DEBUGTIMING
         qDebug()<<on<<"::drawNonGrid ... paintPlot       = " <<time.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(time.nsecsElapsed())/1000000.0<<" msecs";
     #endif
@@ -2453,27 +2358,6 @@ void JKQTBasePlotter::drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& p
     qDebug()<<on<<"::drawNonGrid ... DONE            = "<<timeAll.nsecsElapsed()/1000<<" usecs = "<<static_cast<double>(timeAll.nsecsElapsed())/1000000.0<<" msecs";
 #endif
     emitPlotSignals=oldEmitPlotSignals;
-}
-
-void JKQTBasePlotter::drawNonGridOverlays(JKQTPEnhancedPainter& painter, const QPoint& pos) {
-#ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTBasePlotter::drawNonGridOverlays(point)"));
-#endif
-    QRectF rect(pos, QSizeF(widgetWidth/paintMagnification, widgetHeight/paintMagnification));
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    painter.translate(rect.topLeft());
-    double scale=static_cast<double>(rect.width())/static_cast<double>(widgetWidth)*paintMagnification;
-    if ((scale*static_cast<double>(widgetWidth)/paintMagnification>static_cast<double>(rect.width())) || (scale*static_cast<double>(widgetHeight)/paintMagnification>static_cast<double>(rect.height()))) {
-        scale=static_cast<double>(rect.height())/static_cast<double>(widgetHeight)*paintMagnification;
-    }
-    {
-        painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
-        // scale the plot so it fits on the page
-        painter.scale(scale, scale);
-        drawOverlaysWithHints(painter);
-    }
-
-
 }
 
 void JKQTBasePlotter::setEmittingPlotSignalsEnabled(bool __value)
@@ -4717,84 +4601,6 @@ void JKQTBasePlotter::zoomToFit(bool zoomX, bool zoomY, bool includeX0, bool inc
 
 
 
-
-
-JKQTPOverlayElement *JKQTBasePlotter::getOverlayElement(size_t i) {
-    return overlays[static_cast<int>(i)];
-}
-
-size_t JKQTBasePlotter::getOverlayElementCount() {
-    return static_cast<size_t>(overlays.size());
-}
-
-void JKQTBasePlotter::deleteOverlayElement(size_t i, bool deletegraph) {
-    if (long(i)<0 || long(i)>=overlays.size()) return;
-    JKQTPOverlayElement* g=overlays[static_cast<int>(i)];
-    overlays.removeAt(static_cast<int>(i));
-    if (deletegraph && g) delete g;
-    if (emitPlotSignals) emit overlaysUpdated();
-}
-
-void JKQTBasePlotter::deleteOverlayElement(JKQTPOverlayElement *gr, bool deletegraph) {
-    int i=overlays.indexOf(gr);
-    while (i>=0) {
-        overlays.removeAt(i);
-        i=overlays.indexOf(gr);
-    }
-
-    if (deletegraph && gr) delete gr;
-    if (emitPlotSignals) emit overlaysUpdated();
-}
-
-void JKQTBasePlotter::clearOverlayElement(bool deleteGraphs) {
-    for (int i=0; i<overlays.size(); i++) {
-        JKQTPOverlayElement* g=overlays[i];
-        if (g && deleteGraphs) delete g;
-    }
-    overlays.clear();
-    if (emitPlotSignals) emit overlaysUpdated();
-}
-
-size_t JKQTBasePlotter::addOverlayElement(JKQTPOverlayElement *gr) {
-    gr->setParent(this);
-    for (size_t i=0; i<static_cast<size_t>(overlays.size()); i++) {
-        if (overlays[static_cast<int>(i)]==gr) return i;
-    }
-    overlays.push_back(gr);
-    if (emitPlotSignals) emit overlaysUpdated();
-    return static_cast<size_t>(overlays.size()-1);
-}
-
-bool JKQTBasePlotter::containsOverlayElement(JKQTPOverlayElement *gr) const {
-    for (int i=0; i<overlays.size(); i++) {
-        if (overlays[i]==gr) {
-            return true;
-        }
-    }
-    return false;
-}
-
-size_t JKQTBasePlotter::moveOverlayElementTop(JKQTPOverlayElement *gr) {
-    gr->setParent(this);
-    for (int i=0; i<overlays.size(); i++) {
-        if (overlays[i]==gr) {
-            if (i<overlays.size()-1) {
-                overlays.removeAt(i);
-                overlays.push_back(gr);
-            }
-            return static_cast<size_t>(overlays.size()-1);
-        }
-    }
-    overlays.push_back(gr);
-    if (emitPlotSignals) emit overlaysUpdated();
-    return static_cast<size_t>(overlays.size()-1);
-}
-
-void JKQTBasePlotter::addOverlayElements(const QList<JKQTPOverlayElement *> &gr) {
-    for (int i=0; i< gr.size(); i++) {
-        addOverlayElement(gr[i]);
-    }
-}
 
 
 

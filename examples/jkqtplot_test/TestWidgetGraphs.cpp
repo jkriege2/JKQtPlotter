@@ -16,16 +16,11 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
     QWidget(parent)
 {
 
-    ovlCnt=0;
-    ovlTime.start();
-
 
     plot=new JKQTPlotter(true, this);
     plot->setPlotUpdateEnabled(false);
     plotBot=new JKQTPlotter(false, this, plot->getDatastore());
     plotBot2=new JKQTPlotter(false, this, plot->getDatastore());
-    ovl1=new JKQTPOverlayVerticalLine(0.0, tr("test"), plot->getPlotter());
-    plot->getPlotter()->addOverlayElement(ovl1);
     plot->setObjectName("plot");
     plotBot->setObjectName("plotBot");
     plotBot2->setObjectName("plotBot2");
@@ -309,33 +304,6 @@ TestWidgetGraphs::TestWidgetGraphs(QWidget *parent) :
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    QTimer::singleShot(50, this, SLOT(moveovl()));
-
-}
-
-void TestWidgetGraphs::moveovl() {
-    ovl1->setPosition(ovl1->getPosition()+0.1);
-    if (ovl1->getPosition()>30) ovl1->setPosition(0);
-    ovlCnt++;
-    if (ovlCnt>20) {
-        double fps=double(ovlCnt)/(double(ovlTime.elapsed())/1000.0);
-        ovl1->setText(QString("%1 fps").arg(fps));
-        ovlCnt=0;
-        ovlTime.start();
-    }
-    plot->redrawOverlays();
-    QTimer::singleShot(10, this, SLOT(moveovl()));
 }
 
 

@@ -3,6 +3,7 @@
 #include <QDate>
 #include <QDateTime>
 #include <QApplication>
+#include "jkqtplotter/graphs/jkqtpscatter.h"
 
 
 

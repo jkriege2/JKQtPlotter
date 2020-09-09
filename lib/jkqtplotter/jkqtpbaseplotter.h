@@ -22,7 +22,6 @@
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
 #include "jkqtmathtext/jkqtmathtext.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
-#include "jkqtplotter/overlays/jkqtpbasicoverlays.h"
 #include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/gui/jkqtpenhancedspinboxes.h"
 
@@ -98,7 +97,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *   -# coordinate transforms
  *   -# a set of properties for the graphs (colors, widthes ...) and also a system (see getNextStyle() to automatically
  *     choose a drawing style for different graphs.
- *   -# plot a set of overlay elements (may be used for fast plotting of indicators onto a complex plot)
  *   -# drawing the coordinate axes, grids ... (logarithmic and linear)
  *   -# saveing and printing the resulting plots
  * .
@@ -620,48 +618,33 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param rect rectangle to plot into
-            \param showOverlays decides whether to draw overlays
          */
-        void draw(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays=true);
+        void draw(JKQTPEnhancedPainter& painter, const QRect& rect);
+
+        /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
+            \param painter JKQTPEnhancedPainter to which the plot should be drawn
+            \param pos where to plot the painter (left-top corner)
+         */
+        void draw(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0));
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param rect rectangle to plot into
          */
-        void drawOverlays(JKQTPEnhancedPainter& painter, const QRect& rect);
+        void drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect);
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
             \param pos where to plot the painter (left-top corner)
-            \param showOverlays decides whether to draw overlays
          */
-        void draw(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool showOverlays=true);
-
-        /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
-            \param painter JKQTPEnhancedPainter to which the plot should be drawn
-            \param rect rectangle to plot into
-            \param showOverlays decides whether to draw overlays
-         */
-        void drawNonGrid(JKQTPEnhancedPainter& painter, const QRect& rect, bool showOverlays=true);
-
-        /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
-            \param painter JKQTPEnhancedPainter to which the plot should be drawn
-            \param pos where to plot the painter (left-top corner)
-            \param showOverlays decides whether to draw overlays
-         */
-        void drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0), bool showOverlays=true);
-        /*! \brief draw the contained graph overlays (including grid prints) into the given JKQTPEnhancedPainter
-            \param painter JKQTPEnhancedPainter to which the plot should be drawn
-            \param pos where to plot the painter (left-top corner)
-         */
-        void drawNonGridOverlays(JKQTPEnhancedPainter &painter, const QPoint& pos=QPoint(0,0));
+        void drawNonGrid(JKQTPEnhancedPainter& painter, const QPoint& pos=QPoint(0,0));
 
         /** \brief emit plotUpdated() */
         void redrawPlot() { if (emitPlotSignals) emit plotUpdated(); }
 
-        /** \brief controls, whether the signals plotUpdated() and overlaysUpdated() are emitted */
+        /** \brief controls, whether the signals plotUpdated() are emitted */
         void setEmittingPlotSignalsEnabled(bool __value);
-        /** \brief returns, whether the signals plotUpdated() and overlaysUpdated() are emitted */
+        /** \brief returns, whether the signals plotUpdated() are emitted */
         bool isEmittingPlotSignalsEnabled() const;
 
         /** \copydoc JKQTBasePlotterStyle::plotBorderTop  */
@@ -1021,35 +1004,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
 
 
-        /** \brief returns description of i'th overlay element */
-        JKQTPOverlayElement* getOverlayElement(size_t i);
-
-        /** \brief returns the number of overlay elements */
-        size_t getOverlayElementCount();
-
-        /** \brief remove the i-th overlay element */
-        void deleteOverlayElement(size_t i, bool deletegraph=true);
-
-        /** \brief remove the given overlay element, if it is contained */
-        void deleteOverlayElement(JKQTPOverlayElement* gr, bool deletegraph=true);
-
-        /** \brief remove all overlay elements
-         *
-         *  \param deleteGraphs if set \c true (default) the overlay element objects will also be deleted
-         */
-        void clearOverlayElement(bool deleteGraphs=true);
-
-        /** \brief add a new overlay element, returns it's position in the overlay elements list, if the overlay element is already in the plot, this returns the index in the list */
-        size_t addOverlayElement(JKQTPOverlayElement* gr);
-
-        /** \brief returns \c true, if the given overlay element is in this plot */
-        bool containsOverlayElement(JKQTPOverlayElement* gr) const;
-
-        /** \brief move the given overlay element to the top, or add it, if it is not yet contained */
-        size_t moveOverlayElementTop(JKQTPOverlayElement* gr);
-
-        /** \brief add a new overlay elements from a QList */
-        void addOverlayElements(const QList<JKQTPOverlayElement*>& gr);
 
         /** \brief save the current plot data as a Comma Separated Values (CSV) file
          *
@@ -1128,9 +1082,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 
         /** \brief emitted when the plot has to be updated */
         void plotUpdated();
-
-        /** \brief emitted when the overlay elements have to be updated */
-        void overlaysUpdated();
 
         /** \brief emitted when the plot scaling had to be recalculated */
         void plotScalingRecalculated();
@@ -1631,9 +1582,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief paints the plot onto the given JKQTPEnhancedPainter object
          *
          *  \param painter JKQTPEnhancedPainter to draw on
-         *  \param showOverlays decides whether to draw overlays
          */
-        void drawPlot(JKQTPEnhancedPainter& painter, bool showOverlays=true);
+        void drawPlot(JKQTPEnhancedPainter& painter);
         /** \brief simply calls paintPlot() if grid printing mode is deactivated and prints the graph grid otherwise
          *         \a pageRect is used to determine the size of the page to draw on. If this does not coincide with
          *         the widget extents this function calculates a scaling factor so the graphs fit onto the page. This
@@ -1641,12 +1591,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          *  \param painter JKQTPEnhancedPainter to draw on
          *  \param pageRect size of the page
-         *  \param showOverlays decides whether to draw overlays
          *  \param scaleIfTooLarge scale image if it is too large for pageRect
          *  \param scaleIfTooSmall scale image if it is smaller than pageRect
          */
-        void gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, bool showOverlays=true, bool scaleIfTooLarge=true, bool scaleIfTooSmall=true);
-        void gridPaintOverlays(JKQTPEnhancedPainter& painter, QSizeF pageRect);
+        void gridPaint(JKQTPEnhancedPainter& painter, QSizeF pageRect, bool scaleIfTooLarge=true, bool scaleIfTooSmall=true);
 
         /** \brief This method goes through all registered plotters and calculates the width of every column and
          *      height of every row as the max over the row/column. The reults are stored in the private datamembers
@@ -1664,8 +1612,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void drawGraphs(JKQTPEnhancedPainter& painter);
         /** \brief plot a key */
         void drawKey(JKQTPEnhancedPainter& painter);
-        /** \brief plot all overlay elements, also sets the render hints in \a painter */
-        void drawOverlaysWithHints(JKQTPEnhancedPainter& painter);
 
         /** \brief plot the key contents
          *
@@ -2064,10 +2010,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QList<JKQTPPlotElement*> graphs;
 
 
-        QList<JKQTPOverlayElement*> overlays;
-
-
-
 
 
         /** \brief indicates whether to use clipping (hack for printing, see print() ) */
@@ -2125,7 +2067,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         bool masterSynchronizeHeight;
 
 
-        /** \brief controls, whether the signals plotUpdated() and overlaysUpdated() are emitted */
+        /** \brief controls, whether the signals plotUpdated() are emitted */
         bool emitPlotSignals;
 
 

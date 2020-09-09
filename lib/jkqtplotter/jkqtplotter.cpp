@@ -51,7 +51,7 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     mouseDragRectYEndPixel(0),  mouseDragRectXEnd(0), mouseDragRectYStart(0),
     mouseDragRectYStartPixel(0), mouseDragRectYEnd(0),
     mouseDragMarkers(),
-    image(), imageNoOverlays(), oldImage(),
+    image(), oldImage(),
     menuSpecialContextMenu(nullptr),toolbar(nullptr), masterPlotterX(nullptr), masterPlotterY(nullptr),
     mousePosX(0), mousePosY(0),
     magnification(1),
@@ -75,13 +75,11 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
 
 
     connect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
-    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     connect(plotter, SIGNAL(beforePlotScalingRecalculate()), this, SLOT(intBeforePlotScalingRecalculate()));
     connect(plotter, SIGNAL(zoomChangedLocally(double, double, double, double, JKQTBasePlotter*)), this, SLOT(pzoomChangedLocally(double, double, double, double, JKQTBasePlotter*)));
 
     image=QImage(width(), height(), QImage::Format_ARGB32);
     oldImage=image;
-    imageNoOverlays=image;
 
     // enable mouse-tracking, so mouseMoved-Events can be caught
     setMouseTracking(true);
@@ -149,7 +147,6 @@ JKQTPlotter::JKQTPlotter(QWidget *parent):
 JKQTPlotter::~JKQTPlotter() {
     resetContextMenu(false);
     disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
-    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     disconnect(plotter, SIGNAL(beforePlotScalingRecalculate()), this, SLOT(intBeforePlotScalingRecalculate()));
     disconnect(plotter, SIGNAL(zoomChangedLocally(double, double, double, double, JKQTBasePlotter*)), this, SLOT(pzoomChangedLocally(double, double, double, double, JKQTBasePlotter*)));
     delete plotter;
@@ -1123,24 +1120,6 @@ void JKQTPlotter::synchronizeXYAxis(double newxmin, double newxmax, double newym
     setXY(newxmin, newxmax, newymin, newymax);
 }
 
-void JKQTPlotter::redrawOverlays() {
-#ifdef JKQTBP_AUTOTIMER
-    JKQTPAutoOutputTimer jkaaot(QString("JKQTPlotter::redrawOverlays()"));
-#endif
-    if (!doDrawing) return;
-    disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
-    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
-    image=imageNoOverlays;
-    JKQTPEnhancedPainter painter(&image);
-    if (painter.isActive()) {
-        painter.scale(magnification, magnification);
-        plotter->drawNonGridOverlays(painter);
-    }
-    oldImage=image;
-    connect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
-    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
-    repaint();
-}
 
 
 void JKQTPlotter::redrawPlot() {
@@ -1149,21 +1128,17 @@ void JKQTPlotter::redrawPlot() {
 #endif
     if (!doDrawing) return;
     disconnect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
-    disconnect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     plotter->setWidgetSize(jkqtp_roundTo<int>(width()/magnification), jkqtp_roundTo<int>(height()/magnification-getPlotYOffset()));
     JKQTPEnhancedPainter painter(&image);
     if (painter.isActive()) {
         painter.scale(magnification, magnification);
         //QTime t;
         //t.start();
-        plotter->drawNonGrid(painter, QPoint(0,0), false);//, QRect(QPoint(0,0), QSize(plotter->getPlotWidth(), plotter->getPlotHeight())));
+        plotter->drawNonGrid(painter, QPoint(0,0));//, QRect(QPoint(0,0), QSize(plotter->getPlotWidth(), plotter->getPlotHeight())));
         //qDebug()<<"drawNonGrid"<<objectName()<<": "<<t.elapsed()<<"ms";
-        imageNoOverlays=image;
-        plotter->drawNonGridOverlays(painter);
     }
     oldImage=image;
     connect(plotter, SIGNAL(plotUpdated()), this, SLOT(redrawPlot()));
-    connect(plotter, SIGNAL(overlaysUpdated()), this, SLOT(redrawOverlays()));
     update();
 }
 

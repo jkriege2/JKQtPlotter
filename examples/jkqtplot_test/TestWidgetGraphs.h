@@ -12,9 +12,6 @@
 #include <QCheckBox>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpgeometric.h"
-#include "jkqtplotter/graphs/jkqtpimage.h"
-#include "jkqtplotter/overlays/jkqtpbasicoverlays.h"
-#include "jkqtplotter/graphs/jkqtpparsedfunction.h"
 #include "jkqtplotter/jkqtpbaseelements.h"
 #include "jkqtplotter/gui/jkqtpgraphsmodel.h"
 #include "jkqtplotter/jkqtptools.h"
@@ -34,8 +31,7 @@ class TestWidgetGraphs : public QWidget
         
     signals:
         
-    public slots:
-        void moveovl();
+    protected slots:
 
         void setErrorLineStyle(int index);
         void setESSymbol(int index);
@@ -53,7 +49,6 @@ class TestWidgetGraphs : public QWidget
         double b1[N3], b2[N3], b3[N3];
 
 
-        JKQTPOverlayVerticalLine* ovl1;
         JKQTPlotter* plot;
         JKQTPlotter* plotLOG;
         JKQTPlotter* plotBot;
@@ -64,8 +59,6 @@ class TestWidgetGraphs : public QWidget
         JKQTPXYLineErrorGraph* pltePlot2;
 
 
-        int ovlCnt;
-        QElapsedTimer ovlTime;
 
         
 };

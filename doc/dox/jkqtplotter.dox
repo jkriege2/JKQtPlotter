@@ -211,7 +211,6 @@ This group assembles all classes that represent different elements of a plot (ma
 There are these major subgroups:
   - \ref jkqtpbaseplotter_elements contains all non-graph objects, i.e. things like coordinate axes and so on
   - \ref jkqtplotter_graphsgroup contains the actual graph classes
-  - \ref jkqtplotter_overlays contains classes for overlay elements (lines, marker ...) that can be drawn quickly on top of a plot
 .
 
 \defgroup jkqtpbaseplotter_elements Basic (non-graph) Plot Elements (coordinate axes, ...)
@@ -556,24 +555,6 @@ Examples:
     <tr>
       <td>\image html JKQTPContour_small.png
       <td> JKQTPContourPlot, JKQTPColumnContourPlot
-</table>
-
-\defgroup jkqtplotter_overlays Overlay Elements
-\ingroup jkqtplotter_elements
-
-<table>
-    <tr>
-      <th> Screenshot
-      <th> Classes
-    <tr>
-      <td>
-      <td> JKQTPOverlayVerticalLine, JKQTPOverlayLine
-    <tr>
-      <td>
-      <td> JKQTPOverlayVerticalRange
-    <tr>
-      <td>
-      <td> JKQTPOverlayRectangle
 </table>
 
 
