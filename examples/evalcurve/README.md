@@ -1,8 +1,10 @@
 # Example (JKQTPlotter): Plotting Parametric Mathematical Curves as Line Graphs {#JKQTPlotterEvalCurves}
 ## Basics
-This project (see `./examples/evalcurve/`) demonstrates how to plot mathematical functions as line graphs. The functions may be defined as static C functions, C++ functors or c++ inline functions. The functions may simply depend on the parameter `t`, or on `t` and a vector of parameters.
+This project (see `./examples/evalcurve/`) demonstrates how to plot mathematical functions as line graphs with `JKQTPXYFunctionLineGraph`. The functions may be defined as static C functions, C++ functors or c++ inline functions. The functions may simply depend on the parameter `t`, or on `t` and a vector of parameters.
 
 The class uses an adaptive algorithm, which determines by the local slope, at how many points (or how close points) the functor has to be evaluated. 
+
+If you want to evaluate the parametric function explicitly, you can use `JKQTPXYLineGraph` or `JKQTPXYParametrizedScatterGraph` and have a look at the example [`./examples/parametriccurve`](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/parametriccurve).
 
 [TOC]
 
