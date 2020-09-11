@@ -212,6 +212,9 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 <tr><td> \image html test_distributionplot_small.png
     <td> \subpage JKQTPlotterDistributionPlot
     <td> Combines several different graphs to draw random values, their distribution and some statistical properties
+<tr><td> \image html mandelbrot_small.png
+    <td> \subpage JKQTPlotterMandelbrot
+    <td> 
 </table>
 	
 	
