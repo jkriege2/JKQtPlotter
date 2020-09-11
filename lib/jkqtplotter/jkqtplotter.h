@@ -650,6 +650,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief returns a pointer to the datastore used by this object */
         inline JKQTPDatastore* getDatastore() { return plotter->getDatastore(); }
 
+        /** \brief returns a pointer to the datastore used by this object */
+        inline const JKQTPDatastore* getDatastore() const { return plotter->getDatastore(); }
+
         /** \brief tells the plotter object to use the given external datastore.
          *
          * If the current datastore is internally managed, this method will free that object and use the supplied datastore
