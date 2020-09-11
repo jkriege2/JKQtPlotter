@@ -167,7 +167,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPaintDeviceAdapter {
  *
  * You can set two different aspect ratios:
  *   - The ratio of plotWidth/plotHeight (setAspectRatio(), setMaintainAspectRatio()) will keep the plots pixel-width and height at a certain value.
+ *     \f[ \mbox{aspectRatio}=\frac{\mbox{plotWidth}}{\mbox{plotHeight}} \f]
  *   - The ratio of (xmax-xmin)/(ymax-ymin) (setAxisAspectRatio(), setMaintainAxisAspectRatio()) will keep the displayed axis ranges in a certain ratio.
+ *     \f[ \mbox{axisAspectRatio}=\frac{\left|x_\text{max}-x_\text{min}\right|}{\left|y_\text{max}-y_\text{min}\right|} \f]
  * .
  * So to achieve different effects, use these combinations:
  *   - you have a 200x100 range where each 1x1-pixel should have an aspect ratio of 4:
@@ -656,14 +658,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \copydoc JKQTBasePlotterStyle::plotBorderRight  */
         int getPlotBorderRight() const;
 
-        /** \brief returns whether the maintaining of the data aspect ratio is enabled or disabled */
+        /** \brief returns whether the maintaining of the data aspect ratio is enabled or disabled \see aspectRatio */
         bool doesMaintainAspectRatio() const;
-        /** \brief returns the data aspect ratio, enforced with setMaintainApsectRatio(true) */
+        /** \brief returns the data aspect ratio, enforced with setMaintainApsectRatio(true) \see aspectRatio */
         double getAspectRatio() const;
 
-        /** \brief returns whether the maintaining of the axis aspect ratio is enabled or disabled */
+        /** \brief returns whether the maintaining of the axis aspect ratio is enabled or disabled \see axisAspectRatio */
         bool doesMaintainAxisAspectRatio() const;
-        /** \brief returns the axis aspect ratio, enforced with setMaintainAxisApsectRatio(true) */
+        /** \brief returns the axis aspect ratio, enforced with setMaintainAxisApsectRatio(true) \see axisAspectRatio */
         double getAxisAspectRatio() const;
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForSystem  */
         bool isUsingAntiAliasingForSystem() const;
@@ -1075,7 +1077,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         QSizeF getTextSizeSize(const QString& fontName, double fontSize, const QString& text,  QPainter &painter);
 
 
-
+        /** \brief takes a new axis range \a xminn ... \a xmaxx and \a yminn ... \a ymaxx and corrects the values to match the currently set axisAspectRatio
+         *
+         *  This function is used by setXY(), setX(), setY().
+         *
+         *  \see axisAspectRatio, setXY(), setX(), setY()
+         */
+        void correctXYRangeForAspectRatio(double &xminn, double &xmaxx, double &yminn, double &ymaxx) const;
     signals:
         /** \brief signal: emitted whenever the user selects a new x-y zoom range (by mouse) */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTBasePlotter* sender);
@@ -1391,10 +1399,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief zooms out of the graph (the same as turning the mouse wheel) by the given factor */
         void zoomOut(double factor=2.0);
 
-        /** \brief en-/disables the maintaining of the data aspect ratio */
+        /** \brief en-/disables the maintaining of the data aspect ratio \see aspectRatio */
         void setMaintainAspectRatio(bool value);
 
-        /** \brief en-/disables the maintaining of the axis aspect ratio */
+        /** \brief en-/disables the maintaining of the axis aspect ratio \see axisAspectRatio */
         void setMaintainAxisAspectRatio(bool value);
 
         /** \brief set filename and prefix, used by loadUserSettings() and saveUserSettings()
@@ -1441,9 +1449,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         /** \brief set all graphs invisible, except graph start, start+n, start+2*n, ... */
         void setOnlyNthGraphsVisible(int start, int n);
 
-        /** \brief sets the data aspect ratio, enforced with setMaintainApsectRatio(true) */
+        /** \brief sets the data aspect ratio, enforced with setMaintainApsectRatio(true) \see aspectRatio */
         void setAspectRatio(double __value);
-        /** \brief sets the axis aspect ratio, enforced with setMaintainAxisApsectRatio(true) */
+        /** \brief sets the axis aspect ratio, enforced with setMaintainAxisApsectRatio(true) \see axisAspectRatio */
         void setAxisAspectRatio(double __value);
         /*! \copydoc JKQTBasePlotterStyle::useAntiAliasingForSystem */
         void setUseAntiAliasingForSystem(bool __value);
@@ -1952,14 +1960,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          */
         int internalPlotHeight;
 
-        /** \brief indicates whether the widget should maintain an aspect ratio of plotwidth and plotheight */
+        /** \brief indicates whether the widget should maintain an aspect ratio of plotwidth and plotheight
+         *
+         *  \see aspectRatio
+         */
         bool maintainAspectRatio;
-        /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true */
+        /** \brief the aspect ratio of plotwidth and plotheight to maintain, if \c maintainAspectRatio==true
+         *
+         *  \f[ \mbox{aspectRatio}=\frac{\mbox{plotWidth}}{\mbox{plotHeight}} \f]
+         *
+         *  \see maintainAspectRatio
+         */
         double aspectRatio;
 
         /** \brief indicates whether the axes should maintain an aspect ratio
          *
-         *  \note An axis aspect ration is only well defined for linear axes (if both axes are linear).
+         *  When the axis aspect ratio is to be maintained and new axis ranges are set (e.g. when calling setXY() ),
+         *  the given axis ranges are modified, so
+         *    \f[ \mbox{axisAspectRatio}=\frac{\left|x_\text{max}-x_\text{min}\right|}{\left|y_\text{max}-y_\text{min}\right|} \f]
+         *
+         *  \note An axis aspect ratio is only well defined for linear axes (if both axes are linear).
          *        If both axes a logarithmic, the axis ration is defined for log(axismax)-log(axismin).
          *        For other combinations of axes, this function is deactivated
          *
@@ -1968,7 +1988,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         bool maintainAxisAspectRatio;
         /** \brief the aspect ratio of axis widths to maintain, if \c maintainAxisAspectRatio==true
          *
-         *  \note An axis aspect ration is only well defined for linear axes (if both axes are linear).
+         *  When the axis aspect ratio is to be maintained and new axis ranges are set (e.g. when calling setXY() ),
+         *  the given axis ranges are modified, so
+         *    \f[ \mbox{axisAspectRatio}=\frac{\left|x_\text{max}-x_\text{min}\right|}{\left|y_\text{max}-y_\text{min}\right|} \f]
+         *
+         *  \note An axis aspect ratio is only well defined for linear axes (if both axes are linear).
          *        If both axes a logarithmic, the axis ration is defined for log(axismax)-log(axismin).
          *        For other combinations of axes, this function is deactivated
          *

@@ -484,16 +484,31 @@ void JKQTPlotter::paintUserAction() {
             painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, true);
             painter.setPen(plotterStyle.userActionOverlayPen);
             if (jkqtp_approximatelyUnequal(mouseDragRectXEnd,mouseDragRectXStart) && jkqtp_approximatelyUnequal(mouseDragRectYEnd,mouseDragRectYStart)) {
-                double x1=plotter->x2p(mouseDragRectXStart)*magnification;
-                double y1=plotter->y2p(mouseDragRectYStart)*magnification;
-                double x2=plotter->x2p(mouseDragRectXEnd)*magnification;
-                double y2=plotter->y2p(mouseDragRectYEnd)*magnification;
-                double dx=x2-x1;
-                double dy=y2-y1;
-                if ((currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) || (currentMouseDragAction.mode==jkqtpmdaDrawRectangleForEvent)) {
+                const double x1=plotter->x2p(mouseDragRectXStart)*magnification;
+                const double y1=plotter->y2p(mouseDragRectYStart)*magnification;
+                const double x2=plotter->x2p(mouseDragRectXEnd)*magnification;
+                const double y2=plotter->y2p(mouseDragRectYEnd)*magnification;
+                const double dx=x2-x1;
+                const double dy=y2-y1;
+                if (currentMouseDragAction.mode==jkqtpmdaDrawRectangleForEvent) {
                     painter.fillRect(QRectF(x1, y1, x2-x1, y2-y1), plotterStyle.userActionOverlayBrush);
                     painter.setPen(plotterStyle.userActionOverlayPen);
                     painter.drawRect(QRectF(x1, y1, x2-x1, y2-y1));
+                } else if (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) {
+                    double xmin=mouseDragRectXStart;
+                    double xmax=mouseDragRectXEnd;
+                    double ymin=mouseDragRectYStart;
+                    double ymax=mouseDragRectYEnd;
+                    plotter->correctXYRangeForAspectRatio(xmin,xmax,ymin,ymax);
+
+                    const double xz1=plotter->x2p(xmin)*magnification;
+                    const double yz1=plotter->y2p(ymin)*magnification;
+                    const double xz2=plotter->x2p(xmax)*magnification;
+                    const double yz2=plotter->y2p(ymax)*magnification;
+
+                    painter.fillRect(QRectF(xz1, yz1, xz2-xz1, yz2-yz1), plotterStyle.userActionOverlayBrush);
+                    painter.setPen(plotterStyle.userActionOverlayPen);
+                    painter.drawRect(QRectF(xz1, yz1, xz2-xz1, yz2-yz1));
                 } else if (currentMouseDragAction.mode==jkqtpmdaDrawCircleForEvent) {
                     painter.setPen(plotterStyle.userActionOverlayPen);
                     painter.setBrush(plotterStyle.userActionOverlayBrush);
@@ -717,7 +732,13 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
             event->accept();
             //std::cout<<mouseZoomingTStart<<" -- "<<mouseZoomingTEnd<<std::endl;
             if (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) {
-                emit plotNewZoomRectangle(mouseDragRectXStart, mouseDragRectXEnd, mouseDragRectYStart, mouseDragRectYEnd, event->modifiers());
+                double xmin=mouseDragRectXStart;
+                double xmax=mouseDragRectXEnd;
+                double ymin=mouseDragRectYStart;
+                double ymax=mouseDragRectYEnd;
+                plotter->correctXYRangeForAspectRatio(xmin,xmax,ymin,ymax);
+                emit plotNewZoomRectangle(xmin,xmax,ymin,ymax, event->modifiers());
+                //emit plotNewZoomRectangle(mouseDragRectXStart, mouseDragRectXEnd, mouseDragRectYStart, mouseDragRectYEnd, event->modifiers());
             }
             if ((currentMouseDragAction.mode==jkqtpmdaScribbleForEvents) && (jkqtp_approximatelyUnequal(mouseDragRectXStart,mouseDragRectXEnd) || jkqtp_approximatelyUnequal(mouseDragRectYStart,mouseDragRectYEnd)) ) {
                 emit userScribbleClick(mouseDragRectXEnd, mouseDragRectYEnd, event->modifiers(), false, false);
@@ -815,6 +836,9 @@ void JKQTPlotter::mouseReleaseEvent ( QMouseEvent * event ){
 
                 double ymin=mouseDragRectYStart;
                 double ymax=mouseDragRectYEnd;
+
+
+                plotter->correctXYRangeForAspectRatio(xmin,xmax,ymin,ymax);
 
                 emit zoomChangedLocally(xmin, xmax, ymin, ymax, this);
                 plotter->setXY(xmin, xmax, ymin, ymax);
@@ -924,6 +948,14 @@ void JKQTPlotter::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    const double wheel_x=event->position().x();
+    const double wheel_y=event->position().y();
+#else
+    const int wheel_x=event->x();
+    const int wheel_y=event->y();
+#endif
+
     //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
     auto itAction=findMatchingMouseWheelAction(event->modifiers());
     //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
@@ -934,14 +966,14 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
         //if (act==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
             //qDebug()<<"wheelEvent("<<event->modifiers()<<"):ZoomByWheel";
             const double factor=pow(2.0, 1.0*static_cast<double>(event->angleDelta().y())/120.0)*2.0;
-            double xmin=plotter->p2x(static_cast<double>(event->x())/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
-            double xmax=plotter->p2x(static_cast<double>(event->x())/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
-            double ymin=plotter->p2y(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor);
-            double ymax=plotter->p2y(static_cast<double>(event->y())/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight())/factor);
-            if  ( (event->x()/magnification<plotter->getInternalPlotBorderLeft()) || (event->x()/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+            double xmin=plotter->p2x(static_cast<double>(wheel_x)/magnification-static_cast<double>(plotter->getPlotWidth())/factor);
+            double xmax=plotter->p2x(static_cast<double>(wheel_x)/magnification+static_cast<double>(plotter->getPlotWidth())/factor);
+            double ymin=plotter->p2y(static_cast<double>(wheel_y)/magnification-static_cast<double>(getPlotYOffset())+static_cast<double>(plotter->getPlotHeight())/factor);
+            double ymax=plotter->p2y(static_cast<double>(wheel_y)/magnification-static_cast<double>(getPlotYOffset())-static_cast<double>(plotter->getPlotHeight())/factor);
+            if  ( (wheel_x/magnification<plotter->getInternalPlotBorderLeft()) || (wheel_x/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
                 xmin=getXMin();
                 xmax=getXMax();
-            } else if (((event->y()-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((event->y()-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+            } else if (((wheel_y-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((wheel_y-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
                 ymin=getYMin();
                 ymax=getYMax();
             }
@@ -960,9 +992,9 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
             if (d.x()<0 && d.x()>-10) d.setX(-10);
             if (d.y()>=0 && d.y()<10) d.setY(10);
             if (d.y()<0 && d.y()>-10) d.setY(-10);
-            if  ( (event->x()/magnification<plotter->getInternalPlotBorderLeft()) || (event->x()/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
+            if  ( (wheel_x/magnification<plotter->getInternalPlotBorderLeft()) || (wheel_x/magnification>plotter->getPlotWidth()+plotter->getInternalPlotBorderLeft()) ) {
                 zoomRect.translate(0, d.y());
-            } else if (((event->y()-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((event->y()-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
+            } else if (((wheel_y-getPlotYOffset())/magnification<plotter->getInternalPlotBorderTop()) || ((wheel_y-getPlotYOffset())/magnification>plotter->getPlotHeight()+plotter->getInternalPlotBorderTop()) ) {
                 zoomRect.translate(d.x(), 0);
             } else {
                 zoomRect.translate(d.x(), d.y());
@@ -974,7 +1006,7 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
 
     event->accept();
 
-    emit plotMouseWheelOperated(plotter->p2x(event->x()), plotter->p2x(event->y()), event->modifiers(), event->angleDelta().x(), event->angleDelta().y());
+    emit plotMouseWheelOperated(plotter->p2x(wheel_x), plotter->p2x(wheel_y), event->modifiers(), event->angleDelta().x(), event->angleDelta().y());
 
     updateCursor();
     currentMouseDragAction.clear();

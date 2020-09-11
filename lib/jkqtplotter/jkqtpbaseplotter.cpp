@@ -441,11 +441,13 @@ void JKQTBasePlotter::zoomOut(double factor) {
 
 void JKQTBasePlotter::setMaintainAspectRatio(bool value) {
     maintainAspectRatio=value;
+    setAspectRatio(aspectRatio);
     redrawPlot();
 }
 
 void JKQTBasePlotter::setMaintainAxisAspectRatio(bool value) {
     maintainAxisAspectRatio=value;
+    setAspectRatio(axisAspectRatio);
     redrawPlot();
 }
 
@@ -688,53 +690,42 @@ void JKQTBasePlotter::loadSettings(const QSettings &settings, const QString& gro
 
 
 
-void JKQTBasePlotter::setXY(double xminn, double xmaxx, double yminn, double ymaxx){
-    xAxis->setRange(xminn, xmaxx);
-    yAxis->setRange(yminn, ymaxx);
-    if (maintainAxisAspectRatio) {
+void JKQTBasePlotter::correctXYRangeForAspectRatio(double& xminn, double& xmaxx, double& yminn, double& ymaxx) const {
+    if (xminn>xmaxx) std::swap(xminn,xmaxx);
+    if (yminn>ymaxx) std::swap(yminn,ymaxx);
+    if (maintainAspectRatio) {
         if (xAxis->isLinearAxis() && yAxis->isLinearAxis()) {
-            const double mid=(yAxis->getMax()+yAxis->getMin())/2.0;
-            const double w=fabs(xmaxx-xminn)/axisAspectRatio;
-            yAxis->setRange(mid-w/2.0, mid+w/2.0);
+            const double mid=(yminn+ymaxx)/2.0;
+            const double w=fabs(xmaxx-xminn)/aspectRatio;
+            //qDebug()<<"mod y from "<<yminn<<"..."<<ymaxx<<" to "<<mid-w/2.0<<"..."<<mid+w/2.0;
+            yminn=mid-w/2.0;
+            ymaxx=mid+w/2.0;
         } else if (xAxis->isLogAxis() && yAxis->isLogAxis()) {
-            const double mid=(log(yAxis->getMax())+log(yAxis->getMin()))/2.0;
-            const double w=fabs(log(xmaxx)-log(xminn))/axisAspectRatio;
-            yAxis->setRange(exp(mid-w/2.0), exp(mid+w/2.0));
+            const double mid=(log(yminn)+log(ymaxx))/2.0;
+            const double w=fabs(log(xmaxx)-log(xminn))/aspectRatio;
+            yminn=exp(mid-w/2.0);
+            ymaxx=exp(mid+w/2.0);
         }
     }
+}
+
+
+void JKQTBasePlotter::setXY(double xminn, double xmaxx, double yminn, double ymaxx) {
+
+    correctXYRangeForAspectRatio(xminn, xmaxx, yminn, ymaxx);
+
+    xAxis->setRange(xminn, xmaxx);
+    yAxis->setRange(yminn, ymaxx);
+
     if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
 }
 
 void JKQTBasePlotter::setX(double xminn, double xmaxx){
-    xAxis->setRange(xminn, xmaxx);
-    if (maintainAxisAspectRatio) {
-        if (xAxis->isLinearAxis() && yAxis->isLinearAxis()) {
-            const double mid=(yAxis->getMax()+yAxis->getMin())/2.0;
-            const double w=fabs(xmaxx-xminn)/axisAspectRatio;
-            yAxis->setRange(mid-w/2.0, mid+w/2.0);
-        } else if (xAxis->isLogAxis() && yAxis->isLogAxis()) {
-            const double mid=(log(yAxis->getMax())+log(yAxis->getMin()))/2.0;
-            const double w=fabs(log(xmaxx)-log(xminn))/axisAspectRatio;
-            yAxis->setRange(exp(mid-w/2.0), exp(mid+w/2.0));
-        }
-    }
-    if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
+    setXY(xminn, xmaxx, yAxis->getMin(), yAxis->getMax());
 }
 
 void JKQTBasePlotter::setY(double yminn, double ymaxx) {
-    yAxis->setRange(yminn, ymaxx);
-    if (maintainAxisAspectRatio) {
-        if (xAxis->isLinearAxis() && yAxis->isLinearAxis()) {
-            const double mid=(xAxis->getMax()+xAxis->getMin())/2.0;
-            const double w=fabs(ymaxx-yminn)*axisAspectRatio;
-            xAxis->setRange(mid-w/2.0, mid+w/2.0);
-        } else if (xAxis->isLogAxis() && yAxis->isLogAxis()) {
-            const double mid=(log(xAxis->getMax())+log(xAxis->getMin()))/2.0;
-            const double w=fabs(log(ymaxx)-log(yminn))/axisAspectRatio;
-            xAxis->setRange(exp(mid-w/2.0), exp(mid+w/2.0));
-        }
-    }
-    if (emitSignals) emit zoomChangedLocally(xAxis->getMin(), xAxis->getMax(), yAxis->getMin(), yAxis->getMax(), this);
+    setXY(xAxis->getMin(), xAxis->getMax(), yminn, ymaxx);
 }
 
 void JKQTBasePlotter::setAbsoluteX(double xminn, double xmaxx) {
@@ -2394,6 +2385,7 @@ void JKQTBasePlotter::setAspectRatio(double __value)
 {
     if (jkqtp_approximatelyUnequal(this->aspectRatio , __value)) {
         this->aspectRatio = __value;
+        setXY(getXMin(), getXMax(), getYMin(), getYMax());
         redrawPlot();
     }
 }
