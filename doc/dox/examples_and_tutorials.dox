@@ -214,7 +214,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> Combines several different graphs to draw random values, their distribution and some statistical properties
 <tr><td> \image html mandelbrot_small.png
     <td> \subpage JKQTPlotterMandelbrot
-    <td> 
+    <td> Allows to zoom into the Mandelbrot Set, using the different Zooming methods of JKQTPlotter
 </table>
 	
 	

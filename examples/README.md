@@ -89,7 +89,7 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
 |:-------------:| ------------- | ------------- |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_multiplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/multiplot) | [Layouting Several Plots](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/multiplot) | Combining plots in Qt Layouts <br> linking plot axes <br> copy data from a `std::map` int the datastore <br> print plots/print preview |
 | [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/test_distributionplot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/distributionplot) | [Plotting a Statistical Distribution of Data](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/distributionplot) | Combines several different graphs to draw random values, their distribution and some statistical properties |
-| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/mandelbrot_small.gif)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/mandelbrot) | [Mandelbrot Set Explorer](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/mandelbrot) |  |
+| [![](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/mandelbrot_small.png)](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/mandelbrot) | [Mandelbrot Set Explorer](https://github.com/jkriege2/JKQtPlotter/tree/master/examples/mandelbrot) | Allows to zoom into the Mandelbrot Set, using the different Zooming methods of JKQTPlotter |
 
 
 
