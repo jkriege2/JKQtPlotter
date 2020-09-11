@@ -1217,7 +1217,10 @@ void JKQTPlotter::delayedResizeEvent()
         sizeChanged=true;
     }
 
-    if (sizeChanged) redrawPlot();
+    if (sizeChanged) {
+        emit widgetResized(width(), height(), this);
+        redrawPlot();
+    }
 }
 
 void JKQTPlotter::leaveEvent(QEvent * /*event*/) {

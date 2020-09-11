@@ -30,6 +30,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>new: all geometric objects can either be drawn as graphic element (i.e. lines are straight line, even on non-linear axes), or as mathematical curve (i.e. on non-linear axes, lines become the appropriate curve representing the linear function, connecting the given start/end-points). The only exceptions are ellipses (and the derived arcs,pies,chords), which are always drawn as mathematical curves</li>
   <li>new: a new graph class JKQTPXYFunctionLineGraph draws parametric 2D curves ( \f$ [x,y] = f(t) \f$ ), see \ref JKQTPlotterEvalCurves for an example</li>
   <li>new: added several new copy/set-functions to JKQTPDatastore</li>
+  <li>new: added JPQTPlotter signal, when widget was resized</li>
 </ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download

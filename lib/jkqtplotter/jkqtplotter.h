@@ -1319,6 +1319,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void zoomChangedLocally(double newxmin, double newxmax, double newymin, double newymax, JKQTPlotter* sender);
 
+        /** \brief signal: emitted whenever the widget is resized
+         *
+         * \param new_width new width of the widget (in pixels)
+         * \param new_height new height of the widget (in pixels)
+         * \param sender JKQTPlotter sending this event
+         *
+         * This signal is designed to be connected to these slots: synchronizeXAxis(), synchronizeYAxis(), synchronizeXYAxis()
+         */
+        void widgetResized(int new_width, int new_height, JKQTPlotter* sender);
+
         /** \brief emitted when the mouse action JKQTPlotter::ScribbleEvents and a click event from the mouse occurs inside the plot,
          *         or the mouse moved while the left button is pressed down
          *
