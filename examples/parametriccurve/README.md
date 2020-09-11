@@ -39,7 +39,7 @@ If you use `JKQTPXYParametrizedScatterGraph` instead of `JKQTPXYLineGraph`, you 
     graph2->setXColumn(columnX);
     graph2->setYColumn(columnY);
     graph2->setColorColumn(columnR);
-    graph2->setPalette(JKQTPMathImageMATLAB);
+    graph2->setColorPalette(ette(JKQTPMathImageMATLAB);
     graph2->setSymbolType(JKQTPNoSymbol);
     graph2->setDrawLine(true);
     graph2->setTitle("colored spiral");

@@ -47,7 +47,7 @@ This function returns an integer, which you can cast to a `JKQTPMathImageColorPa
 ```.cpp
     JKQTPColumnMathImage* graph=new JKQTPColumnMathImage(plot);
     // ...
-    graph->setPalette(static_cast<JKQTPMathImageColorPalette>(userpalette_id));
+    graph->setColorPalette(static_cast<JKQTPMathImageColorPalette>(userpalette_id));
 ```
 
 # Load Palettes from Files
@@ -156,7 +156,7 @@ The rest of the example program [`imageplot_userpal.cpp`](https://github.com/jkr
     graph->setWidth(1);
     graph->setHeight(1);
     // color-map is taken from cmbPalette
-    plot->connect(cmbPalette, &JKQTPMathImageColorPaletteComboBox::currentPaletteChanged,[&](JKQTPMathImageColorPalette p) { graph->setPalette(p); plot->redrawPlot(); });
+    plot->connect(cmbPalette, &JKQTPMathImageColorPaletteComboBox::currentPaletteChanged,[&](JKQTPMathImageColorPalette p) { graph->setColorPalette(p); plot->redrawPlot(); });
     cmbPalette->setCurrentColorPalette(graph->getPalette());
 	
 	
@@ -181,7 +181,7 @@ The rest of the example program [`imageplot_userpal.cpp`](https://github.com/jkr
 ```.cpp
     JKQTPMathImageColorPaletteComboBox* cmbPalette=new JKQTPMathImageColorPaletteComboBox(&win);
     // ... 
-    plot->connect(cmbPalette, &JKQTPMathImageColorPaletteComboBox::currentPaletteChanged,[&](JKQTPMathImageColorPalette p) { graph->setPalette(p); plot->redrawPlot(); });
+    plot->connect(cmbPalette, &JKQTPMathImageColorPaletteComboBox::currentPaletteChanged,[&](JKQTPMathImageColorPalette p) { graph->setColorPalette(p); plot->redrawPlot(); });
     cmbPalette->setCurrentColorPalette(graph->getPalette());
 ```
 

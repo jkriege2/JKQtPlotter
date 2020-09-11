@@ -60,7 +60,7 @@ Then this image column can be drawn with a `JKQTPColumnContourPlot`:
     graph->setWidth(w);
     graph->setHeight(h);
     // color-map is "BlueGreenRed"
-    graph->setPalette(JKQTPMathImageBlueGreenRed);
+    graph->setColorPalette(JKQTPMathImageBlueGreenRed);
     // get coordinate axis of color-bar and set its label
     graph->getColorBarRightAxis()->setAxisLabel("electric potential [V]");
     // add some levels for the contours. These are chosen to be at the actual potential values

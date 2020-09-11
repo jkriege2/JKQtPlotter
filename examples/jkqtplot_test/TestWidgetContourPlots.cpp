@@ -101,7 +101,7 @@ TestWidgetContourPlots::TestWidgetContourPlots(QWidget *parent) :
     cp->setNx(histAlexNx);
     cp->setNy(histAlexNy);
     cp->setImageColumn(colHist2D);
-//    cp->setPalette(JKQTPMathImageINVERTED_OCEAN);
+//    cp->setColorPalette(JKQTPMathImageINVERTED_OCEAN);
     cp->setContourLevels(levels);
     cp->setTitle("contour plot");
     plotContour->addGraph(cp);

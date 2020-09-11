@@ -39,7 +39,7 @@ Now we can use th datavectors to add a `JKQTPXYParametrizedScatterGraph`:
     graph1->setSizeColumn(columnS);
     graph1->setSymbolType(JKQTPFilledCircle);
     graph1->setColorColumn(columnG);
-    graph1->setPalette(JKQTPMathImageMATLAB);
+    graph1->setColorPalette(JKQTPMathImageMATLAB);
     graph1->setDrawLine(false);
     graph1->setTitle("");
     plot.addGraph(graph1);

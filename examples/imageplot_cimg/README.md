@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
     graph->setWidth(w);
     graph->setHeight(h);
     // color-map is "MATLAB"
-    graph->setPalette(JKQTPMathImageMATLAB);
+    graph->setColorPalette(JKQTPMathImageMATLAB);
     // get coordinate axis of color-bar and set its label
     graph->getColorBarRightAxis()->setAxisLabel("light intensity [A.U.]");
     // determine min/max of data automatically and use it to set the range of the color-scale

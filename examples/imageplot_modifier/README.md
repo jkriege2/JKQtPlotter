@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
     graph->setWidth(NX);
     graph->setHeight(NY);
     // color-map is "MATLAB"
-    graph->setPalette(JKQTPMathImageMATLAB);
+    graph->setColorPalette(JKQTPMathImageMATLAB);
     // determine min/max of data automatically and use it to set the range of the color-scale
     graph->setAutoImageRange(true);
 

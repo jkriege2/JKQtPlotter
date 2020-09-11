@@ -79,7 +79,7 @@ The second variant for setting the color of each datapoint is by mapping the val
     graph2->setXColumn(columnX);
     graph2->setYColumn(columnY2);
     graph2->setColorColumn(columnC);
-    graph2->setPalette(JKQTPMathImageRYGB);
+    graph2->setColorPalette(JKQTPMathImageRYGB);
     graph2->setSymbolType(JKQTPFilledRect);
     graph2->setDrawLine(true);
     graph2->setTitle("2: color");
@@ -96,7 +96,7 @@ Note also that it is possible to combine any of parametrizations above in a sing
     graph5->setYColumn(columnY5);
     graph5->setColorColumn(columnC);
     graph5->setSizeColumn(columnS);
-    graph5->setPalette(JKQTPMathImageBLUEYELLOW);
+    graph5->setColorPalette(JKQTPMathImageBLUEYELLOW);
     graph5->setDrawLine(true);
     graph5->setTitle("5: color+size");
     graph5->getColorBarRightAxis()->setAxisLabel("color scale for graph5");
