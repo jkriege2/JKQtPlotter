@@ -20,7 +20,6 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/41">#41: Build error when JKQtPlotter_BUILD_INCLUDE_XITS_FONTS set to OFF </a>, thanks to <a href="https://github.com/smistad">user:smistad</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/*.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/45">#45: Build error on mac jkqtfastplotter.cpp:342:28: Variable has incomplete type 'QPainterPath'</a>, thanks to <a href="https://github.com/abdedixit">user:abdedixit</a></li>
-  <li>fixed: JKQTPColumnConstIterator and JKQTPColumnIterator: getImagePositionX() and getImagePositionY() were switched</li>
   <li>renamed/breaking change: renamed JKQTPColorPaletteStyleAndToolsMixin::setPalette() -> JKQTPColorPaletteStyleAndToolsMixin::setColorPalette()</li>
   <li>removed/breaking change: removed the usage of some deprecated functions and objects (e.g. QMatrix)</li>
   <li>removed/breaking change: removed the overlay elements (derived from JKQTPOverlayElement), which were not very well set up and are more confusing than useful.</li>

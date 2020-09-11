@@ -1871,12 +1871,12 @@ class JKQTPColumnIterator {
         /** \brief returns the referenced position/row interpreted as an image pixel, x-component, returns -1 for an invalid operator */
         inline int getImagePositionX() const {
             if (!isValid()) return -1;
-            return pos_ / static_cast<int>(col_->getImageColumns());
+            return pos_ % static_cast<int>(col_->getImageColumns());
         }
         /** \brief returns the referenced position/row interpreted as an image pixel, y-component, returns -1 for an invalid operator */
         inline int getImagePositionY() const {
             if (!isValid()) return -1;
-            return pos_ % static_cast<int>(col_->getImageColumns());
+            return pos_ / static_cast<int>(col_->getImageColumns());
         }
         /*! \brief if the data in the column is interpreted as an image, this is the number of columns (x-dimension) of the image
             \see JKQTPColumn::imageColumns */
@@ -2202,12 +2202,12 @@ class JKQTPColumnConstIterator {
         /** \brief returns the referenced position/row interpreted as an image pixel, x-component, returns -1 for an invalid operator */
         inline int getImagePositionX() const {
             if (!isValid()) return -1;
-            return pos_ / static_cast<int>(col_->getImageColumns());
+            return pos_ % static_cast<int>(col_->getImageColumns());
         }
         /** \brief returns the referenced position/row interpreted as an image pixel, y-component, returns -1 for an invalid operator */
         inline int getImagePositionY() const {
             if (!isValid()) return -1;
-            return pos_ % static_cast<int>(col_->getImageColumns());
+            return pos_ / static_cast<int>(col_->getImageColumns());
         }
         /*! \brief if the data in the column is interpreted as an image, this is the number of columns (x-dimension) of the image
             \see JKQTPColumn::imageColumns */
