@@ -119,13 +119,13 @@ TestWidgetImages::TestWidgetImages(QWidget *parent) :
 
 void TestWidgetImages::setImgPalette(int index)
 {
-    pimg3->setPalette(index);
+    pimg3->setColorPalette(index);
     plotImg->redrawPlot();
 }
 
 void TestWidgetImages::setImgPalette1(int index)
 {
-    pimg2->setPalette(index);
+    pimg2->setColorPalette(index);
     plotImg->redrawPlot();
 }
 

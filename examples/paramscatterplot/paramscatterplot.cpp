@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
     graph2->setXColumn(columnX);
     graph2->setYColumn(columnY2);
     graph2->setColorColumn(columnC);
-    graph2->setPalette(JKQTPMathImageRYGB);
+    graph2->setColorPalette(JKQTPMathImageRYGB);
     graph2->setSymbolType(JKQTPFilledRect);
     graph2->setDrawLine(true);
     graph2->setTitle("2: color");
@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
     graph5->setYColumn(columnY5);
     graph5->setColorColumn(columnC);
     graph5->setSizeColumn(columnS);
-    graph5->setPalette(JKQTPMathImageBLUEYELLOW);
+    graph5->setColorPalette(JKQTPMathImageBLUEYELLOW);
     graph5->setDrawLine(true);
     graph5->setTitle("5: color+size");
     graph5->getColorBarRightAxis()->setAxisLabel("color scale for graph5");
@@ -157,7 +157,7 @@ int main(int argc, char* argv[])
     graph7->setLinewidthColumn(columnLW);
     graph7->setDrawLine(true);
     graph7->setColorColumn(columnC);
-    graph7->setPalette(JKQTPMathImageBLUEYELLOW);
+    graph7->setColorPalette(JKQTPMathImageBLUEYELLOW);
     graph7->setSymbolType(JKQTPNoSymbol);
     graph7->setColorBarRightVisible(false);
     graph7->setColorBarTopVisible(false);

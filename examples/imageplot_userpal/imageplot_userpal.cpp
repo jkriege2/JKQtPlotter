@@ -123,9 +123,9 @@ int main(int argc, char* argv[])
     graph->setWidth(1);
     graph->setHeight(1);
     // color-map is taken from cmbPalette
-    plot->connect(cmbPalette, &JKQTPMathImageColorPaletteComboBox::currentPaletteChanged,[&](JKQTPMathImageColorPalette p) { graph->setPalette(p); plot->redrawPlot(); });
-    graph->setPalette(static_cast<JKQTPMathImageColorPalette>(userpalette_id));
-    cmbPalette->setCurrentColorPalette(graph->getPalette());
+    plot->connect(cmbPalette, &JKQTPMathImageColorPaletteComboBox::currentPaletteChanged,[&](JKQTPMathImageColorPalette p) { graph->setColorPalette(p); plot->redrawPlot(); });
+    graph->setColorPalette(static_cast<JKQTPMathImageColorPalette>(userpalette_id));
+    cmbPalette->setCurrentColorPalette(graph->getColorPalette());
 	
 	
     // 4. add the graphs to the plot, so it is actually displayed

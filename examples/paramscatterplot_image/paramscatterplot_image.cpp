@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     graph1->setSymbolColumn(columnS);
     graph1->setSymbolType(JKQTPFilledTriangle);
     graph1->setColorColumn(columnG);
-    graph1->setPalette(JKQTPMathImageOCEAN);
+    graph1->setColorPalette(JKQTPMathImageOCEAN);
     graph1->setDrawLine(false);
     graph1->setTitle("");
     plot.addGraph(graph1);

@@ -320,7 +320,7 @@ QImage JKQTPColorPaletteStyleAndToolsMixin::getPaletteKeyImage(JKQTPMathImageCol
 }
 
 
-void JKQTPColorPaletteStyleAndToolsMixin::setPalette(int pal) {
+void JKQTPColorPaletteStyleAndToolsMixin::setColorPalette(int pal) {
     palette=static_cast<JKQTPMathImageColorPalette>(pal);
 }
 
@@ -331,12 +331,12 @@ void JKQTPColorPaletteStyleAndToolsMixin::cbSetParent(JKQTBasePlotter* parent) {
 
 }
 
-void JKQTPColorPaletteStyleAndToolsMixin::setPalette(const JKQTPMathImageColorPalette &__value)
+void JKQTPColorPaletteStyleAndToolsMixin::setColorPalette(const JKQTPMathImageColorPalette &__value)
 {
     this->palette = __value;
 }
 
-JKQTPMathImageColorPalette JKQTPColorPaletteStyleAndToolsMixin::getPalette() const
+JKQTPMathImageColorPalette JKQTPColorPaletteStyleAndToolsMixin::getColorPalette() const
 {
     return this->palette;
 }

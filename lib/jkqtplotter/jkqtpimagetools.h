@@ -98,11 +98,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
 
 
         /*! \copydoc palette */
-        void setPalette(int pal);
+        void setColorPalette(int pal);
         /*! \copydoc palette */
-        void setPalette(const JKQTPMathImageColorPalette & __value);
+        void setColorPalette(const JKQTPMathImageColorPalette & __value);
         /*! \copydoc palette */
-        JKQTPMathImageColorPalette getPalette() const;
+        JKQTPMathImageColorPalette getColorPalette() const;
+
         /*! \copydoc rangeMinFailAction */
         void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value);
         /*! \copydoc rangeMinFailAction */
