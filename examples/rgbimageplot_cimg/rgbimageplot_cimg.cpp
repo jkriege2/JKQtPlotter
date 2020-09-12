@@ -3,7 +3,7 @@
  *
  * \ref JKQTPlotterImagePlotRGBCImg
  */
-
+#define cimg_display 0
 #include <QApplication>
 #include <cmath>
 #include "jkqtplotter/jkqtplotter.h"

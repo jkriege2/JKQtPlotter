@@ -23,7 +23,7 @@ conda config --add channels conda-forge --force
 # Useful for debugging any issues with conda
 conda info -a
 
-conda_pkgs="qt cmake opencv"
+conda_pkgs="qt cmake opencv doxygen cimg"
 
 conda create -q -p $our_install_dir ${conda_pkgs}
 
