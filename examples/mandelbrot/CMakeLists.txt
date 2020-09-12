@@ -5,6 +5,7 @@ set(EXENAME jkqtptest_${EXAMPLE_NAME})
 
 message( STATUS "..   Building Example ${EXAMPLE_NAME}" )
 
+find_package(Threads REQUIRED)
 
 # Set up source files
 set(SOURCES ${EXAMPLE_NAME}.cpp mandelbrotmainwindow.cpp)
@@ -19,7 +20,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
 elseif(JKQtPlotter_BUILD_SHARED_LIBS)
     target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
 endif()
-
+target_link_libraries(${EXENAME} Threads::Threads)
 
 
 # Installation
