@@ -40,6 +40,7 @@ set(SOURCES_GRAPHS
     graphs/jkqtpscatter.cpp
     graphs/jkqtprange.cpp
     graphs/jkqtpspecialline.cpp
+    graphs/jkqtpbarchartbase.cpp 
     graphs/jkqtpbarchart.cpp 
     graphs/jkqtpboxplot.cpp 
     graphs/jkqtpboxplotstylingmixins.cpp 
@@ -115,6 +116,7 @@ set(HEADERS_GRAPHS
     graphs/jkqtpscatter.h
     graphs/jkqtprange.h
     graphs/jkqtpspecialline.h
+    graphs/jkqtpbarchartbase.h
     graphs/jkqtpbarchart.h
     graphs/jkqtpevaluatedparametriccurve.h
 )

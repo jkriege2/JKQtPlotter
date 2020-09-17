@@ -10,16 +10,17 @@
 #include "jkqtplotter/graphs/jkqtpbarchart.h"
 
 #define Ndata 5
-int main(int argc, char* argv[])
-{
-    QApplication app(argc, argv);
 
+
+template <class TCHART>
+void doExample()
+{
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
-    JKQTPlotter plot;
-    plot.getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
-    plot.getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
-    plot.getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
-    JKQTPDatastore* ds=plot.getDatastore();
+    JKQTPlotter* plot=new JKQTPlotter();
+    plot->getPlotter()->setUseAntiAliasingForGraphs(true); // nicer (but slower) plotting
+    plot->getPlotter()->setUseAntiAliasingForSystem(true); // nicer (but slower) plotting
+    plot->getPlotter()->setUseAntiAliasingForText(true); // nicer (but slower) text rendering
+    JKQTPDatastore* ds=plot->getDatastore();
 
     // 2. now we create data for three simple barchart
     QString L[Ndata]={  "cat. A", "cat. C", "cat. B", "cat. D", "other"}; // unsorted category axis
@@ -41,24 +42,24 @@ int main(int argc, char* argv[])
     size_t columnY3=ds->addCopiedColumn(Y3, Ndata, "y3");
 
     // 4. create graphs in the plot, which plots the dataset X/Y1, X/Y2 and X/Y3:
-    JKQTPBarVerticalGraph* graph1=new JKQTPBarVerticalGraph(&plot);
-    graph1->setXColumn(columnX);
-    graph1->setYColumn(columnY1);
+    TCHART* graph1=new TCHART(plot);
+    graph1->setBarPositionColumn(columnX);
+    graph1->setBarHeightColumn(columnY1);
     graph1->setTitle(QObject::tr("dataset 1"));
-    JKQTPBarVerticalGraph* graph2=new JKQTPBarVerticalGraph(&plot);
-    graph2->setXColumn(columnX);
-    graph2->setYColumn(columnY2);
+    TCHART* graph2=new TCHART(plot);
+    graph2->setBarPositionColumn(columnX);
+    graph2->setBarHeightColumn(columnY2);
     graph2->setTitle(QObject::tr("dataset 2"));
-    JKQTPBarVerticalGraph* graph3=new JKQTPBarVerticalGraph(&plot);
-    graph3->setXColumn(columnX);
-    graph3->setYColumn(columnY3);
+    TCHART* graph3=new TCHART(plot);
+    graph3->setBarPositionColumn(columnX);
+    graph3->setBarHeightColumn(columnY3);
     graph3->setTitle(QObject::tr("dataset 3"));
 
 
     // 5. add the graphs to the plot, so it is actually displayed
-    plot.addGraph(graph1);
-    plot.addGraph(graph2);
-    plot.addGraph(graph3);
+    plot->addGraph(graph1);
+    plot->addGraph(graph2);
+    plot->addGraph(graph3);
 
     // 6. now we set the graphs, so they are plotted side-by-side
     //    This function searches all JKQTPBarHorizontalGraph in the current
@@ -66,29 +67,45 @@ int main(int argc, char* argv[])
     //    side-by-side groups
     graph1->autoscaleBarWidthAndShift(0.75, 1);
 
-    // 7. data is grouped into 5 numbere groups (1..5), but we also have string
-    //    labels for these groups (stored in L). In order to display these labels,
-    //    we have to tell the x-Axis to use these special labels:
-    plot.getXAxis()->addAxisTickLabels(X, L, Ndata);
-    //    also we can rotate the labels a bit (by 45 degree), so they fit better
-    plot.getXAxis()->setTickLabelAngle(45);
-    plot.getXAxis()->setTickLabelFontSize(12);
+    if (dynamic_cast<JKQTPBarVerticalGraph*>(graph1)!=nullptr) {
+        // 7. data is grouped into 5 numbere groups (1..5), but we also have string
+        //    labels for these groups (stored in L). In order to display these labels,
+        //    we have to tell the x-Axis to use these special labels:
+        plot->getXAxis()->addAxisTickLabels(X, L, Ndata);
+        //    also we can rotate the labels a bit (by 45 degree), so they fit better
+        plot->getXAxis()->setTickLabelAngle(45);
+        plot->getXAxis()->setTickLabelFontSize(12);
+    } else {
+        // 7. data is grouped into 5 numbere groups (1..5), but we also have string
+        //    labels for these groups (stored in L). In order to display these labels,
+        //    we have to tell the x-Axis to use these special labels:
+        plot->getYAxis()->addAxisTickLabels(X, L, Ndata);
+        plot->getYAxis()->setTickLabelFontSize(12);
+    }
 
     // 8. finally we move the plot key/legend to the outside, top-right
     //    and lay it out as a single row
     //    NOTE: plot is a descendent of QWidget, which uses an internal object of
     //          type JKQTBasePlotter, which does the actual plotting.
     //          So many properties of the plot are only available in this internal
-    //          object, which you can access by plot.getPlotter().
-    plot.getPlotter()->setKeyPosition(JKQTPKeyOutsideTopRight);
-    plot.getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
+    //          object, which you can access by plot->getPlotter().
+    plot->getPlotter()->setKeyPosition(JKQTPKeyOutsideTopRight);
+    plot->getPlotter()->setKeyLayout(JKQTPKeyLayoutOneRow);
 
     // 9 autoscale the plot so the graph is contained
-    plot.zoomToFit();
+    plot->zoomToFit();
 
     // show plotter and make it a decent size
-    plot.show();
-    plot.resize(600,400);
+    plot->show();
+    plot->resize(600,400);
+}
+
+int main(int argc, char* argv[])
+{
+    QApplication app(argc, argv);
+
+    doExample<JKQTPBarVerticalGraph>();
+    doExample<JKQTPBarHorizontalGraph>();
 
     return app.exec();
 }

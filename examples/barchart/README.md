@@ -89,8 +89,17 @@ int main(int argc, char* argv[])
     return app.exec();
 }
 ```
+
+Note: Here we use the functions `JKQTPBarVerticalGraph::setXColumn()` and  `JKQTPBarVerticalGraph::setYColumn()` to set the columns to use for the stack positions (X) and heights (Y). Instead you can also use the semantic version `JKQTPBarGraphBase::setBarPositionColumn()` and `JKQTPBarGraphBase::setBarHeightColumn()`.
+
 The result looks like this:
 
 ![barchart](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/barchart.png)
+
+
+
+In order to draw horizontal error bars, you have to use `JKQTPBarHorizontalGraph` instead of `JKQTPBarVerticalGraph`:
+
+![barchart](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/barchart_hor.png)
 
 
