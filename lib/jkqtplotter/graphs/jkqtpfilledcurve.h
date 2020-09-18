@@ -126,66 +126,64 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurv
 
 
 
-/*! \brief This implements filled curve plots where the area is filled between two data columns for each x-value
-    \ingroup jkqtplotter_filledgraphs
-
-    With setDrawlines(false):
-    \image html JKQTPFilledVerticalRangeGraph.png
-
-    With setDrawlines(true):
-    \image html JKQTPFilledVerticalRangeGraph_WithLines.png
-
-
-
-    \see \ref JKQTPlotterDateTimeAxes
+/** \brief This implements filled curve plots where the area is filled between two data columns for each x-value
+  * \ingroup jkqtplotter_filledgraphs
+  *
+  * With \c setDrawlines(false):
+  *
+  * \image html JKQTPfilledVerticalRangeGraph.png
+  *
+  * With \c setDrawlines(true):
+  *
+  * \image html JKQTPfilledVerticalRangeGraph_WithLines.png
+  *
+  * \see \ref JKQTPlotterDateTimeAxes
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
-        Q_OBJECT
-    public:
-        /** \brief class constructor */
-        JKQTPFilledVerticalRangeGraph(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
-        JKQTPFilledVerticalRangeGraph(JKQTPlotter* parent);
-        /** \brief get the maximum and minimum y-value of the graph
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    JKQTPFilledVerticalRangeGraph(JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPFilledVerticalRangeGraph(JKQTPlotter* parent);
+    /** \brief get the maximum and minimum y-value of the graph
          *
          * The result is given in the two parameters which are call-by-reference parameters!
          */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \copydoc JKQTPGraph::usesColumn() */
-        virtual bool usesColumn(int column) const override;
+    /** \copydoc JKQTPGraph::usesColumn() */
+    virtual bool usesColumn(int column) const override;
 
-        /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter) override;
-        /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
+    /** \brief plots the graph to the plotter object specified as parent */
+    virtual void draw(JKQTPEnhancedPainter& painter) override;
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc yColumn2 */ 
+    /*! \copydoc yColumn2 */
         void setYColumn2(int __value);
-        /*! \copydoc yColumn2 */ 
+    /*! \copydoc yColumn2 */
         int getYColumn2() const;
-        /*! \copydoc yColumn2 */ 
+    /*! \copydoc yColumn2 */
         void setYColumn2 (size_t __value);
 
-        /*! \copydoc drawLine */
-        void setDrawLine(bool __value);
-        /*! \copydoc drawLine */
-        bool getDrawLine() const;
+    /*! \copydoc drawLine */
+    void setDrawLine(bool __value);
+    /*! \copydoc drawLine */
+    bool getDrawLine() const;
 
 
-    protected:
+protected:
 
-        /** \brief the column that contains the second y-component of the range */
-        int yColumn2;
+    /** \brief the column that contains the second y-component of the range */
+    int yColumn2;
 
-        /** \brief indicates whether to draw a line or not */
-        bool drawLine;
+    /** \brief indicates whether to draw a line on the circumference of the described area (i.e. along the data points from \c xColumn and \c yColumn as well as \c xColumn and \c yColumn2 or not */
+    bool drawLine;
 
 };
-
-
 
 
 #endif // jkqtpgraphsfilledcurve_H
