@@ -173,45 +173,40 @@ bool JKQTPBarGraphBase::getValuesMinMax(double &mmin, double &mmax, double &smal
 
     if (getBarPositionColumn()<0 || getBarHeightColumn()<0) return false;
 
-    const size_t poscol=static_cast<size_t>(getBarPositionColumn());
     const size_t datacol=static_cast<size_t>(getBarHeightColumn());
 
     if (parent==nullptr) return false;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
-    int imin=0;
-    int imax=static_cast<int>(qMin(datastore->getRows(poscol), datastore->getRows(datacol)));
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0, imax=0;
+    if (getIndexRange(imin, imax)) {
 
-    for (int i=imin; i<imax; i++) {
-        double stack=0;
-        double yv=baseline;
-        const double boxstart=getParentStackedMax(i);
-        if (hasStackParent()) {
-            stack=boxstart;
-            yv=stack;
+
+        for (int i=imin; i<imax; i++) {
+            double stack=0;
+            double yv=baseline;
+            const double boxstart=getParentStackedMax(i);
+            if (hasStackParent()) {
+                stack=boxstart;
+                yv=stack;
+            }
+            if (JKQTPIsOKFloat(yv)) {
+                if (yv>mmax) mmax=yv;
+                if (yv<mmin) mmin=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+            }
+            yv=stack+datastore->get(datacol,static_cast<size_t>(i));
+            if (JKQTPIsOKFloat(yv)) {
+                if (yv>mmax) mmax=yv;
+                if (yv<mmin) mmin=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+            }
         }
-        if (JKQTPIsOKFloat(yv)) {
-            if (yv>mmax) mmax=yv;
-            if (yv<mmin) mmin=yv;
-            double xvsgz;
-            xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
-        }
-        yv=stack+datastore->get(datacol,static_cast<size_t>(i));
-        if (JKQTPIsOKFloat(yv)) {
-            if (yv>mmax) mmax=yv;
-            if (yv<mmin) mmin=yv;
-            double xvsgz;
-            xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
-        }
+        return true;
     }
-    return true;
+    return false;
 }
 
 bool JKQTPBarGraphBase::getPositionsMinMax(double &mmin, double &mmax, double &smallestGreaterZero)
@@ -224,50 +219,43 @@ bool JKQTPBarGraphBase::getPositionsMinMax(double &mmin, double &mmax, double &s
     if (getBarPositionColumn()<0 || getBarHeightColumn()<0) return false;
 
     const size_t poscol=static_cast<size_t>(getBarPositionColumn());
-    const size_t datacol=static_cast<size_t>(getBarHeightColumn());
 
     if (parent==nullptr) return false;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
-    int imin=0;
-    int imax=static_cast<int>(qMin(datastore->getRows(poscol), datastore->getRows(datacol)));
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0, imax=0;
+    if (getIndexRange(imin, imax)) {
+        for (int i=imin; i<imax; i++) {
+            double xv=datastore->get(poscol,static_cast<size_t>(i));
+            int sr=datastore->getNextLowerIndex(poscol, i);
+            int lr=datastore->getNextHigherIndex(poscol, i);
+            double delta, deltap, deltam;
 
-    for (int i=imin; i<imax; i++) {
-        double xv=datastore->get(poscol,static_cast<size_t>(i));
-        int sr=datastore->getNextLowerIndex(poscol, i);
-        int lr=datastore->getNextHigherIndex(poscol, i);
-        double delta, deltap, deltam;
+            if (sr<0 && lr<0) { // only one x-value
+                deltam=0.5;
+                deltap=0.5;
+            } else if (lr<0) { // the right-most x-value
+                deltap=deltam=fabs(xv-datastore->get(poscol,sr))/2.0;
+            } else if (sr<0) { // the left-most x-value
+                deltam=deltap=fabs(datastore->get(poscol,lr)-xv)/2.0;
+            } else {
+                deltam=fabs(xv-datastore->get(poscol,sr))/2.0;
+                deltap=fabs(datastore->get(poscol,lr)-xv)/2.0;
+            }
+            delta=deltap+deltam;
 
-        if (sr<0 && lr<0) { // only one x-value
-            deltam=0.5;
-            deltap=0.5;
-        } else if (lr<0) { // the right-most x-value
-            deltap=deltam=fabs(xv-datastore->get(poscol,sr))/2.0;
-        } else if (sr<0) { // the left-most x-value
-            deltam=deltap=fabs(datastore->get(poscol,lr)-xv)/2.0;
-        } else {
-            deltam=fabs(xv-datastore->get(poscol,sr))/2.0;
-            deltap=fabs(datastore->get(poscol,lr)-xv)/2.0;
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(delta) ) {
+
+                if (start || xv+shift*delta+width*delta/2.0>mmax) mmax=xv+shift*delta+width*delta/2.0;
+                if (start || xv+shift*delta-width*delta/2.0<mmin) mmin=xv+shift*delta-width*delta/2.0;
+                double xvsgz;
+                xvsgz=xv+shift*delta+width*delta/2.0; SmallestGreaterZeroCompare_xvsgz();
+                xvsgz=xv+shift*delta-width*delta/2.0; SmallestGreaterZeroCompare_xvsgz();
+                start=false;
+            }
         }
-        delta=deltap+deltam;
-
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(delta) ) {
-
-            if (start || xv+shift*delta+width*delta/2.0>mmax) mmax=xv+shift*delta+width*delta/2.0;
-            if (start || xv+shift*delta-width*delta/2.0<mmin) mmin=xv+shift*delta-width*delta/2.0;
-            double xvsgz;
-            xvsgz=xv+shift*delta+width*delta/2.0; SmallestGreaterZeroCompare_xvsgz();
-            xvsgz=xv+shift*delta-width*delta/2.0; SmallestGreaterZeroCompare_xvsgz();
-            start=false;
-        }
+        return !start;
     }
-    return !start;
+    return false;
 }
 

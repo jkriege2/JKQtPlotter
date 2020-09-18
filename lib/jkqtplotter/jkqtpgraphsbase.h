@@ -99,6 +99,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         bool isHighlighted() const;
 
         /** \brief returns the parent painter class */
+        inline const JKQTBasePlotter* getParent() const { return parent; }
+        /** \brief returns the parent painter class */
         inline JKQTBasePlotter* getParent() { return parent; }
         /** \brief sets the parent painter class */
         virtual void setParent(JKQTBasePlotter* parent);
@@ -620,7 +622,7 @@ protected:
      *
      * \see setDataSortOrder(), getDataSortOrder()
      * */
-    inline int getDataIndex(int i) {
+    inline int getDataIndex(int i) const {
         if (sortData==Unsorted) return i;
         return sortedIndices.value(i,i);
     }
@@ -688,7 +690,7 @@ protected:
      * \param[out] imax last usable row-index
      *  \return \c true on success and \c false if the information is not available
      */
-    virtual bool getIndexRange(int &imin, int &imax) const;
+    virtual bool getIndexRange(int &imin, int &imax) const override;
 };
 
 
@@ -745,7 +747,7 @@ protected:
      * \param[out] imax last usable row-index
      *  \return \c true on success and \c false if the information is not available
      */
-    virtual bool getIndexRange(int &imin, int &imax) const;
+    virtual bool getIndexRange(int &imin, int &imax) const override;
 };
 
 
@@ -831,7 +833,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
          * This function can beu used to get the correct datapoint after sorting the datapoints,
          * As sorting is done by sorting an index and not reordering the data in the columns themselves.
          * */
-        inline int getDataIndex(int i) {
+        inline int getDataIndex(int i) const {
             if (sortData==Unsorted) return i;
             return sortedIndices.value(i,i);
         }

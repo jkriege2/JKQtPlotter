@@ -921,7 +921,7 @@ void JKQTPGraphViolinplotStyleMixin::plotHorizontalViolinplot(JKQTBasePlotter *p
     }
 }
 
-void JKQTPGraphViolinplotStyleMixin::plotVerticalKeyMarker(JKQTBasePlotter *parent, JKQTPEnhancedPainter &painter, const QRectF &rect)
+void JKQTPGraphViolinplotStyleMixin::plotVerticalKeyMarker(JKQTBasePlotter *parent, JKQTPEnhancedPainter &painter, const QRectF &rect) const
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePenForRects(painter, parent);
@@ -967,7 +967,7 @@ void JKQTPGraphViolinplotStyleMixin::plotVerticalKeyMarker(JKQTBasePlotter *pare
 }
 
 
-void JKQTPGraphViolinplotStyleMixin::plotHorizontalKeyMarker(JKQTBasePlotter *parent, JKQTPEnhancedPainter &painter, const QRectF &rect)
+void JKQTPGraphViolinplotStyleMixin::plotHorizontalKeyMarker(JKQTBasePlotter *parent, JKQTPEnhancedPainter &painter, const QRectF &rect) const
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 

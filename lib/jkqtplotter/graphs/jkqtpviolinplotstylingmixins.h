@@ -377,10 +377,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphViolinplotStyleMixin: public JKQTPGraphLi
         void plotHorizontalViolinplot(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, double yp, double ypbottom, double yptop, const QVector<double>& violin_cat, const QVector<double>& violin_freq, double minp, double medianp, double maxp, double meanp=JKQTP_NAN) const;
 
         /** \brief draw a small, stylized, vertical symbol into \a rect that symbolizes a boxplot, e.g. in a plot legend */
-        void plotVerticalKeyMarker(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, const QRectF& rect);
+        void plotVerticalKeyMarker(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, const QRectF& rect) const;
 
         /** \brief draw a small, stylized, horizontal symbol into \a rect that symbolizes a boxplot, e.g. in a plot legend */
-        void plotHorizontalKeyMarker(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, const QRectF& rect);
+        void plotHorizontalKeyMarker(JKQTBasePlotter* parent, JKQTPEnhancedPainter &painter, const QRectF& rect) const;
     private:
         /** \brief which symbol to use for the datapoints */
         JKQTPGraphSymbols m_meanSymbolType;

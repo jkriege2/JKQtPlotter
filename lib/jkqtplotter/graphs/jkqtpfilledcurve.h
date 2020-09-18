@@ -163,11 +163,11 @@ public:
     virtual QColor getKeyLabelColor() const override;
 
     /*! \copydoc yColumn2 */
-        void setYColumn2(int __value);
+    void setYColumn2(int __value);
     /*! \copydoc yColumn2 */
-        int getYColumn2() const;
+    int getYColumn2() const;
     /*! \copydoc yColumn2 */
-        void setYColumn2 (size_t __value);
+    void setYColumn2 (size_t __value);
 
     /*! \copydoc drawLine */
     void setDrawLine(bool __value);

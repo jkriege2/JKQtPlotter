@@ -565,6 +565,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
     protected:
         /** \brief indicates whether one of the parameters has changed sinse the last recalculation of tickSpacing ... */
         bool paramsChanged;
+        /** \brief can be used to switch off calcPlotScaling() temporarily, while modifying some properties
+         *
+         *  use setDoUpdateScaling() to set this property
+         *
+         *  \see setDoUpdateScaling() and getDoUpdateScaling()
+         */
         bool doUpdateScaling;
 
         /** \brief simply calls the redrawPlot method of the parent plotter class */
@@ -577,14 +583,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
          */
         QVector<QPair<double, QString> > tickLabels;
         /** \brief retun parents JKQTMathText* object */
-        virtual JKQTMathText* getParentMathText();
+        JKQTMathText* getParentMathText();
+        /** \brief retun parents JKQTMathText* object */
+        const JKQTMathText* getParentMathText() const;
 
 
         /** \brief convert a float to a tick label string */
-        QString floattolabel(double data);
+        QString floattolabel(double data) const;
 
         /** \brief convert a float to a tick label string with a given precision */
-        QString floattolabel(double data, int past_comma);
+        QString floattolabel(double data, int past_comma) const;
         /** \brief parent plotter class */
         JKQTBasePlotter* parent;
         /** \brief current view: minimum of time axis */

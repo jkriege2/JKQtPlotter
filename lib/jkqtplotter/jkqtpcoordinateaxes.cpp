@@ -81,6 +81,10 @@ JKQTMathText* JKQTPCoordinateAxis::getParentMathText() {
     return parent->getMathText();
 }
 
+const JKQTMathText* JKQTPCoordinateAxis::getParentMathText() const {
+    return parent->getMathText();
+}
+
 void JKQTPCoordinateAxis::clearAxisTickLabels() {
     tickLabels.clear();
     redrawPlot();
@@ -357,7 +361,7 @@ double JKQTPCoordinateAxis::calcLogTickSpacing() {
 }
 
 
-QString JKQTPCoordinateAxis::floattolabel(double data) {
+QString JKQTPCoordinateAxis::floattolabel(double data) const {
     int past_comma=axisStyle.labelDigits;
     const bool remove_trail0=true;
     QLocale loc=QLocale::system();
@@ -414,7 +418,7 @@ QString JKQTPCoordinateAxis::floattolabel(double data) {
     return QString();
 }
 
-QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) {
+QString JKQTPCoordinateAxis::floattolabel(double data, int past_comma) const {
     bool remove_trail0=true;
     QLocale loc=QLocale::system();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);
