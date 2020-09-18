@@ -27,6 +27,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>improved: constructors and access functions for several geometric objects (e.g. more constructors, additional functions to retrieve parameters in diferent forms, iterators for polygons, ...)</li>
   <li>improved/breaking change: reworked class hierarchy of parsed function plots and declared several setters as slots.</li>
   <li>improved/breaking change: reworked class hierarchy of bar charts.</li>
+  <li>improved/breaking change: reworked graph Base-Classes (promoted several setters to slots, added Q_PROPERTY- and Q_ENUM-declarations...)</li>
   <li>bugfixed/improved: aspect ratio handling in JKQTPlotter.</li>
   <li>new: added geometric plot objects JKQTPGeoArrow to draw arrows (aka lines with added line-end decorators, also extended JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines to draw line-end decorator (aka arrows)</li>
   <li>new: all geometric objects can either be drawn as graphic element (i.e. lines are straight line, even on non-linear axes), or as mathematical curve (i.e. on non-linear axes, lines become the appropriate curve representing the linear function, connecting the given start/end-points). The only exceptions are ellipses (and the derived arcs,pies,chords), which are always drawn as mathematical curves</li>
