@@ -515,125 +515,238 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
  *  ... and overrides/implements the functions:
  *    - getXMinMax()
  *    - getYMinMax()
- +    - usesColumn()
+ *    - usesColumn()
  *  .
  *
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPXYGraph: public JKQTPGraph {
-        Q_OBJECT
-    public:
-        /** \brief specifies how to sort the data in a JKQTPXYGraph before drawing
-         *
-         * \image html jkqtplotter_unsorted.png "Unsorted Data"
-         *
-         * \image html jkqtplotter_sortedx.png "Data sorted along x-axis (DataSortOrder::SortedX)"
-         */
-        enum DataSortOrder {
-            Unsorted=0, /*!< \brief the data for a JKQTPXYGraph is not sorted before drawing */
-            SortedX=1, /*!< \brief the data for a JKQTPXYGraph is sorted so the x-values appear in ascending before drawing */
-            SortedY=2 /*!< \brief the data for a JKQTPXYGraph is sorted so the y-values appear in ascending before drawing */
-        };
-        Q_ENUM(DataSortOrder)
+    Q_OBJECT
+public:
+    /** \brief specifies how to sort the data in a JKQTPXYGraph before drawing
+     *
+     * \image html jkqtplotter_unsorted.png "Unsorted Data"
+     *
+     * \image html jkqtplotter_sortedx.png "Data sorted along x-axis (DataSortOrder::SortedX)"
+     */
+    enum DataSortOrder {
+        Unsorted=0, /*!< \brief the data for a JKQTPXYGraph is not sorted before drawing */
+        SortedX=1, /*!< \brief the data for a JKQTPXYGraph is sorted so the x-values appear in ascending before drawing */
+        SortedY=2 /*!< \brief the data for a JKQTPXYGraph is sorted so the y-values appear in ascending before drawing */
+    };
+    Q_ENUM(DataSortOrder)
 
 
-        /** \brief class constructor */
-        JKQTPXYGraph(JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPXYGraph(JKQTBasePlotter* parent=nullptr);
 
-        /** \brief get the maximum and minimum x-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
-        virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
-        virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+    /** \brief get the maximum and minimum x-value of the graph
+     *
+     * The result is given in the two parameters which are call-by-reference parameters!
+     */
+    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+    /** \brief get the maximum and minimum y-value of the graph
+     *
+     * The result is given in the two parameters which are call-by-reference parameters!
+     */
+    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \copydoc JKQTPGraph::usesColumn() */
-        virtual bool usesColumn(int column) const override;
+    /** \copydoc JKQTPGraph::usesColumn() */
+    virtual bool usesColumn(int column) const override;
 
-        /*! \copydoc xColumn */ 
-        int getXColumn() const;
-        /*! \copydoc yColumn */ 
-        int getYColumn() const;
-        /*! \copydoc sortData */ 
-        DataSortOrder getDataSortOrder() const;
+    /*! \copydoc xColumn */
+    int getXColumn() const;
+    /*! \copydoc yColumn */
+    int getYColumn() const;
+    /*! \copydoc sortData */
+    DataSortOrder getDataSortOrder() const;
 
-        Q_PROPERTY(DataSortOrder sortData READ getDataSortOrder WRITE setDataSortOrder)
-        Q_PROPERTY(int xColumn READ getXColumn WRITE setXColumn)
-        Q_PROPERTY(int yColumn READ getYColumn WRITE setYColumn)
+    Q_PROPERTY(DataSortOrder sortData READ getDataSortOrder WRITE setDataSortOrder)
+    Q_PROPERTY(int xColumn READ getXColumn WRITE setXColumn)
+    Q_PROPERTY(int yColumn READ getYColumn WRITE setYColumn)
 
 
-        /** \brief Implmentation of JKQTPPlotElement::hitTest(), which searches through all graph points defined by xColumn and yColumn
-         *         and returns a general x/y-label, also taking into account possibly known errors to the graphs (if it is derived
-         *         from JKQTPXGraphErrorData and/or JKQTPYGraphErrorData
-         *
-         * \note This function first checks whether JKQTPPlotElement::hitTest() returns any result, so you can use the basic implementation
-         *       in JKQTPPlotElement to override the behaviour here, by simply calling addHitTestData() during your draw() implementation
-         *
-         * \see See JKQTPPlotElement::hitTest() for details on the function definition!
-         */
-        virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
-    public slots:
-        /** \brief sets xColumn and yColumn at the same time */
-        void setXYColumns(size_t xCol, size_t yCol);
-        /** \brief sets xColumn and yColumn at the same time */
-        void setXYColumns(int xCol, int yCol);
-        /** \brief sets xColumn and yColumn at the same time */
-        void setXYColumns(std::pair<int,int> xyColPair);
-        /** \brief sets xColumn and yColumn at the same time */
-        void setXYColumns(std::pair<size_t,size_t> xyColPair);
-        /** \brief sets xColumn and yColumn at the same time */
-        void setXYColumns(QPair<int,int> xyColPair);
-        /** \brief sets xColumn and yColumn at the same time */
-        void setXYColumns(QPair<size_t,size_t> xyColPair);
-        /*! \copydoc sortData */
-        void setDataSortOrder(int __value);
-        /*! \copydoc sortData */
-        void setDataSortOrder(DataSortOrder  __value);
-        /*! \copydoc xColumn */
-        void setXColumn(int __value);
-        /*! \copydoc xColumn */
-        void setXColumn (size_t __value);
-        /*! \copydoc yColumn */
-        void setYColumn(int __value);
-        /*! \copydoc yColumn */
-        void setYColumn (size_t __value);
-    protected:
+    /** \brief Implmentation of JKQTPPlotElement::hitTest(), which searches through all graph points defined by xColumn and yColumn
+     *         and returns a general x/y-label, also taking into account possibly known errors to the graphs (if it is derived
+     *         from JKQTPXGraphErrorData and/or JKQTPYGraphErrorData
+     *
+     * \note This function first checks whether JKQTPPlotElement::hitTest() returns any result, so you can use the basic implementation
+     *       in JKQTPPlotElement to override the behaviour here, by simply calling addHitTestData() during your draw() implementation
+     *
+     * \see See JKQTPPlotElement::hitTest() for details on the function definition!
+     */
+    virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
+public slots:
+    /** \brief sets xColumn and yColumn at the same time */
+    void setXYColumns(size_t xCol, size_t yCol);
+    /** \brief sets xColumn and yColumn at the same time */
+    void setXYColumns(int xCol, int yCol);
+    /** \brief sets xColumn and yColumn at the same time */
+    void setXYColumns(std::pair<int,int> xyColPair);
+    /** \brief sets xColumn and yColumn at the same time */
+    void setXYColumns(std::pair<size_t,size_t> xyColPair);
+    /** \brief sets xColumn and yColumn at the same time */
+    void setXYColumns(QPair<int,int> xyColPair);
+    /** \brief sets xColumn and yColumn at the same time */
+    void setXYColumns(QPair<size_t,size_t> xyColPair);
+    /*! \copydoc sortData */
+    void setDataSortOrder(int __value);
+    /*! \copydoc sortData */
+    void setDataSortOrder(DataSortOrder  __value);
+    /*! \copydoc xColumn */
+    void setXColumn(int __value);
+    /*! \copydoc xColumn */
+    void setXColumn (size_t __value);
+    /*! \copydoc yColumn */
+    void setYColumn(int __value);
+    /*! \copydoc yColumn */
+    void setYColumn (size_t __value);
+protected:
 
-        /** \brief the column that contains the x-component of the datapoints */
-        int xColumn;
-        /** \brief the column that contains the y-component of the datapoints */
-        int yColumn;
+    /** \brief the column that contains the x-component of the datapoints */
+    int xColumn;
+    /** \brief the column that contains the y-component of the datapoints */
+    int yColumn;
 
-        /** \brief if \c !=Unsorted, the data is sorted before plotting */
-        DataSortOrder sortData;
-        /** \brief this array contains the order of indices, in which to access the data in the data columns */
-        QVector<int> sortedIndices;
-        /** \brief sorts data according to the specified criterion in \a sortData ... The result is stored as a index-map in sorted Indices */
-        virtual void intSortData();
-        /** \brief returns the index of the i-th datapoint (where i is an index into the SORTED datapoints)
-         *
-         * This function can beu used to get the correct datapoint after sorting the datapoints,
-         * As sorting is done by sorting an index and not reordering the data in the columns themselves.
-         *
-         * \see setDataSortOrder(), getDataSortOrder()
-         * */
-        inline int getDataIndex(int i) {
-            if (sortData==Unsorted) return i;
-            return sortedIndices.value(i,i);
-        }
+    /** \brief if \c !=Unsorted, the data is sorted before plotting */
+    DataSortOrder sortData;
+    /** \brief this array contains the order of indices, in which to access the data in the data columns */
+    QVector<int> sortedIndices;
+    /** \brief sorts data according to the specified criterion in \a sortData ... The result is stored as a index-map in sorted Indices */
+    virtual void intSortData();
+    /** \brief returns the index of the i-th datapoint (where i is an index into the SORTED datapoints)
+     *
+     * This function can beu used to get the correct datapoint after sorting the datapoints,
+     * As sorting is done by sorting an index and not reordering the data in the columns themselves.
+     *
+     * \see setDataSortOrder(), getDataSortOrder()
+     * */
+    inline int getDataIndex(int i) {
+        if (sortData==Unsorted) return i;
+        return sortedIndices.value(i,i);
+    }
 
-        /** \brief determines the range of row indexes available in the data columns of this graph
-         *
-         * \param[out] imin first usable row-index
-         * \param[out] imax last usable row-index
-         *  \return \c true on success and \c false if the information is not available
-         */
-        virtual bool getIndexRange(int &imin, int &imax) const;
+    /** \brief determines the range of row indexes available in the data columns of this graph
+     *
+     * \param[out] imin first usable row-index
+     * \param[out] imax last usable row-index
+     *  \return \c true on success and \c false if the information is not available
+     */
+    virtual bool getIndexRange(int &imin, int &imax) const;
 };
 
+
+
+/** \brief This virtual JKQTPGraph descendent extends JKQTPXYGraph to two columns for y-values (e.g. for filled range plots in JKQTPFilledVerticalRangeGraph).
+ *  \ingroup jkqtplotter_basegraphs
+ *
+ *  \see JKQTPXXYGraph and e.g. JKQTPFilledVerticalRangeGraph
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYYGraph: public JKQTPXYGraph {
+    Q_OBJECT
+public:
+
+    /** \brief class constructor */
+    JKQTPXYYGraph(JKQTBasePlotter* parent=nullptr);
+
+
+    /** \brief get the maximum and minimum y-value of the graph
+     *
+     * The result is given in the two parameters which are call-by-reference parameters!
+     */
+    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
+
+    /** \copydoc JKQTPGraph::usesColumn() */
+    virtual bool usesColumn(int column) const override;
+
+    /*! \copydoc yColumn2 */
+    int getYColumn2() const;
+
+    /** \copydoc JKQTPXYGraph::hitTest() */
+    virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
+
+    Q_PROPERTY(int yColumn2 READ getYColumn2 WRITE setYColumn2)
+public slots:
+    /** \brief sets xColumn, yColumn and yColumn2 at the same time */
+    void setXYYColumns(size_t xCol, size_t yCol, size_t y2Col);
+    /** \brief sets xColumn, yColumn and yColumn2 at the same time */
+    void setXYYColumns(int xCol, int yCol, int y2Col);
+
+
+    /*! \copydoc yColumn2 */
+    void setYColumn2(int __value);
+    /*! \copydoc yColumn2 */
+    void setYColumn2(size_t __value);
+protected:
+
+    /** \brief the column that contains the second y-component of the datapoints */
+    int yColumn2;
+
+
+    /** \brief determines the range of row indexes available in the data columns of this graph
+     *
+     * \param[out] imin first usable row-index
+     * \param[out] imax last usable row-index
+     *  \return \c true on success and \c false if the information is not available
+     */
+    virtual bool getIndexRange(int &imin, int &imax) const;
+};
+
+
+
+/** \brief This virtual JKQTPGraph descendent extends JKQTPXYGraph to two columns for x-values (e.g. for filled range plots).
+ *  \ingroup jkqtplotter_basegraphs
+ *
+ *  \see JKQTPXYYGraph and e.g. JKQTPFilledVerticalRangeGraph
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXXYGraph: public JKQTPXYGraph {
+    Q_OBJECT
+public:
+
+    /** \brief class constructor */
+    JKQTPXXYGraph(JKQTBasePlotter* parent=nullptr);
+
+
+    /** \brief get the maximum and minimum x-value of the graph
+     *
+     * The result is given in the two parameters which are call-by-reference parameters!
+     */
+    virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
+
+    /** \copydoc JKQTPGraph::usesColumn() */
+    virtual bool usesColumn(int column) const override;
+
+    /*! \copydoc xColumn2 */
+    int getXColumn2() const;
+
+    /** \copydoc JKQTPXYGraph::hitTest() */
+    virtual double hitTest(const QPointF &posSystem, QPointF* closestSpotSystem=nullptr, QString* label=nullptr, HitTestMode mode=HitTestXY) const override;
+
+    Q_PROPERTY(int xColumn2 READ getXColumn2 WRITE setXColumn2)
+public slots:
+    /** \brief sets xColumn, yColumn and xColumn2 at the same time */
+    void setXXYColumns(size_t xCol, size_t x2Col, size_t yCol);
+    /** \brief sets xColumn, yColumn and xColumn2 at the same time */
+    void setXXYColumns(int xCol, int x2Col, int yCol);
+
+
+    /*! \copydoc yColumn2 */
+    void setXColumn2(int __value);
+    /*! \copydoc yColumn2 */
+    void setXColumn2(size_t __value);
+protected:
+
+    /** \brief the column that contains the second y-component of the datapoints */
+    int xColumn2;
+
+
+    /** \brief determines the range of row indexes available in the data columns of this graph
+     *
+     * \param[out] imin first usable row-index
+     * \param[out] imax last usable row-index
+     *  \return \c true on success and \c false if the information is not available
+     */
+    virtual bool getIndexRange(int &imin, int &imax) const;
+};
 
 
 

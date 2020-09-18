@@ -120,7 +120,7 @@ bool JKQTPGraph::getDataMinMax(int column, double &minx, double &maxx, double &s
 
     if (parent==nullptr) return false;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
+    const JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=static_cast<int>(datastore->getRows(column));
 
@@ -310,7 +310,7 @@ bool JKQTPXYGraph::getXMinMax(double& minx, double& maxx, double& smallestGreate
 
     if (parent==nullptr)  return false;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
+    const JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=0;
     getIndexRange(imin, imax);
@@ -336,7 +336,7 @@ bool JKQTPXYGraph::getYMinMax(double& miny, double& maxy, double& smallestGreate
 
     if (parent==nullptr) return false;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
+    const JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=0;
     getIndexRange(imin, imax);
@@ -384,7 +384,9 @@ int JKQTPXYGraph::getYColumn() const
     return this->yColumn;
 }
 
-void JKQTPXYGraph::setYColumn(size_t __value) { this->yColumn = static_cast<int>(__value); }
+void JKQTPXYGraph::setYColumn(size_t __value) {
+    this->yColumn = static_cast<int>(__value);
+}
 
 void JKQTPXYGraph::setDataSortOrder(JKQTPXYGraph::DataSortOrder __value)
 {
@@ -445,7 +447,7 @@ double JKQTPXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSyste
     const double baseclassResult=JKQTPPlotElement::hitTest(posSystem, closestSpotSystem, label, mode);
     if (JKQTPIsOKFloat(baseclassResult)) return baseclassResult;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
+    const JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=0;
     if (!getIndexRange(imin, imax)) return JKQTP_NAN;
@@ -548,7 +550,7 @@ void JKQTPSingleColumnGraph::intSortData()
 
     if (parent==nullptr)  return ;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
+    const JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=0;
     getIndexRange(imin, imax);
@@ -573,18 +575,20 @@ bool JKQTPSingleColumnGraph::getIndexRange(int &imin, int &imax) const
 {
     if (parent==nullptr)  return false;
 
-    JKQTPDatastore* datastore=parent->getDatastore();
-    imin=0;
-    imax=static_cast<int>(datastore->getRows(static_cast<size_t>(dataColumn)));
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    if (dataColumn>=0) {
+        imin=0;
+        imax=static_cast<int>(datastore->getRows(static_cast<size_t>(dataColumn)));
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
+        }
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
+        return true;
     }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    return imin>=0 && imax>=0;
+    return false;
 }
 
 
@@ -642,19 +646,22 @@ void JKQTPXYGraph::intSortData()
 bool JKQTPXYGraph::getIndexRange(int& imin, int& imax) const
 {
     if (parent==nullptr)  return false;
-
-    JKQTPDatastore* datastore=parent->getDatastore();
-    imin=0;
-    imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
+    if (xColumn>=0 && yColumn>=0) {
+        JKQTPDatastore* datastore=parent->getDatastore();
+        imin=0;
+        imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
+        // ensure correct order, i.e. imin<=imax
+        if (imax<imin) {
+            int h=imin;
+            imin=imax;
+            imax=h;
+        }
+        // ranges are always >=0
+        if (imin<0) imin=0;
+        if (imax<0) imax=0;
+        return true;
     }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    return imin>=0 && imax>=0;
+    return false;
 }
 
 
@@ -678,3 +685,286 @@ JKQTPPlotObject::DrawMode JKQTPPlotObject::getDrawMode() const
 
 JKQTPPlotObject::~JKQTPPlotObject()
 = default;
+
+
+
+
+
+
+
+
+JKQTPXYYGraph::JKQTPXYYGraph(JKQTBasePlotter *parent):
+    JKQTPXYGraph(parent), yColumn2(-1)
+{
+
+}
+
+bool JKQTPXYYGraph::getYMinMax(double &miny, double &maxy, double &smallestGreaterZero)
+{
+    bool start=true;
+    miny=0;
+    maxy=0;
+    smallestGreaterZero=0;
+
+    if (parent==nullptr) return false;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0;
+    int imax=0;
+    getIndexRange(imin, imax);
+
+
+    for (int i=imin; i<imax; i++) {
+        const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+        if (JKQTPIsOKFloat(yv)) {
+            if (start || yv>maxy) maxy=yv;
+            if (start || yv<miny) miny=yv;
+            double xvsgz;
+            xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+            start=false;
+        }
+        const double yv2=datastore->get(static_cast<size_t>(yColumn2),static_cast<size_t>(i));
+        if (JKQTPIsOKFloat(yv2)) {
+            if (start || yv2>maxy) maxy=yv2;
+            if (start || yv2<miny) miny=yv2;
+            double xvsgz;
+            xvsgz=yv2; SmallestGreaterZeroCompare_xvsgz();
+            start=false;
+        }
+    }
+    return !start;
+}
+
+bool JKQTPXYYGraph::usesColumn(int column) const
+{
+    return (column==yColumn2) || JKQTPXYYGraph::usesColumn(column);
+}
+
+int JKQTPXYYGraph::getYColumn2() const
+{
+    return yColumn2;
+}
+
+double JKQTPXYYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSystem, QString *label, JKQTPPlotElement::HitTestMode mode) const
+{
+    if (parent==nullptr) return JKQTP_NAN;
+
+    // check base-class implementation and use it, if it returns a vaid value
+    const double baseclassResult=JKQTPXYGraph::hitTest(posSystem, closestSpotSystem, label, mode);
+    if (JKQTPIsOKFloat(baseclassResult)) return baseclassResult;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0;
+    int imax=0;
+    if (!getIndexRange(imin, imax)) return JKQTP_NAN;
+
+
+    int closest=-1;
+    double closedist=JKQTP_NAN;
+    double closedistsec=JKQTP_NAN;
+    QPointF closestPos;
+    QPointF posF=transform(posSystem);
+    for (int i=imin; i<imax; i++) {
+        const QPointF x(datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i)), datastore->get(static_cast<size_t>(yColumn2),static_cast<size_t>(i)));
+        const QPointF xpix = transform(x);
+        if (JKQTPIsOKFloat(xpix.x())&&JKQTPIsOKFloat(xpix.y())) {
+            double d=0, dsecondary=0;
+            switch (mode) {
+            case HitTestXY: d=sqrt(jkqtp_sqr(xpix.x()-posF.x())+jkqtp_sqr(xpix.y()-posF.y())); dsecondary=0; break;
+            case HitTestXOnly: d=fabs(xpix.x()-posF.x()); dsecondary=fabs(xpix.y()-posF.y()); break;
+            case HitTestYOnly: d=fabs(xpix.y()-posF.y()); dsecondary=fabs(xpix.x()-posF.x()); break;
+            }
+            if (closest<0 || d<closedist || (jkqtp_approximatelyEqual(d,closedist) && dsecondary<closedistsec)) {
+                closest=i;
+                closedist=d;
+                closedistsec=dsecondary;
+                closestPos=x;
+                //qDebug()<<"hitTest("<<posSystem<<"[="<<posF<<"pix]...): found closest="<<closest<<", closedist="<<closedist<<", closedistsec="<<closedistsec<<", closestPos="<<closestPos;
+            }
+        }
+    }
+    if (closest>=0) {
+        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest);
+        if (closestSpotSystem) *closestSpotSystem=closestPos;
+        return closedist;
+    } else {
+        return JKQTP_NAN;
+    }
+
+}
+
+void JKQTPXYYGraph::setXYYColumns(size_t xCol, size_t yCol, size_t y2Col)
+{
+    setXYColumns(xCol, yCol);
+    yColumn2=static_cast<int>(y2Col);
+}
+
+void JKQTPXYYGraph::setXYYColumns(int xCol, int yCol, int y2Col)
+{
+    setXYColumns(xCol, yCol);
+    yColumn2=y2Col;
+}
+
+void JKQTPXYYGraph::setYColumn2(int __value)
+{
+    yColumn2=__value;
+}
+
+void JKQTPXYYGraph::setYColumn2(size_t __value)
+{
+    yColumn2=static_cast<int>(__value);
+}
+
+bool JKQTPXYYGraph::getIndexRange(int &imin, int &imax) const
+{
+    bool ok=JKQTPXYGraph::getIndexRange(imin, imax);
+    if (ok) {
+        if (parent==nullptr)  return false;
+        if (yColumn2<0) return false;
+        const JKQTPDatastore* datastore=parent->getDatastore();
+        const auto rows=datastore->getRows(static_cast<size_t>(yColumn2));
+        imax=qMin<int>(imax, rows);
+    }
+    return ok;
+}
+
+
+
+
+
+
+
+JKQTPXXYGraph::JKQTPXXYGraph(JKQTBasePlotter *parent):
+    JKQTPXYGraph(parent), xColumn2(-1)
+{
+
+}
+
+bool JKQTPXXYGraph::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)
+{
+    bool start=true;
+    minx=0;
+    maxx=0;
+    smallestGreaterZero=0;
+
+    if (parent==nullptr) return false;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0;
+    int imax=0;
+    getIndexRange(imin, imax);
+
+
+    for (int i=imin; i<imax; i++) {
+        const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+        if (JKQTPIsOKFloat(xv)) {
+            if (start || xv>maxx) maxx=xv;
+            if (start || xv<minx) minx=xv;
+            double xvsgz;
+            xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+            start=false;
+        }
+        const double xv2=datastore->get(static_cast<size_t>(xColumn2),static_cast<size_t>(i));
+        if (JKQTPIsOKFloat(xv2)) {
+            if (start || xv2>maxx) maxx=xv2;
+            if (start || xv2<minx) minx=xv2;
+            double xvsgz;
+            xvsgz=xv2; SmallestGreaterZeroCompare_xvsgz();
+            start=false;
+        }
+    }
+    return !start;
+}
+
+bool JKQTPXXYGraph::usesColumn(int column) const
+{
+    return (column==xColumn2) || JKQTPXXYGraph::usesColumn(column);
+}
+
+int JKQTPXXYGraph::getXColumn2() const
+{
+    return xColumn2;
+}
+
+double JKQTPXXYGraph::hitTest(const QPointF &posSystem, QPointF *closestSpotSystem, QString *label, JKQTPPlotElement::HitTestMode mode) const
+{
+    if (parent==nullptr) return JKQTP_NAN;
+
+    // check base-class implementation and use it, if it returns a vaid value
+    const double baseclassResult=JKQTPXYGraph::hitTest(posSystem, closestSpotSystem, label, mode);
+    if (JKQTPIsOKFloat(baseclassResult)) return baseclassResult;
+
+    const JKQTPDatastore* datastore=parent->getDatastore();
+    int imin=0;
+    int imax=0;
+    if (!getIndexRange(imin, imax)) return JKQTP_NAN;
+
+
+    int closest=-1;
+    double closedist=JKQTP_NAN;
+    double closedistsec=JKQTP_NAN;
+    QPointF closestPos;
+    QPointF posF=transform(posSystem);
+    for (int i=imin; i<imax; i++) {
+        const QPointF x(datastore->get(static_cast<size_t>(xColumn2),static_cast<size_t>(i)), datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i)));
+        const QPointF xpix = transform(x);
+        if (JKQTPIsOKFloat(xpix.x())&&JKQTPIsOKFloat(xpix.y())) {
+            double d=0, dsecondary=0;
+            switch (mode) {
+            case HitTestXY: d=sqrt(jkqtp_sqr(xpix.x()-posF.x())+jkqtp_sqr(xpix.y()-posF.y())); dsecondary=0; break;
+            case HitTestXOnly: d=fabs(xpix.x()-posF.x()); dsecondary=fabs(xpix.y()-posF.y()); break;
+            case HitTestYOnly: d=fabs(xpix.y()-posF.y()); dsecondary=fabs(xpix.x()-posF.x()); break;
+            }
+            if (closest<0 || d<closedist || (jkqtp_approximatelyEqual(d,closedist) && dsecondary<closedistsec)) {
+                closest=i;
+                closedist=d;
+                closedistsec=dsecondary;
+                closestPos=x;
+                //qDebug()<<"hitTest("<<posSystem<<"[="<<posF<<"pix]...): found closest="<<closest<<", closedist="<<closedist<<", closedistsec="<<closedistsec<<", closestPos="<<closestPos;
+            }
+        }
+    }
+    if (closest>=0) {
+        if (label) *label=formatHitTestDefaultLabel(closestPos.x(), closestPos.y(), closest);
+        if (closestSpotSystem) *closestSpotSystem=closestPos;
+        return closedist;
+    } else {
+        return JKQTP_NAN;
+    }
+
+}
+
+void JKQTPXXYGraph::setXXYColumns(size_t xCol, size_t x2Col, size_t yCol)
+{
+    setXYColumns(xCol, yCol);
+    xColumn2=static_cast<int>(x2Col);
+}
+
+void JKQTPXXYGraph::setXXYColumns(int xCol, int x2Col, int yCol)
+{
+    setXYColumns(xCol, yCol);
+    xColumn2=x2Col;
+}
+
+void JKQTPXXYGraph::setXColumn2(int __value)
+{
+    xColumn2=__value;
+}
+
+void JKQTPXXYGraph::setXColumn2(size_t __value)
+{
+    xColumn2=static_cast<int>(__value);
+}
+
+bool JKQTPXXYGraph::getIndexRange(int &imin, int &imax) const
+{
+    bool ok=JKQTPXYGraph::getIndexRange(imin, imax);
+    if (ok) {
+        if (parent==nullptr)  return false;
+        if (xColumn2<0) return false;
+        const JKQTPDatastore* datastore=parent->getDatastore();
+        const auto rows=datastore->getRows(static_cast<size_t>(xColumn2));
+        imax=qMin<int>(imax, rows);
+    }
+    return ok;
+}
