@@ -93,55 +93,39 @@ void JKQTPImpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
         QPen p=getLinePen(painter, parent);
         p.setCapStyle(Qt::FlatCap);
 
-        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
+        int imax=0;
         int imin=0;
-        if (imax<imin) {
-            int h=imin;
-            imin=imax;
-            imax=h;
-        }
-        if (imin<0) imin=0;
-        if (imax<0) imax=0;
+        if (getIndexRange(imin, imax)) {
 
-        //double xold=-1;
-        //double yold=-1;
-        double x0=transformX(getBaseline());
-        if (parent->getXAxis()->isLogAxis()) {
-            if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
-            else x0=transformX(parent->getXAxis()->getMin());
-        }
-    //    double y0=transformY(getBaseline());
-    //    if (parent->getYAxis()->isLogAxis()) {
-    //        y0=transformY(parent->getYAxis()->getMin());
-    //        if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
-    //        else y0=transformY(parent->getYAxis()->getMin());
-    //    }
-        //bool first=false;
-        QVector<QLineF> lines;
-        QVector<QPointF> points;
-        intSortData();
-        for (int iii=imin; iii<imax; iii++) {
-            int i=qBound(imin, getDataIndex(iii), imax);
-            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                double x=transformX(xv);
-                double y=transformY(yv);
-
-
-                lines.append(QLineF(x0, y, x, y));
-                points.append(QPointF(x,y));
-    //            xold=x;
-    //            yold=y;
-                //first=true;
+            double x0=transformX(getBaseline());
+            if (parent->getXAxis()->isLogAxis()) {
+                if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
+                else x0=transformX(parent->getXAxis()->getMin());
             }
-        }
-        painter.setPen(p);
-        if (lines.size()>0) painter.drawLines(lines);
-        if (drawSymbols && points.size()>0) {
-            painter.save(); auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
-            for (auto& p: points) {
-                plotStyledSymbol(parent, painter, p.x(), p.y());
+
+            QVector<QLineF> lines;
+            QVector<QPointF> points;
+            intSortData();
+            for (int iii=imin; iii<imax; iii++) {
+                const int i=qBound(imin, getDataIndex(iii), imax);
+                const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+                const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                    const double x=transformX(xv);
+                    const double y=transformY(yv);
+
+                    lines.append(QLineF(x0, y, x, y));
+                    points.append(QPointF(x,y));
+
+                }
+            }
+            painter.setPen(p);
+            if (lines.size()>0) painter.drawLines(lines);
+            if (drawSymbols && points.size()>0) {
+                painter.save(); auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
+                for (auto& p: points) {
+                    plotStyledSymbol(parent, painter, p.x(), p.y());
+                }
             }
         }
 
@@ -210,55 +194,42 @@ void JKQTPImpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         QPen p=getLinePen(painter, parent);
         p.setCapStyle(Qt::FlatCap);
 
-        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
+        int imax=0;
         int imin=0;
-        if (imax<imin) {
-            int h=imin;
-            imin=imax;
-            imax=h;
-        }
-        if (imin<0) imin=0;
-        if (imax<0) imax=0;
-
-        //double xold=-1;
-        //double yold=-1;
-        //bool first=false;
-    //    double x0=transformX(getBaseline());
-    //    if (parent->getXAxis()->isLogAxis()) {
-    //        if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
-    //        else x0=transformX(parent->getXAxis()->getMin());
-    //    }
-        double y0=transformY(getBaseline());
-        if (parent->getYAxis()->isLogAxis()) {
-            y0=transformY(parent->getYAxis()->getMin());
-            if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
-            else y0=transformY(parent->getYAxis()->getMin());
-        }
-        QVector<QLineF> lines;
-        QVector<QPointF> points;
-        intSortData();
-        for (int iii=imin; iii<imax; iii++) {
-            int i=qBound(imin, getDataIndex(iii), imax);
-            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv) ) {
-                double x=transformX(xv);
-                double y=transformY(yv);
+        if (getIndexRange(imin, imax)) {
 
 
-                lines.append(QLineF(x, y0, x, y));
-                points.append(QPointF(x,y));
-                //xold=x;
-                //yold=y;
-                //first=true;
+
+            double y0=transformY(getBaseline());
+            if (parent->getYAxis()->isLogAxis()) {
+                y0=transformY(parent->getYAxis()->getMin());
+                if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
+                else y0=transformY(parent->getYAxis()->getMin());
             }
-        }
-        painter.setPen(p);
-        if (lines.size()>0) painter.drawLines(lines);
-        if (drawSymbols && points.size()>0) {
-            painter.save(); auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
-            for (auto& p: points) {
-                plotStyledSymbol(parent, painter, p.x(), p.y());
+            QVector<QLineF> lines;
+            QVector<QPointF> points;
+            intSortData();
+            for (int iii=imin; iii<imax; iii++) {
+                const int i=qBound(imin, getDataIndex(iii), imax);
+                const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+                const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv) ) {
+                    const double x=transformX(xv);
+                    const double y=transformY(yv);
+
+
+                    lines.append(QLineF(x, y0, x, y));
+                    points.append(QPointF(x,y));
+
+                }
+            }
+            painter.setPen(p);
+            if (lines.size()>0) painter.drawLines(lines);
+            if (drawSymbols && points.size()>0) {
+                painter.save(); auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
+                for (auto& p: points) {
+                    plotStyledSymbol(parent, painter, p.x(), p.y());
+                }
             }
         }
     }

@@ -53,27 +53,17 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     JKQTPAutoOutputTimer jkaaot("JKQTPBarHorizontalGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPDatastore* datastore=parent->getDatastore();
+    const JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
-    QPen p=getLinePenForRects(painter, parent);
+    const QPen p=getLinePenForRects(painter, parent);
+    const QBrush b=getFillBrush(painter, parent);
 
-    QBrush b=getFillBrush(painter, parent);
-
-    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
+    int imax=0;
     int imin=0;
-
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    {
+    if (getIndexRange(imin, imax)) {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
     //    double x0=transformX(0);
@@ -87,9 +77,9 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         const bool hasStackPar=hasStackParent();
         for (int iii=imin; iii<imax; iii++) {
             int i=qBound(imin, getDataIndex(iii), imax);
-            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-            int sr=datastore->getNextLowerIndex(xColumn, i);
-            int lr=datastore->getNextHigherIndex(xColumn, i);
+            const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            const int sr=datastore->getNextLowerIndex(xColumn, i);
+            const int lr=datastore->getNextHigherIndex(xColumn, i);
             double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
             double yv0=y0;
             if (!qFuzzyIsNull(getBaseline())) yv0=transformY(getBaseline());
@@ -114,9 +104,9 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             delta=deltap+deltam;
 
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                double x=transformX(xv+shift*delta-width*deltam);
+                const double x=transformX(xv+shift*delta-width*deltam);
                 double y=transformY(yv);
-                double xx=transformX(xv+shift*delta+width*deltap);
+                const double xx=transformX(xv+shift*delta+width*deltap);
                 double yy=yv0;
 
                 //std::cout<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy<<std::endl;
@@ -239,83 +229,76 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     JKQTPAutoOutputTimer jkaaot("JKQTPBarVerticalGraph::draw");
 #endif
     if (parent==nullptr) return;
-    JKQTPDatastore* datastore=parent->getDatastore();
+    const JKQTPDatastore* datastore=parent->getDatastore();
     if (datastore==nullptr) return;
 
     drawErrorsBefore(painter);
 
-    QPen p=getLinePenForRects(painter, parent);
+    const QPen p=getLinePenForRects(painter, parent);
+    const QBrush b=getFillBrush(painter, parent);
 
-    QBrush b=getFillBrush(painter, parent);
-
-    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
+    int imax=0;
     int imin=0;
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
+    if (getIndexRange(imin, imax)) {
 
-    double x0=transformX(0);
-    if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
-//    double y0=transformY(0);
-//    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
-    {
-        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        intSortData();
-        const bool hasStackPar=hasStackParent();
-        double delta=1;
-        double deltap=0;
-        double deltam=0;
-        for (int iii=imin; iii<imax; iii++) {
-            int i=qBound(imin, getDataIndex(iii), imax);
-            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-            int sr=datastore->getNextLowerIndex(yColumn, i);
-            int lr=datastore->getNextHigherIndex(yColumn, i);
-            double xv0=x0;
-            if (!qFuzzyIsNull(getBaseline())) xv0=transformX(getBaseline());
-            if (hasStackPar) {
-                double stackLastX=getParentStackedMax(i);
-                const double xvold=xv;
-                xv0=transformX(stackLastX)+(getLineWidth());
-                xv=stackLastX+xvold;
-            }
+        double x0=transformX(0);
+        if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+    //    double y0=transformY(0);
+    //    if (parent->getYAxis()->isLogAxis()) y0=transformY(parent->getYAxis()->getMin());
+        {
+            painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+            intSortData();
+            const bool hasStackPar=hasStackParent();
+            double delta=1;
+            double deltap=0;
+            double deltam=0;
+            for (int iii=imin; iii<imax; iii++) {
+                int i=qBound(imin, getDataIndex(iii), imax);
+                double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+                double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+                int sr=datastore->getNextLowerIndex(yColumn, i);
+                int lr=datastore->getNextHigherIndex(yColumn, i);
+                double xv0=x0;
+                if (!qFuzzyIsNull(getBaseline())) xv0=transformX(getBaseline());
+                if (hasStackPar) {
+                    double stackLastX=getParentStackedMax(i);
+                    const double xvold=xv;
+                    xv0=transformX(stackLastX)+(getLineWidth());
+                    xv=stackLastX+xvold;
+                }
 
 
-            if (sr<0 && lr<0) { // only one y-value
-                deltam=0.5;
-                deltap=0.5;
-            } else if (lr<0) { // the right-most y-value
-                deltap=deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
-            } else if (sr<0) { // the left-most y-value
-                deltam=deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
-            } else {
-                deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
-                deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
-            }
-            delta=deltap+deltam;
+                if (sr<0 && lr<0) { // only one y-value
+                    deltam=0.5;
+                    deltap=0.5;
+                } else if (lr<0) { // the right-most y-value
+                    deltap=deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+                } else if (sr<0) { // the left-most y-value
+                    deltam=deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
+                } else {
+                    deltam=fabs(yv-datastore->get(yColumn,sr))/2.0;
+                    deltap=fabs(datastore->get(yColumn,lr)-yv)/2.0;
+                }
+                delta=deltap+deltam;
 
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-                double x=xv0;
-                if (!qFuzzyIsNull(getBaseline())) x=transformX(getBaseline());
-                double y=transformY(yv+shift*delta+width*deltap);
-                double xx=transformX(xv);
-                double yy=transformY(yv+shift*delta-width*deltam);
-                if (x>xx) { qSwap(x,xx); }
-                //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
-                //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
-                if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
-                    painter.setBrush(b);
-                    painter.setPen(p);
-                    QRectF r(QPointF(x, y), QPointF(xx, yy));
-                    painter.drawRect(r);
+                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                    double x=xv0;
+                    if (!qFuzzyIsNull(getBaseline())) x=transformX(getBaseline());
+                    double y=transformY(yv+shift*delta+width*deltap);
+                    double xx=transformX(xv);
+                    double yy=transformY(yv+shift*delta-width*deltam);
+                    if (x>xx) { qSwap(x,xx); }
+                    //qDebug()<<"delta="<<delta<<"   x="<<x<<" y="<<y<<"   xx="<<xx<<" yy="<<yy;
+                    //qDebug()<<"xv="<<xv<<"   x0="<<x0<<"   x="<<x<<"..."<<xx;
+                    if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(xx) && JKQTPIsOKFloat(y) && JKQTPIsOKFloat(yy)) {
+                        painter.setBrush(b);
+                        painter.setPen(p);
+                        QRectF r(QPointF(x, y), QPointF(xx, yy));
+                        painter.drawRect(r);
+                    }
                 }
             }
         }
-
     }
     drawErrorsAfter(painter);
 }
@@ -363,33 +346,29 @@ bool JKQTPBarHorizontalErrorGraph::getXMinMax(double &minx, double &maxx, double
 
         if (parent==nullptr) return false;
 
-        JKQTPDatastore* datastore=parent->getDatastore();
+        const JKQTPDatastore* datastore=parent->getDatastore();
+        int imax=0;
         int imin=0;
-        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
-        if (imax<imin) {
-            int h=imin;
-            imin=imax;
-            imax=h;
-        }
-        if (imin<0) imin=0;
-        if (imax<0) imax=0;
+        if (getIndexRange(imin, imax)) {
 
-        for (int i=imin; i<imax; i++) {
-            double xvsgz;
-            double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
-            double xvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
-            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xvv) ) {
-                if (start || xv>maxx) maxx=xv;
-                if (start || xv<minx) minx=xv;
-                xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
-                start=false;
-                if (xvv>maxx) maxx=xvv;
-                if (xvv<minx) minx=xvv;
-                xvsgz=xvv; SmallestGreaterZeroCompare_xvsgz();
-                start=false;
+            for (int i=imin; i<imax; i++) {
+                double xvsgz;
+                const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))+getXErrorU(i, datastore);
+                const double xvv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i))-getXErrorL(i, datastore);
+                if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(xvv) ) {
+                    if (start || xv>maxx) maxx=xv;
+                    if (start || xv<minx) minx=xv;
+                    xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+                    start=false;
+                    if (xvv>maxx) maxx=xvv;
+                    if (xvv<minx) minx=xvv;
+                    xvsgz=xvv; SmallestGreaterZeroCompare_xvsgz();
+                    start=false;
+                }
             }
+            return !start;
         }
-        return !start;
+        return false;
     }
 }
 
@@ -465,33 +444,29 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         if (parent==nullptr) return false;
 
         JKQTPDatastore* datastore=parent->getDatastore();
+        int imax=0;
         int imin=0;
-        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
-        if (imax<imin) {
-            int h=imin;
-            imin=imax;
-            imax=h;
-        }
-        if (imin<0) imin=0;
-        if (imax<0) imax=0;
+        if (getIndexRange(imin, imax)) {
 
-        for (int i=imin; i<imax; i++) {
-            double yv=getBaseline();
-            if (JKQTPIsOKFloat(yv)) {
-                if (yv>maxy) maxy=yv;
-                if (yv<miny) miny=yv;
-                double xvsgz;
-                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+
+            for (int i=imin; i<imax; i++) {
+                double yv=getBaseline();
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxy) maxy=yv;
+                    if (yv<miny) miny=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
+                yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+                if (JKQTPIsOKFloat(yv)) {
+                    if (yv>maxy) maxy=yv;
+                    if (yv<miny) miny=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                }
             }
-            yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-            if (JKQTPIsOKFloat(yv)) {
-                if (yv>maxy) maxy=yv;
-                if (yv<miny) miny=yv;
-                double xvsgz;
-                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
-            }
+            return true;
         }
-        return true;
     } else {
         bool start=false;
         miny=getBaseline();
@@ -505,34 +480,30 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
 
         if (parent==nullptr) return false;
 
-        JKQTPDatastore* datastore=parent->getDatastore();
+        const JKQTPDatastore* datastore=parent->getDatastore();
+        int imax=0;
         int imin=0;
-        int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
-        if (imax<imin) {
-            int h=imin;
-            imin=imax;
-            imax=h;
-        }
-        if (imin<0) imin=0;
-        if (imax<0) imax=0;
+        if (getIndexRange(imin, imax)) {
 
 
-        for (int i=imin; i<imax; i++) {
-            double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+getYErrorU(i, datastore);
-            double yvv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
-            if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(yvv) ) {
-                if (start || yv>maxy) maxy=yv;
-                if (start || yv<miny) miny=yv;
-                double xvsgz;
-                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
-                if (start || yvv>maxy) maxy=yvv;
-                if (start || yvv<miny) miny=yvv;
-                xvsgz=yvv; SmallestGreaterZeroCompare_xvsgz();
-                start=false;
+            for (int i=imin; i<imax; i++) {
+                const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))+getYErrorU(i, datastore);
+                const double yvv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i))-getYErrorL(i, datastore);
+                if (JKQTPIsOKFloat(yv) && JKQTPIsOKFloat(yvv) ) {
+                    if (start || yv>maxy) maxy=yv;
+                    if (start || yv<miny) miny=yv;
+                    double xvsgz;
+                    xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                    if (start || yvv>maxy) maxy=yvv;
+                    if (start || yvv<miny) miny=yvv;
+                    xvsgz=yvv; SmallestGreaterZeroCompare_xvsgz();
+                    start=false;
+                }
             }
+            return !start;
         }
-        return !start;
     }
+    return false;
 }
 
 int JKQTPBarVerticalErrorGraph::getBarErrorColumn() const
