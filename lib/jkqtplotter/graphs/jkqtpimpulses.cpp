@@ -34,13 +34,43 @@
 
 
 
-JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent):
-    JKQTPXYBaselineGraph(parent)
+
+JKQTPImpulsesGraphBase::JKQTPImpulsesGraphBase(JKQTBasePlotter* parent):
+    JKQTPXYBaselineGraph(parent), drawSymbols(false)
 {
-    drawSymbols=false;
     initLineStyle(parent, parentPlotStyle);
     initSymbolStyle(parent, parentPlotStyle);
     setLineWidth(3);
+}
+
+QColor JKQTPImpulsesGraphBase::getKeyLabelColor() const {
+    return getLineColor();
+}
+
+void JKQTPImpulsesGraphBase::setColor(QColor c)
+{
+    setLineColor(c);
+    setSymbolColor(c);
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    c.setAlphaF(0.5);
+    setHighlightingLineColor(c);
+}
+
+void JKQTPImpulsesGraphBase::setDrawSymbols(bool __value)
+{
+    drawSymbols=__value;
+}
+
+bool JKQTPImpulsesGraphBase::getDrawSymbols() const
+{
+    return drawSymbols;
+}
+
+
+JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent):
+    JKQTPImpulsesGraphBase(parent)
+{
+
 }
 
 JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTPlotter* parent):
@@ -126,33 +156,11 @@ void JKQTPImpulsesHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, 
     QPen p=getLinePen(painter, parent);
     p.setCapStyle(Qt::FlatCap);
     painter.setPen(p);
-    int y=rect.top()+rect.height()/2.0;
+
+    const int y=rect.top()+rect.height()/2.0;
     painter.drawLine(rect.left(), y, rect.right(), y);
-
 }
 
-QColor JKQTPImpulsesHorizontalGraph::getKeyLabelColor() const {
-    return getLineColor();
-}
-
-void JKQTPImpulsesHorizontalGraph::setColor(QColor c)
-{
-    setLineColor(c);
-    setSymbolColor(c);
-    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
-    c.setAlphaF(0.5);
-    setHighlightingLineColor(c);
-}
-
-void JKQTPImpulsesHorizontalGraph::setDrawSymbols(bool __value)
-{
-    drawSymbols=__value;
-}
-
-bool JKQTPImpulsesHorizontalGraph::getDrawSymbols() const
-{
-    return drawSymbols;
-}
 
 
 
@@ -165,13 +173,25 @@ bool JKQTPImpulsesHorizontalGraph::getDrawSymbols() const
 
 
 JKQTPImpulsesVerticalGraph::JKQTPImpulsesVerticalGraph(JKQTBasePlotter* parent):
-    JKQTPImpulsesHorizontalGraph(parent)
+    JKQTPImpulsesGraphBase(parent)
 {
 }
 
 JKQTPImpulsesVerticalGraph::JKQTPImpulsesVerticalGraph(JKQTPlotter *parent):
-    JKQTPImpulsesHorizontalGraph(parent)
+    JKQTPImpulsesVerticalGraph(parent->getPlotter())
 {
+
+}
+
+void JKQTPImpulsesVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+
+
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    QPen p=getLinePen(painter, parent);
+    p.setCapStyle(Qt::FlatCap);
+    painter.setPen(p);
+    const int x=rect.left()+rect.width()/2.0;
+    painter.drawLine(x, rect.bottom(), x, rect.top());
 
 }
 

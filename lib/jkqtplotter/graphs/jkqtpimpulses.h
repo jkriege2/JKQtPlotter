@@ -27,53 +27,71 @@
 
 
 
-/*! \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from y=0 to y=f(x) )
-    \ingroup jkqtplotter_barssticks
-
-    \image html plot_impulsesxplots.png
-
-    \see JKQTPImpulsesVerticalGraph, \ref JKQTPlotterImpulsePlots
+/** \brief This is a base class for all impulse graphs
+ *  \ingroup jkqtplotter_barssticks
+ *
+ *  \see JKQTPImpulsesHorizontalGraph, JKQTPImpulsesVerticalGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYBaselineGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin{
-        Q_OBJECT
-    public:
-        /** \brief class constructor */
-        JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
-        JKQTPImpulsesHorizontalGraph(JKQTPlotter* parent);
+class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin{
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    JKQTPImpulsesGraphBase(JKQTBasePlotter* parent=nullptr);
 
-        /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter) override;
-        /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
 
-        /*! \brief color of symbols and impulses in one call */
-        virtual void setColor(QColor c);
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
+    /*! \copydoc drawSymbols */
+    bool getDrawSymbols() const;
 
-        /*! \copydoc drawSymbols */
-        void setDrawSymbols(bool __value);
-        /*! \copydoc drawSymbols */
-        bool getDrawSymbols() const;
+public slots:
+    /*! \brief color of symbols and impulses in one call */
+    virtual void setColor(QColor c);
 
-    protected:
+    /*! \copydoc drawSymbols */
+    void setDrawSymbols(bool __value);
 
-        /** \brief indicates whether to draw symbols at the top of the impulse
+protected:
+
+    /** \brief indicates whether to draw symbols at the top of the impulse
          *
          * \image html impulsesplot_symbols.png
          */
-        bool drawSymbols;
+    bool drawSymbols;
+};
+
+
+/** \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from y=0 to y=f(x) )
+ *  \ingroup jkqtplotter_barssticks
+ *
+ *  \image html plot_impulsesxplots.png
+ *
+ *  \see JKQTPImpulsesVerticalGraph, \ref JKQTPlotterImpulsePlots
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPImpulsesGraphBase {
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPImpulsesHorizontalGraph(JKQTPlotter* parent);
+
+    /** \brief plots the graph to the plotter object specified as parent */
+    virtual void draw(JKQTPEnhancedPainter& painter) override;
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+
+protected:
 };
 
 
 
-/*! \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
-    \ingroup jkqtplotter_barssticks
-
-    \image html plot_impulsesxerrorsplots.png
-
-    \see jkqtpstatAddXErrorImpulsesGraph(), JKQTPImpulsesHorizontalGraph, \ref JKQTPlotterImpulsePlots
+/** \brief This implements an impulse plot with impulses in direction of the X axis (i.e. from x=0 to x=f(y) )
+ *  \ingroup jkqtplotter_barssticks
+ *
+ *  \image html plot_impulsesxerrorsplots.png
+ *
+ *  \see jkqtpstatAddXErrorImpulsesGraph(), JKQTPImpulsesHorizontalGraph, \ref JKQTPlotterImpulsePlots
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpulsesHorizontalGraph, public JKQTPXGraphErrors {
         Q_OBJECT
@@ -100,7 +118,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalErrorGraph: public JKQTPImpu
 
     \see \ref JKQTPlotterImpulsePlots
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHorizontalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesGraphBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -110,6 +128,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesVerticalGraph: public JKQTPImpulsesHor
 
         /** \brief plots the graph to the plotter object specified as parent */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
+        /** \brief plots a key marker inside the specified rectangle \a rect */
+        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 };
 
 
