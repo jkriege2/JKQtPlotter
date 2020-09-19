@@ -34,8 +34,8 @@
 
 
 
-JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTBasePlotter* parent):
-    JKQTPGraph(parent)
+JKQTPRangeBase::JKQTPRangeBase(JKQTBasePlotter* parent):
+    JKQTPPlotElement(parent)
 {
     centerColor=QColor("red");
     centerStyle=Qt::SolidLine;
@@ -60,6 +60,185 @@ JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTBasePlotter* parent):
     plotRange=true;
     plotRangeLines=true;
     fillRange=true;
+}
+
+QColor JKQTPRangeBase::getKeyLabelColor() const
+{
+    return centerColor;
+}
+
+void JKQTPRangeBase::setDrawCenterLineOnly()
+{
+    plotCenterLine=true;
+    plotRange=false;
+}
+
+void JKQTPRangeBase::setColor(QColor c)
+{
+    setLineColor(c);
+    centerColor=c;
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+}
+
+
+void JKQTPRangeBase::setCenterColor(const QColor &__value)
+{
+    this->centerColor = __value;
+}
+
+QColor JKQTPRangeBase::getCenterColor() const
+{
+    return this->centerColor;
+}
+
+void JKQTPRangeBase::setCenterStyle(Qt::PenStyle __value)
+{
+    this->centerStyle = __value;
+}
+
+Qt::PenStyle JKQTPRangeBase::getCenterStyle() const
+{
+    return this->centerStyle;
+}
+
+void JKQTPRangeBase::setCenterLineWidth(double __value)
+{
+    this->centerLineWidth = __value;
+}
+
+double JKQTPRangeBase::getCenterLineWidth() const
+{
+    return this->centerLineWidth;
+}
+
+void JKQTPRangeBase::setRangeMin(double __value)
+{
+    this->rangeMin = __value;
+}
+
+double JKQTPRangeBase::getRangeMin() const
+{
+    return this->rangeMin;
+}
+
+void JKQTPRangeBase::setRangeMax(double __value)
+{
+    this->rangeMax = __value;
+}
+
+double JKQTPRangeBase::getRangeMax() const
+{
+    return this->rangeMax;
+}
+
+void JKQTPRangeBase::setSizeMin(double __value)
+{
+    this->unlimitedSizeMin=false;
+    this->sizeMin = __value;
+}
+
+double JKQTPRangeBase::getSizeMin() const
+{
+    return this->sizeMin;
+}
+
+void JKQTPRangeBase::setSizeMax(double __value)
+{
+    this->unlimitedSizeMax=false;
+    this->sizeMax = __value;
+}
+
+double JKQTPRangeBase::getSizeMax() const
+{
+    return this->sizeMax;
+}
+
+void JKQTPRangeBase::setUnlimitedSizeMin(bool __value)
+{
+    this->unlimitedSizeMin = __value;
+}
+
+bool JKQTPRangeBase::getUnlimitedSizeMin() const
+{
+    return this->unlimitedSizeMin;
+}
+
+void JKQTPRangeBase::setUnlimitedSizeMax(bool __value)
+{
+    this->unlimitedSizeMax = __value;
+}
+
+bool JKQTPRangeBase::getUnlimitedSizeMax() const
+{
+    return this->unlimitedSizeMax;
+}
+
+void JKQTPRangeBase::setRangeCenter(double __value)
+{
+    this->rangeCenter = __value;
+}
+
+double JKQTPRangeBase::getRangeCenter() const
+{
+    return this->rangeCenter;
+}
+
+void JKQTPRangeBase::setPlotCenterLine(bool __value)
+{
+    this->plotCenterLine = __value;
+}
+
+bool JKQTPRangeBase::getPlotCenterLine() const
+{
+    return this->plotCenterLine;
+}
+
+void JKQTPRangeBase::setInvertedRange(bool __value)
+{
+    this->invertedRange = __value;
+}
+
+bool JKQTPRangeBase::getInvertedRange() const
+{
+    return this->invertedRange;
+}
+
+void JKQTPRangeBase::setPlotRange(bool __value)
+{
+    this->plotRange = __value;
+}
+
+bool JKQTPRangeBase::getPlotRange() const
+{
+    return this->plotRange;
+}
+
+void JKQTPRangeBase::setFillRange(bool __value)
+{
+    this->fillRange = __value;
+}
+
+bool JKQTPRangeBase::getFillRange() const
+{
+    return this->fillRange;
+}
+
+void JKQTPRangeBase::setPlotRangeLines(bool __value)
+{
+    this->plotRangeLines = __value;
+}
+
+bool JKQTPRangeBase::getPlotRangeLines() const
+{
+    return this->plotRangeLines;
+}
+
+
+
+JKQTPHorizontalRange::JKQTPHorizontalRange(JKQTBasePlotter* parent):
+    JKQTPRangeBase(parent)
+{
+
 }
 
 
@@ -175,175 +354,6 @@ bool JKQTPHorizontalRange::getYMinMax(double &miny, double &maxy, double &smalle
     return true;
 }
 
-QColor JKQTPHorizontalRange::getKeyLabelColor() const
-{
-    return centerColor;
-}
-
-void JKQTPHorizontalRange::setDrawCenterLineOnly()
-{
-    plotCenterLine=true;
-    plotRange=false;
-}
-
-void JKQTPHorizontalRange::setColor(QColor c)
-{
-    setLineColor(c);
-    centerColor=c;
-    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
-}
-
-
-void JKQTPHorizontalRange::setCenterColor(const QColor &__value)
-{
-    this->centerColor = __value;
-}
-
-QColor JKQTPHorizontalRange::getCenterColor() const
-{
-    return this->centerColor;
-}
-
-void JKQTPHorizontalRange::setCenterStyle(Qt::PenStyle __value)
-{
-    this->centerStyle = __value;
-}
-
-Qt::PenStyle JKQTPHorizontalRange::getCenterStyle() const
-{
-    return this->centerStyle;
-}
-
-void JKQTPHorizontalRange::setCenterLineWidth(double __value)
-{
-    this->centerLineWidth = __value;
-}
-
-double JKQTPHorizontalRange::getCenterLineWidth() const
-{
-    return this->centerLineWidth;
-}
-
-void JKQTPHorizontalRange::setRangeMin(double __value)
-{
-    this->rangeMin = __value;
-}
-
-double JKQTPHorizontalRange::getRangeMin() const
-{
-    return this->rangeMin;
-}
-
-void JKQTPHorizontalRange::setRangeMax(double __value)
-{
-    this->rangeMax = __value;
-}
-
-double JKQTPHorizontalRange::getRangeMax() const
-{
-    return this->rangeMax;
-}
-
-void JKQTPHorizontalRange::setSizeMin(double __value)
-{
-    this->sizeMin = __value;
-}
-
-double JKQTPHorizontalRange::getSizeMin() const
-{
-    return this->sizeMin;
-}
-
-void JKQTPHorizontalRange::setSizeMax(double __value)
-{
-    this->sizeMax = __value;
-}
-
-double JKQTPHorizontalRange::getSizeMax() const
-{
-    return this->sizeMax;
-}
-
-void JKQTPHorizontalRange::setUnlimitedSizeMin(bool __value)
-{
-    this->unlimitedSizeMin = __value;
-}
-
-bool JKQTPHorizontalRange::getUnlimitedSizeMin() const
-{
-    return this->unlimitedSizeMin;
-}
-
-void JKQTPHorizontalRange::setUnlimitedSizeMax(bool __value)
-{
-    this->unlimitedSizeMax = __value;
-}
-
-bool JKQTPHorizontalRange::getUnlimitedSizeMax() const
-{
-    return this->unlimitedSizeMax;
-}
-
-void JKQTPHorizontalRange::setRangeCenter(double __value)
-{
-    this->rangeCenter = __value;
-}
-
-double JKQTPHorizontalRange::getRangeCenter() const
-{
-    return this->rangeCenter;
-}
-
-void JKQTPHorizontalRange::setPlotCenterLine(bool __value)
-{
-    this->plotCenterLine = __value;
-}
-
-bool JKQTPHorizontalRange::getPlotCenterLine() const
-{
-    return this->plotCenterLine;
-}
-
-void JKQTPHorizontalRange::setInvertedRange(bool __value)
-{
-    this->invertedRange = __value;
-}
-
-bool JKQTPHorizontalRange::getInvertedRange() const
-{
-    return this->invertedRange;
-}
-
-void JKQTPHorizontalRange::setPlotRange(bool __value)
-{
-    this->plotRange = __value;
-}
-
-bool JKQTPHorizontalRange::getPlotRange() const
-{
-    return this->plotRange;
-}
-
-void JKQTPHorizontalRange::setFillRange(bool __value)
-{
-    this->fillRange = __value;
-}
-
-bool JKQTPHorizontalRange::getFillRange() const
-{
-    return this->fillRange;
-}
-
-void JKQTPHorizontalRange::setPlotRangeLines(bool __value)
-{
-    this->plotRangeLines = __value;
-}
-
-bool JKQTPHorizontalRange::getPlotRangeLines() const
-{
-    return this->plotRangeLines;
-}
-
 
 
 
@@ -354,12 +364,12 @@ bool JKQTPHorizontalRange::getPlotRangeLines() const
 
 
 JKQTPVerticalRange::JKQTPVerticalRange(JKQTBasePlotter* parent):
-    JKQTPHorizontalRange(parent)
+    JKQTPRangeBase(parent)
 {
 }
 
 JKQTPVerticalRange::JKQTPVerticalRange(JKQTPlotter* parent):
-    JKQTPHorizontalRange(parent)
+    JKQTPVerticalRange(parent->getPlotter())
 {
 }
 

@@ -34,7 +34,7 @@
 
 
 /*! \brief This virtual JKQTPGraph descendent may be used to display a single symbol (marker).
-    \ingroup jkqtplotter_geoplots
+    \ingroup jkqtplotter_annotations
 
     \see \ref JKQTPlotterGeometricGraphs
 
@@ -101,7 +101,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQT
 
 /*! \brief This JKQTPPlotObject is used to display text. It uses the JKQTMathText
            class in order to display LaTeX formulas.
-    \ingroup jkqtplotter_geoplots
+    \ingroup jkqtplotter_annotations
 
     \see \ref JKQTPlotterGeometricGraphs
  */

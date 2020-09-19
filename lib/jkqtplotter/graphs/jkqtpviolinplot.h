@@ -35,7 +35,7 @@
 
 /*! \brief This implements a single vertical <a href="https://en.wikipedia.org/wiki/Violin_plot">Violin Plot</a> as a "geometric element"
     \ingroup jkqtplotter_statgraphs
-    \ingroup jkqtplotter_geoplots
+    \ingroup jkqtplotter_diverse
 
     Draws a vertical violin plot in one of the following styles:
 
@@ -167,7 +167,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPPlotObj
 
 /*! \brief This implements a single horizontal <a href="https://en.wikipedia.org/wiki/Violin_plot">Violin Plot</a> as a "geometric element"
     \ingroup jkqtplotter_statgraphs
-    \ingroup jkqtplotter_geoplots
+    \ingroup jkqtplotter_diverse
 
     Draws a horizontal violin plot in one of the following styles:
 

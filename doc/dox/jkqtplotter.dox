@@ -451,12 +451,28 @@ This group assembles graphs that show their data with symbols and optionally wit
     <tr>
       <td>\image html geo_chords_small.png
       <td> JKQTPGeoChord
+</table>
+
+Examples:
+  - \ref JKQTPlotterGeometricGraphs
+.
+
+\defgroup jkqtplotter_annotations Graph Annotations
+\ingroup jkqtplotter_graphsgroup
+
+<table>
     <tr>
-      <td>\image html geo_boxplot_small.png
-      <td> JKQTPBoxplotVerticalElement, JKQTPBoxplotHorizontalElement
+      <th> Screenshot
+      <th> Classes
     <tr>
-      <td>\image html JKQTPViolinplotVerticalElement_small.png
-      <td> JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
+      <td>\image html symbol_filled_diamond.png
+      <td> JKQTPGeoSymbol
+    <tr>
+      <td>\image html geo_text_small.png
+      <td> JKQTPGeoText
+    <tr>
+      <td>\image html JKQTPHorizontalRange_small.png
+      <td> JKQTPHorizontalRange, JKQTPVerticalRange
 </table>
 
 Examples:
@@ -471,11 +487,14 @@ Examples:
       <th> Screenshot
       <th> Classes
     <tr>
-      <td>\image html JKQTPHorizontalRange_small.png
-      <td> JKQTPHorizontalRange, JKQTPVerticalRange
-    <tr>
       <td>\image html JKQTPPeakStreamGraphY_small.png
       <td> JKQTPPeakStreamGraph
+    <tr>
+      <td>\image html geo_boxplot_small.png
+      <td> JKQTPBoxplotVerticalElement, JKQTPBoxplotHorizontalElement
+    <tr>
+      <td>\image html JKQTPViolinplotVerticalElement_small.png
+      <td> JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
 </table>
 
 \defgroup jkqtplotter_imagelots Matrix/Image Plotting
