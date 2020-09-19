@@ -34,14 +34,9 @@
 
 
 
-
-
-JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter* parent):
-    JKQTPXYBaselineGraph(parent)
+JKQTPSpecialLineGraphBase::JKQTPSpecialLineGraphBase(JKQTBasePlotter* parent):
+    JKQTPXYBaselineGraph(parent), m_drawSymbols(false), m_specialLineType(JKQTPStepLeft)
 {
-    m_drawSymbols=false;
-    m_specialLineType=JKQTPStepLeft;
-
     parentPlotStyle=-1;
     initLineStyle(parent, parentPlotStyle);
     initFillStyle(parent, parentPlotStyle);
@@ -49,14 +44,7 @@ JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter
     setFillCurve(false);
 }
 
-
-JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTPlotter* parent):
-    JKQTPSpecialLineHorizontalGraph(parent->getPlotter())
-{
-}
-
-
-void JKQTPSpecialLineHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
+void JKQTPSpecialLineGraphBase::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen p=getLinePen(painter, parent);
     QPen np(Qt::NoPen);
@@ -73,33 +61,34 @@ void JKQTPSpecialLineHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painte
 
 }
 
-QColor JKQTPSpecialLineHorizontalGraph::getKeyLabelColor() const {
+
+QColor JKQTPSpecialLineGraphBase::getKeyLabelColor() const {
     return getLineColor();
 }
 
-void JKQTPSpecialLineHorizontalGraph::setDrawSymbols(bool __value)
+void JKQTPSpecialLineGraphBase::setDrawSymbols(bool __value)
 {
     m_drawSymbols=__value;
 }
 
-bool JKQTPSpecialLineHorizontalGraph::getDrawSymbols() const
+bool JKQTPSpecialLineGraphBase::getDrawSymbols() const
 {
     return m_drawSymbols;
 }
 
 
-void JKQTPSpecialLineHorizontalGraph::setSpecialLineType(const JKQTPSpecialLineType &__value)
+void JKQTPSpecialLineGraphBase::setSpecialLineType(const JKQTPSpecialLineType &__value)
 {
     this->m_specialLineType = __value;
 }
 
-JKQTPSpecialLineType JKQTPSpecialLineHorizontalGraph::getSpecialLineType() const
+JKQTPSpecialLineType JKQTPSpecialLineGraphBase::getSpecialLineType() const
 {
     return this->m_specialLineType;
 }
 
 
-void JKQTPSpecialLineHorizontalGraph::setColor(QColor c)
+void JKQTPSpecialLineGraphBase::setColor(QColor c)
 {
     setLineColor(c);
     setSymbolColor(c);
@@ -108,6 +97,21 @@ void JKQTPSpecialLineHorizontalGraph::setColor(QColor c)
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
 }
+
+
+
+JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter* parent):
+    JKQTPSpecialLineGraphBase(parent)
+{
+}
+
+
+JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTPlotter* parent):
+    JKQTPSpecialLineHorizontalGraph(parent->getPlotter())
+{
+}
+
+
 
 
 void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
@@ -136,10 +140,6 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         double xold=-1;
         double yold=-1;
-    //    double xstart=-1;
-    //    double ystart=-1;
-        //double x0=transformX(0);
-        //if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
         double y0=transformY(getBaseline());
         if (parent->getYAxis()->isLogAxis()) {
             y0=transformY(parent->getYAxis()->getMin());
@@ -293,12 +293,12 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 JKQTPSpecialLineVerticalGraph::JKQTPSpecialLineVerticalGraph(JKQTBasePlotter *parent):
-    JKQTPSpecialLineHorizontalGraph(parent)
+    JKQTPSpecialLineGraphBase(parent)
 {
 }
 
 JKQTPSpecialLineVerticalGraph::JKQTPSpecialLineVerticalGraph(JKQTPlotter *parent):
-    JKQTPSpecialLineHorizontalGraph(parent)
+    JKQTPSpecialLineVerticalGraph(parent->getPlotter())
 {
 
 }

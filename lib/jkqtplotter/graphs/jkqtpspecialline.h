@@ -43,47 +43,69 @@ class JKQTPDatastore;
 
 
 
-/*! \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
-    \ingroup jkqtplotter_linesymbolgraphs_simple
-
-    \image html stepplots.png
-
-    \see JKQTPSpecialLineVerticalGraph, JKQTPFilledCurveXGraph, \ref JKQTPlotterSpecialStepLinePlot
+/** \brief a Base class for special line graphs (steps ...) like e.g. JKQTPSpecialLineHorizontalGraph
+ *  \ingroup jkqtplotter_linesymbolgraphs_simple
+ *
+ *  \image html stepplots.png
+ *
+ *  \see JKQTPSpecialLineHorizontalGraph, JKQTPSpecialLineVerticalGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
-        Q_OBJECT
-    public:
-        /** \brief class constructor */
-        JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter* parent=nullptr);
-        /** \brief class constructor */
-        JKQTPSpecialLineHorizontalGraph(JKQTPlotter* parent);
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    explicit JKQTPSpecialLineGraphBase(JKQTBasePlotter* parent=nullptr);
 
-        /** \brief plots the graph to the plotter object specified as parent */
-        virtual void draw(JKQTPEnhancedPainter& painter) override;
-        /** \brief plots a key marker inside the specified rectangle \a rect */
-        virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
 
-        /*! sets whether to draw symbols */
-        void setDrawSymbols(bool __value);
-        /*! returns whether symbols are drawn */
-        bool getDrawSymbols() const;
-        /** \brief set the type of connecting (step-)lines */
-        void setSpecialLineType(const JKQTPSpecialLineType & __value);
-        /** \brief get the type of connecting (step-)lines */
-        JKQTPSpecialLineType getSpecialLineType() const;
+    /** \copydoc m_drawSymbols */
+    bool getDrawSymbols() const;
+    /** \copydoc m_specialLineType */
+    JKQTPSpecialLineType getSpecialLineType() const;
 
-        /** \brief set line-color, fill color and symbol color */
-        void setColor(QColor c);
-    protected:
+    Q_PROPERTY(bool drawSymbols READ getDrawSymbols WRITE setDrawSymbols)
+    Q_PROPERTY(JKQTPSpecialLineType specialLineType READ getSpecialLineType WRITE setSpecialLineType)
+public slots:
+    /** \brief set line-color, fill color and symbol color */
+    void setColor(QColor c);
+    /** \copydoc m_drawSymbols */
+    void setDrawSymbols(bool __value);
+    /** \copydoc m_specialLineType */
+    void setSpecialLineType(const JKQTPSpecialLineType & __value);
+protected:
 
-        /** \brief indicates whether to draw a symbols or not */
-        bool m_drawSymbols;
-        /** \brief type of connecting (step)lines */
-        JKQTPSpecialLineType m_specialLineType;
+    /** \brief indicates whether to draw a symbols at the datapoints, or not */
+    bool m_drawSymbols;
+    /** \brief type of connecting (step)lines */
+    JKQTPSpecialLineType m_specialLineType;
 
+
+};
+
+
+/** \brief This implements a step plot with values \f$ \left(x, f(x) \right) \f$
+ *  \ingroup jkqtplotter_linesymbolgraphs_simple
+ *
+ *  \image html stepplots.png
+ *
+ *  \see JKQTPSpecialLineVerticalGraph, \ref JKQTPlotterSpecialStepLinePlot
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPSpecialLineGraphBase {
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPSpecialLineHorizontalGraph(JKQTPlotter* parent);
+
+    /** \brief plots the graph to the plotter object specified as parent */
+    virtual void draw(JKQTPEnhancedPainter& painter) override;
+
+protected:
 
 };
 
@@ -94,9 +116,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYBase
 
     \image html stepplots_vertical.png
 
-    \see JKQTPSpecialLineHorizontalGraph, JKQTPFilledCurveYGraph, \ref JKQTPlotterSpecialStepLinePlot
+    \see JKQTPSpecialLineHorizontalGraph, \ref JKQTPlotterSpecialStepLinePlot
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineVerticalGraph: public JKQTPSpecialLineHorizontalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineVerticalGraph: public JKQTPSpecialLineGraphBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
