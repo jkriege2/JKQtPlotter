@@ -187,9 +187,12 @@ void JKQTPFilledVerticalRangeGraph::draw(JKQTPEnhancedPainter &painter)
                     poly_all.append(plow[i]);
                 }
             }
-            painter.setBrush(b);
-            painter.setPen(np);
-            painter.drawPolygon(poly_all);
+
+            if (getFillCurve()) {
+                painter.setBrush(b);
+                painter.setPen(np);
+                painter.drawPolygon(poly_all);
+            }
 
 
             if (getDrawLine()) {
@@ -299,9 +302,12 @@ void JKQTPFilledHorizontalRangeGraph::draw(JKQTPEnhancedPainter &painter)
                     poly_all.append(plow[i]);
                 }
             }
-            painter.setBrush(b);
-            painter.setPen(np);
-            painter.drawPolygon(poly_all);
+
+            if (getFillCurve()) {
+                painter.setBrush(b);
+                painter.setPen(np);
+                painter.drawPolygon(poly_all);
+            }
 
 
             if (getDrawLine()) {

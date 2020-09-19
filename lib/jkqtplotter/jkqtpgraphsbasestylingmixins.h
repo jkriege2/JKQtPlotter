@@ -461,10 +461,22 @@ public:
     bool getDrawLine() const;
     /*! \copydoc m_drawLine */
     bool doDrawLine() const;
+
+    /*! \copydoc m_fillCurve */
+    void setFillCurve(bool __value);
+    /*! \copydoc m_fillCurve */
+    bool getFillCurve() const;
+    /*! \copydoc m_fillCurve */
+    bool doFillCurve() const;
+
+
     Q_PROPERTY(bool drawLine MEMBER m_drawLine READ getDrawLine WRITE setDrawLine)
+    Q_PROPERTY(bool fillCurve MEMBER m_fillCurve READ getFillCurve WRITE setFillCurve)
 private:
     /** \brief indicates whether to draw a line on the circumference of the described area (i.e. along the data points from \c xColumn and \c yColumn as well as \c xColumn and \c yColumn2 or not */
     bool m_drawLine;
+    /** \brief indicates whether to fill the space between the curve and the x-axis */
+    bool m_fillCurve;
 };
 
 

@@ -567,7 +567,7 @@ double JKQTPGraphDecoratedHeadLineStyleMixin::calcHeadDecoratorSize(double line_
 
 
 JKQTPGraphLineAndFillStyleMixin::JKQTPGraphLineAndFillStyleMixin():
-    m_drawLine(true)
+    m_drawLine(true), m_fillCurve(true)
 {
 
 }
@@ -585,4 +585,19 @@ bool JKQTPGraphLineAndFillStyleMixin::getDrawLine() const
 bool JKQTPGraphLineAndFillStyleMixin::doDrawLine() const
 {
     return m_drawLine;
+}
+
+void JKQTPGraphLineAndFillStyleMixin::setFillCurve(bool __value)
+{
+    m_fillCurve=__value;
+}
+
+bool JKQTPGraphLineAndFillStyleMixin::getFillCurve() const
+{
+    return m_fillCurve;
+}
+
+bool JKQTPGraphLineAndFillStyleMixin::doFillCurve() const
+{
+    return m_fillCurve;
 }

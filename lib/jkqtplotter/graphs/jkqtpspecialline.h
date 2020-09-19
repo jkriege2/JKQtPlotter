@@ -50,7 +50,7 @@ class JKQTPDatastore;
 
     \see JKQTPSpecialLineVerticalGraph, JKQTPFilledCurveXGraph, \ref JKQTPlotterSpecialStepLinePlot
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineAndFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -65,18 +65,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGrap
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! sets whether to draw a line or not */
-        void setDrawLine(bool __value);
-        /*! returns whether the graph line is drawn */
-        bool getDrawLine() const;
+
         /*! sets whether to draw symbols */
         void setDrawSymbols(bool __value);
         /*! returns whether symbols are drawn */
         bool getDrawSymbols() const;
-        /*! sets whether to fill the space between the curve and the baseline/x-axis */
-        void setFillCurve(bool __value);
-        /*! returns whether the space between the curve and the baseline/x-axis is filled */
-        bool getFillCurve() const;
         /** \brief set the type of connecting (step-)lines */
         void setSpecialLineType(const JKQTPSpecialLineType & __value);
         /** \brief get the type of connecting (step-)lines */
@@ -88,12 +81,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGrap
         /** \brief set line-color, fill color and symbol color */
         void setColor(QColor c);
     protected:
-        /** \brief indicates whether to draw a line or not */
-        bool m_drawLine;
+
         /** \brief indicates whether to draw a symbols or not */
         bool m_drawSymbols;
-        /** \brief indicates whether to fill the space between the curve and the baseline/x-axis */
-        bool m_fillCurve;
         /** \brief type of connecting (step)lines */
         JKQTPSpecialLineType m_specialLineType;
         /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!) */

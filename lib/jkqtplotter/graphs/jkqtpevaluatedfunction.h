@@ -44,7 +44,7 @@
  *
  *  \see e.g. JKQTPXFunctionLineGraph for a concrete implementation
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: public JKQTPEvaluatedFunctionWithErrorsGraphBase, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: public JKQTPEvaluatedFunctionWithErrorsGraphBase, public JKQTPGraphLineAndFillStyleMixin {
         Q_OBJECT
     public:
 
@@ -62,8 +62,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: p
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc drawLine */
-        bool getDrawLine() const;
 
 
         /*! \copydoc drawErrorPolygons */
@@ -89,8 +87,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: p
         /*! \brief set color, fill color and error color at the same time */
         void setColor(QColor c);
 
-        /*! \copydoc drawLine */
-        void setDrawLine(bool __value);
+
         /*! \copydoc drawErrorPolygons */
         void setDrawErrorPolygons(bool __value);
         /*! \copydoc drawErrorLines */
@@ -113,12 +110,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: p
         void drawYGraph(JKQTPEnhancedPainter& painter);
 
 
-
-
-        /** \brief indicates whether to draw a line or not */
-        bool drawLine;
-        /** \brief indicates whether to fill the space between the curve and the x-axis */
-        bool fillCurve;
 
 
         /** \brief indicates whether an error polygon should be drawn */

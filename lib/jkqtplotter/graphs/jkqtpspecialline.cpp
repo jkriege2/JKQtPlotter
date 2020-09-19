@@ -39,8 +39,6 @@
 JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter* parent):
     JKQTPXYGraph(parent)
 {
-    m_drawLine=true;
-    m_fillCurve=false;
     m_drawSymbols=false;
     m_specialLineType=JKQTPStepLeft;
     m_baseline=0;
@@ -49,6 +47,7 @@ JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter
     initLineStyle(parent, parentPlotStyle);
     initFillStyle(parent, parentPlotStyle);
     initSymbolStyle(parent, parentPlotStyle);
+    setFillCurve(false);
 }
 
 
@@ -65,10 +64,10 @@ void JKQTPSpecialLineHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painte
     QBrush b=getFillBrush(painter, parent);
     const double y=rect.top()+rect.height()/2.0;
     painter.setPen(np);
-    if (m_drawLine) painter.setPen(p);
+    if (getDrawLine()) painter.setPen(p);
     painter.setBrush(b);
-    if (m_fillCurve) painter.drawRect(rect);
-    if (!m_fillCurve && m_drawLine) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+    if (getFillCurve()) painter.drawRect(rect);
+    if (!getFillCurve() && getDrawLine()) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
     if (m_drawSymbols) {
         plotStyledSymbol(parent, painter, rect.center().x(), rect.center().y(), rect.width()*0.5);
     }
@@ -77,16 +76,6 @@ void JKQTPSpecialLineHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painte
 
 QColor JKQTPSpecialLineHorizontalGraph::getKeyLabelColor() const {
     return getLineColor();
-}
-
-void JKQTPSpecialLineHorizontalGraph::setDrawLine(bool __value)
-{
-    this->m_drawLine = __value;
-}
-
-bool JKQTPSpecialLineHorizontalGraph::getDrawLine() const
-{
-    return this->m_drawLine;
 }
 
 void JKQTPSpecialLineHorizontalGraph::setDrawSymbols(bool __value)
@@ -99,15 +88,6 @@ bool JKQTPSpecialLineHorizontalGraph::getDrawSymbols() const
     return m_drawSymbols;
 }
 
-void JKQTPSpecialLineHorizontalGraph::setFillCurve(bool __value)
-{
-    this->m_fillCurve = __value;
-}
-
-bool JKQTPSpecialLineHorizontalGraph::getFillCurve() const
-{
-    return this->m_fillCurve;
-}
 
 void JKQTPSpecialLineHorizontalGraph::setSpecialLineType(const JKQTPSpecialLineType &__value)
 {
@@ -155,164 +135,159 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
 
-    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
+    int imax=0;
     int imin=0;
 
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
+    if (getIndexRange(imin, imax)) {
 
-    QPainterPath pl, pf;
-    QVector<QPointF> ps;
 
-    double xold=-1;
-    double yold=-1;
-//    double xstart=-1;
-//    double ystart=-1;
-    //double x0=transformX(0);
-    //if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
-    double y0=transformY(m_baseline);
-    if (parent->getYAxis()->isLogAxis()) {
-        y0=transformY(parent->getYAxis()->getMin());
-        if (m_baseline>0 && m_baseline>parent->getYAxis()->getMin()) y0=transformY(m_baseline);
-        else y0=transformY(parent->getYAxis()->getMin());
-    }
-    bool subsequentItem=false;
-    intSortData();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv);
-            double y=transformY(yv);
-            if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
-                ps.append(QPointF(x,y));
-                if (subsequentItem) {
-                    //double xl1=xold;
-                    //double yl1=yold;
-                    //double xl2=x;
-                    //double yl2=y;
+        QPainterPath pl, pf;
+        QVector<QPointF> ps;
 
-                    if (m_specialLineType==JKQTPStepCenter) {
-                        //                      x/y
-                        //              |--------*
-                        //              |
-                        //     *--------|
-                        // xold/yold
-                        const double d=(x-xold);
-                        pf.lineTo(xold+d/2.0, yold);
-                        pf.lineTo(xold+d/2.0, y);
+        double xold=-1;
+        double yold=-1;
+    //    double xstart=-1;
+    //    double ystart=-1;
+        //double x0=transformX(0);
+        //if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
+        double y0=transformY(m_baseline);
+        if (parent->getYAxis()->isLogAxis()) {
+            y0=transformY(parent->getYAxis()->getMin());
+            if (m_baseline>0 && m_baseline>parent->getYAxis()->getMin()) y0=transformY(m_baseline);
+            else y0=transformY(parent->getYAxis()->getMin());
+        }
+        bool subsequentItem=false;
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            const int i=qBound(imin, getDataIndex(iii), imax);
+            const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                const double x=transformX(xv);
+                const double y=transformY(yv);
+                if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                    ps.append(QPointF(x,y));
+                    if (subsequentItem) {
+                        //double xl1=xold;
+                        //double yl1=yold;
+                        //double xl2=x;
+                        //double yl2=y;
+
+                        if (m_specialLineType==JKQTPStepCenter) {
+                            //                      x/y
+                            //              |--------*
+                            //              |
+                            //     *--------|
+                            // xold/yold
+                            const double d=(x-xold);
+                            pf.lineTo(xold+d/2.0, yold);
+                            pf.lineTo(xold+d/2.0, y);
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(xold+d/2.0, yold);
+                                pl.lineTo(xold+d/2.0, y);
+                                pl.lineTo(x, y);
+                            }
+                        } else if (m_specialLineType==JKQTPStepLeft) {
+                            //                     x/y
+                            //     |----------------*
+                            //     |
+                            //     *
+                            // xold/yold
+                            pf.lineTo(xold, y);
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(xold, y);
+                                pl.lineTo(x, y);
+                            }
+                        } else if (m_specialLineType==JKQTPStepRight) {
+                            //                     x/y
+                            //                      *
+                            //                      |
+                            //     *----------------|
+                            // xold/yold
+                            pf.lineTo(x, yold);
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(x, yold);
+                                pl.lineTo(x, y);
+                            }
+                        } else if (m_specialLineType==JKQTPStepAverage) {
+                            //                     x/y
+                            //                      *
+                            //                      |
+                            //     |----------------|
+                            //     |
+                            //     *
+                            // xold/yold
+                            //const double d=(x-xold);
+                            const double h=(y-yold);
+                            pf.lineTo(xold, yold+h/2.0);
+                            pf.lineTo(x, yold+h/2.0);
+                            pf.lineTo(x,y);
+                            if (getDrawLine()) {
+                                pl.lineTo(xold, yold+h/2.0);
+                                pl.lineTo(x, yold+h/2.0);
+                                pl.lineTo(x,y);
+                            }
+                        } else if (m_specialLineType==JKQTPDirectLine) {
+                            //                     x/y
+                            //                 /----*
+                            //           /----/
+                            //     *----/
+                            // xold/yold
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(x, y);
+                            }
+                        }
+
+                        //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
+                    } else {
+                        if (getDrawLine()) pl.moveTo(x,y);
+                        pf.moveTo(x, y0);
                         pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(xold+d/2.0, yold);
-                            pl.lineTo(xold+d/2.0, y);
-                            pl.lineTo(x, y);
-                        }
-                    } else if (m_specialLineType==JKQTPStepLeft) {
-                        //                     x/y
-                        //     |----------------*
-                        //     |
-                        //     *
-                        // xold/yold
-                        pf.lineTo(xold, y);
-                        pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(xold, y);
-                            pl.lineTo(x, y);
-                        }
-                    } else if (m_specialLineType==JKQTPStepRight) {
-                        //                     x/y
-                        //                      *
-                        //                      |
-                        //     *----------------|
-                        // xold/yold
-                        pf.lineTo(x, yold);
-                        pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(x, yold);
-                            pl.lineTo(x, y);
-                        }
-                    } else if (m_specialLineType==JKQTPStepAverage) {
-                        //                     x/y
-                        //                      *
-                        //                      |
-                        //     |----------------|
-                        //     |
-                        //     *
-                        // xold/yold
-                        //const double d=(x-xold);
-                        const double h=(y-yold);
-                        pf.lineTo(xold, yold+h/2.0);
-                        pf.lineTo(x, yold+h/2.0);
-                        pf.lineTo(x,y);
-                        if (m_drawLine) {
-                            pl.lineTo(xold, yold+h/2.0);
-                            pl.lineTo(x, yold+h/2.0);
-                            pl.lineTo(x,y);
-                        }
-                    } else if (m_specialLineType==JKQTPDirectLine) {
-                        //                     x/y
-                        //                 /----*
-                        //           /----/
-                        //     *----/
-                        // xold/yold
-                        pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(x, y);
-                        }
+                        //xstart=x;
+                        //ystart=y0;
                     }
-
-                    //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
-                } else {
-                    if (m_drawLine) pl.moveTo(x,y);
-                    pf.moveTo(x, y0);
-                    pf.lineTo(x, y);
-                    //xstart=x;
-                    //ystart=y0;
+                    xold=x;
+                    yold=y;
+                    subsequentItem=true;
                 }
-                xold=x;
-                yold=y;
-                subsequentItem=true;
+            }
+        }
+        if (getFillCurve()) {
+            pf.lineTo(xold, y0);
+            pf.closeSubpath();
+        }
+        painter.save();
+        auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+
+        if (getFillCurve()) {
+            painter.fillPath(pf, b);
+        }
+
+        if (isHighlighted()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(ph);
+            painter.drawPath(pl);
+        }
+
+        if (getDrawLine()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(p);
+            painter.drawPath(pl);
+        }
+
+        if (m_drawSymbols) {
+            painter.save();
+            auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
+            for (auto& ppoint: ps) {
+                plotStyledSymbol(parent, painter, ppoint.x(), ppoint.y());
             }
         }
     }
-    if (m_fillCurve) {
-        pf.lineTo(xold, y0);
-        pf.closeSubpath();
-    }
-    painter.save();
-    auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-
-    if (m_fillCurve) {
-        painter.fillPath(pf, b);
-    }
-
-    if (isHighlighted()) {
-        painter.setBrush(QBrush(Qt::transparent));
-        painter.setPen(ph);
-        painter.drawPath(pl);
-    }
-
-    if (m_drawLine) {
-        painter.setBrush(QBrush(Qt::transparent));
-        painter.setPen(p);
-        painter.drawPath(pl);
-    }
-
-    if (m_drawSymbols) {
-        painter.save();
-        auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
-        for (auto& ppoint: ps) {
-            plotStyledSymbol(parent, painter, ppoint.x(), ppoint.y());
-        }
-    }
-
 
     drawErrorsAfter(painter);
 }
@@ -353,136 +328,132 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
 
-    int imax=static_cast<int>(qMin(datastore->getRows(static_cast<size_t>(xColumn)), datastore->getRows(static_cast<size_t>(yColumn))));
+    int imax=0;
     int imin=0;
 
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
+    if (getIndexRange(imin, imax)) {
 
-    QPainterPath pl, pf;
-    QVector<QPointF> ps;
 
-    double xold=-1;
-    double yold=-1;
-    double x0=transformX(m_baseline);
-    if (parent->getXAxis()->isLogAxis()) {
-        if (m_baseline>0 && m_baseline>parent->getXAxis()->getMin()) x0=transformX(m_baseline);
-        else x0=transformX(parent->getXAxis()->getMin());
-    }
-    bool first=false;
-    intSortData();
-    for (int iii=imin; iii<imax; iii++) {
-        int i=qBound(imin, getDataIndex(iii), imax);
-        double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
-        if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
-            double x=transformX(xv);
-            double y=transformY(yv);
-            if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
-                ps.append(QPointF(x,y));
-                if (first) {
-                    //double xl1=xold;
-                    //double yl1=yold;
-                    //double xl2=x;
-                    //double yl2=y;
+        QPainterPath pl, pf;
+        QVector<QPointF> ps;
 
-                    if (m_specialLineType==JKQTPStepCenter) {
-                        double d=(y-yold);
-                        pf.lineTo(xold, yold+d/2.0);
-                        pf.lineTo(x, yold+d/2.0);
+        double xold=-1;
+        double yold=-1;
+        double x0=transformX(m_baseline);
+        if (parent->getXAxis()->isLogAxis()) {
+            if (m_baseline>0 && m_baseline>parent->getXAxis()->getMin()) x0=transformX(m_baseline);
+            else x0=transformX(parent->getXAxis()->getMin());
+        }
+        bool first=false;
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            const int i=qBound(imin, getDataIndex(iii), imax);
+            const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                const double x=transformX(xv);
+                const double y=transformY(yv);
+                if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                    ps.append(QPointF(x,y));
+                    if (first) {
+                        //double xl1=xold;
+                        //double yl1=yold;
+                        //double xl2=x;
+                        //double yl2=y;
+
+                        if (m_specialLineType==JKQTPStepCenter) {
+                            double d=(y-yold);
+                            pf.lineTo(xold, yold+d/2.0);
+                            pf.lineTo(x, yold+d/2.0);
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(xold, yold+d/2.0);
+                                pl.lineTo(x, yold+d/2.0);
+                                pl.lineTo(x, y);
+                            }
+                        } else if (m_specialLineType==JKQTPStepLeft) {
+                            pf.lineTo(x, yold);
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(x, yold);
+                                pl.lineTo(x, y);
+                            }
+                        } else if (m_specialLineType==JKQTPStepRight) {
+                            pf.lineTo(xold, y);
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(xold, y);
+                                pl.lineTo(x, y);
+                            }
+                        } else if (m_specialLineType==JKQTPStepAverage) {
+                            //                     x/y
+                            //              |-------*
+                            //              |
+                            //              |
+                            //              |
+                            //     *--------|
+                            // xold/yold
+                            const double d=(x-xold);
+                            //const double h=(y-yold);
+                            pf.lineTo(xold+d/2.0, yold);
+                            pf.lineTo(xold+d/2.0, y);
+                            pf.lineTo(x,y);
+                            if (getDrawLine()) {
+                                pl.lineTo(xold+d/2.0, yold);
+                                pl.lineTo(xold+d/2.0, y);
+                                pl.lineTo(x,y);
+                            }
+                        } else if (m_specialLineType==JKQTPDirectLine) {
+                            //                     x/y
+                            //                 /----*
+                            //           /----/
+                            //     *----/
+                            // xold/yold
+                            pf.lineTo(x, y);
+                            if (getDrawLine()) {
+                                pl.lineTo(x, y);
+                            }
+                        }
+
+                        //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
+                    } else {
+                        if (getDrawLine()) pl.moveTo(x,y);
+                        pf.moveTo(x0, y);
                         pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(xold, yold+d/2.0);
-                            pl.lineTo(x, yold+d/2.0);
-                            pl.lineTo(x, y);
-                        }
-                    } else if (m_specialLineType==JKQTPStepLeft) {
-                        pf.lineTo(x, yold);
-                        pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(x, yold);
-                            pl.lineTo(x, y);
-                        }
-                    } else if (m_specialLineType==JKQTPStepRight) {
-                        pf.lineTo(xold, y);
-                        pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(xold, y);
-                            pl.lineTo(x, y);
-                        }
-                    } else if (m_specialLineType==JKQTPStepAverage) {
-                        //                     x/y
-                        //              |-------*
-                        //              |
-                        //              |
-                        //              |
-                        //     *--------|
-                        // xold/yold
-                        const double d=(x-xold);
-                        //const double h=(y-yold);
-                        pf.lineTo(xold+d/2.0, yold);
-                        pf.lineTo(xold+d/2.0, y);
-                        pf.lineTo(x,y);
-                        if (m_drawLine) {
-                            pl.lineTo(xold+d/2.0, yold);
-                            pl.lineTo(xold+d/2.0, y);
-                            pl.lineTo(x,y);
-                        }
-                    } else if (m_specialLineType==JKQTPDirectLine) {
-                        //                     x/y
-                        //                 /----*
-                        //           /----/
-                        //     *----/
-                        // xold/yold
-                        pf.lineTo(x, y);
-                        if (m_drawLine) {
-                            pl.lineTo(x, y);
-                        }
                     }
-
-                    //std::cout<<"line ("<<xl1<<", "<<yl1<<") -- ("<<xl2<<", "<<yl2<<")"<<std::endl;
-                } else {
-                    if (m_drawLine) pl.moveTo(x,y);
-                    pf.moveTo(x0, y);
-                    pf.lineTo(x, y);
+                    xold=x;
+                    yold=y;
+                    first=true;
                 }
-                xold=x;
-                yold=y;
-                first=true;
             }
         }
-    }
-    pf.lineTo(x0, yold);
-    pf.closeSubpath();
-    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+        pf.lineTo(x0, yold);
+        pf.closeSubpath();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    if (m_fillCurve) {
-        painter.fillPath(pf, b);
-    }
+        if (getFillCurve()) {
+            painter.fillPath(pf, b);
+        }
 
-    if (isHighlighted()) {
-        painter.setBrush(QBrush(Qt::transparent));
-        painter.setPen(ph);
-        painter.drawPath(pl);
-    }
+        if (isHighlighted()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(ph);
+            painter.drawPath(pl);
+        }
 
-    if (m_drawLine) {
-        painter.setBrush(QBrush(Qt::transparent));
-        painter.setPen(p);
-        painter.drawPath(pl);
-    }
+        if (getDrawLine()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(p);
+            painter.drawPath(pl);
+        }
 
-    if (m_drawSymbols) {
-        painter.save();
-        auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
-        for (auto& point: ps) {
-            plotStyledSymbol(parent, painter, point.x(), point.y());
+        if (m_drawSymbols) {
+            painter.save();
+            auto __finalpaintsym=JKQTPFinally([&painter]() {painter.restore();});
+            for (auto& point: ps) {
+                plotStyledSymbol(parent, painter, point.x(), point.y());
+            }
         }
     }
 
