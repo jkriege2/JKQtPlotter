@@ -32,17 +32,50 @@
 
 
 
+JKQTPFilledCurveGraphBase::JKQTPFilledCurveGraphBase(JKQTBasePlotter *parent):
+    JKQTPXYBaselineGraph(parent)
+{
+    parentPlotStyle=-1;
+    initLineStyle(parent, parentPlotStyle);
+    initFillStyle(parent, parentPlotStyle);
+    setFillCurve(true);
+    setDrawLine(true);
+}
+
+QColor JKQTPFilledCurveGraphBase::getKeyLabelColor() const
+{
+    return getLineColor();
+}
+
+void JKQTPFilledCurveGraphBase::drawKeyMarker(JKQTPEnhancedPainter &painter, QRectF &rect)
+{
+    painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+    QPen p=getLinePen(painter, parent);
+    QPen np(Qt::NoPen);
+    QBrush b=getFillBrush(painter, parent);
+    const double y=rect.top()+rect.height()/2.0;
+    painter.setPen(np);
+    if (getDrawLine()) painter.setPen(p);
+    painter.setBrush(b);
+    if (getFillCurve()) painter.drawRect(rect);
+    if (!getFillCurve() && getDrawLine()) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+}
+
+void JKQTPFilledCurveGraphBase::setColor(QColor c)
+{
+    setLineColor(c);
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    c.setAlphaF(0.5);
+    setHighlightingLineColor(c);
+}
 
 
 
 
 JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTBasePlotter* parent):
-    JKQTPSpecialLineHorizontalGraph(parent)
+    JKQTPFilledCurveGraphBase(parent)
 {
-    setDrawLine(true);
-    setDrawSymbols(false);
-    setFillCurve(true);
-    setSpecialLineType(JKQTPDirectLine);
+
 }
 
 JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTPlotter *parent):
@@ -51,21 +84,185 @@ JKQTPFilledCurveXGraph::JKQTPFilledCurveXGraph(JKQTPlotter *parent):
 
 }
 
+void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaaot("JKQTPFilledCurveXGraph::draw");
+#endif
+    if (parent==nullptr) return;
+    JKQTPDatastore* datastore=parent->getDatastore();
+    if (datastore==nullptr) return;
 
+    drawErrorsBefore(painter);
+
+    QPen p=getLinePen(painter, parent);
+    QPen ph=getHighlightingLinePen(painter, parent);
+    QPen np(Qt::NoPen);
+    QBrush b=getFillBrush(painter, parent);
+
+    int imax=0;
+    int imin=0;
+
+    if (getIndexRange(imin, imax)) {
+
+
+        QPainterPath pl, pf;
+
+        double xold=-1;
+        double yold=-1;
+        double y0=transformY(getBaseline());
+        if (parent->getYAxis()->isLogAxis()) {
+            y0=transformY(parent->getYAxis()->getMin());
+            if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
+            else y0=transformY(parent->getYAxis()->getMin());
+        }
+        bool subsequentItem=false;
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            const int i=qBound(imin, getDataIndex(iii), imax);
+            const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                const double x=transformX(xv);
+                const double y=transformY(yv);
+                if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                    if (subsequentItem) {
+                        pf.lineTo(x, y);
+                        if (getDrawLine()) {
+                            pl.lineTo(x, y);
+                        }
+                    } else {
+                        if (getDrawLine()) pl.moveTo(x,y);
+                        pf.moveTo(x, y0);
+                        pf.lineTo(x, y);
+                    }
+                    xold=x;
+                    yold=y;
+                    subsequentItem=true;
+                }
+            }
+        }
+        if (getFillCurve()) {
+            pf.lineTo(xold, y0);
+            pf.closeSubpath();
+        }
+        painter.save();
+        auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+
+        if (getFillCurve()) {
+            painter.fillPath(pf, b);
+        }
+
+        if (isHighlighted()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(ph);
+            painter.drawPath(pl);
+        }
+
+        if (getDrawLine()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(p);
+            painter.drawPath(pl);
+        }
+
+    }
+
+    drawErrorsAfter(painter);
+}
 
 JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTBasePlotter* parent):
-    JKQTPSpecialLineVerticalGraph(parent)
+    JKQTPFilledCurveGraphBase(parent)
 {
-    setDrawLine(true);
-    setDrawSymbols(false);
-    setFillCurve(true);
-    setSpecialLineType(JKQTPDirectLine);
 }
 
 JKQTPFilledCurveYGraph::JKQTPFilledCurveYGraph(JKQTPlotter *parent):
     JKQTPFilledCurveYGraph(parent->getPlotter())
 {
 
+}
+
+void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter &painter)
+{
+#ifdef JKQTBP_AUTOTIMER
+    JKQTPAutoOutputTimer jkaaot("JKQTPSpecialLineVerticalGraph::draw");
+#endif
+    if (parent==nullptr) return;
+    JKQTPDatastore* datastore=parent->getDatastore();
+    if (datastore==nullptr) return;
+
+    drawErrorsBefore(painter);
+
+    QPen p=getLinePen(painter, parent);
+    QPen ph=getHighlightingLinePen(painter, parent);
+    QPen np(Qt::NoPen);
+    QBrush b=getFillBrush(painter, parent);
+
+    int imax=0;
+    int imin=0;
+
+    if (getIndexRange(imin, imax)) {
+
+
+        QPainterPath pl, pf;
+
+        double xold=-1;
+        double yold=-1;
+        double x0=transformX(getBaseline());
+        if (parent->getXAxis()->isLogAxis()) {
+            if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
+            else x0=transformX(parent->getXAxis()->getMin());
+        }
+        bool first=false;
+        intSortData();
+        for (int iii=imin; iii<imax; iii++) {
+            const int i=qBound(imin, getDataIndex(iii), imax);
+            const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            //std::cout<<"(xv, yv) =    ( "<<xv<<", "<<yv<<" )\n";
+            if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
+                const double x=transformX(xv);
+                const double y=transformY(yv);
+                if (JKQTPIsOKFloat(x) && JKQTPIsOKFloat(y)) {
+                    if (first) {
+
+                        pf.lineTo(x, y);
+                        if (getDrawLine()) {
+                            pl.lineTo(x, y);
+                        }
+                    } else {
+                        if (getDrawLine()) pl.moveTo(x,y);
+                        pf.moveTo(x0, y);
+                        pf.lineTo(x, y);
+                    }
+                    xold=x;
+                    yold=y;
+                    first=true;
+                }
+            }
+        }
+        pf.lineTo(x0, yold);
+        pf.closeSubpath();
+        painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
+
+        if (getFillCurve()) {
+            painter.fillPath(pf, b);
+        }
+
+        if (isHighlighted()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(ph);
+            painter.drawPath(pl);
+        }
+
+        if (getDrawLine()) {
+            painter.setBrush(QBrush(Qt::transparent));
+            painter.setPen(p);
+            painter.drawPath(pl);
+        }
+
+    }
+
+    drawErrorsAfter(painter);
 }
 
 
@@ -349,3 +546,4 @@ QColor JKQTPFilledHorizontalRangeGraph::getKeyLabelColor() const
 {
     return getLineColor();
 }
+

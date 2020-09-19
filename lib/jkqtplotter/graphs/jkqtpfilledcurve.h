@@ -30,6 +30,33 @@
 
 
 
+/** \brief a Base class for filled curve graphs like e.g. JKQTPFilledCurveXGraph
+ *  \ingroup jkqtplotter_linesymbolgraphs_simple
+ *
+ *  \image html filledgraphs.png
+ *
+ *  \see JKQTPFilledCurveXGraph, JKQTPFilledCurveYGraph
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin {
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    explicit JKQTPFilledCurveGraphBase(JKQTBasePlotter* parent=nullptr);
+
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+
+public slots:
+    /** \brief set line-color, fill color and symbol color */
+    void setColor(QColor c);
+protected:
+
+};
+
+
+
 /*! \brief This implements filled curve plots where the area is filled between the plot line and the x-Axis.
     \ingroup jkqtplotter_filledgraphs
 
@@ -37,13 +64,15 @@
 
     \see \ref JKQTPlotterFilledGraphs
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPSpecialLineHorizontalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPFilledCurveGraphBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
         JKQTPFilledCurveXGraph(JKQTBasePlotter* parent=nullptr);
         /** \brief class constructor */
         JKQTPFilledCurveXGraph(JKQTPlotter* parent);
+        /** \brief plots the graph to the plotter object specified as parent */
+        void draw(JKQTPEnhancedPainter &painter);
 };
 
 
@@ -85,7 +114,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurv
     \see \ref JKQTPlotterFilledGraphs
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPSpecialLineVerticalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveGraphBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -93,6 +122,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPSpecialLineVert
         /** \brief class constructor */
         JKQTPFilledCurveYGraph(JKQTPlotter* parent);
 
+        /** \brief plots the graph to the plotter object specified as parent */
+        void draw(JKQTPEnhancedPainter &painter);
 
 };
 
