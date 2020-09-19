@@ -35,9 +35,8 @@
 
 
 JKQTPImpulsesHorizontalGraph::JKQTPImpulsesHorizontalGraph(JKQTBasePlotter* parent):
-    JKQTPXYGraph(parent)
+    JKQTPXYBaselineGraph(parent)
 {
-    baseline=0;
     drawSymbols=false;
     initLineStyle(parent, parentPlotStyle);
     initSymbolStyle(parent, parentPlotStyle);
@@ -76,15 +75,15 @@ void JKQTPImpulsesHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         //double xold=-1;
         //double yold=-1;
-        double x0=transformX(baseline);
+        double x0=transformX(getBaseline());
         if (parent->getXAxis()->isLogAxis()) {
-            if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
+            if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
             else x0=transformX(parent->getXAxis()->getMin());
         }
-    //    double y0=transformY(baseline);
+    //    double y0=transformY(getBaseline());
     //    if (parent->getYAxis()->isLogAxis()) {
     //        y0=transformY(parent->getYAxis()->getMin());
-    //        if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
+    //        if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
     //        else y0=transformY(parent->getYAxis()->getMin());
     //    }
         //bool first=false;
@@ -143,16 +142,6 @@ void JKQTPImpulsesHorizontalGraph::setColor(QColor c)
     setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
-}
-
-void JKQTPImpulsesHorizontalGraph::setBaseline(double __value)
-{
-    this->baseline = __value;
-}
-
-double JKQTPImpulsesHorizontalGraph::getBaseline() const
-{
-    return this->baseline;
 }
 
 void JKQTPImpulsesHorizontalGraph::setDrawSymbols(bool __value)
@@ -214,15 +203,15 @@ void JKQTPImpulsesVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
         //double xold=-1;
         //double yold=-1;
         //bool first=false;
-    //    double x0=transformX(baseline);
+    //    double x0=transformX(getBaseline());
     //    if (parent->getXAxis()->isLogAxis()) {
-    //        if (baseline>0 && baseline>parent->getXAxis()->getMin()) x0=transformX(baseline);
+    //        if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
     //        else x0=transformX(parent->getXAxis()->getMin());
     //    }
-        double y0=transformY(baseline);
+        double y0=transformY(getBaseline());
         if (parent->getYAxis()->isLogAxis()) {
             y0=transformY(parent->getYAxis()->getMin());
-            if (baseline>0 && baseline>parent->getYAxis()->getMin()) y0=transformY(baseline);
+            if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
             else y0=transformY(parent->getYAxis()->getMin());
         }
         QVector<QLineF> lines;

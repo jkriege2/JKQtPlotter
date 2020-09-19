@@ -50,7 +50,7 @@ class JKQTPDatastore;
 
     \see JKQTPSpecialLineVerticalGraph, JKQTPFilledCurveXGraph, \ref JKQTPlotterSpecialStepLinePlot
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineAndFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -74,10 +74,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGrap
         void setSpecialLineType(const JKQTPSpecialLineType & __value);
         /** \brief get the type of connecting (step-)lines */
         JKQTPSpecialLineType getSpecialLineType() const;
-        /*! sets baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!) */
-        void setBaseline(double __value);
-        /*! returns the baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!) */
-        double getBaseline() const;
+
         /** \brief set line-color, fill color and symbol color */
         void setColor(QColor c);
     protected:
@@ -86,8 +83,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSpecialLineHorizontalGraph: public JKQTPXYGrap
         bool m_drawSymbols;
         /** \brief type of connecting (step)lines */
         JKQTPSpecialLineType m_specialLineType;
-        /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!) */
-        double m_baseline;
+
 
 };
 

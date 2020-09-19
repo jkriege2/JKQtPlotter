@@ -638,6 +638,36 @@ protected:
 
 
 
+/** \brief This virtual JKQTPGraph descendent extends JKQTPXYGraph adds a baseline-property, which is necessary, e.g. for barcharts, filled graphs to indicate until where to draw the bar or fill the curve (default is 0).
+ *  \ingroup jkqtplotter_basegraphs
+ *
+ *  \see JKQTPSpecialLineHorizontalGraph, JKQTPBarVerticalGraph, JKQTPImpulsesHorizontalGraph, ...
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPXYBaselineGraph: public JKQTPXYGraph {
+    Q_OBJECT
+public:
+
+    /** \brief class constructor */
+    JKQTPXYBaselineGraph(JKQTBasePlotter* parent=nullptr);
+
+    /** \copydoc m_baseline */
+    double getBaseline() const;
+
+    Q_PROPERTY(double baseline READ getBaseline WRITE setBaseline)
+public slots:
+    /** \copydoc m_baseline */
+    void setBaseline(double __value);
+
+protected:
+
+    /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
+     *
+     * \image html impulsesplot_baseline.png
+     */
+    double m_baseline;
+};
+
+
 /** \brief This virtual JKQTPGraph descendent extends JKQTPXYGraph to two columns for y-values (e.g. for filled range plots in JKQTPFilledVerticalRangeGraph).
  *  \ingroup jkqtplotter_basegraphs
  *

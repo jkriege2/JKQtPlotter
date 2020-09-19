@@ -972,3 +972,19 @@ bool JKQTPXXYGraph::getIndexRange(int &imin, int &imax) const
     }
     return ok;
 }
+
+JKQTPXYBaselineGraph::JKQTPXYBaselineGraph(JKQTBasePlotter *parent):
+    JKQTPXYGraph(parent), m_baseline(0.0)
+{
+
+}
+
+double JKQTPXYBaselineGraph::getBaseline() const
+{
+    return m_baseline;
+}
+
+void JKQTPXYBaselineGraph::setBaseline(double __value)
+{
+    m_baseline=__value;
+}

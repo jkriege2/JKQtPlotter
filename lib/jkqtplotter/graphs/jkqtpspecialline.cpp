@@ -37,11 +37,10 @@
 
 
 JKQTPSpecialLineHorizontalGraph::JKQTPSpecialLineHorizontalGraph(JKQTBasePlotter* parent):
-    JKQTPXYGraph(parent)
+    JKQTPXYBaselineGraph(parent)
 {
     m_drawSymbols=false;
     m_specialLineType=JKQTPStepLeft;
-    m_baseline=0;
 
     parentPlotStyle=-1;
     initLineStyle(parent, parentPlotStyle);
@@ -99,15 +98,6 @@ JKQTPSpecialLineType JKQTPSpecialLineHorizontalGraph::getSpecialLineType() const
     return this->m_specialLineType;
 }
 
-void JKQTPSpecialLineHorizontalGraph::setBaseline(double __value)
-{
-    this->m_baseline = __value;
-}
-
-double JKQTPSpecialLineHorizontalGraph::getBaseline() const
-{
-    return this->m_baseline;
-}
 
 void JKQTPSpecialLineHorizontalGraph::setColor(QColor c)
 {
@@ -150,10 +140,10 @@ void JKQTPSpecialLineHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
     //    double ystart=-1;
         //double x0=transformX(0);
         //if (parent->getXAxis()->isLogAxis()) x0=transformX(parent->getXAxis()->getMin());
-        double y0=transformY(m_baseline);
+        double y0=transformY(getBaseline());
         if (parent->getYAxis()->isLogAxis()) {
             y0=transformY(parent->getYAxis()->getMin());
-            if (m_baseline>0 && m_baseline>parent->getYAxis()->getMin()) y0=transformY(m_baseline);
+            if (getBaseline()>0 && getBaseline()>parent->getYAxis()->getMin()) y0=transformY(getBaseline());
             else y0=transformY(parent->getYAxis()->getMin());
         }
         bool subsequentItem=false;
@@ -339,9 +329,9 @@ void JKQTPSpecialLineVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
 
         double xold=-1;
         double yold=-1;
-        double x0=transformX(m_baseline);
+        double x0=transformX(getBaseline());
         if (parent->getXAxis()->isLogAxis()) {
-            if (m_baseline>0 && m_baseline>parent->getXAxis()->getMin()) x0=transformX(m_baseline);
+            if (getBaseline()>0 && getBaseline()>parent->getXAxis()->getMin()) x0=transformX(getBaseline());
             else x0=transformX(parent->getXAxis()->getMin());
         }
         bool first=false;

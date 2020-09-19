@@ -92,7 +92,7 @@ void JKQTPBarVerticalGraph::draw(JKQTPEnhancedPainter& painter) {
             int lr=datastore->getNextHigherIndex(xColumn, i);
             double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
             double yv0=y0;
-            if (!qFuzzyIsNull(baseline)) yv0=transformY(baseline);
+            if (!qFuzzyIsNull(getBaseline())) yv0=transformY(getBaseline());
             if (hasStackPar) {
                 double stackLastY=getParentStackedMax(i);
                 const double yvold=yv;
@@ -276,7 +276,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
             int sr=datastore->getNextLowerIndex(yColumn, i);
             int lr=datastore->getNextHigherIndex(yColumn, i);
             double xv0=x0;
-            if (!qFuzzyIsNull(baseline)) xv0=transformX(baseline);
+            if (!qFuzzyIsNull(getBaseline())) xv0=transformX(getBaseline());
             if (hasStackPar) {
                 double stackLastX=getParentStackedMax(i);
                 const double xvold=xv;
@@ -300,7 +300,7 @@ void JKQTPBarHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
             if (JKQTPIsOKFloat(xv) && JKQTPIsOKFloat(yv)) {
                 double x=xv0;
-                if (!qFuzzyIsNull(baseline)) x=transformX(baseline);
+                if (!qFuzzyIsNull(getBaseline())) x=transformX(getBaseline());
                 double y=transformY(yv+shift*delta+width*deltap);
                 double xx=transformX(xv);
                 double yy=transformY(yv+shift*delta-width*deltam);
@@ -456,10 +456,10 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         miny=0;
         maxy=0;
         smallestGreaterZero=0;
-        if (baseline>0) {
-            smallestGreaterZero=baseline;
-            miny=baseline;
-            maxy=baseline;
+        if (getBaseline()>0) {
+            smallestGreaterZero=getBaseline();
+            miny=getBaseline();
+            maxy=getBaseline();
         }
 
         if (parent==nullptr) return false;
@@ -476,7 +476,7 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         if (imax<0) imax=0;
 
         for (int i=imin; i<imax; i++) {
-            double yv=baseline;
+            double yv=getBaseline();
             if (JKQTPIsOKFloat(yv)) {
                 if (yv>maxy) maxy=yv;
                 if (yv<miny) miny=yv;
@@ -494,13 +494,13 @@ bool JKQTPBarVerticalErrorGraph::getYMinMax(double &miny, double &maxy, double &
         return true;
     } else {
         bool start=false;
-        miny=baseline;
-        maxy=baseline;
+        miny=getBaseline();
+        maxy=getBaseline();
         smallestGreaterZero=0;
-        if (baseline>0) {
-            smallestGreaterZero=baseline;
-            miny=baseline;
-            maxy=baseline;
+        if (getBaseline()>0) {
+            smallestGreaterZero=getBaseline();
+            miny=getBaseline();
+            maxy=getBaseline();
         }
 
         if (parent==nullptr) return false;
@@ -610,7 +610,7 @@ double JKQTPBarVerticalStackableGraph::getParentStackedMax(int index) const
     if (stackParent) {
         return stackParent->getStackedMax(index);
     } else {
-        return baseline;
+        return getBaseline();
     }
 }
 
@@ -695,7 +695,7 @@ double JKQTPBarHorizontalStackableGraph::getParentStackedMax(int index) const
     if (stackParent) {
         return stackParent->getStackedMax(index);
     } else {
-        return baseline;
+        return getBaseline();
     }
 }
 

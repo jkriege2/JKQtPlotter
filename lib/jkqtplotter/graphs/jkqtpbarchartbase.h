@@ -54,7 +54,7 @@
  *
  *  \see JKQTPBarHorizontalGraph, JKQTPBarVerticalGraph
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -73,8 +73,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYGraph, public JKQT
         double getShift() const;
         /*! \copydoc width */ 
         double getWidth() const;
-        /*! \copydoc baseline */ 
-        double getBaseline() const;
+
         /** \brief sets the fill color and the color together, where fillColor is set to \a fill and the line-color is set to \c fill.darker(colorDarker)
          *  \see setColor()
          */
@@ -103,8 +102,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYGraph, public JKQT
         void setShift(double __value);
         /*! \copydoc width */
         void setWidth(double __value);
-        /*! \copydoc baseline */
-        void setBaseline(double __value);
+
 
         /** \brief set outline and fill color at the same time
          *  \see setFillColor_and_darkenedColor()
@@ -137,9 +135,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYGraph, public JKQT
          */
         double shift;
 
-        /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
-         */
-        double baseline;
 
         /** \brief this function is used by autoscaleBarWidthAndShift() to determine whether a given graph shall be taken into account when autoscaling. 
 		 *         Typically this returns \c true for all JKQTPBarGraphBase-derved objects with the same orientation (horizontal or vertical) */

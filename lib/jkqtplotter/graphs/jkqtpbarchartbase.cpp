@@ -37,7 +37,7 @@
 
 
 JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
-    JKQTPXYGraph(parent), width(0.9), shift(0), baseline(0.0)
+    JKQTPXYBaselineGraph(parent), width(0.9), shift(0)
 {
     initFillStyle(parent, parentPlotStyle);
     initLineStyle(parent, parentPlotStyle);
@@ -134,16 +134,6 @@ double JKQTPBarGraphBase::getWidth() const
     return this->width;
 }
 
-void JKQTPBarGraphBase::setBaseline(double __value)
-{
-    this->baseline = __value;
-}
-
-double JKQTPBarGraphBase::getBaseline() const
-{
-    return this->baseline;
-}
-
 void JKQTPBarGraphBase::setFillColor_and_darkenedColor(QColor fill, int colorDarker)
 {
     setFillColor(fill);
@@ -152,7 +142,7 @@ void JKQTPBarGraphBase::setFillColor_and_darkenedColor(QColor fill, int colorDar
 
 double JKQTPBarGraphBase::getParentStackedMax(int /*index*/) const
 {
-    return baseline;
+    return getBaseline();
 }
 
 bool JKQTPBarGraphBase::hasStackParent() const
@@ -165,10 +155,10 @@ bool JKQTPBarGraphBase::getValuesMinMax(double &mmin, double &mmax, double &smal
     mmin=0;
     mmax=0;
     smallestGreaterZero=0;
-    if (baseline>0) {
-        smallestGreaterZero=baseline;
-        mmin=baseline;
-        mmax=baseline;
+    if (getBaseline()>0) {
+        smallestGreaterZero=getBaseline();
+        mmin=getBaseline();
+        mmax=getBaseline();
     }
 
     if (getBarPositionColumn()<0 || getBarHeightColumn()<0) return false;
@@ -184,7 +174,7 @@ bool JKQTPBarGraphBase::getValuesMinMax(double &mmin, double &mmax, double &smal
 
         for (int i=imin; i<imax; i++) {
             double stack=0;
-            double yv=baseline;
+            double yv=getBaseline();
             const double boxstart=getParentStackedMax(i);
             if (hasStackParent()) {
                 stack=boxstart;

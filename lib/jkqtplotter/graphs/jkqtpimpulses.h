@@ -34,7 +34,7 @@
 
     \see JKQTPImpulsesVerticalGraph, \ref JKQTPlotterImpulsePlots
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin{
+class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYBaselineGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphSymbolStyleMixin{
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -52,11 +52,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, 
         /*! \brief color of symbols and impulses in one call */
         virtual void setColor(QColor c);
 
-        /*! \copydoc baseline */
-        void setBaseline(double __value);
-        /*! \copydoc baseline */
-        double getBaseline() const;
-
         /*! \copydoc drawSymbols */
         void setDrawSymbols(bool __value);
         /*! \copydoc drawSymbols */
@@ -64,11 +59,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImpulsesHorizontalGraph: public JKQTPXYGraph, 
 
     protected:
 
-        /** \brief baseline of the plot (NOTE: 0 is interpreted as until plot border in log-mode!!!)
-         *
-         * \image html impulsesplot_baseline.png
-         */
-        double baseline;
         /** \brief indicates whether to draw symbols at the top of the impulse
          *
          * \image html impulsesplot_symbols.png
