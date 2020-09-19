@@ -446,6 +446,27 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
 
 
 
+/** \brief This Mix-In class provides setter/getter methods, storage and other facilities for the graph line and fill style
+ *  \ingroup jkqtplotter_basegraphs_stylemixins
+*/
+class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineAndFillStyleMixin: public JKQTPGraphFillStyleMixin, public JKQTPGraphLineStyleMixin {
+    Q_GADGET
+public:
+    /** \brief class constructor */
+    JKQTPGraphLineAndFillStyleMixin();
+
+    /*! \copydoc m_drawLine */
+    void setDrawLine(bool __value);
+    /*! \copydoc m_drawLine */
+    bool getDrawLine() const;
+    /*! \copydoc m_drawLine */
+    bool doDrawLine() const;
+    Q_PROPERTY(bool drawLine MEMBER m_drawLine READ getDrawLine WRITE setDrawLine)
+private:
+    /** \brief indicates whether to draw a line on the circumference of the described area (i.e. along the data points from \c xColumn and \c yColumn as well as \c xColumn and \c yColumn2 or not */
+    bool m_drawLine;
+};
+
 
 
 /*! \brief This Mix-In class provides setter/getter methods, storage and other facilities for text in graphs

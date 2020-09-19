@@ -137,23 +137,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYErrorGraph: public JKQTPFilledCurv
   *
   * \image html JKQTPfilledVerticalRangeGraph_WithLines.png
   *
-  * \see \ref JKQTPlotterDateTimeAxes
+  * \see JKQTPFilledHorizontalRangeGraph, \ref JKQTPlotterDateTimeAxes
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYGraph, public JKQTPGraphLineStyleMixin, public JKQTPGraphFillStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledVerticalRangeGraph: public JKQTPXYYGraph, public JKQTPGraphLineAndFillStyleMixin {
     Q_OBJECT
 public:
     /** \brief class constructor */
     JKQTPFilledVerticalRangeGraph(JKQTBasePlotter* parent=nullptr);
     /** \brief class constructor */
     JKQTPFilledVerticalRangeGraph(JKQTPlotter* parent);
-    /** \brief get the maximum and minimum y-value of the graph
-         *
-         * The result is given in the two parameters which are call-by-reference parameters!
-         */
-    virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
-
-    /** \copydoc JKQTPGraph::usesColumn() */
-    virtual bool usesColumn(int column) const override;
 
     /** \brief plots the graph to the plotter object specified as parent */
     virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -162,26 +154,49 @@ public:
     /** \brief returns the color to be used for the key label */
     virtual QColor getKeyLabelColor() const override;
 
-    /*! \copydoc yColumn2 */
-    void setYColumn2(int __value);
-    /*! \copydoc yColumn2 */
-    int getYColumn2() const;
-    /*! \copydoc yColumn2 */
-    void setYColumn2 (size_t __value);
 
-    /*! \copydoc drawLine */
-    void setDrawLine(bool __value);
-    /*! \copydoc drawLine */
-    bool getDrawLine() const;
+protected:
+
+
+};
+
+
+
+
+
+
+
+/** \brief This implements filled curve plots where the area is filled between two data columns for each y-value
+  * \ingroup jkqtplotter_filledgraphs
+  *
+  * With \c setDrawlines(false):
+  *
+  * \image html JKQTPFilledHorizontalRangeGraph.png
+  *
+  * With \c setDrawlines(true):
+  *
+  * \image html JKQTPFilledHorizontalRangeGraph_WithLines.png
+  *
+  * \see JKQTPFilledVerticalRangeGraph, \ref JKQTPlotterDateTimeAxes
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPFilledHorizontalRangeGraph: public JKQTPXXYGraph, public JKQTPGraphLineAndFillStyleMixin {
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    JKQTPFilledHorizontalRangeGraph(JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    JKQTPFilledHorizontalRangeGraph(JKQTPlotter* parent);
+
+    /** \brief plots the graph to the plotter object specified as parent */
+    virtual void draw(JKQTPEnhancedPainter& painter) override;
+    /** \brief plots a key marker inside the specified rectangle \a rect */
+    virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
 
 
 protected:
 
-    /** \brief the column that contains the second y-component of the range */
-    int yColumn2;
-
-    /** \brief indicates whether to draw a line on the circumference of the described area (i.e. along the data points from \c xColumn and \c yColumn as well as \c xColumn and \c yColumn2 or not */
-    bool drawLine;
 
 };
 

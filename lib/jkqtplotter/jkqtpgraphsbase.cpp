@@ -711,28 +711,30 @@ bool JKQTPXYYGraph::getYMinMax(double &miny, double &maxy, double &smallestGreat
     const JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=0;
-    getIndexRange(imin, imax);
+    if (getIndexRange(imin, imax)) {
 
 
-    for (int i=imin; i<imax; i++) {
-        const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
-        if (JKQTPIsOKFloat(yv)) {
-            if (start || yv>maxy) maxy=yv;
-            if (start || yv<miny) miny=yv;
-            double xvsgz;
-            xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
-            start=false;
+        for (int i=imin; i<imax; i++) {
+            const double yv=datastore->get(static_cast<size_t>(yColumn),static_cast<size_t>(i));
+            if (JKQTPIsOKFloat(yv)) {
+                if (start || yv>maxy) maxy=yv;
+                if (start || yv<miny) miny=yv;
+                double xvsgz;
+                xvsgz=yv; SmallestGreaterZeroCompare_xvsgz();
+                start=false;
+            }
+            const double yv2=datastore->get(static_cast<size_t>(yColumn2),static_cast<size_t>(i));
+            if (JKQTPIsOKFloat(yv2)) {
+                if (start || yv2>maxy) maxy=yv2;
+                if (start || yv2<miny) miny=yv2;
+                double xvsgz;
+                xvsgz=yv2; SmallestGreaterZeroCompare_xvsgz();
+                start=false;
+            }
         }
-        const double yv2=datastore->get(static_cast<size_t>(yColumn2),static_cast<size_t>(i));
-        if (JKQTPIsOKFloat(yv2)) {
-            if (start || yv2>maxy) maxy=yv2;
-            if (start || yv2<miny) miny=yv2;
-            double xvsgz;
-            xvsgz=yv2; SmallestGreaterZeroCompare_xvsgz();
-            start=false;
-        }
+        return !start;
     }
-    return !start;
+    return false;
 }
 
 bool JKQTPXYYGraph::usesColumn(int column) const
@@ -852,28 +854,30 @@ bool JKQTPXXYGraph::getXMinMax(double &minx, double &maxx, double &smallestGreat
     const JKQTPDatastore* datastore=parent->getDatastore();
     int imin=0;
     int imax=0;
-    getIndexRange(imin, imax);
+    if (getIndexRange(imin, imax)) {
 
 
-    for (int i=imin; i<imax; i++) {
-        const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
-        if (JKQTPIsOKFloat(xv)) {
-            if (start || xv>maxx) maxx=xv;
-            if (start || xv<minx) minx=xv;
-            double xvsgz;
-            xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
-            start=false;
+        for (int i=imin; i<imax; i++) {
+            const double xv=datastore->get(static_cast<size_t>(xColumn),static_cast<size_t>(i));
+            if (JKQTPIsOKFloat(xv)) {
+                if (start || xv>maxx) maxx=xv;
+                if (start || xv<minx) minx=xv;
+                double xvsgz;
+                xvsgz=xv; SmallestGreaterZeroCompare_xvsgz();
+                start=false;
+            }
+            const double xv2=datastore->get(static_cast<size_t>(xColumn2),static_cast<size_t>(i));
+            if (JKQTPIsOKFloat(xv2)) {
+                if (start || xv2>maxx) maxx=xv2;
+                if (start || xv2<minx) minx=xv2;
+                double xvsgz;
+                xvsgz=xv2; SmallestGreaterZeroCompare_xvsgz();
+                start=false;
+            }
         }
-        const double xv2=datastore->get(static_cast<size_t>(xColumn2),static_cast<size_t>(i));
-        if (JKQTPIsOKFloat(xv2)) {
-            if (start || xv2>maxx) maxx=xv2;
-            if (start || xv2<minx) minx=xv2;
-            double xvsgz;
-            xvsgz=xv2; SmallestGreaterZeroCompare_xvsgz();
-            start=false;
-        }
+        return !start;
     }
-    return !start;
+    return false;
 }
 
 bool JKQTPXXYGraph::usesColumn(int column) const

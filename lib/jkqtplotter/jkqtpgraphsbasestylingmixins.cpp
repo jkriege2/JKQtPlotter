@@ -565,3 +565,24 @@ double JKQTPGraphDecoratedHeadLineStyleMixin::calcHeadDecoratorSize(double line_
 }
 
 
+
+JKQTPGraphLineAndFillStyleMixin::JKQTPGraphLineAndFillStyleMixin():
+    m_drawLine(true)
+{
+
+}
+
+void JKQTPGraphLineAndFillStyleMixin::setDrawLine(bool __value)
+{
+    m_drawLine=__value;
+}
+
+bool JKQTPGraphLineAndFillStyleMixin::getDrawLine() const
+{
+    return m_drawLine;
+}
+
+bool JKQTPGraphLineAndFillStyleMixin::doDrawLine() const
+{
+    return m_drawLine;
+}
