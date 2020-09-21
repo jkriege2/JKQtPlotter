@@ -33,6 +33,109 @@
 
 
 
+/** \brief This implements a single vertical <a href="https://en.wikipedia.org/wiki/Violin_plot">Violin Plot</a> as a "geometric element"
+ *  \ingroup jkqtplotter_statgraphs
+ *  \ingroup jkqtplotter_diverse
+ *
+ *  Represents a violin plot in one of the following styles:
+ *
+ *  \image html JKQTPGraphViolinplot_SmoothViolin.png
+ *
+ *  \image html JKQTPGraphViolinplot_StepViolin.png
+ *
+ *  \image html JKQTPGraphViolinplot_BoxViolin.png
+ *
+ *  \see JKQTPViolinplotVerticalElement, JKQTPViolinplotHorizontalElement
+ *
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotElementBase: public JKQTPPlotElement, public JKQTPGraphViolinplotStyleMixin {
+    Q_OBJECT
+public:
+    /** \brief class constructor */
+    JKQTPViolinplotElementBase(JKQTBasePlotter* parent=nullptr);
+
+    /** \brief returns the color to be used for the key label */
+    virtual QColor getKeyLabelColor() const override;
+
+
+    /** \copydoc pos */
+    void setPos(double __value);
+    /** \copydoc pos */
+    double getPos() const;
+    /** \copydoc median */
+    double getMedian() const;
+    /** \copydoc mean */
+    double getMean() const;
+    /** \copydoc min */
+    double getMin() const;
+    /** \copydoc max */
+    double getMax() const;
+
+
+    /** \copydoc drawMean */
+    bool getDrawMean() const;
+    /** \copydoc drawMedian */
+    bool getDrawMedian() const;
+    /** \copydoc drawMinMax */
+    bool getDrawMinMax() const;
+
+
+    /** \copydoc violinPositionColumn */
+    int getViolinPositionColumn() const;
+
+
+    /** \copydoc violinFrequencyColumn */
+    int getViolinFrequencyColumn() const;
+public slots:
+    /** \brief set the color of the graph (colors all elements, based on the given color \a c ) */
+    virtual void setColor(QColor c);
+    /** \copydoc violinFrequencyColumn */
+    void setViolinFrequencyColumn(int __value);
+    /** \copydoc violinFrequencyColumn */
+    void setViolinFrequencyColumn(size_t __value);
+    /** \copydoc violinPositionColumn */
+    void setViolinPositionColumn(int __value);
+    /** \copydoc violinPositionColumn */
+    void setViolinPositionColumn(size_t __value);
+    /** \copydoc drawMinMax */
+    void setDrawMinMax(bool __value);
+    /** \copydoc drawMedian */
+    void setDrawMedian(bool __value);
+    /** \copydoc drawMean */
+    void setDrawMean(bool __value);
+    /** \copydoc max */
+    void setMax(double __value);
+    /** \copydoc min */
+    void setMin(double __value);
+    /** \copydoc mean */
+    void setMean(double __value);
+    /** \copydoc median */
+    void setMedian(double __value);
+protected:
+
+    /** \brief the position of the boxplot on the "other" axis */
+    double pos;
+    /** \brief the median value to be used for the boxplot */
+    double median;
+    /** \brief the mean value to be used for the boxplot */
+    double mean;
+    /** \brief indicates whether to draw the mean */
+    bool drawMean;
+    /** \brief indicates whether to draw the median */
+    bool drawMedian;
+    /** \brief indicates whether to draw the percentiles */
+    bool drawMinMax;
+    /** \brief the minimum value to be used for the boxplot */
+    double min;
+    /** \brief the maximum value to be used for the boxplot */
+    double max;
+    /** \brief column with data for the violin outline: category values (along min-max-axis) */
+    int violinPositionColumn;
+    /** \brief column with data for the violin outline: frequency values (perpendicular to min-max-axis) */
+    int violinFrequencyColumn;
+};
+
+
 /*! \brief This implements a single vertical <a href="https://en.wikipedia.org/wiki/Violin_plot">Violin Plot</a> as a "geometric element"
     \ingroup jkqtplotter_statgraphs
     \ingroup jkqtplotter_diverse
@@ -60,7 +163,7 @@
     \see \ref JKQTPlotterViolinplotGraphs
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPGeometricPlotElement, public JKQTPGraphViolinplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPViolinplotElementBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -72,10 +175,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPGeometr
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
-        virtual void setColor(QColor c);
+
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -90,78 +190,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPGeometr
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
-        /*! \copydoc pos */ 
-        void setPos(double __value);
-        /*! \copydoc pos */ 
-        double getPos() const;
-        /*! \copydoc median */ 
-        void setMedian(double __value);
-        /*! \copydoc median */ 
-        double getMedian() const;
-        /*! \copydoc mean */ 
-        void setMean(double __value);
-        /*! \copydoc mean */ 
-        double getMean() const;
-        /*! \copydoc min */ 
-        void setMin(double __value);
-        /*! \copydoc min */ 
-        double getMin() const;
-        /*! \copydoc max */ 
-        void setMax(double __value);
-        /*! \copydoc max */ 
-        double getMax() const;
-
-
-        /*! \copydoc drawMean */ 
-        void setDrawMean(bool __value);
-        /*! \copydoc drawMean */ 
-        bool getDrawMean() const;
-        /*! \copydoc drawMedian */ 
-        void setDrawMedian(bool __value);
-        /*! \copydoc drawMedian */ 
-        bool getDrawMedian() const;
-        /*! \copydoc drawMinMax */ 
-        void setDrawMinMax(bool __value);
-        /*! \copydoc drawMinMax */ 
-        bool getDrawMinMax() const;
-
-
-        /*! \copydoc violinPositionColumn */
-        void setViolinPositionColumn(int __value);
-        /*! \copydoc violinPositionColumn */
-        void setViolinPositionColumn(size_t __value);
-         /*! \copydoc violinPositionColumn */
-        int getViolinPositionColumn() const;
-
-
-        /*! \copydoc violinFrequencyColumn */
-        void setViolinFrequencyColumn(int __value);
-        /*! \copydoc violinFrequencyColumn */
-        void setViolinFrequencyColumn(size_t __value);
-         /*! \copydoc violinFrequencyColumn */
-        int getViolinFrequencyColumn() const;
-    protected:
-
-        /** \brief the position of the boxplot on the "other" axis */
-        double pos;
-        /** \brief the median value to be used for the boxplot */
-        double median;
-        /** \brief the mean value to be used for the boxplot */
-        double mean;
-        /** \brief indicates whether to draw the mean */
-        bool drawMean;
-        /** \brief indicates whether to draw the median */
-        bool drawMedian;
-        /** \brief indicates whether to draw the percentiles */
-        bool drawMinMax;
-        /** \brief the minimum value to be used for the boxplot */
-        double min;
-        /** \brief the maximum value to be used for the boxplot */
-        double max;
-        /** \brief column with data for the violin outline: category values (along min-max-axis) */
-        int violinPositionColumn;
-        /** \brief column with data for the violin outline: frequency values (perpendicular to min-max-axis) */
-        int violinFrequencyColumn;
 };
 
 
@@ -191,7 +219,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPGeometr
     \see \ref JKQTPlotterViolinplotGraphs
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotHorizontalElement: public JKQTPViolinplotVerticalElement {
+class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotHorizontalElement: public JKQTPViolinplotElementBase {
         Q_OBJECT
     public:
         /** \brief class constructor */

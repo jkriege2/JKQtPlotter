@@ -35,12 +35,8 @@
 
 
 
-
-
-
-
-JKQTPViolinplotVerticalElement::JKQTPViolinplotVerticalElement(JKQTBasePlotter* parent):
-    JKQTPGeometricPlotElement(DrawAsGraphicElement, parent)
+JKQTPViolinplotElementBase::JKQTPViolinplotElementBase(JKQTBasePlotter* parent):
+    JKQTPPlotElement(parent)
 {
     pos=JKQTP_NAN;
     median=JKQTP_NAN;
@@ -55,6 +51,151 @@ JKQTPViolinplotVerticalElement::JKQTPViolinplotVerticalElement(JKQTBasePlotter* 
     initViolinplotStyle(parent, parentPlotStyle);
     setMeanSymbolType(JKQTPPlus);
 
+}
+
+
+void JKQTPViolinplotElementBase::setPos(double __value)
+{
+    this->pos = __value;
+}
+
+double JKQTPViolinplotElementBase::getPos() const
+{
+    return this->pos;
+}
+
+void JKQTPViolinplotElementBase::setMedian(double __value)
+{
+    if (this->median != __value) {
+        this->median = __value;
+        drawMedian=true;
+    }
+}
+
+double JKQTPViolinplotElementBase::getMedian() const
+{
+    return this->median;
+}
+
+
+void JKQTPViolinplotElementBase::setMean(double __value)
+{
+    if (this->mean != __value) {
+        this->mean = __value;
+        drawMean=true;
+    }
+}
+
+double JKQTPViolinplotElementBase::getMean() const
+{
+    return this->mean;
+}
+
+void JKQTPViolinplotElementBase::setMin(double __value)
+{
+    if (this->min != __value) {
+        this->min = __value;
+        drawMinMax=true;
+    }
+}
+
+double JKQTPViolinplotElementBase::getMin() const
+{
+    return this->min;
+}
+
+void JKQTPViolinplotElementBase::setMax(double __value)
+{
+    if (this->max != __value) {
+        this->max = __value;
+        drawMinMax=true;
+    }
+}
+
+double JKQTPViolinplotElementBase::getMax() const
+{
+    return this->max;
+}
+
+
+void JKQTPViolinplotElementBase::setDrawMean(bool __value)
+{
+    this->drawMean = __value;
+}
+
+bool JKQTPViolinplotElementBase::getDrawMean() const
+{
+    return this->drawMean;
+}
+
+void JKQTPViolinplotElementBase::setDrawMedian(bool __value)
+{
+    this->drawMedian = __value;
+}
+
+bool JKQTPViolinplotElementBase::getDrawMedian() const
+{
+    return this->drawMedian;
+}
+
+void JKQTPViolinplotElementBase::setDrawMinMax(bool __value)
+{
+    this->drawMinMax = __value;
+}
+
+bool JKQTPViolinplotElementBase::getDrawMinMax() const
+{
+    return this->drawMinMax;
+}
+
+void JKQTPViolinplotElementBase::setViolinPositionColumn(int __value)
+{
+    violinPositionColumn=__value;
+}
+
+void JKQTPViolinplotElementBase::setViolinPositionColumn(size_t __value)
+{
+    violinPositionColumn=static_cast<int>(__value);
+}
+
+int JKQTPViolinplotElementBase::getViolinPositionColumn() const
+{
+    return violinPositionColumn;
+}
+
+void JKQTPViolinplotElementBase::setViolinFrequencyColumn(int __value)
+{
+    violinFrequencyColumn=__value;
+}
+
+void JKQTPViolinplotElementBase::setViolinFrequencyColumn(size_t __value)
+{
+    violinFrequencyColumn=static_cast<int>(__value);
+}
+
+int JKQTPViolinplotElementBase::getViolinFrequencyColumn() const
+{
+    return violinFrequencyColumn;
+}
+
+QColor JKQTPViolinplotElementBase::getKeyLabelColor() const {
+    return getLineColor();
+}
+
+void JKQTPViolinplotElementBase::setColor(QColor c)
+{
+    setViolinplotColor(c, getParent());
+}
+
+
+
+
+
+
+
+JKQTPViolinplotVerticalElement::JKQTPViolinplotVerticalElement(JKQTBasePlotter* parent):
+    JKQTPViolinplotElementBase(parent)
+{
 }
 
 JKQTPViolinplotVerticalElement::JKQTPViolinplotVerticalElement(JKQTPlotter* parent):
@@ -197,146 +338,23 @@ bool JKQTPViolinplotVerticalElement::getYMinMax(double& miny, double& maxy, doub
         return true;
 }
 
-void JKQTPViolinplotVerticalElement::setPos(double __value)
-{
-    this->pos = __value;
-}
-
-double JKQTPViolinplotVerticalElement::getPos() const
-{
-    return this->pos;
-}
-
-void JKQTPViolinplotVerticalElement::setMedian(double __value)
-{
-    if (this->median != __value) {
-        this->median = __value;
-        drawMedian=true;
-    }
-}
-
-double JKQTPViolinplotVerticalElement::getMedian() const
-{
-    return this->median;
-}
-
-
-void JKQTPViolinplotVerticalElement::setMean(double __value)
-{
-    if (this->mean != __value) {
-        this->mean = __value;
-        drawMean=true;
-    }
-}
-
-double JKQTPViolinplotVerticalElement::getMean() const
-{
-    return this->mean;
-}
-
-void JKQTPViolinplotVerticalElement::setMin(double __value)
-{
-    if (this->min != __value) {
-        this->min = __value;
-        drawMinMax=true;
-    }
-}
-
-double JKQTPViolinplotVerticalElement::getMin() const
-{
-    return this->min;
-}
-
-void JKQTPViolinplotVerticalElement::setMax(double __value)
-{
-    if (this->max != __value) {
-        this->max = __value;
-        drawMinMax=true;
-    }
-}
-
-double JKQTPViolinplotVerticalElement::getMax() const
-{
-    return this->max;
-}
-
-
-void JKQTPViolinplotVerticalElement::setDrawMean(bool __value)
-{
-    this->drawMean = __value;
-}
-
-bool JKQTPViolinplotVerticalElement::getDrawMean() const
-{
-    return this->drawMean;
-}
-
-void JKQTPViolinplotVerticalElement::setDrawMedian(bool __value)
-{
-    this->drawMedian = __value;
-}
-
-bool JKQTPViolinplotVerticalElement::getDrawMedian() const
-{
-    return this->drawMedian;
-}
-
-void JKQTPViolinplotVerticalElement::setDrawMinMax(bool __value)
-{
-    this->drawMinMax = __value;
-}
-
-bool JKQTPViolinplotVerticalElement::getDrawMinMax() const
-{
-    return this->drawMinMax;
-}
-
-void JKQTPViolinplotVerticalElement::setViolinPositionColumn(int __value)
-{
-    violinPositionColumn=__value;
-}
-
-void JKQTPViolinplotVerticalElement::setViolinPositionColumn(size_t __value)
-{
-    violinPositionColumn=static_cast<int>(__value);
-}
-
-int JKQTPViolinplotVerticalElement::getViolinPositionColumn() const
-{
-    return violinPositionColumn;
-}
-
-void JKQTPViolinplotVerticalElement::setViolinFrequencyColumn(int __value)
-{
-    violinFrequencyColumn=__value;
-}
-
-void JKQTPViolinplotVerticalElement::setViolinFrequencyColumn(size_t __value)
-{
-    violinFrequencyColumn=static_cast<int>(__value);
-}
-
-int JKQTPViolinplotVerticalElement::getViolinFrequencyColumn() const
-{
-    return violinFrequencyColumn;
-}
-
-
 void JKQTPViolinplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     plotVerticalKeyMarker(parent, painter, rect);
 }
 
-QColor JKQTPViolinplotVerticalElement::getKeyLabelColor() const {
-    return getLineColor();
-}
 
-void JKQTPViolinplotVerticalElement::setColor(QColor c)
+
+
+
+JKQTPViolinplotHorizontalElement::JKQTPViolinplotHorizontalElement(JKQTBasePlotter *parent):
+    JKQTPViolinplotElementBase(parent)
 {
-    setViolinplotColor(c, getParent());
 }
 
-
-
+JKQTPViolinplotHorizontalElement::JKQTPViolinplotHorizontalElement(JKQTPlotter *parent):
+    JKQTPViolinplotHorizontalElement(parent->getPlotter())
+{
+}
 
 void JKQTPViolinplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     plotHorizontalKeyMarker(parent, painter, rect);
@@ -385,16 +403,6 @@ bool JKQTPViolinplotHorizontalElement::getYMinMax(double& miny, double& maxy, do
     xvsgz=xma; SmallestGreaterZeroCompare_xvsgz();
     return true;
 
-}
-
-JKQTPViolinplotHorizontalElement::JKQTPViolinplotHorizontalElement(JKQTBasePlotter *parent):
-    JKQTPViolinplotVerticalElement(parent)
-{
-}
-
-JKQTPViolinplotHorizontalElement::JKQTPViolinplotHorizontalElement(JKQTPlotter *parent):
-    JKQTPViolinplotHorizontalElement(parent->getPlotter())
-{
 }
 
 void JKQTPViolinplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {

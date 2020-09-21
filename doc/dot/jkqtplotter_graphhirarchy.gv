@@ -99,6 +99,10 @@ digraph
     JKQTPBoxplotElementBase [URL="\link JKQTPBoxplotElementBase"]
     noteJKQTPBoxplotElementBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs that represent \na single boxplot"];
     JKQTPBoxplotElementBase -> noteJKQTPBoxplotElementBase [style=dashed,arrowhead=none];
+	
+    JKQTPViolinplotElementBase [URL="\link JKQTPViolinplotElementBase"]
+    noteJKQTPViolinplotElementBase [shape="note", color="lightyellow",style=filled,fontsize=8,label="base class for all\ngraphs that represent \na single violin plot"];
+    JKQTPViolinplotElementBase -> noteJKQTPViolinplotElementBase [style=dashed,arrowhead=none];
   }  
 	
   JKQTPPlotElement -> JKQTPGraph
@@ -106,6 +110,7 @@ digraph
   JKQTPPlotElement -> JKQTPPlotAnnotationElement
   JKQTPPlotElement -> JKQTPRangeBase
   JKQTPPlotElement -> JKQTPBoxplotElementBase
+  JKQTPPlotElement -> JKQTPViolinplotElementBase
 
   JKQTPGraph -> JKQTPXYGraph
   JKQTPGraph -> JKQTPSingleColumnGraph
