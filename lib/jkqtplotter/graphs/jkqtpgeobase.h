@@ -31,12 +31,12 @@
 #define jkqtpgeobase_H_INCLUDED
 
 
-/*! \brief This JKQTPPlotObject is used as base class for geometric drawing
+/*! \brief This JKQTPGeometricPlotElement is used as base class for geometric drawing
            elements that only consist of lines (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
 
 */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPPlotObject, public JKQTPGraphLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPGeometricPlotElement, public JKQTPGraphLineStyleMixin {
     Q_OBJECT
 public:
     /*! \brief class contructor
@@ -73,12 +73,12 @@ protected:
 
 
 
-/*! \brief This JKQTPPlotObject is used as base class for geometric drawing
+/*! \brief This JKQTPGeometricPlotElement is used as base class for geometric drawing
            elements that consist of lines with one decorated end (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
 
 */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedHeadLine: public JKQTPPlotObject, public JKQTPGraphDecoratedHeadLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedHeadLine: public JKQTPGeometricPlotElement, public JKQTPGraphDecoratedHeadLineStyleMixin {
     Q_OBJECT
 public:
     /*! \brief class contructor
@@ -116,12 +116,12 @@ protected:
 
 
 
-/*! \brief This JKQTPPlotObject is used as base class for geometric drawing
+/*! \brief This JKQTPGeometricPlotElement is used as base class for geometric drawing
            elements that consist of lines with decorated ends (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
 
 */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedLine: public JKQTPPlotObject, public JKQTPGraphDecoratedLineStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedLine: public JKQTPGeometricPlotElement, public JKQTPGraphDecoratedLineStyleMixin {
     Q_OBJECT
 public:
     /*! \brief class contructor
@@ -154,7 +154,7 @@ protected:
 };
 
 
-/*! \brief This JKQTPPlotObject is used as base class for geometric drawing
+/*! \brief This JKQTPGeometricPlotElement is used as base class for geometric drawing
            elements that only consist of lines (i.e. no filling of any kind is done)
     \ingroup jkqtplotter_geoplots
 

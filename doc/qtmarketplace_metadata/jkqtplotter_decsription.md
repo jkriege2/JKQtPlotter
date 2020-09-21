@@ -43,7 +43,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
   - extensive library of image plots (inclusing different color-scale modes, RGBA-plots, overlays/masks)
   - contour plots
   - geometric forms/annotations
-  - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPPlotObject
+  - can be easily extended by deriving a new graph from JKQTPPlotElement or JKQTPGeometricPlotElement
 - optional: OpenCV, CImg interfaces
 - CMake-based build system
 - extensive set of Examples/Tutorials: [https://jkriege2.github.io/JKQtPlotter/example\_tutorial\_projects.html](https://jkriege2.github.io/JKQtPlotter/example_tutorial_projects.html)

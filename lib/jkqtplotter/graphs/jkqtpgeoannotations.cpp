@@ -43,7 +43,7 @@ JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QStrin
 }
 
 JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter *parent, double x_, double y_, const QString& text_):
-    JKQTPPlotObject(DrawAsGraphicElement, parent), JKQTPGraphTextStyleMixin(parent), x(x_),y(y_),text(text_)
+    JKQTPPlotAnnotationElement(parent), JKQTPGraphTextStyleMixin(parent), x(x_),y(y_),text(text_)
 {
 
 }
@@ -131,7 +131,7 @@ QColor JKQTPGeoText::getKeyLabelColor() const {
 
 
 JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
-    JKQTPPlotObject(DrawAsGraphicElement, parent)
+    JKQTPPlotAnnotationElement(parent)
 {
     this->x=x;
     this->y=y;

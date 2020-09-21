@@ -309,7 +309,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVer
     \see jkqtpstatVAddBoxplot(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotsGraphs, \ref JKQTPlotterBoxplotStyling, jkqtpstatAddVBoxplotAndOutliers()
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphBoxplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPGeometricPlotElement, public JKQTPGraphBoxplotStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */

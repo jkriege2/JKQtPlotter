@@ -33,13 +33,13 @@
 
 
 
-/*! \brief This virtual JKQTPGraph descendent may be used to display a single symbol (marker).
+/*! \brief This virtual JKQTPPlotAnnotationElement descendent may be used to display a single symbol (marker).
     \ingroup jkqtplotter_annotations
 
     \see \ref JKQTPlotterGeometricGraphs
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQTPGraphSymbolStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, public JKQTPGraphSymbolStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -65,21 +65,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQT
          */
         JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol=JKQTPCross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
 
-        /*! set the symbol color and symbol fill color */
-        virtual void setColor(QColor c);
-
-        /*! \copydoc x */ 
-        void setX(double __value);
         /*! \copydoc x */ 
         double getX() const;
         /*! \copydoc y */ 
-        void setY(double __value);
-        /*! \copydoc y */ 
         double getY() const;
 
-        /** \copydoc JKQTPGraph::getXMinMax()        */
+        /** \copydoc JKQTPPlotAnnotationElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPGraph::getYMinMax()        */
+        /** \copydoc JKQTPPlotAnnotationElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -89,7 +82,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQT
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
+    public slots:
+        /*! set the symbol color and symbol fill color */
+        virtual void setColor(QColor c);
 
+        /*! \copydoc x */ 
+        void setX(double __value);
+        /*! \copydoc y */ 
+        void setY(double __value);
+	
     protected:
         /** \brief x-position (in plot coordinates) of the symbol (symbol center) */
         double x;
@@ -99,13 +100,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotObject, public JKQT
 };
 
 
-/*! \brief This JKQTPPlotObject is used to display text. It uses the JKQTMathText
+/*! \brief This JKQTPPlotAnnotationElement is used to display text. It uses the JKQTMathText
            class in order to display LaTeX formulas.
     \ingroup jkqtplotter_annotations
 
     \see \ref JKQTPlotterGeometricGraphs
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPGraphTextStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotAnnotationElement, public JKQTPGraphTextStyleMixin {
         Q_OBJECT
     public:
         /*! \brief class contructor
@@ -146,24 +147,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPG
         JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text);
 
         /*! \copydoc text */ 
-        void setText(const QString & __value);
-        /*! \copydoc text */ 
         QString getText() const;
-        /*! \copydoc x */ 
-        void setX(double __value);
         /*! \copydoc x */ 
         double getX() const;
         /*! \copydoc y */ 
-        void setY(double __value);
-        /*! \copydoc y */ 
         double getY() const;
 
-        /** \brief set line and fill color */
-        virtual void setColor(QColor c) ;
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPPlotAnnotationElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPPlotAnnotationElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -173,6 +166,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotObject, public JKQTPG
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
+	public slots:
+        /** \brief set line and fill color */
+        virtual void setColor(QColor c) ;
+		
+        /*! \copydoc text */ 
+        void setText(const QString & __value);
+        /*! \copydoc x */ 
+        void setX(double __value);
+        /*! \copydoc y */ 
+        void setY(double __value);
 
     protected:
         /** \brief x-position (in plot coordinates) of the text (left/baseline) */

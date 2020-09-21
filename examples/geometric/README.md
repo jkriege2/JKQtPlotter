@@ -113,22 +113,22 @@ The example also adds some control-widgets that allow to change the properties o
     cmb->setCurrentIndex(0);
     QObject::connect(cmb, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [plot](int index) {
         for (size_t i=0; i<plot->getPlotter()->getGraphCount(); i++) {
-            JKQTPPlotObject* obj=dynamic_cast<JKQTPPlotObject*>(plot->getPlotter()->getGraph(i));
+            JKQTPGeometricPlotElement* obj=dynamic_cast<JKQTPGeometricPlotElement*>(plot->getPlotter()->getGraph(i));
             if (obj) {
-                obj->setDrawMode((index==0)?JKQTPPlotObject::DrawAsGraphicElement:JKQTPPlotObject::DrawAsMathematicalCurve);
+                obj->setDrawMode((index==0)?JKQTPGeometricPlotElement::DrawAsGraphicElement:JKQTPGeometricPlotElement::DrawAsMathematicalCurve);
             }
         }
         plot->redrawPlot();
     });
 ```
 
-Now you can play with these controls and see how the different shapes get distorted when these properties change, in dependence of whether the DrawMode is `JKQTPPlotObject::DrawAsMathematicalCurve` or `JKQTPPlotObject::DrawAsGraphicElement`.
+Now you can play with these controls and see how the different shapes get distorted when these properties change, in dependence of whether the DrawMode is `JKQTPGeometricPlotElement::DrawAsMathematicalCurve` or `JKQTPGeometricPlotElement::DrawAsGraphicElement`.
 
-Here is an example on log-log axes and DrawMode = `JKQTPPlotObject::DrawAsGraphicElement`:
+Here is an example on log-log axes and DrawMode = `JKQTPGeometricPlotElement::DrawAsGraphicElement`:
 
 ![geometric](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geometric_loglog_DrawAsGraphicElement.png)
 
-Here is an example on log-log axes and DrawMode = `JKQTPPlotObject::DrawAsMathematicalCurve`: Observe how straight lines are bent to the appropriate curve!
+Here is an example on log-log axes and DrawMode = `JKQTPGeometricPlotElement::DrawAsMathematicalCurve`: Observe how straight lines are bent to the appropriate curve!
 
 ![geometric](https://raw.githubusercontent.com/jkriege2/JKQtPlotter/master/screenshots/geometric_loglog_DrawAsMathematicalCurve.png)
 

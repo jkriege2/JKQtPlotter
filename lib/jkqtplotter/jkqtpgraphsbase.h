@@ -436,68 +436,91 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraph: public JKQTPPlotElement {
 
 
 /** \brief this is the virtual base class of all JKQTPPlotElement's in a JKQTPlotter plot that
- *         represent geometric forms or annotations.
+ *         represent geometric forms.
  *  \ingroup jkqtplotter_basegraphs
  *
  *  \see \ref jkqtplotter_graphsgroup_classstructure, \ref JKQTPlotterGeometricGraphs
  *
- *  \section JKQTPPlotObject_coordinates Coordinate Systems
- *  JKQTPPlotObject's have extended coordinate transform capabilities, because in addition to using
+ *  \section JKQTPGeometricPlotElement_coordinates Coordinate Systems
+ *  JKQTPGeometricPlotElement's have extended coordinate transform capabilities, because in addition to using
  *  the plot coordinates, you can also choose to use different other coordinate systems.
  *
- *  \section JKQTPPlotObject_DrawMode Draw Modes
+ *  \section JKQTPGeometricPlotElement_DrawMode Draw Modes
  *
  *  \copydetails m_drawMode
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPPlotObject: public JKQTPPlotElement {
-        Q_OBJECT
-    public:
+class JKQTPLOTTER_LIB_EXPORT JKQTPGeometricPlotElement: public JKQTPPlotElement {
+    Q_OBJECT
+public:
 
-        /** \brief indicates how to draw the geometric object */
-        enum DrawMode {
-            DrawAsGraphicElement,     /*!< \brief draw lines as lines (i.e. graphic elements)  \image html JKQTPPlotObject_DrawAsGraphicElement.png */
-            DrawAsMathematicalCurve   /*!< \brief draw lines as the mathematically correct curve \image html JKQTPPlotObject_DrawAsMathematicalCurve.png */
-        };
-        Q_ENUM(DrawMode)
+    /** \brief indicates how to draw the geometric object */
+    enum DrawMode {
+        DrawAsGraphicElement,     /*!< \brief draw lines as lines (i.e. graphic elements)  \image html JKQTPGeometricPlotElement_DrawAsGraphicElement.png */
+        DrawAsMathematicalCurve   /*!< \brief draw lines as the mathematically correct curve \image html JKQTPGeometricPlotElement_DrawAsMathematicalCurve.png */
+    };
+    Q_ENUM(DrawMode)
 
-        /** \brief class constructor */
-        explicit JKQTPPlotObject(DrawMode drawMode=DrawAsGraphicElement, JKQTBasePlotter* parent=nullptr);
+    /** \brief class constructor */
+    explicit JKQTPGeometricPlotElement(DrawMode drawMode=DrawAsGraphicElement, JKQTBasePlotter* parent=nullptr);
 
-        /** \brief default wirtual destructor */
-        virtual ~JKQTPPlotObject() ;
-        /** \copybrief m_drawMode
+    /** \brief default wirtual destructor */
+    virtual ~JKQTPGeometricPlotElement() ;
+    /** \copybrief m_drawMode
          *
          *  \return the currently set DrawMode
          *  \see m_drawMode, DrawMode
          */
-        DrawMode getDrawMode() const;
+    DrawMode getDrawMode() const;
 
-        Q_PROPERTY(DrawMode drawMode READ getDrawMode WRITE setDrawMode)
-    public slots:
-        /** \copybrief m_drawMode
+    Q_PROPERTY(DrawMode drawMode READ getDrawMode WRITE setDrawMode)
+public slots:
+    /** \copybrief m_drawMode
          *
          *  \param mode the DrawMode to use from now on
          *  \see m_drawMode, DrawMode
          */
-        void setDrawMode(DrawMode mode);
-    protected:
-        /** \brief indicated whether to draw lines as graphic elements (even on non-linear coordinate systems),
+    void setDrawMode(DrawMode mode);
+protected:
+    /** \brief indicated whether to draw lines as graphic elements (even on non-linear coordinate systems),
          *         or as mathematically correct curves
          *
          * It is possible to define in which ways the forms shall be treated/drawn into non-linear
          * coordinate systems (e.g. semi-log or log-log plots). Imagine drawing a line from (x1,y1) to (x2,y2)
          * In a linear coordinate system, this is always a line, but in a non-linear system, the line might
-         * have to be represented by a curve instead. Depending on how you want to use the JKQTPPlotObject you
+         * have to be represented by a curve instead. Depending on how you want to use the JKQTPGeometricPlotElement you
          * can choose to still draw it as a line connecting the points (x1,y1) and (x2,y2), or as the -
          * mathematically correct - curve connecting these two points:
          *
-         * \image html JKQTPPlotObject_DrawAsMathematicalCurve.png
+         * \image html JKQTPGeometricPlotElement_DrawAsMathematicalCurve.png
          *
-         * \image html JKQTPPlotObject_DrawAsGraphicElement.png
+         * \image html JKQTPGeometricPlotElement_DrawAsGraphicElement.png
          *
          * \see DrawMode, setDrawMode(), getDrawMode()
          */
-        DrawMode m_drawMode;
+    DrawMode m_drawMode;
+
+};
+
+
+/** \brief this is the virtual base class of all JKQTPPlotElement's in a JKQTPlotter plot that
+ *         represent annotations of a plot. It differs from JKQTPGeometricPlotElement by not providing a
+ *         selection of drawModes, as annotations are always drawn as graphic elements.
+ *  \ingroup jkqtplotter_basegraphs
+ *
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPPlotAnnotationElement: public JKQTPPlotElement {
+    Q_OBJECT
+public:
+
+    /** \brief class constructor */
+    explicit JKQTPPlotAnnotationElement(JKQTBasePlotter* parent=nullptr);
+
+    /** \brief default wirtual destructor */
+    virtual ~JKQTPPlotAnnotationElement() ;
+
+public slots:
+
+protected:
 
 };
 

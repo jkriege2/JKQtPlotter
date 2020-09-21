@@ -160,7 +160,7 @@ void JKQTPGeoLine::draw(JKQTPEnhancedPainter& painter) {
 
                 // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
                 // and transform each node to draw the corresponding non-linear curve in pixel-space!
-                auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+                auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
                 QVector<QPointF> points=JKQTPSplitLineIntoPoints(line, fTransform);
                 points=JKQTPSimplyfyLineSegemnts(points);
                 if (points.size()>1) {
@@ -447,7 +447,7 @@ void JKQTPGeoInfiniteLine::draw(JKQTPEnhancedPainter& painter) {
             } else {
                 // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
                 // and transform each node to draw the corresponding non-linear curve in pixel-space!
-                auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+                auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
                 QVector<QPointF> points=JKQTPSplitLineIntoPoints(QLineF(x1,y1,x2,y2), fTransform);
                 points=JKQTPSimplyfyLineSegemnts(points);
                 if (points.size()>1) {
@@ -630,7 +630,7 @@ void JKQTPGeoPolyLines::draw(JKQTPEnhancedPainter& painter) {
         } else {
             // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
             // and transform each node to draw the corresponding non-linear curve in pixel-space!
-            auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+            auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
             QVector<QPointF> points_poly=JKQTPSplitPolylineIntoPoints(points, fTransform);
             points_poly=JKQTPSimplyfyLineSegemnts(points_poly);
             if (points_poly.size()>1) {
@@ -747,7 +747,7 @@ JKQTPGeoArc::JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, 
 
 
 void JKQTPGeoArc::draw(JKQTPEnhancedPainter& painter) {
-    auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+    auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
     const QPolygonF rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,angleStart,angleStop, angle);
 
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});

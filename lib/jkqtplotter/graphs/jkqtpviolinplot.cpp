@@ -40,7 +40,7 @@
 
 
 JKQTPViolinplotVerticalElement::JKQTPViolinplotVerticalElement(JKQTBasePlotter* parent):
-    JKQTPPlotObject(DrawAsGraphicElement, parent)
+    JKQTPGeometricPlotElement(DrawAsGraphicElement, parent)
 {
     pos=JKQTP_NAN;
     median=JKQTP_NAN;

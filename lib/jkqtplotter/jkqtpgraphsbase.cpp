@@ -666,24 +666,24 @@ bool JKQTPXYGraph::getIndexRange(int& imin, int& imax) const
 
 
 
-JKQTPPlotObject::JKQTPPlotObject(DrawMode drawMode, JKQTBasePlotter *parent):
+JKQTPGeometricPlotElement::JKQTPGeometricPlotElement(DrawMode drawMode, JKQTBasePlotter *parent):
     JKQTPPlotElement(parent), m_drawMode(drawMode)
 {
 
 }
 
 
-void JKQTPPlotObject::setDrawMode(JKQTPPlotObject::DrawMode mode)
+void JKQTPGeometricPlotElement::setDrawMode(JKQTPGeometricPlotElement::DrawMode mode)
 {
     m_drawMode=mode;
 }
 
-JKQTPPlotObject::DrawMode JKQTPPlotObject::getDrawMode() const
+JKQTPGeometricPlotElement::DrawMode JKQTPGeometricPlotElement::getDrawMode() const
 {
     return m_drawMode;
 }
 
-JKQTPPlotObject::~JKQTPPlotObject()
+JKQTPGeometricPlotElement::~JKQTPGeometricPlotElement()
 = default;
 
 
@@ -987,4 +987,14 @@ double JKQTPXYBaselineGraph::getBaseline() const
 void JKQTPXYBaselineGraph::setBaseline(double __value)
 {
     m_baseline=__value;
+}
+
+JKQTPPlotAnnotationElement::JKQTPPlotAnnotationElement(JKQTBasePlotter *parent)
+{
+
+}
+
+JKQTPPlotAnnotationElement::~JKQTPPlotAnnotationElement()
+{
+
 }

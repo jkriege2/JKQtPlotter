@@ -28,7 +28,7 @@
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
 JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent, DrawMode drawMode):
-    JKQTPPlotObject(drawMode, parent)
+    JKQTPGeometricPlotElement(drawMode, parent)
 {
     setLineColor(color);
     setLineWidth(lineWidth);
@@ -36,7 +36,7 @@ JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle 
 }
 
 JKQTPGeoBaseLine::JKQTPGeoBaseLine(JKQTBasePlotter *parent, DrawMode drawMode):
-    JKQTPPlotObject(drawMode, parent)
+    JKQTPGeometricPlotElement(drawMode, parent)
 {
 
 }
@@ -124,7 +124,7 @@ void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& re
 
 
 JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTBasePlotter *parent, DrawMode drawMode):
-    JKQTPPlotObject(drawMode, parent)
+    JKQTPGeometricPlotElement(drawMode, parent)
 {
     setLineColor(color);
     setLineWidth(lineWidth);
@@ -133,7 +133,7 @@ JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, doubl
 }
 
 JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter *parent, DrawMode drawMode):
-    JKQTPPlotObject(drawMode, parent)
+    JKQTPGeometricPlotElement(drawMode, parent)
 {
 
 }
@@ -165,7 +165,7 @@ QColor JKQTPGeoBaseDecoratedHeadLine::getKeyLabelColor() const
 
 
 JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTBasePlotter *parent, DrawMode drawMode):
-    JKQTPPlotObject(drawMode, parent)
+    JKQTPGeometricPlotElement(drawMode, parent)
 {
     setLineColor(color);
     setLineWidth(lineWidth);
@@ -175,7 +175,7 @@ JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWi
 }
 
 JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(JKQTBasePlotter *parent, DrawMode drawMode):
-    JKQTPPlotObject(drawMode, parent)
+    JKQTPGeometricPlotElement(drawMode, parent)
 {
 
 }

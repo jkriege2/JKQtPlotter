@@ -32,7 +32,7 @@
 
 
 
-/** \brief This JKQTPPlotObject is used to draw a line, optionally line-end decorations (aka arrows) are pssible, but switched off by default.
+/** \brief This JKQTPGeometricPlotElement is used to draw a line, optionally line-end decorations (aka arrows) are pssible, but switched off by default.
  *  \ingroup jkqtplotter_geoplots
  *
  *  \image html JKQTPGeoLine_HeadTail.png
@@ -40,10 +40,10 @@
  *
  *  \image html plot_geoline.png
  *
- *  \note This class support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+ *  \note This class support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
  *        and non-linear axes are chosen, the line is drawn as a curves, instead of straight
  *        a straight line. In the mode
- *        JKQTPPlotObject::DrawMode::DrawAsGraphicElement the line is drawn as a straight line.
+ *        JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement the line is drawn as a straight line.
  *
  *  You can also activate line-end decorators (aka arrows) for this poly-line, by using code like this:
  *  \code
@@ -188,14 +188,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseDecoratedLine {
 
 
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+         * \note This function support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
          *       and non-linear axes are chosen, the line will possibly be represented as a curve,
          *       instead of a straight line.
          */
@@ -291,7 +291,7 @@ public:
 
 
 
-/** \brief This JKQTPPlotObject is used to draw an infinite line
+/** \brief This JKQTPGeometricPlotElement is used to draw an infinite line
  *  \ingroup jkqtplotter_geoplots
  *
  *  an infinite line has a starting point and then goes on in a given direction
@@ -300,10 +300,10 @@ public:
  *  \image html plot_geoinfiniteline.png
  *
  *
- *  \note This class support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+ *  \note This class support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
  *        and non-linear axes are chosen, the line is drawn as a curves, instead of straight
  *        a straight line. In the mode
- *        JKQTPPlotObject::DrawMode::DrawAsGraphicElement the line is drawn as a straight line.
+ *        JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement the line is drawn as a straight line.
  *
  *  You can add a decorator to the head of the line (i.e. the given start point (x,y) ) iff this line is one-sided, i.e. two_sided \c ==false .
  *
@@ -339,14 +339,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedH
         JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+         * \note This function support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
          *       and non-linear axes are chosen, the line will possibly be represented as a curve,
          *       instead of a straight line.
          */
@@ -391,15 +391,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedH
 };
 
 
-/** \brief This JKQTPPlotObject is used to draw a poly line
+/** \brief This JKQTPGeometricPlotElement is used to draw a poly line
  *  \ingroup jkqtplotter_geoplots
  *
  *  \image html plot_geolines.png
  *
- *  \note This class support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+ *  \note This class support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
  *        and non-linear axes are chosen, the points of the poly-line will be possibly
  *        connected by curves, instead of straight lines. In the mode
- *        JKQTPPlotObject::DrawMode::DrawAsGraphicElement the points are connected by straight
+ *        JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement the points are connected by straight
  *        lines, independent of the linearity or non-linearity of the coordinate axes.
  *
  *  You can also activate line-end decorators (aka arrows) for this poly-line, by using code like this:
@@ -454,17 +454,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
         JKQTPGeoPolyLines(JKQTPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+         * \note This function support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
          *       and non-linear axes are chosen, the points of the poly-line will be possibly
          *       connected by curves, instead of straight lines. In the mode
-         *       JKQTPPlotObject::DrawMode::DrawAsGraphicElement the points are connected by straight
+         *       JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement the points are connected by straight
          *       lines, independent of the linearity or non-linearity of the coordinate axes.
          */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -504,7 +504,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
 };
 
 
-/** \brief This JKQTPPlotObject is used to draw an arc
+/** \brief This JKQTPGeometricPlotElement is used to draw an arc
  *  \ingroup jkqtplotter_geoplots
  *
  *
@@ -512,7 +512,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
  *
  *  \image html plot_geopie.png
  *
- *  \note This class support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+ *  \note This class support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
  *        This means that arcs are always treated as mathematical curves, as no meaningful
  *        parametrization for arcs on non-linear axes could be found!
  *
@@ -552,15 +552,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
          */
         JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+         * \note This function support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
          *       This means that arcs are always treated as mathematical curves, as no meaningful
          *       parametrization for arcs on non-linear axes could be found!
          */

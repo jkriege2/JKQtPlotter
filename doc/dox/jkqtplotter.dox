@@ -248,7 +248,7 @@ These are used to e.g. add color-scales to the side of the graph:
 Usually if writing a new graph, one would not directly
 derive from JKQTPPlotElement, but from a cass in it's hirarchy of children. These children already provide certain facilities for certain types of graphs.
 
-\dotfile jkqtplotter_graphhirarchy.dot
+\dotfile jkqtplotter_graphhirarchy.gv
 
 \subsection jkqtplotter_graphsgroup_classstructure_mixins Mix-In Classes for Graphs
 

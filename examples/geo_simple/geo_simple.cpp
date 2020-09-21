@@ -124,16 +124,16 @@ int main(int argc, char* argv[])
     cmb->setCurrentIndex(0);
     QObject::connect(cmb, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [&](int index) {
         for (size_t i=0; i<plot->getPlotter()->getGraphCount(); i++) {
-            JKQTPPlotObject* obj=dynamic_cast<JKQTPPlotObject*>(plot->getPlotter()->getGraph(i));
+            JKQTPGeometricPlotElement* obj=dynamic_cast<JKQTPGeometricPlotElement*>(plot->getPlotter()->getGraph(i));
             if (obj) {
-                obj->setDrawMode((index==0)?JKQTPPlotObject::DrawAsGraphicElement:JKQTPPlotObject::DrawAsMathematicalCurve);
+                obj->setDrawMode((index==0)?JKQTPGeometricPlotElement::DrawAsGraphicElement:JKQTPGeometricPlotElement::DrawAsMathematicalCurve);
             }
         }
         plot->redrawPlot();
         for (size_t i=0; i<plotlog->getPlotter()->getGraphCount(); i++) {
-            JKQTPPlotObject* obj=dynamic_cast<JKQTPPlotObject*>(plotlog->getPlotter()->getGraph(i));
+            JKQTPGeometricPlotElement* obj=dynamic_cast<JKQTPGeometricPlotElement*>(plotlog->getPlotter()->getGraph(i));
             if (obj) {
-                obj->setDrawMode((index==0)?JKQTPPlotObject::DrawAsGraphicElement:JKQTPPlotObject::DrawAsMathematicalCurve);
+                obj->setDrawMode((index==0)?JKQTPGeometricPlotElement::DrawAsGraphicElement:JKQTPGeometricPlotElement::DrawAsMathematicalCurve);
             }
         }
         plotlog->redrawPlot();

@@ -33,15 +33,15 @@
 
 
 
-/** \brief This JKQTPPlotObject is used to draw a rectangle
+/** \brief This JKQTPGeometricPlotElement is used to draw a rectangle
  *  \ingroup jkqtplotter_geoplots
  *
  *  \image html plot_georectangle.png
  *
- *  \note This class support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+ *  \note This class support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
  *        and non-linear axes are chosen, the corner points of the rectangle will be possibly
  *        connected by curves, instead of straight lines. In the mode
- *        JKQTPPlotObject::DrawMode::DrawAsGraphicElement the corners are connected by straight
+ *        JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement the corners are connected by straight
  *        lines, independent of the linearity or non-linearity of the coordinate axes.
  *
  *  \see \ref JKQTPlotterGeometricGraphs
@@ -184,14 +184,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
 
 
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+         * \note This function support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
          *       and non-linear axes are chosen, the corner points of the rectangle will be possibly
          *       connected by curves, instead of straight lines.
          */
@@ -256,12 +256,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
 };
 
 
-/** \brief This JKQTPPlotObject is used to draw a polygon
+/** \brief This JKQTPGeometricPlotElement is used to draw a polygon
  *  \ingroup jkqtplotter_geoplots
  *
  *  \image html plot_geopolygon.png
  *
- *  \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+ *  \note This function support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
  *        and non-linear axes are chosen, the points of the polygon will be possibly
  *        connected by curves, instead of straight lines.
  *
@@ -316,14 +316,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         JKQTPGeoPolygon(JKQTPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve. If set,
+         * \note This function support JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve. If set,
          *       and non-linear axes are chosen, the points of the polygon will be possibly
          *       connected by curves, instead of straight lines.
          */
@@ -364,17 +364,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
         QVector<QPointF> points;
 };
 
-/** \brief This JKQTPPlotObject is used to draw an ellipse
+/** \brief This JKQTPGeometricPlotElement is used to draw an ellipse
  *  \ingroup jkqtplotter_geoplots
  *
  *  \image html plot_geoellipse.png
  *
  *  \image html plot_geoellipse_rotated.png
  *
- *  \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+ *  \note This function support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
  *        This means that ellipses are always treated as mathematical curves, as no meaningful
  *        parametrization for ellipses on non-linear axes could be found! In the mode
- *        JKQTPPlotObject::DrawMode::DrawAsGraphicElement the points are connected by straight
+ *        JKQTPGeometricPlotElement::DrawMode::DrawAsGraphicElement the points are connected by straight
  *        lines, independent of the linearity or non-linearity of the coordinate axes.
  *
  *  \see <a href="http://www.codeguru.com/cpp/g-m/gdi/article.php/c131">http://www.codeguru.com/cpp/g-m/gdi/article.php/c131</a> and
@@ -472,7 +472,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+         * \note This function support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
          *       This means that ellipses are always treated as mathematical curves, as no meaningful
          *       parametrization for ellipses on non-linear axes could be found!*/
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -493,7 +493,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
 
 
 
-/** \brief This JKQTPPlotObject is used to draw a pie
+/** \brief This JKQTPGeometricPlotElement is used to draw a pie
  *  \ingroup jkqtplotter_geoplots
  *
  *
@@ -512,7 +512,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoEllipse: public JKQTPGeoRectangle {
  *      plot->addGraph(new JKQTPGeoText(plot, 3.5+0.55*cos(110.0/180.0*JKQTPSTATISTICS_PI),0.5+0.55*sin(110.0/180.0*JKQTPSTATISTICS_PI), "110\\degree", 10, QColor("grey")));
  *  \endcode
  *
- *  \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+ *  \note This function support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
  *        This means that pies are always treated as mathematical curves, as no meaningful
  *        parametrization for pies on non-linear axes could be found!
  *
@@ -555,15 +555,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
         JKQTPGeoPie(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+         * \note This function support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
          *       This means that pies are always treated as mathematical curves, as no meaningful
          *       parametrization for pies on non-linear axes could be found!*/
         virtual void draw(JKQTPEnhancedPainter& painter) override;
@@ -586,14 +586,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
 
 
 
-/** \brief This JKQTPPlotObject is used to draw a chord
+/** \brief This JKQTPGeometricPlotElement is used to draw a chord
  *  \ingroup jkqtplotter_geoplots
  *
  *  A chord on linear and log-log axes (start angle: 10deg and end-angle 110deg):
  *
  *  \image html plot_geochord.png
  *
- *  \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+ *  \note This function support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
  *        This means that chords are always treated as mathematical curves, as no meaningful
  *        parametrization for chords on non-linear axes could be found!
  *
@@ -635,14 +635,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoChord: public JKQTPGeoPie {
          */
         JKQTPGeoChord(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine, QColor fillColor=QColor("transparent"), Qt::BrushStyle fillStyle=Qt::SolidPattern, DrawMode drawMode=DrawAsGraphicElement);
 
-        /** \copydoc JKQTPPlotObject::getXMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
-        /** \copydoc JKQTPPlotObject::getYMinMax()        */
+        /** \copydoc JKQTPGeometricPlotElement::getYMinMax()        */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
         /** \brief plots the graph to the plotter object specified as parent
          *
-         * \note This function support the JKQTPPlotObject::DrawMode::DrawAsMathematicalCurve only.
+         * \note This function support the JKQTPGeometricPlotElement::DrawMode::DrawAsMathematicalCurve only.
          *       This means that chords are always treated as mathematical curves, as no meaningful
          *       parametrization for chords on non-linear axes could be found!
          */

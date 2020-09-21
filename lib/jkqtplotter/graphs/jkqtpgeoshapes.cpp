@@ -77,25 +77,25 @@ JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, QPointF bottomleft, QP
 {
 }
 
-JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTBasePlotter *parent, const QPointF &center, const QSizeF &size, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPPlotObject::DrawMode drawMode):
+JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTBasePlotter *parent, const QPointF &center, const QSizeF &size, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPGeometricPlotElement::DrawMode drawMode):
     JKQTPGeoRectangle(parent, center.x(), center.y(), size.width(), size.height(), angle, color, lineWidth, style, fillColor, fillStyle, drawMode)
 {
 
 }
 
-JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, const QPointF &center, const QSizeF &size, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPPlotObject::DrawMode drawMode):
+JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, const QPointF &center, const QSizeF &size, double angle, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPGeometricPlotElement::DrawMode drawMode):
     JKQTPGeoRectangle(parent->getPlotter(), center, size, angle, color, lineWidth, style, fillColor, fillStyle, drawMode)
 {
 
 }
 
-JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTBasePlotter *parent, const QPointF &center, const QSizeF &size, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPPlotObject::DrawMode drawMode):
+JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTBasePlotter *parent, const QPointF &center, const QSizeF &size, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPGeometricPlotElement::DrawMode drawMode):
     JKQTPGeoRectangle(parent, center.x(), center.y(), size.width(), size.height(), color, lineWidth, style, fillColor, fillStyle, drawMode)
 {
 
 }
 
-JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, const QPointF &center, const QSizeF &size, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPPlotObject::DrawMode drawMode):
+JKQTPGeoRectangle::JKQTPGeoRectangle(JKQTPlotter *parent, const QPointF &center, const QSizeF &size, QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle, JKQTPGeometricPlotElement::DrawMode drawMode):
     JKQTPGeoRectangle(parent->getPlotter(), center, size, color, lineWidth, style, fillColor, fillStyle, drawMode)
 {
 
@@ -152,7 +152,7 @@ void JKQTPGeoRectangle::draw(JKQTPEnhancedPainter& painter) {
     if ((getDrawMode()==DrawAsGraphicElement) || (getParent()->getXAxis()->isLinearAxis() && getParent()->getYAxis()->isLinearAxis())) {
         rect=transform(poly);
     } else {
-        auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+        auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
         rect=JKQTPSplitPolylineIntoPoints(poly, fTransform);
     }
     for (const auto& p:poly) {
@@ -331,7 +331,7 @@ void JKQTPGeoPolygon::draw(JKQTPEnhancedPainter& painter) {
         } else {
             // for non-linear axes, a line might not be drawn as a line, so we need to segment the line (i.e. linear function in coordinate space)
             // and transform each node to draw the corresponding non-linear curve in pixel-space!
-            auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+            auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
             QVector<QPointF> polyp=points;
             if (polyp.first()!=polyp.last()) polyp.push_back(polyp.first());
             QPolygonF path=JKQTPSplitPolylineIntoPoints(polyp, fTransform);
@@ -462,7 +462,7 @@ void JKQTPGeoEllipse::drawInternal(JKQTPEnhancedPainter& painter, double angleSt
     painter.setBrush(getFillBrush(painter, parent));
 
 
-    auto fTransform=std::bind([](const JKQTPPlotObject* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
+    auto fTransform=std::bind([](const JKQTPGeometricPlotElement* plot, const QPointF& p) { return plot->transform(p); }, this, std::placeholders::_1);
     QPolygonF rect;
     if(mode==InternalDrawMode::Ellipse) {
         rect=JKQTPSplitEllipseIntoPoints(fTransform, x,y,width/2.0, height/2.0,0,360, angle);

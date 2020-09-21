@@ -60,7 +60,7 @@
     \see \ref JKQTPlotterViolinplotGraphs
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPPlotObject, public JKQTPGraphViolinplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPViolinplotVerticalElement: public JKQTPGeometricPlotElement, public JKQTPGraphViolinplotStyleMixin {
         Q_OBJECT
     public:
         /** \brief class constructor */
