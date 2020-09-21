@@ -72,21 +72,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPeakStreamGraph: public JKQTPSingleColumnGraph
         virtual QColor getKeyLabelColor() const override;
         /** \brief set symbol color and fill color at the same time */
         void setColor(QColor col);
-        /*! \copydoc baseline */ 
+        /** \copydoc baseline */ 
         void setBaseline(double __value);
-        /*! \copydoc baseline */ 
+        /** \copydoc baseline */ 
         double getBaseline() const;
-        /*! \copydoc peakHeight */ 
+        /** \copydoc peakHeight */ 
         void setPeakHeight(double __value);
-        /*! \copydoc peakHeight */ 
+        /** \copydoc peakHeight */ 
         double getPeakHeight() const;
-        /*! \copydoc yPeaks */ 
+        /** \copydoc yPeaks */ 
         void setYPeaks(bool __value);
-        /*! \copydoc yPeaks */ 
+        /** \copydoc yPeaks */ 
         bool getYPeaks() const;
-        /*! \copydoc drawBaseline */ 
+        /** \copydoc drawBaseline */ 
         void setDrawBaseline(bool __value);
-        /*! \copydoc drawBaseline */ 
+        /** \copydoc drawBaseline */ 
         bool getDrawBaseline() const;
 
     protected:

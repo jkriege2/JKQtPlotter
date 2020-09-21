@@ -64,19 +64,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: p
 
 
 
-        /*! \copydoc drawErrorPolygons */
+        /** \copydoc drawErrorPolygons */
         bool getDrawErrorPolygons() const;
-        /*! \copydoc drawErrorLines */
+        /** \copydoc drawErrorLines */
         bool getDrawErrorLines() const;
-        /*! \copydoc errorColor */
+        /** \copydoc errorColor */
         virtual QColor getErrorLineColor() const;
-        /*! \copydoc errorFillColor */
+        /** \copydoc errorFillColor */
         virtual QColor getErrorFillColor() const;
-        /*! \copydoc errorFillStyle */
+        /** \copydoc errorFillStyle */
         virtual Qt::BrushStyle getErrorFillStyle() const;
-        /*! \copydoc errorStyle */
+        /** \copydoc errorStyle */
         virtual Qt::PenStyle getErrorLineStyle() const;
-        /*! \copydoc errorLineWidth */
+        /** \copydoc errorLineWidth */
         virtual double getErrorLineWidth() const;
 
 
@@ -84,23 +84,23 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase: p
 
 
     public slots:
-        /*! \brief set color, fill color and error color at the same time */
+        /** \brief set color, fill color and error color at the same time  */
         void setColor(QColor c);
 
 
-        /*! \copydoc drawErrorPolygons */
+        /** \copydoc drawErrorPolygons */
         void setDrawErrorPolygons(bool __value);
-        /*! \copydoc drawErrorLines */
+        /** \copydoc drawErrorLines */
         void setDrawErrorLines(bool __value);
-        /*! \copydoc errorColor */
+        /** \copydoc errorColor */
         virtual void setErrorLineColor(const QColor & __value);
-        /*! \copydoc errorFillColor */
+        /** \copydoc errorFillColor */
         virtual void setErrorFillColor(const QColor & __value);
-        /*! \copydoc errorFillStyle */
+        /** \copydoc errorFillStyle */
         virtual void setErrorFillStyle(Qt::BrushStyle  __value);
-        /*! \copydoc errorStyle */
+        /** \copydoc errorStyle */
         virtual void setErrorLineStyle(Qt::PenStyle  __value);
-        /*! \copydoc errorLineWidth */
+        /** \copydoc errorLineWidth */
         virtual void setErrorLineWidth(double __value);
 
     protected:
@@ -239,7 +239,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFunctorLineGraphBase: public JKQTPEvaluatedFun
          * \see errorPlotFunction
          */
         virtual void setErrorPlotFunction (const jkqtpPlotFunctionType & __value);
-        /*! \copydoc errorPlotFunction */ \
+        /** \copydoc errorPlotFunction */ \
         virtual jkqtpPlotFunctionType getErrorPlotFunction () const;
         /** \brief sets a functor to be used for calculating errors
          *
@@ -251,7 +251,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFunctorLineGraphBase: public JKQTPEvaluatedFun
          * \see errorSimplePlotFunction
          */
         virtual void setErrorPlotFunction (const jkqtpSimplePlotFunctionType & __value);
-        /*! \copydoc errorSimplePlotFunction */ \
+        /** \copydoc errorSimplePlotFunction */ \
         virtual jkqtpSimplePlotFunctionType getErrorSimplePlotFunction () const;
 
 

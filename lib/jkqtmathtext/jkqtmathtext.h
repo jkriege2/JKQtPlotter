@@ -282,13 +282,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
         };
 
 
-        /*! \copydoc fontColor */ 
+        /** \copydoc fontColor */ 
         void setFontColor(const QColor & __value);
-        /*! \copydoc fontColor */ 
+        /** \copydoc fontColor */ 
         QColor getFontColor() const;
-        /*! \copydoc fontSize */ 
+        /** \copydoc fontSize */ 
         void setFontSize(double __value);
-        /*! \copydoc fontSize */ 
+        /** \copydoc fontSize */ 
         double getFontSize() const;
         /** \brief add a font pair to the table with font replacements
          *
@@ -329,82 +329,82 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
             \see setFontRoman(), useXITS(), useSTIX() for more information */
         void setFontRomanOrSpecial(const QString & fontName);
 
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEroman  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEroman   */
         void setFontRoman(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEroman  */
+        /** \brief retrieves the font to be used for text in the logical font MTEroman   */
         QString getFontRoman() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEsans  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEsans   */
         void setFontSans(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEsans  */
+        /** \brief retrieves the font to be used for text in the logical font MTEsans   */
         QString getFontSans() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEtypewriter  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEtypewriter   */
         void setFontTypewriter(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEtypewriter  */
+        /** \brief retrieves the font to be used for text in the logical font MTEtypewriter   */
         QString getFontTypewriter() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEscript  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEscript   */
         void setFontScript(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEscript  */
+        /** \brief retrieves the font to be used for text in the logical font MTEscript   */
         QString getFontScript() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEfraktur  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEfraktur   */
         void setFontFraktur(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEfraktur  */
+        /** \brief retrieves the font to be used for text in the logical font MTEfraktur   */
         QString getFontFraktur() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEcaligraphic  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEcaligraphic   */
         void setFontCaligraphic(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEcaligraphic  */
+        /** \brief retrieves the font to be used for text in the logical font MTEcaligraphic   */
         QString getFontCaligraphic() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEblackboard  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEblackboard   */
         void setFontBlackboard(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief blackboard font is simulated by using roman with outlines only */
+        /** \brief blackboard font is simulated by using roman with outlines only  */
         void setFontBlackboardSimulated(bool doSimulate);
-        /*! \brief is blackboard font simulated by using roman with outlines only */
+        /** \brief is blackboard font simulated by using roman with outlines only  */
         bool isFontBlackboardSimulated() const;
-        /*! \brief retrieves the font to be used for text in the logical font MTEblackboard  */
+        /** \brief retrieves the font to be used for text in the logical font MTEblackboard   */
         QString getFontBlackboard() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for greek letters in the logical font \a font  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for greek letters in the logical font \a font   */
         void setSymbolfontGreek(MTenvironmentFont font, const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for integrals in all logical fonts  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for integrals in all logical fonts   */
         void setSymbolfontGreek(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for greek letters in the logical font \a font  */
+        /** \brief retrieves the font to be used for greek letters in the logical font \a font   */
         QString getSymbolfontGreek(MTenvironmentFont font) const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for symbols in the logical font \a font   */
         void setSymbolfontSymbol(MTenvironmentFont font, const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for integrals in all logical fonts  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for integrals in all logical fonts   */
         void setSymbolfontSymbol(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for symbols in the logical font \a font  */
+        /** \brief retrieves the font to be used for symbols in the logical font \a font   */
         QString getSymbolfontSymbol(MTenvironmentFont font) const;
 
-        /*! \brief retrieves the encoding used for the symbol font to be used for symbols in the logical font \a font  */
+        /** \brief retrieves the encoding used for the symbol font to be used for symbols in the logical font \a font   */
         MTfontEncoding getSymbolfontEncodingSymbol(MTenvironmentFont font) const;
-        /*! \brief retrieves the encoding used for the greek letter font to be used for symbols in the logical font \a font  */
+        /** \brief retrieves the encoding used for the greek letter font to be used for symbols in the logical font \a font   */
         MTfontEncoding getSymbolfontEncodingGreek(MTenvironmentFont font) const;
-        /*! \brief retrieves the encoding used for the script font */
+        /** \brief retrieves the encoding used for the script font  */
         MTfontEncoding getFontEncodingScript() const;
-        /*! \brief retrieves the encoding used for the Fraktur font */
+        /** \brief retrieves the encoding used for the Fraktur font  */
         MTfontEncoding getFontEncodingFraktur() const;
-        /*! \brief retrieves the encoding used for the typewriter font */
+        /** \brief retrieves the encoding used for the typewriter font  */
         MTfontEncoding getFontEncodingTypewriter() const;
-        /*! \brief retrieves the encoding used for the sans-serif font */
+        /** \brief retrieves the encoding used for the sans-serif font  */
         MTfontEncoding getFontEncodingSans() const;
-        /*! \brief retrieves the encoding used for the roman font */
+        /** \brief retrieves the encoding used for the roman font  */
         MTfontEncoding getFontEncodingRoman() const;
-        /*! \brief retrieves the encoding used for the blackboard font */
+        /** \brief retrieves the encoding used for the blackboard font  */
         MTfontEncoding getFontEncodingBlackboard() const;
-        /*! \brief retrieves the encoding used for the caligraphic font */
+        /** \brief retrieves the encoding used for the caligraphic font  */
         JKQTMathText::MTfontEncoding getFontEncodingCaligraphic() const;
 
 
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathRoman  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathRoman   */
         void setFontMathRoman(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEroman  */
+        /** \brief retrieves the font to be used for text in the logical font MTEroman   */
         QString getFontMathRoman() const;
-        /*! \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathSans  */
+        /** \brief set the font \a fontName and it's encoding \a encoding to be used for text in the logical font MTEmathSans   */
         void setFontMathSans(const QString & fontName, MTfontEncoding encoding=MTfontEncoding::MTFEStandard);
-        /*! \brief retrieves the font to be used for text in the logical font MTEsans  */
+        /** \brief retrieves the font to be used for text in the logical font MTEsans   */
         QString getFontMathSans() const;
-        /*! \brief retrieves the encoding used for the math-mode sans-serif font */
+        /** \brief retrieves the encoding used for the math-mode sans-serif font  */
         MTfontEncoding getFontEncodingMathSans() const;
-        /*! \brief retrieves the encoding used for the math-mode roman font */
+        /** \brief retrieves the encoding used for the math-mode roman font  */
         MTfontEncoding getFontEncodingMathRoman() const;
 
         /** \brief configures the class to use the STIX fonts in mathmode
@@ -452,71 +452,71 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
 
 
-        /*! \copydoc brace_factor */ 
+        /** \copydoc brace_factor */ 
         void setBraceFactor(double __value);
-        /*! \copydoc brace_factor */ 
+        /** \copydoc brace_factor */ 
         double getBraceFactor() const;
-        /*! \copydoc subsuper_size_factor */ 
+        /** \copydoc subsuper_size_factor */ 
         void setSubsuperSizeFactor(double __value);
-        /*! \copydoc subsuper_size_factor */ 
+        /** \copydoc subsuper_size_factor */ 
         double getSubsuperSizeFactor() const;
-        /*! \copydoc italic_correction_factor */ 
+        /** \copydoc italic_correction_factor */ 
         void setItalicCorrectionFactor(double __value);
-        /*! \copydoc italic_correction_factor */ 
+        /** \copydoc italic_correction_factor */ 
         double getItalicCorrectionFactor() const;
-        /*! \copydoc operatorsubsuper_size_factor */ 
+        /** \copydoc operatorsubsuper_size_factor */ 
         void setOperatorsubsuperSizeFactor(double __value);
-        /*! \copydoc operatorsubsuper_size_factor */ 
+        /** \copydoc operatorsubsuper_size_factor */ 
         double getOperatorsubsuperSizeFactor() const;
-        /*! \copydoc mathoperator_width_factor */ 
+        /** \copydoc mathoperator_width_factor */ 
         void setMathoperatorWidthFactor(double __value);
-        /*! \copydoc mathoperator_width_factor */ 
+        /** \copydoc mathoperator_width_factor */ 
         double getMathoperatorWidthFactor() const;
-        /*! \copydoc super_shift_factor */ 
+        /** \copydoc super_shift_factor */ 
         void setSuperShiftFactor(double __value);
-        /*! \copydoc super_shift_factor */ 
+        /** \copydoc super_shift_factor */ 
         double getSuperShiftFactor() const;
-        /*! \copydoc sub_shift_factor */ 
+        /** \copydoc sub_shift_factor */ 
         void setSubShiftFactor(double __value);
-        /*! \copydoc sub_shift_factor */ 
+        /** \copydoc sub_shift_factor */ 
         double getSubShiftFactor() const;
-        /*! \copydoc brace_shrink_factor */ 
+        /** \copydoc brace_shrink_factor */ 
         void setBraceShrinkFactor(double __value);
-        /*! \copydoc brace_shrink_factor */ 
+        /** \copydoc brace_shrink_factor */ 
         double getBraceShrinkFactor() const;
-        /*! \copydoc underbrace_factor */ 
+        /** \copydoc underbrace_factor */ 
         void setUnderbraceFactor(double __value);
-        /*! \copydoc underbrace_factor */ 
+        /** \copydoc underbrace_factor */ 
         double getUnderbraceFactor() const;
-        /*! \copydoc undersetFactor */ 
+        /** \copydoc undersetFactor */ 
         void setUndersetFactor(double __value);
-        /*! \copydoc undersetFactor */ 
+        /** \copydoc undersetFactor */ 
         double getUndersetFactor() const;
-        /*! \copydoc frac_factor */ 
+        /** \copydoc frac_factor */ 
         void setFracFactor(double __value);
-        /*! \copydoc frac_factor */ 
+        /** \copydoc frac_factor */ 
         double getFracFactor() const;
-        /*! \copydoc frac_shift_factor */ 
+        /** \copydoc frac_shift_factor */ 
         void setFracShiftFactor(double __value);
-        /*! \copydoc frac_shift_factor */ 
+        /** \copydoc frac_shift_factor */ 
         double getFracShiftFactor() const;
-        /*! \copydoc brace_y_shift_factor */ 
+        /** \copydoc brace_y_shift_factor */ 
         void setBraceYShiftFactor(double __value);
-        /*! \copydoc brace_y_shift_factor */ 
+        /** \copydoc brace_y_shift_factor */ 
         double getBraceYShiftFactor() const;
-        /*! \copydoc decoration_height_factor */ 
+        /** \copydoc decoration_height_factor */ 
         void setDecorationHeightFactor(double __value);
-        /*! \copydoc decoration_height_factor */ 
+        /** \copydoc decoration_height_factor */ 
         double getDecorationHeightFactor() const;
-        /*! \copydoc expensiveRendering */ 
+        /** \copydoc expensiveRendering */ 
         void setExpensiveRendering(bool __value);
-        /*! \copydoc expensiveRendering */ 
+        /** \copydoc expensiveRendering */ 
         bool getExpensiveRendering() const;
-        /*! \copydoc useUnparsed */ 
+        /** \copydoc useUnparsed */ 
         void setUseUnparsed(bool __value);
-        /*! \copydoc useUnparsed */ 
+        /** \copydoc useUnparsed */ 
         bool isUsingUnparsed() const;
-        /*! \copydoc error_list */ 
+        /** \copydoc error_list */ 
         QStringList getErrorList() const;
 
     protected:
@@ -659,7 +659,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
-                /*! \copydoc text */ 
+                /** \copydoc text */ 
                 QString getText() const;
                 virtual QString getTypeName() const override ;
             protected:
@@ -709,7 +709,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
-                /*! \copydoc symbolName */ 
+                /** \copydoc symbolName */ 
                 QString getSymbolName() const;
                 QString getSymbolfontName() const;
                 bool getAddWhitespace() const;
@@ -772,7 +772,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
-                /*! \copydoc nodes */ 
+                /** \copydoc nodes */ 
                 QList<MTnode*> getNodes() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
@@ -797,11 +797,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
-                /*! \brief returns the child node */
+                /** \brief returns the child node  */
                 MTnode* getChild() const;
-                /*! \copydoc name */ 
+                /** \copydoc name */ 
                 QString getName() const;
-                /*! \copydoc parameters */ 
+                /** \copydoc parameters */ 
                 QStringList getParameters() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
@@ -827,7 +827,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 /** \copydoc MTnode::getTypeName() */
-                virtual QString getTypeName() const override;                /*! \brief returns the child node */
+                virtual QString getTypeName() const override;                /** \brief returns the child node  */
                  MTnode *getChild() const;
                 /** \copydoc MTnode::toHtml() */
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
@@ -852,7 +852,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual ~MTsuperscriptNode() override;
                 /** \copydoc MTnode::draw() */
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
-                /*! \brief returns the child node */
+                /** \brief returns the child node  */
                 MTnode* getChild() const;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
@@ -881,19 +881,19 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual void setDrawBoxes(bool draw) override;
                 /** \copydoc MTnode::getTypeName() */
                 virtual QString getTypeName() const override;
-                /*! \brief returns the child node */
+                /** \brief returns the child node  */
                 inline MTnode* getChild() const {
                     return this->child; 
                 }
-                /*! \copydoc openbrace */ 
+                /** \copydoc openbrace */ 
                 inline QString getOpenbrace() const { 
                     return this->openbrace; 
                 }
-                /*! \copydoc closebrace */ 
+                /** \copydoc closebrace */ 
                 inline QString getClosebrace() const { 
                     return this->closebrace; 
                 }
-                /*! \copydoc showRightBrace */ 
+                /** \copydoc showRightBrace */ 
                 inline bool getShowRightBrace() const { 
                     return this->showRightBrace; 
                 }
@@ -923,9 +923,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
                 virtual QString getTypeName() const override ;
-                /*! \brief returns the child node */
+                /** \brief returns the child node  */
                 MTnode *getChild() const;
-                /*! \copydoc degree */ 
+                /** \copydoc degree */ 
                 int getDegree() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
@@ -963,11 +963,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
-                /*! \brief returns the 1st child node */
+                /** \brief returns the 1st child node  */
                 MTnode* getChild1() const;
-                /*! \brief returns the 2nd child node */
+                /** \brief returns the 2nd child node  */
                 MTnode* getChild2() const;
-                /*! \copydoc mode */ 
+                /** \copydoc mode */ 
                 MTfracMode getMode() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
@@ -988,11 +988,11 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 virtual QString getTypeName() const override;
                 virtual double draw(QPainter& painter, double x, double y, MTenvironment currentEv, const MTnodeSize* prevNodeSize=nullptr) override;
                 virtual bool toHtml(QString& html, JKQTMathText::MTenvironment currentEv, JKQTMathText::MTenvironment defaultEv) override;
-                /*! \brief returns the child nodes */
+                /** \brief returns the child nodes  */
                 QVector<QVector<MTnode*> > getChildren() const;
-                /*! \copydoc columns */ 
+                /** \copydoc columns */ 
                 int getColumns() const;
-                /*! \copydoc lines */ 
+                /** \copydoc lines */ 
                 int getLines() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
@@ -1034,9 +1034,9 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
                 /** \copydoc MTnode::setDrawBoxes() */
                 virtual void setDrawBoxes(bool draw) override;
                 virtual QString getTypeName() const override ;
-                /*! \brief returns the child node */
+                /** \brief returns the child node  */
                 MTnode* getChild() const;
-                /*! \copydoc decoration */ 
+                /** \copydoc decoration */ 
                 MTdecoration getDecoration() const;
             protected:
                 /** \copydoc MTnode::getSizeInternal() */
@@ -1165,7 +1165,7 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 
 
     public:
-        /*! \copydoc parsedNode */ 
+        /** \copydoc parsedNode */ 
         MTnode *getParsedNode() const;
 
         struct JKQTMATHTEXT_LIB_EXPORT tbrData {

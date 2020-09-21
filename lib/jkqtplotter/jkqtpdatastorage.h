@@ -1474,14 +1474,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
                 && (valid==other.valid);
     }
 
-    /*! \copydoc name */
+    /** \copydoc name */
     void setName (const QString& __value);
-    /*! \copydoc name */
+    /** \copydoc name */
     QString getName () const;
 
-    /*! \copydoc imageColumns */
+    /** \copydoc imageColumns */
     void setImageColumns (size_t imageWidth);
-    /*! \copydoc imageColumns */
+    /** \copydoc imageColumns */
     inline size_t getImageColumns () const { return imageColumns; }
 
     /** \brief returns the number of rows in this column (accesses the datastore) */
@@ -1599,10 +1599,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumn {
     /** \brief calculates a checksum over the contents of the column (using <a href="https://doc.qt.io/qt-5/qbytearray.html#qChecksum">qChecksum()</a>) */
     inline quint16 calculateChecksum() const;
 
-    /*! \copydoc datastoreItem */ \
+    /** \copydoc datastoreItem */ \
     inline size_t getDatastoreItemNum() const  \
     {   return this->datastoreItem;   }
-    /*! \copydoc datastoreOffset */ \
+    /** \copydoc datastoreOffset */ \
     inline size_t getDatastoreOffset() const  \
     {   return this->datastoreOffset;   }
 
@@ -2290,10 +2290,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPDatastoreItem {
     /** \brief change the size of all columns to the givne number of rows. Returns \c true if the old data could be retained/saved and \c false if the old data was lost (which happens in most of the cases!) */
     bool resizeColumns(size_t rows);
 
-    /*! \copydoc JKQTPDatastoreItem::rows */
+    /** \copydoc JKQTPDatastoreItem::rows */
     inline size_t getRows() const
     {   return rows;   }
-    /*! \copydoc JKQTPDatastoreItem::columns */
+    /** \copydoc JKQTPDatastoreItem::columns */
     inline size_t getColumns() const
     {   return columns;   }
 

@@ -47,26 +47,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
         JKQTPColorPaletteStyleAndToolsMixin(JKQTBasePlotter *parent);
         virtual ~JKQTPColorPaletteStyleAndToolsMixin();
 
-        /*! \brief get list with all available palettes */
+        /** \brief get list with all available palettes  */
         static QStringList getPalettes() ;
-        /*! \brief get list with all available palettes */
+        /** \brief get list with all available palettes  */
         static int getPalettesCount() ;
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QIcon getPaletteIcon(int i) ;
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QIcon getPaletteIcon(JKQTPMathImageColorPalette palette) ;
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QImage getPaletteImage(int i, size_t width) ;
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QImage getPaletteImage(JKQTPMathImageColorPalette palette, size_t width) ;
 
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QIcon getPaletteKeyIcon(int i) ;
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QIcon getPaletteKeyIcon(JKQTPMathImageColorPalette palette) ;
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QImage getPaletteKeyImage(int i, size_t width, size_t height) ;
-        /*! \brief get QIcon representing the given palette */
+        /** \brief get QIcon representing the given palette  */
         static QImage getPaletteKeyImage(JKQTPMathImageColorPalette palette, size_t width, size_t height) ;
 
 
@@ -97,92 +97,92 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteStyleAndToolsMixin {
 
 
 
-        /*! \copydoc palette */
+        /** \copydoc palette */
         void setColorPalette(int pal);
-        /*! \copydoc palette */
+        /** \copydoc palette */
         void setColorPalette(const JKQTPMathImageColorPalette & __value);
-        /*! \copydoc palette */
+        /** \copydoc palette */
         JKQTPMathImageColorPalette getColorPalette() const;
 
-        /*! \copydoc rangeMinFailAction */
+        /** \copydoc rangeMinFailAction */
         void setRangeMinFailAction(const JKQTPMathImageColorRangeFailAction & __value);
-        /*! \copydoc rangeMinFailAction */
+        /** \copydoc rangeMinFailAction */
         JKQTPMathImageColorRangeFailAction getActionRangeMinFail() const;
-        /*! \copydoc rangeMaxFailAction */
+        /** \copydoc rangeMaxFailAction */
         void setRangeMaxFailAction(const JKQTPMathImageColorRangeFailAction & __value);
-        /*! \copydoc rangeMaxFailAction */
+        /** \copydoc rangeMaxFailAction */
         JKQTPMathImageColorRangeFailAction getActionRangeMaxFail() const;
-        /*! \copydoc rangeMinFailColor */
+        /** \copydoc rangeMinFailColor */
         void setRangeMinFailColor(const QColor & __value);
-        /*! \copydoc rangeMinFailColor */
+        /** \copydoc rangeMinFailColor */
         QColor getRangeMinFailColor() const;
-        /*! \copydoc rangeMaxFailColor */
+        /** \copydoc rangeMaxFailColor */
         void setRangeMaxFailColor(const QColor & __value);
-        /*! \copydoc rangeMaxFailColor */
+        /** \copydoc rangeMaxFailColor */
         QColor getRangeMaxFailColor() const;
-        /*! \copydoc nanColor */
+        /** \copydoc nanColor */
         void setNanColor(const QColor & __value);
-        /*! \copydoc nanColor */
+        /** \copydoc nanColor */
         QColor getNanColor() const;
-        /*! \copydoc infColor */
+        /** \copydoc infColor */
         void setInfColor(const QColor & __value);
-        /*! \copydoc infColor */
+        /** \copydoc infColor */
         QColor getInfColor() const;
-        /*! \copydoc showColorBar */
+        /** \copydoc showColorBar */
         void setShowColorBar(bool __value);
-        /*! \copydoc showColorBar */
+        /** \copydoc showColorBar */
         bool getShowColorBar() const;
-        /*! \copydoc colorBarWidth */
+        /** \copydoc colorBarWidth */
         void setColorBarWidth(int __value);
-        /*! \copydoc colorBarWidth */
+        /** \copydoc colorBarWidth */
         int getColorBarWidth() const;
-        /*! \copydoc colorBarOffset */
+        /** \copydoc colorBarOffset */
         void setColorBarOffset(int __value);
-        /*! \copydoc colorBarOffset */
+        /** \copydoc colorBarOffset */
         int getColorBarOffset() const;
-        /*! \copydoc colorBarRelativeHeight */
+        /** \copydoc colorBarRelativeHeight */
         void setColorBarRelativeHeight(double __value);
-        /*! \copydoc colorBarRelativeHeight */
+        /** \copydoc colorBarRelativeHeight */
         double getColorBarRelativeHeight() const;
-        /*! \copydoc imageMin */
+        /** \copydoc imageMin */
         void setImageMin(double __value);
-        /*! \copydoc imageMin */
+        /** \copydoc imageMin */
         double getImageMin() const;
-        /*! \copydoc imageMax */
+        /** \copydoc imageMax */
         void setImageMax(double __value);
-        /*! \copydoc imageMax */
+        /** \copydoc imageMax */
         double getImageMax() const;
-        /*! \copydoc autoImageRange */
+        /** \copydoc autoImageRange */
         void setAutoImageRange(bool __value);
-        /*! \copydoc autoImageRange */
+        /** \copydoc autoImageRange */
         bool getAutoImageRange() const;
-        /*! \copydoc imageName */
+        /** \copydoc imageName */
         void setImageName(const QString & __value);
-        /*! \copydoc imageName */
+        /** \copydoc imageName */
         QString getImageName() const;
-        /*! \copydoc imageNameFontName */
+        /** \copydoc imageNameFontName */
         void setImageNameFontName(const QString & __value);
-        /*! \copydoc imageNameFontName */
+        /** \copydoc imageNameFontName */
         QString getImageNameFontName() const;
-        /*! \copydoc imageNameFontSize */
+        /** \copydoc imageNameFontSize */
         void setImageNameFontSize(double __value);
-        /*! \copydoc imageNameFontSize */
+        /** \copydoc imageNameFontSize */
         double getImageNameFontSize() const;
-        /*! \copydoc colorBarRightAxis */
+        /** \copydoc colorBarRightAxis */
         JKQTPVerticalIndependentAxis* getColorBarRightAxis();
-        /*! \copydoc colorBarTopAxis */
+        /** \copydoc colorBarTopAxis */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxis();
-        /*! \copydoc colorBarRightAxis */
+        /** \copydoc colorBarRightAxis */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const;
-        /*! \copydoc colorBarTopAxis */
+        /** \copydoc colorBarTopAxis */
         const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const;
-        /*! \copydoc colorBarTopVisible */
+        /** \copydoc colorBarTopVisible */
         void setColorBarTopVisible(bool __value);
-        /*! \copydoc colorBarTopVisible */
+        /** \copydoc colorBarTopVisible */
         bool getColorBarTopVisible() const;
-        /*! \copydoc colorBarRightVisible */
+        /** \copydoc colorBarRightVisible */
         void setColorBarRightVisible(bool __value);
-        /*! \copydoc colorBarRightVisible */
+        /** \copydoc colorBarRightVisible */
         bool getColorBarRightVisible() const;
 
 
@@ -282,34 +282,34 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteWithModifierStyleAndToolsMixin : p
         virtual void cbGetModifierDataMinMax(double& imin, double& imax)=0;
 
 
-        /*! \copydoc modifierMode */
+        /** \copydoc modifierMode */
         void setModifierMode(const JKQTPMathImageModifierMode & __value);
-        /*! \copydoc modifierMode */
+        /** \copydoc modifierMode */
         JKQTPMathImageModifierMode getModifierMode() const;
 
-        /*! \copydoc colorBarModifiedWidth */
+        /** \copydoc colorBarModifiedWidth */
         void setColorBarModifiedWidth(double __value);
-        /*! \copydoc colorBarModifiedWidth */
+        /** \copydoc colorBarModifiedWidth */
         double getColorBarModifiedWidth() const;
-        /*! \copydoc modifierColorBarTopAxis */
+        /** \copydoc modifierColorBarTopAxis */
         JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis();
-        /*! \copydoc modifierColorBarRightAxis */
+        /** \copydoc modifierColorBarRightAxis */
         JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis();
-        /*! \copydoc modifierColorBarTopAxis */
+        /** \copydoc modifierColorBarTopAxis */
         const JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const;
-        /*! \copydoc modifierColorBarRightAxis */
+        /** \copydoc modifierColorBarRightAxis */
         const JKQTPHorizontalIndependentAxis *getModifierColorBarRightAxis()  const;
-        /*! \copydoc autoModifierRange */
+        /** \copydoc autoModifierRange */
         void setAutoModifierRange(bool __value);
-        /*! \copydoc autoModifierRange */
+        /** \copydoc autoModifierRange */
         bool getAutoModifierRange() const;
-        /*! \copydoc modifierMin */
+        /** \copydoc modifierMin */
         void setModifierMin(double __value);
-        /*! \copydoc modifierMin */
+        /** \copydoc modifierMin */
         double getModifierMin() const;
-        /*! \copydoc modifierMax */
+        /** \copydoc modifierMax */
         void setModifierMax(double __value);
-        /*! \copydoc modifierMax */
+        /** \copydoc modifierMax */
         double getModifierMax() const;
 
 

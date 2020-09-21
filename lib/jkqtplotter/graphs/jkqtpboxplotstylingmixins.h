@@ -49,40 +49,40 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineS
         JKQTPGraphBoxplotStyleMixin();
 
         void initBoxplotStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
-        /*! \copydoc boxWidthAbsolute */
+        /** \copydoc boxWidthAbsolute */
         void setBoxWidthAbsolute(double __value);
-        /*! \copydoc boxWidthAbsolute */
+        /** \copydoc boxWidthAbsolute */
         double getBoxWidthAbsolute() const;
 
-        /*! \copydoc drawBox */
+        /** \copydoc drawBox */
         void setDrawBox(bool __value);
-        /*! \copydoc drawBox */
+        /** \copydoc drawBox */
         bool getDrawBox() const;
 
-        /*! \copydoc relativeWhiskerWidth */
+        /** \copydoc relativeWhiskerWidth */
         void setRelativeWhiskerWidth(double __value);
-        /*! \copydoc relativeWhiskerWidth */
+        /** \copydoc relativeWhiskerWidth */
         double getRelativeWhiskerWidth() const;
 
-        /*! \copydoc relativeNotchIndent */
+        /** \copydoc relativeNotchIndent */
         void setRelativeNotchIndent(double __value);
-        /*! \copydoc relativeNotchIndent */
+        /** \copydoc relativeNotchIndent */
         double getRelativeNotchIndent() const;
 
 
-        /*! \brief set the line style of whisker lines */
+        /** \brief set the line style of whisker lines  */
         void setWhiskerLineStyle(Qt::PenStyle  __value);
-        /*! \brief get the line style of whisker lines */
+        /** \brief get the line style of whisker lines  */
         Qt::PenStyle getWhiskerLineStyle() const;
 
-        /*! \brief set the width [pt] of whisker lines */
+        /** \brief set the width [pt] of whisker lines  */
         void setWhiskerLineWidth(double __value);
-        /*! \brief get the  width [pt] of whisker lines */
+        /** \brief get the  width [pt] of whisker lines  */
         double getWhiskerLineWidth() const;
 
-        /*! \brief set the color of whisker lines */
+        /** \brief set the color of whisker lines  */
         void setWhiskerLineColor(QColor __value);
-        /*! \brief get the color of whisker lines */
+        /** \brief get the color of whisker lines  */
         QColor getWhiskerLineColor() const;
 
 
@@ -132,19 +132,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineS
 
 
 
-        /*! \brief set the line style of whisker cap lines */
+        /** \brief set the line style of whisker cap lines  */
         void setWhiskerCapLineStyle(Qt::PenStyle  __value);
-        /*! \brief get the line style of whisker cap lines */
+        /** \brief get the line style of whisker cap lines  */
         Qt::PenStyle getWhiskerCapLineStyle() const;
 
-        /*! \brief set the width [pt] of whisker cap lines */
+        /** \brief set the width [pt] of whisker cap lines  */
         void setWhiskerCapLineWidth(double __value);
-        /*! \brief get the  width [pt] of whisker cap lines */
+        /** \brief get the  width [pt] of whisker cap lines  */
         double getWhiskerCapLineWidth() const;
 
-        /*! \brief set the color of whisker cap lines */
+        /** \brief set the color of whisker cap lines  */
         void setWhiskerCapLineColor(QColor __value);
-        /*! \brief get the color of whisker cap lines */
+        /** \brief get the color of whisker cap lines  */
         QColor getWhiskerCapLineColor() const;
 
 
@@ -201,25 +201,25 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineS
             MeanAsLine    /*!< \brief draw mean as a lie (specified by the pen settings in JKQTPGraphSymbolStyleMixin) */
         };
 
-        /*! \copydoc meanMode */
+        /** \copydoc meanMode */
         void setMeanMode(MeanMode __value);
-        /*! \copydoc meanMode */
+        /** \copydoc meanMode */
         MeanMode getMeanMode() const;
 
 
-        /*! \brief set the line style of median lines */
+        /** \brief set the line style of median lines  */
         void setMedianLineStyle(Qt::PenStyle  __value);
-        /*! \brief get the line style of median lines */
+        /** \brief get the line style of median lines  */
         Qt::PenStyle getMedianLineStyle() const;
 
-        /*! \brief set the width [pt] of median lines */
+        /** \brief set the width [pt] of median lines  */
         void setMedianLineWidth(double __value);
-        /*! \brief get the  width [pt] of median lines */
+        /** \brief get the  width [pt] of median lines  */
         double getMedianLineWidth() const;
 
-        /*! \brief set the color of median lines */
+        /** \brief set the color of median lines  */
         void setMedianLineColor(QColor __value);
-        /*! \brief get the color of median lines */
+        /** \brief get the color of median lines  */
         QColor getMedianLineColor() const;
 
 
@@ -271,9 +271,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineS
 
 
 
-        /*! \brief set the line style of Mean lines */
+        /** \brief set the line style of Mean lines  */
         void setMeanLineStyle(Qt::PenStyle  __value);
-        /*! \brief get the line style of Mean lines */
+        /** \brief get the line style of Mean lines  */
         Qt::PenStyle getMeanLineStyle() const;
         /** \brief sets the dash offset for a custom dash style of Mean lines
          *  \see https://doc.qt.io/qt-5/qpen.html#setDashOffset
@@ -323,10 +323,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphBoxplotStyleMixin: public JKQTPGraphLineS
         /** \brief constructs a QPen from the line styling properties */
         QBrush getMeanSymbolBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
 
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
+        /** \brief set the color of the graph (colors all elements, based on the given color \a c ) */
         void setBoxplotColor(QColor c, JKQTBasePlotter *parent);
 
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c , sets background colors from \a bc )*/
+        /** \brief set the color of the graph (colors all elements, based on the given color \a c , sets background colors from \a bc ) */
         void setBoxplotColor(QColor c, QColor bc, JKQTBasePlotter *parent);
 
 

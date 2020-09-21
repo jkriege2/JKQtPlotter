@@ -418,10 +418,10 @@ struct JKQTPImageTools {
 
 
 
-        /*! \brief return a list of all globally available LUTs, human-readable/localized form */
+        /** \brief return a list of all globally available LUTs, human-readable/localized form  */
         static QStringList JKQTCOMMON_LIB_EXPORT getPredefinedPalettes();
 
-        /*! \brief return a list of all globally available LUTs, machine-readable form */
+        /** \brief return a list of all globally available LUTs, machine-readable form  */
         static QStringList JKQTCOMMON_LIB_EXPORT getPredefinedPalettesMachineReadable();
 
         /*! \brief convert the palette \a p to a string
@@ -435,22 +435,22 @@ struct JKQTPImageTools {
         static JKQTCOMMON_LIB_EXPORT JKQTPMathImageColorPalette String2JKQTPMathImageColorPalette(const QString& p);
 
 
-        /*! \brief generates a QImage with width \a width and height 1 for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() ) */
+        /** \brief generates a QImage with width \a width and height 1 for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )  */
         static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(int i, int width);
-        /*! \brief generates a QImage with width \a width and height \a height for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() ) */
+        /** \brief generates a QImage with width \a width and height \a height for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )  */
         static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(int i, int width, int height);
-        /*! \brief generates a QImage with width \a width and height 1 for a specific JKQTPMathImageColorPalette */
+        /** \brief generates a QImage with width \a width and height 1 for a specific JKQTPMathImageColorPalette  */
         static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(JKQTPMathImageColorPalette palette, int width);
-        /*! \brief generates a QImage with width \a width and height \a height for a specific JKQTPMathImageColorPalette */
+        /** \brief generates a QImage with width \a width and height \a height for a specific JKQTPMathImageColorPalette  */
         static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(JKQTPMathImageColorPalette palette, int width, int height);
-        /*! \brief generates a QImage with width \a width and height 1 for a lookup-table \a lut */
+        /** \brief generates a QImage with width \a width and height 1 for a lookup-table \a lut  */
         static QImage JKQTCOMMON_LIB_EXPORT GetPaletteImage(const LUTType& lut, int width);
 
-        /*! \brief generates a QIcon for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() ) */
+        /** \brief generates a QIcon for the i-th color palette (\a i is based on the list returned by JKQTPImagePlot_getPredefinedPalettes() )  */
         static QIcon JKQTCOMMON_LIB_EXPORT GetPaletteIcon(int i) ;
 
 
-        /*! \brief generates a QIcon for a specific JKQTPMathImageColorPalette */
+        /** \brief generates a QIcon for a specific JKQTPMathImageColorPalette  */
         static QIcon JKQTCOMMON_LIB_EXPORT GetPaletteIcon(JKQTPMathImageColorPalette palette) ;
 
     private:

@@ -91,11 +91,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const=0;
 
-        /*! \brief returns the the title of the plot */
+        /** \brief returns the the title of the plot  */
         QString getTitle() const;
-        /*! \brief returns whether the graph is visible in the plot */
+        /** \brief returns whether the graph is visible in the plot  */
         bool isVisible() const;
-        /*! \brief returns whether the graph is shown in a highlighted style in the plot */
+        /** \brief returns whether the graph is shown in a highlighted style in the plot  */
         bool isHighlighted() const;
 
         /** \brief returns the parent painter class */
@@ -111,9 +111,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPPlotElement: public QObject {
         Q_PROPERTY(QString title READ getTitle WRITE setTitle)
         Q_PROPERTY(bool highlighted READ isHighlighted WRITE setHighlighted)
     public slots:
-        /*! \brief sets whether the graph is visible in the plot */
+        /** \brief sets whether the graph is visible in the plot  */
         void setVisible(bool __value);
-        /*! \brief sets whether the graph is drawn in a highlighted style in the plot */
+        /** \brief sets whether the graph is drawn in a highlighted style in the plot  */
         void setHighlighted(bool __value);
         /** \brief sets the title of the plot (for display in key!).
          *
@@ -578,11 +578,11 @@ public:
     /** \copydoc JKQTPGraph::usesColumn() */
     virtual bool usesColumn(int column) const override;
 
-    /*! \copydoc xColumn */
+    /** \copydoc xColumn */
     int getXColumn() const;
-    /*! \copydoc yColumn */
+    /** \copydoc yColumn */
     int getYColumn() const;
-    /*! \copydoc sortData */
+    /** \copydoc sortData */
     DataSortOrder getDataSortOrder() const;
 
     Q_PROPERTY(DataSortOrder sortData READ getDataSortOrder WRITE setDataSortOrder)
@@ -613,17 +613,17 @@ public slots:
     void setXYColumns(QPair<int,int> xyColPair);
     /** \brief sets xColumn and yColumn at the same time */
     void setXYColumns(QPair<size_t,size_t> xyColPair);
-    /*! \copydoc sortData */
+    /** \copydoc sortData */
     void setDataSortOrder(int __value);
-    /*! \copydoc sortData */
+    /** \copydoc sortData */
     void setDataSortOrder(DataSortOrder  __value);
-    /*! \copydoc xColumn */
+    /** \copydoc xColumn */
     void setXColumn(int __value);
-    /*! \copydoc xColumn */
+    /** \copydoc xColumn */
     void setXColumn (size_t __value);
-    /*! \copydoc yColumn */
+    /** \copydoc yColumn */
     void setYColumn(int __value);
-    /*! \copydoc yColumn */
+    /** \copydoc yColumn */
     void setYColumn (size_t __value);
 protected:
 
@@ -713,7 +713,7 @@ public:
     /** \copydoc JKQTPGraph::usesColumn() */
     virtual bool usesColumn(int column) const override;
 
-    /*! \copydoc yColumn2 */
+    /** \copydoc yColumn2 */
     int getYColumn2() const;
 
     /** \copydoc JKQTPXYGraph::hitTest() */
@@ -727,9 +727,9 @@ public slots:
     void setXYYColumns(int xCol, int yCol, int y2Col);
 
 
-    /*! \copydoc yColumn2 */
+    /** \copydoc yColumn2 */
     void setYColumn2(int __value);
-    /*! \copydoc yColumn2 */
+    /** \copydoc yColumn2 */
     void setYColumn2(size_t __value);
 protected:
 
@@ -770,7 +770,7 @@ public:
     /** \copydoc JKQTPGraph::usesColumn() */
     virtual bool usesColumn(int column) const override;
 
-    /*! \copydoc xColumn2 */
+    /** \copydoc xColumn2 */
     int getXColumn2() const;
 
     /** \copydoc JKQTPXYGraph::hitTest() */
@@ -784,9 +784,9 @@ public slots:
     void setXXYColumns(int xCol, int x2Col, int yCol);
 
 
-    /*! \copydoc yColumn2 */
+    /** \copydoc yColumn2 */
     void setXColumn2(int __value);
-    /*! \copydoc yColumn2 */
+    /** \copydoc yColumn2 */
     void setXColumn2(size_t __value);
 protected:
 
@@ -840,14 +840,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         /** \brief class constructor */
         JKQTPSingleColumnGraph(JKQTBasePlotter* parent=nullptr);
 
-        /*! \copydoc dataColumn */ 
+        /** \copydoc dataColumn */
         int getDataColumn() const;
 
-        /*! \copydoc sortData */ 
+        /** \copydoc sortData */
         DataSortOrder getDataSortOrder() const;
 
 
-        /*! \copydoc dataDirection */
+        /** \copydoc dataDirection */
         DataDirection getDataDirection() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */
@@ -858,15 +858,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPSingleColumnGraph: public JKQTPGraph {
         Q_PROPERTY(DataDirection dataDirection READ getDataDirection WRITE setDataDirection)
 
     public slots:
-        /*! \copydoc dataColumn */
+        /** \copydoc dataColumn */
         void setDataColumn(int __value);
-        /*! \copydoc dataColumn */
+        /** \copydoc dataColumn */
         void setDataColumn (size_t __value);
-        /*! \copydoc dataDirection */
+        /** \copydoc dataDirection */
         void setDataDirection(DataDirection __value);
-        /*! \copydoc sortData */
+        /** \copydoc sortData */
         void setDataSortOrder(int __value);
-        /*! \copydoc sortData */
+        /** \copydoc sortData */
         void setDataSortOrder(DataSortOrder  __value);
 
     protected:

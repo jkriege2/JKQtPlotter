@@ -118,179 +118,179 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
         virtual void getDataMinMax(double& imin, double& imax) override;
 
 
-        /*! \copydoc data */
+        /** \copydoc data */
         virtual void setDataR(void* __value);
-        /*! \copydoc data */
+        /** \copydoc data */
         void* getDataR() const;
-        /*! \copydoc datatype */
+        /** \copydoc datatype */
         void setDatatypeR(JKQTPMathImageDataType __value);
-        /*! \copydoc datatype */
+        /** \copydoc datatype */
         JKQTPMathImageDataType getDatatypeR() const;
 
-        /*! \copydoc dataG */
+        /** \copydoc dataG */
         virtual void setDataG(void* __value);
-        /*! \copydoc dataG */
+        /** \copydoc dataG */
         void* getDataG() const;
-        /*! \copydoc datatypeG */
+        /** \copydoc datatypeG */
         void setDatatypeG(JKQTPMathImageDataType __value);
-        /*! \copydoc datatypeG */
+        /** \copydoc datatypeG */
         JKQTPMathImageDataType getDatatypeG() const;
-        /*! \copydoc dataB */ 
+        /** \copydoc dataB */ 
         virtual void setDataB(void* __value);
-        /*! \copydoc dataB */ 
+        /** \copydoc dataB */ 
         void* getDataB() const;
-        /*! \copydoc datatypeB */ 
+        /** \copydoc datatypeB */ 
         void setDatatypeB(JKQTPMathImageDataType __value);
-        /*! \copydoc datatypeB */ 
+        /** \copydoc datatypeB */ 
         JKQTPMathImageDataType getDatatypeB() const;
-        /*! \copydoc showColorBar */ 
+        /** \copydoc showColorBar */ 
         void setShowColorBar(bool __value);
-        /*! \copydoc showColorBar */ 
+        /** \copydoc showColorBar */ 
         bool getShowColorBar() const;
-        /*! \copydoc colorBarWidth */ 
+        /** \copydoc colorBarWidth */ 
         void setColorBarWidth(int __value);
-        /*! \copydoc colorBarWidth */ 
+        /** \copydoc colorBarWidth */ 
         int getColorBarWidth() const;
-        /*! \copydoc colorBarOffset */ 
+        /** \copydoc colorBarOffset */ 
         void setColorBarOffset(int __value);
-        /*! \copydoc colorBarOffset */ 
+        /** \copydoc colorBarOffset */ 
         int getColorBarOffset() const;
-        /*! \copydoc colorBarRelativeHeight */ 
+        /** \copydoc colorBarRelativeHeight */ 
         void setColorBarRelativeHeight(double __value);
-        /*! \copydoc colorBarRelativeHeight */ 
+        /** \copydoc colorBarRelativeHeight */ 
         double getColorBarRelativeHeight() const;
-        /*! \copydoc imageMinR */
+        /** \copydoc imageMinR */
         void setImageMin(double __value);
-        /*! \copydoc imageMinR */
+        /** \copydoc imageMinR */
         double getImageMin() const;
-        /*! \copydoc imageMinR */
+        /** \copydoc imageMinR */
         void setImageMinR(double m);
-        /*! \copydoc imageMaxR */
+        /** \copydoc imageMaxR */
         void setImageMax(double __value);
-        /*! \copydoc imageMaxR */
+        /** \copydoc imageMaxR */
         double getImageMax() const;
-        /*! \copydoc imageMaxR */
+        /** \copydoc imageMaxR */
         void setImageMaxR(double m);
-        /*! \copydoc imageMinG */ 
+        /** \copydoc imageMinG */ 
         void setImageMinG(double __value);
-        /*! \copydoc imageMinG */ 
+        /** \copydoc imageMinG */ 
         double getImageMinG() const;
-        /*! \copydoc imageMaxG */ 
+        /** \copydoc imageMaxG */ 
         void setImageMaxG(double __value);
-        /*! \copydoc imageMaxG */ 
+        /** \copydoc imageMaxG */ 
         double getImageMaxG() const;
-        /*! \copydoc imageMinB */ 
+        /** \copydoc imageMinB */ 
         void setImageMinB(double __value);
-        /*! \copydoc imageMinB */ 
+        /** \copydoc imageMinB */ 
         double getImageMinB() const;
-        /*! \copydoc imageMaxB */ 
+        /** \copydoc imageMaxB */ 
         void setImageMaxB(double __value);
-        /*! \copydoc imageMaxB */
+        /** \copydoc imageMaxB */
         double getImageMaxB() const;
-        /*! \copydoc autoImageRange */ 
+        /** \copydoc autoImageRange */ 
         void setAutoImageRange(bool __value);
-        /*! \copydoc autoImageRange */ 
+        /** \copydoc autoImageRange */ 
         bool getAutoImageRange() const;
-        /*! \copydoc imageNameR */
+        /** \copydoc imageNameR */
         void setImageName(const QString & __value);
-        /*! \copydoc imageNameR */
+        /** \copydoc imageNameR */
         QString getImageName() const;
-        /*! \copydoc imageNameR */
+        /** \copydoc imageNameR */
         QString getImageNameR() const;
-        /*! \copydoc imageNameR */
+        /** \copydoc imageNameR */
         void setImageNameR(const QString& m);
-        /*! \copydoc imageNameG */ 
+        /** \copydoc imageNameG */ 
         void setImageNameG(const QString & __value);
-        /*! \copydoc imageNameG */ 
+        /** \copydoc imageNameG */ 
         QString getImageNameG() const;
-        /*! \copydoc imageNameB */ 
+        /** \copydoc imageNameB */ 
         void setImageNameB(const QString & __value);
-        /*! \copydoc imageNameB */ 
+        /** \copydoc imageNameB */ 
         QString getImageNameB() const;
-        /*! \copydoc imageNameFontName */ 
+        /** \copydoc imageNameFontName */ 
         void setImageNameFontName(const QString & __value);
-        /*! \copydoc imageNameFontName */ 
+        /** \copydoc imageNameFontName */ 
         QString getImageNameFontName() const;
-        /*! \copydoc imageNameFontSize */ 
+        /** \copydoc imageNameFontSize */ 
         void setImageNameFontSize(double __value);
-        /*! \copydoc imageNameFontSize */ 
+        /** \copydoc imageNameFontSize */ 
         double getImageNameFontSize() const;
-        /*! \copydoc colorBarRightAxis */
+        /** \copydoc colorBarRightAxis */
         JKQTPVerticalIndependentAxis* getColorBarRightAxis();
-        /*! \copydoc colorBarTopAxis */
+        /** \copydoc colorBarTopAxis */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxis();
-        /*! \copydoc colorBarRightAxis */
+        /** \copydoc colorBarRightAxis */
         JKQTPVerticalIndependentAxis* getColorBarRightAxisR();
-        /*! \copydoc colorBarTopAxis */
+        /** \copydoc colorBarTopAxis */
         JKQTPHorizontalIndependentAxis *getColorBarTopAxisR();
-        /*! \copydoc colorBarRightAxisG */
+        /** \copydoc colorBarRightAxisG */
         JKQTPVerticalIndependentAxis* getColorBarRightAxisG();
-        /*! \copydoc colorBarTopAxisG */
+        /** \copydoc colorBarTopAxisG */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxisG();
-        /*! \copydoc colorBarRightAxisB */
+        /** \copydoc colorBarRightAxisB */
         JKQTPVerticalIndependentAxis* getColorBarRightAxisB();
-        /*! \copydoc colorBarTopAxisB */
+        /** \copydoc colorBarTopAxisB */
         JKQTPHorizontalIndependentAxis* getColorBarTopAxisB();
-        /*! \copydoc colorBarRightAxis */
+        /** \copydoc colorBarRightAxis */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxis() const;
-        /*! \copydoc colorBarTopAxis */
+        /** \copydoc colorBarTopAxis */
         const JKQTPHorizontalIndependentAxis* getColorBarTopAxis() const;
-        /*! \copydoc colorBarRightAxis */
+        /** \copydoc colorBarRightAxis */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxisR() const;
-        /*! \copydoc colorBarTopAxis */
+        /** \copydoc colorBarTopAxis */
         const JKQTPHorizontalIndependentAxis* getColorBarTopAxisR() const;
-        /*! \copydoc colorBarRightAxisG */
+        /** \copydoc colorBarRightAxisG */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxisG() const;
-        /*! \copydoc colorBarTopAxisG */
+        /** \copydoc colorBarTopAxisG */
         const JKQTPHorizontalIndependentAxis *getColorBarTopAxisG() const;
-        /*! \copydoc colorBarRightAxisB */
+        /** \copydoc colorBarRightAxisB */
         const JKQTPVerticalIndependentAxis* getColorBarRightAxisB() const;
-        /*! \copydoc colorBarTopAxisB */
+        /** \copydoc colorBarTopAxisB */
         const JKQTPHorizontalIndependentAxis *getColorBarTopAxisB() const;
-        /*! \copydoc colorBarTopVisible */ 
+        /** \copydoc colorBarTopVisible */ 
         void setColorBarTopVisible(bool __value);
-        /*! \copydoc colorBarTopVisible */ 
+        /** \copydoc colorBarTopVisible */ 
         bool getColorBarTopVisible() const;
-        /*! \copydoc colorBarRightVisible */ 
+        /** \copydoc colorBarRightVisible */ 
         void setColorBarRightVisible(bool __value);
-        /*! \copydoc colorBarRightVisible */ 
+        /** \copydoc colorBarRightVisible */ 
         bool getColorBarRightVisible() const;
-        /*! \copydoc colorbarsSideBySide */ 
+        /** \copydoc colorbarsSideBySide */ 
         void setColorbarsSideBySide(bool __value);
-        /*! \copydoc colorbarsSideBySide */ 
+        /** \copydoc colorbarsSideBySide */ 
         bool getColorbarsSideBySide() const;
-        /*! \copydoc rgbMode */ 
+        /** \copydoc rgbMode */ 
         void setRgbMode(JKQTPRGBMathImageRGBMode __value);
-        /*! \copydoc rgbMode */ 
+        /** \copydoc rgbMode */ 
         JKQTPRGBMathImageRGBMode getRgbMode() const;
-        /*! \copydoc modifierMode */
+        /** \copydoc modifierMode */
         void setModifierMode(const JKQTPMathImageModifierMode & __value);
-        /*! \copydoc modifierMode */
+        /** \copydoc modifierMode */
         JKQTPMathImageModifierMode getModifierMode() const;
 
-        /*! \copydoc colorBarModifiedWidth */
+        /** \copydoc colorBarModifiedWidth */
         void setColorBarModifiedWidth(double __value);
-        /*! \copydoc colorBarModifiedWidth */
+        /** \copydoc colorBarModifiedWidth */
         double getColorBarModifiedWidth() const;
-        /*! \copydoc modifierColorBarTopAxis */
+        /** \copydoc modifierColorBarTopAxis */
         JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis();
-        /*! \copydoc modifierColorBarRightAxis */
+        /** \copydoc modifierColorBarRightAxis */
         JKQTPHorizontalIndependentAxis* getModifierColorBarRightAxis();
-        /*! \copydoc modifierColorBarTopAxis */
+        /** \copydoc modifierColorBarTopAxis */
         const JKQTPVerticalIndependentAxis* getModifierColorBarTopAxis() const;
-        /*! \copydoc modifierColorBarRightAxis */
+        /** \copydoc modifierColorBarRightAxis */
         const JKQTPHorizontalIndependentAxis *getModifierColorBarRightAxis()  const;
-        /*! \copydoc autoModifierRange */
+        /** \copydoc autoModifierRange */
         void setAutoModifierRange(bool __value);
-        /*! \copydoc autoModifierRange */
+        /** \copydoc autoModifierRange */
         bool getAutoModifierRange() const;
-        /*! \copydoc modifierMin */
+        /** \copydoc modifierMin */
         void setModifierMin(double __value);
-        /*! \copydoc modifierMin */
+        /** \copydoc modifierMin */
         double getModifierMin() const;
-        /*! \copydoc modifierMax */
+        /** \copydoc modifierMax */
         void setModifierMax(double __value);
-        /*! \copydoc modifierMax */
+        /** \copydoc modifierMax */
         double getModifierMax() const;
 
         /** \brief return the data of the green channel used for plotting as a QVector<double> in row-major data-ordering */
@@ -313,7 +313,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
          */
         virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
 
-        /*! \brief return the plotted image only as a QImage */
+        /** \brief return the plotted image only as a QImage  */
         virtual QImage drawImage();
 
         /** \brief determine min/max data value of the image */
@@ -594,21 +594,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumnRGBMathImage: public JKQTPRGBMathImage {
          */
         JKQTPColumnRGBMathImage(double x, double y, double width, double height, int imageRColumn, int imageGColumn, int imageBColumn, JKQTPlotter* parent);
 
-        /*! \copydoc imageRColumn */ 
+        /** \copydoc imageRColumn */ 
         virtual void setImageRColumn(int __value);
-        /*! \copydoc imageRColumn */ 
+        /** \copydoc imageRColumn */ 
         int getImageRColumn() const;
-        /*! \copydoc imageGColumn */ 
+        /** \copydoc imageGColumn */ 
         virtual void setImageGColumn(int __value);
-        /*! \copydoc imageGColumn */ 
+        /** \copydoc imageGColumn */ 
         int getImageGColumn() const;
-        /*! \copydoc imageBColumn */ 
+        /** \copydoc imageBColumn */ 
         virtual void setImageBColumn(int __value);
-        /*! \copydoc imageBColumn */ 
+        /** \copydoc imageBColumn */ 
         int getImageBColumn() const;
-        /*! \copydoc modifierColumn */ 
+        /** \copydoc modifierColumn */ 
         virtual void setModifierColumn(int __value);
-        /*! \copydoc modifierColumn */ 
+        /** \copydoc modifierColumn */ 
         int getModifierColumn() const;
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;

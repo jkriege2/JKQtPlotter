@@ -86,21 +86,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImageBase: public JKQTPGraph {
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc x */
+        /** \copydoc x */
         void setX(double __value);
-        /*! \copydoc x */
+        /** \copydoc x */
         double getX() const;
-        /*! \copydoc y */
+        /** \copydoc y */
         void setY(double __value);
-        /*! \copydoc y */
+        /** \copydoc y */
         double getY() const;
-        /*! \copydoc width */
+        /** \copydoc width */
         void setWidth(double __value);
-        /*! \copydoc width */
+        /** \copydoc width */
         double getWidth() const;
-        /*! \copydoc height */
+        /** \copydoc height */
         void setHeight(double __value);
-        /*! \copydoc height */
+        /** \copydoc height */
         double getHeight() const;
 
     protected:
@@ -198,35 +198,35 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
 
-		/*! \copydoc Nx */
+		/** \copydoc Nx */
 		void setNx(int __value);
-		/*! \copydoc Nx */
+		/** \copydoc Nx */
 		void setNx(size_t __value);
-		/*! \copydoc Nx */
+		/** \copydoc Nx */
         int getNx() const;
-        /*! \copydoc Ny */
+        /** \copydoc Ny */
         void setNy(int __value);
-         /*! \copydoc Ny */
+         /** \copydoc Ny */
         void setNy(size_t __value);
-       /*! \copydoc Ny */
+       /** \copydoc Ny */
         int getNy() const;
-        /*! \copydoc data */
+        /** \copydoc data */
         virtual void setData(void* __value);
-        /*! \copydoc data */
+        /** \copydoc data */
         virtual void *getData() const;
-        /*! \copydoc datatype */
+        /** \copydoc datatype */
         virtual void setDatatype(JKQTPMathImageDataType __value);
-        /*! \copydoc datatype */
+        /** \copydoc datatype */
         virtual JKQTPMathImageDataType getDatatype() const;
-        /*! \copydoc dataModifier */
+        /** \copydoc dataModifier */
         virtual void setDataModifier(void* __value);
-        /*! \copydoc dataModifier */
+        /** \copydoc dataModifier */
         virtual void *getDataModifier() const;
-        /*! \copydoc datatypeModifier */
+        /** \copydoc datatypeModifier */
         virtual void setDatatypeModifier(JKQTPMathImageDataType __value);
-        /*! \copydoc datatypeModifier */
+        /** \copydoc datatypeModifier */
         virtual JKQTPMathImageDataType getDatatypeModifier() const;
-        /*! \copydoc modifierMode */
+        /** \copydoc modifierMode */
 
         /** \brief sets dataModifier (\copybrief dataModifier ) and datatypeModifier (\copybrief datatypeModifier ) */
         virtual void setDataModifier(void* data, JKQTPMathImageDataType datatype);
@@ -370,7 +370,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPImage: public JKQTPImageBase {
         /** \brief deletes the internal image */
         void clear_image();
 
-        /*! \copydoc image */
+        /** \copydoc image */
         inline QImage* getImage() const { return this->image; }
     protected:
         /** \brief the image to be plotted. This is freed by the destructor, iff \a image_owned is set to \c true (.e.g by QImage-copy-constructors) */
@@ -495,10 +495,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImage: public JKQTPMathImageBase, public J
          */
         virtual void drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) override;
 
-        /*! \brief returns a QImage, which contains the plaette drawn outside the plot. \a steps is the number of data-setps (and the size of the output image) used for the palette image. */
+        /** \brief returns a QImage, which contains the plaette drawn outside the plot. \a steps is the number of data-setps (and the size of the output image) used for the palette image.  */
         virtual QImage drawOutsidePalette(uint8_t steps=200);
 
-        /*! \brief return the plotted image only as a QImage */
+        /** \brief return the plotted image only as a QImage  */
         virtual QImage drawImage();
 
         /** \brief determine min/max data value of the image */
@@ -837,18 +837,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumnMathImage: public JKQTPMathImage {
          */
         JKQTPColumnMathImage(double x, double y, double width, double height, int imageColumn, JKQTPlotter* parent);
 
-        /*! \copydoc imageColumn */
+        /** \copydoc imageColumn */
         virtual void setImageColumn(int __value);
 
-        /*! \copydoc imageColumn */
+        /** \copydoc imageColumn */
         virtual void setImageColumn(size_t __value);
-        /*! \copydoc imageColumn */
+        /** \copydoc imageColumn */
         int getImageColumn() const;
-        /*! \copydoc modifierColumn */
+        /** \copydoc modifierColumn */
         virtual void setModifierColumn(int __value);
-         /*! \copydoc modifierColumn */
+         /** \copydoc modifierColumn */
         virtual void setModifierColumn(size_t __value);
-       /*! \copydoc modifierColumn */
+       /** \copydoc modifierColumn */
         int getModifierColumn() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */

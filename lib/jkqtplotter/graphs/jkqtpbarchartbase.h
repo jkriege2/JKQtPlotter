@@ -69,9 +69,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
 
 
 
-        /*! \copydoc shift */ 
+        /** \copydoc shift */
         double getShift() const;
-        /*! \copydoc width */ 
+        /** \copydoc width */
         double getWidth() const;
 
         /** \brief sets the fill color and the color together, where fillColor is set to \a fill and the line-color is set to \c fill.darker(colorDarker)
@@ -98,9 +98,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBarGraphBase: public JKQTPXYBaselineGraph, pub
         /** \brief equivalent to \c autoscaleBarWidthAndShift(groupWidth,1);
          */
         void autoscaleBarWidthAndShiftSeparatedGroups(double groupWidth=0.75);
-        /*! \copydoc shift */
+        /** \copydoc shift */
         void setShift(double __value);
-        /*! \copydoc width */
+        /** \copydoc width */
         void setWidth(double __value);
 
 

@@ -65,64 +65,64 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRangeBase: public JKQTPPlotElement, public JKQ
         virtual QColor getKeyLabelColor() const override;
 
 
-        /*! \copydoc centerColor */ 
+        /** \copydoc centerColor */
         QColor getCenterColor() const;
-        /*! \copydoc centerStyle */ 
+        /** \copydoc centerStyle */
         Qt::PenStyle getCenterStyle() const;
-        /*! \copydoc centerLineWidth */ 
+        /** \copydoc centerLineWidth */
         void setCenterLineWidth(double __value);
-        /*! \copydoc centerLineWidth */ 
+        /** \copydoc centerLineWidth */
         double getCenterLineWidth() const;
-        /*! \copydoc rangeMin */ 
+        /** \copydoc rangeMin */
         double getRangeMin() const;
-        /*! \copydoc rangeMax */ 
+        /** \copydoc rangeMax */
         double getRangeMax() const;
-        /*! \copydoc sizeMin */ 
+        /** \copydoc sizeMin */
         double getSizeMin() const;
-        /*! \copydoc sizeMax */ 
+        /** \copydoc sizeMax */
         double getSizeMax() const;
-        /*! \copydoc unlimitedSizeMin */ 
+        /** \copydoc unlimitedSizeMin */
         bool getUnlimitedSizeMin() const;
-        /*! \copydoc unlimitedSizeMax */ 
+        /** \copydoc unlimitedSizeMax */
         bool getUnlimitedSizeMax() const;
 
-        /*! \copydoc rangeCenter */ 
+        /** \copydoc rangeCenter */
         double getRangeCenter() const;
-        /*! \copydoc plotCenterLine */ 
+        /** \copydoc plotCenterLine */
         bool getPlotCenterLine() const;
-        /*! \copydoc invertedRange */ 
+        /** \copydoc invertedRange */
         bool getInvertedRange() const;
-        /*! \copydoc plotRange */ 
+        /** \copydoc plotRange */
         bool getPlotRange() const;
-        /*! \copydoc fillRange */ 
+        /** \copydoc fillRange */
         bool getFillRange() const;
-        /*! \copydoc plotRangeLines */ 
+        /** \copydoc plotRangeLines */
         bool getPlotRangeLines() const;
     public slots:
-        /*! \brief set the color of the graph (all lines and filling) */
+        /** \brief set the color of the graph (all lines and filling)  */
         virtual void setColor(QColor c);
 
         /** \brief disables all drawing features except the centerline */
         void setDrawCenterLineOnly();
-        /*! \copydoc centerColor */
+        /** \copydoc centerColor */
         void setCenterColor(const QColor & __value);
-        /*! \copydoc centerStyle */
+        /** \copydoc centerStyle */
         void setCenterStyle(Qt::PenStyle  __value);
-        /*! \copydoc plotRangeLines */
+        /** \copydoc plotRangeLines */
         void setPlotRangeLines(bool __value);
-        /*! \copydoc fillRange */
+        /** \copydoc fillRange */
         void setFillRange(bool __value);
-        /*! \copydoc plotRange */
+        /** \copydoc plotRange */
         void setPlotRange(bool __value);
-        /*! \copydoc invertedRange */
+        /** \copydoc invertedRange */
         void setInvertedRange(bool __value);
-        /*! \copydoc rangeCenter */
+        /** \copydoc rangeCenter */
         void setRangeCenter(double __value);
-        /*! \copydoc plotCenterLine */
+        /** \copydoc plotCenterLine */
         void setPlotCenterLine(bool __value);
-        /*! \copydoc unlimitedSizeMax */
+        /** \copydoc unlimitedSizeMax */
         void setUnlimitedSizeMax(bool __value);
-        /*! \copydoc unlimitedSizeMin */
+        /** \copydoc unlimitedSizeMin */
         void setUnlimitedSizeMin(bool __value);
         /** \copydoc sizeMax
          *

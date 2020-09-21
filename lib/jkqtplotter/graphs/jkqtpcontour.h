@@ -95,15 +95,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQ
         /** \brief creates at least nLevels contour levels with logarithmic spacing. FIXME: Has not been tested yet */
         void createContourLevelsLog(int nLevels=3,int m=2);
 
-        /*! \copydoc ignoreOnPlane */ 
+        /** \copydoc ignoreOnPlane */
         void setIgnoreOnPlane(bool __value);
-        /*! \copydoc ignoreOnPlane */ 
+        /** \copydoc ignoreOnPlane */
         bool getIgnoreOnPlane() const;
-        /*! \copydoc contourLevels */
+        /** \copydoc contourLevels */
         int getNumberOfLevels() const;
-        /*! \copydoc contourColoringMode */
+        /** \copydoc contourColoringMode */
         void setContourColoringMode(ContourColoringMode __value);
-        /*! \copydoc contourColoringMode */
+        /** \copydoc contourColoringMode */
         ContourColoringMode getContourColoringMode() const;
         /** \brief sets new contour levels from a container \a levels
          *
@@ -121,11 +121,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPContourPlot: public JKQTPMathImage, public JKQ
          */
         template <class TContainer, class TColorContainer>
         void setContourLevels(const TContainer &levels, const TColorContainer& colors);
-        /*! \copydoc contourLevels */
+        /** \copydoc contourLevels */
         QVector<double> getContourLevels() const;
-        /*! \copydoc relativeLevels */ 
+        /** \copydoc relativeLevels */
         void setRelativeLevels(bool __value);
-        /*! \copydoc relativeLevels */ 
+        /** \copydoc relativeLevels */
         bool getRelativeLevels() const;
         /** \brief add another level for which to draw a contour
          *  \see setOverrideColor(), addContourLevel(), hasOverrideColor(), removeOverrideColor(), getOverrideColor()
@@ -260,12 +260,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColumnContourPlot: public JKQTPContourPlot  {
         /** \brief class constructor */
         JKQTPColumnContourPlot(JKQTPlotter* parent);
 
-        /*! \copydoc imageColumn */
+        /** \copydoc imageColumn */
         void setImageColumn(int __value);
 
-        /*! \copydoc imageColumn */
+        /** \copydoc imageColumn */
         void setImageColumn(size_t __value);
-        /*! \copydoc imageColumn */
+        /** \copydoc imageColumn */
         int getImageColumn() const;
 
         /** \copydoc JKQTPGraph::usesColumn() */

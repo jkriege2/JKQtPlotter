@@ -69,72 +69,72 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotGraphBase: public JKQTPGraph, public JK
         /** \copydoc JKQTPGraph::usesColumn() */
         virtual bool usesColumn(int c) const override;
 
-        /*! \copydoc sortData */ 
+        /** \copydoc sortData */
         DataSortOrder getDataSortOrder() const;
-        /*! \copydoc posColumn */ 
+        /** \copydoc posColumn */
         int getPositionColumn() const;
-        /*! \copydoc medianColumn */ 
+        /** \copydoc medianColumn */
         int getMedianColumn() const;
-        /*! \copydoc meanColumn */ 
+        /** \copydoc meanColumn */
         int getMeanColumn() const;
-        /*! \copydoc minColumn */ 
+        /** \copydoc minColumn */
         int getMinColumn() const;
-        /*! \copydoc maxColumn */ 
+        /** \copydoc maxColumn */
         int getMaxColumn() const;
-        /*! \copydoc percentile25Column */ 
+        /** \copydoc percentile25Column */
         int getPercentile25Column() const;
-        /*! \copydoc percentile75Column */ 
+        /** \copydoc percentile75Column */
         int getPercentile75Column() const;
-        /*! \copydoc medianConfidenceColumn */
+        /** \copydoc medianConfidenceColumn */
         int getMedianConfidenceColumn() const;
 
 
-        /*! \copydoc boxWidthRelative */
+        /** \copydoc boxWidthRelative */
         double getBoxWidthRelative() const;
 
 
-        /*! \copydoc useRelativeBoxWidth */
+        /** \copydoc useRelativeBoxWidth */
         bool getUseRelativeBoxWidth() const;
     public slots:
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
+        /** \brief set the color of the graph (colors all elements, based on the given color \a c ) */
         virtual void setColor(QColor c);
-        /*! \copydoc sortData */
+        /** \copydoc sortData */
         void setDataSortOrder(DataSortOrder  __value);
-        /*! \copydoc sortData */
+        /** \copydoc sortData */
         void setDataSortOrder(int __value);
-        /*! \copydoc posColumn */
+        /** \copydoc posColumn */
         void setPositionColumn(int __value);
-        /*! \copydoc posColumn */
+        /** \copydoc posColumn */
         void setPositionColumn (size_t __value);
-        /*! \copydoc medianColumn */
+        /** \copydoc medianColumn */
         void setMedianColumn(int __value);
-        /*! \copydoc medianColumn */
+        /** \copydoc medianColumn */
         void setMedianColumn (size_t __value);
-        /*! \copydoc meanColumn */
+        /** \copydoc meanColumn */
         void setMeanColumn(int __value);
-        /*! \copydoc meanColumn */
+        /** \copydoc meanColumn */
         void setMeanColumn (size_t __value);
-        /*! \copydoc minColumn */
+        /** \copydoc minColumn */
         void setMinColumn(int __value);
-        /*! \copydoc minColumn */
+        /** \copydoc minColumn */
         void setMinColumn( size_t __value);
-        /*! \copydoc maxColumn */
+        /** \copydoc maxColumn */
         void setMaxColumn(int __value);
-        /*! \copydoc maxColumn */
+        /** \copydoc maxColumn */
         void setMaxColumn (size_t __value);
-        /*! \copydoc percentile25Column */
+        /** \copydoc percentile25Column */
         void setPercentile25Column(int __value);
-        /*! \copydoc percentile25Column */
+        /** \copydoc percentile25Column */
         void setPercentile25Column (size_t __value);
-        /*! \copydoc percentile75Column */
+        /** \copydoc percentile75Column */
         void setPercentile75Column(int __value);
-        /*! \copydoc percentile75Column */
+        /** \copydoc percentile75Column */
         void setPercentile75Column (size_t __value);
-        /*! \copydoc medianConfidenceColumn */
+        /** \copydoc medianConfidenceColumn */
         void setMedianConfidenceColumn (size_t __value);
-        /*! \copydoc boxWidthRelative */
+        /** \copydoc boxWidthRelative */
         void setBoxWidthRelative(double __value);
-        /*! \copydoc useRelativeBoxWidth */
+        /** \copydoc useRelativeBoxWidth */
         void setUseRelativeBoxWidth(bool __value);
     protected:
         /** \brief width of box in percent of distance between the current two posColumn values
@@ -200,59 +200,59 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotElementBase: public JKQTPPlotElement, p
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc pos */ 
+        /** \copydoc pos */
         double getPos() const;
-        /*! \copydoc median */ 
+        /** \copydoc median */
         double getMedian() const;
-        /*! \copydoc mean */ 
+        /** \copydoc mean */
         double getMean() const;
-        /*! \copydoc min */ 
+        /** \copydoc min */
         double getMin() const;
-        /*! \copydoc max */ 
+        /** \copydoc max */
         double getMax() const;
-        /*! \copydoc percentile25 */ 
+        /** \copydoc percentile25 */
         double getPercentile25() const;
-        /*! \copydoc percentile75 */ 
+        /** \copydoc percentile75 */
         double getPercentile75() const;
 
-        /*! \copydoc drawMean */ 
+        /** \copydoc drawMean */
         void setDrawMean(bool __value);
-        /*! \copydoc drawMean */ 
+        /** \copydoc drawMean */
         bool getDrawMean() const;
-        /*! \copydoc drawMedian */ 
+        /** \copydoc drawMedian */
         bool getDrawMedian() const;
-        /*! \copydoc drawMinMax */ 
+        /** \copydoc drawMinMax */
         bool getDrawMinMax() const;
-        /*! \copydoc drawNotch */
+        /** \copydoc drawNotch */
         bool getDrawNotch() const;
 
-        /*! \copydoc medianConfidenceIntervalWidth */
+        /** \copydoc medianConfidenceIntervalWidth */
         double getMedianConfidenceIntervalWidth() const;
     public slots:
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
+        /** \brief set the color of the graph (colors all elements, based on the given color \a c ) */
         virtual void setColor(QColor c);
 
-        /*! \copydoc pos */
+        /** \copydoc pos */
         void setPos(double __value);
-        /*! \copydoc median */
+        /** \copydoc median */
         void setMedian(double __value);
-        /*! \copydoc min */
+        /** \copydoc min */
         void setMin(double __value);
-        /*! \copydoc mean */
+        /** \copydoc mean */
         void setMean(double __value);
-        /*! \copydoc max */
+        /** \copydoc max */
         void setMax(double __value);
-        /*! \copydoc percentile25 */
+        /** \copydoc percentile25 */
         void setPercentile25(double __value);
-        /*! \copydoc percentile75 */
+        /** \copydoc percentile75 */
         void setPercentile75(double __value);
-        /*! \copydoc drawMedian */
+        /** \copydoc drawMedian */
         void setDrawMedian(bool __value);
-        /*! \copydoc drawMinMax */
+        /** \copydoc drawMinMax */
         void setDrawMinMax(bool __value);
-        /*! \copydoc drawNotch */
+        /** \copydoc drawNotch */
         void setDrawNotch(bool __value);
-        /*! \copydoc medianConfidenceIntervalWidth */
+        /** \copydoc medianConfidenceIntervalWidth */
         void setMedianConfidenceIntervalWidth(double __value);
     protected:
 

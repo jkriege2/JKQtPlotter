@@ -788,9 +788,9 @@ class JKQTCOMMON_LIB_EXPORT JKQTPMathParser
         /** \brief class destructor */
         virtual ~JKQTPMathParser();
 
-        /*! \copydoc data */ 
+        /** \copydoc data */ 
         virtual void setData(void* __value);
-        /*! \copydoc data */ 
+        /** \copydoc data */ 
         virtual void* getData() const;
 
         /** \brief  register a new function

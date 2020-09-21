@@ -432,7 +432,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
             }
         }
 
-        /*! \copydoc dragShapePen */ 
+        /** \copydoc dragShapePen */ 
         inline void setDragShapePen(const QPen & __value)
         {
             if (this->dragShapePen != __value) {
@@ -440,12 +440,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 update(); 
             } 
         } 
-        /*! \copydoc dragShapePen */ 
+        /** \copydoc dragShapePen */ 
         inline QPen getDragShapePen() const
         {
             return this->dragShapePen; 
         }
-        /*! \copydoc dragLine */ 
+        /** \copydoc dragLine */ 
         inline void setDragLine(bool __value)
         {
             if (this->dragLine != __value) {
@@ -453,13 +453,13 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 update(); 
             } 
         } 
-        /*! \copydoc dragLine */ 
+        /** \copydoc dragLine */ 
         inline bool getDragLine() const
         {
             return this->dragLine; 
         }
 
-        /*! \copydoc plotBorderLeft */ 
+        /** \copydoc plotBorderLeft */ 
         inline void setPlotBorderLeft(int __value)
         {
             if (this->plotBorderLeft != __value) {
@@ -467,12 +467,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc plotBorderLeft */ 
+        /** \copydoc plotBorderLeft */ 
         inline int getPlotBorderLeft() const
         {
             return this->plotBorderLeft; 
         }
-        /*! \copydoc plotBorderBottom */ 
+        /** \copydoc plotBorderBottom */ 
         inline void setPlotBorderBottom(int __value)
         {
             if (this->plotBorderBottom != __value) {
@@ -480,12 +480,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc plotBorderBottom */ 
+        /** \copydoc plotBorderBottom */ 
         inline int getPlotBorderBottom() const
         {
             return this->plotBorderBottom; 
         }
-        /*! \copydoc plotBorderRight */ 
+        /** \copydoc plotBorderRight */ 
         inline void setPlotBorderRight(int __value)
         {
             if (this->plotBorderRight != __value) {
@@ -493,12 +493,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc plotBorderRight */ 
+        /** \copydoc plotBorderRight */ 
         inline int getPlotBorderRight() const
         {
             return this->plotBorderRight; 
         }
-        /*! \copydoc plotBorderTop */ 
+        /** \copydoc plotBorderTop */ 
         inline void setPlotBorderTop(int __value)
         {
             if (this->plotBorderTop != __value) {
@@ -506,71 +506,71 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc plotBorderTop */ 
+        /** \copydoc plotBorderTop */ 
         inline int getPlotBorderTop() const
         {
             return this->plotBorderTop; 
         }
-        /*! \copydoc plotWidth */ 
+        /** \copydoc plotWidth */ 
         inline int getPlotWidth() const { 
             return this->plotWidth; 
         }
-        /*! \copydoc plotHeight */ 
+        /** \copydoc plotHeight */ 
         inline int getPlotHeight() const { 
             return this->plotHeight; 
         }
-        /*! \copydoc doDrawing */ 
+        /** \copydoc doDrawing */ 
         inline void setPlotUpdateEnabled(bool __value)
         {
             this->doDrawing = __value;
         } 
-        /*! \copydoc doDrawing */ 
+        /** \copydoc doDrawing */ 
         inline bool isPlotUpdateEnabled() const
         {
             return this->doDrawing; 
         }
-        /*! \copydoc internalPlotBorderLeft */ 
+        /** \copydoc internalPlotBorderLeft */ 
         inline int getInternalPlotBorderLeft() const { 
             return this->internalPlotBorderLeft; 
         }
-        /*! \copydoc internalPlotBorderBottom */ 
+        /** \copydoc internalPlotBorderBottom */ 
         inline int getInternalPlotBorderBottom() const { 
             return this->internalPlotBorderBottom; 
         }
-        /*! \copydoc internalPlotBorderRight */ 
+        /** \copydoc internalPlotBorderRight */ 
         inline int getInternalPlotBorderRight() const { 
             return this->internalPlotBorderRight; 
         }
-        /*! \copydoc internalPlotBorderTop */ 
+        /** \copydoc internalPlotBorderTop */ 
         inline int getInternalPlotBorderTop() const { 
             return this->internalPlotBorderTop; 
         }
-        /*! \copydoc xMin */ 
+        /** \copydoc xMin */ 
         inline double getXMin() const { 
             return this->xMin; 
         }
-        /*! \copydoc xMax */ 
+        /** \copydoc xMax */ 
         inline double getXMax() const { 
             return this->xMax; 
         }
-        /*! \copydoc yMin */ 
+        /** \copydoc yMin */ 
         inline double getYMin() const { 
             return this->yMin; 
         }
-        /*! \copydoc yMax */ 
+        /** \copydoc yMax */ 
         inline double getYMax() const { 
             return this->yMax; 
         }
-        /*! \copydoc xAxisLog */ 
+        /** \copydoc xAxisLog */ 
         inline bool getXAxisLog() const { 
             return this->xAxisLog; 
         }
-        /*! \copydoc yAxisLog */ 
+        /** \copydoc yAxisLog */ 
         inline bool getYAxisLog() const { 
             return this->yAxisLog; 
         }
 
-        /*! \copydoc backgroundColor */ 
+        /** \copydoc backgroundColor */ 
         inline void setBackgroundColor(const QColor & __value)
         {
             if (this->backgroundColor != __value) {
@@ -578,12 +578,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc backgroundColor */ 
+        /** \copydoc backgroundColor */ 
         inline QColor getBackgroundColor() const
         {
             return this->backgroundColor; 
         }
-        /*! \copydoc plotBackgroundColor */ 
+        /** \copydoc plotBackgroundColor */ 
         inline void setPlotBackgroundColor(const QColor & __value)
         {
             if (this->plotBackgroundColor != __value) {
@@ -591,12 +591,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc plotBackgroundColor */ 
+        /** \copydoc plotBackgroundColor */ 
         inline QColor getPlotBackgroundColor() const
         {
             return this->plotBackgroundColor; 
         }
-        /*! \copydoc drawGrid */ 
+        /** \copydoc drawGrid */ 
         inline void setDrawGrid(bool __value)
         {
             if (this->drawGrid != __value) {
@@ -604,12 +604,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc drawGrid */ 
+        /** \copydoc drawGrid */ 
         inline bool getDrawGrid() const
         {
             return this->drawGrid; 
         }
-        /*! \copydoc gridColor */ 
+        /** \copydoc gridColor */ 
         inline void setGridColor(const QColor & __value)
         {
             if (this->gridColor != __value) {
@@ -617,12 +617,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc gridColor */ 
+        /** \copydoc gridColor */ 
         inline QColor getGridColor() const
         {
             return this->gridColor; 
         }
-        /*! \copydoc gridStyle */ 
+        /** \copydoc gridStyle */ 
         inline void setGridStyle(Qt::PenStyle  __value)
         {
             if (this->gridStyle != __value) {
@@ -630,12 +630,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc gridStyle */ 
+        /** \copydoc gridStyle */ 
         inline Qt::PenStyle getGridStyle() const
         {
             return this->gridStyle; 
         }
-        /*! \copydoc gridWidth */ 
+        /** \copydoc gridWidth */ 
         inline void setGridWidth(double __value)
         {
             if (this->gridWidth != __value) {
@@ -643,12 +643,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc gridWidth */ 
+        /** \copydoc gridWidth */ 
         inline double getGridWidth() const
         {
             return this->gridWidth; 
         }
-        /*! \copydoc labelFontSize */ 
+        /** \copydoc labelFontSize */ 
         inline void setLabelFontSize(double __value)
         {
             if (this->labelFontSize != __value) {
@@ -656,12 +656,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc labelFontSize */ 
+        /** \copydoc labelFontSize */ 
         inline double getLabelFontSize() const
         {
             return this->labelFontSize; 
         }
-        /*! \copydoc labelFontName */ 
+        /** \copydoc labelFontName */ 
         inline void setLabelFontName(const QString & __value)
         {
             if (this->labelFontName != __value) {
@@ -669,12 +669,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc labelFontName */ 
+        /** \copydoc labelFontName */ 
         inline QString getLabelFontName() const
         {
             return this->labelFontName; 
         }
-        /*! \copydoc tickFontSize */ 
+        /** \copydoc tickFontSize */ 
         inline void setTickFontSize(double __value)
         {
             if (this->tickFontSize != __value) {
@@ -682,12 +682,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc tickFontSize */ 
+        /** \copydoc tickFontSize */ 
         inline double getTickFontSize() const
         {
             return this->tickFontSize; 
         }
-        /*! \copydoc tickFontName */ 
+        /** \copydoc tickFontName */ 
         inline void setTickFontName(const QString & __value)
         {
             if (this->tickFontName != __value) {
@@ -695,12 +695,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc tickFontName */ 
+        /** \copydoc tickFontName */ 
         inline QString getTickFontName() const
         {
             return this->tickFontName; 
         }
-        /*! \copydoc tickLength */ 
+        /** \copydoc tickLength */ 
         inline void setTickLength(double __value)
         {
             if (this->tickLength != __value) {
@@ -708,12 +708,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc tickLength */ 
+        /** \copydoc tickLength */ 
         inline double getTickLength() const
         {
             return this->tickLength; 
         }
-        /*! \copydoc drawSystemBox */ 
+        /** \copydoc drawSystemBox */ 
         inline void setDrawSystemBox(bool __value)
         {
             if (this->drawSystemBox != __value) {
@@ -721,12 +721,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc drawSystemBox */ 
+        /** \copydoc drawSystemBox */ 
         inline bool getDrawSystemBox() const
         {
             return this->drawSystemBox; 
         }
-        /*! \copydoc drawZeroAxes */ 
+        /** \copydoc drawZeroAxes */ 
         inline void setDrawZeroAxes(bool __value)
         {
             if (this->drawZeroAxes != __value) {
@@ -734,12 +734,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc drawZeroAxes */ 
+        /** \copydoc drawZeroAxes */ 
         inline bool getDrawZeroAxes() const
         {
             return this->drawZeroAxes; 
         }
-        /*! \copydoc systemColor */ 
+        /** \copydoc systemColor */ 
         inline void setSystemColor(const QColor & __value)
         {
             if (this->systemColor != __value) {
@@ -747,12 +747,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc systemColor */ 
+        /** \copydoc systemColor */ 
         inline QColor getSystemColor() const
         {
             return this->systemColor; 
         }
-        /*! \copydoc systemWidth */ 
+        /** \copydoc systemWidth */ 
         inline void setSystemWidth(double __value)
         {
             if (this->systemWidth != __value) {
@@ -760,12 +760,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc systemWidth */ 
+        /** \copydoc systemWidth */ 
         inline double getSystemWidth() const
         {
             return this->systemWidth; 
         }
-        /*! \copydoc xZeroTick */ 
+        /** \copydoc xZeroTick */ 
         inline void setXZeroTick(double __value)
         {
             if (this->xZeroTick != __value) {
@@ -773,12 +773,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc xZeroTick */ 
+        /** \copydoc xZeroTick */ 
         inline double getXZeroTick() const
         {
             return this->xZeroTick; 
         }
-        /*! \copydoc yZeroTick */ 
+        /** \copydoc yZeroTick */ 
         inline void setYZeroTick(double __value)
         {
             if (this->yZeroTick != __value) {
@@ -786,12 +786,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc yZeroTick */ 
+        /** \copydoc yZeroTick */ 
         inline double getYZeroTick() const
         {
             return this->yZeroTick; 
         }
-        /*! \copydoc xTickDistance */ 
+        /** \copydoc xTickDistance */ 
         inline void setXTickDistance(double __value)
         {
             if (this->xTickDistance != __value) {
@@ -799,12 +799,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc xTickDistance */ 
+        /** \copydoc xTickDistance */ 
         inline double getXTickDistance() const
         {
             return this->xTickDistance; 
         }
-        /*! \copydoc yTickDistance */ 
+        /** \copydoc yTickDistance */ 
         inline void setYTickDistance(double __value)
         {
             if (this->yTickDistance != __value) {
@@ -812,12 +812,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc yTickDistance */ 
+        /** \copydoc yTickDistance */ 
         inline double getYTickDistance() const
         {
             return this->yTickDistance; 
         }
-        /*! \copydoc xAxisLabel */ 
+        /** \copydoc xAxisLabel */ 
         inline void setXAxisLabel(const QString & __value)
         {
             if (this->xAxisLabel != __value) {
@@ -825,12 +825,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc xAxisLabel */ 
+        /** \copydoc xAxisLabel */ 
         inline QString getXAxisLabel() const
         {
             return this->xAxisLabel; 
         }
-        /*! \copydoc yAxisLabel */ 
+        /** \copydoc yAxisLabel */ 
         inline void setYAxisLabel(const QString & __value)
         {
             if (this->yAxisLabel != __value) {
@@ -838,12 +838,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc yAxisLabel */ 
+        /** \copydoc yAxisLabel */ 
         inline QString getYAxisLabel() const
         {
             return this->yAxisLabel; 
         }
-        /*! \copydoc aspectRatio */ 
+        /** \copydoc aspectRatio */ 
         inline void setAspectRatio(double __value)
         {
             if (this->aspectRatio != __value) {
@@ -851,12 +851,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc aspectRatio */ 
+        /** \copydoc aspectRatio */ 
         inline double getAspectRatio() const
         {
             return this->aspectRatio; 
         }
-        /*! \copydoc maintainAspectRatio */ 
+        /** \copydoc maintainAspectRatio */ 
         inline void setMaintainAspectRatio(bool __value)
         {
             if (this->maintainAspectRatio != __value) {
@@ -864,12 +864,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc maintainAspectRatio */ 
+        /** \copydoc maintainAspectRatio */ 
         inline bool doesMaintainAspectRatio() const
         {
             return this->maintainAspectRatio; 
         }
-        /*! \copydoc xAxisLabelVisible */ 
+        /** \copydoc xAxisLabelVisible */ 
         inline void setXAxisLabelVisible(bool __value)
         {
             if (this->xAxisLabelVisible != __value) {
@@ -877,12 +877,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc xAxisLabelVisible */ 
+        /** \copydoc xAxisLabelVisible */ 
         inline bool getXAxisLabelVisible() const
         {
             return this->xAxisLabelVisible; 
         }
-        /*! \copydoc yAxisLabelVisible */ 
+        /** \copydoc yAxisLabelVisible */ 
         inline void setYAxisLabelVisible(bool __value)
         {
             if (this->yAxisLabelVisible != __value) {
@@ -890,12 +890,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc yAxisLabelVisible */ 
+        /** \copydoc yAxisLabelVisible */ 
         inline bool getYAxisLabelVisible() const
         {
             return this->yAxisLabelVisible; 
         }
-        /*! \copydoc synchronizeX */ 
+        /** \copydoc synchronizeX */ 
         inline void setSynchronizeX(JKQTFastPlotter*  __value)
         {
             if (this->synchronizeX != __value) {
@@ -903,12 +903,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc synchronizeX */ 
+        /** \copydoc synchronizeX */ 
         inline JKQTFastPlotter* getSynchronizeX() const
         {
             return this->synchronizeX; 
         }
-        /*! \copydoc synchronizeY */ 
+        /** \copydoc synchronizeY */ 
         inline void setSynchronizeY(JKQTFastPlotter*  __value)
         {
             if (this->synchronizeY != __value) {
@@ -916,7 +916,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
                 redrawPlot(); 
             } 
         } 
-        /*! \copydoc synchronizeY */ 
+        /** \copydoc synchronizeY */ 
         inline JKQTFastPlotter* getSynchronizeY() const
         {
             return this->synchronizeY; 
@@ -1152,35 +1152,35 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
             return N;
         }
 
-        /*! \copydoc x */ 
+        /** \copydoc x */ 
         inline double* getX() const { 
             return this->x; 
         }
-        /*! \copydoc y */ 
+        /** \copydoc y */ 
         inline double* getY() const { 
             return this->y; 
         }
-        /*! \copydoc yerr */ 
+        /** \copydoc yerr */ 
         inline double* getYerr() const { 
             return this->yerr; 
         }
-        /*! \copydoc xv */ 
+        /** \copydoc xv */ 
         inline QVector<double>* getXv() const { 
             return this->xv; 
         }
-        /*! \copydoc yv */ 
+        /** \copydoc yv */ 
         inline QVector<double>* getYv() const { 
             return this->yv; 
         }
-        /*! \copydoc yerrv */ 
+        /** \copydoc yerrv */ 
         inline QVector<double>* getYerrv() const { 
             return this->yerrv; 
         }
-        /*! \copydoc datatype */ 
+        /** \copydoc datatype */ 
         inline DataType getDatatype() const { 
             return this->datatype; 
         }
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
@@ -1188,12 +1188,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
@@ -1201,12 +1201,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline Qt::PenStyle getStyle() const
         {
             return this->style; 
         }
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline void setWidth(double __value)
         {
             if (this->width != __value) {
@@ -1214,12 +1214,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \copydoc errorColor */ 
+        /** \copydoc errorColor */ 
         inline void setErrorLineColor(const QColor & __value)
         {
             if (this->errorColor != __value) {
@@ -1227,12 +1227,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc errorColor */ 
+        /** \copydoc errorColor */ 
         inline QColor getErrorLineColor() const
         {
             return this->errorColor; 
         }
-        /*! \copydoc errorStyle */ 
+        /** \copydoc errorStyle */ 
         inline void setErrorLineStyle(Qt::PenStyle  __value)
         {
             if (this->errorStyle != __value) {
@@ -1240,12 +1240,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc errorStyle */ 
+        /** \copydoc errorStyle */ 
         inline Qt::PenStyle getErrorLineStyle() const
         {
             return this->errorStyle; 
         }
-        /*! \copydoc errorWidth */ 
+        /** \copydoc errorWidth */ 
         inline void setErrorLineWidth(double __value)
         {
             if (this->errorWidth != __value) {
@@ -1253,7 +1253,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPLinePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc errorWidth */ 
+        /** \copydoc errorWidth */ 
         inline double getErrorLineWidth() const
         {
             return this->errorWidth; 
@@ -1297,7 +1297,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \copydoc crossWidth */ 
+        /** \copydoc crossWidth */ 
         inline void setCrossWidth(double __value)
         {
             if (this->crossWidth != __value) {
@@ -1305,7 +1305,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPVCrossPlot: public JKQTFPLinePlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc crossWidth */ 
+        /** \copydoc crossWidth */ 
         inline double getCrossWidth() const
         {
             return this->crossWidth; 
@@ -1393,7 +1393,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
@@ -1401,12 +1401,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \copydoc fillColor */ 
+        /** \copydoc fillColor */ 
         inline void setFillColor(const QColor & __value)
         {
             if (this->fillColor != __value) {
@@ -1414,12 +1414,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc fillColor */ 
+        /** \copydoc fillColor */ 
         inline QColor getFillColor() const
         {
             return this->fillColor; 
         }
-        /*! \copydoc fillStyle */ 
+        /** \copydoc fillStyle */ 
         inline void setFillStyle(Qt::BrushStyle  __value)
         {
             if (this->fillStyle != __value) {
@@ -1427,12 +1427,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc fillStyle */ 
+        /** \copydoc fillStyle */ 
         inline Qt::BrushStyle getFillStyle() const
         {
             return this->fillStyle; 
         }
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
@@ -1440,12 +1440,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline Qt::PenStyle getStyle() const
         {
             return this->style; 
         }
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline void setWidth(double __value)
         {
             if (this->width != __value) {
@@ -1453,24 +1453,24 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline double getXmin() const { 
             return this->xmin; 
         }
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline double getXmax() const { 
             return this->xmax; 
         }
-        /*! \copydoc centerline */ 
+        /** \copydoc centerline */ 
         inline double getCenterline() const { 
             return this->centerline; 
         }
-        /*! \copydoc showCenterline */ 
+        /** \copydoc showCenterline */ 
         inline void setShowCenterline(bool __value)
         {
             if (this->showCenterline != __value) {
@@ -1478,7 +1478,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPXRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc showCenterline */ 
+        /** \copydoc showCenterline */ 
         inline bool getShowCenterline() const
         {
             return this->showCenterline; 
@@ -1557,7 +1557,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
@@ -1565,12 +1565,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \copydoc fillColor */ 
+        /** \copydoc fillColor */ 
         inline void setFillColor(const QColor & __value)
         {
             if (this->fillColor != __value) {
@@ -1578,12 +1578,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc fillColor */ 
+        /** \copydoc fillColor */ 
         inline QColor getFillColor() const
         {
             return this->fillColor; 
         }
-        /*! \copydoc fillStyle */ 
+        /** \copydoc fillStyle */ 
         inline void setFillStyle(Qt::BrushStyle  __value)
         {
             if (this->fillStyle != __value) {
@@ -1591,12 +1591,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc fillStyle */ 
+        /** \copydoc fillStyle */ 
         inline Qt::BrushStyle getFillStyle() const
         {
             return this->fillStyle; 
         }
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
@@ -1604,12 +1604,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline Qt::PenStyle getStyle() const
         {
             return this->style; 
         }
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline void setWidth(double __value)
         {
             if (this->width != __value) {
@@ -1617,24 +1617,24 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline double getYmin() const { 
             return this->ymin; 
         }
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline double getYmax() const { 
             return this->ymax; 
         }
-        /*! \copydoc centerline */ 
+        /** \copydoc centerline */ 
         inline double getCenterline() const { 
             return this->centerline; 
         }
-        /*! \copydoc showCenterline */ 
+        /** \copydoc showCenterline */ 
         inline void setShowCenterline(bool __value)
         {
             if (this->showCenterline != __value) {
@@ -1642,7 +1642,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPYRangePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc showCenterline */ 
+        /** \copydoc showCenterline */ 
         inline bool getShowCenterline() const
         {
             return this->showCenterline; 
@@ -1709,7 +1709,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \copydoc image */ 
+        /** \copydoc image */ 
         inline void setImage(QImage* __value)
         {
             if (this->image != __value) {
@@ -1717,12 +1717,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc image */ 
+        /** \copydoc image */ 
         inline QImage* getImage() const
         {
             return this->image; 
         }
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
@@ -1730,12 +1730,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
@@ -1743,12 +1743,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
@@ -1756,12 +1756,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
@@ -1769,7 +1769,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQImagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline double getYmax() const
         {
             return this->ymax; 
@@ -2413,7 +2413,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
 
 
 
-        /*! \copydoc image */ 
+        /** \copydoc image */ 
         inline void setImage(void* __value)
         {
             if (this->image != __value) {
@@ -2421,12 +2421,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc image */ 
+        /** \copydoc image */ 
         inline void* getImage() const
         {
             return this->image; 
         }
-        /*! \copydoc imageFormat */ 
+        /** \copydoc imageFormat */ 
         inline void setImageFormat(const JKQTFPImageFormat & __value)
         {
             if (this->imageFormat != __value) {
@@ -2434,12 +2434,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc imageFormat */ 
+        /** \copydoc imageFormat */ 
         inline JKQTFPImageFormat getImageFormat() const
         {
             return this->imageFormat; 
         }
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline void setWidth(int __value)
         {
             if (this->width != __value) {
@@ -2447,12 +2447,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline int getWidth() const
         {
             return this->width; 
         }
-        /*! \copydoc height */ 
+        /** \copydoc height */ 
         inline void setHeight(int __value)
         {
             if (this->height != __value) {
@@ -2460,12 +2460,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc height */ 
+        /** \copydoc height */ 
         inline int getHeight() const
         {
             return this->height; 
         }
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
@@ -2473,12 +2473,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
@@ -2486,12 +2486,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
@@ -2499,12 +2499,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
@@ -2512,12 +2512,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline double getYmax() const
         {
             return this->ymax; 
         }
-        /*! \copydoc drawColorBar */ 
+        /** \copydoc drawColorBar */ 
         inline void setDrawColorBar(bool __value)
         {
             if (this->drawColorBar != __value) {
@@ -2525,12 +2525,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc drawColorBar */ 
+        /** \copydoc drawColorBar */ 
         inline bool getDrawColorBar() const
         {
             return this->drawColorBar; 
         }
-        /*! \copydoc colorBarWidth */ 
+        /** \copydoc colorBarWidth */ 
         inline void setColorBarWidth(int __value)
         {
             if (this->colorBarWidth != __value) {
@@ -2538,24 +2538,24 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimagePlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc colorBarWidth */ 
+        /** \copydoc colorBarWidth */ 
         inline int getColorBarWidth() const
         {
             return this->colorBarWidth; 
         }
-        /*! \copydoc rotation */ 
+        /** \copydoc rotation */ 
         inline int getRotation() const { 
             return this->rotation; 
         }
-        /*! \copydoc palette */ 
+        /** \copydoc palette */ 
         inline JKQTFPColorPalette getPalette() const { 
             return this->palette; 
         }
-        /*! \copydoc colorMin */ 
+        /** \copydoc colorMin */ 
         inline double getColorMin() const { 
             return this->colorMin; 
         }
-        /*! \copydoc colorMax */ 
+        /** \copydoc colorMax */ 
         inline double getColorMax() const { 
             return this->colorMax; 
         }
@@ -2811,9 +2811,9 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc imageRed */ 
+        /** \copydoc imageRed */ 
         inline void* getImageRed () const { return this->imageRed; }
-        /*! \copydoc imageFormatRed */
+        /** \copydoc imageFormatRed */
         inline JKQTFPImageFormat getImageFormatRed () const { return this->imageFormatRed; }
         /*! \brief sets the properties imageGreen and imageFormatGreen to the specified \a __value and \a __value2.
 
@@ -2834,9 +2834,9 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc imageGreen */ 
+        /** \copydoc imageGreen */ 
         inline void* getImageGreen () const { return this->imageGreen; }
-        /*! \copydoc imageFormatGreen */
+        /** \copydoc imageFormatGreen */
         inline JKQTFPImageFormat getImageFormatGreen () const { return this->imageFormatGreen; }
         /*! \brief sets the properties imageBlue and imageFormatBlue to the specified \a __value and \a __value2.
 
@@ -2857,11 +2857,11 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc imageBlue */ 
+        /** \copydoc imageBlue */ 
         inline void* getImageBlue () const { return this->imageBlue; }
-        /*! \copydoc imageFormatBlue */
+        /** \copydoc imageFormatBlue */
         inline JKQTFPImageFormat getImageFormatBlue () const { return this->imageFormatBlue; }
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline void setWidth(int __value)
         {
             if (this->width != __value) {
@@ -2869,12 +2869,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline int getWidth() const
         {
             return this->width; 
         }
-        /*! \copydoc height */ 
+        /** \copydoc height */ 
         inline void setHeight(int __value)
         {
             if (this->height != __value) {
@@ -2882,12 +2882,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc height */ 
+        /** \copydoc height */ 
         inline int getHeight() const
         {
             return this->height; 
         }
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
@@ -2895,12 +2895,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
@@ -2908,12 +2908,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
@@ -2921,12 +2921,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
@@ -2934,36 +2934,36 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPRGBImageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline double getYmax() const
         {
             return this->ymax; 
         }
-        /*! \copydoc rotation */ 
+        /** \copydoc rotation */ 
         inline int getRotation() const { 
             return this->rotation; 
         }
-        /*! \copydoc colorMinRed */ 
+        /** \copydoc colorMinRed */ 
         inline double getColorMinRed() const { 
             return this->colorMinRed; 
         }
-        /*! \copydoc colorMaxRed */ 
+        /** \copydoc colorMaxRed */ 
         inline double getColorMaxRed() const { 
             return this->colorMaxRed; 
         }
-        /*! \copydoc colorMinGreen */ 
+        /** \copydoc colorMinGreen */ 
         inline double getColorMinGreen() const { 
             return this->colorMinGreen; 
         }
-        /*! \copydoc colorMaxGreen */ 
+        /** \copydoc colorMaxGreen */ 
         inline double getColorMaxGreen() const { 
             return this->colorMaxGreen; 
         }
-        /*! \copydoc colorMinBlue */ 
+        /** \copydoc colorMinBlue */ 
         inline double getColorMinBlue() const { 
             return this->colorMinBlue; 
         }
-        /*! \copydoc colorMaxBlue */ 
+        /** \copydoc colorMaxBlue */ 
         inline double getColorMaxBlue() const { 
             return this->colorMaxBlue; 
         }
@@ -3149,23 +3149,23 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
             replot();
         }
 
-        /*! \copydoc image */ 
+        /** \copydoc image */ 
         inline bool* getImage() const { 
             return this->image; 
         }
-        /*! \copydoc rotation */ 
+        /** \copydoc rotation */ 
         inline int getRotation() const { 
             return this->rotation; 
         }
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline int getWidth() const {
             return this->width; 
         }
-        /*! \copydoc height */ 
+        /** \copydoc height */ 
         inline int getHeight() const {
             return this->height; 
         }
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline void setXmin(double __value)
         {
             if (this->xmin != __value) {
@@ -3173,12 +3173,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmin */ 
+        /** \copydoc xmin */ 
         inline double getXmin() const
         {
             return this->xmin; 
         }
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline void setXmax(double __value)
         {
             if (this->xmax != __value) {
@@ -3186,12 +3186,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc xmax */ 
+        /** \copydoc xmax */ 
         inline double getXmax() const
         {
             return this->xmax; 
         }
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline void setYmin(double __value)
         {
             if (this->ymin != __value) {
@@ -3199,12 +3199,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymin */ 
+        /** \copydoc ymin */ 
         inline double getYmin() const
         {
             return this->ymin; 
         }
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline void setYmax(double __value)
         {
             if (this->ymax != __value) {
@@ -3212,12 +3212,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc ymax */ 
+        /** \copydoc ymax */ 
         inline double getYmax() const
         {
             return this->ymax; 
         }
-        /*! \copydoc showAsSymbols */ 
+        /** \copydoc showAsSymbols */ 
         inline void setShowAsSymbols(bool __value)
         {
             if (this->showAsSymbols != __value) {
@@ -3225,12 +3225,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPimageOverlayPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc showAsSymbols */ 
+        /** \copydoc showAsSymbols */ 
         inline bool getShowAsSymbols() const
         {
             return this->showAsSymbols; 
         }
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline QColor getColor() const { 
             return this->color; 
         }
@@ -3288,7 +3288,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline void setWidth(double __value)
         {
             if (this->width != __value) {
@@ -3296,12 +3296,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \copydoc lineWidth */ 
+        /** \copydoc lineWidth */ 
         inline void setLineWidth(double __value)
         {
             if (this->lineWidth != __value) {
@@ -3309,12 +3309,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc lineWidth */ 
+        /** \copydoc lineWidth */ 
         inline double getLineWidth() const
         {
             return this->lineWidth; 
         }
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
@@ -3322,12 +3322,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \copydoc label */ 
+        /** \copydoc label */ 
         inline void setLabel(const QString & __value)
         {
             if (this->label != __value) {
@@ -3335,12 +3335,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc label */ 
+        /** \copydoc label */ 
         inline QString getLabel() const
         {
             return this->label; 
         }
-        /*! \copydoc font */ 
+        /** \copydoc font */ 
         inline void setFont(const QFont & __value)
         {
             if (this->font != __value) {
@@ -3348,12 +3348,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc font */ 
+        /** \copydoc font */ 
         inline QFont getFont() const
         {
             return this->font; 
         }
-        /*! \copydoc position */ 
+        /** \copydoc position */ 
         inline void setPosition(const Position & __value)
         {
             if (this->position != __value) {
@@ -3361,7 +3361,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQScaleBarXPlot: public JKQTFPPlot {
                 replot(); 
             } 
         } 
-        /*! \copydoc position */ 
+        /** \copydoc position */ 
         inline Position getPosition() const
         {
             return this->position; 
@@ -3401,7 +3401,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot
         /** \brief draw the graph */
         virtual void drawGraph(QPainter& painter) override;
 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline void setWidth(double __value)
         {
             if (this->width != __value) {
@@ -3409,12 +3409,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot
                 replot(); 
             } 
         } 
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         inline double getWidth() const
         {
             return this->width; 
         }
-        /*! \copydoc lineWidth */ 
+        /** \copydoc lineWidth */ 
         inline void setLineWidth(double __value)
         {
             if (this->lineWidth != __value) {
@@ -3422,12 +3422,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot
                 replot(); 
             } 
         } 
-        /*! \copydoc lineWidth */ 
+        /** \copydoc lineWidth */ 
         inline double getLineWidth() const
         {
             return this->lineWidth; 
         }
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline void setColor(const QColor & __value)
         {
             if (this->color != __value) {
@@ -3435,12 +3435,12 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot
                 replot(); 
             } 
         } 
-        /*! \copydoc color */ 
+        /** \copydoc color */ 
         inline QColor getColor() const
         {
             return this->color; 
         }
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline void setStyle(Qt::PenStyle  __value)
         {
             if (this->style != __value) {
@@ -3448,7 +3448,7 @@ class JKQTFASTPLOTTER_LIB_EXPORT JKQTFPQOverlayLinearGridPlot: public JKQTFPPlot
                 replot(); 
             } 
         } 
-        /*! \copydoc style */ 
+        /** \copydoc style */ 
         inline Qt::PenStyle getStyle() const
         {
             return this->style; 

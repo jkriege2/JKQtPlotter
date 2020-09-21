@@ -134,7 +134,7 @@ public:
         \param parent the parent plotter object
     */
     explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
-    /*! \brief class contructor */
+    /** \brief class contructor  */
     explicit JKQTPGeoBaseDecoratedLine(JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
 
 

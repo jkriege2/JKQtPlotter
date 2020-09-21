@@ -68,9 +68,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYLineGraph: public JKQTPXYGraph, public JKQTP
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc drawLine */ 
+        /** \copydoc drawLine */
         void setDrawLine(bool __value);
-        /*! \copydoc drawLine */ 
+        /** \copydoc drawLine */
         bool getDrawLine() const;
 
         /** \brief set color of line and symbol */
@@ -135,11 +135,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLine
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
 
-        /*! \copydoc sizeColumn */ 
+        /** \copydoc sizeColumn */
         void setSizeColumn(int __value);
-        /*! \copydoc sizeColumn */
+        /** \copydoc sizeColumn */
         void setSizeColumn (size_t __value);
-        /*! \copydoc sizeColumn */ 
+        /** \copydoc sizeColumn */
         int getSizeColumn() const;
         /** \brief defines a functor, which converts a value from the sizeColumn into an actual symbol size in pt
          *
@@ -162,19 +162,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLine
         FunctorToSize getSizeColumnFunctor();
 
 
-        /*! \copydoc colorColumn */ 
+        /** \copydoc colorColumn */
         void setColorColumn(int __value);
-        /*! \copydoc colorColumn */ 
+        /** \copydoc colorColumn */
         int getColorColumn() const;
-        /*! \copydoc colorColumn */
+        /** \copydoc colorColumn */
         void setColorColumn (size_t __value);
 
 
-        /*! \copydoc symbolColumn */ 
+        /** \copydoc symbolColumn */
         void setSymbolColumn(int __value);
-        /*! \copydoc symbolColumn */ 
+        /** \copydoc symbolColumn */
         int getSymbolColumn() const;
-        /*! \copydoc symbolColumn */
+        /** \copydoc symbolColumn */
         void setSymbolColumn (size_t __value);
         /** \brief defines a functor, which converts a value from the symbolColumn into an actual symbol type
          *
@@ -226,11 +226,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLine
         FunctorToSymbol getSymbolColumnFunctor();
 
 
-        /*! \copydoc linewidthColumn */ 
+        /** \copydoc linewidthColumn */
         void setLinewidthColumn(int __value);
-        /*! \copydoc linewidthColumn */ 
+        /** \copydoc linewidthColumn */
         int getLinewidthColumn() const;
-        /*! \copydoc linewidthColumn */
+        /** \copydoc linewidthColumn */
         void setLinewidthColumn( size_t __value);
         /** \brief defines a functor, which converts a value from the symbolColumn into an actual line width in pt
          *
@@ -260,31 +260,31 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXYParametrizedScatterGraph: public JKQTPXYLine
 
 
 
-        /*! \copydoc colorColumnContainsRGB */ 
+        /** \copydoc colorColumnContainsRGB */
         void setColorColumnContainsRGB(bool __value);
-        /*! \copydoc colorColumnContainsRGB */ 
+        /** \copydoc colorColumnContainsRGB */
         bool getColorColumnContainsRGB() const;
 
-        /*! \copydoc gridModeForSymbolSize */ 
+        /** \copydoc gridModeForSymbolSize */
         void setGridModeForSymbolSize(bool __value);
-        /*! \copydoc gridModeForSymbolSize */ 
+        /** \copydoc gridModeForSymbolSize */
         bool getGridModeForSymbolSize() const;
-        /*! \copydoc gridDeltaX */ 
+        /** \copydoc gridDeltaX */
         void setGridDeltaX(double __value);
-        /*! \copydoc gridDeltaX */ 
+        /** \copydoc gridDeltaX */
         double getGridDeltaX() const;
-        /*! \copydoc gridDeltaY */ 
+        /** \copydoc gridDeltaY */
         void setGridDeltaY(double __value);
-        /*! \copydoc gridDeltaY */ 
+        /** \copydoc gridDeltaY */
         double getGridDeltaY() const;
-        /*! \copydoc gridSymbolFractionSize */ 
+        /** \copydoc gridSymbolFractionSize */
         void setGridSymbolFractionSize(double __value);
-        /*! \copydoc gridSymbolFractionSize */ 
+        /** \copydoc gridSymbolFractionSize */
         double getGridSymbolFractionSize() const;
 
-        /*! \copydoc symbolFillDerivationMode */
+        /** \copydoc symbolFillDerivationMode */
         JKQTPColorDerivationMode getSymbolFillDerivationMode()  const;
-        /*! \copydoc symbolFillDerivationMode */
+        /** \copydoc symbolFillDerivationMode */
         void setSymbolFillDerivationMode(JKQTPColorDerivationMode m);
 
         /** \copydoc  JKQTPGraph::setParent() */

@@ -197,33 +197,33 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoRectangle: public JKQTPGeoBaseFilled {
          */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc x */ 
+        /** \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc x */ 
+        /** \copydoc x */ 
         double getX() const;
-        /*! \copydoc y */ 
+        /** \copydoc y */ 
         void setY(double __value);
-        /*! \copydoc y */ 
+        /** \copydoc y */ 
         double getY() const;
         /** \brief returns the center point of the rectangle */
         QPointF getCenter() const;
         /** \brief sets the center point of the rectangle */
         void setCenter(const QPointF& center);
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         void setWidth(double __value);
-        /*! \copydoc width */ 
+        /** \copydoc width */ 
         double getWidth() const;
-        /*! \copydoc height */ 
+        /** \copydoc height */ 
         void setHeight(double __value);
-        /*! \copydoc height */ 
+        /** \copydoc height */ 
         double getHeight() const;
         /** \brief returns the size (width and height) of the rectangle */
         QSizeF getSize() const;
         /** \brief sets the size (width and height) of the rectangle */
         void setSize(const QSizeF& size);
-        /*! \copydoc angle */
+        /** \copydoc angle */
         void setAngle(double __value);
-        /*! \copydoc angle */ 
+        /** \copydoc angle */ 
         double getAngle() const;
         /** \brief set the rectangle using the bottom-left corner, as well as its width and height */
         void setBottomLeftRectangle(double x, double y, double width, double height);
@@ -329,9 +329,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolygon: public JKQTPGeoBaseFilled {
          */
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc points */ 
+        /** \copydoc points */ 
         void setPoints(const QVector<QPointF> & __value);
-        /*! \copydoc points */ 
+        /** \copydoc points */ 
         QVector<QPointF> getPoints() const;
 
         /** \brief append a point to the polygon \see points */
@@ -568,13 +568,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPie: public JKQTPGeoEllipse {
          *       parametrization for pies on non-linear axes could be found!*/
         virtual void draw(JKQTPEnhancedPainter& painter) override;
 
-        /*! \copydoc angleStart */ 
+        /** \copydoc angleStart */ 
         void setAngleStart(double __value);
-        /*! \copydoc angleStart */ 
+        /** \copydoc angleStart */ 
         double getAngleStart() const;
-        /*! \copydoc angleStop */ 
+        /** \copydoc angleStop */ 
         void setAngleStop(double __value);
-        /*! \copydoc angleStop */ 
+        /** \copydoc angleStop */ 
         double getAngleStop() const;
     protected:
          /** \brief if we only draw an arc, this is the starting angle */

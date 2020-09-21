@@ -41,14 +41,14 @@ public:
 
     /** \brief returns the color to be used for the key label */
     virtual QColor getKeyLabelColor() const override;
-    /*! \copydoc drawSymbols */
+    /** \copydoc drawSymbols */
     bool getDrawSymbols() const;
 
 public slots:
-    /*! \brief color of symbols and impulses in one call */
+    /** \brief color of symbols and impulses in one call  */
     virtual void setColor(QColor c);
 
-    /*! \copydoc drawSymbols */
+    /** \copydoc drawSymbols */
     void setDrawSymbols(bool __value);
 
 protected:

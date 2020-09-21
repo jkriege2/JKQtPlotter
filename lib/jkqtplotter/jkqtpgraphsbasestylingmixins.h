@@ -455,18 +455,18 @@ public:
     /** \brief class constructor */
     JKQTPGraphLineAndFillStyleMixin();
 
-    /*! \copydoc m_drawLine */
+    /** \copydoc m_drawLine */
     void setDrawLine(bool __value);
-    /*! \copydoc m_drawLine */
+    /** \copydoc m_drawLine */
     bool getDrawLine() const;
-    /*! \copydoc m_drawLine */
+    /** \copydoc m_drawLine */
     bool doDrawLine() const;
 
-    /*! \copydoc m_fillCurve */
+    /** \copydoc m_fillCurve */
     void setFillCurve(bool __value);
-    /*! \copydoc m_fillCurve */
+    /** \copydoc m_fillCurve */
     bool getFillCurve() const;
-    /*! \copydoc m_fillCurve */
+    /** \copydoc m_fillCurve */
     bool doFillCurve() const;
 
 

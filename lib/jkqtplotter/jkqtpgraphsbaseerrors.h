@@ -53,9 +53,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphErrorStyleMixin {
 
 
 
-        /*! \copydoc m_errorBarCapSize */
+        /** \copydoc m_errorBarCapSize */
         void setErrorBarCapSize(double __value);
-        /*! \copydoc m_errorBarCapSize */
+        /** \copydoc m_errorBarCapSize */
         double getErrorBarCapSize() const;
 
 
@@ -198,17 +198,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPXGraphErrorData  {
         JKQTPXGraphErrorData();
         virtual ~JKQTPXGraphErrorData()=default;
 
-        /*! \copydoc xErrorSymmetric*/
+        /** \copydoc xErrorSymmetric */
         void setXErrorSymmetric(bool __value);
-        /*! \copydoc xErrorSymmetric */
+        /** \copydoc xErrorSymmetric */
         bool getXErrorSymmetric() const;
-        /*! \copydoc xErrorColumnLower */
+        /** \copydoc xErrorColumnLower */
         int getXErrorColumnLower() const;
-        /*! \copydoc xErrorColumn */
+        /** \copydoc xErrorColumn */
         int getXErrorColumn() const;
-        /*! \copydoc xErrorStyle */
+        /** \copydoc xErrorStyle */
         void setXErrorStyle(JKQTPErrorPlotstyle  __value);
-        /*! \copydoc xErrorStyle */
+        /** \copydoc xErrorStyle */
         JKQTPErrorPlotstyle getXErrorStyle() const;
         /** \copydoc xErrorColumn */
         void setXErrorColumn(int __value);
@@ -248,21 +248,21 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPYGraphErrorData  {
         JKQTPYGraphErrorData();
         virtual ~JKQTPYGraphErrorData()=default;
 
-        /*! \copydoc yErrorSymmetric */
+        /** \copydoc yErrorSymmetric */
         void setYErrorSymmetric(bool __value);
-        /*! \copydoc yErrorSymmetric */
+        /** \copydoc yErrorSymmetric */
         bool getYErrorSymmetric() const;
-        /*! \copydoc yErrorColumnLower */
+        /** \copydoc yErrorColumnLower */
         int getYErrorColumnLower() const;
-        /*! \copydoc yErrorColumn */
+        /** \copydoc yErrorColumn */
         int getYErrorColumn() const;
-        /*! \copydoc yErrorStyle */
+        /** \copydoc yErrorStyle */
         void setYErrorStyle(JKQTPErrorPlotstyle  __value);
-        /*! \copydoc yErrorStyle */
+        /** \copydoc yErrorStyle */
         JKQTPErrorPlotstyle getYErrorStyle() const;
-        /*! \copydoc yErrorColumn */
+        /** \copydoc yErrorColumn */
         void setYErrorColumn(int __value);
-        /*! \copydoc yErrorColumnLower */
+        /** \copydoc yErrorColumnLower */
         void setYErrorColumnLower(int __value);
 
 

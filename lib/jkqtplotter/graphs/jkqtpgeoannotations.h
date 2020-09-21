@@ -65,9 +65,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
          */
         JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol=JKQTPCross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
 
-        /*! \copydoc x */ 
+        /** \copydoc x */ 
         double getX() const;
-        /*! \copydoc y */ 
+        /** \copydoc y */ 
         double getY() const;
 
         /** \copydoc JKQTPPlotAnnotationElement::getXMinMax()        */
@@ -83,12 +83,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
         /** \brief returns the color to be used for the key label */
         virtual QColor getKeyLabelColor() const override;
     public slots:
-        /*! set the symbol color and symbol fill color */
+        /** set the symbol color and symbol fill color  */
         virtual void setColor(QColor c);
 
-        /*! \copydoc x */ 
+        /** \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc y */ 
+        /** \copydoc y */ 
         void setY(double __value);
 	
     protected:
@@ -146,11 +146,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotAnnotationElement, pu
          */
         JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text);
 
-        /*! \copydoc text */ 
+        /** \copydoc text */ 
         QString getText() const;
-        /*! \copydoc x */ 
+        /** \copydoc x */ 
         double getX() const;
-        /*! \copydoc y */ 
+        /** \copydoc y */ 
         double getY() const;
 
 
@@ -170,11 +170,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotAnnotationElement, pu
         /** \brief set line and fill color */
         virtual void setColor(QColor c) ;
 		
-        /*! \copydoc text */ 
+        /** \copydoc text */ 
         void setText(const QString & __value);
-        /*! \copydoc x */ 
+        /** \copydoc x */ 
         void setX(double __value);
-        /*! \copydoc y */ 
+        /** \copydoc y */ 
         void setY(double __value);
 
     protected:
