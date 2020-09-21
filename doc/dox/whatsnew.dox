@@ -32,6 +32,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>improved/breaking change: reworked class hierarchy of special line (step) graphs.</li>
   <li>improved/breaking change: reworked class hierarchy of filled line graphs.</li>
   <li>improved/breaking change: reworked class hierarchy of range plot elements (JKQTPVerticalRange and JKQTPHorizontalRange).</li>
+  <li>improved/breaking change: reworked class hierarchy of boxplots.</li>
   <li>improved/breaking change: reworked graph Base-Classes (promoted several setters to slots, added Q_PROPERTY- and Q_ENUM-declarations...)</li>
   <li>improved/breaking change: made more functions and function parameters const</li>
   <li>bugfixed/improved: aspect ratio handling in JKQTPlotter.</li>

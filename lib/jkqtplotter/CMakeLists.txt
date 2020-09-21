@@ -43,6 +43,7 @@ set(SOURCES_GRAPHS
     graphs/jkqtpbarchartbase.cpp 
     graphs/jkqtpbarchart.cpp 
     graphs/jkqtpboxplot.cpp 
+    graphs/jkqtpboxplotbase.cpp 
     graphs/jkqtpboxplotstylingmixins.cpp 
     graphs/jkqtpevaluatedfunctionbase.cpp 
     graphs/jkqtpevaluatedfunction.cpp 
@@ -93,6 +94,7 @@ set(HEADERS
 )
 set(HEADERS_GRAPHS
     graphs/jkqtpboxplot.h
+    graphs/jkqtpboxplotbase.h
     graphs/jkqtpboxplotstylingmixins.h
     graphs/jkqtpevaluatedfunctionbase.h
     graphs/jkqtpevaluatedfunction.h

@@ -34,7 +34,7 @@
 
 
 JKQTPBoxplotVerticalGraph::JKQTPBoxplotVerticalGraph(JKQTBasePlotter* parent):
-    JKQTPGraph(parent)
+    JKQTPBoxplotGraphBase(parent)
 {
     boxWidthRelative=0.4;
     useRelativeBoxWidth=true;
@@ -296,171 +296,22 @@ bool JKQTPBoxplotVerticalGraph::getYMinMax(double& miny, double& maxy, double& s
     return !start;
 }
 
-bool JKQTPBoxplotVerticalGraph::usesColumn(int c) const
-{
-    return (c==meanColumn)||(c==posColumn)||(c==medianColumn)||(c==minColumn)||(c==maxColumn)||(c==percentile25Column)||(c==percentile75Column);
-}
-
-void JKQTPBoxplotVerticalGraph::setDataSortOrder(JKQTPBoxplotVerticalGraph::DataSortOrder __value)
-{
-    this->sortData = __value;
-}
-
-JKQTPBoxplotVerticalGraph::DataSortOrder JKQTPBoxplotVerticalGraph::getDataSortOrder() const
-{
-    return this->sortData;
-}
-
-void JKQTPBoxplotVerticalGraph::setDataSortOrder(int __value) {
-    sortData=static_cast<DataSortOrder>(__value);
-    if (__value>0) sortData=Sorted;
-}
-
-void JKQTPBoxplotVerticalGraph::setPositionColumn(int __value)
-{
-    this->posColumn = __value;
-}
-
-int JKQTPBoxplotVerticalGraph::getPositionColumn() const
-{
-    return this->posColumn;
-}
-
-void JKQTPBoxplotVerticalGraph::setPositionColumn(size_t __value) {
-    this->posColumn = static_cast<int>(__value);
-}
-
-void JKQTPBoxplotVerticalGraph::setMedianColumn(int __value)
-{
-    this->medianColumn = __value;
-}
-
-int JKQTPBoxplotVerticalGraph::getMedianColumn() const
-{
-    return this->medianColumn;
-}
-
-void JKQTPBoxplotVerticalGraph::setMedianColumn(size_t __value) {
-    this->medianColumn = static_cast<int>(__value);
-}
-
-void JKQTPBoxplotVerticalGraph::setMeanColumn(int __value)
-{
-    this->meanColumn = __value;
-}
-
-int JKQTPBoxplotVerticalGraph::getMeanColumn() const
-{
-    return this->meanColumn;
-}
-
-void JKQTPBoxplotVerticalGraph::setMeanColumn(size_t __value) {
-    this->meanColumn = static_cast<int>(__value);
-}
-
-void JKQTPBoxplotVerticalGraph::setMinColumn(int __value)
-{
-    this->minColumn = __value;
-}
-
-int JKQTPBoxplotVerticalGraph::getMinColumn() const
-{
-    return this->minColumn;
-}
-
-void JKQTPBoxplotVerticalGraph::setMinColumn(size_t __value) {
-    this->minColumn = static_cast<int>(__value);
-}
-
-void JKQTPBoxplotVerticalGraph::setMaxColumn(int __value)
-{
-    this->maxColumn = __value;
-}
-
-int JKQTPBoxplotVerticalGraph::getMaxColumn() const
-{
-    return this->maxColumn;
-}
-
-void JKQTPBoxplotVerticalGraph::setMaxColumn(size_t __value) {
-    this->maxColumn = static_cast<int>(__value);
-}
-
-void JKQTPBoxplotVerticalGraph::setPercentile25Column(int __value)
-{
-    this->percentile25Column = __value;
-}
-
-int JKQTPBoxplotVerticalGraph::getPercentile25Column() const
-{
-    return this->percentile25Column;
-}
-
-void JKQTPBoxplotVerticalGraph::setPercentile25Column(size_t __value) {
-    this->percentile25Column = static_cast<int>(__value);
-}
-
-void JKQTPBoxplotVerticalGraph::setPercentile75Column(int __value)
-{
-    this->percentile75Column = __value;
-}
-
-int JKQTPBoxplotVerticalGraph::getPercentile75Column() const
-{
-    return this->percentile75Column;
-}
-
-void JKQTPBoxplotVerticalGraph::setPercentile75Column(size_t __value) {
-    this->percentile75Column = static_cast<int>(__value);
-}
-
-int JKQTPBoxplotVerticalGraph::getMedianConfidenceColumn() const
-{
-    return medianConfidenceColumn;
-}
-
-void JKQTPBoxplotVerticalGraph::setMedianConfidenceColumn(size_t __value)
-{
-    medianConfidenceColumn=static_cast<int>(__value);
-}
-
-void JKQTPBoxplotVerticalGraph::setBoxWidthRelative(double __value)
-{
-    this->boxWidthRelative = __value;
-}
-
-double JKQTPBoxplotVerticalGraph::getBoxWidthRelative() const
-{
-    return this->boxWidthRelative;
-}
-
-void JKQTPBoxplotVerticalGraph::setUseRelativeBoxWidth(bool __value)
-{
-    useRelativeBoxWidth=__value;
-}
-
-bool JKQTPBoxplotVerticalGraph::getUseRelativeBoxWidth() const
-{
-    return useRelativeBoxWidth;
-}
-
-
 void JKQTPBoxplotVerticalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     plotVerticalKeyMarker(parent, painter, rect);
 }
 
-QColor JKQTPBoxplotVerticalGraph::getKeyLabelColor() const {
-    return getLineColor();
-}
 
-void JKQTPBoxplotVerticalGraph::setColor(QColor c)
+
+
+JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTBasePlotter *parent):
+    JKQTPBoxplotGraphBase(parent)
 {
-    setBoxplotColor(c, getParent());
 }
 
-
-
-
+JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTPlotter *parent):
+    JKQTPBoxplotHorizontalGraph(parent->getPlotter())
+{
+}
 void JKQTPBoxplotHorizontalGraph::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     plotHorizontalKeyMarker(parent, painter, rect);
     
@@ -558,15 +409,6 @@ bool JKQTPBoxplotHorizontalGraph::getYMinMax(double& minx, double& maxx, double&
     return !start;
 }
 
-JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTBasePlotter *parent):
-    JKQTPBoxplotVerticalGraph(parent)
-{
-}
-
-JKQTPBoxplotHorizontalGraph::JKQTPBoxplotHorizontalGraph(JKQTPlotter *parent):
-    JKQTPBoxplotHorizontalGraph(parent->getPlotter())
-{
-}
 
 void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 #ifdef JKQTBP_AUTOTIMER
@@ -730,7 +572,7 @@ void JKQTPBoxplotHorizontalGraph::draw(JKQTPEnhancedPainter& painter) {
 
 
 JKQTPBoxplotVerticalElement::JKQTPBoxplotVerticalElement(JKQTBasePlotter* parent):
-    JKQTPGeometricPlotElement(DrawAsGraphicElement, parent)
+    JKQTPBoxplotElementBase(parent)
 {
     pos=JKQTP_NAN;
     median=JKQTP_NAN;
@@ -921,157 +763,23 @@ bool JKQTPBoxplotVerticalElement::getYMinMax(double& miny, double& maxy, double&
         return true;
 }
 
-void JKQTPBoxplotVerticalElement::setPos(double __value)
-{
-    this->pos = __value;
-}
-
-double JKQTPBoxplotVerticalElement::getPos() const
-{
-    return this->pos;
-}
-
-void JKQTPBoxplotVerticalElement::setMedian(double __value)
-{
-    if (this->median != __value) {
-        this->median = __value;
-        drawMedian=true;
-    }
-}
-
-double JKQTPBoxplotVerticalElement::getMedian() const
-{
-    return this->median;
-}
-
-void JKQTPBoxplotVerticalElement::setMedianConfidenceIntervalWidth(double __value)
-{
-    if (this->medianConfidenceIntervalWidth != __value) {
-        this->medianConfidenceIntervalWidth = __value;
-        drawNotch=true;
-    }
-}
-
-double JKQTPBoxplotVerticalElement::getMedianConfidenceIntervalWidth() const
-{
-    return this->medianConfidenceIntervalWidth;
-}
-
-void JKQTPBoxplotVerticalElement::setMean(double __value)
-{
-    if (this->mean != __value) {
-        this->mean = __value;
-        drawMean=true;
-    }
-}
-
-double JKQTPBoxplotVerticalElement::getMean() const
-{
-    return this->mean;
-}
-
-void JKQTPBoxplotVerticalElement::setMin(double __value)
-{
-    if (this->min != __value) {
-        this->min = __value;
-        drawMinMax=true;
-    }
-}
-
-double JKQTPBoxplotVerticalElement::getMin() const
-{
-    return this->min;
-}
-
-void JKQTPBoxplotVerticalElement::setMax(double __value)
-{
-    if (this->max != __value) {
-        this->max = __value;
-        drawMinMax=true;
-    }
-}
-
-double JKQTPBoxplotVerticalElement::getMax() const
-{
-    return this->max;
-}
-
-void JKQTPBoxplotVerticalElement::setPercentile25(double __value)
-{
-    this->percentile25 = __value;
-}
-
-double JKQTPBoxplotVerticalElement::getPercentile25() const
-{
-    return this->percentile25;
-}
-
-void JKQTPBoxplotVerticalElement::setPercentile75(double __value)
-{
-    this->percentile75 = __value;
-}
-
-double JKQTPBoxplotVerticalElement::getPercentile75() const
-{
-    return this->percentile75;
-}
-
-void JKQTPBoxplotVerticalElement::setDrawMean(bool __value)
-{
-    this->drawMean = __value;
-}
-
-bool JKQTPBoxplotVerticalElement::getDrawMean() const
-{
-    return this->drawMean;
-}
-
-void JKQTPBoxplotVerticalElement::setDrawMedian(bool __value)
-{
-    this->drawMedian = __value;
-}
-
-bool JKQTPBoxplotVerticalElement::getDrawMedian() const
-{
-    return this->drawMedian;
-}
-
-void JKQTPBoxplotVerticalElement::setDrawMinMax(bool __value)
-{
-    this->drawMinMax = __value;
-}
-
-bool JKQTPBoxplotVerticalElement::getDrawMinMax() const
-{
-    return this->drawMinMax;
-}
-
-void JKQTPBoxplotVerticalElement::setDrawNotch(bool __value)
-{
-    drawNotch=__value;
-}
-
-bool JKQTPBoxplotVerticalElement::getDrawNotch() const
-{
-    return drawNotch;
-}
-
-
 void JKQTPBoxplotVerticalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     plotVerticalKeyMarker(parent, painter, rect);
 }
 
-QColor JKQTPBoxplotVerticalElement::getKeyLabelColor() const {
-    return getLineColor();
-}
 
-void JKQTPBoxplotVerticalElement::setColor(QColor c)
+
+
+
+JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTBasePlotter *parent):
+    JKQTPBoxplotElementBase(parent)
 {
-    setBoxplotColor(c, getParent());
 }
 
-
-
+JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTPlotter *parent):
+    JKQTPBoxplotHorizontalElement(parent->getPlotter())
+{
+}
 
 void JKQTPBoxplotHorizontalElement::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) {
     plotHorizontalKeyMarker(parent, painter, rect);
@@ -1130,16 +838,6 @@ bool JKQTPBoxplotHorizontalElement::getYMinMax(double& miny, double& maxy, doubl
     xvsgz=xma; SmallestGreaterZeroCompare_xvsgz();
     return true;
 
-}
-
-JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTBasePlotter *parent):
-    JKQTPBoxplotVerticalElement(parent)
-{
-}
-
-JKQTPBoxplotHorizontalElement::JKQTPBoxplotHorizontalElement(JKQTPlotter *parent):
-    JKQTPBoxplotHorizontalElement(parent->getPlotter())
-{
 }
 
 void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
@@ -1254,39 +952,3 @@ void JKQTPBoxplotHorizontalElement::draw(JKQTPEnhancedPainter& painter) {
 
 
 
-
-
-void JKQTPBoxplotVerticalGraph::intSortData()
-{
-    sortedIndices.clear();
-
-
-
-    if (parent==nullptr)  return ;
-
-    JKQTPDatastore* datastore=parent->getDatastore();
-    int imin=0;
-    int imax=static_cast<int>(datastore->getRows(static_cast<size_t>(posColumn)));
-    if (imax<imin) {
-        int h=imin;
-        imin=imax;
-        imax=h;
-    }
-    if (imin<0) imin=0;
-    if (imax<0) imax=0;
-
-    QVector<double> datas;
-
-    if (sortData==JKQTPBoxplotVerticalGraph::Sorted) {
-
-        for (int i=0; i<imax; i++) {
-            double xv=datastore->get(posColumn,static_cast<size_t>(i));
-            sortedIndices<<i;
-            datas<<xv;
-        }
-
-        jkqtpQuicksortDual(datas.data(), sortedIndices.data(), datas.size());
-
-
-    }
-}

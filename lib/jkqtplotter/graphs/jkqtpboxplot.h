@@ -25,6 +25,7 @@
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
+#include "jkqtplotter/graphs/jkqtpboxplotbase.h"
 #include "jkqtplotter/graphs/jkqtpboxplotstylingmixins.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 
@@ -98,16 +99,9 @@
     \see \ref JKQTPlotterBoxplotsGraphs, jkqtpstatVAddBoxplots(),\ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat, \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotStyling
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, public JKQTPGraphBoxplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPBoxplotGraphBase {
         Q_OBJECT
     public:
-
-        /** \brief Sort order in a  JKQTPBoxplotVerticalGraph (or one of its child classes) */
-        enum DataSortOrder {
-            Unsorted=0,
-            Sorted=1
-        };
-
 
 
         /** \brief class constructor */
@@ -119,11 +113,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, publi
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
-        virtual void setColor(QColor c);
-
 
         /** \brief get the maximum and minimum x-value of the graph
          *
@@ -136,108 +125,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, publi
          */
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
-        /** \copydoc JKQTPGraph::usesColumn() */
-        virtual bool usesColumn(int c) const override;
-
-        /*! \copydoc sortData */ 
-        void setDataSortOrder(DataSortOrder  __value);
-        /*! \copydoc sortData */ 
-        DataSortOrder getDataSortOrder() const;
-        /*! \copydoc sortData */
-        void setDataSortOrder(int __value);
-        /*! \copydoc posColumn */ 
-        void setPositionColumn(int __value);
-        /*! \copydoc posColumn */ 
-        int getPositionColumn() const;
-        /*! \copydoc posColumn */ 
-        void setPositionColumn (size_t __value);
-        /*! \copydoc medianColumn */ 
-        void setMedianColumn(int __value);
-        /*! \copydoc medianColumn */ 
-        int getMedianColumn() const;
-        /*! \copydoc medianColumn */ 
-        void setMedianColumn (size_t __value);
-        /*! \copydoc meanColumn */ 
-        void setMeanColumn(int __value);
-        /*! \copydoc meanColumn */ 
-        int getMeanColumn() const;
-        /*! \copydoc meanColumn */ 
-        void setMeanColumn (size_t __value);
-        /*! \copydoc minColumn */ 
-        void setMinColumn(int __value);
-        /*! \copydoc minColumn */ 
-        int getMinColumn() const;
-        /*! \copydoc minColumn */ 
-        void setMinColumn( size_t __value);
-        /*! \copydoc maxColumn */ 
-        void setMaxColumn(int __value);
-        /*! \copydoc maxColumn */ 
-        int getMaxColumn() const;
-        /*! \copydoc maxColumn */ 
-        void setMaxColumn (size_t __value);
-        /*! \copydoc percentile25Column */ 
-        void setPercentile25Column(int __value);
-        /*! \copydoc percentile25Column */ 
-        int getPercentile25Column() const;
-        /*! \copydoc percentile25Column */ 
-        void setPercentile25Column (size_t __value);
-        /*! \copydoc percentile75Column */ 
-        void setPercentile75Column(int __value);
-        /*! \copydoc percentile75Column */ 
-        int getPercentile75Column() const;
-        /*! \copydoc percentile75Column */ 
-        void setPercentile75Column (size_t __value);
-        /*! \copydoc medianConfidenceColumn */
-        int getMedianConfidenceColumn() const;
-        /*! \copydoc medianConfidenceColumn */
-        void setMedianConfidenceColumn (size_t __value);
-
-
-        /*! \copydoc boxWidthRelative */
-        void setBoxWidthRelative(double __value);
-        /*! \copydoc boxWidthRelative */
-        double getBoxWidthRelative() const;
-
-
-        /*! \copydoc useRelativeBoxWidth */
-        void setUseRelativeBoxWidth(bool __value);
-        /*! \copydoc useRelativeBoxWidth */
-        bool getUseRelativeBoxWidth() const;
     protected:
-        /** \brief width of box in percent of distance between the current two posColumn values
-         *         if we only plot one box&whiskers then JKQTPGraphBoxplotStyleMixin::boxWidthAbsolute in pt is used */
-        double boxWidthRelative;
-        /** \brief if set \c true, boxplot widths are calculated automatically, based on boxWidthRelative,
-         *         otherwise JKQTPGraphBoxplotStyleMixin::boxWidthAbsolute is used. */
-        bool useRelativeBoxWidth;
-
-        /** \brief the column that contains the x-component of the datapoints */
-        int posColumn;
-        /** \brief the column that contains the median-component of the datapoints */
-        int medianColumn;
-        /** \brief the column that contains the confidence interval width of the median (e.g. 1.57*IQR/sqrt(n) ). This is used to draw a notch in the plot (if set) */
-        int medianConfidenceColumn;
-        /** \brief the column that contains the median-component of the datapoints. \note This column is strictly optional. */
-        int meanColumn;
-        /** \brief the column that contains the minimum-component of the datapoints */
-        int minColumn;
-        /** \brief the column that contains the maximum-component of the datapoints */
-        int maxColumn;
-        /** \brief the column that contains the 25% percentile-component of the datapoints */
-        int percentile25Column;
-        /** \brief the column that contains the 75% percentile-component of the datapoints */
-        int percentile75Column;
-        /** \brief if \c !=Unsorted, the data is sorted before plotting */
-        DataSortOrder sortData;
-        /** \brief this array contains the order of indices, in which to access the data in the data columns */
-        QVector<int> sortedIndices;
-
-        virtual void intSortData() ;
-
-        inline  int getDataIndex(int i) {
-            if (sortData==Unsorted) return i;
-            return sortedIndices.value(i,i);
-        }
 
 };
 
@@ -255,7 +143,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalGraph: public JKQTPGraph, publi
     \see JKQTPBoxplotVerticalGraph \ref JKQTPlotterBoxplotsGraphs, jkqtpstatHAddBoxplots(), \ref JKQTPlotterBasicJKQTPDatastoreStatisticsGroupedStat, \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotStyling
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVerticalGraph {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotGraphBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -309,7 +197,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalGraph: public JKQTPBoxplotVer
     \see jkqtpstatVAddBoxplot(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotsGraphs, \ref JKQTPlotterBoxplotStyling, jkqtpstatAddVBoxplotAndOutliers()
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPGeometricPlotElement, public JKQTPGraphBoxplotStyleMixin {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPBoxplotElementBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
@@ -321,10 +209,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPGeometricP
         virtual void draw(JKQTPEnhancedPainter& painter) override;
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-        /** \brief returns the color to be used for the key label */
-        virtual QColor getKeyLabelColor() const override;
-        /*! \brief set the color of the graph (colors all elements, based on the given color \a c )*/
-        virtual void setColor(QColor c);
 
 
         /** \brief get the maximum and minimum x-value of the graph
@@ -339,82 +223,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPGeometricP
         virtual bool getYMinMax(double& miny, double& maxy, double& smallestGreaterZero) override;
 
 
-        /*! \copydoc pos */ 
-        void setPos(double __value);
-        /*! \copydoc pos */ 
-        double getPos() const;
-        /*! \copydoc median */ 
-        void setMedian(double __value);
-        /*! \copydoc median */ 
-        double getMedian() const;
-        /*! \copydoc mean */ 
-        void setMean(double __value);
-        /*! \copydoc mean */ 
-        double getMean() const;
-        /*! \copydoc min */ 
-        void setMin(double __value);
-        /*! \copydoc min */ 
-        double getMin() const;
-        /*! \copydoc max */ 
-        void setMax(double __value);
-        /*! \copydoc max */ 
-        double getMax() const;
-        /*! \copydoc percentile25 */ 
-        void setPercentile25(double __value);
-        /*! \copydoc percentile25 */ 
-        double getPercentile25() const;
-        /*! \copydoc percentile75 */ 
-        void setPercentile75(double __value);
-        /*! \copydoc percentile75 */ 
-        double getPercentile75() const;
-
-        /*! \copydoc drawMean */ 
-        void setDrawMean(bool __value);
-        /*! \copydoc drawMean */ 
-        bool getDrawMean() const;
-        /*! \copydoc drawMedian */ 
-        void setDrawMedian(bool __value);
-        /*! \copydoc drawMedian */ 
-        bool getDrawMedian() const;
-        /*! \copydoc drawMinMax */ 
-        void setDrawMinMax(bool __value);
-        /*! \copydoc drawMinMax */ 
-        bool getDrawMinMax() const;
-        /*! \copydoc drawNotch */
-        void setDrawNotch(bool __value);
-        /*! \copydoc drawNotch */
-        bool getDrawNotch() const;
-
-        /*! \copydoc medianConfidenceIntervalWidth */
-        double getMedianConfidenceIntervalWidth() const;
-        /*! \copydoc medianConfidenceIntervalWidth */
-        void setMedianConfidenceIntervalWidth(double __value);
     protected:
 
-        /** \brief the position of the boxplot on the "other" axis */
-        double pos;
-        /** \brief the median value to be used for the boxplot */
-        double median;
-        /** \brief the width of the confidence interval around the median */
-        double medianConfidenceIntervalWidth;
-        /** \brief indicates whether to draw a notch with width medianConfidenceIntervalWidth */
-        bool drawNotch;
-        /** \brief the mean value to be used for the boxplot */
-        double mean;
-        /** \brief indicates whether to draw the mean */
-        bool drawMean;
-        /** \brief indicates whether to draw the median */
-        bool drawMedian;
-        /** \brief indicates whether to draw the percentiles */
-        bool drawMinMax;
-        /** \brief the minimum value to be used for the boxplot */
-        double min;
-        /** \brief the maximum value to be used for the boxplot */
-        double max;
-        /** \brief the 25% percentile value to be used for the boxplot */
-        double percentile25;
-        /** \brief the 75% percentile value to be used for the boxplot */
-        double percentile75;
+
 };
 
 
@@ -433,7 +244,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotVerticalElement: public JKQTPGeometricP
     \see JKQTPBoxplotVerticalElement, jkqtpstatHAddBoxplot(), \ref JKQTPlotterBasicJKQTPDatastoreStatistics, \ref JKQTPlotterBoxplotsGraphs, \ref JKQTPlotterBoxplotStyling, jkqtpstatAddHBoxplotAndOutliers()
 
  */
-class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotVerticalElement {
+class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotHorizontalElement: public JKQTPBoxplotElementBase {
         Q_OBJECT
     public:
         /** \brief class constructor */
