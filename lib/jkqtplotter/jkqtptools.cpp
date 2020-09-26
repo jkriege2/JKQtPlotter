@@ -379,6 +379,12 @@ bool JKQTPCADrawModeHasAxisLabel(JKQTPCADrawMode pos)
 QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode)
 {
     switch(mode) {
+        case JKQTPFFCMFullyTransparentColor: return "transparent";
+        case JKQTPFFCMBlack: return "black";
+        case JKQTPFFCMWhite: return "white";
+        case JKQTPFFCMGrey25: return "grey25";
+        case JKQTPFFCMGrey50: return "grey50";
+        case JKQTPFFCMGrey75: return "grey75";
         case JKQTPFFCMSameColor: return "same";
         case JKQTPFFCMInvertedColor: return "inverted";
         case JKQTPFFCMLighterColor: return "lighter";
@@ -395,8 +401,14 @@ QString JKQTPColorDerivationMode2String(JKQTPColorDerivationMode mode)
 
 JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode)
 {
-    QString m=mode.trimmed().toLower();
+    const QString m=mode.trimmed().toLower();
+    if (m=="transparent" || m=="no_color") return JKQTPFFCMFullyTransparentColor;
     if (m=="same") return JKQTPFFCMSameColor;
+    if (m=="black") return JKQTPFFCMBlack;
+    if (m=="white") return JKQTPFFCMWhite;
+    if (m=="grey25") return JKQTPFFCMGrey25;
+    if (m=="grey50") return JKQTPFFCMGrey50;
+    if (m=="grey75") return JKQTPFFCMGrey75;
     if (m=="inverted") return JKQTPFFCMInvertedColor;
     if (m=="lighter") return JKQTPFFCMLighterColor;
     if (m=="even_lighter") return JKQTPFFCMEvenLighterColor;
@@ -409,21 +421,27 @@ JKQTPColorDerivationMode String2JKQTPColorDerivationMode(const QString &mode)
     return JKQTPFFCMSameColor;
 }
 
-QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor &col)
+QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor &basecolor)
 {
     switch(mode) {
-        case JKQTPFFCMSameColor: return col;
-        case JKQTPFFCMInvertedColor: return QColor(255-col.red(), 255-col.green(), 255-col.blue(), col.alpha());
-        case JKQTPFFCMLighterColor: return col.lighter();
-        case JKQTPFFCMEvenLighterColor: return col.lighter().lighter();
-        case JKQTPFFCMDarkerColor: return col.darker();
-        case JKQTPFFCMEvenDarkerColor: return col.darker().darker();
-        case JKQTPFFCMMoreTransparentColor: { QColor c=col; c.setAlphaF(0.66*c.alphaF()); return c; }
-        case JKQTPFFCMEvenMoreTransparentColor: { QColor c=col; c.setAlphaF(0.33*c.alphaF()); return c; }
-        case JKQTPFFCMLessTransparentColor: { QColor c=col; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.33); return c; }
-        case JKQTPFFCMEvenLessTransparentColor: { QColor c=col; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.66); return c; }
+        case JKQTPFFCMSameColor: return basecolor;
+        case JKQTPFFCMFullyTransparentColor: return QColor(Qt::transparent);
+        case JKQTPFFCMBlack: return QColor(Qt::black);
+        case JKQTPFFCMWhite: return QColor(Qt::white);
+        case JKQTPFFCMGrey25: return QColor(static_cast<uint8_t>(0.25*255.0),static_cast<uint8_t>(0.25*255.0),static_cast<uint8_t>(0.25*255.0));
+        case JKQTPFFCMGrey50: return QColor(static_cast<uint8_t>(0.50*255.0),static_cast<uint8_t>(0.50*255.0),static_cast<uint8_t>(0.50*255.0));
+        case JKQTPFFCMGrey75: return QColor(static_cast<uint8_t>(0.75*255.0),static_cast<uint8_t>(0.75*255.0),static_cast<uint8_t>(0.75*255.0));
+        case JKQTPFFCMInvertedColor: return QColor(255-basecolor.red(), 255-basecolor.green(), 255-basecolor.blue(), basecolor.alpha());
+        case JKQTPFFCMLighterColor: return basecolor.lighter();
+        case JKQTPFFCMEvenLighterColor: return basecolor.lighter().lighter();
+        case JKQTPFFCMDarkerColor: return basecolor.darker();
+        case JKQTPFFCMEvenDarkerColor: return basecolor.darker().darker();
+        case JKQTPFFCMMoreTransparentColor: { QColor c=basecolor; c.setAlphaF(0.66*c.alphaF()); return c; }
+        case JKQTPFFCMEvenMoreTransparentColor: { QColor c=basecolor; c.setAlphaF(0.33*c.alphaF()); return c; }
+        case JKQTPFFCMLessTransparentColor: { QColor c=basecolor; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.33); return c; }
+        case JKQTPFFCMEvenLessTransparentColor: { QColor c=basecolor; c.setAlphaF(c.alphaF()+(1.0-c.alphaF())*0.66); return c; }
     }
-    return col;
+    return basecolor;
 }
 
 QString JKQTPUserActionMarkerType2String(JKQTPUserActionMarkerType act)

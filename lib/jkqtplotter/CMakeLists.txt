@@ -35,6 +35,7 @@ set(SOURCES
     jkqtpcoordinateaxes.cpp
     jkqtpcoordinateaxesstyle.cpp
     jkqtpimagetools.cpp
+    jkqtpgraphsbasestyle.cpp
     )
 set(SOURCES_GRAPHS
     graphs/jkqtpscatter.cpp
@@ -90,6 +91,7 @@ set(HEADERS
     jkqtpcoordinateaxes.h
     jkqtpcoordinateaxesstyle.h
     jkqtpimagetools.h
+    jkqtpgraphsbasestyle.h
     jkqtplotter_imexport.h
 )
 set(HEADERS_GRAPHS

@@ -320,7 +320,7 @@ JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTBasePlotter *pare
     JKQTPBarHorizontalGraph(parent)
 {
     setErrorColorFromGraphColor(getKeyLabelColor());
-    initErrorStyle(parent, parentPlotStyle);
+    initErrorStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
 }
 
 JKQTPBarHorizontalErrorGraph::JKQTPBarHorizontalErrorGraph(JKQTPlotter *parent):
@@ -414,7 +414,7 @@ JKQTPBarVerticalErrorGraph::JKQTPBarVerticalErrorGraph(JKQTBasePlotter *parent):
     JKQTPBarVerticalGraph(parent)
 {
     setErrorColorFromGraphColor(getKeyLabelColor());
-    initErrorStyle(parent, parentPlotStyle);
+    initErrorStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
 
 }
 

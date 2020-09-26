@@ -24,6 +24,7 @@
 #include <QBrush>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
+#include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 
 
@@ -31,7 +32,6 @@
 #define jkqtpgraphsbasestylingmixins_H
 
 
-class JKQTBasePlotter; // forward
 class JKQTPlotter; // forward
 
 
@@ -51,7 +51,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphLineStyleMixin {
         /** \brief class constructor */
         JKQTPGraphLineStyleMixin();
         /** \brief initiaize the line style (from the parent plotter) */
-        void initLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle);
+        void initLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
 
         virtual ~JKQTPGraphLineStyleMixin();
 
@@ -161,7 +161,7 @@ public:
     /** \brief class constructor */
     JKQTPGraphDecoratedHeadLineStyleMixin();
     /** \brief initiaize the line style (from the parent plotter) */
-    void initDecoratedHeadLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle);
+    void initDecoratedHeadLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
 
     virtual ~JKQTPGraphDecoratedHeadLineStyleMixin();
 
@@ -212,7 +212,7 @@ public:
     /** \brief class constructor */
     JKQTPGraphDecoratedLineStyleMixin();
     /** \brief initiaize the line style (from the parent plotter) */
-    void initDecoratedLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle);
+    void initDecoratedLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
 
     virtual ~JKQTPGraphDecoratedLineStyleMixin();
 
@@ -283,7 +283,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphSymbolStyleMixin {
         /** \brief class constructor */
         JKQTPGraphSymbolStyleMixin();
         /** \brief initiaize the symbol style (from the parent plotter) */
-        void initSymbolStyle(JKQTBasePlotter *parent, int &parentPlotStyle);
+        void initSymbolStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
 
         virtual ~JKQTPGraphSymbolStyleMixin();
 
@@ -399,7 +399,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
         JKQTPGraphFillStyleMixin();
 
         /** \brief initiaize the fill style (from the parent plotter) */
-        void initFillStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
+        void initFillStyle(JKQTBasePlotter* parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
 
         virtual ~JKQTPGraphFillStyleMixin();
 
@@ -497,7 +497,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphTextStyleMixin {
         JKQTPGraphTextStyleMixin(JKQTBasePlotter *parent);
 
         /** \brief initiaize the fill style (from the parent plotter) */
-        void initTextStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
+        void initTextStyle(JKQTBasePlotter* parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
 
         virtual ~JKQTPGraphTextStyleMixin();
 

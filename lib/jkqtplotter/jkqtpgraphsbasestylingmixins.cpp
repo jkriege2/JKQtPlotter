@@ -34,13 +34,14 @@ JKQTPGraphLineStyleMixin::JKQTPGraphLineStyleMixin()
     m_highlightingLineColor.setAlphaF(0.5);
 }
 
-void JKQTPGraphLineStyleMixin::initLineStyle(JKQTBasePlotter* parent, int &parentPlotStyle)
+void JKQTPGraphLineStyleMixin::initLineStyle(JKQTBasePlotter* parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
         if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        m_linePen.setColor(parent->getPlotStyle(parentPlotStyle).color());
-        m_linePen.setStyle(parent->getPlotStyle(parentPlotStyle).style());
-        m_lineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
+        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+        m_linePen.setColor(pen.color());
+        m_linePen.setStyle(pen.style());
+        m_lineWidth=pen.widthF();
         m_highlightingLineColor=getLineColor();
         m_highlightingLineColor.setAlphaF(0.5);
     }
@@ -169,15 +170,16 @@ JKQTPGraphSymbolStyleMixin::JKQTPGraphSymbolStyleMixin()
     m_symbolLineWidth=1;
 }
 
-void JKQTPGraphSymbolStyleMixin::initSymbolStyle(JKQTBasePlotter *parent, int& parentPlotStyle)
+void JKQTPGraphSymbolStyleMixin::initSymbolStyle(JKQTBasePlotter *parent, int& parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
         if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        m_symbolColor=parent->getPlotStyle(parentPlotStyle).color();
-        m_symbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
-        m_symbolLineWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
-        m_symbolType=parent->getPlotStyle(parentPlotStyle).symbol();
-        m_symbolFillColor=parent->getPlotStyle(parentPlotStyle).symbolFillColor();
+        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+        m_symbolColor=pen.color();
+        m_symbolSize=pen.symbolSize();
+        m_symbolLineWidth=pen.symbolLineWidthF();
+        m_symbolType=pen.symbol();
+        m_symbolFillColor=pen.symbolFillColor();
     }
 }
 
@@ -286,13 +288,14 @@ JKQTPGraphFillStyleMixin::JKQTPGraphFillStyleMixin()
 }
 
 
-void JKQTPGraphFillStyleMixin::initFillStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+void JKQTPGraphFillStyleMixin::initFillStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
         if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        m_fillColor=parent->getPlotStyle(parentPlotStyle).fillColor();
+        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+        m_fillColor=pen.fillColor();
         m_fillBrush.setColor(m_fillColor);
-        m_fillBrush.setStyle(parent->getPlotStyle(parentPlotStyle).fillStyle());
+        m_fillBrush.setStyle(pen.fillStyle());
     }
 }
 
@@ -403,16 +406,17 @@ QPen JKQTPGraphLineStyleMixin::getHighlightingLinePenForRects(JKQTPEnhancedPaint
 
 JKQTPGraphTextStyleMixin::JKQTPGraphTextStyleMixin(JKQTBasePlotter *parent)
 {
-    m_textFontName=parent->getDefaultTextFontName();
-    m_textFontSize=parent->getDefaultTextSize();
-    m_textColor=parent->getDefaultTextColor();
+    m_textFontSize=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontSize;
+    m_textColor=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultTextColor;
+    m_textFontName=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontName;
 }
 
-void JKQTPGraphTextStyleMixin::initTextStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+void JKQTPGraphTextStyleMixin::initTextStyle(JKQTBasePlotter *parent, int &/*parentPlotStyle*/, JKQTPPlotStyleType styletype)
 {
-    if (parent) { // get style settings from parent object
-        if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        m_textColor=parent->getPlotStyle(parentPlotStyle).color();
+    if (parent && styletype==JKQTPPlotStyleType::Annotation) { // get style settings from parent object
+        m_textFontSize=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontSize;
+        m_textColor=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultTextColor;
+        m_textFontName=parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.defaultFontName;
     }
 }
 
@@ -459,9 +463,13 @@ JKQTPGraphDecoratedLineStyleMixin::JKQTPGraphDecoratedLineStyleMixin():
     m_tailDecoratorSizeFactor=m_headDecoratorSizeFactor=8.0;
 }
 
-void JKQTPGraphDecoratedLineStyleMixin::initDecoratedLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+void JKQTPGraphDecoratedLineStyleMixin::initDecoratedLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
-    initLineStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, styletype);
+    if (parent) { // get style settings from parent object
+        m_headDecoratorStyle=parent->getCurrentPlotterStyle().graphsStyle.getGraphStyleByType(styletype).defaultHeadDecoratorStyle;
+        m_headDecoratorSizeFactor=m_tailDecoratorSizeFactor=parent->getCurrentPlotterStyle().graphsStyle.getGraphStyleByType(styletype).defaultHeadDecoratorSizeFactor;
+    }
 }
 
 JKQTPGraphDecoratedLineStyleMixin::~JKQTPGraphDecoratedLineStyleMixin()
@@ -528,9 +536,13 @@ JKQTPGraphDecoratedHeadLineStyleMixin::JKQTPGraphDecoratedHeadLineStyleMixin():
     m_headDecoratorSizeFactor=8.0;
 }
 
-void JKQTPGraphDecoratedHeadLineStyleMixin::initDecoratedHeadLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+void JKQTPGraphDecoratedHeadLineStyleMixin::initDecoratedHeadLineStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
-    initLineStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, styletype);
+    if (parent) { // get style settings from parent object
+        m_headDecoratorStyle=parent->getCurrentPlotterStyle().graphsStyle.getGraphStyleByType(styletype).defaultHeadDecoratorStyle;
+        m_headDecoratorSizeFactor=parent->getCurrentPlotterStyle().graphsStyle.getGraphStyleByType(styletype).defaultHeadDecoratorSizeFactor;
+    }
 }
 
 JKQTPGraphDecoratedHeadLineStyleMixin::~JKQTPGraphDecoratedHeadLineStyleMixin()

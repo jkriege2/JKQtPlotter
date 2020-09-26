@@ -25,6 +25,7 @@
 #include "jkqtplotter/jkqtpcoordinateaxesstyle.h"
 #include "jkqtplotter/jkqtpkeystyle.h"
 #include "jkqtplotter/jkqtpimagetools.h"
+#include "jkqtplotter/jkqtpgraphsbasestyle.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
 #include "jkqtcommon/jkqtpbasicimagetools.h"
@@ -37,7 +38,7 @@
 #include <QSettings>
 
 
-/** \brief Support Class for JKQTBasePlotter, which summarizes all proeprties that define the visual styling of a JKQTBasePlotter
+/** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of a JKQTBasePlotter
  *  \ingroup jkqtpplotter_styling
  *
  *  \see JKQTBasePlotter, \ref jkqtpplotter_styling
@@ -107,12 +108,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
          * \see JKQTBasePlotter::setBorder(), \ref jkqtplotter_base_plotsize
          */
         int plotBorderRight;
-        /** \brief width (in pt) of lines used for newly added graphs */
-        double defaultGraphWidth;
-        /** \brief size (in pt) of symbols used for newly added graphs */
-        double defaultGraphSymbolSize;
-        /** \brief with (in pt) of symbol lines used for newly added graphs */
-        double defaultGraphSymbolLineWidth;
         /** \brief color of the background of the plot (widget area) when drawing (to the screen) */
         QBrush widgetBackgroundBrush;
         /** \brief color of the background of the plot (widget area) when exporting*/
@@ -133,12 +128,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
         double plotLabelFontSize;
         /** \brief specifies whether to use antialiasing for plotting the coordinate system */
         bool useAntiAliasingForSystem;
-        /** \brief specifies whether to use antialiasing for plotting the graphs
-         *
-         * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
-         *       roughly three-fold speed improvement!
-         */
-        bool useAntiAliasingForGraphs;
         /** \brief specifies whether to use antialiasing when drawing any text
         * \note You can set this property \c false to increase plotting speed of complex plots (with many graphs inside). You can reach a
         *       roughly three-fold speed improvement!
@@ -150,24 +139,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
         double defaultFontSize;
         /** \brief default font name in the plot */
         QString defaultFontName;
-        /** \brief color palette used by default for new graphs */
-        JKQTPMathImageColorPalette defaultPalette;
-        /** \brief defines how to derive a fill color for a new graph */
-        JKQTPColorDerivationMode graphFillColorDerivationMode;
-        /** \brief defines how to derive an error color for a new graph */
-        JKQTPColorDerivationMode graphErrorColorDerivationMode;
-        /** \brief defines how to derive an error fill color from the error color for a new graph */
-        JKQTPColorDerivationMode graphErrorFillColorDerivationMode;
-
-
-        /** \brief colors used to automatically collor different graphs differently */
-        QVector<QColor> defaultGraphColors;
-        /** \brief Qt::PenStyle used to automatically style different graphs differently */
-        QVector<Qt::PenStyle> defaultGraphPenStyles;
-        /** \brief JKQTPGraphSymbols used to automatically assign to different graphs */
-        QVector<JKQTPGraphSymbols> defaultGraphSymbols;
-        /** \brief Qt::BrushStyle used to automatically style different graphs differently */
-        QVector<Qt::BrushStyle> defaultGraphFillStyles;
 
 
         /** \brief style of the plot key/legend */
@@ -180,6 +151,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
         JKQTPCoordinateAxisStyle rightColorbarAxisStyle;
         /** \brief style of the coordinate axes used to display colorbars at the top */
         JKQTPCoordinateAxisStyle topColorbarAxisStyle;
+        /** \brief style of the graphs */
+        JKQTGraphsBaseStyle graphsStyle;
 
 
 };

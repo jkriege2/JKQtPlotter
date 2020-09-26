@@ -46,16 +46,17 @@ JKQTPGraphErrorStyleMixin::JKQTPGraphErrorStyleMixin() {
     m_errorBarCapSize=7;
 }
 
-void JKQTPGraphErrorStyleMixin::initErrorStyle(JKQTBasePlotter *parent, int &parentPlotStyle)
+void JKQTPGraphErrorStyleMixin::initErrorStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
         if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        m_errorFillColor=parent->getPlotStyle(parentPlotStyle).errorFillColor();
+        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, styletype);
+        m_errorFillColor=pen.errorFillColor();
         m_errorFillBrush.setColor(m_errorFillColor);
-        m_errorFillBrush.setStyle(parent->getPlotStyle(parentPlotStyle).errorFillStyle());
-        m_errorLinePen.setColor(parent->getPlotStyle(parentPlotStyle).errorColor());
-        m_errorLinePen.setStyle(parent->getPlotStyle(parentPlotStyle).errorStyle());
-        m_errorLineWidth=parent->getPlotStyle(parentPlotStyle).errorWidthF();
+        m_errorFillBrush.setStyle(pen.errorFillStyle());
+        m_errorLinePen.setColor(pen.errorColor());
+        m_errorLinePen.setStyle(pen.errorStyle());
+        m_errorLineWidth=pen.errorWidthF();
     }
 
 }

@@ -742,7 +742,7 @@ JKQTPMathImage::JKQTPMathImage(JKQTBasePlotter *parent):
     JKQTPColorPaletteWithModifierStyleAndToolsMixin(parent)
 {
     initJKQTPMathImage();
-    if (parent) this->palette=parent->getCurrentPlotterStyle().defaultPalette;
+    if (parent) this->palette=parent->getCurrentPlotterStyle().graphsStyle.defaultPalette;
 }
 
 

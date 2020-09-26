@@ -246,6 +246,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotElementBase: public JKQTPPlotElement, p
         void setPercentile25(double __value);
         /** \copydoc percentile75 */
         void setPercentile75(double __value);
+        /** \brief set all properties of the plot at once \see pos, median, min, mean, max, percentile25, percentile75 */
+        void setData(double pos, double min, double q75, double median, double mean, double q25, double max);
+
         /** \copydoc drawMedian */
         void setDrawMedian(bool __value);
         /** \copydoc drawMinMax */
@@ -254,6 +257,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPBoxplotElementBase: public JKQTPPlotElement, p
         void setDrawNotch(bool __value);
         /** \copydoc medianConfidenceIntervalWidth */
         void setMedianConfidenceIntervalWidth(double __value);
+
+
     protected:
 
         /** \brief the position of the boxplot on the "other" axis */

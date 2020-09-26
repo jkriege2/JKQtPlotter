@@ -31,7 +31,7 @@
 #include <QSettings>
 
 
-/** \brief Support Class for JKQTPlotter, which summarizes all proeprties that define the visual styling of a JKQTPlotter
+/** \brief Support Class for JKQTPlotter, which summarizes all properties that define the visual styling of a JKQTPlotter
  *  \ingroup jkqtpplotter_styling
  *
  *  \see JKQTPlotter, \ref jkqtpplotter_styling

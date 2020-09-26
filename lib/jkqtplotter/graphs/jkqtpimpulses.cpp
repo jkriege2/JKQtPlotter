@@ -38,9 +38,8 @@
 JKQTPImpulsesGraphBase::JKQTPImpulsesGraphBase(JKQTBasePlotter* parent):
     JKQTPXYBaselineGraph(parent), drawSymbols(false)
 {
-    initLineStyle(parent, parentPlotStyle);
-    initSymbolStyle(parent, parentPlotStyle);
-    setLineWidth(3);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Impulses);
+    initSymbolStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Impulses);
 }
 
 QColor JKQTPImpulsesGraphBase::getKeyLabelColor() const {
@@ -51,7 +50,7 @@ void JKQTPImpulsesGraphBase::setColor(QColor c)
 {
     setLineColor(c);
     setSymbolColor(c);
-    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.impulseStyle.fillColorDerivationMode, c));
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
 }
@@ -246,7 +245,7 @@ JKQTPImpulsesHorizontalErrorGraph::JKQTPImpulsesHorizontalErrorGraph(JKQTBasePlo
     JKQTPImpulsesHorizontalGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    initErrorStyle(parent, parentPlotStyle);
+    initErrorStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Impulses);
 }
 
 JKQTPImpulsesHorizontalErrorGraph::JKQTPImpulsesHorizontalErrorGraph(JKQTPlotter *parent):
@@ -270,7 +269,7 @@ JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTBasePlotter
     JKQTPImpulsesVerticalGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    initErrorStyle(parent, parentPlotStyle);
+    initErrorStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Impulses);
 }
 
 JKQTPImpulsesVerticalErrorGraph::JKQTPImpulsesVerticalErrorGraph(JKQTPlotter *parent):

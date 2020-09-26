@@ -38,7 +38,7 @@ JKQTPXYFunctionLineGraphBase::JKQTPXYFunctionLineGraphBase(double tmin_, double 
     tmin(tmin_),
     tmax(tmax_)
 {
-    initLineStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
     setMaxRefinementDegree(8);
 }
 

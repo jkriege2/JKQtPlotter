@@ -28,7 +28,7 @@
 
 class JKQTBasePlotterStyle; // forward
 
-/** \brief Support Class for JKQTBasePlotter, which summarizes all proeprties that define the visual styling of the key in a JKQTBasePlotter
+/** \brief Support Class for JKQTBasePlotter, which summarizes all properties that define the visual styling of the key in a JKQTBasePlotter
  *  \ingroup jkqtpplotter_styling
  *
  *  \see JKQTBasePlotter, JKQTBasePlotterStyle, \ref jkqtpplotter_styling

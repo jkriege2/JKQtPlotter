@@ -10,11 +10,16 @@ A first table shows all available arrow tips in different sizes.
 ```.cpp
      for (size_t i=0; i<static_cast<size_t>(JKQTPLineDecoratorCount); i++) {
         auto const decor=static_cast<JKQTPLineDecoratorStyle>(i);
-        plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.1,  arr_y, 0.3, arr_y+0.05, QColor("red"), decor, JKQTPNoDecorator, 0.2));
-        plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.4,  arr_y, 0.6, arr_y+0.05, QColor("red"), decor, JKQTPNoDecorator, 0.5));
-        plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.7,  arr_y, 0.9, arr_y+0.05, QColor("red"), decor, JKQTPNoDecorator, 1));
-        plot.addGraph(a=new JKQTPGeoArrow(&plot, 1.0,  arr_y, 1.3, arr_y+0.05, QColor("red"), decor, JKQTPNoDecorator, 2));
-        plot.addGraph(a=new JKQTPGeoArrow(&plot, 1.4,  arr_y, 1.7, arr_y+0.05, QColor("red"), decor, JKQTPNoDecorator, 3));
+        plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.1,  arr_y, 0.3, arr_y+0.05, decor, JKQTPNoDecorator));
+		a->setStyle(QColor("red"), 0.2);
+        plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.4,  arr_y, 0.6, arr_y+0.05, decor, JKQTPNoDecorator));
+		a->setStyle(QColor("red"), 0.5);
+        plot.addGraph(a=new JKQTPGeoArrow(&plot, 0.7,  arr_y, 0.9, arr_y+0.05, decor, JKQTPNoDecorator));
+		a->setStyle(QColor("red"), 1);
+        plot.addGraph(a=new JKQTPGeoArrow(&plot, 1.0,  arr_y, 1.3, arr_y+0.05, decor, JKQTPNoDecorator));
+		a->setStyle(QColor("red"), 2);
+        plot.addGraph(a=new JKQTPGeoArrow(&plot, 1.4,  arr_y, 1.7, arr_y+0.05, decor, JKQTPNoDecorator));
+		a->setStyle(QColor("red"), 3);
         plot.addGraph(new JKQTPGeoText(&plot, a->getX2()+0.05, a->getY2(), "\\verb{"+JKQTPLineDecoratorStyle2String(decor)+"}", 12, a->getLineColor()));
         arr_y+=arr_deltay;
     }
@@ -44,7 +49,7 @@ Here is an example of how to actiavate them for a JKQTPGeoPolyLines:
 
 ```.cpp
     QVector<QPointF> points; points<<QPointF(3,  0.6)<<QPointF(4,  0.5)<<QPointF(3,  1.2)<<QPointF(4,  1.0);
-    JKQTPGeoPolyLines* polyLine=new JKQTPGeoPolyLines(&plot, points, QColor("blue"));
+    JKQTPGeoPolyLines* polyLine=new JKQTPGeoPolyLines(&plot, points);
     polyLine->setHeadDecoratorStyle(JKQTPFilledDoubleArrow);
     polyLine->setTailDecoratorStyle(JKQTPCircleDecorator);
     plot.addGraph(polyLine);
@@ -57,7 +62,7 @@ Here is the result:
 For the class JKQTPGeoInfiniteLine the start can be decorated with an arrow (only if two_sided==false!):
 
 ```.cpp
-    JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(&plot, 1.5, 0.2, 1, 0.25, QColor("blue"), 2);
+    JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(&plot, 1.5, 0.2, 1, 0.25);
     infLine->setHeadDecoratorStyle(JKQTPFilledDoubleArrow);
     plot.addGraph(infLine);
 ```

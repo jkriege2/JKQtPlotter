@@ -14,14 +14,17 @@ The source code of the main application can be found in  [`geometric.cpp`](https
 
     
     // a line
-    plot->addGraph(new JKQTPGeoLine(plot, 1,  0.05, 1.9, 0.9, QColor("red"), 2));
+    JKQTPGeoLine* l;
+	plot->addGraph(l=new JKQTPGeoLine(plot, 1,  0.05, 1.9, 0.9));
+    l->setStyle(QColor("red"), 2));
    
     // an arrow
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.4,  2.5, 0.4, 2.65, QColor("green"), JKQTPArrowAndStop, JKQTPFilledArrow, 1));
+    plot->addGraph(new JKQTPGeoArrow(plot, 0.4,  2.5, 0.4, 2.65, JKQTPArrowAndStop, JKQTPFilledArrow));
 
     
     // a one-sided infinite line with slope dy/dx=0.25/0.2
-    JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(plot, 1.7,  0.2, 0.2, 0.25, QColor("green"), 1.5, Qt::PenStyle::DashLine);
+    JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(plot, 1.7,  0.2, 0.2, 0.25);
+    infLine->setStyle(QColor("green"), 1.5, Qt::PenStyle::DashLine);
     infLine->setTwoSided(false);
     infLine->setAlpha(0.5);
     plot->addGraph(infLine);
@@ -30,24 +33,35 @@ The source code of the main application can be found in  [`geometric.cpp`](https
     // a polyline
     QVector<QPointF> p;
     p<<QPointF(2.1, 0.0)<<QPointF(2.2, 0.92)<<QPointF(2.6, 0.3)<<QPointF(2.9, 0.9);
-    plot->addGraph(new JKQTPGeoPolyLines(plot, p, QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine));
+	JKQTPGeoPolyLines* poly;
+    plot->addGraph(poly=new JKQTPGeoPolyLines(plot, p));
+	poly->setStyleTransparentFill(QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine);
 
     
     // rectangle:
-    plot->addGraph(new JKQTPGeoRectangle(plot, QPointF(0.4,1.3), QPointF(0.9,1.6), QColor("blue"), 1, Qt::SolidLine, rfill));
+	JKQTPGeoRectangle* rec;
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, QPointF(0.4,1.3), QPointF(0.9,1.6)));
+	rec->setStyle(QColor("blue"), 1, Qt::SolidLine, rfill, Qt::SolidPattern);
     // a rotated rectangle (rotated by 35 degrees):
-    plot->addGraph(new JKQTPGeoRectangle(plot, 0.5,1.5,0.8,0.5, 35, QColor("darkblue"), 2, Qt::DashLine));
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 0.5,1.5,0.8,0.5));
+	rec->setStyleTransparentFill(QColor("darkblue"), 2, Qt::DashLine);
+	rec->setAngle(35);
 
     
     // ellipse:
-    plot->addGraph(new JKQTPGeoEllipse(plot, QPointF(0.4,1.3), QPointF(0.9,1.6), QColor("blue"), 1, Qt::SolidLine, rfill));
-    // a rotated ellipse (rotated by 35 degrees):
-    plot->addGraph(new JKQTPGeoEllipse(plot, 0.5,1.5,0.8,0.5, 35, QColor("darkblue"), 2, Qt::DashLine));
+	JKQTPGeoEllipse* ell;
+    plot->addGraph(ell=new JKQTPGeoEllipse(plot, QPointF(0.4,1.3), QPointF(0.9,1.6)));
+	ell->setStyle(QColor("blue"), 1, Qt::SolidLine, rfill, Qt::SolidPattern);
+    // a rotated rectangle (rotated by 35 degrees):
+    plot->addGraph(ell=new JKQTPGeoEllipse(plot, 0.5,1.5,0.8,0.5));
+	ell->setStyleTransparentFill(QColor("darkblue"), 2, Qt::DashLine);
+	ell->setAngle(35);
 
 
     
     // a polygon
-    JKQTPGeoPolygon* polygongraph=new JKQTPGeoPolygon(plot, QColor("red"), 2, Qt::PenStyle::DashLine, QColor("salmon"));
+    JKQTPGeoPolygon* polygongraph=new JKQTPGeoPolygon(plot);
+	polygongraph->setStyle(QColor("red"), 2, Qt::PenStyle::DashLine, QColor("salmon"), Qt::SolidPattern);
     polygongraph->appendPoint(2.1, 0.5);
     polygongraph->appendPoint(2.9, 0.9);
     polygongraph->appendPoint(2.2, 0.8);
@@ -59,15 +73,15 @@ The source code of the main application can be found in  [`geometric.cpp`](https
 
     
     // an arc from an ellipse from -10 degrees to 117 degrees, centered at 2.5,1.5 and full axes of 0.5 and 0.5
-    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.5,0.5, -10, 117 , QColor("orange"), 4, Qt::PenStyle::DashLine));
+    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.5,0.5, -10, 117 ));
 
     
     // a pie centered at 2.5,2.5 with ellipse axes 0.9 and 0.9 and from angle 0 degrees to 90 degrees
-    plot->addGraph(new JKQTPGeoPie(plot,2.5,2.5,0.9,0.9, 0, 90 , QColor("blue"), 4, Qt::PenStyle::SolidLine,QColor("lightblue")));
+    plot->addGraph(new JKQTPGeoPie(plot,2.5,2.5,0.9,0.9, 0, 90));
 
     
     // a chord centered at 2.5,2.5 with ellipse axes 0.9 and 0.9 and from angle 0 degrees to 90 degrees
-    plot->addGraph(new JKQTPGeoChord(plot,2.5,2.5,0.9,0.9, 0, 90 , QColor("blue"), 4, Qt::PenStyle::SolidLine,QColor("lightblue")));
+    plot->addGraph(new JKQTPGeoChord(plot,2.5,2.5,0.9,0.9, 0, 90));
 
 ```
 

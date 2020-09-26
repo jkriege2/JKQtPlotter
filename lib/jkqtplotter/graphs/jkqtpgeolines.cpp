@@ -33,19 +33,7 @@
 
 
 
-JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseDecoratedLine(color, lineWidth, JKQTPNoDecorator, JKQTPNoDecorator, style, parent)
-{
-    this->x1=x1;
-    this->y1=y1;
-    this->x2=x2;
-    this->y2=y2;
-}
 
-JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoLine(parent->getPlotter(), x1,y1,x2,y2,color, lineWidth, style)
-{
-}
 
 JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, double x1_, double y1_, double x2_, double y2_):
     JKQTPGeoBaseDecoratedLine(parent), x1(x1_), y1(y1_), x2(x2_), y2(y2_)
@@ -59,17 +47,7 @@ JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, double x1, double y1, double x2,
 {
 }
 
-JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QPointF &p1, const QPointF &p2, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoLine(parent, p1.x(), p1.y(), p2.x(), p2.y(), color, lineWidth, style)
-{
 
-}
-
-JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, const QPointF &p1, const QPointF &p2, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoLine(parent, p1.x(), p1.y(), p2.x(), p2.y(), color, lineWidth, style)
-{
-
-}
 
 JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QPointF &p1, const QPointF &p2):
     JKQTPGeoLine(parent, p1.x(), p1.y(), p2.x(), p2.y())
@@ -83,17 +61,6 @@ JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, const QPointF &p1, const QPointF
 
 }
 
-JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QLineF &line, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoLine(parent, line.x1(), line.y1(), line.x2(), line.y2(), color, lineWidth, style)
-{
-
-}
-
-JKQTPGeoLine::JKQTPGeoLine(JKQTPlotter *parent, const QLineF &line, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoLine(parent, line.x1(), line.y1(), line.x2(), line.y2(), color, lineWidth, style)
-{
-
-}
 
 JKQTPGeoLine::JKQTPGeoLine(JKQTBasePlotter *parent, const QLineF &line):
     JKQTPGeoLine(parent, line.x1(), line.y1(), line.x2(), line.y2())
@@ -269,23 +236,23 @@ void JKQTPGeoLine::setLine(const QLineF &line)
 
 
 
-JKQTPGeoArrow::JKQTPGeoArrow(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoLine(parent, x1,y1,x2,y2,color, lineWidth, style)
+JKQTPGeoArrow::JKQTPGeoArrow(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle):
+    JKQTPGeoLine(parent, x1,y1,x2,y2)
 {
     setHeadDecoratorStyle(headStyle);
     setTailDecoratorStyle(tailStyle);
 }
 
-JKQTPGeoArrow::JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoArrow(parent->getPlotter(), x1,y1,x2,y2,color, headStyle, tailStyle, lineWidth, style)
+JKQTPGeoArrow::JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle):
+    JKQTPGeoArrow(parent->getPlotter(), x1,y1,x2,y2, headStyle, tailStyle)
 {
 }
 
 
 
 
-JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, double y, double dx, double dy, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseDecoratedHeadLine(color, lineWidth, JKQTPNoDecorator, style, parent)
+JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, double y, double dx, double dy):
+    JKQTPGeoBaseDecoratedHeadLine(parent)
 {
     this->x=x;
     this->y=y;
@@ -294,8 +261,8 @@ JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, do
     this->two_sided=false;
 }
 
-JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoInfiniteLine(parent->getPlotter(), x, y, dx, dy, color, lineWidth, style)
+JKQTPGeoInfiniteLine::JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy):
+    JKQTPGeoInfiniteLine(parent->getPlotter(), x, y, dx, dy)
 {
 }
 
@@ -544,25 +511,25 @@ void JKQTPGeoInfiniteLine::setP(const QPointF &p)
 
 
 
-JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseDecoratedLine(color, lineWidth, JKQTPNoDecorator, JKQTPNoDecorator, style, parent)
+JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPointF>& points):
+    JKQTPGeoBaseDecoratedLine(parent)
 {
     this->points=points;
 }
 
-JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoPolyLines(parent->getPlotter(), points, color, lineWidth, style)
+JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points):
+    JKQTPGeoPolyLines(parent->getPlotter(), points)
 {
 }
 
-JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseDecoratedLine(color, lineWidth, JKQTPNoDecorator, JKQTPNoDecorator, style, parent)
+JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTBasePlotter *parent):
+    JKQTPGeoBaseDecoratedLine(parent)
 {
 
 }
 
-JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter *parent, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoPolyLines(parent->getPlotter(), color, lineWidth, style)
+JKQTPGeoPolyLines::JKQTPGeoPolyLines(JKQTPlotter *parent):
+    JKQTPGeoPolyLines(parent->getPlotter())
 {
 
 }
@@ -728,8 +695,8 @@ QVector<QPointF>::const_iterator JKQTPGeoPolyLines::pointsCEnd() const
 }
 
 
-JKQTPGeoArc::JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent)
+JKQTPGeoArc::JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop):
+    JKQTPGeoBaseLine(parent)
 {
     this->angleStart=angleStart;
     this->angleStop=angleStop;
@@ -740,8 +707,8 @@ JKQTPGeoArc::JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double wid
     this->angle=0;
 }
 
-JKQTPGeoArc::JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color, double lineWidth, Qt::PenStyle style):
-    JKQTPGeoArc(parent->getPlotter(), x, y, width, height, angleStart, angleStop, color, lineWidth, style)
+JKQTPGeoArc::JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop):
+    JKQTPGeoArc(parent->getPlotter(), x, y, width, height, angleStart, angleStop)
 {
 }
 

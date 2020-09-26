@@ -614,8 +614,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         };
 
 
+
         /** \brief returns a QPen object for the i-th plot style */
-        JKQTPPen getPlotStyle(int i) const;
+        JKQTPPen getPlotStyle(int i, JKQTPPlotStyleType type=JKQTPPlotStyleType::Default) const;
 
         /*! \brief draw the contained graph (including grid prints) into the given JKQTPEnhancedPainter
             \param painter JKQTPEnhancedPainter to which the plot should be drawn
@@ -673,8 +674,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         bool isUsingAntiAliasingForGraphs() const;
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForText  */
         bool isUsingAntiAliasingForText() const;
-        /** \copydoc JKQTBasePlotterStyle::defaultGraphWidth   */
-        double getGraphWidth() const;
         /** \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush  */
         QColor getBackgroundColor() const;
         /** \copydoc JKQTBasePlotterStyle::exportBackgroundBrush  */
@@ -1459,8 +1458,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setUseAntiAliasingForGraphs(bool __value);
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForText */
         void setUseAntiAliasingForText(bool __value);
-        /** \copydoc JKQTBasePlotterStyle::defaultGraphWidth */
-        void setGraphWidth(double __value);
         /** \copydoc JKQTBasePlotterStyle::widgetBackgroundBrush */
         void setBackgroundColor(const QColor & __value);
         /** \copydoc JKQTBasePlotterStyle::exportBackgroundBrush */

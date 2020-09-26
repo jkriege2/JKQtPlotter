@@ -38,9 +38,9 @@ JKQTPSpecialLineGraphBase::JKQTPSpecialLineGraphBase(JKQTBasePlotter* parent):
     JKQTPXYBaselineGraph(parent), m_drawSymbols(false), m_specialLineType(JKQTPStepLeft)
 {
     parentPlotStyle=-1;
-    initLineStyle(parent, parentPlotStyle);
-    initFillStyle(parent, parentPlotStyle);
-    initSymbolStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
+    initSymbolStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
     setFillCurve(false);
 }
 
@@ -92,8 +92,8 @@ void JKQTPSpecialLineGraphBase::setColor(QColor c)
 {
     setLineColor(c);
     setSymbolColor(c);
-    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
-    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.symbolFillColorDerivationMode, c));
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, c));
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
 }

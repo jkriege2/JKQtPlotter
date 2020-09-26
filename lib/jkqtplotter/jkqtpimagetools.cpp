@@ -77,7 +77,7 @@ JKQTPColorPaletteStyleAndToolsMixin::JKQTPColorPaletteStyleAndToolsMixin(JKQTBas
     this->colorBarTopVisible=false;
     this->colorBarRightVisible=true;
 
-    if (parent) this->palette=parent->getCurrentPlotterStyle().defaultPalette;
+    if (parent) this->palette=parent->getCurrentPlotterStyle().graphsStyle.defaultPalette;
 
 }
 

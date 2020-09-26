@@ -57,10 +57,21 @@ class JKQTPEnhancedPainter; // forward
 class JKQTBasePlotter; // forward declaration
 
 
+/** \brief used to specify teh type of graph when calling getPlotStyle()
+ * \ingroup jkqtpplottersupprt
+ */
+enum class JKQTPPlotStyleType {
+    Default, /*!< general graphs */
+    Barchart, /*!< barchart-type graphs */
+    Boxplot, /*!< boxplot-type graphs */
+    Filled, /*!< filled graphs  */
+    Impulses, /*!< impulse-type graphs  */
+    Geometric, /*!< geometric elements (e.g. rectangles, circles, lines, ...) */
+    Annotation, /*!< annotation elements */
+};
 
 /** \brief Styles in which to mark single positions during user actions in JKQTPlotter
  * \ingroup jkqtpplottersupprt
-
  */
 enum JKQTPUserActionMarkerType {
     jkqtpuamtCircle=0, /*!< \brief a small circle around the position to mark */
@@ -212,6 +223,13 @@ typedef JKQTPMouseDoubleClickActionsHashMap::const_iterator JKQTPMouseDoubleClic
 
  */
 enum JKQTPColorDerivationMode {
+    JKQTPFFCMFullyTransparentColor, /*!< \brief fully transparent color */
+    JKQTPFFCMNoColor=JKQTPFFCMFullyTransparentColor, /*!< \brief fully transparent color */
+    JKQTPFFCMBlack, /*!< \brief fill with black */
+    JKQTPFFCMGrey75, /*!< \brief fill with 75% grey */
+    JKQTPFFCMGrey50, /*!< \brief fill with 50% grey */
+    JKQTPFFCMGrey25, /*!< \brief fill with 25% grey */
+    JKQTPFFCMWhite, /*!< \brief fill with white */
     JKQTPFFCMSameColor, /*!< \brief fill with the same color */
     JKQTPFFCMInvertedColor, /*!< \brief fill with the inverted color */
     JKQTPFFCMLighterColor, /*!< \brief fill with the a lighter color */
@@ -227,9 +245,12 @@ enum JKQTPColorDerivationMode {
 /** \brief use a JKQTPColorDerivationMode to derive a color from \a col as specified
  *  \ingroup jkqtpplotter_styling
  *
+ *  \param mode the mode of how to modify the given color \a basecolor
+ *  \param basecolor the color in which to base the derivation
+ *
  *  \see JKQTPColorDerivationMode
  */
-JKQTPLOTTER_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& col);
+JKQTPLOTTER_LIB_EXPORT QColor JKQTPGetDerivedColor(JKQTPColorDerivationMode mode, const QColor& basecolor);
 
 /** \brief construct a QColor, based on the given \a color, but with alpha set to the specified value \a alphaF
  *  \ingroup jkqtpplotter_styling

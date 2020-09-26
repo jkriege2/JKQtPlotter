@@ -85,45 +85,57 @@ int main(int argc, char* argv[])
 
     // 3.2 some lines elements (single lines)
     plot->addGraph(new JKQTPGeoText(plot, 1.1,0.95, "\\textbf{Lines:}", 14, QColor("red")));
-    plot->addGraph(new JKQTPGeoLine(plot, 1,  0.05, 1.9, 0.9, QColor("red"), 2));
-    plot->addGraph(new JKQTPGeoLine(plot, 1,  0.1, 1.9, 0.8, QColor("blue"), 1, Qt::PenStyle::DashLine));
-    JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(plot, 1.7,  0.2, 0.2, 0.25, QColor("green"), 1.5, Qt::PenStyle::DashLine);
+    JKQTPGeoLine* l;
+    plot->addGraph(l=new JKQTPGeoLine(plot, 1,  0.05, 1.9, 0.9)); l->setStyle(QColor("red"), 2);
+    plot->addGraph(l=new JKQTPGeoLine(plot, 1,  0.1, 1.9, 0.8)); l->setStyle(QColor("blue"), 1, Qt::PenStyle::DashLine);
+    JKQTPGeoInfiniteLine* infLine=new JKQTPGeoInfiniteLine(plot, 1.7,  0.2, 0.2, 0.25);
+    infLine->setStyle(QColor("green"), 1.5, Qt::PenStyle::DashLine);
     infLine->setTwoSided(false);
     infLine->setAlpha(0.5);
     plot->addGraph(infLine);
-    infLine=new JKQTPGeoInfiniteLine(plot, 1.7,  0.2, 0.2, -0.15, QColor("blue"), 1.5, Qt::PenStyle::SolidLine);
+    infLine=new JKQTPGeoInfiniteLine(plot, 1.7,  0.2, 0.2, -0.15);
+    infLine->setStyle(QColor("blue"), 1.5, Qt::PenStyle::SolidLine);
     infLine->setTwoSided(true);
     infLine->setAlpha(0.5);
     plot->addGraph(infLine);
 
     // 3.3 some arrows
     plot->addGraph(new JKQTPGeoText(plot, 0.1,2.95, "\\textbf{Arrows:}", 14, QColor("red")));
+    JKQTPGeoArrow* a;
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.3,  2.1, 0.1, 2.9, JKQTPTriangleDecoratorAndBar, JKQTPDiamondDecoratorAndBar)); a->setStyle(QColor("green"), 1);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.2,  2.1, 0.2, 2.9, JKQTPNoDecorator, JKQTPFilledTriangleDecoratorAndBar)); a->setStyle(QColor("blue"), 2);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.1,  2.1, 0.3, 2.9, JKQTPDoubleArrowAndBar, JKQTPNoDecorator)); a->setStyle(QColor("orange"), 3);
 
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.3,  2.1, 0.1, 2.9, QColor("green"), JKQTPTriangleDecoratorAndBar, JKQTPDiamondDecoratorAndBar, 1));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.2,  2.1, 0.2, 2.9, QColor("blue"), JKQTPNoDecorator, JKQTPFilledTriangleDecoratorAndBar, 2));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.1,  2.1, 0.3, 2.9, QColor("orange"), JKQTPDoubleArrowAndBar, JKQTPNoDecorator, 3));
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.6,  2.1, 0.4, 2.9, JKQTPTriangleDecorator, JKQTPTriangleDecorator)); a->setStyle(QColor("green"), 0.5);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.5,  2.1, 0.5, 2.9, JKQTPNoDecorator, JKQTPFilledArrow)); a->setStyle(QColor("blue"), 2);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.4,  2.1, 0.6, 2.9, JKQTPFilledArrow, JKQTPNoDecorator)); a->setStyle(QColor("orange"), 1);
 
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.6,  2.1, 0.4, 2.9, QColor("green"), JKQTPTriangleDecorator, JKQTPTriangleDecorator, 0.5));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.5,  2.1, 0.5, 2.9, QColor("blue"), JKQTPNoDecorator, JKQTPFilledArrow, 2));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.4,  2.1, 0.6, 2.9, QColor("orange"), JKQTPFilledArrow, JKQTPNoDecorator, 1));
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.7,  2.1, 0.7, 2.5, JKQTPArrowAndBar, JKQTPFilledArrow)); a->setStyle(QColor("green"), 0.5);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.8,  2.1, 0.8, 2.5, JKQTPArrowAndBar, JKQTPFilledArrow)); a->setStyle(QColor("orange"), 1);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.9,  2.1, 0.9, 2.5, JKQTPArrowAndBar, JKQTPFilledArrow)); a->setStyle(QColor("orange"), 2);
 
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.7,  2.1, 0.7, 2.5, QColor("green"), JKQTPArrowAndBar, JKQTPFilledArrow, 0.5));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.8,  2.1, 0.8, 2.5, QColor("orange"), JKQTPArrowAndBar, JKQTPFilledArrow, 1));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.9,  2.1, 0.9, 2.5, QColor("orange"), JKQTPArrowAndBar, JKQTPFilledArrow, 2));
-
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.7,  2.7, 0.7, 2.9, QColor("green"), JKQTPTriangleDecoratorAndBar, JKQTPFilledCircleDecorator, 0.5));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.8,  2.7, 0.8, 2.9, QColor("orange"), JKQTPTriangleDecoratorAndBar, JKQTPFilledCircleDecorator, 1));
-    plot->addGraph(new JKQTPGeoArrow(plot, 0.9,  2.7, 0.9, 2.9, QColor("orange"), JKQTPTriangleDecoratorAndBar, JKQTPFilledCircleDecorator, 2));
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.7,  2.7, 0.7, 2.9, JKQTPTriangleDecoratorAndBar, JKQTPFilledCircleDecorator)); a->setStyle(QColor("green"), 0.5);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.8,  2.7, 0.8, 2.9, JKQTPTriangleDecoratorAndBar, JKQTPFilledCircleDecorator)); a->setStyle(QColor("orange"), 1);
+    plot->addGraph(a=new JKQTPGeoArrow(plot, 0.9,  2.7, 0.9, 2.9, JKQTPTriangleDecoratorAndBar, JKQTPFilledCircleDecorator)); a->setStyle(QColor("orange"), 2);
 
 
 
     // 3.4 some rectangles (you give the center and width/height of the rectangle in the contructor)
     plot->addGraph(new JKQTPGeoText(plot, 0.1,1.95, "\\textbf{Rectangles:}", 14, QColor("red")));
-    plot->addGraph(new JKQTPGeoRectangle(plot, 0.5,1.5,0.8,0.8, QColor("blue"), 1, Qt::SolidLine, QColor("lightblue")));
+    JKQTPGeoBaseFilled* geo;
+    JKQTPGeoRectangle* rec;
+    plot->addGraph(geo=new JKQTPGeoRectangle(plot, 0.5,1.5,0.8,0.8));
+    geo->setStyle(QColor("blue"), 1, Qt::SolidLine, QColor("lightblue"), Qt::SolidPattern);
     QColor rfill("lightblue"); rfill.setAlphaF(0.5);
-    plot->addGraph(new JKQTPGeoRectangle(plot, QPointF(0.4,1.3), QPointF(0.9,1.6), QColor("blue"), 1, Qt::SolidLine, rfill));
-    plot->addGraph(new JKQTPGeoRectangle(plot, 0.5,1.5,0.8,0.5, 35, QColor("darkblue"), 2, Qt::DashLine));
-    plot->addGraph(new JKQTPGeoRectangle(plot, 0.5,1.5,0.6,0.6, -7, QColor("orange"), 2, Qt::DotLine, QColor("salmon"), Qt::FDiagPattern));
+    plot->addGraph(geo=new JKQTPGeoRectangle(plot, QPointF(0.4,1.3), QPointF(0.9,1.6)));
+    geo->setStyle(QColor("blue"), 1, Qt::SolidLine, rfill, Qt::SolidPattern);
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 0.5,1.5,0.8,0.5));
+    rec->setStyle(QColor("darkblue"), 2, Qt::DashLine);
+    rec->setAngle(35);
+
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 0.5,1.5,0.6,0.6));
+    rec->setStyle(QColor("orange"), 2, Qt::DotLine, QColor("salmon"), Qt::FDiagPattern);
+    rec->setAngle(-7);
     plot->addGraph(new JKQTPGeoSymbol(plot, 0.5,1.5, JKQTPCircle, 5, QColor("grey")));
     plot->addGraph(new JKQTPGeoSymbol(plot, 0.4,1.3, JKQTPCircle, 5, QColor("grey")));
     plot->addGraph(new JKQTPGeoSymbol(plot, 0.9,1.6, JKQTPCircle, 5, QColor("grey")));
@@ -132,21 +144,33 @@ int main(int argc, char* argv[])
     // 3.5 some circles and elllipses
     plot->addGraph(new JKQTPGeoText(plot, 1.1,1.95, "\\textbf{Circles/Ellipses:}", 14, QColor("red")));
     QColor col=QColor("blue"); col.setAlphaF(0.2);
-    plot->addGraph(new JKQTPGeoRectangle(plot, 1.5,1.5,0.8,0.8, col, 0.5, Qt::SolidLine));
+    plot->addGraph(geo=new JKQTPGeoRectangle(plot, 1.5,1.5,0.8,0.8));
+    geo->setStyleTransparentFill(col, 0.5, Qt::SolidLine);
     col.setAlphaF(1);
-    plot->addGraph(new JKQTPGeoEllipse(plot, 1.5,1.5,0.8,0.8, col, 1, Qt::SolidLine, QColor("lightblue")));
+    plot->addGraph(geo=new JKQTPGeoEllipse(plot, 1.5,1.5,0.8,0.8));
+    geo->setStyle(col, 1, Qt::SolidLine, QColor("lightblue"), Qt::SolidPattern);
     col=QColor("blue"); col.setAlphaF(0.2);
-    plot->addGraph(new JKQTPGeoRectangle(plot, QPointF(1.4,1.3), QPointF(1.9,1.6),col, 0.5, Qt::SolidLine));
+    plot->addGraph(geo=new JKQTPGeoRectangle(plot, QPointF(1.4,1.3), QPointF(1.9,1.6)));
+    geo->setStyleTransparentFill(col, 0.5, Qt::SolidLine);
     col.setAlphaF(1);
-    plot->addGraph(new JKQTPGeoEllipse(plot, QPointF(1.4,1.3), QPointF(1.9,1.6), col, 1, Qt::SolidLine, rfill));
+    plot->addGraph(geo=new JKQTPGeoEllipse(plot, QPointF(1.4,1.3), QPointF(1.9,1.6)));
+    geo->setStyle(col, 1, Qt::SolidLine, rfill, Qt::SolidPattern);
     col=QColor("darkblue"); col.setAlphaF(0.2);
-    plot->addGraph(new JKQTPGeoRectangle(plot, 1.5,1.5,0.8,0.5, 35, col, 0.5, Qt::DashLine));
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 1.5,1.5,0.8,0.5));
+    rec->setStyleTransparentFill(col, 0.5, Qt::DashLine);
+    rec->setAngle(35);
     col.setAlphaF(1);
-    plot->addGraph(new JKQTPGeoEllipse(plot, 1.5,1.5,0.8,0.5, 35, col, 2, Qt::DashLine));
+    plot->addGraph(rec=new JKQTPGeoEllipse(plot, 1.5,1.5,0.8,0.5));
+    rec->setStyleTransparentFill(col, 2, Qt::DashLine);
+    rec->setAngle(35);
     col=QColor("orange"); col.setAlphaF(0.2);
-    plot->addGraph(new JKQTPGeoRectangle(plot, 1.5,1.5,0.6,0.6, -7, col, 0.5, Qt::DotLine));
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 1.5,1.5,0.6,0.6));
+    rec->setStyleTransparentFill(col, 0.5, Qt::DotLine);
+    rec->setAngle(-7);
     col.setAlphaF(1);
-    plot->addGraph(new JKQTPGeoEllipse(plot, 1.5,1.5,0.6,0.6, -7, col, 2, Qt::DotLine, QColor("salmon"), Qt::FDiagPattern));
+    plot->addGraph(rec=new JKQTPGeoEllipse(plot, 1.5,1.5,0.6,0.6));
+    rec->setStyle(col, 2, Qt::DotLine, QColor("salmon"), Qt::FDiagPattern);
+    rec->setAngle(-7);
     plot->addGraph(new JKQTPGeoSymbol(plot, 1.5,1.5, JKQTPCircle, 5, QColor("grey")));
     plot->addGraph(new JKQTPGeoSymbol(plot, 1.4,1.3, JKQTPCircle, 5, QColor("grey")));
     plot->addGraph(new JKQTPGeoSymbol(plot, 1.9,1.6, JKQTPCircle, 5, QColor("grey")));
@@ -156,10 +180,12 @@ int main(int argc, char* argv[])
     plot->addGraph(new JKQTPGeoText(plot, 2.1,0.95, "\\textbf{PolyLines/Polygons:}", 14, QColor("red")));
     QVector<QPointF> polygon;
     polygon<<QPointF(2, 0.1)<<QPointF(2.3, 0.9)<<QPointF(2.6, 0.3)<<QPointF(2, 0.8);
-    JKQTPGeoPolygon* polygraph=new JKQTPGeoPolygon(plot, polygon, QColor("blue"), 2, Qt::PenStyle::DashLine, QColor("lightblue"));
+    JKQTPGeoPolygon* polygraph=new JKQTPGeoPolygon(plot, polygon);
+    polygraph->setStyle(QColor("blue"), 2, Qt::PenStyle::DashLine, QColor("lightblue"), Qt::SolidPattern);
     polygraph->setAlpha(0.75);
     plot->addGraph(polygraph);
-    polygraph=new JKQTPGeoPolygon(plot, QColor("red"), 2, Qt::PenStyle::DashLine, QColor("salmon"));
+    polygraph=new JKQTPGeoPolygon(plot);
+    polygraph->setStyle(QColor("red"), 2, Qt::PenStyle::DashLine, QColor("salmon"), Qt::SolidPattern);
     polygraph->appendPoint(2.1, 0.5);
     polygraph->appendPoint(2.9, 0.9);
     polygraph->appendPoint(2.2, 0.8);
@@ -172,45 +198,59 @@ int main(int argc, char* argv[])
     // 3.7 a poly-line element
     QVector<QPointF> p;
     p<<QPointF(2.1, 0.0)<<QPointF(2.2, 0.92)<<QPointF(2.6, 0.3)<<QPointF(2.9, 0.9);
-    plot->addGraph(new JKQTPGeoPolyLines(plot, p, QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine));
+    JKQTPGeoPolyLines* poly;
+    plot->addGraph(poly=new JKQTPGeoPolyLines(plot, p));
+    poly->setStyle(QColor("darkgreen"), 4, Qt::PenStyle::DashDotLine);
 
 
     // 3.8 some arcs
     plot->addGraph(new JKQTPGeoText(plot, 2.1,1.95, "\\textbf{Arcs:}", 14, QColor("red")));
-    plot->addGraph(new JKQTPGeoRectangle(plot, 2.5,1.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
-    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.9,0.9, 0, 90 , QColor("blue"), 4, Qt::PenStyle::SolidLine));
-    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.8,0.8, 90,180 , QColor("red"), 4, Qt::PenStyle::SolidLine));
-    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.7,0.7, 180,270 , QColor("darkblue"), 4, Qt::PenStyle::SolidLine));
-    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.6,0.6, 270,360 , QColor("maroon"), 4, Qt::PenStyle::DashDotLine));
-    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.5,0.5, -10, 117 , QColor("orange"), 4, Qt::PenStyle::DashLine));
-    plot->addGraph(new JKQTPGeoArc(plot,2.5,1.5,0.4,0.4, 85, 347 , QColor("darkgreen"), 4, Qt::PenStyle::SolidLine));
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 2.5,1.5,0.9,0.9));
+    rec->setStyleTransparentFill(QColor("lightgrey"), 0.5, Qt::SolidLine);
+    JKQTPGeoArc* arc;
+    plot->addGraph(arc=new JKQTPGeoArc(plot,2.5,1.5,0.9,0.9, 0, 90)); arc->setStyle(QColor("blue"), 4, Qt::PenStyle::SolidLine);
+    plot->addGraph(arc=new JKQTPGeoArc(plot,2.5,1.5,0.8,0.8, 90,180)); arc->setStyle(QColor("red"), 4, Qt::PenStyle::SolidLine);
+    plot->addGraph(arc=new JKQTPGeoArc(plot,2.5,1.5,0.7,0.7, 180,270)); arc->setStyle( QColor("darkblue"), 4, Qt::PenStyle::SolidLine);
+    plot->addGraph(arc=new JKQTPGeoArc(plot,2.5,1.5,0.6,0.6, 270,360)); arc->setStyle(QColor("maroon"), 4, Qt::PenStyle::DashDotLine);
+    plot->addGraph(arc=new JKQTPGeoArc(plot,2.5,1.5,0.5,0.5, -10, 117)); arc->setStyle(QColor("orange"), 4, Qt::PenStyle::DashLine);
+    plot->addGraph(arc=new JKQTPGeoArc(plot,2.5,1.5,0.4,0.4, 85, 347)); arc->setStyle(QColor("darkgreen"), 4, Qt::PenStyle::SolidLine);
     plot->addGraph(new JKQTPGeoSymbol(plot, 2.5,1.5, JKQTPCircle, 5, QColor("grey")));
 
 
     // 3.9 some pies
     plot->addGraph(new JKQTPGeoText(plot, 2.1,2.95, "\\textbf{Pies:}", 14, QColor("red")));
-    plot->addGraph(new JKQTPGeoRectangle(plot, 2.5,2.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 2.5,2.5,0.9,0.9));
+    rec->setStyleTransparentFill(QColor("lightgrey"), 0.5, Qt::SolidLine);
     JKQTPGeoPie* pie;
-    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.9,0.9, 0, 90 , QColor("blue"), 4, Qt::PenStyle::SolidLine,QColor("lightblue")));
-    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.7,0.7, 180,270 , QColor("darkblue"), 4, Qt::PenStyle::SolidLine,QColor("blue")));
+    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.9,0.9, 0, 90));
+    pie->setStyle(QColor("blue"), 4, Qt::PenStyle::SolidLine,QColor("lightblue"), Qt::SolidPattern);
+    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.7,0.7, 180,270 ));
+    pie->setStyle(QColor("darkblue"), 4, Qt::PenStyle::SolidLine,QColor("blue"), Qt::SolidPattern);
     pie->setAlpha(0.5);
-    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.5,0.3, -25, 117 , QColor("orange"), 4, Qt::PenStyle::DashLine,QColor("red")));
+    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.5,0.3, -25, 117));
+    pie->setStyle(QColor("orange"), 4, Qt::PenStyle::DashLine,QColor("red"), Qt::SolidPattern);
     pie->setAlpha(0.5);
-    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.25,0.8, 85, 347 , QColor("darkgreen"), 4, Qt::PenStyle::SolidLine,QColor("green")));
+    plot->addGraph(pie=new JKQTPGeoPie(plot,2.5,2.5,0.25,0.8, 85, 347));
+    pie->setStyle(QColor("darkgreen"), 4, Qt::PenStyle::SolidLine,QColor("green"), Qt::SolidPattern);
     pie->setAlpha(0.5);
     plot->addGraph(new JKQTPGeoSymbol(plot, 2.5,2.5, JKQTPCircle, 5, QColor("grey")));
 
 
     // 3.10 some chords
     plot->addGraph(new JKQTPGeoText(plot, 1.1,2.95, "\\textbf{Chords:}", 14, QColor("red")));
-    plot->addGraph(new JKQTPGeoRectangle(plot, 1.5,2.5,0.9,0.9, QColor("lightgrey"), 0.5, Qt::SolidLine));
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot, 1.5,2.5,0.9,0.9));
+    rec->setStyleTransparentFill(QColor("lightgrey"), 0.5, Qt::SolidLine);
     JKQTPGeoChord* chord;
-    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.9,0.9, 0, 90 , QColor("blue"), 4, Qt::PenStyle::SolidLine,QColor("lightblue")));
-    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.7,0.7, 180,270 , QColor("darkblue"), 4, Qt::PenStyle::SolidLine,QColor("blue")));
+    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.9,0.9, 0, 90));
+    chord->setStyle(QColor("blue"), 4, Qt::PenStyle::SolidLine,QColor("lightblue"), Qt::SolidPattern);
+    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.7,0.7, 180,270));
+    chord->setStyle(QColor("darkblue"), 4, Qt::PenStyle::SolidLine,QColor("blue"), Qt::SolidPattern);
     chord->setAlpha(0.5);
-    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.5,0.3, -25, 117 , QColor("orange"), 4, Qt::PenStyle::DashLine,QColor("red")));
+    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.5,0.3, -25, 117));
+    chord->setStyle(QColor("orange"), 4, Qt::PenStyle::DashLine,QColor("red"), Qt::SolidPattern);
     chord->setAlpha(0.5);
-    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.25,0.8, 85, 347 , QColor("darkgreen"), 4, Qt::PenStyle::SolidLine,QColor("green")));
+    plot->addGraph(chord=new JKQTPGeoChord(plot,1.5,2.5,0.25,0.8, 85, 347 ));
+    chord->setStyle(QColor("darkgreen"), 4, Qt::PenStyle::SolidLine,QColor("green"), Qt::SolidPattern);
     chord->setAlpha(0.5);
     plot->addGraph(new JKQTPGeoSymbol(plot, 1.5,2.5, JKQTPCircle, 5, QColor("grey")));
 

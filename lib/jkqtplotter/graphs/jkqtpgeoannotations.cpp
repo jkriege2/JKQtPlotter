@@ -31,9 +31,8 @@
 
 
 JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x_, double y_, const QString& text_, double fontSize, QColor color):
-    JKQTPGeoText(parent, x_, y_, text_)
+    JKQTPGeoText(parent, x_, y_, text_, fontSize)
 {
-    setTextFontSize(fontSize);
     setTextColor(color);
 }
 
@@ -42,10 +41,21 @@ JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QStrin
 {
 }
 
+JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter* parent, double x_, double y_, const QString& text_, double fontSize):
+    JKQTPGeoText(parent, x_, y_, text_)
+{
+    setTextFontSize(fontSize);
+}
+
+JKQTPGeoText::JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize):
+    JKQTPGeoText(parent->getPlotter(),x,y,text,fontSize)
+{
+}
+
 JKQTPGeoText::JKQTPGeoText(JKQTBasePlotter *parent, double x_, double y_, const QString& text_):
     JKQTPPlotAnnotationElement(parent), JKQTPGraphTextStyleMixin(parent), x(x_),y(y_),text(text_)
 {
-
+    initTextStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Annotation);
 }
 
 JKQTPGeoText::JKQTPGeoText(JKQTPlotter *parent, double x, double y, const QString &text):
@@ -76,6 +86,17 @@ double JKQTPGeoText::getX() const
 void JKQTPGeoText::setY(double __value)
 {
     this->y = __value;
+}
+
+void JKQTPGeoText::setP(const QPointF &p)
+{
+    x=p.x();
+    y=p.y();
+}
+
+QPointF JKQTPGeoText::getP() const
+{
+    return QPointF(x,y);
 }
 
 double JKQTPGeoText::getY() const
@@ -131,19 +152,66 @@ QColor JKQTPGeoText::getKeyLabelColor() const {
 
 
 JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
-    JKQTPPlotAnnotationElement(parent)
+    JKQTPGeoSymbol(parent, x, y, symbol, symbolSize)
 {
-    this->x=x;
-    this->y=y;
-    setSymbolType(symbol);
-    setSymbolSize(symbolSize);
     setSymbolColor(color);
     setSymbolFillColor(fillColor);
-    setSymbolLineWidth(1);
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize):
+    JKQTPGeoSymbol(parent, x, y, symbol)
+{
+    setSymbolSize(symbolSize);
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize):
+    JKQTPGeoSymbol(parent->getPlotter(), x, y, symbol, symbolSize)
+{
+
 }
 
 JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor):
     JKQTPGeoSymbol(parent->getPlotter(), x, y, symbol, symbolSize, color, fillColor)
+{
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color):
+JKQTPGeoSymbol(parent, x, y, symbol, symbolSize)
+{
+    setSymbolColor(color);
+    if (parent) {
+        setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.symbolFillColorDerivationMode, color));
+    }
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color):
+    JKQTPGeoSymbol(parent->getPlotter(), x, y, symbol, symbolSize, color)
+{
+
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y, JKQTPGraphSymbols symbol):
+    JKQTPGeoSymbol(parent, x, y)
+{
+    setSymbolType(symbol);
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y, JKQTPGraphSymbols symbol):
+    JKQTPGeoSymbol(parent->getPlotter(), x, y, symbol)
+{
+
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTBasePlotter *parent, double x, double y):
+    JKQTPPlotAnnotationElement(parent)
+{
+    this->x=x;
+    this->y=y;
+    initSymbolStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Annotation);
+}
+
+JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y):
+    JKQTPGeoSymbol(parent->getPlotter(), x, y)
 {
 
 }
@@ -151,7 +219,7 @@ JKQTPGeoSymbol::JKQTPGeoSymbol(JKQTPlotter *parent, double x, double y, JKQTPGra
 void JKQTPGeoSymbol::setColor(QColor c)
 {
     setSymbolColor(c);
-    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.annotationStyle.fillColorDerivationMode, c));
 }
 
 void JKQTPGeoSymbol::setX(double __value)
@@ -172,6 +240,17 @@ void JKQTPGeoSymbol::setY(double __value)
 double JKQTPGeoSymbol::getY() const
 {
     return this->y;
+}
+
+void JKQTPGeoSymbol::setP(const QPointF &p)
+{
+    x=p.x();
+    y=p.y();
+}
+
+QPointF JKQTPGeoSymbol::getP() const
+{
+    return QPointF(x,y);
 }
 
 bool JKQTPGeoSymbol::getXMinMax(double &minx, double &maxx, double &smallestGreaterZero)

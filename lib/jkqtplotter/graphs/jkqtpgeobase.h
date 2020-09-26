@@ -41,17 +41,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseLine: public JKQTPGeometricPlotElement,
 public:
     /*! \brief class contructor
 
-        \param color color of drawing
-        \param style line style of drawing
-        \param lineWidth lineWidth of drawing
         \param parent the parent plotter object
-        */
-    explicit JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
-
-    /*! \brief class contructor
-
+        \param drawMode how to draw te element (as geometric or graphic element)
     */
     explicit JKQTPGeoBaseLine(JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
+
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, double lineWidth);
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style);
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, Qt::PenStyle style);
 
 
 
@@ -83,20 +83,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedHeadLine: public JKQTPGeometri
 public:
     /*! \brief class contructor
 
-        \param color color of drawing
-        \param lineWidth lineWidth of drawing
         \param headStyle style of the head decoration
-        \param style line style of drawing
         \param parent the parent plotter object
+        \param drawMode how to draw te element (as geometric or graphic element)
     */
-    explicit JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
+    explicit JKQTPGeoBaseDecoratedHeadLine(JKQTPLineDecoratorStyle headStyle, JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
 
     /*! \brief class contructor
 
+        \param parent the parent plotter object
+        \param drawMode how to draw te element (as geometric or graphic element)
     */
     explicit JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
 
 
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, double lineWidth);
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style);
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, Qt::PenStyle style);
 
 
     /** \brief sets the alpha-channel of the \a color (i.e. its transparency) */
@@ -126,16 +132,25 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseDecoratedLine: public JKQTPGeometricPlo
 public:
     /*! \brief class contructor
 
-        \param color color of drawing
-        \param lineWidth lineWidth of drawing
         \param headStyle style of the head decoration
         \param tailStyle style of the tail decoration
-        \param style line style of drawing
         \param parent the parent plotter object
+        \param drawMode how to draw te element (as geometric or graphic element)
     */
-    explicit JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style=Qt::SolidLine, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
-    /** \brief class contructor  */
+    explicit JKQTPGeoBaseDecoratedLine(JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
+    /** \brief class contructor
+     *
+     *  \param parent the parent plotter object
+     *  \param drawMode how to draw te element (as geometric or graphic element)
+     */
     explicit JKQTPGeoBaseDecoratedLine(JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
+
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, double lineWidth);
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style);
+    /** \brief set several of the style properties with one call */
+    virtual void setStyle(QColor color, Qt::PenStyle style);
 
 
 
@@ -164,38 +179,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public
     public:
         /*! \brief class contructor
 
-            \param color color of drawing
-            \param fillColor color of the filling in the drawing
-            \param style line style of drawing
-            \param fillStyle filling style of the graph
-            \param lineWidth lineWidth of drawing
             \param parent the parent plotter object
+            \param drawMode how to draw te element (as geometric or graphic element)
          */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style=Qt::SolidLine, Qt::BrushStyle fillStyle=Qt::SolidPattern, JKQTBasePlotter* parent=nullptr, DrawMode drawMode=DrawAsGraphicElement);
-        /*! \brief class contructor
-
-            \param color color of drawing
-            \param fillColor color of the filling in the drawing
-            \param style line style of drawing
-            \param lineWidth lineWidth of drawing
-            \param parent the parent plotter object
-         */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
-        /*! \brief class contructor
-
-            \param color color of drawing
-            \param fillColor color of the filling in the drawing
-            \param lineWidth lineWidth of drawing
-            \param parent the parent plotter object
-         */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTBasePlotter* parent, DrawMode drawMode=DrawAsGraphicElement);
-        /*! \brief class contructor
-
-            \param color color of drawing
-            \param fillColor color of the filling in the drawing
-            \param parent the parent plotter object
-         */
-        JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTBasePlotter *parent, DrawMode drawMode=DrawAsGraphicElement);
+        JKQTPGeoBaseFilled(JKQTBasePlotter *parent, DrawMode drawMode=DrawAsGraphicElement);
 
         /** \brief sets the alpha-channel of the \a color and \a fillColor (i.e. its transparency) to the same value */
         virtual void setAlpha(float alpha) override;
@@ -203,6 +190,24 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoBaseFilled: public JKQTPGeoBaseLine, public
         virtual void setAlpha(float alphaLine, float alphaFill);
         /** \brief set line and fill color */
         virtual void setColor(QColor c) override;
+        /** \brief set several of the style properties with one call */
+        virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle) ;
+        /** \brief set several of the style properties with one call */
+        virtual void setStyle(QColor color, double lineWidth, Qt::PenStyle style) override;
+        /** \brief set several of the style properties with one call */
+        virtual void setStyle(QColor color, Qt::PenStyle style) override;
+        /** \brief set several of the style properties with one call */
+        virtual void setStyle(QColor color, double lineWidth) override;
+        /** \brief set several of the style properties with one call */
+        void setStyle(QColor color, QColor fillColor);
+        /** \brief set several of the style properties with one call, sets fill to transparent */
+        void setStyleTransparentFill(QColor color, double lineWidth, Qt::PenStyle style);
+        /** \brief set several of the style properties with one call, sets fill to transparent */
+        void setStyleTransparentFill(QColor color, Qt::PenStyle style);
+        /** \brief set several of the style properties with one call, sets fill to transparent */
+        void setStyleTransparentFill(QColor color, double lineWidth);
+        /** \brief set several of the style properties with one call, sets fill to transparent */
+        void setStyleTransparentFill(QColor color);
 
         /** \brief plots a key marker inside the specified rectangle \a rect */
         virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;

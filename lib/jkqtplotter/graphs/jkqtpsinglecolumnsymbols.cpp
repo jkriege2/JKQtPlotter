@@ -43,7 +43,7 @@ JKQTPSingleColumnSymbolsGraph::JKQTPSingleColumnSymbolsGraph(JKQTBasePlotter *pa
     position=0;
     width=1;
 
-    initSymbolStyle(parent, parentPlotStyle);
+    initSymbolStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
 }
 
 
@@ -257,7 +257,7 @@ QColor JKQTPSingleColumnSymbolsGraph::getKeyLabelColor() const
 void JKQTPSingleColumnSymbolsGraph::setColor(QColor col)
 {
     setSymbolColor(col);
-    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, col));
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, col));
 }
 
 void JKQTPSingleColumnSymbolsGraph::setPosition(double __value)

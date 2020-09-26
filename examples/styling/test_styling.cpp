@@ -5,6 +5,11 @@
 #include "jkqtplotter/graphs/jkqtpbarchart.h"
 #include "jkqtplotter/graphs/jkqtpimage.h"
 #include "jkqtplotter/graphs/jkqtpgeometric.h"
+#include "jkqtplotter/graphs/jkqtpgeoannotations.h"
+#include "jkqtplotter/graphs/jkqtpboxplot.h"
+#include "jkqtplotter/graphs/jkqtpfilledcurve.h"
+#include "jkqtplotter/graphs/jkqtpimpulses.h"
+
 #include <QDir>
 #include <QTextStream>
 #include <QFileDialog>
@@ -126,22 +131,28 @@ void TestStyling::initPlot()
     ds->clear();
 
     // 2. now we create data for a simple plot (a sine curve)
-    QVector<double> X, Y1, Y2, img, X3, Y3, Y3err, Xbar, Ybar, Ybar2;
+    QVector<double> X, Y1, Y2, img, X3, Y3, Y3err, Xbar, Ybar, Ybar2, Y4, Y5, XImp, YImp;
     const int Ndata=100;
     for (int i=0; i<Ndata; i++) {
         const double x=double(i)/double(Ndata)*8.0*JKQTPSTATISTICS_PI;
         X<<x;
         Y1<<1.1+sin(x);
         Y2<<1.1+sin(x)*exp(-0.2*x);
+        Y4<<4.5*exp(-x/10.0);
+        Y5<<2.5*exp(-x/10.0)+1.0;
         if (i%5==0) {
             X3<<x;
             Y3<<(1.5+Y1.last());
             Y3err<<(double(i+5)/double(Ndata)*0.5);
         }
         if (i>0 && i%20==0) {
-            Xbar<<x;
+            Xbar<<x/2.0;
             Ybar<<(double(i+5)/double(Ndata)*(-1.5));
             Ybar2<<(double(i+5)/double(Ndata)*(-1.2));
+        }
+        if (i%8==0) {
+            XImp<<15.0+x/3.0;
+            YImp<<-1.0+0.5*sin(x);
         }
     }
     auto fgauss=[](double x, double y, double x0, double y0, double sx, double sy) {
@@ -168,8 +179,24 @@ void TestStyling::initPlot()
     size_t columnXbar=ds->addCopiedColumn(Xbar, "xbar");
     size_t columnYbar=ds->addCopiedColumn(Ybar, "ybar");
     size_t columnYbar2=ds->addCopiedColumn(Ybar2, "Ybar2");
+    size_t columnY4=ds->addCopiedColumn(Y4, "y4");
+    size_t columnY5=ds->addCopiedColumn(Y5, "y5");
+    size_t columnXImp=ds->addCopiedColumn(XImp, "ximp");
+    size_t columnYImp=ds->addCopiedColumn(YImp, "yimp");
 
-    // 4. create a graph in the plot, which plots the dataset X/Y:
+    // 4. create diverse graphs in the plot:
+    JKQTPFilledCurveXGraph* graphf4=new JKQTPFilledCurveXGraph(ui->plot);
+    graphf4->setXColumn(columnX);
+    graphf4->setYColumn(columnY4);
+    graphf4->setTitle(QObject::tr("filled exp-function"));
+    ui->plot->addGraph(graphf4);
+
+    JKQTPFilledCurveXGraph* graphf5=new JKQTPFilledCurveXGraph(ui->plot);
+    graphf5->setXColumn(columnX);
+    graphf5->setYColumn(columnY5);
+    graphf5->setTitle(QObject::tr("other filled exp-function"));
+    ui->plot->addGraph(graphf5);
+
     JKQTPColumnMathImage* graphI=new JKQTPColumnMathImage(ui->plot);
     graphI->setImageColumn(columnImg);
     graphI->setNx(Ndata);
@@ -177,7 +204,7 @@ void TestStyling::initPlot()
     graphI->setColorBarTopVisible(true);
     graphI->setColorBarRightVisible(true);
     graphI->setX(0.5);
-    graphI->setY(-1.5);
+    graphI->setY(-2.0);
     graphI->setWidth(5);
     graphI->setHeight(1);
     graphI->setTitle(QObject::tr("2{\\times}Gauss"));
@@ -218,6 +245,29 @@ void TestStyling::initPlot()
     ui->plot->addGraph(graphb2);
     graphb2->autoscaleBarWidthAndShiftSeparatedGroups();
 
+    JKQTPImpulsesVerticalGraph* graphi2=new JKQTPImpulsesVerticalGraph(ui->plot);
+    graphi2->setXColumn(columnXImp);
+    graphi2->setYColumn(columnYImp);
+    graphi2->setTitle(QObject::tr("impulses"));
+    ui->plot->addGraph(graphi2);
+
+    JKQTPBoxplotHorizontalElement* graphBP=new JKQTPBoxplotHorizontalElement(ui->plot);
+    graphBP->setData(-2, 7, 10,12,13,17,22);
+    ui->plot->addGraph(graphBP);
+
+    JKQTPGeoSymbol* annotSym=new JKQTPGeoSymbol(ui->plot, 15, -3);
+    ui->plot->addGraph(annotSym);
+
+    JKQTPGeoText* annotTxt=new JKQTPGeoText(ui->plot, 15.1, -3, "Annotation $\\int_{0}^{2\\pi}\\sin(x)\\;\\mathrm{d}x$");
+    ui->plot->addGraph(annotTxt);
+
+    JKQTPGeoEllipse* geoEll=new JKQTPGeoEllipse(ui->plot, 5,-3,5,1);
+    geoEll->setAngle(-25);
+    ui->plot->addGraph(geoEll);
+
+    ui->plot->addGraph(new JKQTPGeoArrow(ui->plot, 5,-3,10,-3.5));
+
+    ui->plot->addGraph(new JKQTPGeoLine(ui->plot, 5,-3,10,-4));
 
     // 6. autoscale the plot so the graph is contained
     ui->plot->zoomToFit();
@@ -249,7 +299,7 @@ void TestStyling::initPlot()
     double y=1;
     double xmax=15;
     int cnt=0;
-    for (auto s: ui->plot->getPlotter()->getCurrentPlotterStyle().defaultGraphSymbols) {
+    for (auto s: ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphSymbols) {
         plotExtra->addGraph(new JKQTPGeoSymbol(plotExtra.data(), x, y, s, 12, QColor("red"), QColor("salmon") ));
         x+=1;
         xmax=qMax(x, xmax);
@@ -261,16 +311,20 @@ void TestStyling::initPlot()
     }
     y=y+1;
     double ycoltest=y;
-    for (auto s: ui->plot->getPlotter()->getCurrentPlotterStyle().defaultGraphPenStyles) {
-        plotExtra->addGraph(new JKQTPGeoLine(plotExtra.data(), 1,y,xlineend,y,QColor("red"), 2, s));
-        plotExtra->addGraph(new JKQTPGeoLine(plotExtra.data(), 1,y-0.25,xlineend,y-0.25,QColor("maroon"), 1, s));
+    for (auto s: ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphPenStyles) {
+        JKQTPGeoLine* l;
+        plotExtra->addGraph(l=new JKQTPGeoLine(plotExtra.data(), 1,y,xlineend,y)); l->setStyle(QColor("red"), 2, s);
+        plotExtra->addGraph(l=new JKQTPGeoLine(plotExtra.data(), 1,y-0.25,xlineend,y-0.25)); l->setStyle(QColor("maroon"), 1, s);
         y+=0.75;
     }
     x=xlineend+1;
-    double dx=(xmax-xlineend-1.0)/static_cast<double>(ui->plot->getPlotter()->getCurrentPlotterStyle().defaultGraphColors.size());
-    for (auto s: ui->plot->getPlotter()->getCurrentPlotterStyle().defaultGraphColors) {
-        plotExtra->addGraph(new JKQTPGeoLine(plotExtra.data(), x,ycoltest,x,y-0.5,s,5));
-        plotExtra->addGraph(new JKQTPGeoRectangle(plotExtra.data(), x+dx/2,(ycoltest+y-0.5)/2.0, dx*0.5, y-ycoltest-0.5, s,1, Qt::SolidLine, JKQTPGetDerivedColor(ui->plot->getPlotter()->getCurrentPlotterStyle().graphFillColorDerivationMode, s)));
+    double dx=(xmax-xlineend-1.0)/static_cast<double>(ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphColors.size());
+    for (auto s: ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphColors) {
+        JKQTPGeoLine* l;
+        plotExtra->addGraph(l=new JKQTPGeoLine(plotExtra.data(), x,ycoltest,x,y-0.5)); l->setStyle(s,5);
+        JKQTPGeoRectangle* r;
+        plotExtra->addGraph(r=new JKQTPGeoRectangle(plotExtra.data(), x+dx/2,(ycoltest+y-0.5)/2.0, dx*0.5, y-ycoltest-0.5));
+        r->setStyle(s,1, Qt::SolidLine, JKQTPGetDerivedColor(ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, s), Qt::SolidPattern);
         x+=dx;
     }
     plotExtra->zoomToFit();

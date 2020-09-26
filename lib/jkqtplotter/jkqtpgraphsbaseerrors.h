@@ -49,7 +49,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphErrorStyleMixin {
         virtual ~JKQTPGraphErrorStyleMixin()=default;
 
         /** \brief initiaize the error indicator style (from the parent plotter) */
-        void initErrorStyle(JKQTBasePlotter* parent, int &parentPlotStyle);
+        void initErrorStyle(JKQTBasePlotter* parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
 
 
 

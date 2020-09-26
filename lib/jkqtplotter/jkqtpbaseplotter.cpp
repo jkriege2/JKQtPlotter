@@ -975,22 +975,22 @@ void JKQTBasePlotter::drawSystemYAxis(JKQTPEnhancedPainter& painter) {
 }
 
 
-JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i) const{
+JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleType type) const{
     int colorI=-1;
     int styleI=0;
     int symbolI=0;
     int brushI=0;
     for (int k=0; k<=i; k++) {
         colorI++;
-        if (colorI>=plotterStyle.defaultGraphColors.size()) {
+        if (colorI>=plotterStyle.graphsStyle.defaultGraphColors.size()) {
             styleI++;
             brushI++;
             colorI=0;
-            if (styleI>=plotterStyle.defaultGraphPenStyles.size()) styleI=0;
-            if (brushI>=plotterStyle.defaultGraphFillStyles.size()) brushI=0;
+            if (styleI>=plotterStyle.graphsStyle.defaultGraphPenStyles.size()) styleI=0;
+            if (brushI>=plotterStyle.graphsStyle.defaultGraphFillStyles.size()) brushI=0;
         }
         symbolI++;
-        if (symbolI>=plotterStyle.defaultGraphSymbols.size()) {
+        if (symbolI>=plotterStyle.graphsStyle.defaultGraphSymbols.size()) {
             symbolI=0;
         }
     }
@@ -998,19 +998,33 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i) const{
     //std::cout<<"plotstyle "<<i<<std::endl;
     //std::cout<<"color "<<colorI<<std::endl;
     //std::cout<<"style "<<styleI<<std::endl;
-    p.setColor(plotterStyle.defaultGraphColors[colorI]);
-    p.setFillColor(JKQTPGetDerivedColor(plotterStyle.graphFillColorDerivationMode, p.color()));
-    p.setErrorLineColor(JKQTPGetDerivedColor(plotterStyle.graphErrorColorDerivationMode, p.color()));
-    p.setErrorFillColor(JKQTPGetDerivedColor(plotterStyle.graphErrorFillColorDerivationMode, p.errorColor()));
-    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
-    p.setErrorLineWidth(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphWidth));
-    p.setSymbolSize(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolSize));
-    p.setSymbolFillColor(JKQTPGetDerivedColor(plotterStyle.graphFillColorDerivationMode, p.color()));
-    p.setSymbolLineWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, plotterStyle.defaultGraphSymbolLineWidth));
-    p.setStyle(plotterStyle.defaultGraphPenStyles[styleI]);
-    p.setSymbolType(plotterStyle.defaultGraphSymbols[symbolI]);
-    p.setFillStyle(plotterStyle.defaultGraphFillStyles[brushI]);
-    p.setErrorFillStyle(plotterStyle.defaultGraphFillStyles[brushI]);
+    const JKQTGraphsSpecificStyleProperties& baseProps=plotterStyle.graphsStyle.getGraphStyleByType(type);
+    Qt::PenStyle basePenStyle=plotterStyle.graphsStyle.defaultGraphPenStyles[styleI];
+    Qt::BrushStyle basebrushStyle=plotterStyle.graphsStyle.defaultGraphFillStyles[brushI];
+    JKQTPGraphSymbols baseSymbol=plotterStyle.graphsStyle.defaultGraphSymbols[symbolI];
+    QColor baseColor=plotterStyle.graphsStyle.defaultGraphColors[colorI];
+    if (type==JKQTPPlotStyleType::Annotation || type==JKQTPPlotStyleType::Geometric) {
+        baseColor=plotterStyle.graphsStyle.annotationStyle.defaultColor;
+        basePenStyle=plotterStyle.graphsStyle.annotationStyle.defaultLineStyle;
+        basebrushStyle=plotterStyle.graphsStyle.annotationStyle.defaultFillStyle;
+        baseSymbol=plotterStyle.graphsStyle.annotationStyle.defaultSymbol;
+    }
+    const QColor lineColor=JKQTPGetDerivedColor(baseProps.graphColorDerivationMode, baseColor);
+    const QColor errorColor=JKQTPGetDerivedColor(baseProps.errorColorDerivationMode, baseColor);
+
+    p.setColor(lineColor);
+    p.setStyle(basePenStyle);
+    p.setSymbolType(baseSymbol);
+    p.setFillStyle(basebrushStyle);
+    p.setErrorFillStyle(basebrushStyle);
+    p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultLineWidth));
+    p.setFillColor(JKQTPGetDerivedColor(baseProps.fillColorDerivationMode, baseColor));
+    p.setErrorLineColor(errorColor);
+    p.setErrorFillColor(JKQTPGetDerivedColor(baseProps.errorFillColorDerivationMode, baseColor));
+    p.setErrorLineWidth(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultErrorIndicatorWidth));
+    p.setSymbolSize(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultSymbolSize));
+    p.setSymbolFillColor(JKQTPGetDerivedColor(baseProps.symbolFillColorDerivationMode, baseColor));
+    p.setSymbolLineWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultSymbolLineSize));
     return p;
 }
 
@@ -1258,7 +1272,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
         }
     }
 
-    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, plotterStyle.useAntiAliasingForGraphs);
+    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, plotterStyle.graphsStyle.useAntiAliasingForGraphs);
     painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, plotterStyle.useAntiAliasingForText);
     {
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
@@ -1270,7 +1284,7 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
 
     drawSystemXAxis(painter);
     drawSystemYAxis(painter);
-    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, plotterStyle.useAntiAliasingForGraphs);
+    painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, plotterStyle.graphsStyle.useAntiAliasingForGraphs);
     painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, plotterStyle.useAntiAliasingForText);
     if (plotterStyle.keyStyle.visible) drawKey(painter);
     painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, plotterStyle.useAntiAliasingForText);
@@ -2411,7 +2425,7 @@ bool JKQTBasePlotter::isUsingAntiAliasingForSystem() const
 
 bool JKQTBasePlotter::isUsingAntiAliasingForGraphs() const
 {
-    return this->plotterStyle.useAntiAliasingForGraphs;
+    return this->plotterStyle.graphsStyle.useAntiAliasingForGraphs;
 }
 
 bool JKQTBasePlotter::isUsingAntiAliasingForText() const
@@ -2419,19 +2433,6 @@ bool JKQTBasePlotter::isUsingAntiAliasingForText() const
     return this->plotterStyle.useAntiAliasingForText;
 }
 
-
-void JKQTBasePlotter::setGraphWidth(double __value)
-{
-    if (jkqtp_approximatelyUnequal(this->plotterStyle.defaultGraphWidth , __value)) {
-        this->plotterStyle.defaultGraphWidth = __value;
-        redrawPlot();
-    }
-}
-
-double JKQTBasePlotter::getGraphWidth() const
-{
-    return this->plotterStyle.defaultGraphWidth;
-}
 
 void JKQTBasePlotter::setBackgroundColor(const QColor &__value)
 {
@@ -3025,8 +3026,8 @@ void JKQTBasePlotter::setUseAntiAliasingForText(bool __value)
 
 void JKQTBasePlotter::setUseAntiAliasingForGraphs(bool __value)
 {
-    if (this->plotterStyle.useAntiAliasingForGraphs != __value) {
-        this->plotterStyle.useAntiAliasingForGraphs = __value;
+    if (this->plotterStyle.graphsStyle.useAntiAliasingForGraphs != __value) {
+        this->plotterStyle.graphsStyle.useAntiAliasingForGraphs = __value;
         redrawPlot();
     }
 }

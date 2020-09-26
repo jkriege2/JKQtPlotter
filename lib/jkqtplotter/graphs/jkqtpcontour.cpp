@@ -40,7 +40,7 @@ JKQTPContourPlot::JKQTPContourPlot(JKQTBasePlotter *parent) :
     contourColoringMode=ColorContoursFromPaletteByValue;
     relativeLevels=false;
 
-    initLineStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
 }
 
 

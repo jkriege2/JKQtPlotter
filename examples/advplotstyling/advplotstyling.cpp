@@ -42,9 +42,12 @@ int main(int argc, char* argv[])
     // 3. now we add three semi-transparent, filled curve plots, one for each histogram
     JKQTPSpecialLineHorizontalGraph* graphF=new JKQTPSpecialLineHorizontalGraph(&plot);
     JKQTPSpecialLineHorizontalGraph* graphF2=new JKQTPSpecialLineHorizontalGraph(&plot);
-    JKQTPGeoLine* graphL1=new JKQTPGeoLine(&plot, 0, 3, 12, 3.5, Qt::red);
-    JKQTPGeoLine* graphL2=new JKQTPGeoLine(&plot, 0, 3.8, 12, 4.5, Qt::red);
-    JKQTPGeoLine* graphL3=new JKQTPGeoLine(&plot, 0, 4.6, 12, 5.5, Qt::red);
+    JKQTPGeoLine* graphL1=new JKQTPGeoLine(&plot, 0, 3, 12, 3.5);
+    graphL1->setColor(Qt::red);
+    JKQTPGeoLine* graphL2=new JKQTPGeoLine(&plot, 0, 3.8, 12, 4.5);
+    graphL2->setColor(Qt::red);
+    JKQTPGeoLine* graphL3=new JKQTPGeoLine(&plot, 0, 4.6, 12, 5.5);
+    graphL3->setColor(Qt::red);
     JKQTPBarVerticalGraph* graphBE=new JKQTPBarVerticalGraph(&plot);
     JKQTPBarVerticalGraph* graphBF=new JKQTPBarVerticalGraph(&plot);
 

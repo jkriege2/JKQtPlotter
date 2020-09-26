@@ -25,6 +25,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>removed/breaking change: removed the usage of some deprecated functions and objects (e.g. QMatrix)</li>
   <li>removed/breaking change: removed the overlay elements (derived from JKQTPOverlayElement), which were not very well set up and are more confusing than useful.</li>
   <li>improved/breaking change: geometric objects now use an adaptive drawing algorithm to represent curves (before e.g. ellipses were always separated into a fixed number of line-segments)</li>
+  <li>improved/breaking change: geometric elements constructor: removed all styling properties, added setStyle()-functions to replace them. This is necessary to better work with the extended Styling system</li>
   <li>improved: constructors and access functions for several geometric objects (e.g. more constructors, additional functions to retrieve parameters in diferent forms, iterators for polygons, ...)</li>
   <li>improved/breaking change: reworked class hierarchy of parsed function plots and declared several setters as slots.</li>
   <li>improved/breaking change: reworked class hierarchy of bar & impulse charts.</li>
@@ -34,6 +35,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>improved/breaking change: reworked class hierarchy of range plot elements (JKQTPVerticalRange and JKQTPHorizontalRange).</li>
   <li>improved/breaking change: reworked class hierarchy of boxplots.</li>
   <li>improved/breaking change: reworked class hierarchy of violin plots.</li>
+  <li>improved/breaking change: extended styling system for graphs.</li>
   <li>improved/breaking change: reworked graph Base-Classes (promoted several setters to slots, added Q_PROPERTY- and Q_ENUM-declarations...)</li>
   <li>improved/breaking change: made more functions and function parameters const</li>
   <li>bugfixed/improved: aspect ratio handling in JKQTPlotter.</li>

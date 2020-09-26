@@ -49,8 +49,8 @@ JKQTPRangeBase::JKQTPRangeBase(JKQTBasePlotter* parent):
 
 
     if (parent) { // get style settings from parent object
-        initLineStyle(parent, parentPlotStyle);
-        initFillStyle(parent, parentPlotStyle);
+        initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
+        initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
         centerColor=parent->getPlotStyle(parentPlotStyle).color();
     }
 
@@ -77,7 +77,7 @@ void JKQTPRangeBase::setColor(QColor c)
 {
     setLineColor(c);
     centerColor=c;
-    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, c));
 }
 
 

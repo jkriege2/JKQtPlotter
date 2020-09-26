@@ -52,7 +52,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
             \param color color of drawing
             \param fillColor fill color of the symbol (if filled)
          */
-        JKQTPGeoSymbol(JKQTBasePlotter* parent, double x, double y, JKQTPGraphSymbols symbol=JKQTPCross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
+        JKQTPGeoSymbol(JKQTBasePlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize);
         /*! \brief class contructor
 
             \param parent parent plotter widget
@@ -63,12 +63,90 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
             \param color color of drawing
             \param fillColor fill color of the symbol (if filled)
          */
-        JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol=JKQTPCross, double symbolSize=10, QColor color=QColor("black"), QColor fillColor=QColor("grey"));
+        JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize);
+        /*! \brief class contructor
 
-        /** \copydoc x */ 
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+            \param symbolSize size of the symbol in pt
+            \param color color of drawing
+            \param fillColor fill color of the symbol (if filled)
+        */
+        JKQTPGeoSymbol(JKQTBasePlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor);
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+            \param symbolSize size of the symbol in pt
+            \param color color of drawing
+            \param fillColor fill color of the symbol (if filled)
+        */
+        JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color, QColor fillColor);
+
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+            \param symbolSize size of the symbol in pt
+            \param color color of drawing
+        */
+        JKQTPGeoSymbol(JKQTBasePlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color);
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+            \param symbolSize size of the symbol in pt
+            \param color color of drawing
+        */
+        JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize, QColor color);
+
+
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+        */
+        JKQTPGeoSymbol(JKQTBasePlotter* parent, double x, double y, JKQTPGraphSymbols symbol);
+
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+            \param symbol symbol type
+          */
+        JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol);
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+        */
+        JKQTPGeoSymbol(JKQTBasePlotter* parent, double x, double y);
+
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of symbol center
+            \param y y-coordinate of symbol center
+        */
+        JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y);
+        /** \copydoc x */
         double getX() const;
         /** \copydoc y */ 
         double getY() const;
+        /** \brief returns x and y at the same time \see x, y */
+        QPointF getP() const;
 
         /** \copydoc JKQTPPlotAnnotationElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;
@@ -90,7 +168,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
         void setX(double __value);
         /** \copydoc y */ 
         void setY(double __value);
-	
+        /** \brief set x and y at the same time \see x, y */
+        void setP(const QPointF& p);
+
     protected:
         /** \brief x-position (in plot coordinates) of the symbol (symbol center) */
         double x;
@@ -129,6 +209,27 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotAnnotationElement, pu
             \param fontSize base font size of text
          */
         JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize, QColor color);
+
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of text
+            \param y y-coordinate of text
+            \param text the text to display
+            \param fontSize base font size of text
+        */
+        JKQTPGeoText(JKQTBasePlotter* parent, double x, double y, const QString& text, double fontSize);
+        /*! \brief class contructor
+
+            \param parent parent plotter widget
+            \param x x-coordinate of text
+            \param y y-coordinate of text
+            \param text the text to display
+            \param fontSize base font size of text
+        */
+        JKQTPGeoText(JKQTPlotter* parent, double x, double y, const QString& text, double fontSize);
+
+
         /*! \brief class contructor
 
             \param parent parent plotter widget
@@ -152,6 +253,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotAnnotationElement, pu
         double getX() const;
         /** \copydoc y */ 
         double getY() const;
+        /** \brief returns x and y at the same time \see x, y */
+        QPointF getP() const;
 
 
         /** \copydoc JKQTPPlotAnnotationElement::getXMinMax()        */
@@ -176,6 +279,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoText: public JKQTPPlotAnnotationElement, pu
         void setX(double __value);
         /** \copydoc y */ 
         void setY(double __value);
+        /** \brief set x and y at the same time \see x, y */
+        void setP(const QPointF& p);
 
     protected:
         /** \brief x-position (in plot coordinates) of the text (left/baseline) */

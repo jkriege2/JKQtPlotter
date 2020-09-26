@@ -36,24 +36,25 @@ JKQTPEvaluatedFunctionWithErrorsGraphDrawingBase::JKQTPEvaluatedFunctionWithErro
     drawErrorPolygons(false),
     drawErrorLines(false)
 {
-    initLineStyle(parent, parentPlotStyle);
-    initFillStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
     setFillCurve(false);
 
-    errorColor=getLineColor().lighter();
-    errorFillColor=getLineColor().lighter();
+    errorColor=JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.errorColorDerivationMode, getLineColor());
+    errorFillColor=JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.errorFillColorDerivationMode, errorColor);
     errorStyle=Qt::SolidLine;
-    errorLineWidth=1;
+    errorLineWidth=parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.defaultErrorIndicatorWidth;
     errorFillStyle=Qt::SolidPattern;
 
 
     if (parent && parentPlotStyle>=0) { // get style settings from parent object
         //std::cout<<"got style settings from parent: "<<parentPlotStyle<<std::endl;
-        errorColor=parent->getPlotStyle(parentPlotStyle).errorColor();
-        errorStyle=parent->getPlotStyle(parentPlotStyle).errorStyle();
-        errorLineWidth=parent->getPlotStyle(parentPlotStyle).errorWidthF();
-        errorFillStyle=parent->getPlotStyle(parentPlotStyle).errorFillStyle();
-        errorFillColor=parent->getPlotStyle(parentPlotStyle).errorFillColor();
+        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle);
+        errorColor=pen.errorColor();
+        errorStyle=pen.errorStyle();
+        errorLineWidth=pen.errorWidthF();
+        errorFillStyle=pen.errorFillStyle();
+        errorFillColor=pen.errorFillColor();
     }
     errorFillColor.setAlphaF(0.5);
 }

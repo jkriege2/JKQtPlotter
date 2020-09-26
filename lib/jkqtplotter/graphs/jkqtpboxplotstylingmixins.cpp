@@ -61,23 +61,25 @@ void JKQTPGraphBoxplotStyleMixin::initBoxplotStyle(JKQTBasePlotter *parent, int 
 {
     setFillStyle(Qt::SolidPattern);
     setFillColor(parent->getCurrentPlotterStyle().plotBackgroundBrush.color());
-    initLineStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Boxplot);
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Boxplot);
     if (parent) { // get style settings from parent object
         if (parentPlotStyle<0) parentPlotStyle=parent->getNextStyle();
-        m_whiskerLinePen.setColor(parent->getPlotStyle(parentPlotStyle).color());
-        m_whiskerLinePen.setStyle(parent->getPlotStyle(parentPlotStyle).style());
-        whiskerLineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        m_whiskerCapLinePen.setColor(parent->getPlotStyle(parentPlotStyle).color());
-        m_whiskerCapLinePen.setStyle(parent->getPlotStyle(parentPlotStyle).style());
-        whiskerCapLineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        m_medianLinePen.setColor(parent->getPlotStyle(parentPlotStyle).color());
-        m_medianLinePen.setStyle(parent->getPlotStyle(parentPlotStyle).style());
-        medianLineWidth=parent->getPlotStyle(parentPlotStyle).widthF();
-        m_meanSymbolLinePen=QPen(parent->getPlotStyle(parentPlotStyle).color(), parent->getPlotStyle(parentPlotStyle).style());
-        m_meanSymbolSize=parent->getPlotStyle(parentPlotStyle).symbolSize();
-        m_meanSymbolLineWidth=parent->getPlotStyle(parentPlotStyle).symbolLineWidthF();
-        m_meanSymbolType=parent->getPlotStyle(parentPlotStyle).symbol();
-        m_meanSymbolFillColor=parent->getPlotStyle(parentPlotStyle).symbolFillColor();
+        const JKQTBasePlotter::JKQTPPen pen=parent->getPlotStyle(parentPlotStyle, JKQTPPlotStyleType::Boxplot);
+        m_whiskerLinePen.setColor(pen.color());
+        m_whiskerLinePen.setStyle(pen.style());
+        whiskerLineWidth=pen.widthF();
+        m_whiskerCapLinePen.setColor(pen.color());
+        m_whiskerCapLinePen.setStyle(pen.style());
+        whiskerCapLineWidth=pen.widthF();
+        m_medianLinePen.setColor(pen.color());
+        m_medianLinePen.setStyle(pen.style());
+        medianLineWidth=pen.widthF();
+        m_meanSymbolLinePen=QPen(pen.color(), pen.style());
+        m_meanSymbolSize=pen.symbolSize();
+        m_meanSymbolLineWidth=pen.symbolLineWidthF();
+        m_meanSymbolType=pen.symbol();
+        m_meanSymbolFillColor=pen.symbolFillColor();
     }
 
     setWhiskerLineColor(getLineColor());
@@ -103,9 +105,9 @@ double JKQTPGraphBoxplotStyleMixin::getBoxWidthAbsolute() const
 void JKQTPGraphBoxplotStyleMixin::setBoxplotColor(QColor c, JKQTBasePlotter *parent)
 {
     setLineColor(c);
-    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.fillColorDerivationMode, c));
     setMeanColor(c);
-    setMeanFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setMeanFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.symbolFillColorDerivationMode, c));
     setWhiskerLineColor(getLineColor());
     setWhiskerCapLineColor(getLineColor());
     setMedianLineColor(getLineColor());

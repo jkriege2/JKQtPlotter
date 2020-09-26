@@ -27,19 +27,29 @@
 #include <QApplication>
 #define SmallestGreaterZeroCompare_xvsgz() if ((xvsgz>10.0*DBL_MIN)&&((smallestGreaterZero<10.0*DBL_MIN) || (xvsgz<smallestGreaterZero))) smallestGreaterZero=xvsgz;
 
-JKQTPGeoBaseLine::JKQTPGeoBaseLine(QColor color, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent, DrawMode drawMode):
+JKQTPGeoBaseLine::JKQTPGeoBaseLine(JKQTBasePlotter *parent, DrawMode drawMode):
     JKQTPGeometricPlotElement(drawMode, parent)
+{
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Geometric);
+}
+
+void JKQTPGeoBaseLine::setStyle(QColor color, double lineWidth)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+}
+
+void JKQTPGeoBaseLine::setStyle(QColor color, double lineWidth, Qt::PenStyle style)
 {
     setLineColor(color);
     setLineWidth(lineWidth);
     setLineStyle(style);
 }
 
-JKQTPGeoBaseLine::JKQTPGeoBaseLine(JKQTBasePlotter *parent, DrawMode drawMode):
-    JKQTPGeometricPlotElement(drawMode, parent)
+void JKQTPGeoBaseLine::setStyle(QColor color, Qt::PenStyle style)
 {
-
-}
+    setLineColor(color);
+    setLineStyle(style);}
 
 void JKQTPGeoBaseLine::setAlpha(float alpha)
 {
@@ -67,28 +77,11 @@ QColor JKQTPGeoBaseLine::getKeyLabelColor() const {
 }
 
 
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, Qt::BrushStyle fillStyle, JKQTBasePlotter* parent, DrawMode drawMode):
-    JKQTPGeoBaseLine(color, lineWidth, style, parent, drawMode)
+
+JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(JKQTBasePlotter *parent, JKQTPGeometricPlotElement::DrawMode drawMode):
+    JKQTPGeoBaseLine(parent, drawMode)
 {
-    setFillColor(fillColor);
-    setFillStyle(fillStyle);
-}
-
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, Qt::PenStyle style, JKQTBasePlotter* parent, DrawMode drawMode):
-    JKQTPGeoBaseFilled(color, fillColor, lineWidth, style, Qt::SolidPattern, parent, drawMode)
-{
-
-}
-
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, double lineWidth, JKQTBasePlotter* parent, DrawMode drawMode):
-    JKQTPGeoBaseFilled(color, fillColor, lineWidth, Qt::SolidLine, Qt::SolidPattern, parent, drawMode)
-{
-
-}
-
-JKQTPGeoBaseFilled::JKQTPGeoBaseFilled(QColor color, QColor fillColor, JKQTBasePlotter* parent, DrawMode drawMode):
-    JKQTPGeoBaseFilled(color, fillColor, 2.0, Qt::SolidLine, Qt::SolidPattern, parent, drawMode)
-{
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Geometric);
 }
 
 void JKQTPGeoBaseFilled::setAlpha(float alpha)
@@ -110,7 +103,73 @@ void JKQTPGeoBaseFilled::setAlpha(float alphaLine, float alphaFill)
 void JKQTPGeoBaseFilled::setColor(QColor c)
 {
     JKQTPGeoBaseLine::setColor(c);
-    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.geometricStyle.fillColorDerivationMode, c));
+}
+
+void JKQTPGeoBaseFilled::setStyle(QColor color, double lineWidth, Qt::PenStyle style, QColor fillColor, Qt::BrushStyle fillStyle)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setLineStyle(style);
+    setFillColor(fillColor);
+    setFillStyle(fillStyle);
+}
+
+void JKQTPGeoBaseFilled::setStyle(QColor color, double lineWidth, Qt::PenStyle style)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setLineStyle(style);
+}
+
+void JKQTPGeoBaseFilled::setStyle(QColor color, Qt::PenStyle style)
+{
+    setLineStyle(style);
+    setLineColor(color);
+}
+
+void JKQTPGeoBaseFilled::setStyle(QColor color, double lineWidth)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+}
+
+void JKQTPGeoBaseFilled::setStyle(QColor color, QColor fillColor)
+{
+    setLineColor(color);
+    setFillColor(fillColor);
+}
+
+void JKQTPGeoBaseFilled::setStyleTransparentFill(QColor color, double lineWidth, Qt::PenStyle style)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setLineStyle(style);
+    setFillColor(Qt::transparent);
+    setFillStyle(Qt::SolidPattern);
+}
+
+void JKQTPGeoBaseFilled::setStyleTransparentFill(QColor color, Qt::PenStyle style)
+{
+    setLineColor(color);
+    setLineStyle(style);
+    setFillColor(Qt::transparent);
+    setFillStyle(Qt::SolidPattern);
+}
+
+void JKQTPGeoBaseFilled::setStyleTransparentFill(QColor color, double lineWidth)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setFillColor(Qt::transparent);
+    setFillStyle(Qt::SolidPattern);
+}
+
+void JKQTPGeoBaseFilled::setStyleTransparentFill(QColor color)
+{
+    setLineColor(color);
+    setFillColor(Qt::transparent);
+    setFillStyle(Qt::SolidPattern);
 }
 
 
@@ -123,19 +182,37 @@ void JKQTPGeoBaseFilled::drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& re
 }
 
 
-JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, Qt::PenStyle style, JKQTBasePlotter *parent, DrawMode drawMode):
+JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTPLineDecoratorStyle headStyle, JKQTBasePlotter *parent, DrawMode drawMode):
     JKQTPGeometricPlotElement(drawMode, parent)
 {
-    setLineColor(color);
-    setLineWidth(lineWidth);
-    setLineStyle(style);
+    int parStyleDummy=0;
+    initDecoratedHeadLineStyle(parent, parStyleDummy, JKQTPPlotStyleType::Geometric);
     setHeadDecoratorStyle(headStyle);
 }
 
 JKQTPGeoBaseDecoratedHeadLine::JKQTPGeoBaseDecoratedHeadLine(JKQTBasePlotter *parent, DrawMode drawMode):
     JKQTPGeometricPlotElement(drawMode, parent)
 {
+    initDecoratedHeadLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Geometric);
+}
 
+void JKQTPGeoBaseDecoratedHeadLine::setStyle(QColor color, double lineWidth)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+}
+
+void JKQTPGeoBaseDecoratedHeadLine::setStyle(QColor color, double lineWidth, Qt::PenStyle style)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setLineStyle(style);
+}
+
+void JKQTPGeoBaseDecoratedHeadLine::setStyle(QColor color, Qt::PenStyle style)
+{
+    setLineColor(color);
+    setLineStyle(style);
 }
 
 void JKQTPGeoBaseDecoratedHeadLine::setAlpha(float alpha)
@@ -164,12 +241,11 @@ QColor JKQTPGeoBaseDecoratedHeadLine::getKeyLabelColor() const
 }
 
 
-JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWidth, JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, Qt::PenStyle style, JKQTBasePlotter *parent, DrawMode drawMode):
+JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(JKQTPLineDecoratorStyle headStyle, JKQTPLineDecoratorStyle tailStyle, JKQTBasePlotter *parent, DrawMode drawMode):
     JKQTPGeometricPlotElement(drawMode, parent)
 {
-    setLineColor(color);
-    setLineWidth(lineWidth);
-    setLineStyle(style);
+    int parStyleDummy=0;
+    initDecoratedLineStyle(parent, parStyleDummy, JKQTPPlotStyleType::Geometric);
     setTailDecoratorStyle(tailStyle);
     setHeadDecoratorStyle(headStyle);
 }
@@ -177,7 +253,27 @@ JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(QColor color, double lineWi
 JKQTPGeoBaseDecoratedLine::JKQTPGeoBaseDecoratedLine(JKQTBasePlotter *parent, DrawMode drawMode):
     JKQTPGeometricPlotElement(drawMode, parent)
 {
+    initDecoratedLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Geometric);
+}
 
+
+void JKQTPGeoBaseDecoratedLine::setStyle(QColor color, double lineWidth)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+}
+
+void JKQTPGeoBaseDecoratedLine::setStyle(QColor color, double lineWidth, Qt::PenStyle style)
+{
+    setLineColor(color);
+    setLineWidth(lineWidth);
+    setLineStyle(style);
+}
+
+void JKQTPGeoBaseDecoratedLine::setStyle(QColor color, Qt::PenStyle style)
+{
+    setLineColor(color);
+    setLineStyle(style);
 }
 
 void JKQTPGeoBaseDecoratedLine::setAlpha(float alpha)

@@ -28,7 +28,7 @@
 
 class JKQTBasePlotterStyle; // forward
 
-/** \brief Support Class for JKQTPCoordinateAxis, which summarizes all proeprties that define the visual styling of a JKQTPCoordinateAxis
+/** \brief Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling of a JKQTPCoordinateAxis
  *  \ingroup jkqtpplotter_styling
  *
  * \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling

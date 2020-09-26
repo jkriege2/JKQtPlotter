@@ -69,32 +69,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseDecoratedLine {
          *  \param y1 y-coordinate of first point of line
          *  \param x2 x-coordinate of second point of line
          *  \param y2 y-coordinate of second point of line
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
-         *  \param parent the parent plotter object
-         */
-        JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
-        /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param x1 x-coordinate of first point of line
-         *  \param y1 y-coordinate of first point of line
-         *  \param x2 x-coordinate of second point of line
-         *  \param y2 y-coordinate of second point of line
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
-         *  \param parent the parent plotter object
-         */
-        JKQTPGeoLine(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
-        /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param x1 x-coordinate of first point of line
-         *  \param y1 y-coordinate of first point of line
-         *  \param x2 x-coordinate of second point of line
-         *  \param y2 y-coordinate of second point of line
          *
          */
         JKQTPGeoLine(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2);
@@ -116,28 +90,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseDecoratedLine {
          *  \param parent the parent plotter object
          *  \param p1 first point of line (tail)
          *  \param p2 second point of line (head)
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
-         *  \param parent the parent plotter object
-         */
-        JKQTPGeoLine(JKQTBasePlotter* parent, const QPointF& p1, const QPointF& p2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
-        /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param p1 first point of line (tail)
-         *  \param p2 second point of line (head)
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
-         *  \param parent the parent plotter object
-         */
-        JKQTPGeoLine(JKQTPlotter* parent, const QPointF& p1, const QPointF& p2, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
-        /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param p1 first point of line (tail)
-         *  \param p2 second point of line (head)
          *
          */
         JKQTPGeoLine(JKQTBasePlotter* parent, const QPointF& p1, const QPointF& p2);
@@ -152,26 +104,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoLine: public JKQTPGeoBaseDecoratedLine {
 
 
 
-        /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param line the line
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
-         *  \param parent the parent plotter object
-         */
-        JKQTPGeoLine(JKQTBasePlotter* parent, const QLineF& line, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
-        /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param line the line
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
-         *  \param parent the parent plotter object
-         */
-        JKQTPGeoLine(JKQTPlotter* parent, const QLineF& line, QColor color, double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
@@ -265,12 +197,10 @@ public:
       * \param y1 y-coordinate of first point of line
       * \param x2 x-coordinate of second point of line
       * \param y2 y-coordinate of second point of line
-      * \param color color of line
-      * \param lineWidth width of line
-      * \param style line style
-      * \param parent the parent plotter object
+      * \param headStyle decorator/arrow style of the head
+      * \param tailStyle decorator/arrow style of the tail
     */
-    JKQTPGeoArrow(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator, double lineWidth=1.0, Qt::PenStyle style=Qt::SolidLine);
+    JKQTPGeoArrow(JKQTBasePlotter* parent, double x1, double y1, double x2, double y2, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
     /** \brief class constructor
       *
       * \param parent the parent plotter object
@@ -278,13 +208,42 @@ public:
       * \param y1 y-coordinate of first point of line
       * \param x2 x-coordinate of second point of line
       * \param y2 y-coordinate of second point of line
-      * \param color color of line
-      * \param lineWidth width of line
-      * \param style line style
-      * \param parent the parent plotter object
+      * \param headStyle decorator/arrow style of the head
+      * \param tailStyle decorator/arrow style of the tail
       */
-    JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, QColor color, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator, double lineWidth=1.0, Qt::PenStyle style=Qt::SolidLine);
+    JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
+    /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param p1 first point of line (tail)
+         *  \param p2 second point of line (head)
+         *
+         */
+    JKQTPGeoArrow(JKQTBasePlotter* parent, const QPointF& p1, const QPointF& p2, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
+    /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param p1 first point of line (tail)
+         *  \param p2 second point of line (head)
+         */
+    JKQTPGeoArrow(JKQTPlotter* parent, const QPointF& p1, const QPointF& p2, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
 
+
+
+
+    /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param line the line
+         *
+         */
+    JKQTPGeoArrow(JKQTBasePlotter* parent, const QLineF& line, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
+    /** \brief class constructor
+         *
+         *  \param parent the parent plotter object
+         *  \param line the line
+         */
+    JKQTPGeoArrow(JKQTPlotter* parent, const QLineF& line, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
 };
 
 
@@ -324,7 +283,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedH
          *  \param lineWidth width of line
          *  \param style line style
          */
-        JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, double y, double dx, double dy, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, double y, double dx, double dy);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
@@ -336,7 +295,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedH
          *  \param lineWidth width of line
          *  \param style line style
          */
-        JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy);
 
 
         /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
@@ -426,7 +385,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
          *  \param lineWidth width of line
          *  \param style line style
          */
-        JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPointF>& points);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
@@ -435,7 +394,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
          *  \param lineWidth width of line
          *  \param style line style
          */
-        JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
@@ -443,7 +402,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
          *  \param lineWidth width of line
          *  \param style line style
          */
-        JKQTPGeoPolyLines(JKQTBasePlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoPolyLines(JKQTBasePlotter* parent);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
@@ -451,7 +410,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
          *  \param lineWidth width of line
          *  \param style line style
          */
-        JKQTPGeoPolyLines(JKQTPlotter* parent, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoPolyLines(JKQTPlotter* parent);
 
 
         /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
@@ -535,7 +494,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
          *  \param style line style
 
          */
-        JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop);
         /** \brief class constructor
 
          *  \param parent the parent plotter object
@@ -550,7 +509,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
          *  \param style line style
 
          */
-        JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop, QColor color=QColor("black"), double lineWidth=1, Qt::PenStyle style=Qt::SolidLine);
+        JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop);
 
         /** \copydoc JKQTPGeometricPlotElement::getXMinMax()        */
         virtual bool getXMinMax(double& minx, double& maxx, double& smallestGreaterZero) override;

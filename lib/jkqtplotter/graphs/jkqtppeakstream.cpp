@@ -40,7 +40,7 @@ JKQTPPeakStreamGraph::JKQTPPeakStreamGraph(JKQTBasePlotter *parent):
     yPeaks=true;
     peakHeight=1;
     drawBaseline=true;
-    initLineStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
 }
 
 

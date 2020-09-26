@@ -12,21 +12,35 @@
 
 template <class TELLIPSEPART>
 void drawExample(JKQTPlotter* plot, double x0, double y0, double wid, double heig, double angleStart, double angleStop) {
-    plot->addGraph(new JKQTPGeoRectangle(plot,x0, y0, wid, heig, QColor("orange"), 1, Qt::PenStyle::DashLine));
-    plot->addGraph(new JKQTPGeoEllipse(plot,x0, y0, wid, heig, QColor("orange"), 1, Qt::PenStyle::DashLine));
+    JKQTPGeoRectangle* rect;
+    plot->addGraph(rect=new JKQTPGeoRectangle(plot,x0, y0, wid, heig));
+    rect->setLineColor(QColor("orange"));
+    rect->setLineStyle(Qt::PenStyle::DashLine);
+    rect->setFillColor(Qt::transparent);
+    rect->setLineWidth(1);
+    JKQTPGeoEllipse* ell;
+    plot->addGraph(ell=new JKQTPGeoEllipse(plot,x0, y0, wid, heig));
+    ell->setLineColor(QColor("orange"));
+    ell->setLineStyle(Qt::PenStyle::DashLine);
+    ell->setFillColor(Qt::transparent);
+    ell->setLineWidth(1);
     TELLIPSEPART* obj;
-    plot->addGraph(obj=new TELLIPSEPART(plot,x0, y0, wid, heig, 10, angleStop , QColor("blue"), 4, Qt::PenStyle::SolidLine));
+    plot->addGraph(obj=new TELLIPSEPART(plot,x0, y0, wid, heig, 10, angleStop));
+    obj->setLineColor(QColor("blue"));
+    obj->setLineStyle(Qt::PenStyle::SolidLine);
+    obj->setLineWidth(4);
     JKQTPGeoBaseFilled* fillobj=dynamic_cast<JKQTPGeoBaseFilled*>(obj);
     if (fillobj) {
         fillobj->setFillColor(QColor("lightblue"));
         fillobj->setAlpha(0.8);
     }
+    JKQTPGeoLine* l;
     plot->addGraph(new JKQTPGeoSymbol(plot, x0, y0,  JKQTPCircle, 5, QColor("red")));
-    plot->addGraph(new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(angleStart/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(angleStart/180.0*JKQTPSTATISTICS_PI), QColor("orange")));
+    plot->addGraph(l=new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(angleStart/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(angleStart/180.0*JKQTPSTATISTICS_PI))); l->setColor(QColor("orange"));
     plot->addGraph(new JKQTPGeoText(plot, x0+wid*1.1/2.0*cos(angleStart/180.0*JKQTPSTATISTICS_PI),y0+heig*1.1/2.0*sin(angleStart/180.0*JKQTPSTATISTICS_PI), "\\alpha_\\text{start}="+QString::number(angleStart, 'f', 0)+"\\degree", 10, QColor("orange")));
-    plot->addGraph(new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(angleStop/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(angleStop/180.0*JKQTPSTATISTICS_PI), QColor("red")));
+    plot->addGraph(new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(angleStop/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(angleStop/180.0*JKQTPSTATISTICS_PI))); l->setColor(QColor("red"));
     plot->addGraph(new JKQTPGeoText(plot, x0+wid*1.1/2.0*cos(angleStop/180.0*JKQTPSTATISTICS_PI),y0+heig*1.1/2.0*sin(angleStop/180.0*JKQTPSTATISTICS_PI), "\\alpha_\\text{stop}="+QString::number(angleStop, 'f', 0)+"\\degree", 10, QColor("red")));
-    plot->addGraph(new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(0/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(0/180.0*JKQTPSTATISTICS_PI), QColor("orange")));
+    plot->addGraph(new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(0/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(0/180.0*JKQTPSTATISTICS_PI)));l->setColor(QColor("orange"));
     plot->addGraph(new JKQTPGeoText(plot, x0+wid*1.1/2.0*cos(0/180.0*JKQTPSTATISTICS_PI),y0+heig*1.1/2.0*sin(0/180.0*JKQTPSTATISTICS_PI), "0\\degree", 10, QColor("orange")));
     plot->addGraph(new JKQTPGeoText(plot, x0,y0-0.05*heig, "(x,y)", 10, QColor("red")));
     plot->addGraph(new JKQTPGeoText(plot, x0,y0-heig*1.1/2.0, "width="+QString::number(wid, 'f', 1), 10, QColor("red")));
@@ -38,10 +52,18 @@ void drawExample(JKQTPlotter* plot, double x0, double y0, double wid, double hei
 
 void drawEllExample(JKQTPlotter* plot, double x0, double y0, double wid, double heig, double angle=0) {
     JKQTPGeoRectangle* rec;
-    plot->addGraph(rec=new JKQTPGeoRectangle(plot,x0, y0, wid, heig, QColor("orange"), 1, Qt::PenStyle::DashLine));
+    plot->addGraph(rec=new JKQTPGeoRectangle(plot,x0, y0, wid, heig));
     rec->setAngle(angle);
+    rec->setLineColor(QColor("orange"));
+    rec->setLineStyle(Qt::PenStyle::DashLine);
+    rec->setFillColor(Qt::transparent);
+    rec->setLineWidth(1);
     JKQTPGeoEllipse* fillobj;
-    plot->addGraph(fillobj=new JKQTPGeoEllipse(plot,x0, y0, wid, heig, QColor("blue"), 1, Qt::PenStyle::DashLine));
+    plot->addGraph(fillobj=new JKQTPGeoEllipse(plot,x0, y0, wid, heig));
+    fillobj->setLineColor(QColor("blue"));
+    fillobj->setLineStyle(Qt::PenStyle::DashLine);
+    fillobj->setFillColor(Qt::transparent);
+    fillobj->setLineWidth(1);
     fillobj->setFillColor(QColor("lightblue"));
     fillobj->setAlpha(0.8);
     fillobj->setAngle(angle);
@@ -51,9 +73,10 @@ void drawEllExample(JKQTPlotter* plot, double x0, double y0, double wid, double 
         plot->addGraph(new JKQTPGeoText(plot, x0,y0-heig*1.1/2.0, "width="+QString::number(wid, 'f', 1), 10, QColor("red")));
         plot->addGraph(new JKQTPGeoText(plot, x0-wid*1.05/2.0,y0, "height="+QString::number(heig, 'f', 1), 10, QColor("red")));
     } else {
-        plot->addGraph(new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(angle/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(angle/180.0*JKQTPSTATISTICS_PI), QColor("red")));
+        JKQTPGeoLine* l;
+        plot->addGraph(l=new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(angle/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(angle/180.0*JKQTPSTATISTICS_PI))); l->setColor( QColor("red"));
         plot->addGraph(new JKQTPGeoText(plot, x0+wid*1.1/2.0*cos(angle/180.0*JKQTPSTATISTICS_PI),y0+heig*1.1/2.0*sin(angle/180.0*JKQTPSTATISTICS_PI), "\\alpha="+QString::number(angle, 'f', 0)+"\\degree", 10, QColor("red")));
-        plot->addGraph(new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(0/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(0/180.0*JKQTPSTATISTICS_PI), QColor("orange")));
+        plot->addGraph(l=new JKQTPGeoLine(plot, x0, y0, x0+wid/2.0*cos(0/180.0*JKQTPSTATISTICS_PI),y0+heig/2.0*sin(0/180.0*JKQTPSTATISTICS_PI))); l->setColor( QColor("orange"));
         plot->addGraph(new JKQTPGeoText(plot, x0+wid*1.1/2.0*cos(0/180.0*JKQTPSTATISTICS_PI),y0+heig*1.1/2.0*sin(0/180.0*JKQTPSTATISTICS_PI), "0\\degree", 10, QColor("orange")));
     }
 

@@ -39,8 +39,8 @@
 JKQTPBarGraphBase::JKQTPBarGraphBase(JKQTBasePlotter* parent):
     JKQTPXYBaselineGraph(parent), width(0.9), shift(0)
 {
-    initFillStyle(parent, parentPlotStyle);
-    initLineStyle(parent, parentPlotStyle);
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Barchart);
 }
 
 
@@ -109,7 +109,7 @@ void JKQTPBarGraphBase::autoscaleBarWidthAndShiftSeparatedGroups(double groupWid
 void JKQTPBarGraphBase::setColor(QColor c)
 {
     setLineColor(c);
-    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.barchartStyle.fillColorDerivationMode, c));
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
 }

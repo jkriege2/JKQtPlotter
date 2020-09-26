@@ -52,8 +52,8 @@ JKQTPXYLineGraph::JKQTPXYLineGraph(JKQTBasePlotter* parent):
     sortData=JKQTPXYGraph::Unsorted;
     drawLine=true;
 
-    initLineStyle(parent, parentPlotStyle);
-    initSymbolStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
+    initSymbolStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Default);
 }
 
 void JKQTPXYLineGraph::draw(JKQTPEnhancedPainter& painter) {
@@ -168,7 +168,7 @@ void JKQTPXYLineGraph::setColor(QColor c)
 {
     setLineColor(c);
     setSymbolColor(c);
-    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setSymbolFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, c));
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
 }
@@ -310,7 +310,7 @@ JKQTPXYParametrizedScatterGraph::JKQTPXYParametrizedScatterGraph(JKQTBasePlotter
     gridSymbolFractionSize=0.9;
     symbolFillDerivationMode=JKQTPFFCMLighterColor;
     if (parent) {
-        symbolFillDerivationMode=parent->getCurrentPlotterStyle().graphFillColorDerivationMode;
+        symbolFillDerivationMode=parent->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode;
     }
 
     clearSizeColumnFunctor();

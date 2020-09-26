@@ -36,8 +36,8 @@ JKQTPFilledCurveGraphBase::JKQTPFilledCurveGraphBase(JKQTBasePlotter *parent):
     JKQTPXYBaselineGraph(parent)
 {
     parentPlotStyle=-1;
-    initLineStyle(parent, parentPlotStyle);
-    initFillStyle(parent, parentPlotStyle);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
     setFillCurve(true);
     setDrawLine(true);
 }
@@ -64,7 +64,7 @@ void JKQTPFilledCurveGraphBase::drawKeyMarker(JKQTPEnhancedPainter &painter, QRe
 void JKQTPFilledCurveGraphBase::setColor(QColor c)
 {
     setLineColor(c);
-    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphFillColorDerivationMode, c));
+    setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.filledStyle.fillColorDerivationMode, c));
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
 }
@@ -271,7 +271,7 @@ JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTBasePlotter *parent
     JKQTPFilledCurveXGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    initErrorStyle(parent, parentPlotStyle);
+    initErrorStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
 }
 
 JKQTPFilledCurveXErrorGraph::JKQTPFilledCurveXErrorGraph(JKQTPlotter *parent):
@@ -296,7 +296,7 @@ JKQTPFilledCurveYErrorGraph::JKQTPFilledCurveYErrorGraph(JKQTBasePlotter *parent
     JKQTPFilledCurveYGraph(parent)
 {
     setErrorColorFromGraphColor(getLineColor());
-    initErrorStyle(parent, parentPlotStyle);
+    initErrorStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
 
 }
 
@@ -323,8 +323,8 @@ void JKQTPFilledCurveYErrorGraph::drawErrorsAfter(JKQTPEnhancedPainter &painter)
 JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTBasePlotter *parent):
     JKQTPXYYGraph(parent)
 {
-    initFillStyle(parent, parentPlotStyle);
-    initLineStyle(parent, parentPlotStyle);
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
 }
 
 JKQTPFilledVerticalRangeGraph::JKQTPFilledVerticalRangeGraph(JKQTPlotter *parent):
@@ -438,8 +438,8 @@ QColor JKQTPFilledVerticalRangeGraph::getKeyLabelColor() const
 JKQTPFilledHorizontalRangeGraph::JKQTPFilledHorizontalRangeGraph(JKQTBasePlotter *parent):
     JKQTPXXYGraph(parent)
 {
-    initFillStyle(parent, parentPlotStyle);
-    initLineStyle(parent, parentPlotStyle);
+    initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
+    initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
 }
 
 JKQTPFilledHorizontalRangeGraph::JKQTPFilledHorizontalRangeGraph(JKQTPlotter *parent):
