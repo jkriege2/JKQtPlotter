@@ -230,12 +230,22 @@ enum JKQTPColorDerivationMode {
     JKQTPFFCMGrey50, /*!< \brief fill with 50% grey */
     JKQTPFFCMGrey25, /*!< \brief fill with 25% grey */
     JKQTPFFCMWhite, /*!< \brief fill with white */
+    JKQTPFFCMTransparentBlack, /*!< \brief fill with black, slightly transparent */
+    JKQTPFFCMTransparentGrey75, /*!< \brief fill with 75% grey, slightly transparent */
+    JKQTPFFCMTransparentGrey50, /*!< \brief fill with 50% grey, slightly transparent */
+    JKQTPFFCMTransparentGrey25, /*!< \brief fill with 25% grey, slightly transparent */
+    JKQTPFFCMTransparentWhite, /*!< \brief fill with white, slightly transparent */
     JKQTPFFCMSameColor, /*!< \brief fill with the same color */
     JKQTPFFCMInvertedColor, /*!< \brief fill with the inverted color */
+    JKQTPFFCMTransparentInvertedColor, /*!< \brief fill with the inverted color, slightly transparent */
     JKQTPFFCMLighterColor, /*!< \brief fill with the a lighter color */
     JKQTPFFCMEvenLighterColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor */
     JKQTPFFCMDarkerColor, /*!< \brief fill with the a darker color */
     JKQTPFFCMEvenDarkerColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor */
+    JKQTPFFCMLighterAndTransparentColor, /*!< \brief fill with the a lighter color, that is in addition a bit transparent */
+    JKQTPFFCMEvenLighterAndTransparentColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor, that is in addition a bit transparent */
+    JKQTPFFCMDarkerAndTransparentColor, /*!< \brief fill with the a darker color, that is in addition a bit transparent */
+    JKQTPFFCMEvenDarkerAndTransparentColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor, that is in addition a bit transparent */
     JKQTPFFCMMoreTransparentColor, /*!< \brief fill with the a partly transparent color */
     JKQTPFFCMEvenMoreTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMMoreTransparentColor */
     JKQTPFFCMLessTransparentColor, /*!< \brief fill with the a partly transparent color */

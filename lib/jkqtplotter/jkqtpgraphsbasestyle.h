@@ -47,8 +47,11 @@ class JKQTBasePlotterStyle; // forward
 class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
         Q_GADGET
     public:
+        /** \brief initializes the object for the given \a type and takes some properties from the \a parent */
         JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTBasePlotterStyle& parent);
-		JKQTGraphsSpecificStyleProperties(const JKQTGraphsSpecificStyleProperties& other)=default;
+        /** \brief initializes the object as a copy of \a other, but modified some properties for the given \a type */
+        JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTGraphsSpecificStyleProperties& other);
+        JKQTGraphsSpecificStyleProperties(const JKQTGraphsSpecificStyleProperties& other)=default;
 		JKQTGraphsSpecificStyleProperties(JKQTGraphsSpecificStyleProperties&& other)=default;
 		JKQTGraphsSpecificStyleProperties& operator=(const JKQTGraphsSpecificStyleProperties& other)=default;
 		JKQTGraphsSpecificStyleProperties& operator=(JKQTGraphsSpecificStyleProperties&& other)=default;
@@ -75,13 +78,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
         /** \brief size (in pt) of symbols used for newly added graphs */
         double defaultSymbolSize;
         /** \brief width (in pt) of the outline of symbols used for newly added graphs */
-        double defaultSymbolLineSize;
+        double defaultSymbolLineWidth;
         /** \brief width (in pt) of lines used for the error indicators of newly added graphs */
         double defaultErrorIndicatorWidth;
         /** \brief head decorator style */
         JKQTPLineDecoratorStyle defaultHeadDecoratorStyle;
         /** \brief head decorator size-factor, used to calculate the size of the arrow from the line width */
         double defaultHeadDecoratorSizeFactor;
+        /** \↓brief fill style for error indicators */
+        Qt::BrushStyle errorFillStyle;
         /** \brief defines how to derive the basic graph color for a new graph from the color selected from JKQTGraphsBaseStyle::defaultGraphColors
          *
          *  This property is usually JKQTPFFCMSameColor, but can be changed to allow to e.g. fill
@@ -96,6 +101,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
         JKQTPColorDerivationMode errorFillColorDerivationMode;
         /** \brief defines how to derive a symbol fill color for a new graph */
         JKQTPColorDerivationMode symbolFillColorDerivationMode;
+    protected:
+        /** \brief modifies some of the settings to match the defaults for the given JKQTPPlotStyleType (e.g. sets line-width for impulses ...) */
+        void modifyForDefaultStyle(JKQTPPlotStyleType type);
  };
 
 
@@ -111,6 +119,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
      JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent);
      JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties& other);
      JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTBasePlotterStyle& parent);
+     JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTGraphsSpecificStyleProperties& other, const JKQTBasePlotterStyle &parent);
      JKQTGeometricSpecificStyleProperties(const JKQTGeometricSpecificStyleProperties& other)=default;
      JKQTGeometricSpecificStyleProperties(JKQTGeometricSpecificStyleProperties&& other)=default;
      JKQTGeometricSpecificStyleProperties& operator=(const JKQTGeometricSpecificStyleProperties& other)=default;
@@ -124,7 +133,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsSpecificStyleProperties {
          *  \param defaultStyle If a setting cannot be found in \a settings, default values are taken from this object
          *                      By default, this is a default-constructed object
          */
-     void loadSettings(const QSettings &settings, const QString& group, const JKQTGraphsSpecificStyleProperties &defaultStyle);
+     void loadSettings(const QSettings &settings, const QString& group, const JKQTGeometricSpecificStyleProperties &defaultStyle);
 
      /** \brief saves the plot properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object.
          *

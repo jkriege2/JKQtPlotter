@@ -142,7 +142,7 @@ void TestStyling::initPlot()
         Y5<<2.5*exp(-x/10.0)+1.0;
         if (i%5==0) {
             X3<<x;
-            Y3<<(1.5+Y1.last());
+            Y3<<(2.5+Y1.last());
             Y3err<<(double(i+5)/double(Ndata)*0.5);
         }
         if (i>0 && i%20==0) {
@@ -228,7 +228,8 @@ void TestStyling::initPlot()
     graph3->setXColumn(columnX3);
     graph3->setYColumn(columnY3);
     graph3->setYErrorColumn(columnY3err);
-    graph3->setDrawLine(false);
+    graph3->setDrawLine(true);
+    graph3->setYErrorStyle(JKQTPErrorBarsPolygons);
     graph3->setTitle(QObject::tr("sine \\pm errors graph"));
     ui->plot->addGraph(graph3);
 
@@ -318,13 +319,16 @@ void TestStyling::initPlot()
         y+=0.75;
     }
     x=xlineend+1;
-    double dx=(xmax-xlineend-1.0)/static_cast<double>(ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphColors.size());
-    for (auto s: ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphColors) {
+    const int cntFillTests=qMax(ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphColors.size(), ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphFillStyles.size());
+    double dx=(xmax-xlineend-1.0)/static_cast<double>(cntFillTests);
+    for (int i=0; i<cntFillTests; i++) {
+        const auto col=ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphColors.value(i%ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphColors.size(), Qt::black);
+        const auto fs=ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphFillStyles.value(i%ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphFillStyles.size(), Qt::SolidPattern);
         JKQTPGeoLine* l;
-        plotExtra->addGraph(l=new JKQTPGeoLine(plotExtra.data(), x,ycoltest,x,y-0.5)); l->setStyle(s,5);
+        plotExtra->addGraph(l=new JKQTPGeoLine(plotExtra.data(), x,ycoltest,x,y-0.5)); l->setStyle(col,5);
         JKQTPGeoRectangle* r;
         plotExtra->addGraph(r=new JKQTPGeoRectangle(plotExtra.data(), x+dx/2,(ycoltest+y-0.5)/2.0, dx*0.5, y-ycoltest-0.5));
-        r->setStyle(s,1, Qt::SolidLine, JKQTPGetDerivedColor(ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, s), Qt::SolidPattern);
+        r->setStyle(col,1, Qt::SolidLine, JKQTPGetDerivedColor(ui->plot->getPlotter()->getCurrentPlotterStyle().graphsStyle.defaultGraphStyle.fillColorDerivationMode, col), fs);
         x+=dx;
     }
     plotExtra->zoomToFit();

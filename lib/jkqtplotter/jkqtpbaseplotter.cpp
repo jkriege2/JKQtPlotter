@@ -1009,6 +1009,9 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
         basebrushStyle=plotterStyle.graphsStyle.annotationStyle.defaultFillStyle;
         baseSymbol=plotterStyle.graphsStyle.annotationStyle.defaultSymbol;
     }
+    if (type==JKQTPPlotStyleType::Barchart || type==JKQTPPlotStyleType::Boxplot || type==JKQTPPlotStyleType::Impulses) {
+        basePenStyle=Qt::SolidLine;
+    }
     const QColor lineColor=JKQTPGetDerivedColor(baseProps.graphColorDerivationMode, baseColor);
     const QColor errorColor=JKQTPGetDerivedColor(baseProps.errorColorDerivationMode, baseColor);
 
@@ -1016,15 +1019,16 @@ JKQTBasePlotter::JKQTPPen JKQTBasePlotter::getPlotStyle(int i, JKQTPPlotStyleTyp
     p.setStyle(basePenStyle);
     p.setSymbolType(baseSymbol);
     p.setFillStyle(basebrushStyle);
-    p.setErrorFillStyle(basebrushStyle);
+    p.setErrorFillStyle(Qt::SolidPattern);
     p.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultLineWidth));
     p.setFillColor(JKQTPGetDerivedColor(baseProps.fillColorDerivationMode, baseColor));
     p.setErrorLineColor(errorColor);
     p.setErrorFillColor(JKQTPGetDerivedColor(baseProps.errorFillColorDerivationMode, baseColor));
+    //qDebug()<<"baseColor="<<baseColor<<"/"<<baseColor.alphaF()*100.0<<"% --> ErrorFillColor="<<p.errorFillColor()<<"/"<<p.errorFillColor().alphaF()*100.0<<"%";
     p.setErrorLineWidth(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultErrorIndicatorWidth));
     p.setSymbolSize(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultSymbolSize));
     p.setSymbolFillColor(JKQTPGetDerivedColor(baseProps.symbolFillColorDerivationMode, baseColor));
-    p.setSymbolLineWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultSymbolLineSize));
+    p.setSymbolLineWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, baseProps.defaultSymbolLineWidth));
     return p;
 }
 

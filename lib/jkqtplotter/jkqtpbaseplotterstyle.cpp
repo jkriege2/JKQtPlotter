@@ -46,7 +46,7 @@ void JKQTBasePlotterStyle::loadSettings(const QSettings &settings, const QString
     debugShowRegionBoxes=settings.value(group+"debug_show_region_boxes", defaultStyle.debugShowRegionBoxes).toBool();
     debugRegionLineWidth=settings.value(group+"debug_region_linewidth", defaultStyle.debugRegionLineWidth).toDouble();
     plotLabelFontName=settings.value(group+"plot_label_font_name", defaultStyle.plotLabelFontName).toString();
-    plotLabelFontSize=settings.value(group+"plot_label_font_size", defaultStyle.debugRegionLineWidth).toDouble();
+    plotLabelFontSize=settings.value(group+"plot_label_font_size", defaultStyle.plotLabelFontSize).toDouble();
     widgetBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color", jkqtp_QColor2String(defaultStyle.widgetBackgroundBrush.color())).toString()));
     exportBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"widget_background_color_for_export", jkqtp_QColor2String(defaultStyle.exportBackgroundBrush.color())).toString()));
     plotBackgroundBrush=QBrush(jkqtp_String2QColor(settings.value(group+"plot_background_color", jkqtp_QColor2String(defaultStyle.plotBackgroundBrush.color())).toString()));

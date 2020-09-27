@@ -9,20 +9,34 @@
 JKQTGraphsSpecificStyleProperties::JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTBasePlotterStyle &/*parent*/):
     defaultLineWidth(2),
     defaultSymbolSize(10),
-    defaultSymbolLineSize(1),
+    defaultSymbolLineWidth(1),
     defaultErrorIndicatorWidth(1),
     defaultHeadDecoratorStyle(JKQTPLineDecoratorStyle::JKQTPDefaultLineDecorator),
     defaultHeadDecoratorSizeFactor(8.0),
+    errorFillStyle(Qt::SolidPattern),
     graphColorDerivationMode(JKQTPFFCMSameColor),
     fillColorDerivationMode(JKQTPFFCMLighterColor),
     errorColorDerivationMode(JKQTPFFCMDarkerColor),
-    errorFillColorDerivationMode(JKQTPFFCMEvenLighterColor),
+    errorFillColorDerivationMode(JKQTPFFCMLighterAndTransparentColor),
     symbolFillColorDerivationMode(JKQTPFFCMLighterColor)
+{
+    modifyForDefaultStyle(type);
+}
+
+JKQTGraphsSpecificStyleProperties::JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTGraphsSpecificStyleProperties &other):
+    JKQTGraphsSpecificStyleProperties(other)
+{
+    modifyForDefaultStyle(type);
+}
+
+
+void JKQTGraphsSpecificStyleProperties::modifyForDefaultStyle(JKQTPPlotStyleType type)
 {
     switch(type) {
     case JKQTPPlotStyleType::Default:
         break;
     case JKQTPPlotStyleType::Filled:
+        fillColorDerivationMode=JKQTPFFCMLighterAndTransparentColor;
         break;
     case JKQTPPlotStyleType::Impulses:
         defaultLineWidth=3;
@@ -49,10 +63,11 @@ void JKQTGraphsSpecificStyleProperties::loadSettings(const QSettings &settings, 
 {
     defaultLineWidth=settings.value(group+"linewidth", defaultStyle.defaultLineWidth).toDouble();
     defaultSymbolSize=settings.value(group+"symbol_size", defaultStyle.defaultSymbolSize).toDouble();
-    defaultSymbolLineSize=settings.value(group+"symbol_line_size", defaultStyle.defaultLineWidth).toDouble();
-    defaultErrorIndicatorWidth=settings.value(group+"error_indicator_width", defaultStyle.defaultLineWidth).toDouble();
+    defaultSymbolLineWidth=settings.value(group+"symbol_line_width", defaultStyle.defaultSymbolLineWidth).toDouble();
+    defaultErrorIndicatorWidth=settings.value(group+"error_indicator_width", defaultStyle.defaultErrorIndicatorWidth).toDouble();
     defaultHeadDecoratorStyle=String2JKQTPLineDecoratorStyle(settings.value(group+"head_decorator_type", JKQTPLineDecoratorStyle2String(defaultStyle.defaultHeadDecoratorStyle)).toString());
     defaultHeadDecoratorSizeFactor=settings.value(group+"head_decorator_size_factor", defaultStyle.defaultHeadDecoratorSizeFactor).toDouble();
+    errorFillStyle=jkqtp_String2QBrushStyle(settings.value(group+"error_fill_style", jkqtp_QBrushStyle2String(errorFillStyle)).toString());
 
     graphColorDerivationMode=String2JKQTPColorDerivationMode(settings.value(group+"graph_color_mode", JKQTPColorDerivationMode2String(defaultStyle.graphColorDerivationMode)).toString());
     fillColorDerivationMode=String2JKQTPColorDerivationMode(settings.value(group+"fill_color_mode", JKQTPColorDerivationMode2String(defaultStyle.fillColorDerivationMode)).toString());
@@ -66,10 +81,11 @@ void JKQTGraphsSpecificStyleProperties::saveSettings(QSettings &settings, const 
 {
     settings.setValue(group+"linewidth", defaultLineWidth);
     settings.setValue(group+"symbol_size", defaultSymbolSize);
-    settings.setValue(group+"symbol_line_size", defaultSymbolLineSize);
+    settings.setValue(group+"symbol_line_width", defaultSymbolLineWidth);
     settings.setValue(group+"error_indicator_width", defaultErrorIndicatorWidth);
     settings.setValue(group+"head_decorator_size_factor", defaultHeadDecoratorSizeFactor);
     settings.setValue(group+"head_decorator_type", JKQTPLineDecoratorStyle2String(defaultHeadDecoratorStyle));
+    settings.setValue(group+"error_fill_style", jkqtp_QBrushStyle2String(errorFillStyle));
 
     settings.setValue(group+"graph_color_mode", JKQTPColorDerivationMode2String(graphColorDerivationMode));
     settings.setValue(group+"fill_color_mode", JKQTPColorDerivationMode2String(fillColorDerivationMode));
@@ -77,6 +93,7 @@ void JKQTGraphsSpecificStyleProperties::saveSettings(QSettings &settings, const 
     settings.setValue(group+"error_fill_color_mode", JKQTPColorDerivationMode2String(errorFillColorDerivationMode));
     settings.setValue(group+"symbol_fill_color_mode", JKQTPColorDerivationMode2String(symbolFillColorDerivationMode));
 }
+
 
 
 JKQTGeometricSpecificStyleProperties::JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent):
@@ -90,7 +107,7 @@ JKQTGeometricSpecificStyleProperties::JKQTGeometricSpecificStyleProperties(const
 }
 
 JKQTGeometricSpecificStyleProperties::JKQTGeometricSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties &other):
-    JKQTGraphsSpecificStyleProperties(other),
+    JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Geometric, other),
     defaultColor(parent.defaultTextColor),
     defaultLineStyle(Qt::SolidLine),
     defaultSymbol(JKQTPGraphSymbols::JKQTPCross),
@@ -109,8 +126,18 @@ JKQTGeometricSpecificStyleProperties::JKQTGeometricSpecificStyleProperties(JKQTP
 
 }
 
+JKQTGeometricSpecificStyleProperties::JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType type, const JKQTGraphsSpecificStyleProperties &other, const JKQTBasePlotterStyle &parent):
+    JKQTGraphsSpecificStyleProperties(type, other),
+    defaultColor(parent.defaultTextColor),
+    defaultLineStyle(Qt::SolidLine),
+    defaultSymbol(JKQTPGraphSymbols::JKQTPCross),
+    defaultFillStyle(Qt::SolidPattern)
+{
 
-void JKQTGeometricSpecificStyleProperties::loadSettings(const QSettings &settings, const QString &group, const JKQTGraphsSpecificStyleProperties &defaultStyle)
+}
+
+
+void JKQTGeometricSpecificStyleProperties::loadSettings(const QSettings &settings, const QString &group, const JKQTGeometricSpecificStyleProperties &defaultStyle)
 {
     JKQTGraphsSpecificStyleProperties::loadSettings(settings, group, defaultStyle);
     defaultColor=jkqtp_String2QColor(settings.value(group+"color", jkqtp_QColor2String(defaultColor)).toString());
@@ -129,7 +156,7 @@ void JKQTGeometricSpecificStyleProperties::saveSettings(QSettings &settings, con
 }
 
 JKQTAnnotationsSpecificStyleProperties::JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent):
-    JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType::Geometric, parent),
+    JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType::Annotation, parent),
     defaultTextColor(parent.defaultTextColor),
     defaultFontSize(12),
     defaultFontName(parent.defaultFontName)
@@ -138,7 +165,7 @@ JKQTAnnotationsSpecificStyleProperties::JKQTAnnotationsSpecificStyleProperties(c
 }
 
 JKQTAnnotationsSpecificStyleProperties::JKQTAnnotationsSpecificStyleProperties(const JKQTBasePlotterStyle& parent, const JKQTGraphsSpecificStyleProperties &other):
-    JKQTGeometricSpecificStyleProperties(parent, other),
+    JKQTGeometricSpecificStyleProperties(JKQTPPlotStyleType::Annotation, other, parent),
     defaultTextColor(parent.defaultTextColor),
     defaultFontSize(12),
     defaultFontName(parent.defaultFontName)
@@ -256,10 +283,10 @@ void JKQTGraphsBaseStyle::loadSettings(const QSettings &settings, const QString 
 
 
     defaultGraphStyle.loadSettings(settings, group+"graphs_base/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Default, parent));
-    barchartStyle.loadSettings(settings, group+"graphs_barchart/", defaultGraphStyle);
-    boxplotStyle.loadSettings(settings, group+"graphs_boxplot/", defaultGraphStyle);
-    filledStyle.loadSettings(settings, group+"graphs_filled/", defaultGraphStyle);
-    impulseStyle.loadSettings(settings, group+"graphs_impulses/", defaultGraphStyle);
+    barchartStyle.loadSettings(settings, group+"graphs_barchart/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Barchart, defaultGraphStyle));
+    boxplotStyle.loadSettings(settings, group+"graphs_boxplot/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Boxplot, defaultGraphStyle));
+    filledStyle.loadSettings(settings, group+"graphs_filled/", JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Filled, defaultGraphStyle));
+    impulseStyle.loadSettings(settings, group+"graphs_impulses/",JKQTGraphsSpecificStyleProperties(JKQTPPlotStyleType::Impulses,  defaultGraphStyle));
     geometricStyle.loadSettings(settings, group+"graphs_geometric/", JKQTGeometricSpecificStyleProperties(parent, defaultGraphStyle));
     annotationStyle.loadSettings(settings, group+"graphs_annotation/", JKQTAnnotationsSpecificStyleProperties(parent, defaultGraphStyle));
 
