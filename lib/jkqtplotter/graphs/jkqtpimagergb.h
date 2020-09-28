@@ -66,7 +66,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
          * \param parent parent plotter object
          *
          */
-        JKQTPRGBMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
+        JKQTPRGBMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor
          *
@@ -81,7 +81,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
          * \param parent parent plotter object
          *
          */
-        JKQTPRGBMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent);
+        JKQTPRGBMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTPlotter* parent);
 
         /** \brief class constructor
          *
@@ -104,14 +104,14 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
         /** \brief set the plot-data to a given array \a data (red), \a dataG (green), \a dataB (blue) with size \a Nx * \a Ny in row-major ordering and with the given \a datatype */
-        virtual void setData(void* dataR, void* dataG, void* dataB, int Nx, int Ny, JKQTPMathImageDataType datatype);
+        virtual void setData(const void* dataR, const void* dataG, const void* dataB, int Nx, int Ny, JKQTPMathImageDataType datatype);
         /** \brief set the plot-data to a given array \a data (red), \a dataG (green), \a dataB (blue) with size \a Nx * \a Ny in row-major ordering  */
-        virtual void setData(void* dataR, void* dataG, void* dataB,  int Nx, int Ny);
+        virtual void setData(const void* dataR, const void* dataG, const void* dataB,  int Nx, int Ny);
 
         /** \brief set the plot-data to a given array \a data (red) with size \a Nx * \a Ny in row-major ordering and with the given \a datatype  */
-        virtual void setData(void* dataR, int Nx, int Ny, JKQTPMathImageDataType datatype) override;
+        virtual void setData(const void* dataR, int Nx, int Ny, JKQTPMathImageDataType datatype) override;
         /** \brief set the plot-data to a given array \a data (red) with size \a Nx * \a Ny in row-major ordering  */
-        virtual void setData(void* dataR,  int Nx, int Ny) override ;
+        virtual void setData(const void* dataR,  int Nx, int Ny) override ;
 
 
         /** \brief determine min/max data value of the image */
@@ -119,26 +119,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
 
 
         /** \copydoc data */
-        virtual void setDataR(void* __value);
+        virtual void setDataR(const void* __value);
         /** \copydoc data */
-        void* getDataR() const;
+        const void* getDataR() const;
         /** \copydoc datatype */
         void setDatatypeR(JKQTPMathImageDataType __value);
         /** \copydoc datatype */
         JKQTPMathImageDataType getDatatypeR() const;
 
         /** \copydoc dataG */
-        virtual void setDataG(void* __value);
+        virtual void setDataG(const void* __value);
         /** \copydoc dataG */
-        void* getDataG() const;
+        const void* getDataG() const;
         /** \copydoc datatypeG */
         void setDatatypeG(JKQTPMathImageDataType __value);
         /** \copydoc datatypeG */
         JKQTPMathImageDataType getDatatypeG() const;
         /** \copydoc dataB */ 
-        virtual void setDataB(void* __value);
+        virtual void setDataB(const void* __value);
         /** \copydoc dataB */ 
-        void* getDataB() const;
+        const void* getDataB() const;
         /** \copydoc datatypeB */ 
         void setDatatypeB(JKQTPMathImageDataType __value);
         /** \copydoc datatypeB */ 
@@ -330,11 +330,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPRGBMathImage: public JKQTPMathImageBase {
     protected:
         void initObject();
         /** \brief points to the data array, holding the image */
-        void* dataG;
+        const void* dataG;
         /** \brief datatype of the data array data */
         JKQTPMathImageDataType datatypeG;
         /** \brief points to the data array, holding the image */
-        void* dataB;
+        const void* dataB;
         /** \brief datatype of the data array data */
         JKQTPMathImageDataType datatypeB;
 

@@ -46,11 +46,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
     public:
 
         /** \brief class constructor */
-        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
+        JKQTPOverlayImage(double x, double y, double width, double height, const bool* data, int Nx, int Ny, QColor colTrue, JKQTBasePlotter* parent=nullptr);
         JKQTPOverlayImage(JKQTBasePlotter* parent=nullptr);
 
         /** \brief class constructor */
-        JKQTPOverlayImage(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent);
+        JKQTPOverlayImage(double x, double y, double width, double height, const bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent);
         JKQTPOverlayImage(JKQTPlotter* parent);
 
         /** \brief plots the graph to the plotter object specified as parent */
@@ -85,19 +85,19 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPOverlayImage: public JKQTPImageBase {
         /** \copydoc Ny */ 
         int getNy() const;
         /** \copydoc data */ 
-        virtual void setData(bool*  __value);
+        virtual void setData(const bool*  __value);
         /** \copydoc data */ 
-        bool *getData() const;
+        const bool *getData() const;
 
         /** \brief set the plot-data to a given array \a data with size \a Nx * \a Ny in row-major ordering */
-        virtual void setData(bool* data, int Nx, int Ny);
+        virtual void setData(const bool* data, int Nx, int Ny);
 
         /** \brief return the data used for plotting as a QVector<double> in row-major data-ordering */
         QVector<double> getDataAsDoubleVector() const;
 
     protected:
         /** \brief points to the data array, holding the image */
-        bool* data;
+        const bool* data;
         /** \brief width of the data array data in pt */
         int Nx;
         /** \brief height of the data array data in pt */

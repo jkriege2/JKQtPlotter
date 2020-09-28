@@ -32,7 +32,7 @@
 #include <QClipboard>
 
 
-JKQTPOverlayImage::JKQTPOverlayImage(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTBasePlotter* parent):
+JKQTPOverlayImage::JKQTPOverlayImage(double x, double y, double width, double height, const bool *data, int Nx, int Ny, QColor colTrue, JKQTBasePlotter* parent):
     JKQTPImageBase(x, y, width, height, parent)
 {
     actSaveImage=new QAction(tr("Save JKQTPOverlayImage ..."), this);
@@ -59,7 +59,7 @@ JKQTPOverlayImage::JKQTPOverlayImage(JKQTBasePlotter *parent):
     this->trueColor=QColor("red");
 }
 
-JKQTPOverlayImage::JKQTPOverlayImage(double x, double y, double width, double height, bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent):
+JKQTPOverlayImage::JKQTPOverlayImage(double x, double y, double width, double height, const bool* data, int Nx, int Ny, QColor colTrue, JKQTPlotter* parent):
     JKQTPImageBase(x, y, width, height, parent)
 {
     actSaveImage=new QAction(tr("Save JKQTPOverlayImage ..."), this);
@@ -185,17 +185,17 @@ int JKQTPOverlayImage::getNy() const
     return this->Ny;
 }
 
-void JKQTPOverlayImage::setData(bool *__value)
+void JKQTPOverlayImage::setData(const bool *__value)
 {
     this->data = __value;
 }
 
-bool *JKQTPOverlayImage::getData() const
+const bool *JKQTPOverlayImage::getData() const
 {
     return this->data;
 }
 
-void JKQTPOverlayImage::setData(bool* data, int Nx, int Ny) {
+void JKQTPOverlayImage::setData(const bool *data, int Nx, int Ny) {
     this->data=data;
     this->Nx=Nx;
     this->Ny=Ny;
@@ -365,15 +365,16 @@ int JKQTPColumnOverlayImageEnhanced::getImageColumn() const
     return this->imageColumn;
 }
 void JKQTPColumnOverlayImageEnhanced::draw(JKQTPEnhancedPainter &painter) {
-    double* d=parent->getDatastore()->getColumnPointer(imageColumn,0);
+    const double* d=parent->getDatastore()->getColumnPointer(imageColumn,0);
     size_t imgSize=parent->getDatastore()->getRows(imageColumn);
-    this->data=(bool*)malloc(imgSize*sizeof(bool));
+    bool* locData=static_cast<bool*>(malloc(imgSize*sizeof(bool)));
+    this->data=locData;
     this->Ny= static_cast<int>(imgSize/this->Nx);
     for (size_t i=0; i<imgSize; i++) {
-        data[i]=(d[i]!=0.0);
+        locData[i]=(d[i]!=0.0);
     }
     JKQTPOverlayImageEnhanced::draw(painter);
-    free(data);
+    free(locData);
     data=nullptr;
 }
 

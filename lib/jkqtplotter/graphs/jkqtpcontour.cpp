@@ -63,7 +63,7 @@ void JKQTPContourPlot::draw(JKQTPEnhancedPainter &painter)
 
     int64_t colChecksum=-1;
     if (data && Nx*Ny>0) {
-        colChecksum=static_cast<int64_t>(qChecksum(reinterpret_cast<char*>(data), Nx*Ny* getSampleSize()));
+        colChecksum=static_cast<int64_t>(qChecksum(reinterpret_cast<const char*>(data), Nx*Ny* getSampleSize()/sizeof(char)));
     }
     /*if (parent && parent->getDatastore() && imageColumn>=0) {
         colChecksum=static_cast<int64_t>(parent->getDatastore()->getColumnChecksum(imageColumn));

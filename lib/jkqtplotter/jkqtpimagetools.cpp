@@ -754,7 +754,7 @@ JKQTPMathImageModifierMode JKQTPColorPaletteWithModifierStyleAndToolsMixin::getM
 }
 
 
-void JKQTPColorPaletteWithModifierStyleAndToolsMixin::modifyImage(QImage &img, void *dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax)
+void JKQTPColorPaletteWithModifierStyleAndToolsMixin::modifyImage(QImage &img, const void *dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax)
 {
     JKQTPModifyImage(img, modifierMode, dataModifier, datatypeModifier, Nx, Ny, internalModifierMin, internalModifierMax);
 }

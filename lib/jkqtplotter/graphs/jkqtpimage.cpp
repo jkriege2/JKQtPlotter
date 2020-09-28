@@ -132,62 +132,68 @@ void JKQTPImageBase::plotImage(JKQTPEnhancedPainter& painter, QImage& image, dou
     }
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
-    double xmin=parent->getXMin();
-    double xmax=parent->getXMax();
-    double ymin=parent->getYMin();
-    double ymax=parent->getYMax();
-    QPointF pp1=transform(xmin,ymax);
-    QPointF pp2=transform(xmax,ymin);
-    QRectF pr(pp1, pp2);
+    // determine full shown plot rectangle in pixel coordinates
+    const double xmin=parent->getXMin();
+    const double xmax=parent->getXMax();
+    const double ymin=parent->getYMin();
+    const double ymax=parent->getYMax();
+    QPointF pix_plot_topleft=transform(xmin,ymax);
+    QPointF pix_plot_bottomright=transform(xmax,ymin);
+    QRectF pix_plotrectangle(pix_plot_topleft, pix_plot_bottomright);
 
+    // these flags say, whether to mirror the image in one or the other direction, before plotting
     bool mirrx=false;
     bool mirry=false;
 
-    QPointF p1=transform(x,y+height);
-    QPointF p2=transform(x+width,y);
-    if (p1.x()>p2.x()) {
-        double tmp=p1.x();
-        p1.setX(p2.x());
-        p2.setX(tmp);
-        tmp=pp1.x();
-        pp1.setX(pp2.x());
-        pp2.setX(tmp);
+    // determine pixel coordinates of image (x..x+width / y..y+width)
+    QPointF pix_topelft=transform(x,y+height);
+    QPointF pix_bottomright=transform(x+width,y);
+    if (pix_topelft.x()>pix_bottomright.x()) {
+        double tmp=pix_topelft.x();
+        pix_topelft.setX(pix_bottomright.x());
+        pix_bottomright.setX(tmp);
+        tmp=pix_plot_topleft.x();
+        pix_plot_topleft.setX(pix_plot_bottomright.x());
+        pix_plot_bottomright.setX(tmp);
         mirrx=true;
     }
-    if (p1.y()>p2.y()) {
-        double tmp=p1.y();
-        p1.setY(p2.y());
-        p2.setY(tmp);
-        tmp=pp1.y();
-        pp1.setY(pp2.y());
-        pp2.setY(tmp);
+    if (pix_topelft.y()>pix_bottomright.y()) {
+        double tmp=pix_topelft.y();
+        pix_topelft.setY(pix_bottomright.y());
+        pix_bottomright.setY(tmp);
+        tmp=pix_plot_topleft.y();
+        pix_plot_topleft.setY(pix_plot_bottomright.y());
+        pix_plot_bottomright.setY(tmp);
         mirry=true;
     }
-    QRectF r(p1, p2);
+    const QRectF pix_imagerect(pix_topelft, pix_bottomright);
 
 
 
     if (image.width()>0 && image.height()>0 && !image.isNull()) {
-        if (r.width()<2*pr.width() && r.height()<2*pr.height()) {
+        // now we determine, whether to directly draw the image (if its size is smaller than twice the plot rectangle,
+        // or not ...
+        if (pix_imagerect.width()<2.0*pix_plotrectangle.width() && pix_imagerect.height()<2.0*pix_plotrectangle.height()) {
             //painter.drawImage(QRectF(p1.x(), p2.y(), fabs(p2.x()-p1.x()), fabs(p2.y()-p1.y())), image);
-            painter.drawImage(QPointF(p1.x(), p1.y()), image.mirrored(mirrx, mirry).scaled(QSize(fabs(p2.x()-p1.x()), fabs(p2.y()-p1.y())), Qt::IgnoreAspectRatio, Qt::FastTransformation));
+            painter.drawImage(QPointF(pix_topelft.x(), pix_topelft.y()), image.mirrored(mirrx, mirry).scaled(QSize(fabs(pix_bottomright.x()-pix_topelft.x()), fabs(pix_bottomright.y()-pix_topelft.y())), Qt::IgnoreAspectRatio, Qt::FastTransformation));
             //qDebug()<<"\nimage.size  = "<<image.size() <<" SIMPLE!";
         } else {
-            double pixwidth=fabs(p2.x()-p1.x())/static_cast<double>(image.width());
-            double pixheight=fabs(p2.y()-p1.y())/static_cast<double>(image.height());
+            // ... if the image is much larger than the plot rectangle, we cut a potion from the image, before plotting
+            const double pixwidth=fabs(pix_bottomright.x()-pix_topelft.x())/static_cast<double>(image.width());
+            const double pixheight=fabs(pix_bottomright.y()-pix_topelft.y())/static_cast<double>(image.height());
             //qDebug()<<"\nimage.size  = "<<image.size();
             //qDebug()<<"size  = "<<QSizeF(width, height);
             //qDebug()<<"pixsize  = "<<QSizeF(pixwidth, pixheight);
             //qDebug()<<"p1  = "<<p1<< "    p2  = "<<p2;
             //qDebug()<<"pp1 = "<<pp1<<"    pp2 = "<<pp2;
-            QPointF ps1(floor((pp1.x()-p1.x())/pixwidth), floor((pp1.y()-p1.y())/pixheight));
-            QPointF ps2=ps1+QPointF(ceil(fabs(pp2.x()-pp1.x())/pixwidth), ceil(fabs(pp2.y()-pp1.y())/pixheight));
+            QPointF ps1(floor((pix_plot_topleft.x()-pix_topelft.x())/pixwidth), floor((pix_plot_topleft.y()-pix_topelft.y())/pixheight));
+            QPointF ps2=ps1+QPointF(ceil(fabs(pix_plot_bottomright.x()-pix_plot_topleft.x())/pixwidth), ceil(fabs(pix_plot_bottomright.y()-pix_plot_topleft.y())/pixheight));
             if (ps1.x()<0) ps1.setX(0);
             if (ps1.y()<0) ps1.setY(0);
             if (ps2.x()>image.width()) ps2.setX(image.width());
             if (ps2.y()>image.height()) ps2.setY(image.height());
-            QRectF source(ps1, ps2);
-            QRectF target(p1.x()+ps1.x()*pixwidth, p1.y()+ps1.y()*pixheight, source.width()*pixwidth, source.height()*pixheight);
+            const QRectF source(ps1, ps2);
+            const QRectF target(pix_topelft.x()+ps1.x()*pixwidth, pix_topelft.y()+ps1.y()*pixheight, source.width()*pixwidth, source.height()*pixheight);
             //qDebug()<<"source = "<<source;
             //qDebug()<<"target = "<<target;
             painter.drawImage(target, image.mirrored(mirrx, mirry), source);
@@ -376,7 +382,7 @@ void JKQTPImage::copyImagePlotAsImage()
 
 
 
-JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTBasePlotter* parent):
+JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTBasePlotter* parent):
     JKQTPImageBase(x, y, width, height, parent)
 {
     this->data=data;
@@ -388,7 +394,7 @@ JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double 
 }
 
 
-JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTPlotter* parent):
+JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTPlotter* parent):
     JKQTPImageBase(x, y, width, height, parent)
 {
     this->data=data;
@@ -433,12 +439,12 @@ int JKQTPMathImageBase::getNy() const
     return this->Ny;
 }
 
-void JKQTPMathImageBase::setData(void *__value)
+void JKQTPMathImageBase::setData(const void *__value)
 {
     this->data = __value;
 }
 
-void *JKQTPMathImageBase::getData() const
+const void *JKQTPMathImageBase::getData() const
 {
     return this->data;
 }
@@ -453,12 +459,12 @@ JKQTPMathImageDataType JKQTPMathImageBase::getDatatype() const
     return this->datatype;
 }
 
-void JKQTPMathImageBase::setDataModifier(void *__value)
+void JKQTPMathImageBase::setDataModifier(const void *__value)
 {
     this->dataModifier = __value;
 }
 
-void *JKQTPMathImageBase::getDataModifier() const
+const void *JKQTPMathImageBase::getDataModifier() const
 {
     return this->dataModifier;
 }
@@ -520,20 +526,20 @@ JKQTPMathImageBase::JKQTPMathImageBase(double x, double y, double width, double 
     datatypeModifier=JKQTPMathImageDataType::DoubleArray;
 }
 
-void JKQTPMathImageBase::setData(void* data, int Nx, int Ny, JKQTPMathImageDataType datatype) {
+void JKQTPMathImageBase::setData(const void *data, int Nx, int Ny, JKQTPMathImageDataType datatype) {
     this->data=data;
     this->datatype=datatype;
     this->Nx=Nx;
     this->Ny=Ny;
 }
 
-void JKQTPMathImageBase::setData(void* data, int Nx, int Ny) {
+void JKQTPMathImageBase::setData(const void* data, int Nx, int Ny) {
     this->data=data;
     this->Nx=Nx;
     this->Ny=Ny;
 }
 
-void JKQTPMathImageBase::setDataModifier(void *data, JKQTPMathImageDataType datatype)
+void JKQTPMathImageBase::setDataModifier(const void *data, JKQTPMathImageDataType datatype)
 {
     this->dataModifier=data;
     this->datatypeModifier=datatype;
@@ -546,44 +552,44 @@ void JKQTPMathImageBase::getDataMinMax(double& imin, double& imax) {
     if (!data) return;
     switch(datatype) {
         case JKQTPMathImageDataType::DoubleArray:
-            imin= JKQTPImagePlot_getImageMin<double>(static_cast<double*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<double>(static_cast<double*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<double>(static_cast<const double*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<double>(static_cast<const double*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::FloatArray:
-            imin= JKQTPImagePlot_getImageMin<float>(static_cast<float*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<float>(static_cast<float*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<float>(static_cast<const float*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<float>(static_cast<const float*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt8Array:
-            imin= JKQTPImagePlot_getImageMin<uint8_t>(static_cast<uint8_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint8_t>(static_cast<uint8_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint8_t>(static_cast<const uint8_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint8_t>(static_cast<const uint8_t*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt16Array:
-            imin= JKQTPImagePlot_getImageMin<uint16_t>(static_cast<uint16_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint16_t>(static_cast<uint16_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint16_t>(static_cast<const uint16_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint16_t>(static_cast<const uint16_t*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt32Array:
-            imin= JKQTPImagePlot_getImageMin<uint32_t>(static_cast<uint32_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint32_t>(static_cast<uint32_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint32_t>(static_cast<const uint32_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint32_t>(static_cast<const uint32_t*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt64Array:
-            imin= JKQTPImagePlot_getImageMin<uint64_t>(static_cast<uint64_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint64_t>(static_cast<uint64_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint64_t>(static_cast<const uint64_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint64_t>(static_cast<const uint64_t*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int8Array:
-            imin= JKQTPImagePlot_getImageMin<int8_t>(static_cast<int8_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int8_t>(static_cast<int8_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int8_t>(static_cast<const int8_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int8_t>(static_cast<const int8_t*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int16Array:
-            imin= JKQTPImagePlot_getImageMin<int16_t>(static_cast<int16_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int16_t>(static_cast<int16_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int16_t>(static_cast<const int16_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int16_t>(static_cast<const int16_t*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int32Array:
-            imin= JKQTPImagePlot_getImageMin<int32_t>(static_cast<int32_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int32_t>(static_cast<int32_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int32_t>(static_cast<const int32_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int32_t>(static_cast<const int32_t*>(data), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int64Array:
-            imin= JKQTPImagePlot_getImageMin<int64_t>(static_cast<int64_t*>(data), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int64_t>(static_cast<int64_t*>(data), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int64_t>(static_cast<const int64_t*>(data), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int64_t>(static_cast<const int64_t*>(data), Nx, Ny);
             break;
     }
 }
@@ -595,44 +601,44 @@ void JKQTPMathImageBase::getModifierMinMax(double &imin, double &imax)
     if (!dataModifier) return;
     switch(datatypeModifier) {
         case JKQTPMathImageDataType::DoubleArray:
-            imin= JKQTPImagePlot_getImageMin<double>(static_cast<double*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<double>(static_cast<double*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<double>(static_cast<const double*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<double>(static_cast<const double*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::FloatArray:
-            imin= JKQTPImagePlot_getImageMin<float>(static_cast<float*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<float>(static_cast<float*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<float>(static_cast<const float*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<float>(static_cast<const float*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt8Array:
-            imin= JKQTPImagePlot_getImageMin<uint8_t>(static_cast<uint8_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint8_t>(static_cast<uint8_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint8_t>(static_cast<const uint8_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint8_t>(static_cast<const uint8_t*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt16Array:
-            imin= JKQTPImagePlot_getImageMin<uint16_t>(static_cast<uint16_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint16_t>(static_cast<uint16_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint16_t>(static_cast<const uint16_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint16_t>(static_cast<const uint16_t*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt32Array:
-            imin= JKQTPImagePlot_getImageMin<uint32_t>(static_cast<uint32_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint32_t>(static_cast<uint32_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint32_t>(static_cast<const uint32_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint32_t>(static_cast<const uint32_t*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::UInt64Array:
-            imin= JKQTPImagePlot_getImageMin<uint64_t>(static_cast<uint64_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<uint64_t>(static_cast<uint64_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<uint64_t>(static_cast<const uint64_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<uint64_t>(static_cast<const uint64_t*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int8Array:
-            imin= JKQTPImagePlot_getImageMin<int8_t>(static_cast<int8_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int8_t>(static_cast<int8_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int8_t>(static_cast<const int8_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int8_t>(static_cast<const int8_t*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int16Array:
-            imin= JKQTPImagePlot_getImageMin<int16_t>(static_cast<int16_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int16_t>(static_cast<int16_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int16_t>(static_cast<const int16_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int16_t>(static_cast<const int16_t*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int32Array:
-            imin= JKQTPImagePlot_getImageMin<int32_t>(static_cast<int32_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int32_t>(static_cast<int32_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int32_t>(static_cast<const int32_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int32_t>(static_cast<const int32_t*>(dataModifier), Nx, Ny);
             break;
         case JKQTPMathImageDataType::Int64Array:
-            imin= JKQTPImagePlot_getImageMin<int64_t>(static_cast<int64_t*>(dataModifier), Nx, Ny);
-            imax= JKQTPImagePlot_getImageMax<int64_t>(static_cast<int64_t*>(dataModifier), Nx, Ny);
+            imin= JKQTPImagePlot_getImageMin<int64_t>(static_cast<const int64_t*>(dataModifier), Nx, Ny);
+            imax= JKQTPImagePlot_getImageMax<int64_t>(static_cast<const int64_t*>(dataModifier), Nx, Ny);
             break;
     }
 }
@@ -641,34 +647,34 @@ QVector<double> JKQTPMathImageBase::getDataAsDoubleVector() const
 {
     switch(datatype) {
         case JKQTPMathImageDataType::DoubleArray:
-            return JKQTPImagePlot_arrayToDVector(static_cast<double*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const double*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::FloatArray:
-            return JKQTPImagePlot_arrayToDVector(static_cast<float*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const float*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::UInt8Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint8_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint8_t*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::UInt16Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint16_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint16_t*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::UInt32Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint32_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint32_t*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::UInt64Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint64_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint64_t*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::Int8Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int8_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int8_t*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::Int16Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int16_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int16_t*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::Int32Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int32_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int32_t*>(data), Nx*Ny);
             break;
         case JKQTPMathImageDataType::Int64Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int64_t*>(data), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int64_t*>(data), Nx*Ny);
             break;
     }
     QVector<double> res;
@@ -679,25 +685,25 @@ QVector<double> JKQTPMathImageBase::getDataModifierAsDoubleVector() const
 {
     switch(datatypeModifier) {
         case JKQTPMathImageDataType::DoubleArray:
-            return JKQTPImagePlot_arrayToDVector(static_cast<double*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const double*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::FloatArray:
-            return JKQTPImagePlot_arrayToDVector(static_cast<float*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const float*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::UInt8Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint8_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint8_t*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::UInt16Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint16_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint16_t*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::UInt32Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint32_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint32_t*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::UInt64Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<uint64_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const uint64_t*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::Int8Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int8_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int8_t*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::Int16Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int16_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int16_t*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::Int32Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int32_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int32_t*>(dataModifier), Nx*Ny);
         case JKQTPMathImageDataType::Int64Array:
-            return JKQTPImagePlot_arrayToDVector(static_cast<int64_t*>(dataModifier), Nx*Ny);
+            return JKQTPImagePlot_arrayToDVector(static_cast<const int64_t*>(dataModifier), Nx*Ny);
     }
     QVector<double> res;
     return res;
@@ -729,7 +735,7 @@ void JKQTPMathImage::initJKQTPMathImage() {
     this->autoModifierRange=true;
 }
 
-JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTBasePlotter* parent):
+JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTBasePlotter* parent):
     JKQTPMathImageBase(x, y, width, height, datatype, data, Nx, Ny, parent),
     JKQTPColorPaletteWithModifierStyleAndToolsMixin(parent)
 {
@@ -747,7 +753,7 @@ JKQTPMathImage::JKQTPMathImage(JKQTBasePlotter *parent):
 
 
 
-JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, void* data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent):
+JKQTPMathImage::JKQTPMathImage(double x, double y, double width, double height, JKQTPMathImageDataType datatype, const void *data, int Nx, int Ny, JKQTPMathImageColorPalette palette, JKQTPlotter* parent):
     JKQTPMathImage(x, y, width, height, datatype, data, Nx, Ny, palette, parent->getPlotter())
 {
 }
@@ -983,16 +989,16 @@ QImage JKQTPMathImage::drawImage() {
     getDataMinMax(internalDataMin, internalDataMax);
     getModifierMinMax(internalModifierMin, internalModifierMax);
     switch(datatype) {
-        case JKQTPMathImageDataType::DoubleArray: JKQTPImageTools::array2image<double>(static_cast<double*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::FloatArray: JKQTPImageTools::array2image<float>(static_cast<float*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::UInt8Array: JKQTPImageTools::array2image<uint8_t>(static_cast<uint8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::UInt16Array: JKQTPImageTools::array2image<uint16_t>(static_cast<uint16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::UInt32Array: JKQTPImageTools::array2image<uint32_t>(static_cast<uint32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::UInt64Array: JKQTPImageTools::array2image<uint64_t>(static_cast<uint64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::Int8Array: JKQTPImageTools::array2image<int8_t>(static_cast<int8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::Int16Array: JKQTPImageTools::array2image<int16_t>(static_cast<int16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::Int32Array: JKQTPImageTools::array2image<int32_t>(static_cast<int32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
-        case JKQTPMathImageDataType::Int64Array: JKQTPImageTools::array2image<int64_t>(static_cast<int64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::DoubleArray: JKQTPImageTools::array2image<double>(static_cast<const double*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::FloatArray: JKQTPImageTools::array2image<float>(static_cast<const float*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::UInt8Array: JKQTPImageTools::array2image<uint8_t>(static_cast<const uint8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::UInt16Array: JKQTPImageTools::array2image<uint16_t>(static_cast<const uint16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::UInt32Array: JKQTPImageTools::array2image<uint32_t>(static_cast<const uint32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::UInt64Array: JKQTPImageTools::array2image<uint64_t>(static_cast<const uint64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::Int8Array: JKQTPImageTools::array2image<int8_t>(static_cast<const int8_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::Int16Array: JKQTPImageTools::array2image<int16_t>(static_cast<const int16_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::Int32Array: JKQTPImageTools::array2image<int32_t>(static_cast<const int32_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
+        case JKQTPMathImageDataType::Int64Array: JKQTPImageTools::array2image<int64_t>(static_cast<const int64_t*>(data), Nx, Ny, img, palette, internalDataMin, internalDataMax, rangeMinFailAction, rangeMaxFailAction, rangeMinFailColor, rangeMaxFailColor, nanColor, infColor); break;
     }
     modifyImage(img, dataModifier, datatypeModifier, Nx, Ny, internalModifierMin, internalModifierMax);
     return img;

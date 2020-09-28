@@ -549,7 +549,7 @@ inline QVector<double> JKQTPImagePlot_BarrayToDVector(const bool* input, int N) 
 
  */
 template <class T>
-inline double JKQTPImagePlot_getImageMin(T* dbl, int width, int height)
+inline double JKQTPImagePlot_getImageMin(const T* dbl, int width, int height)
 {
     if (!dbl || width<=0 || height<=0)
             return 0;
@@ -580,7 +580,7 @@ inline double JKQTPImagePlot_getImageMin(T* dbl, int width, int height)
 
  */
 template <class T>
-inline double JKQTPImagePlot_getImageMax(T* dbl, int width, int height)
+inline double JKQTPImagePlot_getImageMax(const T* dbl, int width, int height)
 {
     if (!dbl || width<=0 || height<=0)
             return 0;
@@ -623,7 +623,7 @@ inline double JKQTPImagePlot_getImageMax(T* dbl, int width, int height)
            leave alpha as it is.
 */
 template <class T>
-inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QImage &img, int channel, double minColor, double maxColor, JKQTPRGBMathImageRGBMode rgbMode=JKQTPRGBMathImageModeRGBMode, bool logScale=false, double logBase=10.0)
+inline void JKQTPImagePlot_array2RGBimage(const T* dbl_in, int width, int height, QImage &img, int channel, double minColor, double maxColor, JKQTPRGBMathImageRGBMode rgbMode=JKQTPRGBMathImageModeRGBMode, bool logScale=false, double logBase=10.0)
 {
     if (!dbl_in || width<=0 || height<=0)
         return;
@@ -653,16 +653,18 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
     }
 
 
-    T* dbl=dbl_in;
+    const T* dbl=dbl_in;
+    T* dbllog=nullptr;
     if (logScale) {
         double logB=log10(logBase);
-        dbl=static_cast<T*>(malloc(width*height*sizeof(T)));
+        dbllog=static_cast<T*>(malloc(width*height*sizeof(T)));
         //memcpy(dbl, dbl_in, width*height*sizeof(T));
         for (int i=0; i<width*height; i++) {
-            dbl[i]=log10(dbl_in[i])/logB;
+            dbllog[i]=log10(dbl_in[i])/logB;
         }
         min=log10(min)/logB;
         max=log10(max)/logB;
+        dbl=dbllog;
     }
     double delta=max-min;
 
@@ -864,7 +866,7 @@ inline void JKQTPImagePlot_array2RGBimage(T* dbl_in, int width, int height, QIma
        }
      }
 
-    if (logScale) free(dbl);
+    if (logScale) free(dbllog);
 }
 
 
@@ -1069,7 +1071,7 @@ QString JKQTCOMMON_LIB_EXPORT ModifierModeToString(const JKQTPMathImageModifierM
 /** \brief modify the given image \a img, using  modifier image \a dataModifier (of type \a datatypeModifier and size \a Nx * \a Ny), using values in the range \a internalModifierMin ... \a internalModifierMax )
     \ingroup jkqtplotter_imagelots_tools
  */
-void JKQTCOMMON_LIB_EXPORT JKQTPModifyImage(QImage& img, JKQTPMathImageModifierMode modifierMode, void* dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
+void JKQTCOMMON_LIB_EXPORT JKQTPModifyImage(QImage& img, JKQTPMathImageModifierMode modifierMode, const void* dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
 
 
 

@@ -315,7 +315,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPColorPaletteWithModifierStyleAndToolsMixin : p
 
         /** \brief modify the given image \a img, using  modifier image \a dataModifier (of type \a datatypeModifier and size \a Nx * \a Ny), using values in the range \a internalModifierMin ... \a internalModifierMax
          */
-        void modifyImage(QImage& img, void* dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
+        void modifyImage(QImage& img, const void* dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax);
 
     protected:
 

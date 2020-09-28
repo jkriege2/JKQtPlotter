@@ -2986,7 +2986,7 @@ QString ModifierModeToString(const JKQTPMathImageModifierMode &mode) {
     return "none";
 }
 
-void JKQTPModifyImage(QImage &img, JKQTPMathImageModifierMode modifierMode, void *dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax)
+void JKQTPModifyImage(QImage &img, JKQTPMathImageModifierMode modifierMode, const void *dataModifier, JKQTPMathImageDataType datatypeModifier, int Nx, int Ny, double internalModifierMin, double internalModifierMax)
 {
     if (!dataModifier) return;
     //getModifierMinMax(internalModifierMin, internalModifierMax);
@@ -3011,16 +3011,16 @@ void JKQTPModifyImage(QImage &img, JKQTPMathImageModifierMode modifierMode, void
         }
         //qDebug()<<"mod: "<<modifierMode<<"  ch:"<<modChannel<<"  rgb:"<<rgbModMode;
         switch(datatypeModifier) {
-            case JKQTPMathImageDataType::DoubleArray: JKQTPImagePlot_array2RGBimage<double>(static_cast<double*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::FloatArray: JKQTPImagePlot_array2RGBimage<float>(static_cast<float*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::UInt8Array: JKQTPImagePlot_array2RGBimage<uint8_t>(static_cast<uint8_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::UInt16Array: JKQTPImagePlot_array2RGBimage<uint16_t>(static_cast<uint16_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::UInt32Array: JKQTPImagePlot_array2RGBimage<uint32_t>(static_cast<uint32_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::UInt64Array: JKQTPImagePlot_array2RGBimage<uint64_t>(static_cast<uint64_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::Int8Array: JKQTPImagePlot_array2RGBimage<int8_t>(static_cast<int8_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::Int16Array: JKQTPImagePlot_array2RGBimage<int16_t>(static_cast<int16_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::Int32Array: JKQTPImagePlot_array2RGBimage<int32_t>(static_cast<int32_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
-            case JKQTPMathImageDataType::Int64Array: JKQTPImagePlot_array2RGBimage<int64_t>(static_cast<int64_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::DoubleArray: JKQTPImagePlot_array2RGBimage<double>(static_cast<const double*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::FloatArray: JKQTPImagePlot_array2RGBimage<float>(static_cast<const float*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt8Array: JKQTPImagePlot_array2RGBimage<uint8_t>(static_cast<const uint8_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt16Array: JKQTPImagePlot_array2RGBimage<uint16_t>(static_cast<const uint16_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt32Array: JKQTPImagePlot_array2RGBimage<uint32_t>(static_cast<const uint32_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::UInt64Array: JKQTPImagePlot_array2RGBimage<uint64_t>(static_cast<const uint64_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int8Array: JKQTPImagePlot_array2RGBimage<int8_t>(static_cast<const int8_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int16Array: JKQTPImagePlot_array2RGBimage<int16_t>(static_cast<const int16_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int32Array: JKQTPImagePlot_array2RGBimage<int32_t>(static_cast<const int32_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
+            case JKQTPMathImageDataType::Int64Array: JKQTPImagePlot_array2RGBimage<int64_t>(static_cast<const int64_t*>(dataModifier), Nx, Ny, img, modChannel, internalModifierMin, internalModifierMax, rgbModMode); break;
         }
     }
 
