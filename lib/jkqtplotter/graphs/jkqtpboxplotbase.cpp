@@ -381,7 +381,7 @@ void JKQTPBoxplotElementBase::setPercentile75(double __value)
     this->percentile75 = __value;
 }
 
-void JKQTPBoxplotElementBase::setData(double pos, double min, double q75, double median, double mean, double q25, double max)
+void JKQTPBoxplotElementBase::setData(double pos, double min, double q25, double median, double mean, double q75, double max)
 {
     this->pos=pos;
     this->min=min;

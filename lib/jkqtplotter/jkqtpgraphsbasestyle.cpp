@@ -49,11 +49,14 @@ void JKQTGraphsSpecificStyleProperties::modifyForDefaultStyle(JKQTPPlotStyleType
     case JKQTPPlotStyleType::Boxplot:
         defaultLineWidth=1;
         fillColorDerivationMode=JKQTPFFCMWhite;
+        graphColorDerivationMode=JKQTPFFCMSameNonTransparentColor;
         break;
     case JKQTPPlotStyleType::Annotation:
+        graphColorDerivationMode=JKQTPFFCMSameNonTransparentColor;
         defaultSymbolSize=16;
         break;
     case JKQTPPlotStyleType::Geometric:
+        graphColorDerivationMode=JKQTPFFCMSameNonTransparentColor;
         fillColorDerivationMode=JKQTPFFCMFullyTransparentColor;
         break;
     }

@@ -230,14 +230,20 @@ enum JKQTPColorDerivationMode {
     JKQTPFFCMGrey50, /*!< \brief fill with 50% grey */
     JKQTPFFCMGrey25, /*!< \brief fill with 25% grey */
     JKQTPFFCMWhite, /*!< \brief fill with white */
-    JKQTPFFCMTransparentBlack, /*!< \brief fill with black, slightly transparent */
-    JKQTPFFCMTransparentGrey75, /*!< \brief fill with 75% grey, slightly transparent */
-    JKQTPFFCMTransparentGrey50, /*!< \brief fill with 50% grey, slightly transparent */
-    JKQTPFFCMTransparentGrey25, /*!< \brief fill with 25% grey, slightly transparent */
-    JKQTPFFCMTransparentWhite, /*!< \brief fill with white, slightly transparent */
+    JKQTPFFCMBlackTransparent, /*!< \brief fill with black, slightly transparent */
+    JKQTPFFCMGrey75Transparent, /*!< \brief fill with 75% grey, slightly transparent */
+    JKQTPFFCMGrey50Transparent, /*!< \brief fill with 50% grey, slightly transparent */
+    JKQTPFFCMGrey25Transparent, /*!< \brief fill with 25% grey, slightly transparent */
+    JKQTPFFCMWhiteTransparent, /*!< \brief fill with white, slightly transparent */
     JKQTPFFCMSameColor, /*!< \brief fill with the same color */
+    JKQTPFFCMSameNonTransparentColor, /*!< \brief fill with the same color, but remove any transparency (if any) */
+    JKQTPFFCMSameMoreTransparentColor, /*!< \brief fill with the a partly transparent color */
+    JKQTPFFCMSameEvenMoreTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMMoreTransparentColor */
+    JKQTPFFCMSameLessTransparentColor, /*!< \brief fill with the a partly transparent color */
+    JKQTPFFCMSameEvenLessTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMLessTransparentColor*/
     JKQTPFFCMInvertedColor, /*!< \brief fill with the inverted color */
-    JKQTPFFCMTransparentInvertedColor, /*!< \brief fill with the inverted color, slightly transparent */
+    JKQTPFFCMInvertedTransparentColor, /*!< \brief fill with the inverted color, slightly transparent */
+    JKQTPFFCMInvertedNonTransparentColor, /*!< \brief fill with the inverted color, non-transparent (even if the basecolor had some transparency) */
     JKQTPFFCMLighterColor, /*!< \brief fill with the a lighter color */
     JKQTPFFCMEvenLighterColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor */
     JKQTPFFCMDarkerColor, /*!< \brief fill with the a darker color */
@@ -246,10 +252,10 @@ enum JKQTPColorDerivationMode {
     JKQTPFFCMEvenLighterAndTransparentColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor, that is in addition a bit transparent */
     JKQTPFFCMDarkerAndTransparentColor, /*!< \brief fill with the a darker color, that is in addition a bit transparent */
     JKQTPFFCMEvenDarkerAndTransparentColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor, that is in addition a bit transparent */
-    JKQTPFFCMMoreTransparentColor, /*!< \brief fill with the a partly transparent color */
-    JKQTPFFCMEvenMoreTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMMoreTransparentColor */
-    JKQTPFFCMLessTransparentColor, /*!< \brief fill with the a partly transparent color */
-    JKQTPFFCMEvenLessTransparentColor, /*!< \brief fill with the a more transparent color than JKQTPFFCMLessTransparentColor*/
+    JKQTPFFCMLighterAndNonTransparentColor, /*!< \brief fill with the a lighter color, that is non-transparent (even if the basecolor had some transparency)  */
+    JKQTPFFCMEvenLighterAndNonTransparentColor, /*!< \brief fill with the an even lighter color  than JKQTPFFCMLighterColor, that is non-transparent (even if the basecolor had some transparency)  */
+    JKQTPFFCMDarkerAndNonTransparentColor, /*!< \brief fill with the a darker color, that is non-transparent (even if the basecolor had some transparency)  */
+    JKQTPFFCMEvenDarkerAndNonTransparentColor, /*!< \brief fill with the an even darker color than JKQTPFFCMDarkerColor, that is non-transparent (even if the basecolor had some transparency)  */
 };
 
 /** \brief use a JKQTPColorDerivationMode to derive a color from \a col as specified
