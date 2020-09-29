@@ -278,17 +278,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc JKQTPCoordinateAxisStyle::showZeroAxis */
         inline bool getShowZeroAxis() const { return this->axisStyle.showZeroAxis; }
         /** \copydoc JKQTPCoordinateAxisStyle::gridColor */
-        inline QColor getGridColor() const { return this->axisStyle.gridColor; }
+        inline QColor getGridColor() const { return this->axisStyle.majorGridStyle.lineColor; }
         /** \copydoc JKQTPCoordinateAxisStyle::minorGridColor */
-        inline QColor getMinorGridColor() const { return this->axisStyle.minorGridColor; }
+        inline QColor getMinorGridColor() const { return this->axisStyle.minorGridStyle.lineColor; }
         /** \copydoc JKQTPCoordinateAxisStyle::gridWidth */
-        inline double getGridWidth() const { return this->axisStyle.gridWidth; }
+        inline double getGridWidth() const { return this->axisStyle.majorGridStyle.lineWidth; }
         /** \copydoc JKQTPCoordinateAxisStyle::gridStyle */
-        inline Qt::PenStyle getGridStyle() const { return this->axisStyle.gridStyle; }
+        inline Qt::PenStyle getGridStyle() const { return this->axisStyle.majorGridStyle.lineStyle; }
         /** \copydoc JKQTPCoordinateAxisStyle::minorGridWidth */
-        inline double getMinorGridWidth() const { return this->axisStyle.minorGridWidth; }
+        inline double getMinorGridWidth() const { return this->axisStyle.minorGridStyle.lineWidth; }
         /** \copydoc JKQTPCoordinateAxisStyle::minorGridStyle */
-        inline Qt::PenStyle getMinorGridStyle() const { return this->axisStyle.minorGridStyle; }
+        inline Qt::PenStyle getMinorGridStyle() const { return this->axisStyle.minorGridStyle.lineStyle; }
         /** \copydoc JKQTPCoordinateAxisStyle::tickTimeFormat */
         inline QString getTickTimeFormat() const { return this->axisStyle.tickTimeFormat; }
         /** \copydoc JKQTPCoordinateAxisStyle::tickDateFormat */
@@ -315,9 +315,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc JKQTPCoordinateAxisStyle::labelDistance */
         inline double getLabelDistance() const { return this->axisStyle.labelDistance; }
         /** \copydoc JKQTPCoordinateAxisStyle::drawGrid */
-        inline bool getDrawGrid() const { return this->axisStyle.drawGrid; }
+        inline bool getDrawGrid() const { return this->axisStyle.majorGridStyle.enabled; }
         /** \copydoc JKQTPCoordinateAxisStyle::drawMinorGrid */
-        inline bool getDrawMinorGrid() const { return this->axisStyle.drawMinorGrid; }
+        inline bool getDrawMinorGrid() const { return this->axisStyle.minorGridStyle.enabled; }
         /** \copydoc JKQTPCoordinateAxisStyle::autoLabelDigits */
         inline void setAutoLabelDigits(bool __value)
         {

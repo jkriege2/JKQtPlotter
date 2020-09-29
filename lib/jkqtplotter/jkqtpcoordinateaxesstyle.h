@@ -28,6 +28,47 @@
 
 class JKQTBasePlotterStyle; // forward
 
+
+/** \brief Support Class for JKQTPCoordinateAxis, and summarizes all properties that define the visual styling of a grid (minor or major), associated with a JKQTPCoordinateAxis
+ *  \ingroup jkqtpplotter_styling
+ *
+ * \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling
+ *
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPGridStyle {
+    Q_GADGET
+public:
+    JKQTPGridStyle(bool isMajor=true);
+
+
+    /** \brief loads the plot properties from a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object
+         *
+         *  \param settings QSettings-object to read from
+         *  \param group Group in the QSettings-object to read from
+         *  \param defaultStyle If a setting cannot be found in \a settings, default values are taken from this object
+         *                      By default, this is a default-constructed object
+         */
+    void loadSettings(const QSettings &settings, const QString& group=QString("grid/"), const JKQTPGridStyle &defaultStyle=JKQTPGridStyle());
+
+    /** \brief saves the plot properties into a <a href="http://doc.qt.io/qt-5/qsettings.html")">QSettings</a> object.
+         *
+         *  \param settings QSettings-object to save to
+         *  \param group Group in the QSettings-object to save to
+         */
+    void saveSettings(QSettings& settings, const QString& group=QString("grid/")) const;
+
+    /** \brief indicates whether to draw the major grid lines */
+    bool enabled;
+    /** \brief color of the grid*/
+    QColor lineColor;
+    /** \brief width of the grid lines (in pixel) */
+    double lineWidth;
+    /** \brief line stye of the grid lines */
+    Qt::PenStyle lineStyle;
+};
+
+
+
 /** \brief Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling of a JKQTPCoordinateAxis
  *  \ingroup jkqtpplotter_styling
  *
@@ -131,27 +172,16 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         /** \brief rotation angle of tick labels [-180..180], i.e. given in degrees, default is 0 (horizontal) */
         double tickLabelAngle;
 
-        /** \brief indicates whether to draw the major grid lines */
-        bool drawGrid;
-        /** \brief color of the grid*/
-        QColor gridColor;
-        /** \brief width of the grid lines (in pixel) */
-        double gridWidth;
-        /** \brief line stye of the grid lines */
-        Qt::PenStyle gridStyle;
-        /** \brief indicates whether to draw the minor grid lines */
-        bool drawMinorGrid;
-        /** \brief color of the minor grid lines */
-        QColor minorGridColor;
-        /** \brief width of the minor grid lines (in pixel) */
-        double minorGridWidth;
-        /** \brief line stye of the minor grid lines */
-        Qt::PenStyle minorGridStyle;
+        /** \brief styling of the major/primary grid */
+        JKQTPGridStyle majorGridStyle;
+        /** \brief styling of the minor/secondary grid */
+        JKQTPGridStyle minorGridStyle;
+
         /** \brief color of 0-line */
         QColor colorZeroAxis;
         /** \brief pen style of 0-line */
         Qt::PenStyle styleZeroAxis;
-        /** \brief if non-zero, the line of the coordinate axis is moved outside by this amount [pt] */
+        /** \brief if non-zero, the line of the coordinate axis is moved outside the plot by this amount [pt]. This does not apply to the zero-axis! */
         double axisLineOffset;
 };
 

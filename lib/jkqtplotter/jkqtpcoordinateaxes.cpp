@@ -841,37 +841,37 @@ void JKQTPCoordinateAxis::setInverted(bool __value) {
 }
 
 void JKQTPCoordinateAxis::setGridColor(const QColor& __value) {
-    this->axisStyle.gridColor = __value;
+    this->axisStyle.majorGridStyle.lineColor = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setMinorGridColor(const QColor& __value) {
-    this->axisStyle.minorGridColor = __value;
+    this->axisStyle.minorGridStyle.lineColor = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setGridWidth(double __value) {
-    this->axisStyle.gridWidth = __value;
+    this->axisStyle.majorGridStyle.lineWidth = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setGridStyle(Qt::PenStyle __value) {
-    this->axisStyle.gridStyle = __value;
+    this->axisStyle.majorGridStyle.lineStyle = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setMinorGridWidth(double __value) {
-    this->axisStyle.minorGridWidth = __value;
+    this->axisStyle.minorGridStyle.lineWidth = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setMinorGridStyle(Qt::PenStyle __value) {
-    this->axisStyle.minorGridStyle = __value;
+    this->axisStyle.minorGridStyle.lineStyle = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
@@ -932,13 +932,13 @@ void JKQTPCoordinateAxis::setLabelDigits(int __value) {
 }
 
 void JKQTPCoordinateAxis::setDrawGrid(bool __value) {
-    this->axisStyle.drawGrid = __value;
+    this->axisStyle.majorGridStyle.enabled = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
 
 void JKQTPCoordinateAxis::setDrawMinorGrid(bool __value) {
-    this->axisStyle.drawMinorGrid = __value;
+    this->axisStyle.minorGridStyle.enabled = __value;
     this->paramsChanged=true;
     redrawPlot();
 }
@@ -1144,13 +1144,13 @@ void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"  start JKQTPVerticalAxis::drawGrids(";
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
     QPen pg=painter.pen();
-    pg.setColor(axisStyle.gridColor);
-    pg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.gridWidth*parent->getLineWidthMultiplier())));
-    pg.setStyle(axisStyle.gridStyle);
+    pg.setColor(axisStyle.majorGridStyle.lineColor);
+    pg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.majorGridStyle.lineWidth*parent->getLineWidthMultiplier())));
+    pg.setStyle(axisStyle.majorGridStyle.lineStyle);
     QPen pmg=painter.pen();
-    pmg.setColor(axisStyle.minorGridColor);
-    pmg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter,  axisStyle.minorGridWidth*parent->getLineWidthMultiplier())));
-    pmg.setStyle(axisStyle.minorGridStyle);
+    pmg.setColor(axisStyle.minorGridStyle.lineColor);
+    pmg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH,parent->pt2px(painter,  axisStyle.minorGridStyle.lineWidth*parent->getLineWidthMultiplier())));
+    pmg.setStyle(axisStyle.minorGridStyle.lineStyle);
     //double top=x2p(axismax);
     //double bottom=x2p(axismin);
     double left=0;
@@ -1179,14 +1179,14 @@ void JKQTPVerticalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
 
         //painter.setPen(pg);
         //qDebug()<<"      1";
-        if (axisStyle.drawGrid && (x<axismax) && (x>axismin) && (fabs(left-right)>0)) {
+        if (axisStyle.majorGridStyle.enabled && (x<axismax) && (x>axismin) && (fabs(left-right)>0)) {
             QLineF l(left, xx, right, xx);
             if (l.length()>0) lines_pg.append(l);//painter.drawLine(l);
         }
         //qDebug()<<"      2";
         //painter.setPen(pmg);
         //qDebug()<<"      3";
-        if ((tickLabels.size()<=0) && axisStyle.drawMinorGrid && (axisStyle.minorTicks>0) && (fabs(right-left)>0)) {
+        if ((tickLabels.size()<=0) && axisStyle.minorGridStyle.enabled && (axisStyle.minorTicks>0) && (fabs(right-left)>0)) {
             //qDebug()<<"      3.1";
             double mx=x+mtdist;
             //qDebug()<<"      3.2";
@@ -1777,13 +1777,13 @@ void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
         bottom=getParentOtheraxisOffset()+getParentOtheraxisWidth();//;
     }
     QPen pg=painter.pen();
-    pg.setColor(axisStyle.gridColor);
-    pg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.gridWidth*parent->getFontSizeMultiplier())));
-    pg.setStyle(axisStyle.gridStyle);
+    pg.setColor(axisStyle.majorGridStyle.lineColor);
+    pg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.majorGridStyle.lineWidth*parent->getFontSizeMultiplier())));
+    pg.setStyle(axisStyle.majorGridStyle.lineStyle);
     QPen pmg=painter.pen();
-    pmg.setColor(axisStyle.minorGridColor);
-    pmg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorGridWidth*parent->getLineWidthMultiplier())));
-    pmg.setStyle(axisStyle.minorGridStyle);
+    pmg.setColor(axisStyle.minorGridStyle.lineColor);
+    pmg.setWidthF(qMax(JKQTPlotterDrawingTools::ABS_MIN_LINEWIDTH, parent->pt2px(painter, axisStyle.minorGridStyle.lineWidth*parent->getLineWidthMultiplier())));
+    pmg.setStyle(axisStyle.minorGridStyle.lineStyle);
 
     double x=tickStart;
     QString label="";
@@ -1800,12 +1800,12 @@ void JKQTPHorizontalAxis::drawGrids(JKQTPEnhancedPainter& painter) {
         //qDebug()<<"   tick @ x="<<x<<"   label="<<label<<"   mtdist="<<mtdist<<"   axisStyle.minorTicks="<<minorTicks;
 
         //painter.setPen(pg);
-        if (axisStyle.drawGrid && (x<axismax) && (x>axismin))  {
+        if (axisStyle.majorGridStyle.enabled && (x<axismax) && (x>axismin))  {
             QLineF l(xx, bottom, xx, top);
             if (l.length()>0) lines_pg.append(l);//painter.drawLine(l);
         }
         //painter.setPen(pmg);
-        if ((tickLabels.size()<=0) && axisStyle.drawMinorGrid && (axisStyle.minorTicks>0)) {
+        if ((tickLabels.size()<=0) && axisStyle.minorGridStyle.enabled && (axisStyle.minorTicks>0)) {
             double mx=x+mtdist;
             for (int i=0; i<static_cast<int>(axisStyle.minorTicks); i++) {
                 double mxx=x2p(mx);

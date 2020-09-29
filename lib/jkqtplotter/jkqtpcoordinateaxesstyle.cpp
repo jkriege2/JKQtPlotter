@@ -2,6 +2,33 @@
 #include "jkqtpbaseplotterstyle.h"
 #include <QApplication>
 
+
+JKQTPGridStyle::JKQTPGridStyle(bool isMajor):
+    enabled(isMajor),
+    lineColor(QColor("gray")),
+    lineWidth(isMajor?0.75:0.5),
+    lineStyle(isMajor?Qt::DashLine:Qt::DotLine)
+{
+
+}
+
+void JKQTPGridStyle::loadSettings(const QSettings &settings, const QString &group, const JKQTPGridStyle &defaultStyle)
+{
+    lineWidth = settings.value(group+"width", defaultStyle.lineWidth).toDouble();
+    enabled = settings.value(group+"enabled", defaultStyle.enabled).toBool();
+    lineColor=jkqtp_String2QColor(settings.value(group+"color", jkqtp_QColor2String(lineColor)).toString());
+    lineStyle=jkqtp_String2QPenStyle(settings.value(group+"style", jkqtp_QPenStyle2String(lineStyle)).toString());
+}
+
+void JKQTPGridStyle::saveSettings(QSettings &settings, const QString &group) const
+{
+    settings.setValue(group+"enabled", enabled);
+    settings.setValue(group+"color", jkqtp_QColor2String(lineColor));
+    settings.setValue(group+"width", lineWidth);
+    settings.setValue(group+"style", jkqtp_QPenStyle2String(lineStyle));
+}
+
+
 JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     labelDigits(3),
     autoLabelDigits(true),
@@ -33,14 +60,8 @@ JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle():
     tickLabelDistance(3),
     labelDistance(5),
     tickLabelAngle(0),
-    drawGrid(true),
-    gridColor(QColor("gray")),
-    gridWidth(0.75),
-    gridStyle(Qt::DashLine),
-    drawMinorGrid(false),
-    minorGridColor(QColor("gray")),
-    minorGridWidth(0.5),
-    minorGridStyle(Qt::DotLine),
+    majorGridStyle(true),
+    minorGridStyle(false),
     colorZeroAxis(QColor("black")),
     styleZeroAxis(Qt::SolidLine),
     axisLineOffset(0)
@@ -80,23 +101,17 @@ void JKQTPCoordinateAxisStyle::loadSettings(const QSettings &settings, const QSt
     minorTickInsideLength = settings.value(group+"minor_tick/inside_length", defaultStyle.minorTickInsideLength).toDouble();
     tickLabelDistance = settings.value(group+"ticks/label_distance", defaultStyle.tickLabelDistance).toDouble();
     labelDistance = settings.value(group+"axis_label/distance", defaultStyle.labelDistance).toDouble();
-    gridWidth = settings.value(group+"grid/width", defaultStyle.gridWidth).toDouble();
-    minorGridWidth = settings.value(group+"minor_grid/width", defaultStyle.minorGridWidth).toDouble();
-    drawGrid = settings.value(group+"grid/enabled", defaultStyle.drawGrid).toBool();
-    drawMinorGrid = settings.value(group+"minor_grid/enabled", defaultStyle.drawMinorGrid).toBool();
     labelPosition=String2JKQTPLabelPosition(settings.value(group+"axis_label/position", JKQTPLabelPosition2String(labelPosition)).toString());
     labelType=String2JKQTPCALabelType(settings.value(group+"axis_label/type", JKQTPCALabelType2String(labelType)).toString());
     axisColor=jkqtp_String2QColor(settings.value(group+"color", jkqtp_QColor2String(axisColor)).toString());
-    gridColor=jkqtp_String2QColor(settings.value(group+"grid/color", jkqtp_QColor2String(gridColor)).toString());
-    minorGridColor=jkqtp_String2QColor(settings.value(group+"minor_grid/color", jkqtp_QColor2String(minorGridColor)).toString());
-    gridStyle=jkqtp_String2QPenStyle(settings.value(group+"grid/style", jkqtp_QPenStyle2String(gridStyle)).toString());
-    minorGridStyle=jkqtp_String2QPenStyle(settings.value(group+"minor_grid/style", jkqtp_QPenStyle2String(minorGridStyle)).toString());
     drawMode1=String2JKQTPCADrawMode(settings.value(group+"draw_mode1", JKQTPCADrawMode2String(drawMode1)).toString());
     drawMode2=String2JKQTPCADrawMode(settings.value(group+"draw_mode2", JKQTPCADrawMode2String(drawMode2)).toString());
     tickMode=String2JKQTPLabelTickMode(settings.value(group+"ticks/mode", JKQTPLabelTickMode2String(tickMode)).toString());
     colorZeroAxis=jkqtp_String2QColor(settings.value(group+"zero_line/color", jkqtp_QColor2String(colorZeroAxis)).toString());
     styleZeroAxis=jkqtp_String2QPenStyle(settings.value(group+"zero_line/style", jkqtp_QPenStyle2String(styleZeroAxis)).toString());
     axisLineOffset = settings.value(group+"axis_lines_offset", defaultStyle.axisLineOffset).toDouble();
+    majorGridStyle.loadSettings(settings, group+"grid/", defaultStyle.majorGridStyle);
+    minorGridStyle.loadSettings(settings, group+"minor_grid/", defaultStyle.minorGridStyle);
 }
 
 void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &group) const
@@ -107,18 +122,10 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     settings.setValue(group+"line_width", lineWidth);
     settings.setValue(group+"axis_lines_offset", axisLineOffset);
     settings.setValue(group+"min_ticks", minTicks);
-    settings.setValue(group+"grid/enabled", drawGrid);
-    settings.setValue(group+"grid/color", jkqtp_QColor2String(gridColor));
-    settings.setValue(group+"grid/width", gridWidth);
-    settings.setValue(group+"grid/style", jkqtp_QPenStyle2String(gridStyle));
     settings.setValue(group+"axis_label/distance", labelDistance);
     settings.setValue(group+"axis_label/font_size", labelFontSize);
     settings.setValue(group+"axis_label/position", JKQTPLabelPosition2String(labelPosition));
     settings.setValue(group+"axis_label/type", JKQTPCALabelType2String(labelType));
-    settings.setValue(group+"minor_grid/enabled", drawMinorGrid);
-    settings.setValue(group+"minor_grid/color", jkqtp_QColor2String(minorGridColor));
-    settings.setValue(group+"minor_grid/style", jkqtp_QPenStyle2String(minorGridStyle));
-    settings.setValue(group+"minor_grid/width", minorGridWidth);
     settings.setValue(group+"minor_tick/labels_enabled", minorTickLabelsEnabled);
     settings.setValue(group+"minor_tick/inside_length", minorTickInsideLength);
     settings.setValue(group+"minor_tick/label_font_size", minorTickLabelFontSize);
@@ -139,4 +146,7 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     settings.setValue(group+"zero_line/line_width", lineWidthZeroAxis);
     settings.setValue(group+"zero_line/color",  jkqtp_QColor2String(colorZeroAxis));
     settings.setValue(group+"zero_line/style", jkqtp_QPenStyle2String(styleZeroAxis));
+    majorGridStyle.saveSettings(settings, group+"grid/");
+    minorGridStyle.saveSettings(settings, group+"minor_grid/");
 }
+
