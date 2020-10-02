@@ -8,10 +8,11 @@
 #include <QPainter>
 #include <QTreeWidget>
 
-
+QT_BEGIN_NAMESPACE
 namespace Ui {
     class TestForm;
 }
+QT_END_NAMESPACE
 
 class TestForm : public QWidget
 {

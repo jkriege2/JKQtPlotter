@@ -4,9 +4,11 @@
 #include <QMainWindow>
 #include "jkqtplotter/jkqtplotter.h"
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
     class TestStyling;
 }
+QT_END_NAMESPACE
 
 class TestStyling : public QMainWindow
 {
