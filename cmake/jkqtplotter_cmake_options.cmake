@@ -32,8 +32,8 @@ if (NOT CMAKE_INSTALL_INCLUDEDIR)
 endif()
 
 # place all DLLs and EXEs in the subdirectory output of the top level directory of the build tree
-set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output)
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/output)
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/output)
 
 
 if(JKQtPlotter_BUILD_DECORATE_LIBNAMES_WITH_BUILDTYPE)
