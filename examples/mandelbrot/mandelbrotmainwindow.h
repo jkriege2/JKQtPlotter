@@ -4,9 +4,11 @@
 #include <QMainWindow>
 #include "jkqtplotter/graphs/jkqtpimage.h"
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
 class MandelbrotMainWindow;
 }
+QT_END_NAMESPACE
 
 class MandelbrotMainWindow : public QMainWindow
 {

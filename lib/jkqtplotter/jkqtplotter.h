@@ -1721,6 +1721,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
 
 };
 
+QT_BEGIN_NAMESPACE
+
 /** \brief qHash-variant used by JKQTPlotter
  *  \internal
  *  \ingroup jkqtpplottersupprt
@@ -1747,5 +1749,7 @@ template<>
 inline uint qHash(const Qt::KeyboardModifiers &key, uint /*seed*/ ) noexcept(noexcept(qHash(key)))  {
     return static_cast<uint>(key);
 }
+
+QT_END_NAMESPACE
 
 #endif // JKQTPLOTTER_H

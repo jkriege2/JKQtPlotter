@@ -5,9 +5,11 @@
 #include "jkqtplotter/jkqtplotter.h"
 #include <QGridLayout>
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
     class TestMultiplotUI;
 }
+QT_END_NAMESPACE
 
 class TestMultiplotUI : public QDialog
 {

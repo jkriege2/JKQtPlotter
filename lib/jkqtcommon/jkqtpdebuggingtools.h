@@ -24,6 +24,7 @@
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include <QString>
 #include <QElapsedTimer>
+#include <stdexcept>
 
 
 #ifndef __WINDOWS__

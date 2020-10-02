@@ -4,9 +4,11 @@
 #include <QWidget>
 #include "jkqtplotter/graphs/jkqtpparsedfunction.h"
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
     class FormWithJKQTPlotter;
 }
+QT_END_NAMESPACE
 
 class FormWithJKQTPlotter : public QWidget
 {
