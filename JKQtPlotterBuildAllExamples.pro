@@ -33,8 +33,11 @@ jkqtmathtext_simpletest.depends = jkqtmathtextlib
 jkqtmathtext_test.subdir = examples/jkqtmathtext_test
 jkqtmathtext_test.depends = jkqtplotterlib
 
-jkqtplotter_simpletest.file = examples/simpletest/jkqtplotter_simpletest.pro
+jkqtplotter_simpletest.file = examples/simpletest/simpletest.pro
 jkqtplotter_simpletest.depends = jkqtplotterlib
+
+jkqtplot_test.file = examples/jkqtplot_test/jkqtplot_test.pro
+jkqtplot_test.depends = jkqtplotterlib
 
 jkqtfastplotter_test.file = $$PWD/examples/jkqtfastplotter_test/jkqtfastplotter_test.pro
 jkqtfastplotter_test.depends = jkqtfastplotterlib

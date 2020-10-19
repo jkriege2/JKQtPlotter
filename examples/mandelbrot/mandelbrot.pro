@@ -1,5 +1,12 @@
 # source code for this simple demo
-SOURCES = mandelbrot.cpp 
+SOURCES = mandelbrot.cpp \
+          mandelbrotmainwindow.cpp
+
+HEADERS = mandelbrotmainwindow.h
+
+FORMS = mandelbrotmainwindow.ui
+
+
 
 # configure Qt
 CONFIG += link_prl qt

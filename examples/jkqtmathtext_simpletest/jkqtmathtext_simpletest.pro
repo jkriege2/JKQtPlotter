@@ -8,12 +8,12 @@ QT += core gui xml  svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 
-DEPENDPATH += ../../../lib  ../../../qmake/staticlib/jkqtplotterlib
-INCLUDEPATH += ../../../lib
+DEPENDPATH += ../../lib  ../../qmake/staticlib/jkqtplotterlib
+INCLUDEPATH += ../../lib
 CONFIG (debug, debug|release) {
-    LIBS += -L../../../qmake/staticlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
+    LIBS += -L../../qmake/staticlib/jkqtplotterlib/debug -ljkqtplotterlib_debug
 } else {
-    LIBS += -L../../../qmake/staticlib/jkqtplotterlib/release -ljkqtplotterlib
+    LIBS += -L../../qmake/staticlib/jkqtplotterlib/release -ljkqtplotterlib
 }
 message("LIBS = $$LIBS")
 

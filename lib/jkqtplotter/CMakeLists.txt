@@ -255,3 +255,5 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION d
 install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${lib_name}_LICENSE.txt" )
 
 
+#get_target_property(printsupp_inc Qt5::PrintSupport INTERFACE_INCLUDE_DIRECTORIES)
+#message("Qt5::PrintSupport::INTERFACE_INCLUDE_DIRECTORIES = ${printsupp_inc}")

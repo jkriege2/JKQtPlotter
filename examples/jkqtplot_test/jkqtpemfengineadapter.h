@@ -4,7 +4,7 @@
 #include "EmfEngine/src/EmfEngine.h"
 #include <QString>
 #include <QStringList>
-#include "../../../jkqtpbaseplotter.h"
+#include "../../lib/jkqtplotter/jkqtpbaseplotter.h"
 
 class JKQTPEmfEngineAdapter : public JKQTPPaintDeviceAdapter
 {
