@@ -165,9 +165,9 @@ void JKQTPEnhancedTableView::copySelectionToExcel(int copyrole, bool storeHead)
                 if (r<rowmin) rowmin=r;
             }
         }
-        QList<int> rowlist=QList<int>::fromSet(rows);
+        QList<int> rowlist=QList<int>(rows.begin(), rows.end());
         std::sort(rowlist.begin(), rowlist.end());
-        QList<int> collist=QList<int>::fromSet(cols);
+        QList<int> collist=QList<int>(cols.begin(), cols.end());
         std::sort(collist.begin(), collist.end());
         int rowcnt=rowlist.size();
         int colcnt=collist.size();
@@ -284,9 +284,9 @@ void JKQTPEnhancedTableView::copySelectionToCSV(int copyrole, bool storeHead, co
                 if (r<rowmin) rowmin=r;
             }
         }
-        QList<int> rowlist=QList<int>::fromSet(rows);
+        QList<int> rowlist=QList<int>(rows.begin(), rows.end());
         std::sort(rowlist.begin(), rowlist.end());
-        QList<int> collist=QList<int>::fromSet(cols);
+        QList<int> collist=QList<int>(cols.begin(), cols.end());
         std::sort(collist.begin(), collist.end());
         int rowcnt=rowlist.size();
         int colcnt=collist.size();
@@ -447,10 +447,10 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
      /*if (maxWidth*scale>p->pageRect().width()) scale=p->pageRect().width()/maxWidth;
      if (maxHeight*scale>p->pageRect().height()) scale=p->pageRect().height()/maxHeight;*/
      if (onePageWide) {
-         if (totalWidth>p->pageRect().width()) scale=p->pageRect().width()/totalWidth;
+         if (totalWidth>p->pageLayout().paintRectPixels(p->resolution()).width()) scale=p->pageLayout().paintRectPixels(p->resolution()).width()/totalWidth;
      }
      if (onePageHigh) {
-         if (totalHeight>p->pageRect().height()) scale=qMin(scale, p->pageRect().height()/totalHeight);
+         if (totalHeight>p->pageLayout().paintRectPixels(p->resolution()).height()) scale=qMin(scale, p->pageLayout().paintRectPixels(p->resolution()).height()/totalHeight);
      }
 
      //qDebug()<<scale;
@@ -467,7 +467,7 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
          if (!onePageWide) {
              for (int c=0; c<cols; c++) {
                  double cw=columnWidth(c);
-                 if (x+cw>p->pageRect().width()/scale) {
+                 if (x+cw>p->pageLayout().paintRectPixels(p->resolution()).width()/scale) {
                      pagesWide++;
                      x=0;
                      pageCols<<c;
@@ -483,7 +483,7 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
          if (!onePageHigh) {
              for (int r=0; r<rows; r++) {
                  double rh=rowHeight(r);
-                 if (y+rh>p->pageRect().height()/scale) {
+                 if (y+rh>p->pageLayout().paintRectPixels(p->resolution()).height()/scale) {
                      pagesHigh++;
                      pageRows<<r;
                      y=hhh;

@@ -1485,12 +1485,12 @@ void JKQTBasePlotter::print(QPrinter* printer, bool displayPreview) {
         delete dialog;
     }
 
-    p->setPageMargins(10,10,10,10,QPrinter::Millimeter);
+    p->setPageMargins(QMarginsF(10,10,10,10),QPageLayout::Millimeter);
 
     if (widgetWidth>widgetHeight) {
-        p->setOrientation(QPrinter::Landscape);
+        p->setPageOrientation(QPageLayout::Landscape);
     } else {
-        p->setOrientation(QPrinter::Portrait);
+        p->setPageOrientation(QPageLayout::Portrait);
     }
 
     printpreviewNew(p, false, -1.0, -1.0, displayPreview);
@@ -1554,14 +1554,14 @@ bool JKQTBasePlotter::printpreviewNew(QPaintDevice* paintDevice, bool setAbsolut
         printer->setColorMode(QPrinter::Color);
         printer->setOutputFormat(QPrinter::PdfFormat);
         printer->setResolution(svg->logicalDpiX());
-        printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
+        printer->setPageMargins(QMarginsF(), QPageLayout::Millimeter);
         printer->setColorMode(QPrinter::Color);
         delPrinter=true;
     } else if (!printer) {
         printer=new QPrinter();
         printer->setOutputFormat(QPrinter::PdfFormat);
         printer->setResolution(paintDevice->logicalDpiX());
-        printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
+        printer->setPageMargins(QMarginsF(), QPageLayout::Millimeter);
         printer->setColorMode(QPrinter::Color);
         delPrinter=true;
     }
@@ -1931,8 +1931,8 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
         qDebug()<<"set printing abs. size to "<<QSizeF(printSizeX_Millimeter, printSizeY_Millimeter)<<" mm^2";
 #endif
         //printer->setPaperSize(QPrinter::Custom);
-        printer->setOrientation(QPrinter::Portrait);
-        printer->setPaperSize(QSizeF(printSizeX_Millimeter, printSizeY_Millimeter), QPrinter::Millimeter);
+        printer->setPageOrientation(QPageLayout::Portrait);
+        printer->setPageSize(QPageSize(QSizeF(printSizeX_Millimeter, printSizeY_Millimeter), QPageSize::Millimeter));
         if (!gridPrinting) widgetHeight=jkqtp_roundTo<int>(widgetWidth*printSizeY_Millimeter/printSizeX_Millimeter);
 
     }
@@ -1969,7 +1969,7 @@ void JKQTBasePlotter::printpreviewPaintRequested(QPrinter* printer) {
     qDebug()<<"x-axis label fontsize = "<<xAxis->getLabelFontSize()<<" pt";
     qDebug()<<"y-axis label fontsize = "<<yAxis->getLabelFontSize()<<" pt";
 #endif
-    gridPaint(painter, printer->pageRect().size(), printScaleToPagesize, printScaleToPagesize);
+    gridPaint(painter, printer->pageLayout().paintRectPixels(printer->resolution()).size(), printScaleToPagesize, printScaleToPagesize);
     painter.end();
     widgetWidth=oldWidgetWidth;
     widgetHeight=oldWidgetHeight;
@@ -2017,8 +2017,8 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
         qDebug()<<"set printing abs. size to "<<QSizeF(printSizeX_Millimeter, printSizeY_Millimeter)<<" mm^2";
 #endif
         if (printer) {
-            printer->setOrientation(QPrinter::Portrait);
-            printer->setPaperSize(QSizeF(printSizeX_Millimeter, printSizeY_Millimeter), QPrinter::Millimeter);
+            printer->setPageOrientation(QPageLayout::Portrait);
+            printer->setPageSize(QPageSize(QSizeF(printSizeX_Millimeter, printSizeY_Millimeter), QPageSize::Millimeter));
         } else if (svg) {
             QRectF siz=QRectF(0,0,printSizeX_Millimeter,printSizeY_Millimeter);
             svg->setSize(QSizeF(ceil(siz.width()*svg->resolution()/25.4), ceil(siz.height()*svg->resolution()/25.4)).toSize());
@@ -2069,7 +2069,7 @@ void JKQTBasePlotter::printpreviewPaintRequestedNew(QPaintDevice *paintDevice)
     qDebug()<<"x-axis label fontsize = "<<xAxis->getLabelFontSize()<<" pt";
     qDebug()<<"y-axis label fontsize = "<<yAxis->getLabelFontSize()<<" pt";
 #endif
-    if (printer) gridPaint(painter, printer->pageRect().size(), printScaleToPagesize, printScaleToPagesize);
+    if (printer) gridPaint(painter, printer->pageLayout().paintRectPixels(printer->resolution()).size(), printScaleToPagesize, printScaleToPagesize);
     else if (svg) gridPaint(painter, svg->size(), printScaleToPagesize, printScaleToPagesize);
     else gridPaint(painter, QSizeF(paintDevice->width(), paintDevice->height()), printScaleToPagesize, printScaleToPagesize);
     painter.end();
@@ -3577,14 +3577,14 @@ void JKQTBasePlotter::saveAsPDF(const QString& filename, bool displayPreview) {
             doLandscape=gridPrintingSize.width()>gridPrintingSize.height();
         }
         if (doLandscape) {
-            printer->setOrientation(QPrinter::Landscape);
+            printer->setPageOrientation(QPageLayout::Landscape);
         } else {
-            printer->setOrientation(QPrinter::Portrait);
+            printer->setPageOrientation(QPageLayout::Portrait);
         }
         printer->setOutputFormat(QPrinter::PdfFormat);
         printer->setColorMode(QPrinter::Color);
         printer->setOutputFileName(fn);
-        printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
+        printer->setPageMargins(QMarginsF(0,0,0,0),QPageLayout::Millimeter);
         printer->setColorMode(QPrinter::Color);
         printpreviewNew(printer, true, -1.0, -1.0, displayPreview);
         delete printer;
