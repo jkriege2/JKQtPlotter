@@ -1,51 +1,54 @@
 version: 0.{build}-{branch}
 
-image:
-    - Visual Studio 2017
 
 environment:
   global:
-    QTVER: 5.11
     JOMDIR: C:\Qt\Tools\QtCreator\bin
     MINGWDIR: C:\Qt\Tools\mingw530_32
     VSVER: 0
+    USE_LINUX: false
 
   matrix:
-    - QTABI: mingw53_32
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      QTABI: mingw53_32
+      QTVER: 5.11
       ARCH: x86
       MAKETOOL: mingw32-make
       CMAKE_GENERATOR: "MinGW Makefiles"
       USE_CMAKE: true
       MSBUILD_FLAGS: 
-#    - QTABI: mingw53_32
-#      ARCH: x86
-#      QMAKESPEC: win32-g++
-#      MAKETOOL: mingw32-make
-#      USE_CMAKE: false
-    - QTABI: msvc2017_64
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      QTABI: msvc2017_64
+      QTVER: 5.11
       ARCH: x64
       VSVER: 2017
       CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
       USE_CMAKE: true
       MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
-#    - QTABI: msvc2017_64
-#      ARCH: x64
-#      VSVER: 2017
-#      QMAKESPEC: win32-msvc
-#      MAKETOOL: jom
-#      USE_CMAKE: false
-    - QTABI: msvc2015
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      QTABI: msvc2019_64
+      QTVER: 5.15.2
+      ARCH: x64
+      VSVER: 2019
+      CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
+      USE_CMAKE: true
+      MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+      QTABI: msvc2015
+      QTVER: 5.11
       ARCH: x86
       VSVER: 14
       CMAKE_GENERATOR: "Visual Studio 15 2017"
       USE_CMAKE: true
       MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
-#    - QTABI: msvc2015
-#      ARCH: x86
-#      VSVER: 14
-#      QMAKESPEC: win32-msvc
-#      MAKETOOL: jom
-#      USE_CMAKE: false
+ #   - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+ #     QTABI: gcc_64
+ #     QTVER: 5.15.2
+ #     ARCH: x64
+ #     CMAKE_GENERATOR: "Unix Makefiles"
+ #     USE_CMAKE: true
+ #     USE_LINUX: true
+
 
 skip_tags: true
 
