@@ -17,7 +17,13 @@
 
 int main(int argc, char* argv[])
 {
+        
+#if QT_VERSION >= 0x050600
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
+#endif
     QApplication app(argc, argv);
+
 
     // 0. tell the library where to find additional palettes.
     //    this needs to be done BEFORE first using JKQTPlotter

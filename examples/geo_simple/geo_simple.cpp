@@ -84,7 +84,13 @@ void drawEllExample(JKQTPlotter* plot, double x0, double y0, double wid, double 
 
 int main(int argc, char* argv[])
 {
+        
+#if QT_VERSION >= 0x050600
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
+#endif
     QApplication app(argc, argv);
+
 
     // 1. create a Widget with a plotter and some control-elements
     QWidget widMain;

@@ -11,7 +11,19 @@
 
 int main(int argc, char* argv[])
 {
+
+#if QT_VERSION >= 0x050600
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
+#endif
+
+
+#if QT_VERSION >= 0x050600
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling); // DPI support
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
+#endif
     QApplication app(argc, argv);
+
 
     // 1. create a plotter window and get a pointer to the internal datastore (for convenience)
     JKQTPlotter plot;
@@ -47,6 +59,7 @@ int main(int argc, char* argv[])
     plot.zoomToFit();
 
     // show plotter and make it a decent size
+    plot.getPlotter()->setPlotLabel(QObject::tr("Graph Title"));
     plot.show();
     plot.resize(600,400);
 
