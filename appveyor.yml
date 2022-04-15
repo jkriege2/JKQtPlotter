@@ -72,6 +72,7 @@ install:
         )
     )
   - set PATH=C:\Qt\%QTVER%\%QTABI%\bin;%JOMDIR%;%PATH%
+  - echo "PATH = %PATH%"
   - echo "BUILD ID Qt%QTVER%_%QTABI%_%APPVEYOR_BUILD_VERSION%_%CONFIGURATION%"
   # Rename sh.exe as sh.exe in PATH interferes with MinGW
   - rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
