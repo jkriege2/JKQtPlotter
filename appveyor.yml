@@ -80,6 +80,7 @@ build_script:
 #  - type "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\random"
 #  - dir "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE"
 #  - type "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE\random"
+  - dir c:\Qt\
   - mkdir build
   - cd build
   - if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=Release) else (set CMAKE_CONFIGURATION=Debug)
