@@ -12,7 +12,7 @@ build:
 
 #configurations to build
 configuration:
-  - release
+  - Release
 #  - debug
 
 
@@ -25,36 +25,42 @@ environment:
     USE_CMAKE: true
  
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - image: Visual Studio 2015
       QTABI: mingw53_32
+	  COMPILER: MinGW
       MINGWDIR: C:\Qt\Tools\mingw530_32
       QTVER: 5.11
       MAKETOOL: mingw32-make
       CMAKE_GENERATOR: "MinGW Makefiles"
       
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - image: Visual Studio 2015
       QTABI: msvc2015_64
+	  COMPILER: MSVC
       QTVER: 5.11
       CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
 
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    - image: Visual Studio 2015
       QTABI: msvc2015
+	  COMPILER: MSVC
       QTVER: 5.11
       CMAKE_GENERATOR: "Visual Studio 15 2017"
       
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+    - image: Visual Studio 2022
       QTABI: msvc2019_64
+	  COMPILER: MSVC
       QTVER: 5.15
       CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
       
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+    - image: Visual Studio 2022
       QTABI: mingw81_64
+	  COMPILER: MinGW
       MINGWDIR: C:\Qt\Tools\mingw810_64
       QTVER: 5.15
       CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
 
-    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+    - image: Ubuntu2004
       QTABI: gcc_64
+	  COMPILER: gcc
       QTVER: 5.15
       CMAKE_GENERATOR: "Unix Makefiles"
       
@@ -62,11 +68,10 @@ environment:
 
 for:
   # Windows (MinGW 5.3 & MSVC2015)
-  - matrix:
+  - 
+    matrix:
       only:
-        - image: Visual Studio 2019 
-        
-    clone_folder: c:\Build\JKQtPlotter
+        - image: Visual Studio 2019
       
     init:
       - cmd: echo == INIT SYSTEM ENVIRONMENT ======================================================================
@@ -82,12 +87,12 @@ for:
       - cmd: echo == INIT COMPILER ENVIRONMENT ====================================================================
       - cmd: set QTDIR=C:\Qt\%QTVER%\%QTABI%\bin
       - cmd: set PATH=%QTDIR%;%JOMDIR%;%PATH%
-      - cmd: if /i "%QTABI:~0:5%"=="mingw" set "PATH=%MINGWDIR%\bin;%PATH%"
+      - cmd: if %COMPILER%==MinGW set "PATH=%MINGWDIR%\bin;%PATH%"
       - cmd: if %QTABI%==msvc2015 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
       - cmd: if %QTABI%==msvc2015_64 call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
       - cmd: if %QTABI%==msvc2015_64 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
       # Rename sh.exe as sh.exe in PATH interferes with MinGW
-      - cmd: if /i "%QTABI:~0:5%"=="mingw" rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
+      - cmd: if %COMPILER%==MinGW rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
       - cmd: echo QTDIR=%QTDIR%
       - cmd: echo JOMDIR=%JOMDIR%
       - cmd: echo PATH=%PATH%
@@ -99,34 +104,28 @@ for:
 
     build_script:
       - cmd: echo == BUILD JKQtPlotter ============================================================================
-      - cd c:\Build\JKQtPlotter
-      - mkdir build
-      - cd build
-      - if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=Release) else (set CMAKE_CONFIGURATION=Debug)
-      - if [%USE_CMAKE%]==[true] (
-          echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
-          cmake --version &&
-          cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
-          echo "--- Build using CMake -------------------------------------------------------------------------------" &&
-          cmake --build . --config "%CMAKE_CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
-        else (
-          echo "--- Run QMake Configure -----------------------------------------------------------------------------" &&
-          qmake.exe -v &&
-          qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro &&
-          echo "--- Build using MAKETOOL ----------------------------------------------------------------------------" &&
-          call %MAKETOOL% &&
-          cd ..)
+      - cmd: mkdir build
+      - cmd: cd build
+      - cmd: if [%USE_CMAKE%]==[true] echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[true] cmake --version &&
+      - cmd: if [%USE_CMAKE%]==[true] cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
+      - cmd: if [%USE_CMAKE%]==[true] echo "--- Build using CMake -------------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[true] cmake --build . --config "%CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
+      - cmd: if [%USE_CMAKE%]==[false] echo "--- Run QMake Configure -----------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[false] qmake.exe -v &&
+      - cmd: if [%USE_CMAKE%]==[false] qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro &&
+      - cmd: if [%USE_CMAKE%]==[false] echo "--- Build using MAKETOOL ----------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[false] call %MAKETOOL% &&
+      - cmd: cd ..
 
 
 
 
   # Windows (MinGW 8.1 & MSVC2019)
-  - matrix:
+  - 
+    matrix:
       only:
         - image: Visual Studio 2022
-        
-    clone_folder: c:\Build\JKQtPlotter
-      
      
     init:
       - cmd: echo == INIT SYSTEM ENVIRONMENT ======================================================================
@@ -142,11 +141,11 @@ for:
       - cmd: echo == INIT COMPILER ENVIRONMENT ====================================================================
       - cmd: set QTDIR=C:\Qt\%QTVER%\%QTABI%\bin
       - cmd: set PATH=%QTDIR%;%JOMDIR%;%PATH%
-      - cmd: if /i "%QTABI:~0:5%"=="mingw" set "PATH=%MINGWDIR%\bin;%PATH%"
+      - cmd: if %COMPILER%==MinGW set "PATH=%MINGWDIR%\bin;%PATH%"
       - cmd: if %QTABI%==msvc2019 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
       - cmd: if %QTABI%==msvc2019_64 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       # Rename sh.exe as sh.exe in PATH interferes with MinGW
-      - cmd: if /i "%QTABI:~0:5%"=="mingw" rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
+      - cmd: if %COMPILER%==MinGW rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
       - cmd: echo QTDIR=%QTDIR%
       - cmd: echo JOMDIR=%JOMDIR%
       - cmd: echo PATH=%PATH%
@@ -156,39 +155,32 @@ for:
       - cmd: set OPENCV_DIR=C:\tools\opencv\build
       - cmd: echo OPENCV_DIR=%OPENCV_DIR%
 
-
     build_script:
       - cmd: echo == BUILD JKQtPlotter ============================================================================
-      - cd c:\Build\JKQtPlotter
-      - mkdir build
-      - cd build
-      - if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=Release) else (set CMAKE_CONFIGURATION=Debug)
-      - if [%USE_CMAKE%]==[true] (
-          echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
-          cmake --version &&
-          cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
-          echo "--- Build using CMake -------------------------------------------------------------------------------" &&
-          cmake --build . --config "%CMAKE_CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
-        else (
-          echo "--- Run QMake Configure -----------------------------------------------------------------------------" &&
-          qmake.exe -v &&
-          qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro &&
-          echo "--- Build using MAKETOOL ----------------------------------------------------------------------------" &&
-          call %MAKETOOL% &&
-          cd ..)
+      - cmd: mkdir build
+      - cmd: cd build
+      - cmd: if [%USE_CMAKE%]==[true] echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[true] cmake --version &&
+      - cmd: if [%USE_CMAKE%]==[true] cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
+      - cmd: if [%USE_CMAKE%]==[true] echo "--- Build using CMake -------------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[true] cmake --build . --config "%CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
+      - cmd: if [%USE_CMAKE%]==[false] echo "--- Run QMake Configure -----------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[false] qmake.exe -v &&
+      - cmd: if [%USE_CMAKE%]==[false] qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro &&
+      - cmd: if [%USE_CMAKE%]==[false] echo "--- Build using MAKETOOL ----------------------------------------------------------------------------" &&
+      - cmd: if [%USE_CMAKE%]==[false] call %MAKETOOL% &&
+      - cmd: cd ..
 
 
 
 
 
   # Linux (Ubuntu2004)
-  - matrix:
+  - 
+    matrix:
       only:
         - image: Ubuntu2004
-        
-    clone_folder: ~/JKQtPlotter
-      
-     
+            
     init:
       - sh: echo == INIT SYSTEM ENVIRONMENT ======================================================================
       - sh: echo _NPROCESSORS_ONLN=$(getconf _NPROCESSORS_ONLN)
@@ -202,23 +194,19 @@ for:
       - sh: set QTDIR=$HOME/Qt/%QTVER%/%QTABI%/bin
       - sh: sudo apt update -qq
       - sh: sudo apt install -y build-essential git qt5-qmake cmake ninja-build
-      - cmd: echo QTDIR=%QTDIR%
-      - cmd: echo PATH=%PATH%
-      - cmd: echo == INSTALL OPENCV ===============================================================================
+      - sh: echo QTDIR=%QTDIR%
+      - sh: echo PATH=%PATH%
+      - sh: echo == INSTALL OPENCV ===============================================================================
       # Install OpenCV
       - sh: sudo apt install -y opencv
       - sh: echo OPENCV_DIR=%OPENCV_DIR%
 
-
     build_script:
       - sh: echo == BUILD JKQtPlotter ============================================================================
-      - sh: cd ~/JKQtPlotter
       - sh: mkdir build
       - sh: cd build
-      - sh: if [[ $CONFIGURATION release ]]; then export CMAKE_CONFIGURATION=Release; fi
-      - sh: if [[ $CONFIGURATION debug ]]; then export CMAKE_CONFIGURATION=Debug; fi
       - sh: echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
       - sh: cmake --version &&
       - sh: cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
       - sh: echo "--- Build using CMake -------------------------------------------------------------------------------" &&
-      - sh: cmake --build . --config "%CMAKE_CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
+      - sh: cmake --build . --config "%CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
