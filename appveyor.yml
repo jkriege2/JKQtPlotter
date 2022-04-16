@@ -1,4 +1,4 @@
-version: {branch}-0.{build}
+version: 0.{build}-{branch}
 
 # don't build tags
 skip_tags: true
@@ -27,7 +27,6 @@ environment:
   matrix:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       QTABI: mingw53_32
-      ARCH: x32
       MINGWDIR: C:\Qt\Tools\mingw530_32
       QTVER: 5.11
       MAKETOOL: mingw32-make
@@ -35,34 +34,30 @@ environment:
       
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       QTABI: msvc2015_64
-      ARCH: x64
       QTVER: 5.11
       CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
 
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       QTABI: msvc2015
-      ARCH: x32
       QTVER: 5.11
       CMAKE_GENERATOR: "Visual Studio 15 2017"
       
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       QTABI: msvc2019_64
-      ARCH: x64
       QTVER: 5.15
       CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
       
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
       QTABI: mingw81_64
-      ARCH: x64
       MINGWDIR: C:\Qt\Tools\mingw810_64
       QTVER: 5.15
       CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
 
     - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
       QTABI: gcc_64
-      ARCH: x64
       QTVER: 5.15
       CMAKE_GENERATOR: "Unix Makefiles"
+      
  
 
 for:
@@ -78,7 +73,6 @@ for:
       - cmd: echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
       - cmd: echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
       - cmd: echo APPVEYOR_BUILD_WORKER_IMAGE=%APPVEYOR_BUILD_WORKER_IMAGE%
-      - cmd: echo ARCH=%ARCH%
       - cmd: echo QTABI=%QTABI%
       - cmd: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
       - cmd: echo CMAKE_BUILDFLAGS=%CMAKE_BUILDFLAGS%
@@ -94,8 +88,6 @@ for:
       - cmd: if %QTABI%==msvc2015_64 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
       # Rename sh.exe as sh.exe in PATH interferes with MinGW
       - cmd: if /i "%QTABI:~0:5%"=="mingw" rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
-      - cmd: if /i "%QTABI:~0:5%"=="mingw" echo "USING MINGW: %QTABI%"
-      - cmd: if /i "%QTABI:~0:4%"=="msvc" echo "USING MSVC: %QTABI%"
       - cmd: echo QTDIR=%QTDIR%
       - cmd: echo JOMDIR=%JOMDIR%
       - cmd: echo PATH=%PATH%
@@ -141,7 +133,6 @@ for:
       - cmd: echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
       - cmd: echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
       - cmd: echo APPVEYOR_BUILD_WORKER_IMAGE=%APPVEYOR_BUILD_WORKER_IMAGE%
-      - cmd: echo ARCH=%ARCH%
       - cmd: echo QTABI=%QTABI%
       - cmd: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
       - cmd: echo CMAKE_BUILDFLAGS=%CMAKE_BUILDFLAGS%
@@ -156,8 +147,6 @@ for:
       - cmd: if %QTABI%==msvc2019_64 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
       # Rename sh.exe as sh.exe in PATH interferes with MinGW
       - cmd: if /i "%QTABI:~0:5%"=="mingw" rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
-      - cmd: if /i "%QTABI:~0:5%"=="mingw" echo "USING MINGW: %QTABI%"
-      - cmd: if /i "%QTABI:~0:4%"=="msvc" echo "USING MSVC: %QTABI%"
       - cmd: echo QTDIR=%QTDIR%
       - cmd: echo JOMDIR=%JOMDIR%
       - cmd: echo PATH=%PATH%
@@ -204,13 +193,13 @@ for:
       - sh: echo == INIT SYSTEM ENVIRONMENT ======================================================================
       - sh: echo _NPROCESSORS_ONLN=$(getconf _NPROCESSORS_ONLN)
       - sh: echo APPVEYOR_BUILD_WORKER_IMAGE=%APPVEYOR_BUILD_WORKER_IMAGE%
-      - sh: echo ARCH=%ARCH%
       - sh: echo QTABI=%QTABI%
       - sh: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
 
     install:
       # Init compiler environment
       - sh: echo == INIT COMPILER ENVIRONMENT ====================================================================
+      - sh: set QTDIR=$HOME/Qt/%QTVER%/%QTABI%/bin
       - sh: sudo apt update -qq
       - sh: sudo apt install -y build-essential git qt5-qmake cmake ninja-build
       - cmd: echo QTDIR=%QTDIR%
