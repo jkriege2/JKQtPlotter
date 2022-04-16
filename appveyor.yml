@@ -1,126 +1,235 @@
-version: 0.{build}-{branch}
+version: {branch}-0.{build}
 
-
-environment:
-  global:
-    JOMDIR: C:\Qt\Tools\QtCreator\bin
-    MINGWDIR: C:\Qt\Tools\mingw530_32
-    VSVER: 0
-    USE_LINUX: false
-
-  matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      QTABI: mingw53_32
-      QTVER: 5.11
-      ARCH: x86
-      MAKETOOL: mingw32-make
-      CMAKE_GENERATOR: "MinGW Makefiles"
-      USE_CMAKE: true
-      MSBUILD_FLAGS: 
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      QTABI: msvc2017_64
-      QTVER: 5.11
-      ARCH: x64
-      VSVER: 2017
-      CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
-      USE_CMAKE: true
-      MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-      QTABI: msvc2019_64
-      QTVER: 5.15.2
-      ARCH: x64
-      VSVER: 2019
-      CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
-      USE_CMAKE: true
-      MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
-      QTABI: msvc2015
-      QTVER: 5.11
-      ARCH: x86
-      VSVER: 14
-      CMAKE_GENERATOR: "Visual Studio 15 2017"
-      USE_CMAKE: true
-      MSBUILD_FLAGS: /verbosity:minimal /maxcpucount
- #   - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
- #     QTABI: gcc_64
- #     QTVER: 5.15.2
- #     ARCH: x64
- #     CMAKE_GENERATOR: "Unix Makefiles"
- #     USE_CMAKE: true
- #     USE_LINUX: true
-
-
+# don't build tags
 skip_tags: true
 
+
+# build options
 build:
   parallel: true
   verbosity: detailed
 
+
+#configurations to build
 configuration:
   - release
 #  - debug
 
 
-install:
-  - IF %VSVER% GTR 14 (
-        call "C:\Program Files (x86)\Microsoft Visual Studio\%VSVER%\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
-    ) ELSE (
-        IF %VSVER% GTR 0 (
-            call "C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\vcvarsall.bat" %ARCH%
-        ) ELSE (
-            set "PATH=%MINGWDIR%\bin;%PATH%"
-        )
-    )
-  - set PATH=C:\Qt\%QTVER%\%QTABI%\bin;%JOMDIR%;%PATH%
-  - echo "PATH = %PATH%"
-  - echo "APPVEYOR_BUILD_WORKER_IMAGE = %APPVEYOR_BUILD_WORKER_IMAGE%"
-  - echo "BUILD ID Qt%QTVER%_%QTABI%_%APPVEYOR_BUILD_VERSION%_%CONFIGURATION%"
-  # Rename sh.exe as sh.exe in PATH interferes with MinGW
-  - rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
-  - cmd: choco install OpenCV
-  - cmd: set OPENCV_DIR=C:\tools\opencv\build
+# define build matrix
+environment:
+  global:
+    JOMDIR: C:\Qt\Tools\QtCreator\bin
+    VSVER: 0
+    CMAKE_BUILDFLAGS:  /verbosity:minimal /maxcpucount
+    USE_CMAKE: true
+ 
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      QTABI: mingw53_32
+      ARCH: x32
+      MINGWDIR: C:\Qt\Tools\mingw530_32
+      QTVER: 5.11
+      MAKETOOL: mingw32-make
+      CMAKE_GENERATOR: "MinGW Makefiles"
+      
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      QTABI: msvc2015_64
+      ARCH: x64
+      QTVER: 5.11
+      CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
 
-build_script:
-#  - dir "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include"
-#  - type "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.16.27023\include\random"
-#  - dir "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE"
-#  - type "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE\random"
-  - dir c:\Qt\
-  - mkdir build
-  - cd build
-  - if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=Release) else (set CMAKE_CONFIGURATION=Debug)
-  - if [%USE_CMAKE%]==[true] (
-      echo "Call CMake..."
-      cmake --version &&
-      cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QT5%" .. &&
-      echo "Build..." &&
-      cmake --build . --config "%CMAKE_CONFIGURATION%" -- %MSBUILD_FLAGS% ) 
-    else (
-      echo "Call QMake..." &&
-      qmake.exe -v &&
-      qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro &&
-      echo "Build..." &&
-      call %MAKETOOL% &&
-      cd ..)
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      QTABI: msvc2015
+      ARCH: x32
+      QTVER: 5.11
+      CMAKE_GENERATOR: "Visual Studio 15 2017"
+      
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      QTABI: msvc2019_64
+      ARCH: x64
+      QTVER: 5.15
+      CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
+      
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+      QTABI: mingw81_64
+      ARCH: x64
+      MINGWDIR: C:\Qt\Tools\mingw810_64
+      QTVER: 5.15
+      CMAKE_GENERATOR: "Visual Studio 16 2019 Win64"
 
-#artifacts:
-#   - path: build\staticlib\**\*.a
-#     name: staticlib %QTVER%%QTABI%
-#   - path: build\sharedlib\**\*.a
-#     name: sharedlib %QTVER%%QTABI%
-#   - path: build\staticlib\**\*.lib
-#     name: staticlib %QTVER%%QTABI%
-#   - path: build\sharedlib\**\*.lib
-#     name: sharedlib %QTVER%%QTABI%
-#   - path: build\sharedlib\**\*.dll
-#     name: dll %QTVER%%QTABI%
+    - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu2004
+      QTABI: gcc_64
+      ARCH: x64
+      QTVER: 5.15
+      CMAKE_GENERATOR: "Unix Makefiles"
+ 
+
+for:
+  # Windows (MinGW 5.3 & MSVC2015)
+  - matrix:
+      only:
+        - image: Visual Studio 2019 
+        
+    clone_folder: c:\Build\JKQtPlotter
+      
+    init:
+      - cmd: echo == INIT SYSTEM ENVIRONMENT ======================================================================
+      - cmd: echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
+      - cmd: echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
+      - cmd: echo APPVEYOR_BUILD_WORKER_IMAGE=%APPVEYOR_BUILD_WORKER_IMAGE%
+      - cmd: echo ARCH=%ARCH%
+      - cmd: echo QTABI=%QTABI%
+      - cmd: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
+      - cmd: echo CMAKE_BUILDFLAGS=%CMAKE_BUILDFLAGS%
+
+    install:
+      # Init compiler environment
+      - cmd: echo == INIT COMPILER ENVIRONMENT ====================================================================
+      - cmd: set QTDIR=C:\Qt\%QTVER%\%QTABI%\bin
+      - cmd: set PATH=%QTDIR%;%JOMDIR%;%PATH%
+      - cmd: if /i "%QTABI:~0:5%"=="mingw" set "PATH=%MINGWDIR%\bin;%PATH%"
+      - cmd: if %QTABI%==msvc2015 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
+      - cmd: if %QTABI%==msvc2015_64 call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
+      - cmd: if %QTABI%==msvc2015_64 call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
+      # Rename sh.exe as sh.exe in PATH interferes with MinGW
+      - cmd: if /i "%QTABI:~0:5%"=="mingw" rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
+      - cmd: if /i "%QTABI:~0:5%"=="mingw" echo "USING MINGW: %QTABI%"
+      - cmd: if /i "%QTABI:~0:4%"=="msvc" echo "USING MSVC: %QTABI%"
+      - cmd: echo QTDIR=%QTDIR%
+      - cmd: echo JOMDIR=%JOMDIR%
+      - cmd: echo PATH=%PATH%
+      - cmd: echo == INSTALL OPENCV ===============================================================================
+      # Install OpenCV
+      - cmd: choco install OpenCV
+      - cmd: set OPENCV_DIR=C:\tools\opencv\build
+      - cmd: echo OPENCV_DIR=%OPENCV_DIR%
+
+    build_script:
+      - cmd: echo == BUILD JKQtPlotter ============================================================================
+      - cd c:\Build\JKQtPlotter
+      - mkdir build
+      - cd build
+      - if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=Release) else (set CMAKE_CONFIGURATION=Debug)
+      - if [%USE_CMAKE%]==[true] (
+          echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
+          cmake --version &&
+          cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
+          echo "--- Build using CMake -------------------------------------------------------------------------------" &&
+          cmake --build . --config "%CMAKE_CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
+        else (
+          echo "--- Run QMake Configure -----------------------------------------------------------------------------" &&
+          qmake.exe -v &&
+          qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro &&
+          echo "--- Build using MAKETOOL ----------------------------------------------------------------------------" &&
+          call %MAKETOOL% &&
+          cd ..)
 
 
 
-# # remote desktop connection on init
-# init:
-  # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
-# # remote desktop connection on finish and block build to not destroy VM
-# on_finish:
-  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  # Windows (MinGW 8.1 & MSVC2019)
+  - matrix:
+      only:
+        - image: Visual Studio 2022
+        
+    clone_folder: c:\Build\JKQtPlotter
+      
+     
+    init:
+      - cmd: echo == INIT SYSTEM ENVIRONMENT ======================================================================
+      - cmd: echo NUMBER_OF_PROCESSORS=%NUMBER_OF_PROCESSORS%
+      - cmd: echo PROCESSOR_IDENTIFIER=%PROCESSOR_IDENTIFIER%
+      - cmd: echo APPVEYOR_BUILD_WORKER_IMAGE=%APPVEYOR_BUILD_WORKER_IMAGE%
+      - cmd: echo ARCH=%ARCH%
+      - cmd: echo QTABI=%QTABI%
+      - cmd: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
+      - cmd: echo CMAKE_BUILDFLAGS=%CMAKE_BUILDFLAGS%
+
+    install:
+      # Init compiler environment
+      - cmd: echo == INIT COMPILER ENVIRONMENT ====================================================================
+      - cmd: set QTDIR=C:\Qt\%QTVER%\%QTABI%\bin
+      - cmd: set PATH=%QTDIR%;%JOMDIR%;%PATH%
+      - cmd: if /i "%QTABI:~0:5%"=="mingw" set "PATH=%MINGWDIR%\bin;%PATH%"
+      - cmd: if %QTABI%==msvc2019 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars32.bat"
+      - cmd: if %QTABI%==msvc2019_64 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+      # Rename sh.exe as sh.exe in PATH interferes with MinGW
+      - cmd: if /i "%QTABI:~0:5%"=="mingw" rename "C:\Program Files\Git\usr\bin\sh.exe" "sh2.exe"
+      - cmd: if /i "%QTABI:~0:5%"=="mingw" echo "USING MINGW: %QTABI%"
+      - cmd: if /i "%QTABI:~0:4%"=="msvc" echo "USING MSVC: %QTABI%"
+      - cmd: echo QTDIR=%QTDIR%
+      - cmd: echo JOMDIR=%JOMDIR%
+      - cmd: echo PATH=%PATH%
+      - cmd: echo == INSTALL OPENCV ===============================================================================
+      # Install OpenCV
+      - cmd: choco install OpenCV
+      - cmd: set OPENCV_DIR=C:\tools\opencv\build
+      - cmd: echo OPENCV_DIR=%OPENCV_DIR%
+
+
+    build_script:
+      - cmd: echo == BUILD JKQtPlotter ============================================================================
+      - cd c:\Build\JKQtPlotter
+      - mkdir build
+      - cd build
+      - if "%CONFIGURATION%"=="release" (set CMAKE_CONFIGURATION=Release) else (set CMAKE_CONFIGURATION=Debug)
+      - if [%USE_CMAKE%]==[true] (
+          echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
+          cmake --version &&
+          cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
+          echo "--- Build using CMake -------------------------------------------------------------------------------" &&
+          cmake --build . --config "%CMAKE_CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
+        else (
+          echo "--- Run QMake Configure -----------------------------------------------------------------------------" &&
+          qmake.exe -v &&
+          qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro &&
+          echo "--- Build using MAKETOOL ----------------------------------------------------------------------------" &&
+          call %MAKETOOL% &&
+          cd ..)
+
+
+
+
+
+  # Linux (Ubuntu2004)
+  - matrix:
+      only:
+        - image: Ubuntu2004
+        
+    clone_folder: ~/JKQtPlotter
+      
+     
+    init:
+      - sh: echo == INIT SYSTEM ENVIRONMENT ======================================================================
+      - sh: echo _NPROCESSORS_ONLN=$(getconf _NPROCESSORS_ONLN)
+      - sh: echo APPVEYOR_BUILD_WORKER_IMAGE=%APPVEYOR_BUILD_WORKER_IMAGE%
+      - sh: echo ARCH=%ARCH%
+      - sh: echo QTABI=%QTABI%
+      - sh: echo CMAKE_GENERATOR=%CMAKE_GENERATOR%
+
+    install:
+      # Init compiler environment
+      - sh: echo == INIT COMPILER ENVIRONMENT ====================================================================
+      - sh: sudo apt update -qq
+      - sh: sudo apt install -y build-essential git qt5-qmake cmake ninja-build
+      - cmd: echo QTDIR=%QTDIR%
+      - cmd: echo PATH=%PATH%
+      - cmd: echo == INSTALL OPENCV ===============================================================================
+      # Install OpenCV
+      - sh: sudo apt install -y opencv
+      - sh: echo OPENCV_DIR=%OPENCV_DIR%
+
+
+    build_script:
+      - sh: echo == BUILD JKQtPlotter ============================================================================
+      - sh: cd ~/JKQtPlotter
+      - sh: mkdir build
+      - sh: cd build
+      - sh: if [[ $CONFIGURATION release ]]; then export CMAKE_CONFIGURATION=Release; fi
+      - sh: if [[ $CONFIGURATION debug ]]; then export CMAKE_CONFIGURATION=Debug; fi
+      - sh: echo "--- Run CMake Configure -----------------------------------------------------------------------------" &&
+      - sh: cmake --version &&
+      - sh: cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. &&
+      - sh: echo "--- Build using CMake -------------------------------------------------------------------------------" &&
+      - sh: cmake --build . --config "%CMAKE_CONFIGURATION%" -- %CMAKE_BUILDFLAGS% ) 
