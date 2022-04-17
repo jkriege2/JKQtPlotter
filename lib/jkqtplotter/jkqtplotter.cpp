@@ -1236,8 +1236,9 @@ void JKQTPlotter::resizeEvent(QResizeEvent *event) {
 
 void JKQTPlotter::delayedResizeEvent()
 {
-    int plotImageWidth=width();
-    int plotImageHeight=height();
+    qreal dpr = devicePixelRatioF();
+    int plotImageWidth=width() * dpr;
+    int plotImageHeight=height() * dpr;
 
     plotImageHeight=plotImageHeight-getPlotYOffset();
     //qDebug()<<"resize: "<<plotImageWidth<<" x "<<plotImageHeight<<std::endl;
@@ -1245,6 +1246,8 @@ void JKQTPlotter::delayedResizeEvent()
     if (plotImageWidth != image.width() || plotImageHeight != image.height()) {
 
         QImage newImage(QSize(plotImageWidth, plotImageHeight), QImage::Format_ARGB32);
+        newImage.setDevicePixelRatio(dpr);
+
         image=newImage;
         sizeChanged=true;
     }
