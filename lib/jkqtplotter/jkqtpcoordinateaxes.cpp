@@ -1012,13 +1012,9 @@ bool JKQTPCoordinateAxis::getNextLabel(double& x, QString& label, bool init) {
         } else {
             for (int i=0; i<tickLabels.size(); i++) {
                 if (x==tickLabels[i].first && i+1<tickLabels.size()) {
-                    if (x>=axismin && x<=axismax) {
-                        label=tickLabels[i+1].second;
-                        x=tickLabels[i+1].first;
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    x=tickLabels[i+1].first;
+                    label=tickLabels[i+1].second;
+                    return (x<=axismax);
                 }
             }
         }
