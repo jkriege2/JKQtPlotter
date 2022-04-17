@@ -159,8 +159,8 @@ for:
       - sh: echo == INSTALL OPENCV ===============================================================================
       - sh: sudo apt install -y libopencv-dev
       # Install CImg
-      - sh: echo == INSTALL CImg =================================================================================
-      - sh: sudo apt install -y cimg-dev
+      #- sh: echo == INSTALL CImg =================================================================================
+      #- sh: sudo apt install -y cimg-dev
 
     build_script:
       - sh: echo == BUILD JKQtPlotter ============================================================================
