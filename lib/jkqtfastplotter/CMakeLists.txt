@@ -34,7 +34,8 @@ include(CMakePackageConfigHelpers)
 
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED  ${SOURCES} ${HEADERS} ${RESOURCES})
+    add_library(${libsh_name} SHARED )
+    target_sources(${libsh_name} PRIVATE ${SOURCES} ${RESOURCES} PUBLIC ${HEADERS})
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL JKQTCommonSharedLib)
@@ -63,6 +64,7 @@ endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
     add_library(${lib_name} STATIC  ${SOURCES} ${HEADERS} ${RESOURCES})
+    target_sources(${lib_name} PRIVATE ${SOURCES} ${RESOURCES} PUBLIC ${HEADERS})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
     set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 11)
