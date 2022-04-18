@@ -165,9 +165,17 @@ void JKQTPEnhancedTableView::copySelectionToExcel(int copyrole, bool storeHead)
                 if (r<rowmin) rowmin=r;
             }
         }
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QList<int> rowlist(rows.begin(), rows.end());
+#else
         QList<int> rowlist=QList<int>::fromSet(rows);
+#endif
         std::sort(rowlist.begin(), rowlist.end());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QList<int> collist(cols.begin(), cols.end());
+#else
         QList<int> collist=QList<int>::fromSet(cols);
+#endif
         std::sort(collist.begin(), collist.end());
         int rowcnt=rowlist.size();
         int colcnt=collist.size();
@@ -284,9 +292,17 @@ void JKQTPEnhancedTableView::copySelectionToCSV(int copyrole, bool storeHead, co
                 if (r<rowmin) rowmin=r;
             }
         }
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QList<int> rowlist(rows.begin(), rows.end());
+#else
         QList<int> rowlist=QList<int>::fromSet(rows);
+#endif
         std::sort(rowlist.begin(), rowlist.end());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        QList<int> collist(cols.begin(), cols.end());
+#else
         QList<int> collist=QList<int>::fromSet(cols);
+#endif
         std::sort(collist.begin(), collist.end());
         int rowcnt=rowlist.size();
         int colcnt=collist.size();
@@ -405,12 +421,12 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
     QPrinter* p=printer;
 
 
-     //p->setPageMargins(10,10,10,10,QPrinter::Millimeter);
+     //p->setPageMargins(10,10,10,10,QPageLayout::Millimeter);
 
      /*if (width()>height()) {
-         p->setOrientation(QPrinter::Landscape);
+         p->setPageOrientation(QPageLayout::Landscape);
      } else {
-         p->setOrientation(QPrinter::Portrait);
+         p->setPageOrientation(QPageLayout::Portrait);
      }*/
 
      clearSelection();
@@ -444,13 +460,14 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
      }
      double scale=1.0;
      // adjust scale, so the widest/highest column fits on one page
-     /*if (maxWidth*scale>p->pageRect().width()) scale=p->pageRect().width()/maxWidth;
-     if (maxHeight*scale>p->pageRect().height()) scale=p->pageRect().height()/maxHeight;*/
+     /*if (maxWidth*scale>p->pageLayout().paintRectPixels(p->resolution()).width()) scale=p->pageLayout().paintRectPixels(p->resolution()).width()/maxWidth;
+     if (maxHeight*scale>p->pageLayout().paintRectPixels(p->resolution()).height()) scale=p->pageLayout().paintRectPixels(p->resolution()).height()/maxHeight;*/
      if (onePageWide) {
-         if (totalWidth>p->pageRect().width()) scale=p->pageRect().width()/totalWidth;
+
+         if (totalWidth>p->pageLayout().paintRectPixels(p->resolution()).width()) scale=p->pageLayout().paintRectPixels(p->resolution()).width()/totalWidth;
      }
      if (onePageHigh) {
-         if (totalHeight>p->pageRect().height()) scale=qMin(scale, p->pageRect().height()/totalHeight);
+         if (totalHeight>p->pageLayout().paintRectPixels(p->resolution()).height()) scale=qMin(scale, p->pageLayout().paintRectPixels(p->resolution()).height()/totalHeight);
      }
 
      //qDebug()<<scale;
@@ -467,7 +484,7 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
          if (!onePageWide) {
              for (int c=0; c<cols; c++) {
                  double cw=columnWidth(c);
-                 if (x+cw>p->pageRect().width()/scale) {
+                 if (x+cw>p->pageLayout().paintRectPixels(p->resolution()).width()/scale) {
                      pagesWide++;
                      x=0;
                      pageCols<<c;
@@ -483,7 +500,7 @@ void JKQTPEnhancedTableView::print(QPrinter *printer, bool onePageWide, bool one
          if (!onePageHigh) {
              for (int r=0; r<rows; r++) {
                  double rh=rowHeight(r);
-                 if (y+rh>p->pageRect().height()/scale) {
+                 if (y+rh>p->pageLayout().paintRectPixels(p->resolution()).height()/scale) {
                      pagesHigh++;
                      pageRows<<r;
                      y=hhh;
@@ -561,13 +578,13 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
     headerFont.setBold(true);
     int pagesWide=pageCols.size()-1;
     int pagesHigh=pageRows.size()-1;
-    //painter.translate(p->pageRect().topLeft());
+    //painter.translate(p->pageLayout().paintRectPixels(p->resolution()).topLeft());
     int pageCnt=0;
     for (int ph=0; ph<pageRows.size()-1; ph++) {
         for (int pw=0; pw<pageCols.size()-1; pw++) {
             if (page<0 || page==pageCnt) {
                 //qDebug()<<"print page "<<ph<<"/"<<pageRows.size()<<pagesHigh<<"    "<<pw<<"/"<<pageCols.size()<<pagesWide;
-                //painter.drawPicture(p->pageRect().topLeft(), pic);
+                //painter.drawPicture(p->pageLayout().paintRectPixels(p->resolution()).topLeft(), pic);
                 double y=0;
                 if (ph==0) {
                     y=hhh;
@@ -607,7 +624,7 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
                         painter.setPen(headerPen);
                         painter.drawText(QRect(rec.x()+4, rec.y()+4, rec.width()-8, rec.height()-8), model()->headerData(c, Qt::Horizontal).toString());
                         painter.drawRect(rec);
-                        //if (x==vhw &&) painter.drawLine(rec.topLeft(), QPoint(rec.left(), p->pageRect().height()));
+                        //if (x==vhw &&) painter.drawLine(rec.topLeft(), QPoint(rec.left(), p->pageLayout().paintRectPixels(p->resolution()).height()));
                         x=x+columnWidth(c);
                     }
 
@@ -623,7 +640,7 @@ void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, do
                         painter.setFont(headerFont);
                         painter.drawText(QRect(rec.x()+4, rec.y()+4, rec.width()-8, rec.height()-8), model()->headerData(r, Qt::Vertical).toString());
                         painter.drawRect(rec);
-                        //if (x==vhw &&) painter.drawLine(rec.topLeft(), QPoint(rec.left(), p->pageRect().height()));
+                        //if (x==vhw &&) painter.drawLine(rec.topLeft(), QPoint(rec.left(), p->pageLayout().paintRectPixels(p->resolution()).height()));
                         y=y+rowHeight(r);
                     }
 
