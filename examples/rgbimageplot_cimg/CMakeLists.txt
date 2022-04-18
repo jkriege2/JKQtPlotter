@@ -20,7 +20,7 @@ if(CImg_FOUND)
     elseif(JKQtPlotter_BUILD_SHARED_LIBS)
         target_link_libraries(${EXENAME} JKQTPlotterSharedLib)
     endif()
-    include_directories(${EXENAME}  ${CIMG_INCLUDE_DIR} )
+    target_link_libraries(${EXENAME} CImg::CImg)
 
     # Installation
     install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
