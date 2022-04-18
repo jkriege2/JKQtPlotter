@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.20)
 
 # Project Name and Version
 # starting from 2020: using semantic version number <major>.<minor>.<patch>
@@ -14,7 +14,7 @@ project(JKQTPlotter LANGUAGES CXX VERSION 4.0.0)
 
 
 # set search path for CMake files
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 # Find includes in the build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

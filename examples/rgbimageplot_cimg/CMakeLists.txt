@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.20)
 find_package( CImg  )
 if(CImg_FOUND)
 
@@ -28,6 +28,6 @@ if(CImg_FOUND)
     #Installation of Qt DLLs on Windows
     jkqtplotter_deployqt(${EXENAME})
         add_custom_command(TARGET ${EXENAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/rgbimageplot_cimg_example.bmp" $<TARGET_FILE_DIR:${EXENAME}>
+            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_LIST_DIR}/rgbimageplot_cimg_example.bmp" $<TARGET_FILE_DIR:${EXENAME}>
         )
 endif(CImg_FOUND)

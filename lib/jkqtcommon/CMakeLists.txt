@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
 
 set(libBasename JKQTCommon)
 set(libIncludeSubdir jkqtcommon)
@@ -21,59 +21,80 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Set up source files
 set(SOURCES
-  jkqtpdebuggingtools.cpp
-  jkqtpmathtools.cpp
-  jkqtpalgorithms.cpp
-  jkqtpstringtools.cpp
-  jkqtplinalgtools.cpp
-  jkqtpcodestructuring.cpp
-  jkqtpbasicimagetools.cpp
-  jkqtpgeometrytools.cpp
-  jkqtpdrawingtools.cpp
-  jkqtpenhancedpainter.cpp
-  jkqtphighrestimer.cpp
-  jkqtpmathparser.cpp
-  jkqttools.cpp
-  jkqtparraytools.cpp
-  jkqtpstatbasics.cpp
-  jkqtpstathistogram.cpp
-  jkqtpstatkde.cpp
-  jkqtpstatregression.cpp
-  jkqtpstatpoly.cpp
-  jkqtpstatgrouped.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpdebuggingtools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpmathtools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpalgorithms.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtplinalgtools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtphighrestimer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpmathparser.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqttools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtparraytools.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatbasics.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstathistogram.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatkde.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatregression.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatpoly.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtpstatgrouped.cpp
 )
 
 set(HEADERS
-  jkqtcommon_imexport.h
-  jkqtpdebuggingtools.h
-  jkqtpmathtools.h
-  jkqtpalgorithms.h
-  jkqtpstringtools.h
-  jkqtplinalgtools.h
-  jkqtpcodestructuring.h
-  jkqtpbasicimagetools.h
-  jkqtpgeometrytools.h
-  jkqtpdrawingtools.h
-  jkqtpenhancedpainter.h
-  jkqtphighrestimer.h
-  jkqtpmathparser.h
-  jkqttools.h
-  jkqtparraytools.h
-  jkqtpstatisticstools.h
-  jkqtpstatbasics.h
-  jkqtpstathistogram.h
-  jkqtpstatkde.h
-  jkqtpstatregression.h
-  jkqtpstatpoly.h
-  jkqtpstatgrouped.h
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtcommon_imexport.h>
+  $<INSTALL_INTERFACE:jkqtcommon_imexport.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdebuggingtools.h>
+  $<INSTALL_INTERFACE:jkqtpdebuggingtools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpmathtools.h>
+  $<INSTALL_INTERFACE:jkqtpmathtools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpalgorithms.h>
+  $<INSTALL_INTERFACE:jkqtpalgorithms.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstringtools.h>
+  $<INSTALL_INTERFACE:jkqtpstringtools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtplinalgtools.h>
+  $<INSTALL_INTERFACE:jkqtplinalgtools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcodestructuring.h>
+  $<INSTALL_INTERFACE:jkqtpcodestructuring.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpbasicimagetools.h>
+  $<INSTALL_INTERFACE:jkqtpbasicimagetools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgeometrytools.h>
+  $<INSTALL_INTERFACE:jkqtpgeometrytools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdrawingtools.h>
+  $<INSTALL_INTERFACE:jkqtpdrawingtools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpenhancedpainter.h>
+  $<INSTALL_INTERFACE:jkqtpenhancedpainter.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtphighrestimer.h>
+  $<INSTALL_INTERFACE:jkqtphighrestimer.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpmathparser.h>
+  $<INSTALL_INTERFACE:jkqtpmathparser.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqttools.h>
+  $<INSTALL_INTERFACE:jkqttools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtparraytools.h>
+  $<INSTALL_INTERFACE:jkqtparraytools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatisticstools.h>
+  $<INSTALL_INTERFACE:jkqtpstatisticstools.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatbasics.h>
+  $<INSTALL_INTERFACE:jkqtpstatbasics.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstathistogram.h>
+  $<INSTALL_INTERFACE:jkqtpstathistogram.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatkde.h>
+  $<INSTALL_INTERFACE:jkqtpstatkde.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatregression.h>
+  $<INSTALL_INTERFACE:jkqtpstatregression.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatpoly.h>
+  $<INSTALL_INTERFACE:jkqtpstatpoly.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpstatgrouped.h>
+  $<INSTALL_INTERFACE:jkqtpstatgrouped.h>
 )
 
 include(CMakePackageConfigHelpers)
 
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED )
-    target_sources(${libsh_name} PRIVATE ${SOURCES} PUBLIC ${HEADERS})
+    add_library(${libsh_name} SHARED ${SOURCES}  ${HEADERS} )
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Xml Qt5::Widgets Qt5::PrintSupport)
@@ -91,18 +112,17 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
       target_compile_definitions(${libsh_name} PUBLIC NOMINMAX)
     endif()
     target_include_directories(${libsh_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     set_target_properties(${libsh_name} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS "ON")
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${libsh_name}Version.cmake 
                                      VERSION ${PROJECT_VERSION} 
-                                     COMPATIBILITY AnyNewerVersion )    
+                                     COMPATIBILITY AnyNewerVersion )
 endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC )
-    target_sources(${lib_name} PRIVATE ${SOURCES} PUBLIC ${HEADERS})
+    add_library(${lib_name} STATIC ${SOURCES} ${HEADERS})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
     set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 11)
@@ -117,7 +137,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
       target_compile_definitions(${lib_name} PUBLIC NOMINMAX)
     endif()
     target_include_directories(${lib_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     target_link_libraries(${lib_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Xml Qt5::Widgets Qt5::PrintSupport)

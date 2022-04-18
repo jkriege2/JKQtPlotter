@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.20)
 find_package( OpenCV  )
 if (OpenCV_FOUND)
 
@@ -31,7 +31,7 @@ if (OpenCV_FOUND)
         #Installation of OpenCV DLLs on Windows
         jkqtplotter_deployopencv(${EXENAME})
         add_custom_command(TARGET ${EXENAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/rgbimageplot_opencv_example.bmp" $<TARGET_FILE_DIR:${EXENAME}>
+            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_LIST_DIR}/rgbimageplot_opencv_example.bmp" $<TARGET_FILE_DIR:${EXENAME}>
         )
 
 endif(OpenCV_FOUND)

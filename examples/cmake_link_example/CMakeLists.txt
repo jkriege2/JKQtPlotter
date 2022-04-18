@@ -41,5 +41,5 @@ target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSuppo
 install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 #Installation of Qt DLLs on Windows
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/jkqtplotter_deployqt.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/../../cmake/jkqtplotter_deployqt.cmake)
 jkqtplotter_deployqt(${EXENAME})

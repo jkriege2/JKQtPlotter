@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
 
 set(libBasename JKQTMathText)
 set(libIncludeSubdir jkqtmathtext)
@@ -21,17 +21,19 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Set up source files
 set(SOURCES
-  jkqtmathtext.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.cpp
 )
 
 set(HEADERS
-  jkqtmathtext.h
-  jkqtmathtext_imexport.h
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext.h>
+  $<INSTALL_INTERFACE:jkqtmathtext.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtmathtext_imexport.h>
+  $<INSTALL_INTERFACE:jkqtmathtext_imexport.h>
 )
 
 if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
     set(RESOURCES
-      resources/xits.qrc
+      ${CMAKE_CURRENT_LIST_DIR}/resources/xits.qrc
     )
 endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
 
@@ -39,8 +41,7 @@ endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
 include(CMakePackageConfigHelpers)
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED
-    target_sources(${libsh_name} PRIVATE ${SOURCES} ${RESOURCES} PUBLIC ${HEADERS})
+    add_library(${libsh_name} SHARED  ${SOURCES} ${RESOURCES} ${HEADERS} )
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport JKQTCommonSharedLib)
@@ -58,7 +59,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
       target_compile_definitions(${libsh_name} PUBLIC NOMINMAX)
     endif()
     target_include_directories(${libsh_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     if(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
@@ -71,8 +72,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
 endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC )
-    target_sources(${lib_name} PRIVATE ${SOURCES} ${RESOURCES} PUBLIC ${HEADERS})
+    add_library(${lib_name} STATIC ${SOURCES} ${RESOURCES} ${HEADERS})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
     set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 11)
@@ -90,8 +90,8 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
         target_compile_definitions(${lib_name} PRIVATE JKQTMATHTEXT_COMPILED_WITH_XITS)
     endif(JKQtPlotter_BUILD_INCLUDE_XITS_FONTS)
     target_link_libraries(${lib_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport JKQTCommonLib)
-	target_include_directories(${lib_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+	  target_include_directories(${lib_name} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake

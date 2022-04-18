@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.20)
 
 set(EXAMPLE_NAME user_interaction)
 set(EXENAME jkqtptest_${EXAMPLE_NAME})

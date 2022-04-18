@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
 
 set(libBasename JKQTFastPlotter)
 set(libIncludeSubdir jkqtfastplotter)
@@ -25,8 +25,10 @@ set(SOURCES
 )
 
 set(HEADERS
-  jkqtfastplotter.h
-  jkqtfastplotter_imexport.h
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtfastplotter.h>
+  $<INSTALL_INTERFACE:jkqtfastplotter.h>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtfastplotter_imexport.h>
+  $<INSTALL_INTERFACE:jkqtfastplotter_imexport.h>
 )
 
 
@@ -34,8 +36,7 @@ include(CMakePackageConfigHelpers)
 
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED )
-    target_sources(${libsh_name} PRIVATE ${SOURCES} ${RESOURCES} PUBLIC ${HEADERS})
+    add_library(${libsh_name} SHARED ${SOURCES} ${RESOURCES} ${HEADERS})
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL JKQTCommonSharedLib)
@@ -52,8 +53,8 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
       target_compile_definitions(${libsh_name} PUBLIC NOMINMAX)
     endif()
     target_compile_definitions(${libsh_name} PRIVATE JKQTFASTPLOTTER_LIB_EXPORT_LIBRARY)
-	target_include_directories(${libsh_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+	  target_include_directories(${libsh_name} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     set_target_properties(${libsh_name} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS "ON")
@@ -63,8 +64,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
 endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC  ${SOURCES} ${HEADERS} ${RESOURCES})
-    target_sources(${lib_name} PRIVATE ${SOURCES} ${RESOURCES} PUBLIC ${HEADERS})
+    add_library(${lib_name} STATIC ${SOURCES} ${RESOURCES} ${HEADERS})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
     set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 11)
@@ -79,8 +79,8 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     endif()
     target_compile_features(${lib_name} PUBLIC cxx_std_11)
     target_link_libraries(${lib_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::OpenGL JKQTCommonLib)
-	target_include_directories(${lib_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+  	target_include_directories(${lib_name} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake

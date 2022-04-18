@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.15)
 
 set(libBasename JKQTPlotter)
 set(libIncludeSubdir jkqtplotter)
@@ -20,129 +20,185 @@ endif(JKQtPlotter_BUILD_STATIC_LIBS)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Set up source files
-set(SOURCES
-    jkqtptools.cpp
-    jkqtpbaseelements.cpp
-    jkqtpbaseplotter.cpp
-    jkqtpdatastorage.cpp
-    jkqtpgraphsbase.cpp
-    jkqtpgraphsbaseerrors.cpp
-    jkqtpgraphsbasestylingmixins.cpp
-    jkqtplotter.cpp
-    jkqtplotterstyle.cpp
-    jkqtpkeystyle.cpp
-    jkqtpbaseplotterstyle.cpp
-    jkqtpcoordinateaxes.cpp
-    jkqtpcoordinateaxesstyle.cpp
-    jkqtpimagetools.cpp
-    jkqtpgraphsbasestyle.cpp
+set(SOURCES_BASE
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtptools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseelements.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseplotter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpdatastorage.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbase.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbaseerrors.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbasestylingmixins.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtplotter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtplotterstyle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpkeystyle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseplotterstyle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpcoordinateaxes.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpcoordinateaxesstyle.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpimagetools.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbasestyle.cpp
     )
 set(SOURCES_GRAPHS
-    graphs/jkqtpscatter.cpp
-    graphs/jkqtprange.cpp
-    graphs/jkqtpspecialline.cpp
-    graphs/jkqtpbarchartbase.cpp 
-    graphs/jkqtpbarchart.cpp 
-    graphs/jkqtpboxplot.cpp 
-    graphs/jkqtpboxplotbase.cpp 
-    graphs/jkqtpboxplotstylingmixins.cpp 
-    graphs/jkqtpevaluatedfunctionbase.cpp 
-    graphs/jkqtpevaluatedfunction.cpp 
-    graphs/jkqtpfilledcurve.cpp 
-    graphs/jkqtpgeometric.cpp 
-    graphs/jkqtpgeoannotations.cpp
-    graphs/jkqtpgeobase.cpp
-    graphs/jkqtpgeolines.cpp
-    graphs/jkqtpgeoshapes.cpp    
-    graphs/jkqtpimage.cpp
-    graphs/jkqtpimpulses.cpp 
-    graphs/jkqtpparsedfunction.cpp 
-    graphs/jkqtppeakstream.cpp 
-    graphs/jkqtpsinglecolumnsymbols.cpp 
-    graphs/jkqtpimageoverlays.cpp 
-    graphs/jkqtpcontour.cpp 
-    graphs/jkqtpimagergb.cpp
-    graphs/jkqtpviolinplot.cpp
-    graphs/jkqtpviolinplotstylingmixins.cpp
-    graphs/jkqtpstatisticsadaptors.cpp 
-    graphs/jkqtpevaluatedparametriccurve.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpscatter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtprange.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpspecialline.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpbarchartbase.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpbarchart.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpboxplot.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpboxplotbase.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpboxplotstylingmixins.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedfunctionbase.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedfunction.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpfilledcurve.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeometric.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeoannotations.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeobase.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeolines.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeoshapes.cpp    
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimage.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimpulses.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpparsedfunction.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtppeakstream.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpsinglecolumnsymbols.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimageoverlays.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpcontour.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimagergb.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpviolinplot.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpviolinplotstylingmixins.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpstatisticsadaptors.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedparametriccurve.cpp 
     )
 set(SOURCES_GUI
-    gui/jkqtpcomboboxes.cpp
-    gui/jkqtpenhancedspinboxes.cpp
-    gui/jkqtpenhancedtableview.cpp
-    gui/jkqtpgraphsmodel.cpp
-    gui/jkvanishqtoolbar.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpcomboboxes.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpenhancedspinboxes.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpenhancedtableview.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpgraphsmodel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/gui/jkvanishqtoolbar.cpp
 )
 
 
-set(HEADERS
-    jkqtptools.h
-    jkqtpbaseelements.h
-    jkqtpbaseplotter.h
-    jkqtpdatastorage.h
-    jkqtpgraphsbase.h
-    jkqtpgraphsbaseerrors.h
-    jkqtpgraphsbasestylingmixins.h
-    jkqtplotter.h
-    jkqtplotterstyle.h
-    jkqtpkeystyle.h
-    jkqtpbaseplotterstyle.h
-    jkqtpcoordinateaxes.h
-    jkqtpcoordinateaxesstyle.h
-    jkqtpimagetools.h
-    jkqtpgraphsbasestyle.h
-    jkqtplotter_imexport.h
+set(HEADERS_BASE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtptools.h>
+    $<INSTALL_INTERFACE:jkqtptools.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseelements.h>
+    $<INSTALL_INTERFACE:jkqtpbaseelements.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseplotter.h>
+    $<INSTALL_INTERFACE:jkqtpbaseplotter.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpdatastorage.h>
+    $<INSTALL_INTERFACE:jkqtpdatastorage.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbase.h>
+    $<INSTALL_INTERFACE:jkqtpgraphsbase.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbaseerrors.h>
+    $<INSTALL_INTERFACE:jkqtpgraphsbaseerrors.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbasestylingmixins.h>
+    $<INSTALL_INTERFACE:jkqtpgraphsbasestylingmixins.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtplotter.h>
+    $<INSTALL_INTERFACE:jkqtplotter.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtplotterstyle.h>
+    $<INSTALL_INTERFACE:jkqtplotterstyle.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpkeystyle.h>
+    $<INSTALL_INTERFACE:jkqtpkeystyle.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpbaseplotterstyle.h>
+    $<INSTALL_INTERFACE:jkqtpbaseplotterstyle.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcoordinateaxes.h>
+    $<INSTALL_INTERFACE:jkqtpcoordinateaxes.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpcoordinateaxesstyle.h>
+    $<INSTALL_INTERFACE:jkqtpcoordinateaxesstyle.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpimagetools.h>
+    $<INSTALL_INTERFACE:jkqtpimagetools.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtpgraphsbasestyle.h>
+    $<INSTALL_INTERFACE:jkqtpgraphsbasestyle.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/jkqtplotter_imexport.h>
+    $<INSTALL_INTERFACE:jkqtplotter_imexport.h>
 )
 set(HEADERS_GRAPHS
-    graphs/jkqtpboxplot.h
-    graphs/jkqtpboxplotbase.h
-    graphs/jkqtpboxplotstylingmixins.h
-    graphs/jkqtpevaluatedfunctionbase.h
-    graphs/jkqtpevaluatedfunction.h
-    graphs/jkqtpfilledcurve.h
-    graphs/jkqtpgeometric.h
-    graphs/jkqtpgeoannotations.h
-    graphs/jkqtpgeobase.h
-    graphs/jkqtpgeolines.h
-    graphs/jkqtpgeoshapes.h
-    graphs/jkqtpimage.h
-    graphs/jkqtpimpulses.h
-    graphs/jkqtpparsedfunction.h
-    graphs/jkqtppeakstream.h
-    graphs/jkqtpsinglecolumnsymbols.h
-    graphs/jkqtpimageoverlays.h
-    graphs/jkqtpcontour.h
-    graphs/jkqtpimagergb.h
-    graphs/jkqtpviolinplot.h
-    graphs/jkqtpviolinplotstylingmixins.h
-    graphs/jkqtpstatisticsadaptors.h
-    graphs/jkqtpscatter.h
-    graphs/jkqtprange.h
-    graphs/jkqtpspecialline.h
-    graphs/jkqtpbarchartbase.h
-    graphs/jkqtpbarchart.h
-    graphs/jkqtpevaluatedparametriccurve.h
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpboxplot.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpboxplot.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpboxplotbase.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpboxplotbase.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpboxplotstylingmixins.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpboxplotstylingmixins.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedfunctionbase.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpevaluatedfunctionbase.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedfunction.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpevaluatedfunction.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpfilledcurve.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpfilledcurve.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeometric.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpgeometric.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeoannotations.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpgeoannotations.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeobase.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpgeobase.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeolines.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpgeolines.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpgeoshapes.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpgeoshapes.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimage.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpimage.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimpulses.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpimpulses.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpparsedfunction.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpparsedfunction.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtppeakstream.h>
+    $<INSTALL_INTERFACE:graphs/jkqtppeakstream.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpsinglecolumnsymbols.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpsinglecolumnsymbols.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimageoverlays.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpimageoverlays.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpcontour.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpcontour.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpimagergb.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpimagergb.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpviolinplot.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpviolinplot.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpviolinplotstylingmixins.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpviolinplotstylingmixins.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpstatisticsadaptors.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpstatisticsadaptors.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpscatter.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpscatter.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtprange.h>
+    $<INSTALL_INTERFACE:graphs/jkqtprange.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpspecialline.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpspecialline.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpbarchartbase.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpbarchartbase.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpbarchart.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpbarchart.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/graphs/jkqtpevaluatedparametriccurve.h>
+    $<INSTALL_INTERFACE:graphs/jkqtpevaluatedparametriccurve.h>
 )
 set(HEADERS_GUI
-    gui/jkqtpcomboboxes.h
-    gui/jkqtpenhancedspinboxes.h
-    gui/jkqtpenhancedtableview.h
-    gui/jkqtpgraphsmodel.h
-    gui/jkvanishqtoolbar.h
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpcomboboxes.h>
+    $<INSTALL_INTERFACE:gui/jkqtpcomboboxes.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpenhancedspinboxes.h>
+    $<INSTALL_INTERFACE:gui/jkqtpenhancedspinboxes.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpenhancedtableview.h>
+    $<INSTALL_INTERFACE:gui/jkqtpenhancedtableview.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/gui/jkqtpgraphsmodel.h>
+    $<INSTALL_INTERFACE:gui/jkqtpgraphsmodel.h>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/gui/jkvanishqtoolbar.h>
+    $<INSTALL_INTERFACE:gui/jkvanishqtoolbar.h>
 )
 
 set(RESOURCES
-  resources/jkqtpbaseplotter.qrc
-  resources/jkqtpstyles.qrc
+  ${CMAKE_CURRENT_LIST_DIR}/resources/jkqtpbaseplotter.qrc
+  ${CMAKE_CURRENT_LIST_DIR}/resources/jkqtpstyles.qrc
 )
 
 include(CMakePackageConfigHelpers)
 
 
 if(JKQtPlotter_BUILD_SHARED_LIBS)
-    add_library(${libsh_name} SHARED )
-    target_sources(${libsh_name} PRIVATE ${SOURCES} ${SOURCES_GRAPHS} ${SOURCES_GUI} ${RESOURCES} PUBLIC ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI})
+    add_library(${libsh_name} SHARED
+          ${SOURCES_BASE}
+          ${SOURCES_GRAPHS}
+          ${SOURCES_GUI}
+          ${RESOURCES}
+          ${HEADERS_BASE}
+          ${HEADERS_GRAPHS}
+          ${HEADERS_GUI}
+    )
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
@@ -160,7 +216,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
       target_compile_definitions(${libsh_name} PUBLIC NOMINMAX)
     endif()
     target_include_directories(${libsh_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     set_target_properties(${libsh_name} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS "ON")
@@ -170,8 +226,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
 endif()
 
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    add_library(${lib_name} STATIC )
-    target_sources(${libsh_name} PRIVATE ${SOURCES} ${SOURCES_GRAPHS} ${SOURCES_GUI} ${RESOURCES} PUBLIC ${HEADERS} ${HEADERS_GRAPHS} ${HEADERS_GUI})
+    add_library(${lib_name} STATIC ${SOURCES_BASE} ${SOURCES_GRAPHS} ${SOURCES_GUI} ${RESOURCES} ${HEADERS_BASE} ${HEADERS_GRAPHS} ${HEADERS_GUI})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
     set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 11)
@@ -186,7 +241,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     endif()
     target_compile_features(${lib_name} PUBLIC cxx_std_11)
     target_include_directories(${lib_name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
     target_link_libraries(${lib_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonLib JKQTMathTextLib)
@@ -240,7 +295,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
                                 DESTINATION lib/cmake  )
 endif(JKQtPlotter_BUILD_STATIC_LIBS)
 
-install(FILES ${HEADERS}
+install(FILES ${HEADERS_BASE}
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
 		COMPONENT Headers)
 
