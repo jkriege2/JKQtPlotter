@@ -7,7 +7,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![Lates Release](https://img.shields.io/github/v/release/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/releases)
 
 ![Language](https://img.shields.io/github/languages/top/jkriege2/JKQtPlotter)
-[![Qt&5](https://img.shields.io/badge/Qt-5-brightgreen)](https://doc.qt.io/qt-5/)
+[![Qt5](https://img.shields.io/badge/Qt-5-brightgreen)](https://doc.qt.io/qt-5/)
 [![Documentation](https://img.shields.io/badge/documentation-online-blue)](http://jkriege2.github.io/JKQtPlotter/index.html)
 
 [[![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter)
