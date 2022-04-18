@@ -15,9 +15,9 @@ set(UIS  )
 add_executable(${EXENAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} ${UIS})
 target_include_directories(${EXENAME} PRIVATE ../../lib)
 if(JKQtPlotter_BUILD_STATIC_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterLib Qt5::PrintSupport Qt5::Xml)
+    target_link_libraries(${EXENAME} JKQTPlotterLib Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Xml)
 elseif(JKQtPlotter_BUILD_SHARED_LIBS)
-    target_link_libraries(${EXENAME} JKQTPlotterSharedLib Qt5::PrintSupport Qt5::Xml)
+    target_link_libraries(${EXENAME} JKQTPlotterSharedLib Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Xml)
 endif()
 
 

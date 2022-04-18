@@ -13,7 +13,9 @@ set(CMAKE_CXX_STANDARD 11)
 #set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Configure project for usage of Qt5
-find_package(Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGL REQUIRED)
+
 
 # include JKQTPlotter
 find_package(JKQTPlotterLib REQUIRED)
@@ -32,10 +34,10 @@ endif()
 
 # add the example executable 
 add_executable(${EXENAME} WIN32 simpletest.cpp)
-# ... link against Qt5 and JKQTPlotterLib
+# ... link against Qt5/6 and JKQTPlotterLib
 #    (you could use JKQTPlotterSharedLib if you don't want to link againast the 
 #     static version, but against the shared/DLL version).
-target_link_libraries(${EXENAME} Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTPlotterLib)
+target_link_libraries(${EXENAME} Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml JKQTPlotterLib)
 
 # Installation
 install(TARGETS ${EXENAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

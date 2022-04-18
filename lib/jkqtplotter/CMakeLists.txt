@@ -201,7 +201,7 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     )
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
-    target_link_libraries(${libsh_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
+    target_link_libraries(${libsh_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml JKQTCommonSharedLib JKQTMathTextSharedLib)
     set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD 11)
     set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
     target_compile_features(${libsh_name} PUBLIC cxx_std_11)
@@ -244,7 +244,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )
-    target_link_libraries(${lib_name} PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::PrintSupport Qt5::Svg Qt5::Xml JKQTCommonLib JKQTMathTextLib)
+    target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::Svg Qt${QT_VERSION_MAJOR}::Xml JKQTCommonLib JKQTMathTextLib)
     write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${lib_name}Version.cmake
                                      VERSION ${PROJECT_VERSION} 
                                      COMPATIBILITY AnyNewerVersion )    
@@ -295,7 +295,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
                                 DESTINATION lib/cmake  )
 endif(JKQtPlotter_BUILD_STATIC_LIBS)
 
-install(FILES ${HEADERS_BASE}
+install(FILES ${HEADERS}
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
 		COMPONENT Headers)
 
@@ -312,5 +312,5 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${lib_name}_Readme.txt" DESTINATION d
 install(FILES "${PROJECT_SOURCE_DIR}/LICENSE" DESTINATION doc/JKQtPlotter RENAME "${lib_name}_LICENSE.txt" )
 
 
-#get_target_property(printsupp_inc Qt5::PrintSupport INTERFACE_INCLUDE_DIRECTORIES)
-#message("Qt5::PrintSupport::INTERFACE_INCLUDE_DIRECTORIES = ${printsupp_inc}")
+#get_target_property(printsupp_inc Qt${QT_VERSION_MAJOR}::PrintSupport INTERFACE_INCLUDE_DIRECTORIES)
+#message("Qt${QT_VERSION_MAJOR}::PrintSupport::INTERFACE_INCLUDE_DIRECTORIES = ${printsupp_inc}")
