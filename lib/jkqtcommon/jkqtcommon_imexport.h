@@ -1,7 +1,6 @@
 #ifndef jkqtcommon_IMPORT_H
 #define jkqtcommon_IMPORT_H
 
-
 /*
     Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 
@@ -39,7 +38,7 @@
         JKQTCOMMON_LIB_EXPORT void exportedFunctionName();
     \endcode
     
-    These macros append the appropriate \c __declspec(dllexport) and \c __declspec(dllimport)
+    These macros append the appropriate \c Q_DECL_EXPORT and \c Q_DECL_IMPORT
     to the function/class body and thus tell windows compilers to export these sysmbols from
     the shared library, or import them from a shared library.
     
@@ -72,21 +71,15 @@
            compiling an application), the symbols are imported
 */
 
-#  ifndef __WINDOWS__
-#    if defined(WIN32) || defined(WIN64) || defined(_MSC_VER) || defined(_WIN32)
-#      define __WINDOWS__
-#    endif
-#  endif
-
-#ifdef __WINDOWS__
+#include <QtCore/QtGlobal>
 #  ifdef JKQTCOMMON_LIB_IN_DLL
 #    ifndef JKQTCOMMON_LIB_EXPORT
 #      ifdef JKQTCOMMON_LIB_EXPORT_LIBRARY
           /* We are building this library */
-#        define JKQTCOMMON_LIB_EXPORT __declspec(dllexport)
+#        define JKQTCOMMON_LIB_EXPORT Q_DECL_EXPORT
 #      else
           /* We are using this library */
-#        define JKQTCOMMON_LIB_EXPORT __declspec(dllimport)
+#        define JKQTCOMMON_LIB_EXPORT Q_DECL_IMPORT
 #      endif
 #    endif
 #  else
@@ -94,13 +87,6 @@
 #      define JKQTCOMMON_LIB_EXPORT
 #    endif
 #  endif
-#else
-#  define JKQTCOMMON_LIB_EXPORT
-#endif
-
-
-
-
 
 
 
