@@ -3,6 +3,12 @@ version: 0.{build}-{branch}
 # don't build tags
 skip_tags: true
 
+# exclude gh-pages branch
+branches:
+  except:
+  - gh-pages
+
+shallow_clone: true
 
 # build options
 build:
@@ -116,7 +122,7 @@ for:
       - cmd: mkdir build
       - cmd: cd build
       - cmd: if %USE_CMAKE%==true cmake --version 
-      - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%" .. 
+      - cmd: if %USE_CMAKE%==true cmake -G "%CMAKE_GENERATOR%" "-DCMAKE_PREFIX_PATH=%QTDIR%;%CIMG_INCLUDE_DIR%" .. 
       - cmd: if %USE_CMAKE%==true cmake --build . --config "%CONFIGURATION%" -- %CMAKE_BUILDFLAGS% 
       - cmd: if %USE_CMAKE%==false qmake.exe -v 
       - cmd: if %USE_CMAKE%==false qmake.exe CONFIG+=%CONFIGURATION% ..\JKQtPlotterBuildAllExamples.pro 
