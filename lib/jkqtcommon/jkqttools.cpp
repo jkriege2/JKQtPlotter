@@ -23,9 +23,14 @@
 
 #include <QList>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QLocale>
 #include <QtCore>
+#if (QT_VERSION>QT_VERSION_CHECK(5, 3, 0))
+#  include <QScreen>
+#  include <QGuiApplication>
+#else
+#  include <QDesktopWidget>
+#endif
 
 void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix) {
     settings.setValue(prefix+"pos", widget->pos());
@@ -34,11 +39,15 @@ void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, const QString& p
 
 void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QPoint defaultPosition, QSize defaultSize, const QString& prefix) {
     QPoint pos = settings.value(prefix+"pos", defaultPosition).toPoint();
-    QSize size = settings.value(prefix+"size", defaultSize).toSize();
-
-    widget->resize(size.boundedTo(QApplication::desktop()->screenGeometry(widget).size()));
-    if (pos.x()<0 || pos.x()>QApplication::desktop()->screenGeometry(widget).width()) pos.setX(0);
-    if (pos.y()<0 || pos.y()>QApplication::desktop()->screenGeometry(widget).height()) pos.setY(0);
+    const QSize size = settings.value(prefix+"size", defaultSize).toSize();
+#if (QT_VERSION>=QT_VERSION_CHECK(5, 3, 0))
+    const auto widgeo = widget->screen()->geometry();
+#else
+    const auto widgeo = QApplication::desktop()->screenGeometry(widget);
+#endif
+    widget->resize(size.boundedTo(widgeo.size()));
+    if (pos.x()<0 || pos.x()>widgeo.width()) pos.setX(0);
+    if (pos.y()<0 || pos.y()>widgeo.height()) pos.setY(0);
     widget->move(pos);
 }
 
@@ -78,21 +87,39 @@ QString jkVariantListToString(const QList<QVariant>& data, const QString& separa
     for (int i=0; i<data.size(); i++) {
         if (i>0) r=r+separator;
         QVariant v=data[i];
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+        if (v.typeId()==QMetaType::Bool) r=r+loc.toString(v.toBool());
+        else if (v.typeId()==QMetaType::Char) r=r+loc.toString(v.toInt());
+        else if (v.typeId()==QMetaType::QDate) r=r+loc.toString(v.toDate());
+        else if (v.typeId()==QMetaType::QDateTime) r=r+loc.toString(v.toDateTime());
+        else if (v.typeId()==QMetaType::Double) r=r+loc.toString(v.toDouble());
+        else if (v.typeId()==QMetaType::Int) r=r+loc.toString(v.toInt());
+        else if (v.typeId()==QMetaType::LongLong) r=r+loc.toString(v.toLongLong());
+        else if (v.typeId()==QMetaType::QString) r=r+QString("\"%1\"").arg(v.toString().replace("\"", "_").replace("\t", " ").replace("\r", "").replace("\n", " ").replace(",", " ").replace(";", " "));
+        else if (v.typeId()==QMetaType::QTime) r=r+loc.toString(v.toTime());
+        else if (v.typeId()==QMetaType::UInt) r=r+loc.toString(v.toUInt());
+        else if (v.typeId()==QMetaType::ULongLong) r=r+loc.toString(v.toULongLong());
+        else r=r+v.toString();
+
+#else
+#  define QVARIANT_TYPESBASE QVariant
         switch (v.type()) {
-            case QVariant::Bool: r=r+loc.toString(v.toBool()); break;
-            case QVariant::Char: r=r+loc.toString(v.toInt()); break;
-            case QVariant::Date: r=r+loc.toString(v.toDate()); break;
-            case QVariant::DateTime: r=r+loc.toString(v.toDateTime()); break;
-            case QVariant::Double: r=r+loc.toString(v.toDouble()); break;
-            case QVariant::Int: r=r+loc.toString(v.toInt()); break;
-            case QVariant::LongLong: r=r+loc.toString(v.toLongLong()); break;
-            case QVariant::String: r=r+QString("\"%1\"").arg(v.toString().replace("\"", "_").replace("\t", " ").replace("\r", "").replace("\n", " ").replace(",", " ").replace(";", " ")); break;
-            case QVariant::Time: r=r+loc.toString(v.toTime()); break;
-            case QVariant::UInt: r=r+loc.toString(v.toUInt()); break;
-            case QVariant::ULongLong: r=r+loc.toString(v.toULongLong()); break;
+
+            case QVARIANT_TYPESBASE::Bool: r=r+loc.toString(v.toBool()); break;
+            case QVARIANT_TYPESBASE::Char: r=r+loc.toString(v.toInt()); break;
+            case QVARIANT_TYPESBASE::Date: r=r+loc.toString(v.toDate()); break;
+            case QVARIANT_TYPESBASE::DateTime: r=r+loc.toString(v.toDateTime()); break;
+            case QVARIANT_TYPESBASE::Double: r=r+loc.toString(v.toDouble()); break;
+            case QVARIANT_TYPESBASE::Int: r=r+loc.toString(v.toInt()); break;
+            case QVARIANT_TYPESBASE::LongLong: r=r+loc.toString(v.toLongLong()); break;
+            case QVARIANT_TYPESBASE::String: r=r+QString("\"%1\"").arg(v.toString().replace("\"", "_").replace("\t", " ").replace("\r", "").replace("\n", " ").replace(",", " ").replace(";", " ")); break;
+            case QVARIANT_TYPESBASE::Time: r=r+loc.toString(v.toTime()); break;
+            case QVARIANT_TYPESBASE::UInt: r=r+loc.toString(v.toUInt()); break;
+            case QVARIANT_TYPESBASE::ULongLong: r=r+loc.toString(v.toULongLong()); break;
             //case : r=r+loc.toString(v.); break;
             default: r=r+v.toString(); break;
         }
+#endif
     }
     return r;
 }
@@ -101,7 +128,11 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_filenameize(const QString& data) {
     QString r;
     QString data1=data.simplified();
     for (int i=0; i<data1.size(); i++) {
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+        const auto c=data1[i];
+#else
         QCharRef c=data1[i];
+#endif
         if (c.isLetterOrNumber() || (c=='-') || (c=='_') || (c=='.')) {
             r+=c;
         } else {
@@ -167,7 +198,11 @@ QString jkqtp_MouseButton2String(Qt::MouseButton button, bool useNONE)
     }
     if (button==Qt::LeftButton) return "LEFT";
     if (button==Qt::RightButton) return "RIGHT";
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    if (button==Qt::MiddleButton) return "MIDDLE";
+#else
     if (button==Qt::MidButton) return "MIDDLE";
+#endif
     if (button==Qt::BackButton) return "BACK";
     if (button==Qt::ForwardButton) return "FORWARD";
     if (button==Qt::TaskButton) return "TASK";
@@ -200,7 +235,11 @@ Qt::MouseButton jkqtp_String2MouseButton(const QString &button)
     auto but=button.toUpper().trimmed();
     if (but=="LEFT") return Qt::LeftButton;
     if (but=="RIGHT") return Qt::RightButton;
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    if (but=="MIDDLE") return Qt::MiddleButton;
+#else
     if (but=="MIDDLE") return Qt::MidButton;
+#endif
     if (but=="BACK") return Qt::BackButton;
     if (but=="FORWARD") return Qt::ForwardButton;
     if (but=="TASK") return Qt::TaskButton;

@@ -3753,11 +3753,13 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
             png.fill(Qt::transparent);
             JKQTPEnhancedPainter painter;
             painter.begin(&png);
-            painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
             painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
             painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
             painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+            painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
             painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
+#endif
 
             /*calcPlotScaling(painter);
             gridPaint(painter, png.rect().size());*/\
@@ -3809,11 +3811,13 @@ void JKQTBasePlotter::copyPixelImage() {
                 png.fill(Qt::transparent);
                 JKQTPEnhancedPainter painter;
                 painter.begin(&png);
-                painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
                 painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
                 painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
                 painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+                painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
                 painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
+#endif
 
                 /*calcPlotScaling(painter);
                 gridPaint(painter, png.rect().size());*/

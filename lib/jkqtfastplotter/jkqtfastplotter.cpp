@@ -69,7 +69,11 @@ void JKQTFPPlot::paint(QPainter& painter) {
 }
 
 JKQTFastPlotter::JKQTFastPlotter(QWidget *parent) :
-    QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel | QGL::Rgba), parent)//, mutexRepaint(QMutex::Recursive), mutexRepaintData(QMutex::Recursive), mutexRepaintSystem(QMutex::Recursive)
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    JKQTFASTPLOTTER_BASE(parent)
+#else
+    JKQTFASTPLOTTER_BASE(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel | QGL::Rgba), parent)//, mutexRepaint(QMutex::Recursive), mutexRepaintData(QMutex::Recursive), mutexRepaintSystem(QMutex::Recursive)
+#endif
 {
     mouseDragStart=QPoint(0,0);
     mouseDragEnd=QPoint(0,0);
@@ -263,7 +267,7 @@ void JKQTFastPlotter::mouseReleaseEvent(QMouseEvent *event)
 }
 
 void JKQTFastPlotter::resizeEvent(QResizeEvent *event) {
-     QGLWidget::resizeEvent(event);
+     JKQTFASTPLOTTER_BASE::resizeEvent(event);
      if (width() > image.width() || height() > image.height()) {
          QImage newImage(QSize(width(), height()), QImage::Format_ARGB32);
          image=newImage;
@@ -350,7 +354,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
             systemPath.moveTo(x2p(x), internalPlotBorderTop+plotHeight+tickLength);
             systemPath.lineTo(x2p(x), internalPlotBorderTop+plotHeight-tickLength);
             QString text=QLocale::system().toString(x);
-            painter.drawText(QPointF(x2p(x)-fmTicks.width(text)/2.0, internalPlotBorderTop+plotHeight+fmTicks.ascent()+fmTicks.width("x")/2.0+tickLength), text);
+            painter.drawText(QPointF(x2p(x)-fmTicks.boundingRect(text).width()/2.0, internalPlotBorderTop+plotHeight+fmTicks.ascent()+fmTicks.boundingRect("x").width()/2.0+tickLength), text);
         }
         if (xAxisLog) {
             x=x*10.0;
@@ -368,7 +372,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
             systemPath.moveTo(x2p(x), internalPlotBorderTop+plotHeight+tickLength);
             systemPath.lineTo(x2p(x), internalPlotBorderTop+plotHeight-tickLength);
             QString text=QLocale::system().toString(x);
-            painter.drawText(QPointF(x2p(x)-fmTicks.width(text)/2.0, internalPlotBorderTop+plotHeight+fmTicks.ascent()+fmTicks.width("x")/2.0+tickLength), text);
+            painter.drawText(QPointF(x2p(x)-fmTicks.boundingRect(text).width()/2.0, internalPlotBorderTop+plotHeight+fmTicks.ascent()+fmTicks.boundingRect("x").width()/2.0+tickLength), text);
         }
         if (xAxisLog) {
             x=x/10.0;
@@ -387,7 +391,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
             systemPath.moveTo(internalPlotBorderLeft-tickLength, y2p(y));
             systemPath.lineTo(internalPlotBorderLeft+tickLength, y2p(y));
             QString text=QLocale::system().toString(y);
-            painter.drawText(QPointF(internalPlotBorderLeft-fmTicks.width("x")/2.0-fmTicks.width(text)-tickLength, y2p(y)+fmTicks.ascent()/2.0), text);
+            painter.drawText(QPointF(internalPlotBorderLeft-fmTicks.boundingRect("x").width()/2.0-fmTicks.boundingRect(text).width()-tickLength, y2p(y)+fmTicks.ascent()/2.0), text);
         }
         if (yAxisLog) {
             y=y*10.0;
@@ -405,7 +409,7 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
             systemPath.moveTo(internalPlotBorderLeft-tickLength, y2p(y));
             systemPath.lineTo(internalPlotBorderLeft+tickLength, y2p(y));
             QString text=QLocale::system().toString(y);
-            painter.drawText(QPointF(internalPlotBorderLeft-fmTicks.width("x")/2.0-fmTicks.width(text)-tickLength, y2p(y)+fmTicks.ascent()/2.0), text);
+            painter.drawText(QPointF(internalPlotBorderLeft-fmTicks.boundingRect("x").width()/2.0-fmTicks.boundingRect(text).width()-tickLength, y2p(y)+fmTicks.ascent()/2.0), text);
         }
         if (yAxisLog) {
             y=y/10.0;
@@ -453,11 +457,11 @@ void JKQTFastPlotter::plotSystem(QPainter& painter) {
     if (xAxisLabelVisible) {
         painter.setPen(pSystem);
         painter.setFont(fLabels);
-        painter.drawText(QPointF(internalPlotBorderLeft+plotWidth-fmLabels.width(xAxisLabel), internalPlotBorderTop+plotHeight+fmTicks.height()+fmTicks.width("x")/2.0+fmLabels.ascent()+tickLength), xAxisLabel);
+        painter.drawText(QPointF(internalPlotBorderLeft+plotWidth-fmLabels.boundingRect(xAxisLabel).width(), internalPlotBorderTop+plotHeight+fmTicks.height()+fmTicks.boundingRect("x").width()/2.0+fmLabels.ascent()+tickLength), xAxisLabel);
     }
     if (yAxisLabelVisible) {
         painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(fmLabels.ascent(), internalPlotBorderTop+fmLabels.width(yAxisLabel));
+        painter.translate(fmLabels.ascent(), internalPlotBorderTop+fmLabels.boundingRect(yAxisLabel).width());
         painter.rotate(-90);
         painter.drawText(QPointF(0, 0), yAxisLabel);
 

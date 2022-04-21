@@ -400,7 +400,9 @@ void TestForm::updateMath()
 
     painter.begin(&pix);
     if (ui->chkAntiAlias->isChecked()) painter.setRenderHint(QPainter::Antialiasing);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
     if (ui->chkAntiAliasHQ->isChecked()) painter.setRenderHint(QPainter::HighQualityAntialiasing);
+#endif
     if (ui->chkAntiAliasText->isChecked()) painter.setRenderHint(QPainter::TextAntialiasing);
     if (ui->chkSmoothTransform->isChecked()) painter.setRenderHint(QPainter::QPainter::SmoothPixmapTransform);
     ht.start();

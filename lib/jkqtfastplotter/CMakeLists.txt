@@ -79,7 +79,10 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     endif()
     target_compile_features(${lib_name} PUBLIC cxx_std_11)
     target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::OpenGL JKQTCommonLib)
-  	target_include_directories(${lib_name} PUBLIC
+    if(${QT_VERSION_MAJOR}>=6)
+        target_link_libraries(${lib_name} PUBLIC t${QT_VERSION_MAJOR}::OpenGLWidgets)
+    endif()
+    target_include_directories(${lib_name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>  
     )

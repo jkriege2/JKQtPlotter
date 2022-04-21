@@ -30,6 +30,7 @@
 #include <QApplication>
 #include <QPainterPath>
 
+
 const double JKQTMathText::ABS_MIN_LINEWIDTH=0.02;
 
 QPainterPath makeHBracePath(double x, double ybrace, double width, double bw, double cubicshrink=0.5, double cubiccontrolfac=0.3) {
@@ -277,14 +278,14 @@ void JKQTMathText::MTtextNode::getSizeInternal(QPainter& painter, JKQTMathText::
     QRectF tbr=parent->getTightBoundingRect(f, txt, painter.device()); //fm.tightBoundingRect(txt);
     if (txt=="|") {
         br=fm.boundingRect("X");
-        tbr=QRectF(0,0,fm.width("X"), fm.ascent());//fm.boundingRect("X");
+        tbr=QRectF(0,0,fm.boundingRect("X").width(), fm.ascent());//fm.boundingRect("X");
         br.setWidth(0.7*br.width());
     }
     width=br.width();//width(text);
 
     if (txt.size()>0) {
         if (txt[0].isSpace() /*&& br.width()<=0*/) width=width+fm.boundingRect("I").width();
-        if (txt.size()>1 && txt[txt.size()-1].isSpace() /*&& (fm.boundingRect("a ").width()==fm.boundingRect("a").width())*/) width=width+fm.width("I");
+        if (txt.size()>1 && txt[txt.size()-1].isSpace() /*&& (fm.boundingRect("a ").width()==fm.boundingRect("a").width())*/) width=width+fm.boundingRect("I").width();
     }
 
     //qDebug()<<"text: "<<text<<"   "<<tbr.height()<<tbr.top()<<tbr.bottom();
@@ -340,7 +341,7 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
     QFontMetricsF fm(f, painter.device());
     /*if (txt.size()>1 && txt[txt.size()-1].isSpace()) {
         QFontMetricsF fm(f, painter.device());
-        //if ((fm.width("a ")==fm.width("a"))) dx=fm.boundingRect("I").width();
+        //if ((fm.QFMF_WIDTH("a ")==fm.QFMF_WIDTH("a"))) dx=fm.boundingRect("I").QFMF_WIDTH();
     }*/
 
     if (!hasDigits || !f.italic()) {
@@ -367,7 +368,7 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
                     painter.setFont(ff);
                     painter.drawText(QPointF(xx, y), QString(txt[i]));
                 }
-                xx=xx+fmff.width(txt[i]);
+                xx=xx+fmff.boundingRect(txt[i]).width();
             } else {
                 if (currentEv.font==MTEblackboard && parent->blackboardSimulated) {
                     QPainterPath path;
@@ -377,7 +378,7 @@ double JKQTMathText::MTtextNode::draw(QPainter& painter, double x, double y, JKQ
                     painter.setFont(f);
                     painter.drawText(QPointF(xx, y), QString(txt[i]));
                 }
-                xx=xx+fm.width(txt[i]);
+                xx=xx+fm.boundingRect(txt[i]).width();
             }
             i++;
         }
@@ -465,7 +466,7 @@ void JKQTMathText::MTinstruction1Node::getSizeInternal(QPainter& painter, JKQTMa
     child->getSize(painter, ev, width, baselineHeight, overallHeight, strikeoutPos);
     if (name=="colorbox" || name=="fbox" || name=="boxed") {
         QFontMetricsF fm(ev.getFont(parent));
-        double xw=fm.width("x");
+        double xw=fm.boundingRect("x").width();
         width+=xw;
         overallHeight+=xw;
         baselineHeight+=xw/2.0;
@@ -488,7 +489,7 @@ double JKQTMathText::MTinstruction1Node::draw(QPainter& painter, double x, doubl
         child->getSize(painter, currentEv, width, baselineHeight, overallHeight, strikeoutPos);
         QPen p=painter.pen();
         QFontMetricsF fm(currentEv.getFont(parent));
-        double xw=fm.width("x");
+        double xw=fm.boundingRect("x").width();
         p.setColor(fcol);
         painter.setPen(p);
         painter.drawRect(QRectF(x,y-baselineHeight-xw/2,width+xw,overallHeight+xw));
@@ -2860,11 +2861,11 @@ void JKQTMathText::MTsymbolNode::getSizeInternal(QPainter& painter, JKQTMathText
     if (currentEv.insideMath) width=qMax(parent->getTightBoundingRect(f, symb, painter.device()).width(),parent->getTightBoundingRect(f, "i", painter.device()).width());//fm.width(symbol);
     else width=fm.boundingRect(symb).width();//fm.width(symbol);
 
-    width=qMax(fm.width("j"), width);
+    width=qMax(fm.boundingRect("j").width(), width);
     if (symb.isEmpty()) {
-        width=fm.width("a");
-        if (symbolName=="|") width=fm.width("1")*0.8;
-        else if (symbolName=="infty") width=fm.width("M");
+        width=fm.boundingRect("a").width();
+        if (symbolName=="|") width=fm.boundingRect("1").width()*0.8;
+        else if (symbolName=="infty") width=fm.boundingRect("M").width();
         else if (symbolName=="quad" || symbolName=="qquad") width=parent->getTightBoundingRect(f, "M", painter.device()).width();
         else if (symbolName==" " || symbolName=="space") width=parent->getTightBoundingRect(f, "x", painter.device()).width();
         else if (symbolName==";") width=parent->getTightBoundingRect(f, "x", painter.device()).width()*0.75;
@@ -2933,7 +2934,7 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
     p.setWidthF(fm.lineWidth());
     p.setStyle(Qt::SolidLine);
     painter.setPen(p);
-    double xwi=fm.width("x");
+    double xwi=fm.boundingRect("x").width();
     if (!props.symbol.isEmpty()) {
         // if the symbol has been recognized in the constructor: draw the symbol
         painter.drawText(QPointF(x+shift, y+props.yfactor*overallHeight), props.symbol);
@@ -2949,7 +2950,7 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
         f1.setItalic(false);
         painter.setFont(f1);
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-        painter.translate(x+shift+fm1.width("8")/3.0, y-fm1.xHeight());
+        painter.translate(x+shift+fm1.boundingRect("8").width()/3.0, y-fm1.xHeight());
         painter.rotate(90);
         painter.drawText(QPointF(0,0), "8");
 
@@ -2961,7 +2962,7 @@ double JKQTMathText::MTsymbolNode::draw(QPainter& painter, double x, double y, J
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
         painter.translate(x+shift, y);
         painter.drawText(QPointF(0,0), "|");
-        painter.translate(fm1.width("8")/3.0, 0);
+        painter.translate(fm1.boundingRect("8").width()/3.0, 0);
         painter.drawText(QPointF(0,0), "|");
 
 
@@ -4876,7 +4877,9 @@ void JKQTMathTextLabel::internalPaint()
             //qDebug()<<"internalPaint(): "<<p.begin(&buffer);
             p.begin(&buffer);
             p.setRenderHint(QPainter::Antialiasing);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
             p.setRenderHint(QPainter::HighQualityAntialiasing);
+#endif
             p.setRenderHint(QPainter::TextAntialiasing);
             size=m_mathText->getSize(p);
             p.end();
@@ -4889,7 +4892,9 @@ void JKQTMathTextLabel::internalPaint()
             //qDebug()<<"internalPaint(): "<<p.begin(&buffer);
             p.begin(&buffer);
             p.setRenderHint(QPainter::Antialiasing);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
             p.setRenderHint(QPainter::HighQualityAntialiasing);
+#endif
             p.setRenderHint(QPainter::TextAntialiasing);
             m_mathText->draw(p,alignment(), QRectF(QPointF(0,0), size));
             p.end();

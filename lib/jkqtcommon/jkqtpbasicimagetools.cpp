@@ -25,6 +25,12 @@
 #ifdef QT_XML_LIB
 #  include <QtXml/QtXml>
 #endif
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+#include<QRegularExpression>
+#include<QRegularExpressionMatch>
+#else
+#include<QRegExp>
+#endif
 
 const int JKQTPImageTools::PALETTE_ICON_WIDTH = 64;
 const int JKQTPImageTools::PALETTE_IMAGEICON_HEIGHT = 64;
@@ -2609,7 +2615,7 @@ JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUTLinInterpolate(const QMap<doub
 {
     QList<QPair<double, QRgb> > itemsi;
     for (auto it=items.begin(); it!=items.end(); ++it) {
-        itemsi.append(qMakePair<double, QRgb>(it.key(), it.value()));
+        itemsi.append(QPair<double, QRgb>(it.key(), it.value()));
     }
     return JKQTPBuildColorPaletteLUTLinInterpolateSorted(itemsi, lut_size);
 }
@@ -2618,7 +2624,7 @@ JKQTPImageTools::LUTType JKQTPBuildColorPaletteLUT(const QMap<double, QRgb> &ite
 {
     QList<QPair<double, QRgb> > itemsi;
     for (auto it=items.begin(); it!=items.end(); ++it) {
-        itemsi.append(qMakePair<double, QRgb>(it.key(), it.value()));
+        itemsi.append(QPair<double, QRgb>(it.key(), it.value()));
     }
     return JKQTPBuildColorPaletteLUTSorted(itemsi, lut_size);
 }
@@ -2820,26 +2826,48 @@ QVector<int> JKQTPImageTools::registerPalettesFromFile(const QString &filename, 
             bool has4=false;
             bool rgb255=false;
             QList<QPair<double, QRgb> > pal;
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+            QRegularExpression rx3("\\s*([0-9eE.+-]+)\\s*([,\\t ])\\s*([0-9eE.+-]+)\\s*\\2\\s*([0-9eE.+-]+)\\s*", QRegularExpression::CaseInsensitiveOption|QRegularExpression::InvertedGreedinessOption);
+            QRegularExpression rx4("\\s*([0-9eE.+-]+)\\s*([,\\t ])\\s*([0-9eE.+-]+)\\s*\\2\\s*([0-9eE.+-]+)\\s*\\2\\s*([0-9eE.+-]+)\\s*", QRegularExpression::CaseInsensitiveOption|QRegularExpression::InvertedGreedinessOption);
+#else
             QRegExp rx3("\\s*([0-9eE.+-]+)\\s*([,\\t ])\\s*([0-9eE.+-]+)\\s*\\2\\s*([0-9eE.+-]+)\\s*", Qt::CaseInsensitive);
             rx3.setMinimal(false);
             QRegExp rx4("\\s*([0-9eE.+-]+)\\s*([,\\t ])\\s*([0-9eE.+-]+)\\s*\\2\\s*([0-9eE.+-]+)\\s*\\2\\s*([0-9eE.+-]+)\\s*", Qt::CaseInsensitive);
             rx4.setMinimal(false);
+#endif
+
             // determine format
             for (int i=slt.size()-1; i>=0; i--) {
                 slt[i]=slt[i].trimmed();
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+                const auto m4=rx4.match(slt[i]);
+                const auto m3=rx3.match(slt[i]);
+                if (m4.hasMatch()) {
+                    const double r=JKQTPImagePlot_QStringToDouble(m4.captured(3));
+                    const double g=JKQTPImagePlot_QStringToDouble(m4.captured(4));
+                    const double b=JKQTPImagePlot_QStringToDouble(m4.captured(5));
+#else
                 if (rx4.indexIn(slt[i])>=0) {
+                    const double r=JKQTPImagePlot_QStringToDouble(rx4.cap(3));
+                    const double g=JKQTPImagePlot_QStringToDouble(rx4.cap(4));
+                    const double b=JKQTPImagePlot_QStringToDouble(rx4.cap(5));
+#endif
                     has4=true;
-                    double r=JKQTPImagePlot_QStringToDouble(rx4.cap(3));
-                    double g=JKQTPImagePlot_QStringToDouble(rx4.cap(4));
-                    double b=JKQTPImagePlot_QStringToDouble(rx4.cap(5));
                     if (r>1.0 || g>1.0 || b>1.0) {
                         rgb255=true;
                     }
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+                } else if (m3.hasMatch()) {
+                    const double r=JKQTPImagePlot_QStringToDouble(m3.captured(1));
+                    const double g=JKQTPImagePlot_QStringToDouble(m3.captured(3));
+                    const double b=JKQTPImagePlot_QStringToDouble(m3.captured(4));
+#else
                 } else if (rx3.indexIn(slt[i])>=0) {
-                    has4=false;
                     double r=JKQTPImagePlot_QStringToDouble(rx3.cap(1));
                     double g=JKQTPImagePlot_QStringToDouble(rx3.cap(3));
                     double b=JKQTPImagePlot_QStringToDouble(rx3.cap(4));
+#endif
+                    has4=false;
                     if (r>1.0 || g>1.0 || b>1.0) {
                         rgb255=true;
                     }
@@ -2852,6 +2880,20 @@ QVector<int> JKQTPImageTools::registerPalettesFromFile(const QString &filename, 
             for (int i=0; i<slt.size(); i++) {
                 double x=0;
                 double r=0, g=0, b=0;
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+                const auto m4=rx4.match(slt[i]);
+                const auto m3=rx3.match(slt[i]);
+                if (has4 && m4.hasMatch()) {
+                    x=JKQTPImagePlot_QStringToDouble(m4.captured(1));
+                    r=JKQTPImagePlot_QStringToDouble(m4.captured(3));
+                    g=JKQTPImagePlot_QStringToDouble(m4.captured(4));
+                    b=JKQTPImagePlot_QStringToDouble(m4.captured(5));
+                } else if (!has4 && m3.hasMatch()) {
+                    x=i;
+                    r=JKQTPImagePlot_QStringToDouble(m3.captured(1));
+                    g=JKQTPImagePlot_QStringToDouble(m3.captured(3));
+                    b=JKQTPImagePlot_QStringToDouble(m3.captured(4));
+#else
                 if (has4 && rx4.indexIn(slt[i])>=0) {
                     x=JKQTPImagePlot_QStringToDouble(rx4.cap(1));
                     r=JKQTPImagePlot_QStringToDouble(rx4.cap(3));
@@ -2863,15 +2905,16 @@ QVector<int> JKQTPImageTools::registerPalettesFromFile(const QString &filename, 
                     g=JKQTPImagePlot_QStringToDouble(rx3.cap(3));
                     b=JKQTPImagePlot_QStringToDouble(rx3.cap(4));
                     //qDebug()<<r<<g<<b;
+#endif
                 } else {
                     ok=false;
                     break;
                 }
                 if (ok) {
                     if (!rgb255) {
-                        pal<<qMakePair(x, qRgb(qBound(0,static_cast<int>(round(255*r)), 255), qBound(0,static_cast<int>(round(255*g)), 255), qBound(0,static_cast<int>(round(255*b)), 255)));
+                        pal<<QPair<double,QRgb>(x, qRgb(qBound(0,static_cast<int>(round(255*r)), 255), qBound(0,static_cast<int>(round(255*g)), 255), qBound(0,static_cast<int>(round(255*b)), 255)));
                     } else {
-                        pal<<qMakePair(x, qRgb(qBound(0,static_cast<int>(round(r)), 255), qBound(0,static_cast<int>(round(g)), 255), qBound(0,static_cast<int>(round(b)), 255)));
+                        pal<<QPair<double,QRgb>(x, qRgb(qBound(0,static_cast<int>(round(r)), 255), qBound(0,static_cast<int>(round(g)), 255), qBound(0,static_cast<int>(round(b)), 255)));
                     }
                 }
             }

@@ -605,10 +605,12 @@ public slots:
     void setXYColumns(size_t xCol, size_t yCol);
     /** \brief sets xColumn and yColumn at the same time */
     void setXYColumns(int xCol, int yCol);
+#if QT_VERSION<QT_VERSION_CHECK(6,0,0)
     /** \brief sets xColumn and yColumn at the same time */
     void setXYColumns(std::pair<int,int> xyColPair);
     /** \brief sets xColumn and yColumn at the same time */
     void setXYColumns(std::pair<size_t,size_t> xyColPair);
+#endif
     /** \brief sets xColumn and yColumn at the same time */
     void setXYColumns(QPair<int,int> xyColPair);
     /** \brief sets xColumn and yColumn at the same time */
