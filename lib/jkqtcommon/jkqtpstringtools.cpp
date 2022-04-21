@@ -209,7 +209,7 @@ std::string jkqtp_tolower(const std::string& s){
        if (ensurePlusMinus) return "+\\rm{0}";
        else return "\\rm{0}";
    }
-   if (fabs(data)<5*std::numeric_limits<double>::epsilon()) {
+   if (fabs(data)<5.0*std::numeric_limits<double>::min()) {
        if (ensurePlusMinus) return "+\\rm{0}";
        else return "\\rm{0}";
    }
@@ -239,7 +239,7 @@ std::string jkqtp_tolower(const std::string& s){
  std::string jkqtp_floattohtmlstr(double data, int past_comma, bool remove_trail0, double belowIsZero, double minNoExponent, double maxNoExponent){
    std::string result;
    if ((belowIsZero>0) && (fabs(data)<belowIsZero)) return "0";
-   if (fabs(data)<5*std::numeric_limits<double>::epsilon()) return "0";
+   if (fabs(data)<5.0*std::numeric_limits<double>::min()) return "0";
    double adata=fabs(data);
    std::string res=jkqtp_floattostr(data, past_comma, remove_trail0);
 
