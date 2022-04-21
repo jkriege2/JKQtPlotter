@@ -4,7 +4,6 @@ function(jkqtplotter_deployqt TARGET_NAME)
         get_target_property(_qmake_executable Qt${QT_VERSION_MAJOR}::qmake IMPORTED_LOCATION)
         get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
         find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
-        find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 
         set(WINDEPLOYQTOPTION "--release")
         if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -22,8 +21,8 @@ function(jkqtplotter_deployqt TARGET_NAME)
             COMMAND "${CMAKE_COMMAND}" -E
                 env PATH="${CMAKE_CXX_COMPILER_BINPATH}\;${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
                     --compiler-runtime
-					-xml
-					-printsupport
+                       -xml
+                       -printsupport
                     ${WINDEPLOYQTOPTION}
                     \"$<TARGET_FILE:${TARGET_NAME}>\"
             COMMENT "Running windeployqt ... "

@@ -28,7 +28,7 @@
 #include <QSvgGenerator>
 #include <QDebug>
 #include <QElapsedTimer>
-#include <QPrintPreviewWidget>
+#include <QtPrintSupport/QPrintPreviewWidget>
 #include <QDialog>
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtplotter/gui/jkqtpgraphsmodel.h"
