@@ -688,7 +688,7 @@ size_t JKQTPDatastore::copyColumn(size_t old_column, size_t start, size_t stride
 {
     JKQTPColumn old=columns[old_column];
     size_t rows=old.getRows();
-    double* d=static_cast<double*>(malloc(rows*sizeof(double)));
+    QVector<double> d(rows, 0.0);
     double* dd=old.getPointer(0);
     size_t j=0;
     for (size_t i=start; i<rows; i+=stride) {
@@ -696,8 +696,7 @@ size_t JKQTPDatastore::copyColumn(size_t old_column, size_t start, size_t stride
         //qDebug()<<old_column<<name<<": "<<j<<i<<d[j];
         j++;
     }
-    size_t n=addCopiedColumn(d, j, name);
-    free(d);
+    size_t n=addCopiedColumn(d.data(), j, name);
     return n;
 }
 

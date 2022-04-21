@@ -1305,17 +1305,17 @@ JKQTPMathParser::jkmpNode* JKQTPMathParser::primary(bool get){
                  jkmpError(jkqtp_format("')' or ',' expected, but '%s' found", currenttokentostring().c_str()));
             }
 
-                    if ( CurrentToken != RBRACKET ) jkmpError(jkqtp_format("')' expected, but '%s' found", currenttokentostring().c_str()));;
-                    JKQTPMathParser::jkmpNode** p=nullptr;
+            if ( CurrentToken != RBRACKET ) jkmpError(jkqtp_format("')' expected, but '%s' found", currenttokentostring().c_str()));;
+            JKQTPMathParser::jkmpNode** p=nullptr;
             if (num>0) {
                p=static_cast<JKQTPMathParser::jkmpNode**>(malloc(sizeof(JKQTPMathParser::jkmpNode*) * num));
                for (int i=0; i<num; i++) {
                  p[i]=params[i];
                }
             }
-                    res=new jkmpFunctionNode(varname, p, num, this, nullptr);
-                    free(params);
-                    getToken();
+            res=new jkmpFunctionNode(varname, p, num, this, nullptr);
+            free(params);
+            getToken();
 
         } else {
           res=new jkmpVariableNode(varname, this, nullptr);

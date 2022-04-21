@@ -28,6 +28,7 @@
 #include <cfloat>
 #include <stdint.h>
 #include <QColor>
+#include <vector>
 #include "jkqtcommon/jkqtcommon_imexport.h"
 #include "jkqtcommon/jkqtpmathtools.h"
 
@@ -654,17 +655,17 @@ inline void JKQTPImagePlot_array2RGBimage(const T* dbl_in, int width, int height
 
 
     const T* dbl=dbl_in;
-    T* dbllog=nullptr;
+    QVector<T> dbllog;
     if (logScale) {
         double logB=log10(logBase);
-        dbllog=static_cast<T*>(malloc(static_cast<size_t>(width)*static_cast<size_t>(height)*sizeof(T)));
+        dbllog.resize(static_cast<size_t>(width)*static_cast<size_t>(height));
         //memcpy(dbl, dbl_in, width*height*sizeof(T));
         for (int i=0; i<width*height; i++) {
             dbllog[i]=log10(dbl_in[i])/logB;
         }
         min=log10(min)/logB;
         max=log10(max)/logB;
-        dbl=dbllog;
+        dbl=dbllog.data();
     }
     double delta=max-min;
 
@@ -865,8 +866,6 @@ inline void JKQTPImagePlot_array2RGBimage(const T* dbl_in, int width, int height
             }
        }
      }
-
-    if (logScale) free(dbllog);
 }
 
 

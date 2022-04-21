@@ -367,15 +367,14 @@ int JKQTPColumnOverlayImageEnhanced::getImageColumn() const
 void JKQTPColumnOverlayImageEnhanced::draw(JKQTPEnhancedPainter &painter) {
     const double* d=parent->getDatastore()->getColumnPointer(imageColumn,0);
     size_t imgSize=parent->getDatastore()->getRows(imageColumn);
-    bool* locData=static_cast<bool*>(malloc(imgSize*sizeof(bool)));
-    this->data=locData;
+    QVector<bool> locData(imgSize,false);
+    this->data=locData.data();
     this->Ny= static_cast<int>(imgSize/this->Nx);
     for (size_t i=0; i<imgSize; i++) {
         locData[i]=(d[i]!=0.0);
     }
     JKQTPOverlayImageEnhanced::draw(painter);
-    free(locData);
-    data=nullptr;
+    this->data=nullptr;
 }
 
 bool JKQTPColumnOverlayImageEnhanced::usesColumn(int c) const
