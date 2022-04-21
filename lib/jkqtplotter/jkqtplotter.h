@@ -1419,10 +1419,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         JKQTPMouseDragActionsHashMapIterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
 
         /** \brief searches JKQTPlotterStyle::registeredMouseWheelActions for a matching action */
-        JKQTPMouseWheelActionsHashMapIterator findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers) const;
+        JKQTPMouseWheelActionsHashMapIterator findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
 
         /** \brief searches JKQTPlotterStyle::registeredMouseDoubleClickActions for a matching action */
-        JKQTPMouseDoubleClickActionsHashMapIterator findMatchingMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const;
+        JKQTPMouseDoubleClickActionsHashMapIterator findMatchingMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
 
         /** \brief you may overwrite this method to modify the given context menu before it is displayed.
          *

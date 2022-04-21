@@ -880,9 +880,9 @@ void JKQTPlotter::resetCurrentMouseDragAction () {
 }
 
 void JKQTPlotter::mouseDoubleClickEvent ( QMouseEvent * event ){
-
-    auto itAction=findMatchingMouseDoubleClickAction(event->button(), event->modifiers());
-    if (itAction!=plotterStyle.registeredMouseDoubleClickActions.end())  {
+    bool foundIT=false;
+    JKQTPMouseDoubleClickActionsHashMapIterator itAction=findMatchingMouseDoubleClickAction(event->button(), event->modifiers(), &foundIT);
+    if (foundIT)  {
         // we found an action to perform on this double-click
         if (itAction.value()==JKQTPMouseDoubleClickActions::jkqtpdcaClickOpensContextMenu) {
             openStandardContextMenu(event->x(), event->y());
@@ -957,11 +957,12 @@ void JKQTPlotter::wheelEvent ( QWheelEvent * event ) {
 #endif
 
     //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
-    auto itAction=findMatchingMouseWheelAction(event->modifiers());
+    bool foundIT=false;
+    auto itAction=findMatchingMouseWheelAction(event->modifiers(), &foundIT);
     //qDebug()<<"wheelEvent("<<event->modifiers()<<"): plotterStyle.registeredMouseWheelActions="<<plotterStyle.registeredMouseWheelActions;
     //qDebug()<<"wheelEvent("<<event->modifiers()<<"): itAction="<<itAction.key()<<","<<itAction.value()<<"  !=end:"<<(itAction!=plotterStyle.registeredMouseWheelActions.end())<<"  ==end:"<<(itAction==plotterStyle.registeredMouseWheelActions.end());
 
-    if (itAction!=plotterStyle.registeredMouseWheelActions.end()) {
+    if (foundIT) {
         if (itAction.value()==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
         //if (act==JKQTPMouseWheelActions::jkqtpmwaZoomByWheel) {
             //qDebug()<<"wheelEvent("<<event->modifiers()<<"):ZoomByWheel";
@@ -1682,40 +1683,44 @@ void JKQTPlotter::openStandardAndSpecialContextMenu(int x, int y)
 
 JKQTPMouseDragActionsHashMapIterator JKQTPlotter::findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool* found) const
 {
-    JKQTPMouseDragActionsHashMapIterator it=registeredOverrideMouseDragActionModes.begin();
-    while (it!=registeredOverrideMouseDragActionModes.end() ) {
-        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
-            if (found) *found=true;
-            return it;
-        }
-        ++it;
-    }
-    it=plotterStyle.registeredMouseDragActionModes.begin();
-    while (it!=plotterStyle.registeredMouseDragActionModes.end() ) {
-        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
-            if (found) *found=true;
-            return it;
-        }
-        ++it;
-    }
     if (found) *found=false;
-    return plotterStyle.registeredMouseDragActionModes.end();
+    JKQTPMouseDragActionsHashMapIterator it=registeredOverrideMouseDragActionModes.cbegin();
+    while (it!=registeredOverrideMouseDragActionModes.cend() ) {
+        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+            if (found) *found=true;
+            return it;
+        }
+        ++it;
+    }
+    it=plotterStyle.registeredMouseDragActionModes.cbegin();
+    while (it!=plotterStyle.registeredMouseDragActionModes.cend() ) {
+        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+            if (found) *found=true;
+            return it;
+        }
+        ++it;
+    }
+    return plotterStyle.registeredMouseDragActionModes.cend();
 }
 
-JKQTPMouseDoubleClickActionsHashMapIterator JKQTPlotter::findMatchingMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers) const
+JKQTPMouseDoubleClickActionsHashMapIterator JKQTPlotter::findMatchingMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool*found) const
 {
-    for (JKQTPMouseDoubleClickActionsHashMapIterator it=plotterStyle.registeredMouseDoubleClickActions.begin(); it!=plotterStyle.registeredMouseDoubleClickActions.end(); ++it) {
+    if (found) *found=false;
+    for (JKQTPMouseDoubleClickActionsHashMapIterator it=plotterStyle.registeredMouseDoubleClickActions.cbegin(); it!=plotterStyle.registeredMouseDoubleClickActions.cend(); ++it) {
         if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+            if (found) *found=true;
             return it;
         }
     }
-    return plotterStyle.registeredMouseDoubleClickActions.end();
+    return plotterStyle.registeredMouseDoubleClickActions.cend();
 }
 
-JKQTPMouseWheelActionsHashMapIterator JKQTPlotter::findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers) const
+JKQTPMouseWheelActionsHashMapIterator JKQTPlotter::findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers, bool *found) const
 {
+    if (found) *found=false;
     for (JKQTPMouseWheelActionsHashMapIterator it=plotterStyle.registeredMouseWheelActions.begin(); it!=plotterStyle.registeredMouseWheelActions.end(); ++it) {
         if (it.key()==modifiers) {
+            if (found) *found=true;
             return it;
         }
     }
