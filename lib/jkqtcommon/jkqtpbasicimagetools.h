@@ -657,7 +657,7 @@ inline void JKQTPImagePlot_array2RGBimage(const T* dbl_in, int width, int height
     T* dbllog=nullptr;
     if (logScale) {
         double logB=log10(logBase);
-        dbllog=static_cast<T*>(malloc(width*height*sizeof(T)));
+        dbllog=static_cast<T*>(malloc(static_cast<size_t>(width)*static_cast<size_t>(height)*sizeof(T)));
         //memcpy(dbl, dbl_in, width*height*sizeof(T));
         for (int i=0; i<width*height; i++) {
             dbllog[i]=log10(dbl_in[i])/logB;
