@@ -34,7 +34,7 @@
 #include <QMap>
 #include <QVector>
 #include <QPair>
-#include <QPrintPreviewWidget>
+#include <QtPrintSupport/QPrintPreviewWidget>
 #include <QDoubleSpinBox>
 #include <QLabel>
 #include <QPointer>
