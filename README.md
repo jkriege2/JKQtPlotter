@@ -10,8 +10,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 [![Qt5](https://img.shields.io/badge/Qt-5-brightgreen)](https://doc.qt.io/qt-5/)
 [![Documentation](https://img.shields.io/badge/documentation-online-blue)](http://jkriege2.github.io/JKQtPlotter/index.html)
 
-[[![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter)
-![CI: Documentation/Linux/MacOX Build](https://img.shields.io/travis/jkriege2/JKQtPlotter/master?label=CI%3A%20Documentation%2FLinux%2FMacOX%20Build)](https://travis-ci.org/jkriege2/JKQtPlotter)
+[![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter)
 
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
 [![Last Commit](https://img.shields.io/github/last-commit/jkriege2/JKQtPlotter)](https://github.com/jkriege2/JKQtPlotter/pulse)
