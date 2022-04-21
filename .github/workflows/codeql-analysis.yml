@@ -51,7 +51,7 @@ jobs:
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
     - name: Install dependencies
-      run: sudo apt -y install build-essential cmake mesa-common-dev libglu1-mesa-dev libfontconfig1 qt5-qmake qtbase5-dev-tools qt5-default
+      run: sudo apt -y install build-essential cmake mesa-common-dev libglu1-mesa-dev libfontconfig1 qt5-qmake qtbase5-dev-tools qt5-default libqt5opengl5-dev qtdeclarative5-dev libqt5svg5-dev libqt5x11extras5-dev
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
