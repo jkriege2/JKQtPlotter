@@ -438,7 +438,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          * \see JKQTPSetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
          */
-        void loadCurrentPlotterStyle(const QSettings& settings, const QString& group="plot/");
+        void loadCurrentPlotterStyle(const QSettings& settings, const QString& group="plots/");
         /** \brief store the current style properties for this JKQTBasePlotter with properties loaded from \a settings
          *
          * \param settings the QSettings object to write to
@@ -446,7 +446,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
          *
          * \see JKQTPSetSystemDefaultBaseStyle(), JKQTPSetSystemDefaultBaseStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
          */
-        void saveCurrentPlotterStyle(QSettings& settings, const QString& group="plot/") const;
+        void saveCurrentPlotterStyle(QSettings& settings, const QString& group="plots/") const;
 
 
 

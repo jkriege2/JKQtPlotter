@@ -889,7 +889,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see JKQTPSetSystemDefaultStyle(), JKQTPSetSystemDefaultStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
          */
-        void loadCurrentPlotterStyle(const QSettings& settings, const QString& group="plot/", bool alsoLoadBaseStyle=true);
+        void loadCurrentPlotterStyle(const QSettings& settings, const QString& group="plots/", bool alsoLoadBaseStyle=true);
         /** \brief store the current style properties for this JKQTBasePlotter with properties loaded from \a settings
          *
          * \param settings the QSettings object to write to
@@ -898,7 +898,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *
          * \see JKQTPSetSystemDefaultStyle(), JKQTPSetSystemDefaultStyle(), getCurrentPlotterStyle(), \ref jkqtpplotter_styling
          */
-        void saveCurrentPlotterStyle(QSettings& settings, const QString& group="plot/", bool alsoSaveBaseStyle=true) const;
+        void saveCurrentPlotterStyle(QSettings& settings, const QString& group="plots/", bool alsoSaveBaseStyle=true) const;
 
         /** \brief \copydoc actMouseLeftAsToolTip */
         QAction *getActMouseLeftAsToolTip() const;
