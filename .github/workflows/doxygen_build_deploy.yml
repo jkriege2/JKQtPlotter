@@ -21,7 +21,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout Repo
+        run: |
+          git clone -o mine git@github.com:jkriege2/JKQtPlotter.git $GITHUB_WORKSPACE/JKQtPlotter
+          git clone -o mine git@github.com:jkriege2/JKQtPlotter.git $GITHUB_WORKSPACE/JKQtPlotter_doc
 
       - name: Install dependencies
         run: |
@@ -29,24 +32,30 @@ jobs:
              sudo apt-get update --fix-missing
              sudo apt-get install -f
              sudo apt -y install build-essential doxygen graphviz doxygen-latex
+             
       - name: Create empty BRANCH gh-pages 
         run: |
+          cd JKQtPlotter_doc
           git branch | grep -q "gh-pages" && git branch -D gh-pages
           git branch gh-pages
           git checkout gh-pages
+          cd ..
 
       - name: Run Doxygen
         run: |
+          cd JKQtPlotter
           cd doc
           doxygen --version
           doxygen Doxyfile
           echo "" > html/.nojekyll
           cd ..
+          cd ..
           
       - name: Deploy to gh-pages
         run: |
+          cd JKQtPlotter_doc
           rm -rf *
-          mv doc/html .
+          mv ../JKQtPlotter/doc/html .
           git add **
           git commit -am "Generated API doc"
           git push -f mine gh-pages:gh-pages
