@@ -24,11 +24,6 @@ jobs:
       - uses: actions/checkout@v3
         with: 
           path: JKQtPlotter
-          
-      - uses: actions/checkout@v3
-        with: 
-          ref: gh-pages
-          path: JKQtPlotter_doc
             
       - name: Install dependencies
         run: |
@@ -36,27 +31,18 @@ jobs:
              sudo apt-get update --fix-missing
              sudo apt-get install -f
              sudo apt -y install build-essential doxygen graphviz doxygen-latex
-             
-      #- name: empty branch gh-pages 
-      #  run: |
-      #    cd JKQtPlotter_doc
-      #    git rm -r *
-      #    cd ..
 
       - name: Run Doxygen
         run: |
-          cd JKQtPlotter
           cd doc
           doxygen --version
           doxygen Doxyfile
           echo "" > html/.nojekyll
           cd ..
-          cd ..
  
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+      - uses: DenverCoder1/doxygen-github-pages-action@v1
         with:
           github_token: ${{ secrets.GH_PAGES_SECRET }}
           branch: gh-pages
-          folder: JKQtPlotter/doc/html
+          folder: docs/html
           
