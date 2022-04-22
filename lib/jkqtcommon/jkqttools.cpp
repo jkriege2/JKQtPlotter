@@ -274,6 +274,6 @@ quint16 jkqtp_checksum(const void *data, size_t len)
 #if QT_VERSION>=QT_VERSION_CHECK(6,0,0)
     return qChecksum(QByteArrayView(static_cast<const uint8_t*>(data), len));
 #else
-    return qChecksum(data, len);
+    return qChecksum(static_cast<const char*>(data), len);
 #endif
 }
