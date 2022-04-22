@@ -1,5 +1,5 @@
 # set minimum required CMake-Version
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 # set Project name
 set(EXAMPLE_NAME simpletest)
@@ -12,7 +12,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 11)
 #set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-# Configure project for usage of Qt5
+# Configure project for usage of Qt5/Qt6
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGL REQUIRED)
 

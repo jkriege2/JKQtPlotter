@@ -5,7 +5,7 @@ This project (see [`cmake_link_example`](https://github.com/jkriege2/JKQtPlotter
 This example uses very simple code, which simply displays a plotter and shows some data. The important part of this example is the ´CMakeLists.txt`-file:
 ```
 	# set minimum required CMake-Version
-	cmake_minimum_required(VERSION 3.10)
+	cmake_minimum_required(VERSION 3.20)
 
 	# set Project name
 	set(EXAMPLE_NAME simpletest)
@@ -15,11 +15,13 @@ This example uses very simple code, which simply displays a plotter and shows so
 	# some basic configurations
 	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_INCLUDE_CURRENT_DIR ON)
-	set(CMAKE_CXX_STANDARD 11)
+	set(CMAKE_CXX_STANDARD 11)    # for Qt5
+	#set(CMAKE_CXX_STANDARD 17)   # for QT6
 	#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-	# Configure project for usage of Qt5
-	find_package(Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
+  # Configure project for usage of Qt5/Qt6
+  find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
+  find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGL REQUIRED)
 
 	# include JKQTPlotter
 	find_package(JKQTCommonLib REQUIRED)

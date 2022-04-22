@@ -8,6 +8,8 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 
 ![Language](https://img.shields.io/github/languages/top/jkriege2/JKQtPlotter)
 [![Qt5](https://img.shields.io/badge/Qt-5-brightgreen)](https://doc.qt.io/qt-5/)
+[![Qt6](https://img.shields.io/badge/Qt-6-brightgreen)](https://doc.qt.io/qt-6/)
+
 [![Documentation](https://img.shields.io/badge/documentation-online-blue)](http://jkriege2.github.io/JKQtPlotter/index.html)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/vq2o9pfi97isxm2a?svg=true)](https://ci.appveyor.com/project/jkriege2/jkqtplotter)
@@ -29,7 +31,7 @@ This software is licensed under the term of the [GNU Lesser General Public Licen
 ## Main Features
 - 2D Plotter widget class (JKQTPlotter)
   - high-quality plotting
-  - no other dependencies than Qt >= 5.0
+  - no other dependencies than Qt >= 5.0 ([CImg](https://cimg.eu/) and [OpenCV](https://opencv.org/) are optional dependencies)
   - highly customizable axes/grids (linear/log, date/time, custom ticks ...)
   - integrated LaTeX parser (pure C++, no dependencies) to render mathematical equations in axis labels, ticks, ...
   - extensive user-interactions pre-programmed (several zooming modes, selecting regions, custom context menus, switch graph visibility, ...)
