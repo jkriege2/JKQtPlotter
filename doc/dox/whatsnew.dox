@@ -12,6 +12,25 @@ This page lists release notes for the diferent version of JKQTPlotter
 \section page_whatsnew_TRUNK trunk/master
 
 \subsection page_whatsnew_TRUNK_OVERVIEW trunk: Overview
+Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
+<ul>
+   <li></li>
+</ul>
+
+\subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
+
+This release is available from:
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
+  - Source Code download (ZIP): <a href="https://github.com/jkriege2/JKQtPlotter/archive/master.zip">https://github.com/jkriege2/JKQtPlotter/archive/master.zip</a>
+  - Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
+.
+
+ 
+
+
+\section page_whatsnew_V4_0_0 V4.0.0: Qt6 compatibility & diverse improvements + bugfixes
+
+\subsection page_whatsnew_V4_0_0_OVERVIEW V4.0.0: Overview
 Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
 <ul>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/34">#34: Skip drawing the line for negative values in log plots</a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
@@ -21,6 +40,12 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/37">#37: CMake installs things into $PREFIX/doc/*.txt </a>, thanks to <a href="https://github.com/certik">user:certik</a></li>
   <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/pull/45">#45: Build error on mac jkqtfastplotter.cpp:342:28: Variable has incomplete type 'QPainterPath'</a>, thanks to <a href="https://github.com/abdedixit">user:abdedixit</a></li>
   <li> merged PR <a href="https://github.com/jkriege2/JKQtPlotter/pull/47">#47: Some minor build fixes</a>, thanks to <a href="https://github.com/patstew">user:patstew</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/48">#48: Cannot #include QPrintPreviewWidget</a>, thanks to <a href="https://github.com/schlenger">user:schlenger</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/49">#49: Incorrect tag in style .ini-files</a>, thanks to <a href="https://github.com/smistad">user:smistad</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/50">#50: Double-Click Zoom Issue</a>, thanks to <a href="https://github.com/Delfinos">user:Delfinos</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/52">#52: 'runtime_error': is not a member of 'std'</a>, thanks to <a href="https://github.com/gomgomi">user:gomgomi</a></li>
+  <li> fixed issue <a href="https://github.com/jkriege2/JKQtPlotter/issues/56">#56: Logscale zoom multiple zeros? </a>, thanks to <a href="https://github.com/sufuk">user:sufuk</a></li>
+  <li> merged PR <a href="https://github.com/jkriege2/JKQtPlotter/pull/51">#51: Bug: JKMathParser exception return local variable </a>, thanks to <a href="https://github.com/StephanOostveen">user:StephanOostveen</a></li>
   <li>renamed/breaking change: renamed JKQTPPlotObject->JKQTPGeometricPlotElement and added new base class JKQTPPlotAnnotationElement</li>
   <li>renamed/breaking change: renamed JKQTPColorPaletteStyleAndToolsMixin::setPalette() -> JKQTPColorPaletteStyleAndToolsMixin::setColorPalette()</li>
   <li>removed/breaking change: removed the usage of some deprecated functions and objects (e.g. QMatrix)</li>
@@ -41,7 +66,9 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>improved/breaking change: made more functions and function parameters const</li>
   <li>improved/breaking change: image plots now manage CONST-data, not plain pointer arrays... This is OK, since the raw data is never owned nor modified by the plot, only referenced!.</li>
   <li>bugfixed/improved: aspect ratio handling in JKQTPlotter.</li>
+  <li>new: switching to semantic versioning ... starting with v4.0.0</li>
   <li>new: Compatibility with Qt 5.15 and Qt6</li>
+  <li>new: added support for high-dpi devices (thanks for <a href="https://github.com/jkriege2/JKQtPlotter/pull/55">PR #55: Enable high-dpi support for plots </a> by <a href="https://github.com/akenmorris">user:akenmorris</a>.</li>
   <li>new: added geometric plot objects JKQTPGeoArrow to draw arrows (aka lines with added line-end decorators, also extended JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines to draw line-end decorator (aka arrows)</li>
   <li>new: all geometric objects can either be drawn as graphic element (i.e. lines are straight line, even on non-linear axes), or as mathematical curve (i.e. on non-linear axes, lines become the appropriate curve representing the linear function, connecting the given start/end-points). The only exceptions are ellipses (and the derived arcs,pies,chords), which are always drawn as mathematical curves</li>
   <li>new: a new graph class JKQTPXYFunctionLineGraph draws parametric 2D curves ( \f$ [x,y] = f(t) \f$ ), see \ref JKQTPlotterEvalCurves for an example</li>
@@ -50,12 +77,11 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>new: added JKQTPFilledHorizontalRangeGraph, complementing JKQTPFilledVerticalRangeGraph</li>
 </ul>
 
-\subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download
+\subsection page_whatsnew_V4_0_0_DOWNLOAD trunk: Download
 
 This release is available from:
-  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter">https://github.com/jkriege2/JKQtPlotter</a>
-  - Source Code download (ZIP): <a href="https://github.com/jkriege2/JKQtPlotter/archive/master.zip">https://github.com/jkriege2/JKQtPlotter/archive/master.zip</a>
-  - Git-Link: <a href="https://github.com/jkriege2/JKQtPlotter.git">https://github.com/jkriege2/JKQtPlotter.git</a>
+  - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0">https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0</a>
+  - Latest Release/Tag: <a href="https://github.com/jkriege2/JKQtPlotter/releases/tag/v4.0.0">https://github.com/jkriege2/JKQtPlotter/releases/tag/v4.0.0</a> (2021-April-xx)
 .
 
 
