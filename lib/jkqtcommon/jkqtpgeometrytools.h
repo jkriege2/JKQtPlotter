@@ -44,7 +44,7 @@
 JKQTCOMMON_LIB_EXPORT QPolygonF jkqtpRotateRect(QRectF r, double angle);
 
 
-/** \brief adaptive drawing of a function graph, specified by two function \f$ f_x(t) \f$ and \f$ f_y(t) \f$ evaluated over a parameter range \f$ t\in\left[t_\text{min}..t_\text{max}\tight] \f$ */
+/** \brief adaptive drawing of a function graph, specified by two function \f$ f_x(t) \f$ and \f$ f_y(t) \f$ evaluated over a parameter range \f$ t\in\left[t_\text{min}..t_\text{max}\right] \f$ */
 class JKQTCOMMON_LIB_EXPORT JKQTPAdaptiveFunctionGraphEvaluator {
 public:
 
