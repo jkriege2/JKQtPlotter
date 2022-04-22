@@ -21,15 +21,15 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout Repo
-        run: |
-          mkdir JKQtPlotter
-          mkdir JKQtPlotter_doc
-          git clone -o mine git@github.com:jkriege2/JKQtPlotter.git $GITHUB_WORKSPACE/JKQtPlotter
-          git clone -o mine git@github.com:jkriege2/JKQtPlotter.git $GITHUB_WORKSPACE/JKQtPlotter_doc
-          ls JKQtPlotter_doc
-          ls JKQtPlotter
-
+      - uses: actions/checkout@v3
+        with: 
+          path: JKQtPlotter
+          
+      - uses: actions/checkout@v3
+        with: 
+          ref: gh-pages
+          path: JKQtPlotter_doc
+            
       - name: Install dependencies
         run: |
              sudo apt-get update
@@ -54,13 +54,11 @@ jobs:
           echo "" > html/.nojekyll
           cd ..
           cd ..
-          
-      - name: Deploy to gh-pages
-        run: |
-          cd JKQtPlotter_doc
-          rm -rf *
-          mv ../JKQtPlotter/doc/html .
-          git add **
-          git commit -am "Generated API doc"
-          git push -f mine gh-pages:gh-pages
+ 
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          github_token: ${{ secrets.GH_PAGES_SECRET }}
+          branch: gh-pages
+          folder: JKQtPlotter/doc/html
           
