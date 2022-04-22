@@ -34,15 +34,17 @@ jobs:
 
       - name: Run Doxygen
         run: |
+          cd JKQtPlotter
           cd doc
           doxygen --version
           doxygen Doxyfile
           echo "" > html/.nojekyll
+          cd ..
           cd ..
  
       - uses: DenverCoder1/doxygen-github-pages-action@v1
         with:
           github_token: ${{ secrets.GH_PAGES_SECRET }}
           branch: gh-pages
-          folder: docs/html
+          folder: JKQtPlotter/doc/html
           
