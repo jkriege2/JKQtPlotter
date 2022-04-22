@@ -25,7 +25,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QtCore>
-#if (QT_VERSION>QT_VERSION_CHECK(5, 3, 0))
+#if (QT_VERSION>QT_VERSION_CHECK(5, 14, 0))
 #  include <QScreen>
 #  include <QGuiApplication>
 #else
@@ -43,7 +43,7 @@ void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, const QString& p
 void jkloadWidgetGeometry(QSettings& settings, QWidget* widget, QPoint defaultPosition, QSize defaultSize, const QString& prefix) {
     QPoint pos = settings.value(prefix+"pos", defaultPosition).toPoint();
     const QSize size = settings.value(prefix+"size", defaultSize).toSize();
-#if (QT_VERSION>=QT_VERSION_CHECK(5, 3, 0))
+#if (QT_VERSION>=QT_VERSION_CHECK(5, 14, 0))
     const auto widgeo = widget->screen()->geometry();
 #else
     const auto widgeo = QApplication::desktop()->screenGeometry(widget);
