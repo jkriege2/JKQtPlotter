@@ -37,13 +37,11 @@ jobs:
              sudo apt-get install -f
              sudo apt -y install build-essential doxygen graphviz doxygen-latex
              
-      - name: Create empty BRANCH gh-pages 
-        run: |
-          cd JKQtPlotter_doc
-          git branch | grep -q "gh-pages" && git branch -D gh-pages
-          git branch gh-pages
-          git checkout gh-pages
-          cd ..
+      #- name: empty branch gh-pages 
+      #  run: |
+      #    cd JKQtPlotter_doc
+      #    git rm -r *
+      #    cd ..
 
       - name: Run Doxygen
         run: |
