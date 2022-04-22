@@ -23,8 +23,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout Repo
         run: |
+          mkdir JKQtPlotter
+          mkdir JKQtPlotter_doc
           git clone -o mine git@github.com:jkriege2/JKQtPlotter.git $GITHUB_WORKSPACE/JKQtPlotter
           git clone -o mine git@github.com:jkriege2/JKQtPlotter.git $GITHUB_WORKSPACE/JKQtPlotter_doc
+          ls JKQtPlotter_doc
+          ls JKQtPlotter
 
       - name: Install dependencies
         run: |
