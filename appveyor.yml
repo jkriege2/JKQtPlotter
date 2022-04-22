@@ -37,6 +37,12 @@ environment:
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
       
+    - QTABI: msvc2019_64
+      COMPILER: MSVC
+      QTVER: 6.3.0
+      CMAKE_GENERATOR: "Visual Studio 16 2019"
+      CMAKE_BUILDFLAGS: /verbosity:minimal /maxcpucount
+      
 #    - QTABI: mingw81_64
 #      COMPILER: MinGW
 #      MINGWDIR: C:\Qt\Tools\mingw810_64
@@ -46,6 +52,11 @@ environment:
     - QTABI: gcc_64
       COMPILER: GCC
       QTVER: 5.15
+      CMAKE_GENERATOR: "Unix Makefiles"
+
+    - QTABI: gcc_64
+      COMPILER: GCC
+      QTVER: 6.2
       CMAKE_GENERATOR: "Unix Makefiles"
       
 image:
