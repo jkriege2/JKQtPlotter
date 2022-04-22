@@ -479,7 +479,9 @@ void JKQTPlotter::paintUserAction() {
         image=oldImage;
         if (image.width()>0 && image.height()>0 && !image.isNull()) {
             JKQTPEnhancedPainter painter(&image);
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
             painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
+#endif
             painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, true);
             painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, true);
             painter.setPen(plotterStyle.userActionOverlayPen);
@@ -1437,12 +1439,12 @@ QAction* JKQTPlotter::getActMouseLeftAsToolTip() const {
 
 void JKQTPlotter::setOverrideMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifier, JKQTPMouseDragActions action)
 {
-    registeredOverrideMouseDragActionModes.insert(qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier), action);
+    registeredOverrideMouseDragActionModes.insert(QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier), action);
 }
 
 void JKQTPlotter::resetOverrideMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifier)
 {
-    registeredOverrideMouseDragActionModes.remove(qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier));
+    registeredOverrideMouseDragActionModes.remove(QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier));
 }
 
 void JKQTPlotter::setContextMenuMode(JKQTPContextMenuModes mode) {
@@ -1686,7 +1688,7 @@ JKQTPMouseDragActionsHashMapIterator JKQTPlotter::findMatchingMouseDragAction(Qt
     if (found) *found=false;
     JKQTPMouseDragActionsHashMapIterator it=registeredOverrideMouseDragActionModes.cbegin();
     while (it!=registeredOverrideMouseDragActionModes.cend() ) {
-        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+        if (it.key()==QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
             if (found) *found=true;
             return it;
         }
@@ -1694,7 +1696,7 @@ JKQTPMouseDragActionsHashMapIterator JKQTPlotter::findMatchingMouseDragAction(Qt
     }
     it=plotterStyle.registeredMouseDragActionModes.cbegin();
     while (it!=plotterStyle.registeredMouseDragActionModes.cend() ) {
-        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+        if (it.key()==QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
             if (found) *found=true;
             return it;
         }
@@ -1707,7 +1709,7 @@ JKQTPMouseDoubleClickActionsHashMapIterator JKQTPlotter::findMatchingMouseDouble
 {
     if (found) *found=false;
     for (JKQTPMouseDoubleClickActionsHashMapIterator it=plotterStyle.registeredMouseDoubleClickActions.cbegin(); it!=plotterStyle.registeredMouseDoubleClickActions.cend(); ++it) {
-        if (it.key()==qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
+        if (it.key()==QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifiers)) {
             if (found) *found=true;
             return it;
         }
@@ -1738,7 +1740,7 @@ void JKQTPlotter::setPlotUpdateEnabled(bool enable)
 
 void JKQTPlotter::registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifier, JKQTPMouseDragActions action)
 {
-    plotterStyle.registeredMouseDragActionModes[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier)]=action;
+    plotterStyle.registeredMouseDragActionModes[QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier)]=action;
     if (button==Qt::LeftButton && modifier==Qt::NoModifier) {
         actMouseLeftAsDefault->setChecked(true);
         resetMouseLeftAction();
@@ -1747,7 +1749,7 @@ void JKQTPlotter::registerMouseDragAction(Qt::MouseButton button, Qt::KeyboardMo
 
 void JKQTPlotter::deregisterMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifier)
 {
-    plotterStyle.registeredMouseDragActionModes.remove(qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier));
+    plotterStyle.registeredMouseDragActionModes.remove(QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier));
 }
 
 void JKQTPlotter::clearAllRegisteredMouseDragActions()
@@ -1757,12 +1759,12 @@ void JKQTPlotter::clearAllRegisteredMouseDragActions()
 
 void JKQTPlotter::registerMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifier, JKQTPMouseDoubleClickActions action)
 {
-    plotterStyle.registeredMouseDoubleClickActions[qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier)]=action;
+    plotterStyle.registeredMouseDoubleClickActions[QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier)]=action;
 }
 
 void JKQTPlotter::deregisterMouseDoubleClickAction(Qt::MouseButton button, Qt::KeyboardModifiers modifier)
 {
-    plotterStyle.registeredMouseDoubleClickActions.remove(qMakePair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier));
+    plotterStyle.registeredMouseDoubleClickActions.remove(QPair<Qt::MouseButton, Qt::KeyboardModifiers>(button, modifier));
 }
 
 void JKQTPlotter::clearAllRegisteredMouseDoubleClickActions()

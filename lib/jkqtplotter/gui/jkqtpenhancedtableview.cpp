@@ -129,6 +129,26 @@ void JKQTPEnhancedTableView::copySelectionToExcel(int copyrole, bool storeHead)
     if (sel.size()==1) {
         QVariant vdata=sel[0].data(copyrole);
         QString txt="";
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+        switch (vdata.typeId()) {
+            case QMetaType::Int:
+            case QMetaType::LongLong:
+            case QMetaType::UInt:
+            case QMetaType::ULongLong:
+            case QMetaType::Bool:
+                txt=vdata.toString();
+                break;
+            case QMetaType::Double:
+                txt=loc.toString(vdata.toDouble());
+                break;
+            case QMetaType::QPointF:
+                txt=loc.toString(vdata.toPointF().x());
+                break;
+            default:
+                txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
+                break;
+        }
+#else
         switch (vdata.type()) {
             case QVariant::Int:
             case QVariant::LongLong:
@@ -147,6 +167,7 @@ void JKQTPEnhancedTableView::copySelectionToExcel(int copyrole, bool storeHead)
                 txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
                 break;
         }
+#endif
          QApplication::clipboard()->setText(txt);
     } else {
         QSet<int> rows, cols;
@@ -210,6 +231,26 @@ void JKQTPEnhancedTableView::copySelectionToExcel(int copyrole, bool storeHead)
             int c=collist.indexOf(sel[i].column());
             QVariant vdata=sel[i].data(copyrole);
             QString txt="";
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+            switch (vdata.typeId()) {
+                case QMetaType::Int:
+                case QMetaType::LongLong:
+                case QMetaType::UInt:
+                case QMetaType::ULongLong:
+                case QMetaType::Bool:
+                    txt=vdata.toString();
+                    break;
+                case QMetaType::Double:
+                    txt=loc.toString(vdata.toDouble());
+                    break;
+                case QMetaType::QPointF:
+                    txt=loc.toString(vdata.toPointF().x());
+                    break;
+                default:
+                    txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
+                    break;
+            }
+#else
             switch (vdata.type()) {
                 case QVariant::Int:
                 case QVariant::LongLong:
@@ -228,6 +269,7 @@ void JKQTPEnhancedTableView::copySelectionToExcel(int copyrole, bool storeHead)
                     txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
                     break;
             }
+#endif
             int shift=0;
             if (storeHead) shift=1;
             if ((r>=0) && (c>=0) && (r<=data.size()) && (c<=colcnt))data[r+shift][c+shift]=txt;
@@ -256,6 +298,26 @@ void JKQTPEnhancedTableView::copySelectionToCSV(int copyrole, bool storeHead, co
     if (sel.size()==1) {
         QVariant vdata=sel[0].data(copyrole);
         QString txt="";
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+        switch (vdata.typeId()) {
+            case QMetaType::Int:
+            case QMetaType::LongLong:
+            case QMetaType::UInt:
+            case QMetaType::ULongLong:
+            case QMetaType::Bool:
+                txt=vdata.toString();
+                break;
+            case QMetaType::Double:
+                txt=JKQTPDoubleToQString(vdata.toDouble(), 15, 'g', decimalpoint);
+                break;
+            case QMetaType::QPointF:
+                txt=JKQTPDoubleToQString(vdata.toPointF().x(), 15, 'g', decimalpoint);
+                break;
+            default:
+                txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
+                break;
+        }
+#else
         switch (vdata.type()) {
             case QVariant::Int:
             case QVariant::LongLong:
@@ -274,6 +336,7 @@ void JKQTPEnhancedTableView::copySelectionToCSV(int copyrole, bool storeHead, co
                 txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
                 break;
         }
+#endif
          QApplication::clipboard()->setText(txt);
     } else {
         QSet<int> rows, cols;
@@ -337,6 +400,26 @@ void JKQTPEnhancedTableView::copySelectionToCSV(int copyrole, bool storeHead, co
             int c=collist.indexOf(sel[i].column());
             QVariant vdata=sel[i].data(copyrole);
             QString txt="";
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+                switch (vdata.typeId()) {
+                    case QMetaType::Int:
+                    case QMetaType::LongLong:
+                    case QMetaType::UInt:
+                    case QMetaType::ULongLong:
+                    case QMetaType::Bool:
+                        txt=vdata.toString();
+                        break;
+                    case QMetaType::Double:
+                        txt=JKQTPDoubleToQString(vdata.toDouble(), 15, 'g', decimalpoint);
+                        break;
+                    case QMetaType::QPointF:
+                        txt=JKQTPDoubleToQString(vdata.toPointF().x(), 15, 'g', decimalpoint);
+                        break;
+                    default:
+                        txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
+                        break;
+                }
+#else
             switch (vdata.type()) {
                 case QVariant::Int:
                 case QVariant::LongLong:
@@ -355,6 +438,7 @@ void JKQTPEnhancedTableView::copySelectionToCSV(int copyrole, bool storeHead, co
                     txt=QString("\"%1\"").arg(vdata.toString().replace('"', "''").replace('\n', "\\n ").replace('\r', "\\r ").replace('\t', " "));
                     break;
             }
+#endif
             int shift=0;
             if (storeHead) shift=1;
             if ((r>=0) && (c>=0) && (r<=data.size()) && (c<=colcnt))data[r+shift][c+shift]=txt;
@@ -568,7 +652,12 @@ QSizeF JKQTPEnhancedTableView::getTotalSize() const
 void JKQTPEnhancedTableView::paint(QPainter &painter, double scale, int page, double hhh, double vhw, const QList<int>& pageCols, const QList<int>& pageRows, QPrinter* p)
 {
     painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
-    QStyleOptionViewItem option = viewOptions();
+    QStyleOptionViewItem option;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    initViewItemOption(&option);
+#else
+    option = viewOptions();
+#endif
     painter.scale(scale, scale);
     QPen headerPen("black");
     headerPen.setWidth(2);

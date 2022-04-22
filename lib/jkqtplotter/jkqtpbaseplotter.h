@@ -2130,7 +2130,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
 /** \brief qHash()-specialization
  *   \ingroup jkqtpplottersupprt
  */
-inline uint qHash(const JKQTBasePlotter::textSizeKey& data) {
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+inline size_t qHash(const JKQTBasePlotter::textSizeKey& data, size_t /*seed=0*/) {
+#else
+inline uint qHash(const JKQTBasePlotter::textSizeKey& data, uint /*seed=0*/) {
+#endif
     return qHash(data.f.family())+qHash(data.text);
 }
 

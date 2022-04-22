@@ -21,7 +21,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Set up source files
 set(SOURCES
-  jkqtfastplotter.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/jkqtfastplotter.cpp
 )
 
 set(HEADERS
@@ -40,10 +40,17 @@ if(JKQtPlotter_BUILD_SHARED_LIBS)
     set_property(TARGET ${libsh_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${libsh_name} PROPERTY OUTPUT_NAME  "${libsh_name_decorated}")
     target_link_libraries(${libsh_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::OpenGL JKQTCommonSharedLib)
+    if(${QT_VERSION_MAJOR} VERSION_LESS "6")
+        set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD 11)
+        set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
+        target_compile_features(${libsh_name} PUBLIC cxx_std_11)
+    else()
+        target_link_libraries(${libsh_name} PUBLIC Qt${QT_VERSION_MAJOR}::OpenGLWidgets)
+        set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD 17)
+        set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
+        target_compile_features(${libsh_name} PUBLIC cxx_std_17)
+    endif()
     target_compile_definitions(${libsh_name} PUBLIC JKQTFASTPLOTTER_LIB_IN_DLL)
-    set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD 11)
-    set_property(TARGET ${libsh_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
-    target_compile_features(${libsh_name} PUBLIC cxx_std_11)
     if(MINGW)
       # COMPILER-SETTINGS FOR MINGW
       target_compile_options(${libsh_name} PUBLIC -fexceptions)
@@ -67,8 +74,6 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
     add_library(${lib_name} STATIC ${SOURCES} ${RESOURCES} ${HEADERS})
     set_property(TARGET ${lib_name} PROPERTY VERSION "${PROJECT_VERSION}")
     set_property(TARGET ${lib_name} PROPERTY OUTPUT_NAME  "${lib_name_decorated}")
-    set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 11)
-    set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
     if(MINGW)
       # COMPILER-SETTINGS FOR MINGW
       target_compile_options(${lib_name} PUBLIC -fexceptions)
@@ -77,10 +82,16 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
       target_compile_options(${lib_name} PUBLIC /EHsc)
       target_compile_definitions(${lib_name} PUBLIC NOMINMAX)
     endif()
-    target_compile_features(${lib_name} PUBLIC cxx_std_11)
     target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::PrintSupport Qt${QT_VERSION_MAJOR}::OpenGL JKQTCommonLib)
-    if(${QT_VERSION_MAJOR}>=6)
-        target_link_libraries(${lib_name} PUBLIC t${QT_VERSION_MAJOR}::OpenGLWidgets)
+    if(${QT_VERSION_MAJOR} VERSION_LESS "6")
+        set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 11)
+        set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
+        target_compile_features(${lib_name} PUBLIC cxx_std_11)
+    else()
+        target_link_libraries(${lib_name} PUBLIC Qt${QT_VERSION_MAJOR}::OpenGLWidgets)
+        set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD 17)
+        set_property(TARGET ${lib_name} PROPERTY CXX_STANDARD_REQUIRED TRUE)
+        target_compile_features(${lib_name} PUBLIC cxx_std_17)
     endif()
     target_include_directories(${lib_name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>

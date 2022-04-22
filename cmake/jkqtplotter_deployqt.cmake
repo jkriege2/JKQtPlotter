@@ -3,12 +3,25 @@ function(jkqtplotter_deployqt TARGET_NAME)
     if (WIN32)
         get_target_property(_qmake_executable Qt${QT_VERSION_MAJOR}::qmake IMPORTED_LOCATION)
         get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
-        find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
-
-        set(WINDEPLOYQTOPTION "--release")
+        find_program(WINDEPLOYQT_ENV_SETUP qtenv2.bat HINTS "${_qt_bin_dir}")
         if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-            set(WINDEPLOYQTOPTION "--debug")
+          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt.debug.bat HINTS "${_qt_bin_dir}")
+        else()
+          find_program(WINDEPLOYQT_EXECUTABLE NAMES windeployqt HINTS "${_qt_bin_dir}")
+        endif()        
+
+
+        if(${QT_VERSION_MAJOR} VERSION_GREATER_EQUAL "6")
+          set(WINDEPLOYQTOPTION "")
+          set(WINDEPLOYQTPACKAGES "")
+        else()
+          set(WINDEPLOYQTOPTION "--release --compiler-runtime")
+          if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+              set(WINDEPLOYQTOPTION "--debug --compiler-runtime")
+          endif()
+          set(WINDEPLOYQTPACKAGES "-xml -printsupport -svg -opengl")
         endif()
+
 
         # install system runtime lib
         include( InstallRequiredSystemLibraries )
@@ -18,13 +31,7 @@ function(jkqtplotter_deployqt TARGET_NAME)
 
         get_filename_component(CMAKE_CXX_COMPILER_BINPATH ${CMAKE_CXX_COMPILER} DIRECTORY )
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND "${CMAKE_COMMAND}" -E
-                env PATH="${CMAKE_CXX_COMPILER_BINPATH}\;${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
-                    --compiler-runtime
-                       -xml
-                       -printsupport
-                    ${WINDEPLOYQTOPTION}
-                    \"$<TARGET_FILE:${TARGET_NAME}>\"
+            COMMAND "${WINDEPLOYQT_ENV_SETUP}" && "${WINDEPLOYQT_EXECUTABLE}" ${WINDEPLOYQTOPTION} ${WINDEPLOYQTPACKAGES} \"$<TARGET_FILE:${TARGET_NAME}>\"
             COMMENT "Running windeployqt ... "
         )
     endif(WIN32)

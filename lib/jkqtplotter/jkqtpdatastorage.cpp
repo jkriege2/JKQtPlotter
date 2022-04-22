@@ -1056,7 +1056,7 @@ void JKQTPDatastore::saveCSV(QTextStream& txt, const QSet<int>& userColumns, con
     // find out the decimal and the thousand separator
     QLocale loc=QLocale::c();
     loc.setNumberOptions(QLocale::OmitGroupSeparator);
-    QChar dsep=loc.decimalPoint();
+    const auto dsep=loc.decimalPoint();
 
 
     txt.setLocale(loc);

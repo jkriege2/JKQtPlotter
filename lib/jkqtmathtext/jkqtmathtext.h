@@ -1194,11 +1194,13 @@ class JKQTMATHTEXT_LIB_EXPORT JKQTMathText : public QObject {
 };
 
 
-
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+inline size_t qHash(const JKQTMathText::tbrDataH& data, size_t /*seed=0*/) {
+#else
 inline uint qHash(const JKQTMathText::tbrDataH& data) {
-    return qHash(data.f.family())+qHash(data.text);
+#endif
+  return qHash(data.f.family())+qHash(data.text);
 }
-
 
 
 

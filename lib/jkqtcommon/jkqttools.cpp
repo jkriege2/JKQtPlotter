@@ -31,6 +31,9 @@
 #else
 #  include <QDesktopWidget>
 #endif
+#if QT_VERSION>=QT_VERSION_CHECK(6,0,0)
+#  include <QByteArrayView>
+#endif
 
 void jksaveWidgetGeometry(QSettings& settings, QWidget* widget, const QString& prefix) {
     settings.setValue(prefix+"pos", widget->pos());
@@ -102,20 +105,19 @@ QString jkVariantListToString(const QList<QVariant>& data, const QString& separa
         else r=r+v.toString();
 
 #else
-#  define QVARIANT_TYPESBASE QVariant
         switch (v.type()) {
 
-            case QVARIANT_TYPESBASE::Bool: r=r+loc.toString(v.toBool()); break;
-            case QVARIANT_TYPESBASE::Char: r=r+loc.toString(v.toInt()); break;
-            case QVARIANT_TYPESBASE::Date: r=r+loc.toString(v.toDate()); break;
-            case QVARIANT_TYPESBASE::DateTime: r=r+loc.toString(v.toDateTime()); break;
-            case QVARIANT_TYPESBASE::Double: r=r+loc.toString(v.toDouble()); break;
-            case QVARIANT_TYPESBASE::Int: r=r+loc.toString(v.toInt()); break;
-            case QVARIANT_TYPESBASE::LongLong: r=r+loc.toString(v.toLongLong()); break;
-            case QVARIANT_TYPESBASE::String: r=r+QString("\"%1\"").arg(v.toString().replace("\"", "_").replace("\t", " ").replace("\r", "").replace("\n", " ").replace(",", " ").replace(";", " ")); break;
-            case QVARIANT_TYPESBASE::Time: r=r+loc.toString(v.toTime()); break;
-            case QVARIANT_TYPESBASE::UInt: r=r+loc.toString(v.toUInt()); break;
-            case QVARIANT_TYPESBASE::ULongLong: r=r+loc.toString(v.toULongLong()); break;
+            case QVariant::Bool: r=r+loc.toString(v.toBool()); break;
+            case QVariant::Char: r=r+loc.toString(v.toInt()); break;
+            case QVariant::Date: r=r+loc.toString(v.toDate()); break;
+            case QVariant::DateTime: r=r+loc.toString(v.toDateTime()); break;
+            case QVariant::Double: r=r+loc.toString(v.toDouble()); break;
+            case QVariant::Int: r=r+loc.toString(v.toInt()); break;
+            case QVariant::LongLong: r=r+loc.toString(v.toLongLong()); break;
+            case QVariant::String: r=r+QString("\"%1\"").arg(v.toString().replace("\"", "_").replace("\t", " ").replace("\r", "").replace("\n", " ").replace(",", " ").replace(";", " ")); break;
+            case QVariant::Time: r=r+loc.toString(v.toTime()); break;
+            case QVariant::UInt: r=r+loc.toString(v.toUInt()); break;
+            case QVariant::ULongLong: r=r+loc.toString(v.toULongLong()); break;
             //case : r=r+loc.toString(v.); break;
             default: r=r+v.toString(); break;
         }
@@ -265,4 +267,13 @@ Qt::MouseButton jkqtp_String2MouseButton(const QString &button)
     if (but=="EXTRA23") return Qt::ExtraButton23;
     if (but=="EXTRA24") return Qt::ExtraButton24;
     return Qt::NoButton;
+}
+
+quint16 jkqtp_checksum(const void *data, size_t len)
+{
+#if QT_VERSION>=QT_VERSION_CHECK(6,0,0)
+    return qChecksum(QByteArrayView(static_cast<const uint8_t*>(data), len));
+#else
+    return qChecksum(data, len);
+#endif
 }
