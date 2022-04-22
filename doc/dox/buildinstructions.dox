@@ -89,6 +89,8 @@ Here is the \c CMakeLists.txt from that directory:
 
 	# Configure project for usage of Qt5
 	find_package(Qt5 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl REQUIRED)
+	# Configure project for usage of Qt6
+	#find_package(Qt6 COMPONENTS Core Gui Widgets PrintSupport Svg Xml OpenGl OpenGLWidgets REQUIRED)
 
 	# include JKQTPlotter
 	find_package(JKQTCommonLib REQUIRED)

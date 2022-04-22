@@ -22,6 +22,7 @@
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtcommon/jkqtpdebuggingtools.h"
+#include "jkqtcommon/jkqttools.h"
 #include <vector>
 #include <cmath>
 #include <iostream>
@@ -2518,7 +2519,7 @@ quint16 JKQTPColumn::calculateChecksum() const
 {
     if (!datastore) return 0;
     if (!datastore->getItem(datastoreItem)) return 0;
-    return qChecksum(reinterpret_cast<const char*>(getPointer(0)), static_cast<uint>(getRows()*sizeof(double)));
+    return jkqtp_checksum(reinterpret_cast<const char*>(getPointer(0)), static_cast<uint>(getRows()*sizeof(double)));
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

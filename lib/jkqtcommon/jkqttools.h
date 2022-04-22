@@ -134,6 +134,12 @@ JKQTCOMMON_LIB_EXPORT QString jkqtp_MouseButton2String(Qt::MouseButton button, b
  *  \see jkqtp_MouseButton2String()
  */
 JKQTCOMMON_LIB_EXPORT Qt::MouseButton jkqtp_String2MouseButton(const QString &button);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by jkqtp_MouseButton2String() ) to <a href="http://doc.qt.io/qt-5/qt.html#MouseButton-enum">Qt::MouseButton</a>
+ *  \ingroup tools
+ *
+ *  \see jkqtp_MouseButton2String()
+ */
+JKQTCOMMON_LIB_EXPORT quint16 jkqtp_checksum(const void* data, size_t len);
 
 
 #endif // JKQTTOOLS_H

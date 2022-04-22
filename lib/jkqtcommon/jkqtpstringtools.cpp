@@ -45,7 +45,12 @@ Copyright (c) 2008-2020 Jan W. Krieger (<jan@jkrieger.de>)
 #include <ctype.h>
 #include <sstream>
 #include <locale>
-
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+#include<QRegularExpression>
+#include<QRegularExpressionMatch>
+#else
+#include<QRegExp>
+#endif
 
 std::string jkqtp_tolower(const std::string& s){
   std::string d;
@@ -527,6 +532,24 @@ QString jkqtp_QColor2String(QColor color, bool useSpecialTransparencySyntax) {
 
 QColor jkqtp_String2QColor(const QString &color)
 {
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+    QRegularExpression rxP("(.+)\\s*,\\s*(\\d+\\.?\\d+)\\%");
+    QRegularExpression rxNP("(.+)\\s*,\\s*([\\d]+)");
+    const auto mP=rxP.match(color);
+    if (mP.hasMatch()) {
+        QColor col(mP.captured(1));
+        double a=QLocale::c().toDouble(mP.captured(2));
+        col.setAlphaF(a/100.0);
+        return col;
+    }
+    const auto mNP=rxNP.match(color);
+    if (mNP.hasMatch()) {
+        QColor col(mNP.captured(1));
+        double a=QLocale::c().toInt(mNP.captured(2));
+        col.setAlphaF(a/255.0);
+        return col;
+    }
+#else
     QRegExp rxP("(.+)\\s*,\\s*(\\d+\\.?\\d+)\\%");
     QRegExp rxNP("(.+)\\s*,\\s*([\\d]+)");
     if (rxP.exactMatch(color)) {
@@ -541,6 +564,7 @@ QColor jkqtp_String2QColor(const QString &color)
         col.setAlphaF(a/255.0);
         return col;
     }
+#endif
     return QColor(color);
 }
 

@@ -34,7 +34,13 @@
 #include <cmath>
 #include <iostream>
 #include <QMutex>
+#if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#define JKQTFASTPLOTTER_BASE QOpenGLWidget
+#else
 #include <QGLWidget>
+#define JKQTFASTPLOTTER_BASE QGLWidget
+#endif
 #include "jkqtcommon/jkqtpmathtools.h"
 #ifdef DEBUG_TIMING
 #  include "jkqtcommon/jkqtphighrestimer.h"
@@ -83,7 +89,13 @@ class JKQTFPPlot;
     .
 
 */
-class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter : public QGLWidget {
+class JKQTFASTPLOTTER_LIB_EXPORT JKQTFastPlotter :
+        #if (QT_VERSION>=QT_VERSION_CHECK(6, 0, 0))
+        public QOpenGLWidget
+        #else
+        public QGLWidget
+        #endif
+{
         Q_OBJECT
     public:
 

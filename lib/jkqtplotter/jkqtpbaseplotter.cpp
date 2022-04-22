@@ -778,29 +778,30 @@ void JKQTBasePlotter::calcPlotScaling(JKQTPEnhancedPainter& painter){
     internalPlotKeyBorderBottom=0;
     internalPlotKeyBorderLeft=0;
     internalPlotKeyBorderRight=0;
+    const qreal Xwid=kfm.boundingRect('X').width();
     if (plotterStyle.keyStyle.position==JKQTPKeyOutsideTopRight) {
-        internalPlotKeyBorderTop=keyHeight+2*plotterStyle.keyStyle.yMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*kfm.width('X')+2;
+        internalPlotKeyBorderTop=keyHeight+2*plotterStyle.keyStyle.yMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*Xwid+2;
         internalPlotBorderTop = internalPlotBorderTop + internalPlotKeyBorderTop;
     } else if (plotterStyle.keyStyle.position==JKQTPKeyOutsideTopLeft) {
-        internalPlotKeyBorderTop=keyHeight+2*plotterStyle.keyStyle.yMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*kfm.width('X')+2;
+        internalPlotKeyBorderTop=keyHeight+2*plotterStyle.keyStyle.yMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*Xwid+2;
         internalPlotBorderTop = internalPlotBorderTop + internalPlotKeyBorderTop;
     } else if (plotterStyle.keyStyle.position==JKQTPKeyOutsideLeftTop) {
-        internalPlotKeyBorderLeft=keyWidth+2*plotterStyle.keyStyle.xMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*kfm.width('X')+2;
+        internalPlotKeyBorderLeft=keyWidth+2*plotterStyle.keyStyle.xMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*Xwid+2;
         internalPlotBorderLeft = internalPlotBorderLeft + internalPlotKeyBorderLeft;
     } else if (plotterStyle.keyStyle.position==JKQTPKeyOutsideLeftBottom) {
-        internalPlotKeyBorderLeft=keyWidth+2*plotterStyle.keyStyle.xMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*kfm.width('X')+2;
+        internalPlotKeyBorderLeft=keyWidth+2*plotterStyle.keyStyle.xMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*Xwid+2;
         internalPlotBorderLeft = internalPlotBorderLeft + internalPlotKeyBorderLeft;
     } else if (plotterStyle.keyStyle.position==JKQTPKeyOutsideBottomRight) {
-        internalPlotKeyBorderBottom=keyHeight+2*plotterStyle.keyStyle.yMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*kfm.width('X')+2;
+        internalPlotKeyBorderBottom=keyHeight+2*plotterStyle.keyStyle.yMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*Xwid+2;
         internalPlotBorderBottom = internalPlotBorderBottom + internalPlotKeyBorderBottom;
     } else if (plotterStyle.keyStyle.position==JKQTPKeyOutsideBottomLeft) {
-        internalPlotKeyBorderBottom=keyHeight+2*plotterStyle.keyStyle.yMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*kfm.width('X')+2;
+        internalPlotKeyBorderBottom=keyHeight+2*plotterStyle.keyStyle.yMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.yOffset*Xwid+2;
         internalPlotBorderBottom = internalPlotBorderBottom + internalPlotKeyBorderBottom;
     } else if (plotterStyle.keyStyle.position==JKQTPKeyOutsideRightTop) {
-        internalPlotKeyBorderRight = keyWidth+2*plotterStyle.keyStyle.xMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*kfm.width('X')+2;
+        internalPlotKeyBorderRight = keyWidth+2*plotterStyle.keyStyle.xMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*Xwid+2;
         internalPlotBorderRight = internalPlotBorderRight + internalPlotKeyBorderRight;
     } else if (plotterStyle.keyStyle.position==JKQTPKeyOutsideRightBottom) {
-        internalPlotKeyBorderRight = keyWidth+2*plotterStyle.keyStyle.xMargin*kfm.width('X')+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*kfm.width('X')+2;
+        internalPlotKeyBorderRight = keyWidth+2*plotterStyle.keyStyle.xMargin*Xwid+ceil(2*plotterStyle.keyStyle.frameWidth)+plotterStyle.keyStyle.xOffset*Xwid+2;
         internalPlotBorderRight = internalPlotBorderRight + internalPlotKeyBorderRight;
     }
 
@@ -1052,13 +1053,14 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
     QFont kf(plotterStyle.defaultFontName, 10);
     kf.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
     QFontMetricsF kfm(kf);
+    const qreal Xwid=kfm.boundingRect('X').width();
 
     // get the size of the key and if keyWidth>0 && keyHeight>0 draw the frame and the contents
     double keyWidth=0;
     double keyHeight=0;
     getKeyExtent(painter, &keyWidth, &keyHeight);
-    double keyRectangleWidth=keyWidth+2.0*plotterStyle.keyStyle.xMargin*kfm.width('X')+2.0*plotterStyle.keyStyle.frameWidth*lineWidthPrintMultiplier;
-    double keyRectangleHeight=keyHeight+2.0*plotterStyle.keyStyle.yMargin*kfm.width('X')+2.0*plotterStyle.keyStyle.frameWidth*lineWidthPrintMultiplier;
+    double keyRectangleWidth=keyWidth+2.0*plotterStyle.keyStyle.xMargin*Xwid+2.0*plotterStyle.keyStyle.frameWidth*lineWidthPrintMultiplier;
+    double keyRectangleHeight=keyHeight+2.0*plotterStyle.keyStyle.yMargin*Xwid+2.0*plotterStyle.keyStyle.frameWidth*lineWidthPrintMultiplier;
 
     if ((keyWidth>0) && (keyHeight>0)) {
         // key position
@@ -1067,64 +1069,64 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
 
         // default: inside top-right
         double x0=internalPlotBorderLeft+internalPlotWidth-keyRectangleWidth;
-        double x=x0-plotterStyle.keyStyle.xOffset*kfm.width('X');
+        double x=x0-plotterStyle.keyStyle.xOffset*Xwid;
         double y0=internalPlotBorderTop;
-        double y=y0+plotterStyle.keyStyle.yOffset*kfm.width('X');
+        double y=y0+plotterStyle.keyStyle.yOffset*Xwid;
 
         switch(plotterStyle.keyStyle.position) {
             case JKQTPKeyOutsideTopRight:
                 x0=internalPlotBorderLeft+internalPlotWidth+internalPlotBorderRight-keyRectangleWidth;
-                x=x0-plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0-plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalTitleHeight;
-                y=y0+plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0+plotterStyle.keyStyle.yOffset*Xwid;
                 break;
 
             case JKQTPKeyOutsideTopLeft:
                 x0=internalPlotBorderLeft;
-                x=x0+plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0+plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalTitleHeight;
-                y=y0+plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0+plotterStyle.keyStyle.yOffset*Xwid;
                 break;
 
             case JKQTPKeyOutsideBottomRight:
                 x0=internalPlotBorderLeft+internalPlotWidth-keyRectangleWidth;
-                x=x0-plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0-plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop+internalPlotHeight+internalPlotBorderBottom-keyRectangleHeight;
-                y=y0-plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0-plotterStyle.keyStyle.yOffset*Xwid;
                 break;
             case JKQTPKeyOutsideBottomLeft:
                 x0=internalPlotBorderLeft;
-                x=x0+plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0+plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop+internalPlotHeight+internalPlotBorderBottom-keyRectangleHeight;
-                y=y0-plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0-plotterStyle.keyStyle.yOffset*Xwid;
                 break;
 
 
 
             case JKQTPKeyOutsideRightTop:
                 x0=internalPlotBorderLeft+internalPlotWidth+internalPlotBorderRight-keyRectangleWidth;
-                x=x0-plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0-plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop;
-                y=y0+plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0+plotterStyle.keyStyle.yOffset*Xwid;
                 break;
             case JKQTPKeyOutsideRightBottom:
                 x0=internalPlotBorderLeft+internalPlotWidth+internalPlotBorderRight-keyRectangleWidth;
-                x=x0-plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0-plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop+internalPlotHeight-keyRectangleHeight;
-                y=y0-plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0-plotterStyle.keyStyle.yOffset*Xwid;
                 break;
 
             case JKQTPKeyOutsideLeftTop:
                 x0=0;
-                x=x0+plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0+plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop;
-                y=y0+plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0+plotterStyle.keyStyle.yOffset*Xwid;
                 break;
             case JKQTPKeyOutsideLeftBottom:
                 x0=0;
-                x=x0+plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0+plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop+internalPlotHeight-keyRectangleHeight;
-                y=y0-plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0-plotterStyle.keyStyle.yOffset*Xwid;
                 break;
 
 
@@ -1132,27 +1134,27 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
 
             case JKQTPKeyInsideBottomRight:
                 x0=internalPlotBorderLeft+internalPlotWidth-keyRectangleWidth;
-                x=x0-plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0-plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop+internalPlotHeight-keyRectangleHeight;
-                y=y0-plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0-plotterStyle.keyStyle.yOffset*Xwid;
                 break;
             case JKQTPKeyInsideBottomLeft:
                 x0=internalPlotBorderLeft;
-                x=x0+plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0+plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop+internalPlotHeight-keyRectangleHeight;
-                y=y0-plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0-plotterStyle.keyStyle.yOffset*Xwid;
                 break;
             case JKQTPKeyInsideTopLeft:
                 x0=internalPlotBorderLeft;
-                x=x0+plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0+plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop;
-                y=y0+plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0+plotterStyle.keyStyle.yOffset*Xwid;
                 break;
             case JKQTPKeyInsideTopRight:
                 x0=internalPlotBorderLeft+internalPlotWidth-keyRectangleWidth;
-                x=x0-plotterStyle.keyStyle.xOffset*kfm.width('X');
+                x=x0-plotterStyle.keyStyle.xOffset*Xwid;
                 y0=internalPlotBorderTop;
-                y=y0+plotterStyle.keyStyle.yOffset*kfm.width('X');
+                y=y0+plotterStyle.keyStyle.yOffset*Xwid;
                 break;
         }
         QRectF rectKey;
@@ -1177,8 +1179,8 @@ void JKQTBasePlotter::drawKey(JKQTPEnhancedPainter& painter) {
             } else {
                 painter.drawRoundedRect(rectKey, pt2px(painter, plotterStyle.keyStyle.frameRounding), pt2px(painter, plotterStyle.keyStyle.frameRounding));
             }
-            y=y+plotterStyle.keyStyle.yMargin*kfm.width('X')+plotterStyle.keyStyle.frameWidth*lineWidthMultiplier/2.0;
-            x=x+plotterStyle.keyStyle.xMargin*kfm.width('X')+plotterStyle.keyStyle.frameWidth*lineWidthMultiplier/2.0;
+            y=y+plotterStyle.keyStyle.yMargin*Xwid+plotterStyle.keyStyle.frameWidth*lineWidthMultiplier/2.0;
+            x=x+plotterStyle.keyStyle.xMargin*Xwid+plotterStyle.keyStyle.frameWidth*lineWidthMultiplier/2.0;
 
             painter.setPen(pf);
 
@@ -1229,7 +1231,9 @@ void JKQTBasePlotter::drawPlot(JKQTPEnhancedPainter& painter) {
         if (plotterStyle.widgetBackgroundBrush!=QBrush(Qt::transparent)) painter.fillRect(QRectF(0,0,widgetWidth/paintMagnification, widgetHeight/paintMagnification), plotterStyle.widgetBackgroundBrush);
     }
     QRectF rPlotBack(internalPlotBorderLeft, internalPlotBorderTop, internalPlotWidth, internalPlotHeight);
+#if QT_VERSION<QT_VERSION_CHECK(6,0,0)
     painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
+#endif
     painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing, plotterStyle.useAntiAliasingForSystem);
     painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing, plotterStyle.useAntiAliasingForText);
     if (plotterStyle.plotFrameVisible) {
@@ -1742,7 +1746,7 @@ bool JKQTBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
     {
         QPalette p(scroll->palette());
         // Set background colour to black
-        p.setColor(QPalette::Background, Qt::darkGray);
+        p.setColor(QPalette::Window, Qt::darkGray);
         scroll->setPalette(p);
     }
     exportPreviewLabel=new QLabel(scroll);
@@ -1751,7 +1755,7 @@ bool JKQTBasePlotter::exportpreview(QSizeF pageSize, bool unitIsMM) {
     {
         QPalette p(exportPreviewLabel->palette());
         // Set background colour to black
-        p.setColor(QPalette::Background, Qt::darkGray);
+        p.setColor(QPalette::Window, Qt::darkGray);
         exportPreviewLabel->setPalette(p);
     }
 
@@ -3306,8 +3310,8 @@ void JKQTBasePlotter::copyData() {
         QTextStream txt(&result);
         QLocale loc=QLocale::system();
         loc.setNumberOptions(QLocale::OmitGroupSeparator);
-        QChar dp=loc.decimalPoint();
-        QString sep="\t";
+        const auto dp=loc.decimalPoint();
+        const QString sep="\t";
         datastore->saveCSV(txt, cols, sep, QString(dp), " ", "\"");
         txt.flush();
     }
@@ -3753,11 +3757,13 @@ void JKQTBasePlotter::saveAsPixelImage(const QString& filename, bool displayPrev
             png.fill(Qt::transparent);
             JKQTPEnhancedPainter painter;
             painter.begin(&png);
-            painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
             painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
             painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
             painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+            painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
             painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
+#endif
 
             /*calcPlotScaling(painter);
             gridPaint(painter, png.rect().size());*/\
@@ -3809,11 +3815,13 @@ void JKQTBasePlotter::copyPixelImage() {
                 png.fill(Qt::transparent);
                 JKQTPEnhancedPainter painter;
                 painter.begin(&png);
-                painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
                 painter.setRenderHint(JKQTPEnhancedPainter::Antialiasing);
                 painter.setRenderHint(JKQTPEnhancedPainter::TextAntialiasing);
                 painter.setRenderHint(JKQTPEnhancedPainter::SmoothPixmapTransform);
+#if (QT_VERSION<QT_VERSION_CHECK(6, 0, 0))
+                painter.setRenderHint(JKQTPEnhancedPainter::NonCosmeticDefaultPen, true);
                 painter.setRenderHint(JKQTPEnhancedPainter::HighQualityAntialiasing);
+#endif
 
                 /*calcPlotScaling(painter);
                 gridPaint(painter, png.rect().size());*/
@@ -4136,21 +4144,22 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
 #ifdef JKQTBP_AUTOTIMER
             jkaaot.write(QString("one-col: graph %1: %2").arg(i).arg(g->getTitle()));
 #endif
+            const auto Xwid=kfm.boundingRect('X').width();
             if (!g->getTitle().isEmpty() && g->isVisible()) {
                 QSizeF fs=getTextSizeSize(plotterStyle.defaultFontName,plotterStyle.keyStyle.fontSize*fontSizeMultiplier,g->getTitle(),painter);//  mt.getSize(painter);
-                double itheight=qMax(plotterStyle.keyStyle.itemHeight*kfm.width('X'), fs.height());
-                QRectF markerRect(x, y+1.5*lineWidthMultiplier, plotterStyle.keyStyle.sampleLineLength*kfm.width('X'), itheight-3.0*lineWidthMultiplier);
+                double itheight=qMax(plotterStyle.keyStyle.itemHeight*Xwid, fs.height());
+                QRectF markerRect(x, y+1.5*lineWidthMultiplier, plotterStyle.keyStyle.sampleLineLength*Xwid, itheight-3.0*lineWidthMultiplier);
                 g->drawKeyMarker(painter, markerRect);
                 mathText.setFontColor(plotterStyle.keyStyle.textColor);
                 mathText.setFontSize(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
                 mathText.setFontRomanOrSpecial(plotterStyle.defaultFontName);
 
                 mathText.parse(g->getTitle());
-                QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*kfm.width('X'),y, key_text_width, itheight);
+                QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,y, key_text_width, itheight);
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
                 //if (itheight<key_item_height*kfm.height()) itheight=key_item_height*kfm.height();
                 //y=y+itheight+(plotterStyle.keyStyle.ySeparation)*kfm.height();
-                y=y+key_text_height+(plotterStyle.keyStyle.ySeparation)*kfm.width('X');
+                y=y+key_text_height+(plotterStyle.keyStyle.ySeparation)*Xwid;
                 if (plotterStyle.debugShowRegionBoxes) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
                     QPen p("orange");
@@ -4174,16 +4183,17 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
             jkaaot.write(QString("one-row: graph %1: %2").arg(i).arg(g->getTitle()));
 #endif
             if (!g->getTitle().isEmpty() && g->isVisible()) {
+                const auto Xwid=kfm.boundingRect('X').width();
                 QSizeF fs=getTextSizeSize(plotterStyle.defaultFontName,plotterStyle.keyStyle.fontSize*fontSizeMultiplier,g->getTitle(),painter);//  mt.getSize(painter);
-                double itheight=qMax(plotterStyle.keyStyle.itemHeight*kfm.width('X'), fs.height());
-                QRectF markerRect(x, y+1.5*lineWidthMultiplier, plotterStyle.keyStyle.sampleLineLength*kfm.width('X'), itheight-3.0*lineWidthMultiplier);
+                double itheight=qMax(plotterStyle.keyStyle.itemHeight*Xwid, fs.height());
+                QRectF markerRect(x, y+1.5*lineWidthMultiplier, plotterStyle.keyStyle.sampleLineLength*Xwid, itheight-3.0*lineWidthMultiplier);
                 g->drawKeyMarker(painter, markerRect);
                 mathText.setFontColor(plotterStyle.keyStyle.textColor);
                 mathText.setFontSize(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
                 mathText.setFontRomanOrSpecial(plotterStyle.defaultFontName);
 
                 mathText.parse(g->getTitle());
-                QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*kfm.width('X'),y, fs.width(), itheight);
+                QRectF txtRect(x+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,y, fs.width(), itheight);
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
                 if (plotterStyle.debugShowRegionBoxes) {
                     painter.save(); auto __finalpaintinner=JKQTPFinally([&painter]() {painter.restore();});
@@ -4199,11 +4209,11 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 }
                 //if (itheight<key_item_height*kfm.height()) itheight=key_item_height*kfm.height();
                 //y=y+itheight+(plotterStyle.keyStyle.ySeparation)*kfm.height();
-                x=x+fs.width()+(2.0*plotterStyle.keyStyle.xSeparation+plotterStyle.keyStyle.sampleLineLength)*kfm.width('X');
+                x=x+fs.width()+(2.0*plotterStyle.keyStyle.xSeparation+plotterStyle.keyStyle.sampleLineLength)*Xwid;
             }
         }
     } else if (plotterStyle.keyStyle.layout==JKQTPKeyLayoutMultiColumn) {
-        //int columns=floor(static_cast<double>(plotWidth)/static_cast<double>(key_item_width*kfm.width('X')));
+        //int columns=floor(static_cast<double>(plotWidth)/static_cast<double>(key_item_width*Xwid));
         bool colfirst=true;
 
         if (plotterStyle.keyStyle.position==JKQTPKeyInsideTopLeft || plotterStyle.keyStyle.position==JKQTPKeyInsideTopRight
@@ -4215,6 +4225,7 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
         int c=1;
         double xx=x;
         double yy=y;
+        const auto Xwid=kfm.boundingRect('X').width();
         for (int i=0; i<graphs.size(); i++) {
             JKQTPPlotElement* g=graphs[i];
 #ifdef JKQTBP_AUTOTIMER
@@ -4222,15 +4233,15 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
 #endif
             if (!g->getTitle().isEmpty() && g->isVisible()) {
                 //QSizeF fs=getTextSizeSize(plotterStyle.defaultFontName,plotterStyle.keyStyle.fontSize*fontSizeMultiplier,g->getTitle(),painter);//  mt.getSize(painter);
-                double itheight=qMax(plotterStyle.keyStyle.itemHeight*kfm.width('X'), key_text_height);
-                QRectF markerRect(xx, yy+1.5*lineWidthMultiplier, plotterStyle.keyStyle.sampleLineLength*kfm.width('X'), itheight-3.0*lineWidthMultiplier);
+                double itheight=qMax(plotterStyle.keyStyle.itemHeight*Xwid, key_text_height);
+                QRectF markerRect(xx, yy+1.5*lineWidthMultiplier, plotterStyle.keyStyle.sampleLineLength*Xwid, itheight-3.0*lineWidthMultiplier);
                 g->drawKeyMarker(painter, markerRect);
                 mathText.setFontColor(plotterStyle.keyStyle.textColor);
                 mathText.setFontSize(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
                 mathText.setFontRomanOrSpecial(plotterStyle.defaultFontName);
                 mathText.parse(g->getTitle());
                 //QSizeF fs=mt.getSize(painter);
-                QRectF txtRect(xx+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*kfm.width('X'),yy, key_text_width, key_text_height);
+                QRectF txtRect(xx+(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation)*Xwid,yy, key_text_width, key_text_height);
                 mathText.draw(painter, Qt::AlignLeft|Qt::AlignVCenter, txtRect);
 
                 if (plotterStyle.debugShowRegionBoxes) {
@@ -4247,26 +4258,26 @@ void JKQTBasePlotter::drawKeyContents(JKQTPEnhancedPainter& painter, double x, d
                 }
 
                 if (colfirst) {
-                    yy=yy+key_text_height+(plotterStyle.keyStyle.ySeparation)*kfm.width('X');
+                    yy=yy+key_text_height+(plotterStyle.keyStyle.ySeparation)*Xwid;
                     l++;
                     if (l>lines) {
                         l=1;
                         c++;
-                        xx=xx+key_text_width+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');
-                        /*if (plotterStyle.keyStyle.autosize) xx=xx+key_text_width+(key_line_length+3.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');
-                        else xx=xx+(key_item_width+2.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');*/
+                        xx=xx+key_text_width+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*Xwid;
+                        /*if (plotterStyle.keyStyle.autosize) xx=xx+key_text_width+(key_line_length+3.0*plotterStyle.keyStyle.xSeparation)*Xwid;
+                        else xx=xx+(key_item_width+2.0*plotterStyle.keyStyle.xSeparation)*Xwid;*/
                         yy=y;
                     }
                 } else {
-                    /*if (plotterStyle.keyStyle.autosize) xx=xx+key_text_width+(key_line_length+3.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');
-                    else xx=xx+(key_item_width+2.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');*/
-                    xx=xx+key_text_width+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');
+                    /*if (plotterStyle.keyStyle.autosize) xx=xx+key_text_width+(key_line_length+3.0*plotterStyle.keyStyle.xSeparation)*Xwid;
+                    else xx=xx+(key_item_width+2.0*plotterStyle.keyStyle.xSeparation)*Xwid;*/
+                    xx=xx+key_text_width+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*Xwid;
                     c++;
                     if (c>columns) {
                         c=1;
                         l++;
                         //yy=yy+(key_item_height+plotterStyle.keyStyle.ySeparation)*kfm.height();
-                        yy=yy+itheight+(plotterStyle.keyStyle.ySeparation)*kfm.width('X');
+                        yy=yy+itheight+(plotterStyle.keyStyle.ySeparation)*Xwid;
                         xx=x;
                     }
                 }
@@ -4288,7 +4299,8 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
     f.setFamily(plotterStyle.defaultFontName);
     f.setPointSizeF(plotterStyle.keyStyle.fontSize*fontSizeMultiplier);
     QFontMetricsF kfm(f);
-    if (text_height!=nullptr) *text_height=plotterStyle.keyStyle.itemHeight*kfm.width('X');
+    const qreal Xwid=kfm.boundingRect('X').width();
+    if (text_height!=nullptr) *text_height=plotterStyle.keyStyle.itemHeight*Xwid;
     if (plotterStyle.keyStyle.layout==JKQTPKeyLayoutOneColumn) {
         int keyHeight=graphs.size();
         double w=0;
@@ -4306,18 +4318,18 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
                 QSizeF fs=getTextSizeSize(plotterStyle.defaultFontName, plotterStyle.keyStyle.fontSize*fontSizeMultiplier, graphs[i]->getTitle(), painter);
                 if (fs.width()>w) w=fs.width();
                 if (text_height && fs.height()>*text_height) *text_height=fs.height();
-                h=h+qMax(plotterStyle.keyStyle.itemHeight*kfm.width('X'), fs.height())+plotterStyle.keyStyle.ySeparation*kfm.width('X');
+                h=h+qMax(plotterStyle.keyStyle.itemHeight*Xwid, fs.height())+plotterStyle.keyStyle.ySeparation*Xwid;
             }
         }
         if (plotterStyle.keyStyle.autosize) {
-            if (width) *width=w+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');
-            if (text_width!=nullptr) *text_width=w+2.0*kfm.width('X');
+            if (width) *width=w+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*Xwid;
+            if (text_width!=nullptr) *text_width=w+2.0*Xwid;
         } else {
-            if (width) *width=plotterStyle.keyStyle.itemWidth*kfm.width('X');
-            if (text_width!=nullptr) *text_width=(plotterStyle.keyStyle.itemWidth-(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation))*kfm.width('X');
+            if (width) *width=plotterStyle.keyStyle.itemWidth*Xwid;
+            if (text_width!=nullptr) *text_width=(plotterStyle.keyStyle.itemWidth-(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation))*Xwid;
         }
-        if (h>plotterStyle.keyStyle.ySeparation*kfm.width('X')) h=h-plotterStyle.keyStyle.ySeparation*kfm.width('X');
-        if (height) *height=h;//keyHeight*key_item_height*kfm.width('X');
+        if (h>plotterStyle.keyStyle.ySeparation*Xwid) h=h-plotterStyle.keyStyle.ySeparation*Xwid;
+        if (height) *height=h;//keyHeight*key_item_height*Xwid;
         if (columns_count) *columns_count=1;
         if (lines_count) *lines_count=keyHeight;
     } else if (plotterStyle.keyStyle.layout==JKQTPKeyLayoutOneRow) {
@@ -4337,19 +4349,19 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
                 QSizeF fs=getTextSizeSize(plotterStyle.defaultFontName, plotterStyle.keyStyle.fontSize*fontSizeMultiplier, graphs[i]->getTitle(), painter);
                 if (fs.height()>h) h=fs.height();
                 if (text_width && fs.width()>*text_width) *text_width=fs.width();
-                w=w+fs.width()+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X');
+                w=w+fs.width()+(plotterStyle.keyStyle.sampleLineLength+2.0*plotterStyle.keyStyle.xSeparation)*Xwid;
             }
         }
-        if (h<plotterStyle.keyStyle.itemHeight*kfm.width('X')) h=plotterStyle.keyStyle.itemHeight*kfm.width('X');
+        if (h<plotterStyle.keyStyle.itemHeight*Xwid) h=plotterStyle.keyStyle.itemHeight*Xwid;
         if (plotterStyle.keyStyle.autosize) {
             if (height) *height=h;
             if (text_height!=nullptr) *text_height=h;
         } else {
             if (height) *height=h;
-            if (text_height!=nullptr) *text_height=(plotterStyle.keyStyle.itemHeight-(plotterStyle.keyStyle.ySeparation))*kfm.width('X');
+            if (text_height!=nullptr) *text_height=(plotterStyle.keyStyle.itemHeight-(plotterStyle.keyStyle.ySeparation))*Xwid;
         }
-        if (w>(plotterStyle.keyStyle.xSeparation)*kfm.width('X')) w=w-(plotterStyle.keyStyle.xSeparation)*kfm.width('X');
-        if (width) *width=w;//keyHeight*key_item_height*kfm.width('X');
+        if (w>(plotterStyle.keyStyle.xSeparation)*Xwid) w=w-(plotterStyle.keyStyle.xSeparation)*Xwid;
+        if (width) *width=w;//keyHeight*key_item_height*Xwid;
         if (columns_count) *columns_count=keyWidth;
         if (lines_count) *lines_count=1;
     } else if (plotterStyle.keyStyle.layout==JKQTPKeyLayoutMultiColumn) {
@@ -4378,12 +4390,12 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
 
         if (text_height) {
             if (plotterStyle.keyStyle.autosize) *text_height=txtH;
-            else *text_height=plotterStyle.keyStyle.itemHeight*kfm.width('X');
+            else *text_height=plotterStyle.keyStyle.itemHeight*Xwid;
         }
 
 
-        double columns=floor(double(internalPlotWidth)/(w+(2.0*plotterStyle.keyStyle.xSeparation+plotterStyle.keyStyle.sampleLineLength)*kfm.width('X')));
-        if (!plotterStyle.keyStyle.autosize) columns=floor(double(internalPlotWidth)/((plotterStyle.keyStyle.itemWidth+2.0*plotterStyle.keyStyle.xSeparation+plotterStyle.keyStyle.sampleLineLength)*kfm.width('X')));
+        double columns=floor(double(internalPlotWidth)/(w+(2.0*plotterStyle.keyStyle.xSeparation+plotterStyle.keyStyle.sampleLineLength)*Xwid));
+        if (!plotterStyle.keyStyle.autosize) columns=floor(double(internalPlotWidth)/((plotterStyle.keyStyle.itemWidth+2.0*plotterStyle.keyStyle.xSeparation+plotterStyle.keyStyle.sampleLineLength)*Xwid));
         columns=qMin(columns, keyHeight);
         int lines=static_cast<int>(ceil(static_cast<double>(keyHeight)/static_cast<double>(columns)));
         lines=jkqtp_roundTo<int>(qMin(static_cast<double>(lines), keyHeight));
@@ -4391,9 +4403,9 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         if (plotterStyle.keyStyle.position==JKQTPKeyInsideTopLeft || plotterStyle.keyStyle.position==JKQTPKeyInsideTopRight
             || plotterStyle.keyStyle.position==JKQTPKeyOutsideTopLeft || plotterStyle.keyStyle.position==JKQTPKeyOutsideTopRight) {
             if (plotterStyle.keyStyle.autosize) {
-                lines=static_cast<int>(floor(static_cast<double>(internalPlotHeight)/static_cast<double>(txtH+(plotterStyle.keyStyle.ySeparation)*kfm.width('X'))));
+                lines=static_cast<int>(floor(static_cast<double>(internalPlotHeight)/static_cast<double>(txtH+(plotterStyle.keyStyle.ySeparation)*Xwid)));
             } else {
-                lines=static_cast<int>(floor(static_cast<double>(internalPlotHeight)/static_cast<double>((plotterStyle.keyStyle.itemHeight+plotterStyle.keyStyle.ySeparation)*kfm.width('X'))));
+                lines=static_cast<int>(floor(static_cast<double>(internalPlotHeight)/static_cast<double>((plotterStyle.keyStyle.itemHeight+plotterStyle.keyStyle.ySeparation)*Xwid)));
             }
             columns=static_cast<int>(ceil(static_cast<double>(keyHeight)/static_cast<double>(lines)));
             lines=jkqtp_roundTo<int>(qMin(static_cast<double>(lines), keyHeight));
@@ -4404,15 +4416,15 @@ void JKQTBasePlotter::getKeyExtent(JKQTPEnhancedPainter& painter, double* width,
         if (lines_count) *lines_count=lines;
 
         if (plotterStyle.keyStyle.autosize) {
-            if (width) *width=(w+(plotterStyle.keyStyle.sampleLineLength+3.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X'))*columns;
-            if (height) *height=lines*(txtH+plotterStyle.keyStyle.ySeparation*kfm.width('X'));
-            if (lines>0) *height=*height-plotterStyle.keyStyle.ySeparation*kfm.width('X');
+            if (width) *width=(w+(plotterStyle.keyStyle.sampleLineLength+3.0*plotterStyle.keyStyle.xSeparation)*Xwid)*columns;
+            if (height) *height=lines*(txtH+plotterStyle.keyStyle.ySeparation*Xwid);
+            if (lines>0) *height=*height-plotterStyle.keyStyle.ySeparation*Xwid;
             if (text_width!=nullptr) *text_width=w;
         } else {
-            if (width) *width=(plotterStyle.keyStyle.itemWidth+2.0*plotterStyle.keyStyle.xSeparation)*kfm.width('X')*columns;
-            if (height) *height=lines*(plotterStyle.keyStyle.itemHeight+plotterStyle.keyStyle.ySeparation)*kfm.width('X');
-            if (lines>0) *height=*height-plotterStyle.keyStyle.ySeparation*kfm.width('X');
-            if (text_width!=nullptr) *text_width=(plotterStyle.keyStyle.itemWidth-(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation))*kfm.width('X');
+            if (width) *width=(plotterStyle.keyStyle.itemWidth+2.0*plotterStyle.keyStyle.xSeparation)*Xwid*columns;
+            if (height) *height=lines*(plotterStyle.keyStyle.itemHeight+plotterStyle.keyStyle.ySeparation)*Xwid;
+            if (lines>0) *height=*height-plotterStyle.keyStyle.ySeparation*Xwid;
+            if (text_width!=nullptr) *text_width=(plotterStyle.keyStyle.itemWidth-(plotterStyle.keyStyle.sampleLineLength+plotterStyle.keyStyle.xSeparation))*Xwid;
         }
 #ifdef SHOW_JKQTPLOTTER_DEBUG
         qDebug()<<"getKeyExtent(): mult-column: columns="<<columns<<"  lines="<<lines;
@@ -5019,7 +5031,14 @@ bool JKQTPPaintDeviceAdapter::useLatexParser() const
 
 QPaintDevice *JKQTPPaintDeviceAdapter::createPaintdeviceMM(const QString &filename, double widthMM, double heightMM) const
 {
-    return createPaintdevice(filename, jkqtp_roundTo<int>(widthMM/25.4*QApplication::desktop()->logicalDpiX()), jkqtp_roundTo<int>(heightMM/25.4*QApplication::desktop()->logicalDpiY()));
+#if QT_VERSION>=QT_VERSION_CHECK(6,0,0)
+    const qreal dpix=qGuiApp->primaryScreen()->logicalDotsPerInchX();
+    const qreal dpiy=qGuiApp->primaryScreen()->logicalDotsPerInchY();
+#else
+    const qreal dpix=QApplication::desktop()->logicalDpiX();
+    const qreal dpiy=QApplication::desktop()->logicalDpiY();
+#endif
+    return createPaintdevice(filename, jkqtp_roundTo<int>(widthMM/25.4*dpix), jkqtp_roundTo<int>(heightMM/25.4*dpiy));
 }
 
 JKQTPSaveDataAdapter::~JKQTPSaveDataAdapter() = default;

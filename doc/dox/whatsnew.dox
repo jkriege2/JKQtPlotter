@@ -41,6 +41,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>improved/breaking change: made more functions and function parameters const</li>
   <li>improved/breaking change: image plots now manage CONST-data, not plain pointer arrays... This is OK, since the raw data is never owned nor modified by the plot, only referenced!.</li>
   <li>bugfixed/improved: aspect ratio handling in JKQTPlotter.</li>
+  <li>new: Compatibility with Qt 5.15 and Qt6</li>
   <li>new: added geometric plot objects JKQTPGeoArrow to draw arrows (aka lines with added line-end decorators, also extended JKQTPGeoLine, JKQTPGeoInfiniteLine, JKQTPGeoPolyLines to draw line-end decorator (aka arrows)</li>
   <li>new: all geometric objects can either be drawn as graphic element (i.e. lines are straight line, even on non-linear axes), or as mathematical curve (i.e. on non-linear axes, lines become the appropriate curve representing the linear function, connecting the given start/end-points). The only exceptions are ellipses (and the derived arcs,pies,chords), which are always drawn as mathematical curves</li>
   <li>new: a new graph class JKQTPXYFunctionLineGraph draws parametric 2D curves ( \f$ [x,y] = f(t) \f$ ), see \ref JKQTPlotterEvalCurves for an example</li>
