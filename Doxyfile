@@ -971,7 +971,9 @@ EXCLUDE                = moc_*.* \
                          doc/qtmarketplace_metadata \
                          qmake \
                          cmake \
-                         .github
+                         .github \
+                         doxygen \
+                         doxygen/bin
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -1311,7 +1313,7 @@ HTML_STYLESHEET        =
 # list). For an example see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  = jkqtplotter_stylesheet.css
+HTML_EXTRA_STYLESHEET  = doc/jkqtplotter_stylesheet.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
@@ -1321,9 +1323,9 @@ HTML_EXTRA_STYLESHEET  = jkqtplotter_stylesheet.css
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       = images/icon_code.png \
-                         images/icon_note.png \
-                         images/icon_see.png
+HTML_EXTRA_FILES       = doc/images/icon_code.png \
+                         doc/images/icon_note.png \
+                         doc/images/icon_see.png
 
 # The HTML_COLORSTYLE_HUE tag controls the color of the HTML output. Doxygen
 # will adjust the colors in the style sheet and background images according to
