@@ -21,30 +21,39 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-        with: 
-          path: JKQtPlotter
+      #- uses: actions/checkout@v3
+      #  with: 
+      #    path: JKQtPlotter
             
       - name: Install dependencies
         run: |
-             sudo apt-get update
-             sudo apt-get update --fix-missing
-             sudo apt-get install -f
-             sudo apt -y install build-essential doxygen graphviz doxygen-latex
-
-      - name: Run Doxygen
+          sudo apt-get update
+          sudo apt-get update --fix-missing
+          sudo apt-get install -f
+          sudo apt -y install build-essential doxygen graphviz doxygen-latex clang-9 libclang-9-dev libclang-cpp9
+      
+      - name: Update Doxygen to 1.9.3
         run: |
-          cd JKQtPlotter
-          cd doc
+          pwd
+          cd $GITHUB_WORKSPACE
+          mkdir doxygen
+          wget -O - https://netcologne.dl.sourceforge.net/project/doxygen/rel-1.9.3/doxygen-1.9.3.linux.bin.tar.gz | tar --strip-components=1 -xz -C doxygen
+          sudo export PATH=$GITHUB_WORKSPACE/doxygen/bin:${PATH}
           doxygen --version
-          doxygen Doxyfile
-          echo "" > html/.nojekyll
-          cd ..
-          cd ..
+                  
+      #- name: Run Doxygen
+      #  run: |
+      #    cd JKQtPlotter
+      #    cd doc
+      #    doxygen --version
+      #    doxygen Doxyfile
+      #    echo "" > html/.nojekyll
+      #    cd ..
+      #    cd ..
  
       - uses: DenverCoder1/doxygen-github-pages-action@v1
         with:
           github_token: ${{ secrets.GH_PAGES_SECRET }}
           branch: gh-pages
-          folder: JKQtPlotter/doc/html
+          folder: doc/html
           

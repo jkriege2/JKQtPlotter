@@ -77,7 +77,7 @@ Changes, compared to  \ref page_whatsnew_V2019_11 "v2019.11" include:
   <li>new: added JKQTPFilledHorizontalRangeGraph, complementing JKQTPFilledVerticalRangeGraph</li>
 </ul>
 
-\subsection page_whatsnew_V4_0_0_DOWNLOAD trunk: Download
+\subsection page_whatsnew_V4_0_0_DOWNLOAD V4.0.0: Download
 
 This release is available from:
   - Source code branch: <a href="https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0">https://github.com/jkriege2/JKQtPlotter/tree/v4.0.0</a>
