@@ -58,7 +58,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          github_token: ${{ secrets.GH_PAGES_SECRET }}
+          github_token: ${{ secrets.GH_PAGES_PUSH_SECRET }}
           branch: gh-pages
           folder: JKQtPlotter/doc/html
           
