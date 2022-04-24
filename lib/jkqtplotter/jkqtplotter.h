@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef JKQTPLOTTER_H
+#define JKQTPLOTTER_H
+
 
 #include <QWidget>
 #include <QVector>
@@ -42,12 +45,10 @@
 #include "jkqtplotter/jkqtplotterstyle.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
 #include "jkqtplotter/jkqtptools.h"
+#include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/gui/jkvanishqtoolbar.h"
 #include <QKeyEvent>
-
-#ifndef JKQTPLOTTER_H
-#define JKQTPLOTTER_H
 
 /** \brief initialized Qt-ressources necessary for JKQTPlotter
  *  \ingroup jkqtpplottersupprt

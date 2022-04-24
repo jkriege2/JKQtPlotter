@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphsviolinplot_H
+#define jkqtpgraphsviolinplot_H
+
 
 #include <QString>
 #include <QPainter>
@@ -27,9 +30,6 @@
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/graphs/jkqtpviolinplotstylingmixins.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-
-#ifndef jkqtpgraphsviolinplot_H
-#define jkqtpgraphsviolinplot_H
 
 
 

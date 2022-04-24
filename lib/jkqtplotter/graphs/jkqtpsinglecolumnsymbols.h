@@ -18,15 +18,15 @@
 */
 
 
+#ifndef jkqtpgraphssinglecolumnsymbols_H_INCLUDED
+#define jkqtpgraphssinglecolumnsymbols_H_INCLUDED
+
 
 #include <QString>
 #include <QPainter>
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-
-#ifndef jkqtpgraphssinglecolumnsymbols_H_INCLUDED
-#define jkqtpgraphssinglecolumnsymbols_H_INCLUDED
 
 
 

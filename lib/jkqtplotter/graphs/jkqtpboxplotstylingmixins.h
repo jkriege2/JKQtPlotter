@@ -18,15 +18,15 @@
 */
 
 
+#ifndef jkqtpgraphsboxplotstylingmixins_H
+#define jkqtpgraphsboxplotstylingmixins_H
+
 #include <QString>
 #include <QPainter>
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-
-#ifndef jkqtpgraphsboxplotstylingmixins_H
-#define jkqtpgraphsboxplotstylingmixins_H
 
 
 

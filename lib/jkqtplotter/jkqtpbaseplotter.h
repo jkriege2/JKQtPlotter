@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef JKQTPBASEPLOTTER_H
+#define JKQTPBASEPLOTTER_H
+
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtpdatastorage.h"
 #include "jkqtplotter/jkqtpbaseplotterstyle.h"
@@ -44,11 +47,8 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
- #include "jkqtplotter/jkqtplotter_imexport.h"
+#include "jkqtplotter/jkqtplotter_imexport.h"
 
-
-#ifndef JKQTPBASEPLOTTER_H
-#define JKQTPBASEPLOTTER_H
 
 
 class JKQTPGraphsModel; // forward

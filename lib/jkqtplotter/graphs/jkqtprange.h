@@ -16,6 +16,8 @@
     You should have received a copy of the GNU Lesser General Public License (LGPL)
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef jkqtpgraphsrange_H
+#define jkqtpgraphsrange_H
 
 
 #include <QString>
@@ -28,8 +30,6 @@
 #include "jkqtcommon/jkqtpenhancedpainter.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#ifndef jkqtpgraphsrange_H
-#define jkqtpgraphsrange_H
 
 // forward declarations
 class JKQTBasePlotter;

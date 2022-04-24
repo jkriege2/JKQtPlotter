@@ -17,6 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
+#define JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
+
+
 
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpstatisticstools.h"
@@ -33,10 +37,6 @@
 #include "jkqtplotter/graphs/jkqtpimpulses.h"
 #include "jkqtplotter/graphs/jkqtpfilledcurve.h"
 #include "jkqtplotter/graphs/jkqtpviolinplot.h"
-
-
-#ifndef JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
-#define JKQTPGRAPHSSTATISTICSADAPTORS_H_INCLUDED
 
 /*! \brief add a JKQTPBoxplotHorizontalElement to the given plotter, where the boxplot values are calculated from the data range \a first ... \a last
     \ingroup jkqtptools_math_statistics_adaptors

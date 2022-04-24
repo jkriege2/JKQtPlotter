@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef JKQTPGRAPHSBASEERROR_H
+#define JKQTPGRAPHSBASEERROR_H
+
 
 #include <QString>
 #include <QPainter>
@@ -27,9 +30,6 @@
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpimagetools.h"
-
-#ifndef JKQTPGRAPHSBASEERROR_H
-#define JKQTPGRAPHSBASEERROR_H
 
 
 /*! \brief This mix-in class assembles all styling properties applicable to error indicators

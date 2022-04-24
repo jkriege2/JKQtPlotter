@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgeolines_H_INCLUDED
+#define jkqtpgeolines_H_INCLUDED
+
 
 #include <QString>
 #include <QPainter>
@@ -26,9 +29,6 @@
 #include "jkqtplotter/jkqtptools.h"
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtmathtext/jkqtmathtext.h"
-
-#ifndef jkqtpgeolines_H_INCLUDED
-#define jkqtpgeolines_H_INCLUDED
 
 
 

@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphsspecialline_H
+#define jkqtpgraphsspecialline_H
+
 
 #include <QString>
 #include <QPainter>
@@ -29,9 +32,6 @@
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/graphs/jkqtprange.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-
-#ifndef jkqtpgraphsspecialline_H
-#define jkqtpgraphsspecialline_H
 
 // forward declarations
 class JKQTBasePlotter;

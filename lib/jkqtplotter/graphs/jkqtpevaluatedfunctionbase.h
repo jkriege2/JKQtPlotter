@@ -18,6 +18,9 @@
 */
 
 
+#ifndef jkqtpevaluatedfunctionbase_H
+#define jkqtpevaluatedfunctionbase_H
+
 
 #include <QString>
 #include <QPainter>
@@ -27,9 +30,6 @@
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtcommon/jkqtpgeometrytools.h"
 #include <functional>
-
-#ifndef jkqtpevaluatedfunctionbase_H
-#define jkqtpevaluatedfunctionbase_H
 
 
 

@@ -17,14 +17,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphsfilledcurve_H
+#define jkqtpgraphsfilledcurve_H
+
 
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/graphs/jkqtpspecialline.h"
-
-#ifndef jkqtpgraphsfilledcurve_H
-#define jkqtpgraphsfilledcurve_H
 
 
 

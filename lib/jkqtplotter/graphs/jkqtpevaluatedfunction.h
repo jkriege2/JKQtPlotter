@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphsevaluatedfunction_H
+#define jkqtpgraphsevaluatedfunction_H
+
 
 
 #include <QString>
@@ -28,9 +31,6 @@
 #include "jkqtcommon/jkqtpgeometrytools.h"
 #include "jkqtplotter/graphs/jkqtpevaluatedfunctionbase.h"
 #include <functional>
-
-#ifndef jkqtpgraphsevaluatedfunction_H
-#define jkqtpgraphsevaluatedfunction_H
 
 
 /** \brief This class extends JKQTPEvaluatedFunctionWithErrorsGraphBase with functions to draw the graphs and

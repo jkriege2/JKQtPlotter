@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphspeakstream_H_INCLUDED
+#define jkqtpgraphspeakstream_H_INCLUDED
+
 
 
 #include <QString>
@@ -24,9 +27,6 @@
 #include <QPair>
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-
-#ifndef jkqtpgraphspeakstream_H_INCLUDED
-#define jkqtpgraphspeakstream_H_INCLUDED
 
 // forward declarations
 class JKQTBasePlotter;

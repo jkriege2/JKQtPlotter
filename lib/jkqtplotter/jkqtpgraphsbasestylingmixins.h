@@ -18,6 +18,10 @@
 */
 
 
+#ifndef jkqtpgraphsbasestylingmixins_H
+#define jkqtpgraphsbasestylingmixins_H
+
+
 #include <QString>
 #include <QPainter>
 #include <QPen>
@@ -26,10 +30,6 @@
 #include "jkqtplotter/jkqtplotter_imexport.h"
 #include "jkqtplotter/jkqtpbaseplotter.h"
 #include "jkqtcommon/jkqtpdrawingtools.h"
-
-
-#ifndef jkqtpgraphsbasestylingmixins_H
-#define jkqtpgraphsbasestylingmixins_H
 
 
 class JKQTPlotter; // forward

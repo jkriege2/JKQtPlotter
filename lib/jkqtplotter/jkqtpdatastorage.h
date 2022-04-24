@@ -17,6 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef JKQTPDATASTORAGE_H
+#define JKQTPDATASTORAGE_H
 
 
 #include "jkqtplotter/jkqtplotter_imexport.h"
@@ -37,8 +39,6 @@
 #include <QStringList>
 #include <QAbstractTableModel>
 #include <QObject>
-#ifndef JKQTPDATASTORAGE_H
-#define JKQTPDATASTORAGE_H
 
 
 class JKQTPColumn; // forward declaration

@@ -18,6 +18,9 @@
 */
 
 
+#ifndef jkqtpevaluatedparametriccurve_H
+#define jkqtpevaluatedparametriccurve_H
+
 
 #include <QString>
 #include <QPainter>
@@ -28,9 +31,6 @@
 #include "jkqtcommon/jkqtpgeometrytools.h"
 #include "jkqtplotter/graphs/jkqtpevaluatedfunctionbase.h"
 #include <functional>
-
-#ifndef jkqtpevaluatedparametriccurve_H
-#define jkqtpevaluatedparametriccurve_H
 
 
 /** \brief Base class for line plots where the data is taken from a user supplied function \f$ [x,y]=f(t) \f$

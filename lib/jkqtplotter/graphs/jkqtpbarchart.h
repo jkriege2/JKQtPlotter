@@ -17,6 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphsbarchart_H
+#define jkqtpgraphsbarchart_H
+
+
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -27,9 +31,6 @@
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
 #include "jkqtplotter/graphs/jkqtpbarchartbase.h"
-#ifndef jkqtpgraphsbarchart_H
-#define jkqtpgraphsbarchart_H
-
 
 
 /*! \brief This implements a bar graph with bars starting at \f$ yoverride \f$ to \f$ y=f(x) \f$

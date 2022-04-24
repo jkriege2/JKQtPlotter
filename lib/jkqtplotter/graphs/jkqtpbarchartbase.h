@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphsbarchartbase_H
+#define jkqtpgraphsbarchartbase_H
+
 #include <QString>
 #include <QPainter>
 #include <QPair>
@@ -26,9 +29,6 @@
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/jkqtpgraphsbaseerrors.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-#ifndef jkqtpgraphsbarchartbase_H
-#define jkqtpgraphsbarchartbase_H
-
 
 
 /** \brief This is a base-class for all bar graphs with vertical or horizontal orientation (the orientation is implemented in dervied classes!)

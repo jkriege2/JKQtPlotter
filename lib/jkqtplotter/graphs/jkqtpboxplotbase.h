@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef jkqtpgraphsboxplotbase_H
+#define jkqtpgraphsboxplotbase_H
+
 
 #include <QString>
 #include <QPainter>
@@ -27,9 +30,6 @@
 #include "jkqtplotter/jkqtpgraphsbase.h"
 #include "jkqtplotter/graphs/jkqtpboxplotstylingmixins.h"
 #include "jkqtplotter/jkqtpgraphsbasestylingmixins.h"
-
-#ifndef jkqtpgraphsboxplotbase_H
-#define jkqtpgraphsboxplotbase_H
 
 
 
