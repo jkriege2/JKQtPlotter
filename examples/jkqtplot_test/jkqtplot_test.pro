@@ -11,24 +11,27 @@ SOURCES += jkqtplot_test.cpp \
     TestWidgetRGBImages.cpp \
     TestWidgetBarcharts.cpp \
     TestWidgetContourPlots.cpp \
-    TestWidgetEmptyPlot.cpp \
-    QTeXEngine/src/QTeXPaintEngine.cpp \
-    QTeXEngine/src/QTeXPaintDevice.cpp
+    TestWidgetEmptyPlot.cpp
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-} else {
-    win32  {
-        SOURCES += jkqtpemfengineadapter.cpp \
-            EmfEngine/src/EmfPaintDevice.cpp \
-            EmfEngine/src/EmfEngine.cpp \
+lessThan(QT_MAJOR_VERSION, 6) {
+    SOURCES += QTeXEngine/src/QTeXPaintEngine.cpp \
+               QTeXEngine/src/QTeXPaintDevice.cpp
+    HEADERS += QTeXEngine/src/QTeXEngine.h
 
-        HEADERS +=EmfEngine/src/EmfEngine.h \
-            jkqtpemfengineadapter.h
+    greaterThan(QT_MAJOR_VERSION, 4) {
+    } else {
+        win32  {
+            SOURCES += jkqtpemfengineadapter.cpp \
+                EmfEngine/src/EmfPaintDevice.cpp \
+                EmfEngine/src/EmfEngine.cpp \
 
-        LIBS += -lgdi32
+            HEADERS +=EmfEngine/src/EmfEngine.h \
+                jkqtpemfengineadapter.h
+
+            LIBS += -lgdi32
+        }
     }
 }
-
 
 HEADERS += testmain.h \
     TestWidgetFunctionPlots.h \
@@ -41,8 +44,7 @@ HEADERS += testmain.h \
     TestWidgetRGBImages.h \
     TestWidgetBarcharts.h \
     TestWidgetContourPlots.h \
-    TestWidgetEmptyPlot.h \
-    QTeXEngine/src/QTeXEngine.h
+    TestWidgetEmptyPlot.h
 
 
 RESOURCES += jkqtplot_test.qrc

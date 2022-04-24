@@ -14,5 +14,8 @@ isEmpty(JKQTP_FASTPLOTTER_PRI_INCLUDED) {
     RESOURCES += $$PWD/jkqtplotter/resources/jkqtpbaseplotter.qrc
 
     QT += opengl
+    greaterThan(QT_MAJOR_VERSION, 5) {
+        QT += openglwidgets
+    }
 
 }

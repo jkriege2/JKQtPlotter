@@ -10,7 +10,7 @@ This page explains how to build JKQTPlotter and to use the results in your own P
 
 \subsection page_buildinstructions_CMAKE_RUN Running a Build with CMake
 
-The preferred way to build JKQTPlotter is using <a href="https://cmake.org/">CMake</a>. You can find a detailed explanation of CMake at https://cliutils.gitlab.io/modern-cmake/. The CMake-build is defined in `CMakeLists.txt` files, found in many of the directories of the code repository. Especially in the root directory and the two subdirectories \c ./lib/ and \c ./examples/ .
+The preferred way to build JKQTPlotter is using <a href="https://cmake.org/">CMake</a>. You can find a detailed explanation of CMake at https://cliutils.gitlab.io/modern-cmake/. The CMake-build is defined in `CMakeLists.txt` files, found in many of the directories of the code repository. Especially in the root directory and the two subdirectories \code ./lib/  \endcode and \code ./examples/  \endcode .
 
 You can build JKQTPlotter (and also the examples) by either opening the file <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/CMakeLists.txt">CMakeLists.txt</a> in QTCreator (which has CMake integration), or by calling \c CMake by hand. How to do this depends on your local system und build environment. 
 
@@ -35,7 +35,7 @@ For Visual Studio it could look like this:
     $ cd build
     $ cmake .. -G "Visual Studio 15 2017 Win64" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources>"
 \endcode
-Where \c <path_to_your_qt_sources> could be e.g. \c C:/development/Qt5/5.12.0/msvc2017_64 . This call results in a Visual Studio solution \c build/JKQTPlotter.sln that you can load and compile from the Visual Studio IDE. Alternatively you can also build the solution directly calling:
+Where \code <path_to_your_qt_sources>  \endcode could be e.g. \code C:/development/Qt5/5.12.0/msvc2017_64  \endcode . This call results in a Visual Studio solution \c build/JKQTPlotter.sln that you can load and compile from the Visual Studio IDE. Alternatively you can also build the solution directly calling:
 \code{.sh}
     $ cmake --build . --config "Debug"
 \endcode
@@ -62,10 +62,10 @@ The CMake build system offers several configuration variables that you may set/c
 \subsection page_buildinstructions_CMAKE_USAGE Using a built, generated with CMake
 
 After building and installing JKQTPlotter you have all files that you need inside the instal directory:
-  - \c <INSTALLDIR>/include contains all required header files
-  - \c <INSTALLDIR>/bin contains the shared libraries
-  - \c <INSTALLDIR>/lib contains the link libraries
-  - \c <INSTALLDIR>/lib/cmake contains files necessary for CMake's \c find_package() to work
+  - \code <INSTALLDIR>/include \endcode contains all required header files
+  - \code <INSTALLDIR>/bin \endcode contains the shared libraries
+  - \code <INSTALLDIR>/lib \endcode contains the link libraries
+  - \code <INSTALLDIR>/lib/cmake \endcode contains files necessary for CMake's \c find_package() to work
 .
 
 You can find an example project that uses a complete cmake-build here: \ref JKQTCMakeLinkExample (online: <a href="https://github.com/jkriege2/JKQtPlotter/blob/master/examples/cmake_link_example">https://github.com/jkriege2/JKQtPlotter/blob/master/examples/cmake_link_example</a>).
@@ -129,8 +129,8 @@ To build this example, you first need to make a subdirectory `build` and then ca
     $ cmake .. -G "<GENERATOR>" "-DCMAKE_PREFIX_PATH=<path_to_your_qt_sources> -DCMAKE_MODULE_PATH=<path_to_lib/cmake_dir_of_JKQTPLOTTER>"
 \endcode
 The you can use the generated makefiles (e.g. load them in an editor, or build them jsing \c make ). In the last line above, you need to specify two directories:
-  - \c <path_to_your_qt_sources> points to you Qt installation
-  - \c <path_to_lib/cmake_dir_of_JKQTPLOTTER> points to the directory containing the \c XYZ.cmake -files from the JKQTPlotter build. Typically this is \c <JKQTPLOTTER_INSTALL_DIR>/lib/cmake , where \c <JKQTPLOTTER_INSTALL_DIR> is the directory into which you installed JKQTPlotter.
+  - \code <path_to_your_qt_sources>  \endcode points to you Qt installation
+  - \code <path_to_lib/cmake_dir_of_JKQTPLOTTER>  \endcode points to the directory containing the \c XYZ.cmake -files from the JKQTPlotter build. Typically this is \code <JKQTPLOTTER_INSTALL_DIR>/lib/cmake \endcode , where \code <JKQTPLOTTER_INSTALL_DIR> \endcode is the directory into which you installed JKQTPlotter.
 .
 
 \section page_buildinstructions_QMAKE Build using QMake
@@ -172,7 +172,7 @@ CONFIG (debug, debug|release) {
 }
 \endcode
 
-This snippet assumes that you built the libraries with the provided `.PRO`-files. You can also add a second `.pro`-file to your projects, which integrates both as subdirs. Such files are used for all examples in this project. Here is an example:
+This snippet assumes that you built the libraries with the provided \code .PRO  \endcode -files. You can also add a second \code .PRO  \endcode -file to your projects, which integrates both as subdirs. Such files are used for all examples in this project. Here is an example:
 \code{.qmake}
 TEMPLATE = subdirs
 
@@ -241,6 +241,11 @@ SUBDIRS +=  jkqtplotterlib_shared test_styling
 
 \note You will have to run a deployment step `make install` before running your executable, so the shared libararies are actually copied to the output directory (see `INSTALLS + ...` above).
 
+
+
+\subsection page_buildinstructions_QMAKEQTCREATOR QMake in QTCreator
+
+You can load the file \c JKQtPlotterBuildAllExamples.pro in te base directory of the project directly in QtCreator and use it to build the library and the examples.
 
 
 

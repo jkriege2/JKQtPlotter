@@ -32,6 +32,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QDateTime>
+#include <QPainterPath>
 
 QTeXPaintEngine::QTeXPaintEngine(const QString& f, QTeXPaintDevice::Unit u)
 : QPaintEngine(QPaintEngine::AllFeatures),
