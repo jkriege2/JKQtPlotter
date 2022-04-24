@@ -137,7 +137,7 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
                                           font!). Best coverage should be given by Unicode font encoding with a good
                                           unicode font installed!<br>\image html jkqtmathtext_symbols.png
       - <code>\\vec{x} \\dot{x} \\ddot{x} \\overline{x} \\underline{x} \\hat{x} \\tilde{x} \\uul{x} \\ool{x} \\bar{x} \\arrow{x} </code>: Decorations over/under symbols \image html jkqtmathtext_mathdeco.png
-      - <code>\\verb{don't parse this _aaa\LaTeX} </code>: interpret enclosed text as verbose \image html jkqtmathtext_verb.png
+      - <code>\\verb{don't parse this _aaa\\LaTeX} </code>: interpret enclosed text as verbose \image html jkqtmathtext_verb.png
     .
 
     \subsection JKQTMathTextSuppoertedLaTeXBraces Braces ...
@@ -151,31 +151,31 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
       - \c \c \\left\\lfloor \c \\right\\rfloor : floor braces , \image html jkqtmathtext_brace_floor.png
       - \c \\left~ \c \\right~ \c \\left\\lceil \c \\right\\rceil : ceil braces , \image html jkqtmathtext_brace_ceil.png
       - \c \\left| \c \\right| : absolute value braces | |, \image html jkqtmathtext_brace_oneline.png
-      - \c \\left\| \c \\right\| : norm braces || ||, \image html jkqtmathtext_brace_dblline.png
+      - \code \left\| \right\| \endcode : norm braces || ||, \image html jkqtmathtext_brace_dblline.png
       - You can use \c \\left. or \c \\right. to have only right or only left brace
     .
 
     \subsection JKQTMathTextSuppoertedLaTeXUnderOver Undersetting, Oversetting, Underbraces, Overbraces ...
     There are also instructions that allow to under/overset braces, arrows, ...:
-      - <code>$\underbrace{x+x+...+x}{k\ \mathrm{times}}$</code> \image html jkqtmathtext_brace_underbrace.png
-      - <code>$\overbrace{x+x+...+x}{k\ \mathrm{times}}$</code> \image html jkqtmathtext_brace_overbrace.png
-      - <code>$\overset{main}{over}$</code> \image html jkqtmathtext_brace_overset.png
-      - <code>$\underset{main}{under}$</code> \image html jkqtmathtext_brace_underset.png
+      - <code>$\\underbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext_brace_underbrace.png
+      - <code>$\\overbrace{x+x+...+x}{k\\ \\mathrm{times}}$</code> \image html jkqtmathtext_brace_overbrace.png
+      - <code>$\\overset{main}{over}$</code> \image html jkqtmathtext_brace_overset.png
+      - <code>$\\underset{main}{under}$</code> \image html jkqtmathtext_brace_underset.png
     .
 
     \subsection JKQTMathTextSuppoertedLaTeXMatrix Matrix/Array Type Instructions
     Several Matrix/Array-typed LaTeX instructions are supported:
-      - <code>$\frac{...}{...}$</code>, <code>$\tfrac{...}{...}$</code> (70% smaller font), <code>$\dfrac{...}{...}$</code> \image html jkqtmathtext_brace_frac.png
-      - <code>$\sfrac{...}{...}$</code> \image html mathparser/MTFMsfrac.png
-      - <code>$\stfrac{...}{...}$</code> (70% smaller font) \image html mathparser/MTFMstfrac.png
-      - <code>$\stackrel{...}{...}$ $\binom{...}{...}$</code> \image html jkqtmathtext_brace_stackrel.png
-      - <code>$\begin{cases} ... & ... \\ ... & ... \end{cases}$</code> \image html jkqtmathtext_brace_begincases.png
-      - <code>$\begin{array} a & b & ...\\ c & d & ...\end{array}$</code> <code>$\begin{matrix} a & b & ...\\ c & d & ...\end{matrix}$</code> \image html jkqtmathtext_array.png
-      - <code>$\begin{pmatrix} a & b & ...\\ c & d & ...\end{pmatrix}$</code> \image html jkqtmathtext_pmatrix.png
-      - <code>$\begin{bmatrix} a & b & ...\\ c & d & ...\end{bmatrix}$</code> \image html jkqtmathtext_bmatrix.png
-      - <code>$\begin{Bmatrix} a & b & ...\\ c & d & ...\end{Bmatrix}$</code> \image html jkqtmathtext_bbmatrix.png
-      - <code>$\begin{vmatrix} a & b & ...\\ c & d & ...\end{vmatrix}$</code> \image html jkqtmathtext_vmatrix.png
-      - <code>$\begin{Vmatrix} a & b & ...\\ c & d & ...\end{Vmatrix}$</code> \image html jkqtmathtext_vvmatrix.png
+      - <code>$\\frac{...}{...}$</code>, <code>$\\tfrac{...}{...}$</code> (70% smaller font), <code>$\\dfrac{...}{...}$</code> \image html jkqtmathtext_brace_frac.png
+      - <code>$\\sfrac{...}{...}$</code> \image html mathparser/MTFMsfrac.png
+      - <code>$\\stfrac{...}{...}$</code> (70% smaller font) \image html mathparser/MTFMstfrac.png
+      - <code>$\\stackrel{...}{...}$ $\\binom{...}{...}$</code> \image html jkqtmathtext_brace_stackrel.png
+      - <code>$\\begin{cases} ... & ... \\\\ ... & ... \\end{cases}$</code> \image html jkqtmathtext_brace_begincases.png
+      - <code>$\\begin{array} a & b & ...\\\\ c & d & ...\\end{array}$</code> <code>$\\begin{matrix} a & b & ...\\\\ c & d & ...\\end{matrix}$</code> \image html jkqtmathtext_array.png
+      - <code>$\\begin{pmatrix} a & b & ...\\\\ c & d & ...\\end{pmatrix}$</code> \image html jkqtmathtext_pmatrix.png
+      - <code>$\\begin{bmatrix} a & b & ...\\\\ c & d & ...\\end{bmatrix}$</code> \image html jkqtmathtext_bmatrix.png
+      - <code>$\\begin{Bmatrix} a & b & ...\\\\ c & d & ...\\end{Bmatrix}$</code> \image html jkqtmathtext_bbmatrix.png
+      - <code>$\\begin{vmatrix} a & b & ...\\\\ c & d & ...\\end{vmatrix}$</code> \image html jkqtmathtext_vmatrix.png
+      - <code>$\\begin{Vmatrix} a & b & ...\\\\ c & d & ...\\end{Vmatrix}$</code> \image html jkqtmathtext_vvmatrix.png
     .
 
     \section JKQTMathTextSuppoertedFonts Font Handling
@@ -189,7 +189,7 @@ JKQTMATHTEXT_LIB_EXPORT void initJKQTMathTextResources();
       - A symbol font used to display special (math) symbols. ( setSymbolfontSymbol() )
       - A "roman" font used as the standard font in math mode ( setFontMathRoman() )
       - A "sans-serif" used as sans serif font in math mode ( setFontMathSans() )
-      - A "blackboard" font used to display double stroked characters (setFontBlackboard() )
+      - A "blackboard" font used to display double stroked characters ( setFontBlackboard() )
       - A "caligraphic" font used to display caligraphic characters ( setFontCaligraphic() )
     .
     

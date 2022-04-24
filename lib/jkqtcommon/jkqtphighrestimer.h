@@ -71,19 +71,6 @@
  *   - then you can query the time difference to the last call of start() by using getTime().
  * .
  *
- * This is the result of a test on a WinXP system, Athlon64 X2 3800+ (2GHz):
- * \image html highrestimer.png
- * Note that this histogram tells you more about how your system works than about the timer itself.
- * What we can find out about the timer is that it really provides a resolution in the microsecond region. This can
- * be seen, as there is a non-zero minimal measured interval (1.67619 usec). This basically tells us the run-time of
- * the measurement loop. There are also bigger run-times which are produced, as this program ran on a multi-process
- * (not process<b>or</b> !!!) OS, which means that the current process may be stalled to allow othe rprocesses to
- * execute. If this would run on a single-process system we should only get one run-time, if we assume that all
- * methods need a fixed amount of time. So we can use this method to test whether our system provides a sufficiently
- * accurate time. The 1.68 usec give an upper bound for the timer interval and thus the resolution they do <b>not</b>
- * represent the timer resolution. To get this nominal resolution in a windows system you could use the WinAPI method
- * \c QueryPerformanceFrequency() which is used in the method getTime(). On my system the timer frequency is 3.57955 MHz
- * which corresponds to a resolution of 0.2794 usec.
  *
  * \par win32 implementation issues:
  * To implement this timer on windows systems I use two API calls from the windows kernel. They are:
@@ -96,24 +83,6 @@
  * the difference between these two. Using QueryPerformanceFrequency() we can calculate the time difference in usecs
  * from the counter value difference using:
  *   \f[ \Delta t=\frac{N_{\mbox{now}}-N_{\mbox{start}}}{\mbox{\texttt{QueryPerformanceFrequency()}}}\cdot 10^{6} \f]
- *
- * \par why not standard POSIX?
- * The standard POSIX time functions available in a MinGW environment have a resolution that is in the range of
- * some 10 milliseconds. This may be enough for many purposes, but for exact time measurement, as you will want
- * to do it on measurement and control systems this is not sufficient. So I tried to find a possibility to
- * implement a system-independent high-resolution timer. As most timer stuff depends on very low-level kernel
- * calls on every operating system this seems to be nearly impossible. So I implemented this timer for win32 only,
- * as this is the system we use in the lab.
- *
- * \par linux implementation possibility:
- * This class does not implement a timer for Linux/Unix systems but I
- * will provide you with a small hint how you could implement one here:
- * The <a href="http://www.gnu.org/software/libc/manual/html_node/High_002dResolution-Calendar.html">\c gettimeofday()
- * method</a> from the libc seems to have enough tim resolution for our pourposes, so try to use this for the high-
- * resolution timer. As mentioned above this method is not available for MinGW in win32 which is the main development
- * platform for this project.
- *
- * \test you can find an example application in the file \link test_hrestimer.cpp \endlink.
  *
  */
 class JKQTCOMMON_LIB_EXPORT JKQTPHighResTimer {

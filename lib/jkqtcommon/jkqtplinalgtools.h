@@ -780,7 +780,6 @@ inline bool jkqtplinalgLinSolve(const T* A, const T* b, long N, T* result_out) {
 
     \param A an NxN matrix of coefficients
     \param[in,out] b an N-entry vector (also receives the result)
-    \param N number of equations
     \param N number of rows and columns in \a A
     \return \c true on success
 

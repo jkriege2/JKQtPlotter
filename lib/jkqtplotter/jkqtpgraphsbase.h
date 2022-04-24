@@ -786,9 +786,9 @@ public slots:
     void setXXYColumns(int xCol, int x2Col, int yCol);
 
 
-    /** \copydoc yColumn2 */
+    /** \copydoc xColumn2 */
     void setXColumn2(int __value);
-    /** \copydoc yColumn2 */
+    /** \copydoc xColumn2 */
     void setXColumn2(size_t __value);
 protected:
 

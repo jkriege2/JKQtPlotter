@@ -623,7 +623,7 @@ Here is a table with all available ready-made styles:
       <th> Screenshot
     <tr>
       <td> <b> The Default Style </b>
-      <td> \image html default.png
+      <td> \image html default.ini.png
     <tr>
       <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/blackandwhite.ini"> \c :/JKQTPlotter/styles/blackandwhite.ini</a>
       <td> \image html blackandwhite.ini.png

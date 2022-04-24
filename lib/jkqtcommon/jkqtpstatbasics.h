@@ -386,9 +386,10 @@ inline double jkqtpstatSumSqr(InputIt first, InputIt last, size_t* Noutput=nullp
     \param first iterator pointing to the first item in the dataset to use \f$ X_1 \f$
     \param last iterator pointing behind the last item in the dataset to use \f$ X_N \f$
     \param[out] output This iterator is used to store the results, use e.g. a std::back_inserter
-    \return vector of cummulative (or partial) sums returned between \a first and \a last (excluding invalid doubles).
-            For invalid values, the last sum is re-inserted, so the returned vector has the same number of entries
-            as the range \a first ... \a last
+                       Output is then a vector of cummulative (or partial) sums returned between
+                       \a first and \a last (excluding invalid doubles).
+                       For invalid values, the last sum is re-inserted, so the returned vector has
+                       the same number of entries as the range \a first ... \a last
 
     This function implements:
       \f[ \sum(X)_j=\cdot\sum\limits_{i=1}^{j}X_i \f]

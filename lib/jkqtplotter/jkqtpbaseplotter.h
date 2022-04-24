@@ -670,7 +670,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         double getAxisAspectRatio() const;
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForSystem  */
         bool isUsingAntiAliasingForSystem() const;
-        /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForGraphs  */
+        /** \copydoc JKQTGraphsBaseStyle::useAntiAliasingForGraphs  */
         bool isUsingAntiAliasingForGraphs() const;
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForText  */
         bool isUsingAntiAliasingForText() const;
@@ -1454,7 +1454,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotter: public QObject {
         void setAxisAspectRatio(double __value);
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForSystem */
         void setUseAntiAliasingForSystem(bool __value);
-        /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForGraphs */
+        /** \copydoc JKQTGraphsBaseStyle::useAntiAliasingForGraphs */
         void setUseAntiAliasingForGraphs(bool __value);
         /** \copydoc JKQTBasePlotterStyle::useAntiAliasingForText */
         void setUseAntiAliasingForText(bool __value);

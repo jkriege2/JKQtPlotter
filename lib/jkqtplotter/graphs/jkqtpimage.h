@@ -233,8 +233,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPMathImageBase: public JKQTPImageBase {
         virtual void setDatatypeModifier(JKQTPMathImageDataType __value);
         /** \copydoc datatypeModifier */
         virtual JKQTPMathImageDataType getDatatypeModifier() const;
-        /** \copydoc modifierMode */
-
         /** \brief sets dataModifier (\copybrief dataModifier ) and datatypeModifier (\copybrief datatypeModifier ) */
         virtual void setDataModifier(const void *data, JKQTPMathImageDataType datatype);
         /** \brief sets data (\copybrief data ) and datatype (\copybrief datatype ), as well as the size of data (Nx: \copybrief Nx and Ny: \copybrief Ny ) */

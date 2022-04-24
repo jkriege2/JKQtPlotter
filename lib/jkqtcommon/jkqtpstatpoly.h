@@ -50,7 +50,6 @@
     \tparam InputItX standard iterator type of \a firstX and \a lastX.
     \tparam InputItY standard iterator type of \a firstY and \a lastY.
     \tparam OutputItP output iterator for the polynomial coefficients
-    \param type model to be fitted
     \param firstX iterator pointing to the first item in the x-dataset to use \f$ x_1 \f$
     \param lastX iterator pointing behind the last item in the x-dataset to use \f$ x_N \f$
     \param firstY iterator pointing to the first item in the y-dataset to use \f$ y_1 \f$

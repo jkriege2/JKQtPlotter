@@ -109,8 +109,8 @@ enum class JKQTPDatastoreItemFormat {
   *           QVector<double> X, Y;
   *           const int Ndata=100;
   *           for (int i=0; i<Ndata; i++) {
-  *            *   const double x=double(i)/double(Ndata)*8.0*JKQTPSTATISTICS_PI;
-  *               X<<x;
+  *              const double x=double(i)/double(Ndata)*8.0*JKQTPSTATISTICS_PI;
+  *              X<<x;
   *              Y<<sin(x);
   *          }
   *          plot.addGraph(linegraph=new JKQTPXYLineGraph(&plot));

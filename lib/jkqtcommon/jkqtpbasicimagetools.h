@@ -116,10 +116,14 @@ enum JKQTPMathImageColorPalette {
     JKQTPMathImageAutumn, /*!< \image html palettes/palette_autumn.png */
     JKQTPMathImageSeismic, /*!< \image html palettes/palette_seismic.png */
     JKQTPMathImageTerrain, /*!< \image html palettes/palette_terrain.png */
-    JKQTPMathImageViridis, /*!< \image html palettes/palette_viridis.png \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageMagma, /*!< \image html palettes/palette_magma.png \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImageInferno, /*!< \image html palettes/palette_inferno.png \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
-    JKQTPMathImagePlasma, /*!< \image html palettes/palette_plasma.png \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageViridis, /*!< \image html palettes/palette_viridis.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageMagma, /*!< \image html palettes/palette_magma.png
+                              \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImageInferno, /*!< \image html palettes/palette_inferno.png
+                                \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
+    JKQTPMathImagePlasma, /*!< \image html palettes/palette_plasma.png
+                               \see from https://github.com/BIDS/colormap/blob/master/colormaps.py  https://github.com/BIDS/colormap/blob/master/colormaps.py */
 
 
     JKQTPMathImageBLUEMAGENTAYELLOW, /*!< \image html palettes/palette_BlMaYe.png */
@@ -245,7 +249,7 @@ struct JKQTPImageTools {
                   ...
                 </ColorMap>
             \endverbatim
-            optionally several \c <ColorMap>...</ColorMap> definitions may be put below an arbitrarily named
+            optionally several \code <ColorMap>...</ColorMap> \endcode definitions may be put below an arbitrarily named
             document node, e.g.:
             \verbatim
                 <ColorMaps>

@@ -213,36 +213,43 @@ public:
       */
     JKQTPGeoArrow(JKQTPlotter* parent, double x1, double y1, double x2, double y2, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
     /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param p1 first point of line (tail)
-         *  \param p2 second point of line (head)
-         *
-         */
+      *
+      *  \param parent the parent plotter object
+      *  \param p1 first point of line (tail)
+      *  \param p2 second point of line (head)
+      *  \param headStyle decorator/arrow style of the head
+      *  \param tailStyle decorator/arrow style of the tail
+      */
     JKQTPGeoArrow(JKQTBasePlotter* parent, const QPointF& p1, const QPointF& p2, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
     /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param p1 first point of line (tail)
-         *  \param p2 second point of line (head)
-         */
+      *
+      *  \param parent the parent plotter object
+      *  \param p1 first point of line (tail)
+      *  \param p2 second point of line (head)
+      *  \param headStyle decorator/arrow style of the head
+      *  \param tailStyle decorator/arrow style of the tail
+      */
     JKQTPGeoArrow(JKQTPlotter* parent, const QPointF& p1, const QPointF& p2, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
 
 
 
 
     /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param line the line
-         *
-         */
+      *
+      *  \param parent the parent plotter object
+      *  \param line the line
+      *  \param headStyle decorator/arrow style of the head
+      *  \param tailStyle decorator/arrow style of the tail
+      *
+      */
     JKQTPGeoArrow(JKQTBasePlotter* parent, const QLineF& line, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
     /** \brief class constructor
-         *
-         *  \param parent the parent plotter object
-         *  \param line the line
-         */
+      *
+      *  \param parent the parent plotter object
+      *  \param line the line
+      *  \param headStyle decorator/arrow style of the head
+      *  \param tailStyle decorator/arrow style of the tail
+      */
     JKQTPGeoArrow(JKQTPlotter* parent, const QLineF& line, JKQTPLineDecoratorStyle headStyle=JKQTPDefaultLineDecorator, JKQTPLineDecoratorStyle tailStyle=JKQTPNoDecorator);
 };
 
@@ -279,9 +286,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedH
          *  \param y y-coordinate of start point of line
          *  \param dx x-direction of the line
          *  \param dy y-direction of the line
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
          */
         JKQTPGeoInfiniteLine(JKQTBasePlotter* parent, double x, double y, double dx, double dy);
         /** \brief class constructor
@@ -291,9 +295,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoInfiniteLine: public JKQTPGeoBaseDecoratedH
          *  \param y y-coordinate of start point of line
          *  \param dx x-direction of the line
          *  \param dy y-direction of the line
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
          */
         JKQTPGeoInfiniteLine(JKQTPlotter* parent, double x, double y, double dx, double dy);
 
@@ -381,34 +382,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoPolyLines: public JKQTPGeoBaseDecoratedLine
          *
          *  \param parent the parent plotter object
          *  \param points points on the polygon
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
          */
         JKQTPGeoPolyLines(JKQTBasePlotter* parent, const QVector<QPointF>& points);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
          *  \param points points on the polygon
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
          */
         JKQTPGeoPolyLines(JKQTPlotter* parent, const QVector<QPointF>& points);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
          */
         JKQTPGeoPolyLines(JKQTBasePlotter* parent);
         /** \brief class constructor
          *
          *  \param parent the parent plotter object
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
          */
         JKQTPGeoPolyLines(JKQTPlotter* parent);
 
@@ -489,9 +478,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
          *  \param height of ellipse (2 * half axis)
          *  \param angleStart if we only draw an arc, this is the starting angle in degrees
          *  \param angleStop if we only draw an arc, this is the ending angle in degrees
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
 
          */
         JKQTPGeoArc(JKQTBasePlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop);
@@ -504,9 +490,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoArc: public JKQTPGeoBaseLine {
          *  \param height of ellipse (2 * half axis)
          *  \param angleStart if we only draw an arc, this is the starting angle in degrees
          *  \param angleStop if we only draw an arc, this is the ending angle in degrees
-         *  \param color color of line
-         *  \param lineWidth width of line
-         *  \param style line style
 
          */
         JKQTPGeoArc(JKQTPlotter* parent, double x, double y, double width, double height, double angleStart, double angleStop);

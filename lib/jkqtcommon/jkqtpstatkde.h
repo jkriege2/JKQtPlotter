@@ -447,7 +447,6 @@ inline void jkqtpstatKDE1D(InputIt first, InputIt last, double binXLeft, double 
     \param firstY iterator pointing to the first y-position item in the dataset to use \f$ Y_1 \f$
     \param lastY iterator pointing behind the last y-position item in the dataset to use \f$ Y_N \f$
     \param kernel the kernel function to use (e.g. jkqtpstatKernel1DGaussian() )
-    \param kernel the kernel function to use (e.g. jkqtpstatKernel2DGaussian() )
     \param bandwidthX x-bandwidth used for the KDE
     \param bandwidthY y-bandwidth used for the KDE
 

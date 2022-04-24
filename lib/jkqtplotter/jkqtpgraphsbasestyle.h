@@ -220,6 +220,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTGraphsBaseStyle {
          *  \param group Group in the QSettings-object to read from
          *  \param defaultStyle If a setting cannot be found in \a settings, default values are taken from this object
          *                      By default, this is a default-constructed object
+         *  \param parent parent JKQTBasePlotterStyle instance for inital values
          */
         void loadSettings(const QSettings &settings, const QString& group, const JKQTGraphsBaseStyle &defaultStyle, const JKQTBasePlotterStyle& parent);
 

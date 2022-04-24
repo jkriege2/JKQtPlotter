@@ -277,17 +277,17 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline QColor getAxisColor() const { return this->axisStyle.axisColor; }
         /** \copydoc JKQTPCoordinateAxisStyle::showZeroAxis */
         inline bool getShowZeroAxis() const { return this->axisStyle.showZeroAxis; }
-        /** \copydoc JKQTPCoordinateAxisStyle::gridColor */
+        /** \copydoc JKQTPGridStyle::lineColor */
         inline QColor getGridColor() const { return this->axisStyle.majorGridStyle.lineColor; }
-        /** \copydoc JKQTPCoordinateAxisStyle::minorGridColor */
+        /** \copydoc JKQTPGridStyle::lineColor */
         inline QColor getMinorGridColor() const { return this->axisStyle.minorGridStyle.lineColor; }
-        /** \copydoc JKQTPCoordinateAxisStyle::gridWidth */
+        /** \copydoc JKQTPGridStyle::lineWidth */
         inline double getGridWidth() const { return this->axisStyle.majorGridStyle.lineWidth; }
-        /** \copydoc JKQTPCoordinateAxisStyle::gridStyle */
+        /** \copydoc JKQTPGridStyle::lineStyle */
         inline Qt::PenStyle getGridStyle() const { return this->axisStyle.majorGridStyle.lineStyle; }
-        /** \copydoc JKQTPCoordinateAxisStyle::minorGridWidth */
+        /** \copydoc JKQTPGridStyle::lineWidth */
         inline double getMinorGridWidth() const { return this->axisStyle.minorGridStyle.lineWidth; }
-        /** \copydoc JKQTPCoordinateAxisStyle::minorGridStyle */
+        /** \copydoc JKQTPGridStyle::lineStyle */
         inline Qt::PenStyle getMinorGridStyle() const { return this->axisStyle.minorGridStyle.lineStyle; }
         /** \copydoc JKQTPCoordinateAxisStyle::tickTimeFormat */
         inline QString getTickTimeFormat() const { return this->axisStyle.tickTimeFormat; }
@@ -314,9 +314,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         inline double getTickLabelDistance() const { return this->axisStyle.tickLabelDistance; }
         /** \copydoc JKQTPCoordinateAxisStyle::labelDistance */
         inline double getLabelDistance() const { return this->axisStyle.labelDistance; }
-        /** \copydoc JKQTPCoordinateAxisStyle::drawGrid */
+        /** \copydoc JKQTPGridStyle::enabled */
         inline bool getDrawGrid() const { return this->axisStyle.majorGridStyle.enabled; }
-        /** \copydoc JKQTPCoordinateAxisStyle::drawMinorGrid */
+        /** \copydoc JKQTPGridStyle::enabled */
         inline bool getDrawMinorGrid() const { return this->axisStyle.minorGridStyle.enabled; }
         /** \copydoc JKQTPCoordinateAxisStyle::autoLabelDigits */
         inline void setAutoLabelDigits(bool __value)
@@ -507,22 +507,22 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc inverted */
         void setInverted(bool __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::gridColor */
+        /** \copydoc JKQTPGridStyle::lineColor */
         void setGridColor(const QColor& __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::minorGridColor */
+        /** \copydoc JKQTPGridStyle::lineColor */
         void setMinorGridColor(const QColor& __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::gridWidth */
+        /** \copydoc JKQTPGridStyle::lineWidth */
         void setGridWidth (double __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::gridStyle */
+        /** \copydoc JKQTPGridStyle::lineStyle */
         void setGridStyle(Qt::PenStyle __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::minorGridWidth */
+        /** \copydoc JKQTPGridStyle::lineWidth */
         void setMinorGridWidth(double __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::minorGridStyle */
+        /** \copydoc JKQTPGridStyle::lineStyle */
         void setMinorGridStyle (Qt::PenStyle __value);
 
 
@@ -552,10 +552,10 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxis: public QObject {
         /** \copydoc JKQTPCoordinateAxisStyle::labelDigits */
         void setLabelDigits(int __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::drawGrid */
+        /** \copydoc JKQTPGridStyle::enabled */
         void setDrawGrid(bool __value);
 
-        /** \copydoc JKQTPCoordinateAxisStyle::drawMinorGrid */
+        /** \copydoc JKQTPGridStyle::enabled */
         void setDrawMinorGrid(bool __value);
 
 

@@ -49,8 +49,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
             \param y y-coordinate of symbol center
             \param symbol symbol type
             \param symbolSize size of the symbol in pt
-            \param color color of drawing
-            \param fillColor fill color of the symbol (if filled)
          */
         JKQTPGeoSymbol(JKQTBasePlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize);
         /*! \brief class contructor
@@ -60,8 +58,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGeoSymbol: public JKQTPPlotAnnotationElement, 
             \param y y-coordinate of symbol center
             \param symbol symbol type
             \param symbolSize size of the symbol in pt
-            \param color color of drawing
-            \param fillColor fill color of the symbol (if filled)
          */
         JKQTPGeoSymbol(JKQTPlotter* parent, double x, double y, JKQTPGraphSymbols symbol, double symbolSize);
         /*! \brief class contructor
