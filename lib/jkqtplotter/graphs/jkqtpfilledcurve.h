@@ -40,6 +40,16 @@
 class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveGraphBase: public JKQTPXYBaselineGraph, public JKQTPGraphLineAndFillStyleMixin {
     Q_OBJECT
 public:
+    /** \brief specifies how the area below the graph is filled
+     *
+     *  \see setFillMode(), getFillMode(), fillStyleBelow(), \ref JKQTPlotterWigglePlots
+     */
+    enum FillMode {
+        SingleFilling=0, /*!< \brief the whole area is filled with the same color/pattern, generates "simple filled plots", such as \image html filledgraphs_small.png */
+        TwoColorFilling=1 /*!< \brief the area above and below baseline with the two different colors/patterns, generates "wiggle plots", such as \image html wiggleplots_small.png */
+    };
+    Q_ENUM(FillMode)
+
     /** \brief class constructor */
     explicit JKQTPFilledCurveGraphBase(JKQTBasePlotter* parent=nullptr);
 
@@ -47,12 +57,23 @@ public:
     virtual QColor getKeyLabelColor() const override;
     /** \brief plots a key marker inside the specified rectangle \a rect */
     virtual void drawKeyMarker(JKQTPEnhancedPainter& painter, QRectF& rect) override;
-
+    /** \copydoc m_fillStyleBelow */
+    JKQTPGraphFillStyleMixin& fillStyleBelow();
+    /** \copydoc m_fillStyleBelow */
+    const JKQTPGraphFillStyleMixin& fillStyleBelow() const;
+    /** \copydoc m_fillMode */
+    FillMode getFillMode() const;
 public slots:
     /** \brief set line-color, fill color and symbol color */
     void setColor(QColor c);
+    /** \copydoc m_fillMode */
+    void setFillMode(FillMode mode);
 protected:
-
+    /** \brief specifies how the area of the graph is filles */
+    FillMode m_fillMode;
+    /** \brief if m_fillMode \c ==FillAboveAndBelowDifferently then this fill style is used below the baseline and
+     *         the default fill style is used above */
+    JKQTPGraphFillStyleMixin m_fillStyleBelow;
 };
 
 
@@ -63,6 +84,19 @@ protected:
     \image html filledgraphs.png
 
     \see \ref JKQTPlotterFilledGraphs
+
+    This class also provides the possibility to file above and below the baseline with different style.
+    Such plots are sometimes called "Wiggle Plots" and are often used (in their black/white-variety for seismographic
+    data plotting.
+
+    \image html wiggleplot_x.png
+
+    To generate such a plot, used \c JKQTPFilledCurveXGraph::setFillMode(JKQTPFilledCurveXGraph::FillMode::TwoColorFilling)
+    and then use \c JKQTPFilledCurveXGraph::fillStyleBelow() to access the fill style for the area below the baseline
+    and the default fill style to define the fill style above the baseline.
+
+    \see \ref JKQTPlotterWigglePlots
+
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXGraph: public JKQTPFilledCurveGraphBase {
         Q_OBJECT
@@ -112,6 +146,18 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurv
     \image html filledgraphs_yaxis.png
 
     \see \ref JKQTPlotterFilledGraphs
+
+    This class also provides the possibility to file above and below the baseline with different style.
+    Such plots are sometimes called "Wiggle Plots" and are often used (in their black/white-variety for seismographic
+    data plotting.
+
+    \image html wiggleplot_x.png
+
+    To generate such a plot, used \c JKQTPFilledCurveXGraph::setFillMode(JKQTPFilledCurveXGraph::FillMode::TwoColorFilling)
+    and then use \c JKQTPFilledCurveXGraph::fillStyleBelow() to access the fill style for the area below the baseline
+    and the default fill style to define the fill style above the baseline.
+
+    \see \ref JKQTPlotterWigglePlots
 
  */
 class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveYGraph: public JKQTPFilledCurveGraphBase {

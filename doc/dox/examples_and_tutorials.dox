@@ -37,7 +37,10 @@ All test-projects are Qt-projects that use qmake to build. You can load them int
     <td> `JKQTPBarVerticalStackableGraph`, `JKQTPBarHorizontalStackableGraph` <br> C++-style vectors of data 
 <tr><td> \image html filledgraphs_small.png
     <td> \subpage JKQTPlotterFilledGraphs
-    <td> `JKQTPBarVerticalGraph` <br> setting/altering data in `JKQTPDatstore` directly <br>  transparent plots <br> calculating histograms 
+    <td> `JKQTPFilledCurveXGraph`/`JKQTPFilledCurveYGraph` <br> setting/altering data in `JKQTPDatstore` directly <br>  transparent plots <br> calculating histograms 
+<tr><td> \image html wiggleplots_small.png
+    <td> \subpage JKQTPlotterWigglePlots
+    <td> `JKQTPFilledCurveXGraph`/`JKQTPFilledCurveYGraph` <br> setting/altering data in `JKQTPDatstore` directly <br>  data-depentend coloring <br> random-walks <br> seismographic data
 <tr><td> \image html impulsesplot_small.png
     <td> \subpage JKQTPlotterImpulsePlots
     <td> `JKQTPImpulsesVerticalGraph` and `JKQTPImpulsesHorizontalGraph` <br> C++-style QVector as plot data 

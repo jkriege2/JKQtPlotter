@@ -14,7 +14,7 @@ This page lists release notes for the diferent version of JKQTPlotter
 \subsection page_whatsnew_TRUNK_OVERVIEW trunk: Overview
 Changes, compared to  \ref page_whatsnew_V4_0_0 "v4.0.0" include:
 <ul>
-   <li></li>
+   <li>JKQTPFilledCurveXGraph and JKQTPFilledCurveYGraph can now plot wiggle plots with different fill styles above and below the baseline (feature request <a href="https://github.com/jkriege2/JKQtPlotter/issues/68">#68 Wiggle Plots</a> from <a href="https://github.com/xichaoqiang">user:xichaoqiang</a>   </li>
 </ul>
 
 \subsection page_whatsnew_TRUNK_DOWNLOAD trunk: Download

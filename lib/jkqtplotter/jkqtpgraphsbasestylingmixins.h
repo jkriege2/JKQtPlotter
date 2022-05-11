@@ -400,6 +400,8 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
 
         /** \brief initiaize the fill style (from the parent plotter) */
         void initFillStyle(JKQTBasePlotter* parent, int &parentPlotStyle, JKQTPPlotStyleType styletype=JKQTPPlotStyleType::Default);
+        /** \brief initiaize the fill style from another JKQTPGraphFillStyleMixin \a other by inverting its fill color */
+        void initFillStyleInvertedColor(JKQTPGraphFillStyleMixin *other);
 
         virtual ~JKQTPGraphFillStyleMixin();
 
@@ -434,14 +436,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPGraphFillStyleMixin {
 
         Q_PROPERTY(Qt::BrushStyle fillStyle MEMBER m_fillStyle READ getFillStyle WRITE setFillStyle)
         Q_PROPERTY(QColor fillColor MEMBER m_fillColor READ getFillColor WRITE setFillColor)
+
+        /** \brief constructs a QBrush from the graph fill styling properties */
+        QBrush getFillBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
     private:
         /** \brief fill style of the graph */
         QBrush m_fillBrush;
         /** \brief last fill color of the graph  */
         QColor m_fillColor;
     protected:
-        /** \brief constructs a QBrush from the graph fill styling properties */
-        QBrush getFillBrush(JKQTPEnhancedPainter &painter, JKQTBasePlotter* parent) const;
 };
 
 

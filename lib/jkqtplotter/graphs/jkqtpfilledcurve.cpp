@@ -33,11 +33,12 @@
 
 
 JKQTPFilledCurveGraphBase::JKQTPFilledCurveGraphBase(JKQTBasePlotter *parent):
-    JKQTPXYBaselineGraph(parent)
+    JKQTPXYBaselineGraph(parent), m_fillMode(FillMode::SingleFilling)
 {
     parentPlotStyle=-1;
     initLineStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
     initFillStyle(parent, parentPlotStyle, JKQTPPlotStyleType::Filled);
+    m_fillStyleBelow.initFillStyleInvertedColor(this);
     setFillCurve(true);
     setDrawLine(true);
 }
@@ -57,8 +58,36 @@ void JKQTPFilledCurveGraphBase::drawKeyMarker(JKQTPEnhancedPainter &painter, QRe
     painter.setPen(np);
     if (getDrawLine()) painter.setPen(p);
     painter.setBrush(b);
-    if (getFillCurve()) painter.drawRect(rect);
+    if (getFillCurve()) {
+        if (getFillMode()==FillMode::SingleFilling) {
+            painter.drawRect(rect);
+        } else {
+            QBrush belowB=fillStyleBelow().getFillBrush(painter, parent);
+            QPolygonF p,pb;
+            p<<rect.topLeft()<<rect.topRight()<<rect.bottomRight();
+            pb<<rect.topLeft()<<rect.bottomRight()<<rect.bottomLeft();
+            painter.drawPolygon(p);
+            painter.setBrush(belowB);
+            painter.drawPolygon(pb);
+            painter.setBrush(b);
+        }
+    }
     if (!getFillCurve() && getDrawLine()) painter.drawLine(QLineF(rect.left(), y, rect.right(), y));
+}
+
+JKQTPGraphFillStyleMixin &JKQTPFilledCurveGraphBase::fillStyleBelow()
+{
+    return m_fillStyleBelow;
+}
+
+const JKQTPGraphFillStyleMixin &JKQTPFilledCurveGraphBase::fillStyleBelow() const
+{
+    return m_fillStyleBelow;
+}
+
+JKQTPFilledCurveGraphBase::FillMode JKQTPFilledCurveGraphBase::getFillMode() const
+{
+    return m_fillMode;
 }
 
 void JKQTPFilledCurveGraphBase::setColor(QColor c)
@@ -67,6 +96,12 @@ void JKQTPFilledCurveGraphBase::setColor(QColor c)
     setFillColor(JKQTPGetDerivedColor(parent->getCurrentPlotterStyle().graphsStyle.filledStyle.fillColorDerivationMode, c));
     c.setAlphaF(0.5);
     setHighlightingLineColor(c);
+    m_fillStyleBelow.initFillStyleInvertedColor(this);
+}
+
+void JKQTPFilledCurveGraphBase::setFillMode(FillMode mode)
+{
+    m_fillMode=mode;
 }
 
 
@@ -98,6 +133,7 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
     QPen ph=getHighlightingLinePen(painter, parent);
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
+    QBrush b_below=fillStyleBelow().getFillBrush(painter, parent);
 
     int imax=0;
     int imin=0;
@@ -150,7 +186,22 @@ void JKQTPFilledCurveXGraph::draw(JKQTPEnhancedPainter& painter) {
         auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
         if (getFillCurve()) {
-            painter.fillPath(pf, b);
+            if (getFillMode()==FillMode::SingleFilling) {
+                painter.fillPath(pf, b);
+            } else if (getFillMode()==FillMode::TwoColorFilling) {
+                QRectF rAbove=pf.boundingRect();
+                rAbove.setBottom(y0);
+                QPainterPath pAbove;
+                pAbove.addRect(rAbove);
+                QRectF rBelow=pf.boundingRect();
+                rBelow.setTop(y0);
+                QPainterPath pBelow;
+                pBelow.addRect(rBelow);
+                QPainterPath pfa=pf.intersected(pAbove);
+                QPainterPath pfb=pf.intersected(pBelow);
+                painter.fillPath(pfa, b);
+                painter.fillPath(pfb, b_below);
+            }
         }
 
         if (isHighlighted()) {
@@ -196,6 +247,7 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter &painter)
     QPen ph=getHighlightingLinePen(painter, parent);
     QPen np(Qt::NoPen);
     QBrush b=getFillBrush(painter, parent);
+    QBrush b_below=fillStyleBelow().getFillBrush(painter, parent);
 
     int imax=0;
     int imin=0;
@@ -245,7 +297,22 @@ void JKQTPFilledCurveYGraph::draw(JKQTPEnhancedPainter &painter)
         painter.save(); auto __finalpaint=JKQTPFinally([&painter]() {painter.restore();});
 
         if (getFillCurve()) {
-            painter.fillPath(pf, b);
+            if (getFillMode()==FillMode::SingleFilling) {
+                painter.fillPath(pf, b);
+            } else if (getFillMode()==FillMode::TwoColorFilling) {
+                QRectF rAbove=pf.boundingRect();
+                rAbove.setLeft(x0);
+                QPainterPath pAbove;
+                pAbove.addRect(rAbove);
+                QRectF rBelow=pf.boundingRect();
+                rBelow.setRight(x0);
+                QPainterPath pBelow;
+                pBelow.addRect(rBelow);
+                QPainterPath pfa=pf.intersected(pAbove);
+                QPainterPath pfb=pf.intersected(pBelow);
+                painter.fillPath(pfa, b);
+                painter.fillPath(pfb, b_below);
+            }
         }
 
         if (isHighlighted()) {

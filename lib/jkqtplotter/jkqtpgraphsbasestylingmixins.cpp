@@ -288,6 +288,19 @@ JKQTPGraphFillStyleMixin::JKQTPGraphFillStyleMixin()
 }
 
 
+void JKQTPGraphFillStyleMixin::initFillStyleInvertedColor(JKQTPGraphFillStyleMixin *other)
+{
+    if (other) { // get style settings from parent object
+        m_fillColor=other->getFillColor();
+        qreal h=0,s=0,v=0,a=0;
+        m_fillColor.getHsvF(&h, &s, &v, &a);
+        h=std::fmod(h+120.0/360.0, 1.0);
+        m_fillColor.setHsvF(h,s,v,a);
+        m_fillBrush.setColor(m_fillColor);
+        m_fillBrush.setStyle(other->getFillStyle());
+    }
+}
+
 void JKQTPGraphFillStyleMixin::initFillStyle(JKQTBasePlotter *parent, int &parentPlotStyle, JKQTPPlotStyleType styletype)
 {
     if (parent) { // get style settings from parent object
