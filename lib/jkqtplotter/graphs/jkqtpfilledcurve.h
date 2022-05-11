@@ -151,7 +151,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPFilledCurveXErrorGraph: public JKQTPFilledCurv
     Such plots are sometimes called "Wiggle Plots" and are often used (in their black/white-variety for seismographic
     data plotting.
 
-    \image html wiggleplot_x.png
+    \image html wiggleplot_y.png
 
     To generate such a plot, used \c JKQTPFilledCurveXGraph::setFillMode(JKQTPFilledCurveXGraph::FillMode::TwoColorFilling)
     and then use \c JKQTPFilledCurveXGraph::fillStyleBelow() to access the fill style for the area below the baseline
