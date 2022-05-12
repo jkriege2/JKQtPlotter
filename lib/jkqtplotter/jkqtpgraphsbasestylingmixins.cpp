@@ -292,7 +292,11 @@ void JKQTPGraphFillStyleMixin::initFillStyleInvertedColor(JKQTPGraphFillStyleMix
 {
     if (other) { // get style settings from parent object
         m_fillColor=other->getFillColor();
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+        float h=0,s=0,v=0,a=0;
+#else
         qreal h=0,s=0,v=0,a=0;
+#endif
         m_fillColor.getHsvF(&h, &s, &v, &a);
         h=std::fmod(h+120.0/360.0, 1.0);
         m_fillColor.setHsvF(h,s,v,a);
