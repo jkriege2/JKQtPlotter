@@ -7,6 +7,7 @@
 #include <QApplication>
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpfilledcurve.h"
+#include "jkqtcommon/jkqtpmathtools.h"
 #include <random>
 
 void drawRandomWalkX(JKQTPlotter& plot) {
@@ -94,7 +95,7 @@ void drawWavepacketsY(JKQTPlotter& plot) {
         const double offset=(static_cast<double>(nw)*1.5+1.5);
         for (size_t ti=0; ti<NSteps; ti++) {
             const double t=ds->get(columnT, ti);
-            ds->set(columnPacket, ti, offset+sin(2.0*M_PI*t/wavelength)*exp(-0.5*jkqtp_sqr(t-pos)/jkqtp_sqr(packwidth)));
+            ds->set(columnPacket, ti, offset+sin(2.0*JKQTPSTATISTICS_PI*t/wavelength)*exp(-0.5*jkqtp_sqr(t-pos)/jkqtp_sqr(packwidth)));
         }
 
 
