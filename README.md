@@ -1,4 +1,3 @@
-![JKQtPlotter logo](./doc/images/socialmediabanner.png)
 # JKQTPlotter - A Qt Plotting Library
 This is an extensive library of function/data plotter classes for Qt (>= 5.0, tested with Qt up to 5.12).
 
