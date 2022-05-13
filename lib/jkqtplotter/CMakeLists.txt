@@ -307,7 +307,7 @@ if(JKQtPlotter_BUILD_STATIC_LIBS)
                                 DESTINATION lib/cmake  )
 endif(JKQtPlotter_BUILD_STATIC_LIBS)
 
-install(FILES ${HEADERS}
+install(FILES ${HEADERS_BASE}
 		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${libIncludeSubdir}
 		COMPONENT Headers)
 
