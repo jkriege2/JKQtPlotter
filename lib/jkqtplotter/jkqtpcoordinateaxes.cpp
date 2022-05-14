@@ -1011,14 +1011,10 @@ bool JKQTPCoordinateAxis::getNextLabel(double& x, QString& label, bool init) {
             return (tickLabels.size()>0);
         } else {
             for (int i=0; i<tickLabels.size(); i++) {
-                if (x==tickLabels[i].first && i+1<tickLabels.size()) {
-                    if (x>=axismin && x<=axismax) {
-                        label=tickLabels[i+1].second;
-                        x=tickLabels[i+1].first;
-                        return true;
-                    } else {
-                        return false;
-                    }
+                if (fabs(x-tickLabels[i].first)<1e-30 && i+1<tickLabels.size()) {
+                    label=tickLabels[i+1].second;
+                    x=tickLabels[i+1].first;
+                    return (x>=axismin && x<=axismax);
                 }
             }
         }
