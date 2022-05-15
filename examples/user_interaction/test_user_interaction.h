@@ -21,6 +21,7 @@ class TestUserInteraction : public QMainWindow
     signals:
 
     public slots:
+        void setMouseMoveAction(int index);
         void setLeftMouseAction(int index);
         void setLeftCtrlMouseAction(int index);
         void setRightMouseAction(int index);
@@ -63,6 +64,7 @@ class TestUserInteraction : public QMainWindow
         QCheckBox* chkShowToolbar;
         QCheckBox* chkToolbarAlwaysOn;
         QCheckBox* chkGrid;
+        QComboBox* cmbMouseMoveAction;
         QComboBox* cmbLeftNoModMouseAction;
         QComboBox* cmbLeftCtrlModMouseAction;
         QComboBox* cmbRightNoModMouseAction;

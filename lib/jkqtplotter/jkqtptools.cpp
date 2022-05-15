@@ -543,3 +543,15 @@ JKQTPUserActionMarkerType String2JKQTPUserActionMarkerType(const QString &act)
     if (m=="circle+crosshair" || m=="circle+cross") return jkqtpuamtCircleAndCrossHair;
     return jkqtpuamtCircle;
 }
+
+QString JKQTPMouseMoveActions2String(JKQTPMouseMoveActions act)
+{
+    if (act==jkqtpmmaToolTipForClosestDataPoint) return "ToolTipForClosestDataPoint";
+    return "ToolTipForClosestDataPoint";
+}
+
+JKQTPMouseMoveActions String2JKQTPMouseMoveActions(const QString &s)
+{
+    if (s=="jkqtpmmatooltipforclosestdatapoint"||s=="closestdatapointtooltip"||s=="tooltipforclosestdatapoint"||s=="tooltip") return jkqtpmmaToolTipForClosestDataPoint;
+    return jkqtpmmaToolTipForClosestDataPoint;
+}

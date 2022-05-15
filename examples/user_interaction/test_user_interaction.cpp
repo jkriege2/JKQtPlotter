@@ -96,6 +96,14 @@ TestUserInteraction::TestUserInteraction(QWidget *parent) :
     cmbMagnification->setCurrentIndex(3);
 
     // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
+    cmbMouseMoveAction=new QComboBox(this);
+    layForm->addRow("mouse action: move, no modifiers", cmbMouseMoveAction);
+    cmbMouseMoveAction->addItem("none");
+    cmbMouseMoveAction->addItem("jkqtpmmaToolTipForClosestDataPoint");
+    connect(cmbMouseMoveAction, SIGNAL(currentIndexChanged(int)), this, SLOT(setMouseMoveAction(int)));
+    setMouseMoveAction(cmbMouseMoveAction->currentIndex());
+
+    // add a QComboBox that allows to set the left mouse button action for the JKQTPlotter
     cmbLeftNoModMouseAction=new QComboBox(this);
     layForm->addRow("mouse action: left-click, no modifiers", cmbLeftNoModMouseAction);
     cmbLeftNoModMouseAction->addItem("jkqtpmdaPanPlotOnMove");
@@ -333,6 +341,12 @@ void TestUserInteraction::setRightMouseAction(int index)
 {
     if (index==cmbRightNoModMouseAction->count()-1) plot->deregisterMouseDragAction(Qt::RightButton, Qt::NoModifier);
     else plot->registerMouseDragAction(Qt::RightButton, Qt::NoModifier, static_cast<JKQTPMouseDragActions>(index));
+}
+
+void TestUserInteraction::setMouseMoveAction(int index)
+{
+    if (index==0) plot->deregisterMouseMoveAction(Qt::NoModifier);
+    else plot->registerMouseMoveAction(Qt::NoModifier, static_cast<JKQTPMouseMoveActions>(index-1));
 }
 
 void TestUserInteraction::setPlotMagnification(int index)

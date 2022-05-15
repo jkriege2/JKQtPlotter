@@ -370,7 +370,7 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  * \image html contextmenu_graphvisibility.gif
  *
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEWHEEL Actions When a Mouse Wheel Event Occurs
- * The actions to be performed when the mouse hweel is operated are specified in JKQTPMouseWheelActions.
+ * The actions to be performed when the mouse wheel is operated are specified in JKQTPMouseWheelActions.
  * You can bind one of these actions to the mouse-wheel (under the condition that a specified Qt::KeyboardModifiers
  * is pressed) by using these functions:
  *   - registerMouseWheelAction() tells JKQTPlotter to perform a certain action (selected from JKQTPMouseWheelActions)
@@ -386,7 +386,7 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  * In addition the signal void plotMouseWheelOperated() is emitted whenever a mouse-wheel event occurs.
  *
  *
- * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE Signaling When Mouse Moves
+ * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_MOUSEMOVE Mouse Move Signaling and Actions
  * In addition the signal plotMouseMove() is called whenever the mouse moves over the plot.
  * Additional signals may be emitted, depending on the currently active JKQTPlotter::MouseActionMode.
  *
@@ -395,6 +395,14 @@ JKQTPLOTTER_LIB_EXPORT void initJKQTPlotterResources();
  *
  * \image html mousepositiondisplay.gif
  *
+ * The actions to be performed when the mouse moves without a mouse-button pressed are specified in JKQTPMouseMoveActions.
+ * You can bind one of these actions to the mouse (under the condition that a specified Qt::KeyboardModifiers
+ * is pressed) by using these functions:
+ *   - registerMouseMoveAction() tells JKQTPlotter to perform a certain action (selected from JKQTPMouseMoveActions)
+ *     when a specified mouse button is pushed while a specified (or no) keyborad modifiers (e.g. CTRL,ALT,SHIFT...) is pressed.
+ *   - deregisterMouseMoveAction() deletes a previously defined user-interaction
+ *   - clearAllMouseMoveActions() deletes all previously specified user-actions
+ * .
  *
  * \subsubsection JKQTPLOTTER_USERMOUSEINTERACTION_FASTRESIZING Fast Resizing of a Plot Widget
  * When the user resized the widget, the graph would in principle have to be readrawn for every intermediate step.
@@ -712,6 +720,13 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief deletes all mouse-wheel actions \see registerMouseWheelAction(), deregisterMouseWheelAction(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
         void clearAllMouseWheelActions();
 
+        /** \brief specifies the action to perform on a mouse move event when a given modifier is pressed \see deregisterMouseMoveAction(), clearAllMouseMoveActions(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
+        void registerMouseMoveAction(Qt::KeyboardModifiers modifier, JKQTPMouseMoveActions action);
+        /** \brief deletes all mouse-move actions registered for a given \a modifier \see registerMouseMoveAction(), clearAllMouseMoveActions(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
+        void deregisterMouseMoveAction(Qt::KeyboardModifiers modifier);
+        /** \brief deletes all mouse-move actions \see registerMouseMoveAction(), deregisterMouseMoveAction(), \ref JKQTPLOTTER_USERMOUSEINTERACTION */
+        void clearAllMouseMoveActions();
+
         /*! \brief returns the currently set special context menu object
          *
          *  \see \ref JKQTPLOTTER_SPECIALCONTEXTMENU, setSpecialContextMenu(), menuSpecialContextMenu, contextMenuOpened(), \ref JKQTPlotterUserInteraction
@@ -901,16 +916,26 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          */
         void saveCurrentPlotterStyle(QSettings& settings, const QString& group="plots/", bool alsoSaveBaseStyle=true) const;
 
-        /** \brief \copydoc actMouseLeftAsToolTip */
-        QAction *getActMouseLeftAsToolTip() const;
+        /** \brief \copydoc actMouseMoveToolTip */
+        QAction *getActMouseMoveToolTip();
         /** \brief \copydoc actMouseLeftAsRuler */
-        QAction *getActMouseLeftAsRuler() const;
+        QAction *getActMouseLeftAsRuler();
         /** \brief \copydoc actMouseLeftAsDefault */
-        QAction *getActMouseLeftAsDefault() const;
+        QAction *getActMouseLeftAsDefault();
         /** \brief \copydoc actMouseLeftAsZoomRect */
-        QAction *getActMouseLeftAsZoomRect() const;
+        QAction *getActMouseLeftAsZoomRect();
         /** \brief \copydoc actMouseLeftAsPanView */
-        QAction *getActMouseLeftAsPanView() const;
+        QAction *getActMouseLeftAsPanView();
+        /** \brief \copydoc actMouseMoveToolTip */
+        const QAction *getActMouseMoveToolTip() const;
+        /** \brief \copydoc actMouseLeftAsRuler */
+        const QAction *getActMouseLeftAsRuler() const;
+        /** \brief \copydoc actMouseLeftAsDefault */
+        const QAction *getActMouseLeftAsDefault() const;
+        /** \brief \copydoc actMouseLeftAsZoomRect */
+        const QAction *getActMouseLeftAsZoomRect() const;
+        /** \brief \copydoc actMouseLeftAsPanView */
+        const QAction *getActMouseLeftAsPanView() const;
 
 
     public slots:
@@ -1224,7 +1249,6 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          * \see setX(), setX(), zoomToFit(), setAbsoluteXY(), JKQTBasePlotter::setXY()
          */
          inline void setXY(double xminn, double xmaxx, double yminn, double ymaxx) { plotter->setXY(xminn, xmaxx, yminn, ymaxx); }
-
     signals:
         /** \brief emitted whenever the mouse moves
          *
@@ -1416,8 +1440,15 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief the currently executed MouseDragAction */
         MouseDragAction currentMouseDragAction;
 
+
+        /** \brief the currently executed MouseMoveActions */
+        QSet<JKQTPMouseMoveActions> currentMouseMoveAction;
+
         /** \brief searches JKQTPlotterStyle::registeredMouseActionModes for a matching action, returns in \a found whether an action was found */
         JKQTPMouseDragActionsHashMapIterator findMatchingMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
+
+        /** \brief searches JKQTPlotterStyle::registeredMouseMoveActions for a matching action */
+        JKQTPMouseMoveActionsHashMapIterator findMatchingMouseMoveAction(Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
 
         /** \brief searches JKQTPlotterStyle::registeredMouseWheelActions for a matching action */
         JKQTPMouseWheelActionsHashMapIterator findMatchingMouseWheelAction(Qt::KeyboardModifiers modifiers, bool *found=nullptr) const;
@@ -1545,9 +1576,11 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
          *   - if displayMousePosition is \c true , stores the current mouse position in mousePosX, mousePosY
          *   - if necessary, contributes to user-actions started by mousePressEvent()
          *   - emits plotMouseMove() if the mouse is inside the plot rectangle .
+         *   - execute mouseMoveActions
          * .
          *
          * \see mousePosX, mousePosY
+         * \see registerMouseWheelAction(), deregisterMouseWheelAction(), registeredMouseWheelActions
          */
         void mouseMoveEvent ( QMouseEvent * event );
 
@@ -1683,7 +1716,7 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         /** \brief action that activates the ruler tool (override!) */
         QAction* actMouseLeftAsRuler;
         /** \brief action that activates the tooltip tool (override!)  */
-        QAction* actMouseLeftAsToolTip;
+        QAction* actMouseMoveToolTip;
         /** \brief action that activates the zoom rectangle tool (override!) */
         QAction* actMouseLeftAsZoomRect;
         /** \brief action that activates the pan view tool (override!)  */
@@ -1715,10 +1748,12 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPlotter: public QWidget {
         void setMouseLeftActionAsZoomRect();
         /** \brief action that activates the ruler tool \see resetMouseLeftAction(), setMouseLeftActionAsToolTip() */
         void setMouseLeftActionAsRuler();
-        /** \brief action that activates the tooltip tool \see setMouseLeftActionAsRuler(), resetMouseLeftAction() */
-        void setMouseLeftActionAsToolTip();
+        /** \brief action that activates the tooltip tool, when dragging the mouse with the left button pressed \see resetMouseLeftAction() */
+        void setMouseLeftDragActionAsToolTip();
         /** \brief resets any previously set override action for the left mouse-button, un-modified \see setMouseLeftActionAsRuler(), setMouseLeftActionAsToolTip() */
         void resetMouseLeftAction();
+        /** \brief action that (de)activates the tooltip tool, when moving the mouse without any button pressed \see setMouseLeftActionAsRuler(), resetMouseLeftAction() */
+        void setMouseMoveActionAsToolTip(bool enabled);
 
 };
 

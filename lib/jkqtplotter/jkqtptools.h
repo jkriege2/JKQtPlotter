@@ -172,6 +172,29 @@ JKQTPLOTTER_LIB_EXPORT QString JKQTPMouseWheelActions2String(JKQTPMouseWheelActi
  */
 JKQTPLOTTER_LIB_EXPORT JKQTPMouseWheelActions String2JKQTPMouseWheelActions(const QString &act);
 
+/** \brief Availble action this JKQtPlotter can perform when mouse events occur.
+ *         This allows you to e.g. draw rectangles or lines over the plot and receive a signal, when the drawing finishes
+ * \ingroup jkqtpplottersupprt
+
+ */
+enum JKQTPMouseMoveActions {
+    jkqtpmmaToolTipForClosestDataPoint /*!< \brief shows a tooltip with data of the closest data-point in the plot \image html tooltiptool.gif */
+};
+
+
+/** \brief convert a JKQTPMouseDragActions to a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a>
+ *  \ingroup jkqtpplottersupprt
+ *
+ *  \see String2JKQTPMouseDragActions(), JKQTPMouseDragActions
+ */
+JKQTPLOTTER_LIB_EXPORT QString JKQTPMouseMoveActions2String(JKQTPMouseMoveActions act);
+/** \brief convert a <a href="http://doc.qt.io/qt-5/qstring.html">QString</a> (created by JKQTPMouseDragActions2String() ) to JKQTPMouseDragActions
+ *  \ingroup jkqtpplottersupprt
+ *
+ *  \see JKQTPMouseDragActions2String(), JKQTPMouseDragActions
+ */
+JKQTPLOTTER_LIB_EXPORT JKQTPMouseMoveActions String2JKQTPMouseMoveActions(const QString &button);
+
 /** \brief modes for the context menu
  * \ingroup jkqtpplottersupprt
  */
@@ -217,6 +240,12 @@ typedef QHash<QPair<Qt::MouseButton,Qt::KeyboardModifiers>, JKQTPMouseDoubleClic
 typedef JKQTPMouseDoubleClickActionsHashMap::const_iterator JKQTPMouseDoubleClickActionsHashMapIterator;
 
 
+/** \brief data structure for storage of assigned JKQTPMouseMoveActions \see JKQTPMouseMoveActionsHashMapIterator
+ *  \ingroup jkqtpplottersupprt */
+typedef QHash<Qt::KeyboardModifiers, JKQTPMouseMoveActions> JKQTPMouseMoveActionsHashMap;
+/** \brief iterator for JKQTPMouseMoveActionsHashMap \see JKQTPMouseMoveActionsHashMap
+ *  \ingroup jkqtpplottersupprt */
+typedef JKQTPMouseMoveActionsHashMap::const_iterator JKQTPMouseMoveActionsHashMapIterator;
 
 /** \brief Specifies how a fill-color is derived from a given color
  * \ingroup jkqtpplotter_styling

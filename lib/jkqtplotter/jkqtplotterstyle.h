@@ -151,6 +151,9 @@ public:
     JKQTPMouseDoubleClickActionsHashMap registeredMouseDoubleClickActions;
 
 
+    /** \brief the currently executed MouseMoveAction */
+    JKQTPMouseMoveActionsHashMap registeredMouseMoveActions;
+
 };
 
 

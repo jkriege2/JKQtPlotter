@@ -29,6 +29,7 @@
 #endif
 #include "jkqtplotter/jkqtplotter.h"
 #include "jkqtplotter/graphs/jkqtpscatter.h"
+#include "jkqtplotter.h"
 
 
 #define jkqtp_RESIZE_DELAY 100
@@ -62,7 +63,7 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     contextSubMenus(),
     plotterStyle(JKQTPGetSystemDefaultStyle()),
     resizeTimer(), registeredOverrideMouseDragActionModes(),
-    actgrpMouseLeft(nullptr), actMouseLeftAsDefault(nullptr), actMouseLeftAsRuler(nullptr), actMouseLeftAsToolTip(nullptr), actMouseLeftAsZoomRect(nullptr), actMouseLeftAsPanView(nullptr)
+    actgrpMouseLeft(nullptr), actMouseLeftAsDefault(nullptr), actMouseLeftAsRuler(nullptr), actMouseMoveToolTip(nullptr), actMouseLeftAsZoomRect(nullptr), actMouseLeftAsPanView(nullptr)
 {    
     initJKQTPlotterResources();
 
@@ -99,17 +100,22 @@ JKQTPlotter::JKQTPlotter(bool datastore_internal, QWidget* parent, JKQTPDatastor
     actMouseLeftAsRuler=actgrpMouseLeft->addAction(QIcon(":/JKQTPlotter/jkqtp_mouseact_ruler.png"), tr("Ruler Tool"));
     actMouseLeftAsRuler->setToolTip(tr("switch on the ruler tool (left button, no modifiers)"));
     actMouseLeftAsRuler->setCheckable(true);
-    actMouseLeftAsToolTip=actgrpMouseLeft->addAction(QIcon(":/JKQTPlotter/jkqtp_mouseact_tooltip.png"), tr("Data Tooltip Tool"));
-    actMouseLeftAsToolTip->setToolTip(tr("switch on the data tooltip tool (left button, no modifiers)"));
-    actMouseLeftAsToolTip->setCheckable(true);
+    //actMouseLeftAsToolTip=actgrpMouseLeft->addAction(QIcon(":/JKQTPlotter/jkqtp_mouseact_tooltip.png"), tr("Data Tooltip Tool"));
+    //actMouseLeftAsToolTip->setToolTip(tr("switch on the data tooltip tool when moving the mouse (no modifiers)"));
+    //actMouseLeftAsToolTip->setCheckable(true);
     actgrpMouseLeft->setExclusive(true);
     actMouseLeftAsDefault->setChecked(true);
 
+    actMouseMoveToolTip=new QAction(QIcon(":/JKQTPlotter/jkqtp_mouseact_tooltip.png"), tr("Data Tooltip Tool"));
+    actMouseMoveToolTip->setToolTip(tr("switch on the data tooltip tool when moving the mouse (no modifiers)"));
+    actMouseMoveToolTip->setCheckable(true);
+    actMouseMoveToolTip->setChecked(false);
+
     connect(actMouseLeftAsDefault, SIGNAL(triggered()), this, SLOT(resetMouseLeftAction()));
     connect(actMouseLeftAsRuler, SIGNAL(triggered()), this, SLOT(setMouseLeftActionAsRuler()));
-    connect(actMouseLeftAsToolTip, SIGNAL(triggered()), this, SLOT(setMouseLeftActionAsToolTip()));
     connect(actMouseLeftAsPanView, SIGNAL(triggered()), this, SLOT(setMouseLeftActionAsPanView()));
     connect(actMouseLeftAsZoomRect, SIGNAL(triggered()), this, SLOT(setMouseLeftActionAsZoomRect()));
+    connect(actMouseMoveToolTip, SIGNAL(toggled(bool)), this, SLOT(setMouseMoveActionAsToolTip(bool)));
 
 
     toolbar=new JKVanishQToolBar(this);
@@ -358,6 +364,27 @@ void JKQTPlotter::clearAllMouseWheelActions()
     //qDebug()<<"clearAllMouseWheelActions(): "<<plotterStyle.registeredMouseWheelActions;
 }
 
+void JKQTPlotter::registerMouseMoveAction(Qt::KeyboardModifiers modifier, JKQTPMouseMoveActions action)
+{
+    //qDebug()<<"registerMouseMoveAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseMoveActions;
+    plotterStyle.registeredMouseMoveActions[modifier]=action;
+    //qDebug()<<"registerMouseMoveAction("<<modifier<<","<<action<<"): "<<plotterStyle.registeredMouseMoveActions;
+}
+
+void JKQTPlotter::deregisterMouseMoveAction(Qt::KeyboardModifiers modifier)
+{
+    //qDebug()<<"deregisterMouseMoveAction("<<modifier<<"): "<<plotterStyle.registeredMouseMoveActions;
+    plotterStyle.registeredMouseMoveActions.remove(modifier);
+    //qDebug()<<"deregisterMouseMoveAction("<<modifier<<"): "<<plotterStyle.registeredMouseMoveActions;
+}
+
+void JKQTPlotter::clearAllMouseMoveActions()
+{
+    //qDebug()<<"clearAllMouseMoveActions(): "<<plotterStyle.registeredMouseMoveActions;
+    plotterStyle.registeredMouseMoveActions.clear();
+    //qDebug()<<"clearAllMouseMoveActions(): "<<plotterStyle.registeredMouseMoveActions;
+}
+
 
 
 
@@ -453,8 +480,8 @@ void JKQTPlotter::fillInternalStructForToolTipOfClosestDataPoint(double x0, doub
             foundAll=true;
         }
     }
+    mouseDragMarkers.clear();
     if (foundAll && dbest<getCurrentPlotterStyle().maxTooltipDistance) {
-        mouseDragMarkers.clear();
         QStringList entries;
         for (int i=0; i<posSyss.size(); i++) {
             const QPoint posPix=QPointF(getXAxis()->x2p(posSyss[i].x())*magnification, getYAxis()->x2p(posSyss[i].y())*magnification).toPoint();
@@ -475,7 +502,7 @@ void JKQTPlotter::fillInternalStructForToolTipOfClosestDataPoint(double x0, doub
 }
 
 void JKQTPlotter::paintUserAction() {
-    if (currentMouseDragAction.isValid() && mouseDragingRectangle) {
+    if ((currentMouseDragAction.isValid() && mouseDragingRectangle) || (!currentMouseMoveAction.isEmpty())) {
         image=oldImage;
         if (image.width()>0 && image.height()>0 && !image.isNull()) {
             JKQTPEnhancedPainter painter(&image);
@@ -492,97 +519,100 @@ void JKQTPlotter::paintUserAction() {
                 const double y2=plotter->y2p(mouseDragRectYEnd)*magnification;
                 const double dx=x2-x1;
                 const double dy=y2-y1;
-                if (currentMouseDragAction.mode==jkqtpmdaDrawRectangleForEvent) {
-                    painter.fillRect(QRectF(x1, y1, x2-x1, y2-y1), plotterStyle.userActionOverlayBrush);
-                    painter.setPen(plotterStyle.userActionOverlayPen);
-                    painter.drawRect(QRectF(x1, y1, x2-x1, y2-y1));
-                } else if (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) {
-                    double xmin=mouseDragRectXStart;
-                    double xmax=mouseDragRectXEnd;
-                    double ymin=mouseDragRectYStart;
-                    double ymax=mouseDragRectYEnd;
-                    plotter->correctXYRangeForAspectRatio(xmin,xmax,ymin,ymax);
+                if (currentMouseDragAction.isValid() && mouseDragingRectangle) {
+                    if (currentMouseDragAction.mode==jkqtpmdaDrawRectangleForEvent) {
+                        painter.fillRect(QRectF(x1, y1, x2-x1, y2-y1), plotterStyle.userActionOverlayBrush);
+                        painter.setPen(plotterStyle.userActionOverlayPen);
+                        painter.drawRect(QRectF(x1, y1, x2-x1, y2-y1));
+                    } else if (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) {
+                        double xmin=mouseDragRectXStart;
+                        double xmax=mouseDragRectXEnd;
+                        double ymin=mouseDragRectYStart;
+                        double ymax=mouseDragRectYEnd;
+                        plotter->correctXYRangeForAspectRatio(xmin,xmax,ymin,ymax);
 
-                    const double xz1=plotter->x2p(xmin)*magnification;
-                    const double yz1=plotter->y2p(ymin)*magnification;
-                    const double xz2=plotter->x2p(xmax)*magnification;
-                    const double yz2=plotter->y2p(ymax)*magnification;
+                        const double xz1=plotter->x2p(xmin)*magnification;
+                        const double yz1=plotter->y2p(ymin)*magnification;
+                        const double xz2=plotter->x2p(xmax)*magnification;
+                        const double yz2=plotter->y2p(ymax)*magnification;
 
-                    painter.fillRect(QRectF(xz1, yz1, xz2-xz1, yz2-yz1), plotterStyle.userActionOverlayBrush);
-                    painter.setPen(plotterStyle.userActionOverlayPen);
-                    painter.drawRect(QRectF(xz1, yz1, xz2-xz1, yz2-yz1));
-                } else if (currentMouseDragAction.mode==jkqtpmdaDrawCircleForEvent) {
-                    painter.setPen(plotterStyle.userActionOverlayPen);
-                    painter.setBrush(plotterStyle.userActionOverlayBrush);
-                    painter.drawEllipse(QPointF(x1, y1), qMin(fabs(dx), fabs(dy)), qMin(fabs(dx), fabs(dy)));
-                } else  if (currentMouseDragAction.mode==jkqtpmdaDrawEllipseForEvent) {
-                    painter.setPen(plotterStyle.userActionOverlayPen);
-                    painter.setBrush(plotterStyle.userActionOverlayBrush);
-                    painter.drawEllipse(QPointF(x1, y1), fabs(dx), fabs(dy));
-                } else  if (currentMouseDragAction.mode==jkqtpmdaDrawLineForEvent) {
-                    painter.setPen(plotterStyle.userActionOverlayPen);
-                    painter.setBrush(plotterStyle.userActionOverlayBrush);
-                    painter.drawLine(QPointF(x1,y1), QPointF(x2,y2));
-                } else  if (currentMouseDragAction.mode==jkqtpmdaRuler) {
-                    painter.setPen(plotterStyle.userActionOpaquePen);
-                    painter.setBrush(plotterStyle.userActionOpaqueBrush);
-                    painter.drawLine(QPointF(x1,y1), QPointF(x2,y1));
-                    painter.drawLine(QPointF(x2,y1), QPointF(x2,y2));
-                    painter.drawLine(QPointF(x1,y1), QPointF(x2,y2));
-                    const double dxy=sqrt(jkqtp_sqr(mouseDragRectXEnd-mouseDragRectXStart)+jkqtp_sqr(mouseDragRectYEnd-mouseDragRectYStart));
-                    const double alpha=atan2((mouseDragRectYEnd-mouseDragRectYStart), (mouseDragRectXEnd-mouseDragRectXStart))/JKQTPSTATISTICS_PI*180.0;
-                    const double dx=fabs(mouseDragRectXEnd-mouseDragRectXStart);
-                    const double dy=fabs(mouseDragRectYEnd-mouseDragRectYStart);
+                        painter.fillRect(QRectF(xz1, yz1, xz2-xz1, yz2-yz1), plotterStyle.userActionOverlayBrush);
+                        painter.setPen(plotterStyle.userActionOverlayPen);
+                        painter.drawRect(QRectF(xz1, yz1, xz2-xz1, yz2-yz1));
+                    } else if (currentMouseDragAction.mode==jkqtpmdaDrawCircleForEvent) {
+                        painter.setPen(plotterStyle.userActionOverlayPen);
+                        painter.setBrush(plotterStyle.userActionOverlayBrush);
+                        painter.drawEllipse(QPointF(x1, y1), qMin(fabs(dx), fabs(dy)), qMin(fabs(dx), fabs(dy)));
+                    } else  if (currentMouseDragAction.mode==jkqtpmdaDrawEllipseForEvent) {
+                        painter.setPen(plotterStyle.userActionOverlayPen);
+                        painter.setBrush(plotterStyle.userActionOverlayBrush);
+                        painter.drawEllipse(QPointF(x1, y1), fabs(dx), fabs(dy));
+                    } else  if (currentMouseDragAction.mode==jkqtpmdaDrawLineForEvent) {
+                        painter.setPen(plotterStyle.userActionOverlayPen);
+                        painter.setBrush(plotterStyle.userActionOverlayBrush);
+                        painter.drawLine(QPointF(x1,y1), QPointF(x2,y2));
+                    } else  if (currentMouseDragAction.mode==jkqtpmdaRuler) {
+                        painter.setPen(plotterStyle.userActionOpaquePen);
+                        painter.setBrush(plotterStyle.userActionOpaqueBrush);
+                        painter.drawLine(QPointF(x1,y1), QPointF(x2,y1));
+                        painter.drawLine(QPointF(x2,y1), QPointF(x2,y2));
+                        painter.drawLine(QPointF(x1,y1), QPointF(x2,y2));
+                        const double dxy=sqrt(jkqtp_sqr(mouseDragRectXEnd-mouseDragRectXStart)+jkqtp_sqr(mouseDragRectYEnd-mouseDragRectYStart));
+                        const double alpha=atan2((mouseDragRectYEnd-mouseDragRectYStart), (mouseDragRectXEnd-mouseDragRectXStart))/JKQTPSTATISTICS_PI*180.0;
+                        const double dx=fabs(mouseDragRectXEnd-mouseDragRectXStart);
+                        const double dy=fabs(mouseDragRectYEnd-mouseDragRectYStart);
 
-                    painter.setBrush(plotterStyle.userActionOpaqueBrush);
-                    QString txt;
-                    double a=0,d=0,so=0,w=0;
-                    getPlotter()->getMathText()->setFontSize(plotterStyle.userActionFontSize);
-                    getPlotter()->getMathText()->setFontRomanOrSpecial(plotterStyle.userActionFontName);
+                        painter.setBrush(plotterStyle.userActionOpaqueBrush);
+                        QString txt;
+                        double a=0,d=0,so=0,w=0;
+                        getPlotter()->getMathText()->setFontSize(plotterStyle.userActionFontSize);
+                        getPlotter()->getMathText()->setFontRomanOrSpecial(plotterStyle.userActionFontName);
 
-                    txt=QString::fromStdString("\\delta_{x}="+jkqtp_floattolatexstr(dx, 3));
-                    getPlotter()->getMathText()->parse(txt);
-                    getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
-                    if (y1>y2) {
-                        QRectF rec((x1+x2)/2.0-w/2.0, y1+2, w, a+d);
-                        painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                        getPlotter()->getMathText()->draw(painter, Qt::AlignTop, rec);
-                    } else {
-                        QRectF rec((x1+x2)/2.0-w/2.0, y1-2-a-d, w, a+d);
-                        painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                        getPlotter()->getMathText()->draw(painter, Qt::AlignBottom, rec);
+                        txt=QString::fromStdString("\\delta_{x}="+jkqtp_floattolatexstr(dx, 3));
+                        getPlotter()->getMathText()->parse(txt);
+                        getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
+                        if (y1>y2) {
+                            QRectF rec((x1+x2)/2.0-w/2.0, y1+2, w, a+d);
+                            painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignTop, rec);
+                        } else {
+                            QRectF rec((x1+x2)/2.0-w/2.0, y1-2-a-d, w, a+d);
+                            painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignBottom, rec);
+                        }
+
+                        txt=jkqtp_floattolatexqstr(dy, 3);
+                        getPlotter()->getMathText()->parse("\\delta_{y}="+txt);
+                        getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
+                        //double dyh=a+d;
+                        if (x2>x1) {
+                            QRectF rec(x2+2, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
+                            painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignLeft, rec);
+                        } else {
+                            QRectF rec(x2-2-w, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
+                            painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
+                            getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignRight, rec);
+                        }
+
+
+                        txt=QString::fromStdString("\\delta_{x,y}="+jkqtp_floattolatexstr(dxy)+", \\alpha="+jkqtp_floattolatexstr(alpha, 1)+"\\degree, \\stfrac{\\mathrm{d}y}{\\mathrm{d}x}="+jkqtp_floattolatexstr(dy/dx, 1));
+                        getPlotter()->getMathText()->parse(txt);
+                        getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
+                        if (x2<x1) {
+                            QRectF rec((x1+x2)/2.0, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
+                            painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
+                            getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignLeft, rec);
+                        } else {
+                            QRectF rec((x1+x2)/2.0-w, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
+                            painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
+                            getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignRight, rec);
+                        }
+
+
                     }
-
-                    txt=jkqtp_floattolatexqstr(dy, 3);
-                    getPlotter()->getMathText()->parse("\\delta_{y}="+txt);
-                    getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
-                    //double dyh=a+d;
-                    if (x2>x1) {
-                        QRectF rec(x2+2, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
-                        painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                        getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignLeft, rec);
-                    } else {
-                        QRectF rec(x2-2-w, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
-                        painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                        getPlotter()->getMathText()->draw(painter, Qt::AlignVCenter|Qt::AlignRight, rec);
-                    }
-
-
-                    txt=QString::fromStdString("\\delta_{x,y}="+jkqtp_floattolatexstr(dxy)+", \\alpha="+jkqtp_floattolatexstr(alpha, 1)+"\\degree, \\stfrac{\\mathrm{d}y}{\\mathrm{d}x}="+jkqtp_floattolatexstr(dy/dx, 1));
-                    getPlotter()->getMathText()->parse(txt);
-                    getPlotter()->getMathText()->getSizeDetail(painter, w, a, d, so);
-                    if (x2<x1) {
-                        QRectF rec((x1+x2)/2.0, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
-                        painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                        getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignLeft, rec);
-                    } else {
-                        QRectF rec((x1+x2)/2.0-w, (y1+y2)/2.0-(a+d)/2.0, w, a+d);
-                        painter.fillRect(rec, plotterStyle.userActionOpaqueBrush);
-                        getPlotter()->getMathText()->draw(painter,Qt::AlignTop|Qt::AlignRight, rec);
-                    }
-
-
-                } else  if (currentMouseDragAction.mode==jkqtpmdaToolTipForClosestDataPoint) {
+                }
+                if ((currentMouseDragAction.isValid() && currentMouseDragAction.mode==jkqtpmdaToolTipForClosestDataPoint) || currentMouseMoveAction.contains(jkqtpmmaToolTipForClosestDataPoint)) {
                     if (mouseDragMarkers.size()>0) {
                         const int markerD=getCurrentPlotterStyle().userActionMarkerDiameter;
                         if (getCurrentPlotterStyle().userActionMarkerType==jkqtpuamtCircle) {
@@ -695,6 +725,7 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
     if (!plotterStyle.toolbarEnabled) {
         toolbar->hide();
     }
+    currentMouseMoveAction.clear();
     if (currentMouseDragAction.isValid()) {
         if (( (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) ||
               (currentMouseDragAction.mode==jkqtpmdaDrawRectangleForEvent) ||
@@ -761,6 +792,21 @@ void JKQTPlotter::mouseMoveEvent ( QMouseEvent * event ) {
             event->accept();
             /*if (emitSignals)*/ //emit plotMouseMove(x, y);
         }
+    } else if (event->buttons()==Qt::NoButton) {
+        bool foundIT=false;
+        auto actionIT=findMatchingMouseMoveAction(event->modifiers(), &foundIT);
+        if (foundIT) {
+            // we found a matching action
+            currentMouseMoveAction.insert(actionIT.value());
+            if(actionIT.value()==jkqtpmmaToolTipForClosestDataPoint){
+                mouseDragRectXStart=plotter->p2x(event->x()/magnification);
+                mouseDragRectYStart=plotter->p2y((event->y()-getPlotYOffset())/magnification);
+                mouseDragRectXStartPixel=event->x();
+                mouseDragRectYStartPixel=event->y();
+                fillInternalStructForToolTipOfClosestDataPoint(plotter->p2x(event->x()/magnification), plotter->p2y((event->y()-getPlotYOffset())/magnification));
+            }
+            paintUserAction();
+        }
     }
 
     // emit move signal, if event occured inside plot only
@@ -806,7 +852,7 @@ void JKQTPlotter::mousePressEvent ( QMouseEvent * event ){
         event->accept();
     }
     updateCursor();
-    if ((actionIT!=plotterStyle.registeredMouseDragActionModes.end() || actionIT!=registeredOverrideMouseDragActionModes.end()) && actionIT.value()==jkqtpmdaToolTipForClosestDataPoint) {
+    if (foundIT && actionIT.value()==jkqtpmdaToolTipForClosestDataPoint) {
         fillInternalStructForToolTipOfClosestDataPoint(mouseDragRectXStart, mouseDragRectYStart);
         paintUserAction();
     }
@@ -1043,12 +1089,13 @@ void JKQTPlotter::initContextMenu()
     contextMenu->addAction(plotter->getActionZoomAll());
     contextMenu->addAction(plotter->getActionZoomIn());
     contextMenu->addAction(plotter->getActionZoomOut());
+    contextMenu->addSeparator();
+    contextMenu->addAction(actMouseMoveToolTip);
     contextMenu->addSection(tr("left mouse button tool"));
     contextMenu->addAction(actMouseLeftAsDefault);
     contextMenu->addAction(actMouseLeftAsPanView);
     contextMenu->addAction(actMouseLeftAsZoomRect);
     contextMenu->addAction(actMouseLeftAsRuler);
-    contextMenu->addAction(actMouseLeftAsToolTip);
     contextMenu->addSeparator();
     QMenu* menVisibleGroup=new QMenu(tr("Graph Visibility"), contextMenu);
     for (size_t i=0; i<getPlotter()->getGraphCount(); i++) {
@@ -1102,7 +1149,11 @@ void JKQTPlotter::initContextMenu()
 
 void JKQTPlotter::updateCursor() {
     if (!currentMouseDragAction.isValid()) {
-        setCursor(QCursor(Qt::ArrowCursor));
+        if (currentMouseMoveAction.contains(jkqtpmmaToolTipForClosestDataPoint)) {
+            setCursor(QCursor(Qt::CrossCursor));
+        } else {
+            setCursor(QCursor(Qt::ArrowCursor));
+        }
     } else {
         if (currentMouseDragAction.mode==jkqtpmdaZoomByRectangle) {
             static QBitmap cursor(":/JKQTPlotter/jkqtp_cursor_zoom.png");
@@ -1400,7 +1451,7 @@ void JKQTPlotter::setMouseLeftActionAsRuler()
     setOverrideMouseDragAction(Qt::LeftButton, Qt::NoModifier, JKQTPMouseDragActions::jkqtpmdaRuler);
 }
 
-void JKQTPlotter::setMouseLeftActionAsToolTip()
+void JKQTPlotter::setMouseLeftDragActionAsToolTip()
 {
     setOverrideMouseDragAction(Qt::LeftButton, Qt::NoModifier, JKQTPMouseDragActions::jkqtpmdaToolTipForClosestDataPoint);
 }
@@ -1410,31 +1461,63 @@ void JKQTPlotter::resetMouseLeftAction()
     resetOverrideMouseDragAction(Qt::LeftButton, Qt::NoModifier);
 }
 
+void JKQTPlotter::setMouseMoveActionAsToolTip(bool enabled)
+{
+    if (enabled) {
+        registerMouseMoveAction(Qt::NoModifier, JKQTPMouseMoveActions::jkqtpmmaToolTipForClosestDataPoint);
+    } else {
+        deregisterMouseMoveAction(Qt::NoModifier);
+    }
+}
+
 void JKQTPlotter::setMouseActionToolbarActionsActive(bool __value)
 {
     actgrpMouseLeft->setVisible(__value);
+    actMouseMoveToolTip->setVisible(__value);
 }
 
-QAction* JKQTPlotter::getActMouseLeftAsDefault() const {
+QAction* JKQTPlotter::getActMouseLeftAsDefault()  {
     return actMouseLeftAsDefault;
 }
 
-QAction *JKQTPlotter::getActMouseLeftAsZoomRect() const
+QAction *JKQTPlotter::getActMouseLeftAsZoomRect()
 {
     return actMouseLeftAsZoomRect;
 }
 
-QAction *JKQTPlotter::getActMouseLeftAsPanView() const
+QAction *JKQTPlotter::getActMouseLeftAsPanView()
 {
     return actMouseLeftAsPanView;
 }
 
-QAction* JKQTPlotter::getActMouseLeftAsRuler() const {
+QAction* JKQTPlotter::getActMouseLeftAsRuler()  {
     return actMouseLeftAsRuler;
 }
 
-QAction* JKQTPlotter::getActMouseLeftAsToolTip() const {
-    return actMouseLeftAsToolTip;
+const QAction* JKQTPlotter::getActMouseLeftAsDefault() const {
+    return actMouseLeftAsDefault;
+}
+
+const QAction *JKQTPlotter::getActMouseLeftAsZoomRect() const
+{
+    return actMouseLeftAsZoomRect;
+}
+
+const QAction *JKQTPlotter::getActMouseLeftAsPanView() const
+{
+    return actMouseLeftAsPanView;
+}
+
+const QAction* JKQTPlotter::getActMouseLeftAsRuler() const {
+    return actMouseLeftAsRuler;
+}
+
+const QAction* JKQTPlotter::getActMouseMoveToolTip() const {
+    return actMouseMoveToolTip;
+}
+
+QAction* JKQTPlotter::getActMouseMoveToolTip() {
+    return actMouseMoveToolTip;
 }
 
 void JKQTPlotter::setOverrideMouseDragAction(Qt::MouseButton button, Qt::KeyboardModifiers modifier, JKQTPMouseDragActions action)
@@ -1545,11 +1628,12 @@ void JKQTPlotter::populateToolbar(QToolBar *toolbar) const
     toolbar->addAction(plotter->getActionZoomIn());
     toolbar->addAction(plotter->getActionZoomOut());
     toolbar->addSeparator();
+    toolbar->addAction(actMouseMoveToolTip);
+    toolbar->addSeparator();
     toolbar->addAction(actMouseLeftAsDefault);
     toolbar->addAction(actMouseLeftAsPanView);
     toolbar->addAction(actMouseLeftAsZoomRect);
     toolbar->addAction(actMouseLeftAsRuler);
-    toolbar->addAction(actMouseLeftAsToolTip);
     if (actions().size()>0) {
         toolbar->addSeparator();
         toolbar->addActions(actions());
@@ -1729,6 +1813,20 @@ JKQTPMouseWheelActionsHashMapIterator JKQTPlotter::findMatchingMouseWheelAction(
     return plotterStyle.registeredMouseWheelActions.end();
 
     //return plotterStyle.registeredMouseWheelActions.find(modifiers);
+}
+
+JKQTPMouseMoveActionsHashMapIterator JKQTPlotter::findMatchingMouseMoveAction(Qt::KeyboardModifiers modifiers, bool *found) const
+{
+    if (found) *found=false;
+    for (JKQTPMouseMoveActionsHashMapIterator it=plotterStyle.registeredMouseMoveActions.begin(); it!=plotterStyle.registeredMouseMoveActions.end(); ++it) {
+        if (it.key()==modifiers) {
+            if (found) *found=true;
+            return it;
+        }
+    }
+    return plotterStyle.registeredMouseMoveActions.end();
+
+    //return plotterStyle.registeredMouseMoveActions.find(modifiers);
 }
 
 void JKQTPlotter::setPlotUpdateEnabled(bool enable)

@@ -25,6 +25,7 @@ JKQTPlotterStyle::JKQTPlotterStyle():
     usePaletteColors(true),
     registeredMouseDragActionModes(),
     registeredMouseWheelActions(),
+    registeredMouseMoveActions(),
     registeredMouseDoubleClickActions()
 {
     // default user-actions:
@@ -97,6 +98,7 @@ void JKQTPlotterStyle::loadSettings(const QSettings &settings, const QString &gr
         return -1;
     };
 
+    registeredMouseMoveActions.clear();
     registeredMouseWheelActions.clear();
     registeredMouseDragActionModes.clear();
     registeredMouseDoubleClickActions.clear();
@@ -124,6 +126,12 @@ void JKQTPlotterStyle::loadSettings(const QSettings &settings, const QString &gr
                 auto modifiers=jkqtp_String2KeyboardModifiers(settings.value(group+"actions/mouse_wheel"+QString::number(id)+"/modifiers", Qt::NoModifier).toString());
                 auto action=String2JKQTPMouseWheelActions(settings.value(group+"actions/mouse_wheel"+QString::number(id)+"/action", jkqtpmwaZoomByWheel).toString());
                 registeredMouseWheelActions[modifiers]=action;
+            }
+            id=readID(k, group+"actions/mouse_move");
+            if (id>=0) {
+                auto modifiers=jkqtp_String2KeyboardModifiers(settings.value(group+"actions/mouse_move"+QString::number(id)+"/modifiers", Qt::NoModifier).toString());
+                auto action=String2JKQTPMouseMoveActions(settings.value(group+"actions/mouse_move"+QString::number(id)+"/action", jkqtpmwaZoomByWheel).toString());
+                registeredMouseMoveActions[modifiers]=action;
             }
         }
     }
@@ -188,6 +196,13 @@ void JKQTPlotterStyle::saveSettings(QSettings &settings, const QString &group) c
     for (auto it=registeredMouseWheelActions.begin(); it!=registeredMouseWheelActions.end(); ++it) {
         settings.setValue(group+"actions/mouse_wheel"+QString::number(cnt)+"/modifiers", jkqtp_KeyboardModifiers2String(it.key()));
         settings.setValue(group+"actions/mouse_wheel"+QString::number(cnt)+"/action", JKQTPMouseWheelActions2String(it.value()));
+        cnt++;
+    }
+
+    cnt=0;
+    for (auto it=registeredMouseMoveActions.begin(); it!=registeredMouseMoveActions.end(); ++it) {
+        settings.setValue(group+"actions/mouse_move"+QString::number(cnt)+"/modifiers", jkqtp_KeyboardModifiers2String(it.key()));
+        settings.setValue(group+"actions/mouse_move"+QString::number(cnt)+"/action", JKQTPMouseMoveActions2String(it.value()));
         cnt++;
     }
 }
