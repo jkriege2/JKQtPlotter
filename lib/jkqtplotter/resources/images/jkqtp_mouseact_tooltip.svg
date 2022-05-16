@@ -2,25 +2,25 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="128"
    height="128"
    id="svg1307"
    sodipodi:version="0.32"
-   inkscape:version="0.91 r13725"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
    version="1.0"
    sodipodi:docname="jkqtp_mouseact_tooltip.svg"
    inkscape:output_extension="org.inkscape.output.svgz.inkscape"
-   inkscape:export-filename="jkqtp_mouseact_tooltip.png"
-   inkscape:export-xdpi="16.875"
-   inkscape:export-ydpi="16.875">
+   inkscape:export-filename="C:\Jan\Programmieren\JKQtPlotter\lib\jkqtplotter\resources\images\jkqtp_mouseact_tooltip@2x.png"
+   inkscape:export-xdpi="36"
+   inkscape:export-ydpi="36"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs1309">
     <linearGradient
@@ -274,8 +274,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6568544"
-     inkscape:cx="31.094592"
-     inkscape:cy="56.473506"
+     inkscape:cx="-12.28598"
+     inkscape:cy="56.391764"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
@@ -283,11 +283,12 @@
      guidetolerance="0.1px"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1018"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1">
+     inkscape:window-width="2240"
+     inkscape:window-height="1294"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="0">
     <sodipodi:guide
        orientation="horizontal"
        position="14.142135,38.890872"
@@ -320,7 +321,7 @@
             <dc:title>Oxygen team</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
       <cc:License
          rdf:about="http://creativecommons.org/licenses/LGPL/2.1/">
@@ -377,19 +378,20 @@
        sodipodi:nodetypes="ccccccc" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.94131088px;line-height:125%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="37.818214"
        y="59.321354"
        id="text5587"
-       sodipodi:linespacing="125%"
        transform="scale(0.9615429,1.0399952)"><tspan
          sodipodi:role="line"
          id="tspan5589"
          x="37.818214"
-         y="59.321354">Graph1:</tspan><tspan
+         y="59.321354"
+         style="font-size:16.9413px;line-height:1.25">Graph1:</tspan><tspan
          sodipodi:role="line"
          x="37.818214"
          y="80.497993"
-         id="tspan5591">[123,456]</tspan></text>
+         id="tspan5591"
+         style="font-size:16.9413px;line-height:1.25">[123,456]</tspan></text>
   </g>
 </svg>

@@ -2,16 +2,6 @@
 <!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
 
 <svg
-   xmlns:ns="http://ns.adobe.com/SaveForWeb/1.0/"
-   xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="Layer_1"
    width="128"
@@ -21,12 +11,21 @@
    enable-background="new 0 0 128 128"
    xml:space="preserve"
    sodipodi:version="0.32"
-   inkscape:version="0.48.1 "
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
    sodipodi:docname="copy16_nohead.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    inkscape:export-filename="copy16_nohead.png"
-   inkscape:export-xdpi="11.25"
-   inkscape:export-ydpi="11.25"><defs
+   inkscape:export-xdpi="18"
+   inkscape:export-ydpi="18"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:ns="http://ns.adobe.com/SaveForWeb/1.0/"><defs
    id="defs105"><linearGradient
    id="linearGradient3291"><stop
      style="stop-color:black;stop-opacity:1"
@@ -133,9 +132,7 @@
    width="1"
    height="1"
    id="foreignObject7">
-		<i:pgfRef
-   xlink:href="#adobe_illustrator_pgf">
-		</i:pgfRef>
+		
 	</foreignObject>
 	
 <linearGradient
@@ -260,7 +257,11 @@
    y2="94.104362"
    gradientTransform="matrix(0.8749999,0,0,0.8571428,10.000003,17.142857)" /><filter
    inkscape:collect="always"
-   id="filter6241"><feGaussianBlur
+   id="filter6241"
+   x="-0.095020407"
+   y="-0.096999997"
+   width="1.1900408"
+   height="1.194"><feGaussianBlur
      inkscape:collect="always"
      stdDeviation="1.2065414"
      id="feGaussianBlur6243" /></filter><radialGradient
@@ -292,12 +293,16 @@
    x2="86.571632"
    y2="94.104362" /><filter
    inkscape:collect="always"
-   id="filter3217"><feGaussianBlur
+   id="filter3217"
+   x="-0.025701584"
+   y="-0.022488886"
+   width="1.0514032"
+   height="1.0449778"><feGaussianBlur
      inkscape:collect="always"
      stdDeviation="0.89955545"
      id="feGaussianBlur3219" /></filter></defs><sodipodi:namedview
-   inkscape:window-height="670"
-   inkscape:window-width="1022"
+   inkscape:window-height="1294"
+   inkscape:window-width="2240"
    inkscape:pageshadow="2"
    inkscape:pageopacity="0.0"
    guidetolerance="10.0"
@@ -308,22 +313,23 @@
    pagecolor="#ffffff"
    id="base"
    inkscape:zoom="4"
-   inkscape:cx="92.02737"
-   inkscape:cy="94.923944"
-   inkscape:window-x="17"
-   inkscape:window-y="98"
+   inkscape:cx="92.125"
+   inkscape:cy="95"
+   inkscape:window-x="-11"
+   inkscape:window-y="-11"
    inkscape:current-layer="g6245"
    showgrid="true"
    inkscape:grid-points="false"
    inkscape:grid-bbox="true"
    inkscape:object-points="true"
-   inkscape:window-maximized="0"><inkscape:grid
+   inkscape:window-maximized="1"
+   inkscape:pagecheckerboard="0"><inkscape:grid
      id="GridFromPre046Settings"
      type="xygrid"
-     originx="0px"
-     originy="0px"
-     spacingx="4px"
-     spacingy="4px"
+     originx="0"
+     originy="0"
+     spacingx="4"
+     spacingy="4"
      color="#0000ff"
      empcolor="#0000ff"
      opacity="0.2"
@@ -373,7 +379,7 @@
 	</ns:sfw>
 <rdf:RDF><cc:Work
      rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-       rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata>
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata>
 
 <radialGradient
    id="XMLID_7_"

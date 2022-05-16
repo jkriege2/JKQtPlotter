@@ -2,26 +2,25 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="128"
    height="128"
    id="svg1307"
    sodipodi:version="0.32"
-   inkscape:version="0.91 r13725"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
    version="1.0"
    sodipodi:docname="jkqtp_mouseact_zoomrect.svg"
    inkscape:output_extension="org.inkscape.output.svgz.inkscape"
-   inkscape:export-filename="jkqtp_mouseact_zoomrect.png"
-   inkscape:export-xdpi="16.875"
-   inkscape:export-ydpi="16.875">
+   inkscape:export-filename="jkqtp_mouseact_zoomrect@2x.png"
+   inkscape:export-xdpi="36"
+   inkscape:export-ydpi="36"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs1309">
     <linearGradient
@@ -2136,10 +2135,7 @@
        width="1"
        y="0"
        x="0"
-       requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/">
-      <i:pgfRef
-         xlink:href="#adobe_illustrator_pgf" />
-    </foreignObject>
+       requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" />
     <radialGradient
        gradientTransform="matrix(1,0,0,0.197802,0,92.82166)"
        gradientUnits="userSpaceOnUse"
@@ -2610,7 +2606,11 @@
          d="M 376.98182,-19.965229 A 56.032688,56.032688 0 1 1 264.91644,-19.965229 A 56.032688,56.032688 0 1 1 376.98182,-19.965229 z" />
     </clipPath>
     <filter
-       id="filter3251">
+       id="filter3251"
+       x="-0.016656921"
+       y="-0.016656703"
+       width="1.0333138"
+       height="1.0333134">
       <feGaussianBlur
          id="feGaussianBlur3253"
          stdDeviation="0.57076996"
@@ -3104,8 +3104,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="-0.94125932"
-     inkscape:cy="-0.82692873"
+     inkscape:cx="-1.0606601"
+     inkscape:cy="-0.70710676"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
@@ -3113,11 +3113,12 @@
      guidetolerance="0.1px"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1018"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1">
+     inkscape:window-width="2240"
+     inkscape:window-height="1294"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="0">
     <sodipodi:guide
        orientation="horizontal"
        position="14.142135,38.890872"

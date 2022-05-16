@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/"
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="128"
    height="128"
    id="svg1307"
    sodipodi:version="0.32"
-   inkscape:version="0.46"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
    version="1.0"
-   sodipodi:docbase="/home/pinheiro/artwork/Oxygen/theme/svg/actions"
-   sodipodi:docname="table.svg"
-   inkscape:export-filename="D:\Programmieren\cpp\dkfz\quickfit3\images\16x16\table.png"
-   inkscape:export-xdpi="11.25"
-   inkscape:export-ydpi="11.25"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   sodipodi:docname="jkqtp_showplotdata.svg"
+   inkscape:export-filename="jkqtp_showplotdata@.png"
+   inkscape:export-xdpi="24"
+   inkscape:export-ydpi="24"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -30,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6568542"
-     inkscape:cx="62.203575"
-     inkscape:cy="72.200972"
+     inkscape:cx="62.137009"
+     inkscape:cy="72.124892"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:document-units="px"
@@ -39,12 +38,14 @@
      guidetolerance="0.1px"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1106"
-     inkscape:window-height="1009"
-     inkscape:window-x="130"
-     inkscape:window-y="13"
+     inkscape:window-width="2240"
+     inkscape:window-height="1294"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
      width="128px"
-     height="128px">
+     height="128px"
+     inkscape:pagecheckerboard="0"
+     inkscape:window-maximized="1">
     <sodipodi:guide
        id="guide2204"
        position="31"
@@ -1576,10 +1577,7 @@
        width="1"
        y="0"
        x="0"
-       requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/">
-      <i:pgfRef
-         xlink:href="#adobe_illustrator_pgf" />
-    </foreignObject>
+       requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" />
     <linearGradient
        id="linearGradient2902"
        inkscape:collect="always">
@@ -3153,10 +3151,7 @@
        width="1"
        y="0"
        x="0"
-       requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/">
-      <i:pgfRef
-         xlink:href="#adobe_illustrator_pgf" />
-    </foreignObject>
+       requiredExtensions="http://ns.adobe.com/AdobeIllustrator/10.0/" />
     <linearGradient
        id="linearGradient5298"
        inkscape:collect="always">
