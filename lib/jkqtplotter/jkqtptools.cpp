@@ -56,7 +56,7 @@ QString JKQTPCADrawMode2String(JKQTPCADrawMode pos) {
         case JKQTPCADMTicksTickLabels: return "ticks+labels";
         case JKQTPCADMTicks: return "ticks";
         case JKQTPCADMLineTicksTickLabels: return "line+ticks+labels";
-        case JKQTPCADMTickLabelsAxisLabel: return "ticks+axislabel";
+        case JKQTPCADMTickLabelsAxisLabel: return "labels+axislabel";
         case JKQTPCADMTickLabels: return "labels";
         case JKQTPCADMLineTicks: return "line+ticks";
         case JKQTPCADMLine: return "line";
