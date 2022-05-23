@@ -777,8 +777,8 @@ void JKQTPMathImage::setParent(JKQTBasePlotter* parent) {
     if (parent) {
         parent->registerAdditionalAction(tr("Save Image Plot Images ..."), actSaveImage);
         parent->registerAdditionalAction(tr("Copy Image Plot Images ..."), actCopyImage);
-        parent->registerAdditionalAction(tr("Save Image Plot Images ..."), actSavePalette);
-        parent->registerAdditionalAction(tr("Copy Image Plot Images ..."), actCopyPalette);
+        parent->registerAdditionalAction(tr("Save Image Plot Palettes ..."), actSavePalette);
+        parent->registerAdditionalAction(tr("Copy Image Plot Palettes ..."), actCopyPalette);
     }
     actSaveImage->setEnabled(parent);
     actCopyImage->setEnabled(parent);
@@ -860,7 +860,7 @@ void JKQTPMathImage::saveColorbarPlotAsImage(const QString &filename, const QByt
         QString selFormat;
         if (fn.isEmpty()) {
             selFormat=currentFileFormat;
-            fn = QFileDialog::getSaveFileName(nullptr, tr("Save Image Plot As Image ..."),
+            fn = QFileDialog::getSaveFileName(nullptr, tr("Save Palette Plot As Image ..."),
                                         currentSaveDirectory,
                                               filt.join(";;"), &selFormat);
             if (!fn.isEmpty()) currentSaveDirectory=QFileInfo(fn).absolutePath();
@@ -905,12 +905,12 @@ void JKQTPMathImage::draw(JKQTPEnhancedPainter& painter) {
 
 
 void JKQTPMathImage::getOutsideSize(JKQTPEnhancedPainter& painter, int& leftSpace, int& rightSpace, int& topSpace, int& bottomSpace) {
-    JKQTPGraph::getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+    JKQTPMathImageBase::getOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
     cbGetOutsideSize(painter, leftSpace, rightSpace, topSpace, bottomSpace);
 }
 
 void JKQTPMathImage::drawOutside(JKQTPEnhancedPainter& painter, QRect leftSpace, QRect rightSpace, QRect topSpace, QRect bottomSpace) {
-    JKQTPGraph::drawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
+    JKQTPMathImageBase::drawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
     if (showColorBar) cbDrawOutside(painter, leftSpace, rightSpace, topSpace, bottomSpace);
 }
 

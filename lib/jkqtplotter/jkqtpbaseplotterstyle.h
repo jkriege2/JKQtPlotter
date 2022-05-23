@@ -148,9 +148,9 @@ class JKQTPLOTTER_LIB_EXPORT JKQTBasePlotterStyle {
         /** \brief style of the y-axis of the main coordinate system */
         JKQTPCoordinateAxisStyle yAxisStyle;
         /** \brief style of the coordinate axes used to display colorbars in the right */
-        JKQTPCoordinateAxisStyle rightColorbarAxisStyle;
+        JKQTPColorbarCoordinateAxisStyle rightColorbarAxisStyle;
         /** \brief style of the coordinate axes used to display colorbars at the top */
-        JKQTPCoordinateAxisStyle topColorbarAxisStyle;
+        JKQTPColorbarCoordinateAxisStyle topColorbarAxisStyle;
         /** \brief style of the graphs */
         JKQTGraphsBaseStyle graphsStyle;
 

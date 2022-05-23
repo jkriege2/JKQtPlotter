@@ -42,61 +42,19 @@ void JKQTPRGBMathImage::initObject()
 
     rgbMode=JKQTPRGBMathImageModeRGBMode;
     colorBarRightAxis=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    colorBarRightAxis->setDrawMode1(JKQTPCADMLine);
-    colorBarRightAxis->setDrawMode2(JKQTPCADMcomplete);
     colorBarRightAxis->setAxisLabel("");
-    colorBarRightAxis->setMinTicks(5);
-    colorBarRightAxis->setMinorTicks(0);
-    colorBarRightAxis->setTickOutsideLength(0);
-    colorBarRightAxis->setMinorTickOutsideLength(0);
-    colorBarRightAxis->setShowZeroAxis(false);
     colorBarTopAxis=new JKQTPHorizontalIndependentAxis(0, 100, 0, 100, parent);
-    colorBarTopAxis->setDrawMode1(JKQTPCADMLine);
-    colorBarTopAxis->setDrawMode2(JKQTPCADMcomplete);
     colorBarTopAxis->setAxisLabel("");
-    colorBarTopAxis->setMinTicks(3);
-    colorBarTopAxis->setMinorTicks(0);
-    colorBarTopAxis->setTickOutsideLength(0);
-    colorBarTopAxis->setMinorTickOutsideLength(0);
-    colorBarTopAxis->setShowZeroAxis(false);
 
     colorBarRightAxisG=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    colorBarRightAxisG->setDrawMode1(JKQTPCADMLine);
-    colorBarRightAxisG->setDrawMode2(JKQTPCADMcomplete);
     colorBarRightAxisG->setAxisLabel("");
-    colorBarRightAxisG->setMinTicks(5);
-    colorBarRightAxisG->setShowZeroAxis(false);
-    colorBarRightAxisG->setMinorTicks(0);
-    colorBarRightAxisG->setTickOutsideLength(0);
-    colorBarRightAxisG->setMinorTickOutsideLength(0);
     colorBarTopAxisG=new JKQTPHorizontalIndependentAxis(0, 100, 0, 100, parent);
-    colorBarTopAxisG->setDrawMode1(JKQTPCADMLine);
-    colorBarTopAxisG->setDrawMode2(JKQTPCADMcomplete);
     colorBarTopAxisG->setAxisLabel("");
-    colorBarTopAxisG->setMinTicks(3);
-    colorBarTopAxisG->setShowZeroAxis(false);
-    colorBarTopAxisG->setMinorTicks(0);
-    colorBarTopAxisG->setTickOutsideLength(0);
-    colorBarTopAxisG->setMinorTickOutsideLength(0);
 
     colorBarRightAxisB=new JKQTPVerticalIndependentAxis(0, 100, 0, 100, parent);
-    colorBarRightAxisB->setDrawMode1(JKQTPCADMLine);
-    colorBarRightAxisB->setDrawMode2(JKQTPCADMcomplete);
     colorBarRightAxisB->setAxisLabel("");
-    colorBarRightAxisB->setMinTicks(5);
-    colorBarRightAxisB->setShowZeroAxis(false);
-    colorBarRightAxisB->setMinorTicks(0);
-    colorBarRightAxisB->setTickOutsideLength(0);
-    colorBarRightAxisB->setMinorTickOutsideLength(0);
     colorBarTopAxisB=new JKQTPHorizontalIndependentAxis(0, 100, 0, 100, parent);
-    colorBarTopAxisB->setDrawMode1(JKQTPCADMLine);
-    colorBarTopAxisB->setDrawMode2(JKQTPCADMcomplete);
     colorBarTopAxisB->setAxisLabel("");
-    colorBarTopAxisB->setMinTicks(3);
-    colorBarTopAxisB->setShowZeroAxis(false);
-    colorBarTopAxisB->setMinorTicks(0);
-    colorBarTopAxisB->setTickOutsideLength(0);
-    colorBarTopAxisB->setMinorTickOutsideLength(0);
 
 
     this->colorBarTopVisible=true;

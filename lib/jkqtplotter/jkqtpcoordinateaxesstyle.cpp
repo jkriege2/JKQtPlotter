@@ -150,3 +150,26 @@ void JKQTPCoordinateAxisStyle::saveSettings(QSettings &settings, const QString &
     minorGridStyle.saveSettings(settings, group+"minor_grid/");
 }
 
+
+JKQTPColorbarCoordinateAxisStyle::JKQTPColorbarCoordinateAxisStyle():
+    JKQTPCoordinateAxisStyle()
+{
+    initMembersForColorbars();
+}
+
+
+JKQTPColorbarCoordinateAxisStyle::JKQTPColorbarCoordinateAxisStyle(const JKQTBasePlotterStyle &baseStyle):
+    JKQTPCoordinateAxisStyle(baseStyle)
+{
+    initMembersForColorbars();
+}
+
+void JKQTPColorbarCoordinateAxisStyle::initMembersForColorbars() {
+    drawMode1=JKQTPCADMLine;
+    drawMode2=JKQTPCADMcomplete;
+    minTicks=5;
+    minorTicks=0;
+    tickOutsideLength=0;
+    minorTickOutsideLength=0;
+    showZeroAxis=false;
+}

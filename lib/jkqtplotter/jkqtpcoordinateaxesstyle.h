@@ -185,4 +185,27 @@ class JKQTPLOTTER_LIB_EXPORT JKQTPCoordinateAxisStyle {
         double axisLineOffset;
 };
 
+
+/** \brief Support Class for JKQTPCoordinateAxis, which summarizes all properties that define the visual styling of a JKQTPCoordinateAxis
+ *         used for colorbars outside the plot
+ *  \ingroup jkqtpplotter_styling
+ *
+ * The major difference between this dervied version and the base JKQTPCoordinateAxisStyle are differently initialized members.
+ * \see JKQTPCoordinateAxis, \ref jkqtpplotter_styling
+ *
+ */
+class JKQTPLOTTER_LIB_EXPORT JKQTPColorbarCoordinateAxisStyle: public JKQTPCoordinateAxisStyle {
+        Q_GADGET
+    public:
+        /** \copydoc JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle() */
+        JKQTPColorbarCoordinateAxisStyle();
+
+        /** \copydoc JKQTPCoordinateAxisStyle::JKQTPCoordinateAxisStyle(const JKQTBasePlotterStyle&) */
+        JKQTPColorbarCoordinateAxisStyle(const JKQTBasePlotterStyle& baseStyle);
+    private:
+        /** \brief modifies the members to match the requirements of colorbar axes */
+        void initMembersForColorbars();
+
+};
+
 #endif // JKQTPCOORDINATEAXESSTYLE_H

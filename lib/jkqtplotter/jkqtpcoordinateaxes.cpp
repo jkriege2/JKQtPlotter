@@ -1327,6 +1327,12 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
     //qDebug()<<"    offset="<<offset;
     //qDebug()<<"    x2p(0)="<<x2p(0);
     //qDebug()<<"    tickStart="<<tickStart;
+    //qDebug()<<"    drawMode1="<<JKQTPCADrawMode2String(axisStyle.drawMode1);
+    //qDebug()<<"    drawMode2="<<JKQTPCADrawMode2String(axisStyle.drawMode2);
+    //qDebug()<<"    tickInsideLength="<<axisStyle.tickInsideLength;
+    //qDebug()<<"    tickOutsideLength="<<axisStyle.tickOutsideLength;
+    //qDebug()<<"    minorTickInsideLength="<<axisStyle.minorTickInsideLength;
+    //qDebug()<<"    minorTickOutsideLength="<<axisStyle.minorTickOutsideLength;
 
     if (std::isnan(left) || std::isnan(right) || std::isnan(top) || std::isnan(bottom)) return;
     if (std::isinf(left) || std::isinf(right) || std::isinf(top) || std::isinf(bottom)) return;
@@ -1397,13 +1403,14 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
 
             double xleft=-1000000;
             double xx=x2p(x);
-            //qDebug()<<"   tick @ x="<<x<<"   label="<<label<<"   mtdist="<<mtdist<<"   axisStyle.minorTicks="<<minorTicks;
+            //qDebug()<<"   tick @ x="<<x<<"   label="<<label<<"   mtdist="<<mtdist;
 
             if (JKQTPCADrawModeHasTicks(axisStyle.drawMode1)||JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
                 //painter.setPen(ptick);
                 if ((x<=axismax) && (x>=axismin))  {
                     QLineF l(left-parent->pt2px(painter, axisStyle.tickOutsideLength), xx, left+parent->pt2px(painter, axisStyle.tickInsideLength), xx);
                     if (l.length()>0) lines_ptick.append(l);//painter.drawLine(l);
+                    //qDebug()<<"tick: "<<l;
                 }
                 //painter.setPen(pmtick);
                 if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0)) {
@@ -1424,6 +1431,7 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
                         if (mx<=axismax && mx>=axismin) {
                             QLineF l(xleft=left-parent->pt2px(painter, axisStyle.minorTickOutsideLength), mxx, left+parent->pt2px(painter, axisStyle.minorTickInsideLength), mxx);
                             if (l.length()>0) lines_pmtick.append(l);//painter.drawLine(l);
+                            //qDebug()<<"minortick: "<<l;
                             double val= mx/pow(logAxisBase,floor(log(mx)/log(logAxisBase)));
 
                             if (axisStyle.minorTickLabelsEnabled&&JKQTPCADrawModeHasTickLabels(axisStyle.drawMode1)) {
@@ -1443,6 +1451,8 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
                 if (x<=axismax && x>=axismin) {
                     QLineF l(right-parent->pt2px(painter, axisStyle.tickInsideLength), xx, right+parent->pt2px(painter, axisStyle.tickOutsideLength), xx);
                     if (l.length()>0) lines_ptick2.append(l);//painter.drawLine(l);
+                    //qDebug()<<"tick2: "<<l;
+
                 }
                 //painter.setPen(pmtick);
                 if ((tickLabels.size()<=0) && (axisStyle.minorTicks>0)) {
@@ -1462,6 +1472,8 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
                         if (mx<=axismax && mx>=axismin)  {
                             QLineF l(right-parent->pt2px(painter, axisStyle.minorTickInsideLength), mxx, xleft=(right+parent->pt2px(painter, axisStyle.minorTickOutsideLength)), mxx);
                             if (l.length()>0) lines_pmtick2.append(l);//painter.drawLine(l);
+                            //qDebug()<<"minortick2: "<<l;
+
                             double val= mx/pow(logAxisBase,floor(log(mx)/log(logAxisBase)));
 
                             if (axisStyle.minorTickLabelsEnabled) {
@@ -1497,6 +1509,13 @@ void JKQTPVerticalAxis::drawAxes(JKQTPEnhancedPainter& painter) {
         painter.setPen(pmtick);
         painter.drawLines(lines_pmtick);
         painter.drawLines(lines_pmtick2);
+        //qDebug()<<"left="<<left<<", right="<<right<<", top="<<top<<", bottom="<<bottom;
+        //qDebug()<<"ptick: "<<jkqtp_QColor2String(ptick.color())<<","<<jkqtp_QPenStyle2String(ptick.style())<<" lines_ptick.size="<<lines_ptick.size()<<", lines_ptick2.size="<<lines_ptick2.size();
+        //if (lines_ptick.size()>0) qDebug()<<"  lines_ptick[0]="<<lines_ptick[0];
+        //if (lines_ptick2.size()>0) qDebug()<<"  lines_ptick2[0]="<<lines_ptick2[0];
+        //qDebug()<<"pmtick: "<<jkqtp_QColor2String(pmtick.color())<<","<<jkqtp_QPenStyle2String(pmtick.style())<<" lines_pmtick.size="<<lines_pmtick.size()<<", lines_pmtick2.size="<<lines_pmtick2.size();
+        //if (lines_pmtick.size()>0) qDebug()<<"  lines_pmtick[0]="<<lines_pmtick[0];
+        //if (lines_pmtick2.size()>0) qDebug()<<"  lines_pmtick2[0]="<<lines_pmtick2[0];
     }
 
     // plot axis label
