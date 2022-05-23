@@ -634,6 +634,9 @@ Here is a table with all available ready-made styles:
       <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/dark.ini"> \c :/JKQTPlotter/styles/dark.ini</a>
       <td> \image html dark.ini.png
     <tr>
+      <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/seaborn.ini"> \c :/JKQTPlotter/styles/seaborn.ini</a>
+      <td> \image html seaborn.ini.png
+    <tr>
       <td> <a href="https://github.com/jkriege2/JKQtPlotter/tree/master/lib/jkqtplotter/resources/styles/simple_gridandticks.ini"> \c :/JKQTPlotter/styles/simple_gridandticks.ini</a>
       <td> \image html simple_gridandticks.ini.png
     <tr>
